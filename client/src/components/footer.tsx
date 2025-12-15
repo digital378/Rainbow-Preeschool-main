@@ -1,0 +1,170 @@
+import { Link } from "wouter";
+import { Phone, Mail, MapPin, Clock } from "lucide-react";
+import { SiFacebook, SiInstagram, SiYoutube } from "react-icons/si";
+import { branches, programmes } from "@shared/schema";
+
+export function Footer() {
+  const currentYear = new Date().getFullYear();
+
+  return (
+    <footer className="bg-card border-t">
+      {/* Rainbow strip */}
+      <div className="h-1 rainbow-gradient" />
+      
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+          {/* About */}
+          <div className="space-y-4">
+            <div className="flex items-center gap-2">
+              <div className="w-10 h-10 rounded-full rainbow-gradient flex items-center justify-center">
+                <span className="text-white font-bold text-lg">R</span>
+              </div>
+              <div>
+                <h3 className="font-bold text-lg">
+                  <span className="rainbow-text">Rainbow</span>
+                </h3>
+                <p className="text-xs text-muted-foreground -mt-1">Preschool International</p>
+              </div>
+            </div>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              Laying the foundation for tomorrow since 2007. Over 50,000 young students have completed their Pre-Primary education with us.
+            </p>
+            <div className="flex items-center gap-3">
+              <a
+                href="https://facebook.com/rainbowpreschools"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-full bg-muted flex items-center justify-center hover-elevate"
+                data-testid="link-social-facebook"
+              >
+                <SiFacebook className="h-4 w-4" />
+              </a>
+              <a
+                href="https://instagram.com/rainbowpreschools"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-full bg-muted flex items-center justify-center hover-elevate"
+                data-testid="link-social-instagram"
+              >
+                <SiInstagram className="h-4 w-4" />
+              </a>
+              <a
+                href="https://youtube.com/rainbowpreschools"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-full bg-muted flex items-center justify-center hover-elevate"
+                data-testid="link-social-youtube"
+              >
+                <SiYoutube className="h-4 w-4" />
+              </a>
+            </div>
+          </div>
+
+          {/* Quick Links */}
+          <div>
+            <h4 className="font-semibold text-base mb-4">Quick Links</h4>
+            <ul className="space-y-2">
+              <li>
+                <Link href="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors" data-testid="link-footer-home">
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link href="/about" className="text-sm text-muted-foreground hover:text-foreground transition-colors" data-testid="link-footer-about">
+                  About Us
+                </Link>
+              </li>
+              <li>
+                <Link href="/programmes" className="text-sm text-muted-foreground hover:text-foreground transition-colors" data-testid="link-footer-programmes">
+                  Our Programmes
+                </Link>
+              </li>
+              <li>
+                <Link href="/blog" className="text-sm text-muted-foreground hover:text-foreground transition-colors" data-testid="link-footer-blog">
+                  News & Blog
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact" className="text-sm text-muted-foreground hover:text-foreground transition-colors" data-testid="link-footer-contact">
+                  Contact Us
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Programmes */}
+          <div>
+            <h4 className="font-semibold text-base mb-4">Our Programmes</h4>
+            <ul className="space-y-2">
+              {programmes.slice(0, 5).map((prog) => (
+                <li key={prog.id}>
+                  <Link
+                    href={`/programmes#${prog.id}`}
+                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                    data-testid={`link-footer-programme-${prog.id}`}
+                  >
+                    {prog.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Contact Info */}
+          <div>
+            <h4 className="font-semibold text-base mb-4">Contact Info</h4>
+            <ul className="space-y-3">
+              <li className="flex items-start gap-3">
+                <MapPin className="h-4 w-4 text-primary mt-0.5 shrink-0" />
+                <span className="text-sm text-muted-foreground">
+                  6 Branches across Thane West, Maharashtra
+                </span>
+              </li>
+              <li className="flex items-center gap-3">
+                <Phone className="h-4 w-4 text-primary shrink-0" />
+                <a
+                  href="tel:9321239367"
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  data-testid="link-footer-phone"
+                >
+                  93212 39367
+                </a>
+              </li>
+              <li className="flex items-center gap-3">
+                <Mail className="h-4 w-4 text-primary shrink-0" />
+                <a
+                  href="mailto:info@rainbowpreschools.com"
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  data-testid="link-footer-email"
+                >
+                  info@rainbowpreschools.com
+                </a>
+              </li>
+              <li className="flex items-center gap-3">
+                <Clock className="h-4 w-4 text-primary shrink-0" />
+                <span className="text-sm text-muted-foreground">
+                  Mon - Sat: 8:00 AM - 6:00 PM
+                </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Bottom bar */}
+        <div className="mt-12 pt-8 border-t flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="text-sm text-muted-foreground text-center md:text-left">
+            &copy; {currentYear} Rainbow Preschool International. All rights reserved.
+          </p>
+          <div className="flex items-center gap-4 text-sm text-muted-foreground">
+            <Link href="/privacy" className="hover:text-foreground transition-colors" data-testid="link-privacy">
+              Privacy Policy
+            </Link>
+            <Link href="/terms" className="hover:text-foreground transition-colors" data-testid="link-terms">
+              Terms of Service
+            </Link>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}

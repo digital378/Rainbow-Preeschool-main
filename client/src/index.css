@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* LIGHT MODE */
+/* LIGHT MODE - Rainbow Preschool Theme */
 :root {
   --button-outline: rgba(0,0,0, .10);
   --badge-outline: rgba(0,0,0, .05);
@@ -10,42 +10,43 @@
   --elevate-1: rgba(0,0,0, .03);
   --elevate-2: rgba(0,0,0, .08);
   --background: 0 0% 100%;
-  --foreground: 0 0% 10%;
-  --border: 0 0% 90%;
-  --card: 0 0% 98%;
-  --card-foreground: 0 0% 10%;
-  --card-border: 0 0% 95%;
-  --sidebar: 0 0% 96%;
-  --sidebar-foreground: 0 0% 10%;
-  --sidebar-border: 0 0% 92%;
-  --sidebar-primary: 340 85% 45%;
-  --sidebar-primary-foreground: 340 85% 98%;
-  --sidebar-accent: 0 0% 92%;
-  --sidebar-accent-foreground: 0 0% 10%;
-  --sidebar-ring: 340 85% 45%;
-  --popover: 0 0% 94%;
-  --popover-foreground: 0 0% 10%;
-  --popover-border: 0 0% 90%;
-  --primary: 340 85% 45%;
-  --primary-foreground: 340 85% 98%;
-  --secondary: 0 0% 90%;
-  --secondary-foreground: 0 0% 10%;
-  --muted: 0 4% 88%;
-  --muted-foreground: 0 0% 35%;
-  --accent: 340 12% 90%;
-  --accent-foreground: 340 12% 15%;
+  --foreground: 220 20% 15%;
+  --border: 30 20% 90%;
+  --card: 30 30% 98%;
+  --card-foreground: 220 20% 15%;
+  --card-border: 30 20% 92%;
+  --sidebar: 30 25% 96%;
+  --sidebar-foreground: 220 20% 15%;
+  --sidebar-border: 30 20% 90%;
+  --sidebar-primary: 340 75% 50%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 30 30% 92%;
+  --sidebar-accent-foreground: 220 20% 15%;
+  --sidebar-ring: 340 75% 50%;
+  --popover: 30 20% 98%;
+  --popover-foreground: 220 20% 15%;
+  --popover-border: 30 20% 90%;
+  --primary: 340 75% 50%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 45 90% 55%;
+  --secondary-foreground: 45 90% 15%;
+  --muted: 30 15% 90%;
+  --muted-foreground: 220 10% 45%;
+  --accent: 200 75% 50%;
+  --accent-foreground: 0 0% 100%;
   --destructive: 0 84% 42%;
   --destructive-foreground: 0 84% 98%;
-  --input: 0 0% 70%;
-  --ring: 340 85% 45%;
-  --chart-1: 340 85% 35%;
-  --chart-2: 45 90% 40%;
-  --chart-3: 200 85% 35%;
-  --chart-4: 280 80% 38%;
-  --chart-5: 120 75% 35%;
-  --font-sans: Open Sans, sans-serif;
+  --input: 30 20% 75%;
+  --ring: 340 75% 50%;
+  --chart-1: 340 75% 50%;
+  --chart-2: 45 90% 55%;
+  --chart-3: 200 75% 50%;
+  --chart-4: 280 70% 55%;
+  --chart-5: 140 65% 45%;
+  --font-sans: 'Inter', 'Open Sans', sans-serif;
   --font-serif: Georgia, serif;
   --font-mono: Menlo, monospace;
+  --font-heading: 'Poppins', 'Inter', sans-serif;
   --radius: .5rem;
   --shadow-2xs: 0px 2px 0px 0px hsl(0 0% 0% / 0.00);
   --shadow-xs: 0px 2px 0px 0px hsl(0 0% 0% / 0.00);
@@ -57,6 +58,14 @@
   --shadow-2xl: 0px 2px 0px 0px hsl(0 0% 0% / 0.00);
   --tracking-normal: 0em;
   --spacing: 0.25rem;
+
+  /* Rainbow gradient colors */
+  --rainbow-red: 0 85% 60%;
+  --rainbow-orange: 25 95% 55%;
+  --rainbow-yellow: 45 95% 55%;
+  --rainbow-green: 140 70% 45%;
+  --rainbow-blue: 200 80% 50%;
+  --rainbow-purple: 280 75% 55%;
 
 /* Fallback for older browsers */
   --sidebar-primary-border: hsl(var(--sidebar-primary));
@@ -93,40 +102,40 @@
   --opaque-button-border-intensity: 9;
   --elevate-1: rgba(255,255,255, .04);
   --elevate-2: rgba(255,255,255, .09);
-  --background: 0 0% 8%;
-  --foreground: 0 0% 95%;
-  --border: 0 0% 18%;
-  --card: 0 0% 10%;
-  --card-foreground: 0 0% 95%;
-  --card-border: 0 0% 14%;
-  --sidebar: 0 0% 12%;
-  --sidebar-foreground: 0 0% 95%;
-  --sidebar-border: 0 0% 16%;
-  --sidebar-primary: 340 85% 45%;
-  --sidebar-primary-foreground: 340 85% 98%;
-  --sidebar-accent: 0 0% 16%;
-  --sidebar-accent-foreground: 0 0% 95%;
-  --sidebar-ring: 340 85% 45%;
-  --popover: 0 0% 14%;
-  --popover-foreground: 0 0% 95%;
-  --popover-border: 0 0% 18%;
-  --primary: 340 85% 45%;
-  --primary-foreground: 340 85% 98%;
-  --secondary: 0 0% 18%;
-  --secondary-foreground: 0 0% 95%;
-  --muted: 0 4% 20%;
-  --muted-foreground: 0 0% 65%;
-  --accent: 340 12% 18%;
-  --accent-foreground: 340 12% 90%;
-  --destructive: 0 84% 42%;
+  --background: 220 20% 8%;
+  --foreground: 30 20% 95%;
+  --border: 220 15% 18%;
+  --card: 220 18% 12%;
+  --card-foreground: 30 20% 95%;
+  --card-border: 220 15% 16%;
+  --sidebar: 220 18% 10%;
+  --sidebar-foreground: 30 20% 95%;
+  --sidebar-border: 220 15% 16%;
+  --sidebar-primary: 340 75% 55%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 220 15% 18%;
+  --sidebar-accent-foreground: 30 20% 95%;
+  --sidebar-ring: 340 75% 55%;
+  --popover: 220 18% 14%;
+  --popover-foreground: 30 20% 95%;
+  --popover-border: 220 15% 20%;
+  --primary: 340 75% 55%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 45 85% 50%;
+  --secondary-foreground: 45 90% 10%;
+  --muted: 220 12% 22%;
+  --muted-foreground: 30 10% 60%;
+  --accent: 200 75% 55%;
+  --accent-foreground: 0 0% 100%;
+  --destructive: 0 84% 50%;
   --destructive-foreground: 0 84% 98%;
-  --input: 0 0% 30%;
-  --ring: 340 85% 45%;
-  --chart-1: 340 85% 65%;
+  --input: 220 15% 30%;
+  --ring: 340 75% 55%;
+  --chart-1: 340 75% 60%;
   --chart-2: 45 90% 60%;
-  --chart-3: 200 85% 65%;
-  --chart-4: 280 80% 68%;
-  --chart-5: 120 75% 65%;
+  --chart-3: 200 75% 60%;
+  --chart-4: 280 70% 60%;
+  --chart-5: 140 65% 55%;
   --shadow-2xs: 0px 2px 0px 0px hsl(0 0% 0% / 0.00);
   --shadow-xs: 0px 2px 0px 0px hsl(0 0% 0% / 0.00);
   --shadow-sm: 0px 2px 0px 0px hsl(0 0% 0% / 0.00), 0px 1px 2px -1px hsl(0 0% 0% / 0.00);
@@ -135,6 +144,14 @@
   --shadow-lg: 0px 2px 0px 0px hsl(0 0% 0% / 0.00), 0px 4px 6px -1px hsl(0 0% 0% / 0.00);
   --shadow-xl: 0px 2px 0px 0px hsl(0 0% 0% / 0.00), 0px 8px 10px -1px hsl(0 0% 0% / 0.00);
   --shadow-2xl: 0px 2px 0px 0px hsl(0 0% 0% / 0.00);
+
+  /* Rainbow gradient colors - slightly brighter for dark mode */
+  --rainbow-red: 0 80% 65%;
+  --rainbow-orange: 25 90% 60%;
+  --rainbow-yellow: 45 90% 60%;
+  --rainbow-green: 140 65% 50%;
+  --rainbow-blue: 200 75% 55%;
+  --rainbow-purple: 280 70% 60%;
 
 /* Fallback for older browsers */
   --sidebar-primary-border: hsl(var(--sidebar-primary));
@@ -173,6 +190,39 @@
   body {
     @apply font-sans antialiased bg-background text-foreground;
   }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+  }
+}
+
+/* Rainbow gradient utility */
+.rainbow-gradient {
+  background: linear-gradient(
+    90deg,
+    hsl(var(--rainbow-red)) 0%,
+    hsl(var(--rainbow-orange)) 17%,
+    hsl(var(--rainbow-yellow)) 33%,
+    hsl(var(--rainbow-green)) 50%,
+    hsl(var(--rainbow-blue)) 67%,
+    hsl(var(--rainbow-purple)) 83%,
+    hsl(var(--rainbow-red)) 100%
+  );
+}
+
+.rainbow-text {
+  background: linear-gradient(
+    90deg,
+    hsl(var(--rainbow-red)) 0%,
+    hsl(var(--rainbow-orange)) 20%,
+    hsl(var(--rainbow-yellow)) 40%,
+    hsl(var(--rainbow-green)) 60%,
+    hsl(var(--rainbow-blue)) 80%,
+    hsl(var(--rainbow-purple)) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 /**
