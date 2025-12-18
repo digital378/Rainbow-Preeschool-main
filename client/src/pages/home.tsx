@@ -26,10 +26,10 @@ export default function Home() {
               <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">About</p>
               <h2 className="text-3xl md:text-4xl font-bold mb-6">Rainbow Preschool International</h2>
               <p className="text-muted-foreground text-lg leading-relaxed mb-6">
-                Rainbow Preschool International was founded in the year 2007. Over 50,000 young students have completed their Pre-Primary education with us since then.
+                Founded in 2007, Rainbow Preschool International has nurtured over 50,000 young learners through joyful early childhood education. Being one of the most trusted preschools in Thane, we provide a safe, secure, and happy learning environment built on a strong play-based philosophy.
               </p>
               <p className="text-muted-foreground leading-relaxed mb-8">
-                As a trusted preschool in Thane West, our spontaneous, adaptable, play-based approach helps children learn with joy and confidence while preparing them for primary school. Our curriculum and assessments ensure that children are well-versed in key concepts around numbers and alphabets.
+                Our age-appropriate curriculum helps children develop confidence, creativity, and early academic skills, preparing them smoothly for primary schooling while respecting every child's unique pace of growth.
               </p>
               <Link href="/about">
                 <Button variant="outline" data-testid="button-learn-more">
@@ -53,7 +53,7 @@ export default function Home() {
               </Card>
               <Card className="text-center">
                 <CardContent className="pt-6">
-                  <p className="text-4xl font-bold text-primary mb-2 stat-3d">6</p>
+                  <p className="text-4xl font-bold text-primary mb-2 stat-3d">06</p>
                   <p className="text-sm text-muted-foreground">Centres</p>
                 </CardContent>
               </Card>

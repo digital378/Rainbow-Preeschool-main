@@ -1,6 +1,6 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Play, Star } from "lucide-react";
+import { ArrowRight, Calendar, Star } from "lucide-react";
 import { trackCTAClick } from "@/lib/analytics";
 
 export function HeroSection() {
@@ -43,7 +43,6 @@ export function HeroSection() {
           {/* Tagline */}
           <p className="text-lg md:text-xl lg:text-2xl text-muted-foreground max-w-2xl mx-auto mb-8 md:mb-10">
             Laying the foundation for tomorrow.
-            <span className="block mt-2 text-base md:text-lg">A lifetime of Learning & Adventure begins here.</span>
           </p>
 
           {/* CTA Buttons */}
@@ -68,7 +67,7 @@ export function HeroSection() {
                 data-testid="button-hero-contact"
               >
                 Book a Tour
-                <Play className="ml-2 h-4 w-4" />
+                <Calendar className="ml-2 h-4 w-4" />
               </Button>
             </Link>
           </div>
@@ -86,7 +85,7 @@ export function HeroSection() {
             </div>
             <div className="w-px h-12 bg-border hidden sm:block" />
             <div className="text-center">
-              <p className="text-3xl md:text-4xl font-bold text-primary stat-3d">6</p>
+              <p className="text-3xl md:text-4xl font-bold text-primary stat-3d">06</p>
               <p className="text-sm text-muted-foreground mt-1">Centres in Thane</p>
             </div>
             <div className="w-px h-12 bg-border hidden sm:block" />
