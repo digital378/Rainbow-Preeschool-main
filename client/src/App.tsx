@@ -7,6 +7,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
+import { FloatingElements } from "@/components/floating-elements";
 import { initGA } from "./lib/analytics";
 import { useAnalytics } from "./hooks/use-analytics";
 
@@ -45,7 +46,8 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider defaultTheme="light" storageKey="rainbow-preschool-theme">
         <TooltipProvider>
-          <div className="min-h-screen flex flex-col">
+          <FloatingElements />
+          <div className="min-h-screen flex flex-col relative z-10">
             <Navigation />
             <main className="flex-1">
               <Router />
