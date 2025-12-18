@@ -54,7 +54,7 @@ export default function Home() {
               <Card className="text-center">
                 <CardContent className="pt-6">
                   <p className="text-4xl font-bold text-primary mb-2 stat-3d">6</p>
-                  <p className="text-sm text-muted-foreground">Branches</p>
+                  <p className="text-sm text-muted-foreground">Centres</p>
                 </CardContent>
               </Card>
               <Card className="text-center">
@@ -123,12 +123,12 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Branches Section */}
+      {/* Centres Section */}
       <section className="py-16 md:py-20 lg:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">Our Locations</p>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Rainbow Preschool Branches</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Rainbow Preschool Centres</h2>
             <p className="text-muted-foreground text-lg">Find a Rainbow Preschool near you across Thane West.</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

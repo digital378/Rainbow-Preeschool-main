@@ -15,7 +15,9 @@ export function BranchCard({ branch }: BranchCardProps) {
   };
 
   const whatsappNumber = branch.whatsapp?.replace(/\s/g, "");
-  const callingNumber = branch.calling?.replace(/\s/g, "") || branch.landline?.replace(/-/g, "");
+  const landline = 'landline' in branch ? branch.landline : undefined;
+  const secondCalling = 'secondCalling' in branch ? branch.secondCalling : undefined;
+  const callingNumber = branch.calling?.replace(/\s/g, "") || landline?.replace(/-/g, "");
 
   return (
     <Card 
@@ -38,16 +40,16 @@ export function BranchCard({ branch }: BranchCardProps) {
         </p>
 
         <div className="space-y-2">
-          {branch.landline && (
+          {landline && (
             <div className="flex items-center gap-2 text-sm">
               <Phone className="w-4 h-4 text-muted-foreground" />
               <a
-                href={`tel:${branch.landline.replace(/-/g, "")}`}
+                href={`tel:${landline.replace(/-/g, "")}`}
                 className="hover:text-primary transition-colors"
                 onClick={handleCall}
                 data-testid={`link-branch-landline-${branch.id}`}
               >
-                {branch.landline}
+                {landline}
               </a>
             </div>
           )}
@@ -64,15 +66,15 @@ export function BranchCard({ branch }: BranchCardProps) {
               </a>
             </div>
           )}
-          {branch.secondCalling && (
+          {secondCalling && (
             <div className="flex items-center gap-2 text-sm">
               <Phone className="w-4 h-4 text-muted-foreground" />
               <a
-                href={`tel:${branch.secondCalling.replace(/\s/g, "")}`}
+                href={`tel:${secondCalling.replace(/\s/g, "")}`}
                 className="hover:text-primary transition-colors"
                 data-testid={`link-branch-second-${branch.id}`}
               >
-                {branch.secondCalling}
+                {secondCalling}
               </a>
             </div>
           )}

@@ -87,7 +87,7 @@ export function HeroSection() {
             <div className="w-px h-12 bg-border hidden sm:block" />
             <div className="text-center">
               <p className="text-3xl md:text-4xl font-bold text-primary stat-3d">6</p>
-              <p className="text-sm text-muted-foreground mt-1">Branches in Thane</p>
+              <p className="text-sm text-muted-foreground mt-1">Centres in Thane</p>
             </div>
             <div className="w-px h-12 bg-border hidden sm:block" />
             <div className="text-center">

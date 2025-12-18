@@ -315,11 +315,11 @@ export function ContactForm({ defaultBranch, compact = false }: ContactFormProps
             name="branch"
             render={({ field }) => (
               <FormItem className={compact ? "" : "md:col-span-2"}>
-                <FormLabel>Preferred Branch *</FormLabel>
+                <FormLabel>Preferred Centre *</FormLabel>
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                   <FormControl>
-                    <SelectTrigger data-testid="select-branch">
-                      <SelectValue placeholder="Select branch" />
+                    <SelectTrigger data-testid="select-centre">
+                      <SelectValue placeholder="Select centre" />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>

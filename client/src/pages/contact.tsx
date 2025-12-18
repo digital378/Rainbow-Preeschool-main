@@ -84,8 +84,8 @@ export default function Contact() {
                     </div>
                     <div>
                       <h3 className="font-semibold mb-1">Locations</h3>
-                      <p className="text-muted-foreground">6 Branches across Thane West</p>
-                      <p className="text-sm text-muted-foreground mt-1">Find your nearest branch below</p>
+                      <p className="text-muted-foreground">6 Centres across Thane West</p>
+                      <p className="text-sm text-muted-foreground mt-1">Find your nearest centre below</p>
                     </div>
                   </div>
                 </CardContent>
@@ -100,11 +100,11 @@ export default function Contact() {
         </div>
       </section>
 
-      {/* Branches Section */}
+      {/* Centres Section */}
       <section className="py-16 md:py-20 lg:py-24 bg-card">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Branches</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Centres</h2>
             <p className="text-muted-foreground text-lg">Find a Rainbow Preschool near you across Thane West.</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

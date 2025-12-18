@@ -114,7 +114,7 @@ export function Footer() {
               <li className="flex items-start gap-3">
                 <MapPin className="h-4 w-4 text-primary mt-0.5 shrink-0" />
                 <span className="text-sm text-muted-foreground">
-                  6 Branches across Thane West, Maharashtra
+                  6 Centres across Thane West, Maharashtra
                 </span>
               </li>
               <li className="flex items-center gap-3">

@@ -100,8 +100,8 @@ export const programmes = [
     icon: "sun",
   },
   {
-    id: "daycare",
-    name: "Day Care",
+    id: "happy-times",
+    name: "Happy Times",
     ageRange: "1.5 - 6 years",
     description: "Safe and nurturing environment for extended care with engaging activities",
     icon: "heart",
@@ -110,58 +110,58 @@ export const programmes = [
 
 export type Programme = typeof programmes[number];
 
-// Branch information
+// Centre information
 export const branches = [
   {
     id: "aggarwal",
-    name: "Aggarwal Branch (Manpada)",
+    name: "Aggarwal Centre (Manpada)",
     address: "Aggarwal Arcade, Near Khewra Circle, Manpada, Thane (W)",
     landline: "022-47762019",
     calling: "93212 39367",
     whatsapp: "88281 95788",
-    mapUrl: "https://maps.google.com/?q=Aggarwal+Arcade+Manpada+Thane",
+    mapUrl: "https://maps.app.goo.gl/jenJNhoqsExdWH5DA",
   },
   {
     id: "hariniwas",
-    name: "Hariniwas Branch",
+    name: "Hariniwas Centre",
     address: "M.V.Apartments, Bhakti Mandir Road, Opp. Thanawala Garage, Hariniwas Circle, Panchpakadi, Thane (W)",
     calling: "91365 78589",
     whatsapp: "91365 78589",
-    mapUrl: "https://maps.google.com/?q=Hariniwas+Circle+Panchpakadi+Thane",
+    mapUrl: "https://maps.app.goo.gl/KrcVoEu8xSHEzEPd9",
   },
   {
     id: "anand-nagar",
-    name: "Anand Nagar Branch",
+    name: "Anand Nagar Centre",
     address: "Kris Commercial Plaza, 1st Floor, Opp. Tropical Lagoon, Anand Nagar, Thane (W)",
     calling: "98337 81550",
     whatsapp: "98337 81550",
     secondCalling: "91524 89789",
-    mapUrl: "https://maps.google.com/?q=Anand+Nagar+Thane",
+    mapUrl: "https://maps.app.goo.gl/oFnzPGooMos4qACV9",
   },
   {
     id: "dhokali",
-    name: "Dhokali Branch",
+    name: "Dhokali Centre",
     address: "Kolshet Road, Dhokali Naka, Opp. Aban Park Society, Thane (W)",
     calling: "93212 38375",
     whatsapp: "91673 99247",
-    mapUrl: "https://maps.google.com/?q=Dhokali+Naka+Thane",
+    mapUrl: "https://maps.app.goo.gl/WAp5VMqUs6UhUK4c8",
   },
   {
     id: "kalwa",
-    name: "Kalwa Branch",
+    name: "Kalwa Centre",
     address: "Harsh Prasad Co-op Hsg, Soc, Near Sayba Hall, Manisha Nagar, Gate No.1, Kalwa",
     calling: "74003 27905",
     whatsapp: "74003 27905",
-    mapUrl: "https://maps.google.com/?q=Manisha+Nagar+Kalwa",
+    mapUrl: "https://maps.app.goo.gl/HoW2W9r1v6Jzi397A",
   },
   {
     id: "kasarvadavali",
-    name: "Kasarvadavali Branch",
+    name: "Kasarvadavali Centre",
     address: "Rosa Gardenia, Next to Parijat Gardens, Kasarvadavali, Behind Hypercity Mall, Thane (W)",
     landline: "022-40062128",
     calling: "87798 00068",
     whatsapp: "87798 00068",
-    mapUrl: "https://maps.google.com/?q=Kasarvadavali+Thane",
+    mapUrl: "https://maps.app.goo.gl/kE2EyU3YUuf9ZDuNA",
   },
 ] as const;
 

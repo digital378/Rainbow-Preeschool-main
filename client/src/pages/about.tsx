@@ -6,10 +6,10 @@ import { Award, Users, Heart, Target, Star, Calendar } from "lucide-react";
 
 const milestones = [
   { year: "2007", title: "Founded", description: "Rainbow Preschool started with a vision to provide quality early education" },
-  { year: "2010", title: "Expansion", description: "Opened second branch to serve more families in Thane" },
+  { year: "2010", title: "Expansion", description: "Opened second centre to serve more families in Thane" },
   { year: "2015", title: "10,000 Students", description: "Reached milestone of educating over 10,000 young learners" },
   { year: "2020", title: "Digital Learning", description: "Successfully adapted to online learning during the pandemic" },
-  { year: "2023", title: "6 Branches", description: "Expanded to 6 branches across Thane West" },
+  { year: "2023", title: "6 Centres", description: "Expanded to 6 centres across Thane West" },
   { year: "2024", title: "50,000+ Alumni", description: "Celebrated over 50,000 students completing their preschool journey" },
 ];
 
@@ -44,7 +44,7 @@ export default function About() {
               <h2 className="text-3xl md:text-4xl font-bold mb-6">Our Story</h2>
               <div className="space-y-4 text-muted-foreground leading-relaxed">
                 <p>
-                  Rainbow Preschool International was founded in 2007 with a simple yet powerful vision: to provide every child with the best possible start in their educational journey. Over the years, we have grown from a single school to six thriving branches across Thane West.
+                  Rainbow Preschool International was founded in 2007 with a simple yet powerful vision: to provide every child with the best possible start in their educational journey. Over the years, we have grown from a single school to six thriving centres across Thane West.
                 </p>
                 <p>
                   More than 50,000 young students have completed their Pre-Primary education with us, each one carrying forward the values and skills they learned at Rainbow. Our spontaneous, adaptable, play-based approach helps children learn with joy and confidence while preparing them for primary school.
@@ -58,7 +58,7 @@ export default function About() {
               {[
                 { value: "50,000+", label: "Happy Students" },
                 { value: "18+", label: "Years of Excellence" },
-                { value: "6", label: "Branches in Thane" },
+                { value: "6", label: "Centres in Thane" },
                 { value: "4.7", label: "Google Rating", icon: Star },
               ].map((stat, i) => (
                 <Card key={i} className="text-center">

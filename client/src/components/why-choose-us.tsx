@@ -1,41 +1,41 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { Award, Building2, BookOpen, Users, Shield, Sparkles } from "lucide-react";
+import { Shield, Award, Sparkles, Users, Bus, Gamepad2 } from "lucide-react";
 
 const features = [
   {
-    icon: Award,
-    title: "Certified Teachers",
-    description: "Our Educators are completely certified, exceptionally experienced, and fiercely committed to their jobs.",
+    icon: Shield,
+    title: "Safe & Secure Campus",
+    description: "CCTV-monitored premises with 100% female teaching staff.",
     color: "bg-pink-100 dark:bg-pink-900/30 text-pink-600 dark:text-pink-400",
   },
   {
-    icon: Building2,
-    title: "Modern Facility",
-    description: "Two Teachers per Classroom, CCTV Enabled, Spacious & Air Conditioned, Child Friendly & Smart Classrooms.",
+    icon: Award,
+    title: "Certified Teachers",
+    description: "ECCEd certified & experienced teachers who nurture every child with love and attention.",
     color: "bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400",
   },
   {
-    icon: BookOpen,
-    title: "Research-Based Curriculum",
-    description: "Learning goes beyond books with events, celebrations, 100% participation, and audio-visual teaching aids.",
+    icon: Sparkles,
+    title: "Health, Hygiene & Cleanliness",
+    description: "Daily sanitisation, child-safe washrooms, and hygiene-first practices.",
     color: "bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400",
   },
   {
     icon: Users,
-    title: "Small Class Sizes",
-    description: "Individual attention for every child with optimal student-to-teacher ratios for better learning outcomes.",
+    title: "Ideal Student-Teacher Ratio (30:2)",
+    description: "Ensuring personalised care and individual attention.",
     color: "bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400",
   },
   {
-    icon: Shield,
-    title: "Safe Environment",
-    description: "CCTV monitoring, trained staff, secure premises, and comprehensive safety protocols for peace of mind.",
+    icon: Bus,
+    title: "GPS-Enabled Transport",
+    description: "Safe, in-house transport with real-time tracking.",
     color: "bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400",
   },
   {
-    icon: Sparkles,
-    title: "Holistic Development",
-    description: "Focus on cognitive, emotional, social, and physical development through play-based learning approaches.",
+    icon: Gamepad2,
+    title: "Strong Foundation Through Play",
+    description: "Holistic, play-based learning for confident early development.",
     color: "bg-teal-100 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400",
   },
 ];
@@ -52,7 +52,7 @@ export function WhyChooseUs() {
             We Give Your Child Better Values
           </h2>
           <p className="text-muted-foreground text-lg">
-            At Rainbow Preschool, we believe every child deserves the best start in life. 
+            At Rainbow Preschools, we believe every child deserves the best start in life. 
             Here's what makes us different.
           </p>
         </div>

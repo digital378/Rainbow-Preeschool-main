@@ -77,11 +77,11 @@ export function Navigation() {
               </Link>
             ))}
             
-            {/* Branches Dropdown */}
+            {/* Centres Dropdown */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="text-sm font-medium" data-testid="button-branches-dropdown">
-                  Branches <ChevronDown className="ml-1 h-4 w-4" />
+                <Button variant="ghost" className="text-sm font-medium" data-testid="button-centres-dropdown">
+                  Centres <ChevronDown className="ml-1 h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-64">
@@ -95,7 +95,7 @@ export function Navigation() {
                       <span className="font-medium text-sm">{branch.name}</span>
                       <span className="text-xs text-muted-foreground flex items-center gap-1">
                         <Phone className="h-3 w-3" />
-                        {branch.calling || branch.landline}
+                        {branch.calling || ('landline' in branch ? branch.landline : '')}
                       </span>
                     </a>
                   </DropdownMenuItem>
@@ -143,7 +143,7 @@ export function Navigation() {
               ))}
               
               <div className="pt-4 border-t mt-2">
-                <p className="text-sm font-semibold text-muted-foreground mb-2 px-4">Our Branches</p>
+                <p className="text-sm font-semibold text-muted-foreground mb-2 px-4">Our Centres</p>
                 {branches.map((branch) => (
                   <a
                     key={branch.id}
