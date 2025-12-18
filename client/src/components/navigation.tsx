@@ -48,14 +48,14 @@ export function Navigation() {
       )}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <nav className="flex items-center justify-between gap-4 h-16 md:h-20">
+        <nav className="flex items-center justify-between gap-4 h-20 md:h-24">
           {/* Logo */}
           <Link href="/" data-testid="link-logo">
             <div className="flex items-center gap-2">
               <img 
                 src={logoImage} 
                 alt="Rainbow Preschool International" 
-                className="w-14 h-14 md:w-16 md:h-16 object-contain"
+                className="w-16 h-16 md:w-20 md:h-20 object-contain"
               />
             </div>
           </Link>
