@@ -55,7 +55,7 @@ export function Navigation() {
               <img 
                 src={logoImage} 
                 alt="Rainbow Preschool International" 
-                className="w-12 h-12 md:w-14 md:h-14 object-contain"
+                className="w-14 h-14 md:w-16 md:h-16 object-contain"
               />
             </div>
           </Link>

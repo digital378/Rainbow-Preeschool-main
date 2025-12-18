@@ -20,7 +20,7 @@ export function Footer() {
               <img 
                 src={logoImage} 
                 alt="Rainbow Preschool International" 
-                className="w-16 h-16 object-contain"
+                className="w-20 h-20 object-contain"
               />
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed">
