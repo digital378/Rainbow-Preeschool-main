@@ -29,7 +29,7 @@ export default function Contact() {
               <Card>
                 <CardHeader>
                   <h2 className="text-2xl font-bold">Request A Callback</h2>
-                  <p className="text-muted-foreground">Fill out the form and we'll get back to you within 24 hours.</p>
+                  <p className="text-muted-foreground">Fill out the form and we'll get back to you shortly.</p>
                 </CardHeader>
                 <CardContent>
                   <ContactForm />
@@ -47,10 +47,9 @@ export default function Contact() {
                     </div>
                     <div>
                       <h3 className="font-semibold mb-1">Phone</h3>
-                      <a href="tel:9321239367" className="text-muted-foreground hover:text-primary transition-colors" data-testid="link-contact-phone">
-                        93212 39367
+                      <a href="tel:8291568972" className="text-muted-foreground hover:text-primary transition-colors" data-testid="link-contact-phone">
+                        82915 68972
                       </a>
-                      <p className="text-sm text-muted-foreground mt-1">Available Mon-Sat, 8am-6pm</p>
                     </div>
                   </div>
 
@@ -60,10 +59,9 @@ export default function Contact() {
                     </div>
                     <div>
                       <h3 className="font-semibold mb-1">Email</h3>
-                      <a href="mailto:info@rainbowpreschools.com" className="text-muted-foreground hover:text-primary transition-colors" data-testid="link-contact-email">
-                        info@rainbowpreschools.com
+                      <a href="mailto:admin@rainbowpreschools.com" className="text-muted-foreground hover:text-primary transition-colors" data-testid="link-contact-email">
+                        admin@rainbowpreschools.com
                       </a>
-                      <p className="text-sm text-muted-foreground mt-1">We reply within 24 hours</p>
                     </div>
                   </div>
 
@@ -74,7 +72,7 @@ export default function Contact() {
                     <div>
                       <h3 className="font-semibold mb-1">Working Hours</h3>
                       <p className="text-muted-foreground">Monday - Saturday</p>
-                      <p className="text-sm text-muted-foreground mt-1">8:00 AM - 6:00 PM</p>
+                      <p className="text-sm text-muted-foreground mt-1">9AM - 6PM</p>
                     </div>
                   </div>
 
@@ -105,7 +103,7 @@ export default function Contact() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Centres</h2>
-            <p className="text-muted-foreground text-lg">Find a Rainbow Preschool near you across Thane West.</p>
+            <p className="text-muted-foreground text-lg">Locate your nearest Rainbow Preschools Centre in Thane.</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {branches.map((branch) => (
