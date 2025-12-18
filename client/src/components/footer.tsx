@@ -2,6 +2,7 @@ import { Link } from "wouter";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
 import { SiFacebook, SiInstagram, SiYoutube } from "react-icons/si";
 import { branches, programmes } from "@shared/schema";
+import logoImage from "@assets/Rainbow_Pre_School.Logo_1766035853658.png";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -16,15 +17,11 @@ export function Footer() {
           {/* About */}
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <div className="w-10 h-10 rounded-full rainbow-gradient flex items-center justify-center">
-                <span className="text-white font-bold text-lg">R</span>
-              </div>
-              <div>
-                <h3 className="font-bold text-lg">
-                  <span className="rainbow-text">Rainbow</span>
-                </h3>
-                <p className="text-xs text-muted-foreground -mt-1">Preschool International</p>
-              </div>
+              <img 
+                src={logoImage} 
+                alt="Rainbow Preschool International" 
+                className="w-16 h-16 object-contain"
+              />
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed">
               Laying the foundation for tomorrow since 2007. Over 50,000 young students have completed their Pre-Primary education with us.

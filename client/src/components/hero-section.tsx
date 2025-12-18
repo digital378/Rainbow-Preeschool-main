@@ -1,6 +1,6 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Play } from "lucide-react";
+import { ArrowRight, Play, Star } from "lucide-react";
 import { trackCTAClick } from "@/lib/analytics";
 
 export function HeroSection() {
@@ -28,7 +28,7 @@ export function HeroSection() {
           {/* Welcome badge */}
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-card border mb-6 md:mb-8">
             <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-            <span className="text-sm font-medium text-muted-foreground">Admissions Open for 2025-26</span>
+            <span className="text-sm font-medium text-muted-foreground">Admissions Open for 2026-27</span>
           </div>
 
           {/* Main heading */}
@@ -73,27 +73,27 @@ export function HeroSection() {
             </Link>
           </div>
 
-          {/* Trust indicators */}
+          {/* Trust indicators with 3D numbers */}
           <div className="mt-12 md:mt-16 flex flex-wrap items-center justify-center gap-8 md:gap-12">
             <div className="text-center">
-              <p className="text-3xl md:text-4xl font-bold text-primary">50,000+</p>
+              <p className="text-3xl md:text-4xl font-bold text-primary stat-3d">50,000+</p>
               <p className="text-sm text-muted-foreground mt-1">Happy Students</p>
             </div>
             <div className="w-px h-12 bg-border hidden sm:block" />
             <div className="text-center">
-              <p className="text-3xl md:text-4xl font-bold text-primary">18+</p>
+              <p className="text-3xl md:text-4xl font-bold text-primary stat-3d">18+</p>
               <p className="text-sm text-muted-foreground mt-1">Years Experience</p>
             </div>
             <div className="w-px h-12 bg-border hidden sm:block" />
             <div className="text-center">
-              <p className="text-3xl md:text-4xl font-bold text-primary">6</p>
+              <p className="text-3xl md:text-4xl font-bold text-primary stat-3d">6</p>
               <p className="text-sm text-muted-foreground mt-1">Branches in Thane</p>
             </div>
             <div className="w-px h-12 bg-border hidden sm:block" />
             <div className="text-center">
               <div className="flex items-center justify-center gap-1">
-                <p className="text-3xl md:text-4xl font-bold text-primary">4.7</p>
-                <span className="text-2xl">⭐</span>
+                <p className="text-3xl md:text-4xl font-bold text-primary stat-3d">4.7</p>
+                <Star className="w-6 h-6 fill-yellow-400 text-yellow-400" />
               </div>
               <p className="text-sm text-muted-foreground mt-1">Google Rating</p>
             </div>

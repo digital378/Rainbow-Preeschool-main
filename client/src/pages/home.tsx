@@ -41,26 +41,26 @@ export default function Home() {
             <div className="grid grid-cols-2 gap-4">
               <Card className="text-center">
                 <CardContent className="pt-6">
-                  <p className="text-4xl font-bold text-primary mb-2">50K+</p>
+                  <p className="text-4xl font-bold text-primary mb-2 stat-3d">50K+</p>
                   <p className="text-sm text-muted-foreground">Students Taught</p>
                 </CardContent>
               </Card>
               <Card className="text-center">
                 <CardContent className="pt-6">
-                  <p className="text-4xl font-bold text-primary mb-2">18+</p>
+                  <p className="text-4xl font-bold text-primary mb-2 stat-3d">18+</p>
                   <p className="text-sm text-muted-foreground">Years Experience</p>
                 </CardContent>
               </Card>
               <Card className="text-center">
                 <CardContent className="pt-6">
-                  <p className="text-4xl font-bold text-primary mb-2">6</p>
+                  <p className="text-4xl font-bold text-primary mb-2 stat-3d">6</p>
                   <p className="text-sm text-muted-foreground">Branches</p>
                 </CardContent>
               </Card>
               <Card className="text-center">
                 <CardContent className="pt-6">
                   <div className="flex items-center justify-center gap-1 mb-2">
-                    <p className="text-4xl font-bold text-primary">4.7</p>
+                    <p className="text-4xl font-bold text-primary stat-3d">4.7</p>
                     <Star className="w-6 h-6 fill-yellow-400 text-yellow-400" />
                   </div>
                   <p className="text-sm text-muted-foreground">Google Rating</p>

@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { branches } from "@shared/schema";
 import { cn } from "@/lib/utils";
+import logoImage from "@assets/Rainbow_Pre_School.Logo_1766035853658.png";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -51,15 +52,11 @@ export function Navigation() {
           {/* Logo */}
           <Link href="/" data-testid="link-logo">
             <div className="flex items-center gap-2">
-              <div className="w-10 h-10 md:w-12 md:h-12 rounded-full rainbow-gradient flex items-center justify-center">
-                <span className="text-white font-bold text-lg md:text-xl">R</span>
-              </div>
-              <div className="hidden sm:block">
-                <h1 className="font-bold text-lg md:text-xl leading-tight">
-                  <span className="rainbow-text">Rainbow</span>
-                </h1>
-                <p className="text-xs text-muted-foreground -mt-1">Preschool International</p>
-              </div>
+              <img 
+                src={logoImage} 
+                alt="Rainbow Preschool International" 
+                className="w-12 h-12 md:w-14 md:h-14 object-contain"
+              />
             </div>
           </Link>
 
