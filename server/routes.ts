@@ -4,6 +4,33 @@ import { storage } from "./storage";
 import { insertContactSchema } from "@shared/schema";
 import { z } from "zod";
 
+const RECAPTCHA_SECRET_KEY = process.env.RECAPTCHA_SECRET_KEY || "";
+
+async function verifyRecaptcha(token: string): Promise<{ success: boolean; score?: number }> {
+  if (!RECAPTCHA_SECRET_KEY) {
+    return { success: true };
+  }
+
+  try {
+    const response = await fetch("https://www.google.com/recaptcha/api/siteverify", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: new URLSearchParams({
+        secret: RECAPTCHA_SECRET_KEY,
+        response: token,
+      }),
+    });
+
+    const data = await response.json() as { success: boolean; score?: number };
+    return data;
+  } catch (error) {
+    console.error("reCAPTCHA verification error:", error);
+    return { success: false };
+  }
+}
+
 export async function registerRoutes(
   httpServer: Server,
   app: Express
@@ -12,7 +39,17 @@ export async function registerRoutes(
   // Contact form submission
   app.post("/api/contact", async (req, res) => {
     try {
-      const validatedData = insertContactSchema.parse(req.body);
+      const { recaptchaToken, ...formData } = req.body;
+
+      if (RECAPTCHA_SECRET_KEY && recaptchaToken) {
+        const recaptchaResult = await verifyRecaptcha(recaptchaToken);
+        if (!recaptchaResult.success || (recaptchaResult.score !== undefined && recaptchaResult.score < 0.5)) {
+          res.status(400).json({ error: "reCAPTCHA verification failed. Please try again." });
+          return;
+        }
+      }
+
+      const validatedData = insertContactSchema.parse(formData);
       const contact = await storage.createContact(validatedData);
       res.status(201).json({ success: true, id: contact.id });
     } catch (error) {

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -26,6 +26,67 @@ import { programmes, branches } from "@shared/schema";
 import { apiRequest } from "@/lib/queryClient";
 import { trackFormSubmission } from "@/lib/analytics";
 import { Loader2, CheckCircle } from "lucide-react";
+
+declare global {
+  interface Window {
+    grecaptcha: {
+      ready: (callback: () => void) => void;
+      execute: (siteKey: string, options: { action: string }) => Promise<string>;
+    };
+  }
+}
+
+const RECAPTCHA_SITE_KEY = import.meta.env.VITE_RECAPTCHA_SITE_KEY || "";
+
+function useRecaptcha() {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    if (!RECAPTCHA_SITE_KEY) {
+      setIsLoaded(true);
+      return;
+    }
+    
+    if (document.querySelector('script[src*="recaptcha"]')) {
+      setIsLoaded(true);
+      return;
+    }
+
+    const script = document.createElement("script");
+    script.src = `https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_SITE_KEY}`;
+    script.async = true;
+    script.onload = () => setIsLoaded(true);
+    document.body.appendChild(script);
+
+    return () => {
+      const existingScript = document.querySelector('script[src*="recaptcha"]');
+      if (existingScript) {
+        existingScript.remove();
+      }
+    };
+  }, []);
+
+  const getToken = async (): Promise<string | null> => {
+    if (!RECAPTCHA_SITE_KEY || !window.grecaptcha) {
+      return null;
+    }
+
+    return new Promise((resolve) => {
+      window.grecaptcha.ready(async () => {
+        try {
+          const token = await window.grecaptcha.execute(RECAPTCHA_SITE_KEY, {
+            action: "contact_form",
+          });
+          resolve(token);
+        } catch {
+          resolve(null);
+        }
+      });
+    });
+  };
+
+  return { isLoaded, getToken };
+}
 
 const contactFormSchema = z.object({
   parentName: z.string().min(2, "Name must be at least 2 characters"),
@@ -60,6 +121,7 @@ interface ContactFormProps {
 export function ContactForm({ defaultBranch, compact = false }: ContactFormProps) {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { toast } = useToast();
+  const { getToken } = useRecaptcha();
 
   const form = useForm<ContactFormValues>({
     resolver: zodResolver(contactFormSchema),
@@ -76,7 +138,7 @@ export function ContactForm({ defaultBranch, compact = false }: ContactFormProps
   });
 
   const mutation = useMutation({
-    mutationFn: async (data: ContactFormValues) => {
+    mutationFn: async (data: ContactFormValues & { recaptchaToken?: string }) => {
       const response = await apiRequest("POST", "/api/contact", data);
       return response;
     },
@@ -89,7 +151,7 @@ export function ContactForm({ defaultBranch, compact = false }: ContactFormProps
       });
       form.reset();
     },
-    onError: (error) => {
+    onError: () => {
       toast({
         title: "Something went wrong",
         description: "Please try again or call us directly.",
@@ -98,8 +160,9 @@ export function ContactForm({ defaultBranch, compact = false }: ContactFormProps
     },
   });
 
-  const onSubmit = (data: ContactFormValues) => {
-    mutation.mutate(data);
+  const onSubmit = async (data: ContactFormValues) => {
+    const recaptchaToken = await getToken();
+    mutation.mutate({ ...data, recaptchaToken: recaptchaToken || undefined });
   };
 
   if (isSubmitted) {
