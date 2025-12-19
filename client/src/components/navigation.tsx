@@ -39,14 +39,24 @@ export function Navigation() {
   }, [location]);
 
   return (
-    <header
-      className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-        isScrolled
-          ? "bg-background/95 backdrop-blur-md border-b shadow-sm"
-          : "bg-transparent"
-      )}
-    >
+    <>
+      {/* Top Admission Banner */}
+      <div className="fixed top-0 left-0 right-0 z-50 bg-primary text-primary-foreground">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-center py-2 text-sm font-medium">
+            <span>Admissions Open for AY 2026-27</span>
+          </div>
+        </div>
+      </div>
+      
+      <header
+        className={cn(
+          "fixed top-9 left-0 right-0 z-50 transition-all duration-300",
+          isScrolled
+            ? "bg-background/95 backdrop-blur-md border-b shadow-sm"
+            : "bg-transparent"
+        )}
+      >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <nav className="flex items-center justify-between gap-4 h-20 md:h-24">
           {/* Logo */}
@@ -180,5 +190,6 @@ export function Navigation() {
         )}
       </div>
     </header>
+    </>
   );
 }
