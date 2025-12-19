@@ -16,9 +16,16 @@ import logoImage from "@assets/Rainbow_Pre_School.Logo_1766035853658.png";
 const navLinks = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About Us" },
-  { href: "/programmes", label: "Programmes" },
   { href: "/blog", label: "News & Blog" },
   { href: "/contact", label: "Contact" },
+];
+
+const programmeLinks = [
+  { href: "/programmes/playgroup", label: "Playgroup" },
+  { href: "/programmes/nursery", label: "Nursery" },
+  { href: "/programmes/kindergarten", label: "Kindergarten" },
+  { href: "/programmes/summer-camp", label: "Summer Camp" },
+  { href: "/programmes/happy-times", label: "Happy Times" },
 ];
 
 export function Navigation() {
@@ -62,21 +69,96 @@ export function Navigation() {
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-1">
-            {navLinks.map((link) => (
-              <Link key={link.href} href={link.href}>
-                <Button
-                  variant="ghost"
+            {/* Home link */}
+            <Link href="/">
+              <Button
+                variant="ghost"
+                className={cn(
+                  "text-sm font-medium",
+                  !isScrolled && "text-white hover:text-white hover:bg-white/20",
+                  location === "/" && (isScrolled ? "bg-accent" : "bg-white/20")
+                )}
+                data-testid="link-nav-home"
+              >
+                Home
+              </Button>
+            </Link>
+            
+            {/* About Us link */}
+            <Link href="/about">
+              <Button
+                variant="ghost"
+                className={cn(
+                  "text-sm font-medium",
+                  !isScrolled && "text-white hover:text-white hover:bg-white/20",
+                  location === "/about" && (isScrolled ? "bg-accent" : "bg-white/20")
+                )}
+                data-testid="link-nav-about-us"
+              >
+                About Us
+              </Button>
+            </Link>
+            
+            {/* Programmes Dropdown */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button 
+                  variant="ghost" 
                   className={cn(
                     "text-sm font-medium",
                     !isScrolled && "text-white hover:text-white hover:bg-white/20",
-                    location === link.href && (isScrolled ? "bg-accent" : "bg-white/20")
-                  )}
-                  data-testid={`link-nav-${link.label.toLowerCase().replace(/\s+/g, "-")}`}
+                    location.startsWith("/programmes") && (isScrolled ? "bg-accent" : "bg-white/20")
+                  )} 
+                  data-testid="button-programmes-dropdown"
                 >
-                  {link.label}
+                  Programmes <ChevronDown className="ml-1 h-4 w-4" />
                 </Button>
-              </Link>
-            ))}
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start" className="w-48">
+                {programmeLinks.map((programme) => (
+                  <DropdownMenuItem key={programme.href} asChild>
+                    <Link href={programme.href}>
+                      <span 
+                        className="w-full py-1 cursor-pointer"
+                        data-testid={`link-programme-${programme.label.toLowerCase().replace(/\s+/g, "-")}`}
+                      >
+                        {programme.label}
+                      </span>
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+            
+            {/* News & Blog link */}
+            <Link href="/blog">
+              <Button
+                variant="ghost"
+                className={cn(
+                  "text-sm font-medium",
+                  !isScrolled && "text-white hover:text-white hover:bg-white/20",
+                  location === "/blog" && (isScrolled ? "bg-accent" : "bg-white/20")
+                )}
+                data-testid="link-nav-news-blog"
+              >
+                News & Blog
+              </Button>
+            </Link>
+            
+            {/* Contact link */}
+            <Link href="/contact">
+              <Button
+                variant="ghost"
+                className={cn(
+                  "text-sm font-medium",
+                  !isScrolled && "text-white hover:text-white hover:bg-white/20",
+                  location === "/contact" && (isScrolled ? "bg-accent" : "bg-white/20")
+                )}
+                data-testid="link-nav-contact"
+              >
+                Contact
+              </Button>
+            </Link>
             
             {/* Centres Dropdown */}
             <DropdownMenu>
@@ -103,7 +185,7 @@ export function Navigation() {
                       <span className="font-medium text-sm">{branch.name}</span>
                       <span className="text-xs text-muted-foreground flex items-center gap-1">
                         <Phone className="h-3 w-3" />
-                        {branch.calling || ('landline' in branch ? branch.landline : '')}
+                        {branch.calling}
                       </span>
                     </a>
                   </DropdownMenuItem>
@@ -155,6 +237,23 @@ export function Navigation() {
                 </Link>
               ))}
               
+              {/* Mobile Programmes Section */}
+              <div className="pt-4 border-t mt-2">
+                <p className="text-sm font-semibold text-muted-foreground mb-2 px-4">Programmes</p>
+                {programmeLinks.map((programme) => (
+                  <Link key={programme.href} href={programme.href}>
+                    <Button
+                      variant={location === programme.href ? "secondary" : "ghost"}
+                      className="w-full justify-start text-sm"
+                      data-testid={`link-mobile-programme-${programme.label.toLowerCase().replace(/\s+/g, "-")}`}
+                    >
+                      {programme.label}
+                    </Button>
+                  </Link>
+                ))}
+              </div>
+              
+              {/* Mobile Centres Section */}
               <div className="pt-4 border-t mt-2">
                 <p className="text-sm font-semibold text-muted-foreground mb-2 px-4">Our Centres</p>
                 {branches.map((branch) => (
