@@ -22,47 +22,47 @@ import {
 const faqs = [
   {
     question: "What is a typical day like at Rainbow Preschool?",
-    answer: "At Rainbow Preschool, a typical day is structured and educational. It starts with arrival and greetings, followed by a prayer session, interactive and concept introduction sessions, playtime, snack time, circle time for recap and sing-alongs, and dispersal, ensuring a mix of learning, play, and social interaction."
+    answer: "A well-balanced routine with greetings, prayer, concept learning, playtime, snacks, circle time, songs, and dispersal - blending learning, play, and social interaction."
   },
   {
     question: "How does the curriculum support early childhood development?",
-    answer: "Our curriculum is designed around play-based learning principles that support cognitive, social, emotional, and physical development. We focus on age-appropriate activities that build foundational skills in literacy, numeracy, creativity, and critical thinking while fostering curiosity and a love for learning."
+    answer: "Through interactive, age-appropriate activities that build cognitive, social, emotional, physical, and language skills."
   },
   {
-    question: "Are there any special programs or extra activities offered?",
-    answer: "Yes! We offer Kids Activity Club with 20+ activities including brain gym, aerobics, drama, art & craft, and more. We also have Summer Camp programs and special holiday activities to keep children engaged and learning throughout the year."
+    question: "Are there any special programs or extra activities?",
+    answer: "Yes. Children enjoy art & craft, outdoor activities, nature walks, field trips, and special learning events."
   },
   {
-    question: "How does the preschool incorporate technology into learning?",
-    answer: "We use age-appropriate technology as a tool to enhance learning experiences. This includes interactive digital content, educational apps, and multimedia presentations that complement our hands-on, play-based approach to education."
+    question: "How is technology used in learning?",
+    answer: "We use audio-visual learning tools, digital storytelling, and parent communication platforms to enhance engagement and updates."
   },
   {
-    question: "What health and safety measures are in place at Rainbow Preschool?",
-    answer: "Safety is our top priority. We maintain strict hygiene protocols, have trained staff for first aid, secure premises with CCTV monitoring, controlled access points, and follow all government health and safety guidelines. Regular sanitization and health checks are conducted."
+    question: "What health and safety measures are in place?",
+    answer: "A secure campus with access control, hygiene protocols, nutritious meals, medical check-ups, and regular parent communication."
   },
   {
     question: "What is the sick child policy?",
-    answer: "For the health of all children, we request that sick children stay home until they are fever-free for 24 hours without medication. Parents are informed immediately if a child shows signs of illness during school hours, and we follow proper isolation protocols."
+    answer: "Children should stay home if unwell and return only after full recovery with a medical fitness certificate, if required."
   },
   {
-    question: "How are emergencies and first-aid situations handled?",
-    answer: "Our staff is trained in first aid and emergency procedures. We have first aid kits in every classroom, emergency contact information for all children, and established protocols for various emergency situations including medical emergencies, natural disasters, and evacuations."
+    question: "How are emergencies and first-aid handled?",
+    answer: "Basic first aid is provided immediately, parents are informed promptly, and emergency contacts are always maintained."
   },
   {
-    question: "How often are parent-teacher conferences held?",
-    answer: "We conduct formal parent-teacher conferences twice a year to discuss your child's progress. However, we maintain open communication throughout the year through daily updates, monthly reports, and our parent communication app. Parents can also request meetings anytime."
+    question: "How often are parent-teacher meetings held?",
+    answer: "Playgroup: Monthly. Nursery to Senior KG: Every alternate month. Regular communication is encouraged."
   },
   {
-    question: "What facilities and resources are available for children at Rainbow Preschool?",
-    answer: "Our centres feature spacious, well-ventilated classrooms, age-appropriate furniture, outdoor play areas, learning corners for different activities, library corners, art studios, and child-safe restrooms. Each centre is designed to create a stimulating and safe learning environment."
+    question: "What facilities are available for children?",
+    answer: "Play areas, activity rooms, library, audio-visual learning, toys, and child-friendly resources."
   },
   {
-    question: "How are meals and snacks managed? Does the preschool provide them?",
-    answer: "Parents send snacks and meals from home in tiffin boxes. We encourage healthy, nutritious food and provide guidelines to parents. Staff ensures proper meal times and assists younger children during meals. We maintain a nut-free environment for safety."
+    question: "Are meals and snacks provided?",
+    answer: "Yes. Healthy meals are prepared under supervision, and monthly menus are shared with parents."
   },
   {
-    question: "What are the policies for pickup and drop-off?",
-    answer: "Children can only be picked up by authorized persons listed in our records. We follow strict verification protocols during pickup. Drop-off and pickup times are structured to ensure smooth transitions. Parents must inform us in advance if someone else will be picking up their child."
+    question: "What are the pickup and drop-off policies?",
+    answer: "Children are released only to authorized adults with parent passes. Transport users follow strict verification at stops."
   },
 ];
 
