@@ -68,7 +68,8 @@ export function Navigation() {
                   variant="ghost"
                   className={cn(
                     "text-sm font-medium",
-                    location === link.href && "bg-accent"
+                    !isScrolled && "text-white hover:text-white hover:bg-white/20",
+                    location === link.href && (isScrolled ? "bg-accent" : "bg-white/20")
                   )}
                   data-testid={`link-nav-${link.label.toLowerCase().replace(/\s+/g, "-")}`}
                 >
@@ -80,7 +81,14 @@ export function Navigation() {
             {/* Centres Dropdown */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="text-sm font-medium" data-testid="button-centres-dropdown">
+                <Button 
+                  variant="ghost" 
+                  className={cn(
+                    "text-sm font-medium",
+                    !isScrolled && "text-white hover:text-white hover:bg-white/20"
+                  )} 
+                  data-testid="button-centres-dropdown"
+                >
                   Centres <ChevronDown className="ml-1 h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
@@ -106,7 +114,9 @@ export function Navigation() {
 
           {/* Right side actions */}
           <div className="flex items-center gap-2">
-            <ThemeToggle />
+            <div className={cn(!isScrolled && "[&_button]:text-white [&_button]:hover:text-white [&_button]:hover:bg-white/20")}>
+              <ThemeToggle />
+            </div>
             <Link href="/contact" className="hidden md:block">
               <Button data-testid="button-contact-cta">
                 Contact Us
@@ -117,7 +127,10 @@ export function Navigation() {
             <Button
               variant="ghost"
               size="icon"
-              className="lg:hidden"
+              className={cn(
+                "lg:hidden",
+                !isScrolled && "text-white hover:text-white hover:bg-white/20"
+              )}
               onClick={() => setIsOpen(!isOpen)}
               data-testid="button-mobile-menu"
             >
