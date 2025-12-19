@@ -18,6 +18,26 @@ export default function Home() {
     <div>
       <HeroSection />
 
+      {/* Contact Form Section - Get In Touch */}
+      <section className="py-16 md:py-20 lg:py-24 bg-card">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+            <div>
+              <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">Get In Touch</p>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">Request A Callback</h2>
+              <p className="text-muted-foreground text-lg">
+                Submit your details and queries here. We'd be glad to help you out!
+              </p>
+            </div>
+            <Card>
+              <CardContent className="pt-6">
+                <ContactForm />
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
       {/* About Section */}
       <section className="py-16 md:py-20 lg:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -135,30 +155,6 @@ export default function Home() {
             {branches.map((branch) => (
               <BranchCard key={branch.id} branch={branch} />
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Contact Form Section */}
-      <section className="py-16 md:py-20 lg:py-24 bg-card">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
-            <div>
-              <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">Get In Touch</p>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">Request A Callback</h2>
-              <p className="text-muted-foreground text-lg mb-8">
-                Submit your details and queries here. We'd be glad to help you out!
-              </p>
-              <blockquote className="border-l-4 border-primary pl-4 italic text-muted-foreground">
-                "The secret of getting ahead is getting started."
-                <footer className="mt-2 text-sm font-medium text-foreground">— Mark Twain</footer>
-              </blockquote>
-            </div>
-            <Card>
-              <CardContent className="pt-6">
-                <ContactForm />
-              </CardContent>
-            </Card>
           </div>
         </div>
       </section>
