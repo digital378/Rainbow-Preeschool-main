@@ -165,22 +165,6 @@ export default function Home() {
             <p className="text-muted-foreground text-lg">Find a Rainbow Preschool near you across Thane West.</p>
           </div>
           
-          {/* Google Maps Embed */}
-          <div className="mb-12 rounded-xl overflow-hidden shadow-md">
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d60270.14661890574!2d72.93505185!3d19.2187525!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sRainbow%20Preschool%20International%20Thane!5e0!3m2!1sen!2sin!4v1703000000000!5m2!1sen!2sin"
-              width="100%"
-              height="450"
-              style={{ border: 0 }}
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              title="Rainbow Preschool International Centres Map"
-              className="w-full"
-              data-testid="map-centres"
-            />
-          </div>
-          
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {branches.map((branch) => (
               <BranchCard key={branch.id} branch={branch} />
