@@ -105,6 +105,26 @@ export default function Contact() {
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Centres</h2>
             <p className="text-muted-foreground text-lg">Locate your nearest Rainbow Preschools Centre in Thane.</p>
           </div>
+          
+          {/* Interactive Google Map with All Centres */}
+          <div className="mb-12 rounded-xl overflow-hidden shadow-md">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d60270.14661890574!2d72.93505185!3d19.2187525!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sRainbow%20Preschool%20International%20Thane!5e0!3m2!1sen!2sin!4v1703000000000!5m2!1sen!2sin"
+              width="100%"
+              height="500"
+              style={{ border: 0 }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title="Rainbow Preschool International - All Centres in Thane"
+              className="w-full"
+              data-testid="map-contact-centres"
+            />
+          </div>
+          <p className="text-center text-sm text-muted-foreground mb-8">
+            Click on any pin to view centre details. Use zoom controls to explore the map.
+          </p>
+          
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {branches.map((branch) => (
               <BranchCard key={branch.id} branch={branch} />
