@@ -1,0 +1,79 @@
+Redesign the homepage hero section for Rainbow Preschool International by introducing animated hero banners while maintaining clear text visibility and brand consistency.
+
+Scope of Changes (Strictly Limited)
+
+Apply changes ONLY to the content shown in the shared screenshot (SS).
+
+Do NOT modify, remove, or restyle any content or sections that are not part of the SS.
+
+Layout & Structure Changes
+
+Add hero banners in the background behind the heading “Welcome to Rainbow Preschool International”.
+
+Update the layout so that:
+
+All existing text content from the SS appears aligned on the left side.
+
+Hero banners run as an animated slideshow in the background.
+
+Banner Slideshow Requirements
+
+Implement a smooth animated slideshow (auto-play).
+
+Allowed transitions:
+
+Fade
+
+Cross-dissolve
+
+Soft slide (non-distracting)
+
+Ensure performance-friendly animation (no heavy effects).
+
+Text Visibility & Readability
+
+Text content must remain clearly readable on all banners.
+
+Add a fade or gradient overlay on banners to enhance contrast:
+
+Gradient direction: left → right or bottom → top (developer’s discretion).
+
+Gradient color should adapt to light/dark mode.
+
+Overlay opacity should adjust dynamically based on banner brightness.
+
+Ensure WCAG-friendly contrast where possible.
+
+Adaptive Styling
+
+Banner overlay colors should be adaptive to individual banner images.
+
+Button colors may:
+
+Change dynamically based on the active banner.
+
+Still maintain brand harmony and sufficient contrast.
+
+Hover and active states should remain clearly visible.
+
+Design Constraints
+
+Maintain the existing text content exactly as provided in the SS (no copy changes).
+
+Do not introduce new text, CTAs, or sections.
+
+Keep the design clean, child-friendly, and premium, aligned with a preschool brand.
+
+Expected Outcome
+
+A visually engaging hero section with:
+
+Left-aligned text content
+
+Animated background banners
+
+Maximum text readability
+
+Adaptive gradients and button colors
+
+Changes limited strictly to the SS content area.
