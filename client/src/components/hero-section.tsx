@@ -1,7 +1,7 @@
 import { Link } from "wouter";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Calendar, Star } from "lucide-react";
+import { ArrowRight, Calendar } from "lucide-react";
 import { trackCTAClick } from "@/lib/analytics";
 
 import heroBanner1 from "@assets/RPS_Hero_Banner_1_1766120729093.jpg";
@@ -22,7 +22,7 @@ export function HeroSection() {
   }, []);
 
   return (
-    <section className="relative min-h-[90vh] flex items-center overflow-hidden">
+    <section className="relative min-h-[70vh] flex items-center overflow-hidden">
       {/* Animated Background Banners */}
       <div className="absolute inset-0">
         {banners.map((banner, index) => (
@@ -96,31 +96,6 @@ export function HeroSection() {
             </Link>
           </div>
 
-          {/* Trust indicators with 3D numbers */}
-          <div className="mt-12 md:mt-16 flex flex-wrap items-center gap-6 md:gap-10">
-            <div className="text-center">
-              <p className="text-2xl md:text-3xl font-bold text-white stat-3d">50,000+</p>
-              <p className="text-xs md:text-sm text-white/70 mt-1">Happy Students</p>
-            </div>
-            <div className="w-px h-10 bg-white/30 hidden sm:block" />
-            <div className="text-center">
-              <p className="text-2xl md:text-3xl font-bold text-white stat-3d">18+</p>
-              <p className="text-xs md:text-sm text-white/70 mt-1">Years Experience</p>
-            </div>
-            <div className="w-px h-10 bg-white/30 hidden sm:block" />
-            <div className="text-center">
-              <p className="text-2xl md:text-3xl font-bold text-white stat-3d">06</p>
-              <p className="text-xs md:text-sm text-white/70 mt-1">Centres in Thane</p>
-            </div>
-            <div className="w-px h-10 bg-white/30 hidden sm:block" />
-            <div className="text-center">
-              <div className="flex items-center justify-center gap-1">
-                <p className="text-2xl md:text-3xl font-bold text-white stat-3d">4.7</p>
-                <Star className="w-5 h-5 fill-yellow-400 text-yellow-400" />
-              </div>
-              <p className="text-xs md:text-sm text-white/70 mt-1">Google Rating</p>
-            </div>
-          </div>
         </div>
       </div>
 
