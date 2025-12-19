@@ -25,9 +25,22 @@ export default function Home() {
             <div>
               <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">Get In Touch</p>
               <h2 className="text-3xl md:text-4xl font-bold mb-4">Request A Callback</h2>
-              <p className="text-muted-foreground text-lg">
+              <p className="text-muted-foreground text-lg mb-8">
                 Submit your details and queries here. We'd be glad to help you out!
               </p>
+              <div className="rounded-xl overflow-hidden shadow-md">
+                <video 
+                  autoPlay 
+                  loop 
+                  muted 
+                  playsInline
+                  className="w-full h-auto"
+                  data-testid="video-walkthrough"
+                >
+                  <source src="/assets/RPS_Walkthrough_Video_-_Website_1_1766126796450.mp4" type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              </div>
             </div>
             <Card>
               <CardContent className="pt-6">
