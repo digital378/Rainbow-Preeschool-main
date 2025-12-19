@@ -106,23 +106,23 @@ export default function Contact() {
             <p className="text-muted-foreground text-lg">Locate your nearest Rainbow Preschools Centre in Thane.</p>
           </div>
           
-          {/* Interactive Google Map with All Centres */}
+          {/* Interactive Google Map with All 6 Centres */}
           <div className="mb-12 rounded-xl overflow-hidden shadow-md">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d60270.14661890574!2d72.93505185!3d19.2187525!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sRainbow%20Preschool%20International%20Thane!5e0!3m2!1sen!2sin!4v1703000000000!5m2!1sen!2sin"
+              src="https://www.google.com/maps/embed?pb=!1m52!1m12!1m3!1d60280!2d72.965!3d19.225!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m37!3e2!4m5!1s0x3be7b95ffb8bcb13:0x13688c8325ca683d!2sRainbow%20Preschool%20-%20Aggarwal%20Arcade%20Centre%2C%20Manpada%2C%20Thane!3m2!1d19.2326549!2d72.9710766!4m5!1s0x3be7b975b40427b7:0x242ddb15f6e8ed13!2sRainbow%20Preschool%20-%20Hariniwas%20Centre%2C%20Thane!3m2!1d19.1917133!2d72.966523!4m5!1s0x3be7bb97c41357b7:0x6fb38c5fc413efd!2sRainbow%20Preschool%20-%20Anand%20Nagar%20Centre%2C%20Thane!3m2!1d19.2648723!2d72.9707478!4m5!1s0x3be7b959c655a7df:0xe5f1220ddc82fa0e!2sRainbow%20Preschool%20-%20Dhokali%20Centre%2C%20Thane!3m2!1d19.228991!2d72.9802583!4m5!1s0x3be7b92cb119b52d:0xf0102245760e3e34!2sRainbow%20Preschool%20-%20Kalwa%20Centre%2C%20Thane!3m2!1d19.1990801!2d72.9913522!4m5!1s0x3be7bba6a93f26cb:0x946d1fefba8c8e88!2sRainbow%20Preschool%20-%20Kasarvadavli%20Centre%2C%20Thane!3m2!1d19.2669237!2d72.9634446!5e0!3m2!1sen!2sin!4v1703000000000"
               width="100%"
               height="500"
               style={{ border: 0 }}
               allowFullScreen
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              title="Rainbow Preschool International - All Centres in Thane"
+              title="Rainbow Preschool International - All 6 Centres in Thane"
               className="w-full"
               data-testid="map-contact-centres"
             />
           </div>
           <p className="text-center text-sm text-muted-foreground mb-8">
-            Click on any pin to view centre details. Use zoom controls to explore the map.
+            Click on any marker to view centre details. Use zoom controls to explore all 6 locations.
           </p>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
