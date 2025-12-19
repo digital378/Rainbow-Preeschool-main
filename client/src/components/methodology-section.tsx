@@ -1,29 +1,7 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, BookOpen, Users, Award, Heart } from "lucide-react";
-
-const methodologySteps = [
-  {
-    icon: BookOpen,
-    title: "Play-Based Learning",
-    description: "Children learn best through play, exploration, and hands-on activities",
-  },
-  {
-    icon: Users,
-    title: "Social Development",
-    description: "Building friendships, teamwork, and communication skills",
-  },
-  {
-    icon: Award,
-    title: "Academic Readiness",
-    description: "Preparing children for primary school with foundational concepts",
-  },
-  {
-    icon: Heart,
-    title: "Emotional Growth",
-    description: "Nurturing confidence, independence, and emotional intelligence",
-  },
-];
+import { ArrowRight } from "lucide-react";
+import flowChartImage from "@assets/New_RPS_Flow_Chart_1766124212525.png";
 
 export function MethodologySection() {
   return (
@@ -42,24 +20,6 @@ export function MethodologySection() {
               At Rainbow Preschool, our teachers are dedicated and nurturing. Their singular goal is to help your child meet milestones and become successful. We offer a path toward elementary school that can be personalized to meet each child's needs.
             </p>
 
-            <div className="space-y-4 mb-8">
-              {methodologySteps.map((step, index) => (
-                <div 
-                  key={index} 
-                  className="flex items-start gap-4"
-                  data-testid={`methodology-step-${index}`}
-                >
-                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                    <step.icon className="w-5 h-5 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-base mb-1">{step.title}</h3>
-                    <p className="text-sm text-muted-foreground">{step.description}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-
             <Link href="/programmes">
               <Button size="lg" data-testid="button-methodology-programmes">
                 View Our Programmes
@@ -68,59 +28,14 @@ export function MethodologySection() {
             </Link>
           </div>
 
-          {/* Visual representation */}
+          {/* Flow Chart Image */}
           <div className="relative">
-            <div className="aspect-square max-w-md mx-auto">
-              {/* Flow diagram representation */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="relative w-full h-full">
-                  {/* Center circle */}
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 rounded-full bg-primary/10 flex items-center justify-center">
-                    <div className="text-center">
-                      <span className="text-2xl font-bold text-primary">RPS</span>
-                      <p className="text-xs text-muted-foreground mt-1">Methodology</p>
-                    </div>
-                  </div>
-
-                  {/* Orbiting elements */}
-                  {methodologySteps.map((step, index) => {
-                    const angle = (index * 90 - 45) * (Math.PI / 180);
-                    const radius = 140;
-                    const x = Math.cos(angle) * radius;
-                    const y = Math.sin(angle) * radius;
-
-                    return (
-                      <div
-                        key={index}
-                        className="absolute top-1/2 left-1/2 w-20 h-20"
-                        style={{
-                          transform: `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`,
-                        }}
-                      >
-                        <div className="w-full h-full rounded-xl bg-card border flex flex-col items-center justify-center p-2 text-center shadow-sm">
-                          <step.icon className="w-5 h-5 text-primary mb-1" />
-                          <span className="text-xs font-medium leading-tight">{step.title.split(" ")[0]}</span>
-                        </div>
-                      </div>
-                    );
-                  })}
-
-                  {/* Connecting lines */}
-                  <svg className="absolute inset-0 w-full h-full pointer-events-none">
-                    <circle
-                      cx="50%"
-                      cy="50%"
-                      r="120"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="1"
-                      strokeDasharray="8 4"
-                      className="text-border"
-                    />
-                  </svg>
-                </div>
-              </div>
-            </div>
+            <img 
+              src={flowChartImage} 
+              alt="Rainbow Preschool Methodology - Art Studio, Maths & Science, Sports & Movement, Skill Development, General Aptitude, Bilingual Education" 
+              className="w-full max-w-lg mx-auto"
+              data-testid="img-methodology-flowchart"
+            />
           </div>
         </div>
       </div>
