@@ -16,16 +16,9 @@ import logoImage from "@assets/Rainbow_Pre_School.Logo_1766035853658.png";
 const navLinks = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About Us" },
+  { href: "/programmes", label: "Programmes" },
   { href: "/blog", label: "News & Blog" },
   { href: "/contact", label: "Contact" },
-];
-
-const programmeLinks = [
-  { href: "/programmes/playgroup", label: "Playgroup" },
-  { href: "/programmes/nursery", label: "Nursery" },
-  { href: "/programmes/kindergarten", label: "Kindergarten" },
-  { href: "/programmes/summer-camp", label: "Summer Camp" },
-  { href: "/programmes/happy-times", label: "Happy Times" },
 ];
 
 export function Navigation() {
@@ -105,36 +98,20 @@ export function Navigation() {
               </Button>
             </Link>
             
-            {/* Programmes Dropdown */}
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button 
-                  variant="ghost" 
-                  className={cn(
-                    "text-sm font-medium",
-                    useTransparentHeader && "text-white hover:text-white hover:bg-white/20",
-                    location.startsWith("/programmes") && (useTransparentHeader ? "bg-white/20" : "bg-accent")
-                  )} 
-                  data-testid="button-programmes-dropdown"
-                >
-                  Programmes <ChevronDown className="ml-1 h-4 w-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="start" className="w-48">
-                {programmeLinks.map((programme) => (
-                  <DropdownMenuItem key={programme.href} asChild>
-                    <Link href={programme.href}>
-                      <span 
-                        className="w-full py-1 cursor-pointer"
-                        data-testid={`link-programme-${programme.label.toLowerCase().replace(/\s+/g, "-")}`}
-                      >
-                        {programme.label}
-                      </span>
-                    </Link>
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
+            {/* Programmes link */}
+            <Link href="/programmes">
+              <Button
+                variant="ghost"
+                className={cn(
+                  "text-sm font-medium",
+                  useTransparentHeader && "text-white hover:text-white hover:bg-white/20",
+                  location.startsWith("/programmes") && (useTransparentHeader ? "bg-white/20" : "bg-accent")
+                )}
+                data-testid="link-nav-programmes"
+              >
+                Programmes
+              </Button>
+            </Link>
             
             {/* News & Blog link */}
             <Link href="/blog">
@@ -242,22 +219,6 @@ export function Navigation() {
                   </Button>
                 </Link>
               ))}
-              
-              {/* Mobile Programmes Section */}
-              <div className="pt-4 border-t mt-2">
-                <p className="text-sm font-semibold text-muted-foreground mb-2 px-4">Programmes</p>
-                {programmeLinks.map((programme) => (
-                  <Link key={programme.href} href={programme.href}>
-                    <Button
-                      variant={location === programme.href ? "secondary" : "ghost"}
-                      className="w-full justify-start text-sm"
-                      data-testid={`link-mobile-programme-${programme.label.toLowerCase().replace(/\s+/g, "-")}`}
-                    >
-                      {programme.label}
-                    </Button>
-                  </Link>
-                ))}
-              </div>
               
               {/* Mobile Centres Section */}
               <div className="pt-4 border-t mt-2">
