@@ -3,6 +3,7 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertContactSchema } from "@shared/schema";
 import { z } from "zod";
+import { sendLeadNotificationEmail } from "./gmail";
 
 const RECAPTCHA_SECRET_KEY = process.env.RECAPTCHA_SECRET_KEY || "";
 
@@ -51,6 +52,22 @@ export async function registerRoutes(
 
       const validatedData = insertContactSchema.parse(formData);
       const contact = await storage.createContact(validatedData);
+      
+      // Send email notification
+      try {
+        await sendLeadNotificationEmail({
+          parentName: validatedData.parentName,
+          childName: validatedData.childName,
+          phone: validatedData.phone,
+          email: validatedData.email,
+          childAge: validatedData.childAge,
+          branch: validatedData.branch,
+          message: validatedData.message || undefined
+        });
+      } catch (emailError) {
+        console.error("Failed to send email notification:", emailError);
+      }
+      
       res.status(201).json({ success: true, id: contact.id });
     } catch (error) {
       if (error instanceof z.ZodError) {
