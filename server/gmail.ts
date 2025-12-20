@@ -1,55 +1,5 @@
-// Gmail integration for sending email notifications
-import { google } from 'googleapis';
-
-let connectionSettings: any;
-
-async function getAccessToken() {
-  if (connectionSettings && connectionSettings.settings.expires_at && new Date(connectionSettings.settings.expires_at).getTime() > Date.now()) {
-    return connectionSettings.settings.access_token;
-  }
-  
-  const hostname = process.env.REPLIT_CONNECTORS_HOSTNAME
-  const xReplitToken = process.env.REPL_IDENTITY 
-    ? 'repl ' + process.env.REPL_IDENTITY 
-    : process.env.WEB_REPL_RENEWAL 
-    ? 'depl ' + process.env.WEB_REPL_RENEWAL 
-    : null;
-
-  if (!xReplitToken) {
-    throw new Error('X_REPLIT_TOKEN not found for repl/depl');
-  }
-
-  connectionSettings = await fetch(
-    'https://' + hostname + '/api/v2/connection?include_secrets=true&connector_names=google-mail',
-    {
-      headers: {
-        'Accept': 'application/json',
-        'X_REPLIT_TOKEN': xReplitToken
-      }
-    }
-  ).then(res => res.json()).then(data => data.items?.[0]);
-
-  const accessToken = connectionSettings?.settings?.access_token || connectionSettings.settings?.oauth?.credentials?.access_token;
-
-  if (!connectionSettings || !accessToken) {
-    throw new Error('Gmail not connected');
-  }
-  return accessToken;
-}
-
-// WARNING: Never cache this client.
-// Access tokens expire, so a new client must be created each time.
-// Always call this function again to get a fresh client.
-export async function getUncachableGmailClient() {
-  const accessToken = await getAccessToken();
-
-  const oauth2Client = new google.auth.OAuth2();
-  oauth2Client.setCredentials({
-    access_token: accessToken
-  });
-
-  return google.gmail({ version: 'v1', auth: oauth2Client });
-}
+// Gmail SMTP integration for sending email notifications using nodemailer
+import nodemailer from 'nodemailer';
 
 interface ContactFormData {
   parentName: string;
@@ -61,38 +11,26 @@ interface ContactFormData {
   message?: string;
 }
 
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.GMAIL_USER,
+    pass: process.env.GMAIL_APP_PASSWORD
+  }
+});
+
 export async function sendLeadNotificationEmail(data: ContactFormData): Promise<boolean> {
+  const gmailUser = process.env.GMAIL_USER;
+  const gmailPass = process.env.GMAIL_APP_PASSWORD;
+
+  if (!gmailUser || !gmailPass) {
+    console.error('Gmail credentials not configured');
+    return false;
+  }
+
   try {
-    const gmail = await getUncachableGmailClient();
-    
-    // Get user's email address
-    const profile = await gmail.users.getProfile({ userId: 'me' });
-    const userEmail = profile.data.emailAddress;
-    
-    // Create email content with table layout similar to reference
     const emailSubject = `New Enquiry from ${data.parentName} - Rainbow Preschools Website`;
-    const emailBody = `
-Dear Team,
 
-Here are the details of the newly generated lead:
-
-Field                   | Value
-------------------------|----------------------------------
-Parent_Name             | ${data.parentName}
-Student_Name            | ${data.childName}
-Mobile_No               | ${data.phone}
-Email_Id                | ${data.email}
-Child_Age               | ${data.childAge}
-Preferred_Centre        | ${data.branch}
-LeadSource              | Website
-LeadMedium              | Website Enquiry Form
-Message                 | ${data.message || 'No message provided'}
-
-Best regards,
-Rainbow Preschools Website
-    `.trim();
-
-    // Create HTML version
     const htmlBody = `
 <!DOCTYPE html>
 <html>
@@ -128,36 +66,33 @@ Rainbow Preschools Website
 </html>
     `.trim();
 
-    // Create the email message
-    const messageParts = [
-      `From: ${userEmail}`,
-      `To: ${userEmail}`,
-      `Subject: ${emailSubject}`,
-      'MIME-Version: 1.0',
-      'Content-Type: multipart/alternative; boundary="boundary"',
-      '',
-      '--boundary',
-      'Content-Type: text/plain; charset=UTF-8',
-      '',
-      emailBody,
-      '',
-      '--boundary',
-      'Content-Type: text/html; charset=UTF-8',
-      '',
-      htmlBody,
-      '',
-      '--boundary--'
-    ];
-    
-    const rawMessage = messageParts.join('\r\n');
-    const encodedMessage = Buffer.from(rawMessage).toString('base64').replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+    const textBody = `
+Dear Team,
 
-    // Send the email
-    await gmail.users.messages.send({
-      userId: 'me',
-      requestBody: {
-        raw: encodedMessage
-      }
+Here are the details of the newly generated lead:
+
+Field                   | Value
+------------------------|----------------------------------
+Parent_Name             | ${data.parentName}
+Student_Name            | ${data.childName}
+Mobile_No               | ${data.phone}
+Email_Id                | ${data.email}
+Child_Age               | ${data.childAge}
+Preferred_Centre        | ${data.branch}
+LeadSource              | Website
+LeadMedium              | Website Enquiry Form
+Message                 | ${data.message || 'No message provided'}
+
+Best regards,
+Rainbow Preschools Website
+    `.trim();
+
+    await transporter.sendMail({
+      from: gmailUser,
+      to: gmailUser,
+      subject: emailSubject,
+      text: textBody,
+      html: htmlBody
     });
 
     console.log('Lead notification email sent successfully');
