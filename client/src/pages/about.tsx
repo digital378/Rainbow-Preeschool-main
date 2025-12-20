@@ -3,6 +3,7 @@ import { WhyChooseUs } from "@/components/why-choose-us";
 import { MethodologySection } from "@/components/methodology-section";
 import { CTASection } from "@/components/cta-section";
 import { Eye, Rocket, Star, Calendar } from "lucide-react";
+import heroImage from "@assets/16_1766236394926.jpg";
 
 const milestones = [
   { year: "2007", title: "Founded", description: "Rainbow Preschool started with a vision to provide quality early education" },
@@ -30,8 +31,13 @@ export default function About() {
   return (
     <div className="pt-20">
       {/* Hero Section */}
-      <section className="py-24 md:py-32 lg:py-40 bg-gradient-to-br from-primary/5 via-accent/5 to-secondary/5 flex items-center justify-center">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-24 md:py-32 lg:py-40 flex items-center justify-center relative overflow-hidden">
+        <div 
+          className="absolute inset-0 bg-cover bg-center opacity-[0.15]"
+          style={{ backgroundImage: `url(${heroImage})` }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-accent/5 to-secondary/5" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center">
             <h1 className="text-4xl md:text-5xl font-bold">About Us</h1>
           </div>
