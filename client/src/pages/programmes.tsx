@@ -44,7 +44,7 @@ const programmeDetails: Record<string, { features: string[]; schedule: string; a
     schedule: "Summer vacation period",
     activities: ["Arts and crafts", "Sports", "Music", "Outdoor adventures"],
   },
-  daycare: {
+  "happy-times": {
     features: ["Safe and nurturing environment", "Flexible hours for working parents", "Nutritious meals", "Engaging activities throughout the day"],
     schedule: "Extended hours available",
     activities: ["100% female staff", "Homely care for children", "CCTV surveillance across all daycare areas"],
