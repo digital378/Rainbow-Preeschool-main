@@ -70,13 +70,12 @@ export default function Programmes() {
   return (
     <div className="pt-20">
       {/* Hero Section */}
-      <section className="py-16 md:py-20 lg:py-24 bg-gradient-to-br from-primary/5 via-accent/5 to-secondary/5">
+      <section className="py-24 md:py-32 lg:py-40 bg-gradient-to-br from-primary/5 via-accent/5 to-secondary/5 flex items-center justify-center">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto text-center">
-            <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">Our Programmes</p>
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">Age-Appropriate Learning Journeys</h1>
+          <div className="text-center">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6">Programmes</h1>
             <p className="text-lg text-muted-foreground leading-relaxed">
-              From playgroup to kindergarten, our research-based curriculum is designed to nurture every aspect of your child's development.
+              Curriculum designed to nurture every aspect of your child's development.
             </p>
           </div>
         </div>
