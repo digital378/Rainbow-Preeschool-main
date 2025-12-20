@@ -1,0 +1,54 @@
+Convert Provided Image to Background-Free PNG & Make It Adaptive for Light & Dark Mode
+
+Objective
+Convert the attached image into a PNG with transparent background and make it fully adaptive for both light mode and dark mode on the website.
+All texts, icons, and visual elements must remain clearly visible and accessible in both modes.
+
+Input
+Attached screenshot/image (shows a teacher with children and surrounding feature icons such as Art Studio, Maths & Science, Sports & Movement, etc.)
+
+Deliverables
+1. Background-Free PNG
+Remove the white background completely.
+Export as a high-quality PNG with transparency.
+Ensure smooth edges (no jagged cut-outs or halos).
+2. Light Mode Version
+Texts and icons should be clearly visible on a light background.
+Adjust colors if required to ensure sufficient contrast.
+Maintain a clean, friendly, school-appropriate look.
+3. Dark Mode Version
+Texts and icons must remain clearly readable on a dark background.
+Modify colors of:
+Text
+Icon outlines/fills
+Circular elements
+Avoid dull or low-contrast colors in dark mode.
+4. Adaptive / Theme-Aware Implementation
+Output should support automatic switching between light & dark mode.
+Preferred approaches:
+CSS variables (:root, [data-theme="dark"])
+SVG with currentColor
+Two optimized PNGs (light & dark) switched via CSS/JS
+Follow accessibility contrast best practices (WCAG-friendly).
+5. Design Consistency
+You may change colors only if needed for visibility.
+Keep a playful, child-friendly education theme.
+Ensure icons, labels, and illustrations remain visually balanced.
+
+ Quality Checks
+No background visible (transparent PNG)
+All text readable in both modes
+Icons clearly distinguishable
+No color bleeding or washed-out elements
+Looks good on both desktop & mobile screens
+
+Final Output Required
+PNG file(s) with transparent background
+If applicable:
+SVG / CSS / JS code used for light-dark mode switching
+Brief explanation of how the theme adaptation works
+
+Notes
+Do not hardcode colors that break visibility in dark mode.
+Prioritize clarity, contrast, and visual comfort for parents and children.
+Assume the image will be placed on a modern school website supporting theme switching.
