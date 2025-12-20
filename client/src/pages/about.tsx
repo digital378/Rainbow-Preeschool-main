@@ -2,7 +2,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { WhyChooseUs } from "@/components/why-choose-us";
 import { MethodologySection } from "@/components/methodology-section";
 import { CTASection } from "@/components/cta-section";
-import { Award, Users, Heart, Target, Star, Calendar } from "lucide-react";
+import { Eye, Rocket, Star, Calendar } from "lucide-react";
 
 const milestones = [
   { year: "2007", title: "Founded", description: "Rainbow Preschool started with a vision to provide quality early education" },
@@ -13,11 +13,17 @@ const milestones = [
   { year: "2024", title: "50,000+ Alumni", description: "Celebrated over 50,000 students completing their preschool journey" },
 ];
 
-const values = [
-  { icon: Heart, title: "Love & Care", description: "Every child is nurtured with unconditional love and care" },
-  { icon: Target, title: "Excellence", description: "We strive for excellence in everything we do" },
-  { icon: Users, title: "Community", description: "Building strong relationships between parents, teachers, and children" },
-  { icon: Award, title: "Quality", description: "Maintaining highest standards of education and safety" },
+const visionMission = [
+  { 
+    icon: Eye, 
+    title: "Vision", 
+    description: "We aspire to live in a society where education and learning means thinking deeply about the purpose of life, sharing freedom, and spreading hope within families, communities, and throughout the globe. We hope the generations emerging out of our preschools & school will create such an inspiring society." 
+  },
+  { 
+    icon: Rocket, 
+    title: "Mission", 
+    description: "Our mission is to cultivate a community of parents and educators who collaborate to give children a secure, energizing and supportive environment which enables them to develop and learn." 
+  },
 ];
 
 export default function About() {
@@ -112,17 +118,19 @@ export default function About() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Core Values</h2>
-            <p className="text-muted-foreground text-lg">The principles that guide everything we do at Rainbow Preschool.</p>
+            <p className="text-muted-foreground text-lg">Better Future Through Play.</p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {values.map((value, i) => (
-              <Card key={i} className="text-center border-0 shadow-none bg-transparent">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {visionMission.map((item, i) => (
+              <Card key={i} className="bg-card shadow-sm" data-testid={`card-value-${i}`}>
                 <CardContent className="pt-6">
-                  <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                    <value.icon className="w-7 h-7 text-primary" />
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                      <item.icon className="w-5 h-5 text-primary" />
+                    </div>
+                    <h3 className="text-2xl font-bold text-primary">{item.title}</h3>
                   </div>
-                  <h3 className="font-semibold text-lg mb-2">{value.title}</h3>
-                  <p className="text-sm text-muted-foreground">{value.description}</p>
+                  <p className="text-muted-foreground leading-relaxed">{item.description}</p>
                 </CardContent>
               </Card>
             ))}
