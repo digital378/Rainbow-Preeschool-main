@@ -88,7 +88,6 @@ export default function Programmes() {
           {programmes.map((programme, index) => {
             const Icon = iconMap[programme.icon as keyof typeof iconMap] || Baby;
             const details = programmeDetails[programme.id];
-            const isEven = index % 2 === 0;
 
             return (
               <div
@@ -97,8 +96,8 @@ export default function Programmes() {
                 className="scroll-mt-24"
                 data-testid={`section-programme-${programme.id}`}
               >
-                <div className={`grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center ${!isEven ? "lg:flex-row-reverse" : ""}`}>
-                  <div className={!isEven ? "lg:order-2" : ""}>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+                  <div>
                     <div className="flex items-center gap-3 mb-4">
                       <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
                         <Icon className="w-6 h-6 text-primary" />
@@ -135,7 +134,7 @@ export default function Programmes() {
                     </Link>
                   </div>
                   
-                  <Card className={!isEven ? "lg:order-1" : ""}>
+                  <Card>
                     <CardHeader>
                       <h3 className="font-semibold">Activities Include:</h3>
                     </CardHeader>
