@@ -72,8 +72,43 @@ export default function About() {
         </div>
       </section>
 
-      {/* Values Section */}
+      {/* Chairperson's Note Section */}
       <section className="py-16 md:py-20 lg:py-24 bg-card">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            <div>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6">Chairperson's Note</h2>
+              <div className="space-y-4 text-muted-foreground leading-relaxed">
+                <p className="italic">
+                  "Live as if you were to die tomorrow, Learn as if you were to live forever." – Mahatma Gandhi
+                </p>
+                <p>
+                  Just like our beloved Mahatma Gandhi Ji believed, Learning is essential for an individual's growth. And when we hear the word Learning, the word Education comes to our mind as they both are co-related.
+                </p>
+                <p>
+                  Education is a joint venture: an association between the school and the home to ensure that children become successful in whatever they choose to pursue. Right education materializes out of co-operation among the learners, mentors, parents and the community.
+                </p>
+                <p>
+                  At Rainbow, you, the parents, play a vital role in our journey towards excellence and your contribution is priceless to us.
+                </p>
+                <p>
+                  I assure you that the entire team of Rainbow Preschool International & Rainbow International School helps shape each child into an intelligent, skilled and committed Indian citizen with a global perspective. I look forward to your kind association, valuable support and a healthy rapport that shall assist us in the holistic development of each child.
+                </p>
+                <p className="pt-4">
+                  Yours Sincerely,<br />
+                  <span className="font-semibold text-foreground">Mrs. Akila Balbale</span>
+                </p>
+              </div>
+            </div>
+            <div>
+              {/* Space reserved for chairperson image */}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Values Section */}
+      <section className="py-16 md:py-20 lg:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Core Values</h2>
