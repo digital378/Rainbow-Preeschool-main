@@ -32,6 +32,9 @@ export function Navigation() {
   const [location] = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  
+  // Only use transparent header on homepage
+  const isHomepage = location === "/";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -45,13 +48,16 @@ export function Navigation() {
     setIsOpen(false);
   }, [location]);
 
+  // Use transparent header only on homepage when not scrolled
+  const useTransparentHeader = isHomepage && !isScrolled;
+
   return (
     <header
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-        isScrolled
-          ? "bg-background/95 backdrop-blur-md border-b shadow-sm"
-          : "bg-transparent"
+        useTransparentHeader
+          ? "bg-transparent"
+          : "bg-background/95 backdrop-blur-md border-b shadow-sm"
       )}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -75,8 +81,8 @@ export function Navigation() {
                 variant="ghost"
                 className={cn(
                   "text-sm font-medium",
-                  !isScrolled && "text-white hover:text-white hover:bg-white/20",
-                  location === "/" && (isScrolled ? "bg-accent" : "bg-white/20")
+                  useTransparentHeader && "text-white hover:text-white hover:bg-white/20",
+                  location === "/" && (useTransparentHeader ? "bg-white/20" : "bg-accent")
                 )}
                 data-testid="link-nav-home"
               >
@@ -90,8 +96,8 @@ export function Navigation() {
                 variant="ghost"
                 className={cn(
                   "text-sm font-medium",
-                  !isScrolled && "text-white hover:text-white hover:bg-white/20",
-                  location === "/about" && (isScrolled ? "bg-accent" : "bg-white/20")
+                  useTransparentHeader && "text-white hover:text-white hover:bg-white/20",
+                  location === "/about" && (useTransparentHeader ? "bg-white/20" : "bg-accent")
                 )}
                 data-testid="link-nav-about-us"
               >
@@ -106,8 +112,8 @@ export function Navigation() {
                   variant="ghost" 
                   className={cn(
                     "text-sm font-medium",
-                    !isScrolled && "text-white hover:text-white hover:bg-white/20",
-                    location.startsWith("/programmes") && (isScrolled ? "bg-accent" : "bg-white/20")
+                    useTransparentHeader && "text-white hover:text-white hover:bg-white/20",
+                    location.startsWith("/programmes") && (useTransparentHeader ? "bg-white/20" : "bg-accent")
                   )} 
                   data-testid="button-programmes-dropdown"
                 >
@@ -136,8 +142,8 @@ export function Navigation() {
                 variant="ghost"
                 className={cn(
                   "text-sm font-medium",
-                  !isScrolled && "text-white hover:text-white hover:bg-white/20",
-                  location === "/blog" && (isScrolled ? "bg-accent" : "bg-white/20")
+                  useTransparentHeader && "text-white hover:text-white hover:bg-white/20",
+                  location === "/blog" && (useTransparentHeader ? "bg-white/20" : "bg-accent")
                 )}
                 data-testid="link-nav-news-blog"
               >
@@ -151,8 +157,8 @@ export function Navigation() {
                 variant="ghost"
                 className={cn(
                   "text-sm font-medium",
-                  !isScrolled && "text-white hover:text-white hover:bg-white/20",
-                  location === "/contact" && (isScrolled ? "bg-accent" : "bg-white/20")
+                  useTransparentHeader && "text-white hover:text-white hover:bg-white/20",
+                  location === "/contact" && (useTransparentHeader ? "bg-white/20" : "bg-accent")
                 )}
                 data-testid="link-nav-contact"
               >
@@ -167,7 +173,7 @@ export function Navigation() {
                   variant="ghost" 
                   className={cn(
                     "text-sm font-medium",
-                    !isScrolled && "text-white hover:text-white hover:bg-white/20"
+                    useTransparentHeader && "text-white hover:text-white hover:bg-white/20"
                   )} 
                   data-testid="button-centres-dropdown"
                 >
@@ -196,7 +202,7 @@ export function Navigation() {
 
           {/* Right side actions */}
           <div className="flex items-center gap-2">
-            <div className={cn(!isScrolled && "[&_button]:text-white [&_button]:hover:text-white [&_button]:hover:bg-white/20")}>
+            <div className={cn(useTransparentHeader && "[&_button]:text-white [&_button]:hover:text-white [&_button]:hover:bg-white/20")}>
               <ThemeToggle />
             </div>
             <Link href="/contact" className="hidden md:block">
@@ -211,7 +217,7 @@ export function Navigation() {
               size="icon"
               className={cn(
                 "lg:hidden",
-                !isScrolled && "text-white hover:text-white hover:bg-white/20"
+                useTransparentHeader && "text-white hover:text-white hover:bg-white/20"
               )}
               onClick={() => setIsOpen(!isOpen)}
               data-testid="button-mobile-menu"
