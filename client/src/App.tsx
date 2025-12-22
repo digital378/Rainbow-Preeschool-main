@@ -26,12 +26,12 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/about" component={About} />
       <Route path="/programmes" component={Programmes} />
-      <Route path="/Playgroup">{() => <ProgrammeLanding programmeSlug="Playgroup" />}</Route>
-      <Route path="/Nursery">{() => <ProgrammeLanding programmeSlug="Nursery" />}</Route>
-      <Route path="/Kindergarten">{() => <ProgrammeLanding programmeSlug="Kindergarten" />}</Route>
-      <Route path="/Kids-Activity-Club">{() => <ProgrammeLanding programmeSlug="Kids-Activity-Club" />}</Route>
-      <Route path="/Summer-Camp">{() => <ProgrammeLanding programmeSlug="Summer-Camp" />}</Route>
-      <Route path="/Happy-Times">{() => <ProgrammeLanding programmeSlug="Happy-Times" />}</Route>
+      <Route path="/playgroup">{() => <ProgrammeLanding programmeSlug="playgroup" />}</Route>
+      <Route path="/nursery">{() => <ProgrammeLanding programmeSlug="nursery" />}</Route>
+      <Route path="/kindergarten">{() => <ProgrammeLanding programmeSlug="kindergarten" />}</Route>
+      <Route path="/kids-activity-club">{() => <ProgrammeLanding programmeSlug="kids-activity-club" />}</Route>
+      <Route path="/summer-camp">{() => <ProgrammeLanding programmeSlug="summer-camp" />}</Route>
+      <Route path="/happy-times">{() => <ProgrammeLanding programmeSlug="happy-times" />}</Route>
       <Route path="/contact" component={Contact} />
       <Route path="/blog" component={Blog} />
       <Route component={NotFound} />

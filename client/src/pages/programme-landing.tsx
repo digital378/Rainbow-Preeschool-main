@@ -207,7 +207,7 @@ export default function ProgrammeLanding({ programmeSlug }: ProgrammeLandingProp
         title={details.seoTitle}
         description={details.seoDescription}
         keywords={details.seoKeywords}
-        canonical={`https://rainbowpreschools.com/${programmeSlug}`}
+        canonical={`https://rainbowpreschools.com/${programmeSlug.toLowerCase()}`}
       />
 
       {/* Hero Section */}
