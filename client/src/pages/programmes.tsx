@@ -73,7 +73,7 @@ export default function Programmes() {
       <SEO
         title="Programmes - Rainbow Preschool International | Playgroup, Nursery, Kindergarten"
         description="Explore Rainbow Preschool programmes: Playgroup (1.5-2.5 yrs), Nursery (2.5-3.5 yrs), Kindergarten (3.5-5.5 yrs), Summer Camp & Daycare. Play-based curriculum for holistic development."
-        keywords="preschool programmes thane, playgroup thane, nursery admission thane, kindergarten thane, daycare thane, summer camp kids thane, early childhood curriculum"
+        keywords="preschool programmes thane, playgroup thane, nursery admission thane, kindergarten thane, daycare thane, summer camp kids thane, early childhood curriculum, playgroup for 2 year old, nursery school syllabus, kg admission, lkg ukg admission, best playgroup, toddler classes, pre nursery classes, junior kg admission"
         canonical="https://rainbowpreschools.com/programmes"
       />
       {/* Hero Section */}

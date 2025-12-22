@@ -34,7 +34,7 @@ export default function About() {
       <SEO
         title="About Us - Rainbow Preschool International | Best Preschool in Thane Since 2007"
         description="Learn about Rainbow Preschool International, Thane's trusted preschool since 2007. 50,000+ alumni, 6 centres, play-based learning approach. Discover our vision, mission & story."
-        keywords="about rainbow preschool, best preschool thane, preschool history thane, early childhood education thane, play-based learning, preschool thane west"
+        keywords="about rainbow preschool, best preschool thane, preschool history thane, early childhood education thane, play-based learning, preschool thane west, preschool near me, best nursery school, top preschools india, child care center, toddler school, pre primary school, montessori school thane"
         canonical="https://rainbowpreschools.com/about"
       />
       {/* Hero Section */}
