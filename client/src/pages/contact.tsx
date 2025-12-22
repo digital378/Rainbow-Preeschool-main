@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { ContactForm } from "@/components/contact-form";
 import { BranchCard } from "@/components/branch-card";
@@ -6,6 +7,21 @@ import { branches } from "@shared/schema";
 import { Phone, Mail, Clock, MapPin } from "lucide-react";
 
 export default function Contact() {
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://eeconfigstaticfiles.blob.core.windows.net/staticfiles/rpsinternational/ee-form-widget/form-5/widget.js";
+    script.async = true;
+    const container = document.getElementById("ee-form-5");
+    if (container) {
+      container.appendChild(script);
+    }
+    return () => {
+      if (container && script.parentNode === container) {
+        container.removeChild(script);
+      }
+    };
+  }, []);
+
   return (
     <div className="pt-20">
       <SEO
@@ -138,6 +154,9 @@ export default function Contact() {
           </div>
         </div>
       </section>
+
+      {/* ExtraEdge Form Tracking */}
+      <div id="ee-form-5" style={{ display: "none" }} />
     </div>
   );
 }
