@@ -33,6 +33,17 @@ declare global {
       ready: (callback: () => void) => void;
       execute: (siteKey: string, options: { action: string }) => Promise<string>;
     };
+    gtag: (...args: any[]) => void;
+  }
+}
+
+// Fire Google Ads conversion event
+function fireConversionEvent() {
+  if (typeof window !== 'undefined' && window.gtag) {
+    window.gtag('event', 'conversion_event_submit_lead_form', {
+      'event_callback': () => {},
+      'event_timeout': 2000,
+    });
   }
 }
 
@@ -145,6 +156,7 @@ export function ContactForm({ defaultBranch, compact = false }: ContactFormProps
     onSuccess: () => {
       setIsSubmitted(true);
       trackFormSubmission("contact_form", form.getValues("branch"));
+      fireConversionEvent(); // Fire Google Ads conversion event
       toast({
         title: "Request Submitted!",
         description: "We'll get back to you within 24 hours.",
