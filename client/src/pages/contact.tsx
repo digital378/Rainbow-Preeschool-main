@@ -1,12 +1,19 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { ContactForm } from "@/components/contact-form";
 import { BranchCard } from "@/components/branch-card";
+import { SEO } from "@/components/seo";
 import { branches } from "@shared/schema";
 import { Phone, Mail, Clock, MapPin } from "lucide-react";
 
 export default function Contact() {
   return (
     <div className="pt-20">
+      <SEO
+        title="Contact Us - Rainbow Preschool International | Admissions & Enquiries"
+        description="Contact Rainbow Preschool International for admissions, school tours & enquiries. 6 centres across Thane West. Call 82915 68972 or visit our nearest centre today."
+        keywords="contact rainbow preschool, preschool admissions thane, preschool enquiry, preschool near me thane, kindergarten admissions, nursery admissions thane"
+        canonical="https://rainbowpreschools.com/contact"
+      />
       {/* Hero Section */}
       <section className="py-24 md:py-32 lg:py-40 bg-gradient-to-br from-primary/5 via-accent/5 to-secondary/5 flex items-center justify-center">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

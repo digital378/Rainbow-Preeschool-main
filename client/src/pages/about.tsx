@@ -2,6 +2,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { WhyChooseUs } from "@/components/why-choose-us";
 import { MethodologySection } from "@/components/methodology-section";
 import { CTASection } from "@/components/cta-section";
+import { SEO } from "@/components/seo";
 import { Eye, Rocket, Star, Calendar } from "lucide-react";
 import heroImage from "@assets/16_1766236394926.jpg";
 
@@ -30,6 +31,12 @@ const visionMission = [
 export default function About() {
   return (
     <div className="pt-20">
+      <SEO
+        title="About Us - Rainbow Preschool International | Best Preschool in Thane Since 2007"
+        description="Learn about Rainbow Preschool International, Thane's trusted preschool since 2007. 50,000+ alumni, 6 centres, play-based learning approach. Discover our vision, mission & story."
+        keywords="about rainbow preschool, best preschool thane, preschool history thane, early childhood education thane, play-based learning, preschool thane west"
+        canonical="https://rainbowpreschools.com/about"
+      />
       {/* Hero Section */}
       <section className="py-24 md:py-32 lg:py-40 flex items-center justify-center relative overflow-hidden">
         <div 

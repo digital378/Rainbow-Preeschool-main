@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { CTASection } from "@/components/cta-section";
+import { SEO } from "@/components/seo";
 import { programmes } from "@shared/schema";
 import { Baby, BookOpen, GraduationCap, Palette, Sun, Heart, CheckCircle, ArrowRight } from "lucide-react";
 import { Link } from "wouter";
@@ -69,6 +70,12 @@ export default function Programmes() {
 
   return (
     <div className="pt-20">
+      <SEO
+        title="Programmes - Rainbow Preschool International | Playgroup, Nursery, Kindergarten"
+        description="Explore Rainbow Preschool programmes: Playgroup (1.5-2.5 yrs), Nursery (2.5-3.5 yrs), Kindergarten (3.5-5.5 yrs), Summer Camp & Daycare. Play-based curriculum for holistic development."
+        keywords="preschool programmes thane, playgroup thane, nursery admission thane, kindergarten thane, daycare thane, summer camp kids thane, early childhood curriculum"
+        canonical="https://rainbowpreschools.com/programmes"
+      />
       {/* Hero Section */}
       <section className="py-24 md:py-32 lg:py-40 bg-gradient-to-br from-primary/5 via-accent/5 to-secondary/5 flex items-center justify-center">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

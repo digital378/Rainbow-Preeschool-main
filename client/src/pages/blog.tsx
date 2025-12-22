@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { BlogCard, BlogCardSkeleton } from "@/components/blog-card";
 import { CTASection } from "@/components/cta-section";
+import { SEO } from "@/components/seo";
 import { type BlogPost } from "@shared/schema";
 
 const defaultBlogPosts: BlogPost[] = [
@@ -75,6 +76,12 @@ export default function Blog() {
 
   return (
     <div className="pt-20">
+      <SEO
+        title="Blog & News - Rainbow Preschool International | Parenting Tips & Updates"
+        description="Read the latest news, parenting tips & early education articles from Rainbow Preschool Thane. Expert advice on child development, preschool preparation & learning activities."
+        keywords="preschool blog, parenting tips, early childhood education articles, child development tips, preschool preparation, rainbow preschool news"
+        canonical="https://rainbowpreschools.com/blog"
+      />
       {/* Hero Section */}
       <section className="py-16 md:py-20 lg:py-24 bg-gradient-to-br from-primary/5 via-accent/5 to-secondary/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
