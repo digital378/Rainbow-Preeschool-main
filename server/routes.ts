@@ -61,6 +61,7 @@ export async function registerRoutes(
           phone: validatedData.phone,
           email: validatedData.email,
           childAge: validatedData.childAge,
+          programme: validatedData.programme,
           branch: validatedData.branch,
           message: validatedData.message || undefined
         });

@@ -7,6 +7,7 @@ interface ContactFormData {
   phone: string;
   email: string;
   childAge: string;
+  programme: string;
   branch: string;
   message?: string;
 }
@@ -55,6 +56,7 @@ export async function sendLeadNotificationEmail(data: ContactFormData): Promise<
     <tr><td>Mobile_No</td><td>${data.phone}</td></tr>
     <tr><td>Email_Id</td><td><a href="mailto:${data.email}">${data.email}</a></td></tr>
     <tr><td>Child_Age</td><td>${data.childAge}</td></tr>
+    <tr><td>Programme</td><td>${data.programme}</td></tr>
     <tr><td>Preferred_Centre</td><td>${data.branch}</td></tr>
     <tr><td>LeadSource</td><td>Website</td></tr>
     <tr><td>LeadMedium</td><td>Website Enquiry Form</td></tr>
@@ -78,6 +80,7 @@ Student_Name            | ${data.childName}
 Mobile_No               | ${data.phone}
 Email_Id                | ${data.email}
 Child_Age               | ${data.childAge}
+Programme               | ${data.programme}
 Preferred_Centre        | ${data.branch}
 LeadSource              | Website
 LeadMedium              | Website Enquiry Form
