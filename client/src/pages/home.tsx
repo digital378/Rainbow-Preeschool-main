@@ -9,6 +9,7 @@ import { WhyChooseUs } from "@/components/why-choose-us";
 import { MethodologySection } from "@/components/methodology-section";
 import { CTASection } from "@/components/cta-section";
 import { ContactForm } from "@/components/contact-form";
+import { CountUp } from "@/components/count-up";
 import { programmes, branches, testimonials } from "@shared/schema";
 import { ArrowRight, Star } from "lucide-react";
 import { SiGoogle } from "react-icons/si";
@@ -127,26 +128,34 @@ export default function Home() {
             <div className="grid grid-cols-2 gap-4">
               <Card className="text-center">
                 <CardContent className="pt-6">
-                  <p className="text-4xl font-bold text-primary mb-2">50,000+</p>
+                  <p className="text-4xl font-bold text-primary mb-2">
+                    <CountUp end={50000} duration={2000} suffix="+" />
+                  </p>
                   <p className="text-sm text-muted-foreground">Happy Students</p>
                 </CardContent>
               </Card>
               <Card className="text-center">
                 <CardContent className="pt-6">
-                  <p className="text-4xl font-bold text-primary mb-2">18+</p>
+                  <p className="text-4xl font-bold text-primary mb-2">
+                    <CountUp end={18} duration={1500} delay={200} suffix="+" />
+                  </p>
                   <p className="text-sm text-muted-foreground">Years of Excellence</p>
                 </CardContent>
               </Card>
               <Card className="text-center">
                 <CardContent className="pt-6">
-                  <p className="text-4xl font-bold text-primary mb-2">06</p>
+                  <p className="text-4xl font-bold text-primary mb-2">
+                    <CountUp end={6} duration={1500} delay={400} prefix="0" />
+                  </p>
                   <p className="text-sm text-muted-foreground">Centres in Thane</p>
                 </CardContent>
               </Card>
               <Card className="text-center">
                 <CardContent className="pt-6">
                   <div className="flex items-center justify-center gap-1 mb-2">
-                    <p className="text-4xl font-bold text-primary">4.7</p>
+                    <p className="text-4xl font-bold text-primary">
+                      <CountUp end={4.7} duration={1500} delay={600} decimals={1} />
+                    </p>
                     <Star className="w-6 h-6 fill-yellow-400 text-yellow-400" />
                   </div>
                   <p className="text-sm text-muted-foreground">Google Rating</p>
