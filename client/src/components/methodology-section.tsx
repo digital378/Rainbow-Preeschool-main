@@ -1,6 +1,6 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Palette, FlaskConical, Dumbbell, Lightbulb, Brain, MessageCircle } from "lucide-react";
+import { ArrowRight, Palette, FlaskConical, Dumbbell, Lightbulb, Brain, MessageCircle, BookOpen } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const curriculumAreas = [
@@ -114,16 +114,9 @@ export function MethodologySection() {
                 })}
               </svg>
 
-              {/* Center Circle - RPS Curriculum with 3D effect */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-28 h-28 md:w-36 md:h-36 rounded-full bg-gradient-to-br from-pink-100 via-white to-pink-50 dark:from-pink-900/40 dark:via-gray-800 dark:to-pink-800/40 border-4 border-primary/60 flex items-center justify-center shadow-[0_6px_0_0_rgb(219,39,119),0_8px_16px_-2px_rgba(219,39,119,0.35)] dark:shadow-[0_6px_0_0_rgb(157,23,77),0_8px_16px_-2px_rgba(219,39,119,0.25)] z-10">
-                <div className="text-center">
-                  <div className="text-2xl md:text-3xl font-bold">
-                    <span className="text-primary">R</span>
-                    <span className="text-secondary">P</span>
-                    <span className="text-accent">S</span>
-                  </div>
-                  <p className="text-xs text-muted-foreground font-medium mt-1">Curriculum</p>
-                </div>
+              {/* Center Circle - Curriculum Icon with 3D effect */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-28 h-28 md:w-36 md:h-36 rounded-full bg-gradient-to-br from-pink-400 via-pink-500 to-pink-600 dark:from-pink-500 dark:via-pink-600 dark:to-pink-700 flex items-center justify-center shadow-[0_6px_0_0_rgb(157,23,77),0_8px_20px_-2px_rgba(219,39,119,0.5)] dark:shadow-[0_6px_0_0_rgb(131,24,67),0_8px_20px_-2px_rgba(219,39,119,0.35)] z-10">
+                <BookOpen className="w-12 h-12 md:w-16 md:h-16 text-white" strokeWidth={1.5} />
               </div>
 
               {/* Curriculum Area Bubbles with 3D effect */}
