@@ -1,4 +1,4 @@
-import { Switch, Route } from "wouter";
+import { Switch, Route, useLocation } from "wouter";
 import { useEffect } from "react";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
@@ -17,6 +17,18 @@ import ProgrammeLanding from "@/pages/programme-landing";
 import Contact from "@/pages/contact";
 import Blog from "@/pages/blog";
 import NotFound from "@/pages/not-found";
+
+function ScrollToTop() {
+  const [location] = useLocation();
+  
+  useEffect(() => {
+    if (!location.includes('#')) {
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    }
+  }, [location]);
+  
+  return null;
+}
 
 function Router() {
   useAnalytics();
@@ -55,6 +67,7 @@ function App() {
           <div className="min-h-screen flex flex-col relative z-10">
             <Navigation />
             <main className="flex-1">
+              <ScrollToTop />
               <Router />
             </main>
             <Footer />
