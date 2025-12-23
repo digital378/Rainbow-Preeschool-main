@@ -73,7 +73,7 @@ export default function About() {
               {[
                 { value: "50,000+", label: "Happy Students" },
                 { value: "18+", label: "Years of Excellence" },
-                { value: "6", label: "Centres in Thane" },
+                { value: "06", label: "Centres in Thane" },
                 { value: "4.7", label: "Google Rating", icon: Star },
               ].map((stat, i) => (
                 <Card key={i} className="text-center">
