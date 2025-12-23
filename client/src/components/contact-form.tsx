@@ -157,6 +157,10 @@ export function ContactForm({ defaultBranch, compact = false }: ContactFormProps
       setIsSubmitted(true);
       trackFormSubmission("contact_form", form.getValues("branch"));
       fireConversionEvent(); // Fire Google Ads conversion event
+      // Fire Meta Pixel Lead conversion event
+      if (typeof window !== 'undefined' && (window as any).fbq) {
+        (window as any).fbq('track', 'Lead');
+      }
       toast({
         title: "Request Submitted!",
         description: "We'll get back to you within 24 hours.",
