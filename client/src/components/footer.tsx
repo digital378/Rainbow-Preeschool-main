@@ -114,33 +114,42 @@ export function Footer() {
               <li className="flex items-start gap-3">
                 <MapPin className="h-4 w-4 text-primary mt-0.5 shrink-0" />
                 <span className="text-sm text-muted-foreground">
-                  6 Centres across Thane West, Maharashtra
+                  2nd Floor, Chestnut Plaza, Opp. Edenwoods, Khewra Cir Marg, Manpada, Thane (W), 400610 (Head Office)
                 </span>
               </li>
-              <li className="flex items-center gap-3">
-                <Phone className="h-4 w-4 text-primary shrink-0" />
-                <a
-                  href="tel:9321239367"
-                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                  data-testid="link-footer-phone"
-                >
-                  93212 39367
-                </a>
+              <li className="flex items-start gap-3">
+                <Phone className="h-4 w-4 text-primary mt-0.5 shrink-0" />
+                <div className="flex flex-col gap-1">
+                  <a
+                    href="tel:8291568972"
+                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                    data-testid="link-footer-phone-1"
+                  >
+                    82915 68972
+                  </a>
+                  <a
+                    href="tel:02261147114"
+                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                    data-testid="link-footer-phone-2"
+                  >
+                    022 6114 7114
+                  </a>
+                </div>
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="h-4 w-4 text-primary shrink-0" />
                 <a
-                  href="mailto:info@rainbowpreschools.com"
+                  href="mailto:admin@rainbowpreschools.com"
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                   data-testid="link-footer-email"
                 >
-                  info@rainbowpreschools.com
+                  admin@rainbowpreschools.com
                 </a>
               </li>
               <li className="flex items-center gap-3">
                 <Clock className="h-4 w-4 text-primary shrink-0" />
                 <span className="text-sm text-muted-foreground">
-                  Mon - Sat: 8:00 AM - 6:00 PM
+                  Mon - Sat: 9 AM - 6 PM
                 </span>
               </li>
             </ul>
