@@ -1,50 +1,56 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
-import teacherImage from "@assets/New_RPS_Flow_Chart_1766124212525.png";
+import { ArrowRight, Palette, FlaskConical, Dumbbell, Lightbulb, Brain, MessageCircle } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const curriculumAreas = [
   {
     id: "art",
     label: "Art Studio",
-    emoji: "🎨",
-    bgColor: "bg-orange-500",
-    borderColor: "border-orange-300",
+    icon: Palette,
+    bg: "bg-gradient-to-br from-orange-400 to-orange-500 dark:from-orange-500 dark:to-orange-600",
+    iconColor: "text-white",
+    shadow: "shadow-[0_4px_0_0_rgb(194,65,12),0_6px_12px_-2px_rgba(234,88,12,0.4)]",
   },
   {
     id: "maths",
     label: "Maths & Science",
-    emoji: "🔬",
-    bgColor: "bg-sky-500",
-    borderColor: "border-sky-300",
+    icon: FlaskConical,
+    bg: "bg-gradient-to-br from-sky-400 to-sky-500 dark:from-sky-500 dark:to-sky-600",
+    iconColor: "text-white",
+    shadow: "shadow-[0_4px_0_0_rgb(2,132,199),0_6px_12px_-2px_rgba(14,165,233,0.4)]",
   },
   {
     id: "sports",
     label: "Sports & Movement",
-    emoji: "⚽",
-    bgColor: "bg-teal-600",
-    borderColor: "border-teal-400",
+    icon: Dumbbell,
+    bg: "bg-gradient-to-br from-teal-500 to-teal-600 dark:from-teal-500 dark:to-teal-600",
+    iconColor: "text-white",
+    shadow: "shadow-[0_4px_0_0_rgb(15,118,110),0_6px_12px_-2px_rgba(20,184,166,0.4)]",
   },
   {
     id: "skill",
     label: "Skill Development",
-    emoji: "🧠",
-    bgColor: "bg-green-500",
-    borderColor: "border-green-300",
+    icon: Lightbulb,
+    bg: "bg-gradient-to-br from-green-400 to-green-500 dark:from-green-500 dark:to-green-600",
+    iconColor: "text-white",
+    shadow: "shadow-[0_4px_0_0_rgb(22,163,74),0_6px_12px_-2px_rgba(34,197,94,0.4)]",
   },
   {
     id: "aptitude",
     label: "General Aptitude",
-    emoji: "💡",
-    bgColor: "bg-purple-400",
-    borderColor: "border-purple-200",
+    icon: Brain,
+    bg: "bg-gradient-to-br from-purple-400 to-purple-500 dark:from-purple-500 dark:to-purple-600",
+    iconColor: "text-white",
+    shadow: "shadow-[0_4px_0_0_rgb(126,34,206),0_6px_12px_-2px_rgba(168,85,247,0.4)]",
   },
   {
     id: "bilingual",
     label: "Bilingual Education",
-    emoji: "🗣️",
-    bgColor: "bg-amber-500",
-    borderColor: "border-amber-300",
+    icon: MessageCircle,
+    bg: "bg-gradient-to-br from-amber-400 to-amber-500 dark:from-amber-500 dark:to-amber-600",
+    iconColor: "text-white",
+    shadow: "shadow-[0_4px_0_0_rgb(180,83,9),0_6px_12px_-2px_rgba(245,158,11,0.4)]",
   },
 ];
 
@@ -108,8 +114,8 @@ export function MethodologySection() {
                 })}
               </svg>
 
-              {/* Center Circle - RPS Curriculum */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-28 h-28 md:w-36 md:h-36 rounded-full bg-gradient-to-br from-primary/20 via-secondary/20 to-accent/20 border-4 border-primary/40 flex items-center justify-center shadow-lg z-10">
+              {/* Center Circle - RPS Curriculum with 3D effect */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-28 h-28 md:w-36 md:h-36 rounded-full bg-gradient-to-br from-pink-100 via-white to-pink-50 dark:from-pink-900/40 dark:via-gray-800 dark:to-pink-800/40 border-4 border-primary/60 flex items-center justify-center shadow-[0_6px_0_0_rgb(219,39,119),0_8px_16px_-2px_rgba(219,39,119,0.35)] dark:shadow-[0_6px_0_0_rgb(157,23,77),0_8px_16px_-2px_rgba(219,39,119,0.25)] z-10">
                 <div className="text-center">
                   <div className="text-2xl md:text-3xl font-bold">
                     <span className="text-primary">R</span>
@@ -120,12 +126,13 @@ export function MethodologySection() {
                 </div>
               </div>
 
-              {/* Curriculum Area Bubbles */}
+              {/* Curriculum Area Bubbles with 3D effect */}
               {curriculumAreas.map((area, index) => {
                 const angle = (index * 60 - 90) * (Math.PI / 180);
                 const radius = 145;
                 const x = Math.cos(angle) * radius;
                 const y = Math.sin(angle) * radius;
+                const Icon = area.icon;
                 
                 return (
                   <div
@@ -136,8 +143,12 @@ export function MethodologySection() {
                     }}
                     data-testid={`curriculum-area-${area.id}`}
                   >
-                    <div className={`w-12 h-12 md:w-14 md:h-14 rounded-full ${area.bgColor} border-4 ${area.borderColor} flex items-center justify-center shadow-lg transition-transform hover:scale-110`}>
-                      <span className="text-lg md:text-xl">{area.emoji}</span>
+                    <div className={cn(
+                      "w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center transition-transform hover:scale-105",
+                      area.bg,
+                      area.shadow
+                    )}>
+                      <Icon className={cn("w-6 h-6 md:w-7 md:h-7", area.iconColor)} />
                     </div>
                     <span className="text-xs md:text-sm font-semibold text-foreground text-center whitespace-nowrap">
                       {area.label}
