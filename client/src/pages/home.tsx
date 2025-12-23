@@ -127,20 +127,20 @@ export default function Home() {
             <div className="grid grid-cols-2 gap-4">
               <Card className="text-center">
                 <CardContent className="pt-6">
-                  <p className="text-4xl font-bold text-primary mb-2">50K+</p>
-                  <p className="text-sm text-muted-foreground">Students Taught</p>
+                  <p className="text-4xl font-bold text-primary mb-2">50,000+</p>
+                  <p className="text-sm text-muted-foreground">Happy Students</p>
                 </CardContent>
               </Card>
               <Card className="text-center">
                 <CardContent className="pt-6">
                   <p className="text-4xl font-bold text-primary mb-2">18+</p>
-                  <p className="text-sm text-muted-foreground">Years Experience</p>
+                  <p className="text-sm text-muted-foreground">Years of Excellence</p>
                 </CardContent>
               </Card>
               <Card className="text-center">
                 <CardContent className="pt-6">
                   <p className="text-4xl font-bold text-primary mb-2">06</p>
-                  <p className="text-sm text-muted-foreground">Centres</p>
+                  <p className="text-sm text-muted-foreground">Centres in Thane</p>
                 </CardContent>
               </Card>
               <Card className="text-center">
