@@ -3,6 +3,7 @@ import { WhyChooseUs } from "@/components/why-choose-us";
 import { MethodologySection } from "@/components/methodology-section";
 import { CTASection } from "@/components/cta-section";
 import { SEO } from "@/components/seo";
+import { CountUp } from "@/components/count-up";
 import { Eye, Rocket, Star, Calendar } from "lucide-react";
 import heroImage from "@assets/16_1766236394926.jpg";
 
@@ -70,22 +71,47 @@ export default function About() {
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
-              {[
-                { value: "50,000+", label: "Happy Students" },
-                { value: "18+", label: "Years of Excellence" },
-                { value: "06", label: "Centres in Thane" },
-                { value: "4.7", label: "Google Rating", icon: Star },
-              ].map((stat, i) => (
-                <Card key={i} className="text-center">
-                  <CardContent className="pt-6">
-                    <div className="flex items-center justify-center gap-1 mb-2">
-                      <p className="text-3xl font-bold text-primary">{stat.value}</p>
-                      {stat.icon && <stat.icon className="w-5 h-5 fill-yellow-400 text-yellow-400" />}
-                    </div>
-                    <p className="text-sm text-muted-foreground">{stat.label}</p>
-                  </CardContent>
-                </Card>
-              ))}
+              <Card className="text-center">
+                <CardContent className="pt-6">
+                  <div className="flex items-center justify-center gap-1 mb-2">
+                    <p className="text-3xl font-bold text-primary">
+                      <CountUp end={50000} duration={2000} suffix="+" />
+                    </p>
+                  </div>
+                  <p className="text-sm text-muted-foreground">Happy Students</p>
+                </CardContent>
+              </Card>
+              <Card className="text-center">
+                <CardContent className="pt-6">
+                  <div className="flex items-center justify-center gap-1 mb-2">
+                    <p className="text-3xl font-bold text-primary">
+                      <CountUp end={18} duration={1500} delay={200} suffix="+" />
+                    </p>
+                  </div>
+                  <p className="text-sm text-muted-foreground">Years of Excellence</p>
+                </CardContent>
+              </Card>
+              <Card className="text-center">
+                <CardContent className="pt-6">
+                  <div className="flex items-center justify-center gap-1 mb-2">
+                    <p className="text-3xl font-bold text-primary">
+                      <CountUp end={6} duration={1500} delay={400} prefix="0" />
+                    </p>
+                  </div>
+                  <p className="text-sm text-muted-foreground">Centres in Thane</p>
+                </CardContent>
+              </Card>
+              <Card className="text-center">
+                <CardContent className="pt-6">
+                  <div className="flex items-center justify-center gap-1 mb-2">
+                    <p className="text-3xl font-bold text-primary">
+                      <CountUp end={4.7} duration={1500} delay={600} decimals={1} />
+                    </p>
+                    <Star className="w-5 h-5 fill-yellow-400 text-yellow-400" />
+                  </div>
+                  <p className="text-sm text-muted-foreground">Google Rating</p>
+                </CardContent>
+              </Card>
             </div>
           </div>
         </div>
