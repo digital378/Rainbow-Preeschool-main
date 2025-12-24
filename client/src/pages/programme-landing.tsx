@@ -218,33 +218,11 @@ export default function ProgrammeLanding({ programmeSlug }: ProgrammeLandingProp
           <div className="absolute top-1/2 left-1/2 w-48 h-48 bg-accent rounded-full blur-3xl transform -translate-x-1/2 -translate-y-1/2" />
         </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-          <div className="text-center">
-            <div className="flex justify-center mb-6">
-              <div className="w-20 h-20 rounded-2xl bg-primary/20 flex items-center justify-center">
-                <Icon className="w-10 h-10 text-primary" />
-              </div>
-            </div>
-            <Badge variant="secondary" className="mb-4 text-base px-4 py-1">
+          <div className="text-center flex flex-col items-center justify-center">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">{programme.name}</h1>
+            <Badge variant="secondary" className="text-base px-4 py-1">
               {programme.ageRange}
             </Badge>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">{programme.name}</h1>
-            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto mb-8">
-              {programme.description}
-            </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <Link href="/contact#enquiry-form">
-                <Button size="lg" data-testid={`button-enquire-${programme.id}`}>
-                  Enquire Now
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </Link>
-              <Link href="/contact">
-                <Button size="lg" variant="outline" data-testid={`button-contact-${programme.id}`}>
-                  <Phone className="mr-2 h-5 w-5" />
-                  Call Us
-                </Button>
-              </Link>
-            </div>
           </div>
         </div>
       </section>
