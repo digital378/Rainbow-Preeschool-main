@@ -219,10 +219,10 @@ export default function ProgrammeLanding({ programmeSlug }: ProgrammeLandingProp
         </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="text-center flex flex-col items-center justify-center">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">{programme.name}</h1>
-            <Badge variant="secondary" className="text-base px-4 py-1">
+            <Badge variant="secondary" className="text-base px-4 py-1 mb-4">
               {programme.ageRange}
             </Badge>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold">{programme.name}</h1>
           </div>
         </div>
       </section>
