@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { CTASection } from "@/components/cta-section";
 import { SEO } from "@/components/seo";
+import { ContactForm } from "@/components/contact-form";
 import { programmes, branches } from "@shared/schema";
 import { Baby, BookOpen, GraduationCap, Palette, Sun, Heart, CheckCircle, ArrowRight, MapPin, Phone, Clock, Users, Star, Shield } from "lucide-react";
 import { trackProgrammeView } from "@/lib/analytics";
@@ -223,6 +224,28 @@ export default function ProgrammeLanding({ programmeSlug }: ProgrammeLandingProp
               {programme.ageRange}
             </Badge>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold">{programme.name}</h1>
+          </div>
+        </div>
+      </section>
+
+      {/* Get in Touch Section */}
+      <section className="py-16 md:py-20 lg:py-24 bg-muted/30">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+            <div>
+              <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">
+                Get In Touch
+              </p>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">Request a Callback</h2>
+              <p className="text-muted-foreground text-lg leading-relaxed">
+                Submit your details and queries here. We'd be glad to help you out!
+              </p>
+            </div>
+            <Card className="shadow-lg">
+              <CardContent className="p-6 md:p-8">
+                <ContactForm />
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>
