@@ -39,12 +39,12 @@ const programmeDetails: Record<string, {
 }> = {
   playgroup: {
     features: [
-      { title: "Safe & Secure Campus", description: "CCTV-monitored premises with 100% female teaching staff.", icon: "shield-check", gradient: "from-pink-100 to-pink-200 dark:from-pink-900/30 dark:to-pink-800/30" },
-      { title: "Certified Teachers", description: "ECCEd certified & experienced teachers who nurture every child with love and attention.", icon: "award", gradient: "from-sky-100 to-sky-200 dark:from-sky-900/30 dark:to-sky-800/30" },
-      { title: "Health, Hygiene & Cleanliness", description: "Daily sanitisation, child-safe washrooms, and hygiene-first practices.", icon: "sparkles", gradient: "from-green-100 to-green-200 dark:from-green-900/30 dark:to-green-800/30" },
-      { title: "Ideal Student-Teacher Ratio (30:2)", description: "Ensuring personalised care and individual attention.", icon: "users-round", gradient: "from-purple-100 to-purple-200 dark:from-purple-900/30 dark:to-purple-800/30" },
-      { title: "GPS-Enabled Transport", description: "Safe, in-house transport with real-time tracking.", icon: "bus", gradient: "from-orange-100 to-orange-200 dark:from-orange-900/30 dark:to-orange-800/30" },
-      { title: "Strong Foundation Through Play", description: "Holistic, play-based learning for confident early development.", icon: "gamepad", gradient: "from-blue-100 to-blue-200 dark:from-blue-900/30 dark:to-blue-800/30" }
+      { title: "Introduction to Colors and Shapes", description: "Learning to recognize and identify basic colors and shapes through fun activities.", icon: "shapes", gradient: "from-pink-100 to-pink-200 dark:from-pink-900/30 dark:to-pink-800/30" },
+      { title: "Puppet Shows and Storytelling", description: "Engaging narratives that spark imagination and build listening skills.", icon: "message", gradient: "from-sky-100 to-sky-200 dark:from-sky-900/30 dark:to-sky-800/30" },
+      { title: "Sensory Play Activities", description: "Hands-on exploration that stimulates cognitive and motor development.", icon: "hand-heart", gradient: "from-green-100 to-green-200 dark:from-green-900/30 dark:to-green-800/30" },
+      { title: "Basic Motor Skill Development", description: "Activities designed to strengthen fine and gross motor abilities.", icon: "activity", gradient: "from-purple-100 to-purple-200 dark:from-purple-900/30 dark:to-purple-800/30" },
+      { title: "Social Interaction with Peers", description: "Learning to share, cooperate, and build friendships with other children.", icon: "users-round", gradient: "from-orange-100 to-orange-200 dark:from-orange-900/30 dark:to-orange-800/30" },
+      { title: "Language Development through Songs", description: "Building vocabulary and speech through rhymes and musical activities.", icon: "music", gradient: "from-blue-100 to-blue-200 dark:from-blue-900/30 dark:to-blue-800/30" }
     ],
     schedule: "2-3 hours daily, flexible timing",
     activities: ["Circle time", "Music and movement", "Art exploration", "Free play", "Outdoor activities", "Rhymes and songs"],
@@ -61,12 +61,12 @@ const programmeDetails: Record<string, {
   },
   nursery: {
     features: [
-      { title: "Safe & Secure Campus", description: "CCTV-monitored premises with 100% female teaching staff.", icon: "shield-check", gradient: "from-pink-100 to-pink-200 dark:from-pink-900/30 dark:to-pink-800/30" },
-      { title: "Certified Teachers", description: "ECCEd certified & experienced teachers who nurture every child with love and attention.", icon: "award", gradient: "from-sky-100 to-sky-200 dark:from-sky-900/30 dark:to-sky-800/30" },
-      { title: "Health, Hygiene & Cleanliness", description: "Daily sanitisation, child-safe washrooms, and hygiene-first practices.", icon: "sparkles", gradient: "from-green-100 to-green-200 dark:from-green-900/30 dark:to-green-800/30" },
-      { title: "Ideal Student-Teacher Ratio (30:2)", description: "Ensuring personalised care and individual attention.", icon: "users-round", gradient: "from-purple-100 to-purple-200 dark:from-purple-900/30 dark:to-purple-800/30" },
-      { title: "GPS-Enabled Transport", description: "Safe, in-house transport with real-time tracking.", icon: "bus", gradient: "from-orange-100 to-orange-200 dark:from-orange-900/30 dark:to-orange-800/30" },
-      { title: "Strong Foundation Through Play", description: "Holistic, play-based learning for confident early development.", icon: "gamepad", gradient: "from-blue-100 to-blue-200 dark:from-blue-900/30 dark:to-blue-800/30" }
+      { title: "Alphabet and Number Recognition", description: "Building foundation for reading and math through interactive learning.", icon: "book", gradient: "from-pink-100 to-pink-200 dark:from-pink-900/30 dark:to-pink-800/30" },
+      { title: "Group Reading Sessions", description: "Developing early literacy skills through shared reading experiences.", icon: "message", gradient: "from-sky-100 to-sky-200 dark:from-sky-900/30 dark:to-sky-800/30" },
+      { title: "Creative Arts and Crafts", description: "Expressing creativity through painting, drawing, and craft projects.", icon: "brush", gradient: "from-green-100 to-green-200 dark:from-green-900/30 dark:to-green-800/30" },
+      { title: "Physical Development through Yoga", description: "Building flexibility, balance, and body awareness.", icon: "activity", gradient: "from-purple-100 to-purple-200 dark:from-purple-900/30 dark:to-purple-800/30" },
+      { title: "Basic Writing Skills", description: "Learning to hold pencils and form letters and numbers.", icon: "shapes", gradient: "from-orange-100 to-orange-200 dark:from-orange-900/30 dark:to-orange-800/30" },
+      { title: "Cognitive Skill Development", description: "Puzzles and activities that enhance thinking and problem-solving.", icon: "brain", gradient: "from-blue-100 to-blue-200 dark:from-blue-900/30 dark:to-blue-800/30" }
     ],
     schedule: "3-4 hours daily",
     activities: ["Phonics introduction", "Dancing and singing", "Puppet shows", "Outdoor play", "Story time", "Number games"],
@@ -83,12 +83,12 @@ const programmeDetails: Record<string, {
   },
   kindergarten: {
     features: [
-      { title: "Safe & Secure Campus", description: "CCTV-monitored premises with 100% female teaching staff.", icon: "shield-check", gradient: "from-pink-100 to-pink-200 dark:from-pink-900/30 dark:to-pink-800/30" },
-      { title: "Certified Teachers", description: "ECCEd certified & experienced teachers who nurture every child with love and attention.", icon: "award", gradient: "from-sky-100 to-sky-200 dark:from-sky-900/30 dark:to-sky-800/30" },
-      { title: "Health, Hygiene & Cleanliness", description: "Daily sanitisation, child-safe washrooms, and hygiene-first practices.", icon: "sparkles", gradient: "from-green-100 to-green-200 dark:from-green-900/30 dark:to-green-800/30" },
-      { title: "Ideal Student-Teacher Ratio (30:2)", description: "Ensuring personalised care and individual attention.", icon: "users-round", gradient: "from-purple-100 to-purple-200 dark:from-purple-900/30 dark:to-purple-800/30" },
-      { title: "GPS-Enabled Transport", description: "Safe, in-house transport with real-time tracking.", icon: "bus", gradient: "from-orange-100 to-orange-200 dark:from-orange-900/30 dark:to-orange-800/30" },
-      { title: "Strong Foundation Through Play", description: "Holistic, play-based learning for confident early development.", icon: "gamepad", gradient: "from-blue-100 to-blue-200 dark:from-blue-900/30 dark:to-blue-800/30" }
+      { title: "Reading and Writing Readiness", description: "Preparing children for fluent reading and writing skills.", icon: "book", gradient: "from-pink-100 to-pink-200 dark:from-pink-900/30 dark:to-pink-800/30" },
+      { title: "Math Concepts and Problem Solving", description: "Learning numbers, counting, and basic mathematical operations.", icon: "brain", gradient: "from-sky-100 to-sky-200 dark:from-sky-900/30 dark:to-sky-800/30" },
+      { title: "Science Exploration (EVS)", description: "Discovering the natural world through experiments and observation.", icon: "sparkles", gradient: "from-green-100 to-green-200 dark:from-green-900/30 dark:to-green-800/30" },
+      { title: "General Knowledge Building", description: "Learning about the world, culture, and current events.", icon: "target", gradient: "from-purple-100 to-purple-200 dark:from-purple-900/30 dark:to-purple-800/30" },
+      { title: "Computer Awareness Basics", description: "Introduction to computers and digital literacy.", icon: "zap", gradient: "from-orange-100 to-orange-200 dark:from-orange-900/30 dark:to-orange-800/30" },
+      { title: "Personality Development", description: "Building confidence, communication, and social skills.", icon: "rocket", gradient: "from-blue-100 to-blue-200 dark:from-blue-900/30 dark:to-blue-800/30" }
     ],
     schedule: "4-5 hours daily",
     activities: ["English language arts", "Mathematics", "Art & Craft", "Sports and games", "Science experiments", "Public speaking"],
@@ -105,12 +105,12 @@ const programmeDetails: Record<string, {
   },
   "kids-activity-club": {
     features: [
-      { title: "Safe & Secure Campus", description: "CCTV-monitored premises with 100% female teaching staff.", icon: "shield-check", gradient: "from-pink-100 to-pink-200 dark:from-pink-900/30 dark:to-pink-800/30" },
-      { title: "Certified Teachers", description: "ECCEd certified & experienced teachers who nurture every child with love and attention.", icon: "award", gradient: "from-sky-100 to-sky-200 dark:from-sky-900/30 dark:to-sky-800/30" },
-      { title: "Health, Hygiene & Cleanliness", description: "Daily sanitisation, child-safe washrooms, and hygiene-first practices.", icon: "sparkles", gradient: "from-green-100 to-green-200 dark:from-green-900/30 dark:to-green-800/30" },
-      { title: "Ideal Student-Teacher Ratio (30:2)", description: "Ensuring personalised care and individual attention.", icon: "users-round", gradient: "from-purple-100 to-purple-200 dark:from-purple-900/30 dark:to-purple-800/30" },
-      { title: "GPS-Enabled Transport", description: "Safe, in-house transport with real-time tracking.", icon: "bus", gradient: "from-orange-100 to-orange-200 dark:from-orange-900/30 dark:to-orange-800/30" },
-      { title: "Strong Foundation Through Play", description: "Holistic, play-based learning for confident early development.", icon: "gamepad", gradient: "from-blue-100 to-blue-200 dark:from-blue-900/30 dark:to-blue-800/30" }
+      { title: "20+ Engaging Activities", description: "A wide variety of activities to keep children entertained and learning.", icon: "sparkles", gradient: "from-pink-100 to-pink-200 dark:from-pink-900/30 dark:to-pink-800/30" },
+      { title: "Brain Gym Exercises", description: "Activities designed to enhance cognitive abilities and focus.", icon: "brain", gradient: "from-sky-100 to-sky-200 dark:from-sky-900/30 dark:to-sky-800/30" },
+      { title: "Creative Arts and Drama", description: "Expressing creativity through art, drama, and performance.", icon: "brush", gradient: "from-green-100 to-green-200 dark:from-green-900/30 dark:to-green-800/30" },
+      { title: "Physical Fitness Programs", description: "Building strength, coordination, and healthy habits.", icon: "activity", gradient: "from-purple-100 to-purple-200 dark:from-purple-900/30 dark:to-purple-800/30" },
+      { title: "Music and Dance Classes", description: "Learning rhythm, movement, and musical expression.", icon: "music", gradient: "from-orange-100 to-orange-200 dark:from-orange-900/30 dark:to-orange-800/30" },
+      { title: "Personality Development", description: "Building confidence, communication, and leadership skills.", icon: "rocket", gradient: "from-blue-100 to-blue-200 dark:from-blue-900/30 dark:to-blue-800/30" }
     ],
     schedule: "Flexible after-school hours",
     activities: ["Aerobics", "Drama", "Art classes", "Brain development games", "Public speaking", "Craft workshops"],
@@ -127,12 +127,12 @@ const programmeDetails: Record<string, {
   },
   "summer-camp": {
     features: [
-      { title: "Safe & Secure Campus", description: "CCTV-monitored premises with 100% female teaching staff.", icon: "shield-check", gradient: "from-pink-100 to-pink-200 dark:from-pink-900/30 dark:to-pink-800/30" },
-      { title: "Certified Teachers", description: "ECCEd certified & experienced teachers who nurture every child with love and attention.", icon: "award", gradient: "from-sky-100 to-sky-200 dark:from-sky-900/30 dark:to-sky-800/30" },
-      { title: "Health, Hygiene & Cleanliness", description: "Daily sanitisation, child-safe washrooms, and hygiene-first practices.", icon: "sparkles", gradient: "from-green-100 to-green-200 dark:from-green-900/30 dark:to-green-800/30" },
-      { title: "Ideal Student-Teacher Ratio (30:2)", description: "Ensuring personalised care and individual attention.", icon: "users-round", gradient: "from-purple-100 to-purple-200 dark:from-purple-900/30 dark:to-purple-800/30" },
-      { title: "GPS-Enabled Transport", description: "Safe, in-house transport with real-time tracking.", icon: "bus", gradient: "from-orange-100 to-orange-200 dark:from-orange-900/30 dark:to-orange-800/30" },
-      { title: "Strong Foundation Through Play", description: "Holistic, play-based learning for confident early development.", icon: "gamepad", gradient: "from-blue-100 to-blue-200 dark:from-blue-900/30 dark:to-blue-800/30" }
+      { title: "Fun Holiday Activities", description: "Exciting and engaging activities to make the most of summer break.", icon: "sparkles", gradient: "from-pink-100 to-pink-200 dark:from-pink-900/30 dark:to-pink-800/30" },
+      { title: "Creative Workshops", description: "Hands-on workshops for art, craft, and creative expression.", icon: "brush", gradient: "from-sky-100 to-sky-200 dark:from-sky-900/30 dark:to-sky-800/30" },
+      { title: "Team Building Games", description: "Group activities that build cooperation and teamwork skills.", icon: "users-round", gradient: "from-green-100 to-green-200 dark:from-green-900/30 dark:to-green-800/30" },
+      { title: "New Friendships", description: "Meeting new friends and building lasting bonds.", icon: "hand-heart", gradient: "from-purple-100 to-purple-200 dark:from-purple-900/30 dark:to-purple-800/30" },
+      { title: "Outdoor Adventures", description: "Exploring nature and outdoor activities for active fun.", icon: "tree-pine", gradient: "from-orange-100 to-orange-200 dark:from-orange-900/30 dark:to-orange-800/30" },
+      { title: "Skill Development", description: "Learning new skills while having fun during vacation.", icon: "rocket", gradient: "from-blue-100 to-blue-200 dark:from-blue-900/30 dark:to-blue-800/30" }
     ],
     schedule: "Summer vacation period",
     activities: ["Arts and crafts", "Sports", "Music", "Outdoor adventures", "Swimming", "Cooking classes"],
@@ -149,12 +149,12 @@ const programmeDetails: Record<string, {
   },
   "happy-times": {
     features: [
-      { title: "Safe & Secure Campus", description: "CCTV-monitored premises with 100% female teaching staff.", icon: "shield-check", gradient: "from-pink-100 to-pink-200 dark:from-pink-900/30 dark:to-pink-800/30" },
-      { title: "Certified Teachers", description: "ECCEd certified & experienced teachers who nurture every child with love and attention.", icon: "award", gradient: "from-sky-100 to-sky-200 dark:from-sky-900/30 dark:to-sky-800/30" },
-      { title: "Health, Hygiene & Cleanliness", description: "Daily sanitisation, child-safe washrooms, and hygiene-first practices.", icon: "sparkles", gradient: "from-green-100 to-green-200 dark:from-green-900/30 dark:to-green-800/30" },
-      { title: "Ideal Student-Teacher Ratio (30:2)", description: "Ensuring personalised care and individual attention.", icon: "users-round", gradient: "from-purple-100 to-purple-200 dark:from-purple-900/30 dark:to-purple-800/30" },
-      { title: "GPS-Enabled Transport", description: "Safe, in-house transport with real-time tracking.", icon: "bus", gradient: "from-orange-100 to-orange-200 dark:from-orange-900/30 dark:to-orange-800/30" },
-      { title: "Strong Foundation Through Play", description: "Holistic, play-based learning for confident early development.", icon: "gamepad", gradient: "from-blue-100 to-blue-200 dark:from-blue-900/30 dark:to-blue-800/30" }
+      { title: "Safe and Nurturing Environment", description: "A loving space where children feel secure and cared for.", icon: "shield-check", gradient: "from-pink-100 to-pink-200 dark:from-pink-900/30 dark:to-pink-800/30" },
+      { title: "Flexible Hours for Working Parents", description: "Extended timings to accommodate working parents' schedules.", icon: "activity", gradient: "from-sky-100 to-sky-200 dark:from-sky-900/30 dark:to-sky-800/30" },
+      { title: "Nutritious Meals Provided", description: "Healthy, home-cooked meals to keep children energized.", icon: "hand-heart", gradient: "from-green-100 to-green-200 dark:from-green-900/30 dark:to-green-800/30" },
+      { title: "Engaging Activities Throughout the Day", description: "Fun activities to keep children productively occupied.", icon: "sparkles", gradient: "from-purple-100 to-purple-200 dark:from-purple-900/30 dark:to-purple-800/30" },
+      { title: "Homework Assistance", description: "Help with schoolwork and academic support.", icon: "book", gradient: "from-orange-100 to-orange-200 dark:from-orange-900/30 dark:to-orange-800/30" },
+      { title: "Rest and Nap Time", description: "Quiet time for children to rest and recharge.", icon: "music", gradient: "from-blue-100 to-blue-200 dark:from-blue-900/30 dark:to-blue-800/30" }
     ],
     schedule: "Extended hours available (8 AM - 7 PM)",
     activities: ["100% female staff", "Homely care for children", "CCTV surveillance across all areas", "Indoor and outdoor play"],
@@ -187,6 +187,18 @@ const featureIconMap: Record<string, typeof ShieldCheck> = {
   "users-round": UsersRound,
   "bus": Bus,
   "gamepad": Gamepad2,
+  "shapes": Shapes,
+  "message": MessageCircle,
+  "hand-heart": HandHeart,
+  "activity": Activity,
+  "music": Music,
+  "book": BookOpen,
+  "brush": Brush,
+  "brain": Brain,
+  "target": Target,
+  "zap": Zap,
+  "rocket": Rocket,
+  "tree-pine": TreePine,
 };
 
 interface ProgrammeLandingProps {
@@ -287,6 +299,18 @@ export default function ProgrammeLanding({ programmeSlug }: ProgrammeLandingProp
                 "users-round": "text-purple-500",
                 "bus": "text-orange-500",
                 "gamepad": "text-blue-500",
+                "shapes": "text-pink-500",
+                "message": "text-sky-500",
+                "hand-heart": "text-green-500",
+                "activity": "text-purple-500",
+                "music": "text-blue-500",
+                "book": "text-pink-500",
+                "brush": "text-green-500",
+                "brain": "text-sky-500",
+                "target": "text-purple-500",
+                "zap": "text-orange-500",
+                "rocket": "text-blue-500",
+                "tree-pine": "text-orange-500",
               };
               return (
                 <div key={index} className="text-center">
