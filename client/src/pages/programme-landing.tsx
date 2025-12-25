@@ -398,7 +398,11 @@ export default function ProgrammeLanding({ programmeSlug }: ProgrammeLandingProp
           </div>
           <div className="flex flex-wrap justify-center gap-3">
             {details.activities.map((activity, index) => (
-              <Badge key={index} variant="outline" className="text-base px-4 py-2">
+              <Badge 
+                key={index} 
+                variant="outline" 
+                className="text-base px-4 py-2 cursor-pointer transition-all duration-300 hover:bg-[#df2060] hover:text-white hover:border-[#df2060] active:bg-[#df2060] active:text-white active:border-[#df2060]"
+              >
                 {activity}
               </Badge>
             ))}
