@@ -6,6 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { CTASection } from "@/components/cta-section";
 import { SEO } from "@/components/seo";
 import { ContactForm } from "@/components/contact-form";
+import { CountUp } from "@/components/count-up";
 import { programmes, branches } from "@shared/schema";
 import { Baby, BookOpen, GraduationCap, Palette, Sun, Heart, CheckCircle, ArrowRight, MapPin, Phone, Clock, Users, Star, Shield } from "lucide-react";
 import { trackProgrammeView } from "@/lib/analytics";
@@ -288,31 +289,47 @@ export default function ProgrammeLanding({ programmeSlug }: ProgrammeLandingProp
                   </li>
                 ))}
               </ul>
-              <div className="mt-8 flex items-center gap-4 text-muted-foreground">
-                <Clock className="w-5 h-5 text-primary" />
-                <span><strong>Schedule:</strong> {details.schedule}</span>
+              <div className="mt-8 text-muted-foreground">
+                <div className="flex items-start gap-4">
+                  <Clock className="w-5 h-5 text-primary mt-0.5 shrink-0" />
+                  <div>
+                    <strong>Timings:</strong>
+                    <div className="mt-1 space-y-1">
+                      <div>Morning Batch - 8:30AM to 11:30AM</div>
+                      <div>Afternoon Batch - 12:30PM to 3:30PM</div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
               <Card className="text-center p-6">
                 <Users className="w-10 h-10 text-primary mx-auto mb-3" />
-                <div className="text-3xl font-bold text-foreground">50,000+</div>
+                <div className="text-3xl font-bold text-foreground">
+                  <CountUp end={50000} duration={2000} suffix="+" />
+                </div>
                 <div className="text-sm text-muted-foreground">Happy Students</div>
               </Card>
               <Card className="text-center p-6">
                 <Star className="w-10 h-10 text-secondary mx-auto mb-3" />
-                <div className="text-3xl font-bold text-foreground">17+</div>
-                <div className="text-sm text-muted-foreground">Years Experience</div>
+                <div className="text-3xl font-bold text-foreground">
+                  <CountUp end={18} duration={1500} delay={200} suffix="+" />
+                </div>
+                <div className="text-sm text-muted-foreground">Years of Excellence</div>
               </Card>
               <Card className="text-center p-6">
                 <MapPin className="w-10 h-10 text-accent mx-auto mb-3" />
-                <div className="text-3xl font-bold text-foreground">6</div>
+                <div className="text-3xl font-bold text-foreground">
+                  <CountUp end={6} duration={1500} delay={400} prefix="0" />
+                </div>
                 <div className="text-sm text-muted-foreground">Centres in Thane</div>
               </Card>
               <Card className="text-center p-6">
                 <Shield className="w-10 h-10 text-green-500 mx-auto mb-3" />
-                <div className="text-3xl font-bold text-foreground">100%</div>
-                <div className="text-sm text-muted-foreground">Safe Environment</div>
+                <div className="text-3xl font-bold text-foreground">
+                  <CountUp end={100} duration={1500} delay={600} suffix="%" />
+                </div>
+                <div className="text-sm text-muted-foreground">Female Staff</div>
               </Card>
             </div>
           </div>
