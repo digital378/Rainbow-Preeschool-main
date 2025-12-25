@@ -7,6 +7,7 @@ import { CTASection } from "@/components/cta-section";
 import { SEO } from "@/components/seo";
 import { ContactForm } from "@/components/contact-form";
 import { CountUp } from "@/components/count-up";
+import { BranchCard } from "@/components/branch-card";
 import { programmes, branches } from "@shared/schema";
 import { Baby, BookOpen, GraduationCap, Palette, Sun, Heart, CheckCircle, ArrowRight, MapPin, Phone, Clock, Users, Star, Shield, ShieldCheck, Award, Sparkles, Bus, UsersRound, Gamepad2, Brain, Music, Brush, Shapes, MessageCircle, Activity, HandHeart, TreePine, Zap, Rocket, Target } from "lucide-react";
 import { trackProgrammeView } from "@/lib/analytics";
@@ -430,24 +431,16 @@ export default function ProgrammeLanding({ programmeSlug }: ProgrammeLandingProp
       {/* Centres Section */}
       <section className="py-16 md:py-20 lg:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Centres</h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              {programme.name} is available at all our 6 centres across Thane West.
+          <div className="text-center max-w-3xl mx-auto mb-12">
+            <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">Our Locations</p>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Rainbow Preschool Centres</h2>
+            <p className="text-muted-foreground text-lg">
+              {programme.name} is available at all our centres across Thane.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {branches.slice(0, 6).map((branch) => (
-              <Card key={branch.id} className="hover-elevate">
-                <CardContent className="p-6">
-                  <h3 className="font-semibold mb-2">{branch.name}</h3>
-                  <p className="text-sm text-muted-foreground mb-3">{branch.address}</p>
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <Phone className="w-4 h-4" />
-                    <span>{branch.calling}</span>
-                  </div>
-                </CardContent>
-              </Card>
+            {branches.map((branch) => (
+              <BranchCard key={branch.id} branch={branch} />
             ))}
           </div>
         </div>
