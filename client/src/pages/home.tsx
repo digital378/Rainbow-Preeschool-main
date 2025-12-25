@@ -155,8 +155,8 @@ export default function Home() {
               </Card>
               <Card className="text-center">
                 <CardContent className="pt-6">
-                  <Shield className="w-10 h-10 text-green-500 fill-green-500 mx-auto mb-3" />
-                  <p className="text-3xl font-bold text-green-500 mb-1">
+                  <Shield className="w-10 h-10 text-green-500 mx-auto mb-3" />
+                  <p className="text-3xl font-bold text-foreground mb-1">
                     <CountUp end={100} duration={1500} delay={600} suffix="%" />
                   </p>
                   <p className="text-sm text-muted-foreground">Female Staff</p>
