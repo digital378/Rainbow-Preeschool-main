@@ -10,7 +10,6 @@ const redirectMap: Record<string, string> = {
   "/about.php": "/about",
   "/our-story": "/about",
   
-  "/programmes": "/programmes",
   "/programs": "/programmes",
   "/our-programmes": "/programmes",
   "/our-programs": "/programmes",
