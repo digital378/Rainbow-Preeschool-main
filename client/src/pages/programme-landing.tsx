@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useRoute, Link } from "wouter";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -11,6 +11,60 @@ import { BranchCard } from "@/components/branch-card";
 import { programmes, branches } from "@shared/schema";
 import { Baby, BookOpen, GraduationCap, Palette, Sun, Heart, CheckCircle, ArrowRight, MapPin, Phone, Clock, Users, Star, Shield, ShieldCheck, Award, Sparkles, Bus, UsersRound, Gamepad2, Brain, Music, Brush, Shapes, MessageCircle, Activity, HandHeart, TreePine, Zap, Rocket, Target } from "lucide-react";
 import { trackProgrammeView } from "@/lib/analytics";
+
+function ActivitiesSection({ activities }: { activities: string[] }) {
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <section ref={sectionRef} className="py-16 md:py-20 lg:py-24">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">Daily Activities</h2>
+          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+            A variety of engaging activities to keep your child learning and having fun.
+          </p>
+        </div>
+        <div className="flex flex-wrap justify-center gap-3">
+          {activities.map((activity, index) => (
+            <Badge 
+              key={index} 
+              variant="outline" 
+              className={`text-base px-4 py-2 cursor-pointer transition-all duration-300 hover:bg-[#df2060] hover:text-white hover:border-[#df2060] active:bg-[#df2060] active:text-white active:border-[#df2060] ${
+                isVisible 
+                  ? "opacity-100 translate-y-0" 
+                  : "opacity-0 translate-y-4"
+              }`}
+              style={{ 
+                transitionDelay: isVisible ? `${index * 100}ms` : "0ms",
+                transitionProperty: "all"
+              }}
+            >
+              {activity}
+            </Badge>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
 
 const iconMap = {
   baby: Baby,
@@ -389,27 +443,7 @@ export default function ProgrammeLanding({ programmeSlug }: ProgrammeLandingProp
       </section>
 
       {/* Activities Section */}
-      <section className="py-16 md:py-20 lg:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Daily Activities</h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              A variety of engaging activities to keep your child learning and having fun.
-            </p>
-          </div>
-          <div className="flex flex-wrap justify-center gap-3">
-            {details.activities.map((activity, index) => (
-              <Badge 
-                key={index} 
-                variant="outline" 
-                className="text-base px-4 py-2 cursor-pointer transition-all duration-300 hover:bg-[#df2060] hover:text-white hover:border-[#df2060] active:bg-[#df2060] active:text-white active:border-[#df2060]"
-              >
-                {activity}
-              </Badge>
-            ))}
-          </div>
-        </div>
-      </section>
+      <ActivitiesSection activities={details.activities} />
 
       {/* Programme Highlights */}
       <section className="py-16 md:py-20 lg:py-24 bg-muted/30">
