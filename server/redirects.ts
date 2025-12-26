@@ -31,7 +31,6 @@ const redirectMap: Record<string, string> = {
   "/register": "/contact",
   "/callback": "/contact",
   
-  "/blog": "/blog",
   "/news": "/blog",
   "/updates": "/blog",
   "/articles": "/blog",
@@ -67,8 +66,6 @@ const redirectMap: Record<string, string> = {
   "/administrator": "/",
   "/admin": "/",
   
-  "/sitemap.xml": "/",
-  "/robots.txt": "/",
   "/feed": "/blog",
   "/rss": "/blog",
 };
