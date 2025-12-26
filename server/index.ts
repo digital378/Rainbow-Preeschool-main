@@ -3,6 +3,8 @@ import { registerRoutes } from "./routes";
 import { serveStatic } from "./static";
 import { setupRedirects } from "./redirects";
 import { createServer } from "http";
+import path from "path";
+import fs from "fs";
 
 const app = express();
 const httpServer = createServer(app);
@@ -22,6 +24,28 @@ app.use(
 );
 
 app.use(express.urlencoded({ extended: false }));
+
+// Serve sitemap.xml with correct content type (must be before redirects)
+app.get("/sitemap.xml", (req, res) => {
+  const sitemapPath = path.join(process.cwd(), "client", "public", "sitemap.xml");
+  if (fs.existsSync(sitemapPath)) {
+    res.setHeader("Content-Type", "application/xml");
+    res.sendFile(sitemapPath);
+  } else {
+    res.status(404).send("Sitemap not found");
+  }
+});
+
+// Serve robots.txt with correct content type (must be before redirects)
+app.get("/robots.txt", (req, res) => {
+  const robotsPath = path.join(process.cwd(), "client", "public", "robots.txt");
+  if (fs.existsSync(robotsPath)) {
+    res.setHeader("Content-Type", "text/plain");
+    res.sendFile(robotsPath);
+  } else {
+    res.status(404).send("Robots.txt not found");
+  }
+});
 
 setupRedirects(app);
 
