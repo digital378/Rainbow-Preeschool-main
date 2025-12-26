@@ -132,9 +132,9 @@ export default function Programmes() {
                       </>
                     )}
                     
-                    <Link href="/contact#enquiry-form">
-                      <Button data-testid={`button-enquire-${programme.id}`}>
-                        Enquire Now
+                    <Link href={`/${programme.id}`}>
+                      <Button data-testid={`button-more-info-${programme.id}`}>
+                        More Info
                         <ArrowRight className="ml-2 h-4 w-4" />
                       </Button>
                     </Link>
