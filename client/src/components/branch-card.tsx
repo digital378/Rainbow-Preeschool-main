@@ -15,15 +15,15 @@ interface BranchCardProps {
   branch: Branch;
 }
 
-// Map branch IDs to local landing page URLs
-// All 6 branches mapped to their respective locality pages
+// Map branch IDs to local preschool landing page URLs
+// All 6 branches mapped to their respective preschool locality pages
 const branchToLocalPage: Record<string, { url: string; locality: string }> = {
-  "aggarwal": { url: "/playgroup-in-manpada", locality: "Manpada" },
-  "hariniwas": { url: "/playgroup-in-thane", locality: "Thane" },
-  "anand-nagar": { url: "/playgroup-in-anand-nagar", locality: "Anand Nagar" },
-  "dhokali": { url: "/playgroup-in-dhokali", locality: "Dhokali" },
-  "kalwa": { url: "/playgroup-in-kalwa", locality: "Kalwa" },
-  "kasarvadavali": { url: "/playgroup-near-ghodbunder-road", locality: "Ghodbunder Road" },
+  "aggarwal": { url: "/preschool-in-manpada-thane", locality: "Manpada" },
+  "hariniwas": { url: "/preschool-in-hariniwas-thane", locality: "Hariniwas" },
+  "anand-nagar": { url: "/preschool-in-anand-nagar-thane", locality: "Anand Nagar" },
+  "dhokali": { url: "/preschool-in-dhokali-thane", locality: "Dhokali" },
+  "kalwa": { url: "/preschool-in-kalwa-thane", locality: "Kalwa" },
+  "kasarvadavali": { url: "/preschool-in-kasarvadavali-thane", locality: "Kasarvadavali" },
 };
 
 export function BranchCard({ branch }: BranchCardProps) {
