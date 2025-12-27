@@ -434,8 +434,37 @@ export default function PlaygroupLanding() {
         </div>
       </section>
 
-      {/* What Your Child Learns - Icon Grid */}
+      {/* A Day in Our Playgroup - Timeline */}
       <section className="py-16 md:py-20 lg:py-24 bg-muted/30">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">A Day in Our Playgroup</h2>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              A structured yet flexible routine that balances learning, play, and rest.
+            </p>
+          </div>
+          <div className="max-w-3xl mx-auto">
+            <div className="relative">
+              <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-primary/20 transform md:-translate-x-1/2" />
+              {dailyRoutine.map((item, index) => (
+                <div key={index} className={`relative flex items-start gap-4 mb-8 ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
+                  <div className="absolute left-4 md:left-1/2 w-3 h-3 bg-primary rounded-full transform -translate-x-1/2 mt-2" />
+                  <div className={`ml-12 md:ml-0 md:w-1/2 ${index % 2 === 0 ? 'md:pr-12 md:text-right' : 'md:pl-12'}`}>
+                    <div className="bg-background p-4 rounded-lg shadow-sm border">
+                      <Badge variant="secondary" className="mb-2">{item.time}</Badge>
+                      <h4 className="font-semibold text-lg">{item.activity}</h4>
+                      <p className="text-sm text-muted-foreground">{item.description}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* What Your Child Learns - Icon Grid */}
+      <section className="py-16 md:py-20 lg:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">What Your Child Will Learn</h2>
@@ -488,35 +517,6 @@ export default function PlaygroupLanding() {
                 <ContactForm defaultProgramme="Playgroup" />
               </CardContent>
             </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* A Day in Our Playgroup - Timeline */}
-      <section className="py-16 md:py-20 lg:py-24 bg-muted/30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">A Day in Our Playgroup</h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              A structured yet flexible routine that balances learning, play, and rest.
-            </p>
-          </div>
-          <div className="max-w-3xl mx-auto">
-            <div className="relative">
-              <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-primary/20 transform md:-translate-x-1/2" />
-              {dailyRoutine.map((item, index) => (
-                <div key={index} className={`relative flex items-start gap-4 mb-8 ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
-                  <div className="absolute left-4 md:left-1/2 w-3 h-3 bg-primary rounded-full transform -translate-x-1/2 mt-2" />
-                  <div className={`ml-12 md:ml-0 md:w-1/2 ${index % 2 === 0 ? 'md:pr-12 md:text-right' : 'md:pl-12'}`}>
-                    <div className="bg-background p-4 rounded-lg shadow-sm border">
-                      <Badge variant="secondary" className="mb-2">{item.time}</Badge>
-                      <h4 className="font-semibold text-lg">{item.activity}</h4>
-                      <p className="text-sm text-muted-foreground">{item.description}</p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
           </div>
         </div>
       </section>
