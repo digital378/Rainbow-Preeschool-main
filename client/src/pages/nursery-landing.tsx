@@ -345,10 +345,6 @@ const faqs = [
     answer: "Your child will learn phonics basics, number recognition (1-20), pre-writing skills, art & creativity, and develop strong social and communication skills through interactive activities, stories, and group learning."
   },
   {
-    question: "Do you offer trial classes for nursery?",
-    answer: "Yes! We encourage parents to schedule a centre visit where your child can experience a trial session. This helps both parent and child feel comfortable before enrollment."
-  },
-  {
     question: "What is the batch size in nursery?",
     answer: "We maintain small batch sizes of 12-15 children per teacher to ensure individual attention and personalized learning for each child."
   },
