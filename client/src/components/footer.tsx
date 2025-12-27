@@ -1,7 +1,6 @@
 import { Link } from "wouter";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
 import { SiFacebook, SiInstagram, SiYoutube } from "react-icons/si";
-import { branches, programmes } from "@shared/schema";
 import logoImage from "@assets/Rainbow_Pre_School.Logo_1766035853658.png";
 
 export function Footer() {
@@ -93,17 +92,51 @@ export function Footer() {
           <div>
             <h4 className="font-semibold text-base mb-4">Our Programmes</h4>
             <ul className="space-y-2">
-              {programmes.slice(0, 5).map((prog) => (
-                <li key={prog.id}>
-                  <Link
-                    href={`/programmes#${prog.id}`}
-                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                    data-testid={`link-footer-programme-${prog.id}`}
-                  >
-                    {prog.name}
-                  </Link>
-                </li>
-              ))}
+              <li>
+                <Link
+                  href="/playgroup"
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  data-testid="link-footer-programme-playgroup"
+                >
+                  Playgroup
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/nursery"
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  data-testid="link-footer-programme-nursery"
+                >
+                  Nursery
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/kindergarten"
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  data-testid="link-footer-programme-kindergarten"
+                >
+                  Kindergarten
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/kids-activity-club"
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  data-testid="link-footer-programme-kids-activity-club"
+                >
+                  Kids Activity Club
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/summer-camp"
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  data-testid="link-footer-programme-summer-camp"
+                >
+                  Summer Camp
+                </Link>
+              </li>
             </ul>
           </div>
 
