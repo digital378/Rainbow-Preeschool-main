@@ -354,7 +354,7 @@ const faqs = [
   },
   {
     question: "What are the playgroup timings?",
-    answer: "We offer two batches: Morning Batch (8:30 AM - 11:30 AM) and Afternoon Batch (12:30 PM - 3:30 PM). You can choose the timing that suits your schedule."
+    answer: "We offer two options: Morning Batch (8:30 AM - 12:30 PM) and Extended Day (12:00 PM - 4:00 PM). Choose the timing that works best for your family schedule."
   },
 ];
 
@@ -555,8 +555,8 @@ export default function PlaygroupLanding() {
                   <div>
                     <strong>Timings:</strong>
                     <div className="mt-1 space-y-1">
-                      <div>Morning Batch - 8:30AM to 11:30AM</div>
-                      <div>Afternoon Batch - 12:30PM to 3:30PM</div>
+                      <div>Morning Batch - 8:30AM to 12:30PM</div>
+                      <div>Extended Day - 12:00PM to 4:00PM</div>
                     </div>
                   </div>
                 </div>

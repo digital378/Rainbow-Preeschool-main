@@ -335,7 +335,7 @@ const dailyRoutine = [
 const faqs = [
   {
     question: "What are the Happy Times operating hours?",
-    answer: "Happy Times operates from 2:00 PM to 7:00 PM on school days. We offer flexible pickup times within this window to accommodate working parents' schedules."
+    answer: "Happy Times operates from 8:30 AM to 7:30 PM on school days. We offer flexible pickup times within this window to accommodate working parents' schedules."
   },
   {
     question: "Are meals provided at Happy Times?",
@@ -370,7 +370,7 @@ export default function HappyTimesLanding() {
     <div className="pt-20">
       <SEO
         title="Happy Times After School Care in Thane | Rainbow Preschool"
-        description="Best after-school care in Thane for children aged 3-10 years. Safe environment, homework help, supervised play, and healthy snacks. Extended hours until 7 PM for working parents."
+        description="Best after-school care in Thane for children aged 3-10 years. Safe environment, homework help, supervised play, and healthy snacks. Extended hours until 7:30 PM for working parents."
         keywords="after school care thane, after school programme thane, daycare for school kids thane, extended care for children thane, after school activities thane"
         canonical="https://rainbowpreschools.com/happy-times"
       />
@@ -428,7 +428,7 @@ export default function HappyTimesLanding() {
                 At Rainbow Preschool's Happy Times, children receive dedicated homework assistance, ensuring they complete assignments with guidance and develop strong study habits. Our supervised play activities promote physical development and social skills in a secure setting.
               </p>
               <p className="text-lg leading-relaxed">
-                Working parents can have complete peace of mind knowing their children are in a caring environment with trained staff, CCTV monitoring, and healthy snacks. Our extended hours until 7 PM accommodate varied work schedules, making pickup convenient and stress-free.
+                Working parents can have complete peace of mind knowing their children are in a caring environment with trained staff, CCTV monitoring, and healthy snacks. Our extended hours until 7:30 PM accommodate varied work schedules, making pickup convenient and stress-free.
               </p>
             </div>
           </div>
@@ -531,7 +531,7 @@ export default function HappyTimesLanding() {
               <ul className="space-y-4">
                 <li className="flex items-start gap-3">
                   <Star className="w-5 h-5 text-secondary mt-0.5 shrink-0" />
-                  <span className="text-lg">Extended hours until 7 PM for working parents</span>
+                  <span className="text-lg">Extended hours until 7:30 PM for working parents</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <Star className="w-5 h-5 text-secondary mt-0.5 shrink-0" />
@@ -556,7 +556,7 @@ export default function HappyTimesLanding() {
                   <div>
                     <strong>Operating Hours:</strong>
                     <div className="mt-1">
-                      <div>Monday to Friday - 2:00 PM to 7:00 PM</div>
+                      <div>Monday to Friday - 8:30 AM to 7:30 PM</div>
                     </div>
                   </div>
                 </div>
