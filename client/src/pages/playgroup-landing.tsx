@@ -345,10 +345,6 @@ const faqs = [
     answer: "Your child will develop social skills, motor coordination, language abilities, and cognitive skills through play-based activities, songs, stories, and sensory exploration."
   },
   {
-    question: "Do you offer trial classes?",
-    answer: "Yes! We encourage parents to schedule a centre visit where your child can experience a trial session. This helps both parent and child feel comfortable before enrollment."
-  },
-  {
     question: "What is the batch size?",
     answer: "We maintain small batch sizes of 10-12 children per teacher to ensure individual attention and personalized care for each child."
   },
