@@ -76,7 +76,17 @@ The backend provides:
 ## Local SEO Structure
 
 ### Hyperlocal Landing Pages
-The site implements aggressive local SEO targeting "playgroup in [locality]" keywords with 7 dedicated landing pages:
+The site implements aggressive local SEO targeting "preschool in [locality]" and "playgroup in [locality]" keywords with dedicated landing pages:
+
+**Preschool Centre Pages (Primary SEO Focus):**
+- `/preschool-in-manpada-thane` - Manpada centre
+- `/preschool-in-hariniwas-thane` - Hariniwas centre
+- `/preschool-in-anand-nagar-thane` - Anand Nagar centre
+- `/preschool-in-dhokali-thane` - Dhokali centre
+- `/preschool-in-kalwa-thane` - Kalwa centre
+- `/preschool-in-kasarvadavali-thane` - Kasarvadavali centre
+
+**Legacy Playgroup Pages:**
 - `/playgroup-in-thane` - Main Thane hub page
 - `/playgroup-in-manpada` - Manpada centre
 - `/playgroup-in-kalwa` - Kalwa centre
@@ -87,7 +97,7 @@ The site implements aggressive local SEO targeting "playgroup in [locality]" key
 
 ### Centre Data Structure
 All centre information is centralized in `shared/centre-data.ts`:
-- Centre details with locality slugs and landing page URLs
+- Centre details with locality slugs, playgroundLandingUrl and preschoolLandingUrl
 - Locality-specific FAQs for each page
 - Locality intro copy for unique content
 - SEO meta data (title, description, h1, canonical)
@@ -105,6 +115,9 @@ Enhanced lead tracking via dataLayer pushes:
 - `call_click` - Phone number clicks
 - `directions_click` - Map directions clicks
 - `local_page_click` - Local landing page link clicks
+- `homepage_location_click` - Homepage preschool card clicks
+- `header_centre_click` - Navigation dropdown centre clicks
+- `mobile_centre_click` - Mobile menu centre clicks
 
 All events capture UTM parameters for attribution tracking.
 
