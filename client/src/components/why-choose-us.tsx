@@ -5,8 +5,8 @@ import { cn } from "@/lib/utils";
 const features = [
   {
     icon: Shield,
-    title: "Safe & Secure Campus",
-    description: "CCTV-monitored premises with 100% female teaching staff.",
+    title: "Safety & CCTV",
+    description: "CCTV-monitored premises with 100% female teaching staff for a secure environment.",
     bg: "bg-gradient-to-br from-pink-100 to-pink-200 dark:from-pink-800/40 dark:to-pink-900/40",
     iconColor: "text-pink-600 dark:text-pink-400",
     shadow: "shadow-[0_4px_0_0_rgb(219,39,119),0_6px_12px_-2px_rgba(219,39,119,0.3)] dark:shadow-[0_4px_0_0_rgb(157,23,77),0_6px_12px_-2px_rgba(219,39,119,0.2)]",
@@ -21,7 +21,7 @@ const features = [
   },
   {
     icon: Sparkles,
-    title: "Health, Hygiene & Cleanliness",
+    title: "Hygiene & Cleanliness",
     description: "Daily sanitisation, child-safe washrooms, and hygiene-first practices.",
     bg: "bg-gradient-to-br from-green-100 to-green-200 dark:from-green-800/40 dark:to-green-900/40",
     iconColor: "text-green-600 dark:text-green-400",
@@ -29,24 +29,24 @@ const features = [
   },
   {
     icon: Users,
-    title: "Ideal Student-Teacher Ratio (30:2)",
-    description: "Ensuring personalised care and individual attention.",
+    title: "Ideal Student-Teacher Ratio",
+    description: "30:2 ratio ensuring personalised care and individual attention for every child.",
     bg: "bg-gradient-to-br from-purple-100 to-purple-200 dark:from-purple-800/40 dark:to-purple-900/40",
     iconColor: "text-purple-600 dark:text-purple-400",
     shadow: "shadow-[0_4px_0_0_rgb(147,51,234),0_6px_12px_-2px_rgba(147,51,234,0.3)] dark:shadow-[0_4px_0_0_rgb(107,33,168),0_6px_12px_-2px_rgba(147,51,234,0.2)]",
   },
   {
     icon: Bus,
-    title: "GPS-Enabled Transport",
-    description: "Safe, in-house transport with real-time tracking.",
+    title: "Transport Facility",
+    description: "Safe, GPS-enabled in-house transport with real-time tracking for parents.",
     bg: "bg-gradient-to-br from-orange-100 to-orange-200 dark:from-orange-800/40 dark:to-orange-900/40",
     iconColor: "text-orange-600 dark:text-orange-400",
     shadow: "shadow-[0_4px_0_0_rgb(234,88,12),0_6px_12px_-2px_rgba(234,88,12,0.3)] dark:shadow-[0_4px_0_0_rgb(194,65,12),0_6px_12px_-2px_rgba(234,88,12,0.2)]",
   },
   {
     icon: Gamepad2,
-    title: "Strong Foundation Through Play",
-    description: "Holistic, play-based learning for confident early development.",
+    title: "Play-Based Learning",
+    description: "Holistic, play-based curriculum for confident early development and growth.",
     bg: "bg-gradient-to-br from-teal-100 to-teal-200 dark:from-teal-800/40 dark:to-teal-900/40",
     iconColor: "text-teal-600 dark:text-teal-400",
     shadow: "shadow-[0_4px_0_0_rgb(13,148,136),0_6px_12px_-2px_rgba(13,148,136,0.3)] dark:shadow-[0_4px_0_0_rgb(17,94,89),0_6px_12px_-2px_rgba(13,148,136,0.2)]",
@@ -62,7 +62,7 @@ export function WhyChooseUs() {
             Why Choose Us
           </p>
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            We Give Your Child Better Values
+            Why Parents Trust Rainbow Preschool in Thane
           </h2>
           <p className="text-muted-foreground text-lg">
             At Rainbow Preschools, we believe every child deserves the best start in life. 

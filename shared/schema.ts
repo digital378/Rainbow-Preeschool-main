@@ -172,24 +172,28 @@ export const testimonials = [
   {
     id: "1",
     name: "Kamlesh Karangutkar",
+    locality: "Manpada",
     rating: 5,
     text: "My son has successfully completed his preschool years. I am very happy and satisfied with the way Rainbow has shaped him and his overall growth. The method of teaching is very creative. He learnt many concepts in playful manner.",
   },
   {
     id: "2",
     name: "Reema Deshmukh",
+    locality: "Kalwa",
     rating: 5,
     text: "We have been associated with Rainbow preschool from the playgroup and our experience has been amazing. The teachers and the staff are so caring and efficient. My son enjoys the activities that go along with the academics.",
   },
   {
     id: "3",
     name: "Harpreet Singh",
+    locality: "Ghodbunder Road",
     rating: 5,
     text: "We highly recommend Rainbow preschool in Thane as it has perfect combination of Quality education, professional teachers, supporting staff & requisite infrastructure. My Daughter has seen lot of development & progress.",
   },
   {
     id: "4",
     name: "Uzma Tabassum",
+    locality: "Anand Nagar",
     rating: 5,
     text: "I Would like to thank our School Management from the bottom of my heart for taking up so much initiative. Individual Attention for the student taken care from teachers and most importantly my daughter and son love the school most.",
   },

@@ -58,8 +58,19 @@ export function ProgrammeCard({ programme, index = 0 }: ProgrammeCardProps) {
   const Icon = iconMap[programme.icon as keyof typeof iconMap] || Baby;
   const colors = colorMap[programme.id] || defaultColor;
 
+  const programmeRoutes: Record<string, string> = {
+    playgroup: "/playgroup",
+    nursery: "/nursery",
+    kindergarten: "/kindergarten",
+    "kids-activity-club": "/kids-activity-club",
+    "summer-camp": "/summer-camp",
+    "happy-times": "/happy-times",
+  };
+  
+  const href = programmeRoutes[programme.id] || `/programmes#${programme.id}`;
+
   return (
-    <Link href={`/programmes#${programme.id}`}>
+    <Link href={href}>
       <Card 
         className="group h-full transition-transform duration-300 hover:-translate-y-1 cursor-pointer"
         data-testid={`card-programme-${programme.id}`}

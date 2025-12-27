@@ -2,11 +2,17 @@ import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Palette, FlaskConical, Dumbbell, Lightbulb, Brain, MessageCircle, BookOpen } from "lucide-react";
 import { cn } from "@/lib/utils";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 const curriculumAreas = [
   {
     id: "art",
     label: "Art Studio",
+    tooltip: "Creative expression through painting, drawing, and crafts",
     icon: Palette,
     bg: "bg-gradient-to-br from-orange-400 to-orange-500 dark:from-orange-500 dark:to-orange-600",
     iconColor: "text-white",
@@ -15,6 +21,7 @@ const curriculumAreas = [
   {
     id: "maths",
     label: "Maths & Science",
+    tooltip: "Early numeracy and scientific exploration through play",
     icon: FlaskConical,
     bg: "bg-gradient-to-br from-sky-400 to-sky-500 dark:from-sky-500 dark:to-sky-600",
     iconColor: "text-white",
@@ -23,6 +30,7 @@ const curriculumAreas = [
   {
     id: "sports",
     label: "Sports & Movement",
+    tooltip: "Physical development through games and outdoor activities",
     icon: Dumbbell,
     bg: "bg-gradient-to-br from-teal-500 to-teal-600 dark:from-teal-500 dark:to-teal-600",
     iconColor: "text-white",
@@ -31,6 +39,7 @@ const curriculumAreas = [
   {
     id: "skill",
     label: "Skill Development",
+    tooltip: "Fine motor skills and practical life activities",
     icon: Lightbulb,
     bg: "bg-gradient-to-br from-green-400 to-green-500 dark:from-green-500 dark:to-green-600",
     iconColor: "text-white",
@@ -39,6 +48,7 @@ const curriculumAreas = [
   {
     id: "aptitude",
     label: "General Aptitude",
+    tooltip: "Cognitive development and problem-solving abilities",
     icon: Brain,
     bg: "bg-gradient-to-br from-purple-400 to-purple-500 dark:from-purple-500 dark:to-purple-600",
     iconColor: "text-white",
@@ -47,6 +57,7 @@ const curriculumAreas = [
   {
     id: "bilingual",
     label: "Bilingual Education",
+    tooltip: "Language skills in English and Hindi/Marathi",
     icon: MessageCircle,
     bg: "bg-gradient-to-br from-amber-400 to-amber-500 dark:from-amber-500 dark:to-amber-600",
     iconColor: "text-white",
@@ -67,8 +78,11 @@ export function MethodologySection() {
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
               Research-Based Curriculum for Every Child
             </h2>
-            <p className="text-muted-foreground text-lg mb-8 leading-relaxed">
+            <p className="text-muted-foreground text-lg mb-6 leading-relaxed">
               At Rainbow Preschool, our teachers are dedicated and nurturing. Their singular goal is to help your child meet milestones and become successful. We offer a path toward elementary school that can be personalized to meet each child's needs.
+            </p>
+            <p className="text-muted-foreground mb-8 leading-relaxed">
+              Our curriculum is designed for preschool and playgroup children in Thane, supporting holistic early development through age-appropriate activities.
             </p>
 
             <Link href="/programmes">
@@ -119,7 +133,7 @@ export function MethodologySection() {
                 <BookOpen className="w-12 h-12 md:w-16 md:h-16 text-white" strokeWidth={1.5} />
               </div>
 
-              {/* Curriculum Area Bubbles with 3D effect */}
+              {/* Curriculum Area Bubbles with 3D effect and tooltips */}
               {curriculumAreas.map((area, index) => {
                 const angle = (index * 60 - 90) * (Math.PI / 180);
                 const radius = 145;
@@ -128,25 +142,31 @@ export function MethodologySection() {
                 const Icon = area.icon;
                 
                 return (
-                  <div
-                    key={area.id}
-                    className="absolute top-1/2 left-1/2 flex flex-col items-center gap-2 z-20"
-                    style={{
-                      transform: `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`,
-                    }}
-                    data-testid={`curriculum-area-${area.id}`}
-                  >
-                    <div className={cn(
-                      "w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center transition-transform hover:scale-105",
-                      area.bg,
-                      area.shadow
-                    )}>
-                      <Icon className={cn("w-6 h-6 md:w-7 md:h-7", area.iconColor)} />
-                    </div>
-                    <span className="text-xs md:text-sm font-semibold text-foreground text-center whitespace-nowrap">
-                      {area.label}
-                    </span>
-                  </div>
+                  <Tooltip key={area.id}>
+                    <TooltipTrigger asChild>
+                      <div
+                        className="absolute top-1/2 left-1/2 flex flex-col items-center gap-2 z-20 cursor-pointer"
+                        style={{
+                          transform: `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`,
+                        }}
+                        data-testid={`curriculum-area-${area.id}`}
+                      >
+                        <div className={cn(
+                          "w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center transition-transform hover:scale-105",
+                          area.bg,
+                          area.shadow
+                        )}>
+                          <Icon className={cn("w-6 h-6 md:w-7 md:h-7", area.iconColor)} />
+                        </div>
+                        <span className="text-xs md:text-sm font-semibold text-foreground text-center whitespace-nowrap">
+                          {area.label}
+                        </span>
+                      </div>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>{area.tooltip}</p>
+                    </TooltipContent>
+                  </Tooltip>
                 );
               })}
             </div>

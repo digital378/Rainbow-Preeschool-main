@@ -5,7 +5,7 @@ interface ContactFormData {
   parentName: string;
   childName: string;
   phone: string;
-  email: string;
+  email?: string;
   childAge: string;
   programme: string;
   branch: string;
@@ -54,7 +54,7 @@ export async function sendLeadNotificationEmail(data: ContactFormData): Promise<
     <tr><td>Parent_Name</td><td>${data.parentName}</td></tr>
     <tr><td>Student_Name</td><td>${data.childName}</td></tr>
     <tr><td>Mobile_No</td><td>${data.phone}</td></tr>
-    <tr><td>Email_Id</td><td><a href="mailto:${data.email}">${data.email}</a></td></tr>
+    <tr><td>Email_Id</td><td>${data.email ? `<a href="mailto:${data.email}">${data.email}</a>` : 'Not provided'}</td></tr>
     <tr><td>Child_Age</td><td>${data.childAge}</td></tr>
     <tr><td>Programme</td><td>${data.programme}</td></tr>
     <tr><td>Preferred_Centre</td><td>${data.branch}</td></tr>
@@ -78,7 +78,7 @@ Field                   | Value
 Parent_Name             | ${data.parentName}
 Student_Name            | ${data.childName}
 Mobile_No               | ${data.phone}
-Email_Id                | ${data.email}
+Email_Id                | ${data.email || 'Not provided'}
 Child_Age               | ${data.childAge}
 Programme               | ${data.programme}
 Preferred_Centre        | ${data.branch}

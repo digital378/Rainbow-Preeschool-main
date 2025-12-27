@@ -1,6 +1,15 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { HeroSection } from "@/components/hero-section";
 import { ProgrammeCard } from "@/components/programme-card";
 import { BranchCard } from "@/components/branch-card";
@@ -11,8 +20,13 @@ import { CTASection } from "@/components/cta-section";
 import { ContactForm } from "@/components/contact-form";
 import { CountUp } from "@/components/count-up";
 import { programmes, branches, testimonials } from "@shared/schema";
-import { ArrowRight, Star, Users, MapPin, Shield } from "lucide-react";
-import { SiGoogle } from "react-icons/si";
+import { ArrowRight, Star, Users, MapPin, Shield, Lock, Phone } from "lucide-react";
+import { SiGoogle, SiWhatsapp } from "react-icons/si";
+import { useState, useEffect } from "react";
+import { useToast } from "@/hooks/use-toast";
+import { useMutation } from "@tanstack/react-query";
+import { apiRequest } from "@/lib/queryClient";
+import { trackFormSubmission, trackCTAClick } from "@/lib/analytics";
 import {
   Accordion,
   AccordionContent,
@@ -22,55 +36,192 @@ import {
 
 const faqs = [
   {
-    question: "What is a typical day like at Rainbow Preschool?",
-    answer: "A well-balanced routine with greetings, prayer, concept learning, playtime, snacks, circle time, songs, and dispersal - blending learning, play, and social interaction."
+    question: "Which is the best preschool in Thane?",
+    answer: "Rainbow Preschool International is one of the most trusted preschools in Thane with 18+ years of experience and 50,000+ happy students. We offer safe, play-based learning with certified teachers across 6 centres in Thane."
   },
   {
-    question: "How does the curriculum support early childhood development?",
-    answer: "Through interactive, age-appropriate activities that build cognitive, social, emotional, physical, and language skills."
+    question: "What age can a child start playgroup?",
+    answer: "Children can start playgroup at Rainbow Preschool from 1.5 years (18 months) of age. Our playgroup programme is designed for children aged 1.5 to 2.5 years, introducing learning through fun activities like puppet shows, play, and colours."
   },
   {
-    question: "Are there any special programs or extra activities?",
-    answer: "Yes. Children enjoy art & craft, outdoor activities, nature walks, field trips, and special learning events."
+    question: "Is Rainbow Preschool safe for toddlers?",
+    answer: "Absolutely! Safety is our top priority. We have CCTV-monitored premises, 100% female teaching staff, secure entry/exit procedures, and follow strict health and hygiene protocols. Our ideal 30:2 student-teacher ratio ensures personalised care."
   },
   {
-    question: "How is technology used in learning?",
-    answer: "We use audio-visual learning tools, digital storytelling, and parent communication platforms to enhance engagement and updates."
+    question: "Do you offer playgroup in Thane West?",
+    answer: "Yes! We have multiple centres in Thane West including Manpada, Anand Nagar, Dhokali, and Kasarvadavali. All centres offer playgroup programmes for children aged 1.5 to 2.5 years."
   },
   {
-    question: "What health and safety measures are in place?",
-    answer: "A secure campus with access control, hygiene protocols, nutritious meals, medical check-ups, and regular parent communication."
+    question: "How can I book a visit to Rainbow Preschool?",
+    answer: "You can book a visit by calling us at 82915 68972 or 022 6114 7114, or fill out our contact form. Our admissions team will schedule a convenient time for you to visit your nearest centre."
   },
   {
-    question: "What is the sick child policy?",
-    answer: "Children should stay home if unwell and return only after full recovery with a medical fitness certificate, if required."
-  },
-  {
-    question: "How are emergencies and first-aid handled?",
-    answer: "Basic first aid is provided immediately, parents are informed promptly, and emergency contacts are always maintained."
-  },
-  {
-    question: "How often are parent-teacher meetings held?",
-    answer: "Playgroup: Monthly. Nursery to Senior KG: Every alternate month. Regular communication is encouraged."
-  },
-  {
-    question: "What facilities are available for children?",
-    answer: "Play areas, activity rooms, library, audio-visual learning, toys, and child-friendly resources."
-  },
-  {
-    question: "Are meals and snacks provided?",
-    answer: "Yes. Healthy meals are prepared under supervision, and monthly menus are shared with parents."
-  },
-  {
-    question: "What are the pickup and drop-off policies?",
-    answer: "Children are released only to authorized adults with parent passes. Transport users follow strict verification at stops."
+    question: "What programmes does Rainbow Preschool offer?",
+    answer: "We offer Playgroup (1.5-2.5 years), Nursery (2.5-3.5 years), Kindergarten (3.5-5.5 years), Kids Activity Club (3-10 years), Summer Camp (2-10 years), and Happy Times after-school care (3-10 years)."
   },
 ];
 
+const childAgeOptions = [
+  "Below 1.5 years",
+  "1.5 - 2 years",
+  "2 - 2.5 years",
+  "2.5 - 3 years",
+  "3 - 3.5 years",
+  "3.5 - 4 years",
+  "4 - 5 years",
+  "5+ years",
+];
+
+function QuickCallbackStrip() {
+  const { toast } = useToast();
+  const [formData, setFormData] = useState({
+    parentName: "",
+    phone: "",
+    childAge: "",
+  });
+
+  const mutation = useMutation({
+    mutationFn: async (data: typeof formData) => {
+      return apiRequest("POST", "/api/contact", {
+        parentName: data.parentName,
+        phone: data.phone,
+        childAge: data.childAge,
+        programme: "General Enquiry",
+        branch: "To be assigned",
+        childName: "Quick Callback",
+      });
+    },
+    onSuccess: () => {
+      trackFormSubmission("quick_callback", "homepage_strip");
+      toast({
+        title: "Thank you!",
+        description: "Our admissions team will call you shortly.",
+      });
+      setFormData({ parentName: "", phone: "", childAge: "" });
+    },
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "Something went wrong. Please try again.",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formData.parentName || !formData.phone || !formData.childAge) {
+      toast({
+        title: "Please fill all fields",
+        description: "All fields are required to submit the form.",
+        variant: "destructive",
+      });
+      return;
+    }
+    mutation.mutate(formData);
+  };
+
+  return (
+    <section className="py-6 md:py-8 bg-primary/5 border-b">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <form onSubmit={handleSubmit} className="flex flex-col md:flex-row items-center gap-4">
+          <div className="flex-1 w-full md:w-auto">
+            <Label htmlFor="quick-parent-name" className="sr-only">Parent Name</Label>
+            <Input
+              id="quick-parent-name"
+              placeholder="Parent Name"
+              value={formData.parentName}
+              onChange={(e) => setFormData({ ...formData, parentName: e.target.value })}
+              className="w-full"
+              data-testid="input-quick-parent-name"
+            />
+          </div>
+          <div className="flex-1 w-full md:w-auto">
+            <Label htmlFor="quick-phone" className="sr-only">Phone Number</Label>
+            <Input
+              id="quick-phone"
+              placeholder="Phone Number"
+              type="tel"
+              value={formData.phone}
+              onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+              className="w-full"
+              data-testid="input-quick-phone"
+            />
+          </div>
+          <div className="flex-1 w-full md:w-auto">
+            <Label htmlFor="quick-child-age" className="sr-only">Child's Age</Label>
+            <Select
+              value={formData.childAge}
+              onValueChange={(value) => setFormData({ ...formData, childAge: value })}
+            >
+              <SelectTrigger id="quick-child-age" data-testid="select-quick-child-age">
+                <SelectValue placeholder="Child's Age" />
+              </SelectTrigger>
+              <SelectContent>
+                {childAgeOptions.map((age) => (
+                  <SelectItem key={age} value={age}>
+                    {age}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <Button 
+            type="submit" 
+            disabled={mutation.isPending}
+            className="w-full md:w-auto px-8"
+            data-testid="button-quick-callback"
+          >
+            {mutation.isPending ? "Sending..." : "Get a Call Back"}
+          </Button>
+        </form>
+        <p className="text-center md:text-left text-xs text-muted-foreground mt-3 flex items-center justify-center md:justify-start gap-1">
+          <Lock className="w-3 h-3" />
+          No spam. One call from our admissions team.
+        </p>
+      </div>
+    </section>
+  );
+}
+
 export default function Home() {
+  useEffect(() => {
+    const faqSchema = {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": faqs.map((faq) => ({
+        "@type": "Question",
+        "name": faq.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": faq.answer
+        }
+      }))
+    };
+    
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'faq-schema';
+    script.textContent = JSON.stringify(faqSchema);
+    
+    const existingScript = document.getElementById('faq-schema');
+    if (existingScript) {
+      existingScript.remove();
+    }
+    document.head.appendChild(script);
+    
+    return () => {
+      const scriptToRemove = document.getElementById('faq-schema');
+      if (scriptToRemove) {
+        scriptToRemove.remove();
+      }
+    };
+  }, []);
+
   return (
     <div>
       <HeroSection />
+      <QuickCallbackStrip />
 
       {/* Contact Form Section - Get In Touch */}
       <section className="py-16 md:py-20 lg:py-24 bg-card">
@@ -105,18 +256,18 @@ export default function Home() {
         </div>
       </section>
 
-      {/* About Section */}
+      {/* About Section - SEO Enhanced */}
       <section className="py-16 md:py-20 lg:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <div>
               <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">About</p>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">Rainbow Preschool International</h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6">A Trusted Preschool in Thane Since 2007</h2>
               <p className="text-muted-foreground text-lg leading-relaxed mb-6">
-                Founded in 2007, Rainbow Preschool International has nurtured over 50,000 young learners through joyful early childhood education. Being one of the most trusted preschools in Thane, we provide a safe, secure, and happy learning environment built on a strong play-based philosophy.
+                Rainbow Preschool International is one of the most trusted preschools in Thane, having nurtured over 50,000 young learners through joyful early childhood education. Our playgroup in Thane provides a safe, secure, and happy learning environment built on a strong play-based philosophy.
               </p>
               <p className="text-muted-foreground leading-relaxed mb-8">
-                Our age-appropriate curriculum helps children develop confidence, creativity, and early academic skills, preparing them smoothly for primary schooling while respecting every child's unique pace of growth.
+                Our age-appropriate early childhood education curriculum helps children develop confidence, creativity, and early academic skills, preparing them smoothly for primary schooling while respecting every child's unique pace of growth.
               </p>
               <Link href="/about">
                 <Button variant="outline" data-testid="button-learn-more">
@@ -126,33 +277,39 @@ export default function Home() {
               </Link>
             </div>
             <div className="grid grid-cols-2 gap-4">
-              <Card className="text-center">
-                <CardContent className="pt-6">
-                  <Users className="w-10 h-10 text-primary mx-auto mb-3" />
-                  <p className="text-3xl font-bold text-foreground mb-1">
-                    <CountUp end={50000} duration={2000} suffix="+" />
-                  </p>
-                  <p className="text-sm text-muted-foreground">Happy Students</p>
-                </CardContent>
-              </Card>
-              <Card className="text-center">
-                <CardContent className="pt-6">
-                  <Star className="w-10 h-10 text-yellow-400 fill-yellow-400 mx-auto mb-3" />
-                  <p className="text-3xl font-bold text-foreground mb-1">
-                    <CountUp end={18} duration={1500} delay={200} suffix="+" />
-                  </p>
-                  <p className="text-sm text-muted-foreground">Years of Excellence</p>
-                </CardContent>
-              </Card>
-              <Card className="text-center">
-                <CardContent className="pt-6">
-                  <MapPin className="w-10 h-10 text-sky-500 mx-auto mb-3" />
-                  <p className="text-3xl font-bold text-foreground mb-1">
-                    <CountUp end={6} duration={1500} delay={400} prefix="0" />
-                  </p>
-                  <p className="text-sm text-muted-foreground">Centres in Thane</p>
-                </CardContent>
-              </Card>
+              <Link href="#testimonials">
+                <Card className="text-center hover-elevate cursor-pointer">
+                  <CardContent className="pt-6">
+                    <Users className="w-10 h-10 text-primary mx-auto mb-3" />
+                    <p className="text-3xl font-bold text-foreground mb-1">
+                      <CountUp end={50000} duration={2000} suffix="+" />
+                    </p>
+                    <p className="text-sm text-muted-foreground">Happy Students</p>
+                  </CardContent>
+                </Card>
+              </Link>
+              <Link href="/about">
+                <Card className="text-center hover-elevate cursor-pointer">
+                  <CardContent className="pt-6">
+                    <Star className="w-10 h-10 text-yellow-400 fill-yellow-400 mx-auto mb-3" />
+                    <p className="text-3xl font-bold text-foreground mb-1">
+                      <CountUp end={18} duration={1500} delay={200} suffix="+" />
+                    </p>
+                    <p className="text-sm text-muted-foreground">Years of Excellence</p>
+                  </CardContent>
+                </Card>
+              </Link>
+              <Link href="#centres">
+                <Card className="text-center hover-elevate cursor-pointer">
+                  <CardContent className="pt-6">
+                    <MapPin className="w-10 h-10 text-sky-500 mx-auto mb-3" />
+                    <p className="text-3xl font-bold text-foreground mb-1">
+                      <CountUp end={6} duration={1500} delay={400} prefix="0" />
+                    </p>
+                    <p className="text-sm text-muted-foreground">Centres in Thane</p>
+                  </CardContent>
+                </Card>
+              </Link>
               <Card className="text-center">
                 <CardContent className="pt-6">
                   <Shield className="w-10 h-10 text-green-500 mx-auto mb-3" />
@@ -167,14 +324,14 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Programmes Section */}
+      {/* Programmes Section - SEO Cluster Hub */}
       <section className="py-16 md:py-20 lg:py-24 bg-card">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">Our Programmes</p>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Designed for Every Stage</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Programmes Designed for Every Stage of Early Learning</h2>
             <p className="text-muted-foreground text-lg">
-              From playgroup to kindergarten, we offer age-appropriate programmes that nurture your child's growth.
+              From playgroup to kindergarten, we offer age-appropriate programmes that nurture your child's growth through play-based learning.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -196,12 +353,12 @@ export default function Home() {
       <WhyChooseUs />
       <MethodologySection />
 
-      {/* Testimonials Section */}
-      <section className="py-16 md:py-20 lg:py-24 bg-card">
+      {/* Testimonials Section - Local SEO Enhanced */}
+      <section id="testimonials" className="py-16 md:py-20 lg:py-24 bg-card">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">Testimonials</p>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">What Parents Say</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Parents from Thane Say...</h2>
             <div className="flex items-center justify-center gap-2 mt-4">
               <SiGoogle className="w-5 h-5" />
               <span className="font-semibold">4.7</span>
@@ -219,13 +376,15 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Centres Section */}
-      <section className="py-16 md:py-20 lg:py-24">
+      {/* Centres Section - Local SEO Gold */}
+      <section id="centres" className="py-16 md:py-20 lg:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">Our Locations</p>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Rainbow Preschool Centres</h2>
-            <p className="text-muted-foreground text-lg">Locate your nearest Rainbow Preschools Centre in Thane.</p>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Preschool Centres Across Thane</h2>
+            <p className="text-muted-foreground text-lg">
+              Looking for a preschool or playgroup near you in Thane? Find your nearest centre.
+            </p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -236,19 +395,30 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FAQs Section */}
+      {/* FAQs Section - Homepage SEO with Schema */}
       <section className="py-16 md:py-20 lg:py-24 bg-card">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold">Frequently Asked Questions</h2>
+            <p className="text-muted-foreground mt-2">Common questions about our preschool in Thane</p>
           </div>
           <Accordion type="single" collapsible className="w-full">
             {faqs.map((faq, index) => (
-              <AccordionItem key={index} value={`item-${index}`} data-testid={`faq-item-${index}`}>
-                <AccordionTrigger className="text-left text-base font-medium hover:no-underline" data-testid={`faq-trigger-${index}`}>
+              <AccordionItem 
+                key={index} 
+                value={`item-${index}`} 
+                data-testid={`faq-item-${index}`}
+              >
+                <AccordionTrigger 
+                  className="text-left text-base font-medium hover:no-underline" 
+                  data-testid={`faq-trigger-${index}`}
+                >
                   {faq.question}
                 </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground" data-testid={`faq-content-${index}`}>
+                <AccordionContent 
+                  className="text-muted-foreground" 
+                  data-testid={`faq-content-${index}`}
+                >
                   {faq.answer}
                 </AccordionContent>
               </AccordionItem>
@@ -258,6 +428,29 @@ export default function Home() {
       </section>
 
       <CTASection />
+
+      {/* Sticky Mobile CTA */}
+      <div className="fixed bottom-0 left-0 right-0 z-40 md:hidden bg-background border-t p-3 flex items-center gap-2">
+        <Link href="/contact" className="flex-1">
+          <Button className="w-full" onClick={() => trackCTAClick("request_callback", "sticky_mobile")}>
+            <Phone className="mr-2 h-4 w-4" />
+            Request Callback
+          </Button>
+        </Link>
+        <a 
+          href="https://wa.me/918291568972?text=Hi%2C%20I%20would%20like%20to%20know%20more%20about%20Rainbow%20Preschool"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="shrink-0"
+        >
+          <Button variant="outline" size="icon" onClick={() => trackCTAClick("whatsapp_chat", "sticky_mobile")}>
+            <SiWhatsapp className="h-5 w-5 text-green-500" />
+          </Button>
+        </a>
+      </div>
+      
+      {/* Spacer for sticky mobile CTA */}
+      <div className="h-16 md:hidden" />
     </div>
   );
 }

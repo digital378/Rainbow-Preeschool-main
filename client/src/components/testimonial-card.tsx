@@ -49,7 +49,7 @@ export function TestimonialCard({ testimonial }: TestimonialCardProps) {
           </Avatar>
           <div>
             <p className="font-medium text-sm">{testimonial.name}</p>
-            <p className="text-xs text-muted-foreground">Parent</p>
+            <p className="text-xs text-muted-foreground">Parent, {testimonial.locality}</p>
           </div>
         </div>
       </CardContent>

@@ -59,7 +59,7 @@ export async function registerRoutes(
           parentName: validatedData.parentName,
           childName: validatedData.childName,
           phone: validatedData.phone,
-          email: validatedData.email,
+          email: validatedData.email || undefined,
           childAge: validatedData.childAge,
           programme: validatedData.programme,
           branch: validatedData.branch,

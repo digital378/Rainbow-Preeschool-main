@@ -1,7 +1,8 @@
 import { Link } from "wouter";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Calendar } from "lucide-react";
+import { ArrowRight, Phone, Users, Star, MapPin, Shield } from "lucide-react";
+import { SiWhatsapp } from "react-icons/si";
 import { trackCTAClick } from "@/lib/analytics";
 
 import heroBanner1 from "@assets/RPS_Hero_Banner_1_1766120729093.jpg";
@@ -10,6 +11,13 @@ import heroBanner3 from "@assets/RPS_Hero_Banner_3_1766120729093.jpg";
 import heroBanner4 from "@assets/RPS_Hero_Banner_4_1766120729092.jpg";
 
 const banners = [heroBanner1, heroBanner2, heroBanner3, heroBanner4];
+
+const trustBadges = [
+  { icon: Users, label: "50,000+ Happy Students" },
+  { icon: Star, label: "18+ Years of Excellence" },
+  { icon: MapPin, label: "6 Centres Across Thane" },
+  { icon: Shield, label: "100% Female Staff" },
+];
 
 export function HeroSection() {
   const [currentBanner, setCurrentBanner] = useState(0);
@@ -22,7 +30,7 @@ export function HeroSection() {
   }, []);
 
   return (
-    <section className="relative min-h-[70vh] flex items-center overflow-hidden">
+    <section className="relative min-h-[75vh] flex items-center overflow-hidden">
       {/* Animated Background Banners */}
       <div className="absolute inset-0">
         {banners.map((banner, index) => (
@@ -35,13 +43,13 @@ export function HeroSection() {
           >
             <img
               src={banner}
-              alt={`Rainbow Preschool Banner ${index + 1}`}
+              alt={`Preschool classroom in Thane - Rainbow Preschool ${index + 1}`}
               className="w-full h-full object-cover"
             />
           </div>
         ))}
         
-        {/* Gradient overlay for text readability - adapts to light/dark mode */}
+        {/* Gradient overlay for text readability */}
         <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/30 dark:from-black/85 dark:via-black/65 dark:to-black/35" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
       </div>
@@ -55,26 +63,47 @@ export function HeroSection() {
             <span className="text-sm font-medium text-white/90">Admissions Open for 2026-27</span>
           </div>
 
-          {/* Main heading */}
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6">
-            <span className="block text-white">Welcome To</span>
-            <span className="block rainbow-text mt-2">Rainbow</span>
-            <span className="block text-2xl sm:text-3xl md:text-4xl font-semibold text-white/80 mt-3">
-              Preschool International
-            </span>
+          {/* Main heading - Single H1 for SEO */}
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 text-white leading-tight">
+            Preschool & Playgroup in Thane for Early Childhood Excellence
           </h1>
 
-          {/* Tagline */}
-          <p className="text-lg md:text-xl lg:text-2xl text-white/80 max-w-xl mb-8 md:mb-10">
-            Laying the foundation for tomorrow.
+          {/* Subheading */}
+          <p className="text-lg md:text-xl text-white/90 max-w-xl mb-8 md:mb-10 leading-relaxed">
+            Nurturing children aged 1.5 to 6 years with play-based learning, care, and confidence since 2007.
           </p>
+
+          {/* Trust Badges */}
+          <div className="flex flex-wrap items-center gap-3 mb-8 md:mb-10">
+            {trustBadges.map((badge, index) => (
+              <div 
+                key={index}
+                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-sm border border-white/20"
+              >
+                <badge.icon className="w-4 h-4 text-yellow-400" />
+                <span className="text-xs sm:text-sm font-medium text-white/90">{badge.label}</span>
+              </div>
+            ))}
+          </div>
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row items-start gap-4">
-            <Link href="/programmes">
+            <Link href="/contact">
               <Button 
                 size="lg" 
                 className="text-base px-8 bg-primary hover:bg-primary/90"
+                onClick={() => trackCTAClick("request_callback", "hero")}
+                data-testid="button-hero-callback"
+              >
+                <Phone className="mr-2 h-5 w-5" />
+                Request a Callback
+              </Button>
+            </Link>
+            <Link href="/programmes">
+              <Button 
+                variant="outline" 
+                size="lg" 
+                className="text-base px-8 border-white/30 text-white bg-white/10 backdrop-blur-sm hover:bg-white/20"
                 onClick={() => trackCTAClick("explore_programmes", "hero")}
                 data-testid="button-hero-programmes"
               >
@@ -82,22 +111,22 @@ export function HeroSection() {
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
-            <Link href="/contact">
-              <Button 
-                variant="outline" 
-                size="lg" 
-                className="text-base px-8 border-white/30 text-white bg-white/10 backdrop-blur-sm hover:bg-white/20"
-                onClick={() => trackCTAClick("book_tour", "hero")}
-                data-testid="button-hero-contact"
-              >
-                Book a Tour
-                <Calendar className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
           </div>
-
         </div>
       </div>
+
+      {/* WhatsApp Floating Button */}
+      <a
+        href="https://wa.me/918291568972?text=Hi%2C%20I%20would%20like%20to%20know%20more%20about%20Rainbow%20Preschool"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-green-500 flex items-center justify-center shadow-lg hover:bg-green-600 transition-colors"
+        onClick={() => trackCTAClick("whatsapp_chat", "floating")}
+        data-testid="button-whatsapp-floating"
+        aria-label="Chat on WhatsApp"
+      >
+        <SiWhatsapp className="w-7 h-7 text-white" />
+      </a>
 
       {/* Banner indicators */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-2">
