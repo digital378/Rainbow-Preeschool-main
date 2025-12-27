@@ -101,7 +101,7 @@ const programmeDetails: Record<string, {
       { title: "Social Interaction with Peers", description: "Learning to share, cooperate, and build friendships with other children.", icon: "users-round", gradient: "from-orange-100 to-orange-200 dark:from-orange-900/30 dark:to-orange-800/30" },
       { title: "Language Development through Songs", description: "Building vocabulary and speech through rhymes and musical activities.", icon: "music", gradient: "from-blue-100 to-blue-200 dark:from-blue-900/30 dark:to-blue-800/30" }
     ],
-    schedule: "2-3 hours daily, flexible timing",
+    schedule: "Morning Batch - 8:30AM to 11:30AM\nAfternoon Batch - 12:30PM to 3:30PM",
     activities: ["Circle time", "Music and movement", "Art exploration", "Free play", "Outdoor activities", "Rhymes and songs"],
     highlights: ["Small batch sizes for individual attention", "Trained and caring teachers", "Safe and hygienic environment", "Regular parent updates"],
     whyChoose: [

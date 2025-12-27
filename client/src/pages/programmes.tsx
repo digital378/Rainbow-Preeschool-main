@@ -22,7 +22,7 @@ const iconMap = {
 const programmeDetails: Record<string, { features: string[]; schedule: string; activities: string[] }> = {
   playgroup: {
     features: ["Introduction to colors and shapes", "Puppet shows and storytelling", "Sensory play activities", "Basic motor skill development"],
-    schedule: "2-3 hours daily, flexible timing",
+    schedule: "Morning Batch - 8:30AM to 11:30AM\nAfternoon Batch - 12:30PM to 3:30PM",
     activities: ["Circle time", "Music and movement", "Art exploration", "Free play"],
   },
   nursery: {
@@ -126,9 +126,18 @@ export default function Programmes() {
                             ))}
                           </ul>
                         </div>
-                        <p className="text-sm text-muted-foreground mb-6">
-                          <strong>Schedule:</strong> {details.schedule}
-                        </p>
+                        <div className="text-sm text-muted-foreground mb-6">
+                          <strong>{details.schedule.includes('\n') ? 'Timings:' : 'Schedule:'}</strong>
+                          {details.schedule.includes('\n') ? (
+                            <div className="mt-1 ml-4">
+                              {details.schedule.split('\n').map((line, i) => (
+                                <div key={i}>{line}</div>
+                              ))}
+                            </div>
+                          ) : (
+                            <span> {details.schedule}</span>
+                          )}
+                        </div>
                       </>
                     )}
                     
