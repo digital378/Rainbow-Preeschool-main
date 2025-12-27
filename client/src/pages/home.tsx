@@ -223,39 +223,6 @@ export default function Home() {
       <HeroSection />
       <QuickCallbackStrip />
 
-      {/* Contact Form Section - Get In Touch */}
-      <section className="py-16 md:py-20 lg:py-24 bg-card">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
-            <div>
-              <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">Get In Touch</p>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">Request A Callback</h2>
-              <p className="text-muted-foreground text-lg mb-8">
-                Submit your details and queries here. We'd be glad to help you out!
-              </p>
-              <div className="rounded-xl overflow-hidden shadow-md">
-                <video 
-                  autoPlay 
-                  loop 
-                  muted 
-                  playsInline
-                  className="w-full h-auto"
-                  data-testid="video-walkthrough"
-                >
-                  <source src="/assets/RPS_Walkthrough_Video_-_Website_1_1766126796450.mp4" type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
-              </div>
-            </div>
-            <Card>
-              <CardContent className="pt-6">
-                <ContactForm />
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-
       {/* About Section - SEO Enhanced */}
       <section className="py-16 md:py-20 lg:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -372,6 +339,39 @@ export default function Home() {
             {testimonials.map((testimonial) => (
               <TestimonialCard key={testimonial.id} testimonial={testimonial} />
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Contact Form Section - Get In Touch */}
+      <section className="py-16 md:py-20 lg:py-24 bg-card">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+            <div>
+              <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">Get In Touch</p>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">Request A Callback</h2>
+              <p className="text-muted-foreground text-lg mb-8">
+                Submit your details and queries here. We'd be glad to help you out!
+              </p>
+              <div className="rounded-xl overflow-hidden shadow-md">
+                <video 
+                  autoPlay 
+                  loop 
+                  muted 
+                  playsInline
+                  className="w-full h-auto"
+                  data-testid="video-walkthrough"
+                >
+                  <source src="/assets/RPS_Walkthrough_Video_-_Website_1_1766126796450.mp4" type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+            </div>
+            <Card>
+              <CardContent className="pt-6">
+                <ContactForm />
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>
