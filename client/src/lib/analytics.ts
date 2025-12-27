@@ -103,6 +103,14 @@ export const trackLeadFormSubmit = (params: LeadEventParams) => {
   
   // Also fire GA4 event
   trackEvent('form_submit', 'lead_generation', params.programme || 'general');
+  
+  // Fire conversion event for GA4 (same as contact form)
+  if (typeof window !== 'undefined' && window.gtag) {
+    window.gtag('event', 'conversion_event_submit_lead_form', {
+      'event_callback': () => {},
+      'event_timeout': 2000,
+    });
+  }
 };
 
 // Track WhatsApp click
