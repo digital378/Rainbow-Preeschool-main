@@ -20,6 +20,7 @@ import { CTASection } from "@/components/cta-section";
 import { ContactForm } from "@/components/contact-form";
 import { CountUp } from "@/components/count-up";
 import { programmes, branches, testimonials } from "@shared/schema";
+import { localityLandingPages } from "@shared/centre-data";
 import { ArrowRight, Star, Users, MapPin, Shield, Lock, Phone } from "lucide-react";
 import { SiGoogle, SiWhatsapp } from "react-icons/si";
 import { useState, useEffect } from "react";
@@ -185,7 +186,54 @@ function QuickCallbackStrip() {
 }
 
 export default function Home() {
+  // Inject all schemas
   useEffect(() => {
+    // Organization Schema
+    const organizationSchema = {
+      "@context": "https://schema.org",
+      "@type": "EducationalOrganization",
+      "name": "Rainbow Preschool International",
+      "alternateName": "Rainbow Preschools",
+      "url": "https://rainbowpreschools.com",
+      "logo": "https://rainbowpreschools.com/assets/Rainbow_Pre_School.Logo.png",
+      "description": "Trusted preschool in Thane since 2007. Play-based early learning for children aged 1.5-5 years. 6 centres across Thane West.",
+      "foundingDate": "2007",
+      "areaServed": {
+        "@type": "City",
+        "name": "Thane"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+91-8291568972",
+        "contactType": "admissions",
+        "areaServed": "IN",
+        "availableLanguage": ["English", "Hindi", "Marathi"]
+      },
+      "sameAs": [
+        "https://facebook.com/rainbowpreschools",
+        "https://instagram.com/rainbowpreschools",
+        "https://youtube.com/rainbowpreschools"
+      ],
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "2nd Floor, Chestnut Plaza, Opp. Edenwoods, Khewra Cir Marg, Manpada",
+        "addressLocality": "Thane",
+        "addressRegion": "Maharashtra",
+        "postalCode": "400610",
+        "addressCountry": "IN"
+      }
+    };
+
+    // WebSite Schema with SearchAction
+    const websiteSchema = {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Rainbow Preschool International",
+      "url": "https://rainbowpreschools.com",
+      "description": "Trusted preschool in Thane since 2007"
+    };
+
+    // FAQ Schema
     const faqSchema = {
       "@context": "https://schema.org",
       "@type": "FAQPage",
@@ -199,22 +247,38 @@ export default function Home() {
       }))
     };
     
-    const script = document.createElement('script');
-    script.type = 'application/ld+json';
-    script.id = 'faq-schema';
-    script.textContent = JSON.stringify(faqSchema);
-    
-    const existingScript = document.getElementById('faq-schema');
-    if (existingScript) {
-      existingScript.remove();
-    }
-    document.head.appendChild(script);
+    // Add Organization Schema
+    const orgScript = document.createElement('script');
+    orgScript.type = 'application/ld+json';
+    orgScript.id = 'organization-schema';
+    orgScript.textContent = JSON.stringify(organizationSchema);
+    const existingOrgScript = document.getElementById('organization-schema');
+    if (existingOrgScript) existingOrgScript.remove();
+    document.head.appendChild(orgScript);
+
+    // Add WebSite Schema
+    const webScript = document.createElement('script');
+    webScript.type = 'application/ld+json';
+    webScript.id = 'website-schema';
+    webScript.textContent = JSON.stringify(websiteSchema);
+    const existingWebScript = document.getElementById('website-schema');
+    if (existingWebScript) existingWebScript.remove();
+    document.head.appendChild(webScript);
+
+    // Add FAQ Schema
+    const faqScript = document.createElement('script');
+    faqScript.type = 'application/ld+json';
+    faqScript.id = 'faq-schema';
+    faqScript.textContent = JSON.stringify(faqSchema);
+    const existingFaqScript = document.getElementById('faq-schema');
+    if (existingFaqScript) existingFaqScript.remove();
+    document.head.appendChild(faqScript);
     
     return () => {
-      const scriptToRemove = document.getElementById('faq-schema');
-      if (scriptToRemove) {
-        scriptToRemove.remove();
-      }
+      ['organization-schema', 'website-schema', 'faq-schema'].forEach(id => {
+        const s = document.getElementById(id);
+        if (s) s.remove();
+      });
     };
   }, []);
 
@@ -372,6 +436,30 @@ export default function Home() {
                 <ContactForm />
               </CardContent>
             </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Find Playgroup Near You - Local SEO Links */}
+      <section className="py-12 md:py-16 bg-primary/5">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl md:text-3xl font-bold mb-2">Find Playgroup Near You in Thane</h2>
+            <p className="text-muted-foreground">
+              Click on your area to learn more about our playgroup programmes
+            </p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-3">
+            {localityLandingPages.map((locality) => (
+              <Link key={locality.slug} href={locality.url}>
+                <Card className="text-center hover-elevate cursor-pointer h-full">
+                  <CardContent className="pt-4 pb-4">
+                    <MapPin className="w-6 h-6 text-primary mx-auto mb-2" />
+                    <p className="font-medium text-sm">{locality.name}</p>
+                  </CardContent>
+                </Card>
+              </Link>
+            ))}
           </div>
         </div>
       </section>
