@@ -401,8 +401,8 @@ export default function ProgrammeLanding({ programmeSlug }: ProgrammeLandingProp
                   <div>
                     <strong>Timings:</strong>
                     <div className="mt-1 space-y-1">
-                      <div>Morning Batch - 8:30AM to 12:30PM</div>
-                      <div>Extended Day - 12:00PM to 4:00PM</div>
+                      <div>Morning Batch - 8:30AM to 11:30AM</div>
+                      <div>Afternoon Batch - 12:30PM to 3:30PM</div>
                     </div>
                   </div>
                 </div>
