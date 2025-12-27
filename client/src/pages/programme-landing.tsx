@@ -123,7 +123,7 @@ const programmeDetails: Record<string, {
       { title: "Basic Writing Skills", description: "Learning to hold pencils and form letters and numbers.", icon: "shapes", gradient: "from-orange-100 to-orange-200 dark:from-orange-900/30 dark:to-orange-800/30" },
       { title: "Cognitive Skill Development", description: "Puzzles and activities that enhance thinking and problem-solving.", icon: "brain", gradient: "from-blue-100 to-blue-200 dark:from-blue-900/30 dark:to-blue-800/30" }
     ],
-    schedule: "3-4 hours daily",
+    schedule: "Morning Batch - 8:30AM to 11:30AM\nAfternoon Batch - 12:30PM to 3:30PM",
     activities: ["Phonics introduction", "Dancing and singing", "Puppet shows", "Outdoor play", "Story time", "Number games"],
     highlights: ["Structured learning environment", "Phonics-based reading approach", "Regular assessments", "Parent-teacher meetings"],
     whyChoose: [
@@ -145,7 +145,7 @@ const programmeDetails: Record<string, {
       { title: "Computer Awareness Basics", description: "Introduction to computers and digital literacy.", icon: "zap", gradient: "from-orange-100 to-orange-200 dark:from-orange-900/30 dark:to-orange-800/30" },
       { title: "Personality Development", description: "Building confidence, communication, and social skills.", icon: "rocket", gradient: "from-blue-100 to-blue-200 dark:from-blue-900/30 dark:to-blue-800/30" }
     ],
-    schedule: "4-5 hours daily",
+    schedule: "Morning Batch - 8:30AM to 11:30AM\nAfternoon Batch - 12:30PM to 3:30PM",
     activities: ["English language arts", "Mathematics", "Art & Craft", "Sports and games", "Science experiments", "Public speaking"],
     highlights: ["School readiness programme", "Subject-wise curriculum", "Regular homework and assessments", "Annual day celebrations"],
     whyChoose: [

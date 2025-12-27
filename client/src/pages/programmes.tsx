@@ -27,12 +27,12 @@ const programmeDetails: Record<string, { features: string[]; schedule: string; a
   },
   nursery: {
     features: ["Alphabet and number recognition", "Group reading sessions", "Creative arts and crafts", "Physical development through yoga"],
-    schedule: "3-4 hours daily",
+    schedule: "Morning Batch - 8:30AM to 11:30AM\nAfternoon Batch - 12:30PM to 3:30PM",
     activities: ["Phonics introduction", "Dancing and singing", "Puppet shows", "Outdoor play"],
   },
   kindergarten: {
     features: ["Reading and writing readiness", "Math concepts and problem solving", "Science exploration (EVS)", "General knowledge building"],
-    schedule: "4-5 hours daily",
+    schedule: "Morning Batch - 8:30AM to 11:30AM\nAfternoon Batch - 12:30PM to 3:30PM",
     activities: ["English language arts", "Mathematics", "Art & Craft", "Sports and games"],
   },
   "kids-activity-club": {
