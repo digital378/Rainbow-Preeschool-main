@@ -2,6 +2,7 @@ import { Link } from "wouter";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
 import { SiFacebook, SiInstagram, SiYoutube } from "react-icons/si";
 import logoImage from "@assets/Rainbow_Pre_School.Logo_1766035853658.png";
+import { localityLandingPages } from "@shared/centre-data";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -12,7 +13,7 @@ export function Footer() {
       <div className="h-1 rainbow-gradient" />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-8">
           {/* About */}
           <div className="space-y-4">
             <div className="flex items-center gap-2">
@@ -137,6 +138,24 @@ export function Footer() {
                   Summer Camp
                 </Link>
               </li>
+            </ul>
+          </div>
+
+          {/* Thane Locations - NEW */}
+          <div>
+            <h4 className="font-semibold text-base mb-4">Thane Locations</h4>
+            <ul className="space-y-2">
+              {localityLandingPages.slice(0, 6).map((locality) => (
+                <li key={locality.slug}>
+                  <Link
+                    href={locality.url}
+                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                    data-testid={`link-footer-location-${locality.slug}`}
+                  >
+                    Playgroup in {locality.name}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 

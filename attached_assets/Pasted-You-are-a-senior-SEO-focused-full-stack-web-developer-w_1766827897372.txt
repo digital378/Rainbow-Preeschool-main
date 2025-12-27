@@ -1,0 +1,134 @@
+You are a senior SEO-focused full-stack web developer working inside a Replit project for a preschool website (Rainbow Preschool International, Thane). Google Business Profiles are already set; your job is to dominate organic local SEO using website changes only.
+
+NEW REQUIREMENT (VERY IMPORTANT)
+The Centres section currently shows centre phone numbers. Update it so that each centre card ALSO includes:
+- A “View Local Page” button linking to the newly built hyperlocal landing page for that locality, and
+- The phone number remains, but the primary CTA becomes the local page link + callback lead CTA.
+Additionally, the phone number must be clickable (tel:) and WhatsApp must be deep-linked (wa.me).
+
+GOALS
+1) Create hyperlocal landing pages for “Playgroup in Thane” searches and localities (Manpada, Kalwa, Ghodbunder Road, Anand Nagar, Kasarvadavali, Dhokali).
+2) Add internal linking from Homepage, Programmes->Playgroup page, Centres page, and Footer to these local pages.
+3) Implement correct on-page SEO: unique H1/H2 structure, keyword placement, meta title/description, canonical, OG tags.
+4) Add JSON-LD schema: Organization (sitewide), WebSite (sitewide), BreadcrumbList (each page), FAQPage (local pages), LocalBusiness/Preschool (per centre or locality).
+5) Add sitemap.xml and robots.txt and ensure all new pages are included.
+6) Ensure lead generation is first-class: add “Request a Callback” form above the fold on Playgroup page and on each local page, with validation and a success state. Add hidden fields: programme=Playgroup, locality, source_page, utm parameters.
+7) Add click tracking for call/whatsapp/directions/form submit (GA4-friendly). Implement as dataLayer pushes (preferred) or gtag events.
+
+CONSTRAINTS
+- Must be fast: optimize images, use lazy-loading, minimize heavy animations.
+- Must be mobile-first and accessible (labels for inputs, aria attributes, good contrast).
+- Content must be unique per locality page (no duplicate copy). Use locality-specific text and include centre-specific info in a structured block.
+- Keep design consistent with existing dark premium + rainbow accent branding.
+
+DELIVERABLES
+A) Create these pages (at minimum):
+   - /playgroup-in-thane
+   - /playgroup-in-manpada
+   - /playgroup-in-kalwa
+   - /playgroup-near-ghodbunder-road
+   - /playgroup-in-anand-nagar
+   - /playgroup-in-kasarvadavali
+   - /playgroup-in-dhokali
+
+B) Update existing pages:
+   - Homepage: add “Find Playgroup Near You in Thane” section linking to all the above pages + mini callback form.
+   - Playgroup programme page: add locality links + FAQ section + above-the-fold callback form + sticky mobile CTA.
+   - Centres page: each centre card MUST include:
+       1) Phone number (clickable tel:)
+       2) WhatsApp button (deep link)
+       3) Directions button
+       4) NEW: “View Local Page” button linking to relevant hyperlocal landing page
+       5) Optional: “Request Callback for this Centre” button that opens the callback form with centre preselected.
+   - Footer: add small “Thane Locations” link list to top 5 local pages.
+
+C) Update data architecture (IMPORTANT):
+   - Centralize centre data into one reusable data source (JSON/JS/TS object) that includes:
+     - centreName
+     - localitySlug
+     - landingPageUrl (the new local page)
+     - address
+     - phoneNumbers (one or two)
+     - whatsappNumber
+     - googleMapsDirectionsUrl
+     - googleMapsEmbedUrl (optional)
+   - Use this same data source for:
+     - Centres page cards
+     - Local landing pages “Centre info” card
+     - Schema LocalBusiness data
+
+D) Add SEO essentials:
+   - meta title + meta description unique per page
+   - canonical tags
+   - OpenGraph + Twitter tags
+   - Sitemap + robots.txt
+
+E) Add schema JSON-LD:
+   - Organization + WebSite on all pages
+   - BreadcrumbList on each page
+   - FAQPage on local pages and playgroup page
+   - LocalBusiness for each centre embedded on centre pages and/or local pages
+
+F) Add analytics events:
+   - dataLayer push events for:
+     - lead_form_view
+     - lead_form_submit (include programme, locality, source_page, centre)
+     - whatsapp_click (include centre/locality)
+     - call_click (include centre/locality)
+     - directions_click (include centre/locality)
+     - local_page_click (include centre/locality)
+
+IMPLEMENTATION STEPS (DO THESE IN ORDER)
+1) Inspect the current project structure and routing (React/Next or plain HTML). Identify where pages are defined and how metadata is set.
+2) Create a single source of truth for centre data (centreData.json or centreData.ts).
+3) Implement a reusable page/template:
+   - LocalLandingTemplate(locality, centreInfo, seoMeta, faqItems)
+   - CallbackForm component with validation + success UI + hidden fields capture + preselect centre if opened from centre card.
+4) Generate all local pages using the template with unique copy:
+   - Each page must have:
+     - H1: “Playgroup in {Locality}, Thane (1.5–2.5 Years)”
+     - Intro paragraph with locality mention
+     - Benefits grid (icons)
+     - “A Day in Playgroup” mini timeline
+     - Centre info card (address, phone tel:, WhatsApp, View Local Page not needed here because you are already on it)
+     - Embedded Google map iframe
+     - FAQ accordion (6–8 Qs)
+     - CTA section at bottom + callback form
+5) Update Centres page cards to use the new centre data:
+   - Keep phone numbers but add “View Local Page” CTA
+   - Ensure phone/WhatsApp/directions/local-page clicks fire tracking events
+6) Add schema JSON-LD for each page and verify no invalid JSON.
+7) Add sitemap.xml and robots.txt. Ensure sitemap includes every new local page.
+8) Add internal linking updates to homepage/playgroup/centres/footer.
+9) Add event tracking (dataLayer pushes) on:
+   - form view (IntersectionObserver)
+   - form submit
+   - click handlers for WhatsApp/Call/Directions/View Local Page
+10) Run tests:
+   - No broken links
+   - Lighthouse basics (performance/accessibility)
+   - Validate JSON-LD objects are valid JSON
+11) Provide a summary of changed files and where to edit:
+   - centre data source
+   - local page copy
+   - FAQ lists
+   - metadata
+
+CONTENT GUIDELINES (IMPORTANT)
+- Write parent-friendly copy. Avoid keyword stuffing.
+- Include these target terms naturally:
+  - playgroup in thane, playgroup in {locality}, toddler playgroup, play-based learning, preschool in thane (supporting)
+- Add hyperlocal mentions:
+  - “near {landmark/area}” if you have it, otherwise keep it generic.
+- FAQs should address:
+  - right age, safety, timings, trial class, batch size, playgroup vs nursery, fees enquiry (without listing fees if you don’t want to), centre selection.
+
+NOW START:
+- First, show me the project structure you found and your plan for where these files/pages will live.
+- Then implement centre data as a single source of truth.
+- Then implement template + callback form.
+- Then generate local pages + internal linking + schema + sitemap/robots + tracking.
+- Output:
+  1) list of all URLs created
+  2) which centre card links to which landing page
+  3) meta title/description for each page

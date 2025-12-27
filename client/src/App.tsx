@@ -24,6 +24,17 @@ import Contact from "@/pages/contact";
 import Blog from "@/pages/blog";
 import NotFound from "@/pages/not-found";
 
+// Local Playgroup Pages
+import {
+  PlaygroupInThane,
+  PlaygroupInManpada,
+  PlaygroupInKalwa,
+  PlaygroupNearGhodbunderRoad,
+  PlaygroupInAnandNagar,
+  PlaygroupInKasarvadavali,
+  PlaygroupInDhokali,
+} from "@/pages/local-playgroup";
+
 function ScrollToTop() {
   const [location] = useLocation();
   
@@ -52,6 +63,16 @@ function Router() {
       <Route path="/happy-times" component={HappyTimesLanding} />
       <Route path="/contact" component={Contact} />
       <Route path="/blog" component={Blog} />
+      
+      {/* Local Playgroup Landing Pages */}
+      <Route path="/playgroup-in-thane" component={PlaygroupInThane} />
+      <Route path="/playgroup-in-manpada" component={PlaygroupInManpada} />
+      <Route path="/playgroup-in-kalwa" component={PlaygroupInKalwa} />
+      <Route path="/playgroup-near-ghodbunder-road" component={PlaygroupNearGhodbunderRoad} />
+      <Route path="/playgroup-in-anand-nagar" component={PlaygroupInAnandNagar} />
+      <Route path="/playgroup-in-kasarvadavali" component={PlaygroupInKasarvadavali} />
+      <Route path="/playgroup-in-dhokali" component={PlaygroupInDhokali} />
+      
       <Route component={NotFound} />
     </Switch>
   );
