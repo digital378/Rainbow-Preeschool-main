@@ -65,7 +65,7 @@ export function HeroSection() {
 
           {/* Main heading - Single H1 for SEO */}
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 text-white leading-tight">
-            Preschool & Playgroup in Thane for Early Childhood Excellence
+            Best Preschool in Thane for Children
           </h1>
 
           {/* Subheading */}
