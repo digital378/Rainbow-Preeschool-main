@@ -1,0 +1,38 @@
+Upgrade the “Research-Based Curriculum for Every Child” section to be more engaging and premium with kid-friendly micro-animations, while keeping performance strong.
+
+Design requirements:
+- Maintain existing dark premium + rainbow accent brand style.
+- Make the right-side curriculum diagram (central circle with orbit icons) interactive.
+- Animations must be lightweight: CSS + optional Framer Motion (if already used). Avoid heavy parallax.
+- Must be responsive and accessible (keyboard focus states, reduced motion support).
+
+Implementation tasks:
+1) Fix heading underline overlap using a pseudo-element underline or text-underline-offset (do not allow line to intersect glyphs).
+2) Make the curriculum orbit diagram interactive:
+   - Central hub gently “breathes” (scale 1.0 -> 1.03 -> 1.0) every 4–6s.
+   - Orbit icons float subtly (translateY 0 -> -6px -> 0) with staggered delays.
+   - On hover/tap of each icon:
+     a) icon scales slightly (1.06)
+     b) shows a tooltip/card with 2 lines:
+        - Title (e.g., “Art Studio”)
+        - One-line benefit (e.g., “Creativity + fine motor skills”)
+   - Highlight connecting line from hub to the hovered icon (increase opacity/glow).
+3) Add scroll-based entrance animation:
+   - Left text column slides in + fades
+   - Right orbit graphic fades in + scales slightly
+   - Trigger only once using IntersectionObserver.
+4) Add a “Curriculum Explorer” micro-UX:
+   - Under the paragraph add a row of small pill chips (Art, STEM, Sports, Language, Skills, Aptitude).
+   - Clicking a chip highlights the corresponding orbit icon and updates a short description.
+5) Performance & accessibility:
+   - Add prefers-reduced-motion: reduce to disable floats and breathing animations.
+   - Ensure diagram doesn’t shift layout (use fixed container size).
+   - Use semantic buttons for orbit icons, not divs.
+6) Provide final output:
+   - Updated component code for this section
+   - CSS (or Tailwind classes)
+   - Any helper data array for orbit items (title, icon, description)
+   - Confirm it works on mobile (tap opens tooltip / bottom sheet).
+
+Bonus:
+- Add a subtle “sparkle” gradient glow behind the central hub that animates slowly (background-position animation).
