@@ -15,6 +15,11 @@ import About from "@/pages/about";
 import Programmes from "@/pages/programmes";
 import ProgrammeLanding from "@/pages/programme-landing";
 import PlaygroupLanding from "@/pages/playgroup-landing";
+import NurseryLanding from "@/pages/nursery-landing";
+import KindergartenLanding from "@/pages/kindergarten-landing";
+import KidsActivityClubLanding from "@/pages/kids-activity-club-landing";
+import SummerCampLanding from "@/pages/summer-camp-landing";
+import HappyTimesLanding from "@/pages/happy-times-landing";
 import Contact from "@/pages/contact";
 import Blog from "@/pages/blog";
 import NotFound from "@/pages/not-found";
@@ -40,11 +45,11 @@ function Router() {
       <Route path="/about" component={About} />
       <Route path="/programmes" component={Programmes} />
       <Route path="/playgroup" component={PlaygroupLanding} />
-      <Route path="/nursery">{() => <ProgrammeLanding programmeSlug="nursery" />}</Route>
-      <Route path="/kindergarten">{() => <ProgrammeLanding programmeSlug="kindergarten" />}</Route>
-      <Route path="/kids-activity-club">{() => <ProgrammeLanding programmeSlug="kids-activity-club" />}</Route>
-      <Route path="/summer-camp">{() => <ProgrammeLanding programmeSlug="summer-camp" />}</Route>
-      <Route path="/happy-times">{() => <ProgrammeLanding programmeSlug="happy-times" />}</Route>
+      <Route path="/nursery" component={NurseryLanding} />
+      <Route path="/kindergarten" component={KindergartenLanding} />
+      <Route path="/kids-activity-club" component={KidsActivityClubLanding} />
+      <Route path="/summer-camp" component={SummerCampLanding} />
+      <Route path="/happy-times" component={HappyTimesLanding} />
       <Route path="/contact" component={Contact} />
       <Route path="/blog" component={Blog} />
       <Route component={NotFound} />
