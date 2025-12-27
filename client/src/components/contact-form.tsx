@@ -126,10 +126,12 @@ const ageOptions = [
 
 interface ContactFormProps {
   defaultBranch?: string;
+  defaultProgramme?: string;
   compact?: boolean;
+  onSuccess?: () => void;
 }
 
-export function ContactForm({ defaultBranch, compact = false }: ContactFormProps) {
+export function ContactForm({ defaultBranch, defaultProgramme, compact = false, onSuccess }: ContactFormProps) {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { toast } = useToast();
   const { getToken } = useRecaptcha();
@@ -142,7 +144,7 @@ export function ContactForm({ defaultBranch, compact = false }: ContactFormProps
       email: "",
       childName: "",
       childAge: "",
-      programme: "",
+      programme: defaultProgramme || "",
       branch: defaultBranch || "",
       message: "",
     },
@@ -166,6 +168,7 @@ export function ContactForm({ defaultBranch, compact = false }: ContactFormProps
         description: "We'll get back to you within 24 hours.",
       });
       form.reset();
+      if (onSuccess) onSuccess();
     },
     onError: () => {
       toast({

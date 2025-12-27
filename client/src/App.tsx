@@ -14,6 +14,7 @@ import Home from "@/pages/home";
 import About from "@/pages/about";
 import Programmes from "@/pages/programmes";
 import ProgrammeLanding from "@/pages/programme-landing";
+import PlaygroupLanding from "@/pages/playgroup-landing";
 import Contact from "@/pages/contact";
 import Blog from "@/pages/blog";
 import NotFound from "@/pages/not-found";
@@ -38,7 +39,7 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/about" component={About} />
       <Route path="/programmes" component={Programmes} />
-      <Route path="/playgroup">{() => <ProgrammeLanding programmeSlug="playgroup" />}</Route>
+      <Route path="/playgroup" component={PlaygroupLanding} />
       <Route path="/nursery">{() => <ProgrammeLanding programmeSlug="nursery" />}</Route>
       <Route path="/kindergarten">{() => <ProgrammeLanding programmeSlug="kindergarten" />}</Route>
       <Route path="/kids-activity-club">{() => <ProgrammeLanding programmeSlug="kids-activity-club" />}</Route>
