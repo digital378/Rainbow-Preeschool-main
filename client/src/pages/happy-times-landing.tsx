@@ -342,16 +342,8 @@ const faqs = [
     answer: "Yes! We provide healthy, nutritious snacks in the afternoon. If your child requires a meal, please let us know in advance and we can accommodate special dietary requirements."
   },
   {
-    question: "Do you offer transport services?",
-    answer: "We can coordinate with local school transport services for pickup from nearby schools. Please contact your preferred centre for specific arrangements in your area."
-  },
-  {
     question: "What age group is Happy Times suitable for?",
     answer: "Happy Times is designed for children aged 3 to 10 years who need after-school care. We group children by age to ensure age-appropriate activities and supervision."
-  },
-  {
-    question: "Will my child get homework help?",
-    answer: "Yes! Our trained staff provides dedicated homework time with supervision and assistance. We help children complete their school assignments and develop good study habits."
   },
   {
     question: "How do I enroll my child in Happy Times?",
