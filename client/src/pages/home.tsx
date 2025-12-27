@@ -20,7 +20,8 @@ import { CTASection } from "@/components/cta-section";
 import { ContactForm } from "@/components/contact-form";
 import { CountUp } from "@/components/count-up";
 import { programmes, branches, testimonials } from "@shared/schema";
-import { localityLandingPages } from "@shared/centre-data";
+import { preschoolLandingPages } from "@shared/centre-data";
+import { pushToDataLayer } from "@/lib/analytics";
 import { ArrowRight, Star, Users, MapPin, Shield, Lock, Phone } from "lucide-react";
 import { SiGoogle, SiWhatsapp } from "react-icons/si";
 import { useState, useEffect } from "react";
@@ -440,25 +441,32 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Find Playgroup Near You - Local SEO Links */}
+      {/* Find Preschool Near You - Local SEO Links */}
       <section className="py-12 md:py-16 bg-primary/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8">
-            <h2 className="text-2xl md:text-3xl font-bold mb-2">Find Playgroup Near You in Thane</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-2">Find Preschool Near You in Thane</h2>
             <p className="text-muted-foreground">
-              Click on your area to learn more about our playgroup programmes
+              Click on your area to explore the nearest Rainbow Preschool centre
             </p>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-3">
-            {localityLandingPages.map((locality) => (
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+            {preschoolLandingPages.map((locality) => (
               <Link 
                 key={locality.slug} 
                 href={locality.url}
-                data-testid={`link-locality-${locality.slug}`}
+                onClick={() => {
+                  pushToDataLayer({
+                    event: 'homepage_location_click',
+                    locality: locality.name,
+                    slug: locality.url,
+                  });
+                }}
+                data-testid={`link-preschool-${locality.slug}`}
               >
                 <Card 
                   className="text-center hover-elevate cursor-pointer h-full"
-                  data-testid={`card-locality-${locality.slug}`}
+                  data-testid={`card-preschool-${locality.slug}`}
                 >
                   <CardContent className="pt-4 pb-4">
                     <MapPin className="w-6 h-6 text-primary mx-auto mb-2" />

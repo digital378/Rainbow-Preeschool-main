@@ -35,6 +35,16 @@ import {
   PlaygroupInDhokali,
 } from "@/pages/local-playgroup";
 
+// Preschool Centre Landing Pages
+import {
+  PreschoolInManpada,
+  PreschoolInHariniwas,
+  PreschoolInAnandNagar,
+  PreschoolInDhokali,
+  PreschoolInKalwa,
+  PreschoolInKasarvadavali,
+} from "@/pages/preschool-location";
+
 function ScrollToTop() {
   const [location] = useLocation();
   
@@ -72,6 +82,14 @@ function Router() {
       <Route path="/playgroup-in-anand-nagar" component={PlaygroupInAnandNagar} />
       <Route path="/playgroup-in-kasarvadavali" component={PlaygroupInKasarvadavali} />
       <Route path="/playgroup-in-dhokali" component={PlaygroupInDhokali} />
+      
+      {/* Preschool Centre Landing Pages */}
+      <Route path="/preschool-in-manpada-thane" component={PreschoolInManpada} />
+      <Route path="/preschool-in-hariniwas-thane" component={PreschoolInHariniwas} />
+      <Route path="/preschool-in-anand-nagar-thane" component={PreschoolInAnandNagar} />
+      <Route path="/preschool-in-dhokali-thane" component={PreschoolInDhokali} />
+      <Route path="/preschool-in-kalwa-thane" component={PreschoolInKalwa} />
+      <Route path="/preschool-in-kasarvadavali-thane" component={PreschoolInKasarvadavali} />
       
       <Route component={NotFound} />
     </Switch>

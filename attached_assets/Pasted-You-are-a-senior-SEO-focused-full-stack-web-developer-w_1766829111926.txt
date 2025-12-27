@@ -1,0 +1,137 @@
+You are a senior SEO-focused full-stack web developer working inside a Replit project for Rainbow Preschool International (Thane). Google Business Profiles are already set.
+
+NEW REQUIREMENT (IMPORTANT)
+The homepage currently has a section titled “Find Playgroup Near You in Thane” with local area buttons linking to playgroup landing pages. Update this section to instead target preschool intent and link to the new preschool centre landing pages:
+
+- Change heading to: “Find Preschool Near You in Thane”
+- Change subheading to: “Click on your area to explore the nearest Rainbow Preschool centre”
+- Replace all buttons/links so they point to the new preschool location landing pages:
+   Manpada → /preschool-in-manpada-thane
+   Hariniwas → /preschool-in-hariniwas-thane
+   Anand Nagar → /preschool-in-anand-nagar-thane
+   Dhokali → /preschool-in-dhokali-thane
+   Kalwa → /preschool-in-kalwa-thane
+   Kasarvadavali → /preschool-in-kasarvadavali-thane
+
+If a “Thane” button exists in that section, either:
+- link it to /centres (preferred) OR
+- link it to /preschool-in-thane (only if such a page exists), otherwise remove the Thane button.
+
+TASK 1 — Create location-specific landing pages for each Preschool centre (NOT just playgroup)
+Create unique location landing pages for our preschool centres in Thane and update the site navigation accordingly.
+
+Centres list (use these):
+- Aggarwal Centre (Manpada)
+- Hariniwas Centre
+- Anand Nagar Centre
+- Dhokali Centre
+- Kalwa Centre
+- Kasarvadavali Centre
+
+URL SLUGS (create exactly these pages):
+- /preschool-in-manpada-thane
+- /preschool-in-hariniwas-thane
+- /preschool-in-anand-nagar-thane
+- /preschool-in-dhokali-thane
+- /preschool-in-kalwa-thane
+- /preschool-in-kasarvadavali-thane
+
+Each page must be UNIQUE (no copy-paste) and include:
+
+1) SEO meta:
+   - Meta title: “Preschool in {Locality}, Thane | Rainbow Preschool International”
+   - Meta description: “Looking for a preschool in {Locality}, Thane? Rainbow Preschool offers playgroup, nursery & kindergarten with safe, play-based learning. Enquire now.”
+   - Canonical tag
+   - OG/Twitter tags
+
+2) On-page structure:
+   - One H1 only: “Preschool in {Locality}, Thane”
+   - 2–3 intro paragraphs mentioning {Locality} and Thane naturally
+   - “Programmes available at this centre” section with links to:
+       - Playgroup page
+       - Nursery page
+       - Kindergarten page
+     (If dedicated local programme pages exist, link those too.)
+   - “Why parents in {Locality} choose Rainbow” (bullets)
+   - Safety & hygiene section
+   - Timings section (if known; otherwise generic)
+   - Centre info card:
+       - Full address
+       - Phone number(s) as tel: links
+       - WhatsApp deep link (wa.me)
+       - Directions link
+       - Google map embed iframe
+   - Testimonials snippet (if available)
+   - FAQ accordion (6–8 FAQs) tailored to “preschool in {Locality}”
+   - Strong CTA: callback form (same reusable component) with centre preselected
+
+3) Schema JSON-LD:
+   - LocalBusiness or Preschool schema (with name, address, telephone, geo if available, openingHours if available)
+   - FAQPage schema using the FAQs on the page
+   - BreadcrumbList schema
+   - Organization + WebSite schema sitewide (if not already done)
+
+TASK 2 — Update Header “Centres” dropdown to link to these location pages (no phone call actions)
+Currently the “Centres” dropdown shows phone icons/numbers. Replace this behavior:
+
+- Dropdown should list centre names as links to the new location pages above.
+- Each dropdown item should include:
+   - Centre name + locality label
+   - Optional tiny subtext: “Preschool in {Locality}”
+- Remove “call now” behavior from header dropdown items.
+- Keep phone numbers accessible elsewhere:
+   - On the Centres page cards
+   - On each location landing page (centre info card)
+- On mobile menu, update “Our Centres” list similarly: each is a link to the corresponding location page (not a phone call).
+
+DATA ARCHITECTURE (IMPORTANT)
+Create a single source of truth for centre data (centreData.ts or centreData.json) with fields:
+- id
+- name
+- locality
+- slug (the new preschool landing page URL)
+- address
+- phones (array)
+- whatsappNumber
+- directionsUrl
+- mapEmbedUrl
+- programmeLinks (playgroup/nursery/kindergarten)
+
+Use this data source to power:
+- Homepage “Find Preschool Near You in Thane” section buttons
+- Header dropdown list
+- Mobile menu centre list
+- Centres page cards
+- Centre info cards on the new location pages
+- LocalBusiness schema data
+
+TRACKING
+Add dataLayer push events for:
+- header_centre_click {centre, locality, slug}
+- mobile_centre_click {centre, locality, slug}
+- homepage_location_click {locality, slug}
+- call_click {centre, locality}
+- whatsapp_click {centre, locality}
+- directions_click {centre, locality}
+- lead_form_submit {centre, locality, source_page}
+
+IMPLEMENTATION STEPS (in order)
+1) Inspect routing and how pages are created (React/Next/plain).
+2) Create centre data source.
+3) Build a reusable LocationLandingTemplate(centreData).
+4) Generate the six location pages using the template and unique copy.
+5) Update header dropdown and mobile menu to use centre data and link to slugs.
+6) Update Homepage “Find Playgroup Near You in Thane” section:
+   - Rename to “Find Preschool Near You in Thane”
+   - Replace links with preschool landing page slugs from centreData
+   - Ensure onClick triggers homepage_location_click tracking event
+7) Ensure sitemap.xml includes all new pages.
+8) Verify no broken links, consistent styling, responsive dropdown.
+9) Output:
+   - list of created URLs
+   - which dropdown items link to which URLs
+   - homepage button labels and their links
+   - meta title + description for each page
+
+START NOW:
+First show me the current navigation component files AND the homepage section component/file where the “Find Playgroup Near You in Thane” section exists, plus the project route structure. Then implement in small, testable commits.

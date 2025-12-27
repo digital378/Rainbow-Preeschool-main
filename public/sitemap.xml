@@ -59,40 +59,72 @@
     <priority>0.7</priority>
   </url>
 
-  <!-- Local Playgroup Landing Pages (SEO Priority) -->
+  <!-- Preschool Centre Landing Pages (SEO Priority - NEW) -->
   <url>
-    <loc>https://rainbowpreschools.com/playgroup-in-thane</loc>
+    <loc>https://rainbowpreschools.com/preschool-in-manpada-thane</loc>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
   </url>
   <url>
-    <loc>https://rainbowpreschools.com/playgroup-in-manpada</loc>
+    <loc>https://rainbowpreschools.com/preschool-in-hariniwas-thane</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://rainbowpreschools.com/preschool-in-anand-nagar-thane</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://rainbowpreschools.com/preschool-in-dhokali-thane</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://rainbowpreschools.com/preschool-in-kalwa-thane</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://rainbowpreschools.com/preschool-in-kasarvadavali-thane</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+
+  <!-- Local Playgroup Landing Pages (Legacy) -->
+  <url>
+    <loc>https://rainbowpreschools.com/playgroup-in-thane</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://rainbowpreschools.com/playgroup-in-manpada</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
   </url>
   <url>
     <loc>https://rainbowpreschools.com/playgroup-in-kalwa</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <priority>0.85</priority>
   </url>
   <url>
     <loc>https://rainbowpreschools.com/playgroup-near-ghodbunder-road</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <priority>0.85</priority>
   </url>
   <url>
     <loc>https://rainbowpreschools.com/playgroup-in-anand-nagar</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <priority>0.85</priority>
   </url>
   <url>
     <loc>https://rainbowpreschools.com/playgroup-in-kasarvadavali</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <priority>0.85</priority>
   </url>
   <url>
     <loc>https://rainbowpreschools.com/playgroup-in-dhokali</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <priority>0.85</priority>
   </url>
 </urlset>

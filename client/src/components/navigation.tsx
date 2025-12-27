@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
-import { Menu, X, Phone, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronDown, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
 import {
@@ -9,7 +9,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { branches } from "@shared/schema";
+import { centres } from "@shared/centre-data";
+import { pushToDataLayer } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 import logoImage from "@assets/Rainbow_Pre_School.Logo_1766035853658.png";
 
@@ -157,20 +158,28 @@ export function Navigation() {
                   Centres <ChevronDown className="ml-1 h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-64">
-                {branches.map((branch) => (
-                  <DropdownMenuItem key={branch.id} asChild>
-                    <a
-                      href={`tel:${branch.calling?.replace(/\s/g, "")}`}
-                      className="flex flex-col items-start gap-1 py-2"
-                      data-testid={`link-branch-${branch.id}`}
+              <DropdownMenuContent align="end" className="w-72">
+                {centres.map((centre) => (
+                  <DropdownMenuItem key={centre.id} asChild>
+                    <Link
+                      href={centre.preschoolLandingUrl}
+                      onClick={() => {
+                        pushToDataLayer({
+                          event: 'header_centre_click',
+                          centre: centre.name,
+                          locality: centre.localityName,
+                          slug: centre.preschoolLandingUrl,
+                        });
+                      }}
+                      className="flex flex-col items-start gap-1 py-2 cursor-pointer"
+                      data-testid={`link-centre-${centre.id}`}
                     >
-                      <span className="font-medium text-sm">{branch.name}</span>
+                      <span className="font-medium text-sm">{centre.name}</span>
                       <span className="text-xs text-muted-foreground flex items-center gap-1">
-                        <Phone className="h-3 w-3" />
-                        {branch.calling}
+                        <MapPin className="h-3 w-3" />
+                        Preschool in {centre.localityName}
                       </span>
-                    </a>
+                    </Link>
                   </DropdownMenuItem>
                 ))}
               </DropdownMenuContent>
@@ -223,16 +232,24 @@ export function Navigation() {
               {/* Mobile Centres Section */}
               <div className="pt-4 border-t mt-2">
                 <p className="text-sm font-semibold text-muted-foreground mb-2 px-4">Our Centres</p>
-                {branches.map((branch) => (
-                  <a
-                    key={branch.id}
-                    href={`tel:${branch.calling?.replace(/\s/g, "")}`}
+                {centres.map((centre) => (
+                  <Link
+                    key={centre.id}
+                    href={centre.preschoolLandingUrl}
+                    onClick={() => {
+                      pushToDataLayer({
+                        event: 'mobile_centre_click',
+                        centre: centre.name,
+                        locality: centre.localityName,
+                        slug: centre.preschoolLandingUrl,
+                      });
+                    }}
                     className="flex items-center gap-2 px-4 py-2 text-sm hover-elevate rounded-md"
-                    data-testid={`link-mobile-branch-${branch.id}`}
+                    data-testid={`link-mobile-centre-${centre.id}`}
                   >
-                    <Phone className="h-4 w-4 text-primary" />
-                    <span>{branch.name}</span>
-                  </a>
+                    <MapPin className="h-4 w-4 text-primary" />
+                    <span>{centre.name}</span>
+                  </Link>
                 ))}
               </div>
               
