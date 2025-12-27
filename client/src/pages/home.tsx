@@ -447,7 +447,7 @@ export default function Home() {
           <div className="text-center mb-8">
             <h2 className="text-2xl md:text-3xl font-bold mb-2">Find Preschool Near You in Thane</h2>
             <p className="text-muted-foreground">
-              Click on your area to explore the nearest Rainbow Preschool centre
+              Choose the Rainbow Preschool centre closest to your home
             </p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
