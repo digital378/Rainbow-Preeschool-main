@@ -72,3 +72,42 @@ The backend provides:
 - **Bundler**: Vite for frontend, esbuild for server production build
 - **TypeScript**: Strict mode enabled with path aliases (@/, @shared/, @assets/)
 - **Replit Plugins**: Runtime error overlay, cartographer, dev banner (development only)
+
+## Local SEO Structure
+
+### Hyperlocal Landing Pages
+The site implements aggressive local SEO targeting "playgroup in [locality]" keywords with 7 dedicated landing pages:
+- `/playgroup-in-thane` - Main Thane hub page
+- `/playgroup-in-manpada` - Manpada centre
+- `/playgroup-in-kalwa` - Kalwa centre
+- `/playgroup-near-ghodbunder-road` - Ghodbunder Road area
+- `/playgroup-in-anand-nagar` - Anand Nagar centre
+- `/playgroup-in-kasarvadavali` - Kasarvadavali centre
+- `/playgroup-in-dhokali` - Dhokali centre
+
+### Centre Data Structure
+All centre information is centralized in `shared/centre-data.ts`:
+- Centre details with locality slugs and landing page URLs
+- Locality-specific FAQs for each page
+- Locality intro copy for unique content
+- SEO meta data (title, description, h1, canonical)
+
+### Schema Markup (JSON-LD)
+- **Homepage**: Organization, WebSite, FAQPage schemas
+- **Local pages**: LocalBusiness (Preschool type), FAQPage, BreadcrumbList schemas
+- Schemas are dynamically injected via useEffect with proper cleanup
+
+### Analytics Tracking
+Enhanced lead tracking via dataLayer pushes:
+- `lead_form_view` - When callback form becomes visible
+- `lead_form_submit` - Successful form submission
+- `whatsapp_click` - WhatsApp button clicks
+- `call_click` - Phone number clicks
+- `directions_click` - Map directions clicks
+- `local_page_click` - Local landing page link clicks
+
+All events capture UTM parameters for attribution tracking.
+
+### SEO Files
+- `public/sitemap.xml` - All pages with priority weighting (local pages at 0.9)
+- `public/robots.txt` - Allow all, disallow /api/

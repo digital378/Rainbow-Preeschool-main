@@ -16,13 +16,14 @@ interface BranchCardProps {
 }
 
 // Map branch IDs to local landing page URLs
+// All 6 branches mapped to their respective locality pages
 const branchToLocalPage: Record<string, { url: string; locality: string }> = {
   "aggarwal": { url: "/playgroup-in-manpada", locality: "Manpada" },
   "hariniwas": { url: "/playgroup-in-thane", locality: "Thane" },
   "anand-nagar": { url: "/playgroup-in-anand-nagar", locality: "Anand Nagar" },
   "dhokali": { url: "/playgroup-in-dhokali", locality: "Dhokali" },
   "kalwa": { url: "/playgroup-in-kalwa", locality: "Kalwa" },
-  "kasarvadavali": { url: "/playgroup-in-kasarvadavali", locality: "Kasarvadavali" },
+  "kasarvadavali": { url: "/playgroup-near-ghodbunder-road", locality: "Ghodbunder Road" },
 };
 
 export function BranchCard({ branch }: BranchCardProps) {

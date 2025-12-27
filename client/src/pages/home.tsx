@@ -451,8 +451,15 @@ export default function Home() {
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-3">
             {localityLandingPages.map((locality) => (
-              <Link key={locality.slug} href={locality.url}>
-                <Card className="text-center hover-elevate cursor-pointer h-full">
+              <Link 
+                key={locality.slug} 
+                href={locality.url}
+                data-testid={`link-locality-${locality.slug}`}
+              >
+                <Card 
+                  className="text-center hover-elevate cursor-pointer h-full"
+                  data-testid={`card-locality-${locality.slug}`}
+                >
                   <CardContent className="pt-4 pb-4">
                     <MapPin className="w-6 h-6 text-primary mx-auto mb-2" />
                     <p className="font-medium text-sm">{locality.name}</p>
