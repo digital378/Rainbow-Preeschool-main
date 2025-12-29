@@ -25,7 +25,7 @@ import Blog from "@/pages/blog";
 import BlogPost from "@/pages/blog-post";
 import NotFound from "@/pages/not-found";
 
-// Local Playgroup Pages
+// Local Playgroup Pages (Standalone Landing Pages)
 import {
   PlaygroupInThane,
   PlaygroupInManpada,
@@ -45,6 +45,17 @@ import {
   PreschoolInKalwa,
   PreschoolInKasarvadavali,
 } from "@/pages/preschool-location";
+
+// Standalone landing page paths (no nav/footer)
+const STANDALONE_LANDING_PATHS = [
+  "/playgroup-in-thane",
+  "/playgroup-in-manpada",
+  "/playgroup-in-kalwa",
+  "/playgroup-near-ghodbunder-road",
+  "/playgroup-in-anand-nagar",
+  "/playgroup-in-kasarvadavali",
+  "/playgroup-in-dhokali",
+];
 
 function ScrollToTop() {
   const [location] = useLocation();
@@ -76,7 +87,7 @@ function Router() {
       <Route path="/blog" component={Blog} />
       <Route path="/blog/:slug" component={BlogPost} />
       
-      {/* Local Playgroup Landing Pages */}
+      {/* Local Playgroup Landing Pages (Standalone - no nav/footer) */}
       <Route path="/playgroup-in-thane" component={PlaygroupInThane} />
       <Route path="/playgroup-in-manpada" component={PlaygroupInManpada} />
       <Route path="/playgroup-in-kalwa" component={PlaygroupInKalwa} />
@@ -98,6 +109,33 @@ function Router() {
   );
 }
 
+function AppContent() {
+  const [location] = useLocation();
+  const isStandaloneLanding = STANDALONE_LANDING_PATHS.includes(location);
+
+  // For standalone landing pages, render without nav/footer
+  if (isStandaloneLanding) {
+    return (
+      <>
+        <ScrollToTop />
+        <Router />
+      </>
+    );
+  }
+
+  // Regular pages with nav and footer
+  return (
+    <div className="min-h-screen flex flex-col relative z-10">
+      <Navigation />
+      <main className="flex-1">
+        <ScrollToTop />
+        <Router />
+      </main>
+      <Footer />
+    </div>
+  );
+}
+
 function App() {
   useEffect(() => {
     if (!import.meta.env.VITE_GA_MEASUREMENT_ID) {
@@ -111,14 +149,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider defaultTheme="light" storageKey="rainbow-preschool-theme">
         <TooltipProvider>
-          <div className="min-h-screen flex flex-col relative z-10">
-            <Navigation />
-            <main className="flex-1">
-              <ScrollToTop />
-              <Router />
-            </main>
-            <Footer />
-          </div>
+          <AppContent />
           <Toaster />
         </TooltipProvider>
       </ThemeProvider>

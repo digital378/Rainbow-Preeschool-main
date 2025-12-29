@@ -1,0 +1,200 @@
+You are a senior UX + SEO full-stack developer working inside a Replit project for Rainbow Preschool International (Thane).
+
+We have direct-link (standalone) playgroup landing pages:
+- /playgroup-in-thane
+- /playgroup-in-manpada
+- /playgroup-in-kalwa
+- /playgroup-near-ghodbunder-road
+- /playgroup-in-anand-nagar
+- /playgroup-in-kasarvadavali
+- /playgroup-in-dhokali
+
+IMPORTANT REQUIREMENT
+Do NOT connect these pages to the main website navigation and do NOT add them to header/menus/footer. These pages are intended for direct-link traffic (ads/WhatsApp/QR). They should be self-contained and optimized for conversion + SEO best practices only.
+
+PRIMARY GOALS
+1) Improve UI/UX and conversion rate for all playgroup landing pages.
+2) Add kid-friendly, modern, lightweight micro-animations (performance-safe).
+3) Implement best-practice SEO for each landing page (unique meta, schema, canonical, OG).
+4) Make the experience mobile-first and accessible.
+
+CONSTRAINTS
+- Keep pages FAST: no heavy animation libraries unless already installed; prefer CSS animations + IntersectionObserver.
+- Respect prefers-reduced-motion to disable motion for users who want it.
+- Keep copy natural; no keyword stuffing.
+- Ensure unique copy per locality page (intro + FAQ + centre block).
+- Exactly one H1 per page.
+- Do not add global navigation links or internal linking requirements.
+
+UI/UX UPGRADE REQUIREMENTS (apply to every landing page)
+A) Landing-specific header (minimal)
+- Replace full website navigation header with a simple top bar:
+  - Left: logo
+  - Right: small “Call” and “WhatsApp” icons
+- Keep it compact and sticky (height ~56px).
+- Add “Back” is optional but not required.
+- This header must not include site navigation menus.
+
+B) Hero section (above the fold)
+- H1 must include locality and age range:
+  Example: “Playgroup in Kalwa, Thane (1.5–2.5 Years)”
+- Add a short supporting paragraph mentioning locality once naturally.
+- Add a trust row with 3 proof points (years, happy students, centres).
+- CTA layout:
+  Primary: “Request a Free Callback”
+  Secondary: “WhatsApp”
+  Tertiary: “Call Now”
+- Include subtle background creativity:
+  - soft rainbow gradient blob behind hero (CSS)
+  - tiny floating shapes at low opacity
+  - ensure readability/contrast.
+
+C) Callback form (lead-gen is the #1 objective)
+- Keep form on first screen (or immediately after hero).
+- Required fields: Parent Name, Phone, Child Age (optional email/message).
+- Add validation + error messages + success state.
+- Add hidden fields captured automatically:
+  - programme=Playgroup
+  - locality=<current locality>
+  - source_page=<current URL path>
+  - utm_source, utm_medium, utm_campaign, utm_content (read from URL)
+- Add privacy microcopy: “Your information is safe. No spam.”
+
+D) Sticky conversion bar (mobile)
+- Add a sticky bottom bar on mobile:
+  - Call Now (tel:)
+  - WhatsApp (wa.me)
+  - Request Callback (scroll to form or open modal)
+- Avoid overlap with existing WhatsApp floating button:
+  - either remove the floating WhatsApp button on these landing pages,
+  - or reposition it so it doesn’t collide.
+
+E) Why Choose section
+- Keep benefits as cards but make them more premium:
+  - consistent icon size
+  - better spacing
+  - hover/tap micro-interactions (lift + shadow)
+  - 2-column grid on mobile, 3-column on desktop.
+
+F) “A Day in Our Playgroup”
+- Convert to a vertical mini timeline on mobile and horizontal/2-column on desktop.
+- Add scroll-reveal animation using IntersectionObserver (fade + slight slide, once).
+
+G) Centre card + Map section
+- “Visit our {Locality} Centre” card:
+  - address
+  - phone (tel: clickable)
+  - WhatsApp (wa.me)
+  - Directions (Google Maps link)
+  - responsive map embed (lazy-loaded)
+- Add a “Book a Visit” CTA that triggers the callback form or opens a modal.
+
+H) FAQs
+- Accordion with 6–8 questions.
+- Must be unique per locality:
+  - access/landmarks for that locality (generic if unknown)
+  - safety
+  - timings
+  - trial class
+  - playgroup vs nursery
+  - batch size
+  - fees enquiry (answer without listing exact fee numbers if not desired)
+- Use FAQPage schema.
+
+I) Final CTA block
+- Strong closing CTA:
+  “Ready to visit our {Locality} centre?”
+  Buttons: Request Callback / WhatsApp / Call
+
+ANIMATIONS (lightweight + fun)
+- Use subtle, performance-safe motion only:
+  1) Hero blob gradient slowly shifts (CSS keyframes)
+  2) Cards hover: scale 1.02 and shadow
+  3) Scroll reveal for sections via IntersectionObserver
+- Add prefers-reduced-motion support:
+  Disable keyframes and reduce transitions.
+
+SEO REQUIREMENTS (per landing page)
+1) Unique meta title + meta description
+- Title template:
+  “Playgroup in {Locality}, Thane (1.5–2.5 Years) | Rainbow Preschool”
+- Description template:
+  “Looking for a playgroup in {Locality}, Thane? Safe, play-based learning for toddlers aged 1.5–2.5 years. Request a callback.”
+
+2) Canonical
+- canonical must point to the exact URL of that landing page.
+
+3) OG/Twitter tags
+- Default OG image is fine if locality-specific is unavailable.
+
+4) JSON-LD schema
+- Organization + WebSite (can be reused)
+- BreadcrumbList (Home > Playgroup > Locality) even if not linked in nav
+- FAQPage schema from FAQs
+- LocalBusiness/Preschool schema using the centre info shown on that page
+
+5) On-page structure
+- Exactly one H1
+- H2 sections: Callback, Why Choose, Day Timeline, Visit Centre, FAQs
+
+DATA ARCHITECTURE (IMPORTANT)
+Create one data file (playgroupLandingData.ts/json) containing:
+- localityName
+- slug
+- centreName
+- address
+- phones[]
+- whatsappNumber
+- directionsUrl
+- mapEmbedUrl
+- uniqueIntroParagraph (per locality)
+- faqItems (per locality)
+Use it to generate all pages via a single template component:
+PlaygroupLandingTemplate(localityData)
+
+TRACKING (GA4-ready via dataLayer)
+Implement dataLayer events:
+- lead_form_view (when form enters viewport)
+- lead_form_submit (include locality, programme, source_page, utms)
+- call_click (include locality)
+- whatsapp_click (include locality)
+- directions_click (include locality)
+- book_visit_click (include locality)
+
+SITEMAP / INDEXING (IMPORTANT)
+Do NOT add these pages to navigation, but DO ensure they are technically crawlable:
+- include in sitemap.xml (recommended)
+- do not block in robots.txt
+If the site owner later decides to keep them noindex, add an easy toggle flag per landing page.
+
+IMPLEMENTATION STEPS
+1) Inspect where these landing pages live and how they are routed.
+2) Build reusable components:
+   - MinimalLandingHeader
+   - LandingHero
+   - TrustRow
+   - CallbackForm
+   - StickyCTABar
+   - BenefitsGrid
+   - DayTimeline
+   - CentreCardWithMap (lazy iframe)
+   - FAQAccordion
+   - FinalCTA
+   - SEOHead + Schema injector
+3) Create PlaygroupLandingTemplate(localityData).
+4) Refactor ALL listed landing pages to use the template and locality data file.
+5) Apply animations + reduced motion.
+6) Apply SEO meta + schema + canonical + OG tags for each page.
+7) Update sitemap.xml to include these landing page URLs (but do not link them in nav).
+8) Test mobile conversion UX (sticky bar, form visibility, no button overlaps).
+
+FINAL OUTPUT REQUIRED
+- list of pages updated
+- list of components created
+- where locality data lives (single file)
+- meta title + description for each landing page
+- confirmation that pages remain standalone (not added to site navigation)
+- a quick checklist: H1 count, schema present, canonical present, form working
+
+NOW START:
+First show me the route/page structure where these landing pages are defined. Then implement the template and apply it across all slugs.
