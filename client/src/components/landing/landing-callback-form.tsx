@@ -151,7 +151,7 @@ export function LandingCallbackForm({ locality, sourcePage }: LandingCallbackFor
   }
 
   return (
-    <Card ref={formRef} id="callback-form" className="scroll-mt-20 animate-fade-in-up">
+    <Card ref={formRef} id="callback-form" className="scroll-mt-20" data-reveal="pop">
       <CardHeader className="pb-4">
         <h2 className="text-2xl font-bold text-center">Request a Free Callback</h2>
         <p className="text-muted-foreground text-center text-sm">

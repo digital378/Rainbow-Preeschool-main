@@ -84,12 +84,12 @@ export function CentreCardWithMap({
   return (
     <section className="py-16 md:py-20 bg-muted/30">
       <div className="max-w-4xl mx-auto px-4">
-        <div className="text-center mb-10">
-          <h2 className="text-2xl md:text-3xl font-bold mb-3">Visit Our {locality} Centre</h2>
+        <div className="text-center mb-10" data-reveal="float">
+          <h2 className="text-2xl md:text-3xl font-bold mb-3" data-sparkle>Visit Our {locality} Centre</h2>
           <p className="text-muted-foreground">Schedule a campus tour and see our facilities</p>
         </div>
 
-        <Card className="overflow-hidden">
+        <Card className="overflow-hidden" data-reveal="pop">
           <div className="grid md:grid-cols-2">
             {/* Centre Info */}
             <div>

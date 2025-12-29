@@ -9,6 +9,8 @@ import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { initGA } from "./lib/analytics";
 import { useAnalytics } from "./hooks/use-analytics";
+import { useScrollRevealOnRoute } from "./hooks/use-scroll-reveal";
+import "@/styles/scroll-reveal.css";
 
 import Home from "@/pages/home";
 import About from "@/pages/about";
@@ -70,7 +72,9 @@ function ScrollToTop() {
 }
 
 function Router() {
+  const [location] = useLocation();
   useAnalytics();
+  useScrollRevealOnRoute(location);
   
   return (
     <Switch>

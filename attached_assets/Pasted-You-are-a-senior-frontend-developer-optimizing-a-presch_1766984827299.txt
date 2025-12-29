@@ -1,0 +1,85 @@
+You are a senior frontend developer optimizing a preschool website (Rainbow Preschool International). I want a new, creative, kids-friendly scroll animation that can be used sitewide on ALL pages (homepage, programmes, centres, playgroup landing pages, preschool location pages).
+
+GOAL
+Implement a “Rainbow Trail Scroll Reveal” system:
+- As the user scrolls, sections/cards gently “pop” into view with playful motion.
+- Add a subtle rainbow “sparkle trail” accent that animates briefly near the section heading when it enters view.
+- Must feel kid-friendly, modern, and premium (not distracting).
+- Must be lightweight, fast, accessible, and SEO-safe.
+
+HARD CONSTRAINTS
+- No heavy libraries unless already installed. Prefer vanilla JS + CSS.
+- Use IntersectionObserver (NO scroll event listeners for animation).
+- Respect prefers-reduced-motion: if enabled, disable ALL animations and show content instantly.
+- Must not shift layout (no CLS). Only animate opacity/transform/filter.
+- Must not hide content from Google: content must remain in DOM (no delayed rendering). Only animate presentation.
+- Must work on mobile and desktop.
+
+WHAT TO BUILD (SITEWIDE ANIMATION KIT)
+1) A small reusable utility (one JS/TS file) that:
+   - Finds elements with data-attributes:
+     [data-reveal] for sections/cards
+     [data-sparkle] for headings
+     [data-stagger] containers for staggered children
+   - Uses IntersectionObserver to add class "is-inview" ONCE when visible.
+   - Supports stagger for children: add inline style delay or class-based delays.
+
+2) CSS animations (one stylesheet/module) including:
+   A) Reveal animations (choose based on attribute)
+      - data-reveal="pop"     -> slight scale up + fade in
+      - data-reveal="float"   -> fade in + gentle upward float
+      - data-reveal="slide"   -> small slide from left/right based on data-direction
+      - data-reveal="wiggle"  -> micro wiggle for icons only (very subtle)
+
+   B) “Rainbow Sparkle Trail” heading accent:
+      - When a heading with [data-sparkle] enters view:
+        - show a thin rainbow underline that “draws” left-to-right (like a stroke)
+        - release 4–6 tiny sparkles (dots/stars) that rise and fade near the underline
+      - Keep it subtle: duration 700–900ms, then stop.
+      - Must not overlap text or reduce readability.
+      - Must be disabled for prefers-reduced-motion.
+
+   C) “Floating Sticker” micro-motion (optional):
+      - For small icons in cards (NOT text):
+        - very slow bobbing animation with random-ish delay so it feels playful.
+      - Disable for reduced motion.
+
+3) Integration across pages:
+- Apply [data-reveal] to:
+  - hero badges, trust stats, benefits cards, timeline steps, centre cards, FAQ accordions, CTA blocks.
+- Apply [data-sparkle] to:
+  - section headings like “Why Choose…”, “Daily Activities”, “Visit Our Centre”, “FAQs”
+- For grids (benefits cards etc.), apply:
+  - data-stagger="children" on container and data-reveal on each child so they animate one-by-one.
+
+DELIVERABLES
+A) Add a global “reveal init” that runs on route change if SPA, or on DOMContentLoaded if multi-page.
+B) Add a single global CSS file or module containing the animations and reduced-motion rules.
+C) Update existing components/pages to add the data attributes consistently (do not redesign layouts).
+D) Ensure no animation conflicts with existing sticky CTA bars or WhatsApp button.
+E) Provide a small “usage guide” comment in code showing:
+   <h2 data-sparkle>Heading</h2>
+   <div data-stagger="children">
+     <div data-reveal="pop">...</div>
+     <div data-reveal="pop">...</div>
+   </div>
+
+ACCESSIBILITY / PERFORMANCE
+- Add:
+  @media (prefers-reduced-motion: reduce) { disable transitions + animations; set opacity:1 transform:none; }
+- Ensure IntersectionObserver threshold tuned (e.g., 0.15) and rootMargin (e.g., "0px 0px -10% 0px") so it triggers naturally.
+- No heavy DOM creation. For sparkles, use CSS pseudo-elements OR create a tiny set of spans once per heading and reuse.
+
+NOW DO THIS
+1) Inspect the project stack and determine best place for:
+   - global CSS
+   - global JS init
+2) Implement the animation kit files:
+   - /src/lib/scrollReveal.(ts|js) (or similar)
+   - /src/styles/scrollReveal.css (or similar)
+3) Wire it up globally.
+4) Add data attributes across all major sections on all pages.
+5) Test on mobile and desktop, and confirm reduced-motion works.
+6) Output the list of files changed and quick before/after notes.
+
+IMPORTANT: Keep it kid-friendly, subtle, and premium. No distracting bouncing text. Only cards/icons/underlines/sparkles.

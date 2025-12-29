@@ -299,9 +299,9 @@ export default function Home() {
       <section className="py-16 md:py-20 lg:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-            <div>
+            <div data-reveal="float">
               <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">About</p>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">A Trusted Preschool in Thane Since 2007</h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6" data-sparkle>A Trusted Preschool in Thane Since 2007</h2>
               <p className="text-muted-foreground text-lg leading-relaxed mb-6">
                 Rainbow Preschool International is one of the most trusted preschools in Thane, having nurtured over 50,000 young learners through joyful early childhood education. Our playgroup in Thane provides a safe, secure, and happy learning environment built on a strong play-based philosophy.
               </p>
@@ -315,11 +315,11 @@ export default function Home() {
                 </Button>
               </Link>
             </div>
-            <div className="grid grid-cols-2 gap-4">
-              <Link href="#testimonials">
+            <div className="grid grid-cols-2 gap-4" data-stagger="children">
+              <Link href="#testimonials" data-reveal="pop">
                 <Card className="text-center hover-elevate cursor-pointer">
                   <CardContent className="pt-6">
-                    <Users className="w-10 h-10 text-primary mx-auto mb-3" />
+                    <Users className="w-10 h-10 text-primary mx-auto mb-3" data-float-icon />
                     <p className="text-3xl font-bold text-foreground mb-1">
                       <CountUp end={50000} duration={2000} suffix="+" />
                     </p>
@@ -327,10 +327,10 @@ export default function Home() {
                   </CardContent>
                 </Card>
               </Link>
-              <Link href="/about">
+              <Link href="/about" data-reveal="pop">
                 <Card className="text-center hover-elevate cursor-pointer">
                   <CardContent className="pt-6">
-                    <Star className="w-10 h-10 text-yellow-400 fill-yellow-400 mx-auto mb-3" />
+                    <Star className="w-10 h-10 text-yellow-400 fill-yellow-400 mx-auto mb-3" data-float-icon />
                     <p className="text-3xl font-bold text-foreground mb-1">
                       <CountUp end={18} duration={1500} delay={200} suffix="+" />
                     </p>
@@ -338,10 +338,10 @@ export default function Home() {
                   </CardContent>
                 </Card>
               </Link>
-              <Link href="#centres">
+              <Link href="#centres" data-reveal="pop">
                 <Card className="text-center hover-elevate cursor-pointer">
                   <CardContent className="pt-6">
-                    <MapPin className="w-10 h-10 text-sky-500 mx-auto mb-3" />
+                    <MapPin className="w-10 h-10 text-sky-500 mx-auto mb-3" data-float-icon />
                     <p className="text-3xl font-bold text-foreground mb-1">
                       <CountUp end={6} duration={1500} delay={400} prefix="0" />
                     </p>
@@ -349,9 +349,9 @@ export default function Home() {
                   </CardContent>
                 </Card>
               </Link>
-              <Card className="text-center">
+              <Card className="text-center" data-reveal="pop">
                 <CardContent className="pt-6">
-                  <Shield className="w-10 h-10 text-green-500 mx-auto mb-3" />
+                  <Shield className="w-10 h-10 text-green-500 mx-auto mb-3" data-float-icon />
                   <p className="text-3xl font-bold text-foreground mb-1">
                     <CountUp end={100} duration={1500} delay={600} suffix="%" />
                   </p>
@@ -366,9 +366,9 @@ export default function Home() {
       {/* Programmes Section - SEO Cluster Hub */}
       <section className="py-16 md:py-20 lg:py-24 bg-card">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-12">
+          <div className="text-center max-w-3xl mx-auto mb-12" data-reveal="float">
             <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">Our Programmes</p>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Programmes Designed for Every Stage of Early Learning</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4" data-sparkle>Programmes Designed for Every Stage of Early Learning</h2>
             <p className="text-muted-foreground text-lg">
               From playgroup to kindergarten, we offer age-appropriate programmes that nurture your child's growth through play-based learning.
             </p>
@@ -395,9 +395,9 @@ export default function Home() {
       {/* Testimonials Section - Local SEO Enhanced */}
       <section id="testimonials" className="py-16 md:py-20 lg:py-24 bg-card">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-12">
+          <div className="text-center max-w-3xl mx-auto mb-12" data-reveal="float">
             <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">Testimonials</p>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Parents from Thane Say...</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4" data-sparkle>Parents from Thane Say...</h2>
             <div className="flex items-center justify-center gap-2 mt-4">
               <SiGoogle className="w-5 h-5" />
               <span className="font-semibold">4.7</span>
@@ -419,9 +419,9 @@ export default function Home() {
       <section className="py-16 md:py-20 lg:py-24 bg-card">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
-            <div>
+            <div data-reveal="slide" data-direction="left">
               <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">Get In Touch</p>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">Request A Callback</h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4" data-sparkle>Request A Callback</h2>
               <p className="text-muted-foreground text-lg mb-8">
                 Submit your details and queries here. We'd be glad to help you out!
               </p>
@@ -439,7 +439,7 @@ export default function Home() {
                 </video>
               </div>
             </div>
-            <Card>
+            <Card data-reveal="slide" data-direction="right">
               <CardContent className="pt-6">
                 <ContactForm />
               </CardContent>
@@ -451,8 +451,8 @@ export default function Home() {
       {/* Find Preschool Near You - Local SEO Links */}
       <section className="py-12 md:py-16 bg-primary/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8">
-            <h2 className="text-2xl md:text-3xl font-bold mb-2">Find Preschool Near You in Thane</h2>
+          <div className="text-center mb-8" data-reveal="float">
+            <h2 className="text-2xl md:text-3xl font-bold mb-2" data-sparkle>Find Preschool Near You in Thane</h2>
             <p className="text-muted-foreground">
               Choose the Rainbow Preschool centre closest to your home
             </p>
@@ -489,9 +489,9 @@ export default function Home() {
       {/* Centres Section - Local SEO Gold */}
       <section id="centres" className="py-16 md:py-20 lg:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-12">
+          <div className="text-center max-w-3xl mx-auto mb-12" data-reveal="float">
             <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">Our Locations</p>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Preschool Centres Across Thane</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4" data-sparkle>Our Preschool Centres Across Thane</h2>
             <p className="text-muted-foreground text-lg">
               Looking for a preschool or playgroup near you in Thane? Find your nearest centre.
             </p>
@@ -508,8 +508,8 @@ export default function Home() {
       {/* FAQs Section - Homepage SEO with Schema */}
       <section className="py-16 md:py-20 lg:py-24 bg-card">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold">Frequently Asked Questions</h2>
+          <div className="text-center mb-12" data-reveal="float">
+            <h2 className="text-3xl md:text-4xl font-bold" data-sparkle>Frequently Asked Questions</h2>
             <p className="text-muted-foreground mt-2">Common questions about our preschool in Thane</p>
           </div>
           <Accordion type="single" collapsible className="w-full">

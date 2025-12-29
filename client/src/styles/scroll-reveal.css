@@ -1,0 +1,261 @@
+/**
+ * Rainbow Trail Scroll Reveal - CSS Animations
+ * Kid-friendly, modern, premium scroll animations
+ */
+
+/* ============================================
+   BASE STATES - Hidden before reveal
+   ============================================ */
+
+/* Pop animation - scale up + fade */
+[data-reveal="pop"] {
+  opacity: 0;
+  transform: scale(0.92);
+  transition: opacity 0.5s ease-out, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition-delay: var(--stagger-delay, 0ms);
+}
+
+[data-reveal="pop"].is-inview {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Float animation - fade + gentle upward float */
+[data-reveal="float"] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  transition-delay: var(--stagger-delay, 0ms);
+}
+
+[data-reveal="float"].is-inview {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Slide animation - from left/right */
+[data-reveal="slide"] {
+  opacity: 0;
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+  transition-delay: var(--stagger-delay, 0ms);
+}
+
+[data-reveal="slide"][data-direction="left"] {
+  transform: translateX(-32px);
+}
+
+[data-reveal="slide"][data-direction="right"] {
+  transform: translateX(32px);
+}
+
+[data-reveal="slide"].is-inview {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Wiggle animation - subtle micro wiggle for icons */
+[data-reveal="wiggle"] {
+  opacity: 0;
+  transform: rotate(-3deg);
+  transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+  transition-delay: var(--stagger-delay, 0ms);
+}
+
+[data-reveal="wiggle"].is-inview {
+  opacity: 1;
+  animation: wiggle-reveal 0.5s ease-out forwards;
+}
+
+@keyframes wiggle-reveal {
+  0% { transform: rotate(-3deg); }
+  25% { transform: rotate(3deg); }
+  50% { transform: rotate(-2deg); }
+  75% { transform: rotate(1deg); }
+  100% { transform: rotate(0deg); }
+}
+
+/* ============================================
+   RAINBOW SPARKLE TRAIL - Heading Accent
+   ============================================ */
+
+[data-sparkle] {
+  position: relative;
+  display: inline-block;
+}
+
+/* Rainbow underline that draws left-to-right */
+[data-sparkle]::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    hsl(var(--primary)) 0%,
+    hsl(var(--secondary)) 25%,
+    hsl(140, 65%, 50%) 50%,
+    hsl(var(--accent)) 75%,
+    hsl(280, 70%, 55%) 100%
+  );
+  border-radius: 2px;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+[data-sparkle].is-inview::after {
+  transform: scaleX(1);
+}
+
+/* Sparkle container positioning */
+.sparkle-container {
+  position: absolute;
+  left: 0;
+  bottom: -8px;
+  width: 100%;
+  height: 20px;
+  pointer-events: none;
+  overflow: visible;
+}
+
+/* Individual sparkle dots */
+.sparkle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  opacity: 0;
+  transform: translateY(0) scale(0);
+}
+
+[data-sparkle].is-inview .sparkle {
+  animation: sparkle-rise 0.8s ease-out forwards;
+}
+
+/* Sparkle positions and colors */
+.sparkle-1 {
+  left: 10%;
+  background: hsl(var(--primary));
+  animation-delay: 0.1s;
+}
+
+.sparkle-2 {
+  left: 30%;
+  background: hsl(var(--secondary));
+  animation-delay: 0.2s;
+}
+
+.sparkle-3 {
+  left: 50%;
+  background: hsl(140, 65%, 50%);
+  animation-delay: 0.3s;
+}
+
+.sparkle-4 {
+  left: 70%;
+  background: hsl(var(--accent));
+  animation-delay: 0.4s;
+}
+
+.sparkle-5 {
+  left: 90%;
+  background: hsl(280, 70%, 55%);
+  animation-delay: 0.5s;
+}
+
+@keyframes sparkle-rise {
+  0% {
+    opacity: 0;
+    transform: translateY(0) scale(0);
+  }
+  30% {
+    opacity: 1;
+    transform: translateY(-12px) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-24px) scale(0.5);
+  }
+}
+
+/* ============================================
+   FLOATING STICKER - Gentle bobbing for icons
+   ============================================ */
+
+[data-float-icon] {
+  animation: gentle-bob 4s ease-in-out infinite;
+  animation-delay: var(--bob-delay, 0s);
+}
+
+@keyframes gentle-bob {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+/* Random-ish delays for multiple icons */
+[data-float-icon]:nth-child(1) { --bob-delay: 0s; }
+[data-float-icon]:nth-child(2) { --bob-delay: 0.5s; }
+[data-float-icon]:nth-child(3) { --bob-delay: 1s; }
+[data-float-icon]:nth-child(4) { --bob-delay: 1.5s; }
+[data-float-icon]:nth-child(5) { --bob-delay: 0.3s; }
+[data-float-icon]:nth-child(6) { --bob-delay: 0.8s; }
+
+/* ============================================
+   ACCESSIBILITY - Reduced Motion
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  /* Disable all scroll reveal animations */
+  [data-reveal],
+  [data-reveal="pop"],
+  [data-reveal="float"],
+  [data-reveal="slide"],
+  [data-reveal="wiggle"] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+  }
+
+  /* Disable sparkle animations */
+  [data-sparkle]::after {
+    transform: scaleX(1) !important;
+    transition: none !important;
+  }
+
+  .sparkle {
+    display: none !important;
+  }
+
+  /* Disable floating icons */
+  [data-float-icon] {
+    animation: none !important;
+  }
+
+  /* No animation class - ensures content is visible */
+  .no-animation {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* ============================================
+   UTILITIES
+   ============================================ */
+
+/* Prevent layout shift - content always in DOM */
+[data-reveal],
+[data-sparkle] {
+  will-change: opacity, transform;
+}
+
+/* Clean state after animation completes */
+[data-reveal].is-inview {
+  will-change: auto;
+}

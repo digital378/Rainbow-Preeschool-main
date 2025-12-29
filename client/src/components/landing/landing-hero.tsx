@@ -44,34 +44,34 @@ export function LandingHero({
       </div>
 
       <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
-        <Badge variant="secondary" className="mb-4 animate-fade-in">
+        <Badge variant="secondary" className="mb-4" data-reveal="pop">
           Trusted Since 2007
         </Badge>
         
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 animate-fade-in-up">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6" data-reveal="float" data-sparkle>
           {h1}
         </h1>
         
-        <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed animate-fade-in-up animation-delay-200">
+        <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed" data-reveal="float">
           {introParagraph}
         </p>
         
         {/* Trust row */}
-        <div className="flex flex-wrap justify-center gap-4 md:gap-8 mb-10 animate-fade-in-up animation-delay-400">
-          <div className="flex items-center gap-2 text-sm">
-            <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+        <div className="flex flex-wrap justify-center gap-4 md:gap-8 mb-10" data-stagger="children">
+          <div className="flex items-center gap-2 text-sm" data-reveal="pop">
+            <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center" data-float-icon>
               <Calendar className="w-4 h-4 text-primary" />
             </div>
             <span className="font-medium">18+ Years</span>
           </div>
-          <div className="flex items-center gap-2 text-sm">
-            <div className="w-8 h-8 rounded-full bg-secondary/10 flex items-center justify-center">
+          <div className="flex items-center gap-2 text-sm" data-reveal="pop">
+            <div className="w-8 h-8 rounded-full bg-secondary/10 flex items-center justify-center" data-float-icon>
               <Users className="w-4 h-4 text-secondary" />
             </div>
             <span className="font-medium">50,000+ Students</span>
           </div>
-          <div className="flex items-center gap-2 text-sm">
-            <div className="w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center">
+          <div className="flex items-center gap-2 text-sm" data-reveal="pop">
+            <div className="w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center" data-float-icon>
               <Shield className="w-4 h-4 text-accent" />
             </div>
             <span className="font-medium">6 Centres</span>
@@ -79,7 +79,7 @@ export function LandingHero({
         </div>
         
         {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 animate-fade-in-up animation-delay-600">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3" data-reveal="float">
           <Button
             size="lg"
             onClick={onCallbackClick}
