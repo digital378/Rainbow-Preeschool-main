@@ -1,0 +1,152 @@
+You are a senior technical SEO + full-stack web developer working inside a Replit project for Rainbow Preschool International (Thane). Your task is to implement BEST-PRACTICE SEO across the entire site and all landing pages, using context-aware metadata and structured data for each page type.
+
+HIGH-LEVEL GOAL
+Make every page SEO-correct and locally optimized (Thane + hyperlocal), with:
+- correct metadata per page context
+- correct heading structure
+- correct schema JSON-LD
+- correct canonicals
+- sitemap/robots
+- internal linking improvements
+- image alt + performance improvements
+- tracking readiness
+
+IMPORTANT CONSTRAINTS
+- Do NOT keyword-stuff. Keep copy natural.
+- Keep design unchanged unless necessary for SEO/accessibility.
+- Ensure no duplicate meta titles/descriptions across pages.
+- Ensure only one H1 per page.
+- Must be mobile-first and fast (Core Web Vitals).
+- Preserve existing routing and page URLs.
+
+STEP 1 — Audit the project and classify all pages
+1) Inspect the route structure and list every existing page/route.
+2) Categorize each page into a page-type:
+   A) Homepage
+   B) Programme pages (Playgroup/Nursery/Kindergarten/etc.)
+   C) Centre listing page (/centres)
+   D) Location landing pages (/preschool-in-... and /playgroup-in-... if present)
+   E) About/Contact pages
+   F) Blog/news pages + individual posts
+3) For each page, identify the primary SEO intent and locality intent (if any).
+
+STEP 2 — Create a reusable SEO system
+Implement a reusable SEO helper/component that supports:
+- title
+- meta description
+- canonical
+- robots
+- OpenGraph tags (og:title, og:description, og:url, og:image)
+- Twitter tags
+- structured data injection (JSON-LD)
+- breadcrumb support
+This must work for every route (React/Next/plain HTML) depending on the current stack.
+
+STEP 3 — Context-aware SEO rules (use these exact templates)
+Create a SEO configuration strategy:
+
+A) Homepage
+- Title: “Best Preschool & Playgroup in Thane | Rainbow Preschool International”
+- Description: “Trusted preschool and playgroup in Thane for children 1.5–6 years. Play-based learning, safe campus, trained teachers. Request a callback today.”
+- Schema: Organization + WebSite + SearchAction + (optional) AggregateRating if reviews are shown.
+
+B) Programme Pages (example: Playgroup)
+- Title template: “{Programme} in Thane ({Age Range}) | Rainbow Preschool”
+- Description template: “{Programme} in Thane for children {Age Range}. Safe, nurturing, play-based learning with trained teachers. Enquire now.”
+- Schema: BreadcrumbList + FAQPage + (optional) Service schema.
+- Must include internal links to:
+  - related programme pages
+  - centre/location pages
+  - enquiry/callback section
+
+C) Centre Listing Page (/centres)
+- Title: “Preschool Centres in Thane | Rainbow Preschool International”
+- Description: “Find Rainbow Preschool centres across Thane including Manpada, Kalwa, Dhokali, Anand Nagar, Hariniwas, Kasarvadavali. Get directions or request a callback.”
+- Schema: BreadcrumbList + ItemList + LocalBusiness entries for each centre (or link to each centre page/landing page).
+- Ensure NAP consistency (name/address/phone).
+
+D) Location Landing Pages (/preschool-in-<locality>-thane)
+- Title template: “Preschool in {Locality}, Thane | Rainbow Preschool International”
+- Description: “Looking for a preschool in {Locality}, Thane? Rainbow Preschool offers playgroup, nursery & kindergarten with safe, play-based learning. Enquire now.”
+- Schema: LocalBusiness/Preschool + FAQPage + BreadcrumbList.
+- Include:
+  - centre info card (address, tel links, WhatsApp, directions, map embed)
+  - locally contextual intro copy mentioning {Locality} and Thane naturally
+  - links to programme pages
+  - strong callback form CTA
+
+E) Contact Page
+- Title: “Contact Rainbow Preschool International | Thane”
+- Description: “Call, WhatsApp or request a callback to speak with our admissions team in Thane. Find centre addresses and directions.”
+- Schema: ContactPage + Organization + ContactPoint.
+
+F) About Page
+- Title: “About Rainbow Preschool International | Trusted Preschool in Thane”
+- Description: “Since 2007, Rainbow Preschool in Thane has nurtured 50,000+ students with play-based early childhood education.”
+- Schema: Organization + BreadcrumbList.
+
+G) Blog/News listing + posts
+- Blog index Title: “Parenting & Preschool Tips | Rainbow Preschool Blog”
+- Post Title: “{Post Title} | Rainbow Preschool”
+- Schema: BlogPosting + BreadcrumbList + Organization
+- Ensure clean slugs, excerpt meta descriptions, OG image.
+
+STEP 4 — Canonicals, sitemap.xml, robots.txt
+1) Add canonical tags to every page. Canonical must match the public URL.
+2) Generate/update /sitemap.xml to include:
+   - all static pages
+   - all programme pages
+   - all location landing pages
+   - all blog posts (if applicable)
+3) Add/update /robots.txt:
+   - allow crawling
+   - reference sitemap location
+   - block irrelevant routes (if any)
+
+STEP 5 — On-page SEO and accessibility fixes
+For every page:
+- Ensure exactly one H1 that matches primary intent.
+- Ensure H2/H3 structure is logical.
+- Add descriptive alt text to images (no keyword stuffing, but include Thane/locality where relevant).
+- Ensure buttons and links have accessible labels (aria-label if needed).
+- Fix any heading underline/overlap issues and maintain readability.
+
+STEP 6 — Internal linking improvements
+1) Homepage: add “Find Preschool Near You in Thane” linking to location pages.
+2) Programme pages: add “Find a centre near you” linking to relevant location pages.
+3) Location pages: link back to programmes + centres page.
+4) Footer: add “Thane Locations” list linking to top location pages.
+
+STEP 7 — Performance / Core Web Vitals quick wins
+- Enable image lazy-loading where possible.
+- Compress large images and use modern formats if supported.
+- Avoid heavy animation scripts; prefer CSS.
+- Ensure fonts are loaded efficiently (preconnect/preload if applicable).
+
+STEP 8 — Tracking readiness (no external setup required)
+Implement dataLayer push events for:
+- lead_form_view
+- lead_form_submit (include page, programme, locality, centre)
+- call_click
+- whatsapp_click
+- directions_click
+- header_centre_click
+- homepage_location_click
+
+FINAL OUTPUT REQUIRED
+1) Print a route-by-route SEO summary table in text (not HTML tables) listing:
+   - URL
+   - page type
+   - meta title
+   - meta description
+   - schema types applied
+   - canonical
+2) List all files changed/created.
+3) Confirm sitemap/robots URLs and that all landing pages are included.
+4) Note any pages missing data (e.g., OG image) and propose defaults.
+
+NOW START
+- First, show the detected routes and your plan for SEO component placement.
+- Then implement the reusable SEO system.
+- Then apply SEO updates page-by-page using the templates above.
+- Then generate sitemap + robots + internal links + tracking events.

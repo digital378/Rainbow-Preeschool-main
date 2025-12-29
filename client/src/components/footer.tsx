@@ -2,7 +2,7 @@ import { Link } from "wouter";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
 import { SiFacebook, SiInstagram, SiYoutube } from "react-icons/si";
 import logoImage from "@assets/Rainbow_Pre_School.Logo_1766035853658.png";
-import { localityLandingPages } from "@shared/centre-data";
+import { localityLandingPages, preschoolLandingPages } from "@shared/centre-data";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -141,18 +141,18 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Thane Locations - NEW */}
+          {/* Preschool Centres in Thane */}
           <div>
-            <h4 className="font-semibold text-base mb-4">Thane Locations</h4>
+            <h4 className="font-semibold text-base mb-4">Preschool in Thane</h4>
             <ul className="space-y-2">
-              {localityLandingPages.slice(0, 6).map((locality) => (
-                <li key={locality.slug}>
+              {preschoolLandingPages.map((location) => (
+                <li key={location.slug}>
                   <Link
-                    href={locality.url}
+                    href={location.url}
                     className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                    data-testid={`link-footer-location-${locality.slug}`}
+                    data-testid={`link-footer-preschool-${location.slug}`}
                   >
-                    Playgroup in {locality.name}
+                    Preschool in {location.name}
                   </Link>
                 </li>
               ))}

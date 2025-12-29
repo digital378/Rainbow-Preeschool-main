@@ -19,6 +19,7 @@ import { MethodologySection } from "@/components/methodology-section";
 import { CTASection } from "@/components/cta-section";
 import { ContactForm } from "@/components/contact-form";
 import { CountUp } from "@/components/count-up";
+import { SEO } from "@/components/seo";
 import { programmes, branches, testimonials } from "@shared/schema";
 import { preschoolLandingPages } from "@shared/centre-data";
 import { pushToDataLayer } from "@/lib/analytics";
@@ -285,6 +286,12 @@ export default function Home() {
 
   return (
     <div>
+      <SEO
+        title="Best Preschool & Playgroup in Thane | Rainbow Preschool International"
+        description="Trusted preschool and playgroup in Thane for children 1.5-6 years. Play-based learning, safe campus, trained teachers. 6 centres across Thane. Request a callback today."
+        keywords="preschool in thane, playgroup in thane, best preschool thane, nursery school thane, early childhood education thane, rainbow preschool"
+        canonical="/"
+      />
       <HeroSection />
       <QuickCallbackStrip />
 
