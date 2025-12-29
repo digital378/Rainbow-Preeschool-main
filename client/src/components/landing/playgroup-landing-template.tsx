@@ -132,7 +132,7 @@ export function PlaygroupLandingTemplate({ data }: PlaygroupLandingTemplateProps
         title={data.seo.title}
         description={data.seo.description}
         keywords={`playgroup in ${data.localityName.toLowerCase()}, preschool ${data.localityName.toLowerCase()}, toddler school thane, early learning ${data.localityName.toLowerCase()}`}
-        canonical={data.url}
+        canonical={data.seo.canonical}
       />
 
       <MinimalHeader
