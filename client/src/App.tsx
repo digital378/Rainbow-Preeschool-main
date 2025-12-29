@@ -22,6 +22,7 @@ import SummerCampLanding from "@/pages/summer-camp-landing";
 import HappyTimesLanding from "@/pages/happy-times-landing";
 import Contact from "@/pages/contact";
 import Blog from "@/pages/blog";
+import BlogPost from "@/pages/blog-post";
 import NotFound from "@/pages/not-found";
 
 // Local Playgroup Pages
@@ -73,6 +74,7 @@ function Router() {
       <Route path="/happy-times" component={HappyTimesLanding} />
       <Route path="/contact" component={Contact} />
       <Route path="/blog" component={Blog} />
+      <Route path="/blog/:slug" component={BlogPost} />
       
       {/* Local Playgroup Landing Pages */}
       <Route path="/playgroup-in-thane" component={PlaygroupInThane} />

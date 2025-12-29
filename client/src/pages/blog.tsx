@@ -117,7 +117,6 @@ export default function Blog() {
       <CTASection
         title="Want to Learn More?"
         description="Subscribe to our newsletter for the latest updates and parenting tips."
-        primaryAction={{ text: "Contact Us", href: "/contact" }}
       />
     </div>
   );
