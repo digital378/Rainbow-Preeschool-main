@@ -12,7 +12,7 @@ import { initReveal, cleanupReveal } from "@/lib/scroll-reveal";
  */
 export function useScrollReveal() {
   useEffect(() => {
-    // Small delay to ensure DOM is ready after route change
+    // Small delay to ensure DOM is ready
     const timeoutId = setTimeout(() => {
       initReveal();
     }, 100);
@@ -30,8 +30,7 @@ export function useScrollReveal() {
  */
 export function useScrollRevealOnRoute(pathname: string) {
   useEffect(() => {
-    // Cleanup and reinitialize on route change
-    cleanupReveal();
+    // initReveal internally calls cleanupReveal first to prevent duplicates
     const timeoutId = setTimeout(() => {
       initReveal();
     }, 150);

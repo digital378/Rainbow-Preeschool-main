@@ -21,6 +21,10 @@
  * - data-float-icon - Gentle bobbing for icons
  */
 
+// Singleton observers - persisted across reinitializations
+let revealObserver: IntersectionObserver | null = null;
+let sparkleObserver: IntersectionObserver | null = null;
+
 // Check if reduced motion is preferred
 function prefersReducedMotion(): boolean {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -45,10 +49,39 @@ function createSparkles(element: HTMLElement): void {
   element.appendChild(container);
 }
 
+// Cleanup existing observers and DOM modifications
+function cleanupReveal(): void {
+  // Disconnect existing observers
+  if (revealObserver) {
+    revealObserver.disconnect();
+    revealObserver = null;
+  }
+  if (sparkleObserver) {
+    sparkleObserver.disconnect();
+    sparkleObserver = null;
+  }
+  
+  // Remove is-inview classes from all elements
+  document.querySelectorAll("[data-reveal].is-inview").forEach((el) => {
+    el.classList.remove("is-inview", "no-animation");
+  });
+  document.querySelectorAll("[data-sparkle].is-inview").forEach((el) => {
+    el.classList.remove("is-inview", "no-animation");
+  });
+  
+  // Remove dynamically appended sparkle containers to prevent DOM buildup
+  document.querySelectorAll(".sparkle-container").forEach((container) => {
+    container.remove();
+  });
+}
+
 // Initialize reveal animations
 function initReveal(): void {
+  // First, clean up any existing observers to prevent duplicates
+  cleanupReveal();
+  
   if (prefersReducedMotion()) {
-    // For reduced motion: show all content immediately
+    // For reduced motion: show all content immediately without animation
     document.querySelectorAll("[data-reveal]").forEach((el) => {
       el.classList.add("is-inview", "no-animation");
     });
@@ -58,13 +91,13 @@ function initReveal(): void {
     return;
   }
 
-  // Reveal observer for sections/cards
-  const revealObserver = new IntersectionObserver(
+  // Create new reveal observer
+  revealObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           entry.target.classList.add("is-inview");
-          revealObserver.unobserve(entry.target);
+          revealObserver?.unobserve(entry.target);
         }
       });
     },
@@ -74,14 +107,14 @@ function initReveal(): void {
     }
   );
 
-  // Sparkle observer for headings
-  const sparkleObserver = new IntersectionObserver(
+  // Create new sparkle observer
+  sparkleObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           createSparkles(entry.target as HTMLElement);
           entry.target.classList.add("is-inview");
-          sparkleObserver.unobserve(entry.target);
+          sparkleObserver?.unobserve(entry.target);
         }
       });
     },
@@ -93,69 +126,21 @@ function initReveal(): void {
 
   // Observe all reveal elements
   document.querySelectorAll("[data-reveal]").forEach((el) => {
-    revealObserver.observe(el);
+    revealObserver?.observe(el);
   });
 
   // Observe all sparkle headings
   document.querySelectorAll("[data-sparkle]").forEach((el) => {
-    sparkleObserver.observe(el);
+    sparkleObserver?.observe(el);
   });
 
-  // Handle stagger containers
+  // Handle stagger containers - set delay CSS custom properties
   document.querySelectorAll("[data-stagger='children']").forEach((container) => {
     const children = container.querySelectorAll("[data-reveal]");
     children.forEach((child, index) => {
       (child as HTMLElement).style.setProperty("--stagger-delay", `${index * 100}ms`);
     });
   });
-}
-
-// Cleanup function for SPA navigation
-function cleanupReveal(): void {
-  document.querySelectorAll("[data-reveal].is-inview").forEach((el) => {
-    el.classList.remove("is-inview");
-  });
-  document.querySelectorAll("[data-sparkle].is-inview").forEach((el) => {
-    el.classList.remove("is-inview");
-    const container = el.querySelector(".sparkle-container");
-    if (container) container.remove();
-  });
-}
-
-// Export for React hook usage - returns cleanup function
-export function useScrollReveal(): (() => void) | undefined {
-  // Run on mount
-  if (typeof window !== "undefined") {
-    // Small delay to ensure DOM is ready after route change
-    const timeoutId = setTimeout(() => {
-      initReveal();
-    }, 50);
-    
-    // Listen for reduced motion changes
-    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const handleChange = () => {
-      cleanupReveal();
-      initReveal();
-    };
-    
-    mediaQuery.addEventListener("change", handleChange);
-    
-    return () => {
-      clearTimeout(timeoutId);
-      mediaQuery.removeEventListener("change", handleChange);
-    };
-  }
-  return undefined;
-}
-
-// Initialize on DOMContentLoaded for non-SPA pages
-if (typeof document !== "undefined") {
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initReveal);
-  } else {
-    // DOM already loaded
-    initReveal();
-  }
 }
 
 export { initReveal, cleanupReveal, prefersReducedMotion };
