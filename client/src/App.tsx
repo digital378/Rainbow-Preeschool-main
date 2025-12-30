@@ -101,6 +101,7 @@ import {
   PhysicalDevelopmentSigns,
   MidTermVisitQuestions,
   FAQsPage,
+  UnderstandingPreschoolImportance,
   AuthorArchivePage,
   legacySlugs,
 } from "@/pages/legacy-pages";
@@ -226,6 +227,7 @@ function Router() {
       <Route path="/45-signs-of-healthy-physical-development-ages-3-6" component={PhysicalDevelopmentSigns} />
       <Route path="/questions-ask-school-visit-mid-term-playgroup-admissions" component={MidTermVisitQuestions} />
       <Route path="/faqs" component={FAQsPage} />
+      <Route path="/understanding-the-importance-of-preschool-in-early-childhood-development" component={UnderstandingPreschoolImportance} />
       
       {/* Author Archive Pages (redirect to resources) */}
       <Route path="/author/rainbowpreschools" component={AuthorArchivePage} />
