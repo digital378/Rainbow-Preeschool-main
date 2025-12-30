@@ -17,7 +17,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import { Lock, CheckCircle2, Loader2 } from "lucide-react";
-import { pushToDataLayer } from "@/lib/analytics";
+import { trackLeadFormSubmit, trackFormView, getUTMParams } from "@/lib/analytics";
 
 const formSchema = z.object({
   parentName: z.string().min(2, "Please enter your name"),
@@ -57,13 +57,12 @@ export function LandingCallbackForm({ locality, sourcePage }: LandingCallbackFor
           if (entry.isIntersecting && !hasTrackedView.current) {
             hasTrackedView.current = true;
             const urlParams = new URLSearchParams(window.location.search);
-            pushToDataLayer({
-              event: "lead_form_view",
+            trackFormView({
               locality,
               source_page: sourcePage,
-              utm_source: urlParams.get("utm_source") || "",
-              utm_medium: urlParams.get("utm_medium") || "",
-              utm_campaign: urlParams.get("utm_campaign") || "",
+              utm_source: urlParams.get("utm_source") || undefined,
+              utm_medium: urlParams.get("utm_medium") || undefined,
+              utm_campaign: urlParams.get("utm_campaign") || undefined,
             });
           }
         });
@@ -104,16 +103,14 @@ export function LandingCallbackForm({ locality, sourcePage }: LandingCallbackFor
       });
     },
     onSuccess: () => {
-      const urlParams = new URLSearchParams(window.location.search);
-      pushToDataLayer({
-        event: "lead_form_submit",
+      const utmParams = getUTMParams();
+      trackLeadFormSubmit({
+        form_id: "landing-callback-form",
+        form_name: "Landing Callback Form",
         locality,
         programme: "Playgroup",
         source_page: sourcePage,
-        utm_source: urlParams.get("utm_source") || "",
-        utm_medium: urlParams.get("utm_medium") || "",
-        utm_campaign: urlParams.get("utm_campaign") || "",
-        utm_content: urlParams.get("utm_content") || "",
+        ...utmParams,
       });
       setSubmitted(true);
       toast({

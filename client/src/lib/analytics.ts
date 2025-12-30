@@ -94,21 +94,49 @@ export const trackFormView = (params: LeadEventParams) => {
   });
 };
 
-// Track successful form submission
-export const trackLeadFormSubmit = (params: LeadEventParams) => {
+// Duplicate prevention lock
+let leadEventFired = false;
+
+// Track successful form submission - CANONICAL EVENT for all forms
+export const trackLeadFormSubmit = (params: LeadEventParams & { form_id?: string; form_name?: string }) => {
+  // Prevent duplicate fires within 3 seconds
+  if (leadEventFired) return;
+  leadEventFired = true;
+  
+  // Reset lock after delay
+  setTimeout(() => {
+    leadEventFired = false;
+  }, 3000);
+  
+  // Push CANONICAL conversion event to dataLayer (GTM picks this up)
+  pushToDataLayer({
+    event: 'conversion_event_submit_lead_form',
+    form_id: params.form_id || null,
+    form_name: params.form_name || null,
+    page_path: typeof window !== 'undefined' ? window.location.pathname : '',
+    page_url: typeof window !== 'undefined' ? window.location.href : '',
+    programme: params.programme,
+    locality: params.locality,
+    centre: params.centre,
+    source_page: params.source_page,
+    utm_source: params.utm_source,
+    utm_medium: params.utm_medium,
+    utm_campaign: params.utm_campaign,
+  });
+  
+  // Also push legacy event for backwards compatibility
   pushToDataLayer({
     event: 'lead_form_submit',
     ...params,
   });
   
-  // Also fire GA4 event
-  trackEvent('form_submit', 'lead_generation', params.programme || 'general');
-  
-  // Fire conversion event for GA4 (same as contact form)
+  // Fire GA4 event directly as backup
   if (typeof window !== 'undefined' && window.gtag) {
     window.gtag('event', 'conversion_event_submit_lead_form', {
-      'event_callback': () => {},
-      'event_timeout': 2000,
+      form_id: params.form_id,
+      form_name: params.form_name,
+      programme: params.programme,
+      locality: params.locality,
     });
   }
 };
@@ -192,4 +220,38 @@ export const getUTMParams = () => {
     utm_term: params.get('utm_term') || undefined,
     utm_content: params.get('utm_content') || undefined,
   };
+};
+
+// ============================================
+// GLOBAL FORM SUBMISSION TRACKING
+// ============================================
+// This catches ANY form submission as a fallback
+// Explicit trackLeadFormSubmit calls take priority
+
+let globalFormListenerAttached = false;
+
+export const initGlobalFormTracking = () => {
+  if (typeof window === 'undefined' || globalFormListenerAttached) return;
+  globalFormListenerAttached = true;
+  
+  document.addEventListener('submit', (e) => {
+    const form = e.target as HTMLElement;
+    if (!form || form.tagName !== 'FORM') return;
+    
+    // Skip forms marked to ignore (like search forms)
+    if (form.classList.contains('ignore-lead-tracking')) return;
+    
+    // Get form details
+    const formElement = form as HTMLFormElement;
+    const formId = formElement.id || null;
+    const formName = formElement.getAttribute('name') || formElement.getAttribute('data-form-name') || null;
+    
+    // Fire the canonical event (deduplication is handled in trackLeadFormSubmit)
+    trackLeadFormSubmit({
+      form_id: formId || undefined,
+      form_name: formName || undefined,
+      source_page: window.location.pathname,
+      ...getUTMParams(),
+    });
+  }, true); // Use capture phase to ensure we catch it early
 };

@@ -7,7 +7,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
-import { initGA } from "./lib/analytics";
+import { initGA, initGlobalFormTracking } from "./lib/analytics";
 import { useAnalytics } from "./hooks/use-analytics";
 import { useScrollRevealOnRoute } from "./hooks/use-scroll-reveal";
 import "@/styles/scroll-reveal.css";
@@ -149,6 +149,8 @@ function App() {
     } else {
       initGA();
     }
+    // Initialize global form tracking for all forms
+    initGlobalFormTracking();
   }, []);
 
   return (

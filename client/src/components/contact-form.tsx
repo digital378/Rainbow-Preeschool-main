@@ -24,7 +24,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { programmes, branches } from "@shared/schema";
 import { apiRequest } from "@/lib/queryClient";
-import { trackFormSubmission } from "@/lib/analytics";
+import { trackLeadFormSubmit, getUTMParams } from "@/lib/analytics";
 import { Loader2, CheckCircle } from "lucide-react";
 
 declare global {
@@ -37,15 +37,6 @@ declare global {
   }
 }
 
-// Fire Google Ads conversion event
-function fireConversionEvent() {
-  if (typeof window !== 'undefined' && window.gtag) {
-    window.gtag('event', 'conversion_event_submit_lead_form', {
-      'event_callback': () => {},
-      'event_timeout': 2000,
-    });
-  }
-}
 
 const RECAPTCHA_SITE_KEY = import.meta.env.VITE_RECAPTCHA_SITE_KEY || "";
 
@@ -157,8 +148,15 @@ export function ContactForm({ defaultBranch, defaultProgramme, compact = false, 
     },
     onSuccess: () => {
       setIsSubmitted(true);
-      trackFormSubmission("contact_form", form.getValues("branch"));
-      fireConversionEvent(); // Fire Google Ads conversion event
+      const utmParams = getUTMParams();
+      trackLeadFormSubmit({
+        form_id: "contact-form",
+        form_name: "Contact Form",
+        programme: form.getValues("programme"),
+        centre: form.getValues("branch"),
+        source_page: window.location.pathname,
+        ...utmParams,
+      });
       // Fire Meta Pixel Lead conversion event
       if (typeof window !== 'undefined' && (window as any).fbq) {
         (window as any).fbq('track', 'Lead');

@@ -92,6 +92,8 @@ export function LocalCallbackForm({
     onSuccess: () => {
       const utmParams = getUTMParams();
       trackLeadFormSubmit({
+        form_id: "local-callback-form",
+        form_name: "Local Callback Form",
         programme,
         locality,
         centre,

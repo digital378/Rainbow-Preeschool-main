@@ -109,8 +109,18 @@ All centre information is centralized in `shared/centre-data.ts`:
 
 ### Analytics Tracking
 Enhanced lead tracking via dataLayer pushes:
+
+**Canonical Lead Conversion Event:**
+- `conversion_event_submit_lead_form` - **PRIMARY** conversion event for ALL form submissions
+  - Pushed to dataLayer for GTM pickup
+  - Also fired via gtag for direct GA4
+  - Includes form_id, form_name, page_path, page_url, programme, locality, centre, UTM params
+  - Deduplication lock prevents double-firing within 3 seconds
+  - Global form listener catches any forms that don't explicitly call tracking
+
+**Other Events:**
 - `lead_form_view` - When callback form becomes visible
-- `lead_form_submit` - Successful form submission
+- `lead_form_submit` - Legacy event (also fires alongside conversion event)
 - `whatsapp_click` - WhatsApp button clicks
 - `call_click` - Phone number clicks
 - `directions_click` - Map directions clicks
@@ -120,6 +130,11 @@ Enhanced lead tracking via dataLayer pushes:
 - `mobile_centre_click` - Mobile menu centre clicks
 
 All events capture UTM parameters for attribution tracking.
+
+**Form Tracking Architecture:**
+- `trackLeadFormSubmit()` in `client/src/lib/analytics.ts` is the single source of truth
+- `initGlobalFormTracking()` in App.tsx catches all form submissions as backup
+- Forms explicitly calling trackLeadFormSubmit: Contact Form, Landing Callback Form, Local Callback Form
 
 ### SEO Files
 - `public/sitemap.xml` - All pages with priority weighting (local pages at 0.9)
