@@ -27,11 +27,11 @@ export const legacyPagesData: Record<string, LegacyPageData> = {
     title: "36 Motivational Thoughts of the Day for Kids | Rainbow Preschool",
     metaDescription: "Discover 36 uplifting motivational thoughts for children. Help your preschooler build confidence, resilience, and a positive mindset with these daily affirmations.",
     h1: "36 Motivational Thoughts of the Day for Kids",
-    intro: "Starting each day with positive thoughts helps children develop confidence, emotional resilience, and a growth mindset. Here are 36 motivational thoughts perfect for preschoolers and young children in Thane.",
+    intro: "Starting each day with positive thoughts helps children develop confidence, emotional resilience, and a growth mindset. Here are 36 motivational thoughts perfect for preschoolers and young children in Thane. At <a href=\"/about\">Rainbow Preschool International</a>, we believe in nurturing the whole child through positive reinforcement.",
     sections: [
       {
         heading: "Why Daily Affirmations Matter for Young Children",
-        content: "Children's minds are incredibly receptive to positive messaging. When we share motivational thoughts with preschoolers, we help them build a foundation of self-belief that supports their learning journey.\n\nAt Rainbow Preschool International, we incorporate positive affirmations into our daily routine, helping children develop emotional intelligence alongside academic skills.",
+        content: "Children's minds are incredibly receptive to positive messaging. When we share motivational thoughts with preschoolers, we help them build a foundation of self-belief that supports their learning journey.\n\nAt <a href=\"/about\">Rainbow Preschool International</a>, we incorporate positive affirmations into our daily routine across all our centres including <a href=\"/preschool-in-manpada-thane\">Manpada</a>, <a href=\"/preschool-in-hariniwas-thane\">Hariniwas</a>, <a href=\"/preschool-in-anand-nagar-thane\">Anand Nagar</a>, <a href=\"/preschool-in-dhokali-thane\">Dhokali</a>, <a href=\"/preschool-in-kalwa-thane\">Kalwa</a>, and <a href=\"/preschool-in-kasarvadavali-thane\">Kasarvadavali</a>. Our teachers help children develop emotional intelligence alongside academic skills through our carefully designed <a href=\"/programmes\">programmes</a>.",
         bulletPoints: [
           "Builds self-confidence from an early age",
           "Helps children cope with challenges",
@@ -42,7 +42,7 @@ export const legacyPagesData: Record<string, LegacyPageData> = {
       },
       {
         heading: "Motivational Thoughts for Preschoolers",
-        content: "Here are age-appropriate motivational thoughts that parents and teachers can share with young children:\n\n1. I am kind and helpful.\n2. I can do hard things.\n3. My mistakes help me learn.\n4. I am a good friend.\n5. I am loved just as I am.\n6. Today will be a great day.\n7. I can try again if I don't succeed.\n8. My words are powerful and kind.\n9. I am brave and strong.\n10. Learning new things is fun.\n\nThese simple affirmations are perfect for morning circle time or as part of your child's bedtime routine.",
+        content: "Here are age-appropriate motivational thoughts that parents and teachers can share with young children. These affirmations are used in our <a href=\"/playgroup\">Playgroup</a>, <a href=\"/nursery\">Nursery</a>, and <a href=\"/kindergarten\">Kindergarten</a> programmes:\n\n1. I am kind and helpful.\n2. I can do hard things.\n3. My mistakes help me learn.\n4. I am a good friend.\n5. I am loved just as I am.\n6. Today will be a great day.\n7. I can try again if I don't succeed.\n8. My words are powerful and kind.\n9. I am brave and strong.\n10. Learning new things is fun.\n\nThese simple affirmations are perfect for morning circle time or as part of your child's bedtime routine. Our experienced teachers use these daily at all Rainbow Preschool centres in Thane.",
         bulletPoints: [
           "I believe in myself",
           "I am important and special",
@@ -53,15 +53,15 @@ export const legacyPagesData: Record<string, LegacyPageData> = {
       },
       {
         heading: "How to Use These Thoughts at Home",
-        content: "Make affirmations part of your daily routine by saying them together during breakfast, on the way to school, or before bedtime. At Rainbow Preschool, we find that children who practice positive self-talk show greater confidence in classroom activities and social interactions.\n\nYou can also create a simple affirmation chart where your child picks a new thought each day, making it an interactive and fun experience.",
+        content: "Make affirmations part of your daily routine by saying them together during breakfast, on the way to school, or before bedtime. At Rainbow Preschool, we find that children who practice positive self-talk show greater confidence in classroom activities and social interactions.\n\nYou can also create a simple affirmation chart where your child picks a new thought each day, making it an interactive and fun experience. <a href=\"/contact\">Contact us</a> to learn more about how we integrate positive affirmations into our curriculum at our centres in <a href=\"/preschool-in-manpada-thane\">Manpada</a>, <a href=\"/preschool-in-hariniwas-thane\">Hariniwas</a>, and other Thane locations.",
         bulletPoints: []
       }
     ],
     faqs: [
-      { question: "At what age should I start using affirmations with my child?", answer: "You can start as early as 1.5-2 years. Simple phrases like 'You are loved' and 'You are kind' work well for toddlers. As children grow, you can introduce more complex affirmations." },
+      { question: "At what age should I start using affirmations with my child?", answer: "You can start as early as 1.5-2 years. Simple phrases like 'You are loved' and 'You are kind' work well for toddlers. As children grow, you can introduce more complex affirmations. Our <a href=\"/playgroup\">Playgroup programme</a> starts from age 1.5 years." },
       { question: "How often should we practice positive affirmations?", answer: "Daily practice is most effective. Choose a consistent time like morning breakfast or bedtime. Even 2-3 minutes of positive affirmations can make a significant difference." },
       { question: "What if my child doesn't want to repeat affirmations?", answer: "Never force it. Instead, model positive self-talk yourself. Say affirmations about yourself out loud and let your child observe. They'll often start joining in naturally." },
-      { question: "Can affirmations help with school anxiety?", answer: "Yes! Affirmations like 'I am brave' and 'I can do hard things' help children build confidence. At Rainbow Preschool, we use affirmations to help children transition smoothly into school life." }
+      { question: "Can affirmations help with school anxiety?", answer: "Yes! Affirmations like 'I am brave' and 'I can do hard things' help children build confidence. At <a href=\"/about\">Rainbow Preschool</a>, we use affirmations to help children transition smoothly into school life across all our <a href=\"/programmes\">programmes</a>." }
     ],
     relatedLinks: [
       { title: "Our Programmes", url: "/programmes", description: "Holistic early childhood education" },
@@ -1980,17 +1980,18 @@ Object.assign(legacyPagesData, {
     title: "Mid-Term Playgroup Admission Open | Rainbow Preschool Thane",
     metaDescription: "Mid-term admissions now open for playgroup at Rainbow Preschool International, Thane. Enroll your child today!",
     h1: "Mid-Term Playgroup Admission Now Open",
-    intro: "Good news for parents in Thane! Rainbow Preschool International is accepting mid-term admissions for our Playgroup programme. Don't wait for the next academic year—start your child's learning journey today!",
+    intro: "Good news for parents in Thane! <a href=\"/about\">Rainbow Preschool International</a> is accepting mid-term admissions for our <a href=\"/playgroup\">Playgroup programme</a>. Don't wait for the next academic year—start your child's learning journey today at any of our six centres across Thane!",
     sections: [
-      { heading: "Why Wait When You Can Start Now?", content: "Children develop at their own pace. If your child is ready for preschool, there's no need to wait for a new academic year. Our mid-term admission option ensures your child doesn't miss valuable learning time.", bulletPoints: [] },
-      { heading: "What Playgroup Offers", content: "Our playgroup programme for children aged 1.5-2.5 years focuses on:", bulletPoints: ["Sensory exploration and discovery", "Early language development", "Fine and gross motor skills", "Social skills and emotional regulation", "Introduction to routines", "Creative expression through art and music"] },
-      { heading: "Available Centres", content: "Check seat availability at:", bulletPoints: ["Manpada (Aggarwal Centre)", "Hariniwas", "Anand Nagar", "Dhokali", "Kalwa", "Kasarvadavali"] }
+      { heading: "Why Wait When You Can Start Now?", content: "Children develop at their own pace. If your child is ready for preschool, there's no need to wait for a new academic year. Our mid-term admission option at <a href=\"/about\">Rainbow Preschool International</a> ensures your child doesn't miss valuable learning time.\n\nWith over 17 years of experience in early childhood education and 50,000+ alumni, we understand that every child's readiness is unique. Our flexible admission policy allows children to join at any time of the year, subject to seat availability.", bulletPoints: [] },
+      { heading: "What Playgroup Offers", content: "Our <a href=\"/playgroup\">Playgroup programme</a> for children aged 1.5-2.5 years focuses on holistic development through play-based learning. Each activity is designed to nurture your child's natural curiosity while building essential skills for later education.", bulletPoints: ["Sensory exploration and discovery", "Early language development", "Fine and gross motor skills", "Social skills and emotional regulation", "Introduction to routines", "Creative expression through art and music"] },
+      { heading: "Available Centres in Thane", content: "Check seat availability at any of our Rainbow Preschool centres:", bulletPoints: ["<a href=\"/preschool-in-manpada-thane\">Manpada</a> (Aggarwal Centre) - Our flagship centre", "<a href=\"/preschool-in-hariniwas-thane\">Hariniwas</a> - Serving Hariniwas & nearby areas", "<a href=\"/preschool-in-anand-nagar-thane\">Anand Nagar</a> - Ideal for Anand Nagar residents", "<a href=\"/preschool-in-dhokali-thane\">Dhokali</a> - Convenient for Ghodbunder Road families", "<a href=\"/preschool-in-kalwa-thane\">Kalwa</a> - Serving the Kalwa community", "<a href=\"/preschool-in-kasarvadavali-thane\">Kasarvadavali</a> - For Kasarvadavali & surrounding areas"] },
+      { heading: "How to Apply for Mid-Term Admission", content: "The admission process is simple and quick. <a href=\"/contact\">Contact us</a> to schedule a campus visit or fill out our enquiry form. Our admission counselors will guide you through the entire process and help you choose the best centre for your family.\n\nAfter the initial meeting, you can complete admission formalities and your child can start within days. We ensure a smooth transition with our specialized orientation programme.", bulletPoints: [] }
     ],
     faqs: [
-      { question: "Is mid-term admission the same as regular admission?", answer: "Yes! Your child receives the same quality programme. Fees are pro-rated based on the joining date." },
-      { question: "How do I apply?", answer: "Contact your preferred centre or fill out our online enquiry form. We'll check availability and guide you through the process." },
-      { question: "What documents are needed?", answer: "Birth certificate, photographs, parent ID, and address proof. Our team will provide a complete checklist." },
-      { question: "When can my child start?", answer: "Subject to seat availability, your child can begin within days of completing admission formalities." }
+      { question: "Is mid-term admission the same as regular admission?", answer: "Yes! Your child receives the same quality <a href=\"/playgroup\">Playgroup programme</a>. Fees are pro-rated based on the joining date, ensuring you only pay for the months remaining in the academic year." },
+      { question: "How do I apply?", answer: "<a href=\"/contact\">Contact your preferred centre</a> or fill out our online enquiry form. We'll check availability at centres like <a href=\"/preschool-in-manpada-thane\">Manpada</a>, <a href=\"/preschool-in-hariniwas-thane\">Hariniwas</a>, and others, then guide you through the process." },
+      { question: "What documents are needed?", answer: "Birth certificate, photographs, parent ID, and address proof. Our team will provide a complete checklist when you <a href=\"/contact\">contact us</a>." },
+      { question: "When can my child start?", answer: "Subject to seat availability, your child can begin within days of completing admission formalities at any of our centres." }
     ],
     relatedLinks: [
       { title: "Playgroup Programme", url: "/playgroup", description: "Curriculum details" },
@@ -2000,7 +2001,9 @@ Object.assign(legacyPagesData, {
     internalLinks: [
       { text: "Enquire Now", url: "/contact" },
       { text: "Playgroup Details", url: "/playgroup" },
-      { text: "Find a Centre", url: "/contact#centres" },
+      { text: "Preschool in Manpada", url: "/preschool-in-manpada-thane" },
+      { text: "Preschool in Hariniwas", url: "/preschool-in-hariniwas-thane" },
+      { text: "Preschool in Anand Nagar", url: "/preschool-in-anand-nagar-thane" },
       { text: "All Programmes", url: "/programmes" }
     ],
     category: "Admissions"

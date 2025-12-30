@@ -238,9 +238,10 @@ function Router() {
 
 function AppContent() {
   const [location] = useLocation();
-  // Normalize path by removing query parameters for standalone check
+  // Normalize path by removing query parameters and trailing slashes for standalone check
   const pathWithoutQuery = location.split("?")[0];
-  const isStandaloneLanding = STANDALONE_LANDING_PATHS.includes(pathWithoutQuery);
+  const normalizedPath = pathWithoutQuery.replace(/\/$/, '') || '/';
+  const isStandaloneLanding = STANDALONE_LANDING_PATHS.includes(normalizedPath);
 
   // For standalone landing pages, render without nav/footer
   if (isStandaloneLanding) {

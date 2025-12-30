@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { Link } from "wouter";
 import { ChevronRight, Phone, MessageCircle, BookOpen, GraduationCap, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -11,6 +11,47 @@ import {
 } from "@/components/ui/accordion";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
+
+// Auto-linking configuration for internal links
+const autoLinkConfig = [
+  // Centre names - must come before generic "preschool" matches
+  { pattern: /\bManpada\b(?![^<]*>)/gi, replacement: '<a href="/preschool-in-manpada-thane">Manpada</a>' },
+  { pattern: /\bHariniwas\b(?![^<]*>)/gi, replacement: '<a href="/preschool-in-hariniwas-thane">Hariniwas</a>' },
+  { pattern: /\bAnand Nagar\b(?![^<]*>)/gi, replacement: '<a href="/preschool-in-anand-nagar-thane">Anand Nagar</a>' },
+  { pattern: /\bDhokali\b(?![^<]*>)/gi, replacement: '<a href="/preschool-in-dhokali-thane">Dhokali</a>' },
+  { pattern: /\bKalwa\b(?![^<]*>)/gi, replacement: '<a href="/preschool-in-kalwa-thane">Kalwa</a>' },
+  { pattern: /\bKasarvadavali\b(?![^<]*>)/gi, replacement: '<a href="/preschool-in-kasarvadavali-thane">Kasarvadavali</a>' },
+  // Programme names
+  { pattern: /\bPlaygroup programme\b(?![^<]*>)/gi, replacement: '<a href="/playgroup">Playgroup programme</a>' },
+  { pattern: /\bNursery programme\b(?![^<]*>)/gi, replacement: '<a href="/nursery">Nursery programme</a>' },
+  { pattern: /\bKindergarten programme\b(?![^<]*>)/gi, replacement: '<a href="/kindergarten">Kindergarten programme</a>' },
+  // Contact links
+  { pattern: /\bContact us\b(?![^<]*>)/gi, replacement: '<a href="/contact">Contact us</a>' },
+  { pattern: /\benquire now\b(?![^<]*>)/gi, replacement: '<a href="/contact">enquire now</a>' },
+];
+
+// Function to auto-link key terms in content (skips text already inside links)
+function enrichContentWithLinks(content: string): string {
+  let enrichedContent = content;
+  
+  for (const { pattern, replacement } of autoLinkConfig) {
+    enrichedContent = enrichedContent.replace(pattern, (match) => {
+      // Check if this match is already inside an anchor tag
+      const beforeMatch = enrichedContent.substring(0, enrichedContent.indexOf(match));
+      const openTags = (beforeMatch.match(/<a\b/gi) || []).length;
+      const closeTags = (beforeMatch.match(/<\/a>/gi) || []).length;
+      
+      // If inside an anchor tag, don't replace
+      if (openTags > closeTags) {
+        return match;
+      }
+      
+      return replacement.replace(/>[^<]+</, `>${match}<`);
+    });
+  }
+  
+  return enrichedContent;
+}
 
 export interface FAQ {
   question: string;
@@ -189,9 +230,10 @@ export function LegacyLandingPage({ data }: LegacyLandingPageProps) {
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6 font-display" data-testid="text-page-title">
                 {data.h1}
               </h1>
-              <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mb-8">
-                {data.intro}
-              </p>
+              <p 
+                className="text-lg md:text-xl text-muted-foreground max-w-3xl mb-8 [&_a]:text-primary [&_a]:underline [&_a]:hover:text-primary/80"
+                dangerouslySetInnerHTML={{ __html: enrichContentWithLinks(data.intro) }}
+              />
               
               <div className="flex flex-wrap gap-4">
                 <Button asChild size="lg" data-testid="button-enquire-top">
@@ -219,15 +261,16 @@ export function LegacyLandingPage({ data }: LegacyLandingPageProps) {
                       {section.heading}
                     </h2>
                     <div className="prose prose-lg dark:prose-invert max-w-none">
-                      <p className="text-muted-foreground leading-relaxed whitespace-pre-line">
-                        {section.content}
-                      </p>
+                      <div 
+                        className="text-muted-foreground leading-relaxed whitespace-pre-line [&_a]:text-primary [&_a]:underline [&_a]:hover:text-primary/80"
+                        dangerouslySetInnerHTML={{ __html: enrichContentWithLinks(section.content) }}
+                      />
                       {section.bulletPoints && section.bulletPoints.length > 0 && (
                         <ul className="mt-4 space-y-2">
                           {section.bulletPoints.map((point, i) => (
-                            <li key={i} className="flex items-start gap-3 text-muted-foreground">
+                            <li key={i} className="flex items-start gap-3 text-muted-foreground [&_a]:text-primary [&_a]:underline [&_a]:hover:text-primary/80">
                               <span className="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0" />
-                              <span>{point}</span>
+                              <span dangerouslySetInnerHTML={{ __html: enrichContentWithLinks(point) }} />
                             </li>
                           ))}
                         </ul>
@@ -264,8 +307,8 @@ export function LegacyLandingPage({ data }: LegacyLandingPageProps) {
                         <AccordionTrigger className="text-left font-medium" data-testid={`faq-trigger-${index}`}>
                           {faq.question}
                         </AccordionTrigger>
-                        <AccordionContent className="text-muted-foreground">
-                          {faq.answer}
+                        <AccordionContent className="text-muted-foreground [&_a]:text-primary [&_a]:underline [&_a]:hover:text-primary/80">
+                          <span dangerouslySetInnerHTML={{ __html: enrichContentWithLinks(faq.answer) }} />
                         </AccordionContent>
                       </AccordionItem>
                     ))}
