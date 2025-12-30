@@ -45,7 +45,9 @@ interface LegacyLandingPageProps {
 }
 
 export function LegacyLandingPage({ data }: LegacyLandingPageProps) {
-  const canonicalUrl = `https://rainbowpreschools.com${data.slug}`;
+  // Remove trailing slash from slug for canonical URL to match actual routes
+  const slugWithoutTrailingSlash = data.slug.replace(/\/$/, '');
+  const canonicalUrl = `https://rainbowpreschools.com${slugWithoutTrailingSlash}`;
   const category = data.category || "Resources";
 
   useEffect(() => {
