@@ -1,0 +1,113 @@
+GOAL:
+Fix SEO + 404s by recreating a set of previously indexed blog/landing URLs as standalone landing pages.
+These pages should NOT be linked in the main navigation/menu, but should contain:
+1) Helpful, relevant on-page content (not thin doorway pages)
+2) 3–6 contextual internal links ("backlinks") to relevant existing pages on the main site
+3) Prominent CTA buttons to “Contact Us” and “Request a Callback”
+4) SEO optimization: title tags, meta descriptions, H1, H2s, FAQ section, and basic schema (FAQPage + BreadcrumbList)
+5) Must return HTTP 200 and render fast
+6) Include a small “Related Pages” section with internal links relevant to the topic
+7) Add a short lead capture module: a button or link to the existing contact form page (do NOT create a new form unless the project already supports it)
+8) Ensure these pages are indexable (no noindex), and include clean canonical tags (self-referencing canonical unless you detect a better equivalent page and content is truly duplicated)
+
+IMPLEMENTATION REQUIREMENTS:
+- First, inspect the project architecture to determine routing:
+  - If Next.js: create pages under /pages or /app matching slugs.
+  - If Express/Node: add route handlers for each slug and render with the existing template.
+  - If React SPA with router: add routes + components and ensure server serves index.html for these routes OR implement SSR/rewrites if already present.
+- Reuse existing site layout/header/footer styles.
+- Do not add these pages to the site header menu or main navigation components.
+- If the project has a sitemap generator, ensure these URLs are included ONLY if the sitemap already includes dynamic pages automatically; otherwise do not change sitemap unless asked.
+- Add a simple internal component/template so you don’t duplicate code 50 times:
+  - Create a “LegacyLandingPage” template that takes: title, description, intro, bullet points, faq array, relatedLinks array.
+  - Then instantiate it for each slug.
+
+CONTENT GUIDELINES:
+For each URL:
+- Use the slug to infer the topic and write 600–1200 words of genuinely useful content aimed at parents of preschool/playgroup kids in Thane.
+- Include 3–6 contextual internal links to relevant core pages such as:
+  - /contact
+  - /playgroup
+  - /programmes (or whatever exists)
+  - /centres (or individual centre pages if present)
+  - Home page /
+- Add CTA buttons near top and bottom:
+  - “Enquire Now” -> /contact
+  - “Explore Programmes” -> /programmes (or best matching existing page)
+- Add a short FAQ (4–6 Q&A) relevant to that topic.
+- Add breadcrumb navigation linking back to Home and Blog/Resources if a resources page exists; otherwise link Home > Guides.
+- Add schema JSON-LD for FAQPage and BreadcrumbList.
+
+URLS TO CREATE (must match EXACTLY):
+/36-motivational-thoughts-of-the-day-for-kids/
+/explore-50-fruits-vegetables-english-hindi/
+/mid-term-playgroup-admissions-benefits/
+/national-symbols-of-india-for-kids/
+/solitary-play-activities/
+/pre-kg-age-guide/
+/10-spring-gardening-activitie-for-preschoolers/
+/how-to-motivate-your-kids-for-school-8-ways/
+/best-indoor-games-for-kids-at-home/
+/7-ways-teaching-aids-help-children-learn-better/
+/preschool-vs-prekg-2/
+/preschool-admission-process-guide/
+/sports-day-activities-for-kindergarten/
+/guide-to-understanding-good-touch-and-bad-touch/
+/body-parts-names-in-english-for-preschoolers/
+/rainy-season-activities-for-kindergarten/
+/6-simple-tips-for-improving-listening-skills-in-preschoolers/
+/diwali-activity-for-kindergarten/
+/impact-of-parent-teacher-communication-on-student-success/
+/holi-activities-for-kids/
+/7-things-you-can-do-to-help-children-overcome-fear/
+/importance-of-play-in-childrens-emotional-growth/
+/what-makes-children-forget-their-manners/
+/trends-in-early-childhood-education/
+/healthy-preschool-meals-for-bright-minds-and-bodies/
+/boost-early-childhood-development-with-educational-toys/
+/how-mid-term-admission-open-for-playgroup-supports-social-and-emotional-development/
+/admissions-24-25/
+/innovative-learning-activities-for-preschoolers/
+/mid-term-playgroup/
+/brain-gym-activities-for-preschoolers/
+/immunity-boosting-foods-for-kids/
+/10-easy-ways-to-help-kids-learn-colours-and-shapes-better/
+/8-amazing-reasons-why-cooking-is-important-for-kids/
+/parents-guide-mid-term-playgroup-admission/
+/6-quick-tips-to-help-children-learn-writing/
+/fun-games-teach-even-odd-numbers/
+/what-to-ask-during-a-tour-of-a-preschool-in-thane/
+/9-questions-to-ask-while-choosing-a-pre-school/
+/fun-interactive-learning-activities-for-preschoolers-2/
+/innovative-summer-activities-for-kids-keeping-minds-engaged/
+/rainbow-family-wins-cleanest-school-thane/
+/why-preschool-education-shapes-early-childhood-development/
+/mid-term-playgroup-admission/
+/why-nursery-school-is-important-for-early-childhood-development/
+/the-most-promising-preschool-chain-of-the-year-maharashtra/
+/51-inspiring-life-lessons-that-make-children-confident/
+/play-these-9-games-to-make-kids-smarter/
+/45-signs-of-healthy-physical-development-ages-3-6/
+/questions-ask-school-visit-mid-term-playgroup-admissions/
+/faqs/
+
+SPECIAL CASES:
+These old WordPress author archive URLs should NOT be created as full blog archives; instead:
+- Create lightweight “Resource Archive” landing pages that explain the content moved, and link to the most relevant current pages (Home, Contact, Programmes, Blog index if exists).
+- Must return HTTP 200.
+/author/admin_rps/page/5/
+/author/admin_rps/page/6/
+
+QUALITY CHECKS:
+- No broken links.
+- Consistent branding and typography.
+- Use semantic HTML (main, article, header, nav, section).
+- Lighthouse-friendly: avoid huge scripts, no heavy images.
+- Add basic OpenGraph meta tags (og:title, og:description, og:url).
+- Ensure trailing slash behavior matches site configuration; if the site enforces no trailing slash, follow the project convention but keep the route matching both.
+
+DELIVERABLE:
+Implement the pages, commit changes, and provide:
+1) List of created files/routes
+2) How to test locally (URLs to open)
+3) Notes on any existing routes/pages you linked to (so I can confirm they exist)
