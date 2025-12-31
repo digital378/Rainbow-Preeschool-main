@@ -3,14 +3,17 @@ import { useEffect, useRef, useCallback } from "react";
 interface Particle {
   x: number;
   y: number;
+  z: number;
   vx: number;
   vy: number;
+  vz: number;
   size: number;
   alpha: number;
   hue: number;
   life: number;
   maxLife: number;
   twinkleOffset: number;
+  rotationSpeed: number;
 }
 
 interface RainbowSparkleTrailConfig {
@@ -39,28 +42,37 @@ export function RainbowSparkleTrail({ enabled = true, intensity = 1 }: RainbowSp
     const hue = RAINBOW_HUES[Math.floor(Math.random() * RAINBOW_HUES.length)];
     const isMobile = isMobileRef.current;
     
-    const baseLife = isMobile ? 300 : 500;
-    const lifeVariance = isMobile ? 200 : 400;
+    const baseLife = isMobile ? 350 : 550;
+    const lifeVariance = isMobile ? 250 : 450;
     const life = baseLife + Math.random() * lifeVariance;
     
-    const baseSize = isMobile ? 1 : 1.5;
-    const sizeVariance = isMobile ? 2.5 : 3.5;
-    const size = isScroll ? (baseSize + Math.random() * 1.5) : (baseSize + Math.random() * sizeVariance);
+    const z = Math.random();
     
-    const spread = isMobile ? 6 : 10;
-    const velocity = isMobile ? 1 : 1.5;
+    const baseSize = isMobile ? 1.2 : 1.8;
+    const sizeVariance = isMobile ? 3 : 4;
+    const depthScale = 0.4 + z * 0.6;
+    const size = isScroll 
+      ? (baseSize + Math.random() * 1.5) * depthScale 
+      : (baseSize + Math.random() * sizeVariance) * depthScale;
+    
+    const spread = isMobile ? 8 : 14;
+    const velocity = isMobile ? 1.2 : 1.8;
+    const depthVelocity = 0.5 + z * 0.5;
     
     return {
-      x: x + (Math.random() - 0.5) * spread,
-      y: y + (Math.random() - 0.5) * spread,
-      vx: (Math.random() - 0.5) * velocity,
-      vy: (Math.random() - 0.5) * velocity - 0.3,
+      x: x + (Math.random() - 0.5) * spread * depthScale,
+      y: y + (Math.random() - 0.5) * spread * depthScale,
+      z,
+      vx: (Math.random() - 0.5) * velocity * depthVelocity,
+      vy: (Math.random() - 0.5) * velocity * depthVelocity - 0.4,
+      vz: (Math.random() - 0.5) * 0.02,
       size,
       alpha: 0.85 + Math.random() * 0.15,
       hue,
       life,
       maxLife: life,
       twinkleOffset: Math.random() * Math.PI * 2,
+      rotationSpeed: (Math.random() - 0.5) * 0.1,
     };
   }, []);
 
@@ -119,7 +131,7 @@ export function RainbowSparkleTrail({ enabled = true, intensity = 1 }: RainbowSp
       const now = performance.now();
       if (now - lastEmitTime < THROTTLE_MS) return;
       lastEmitTime = now;
-      emitParticles(e.clientX, e.clientY, 4 + Math.random() * 3);
+      emitParticles(e.clientX, e.clientY, 5 + Math.random() * 3);
     };
 
     const handleTouchMove = (e: TouchEvent) => {
@@ -128,7 +140,7 @@ export function RainbowSparkleTrail({ enabled = true, intensity = 1 }: RainbowSp
       lastEmitTime = now;
       const touch = e.touches[0];
       if (touch) {
-        emitParticles(touch.clientX, touch.clientY, 3 + Math.random() * 2);
+        emitParticles(touch.clientX, touch.clientY, 4 + Math.random() * 2);
       }
     };
 
@@ -136,7 +148,7 @@ export function RainbowSparkleTrail({ enabled = true, intensity = 1 }: RainbowSp
       const touch = e.touches[0];
       if (touch) {
         lastPosRef.current = { x: touch.clientX, y: touch.clientY };
-        emitParticles(touch.clientX, touch.clientY, 5);
+        emitParticles(touch.clientX, touch.clientY, 6);
       }
     };
 
@@ -186,60 +198,95 @@ export function RainbowSparkleTrail({ enabled = true, intensity = 1 }: RainbowSp
         const now = performance.now();
         const isMobileDevice = isMobileRef.current;
         
+        particlesRef.current.sort((a, b) => a.z - b.z);
+        
         particlesRef.current = particlesRef.current.filter((p) => {
           const frameAdjust = isMobileDevice ? 33 : 16;
           p.life -= frameAdjust;
           if (p.life <= 0) return false;
 
-          p.x += p.vx;
-          p.y += p.vy;
-          p.vy += 0.015;
+          const depthSpeed = 0.5 + p.z * 0.5;
+          p.x += p.vx * depthSpeed;
+          p.y += p.vy * depthSpeed;
+          p.z += p.vz;
+          p.z = Math.max(0, Math.min(1, p.z));
+          p.vy += 0.012 * depthSpeed;
 
           const lifeRatio = p.life / p.maxLife;
-          const currentAlpha = p.alpha * lifeRatio;
-          const twinkle = 0.8 + 0.2 * Math.sin(now * 0.008 + p.twinkleOffset);
-          const currentSize = p.size * twinkle * (0.6 + lifeRatio * 0.4);
+          const depthAlpha = 0.4 + p.z * 0.6;
+          const currentAlpha = p.alpha * lifeRatio * depthAlpha;
+          const twinkle = 0.75 + 0.25 * Math.sin(now * 0.01 + p.twinkleOffset);
+          
+          const depthScale = 0.5 + p.z * 0.5;
+          const currentSize = p.size * twinkle * (0.6 + lifeRatio * 0.4) * depthScale;
 
           ctx.save();
           ctx.globalCompositeOperation = "lighter";
           ctx.globalAlpha = currentAlpha * twinkle;
 
           if (isMobileDevice) {
-            ctx.fillStyle = `hsla(${p.hue}, 100%, 75%, 1)`;
+            const blurAmount = (1 - p.z) * 1.5;
+            
+            ctx.fillStyle = `hsla(${p.hue}, 100%, ${70 + p.z * 15}%, 1)`;
             ctx.beginPath();
             ctx.arc(p.x, p.y, currentSize, 0, Math.PI * 2);
             ctx.fill();
             
-            ctx.globalAlpha = currentAlpha * 0.5;
-            ctx.fillStyle = `hsla(${p.hue}, 100%, 85%, 0.8)`;
+            ctx.globalAlpha = currentAlpha * 0.4 * (0.5 + p.z * 0.5);
+            ctx.fillStyle = `hsla(${p.hue}, 100%, ${80 + p.z * 10}%, 0.7)`;
             ctx.beginPath();
-            ctx.arc(p.x, p.y, currentSize * 1.8, 0, Math.PI * 2);
+            ctx.arc(p.x, p.y, currentSize * (1.8 + blurAmount), 0, Math.PI * 2);
             ctx.fill();
           } else {
+            const innerGlow = currentSize * 1.2;
+            const outerGlow = currentSize * (2 + (1 - p.z) * 1.5);
+            
             const gradient = ctx.createRadialGradient(
               p.x, p.y, 0,
-              p.x, p.y, currentSize
+              p.x, p.y, outerGlow
             );
-            gradient.addColorStop(0, `hsla(${p.hue}, 100%, 85%, 1)`);
-            gradient.addColorStop(0.3, `hsla(${p.hue}, 100%, 70%, 0.9)`);
-            gradient.addColorStop(0.6, `hsla(${p.hue}, 100%, 60%, 0.5)`);
-            gradient.addColorStop(1, `hsla(${p.hue}, 100%, 50%, 0)`);
+            gradient.addColorStop(0, `hsla(${p.hue}, 100%, ${85 + p.z * 10}%, 1)`);
+            gradient.addColorStop(0.2, `hsla(${p.hue}, 100%, ${75 + p.z * 10}%, 0.9)`);
+            gradient.addColorStop(0.5, `hsla(${p.hue}, 100%, ${65 + p.z * 5}%, 0.5)`);
+            gradient.addColorStop(1, `hsla(${p.hue}, 100%, 55%, 0)`);
 
             ctx.fillStyle = gradient;
             ctx.beginPath();
-            ctx.arc(p.x, p.y, currentSize, 0, Math.PI * 2);
+            ctx.arc(p.x, p.y, outerGlow, 0, Math.PI * 2);
             ctx.fill();
 
-            if (currentSize > 2.5) {
-              ctx.strokeStyle = `hsla(${p.hue}, 100%, 90%, ${currentAlpha * 0.6})`;
-              ctx.lineWidth = 0.4;
-              const starSize = currentSize * 0.7;
+            if (currentSize > 2 && p.z > 0.3) {
+              ctx.strokeStyle = `hsla(${p.hue}, 100%, 92%, ${currentAlpha * 0.7 * p.z})`;
+              ctx.lineWidth = 0.3 + p.z * 0.3;
+              const starSize = currentSize * (0.6 + p.z * 0.4);
+              
+              ctx.save();
+              ctx.translate(p.x, p.y);
+              ctx.rotate(now * p.rotationSpeed * 0.001);
+              
               ctx.beginPath();
-              ctx.moveTo(p.x - starSize, p.y);
-              ctx.lineTo(p.x + starSize, p.y);
-              ctx.moveTo(p.x, p.y - starSize);
-              ctx.lineTo(p.x, p.y + starSize);
+              ctx.moveTo(-starSize, 0);
+              ctx.lineTo(starSize, 0);
+              ctx.moveTo(0, -starSize);
+              ctx.lineTo(0, starSize);
+              
+              if (p.z > 0.6) {
+                const diagSize = starSize * 0.7;
+                ctx.moveTo(-diagSize, -diagSize);
+                ctx.lineTo(diagSize, diagSize);
+                ctx.moveTo(diagSize, -diagSize);
+                ctx.lineTo(-diagSize, diagSize);
+              }
               ctx.stroke();
+              ctx.restore();
+            }
+            
+            if (p.z > 0.7) {
+              ctx.globalAlpha = currentAlpha * 0.3 * (p.z - 0.7) * 3;
+              ctx.fillStyle = `hsla(${p.hue}, 100%, 95%, 0.8)`;
+              ctx.beginPath();
+              ctx.arc(p.x, p.y, currentSize * 0.3, 0, Math.PI * 2);
+              ctx.fill();
             }
           }
 
