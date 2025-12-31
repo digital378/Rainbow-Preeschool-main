@@ -13,7 +13,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
-import { trackLeadFormSubmit, trackFormView, getUTMParams } from "@/lib/analytics";
+import { trackFormSubmit, trackFormView, getUTMParams, type FormType } from "@/lib/analytics";
 import { CheckCircle2, Lock } from "lucide-react";
 
 interface LocalCallbackFormProps {
@@ -92,16 +92,14 @@ export function LocalCallbackForm({
     },
     onSuccess: (responseData: { success: boolean; id: number; emailSent: boolean }) => {
       // Only fire GA4 event if email was actually sent (confirmed delivery)
+      // Uses instant form type for callback/short forms
+      // Event name determined by page path (URLSlug_Form_Submit)
       if (responseData.emailSent) {
-        const utmParams = getUTMParams();
-        trackLeadFormSubmit({
-          form_id: "local-callback-form",
-          form_name: "Local Callback Form",
+        trackFormSubmit({
+          formType: 'instant' as FormType,
           programme,
-          locality,
           centre,
-          source_page: sourcePage || window.location.pathname,
-          ...utmParams,
+          locality,
         });
       }
       setIsSubmitted(true);

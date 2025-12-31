@@ -17,7 +17,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import { Lock, CheckCircle2, Loader2 } from "lucide-react";
-import { trackLeadFormSubmit, trackFormView, getUTMParams } from "@/lib/analytics";
+import { trackFormSubmit, trackFormView, getUTMParams, type FormType } from "@/lib/analytics";
 
 const formSchema = z.object({
   parentName: z.string().min(2, "Please enter your name"),
@@ -105,15 +105,13 @@ export function LandingCallbackForm({ locality, sourcePage }: LandingCallbackFor
     },
     onSuccess: (responseData: { success: boolean; id: number; emailSent: boolean }) => {
       // Only fire GA4 event if email was actually sent (confirmed delivery)
+      // PLAYGROUP PAGE "/playgroup" → Playgroup_Form_Submit
+      // Other landing pages → URLSlug_Form_Submit
       if (responseData.emailSent) {
-        const utmParams = getUTMParams();
-        trackLeadFormSubmit({
-          form_id: "landing-callback-form",
-          form_name: "Landing Callback Form",
-          locality,
+        trackFormSubmit({
+          formType: 'instant' as FormType,
           programme: "Playgroup",
-          source_page: sourcePage,
-          ...utmParams,
+          locality,
         });
       }
       setSubmitted(true);

@@ -24,7 +24,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { programmes, branches } from "@shared/schema";
 import { apiRequest } from "@/lib/queryClient";
-import { trackLeadFormSubmit, getUTMParams } from "@/lib/analytics";
+import { trackFormSubmit, type FormType } from "@/lib/analytics";
 import { Loader2, CheckCircle } from "lucide-react";
 
 declare global {
@@ -150,15 +150,13 @@ export function ContactForm({ defaultBranch, defaultProgramme, compact = false, 
       setIsSubmitted(true);
       
       // Only fire GA4 event if email was actually sent (confirmed delivery)
+      // HOME PAGE "/" detailed form → Home_Form_Submit
+      // OTHER PAGES → URLSlug_Form_Submit
       if (responseData.emailSent) {
-        const utmParams = getUTMParams();
-        trackLeadFormSubmit({
-          form_id: "contact-form",
-          form_name: "Contact Form",
+        trackFormSubmit({
+          formType: 'detailed' as FormType,
           programme: form.getValues("programme"),
           centre: form.getValues("branch"),
-          source_page: window.location.pathname,
-          ...utmParams,
         });
         // Fire Meta Pixel Lead conversion event only on confirmed email
         if (typeof window !== 'undefined' && (window as any).fbq) {

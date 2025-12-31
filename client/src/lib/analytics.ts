@@ -1,14 +1,24 @@
 // Google Analytics 4 Integration for Rainbow Preschool
-// Enhanced with dataLayer pushes for lead tracking
+// Clean, non-duplicated form submission tracking using gtag/dataLayer
+// 
+// EVENT NAMING CONVENTION:
+// - "/" (instant form) → Home_Instant_Form_Submit
+// - "/" (detailed form) → Home_Form_Submit  
+// - "/playgroup" → Playgroup_Form_Submit
+// - All other pages → URLSlug_Form_Submit (e.g., /admissions → Admissions_Form_Submit)
 
 declare global {
   interface Window {
     dataLayer: any[];
     gtag: (...args: any[]) => void;
+    __formSubmitted?: boolean; // Session-level deduplication flag
   }
 }
 
-// Initialize Google Analytics
+// ============================================
+// GA4 INITIALIZATION
+// ============================================
+
 export const initGA = () => {
   const measurementId = import.meta.env.VITE_GA_MEASUREMENT_ID;
 
@@ -37,7 +47,193 @@ export const initGA = () => {
   document.head.appendChild(script2);
 };
 
-// Push to dataLayer
+// ============================================
+// FORM TRACKING - PAGE-BASED EVENT NAMES
+// ============================================
+
+// Form types for home page differentiation
+export type FormType = 'instant' | 'detailed' | 'default';
+
+interface FormTrackingParams {
+  formType?: FormType;
+  programme?: string;
+  centre?: string;
+  locality?: string;
+}
+
+/**
+ * Generate GA4 event name based on page and form type
+ * 
+ * NAMING RULES:
+ * - Homepage "/" with instant form → Home_Instant_Form_Submit
+ * - Homepage "/" with detailed form → Home_Form_Submit
+ * - Playgroup page "/playgroup" → Playgroup_Form_Submit
+ * - All other pages → URLSlug_Form_Submit
+ *   - Slug is capitalized
+ *   - Hyphens replaced with underscores
+ */
+export const getFormEventName = (formType: FormType = 'default'): string => {
+  const pathname = window.location.pathname;
+  
+  // HOMEPAGE "/" - differentiate by form type
+  if (pathname === '/') {
+    if (formType === 'instant') {
+      return 'Home_Instant_Form_Submit';
+    }
+    // Both 'detailed' and 'default' on homepage → Home_Form_Submit
+    return 'Home_Form_Submit';
+  }
+  
+  // PLAYGROUP PAGE "/playgroup"
+  if (pathname === '/playgroup') {
+    return 'Playgroup_Form_Submit';
+  }
+  
+  // ALL OTHER PAGES - dynamic slug-based naming
+  // Remove leading slash and convert to event name
+  const slug = pathname.replace(/^\//, '').replace(/\/$/, '');
+  
+  if (!slug) {
+    return 'Home_Form_Submit'; // Fallback for edge cases
+  }
+  
+  // Capitalize first letter of each word, replace hyphens with underscores
+  const eventSlug = slug
+    .split('-')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join('_');
+  
+  return `${eventSlug}_Form_Submit`;
+};
+
+// Duplicate prevention: session-level flag + timing lock
+let formSubmitLock = false;
+const DEDUP_TIMEOUT_MS = 5000;
+
+/**
+ * Track form submission with GA4
+ * ONLY call this after server confirms email was successfully sent
+ * 
+ * @param params.formType - 'instant' | 'detailed' | 'default'
+ * @param params.programme - Programme name if applicable
+ * @param params.centre - Centre/branch name if applicable
+ * @param params.locality - Locality for local pages
+ */
+export const trackFormSubmit = (params: FormTrackingParams = {}) => {
+  if (typeof window === 'undefined') return;
+  
+  // SAFEGUARD 1: Session-level flag
+  if (window.__formSubmitted) {
+    console.debug('[GA4] Form submit blocked - already submitted this session');
+    return;
+  }
+  
+  // SAFEGUARD 2: Timing lock to prevent rapid-fire duplicates
+  if (formSubmitLock) {
+    console.debug('[GA4] Form submit blocked - dedup lock active');
+    return;
+  }
+  
+  // Set locks
+  window.__formSubmitted = true;
+  formSubmitLock = true;
+  
+  // Reset timing lock after delay (session flag persists until page reload)
+  setTimeout(() => {
+    formSubmitLock = false;
+  }, DEDUP_TIMEOUT_MS);
+  
+  const measurementId = import.meta.env.VITE_GA_MEASUREMENT_ID;
+  const eventName = getFormEventName(params.formType || 'default');
+  
+  // Fire GA4 event via gtag (primary method)
+  if (window.gtag && measurementId) {
+    window.gtag('event', eventName, {
+      page_path: window.location.pathname,
+      page_title: document.title,
+      form_type: params.formType || 'default',
+      page_category: 'lead_form',
+      programme: params.programme || undefined,
+      centre: params.centre || undefined,
+      locality: params.locality || undefined,
+      send_to: measurementId,
+    });
+  } else {
+    // Fallback to dataLayer push
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: eventName,
+      page_path: window.location.pathname,
+      page_title: document.title,
+      form_type: params.formType || 'default',
+      page_category: 'lead_form',
+      programme: params.programme || undefined,
+      centre: params.centre || undefined,
+      locality: params.locality || undefined,
+    });
+  }
+  
+  console.debug(`[GA4] Event fired: ${eventName}`, {
+    page: window.location.pathname,
+    formType: params.formType,
+  });
+};
+
+/**
+ * Reset form submission tracking (call on SPA navigation)
+ * This allows a new form submission to be tracked on subsequent pages
+ */
+export const resetFormTracking = () => {
+  if (typeof window !== 'undefined') {
+    window.__formSubmitted = false;
+    formSubmitLock = false;
+  }
+};
+
+// ============================================
+// LEGACY TRACKING FUNCTION (for backwards compatibility)
+// Maps to new trackFormSubmit with appropriate form type
+// ============================================
+
+interface LeadEventParams {
+  programme?: string;
+  locality?: string;
+  centre?: string;
+  source_page?: string;
+  utm_source?: string;
+  utm_medium?: string;
+  utm_campaign?: string;
+  form_id?: string;
+  form_name?: string;
+}
+
+/**
+ * @deprecated Use trackFormSubmit instead
+ * Kept for backwards compatibility during migration
+ */
+export const trackLeadFormSubmit = (params: LeadEventParams) => {
+  // Determine form type from form_id
+  let formType: FormType = 'default';
+  
+  if (params.form_id === 'instant-callback-form' || params.form_id === 'hero-callback-form') {
+    formType = 'instant';
+  } else if (params.form_id === 'contact-form') {
+    formType = 'detailed';
+  }
+  
+  trackFormSubmit({
+    formType,
+    programme: params.programme,
+    centre: params.centre,
+    locality: params.locality,
+  });
+};
+
+// ============================================
+// OTHER GA4 TRACKING EVENTS
+// ============================================
+
+// Push to dataLayer (for custom events)
 export const pushToDataLayer = (event: Record<string, any>) => {
   if (typeof window === 'undefined') return;
   window.dataLayer = window.dataLayer || [];
@@ -51,12 +247,15 @@ export const trackPageView = (url: string) => {
   const measurementId = import.meta.env.VITE_GA_MEASUREMENT_ID;
   if (!measurementId) return;
   
+  // Reset form tracking on page navigation (SPA support)
+  resetFormTracking();
+  
   window.gtag('config', measurementId, {
     page_path: url
   });
 };
 
-// Track events (GA4)
+// Track custom events (GA4)
 export const trackEvent = (
   action: string, 
   category?: string, 
@@ -72,58 +271,12 @@ export const trackEvent = (
   });
 };
 
-// ============================================
-// LEAD TRACKING EVENTS (dataLayer pushes)
-// ============================================
-
-interface LeadEventParams {
-  programme?: string;
-  locality?: string;
-  centre?: string;
-  source_page?: string;
-  utm_source?: string;
-  utm_medium?: string;
-  utm_campaign?: string;
-}
-
 // Track when lead form becomes visible
 export const trackFormView = (params: LeadEventParams) => {
   pushToDataLayer({
     event: 'lead_form_view',
+    page_path: window.location.pathname,
     ...params,
-  });
-};
-
-// Duplicate prevention lock
-let leadEventFired = false;
-
-// Track successful form submission - CANONICAL EVENT for all forms
-// This should ONLY be called after server confirms email was sent
-export const trackLeadFormSubmit = (params: LeadEventParams & { form_id?: string; form_name?: string }) => {
-  // Prevent duplicate fires within 5 seconds (extended for safety)
-  if (leadEventFired) return;
-  leadEventFired = true;
-  
-  // Reset lock after delay
-  setTimeout(() => {
-    leadEventFired = false;
-  }, 5000);
-  
-  // Push SINGLE conversion event to dataLayer (GTM picks this up)
-  // Removed duplicate gtag call to prevent double-counting
-  pushToDataLayer({
-    event: 'conversion_event_submit_lead_form',
-    form_id: params.form_id || null,
-    form_name: params.form_name || null,
-    page_path: typeof window !== 'undefined' ? window.location.pathname : '',
-    page_url: typeof window !== 'undefined' ? window.location.href : '',
-    programme: params.programme,
-    locality: params.locality,
-    centre: params.centre,
-    source_page: params.source_page,
-    utm_source: params.utm_source,
-    utm_medium: params.utm_medium,
-    utm_campaign: params.utm_campaign,
   });
 };
 
@@ -167,33 +320,6 @@ export const trackLocalPageClick = (params: { centre?: string; locality?: string
   trackEvent('local_page_click', 'engagement', params.locality);
 };
 
-// ============================================
-// LEGACY FUNCTIONS (kept for compatibility)
-// ============================================
-
-// Track form submissions
-export const trackFormSubmission = (formName: string, branch?: string) => {
-  trackEvent('form_submit', 'engagement', formName, undefined);
-  if (branch) {
-    trackEvent('lead_generated', 'conversion', branch, undefined);
-  }
-};
-
-// Track programme page views
-export const trackProgrammeView = (programmeName: string) => {
-  trackEvent('programme_view', 'engagement', programmeName, undefined);
-};
-
-// Track branch selection
-export const trackBranchSelection = (branchName: string) => {
-  trackEvent('branch_selected', 'engagement', branchName, undefined);
-};
-
-// Track CTA clicks
-export const trackCTAClick = (ctaName: string, location: string) => {
-  trackEvent('cta_click', 'engagement', `${ctaName}_${location}`, undefined);
-};
-
 // Get UTM parameters from URL
 export const getUTMParams = () => {
   if (typeof window === 'undefined') return {};
@@ -209,13 +335,29 @@ export const getUTMParams = () => {
 };
 
 // ============================================
-// GLOBAL FORM SUBMISSION TRACKING
+// LEGACY FUNCTIONS (kept for compatibility)
 // ============================================
-// DISABLED: Global form listener removed to prevent duplicate GA4 events.
-// GA4 events are now fired ONLY after server confirms email was sent.
-// Each form component handles its own tracking in onSuccess callback.
 
+export const trackFormSubmission = (formName: string, branch?: string) => {
+  trackEvent('form_submit', 'engagement', formName, undefined);
+  if (branch) {
+    trackEvent('lead_generated', 'conversion', branch, undefined);
+  }
+};
+
+export const trackProgrammeView = (programmeName: string) => {
+  trackEvent('programme_view', 'engagement', programmeName, undefined);
+};
+
+export const trackBranchSelection = (branchName: string) => {
+  trackEvent('branch_selected', 'engagement', branchName, undefined);
+};
+
+export const trackCTAClick = (ctaName: string, location: string) => {
+  trackEvent('cta_click', 'engagement', `${ctaName}_${location}`, undefined);
+};
+
+// Disabled - form tracking is now handled per-form after email confirmation
 export const initGlobalFormTracking = () => {
-  // Intentionally empty - global tracking disabled to prevent duplicates
-  // Forms now track individually only after confirmed email delivery
+  // Intentionally empty
 };

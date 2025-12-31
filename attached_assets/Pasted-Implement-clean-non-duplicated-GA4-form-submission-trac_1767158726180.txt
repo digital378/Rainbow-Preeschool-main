@@ -1,0 +1,121 @@
+Implement clean, non-duplicated GA4 form submission tracking directly in the website code
+(using gtag / dataLayer), without relying on GTM Form Submission triggers.
+
+We will track form submits using custom GA4 events based on:
+- Page location
+- Form type
+- URL slug
+
+DO NOT:
+- Use GTM "Form Submission" triggers
+- Fire multiple events for the same form submit
+- Track on button click (only track after successful submit)
+
+--------------------------------------------------
+EVENTS TO CREATE (GA4 EVENT NAMES)
+--------------------------------------------------
+
+1) Home_Instant_Form_Submit
+- Trigger only when the Instant Form on the Home page is successfully submitted
+- Page condition: pathname === "/"
+- Form identifier: instant / short form
+
+2) Home_Form_Submit
+- Trigger only when the detailed form at the bottom of the Home page is submitted
+- Page condition: pathname === "/"
+- Form identifier: detailed / expanded form
+
+3) Playgroup_Form_Submit
+- Trigger only when the form on "/playgroup" page is submitted
+- Page condition: pathname === "/playgroup"
+
+4) Dynamic page-based tracking:
+For ALL other forms across the site, create events dynamically in this format:
+"URLSlug_Form_Submit"
+
+Examples:
+- "/admissions"      → Admissions_Form_Submit
+- "/contact"         → Contact_Form_Submit
+- "/mid-term-playgroup" → Mid_Term_Playgroup_Form_Submit
+
+Rules:
+- Slug must be capitalized
+- Hyphens replaced with underscores
+- Root homepage "/" must NOT use slug logic (handled separately)
+
+--------------------------------------------------
+IMPLEMENTATION REQUIREMENTS
+--------------------------------------------------
+
+1) Create a single global form tracking utility:
+   - Name: initGA4FormTracking()
+   - Place it in a global JS file or root layout
+
+2) Detection logic:
+   - Track ONLY after successful submission:
+     - If form uses AJAX → hook after success response
+     - If form redirects → fire event before redirect
+   - Use a `data-ga-form-type` attribute to differentiate forms when needed
+
+3) Event firing (VERY IMPORTANT):
+   - Fire ONLY ONE event per submission
+   - Add a session-level deduplication flag:
+     - Example: window.__formSubmitted = true
+   - Reset flag on page reload
+
+4) GA4 Event format:
+Use gtag if available, otherwise fallback to dataLayer:
+
+gtag("event", EVENT_NAME, {
+  page_path: window.location.pathname,
+  page_title: document.title,
+  form_type: "instant | detailed | default",
+  page_category: "lead_form",
+  send_to: "GA_MEASUREMENT_ID"
+});
+
+5) Safeguards:
+- Prevent double firing caused by:
+  - Multiple submit handlers
+  - AJAX + redirect combination
+  - Enter key + button click
+- Ignore disabled or invalid submissions
+
+6) Accessibility & performance:
+- Passive listeners
+- No layout shift
+- No blocking of form UX
+
+--------------------------------------------------
+DELIVERABLES
+--------------------------------------------------
+
+You must:
+1) Implement the tracking logic in code (not pseudocode)
+2) Automatically detect page slug for dynamic event naming
+3) Add comments explaining:
+   - Where Home Instant Form is detected
+   - Where Home Detailed Form is detected
+   - Where Playgroup Form is detected
+4) Ensure this works across:
+   - Desktop
+   - Mobile
+   - SPA-style navigation (if applicable)
+
+--------------------------------------------------
+TESTING INSTRUCTIONS (MUST WORK)
+--------------------------------------------------
+
+After implementation:
+- Submitting any form must fire EXACTLY ONE GA4 event
+- GA4 DebugView should show:
+  - Home_Instant_Form_Submit (home instant form)
+  - Home_Form_Submit (home bottom form)
+  - Playgroup_Form_Submit (playgroup page)
+  - URLSlug_Form_Submit (all other pages)
+- No duplicate "form_submit" events should appear
+
+IMPORTANT:
+- Do not touch existing GTM tags unless required
+- This code-level tracking is the source of truth
+- Keep the solution future-proof and clean
