@@ -18,11 +18,6 @@ interface RainbowSparkleTrailConfig {
   intensity?: number;
 }
 
-const DEFAULT_CONFIG: Required<RainbowSparkleTrailConfig> = {
-  enabled: true,
-  intensity: 1,
-};
-
 const MAX_PARTICLES = 300;
 const RAINBOW_HUES = [0, 30, 60, 120, 200, 260, 290];
 
@@ -91,6 +86,7 @@ export function RainbowSparkleTrail({ enabled = true, intensity = 1 }: RainbowSp
       canvas.height = window.innerHeight * dpr;
       canvas.style.width = `${window.innerWidth}px`;
       canvas.style.height = `${window.innerHeight}px`;
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.scale(dpr, dpr);
     };
     resizeCanvas();
