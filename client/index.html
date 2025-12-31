@@ -59,7 +59,7 @@
     
     <!-- GTM REMOVED - was causing duplicate events. Using direct gtag tracking instead -->
     
-    <!-- Meta Pixel Code -->
+    <!-- Meta Pixel Code (Two Pixels: Main + Dataset) -->
     <script>
     !function(f,b,e,v,n,t,s)
     {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -70,16 +70,18 @@
     s.parentNode.insertBefore(t,s)}(window, document,'script',
     'https://connect.facebook.net/en_US/fbevents.js');
     fbq('init', '876471444795481');
+    fbq('init', '1577162793423268');
     fbq('track', 'PageView');
     </script>
     <!-- End Meta Pixel Code -->
   </head>
   <body>
     <!-- GTM noscript removed -->
-    <!-- Meta Pixel (noscript) -->
-    <noscript><img height="1" width="1" style="display:none"
-    src="https://www.facebook.com/tr?id=876471444795481&ev=PageView&noscript=1"
-    /></noscript>
+    <!-- Meta Pixel (noscript) - Both pixels -->
+    <noscript>
+      <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=876471444795481&ev=PageView&noscript=1" />
+      <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1577162793423268&ev=PageView&noscript=1" />
+    </noscript>
     <!-- End Meta Pixel (noscript) -->
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
