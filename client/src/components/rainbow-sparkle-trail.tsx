@@ -56,7 +56,7 @@ export function RainbowSparkleTrail({ enabled = true, intensity = 1 }: RainbowSp
       vx: (Math.random() - 0.5) * velocity,
       vy: (Math.random() - 0.5) * velocity - 0.3,
       size,
-      alpha: 0.7 + Math.random() * 0.3,
+      alpha: 0.85 + Math.random() * 0.15,
       hue,
       life,
       maxLife: life,
@@ -205,23 +205,25 @@ export function RainbowSparkleTrail({ enabled = true, intensity = 1 }: RainbowSp
           ctx.globalAlpha = currentAlpha * twinkle;
 
           if (isMobileDevice) {
-            ctx.fillStyle = `hsla(${p.hue}, 100%, 70%, 1)`;
+            ctx.fillStyle = `hsla(${p.hue}, 100%, 75%, 1)`;
             ctx.beginPath();
             ctx.arc(p.x, p.y, currentSize, 0, Math.PI * 2);
             ctx.fill();
             
-            ctx.globalAlpha = currentAlpha * 0.4;
+            ctx.globalAlpha = currentAlpha * 0.5;
+            ctx.fillStyle = `hsla(${p.hue}, 100%, 85%, 0.8)`;
             ctx.beginPath();
-            ctx.arc(p.x, p.y, currentSize * 1.5, 0, Math.PI * 2);
+            ctx.arc(p.x, p.y, currentSize * 1.8, 0, Math.PI * 2);
             ctx.fill();
           } else {
             const gradient = ctx.createRadialGradient(
               p.x, p.y, 0,
               p.x, p.y, currentSize
             );
-            gradient.addColorStop(0, `hsla(${p.hue}, 100%, 75%, 1)`);
-            gradient.addColorStop(0.4, `hsla(${p.hue}, 100%, 65%, 0.7)`);
-            gradient.addColorStop(1, `hsla(${p.hue}, 100%, 55%, 0)`);
+            gradient.addColorStop(0, `hsla(${p.hue}, 100%, 85%, 1)`);
+            gradient.addColorStop(0.3, `hsla(${p.hue}, 100%, 70%, 0.9)`);
+            gradient.addColorStop(0.6, `hsla(${p.hue}, 100%, 60%, 0.5)`);
+            gradient.addColorStop(1, `hsla(${p.hue}, 100%, 50%, 0)`);
 
             ctx.fillStyle = gradient;
             ctx.beginPath();
@@ -229,9 +231,9 @@ export function RainbowSparkleTrail({ enabled = true, intensity = 1 }: RainbowSp
             ctx.fill();
 
             if (currentSize > 2.5) {
-              ctx.strokeStyle = `hsla(${p.hue}, 100%, 85%, ${currentAlpha * 0.4})`;
-              ctx.lineWidth = 0.3;
-              const starSize = currentSize * 0.6;
+              ctx.strokeStyle = `hsla(${p.hue}, 100%, 90%, ${currentAlpha * 0.6})`;
+              ctx.lineWidth = 0.4;
+              const starSize = currentSize * 0.7;
               ctx.beginPath();
               ctx.moveTo(p.x - starSize, p.y);
               ctx.lineTo(p.x + starSize, p.y);
