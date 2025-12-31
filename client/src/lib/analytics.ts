@@ -340,15 +340,11 @@ export const getUTMParams = () => {
 };
 
 // ============================================
-// LEGACY FUNCTIONS (kept for compatibility)
+// LEGACY FUNCTIONS (DISABLED - use trackFormSubmit instead)
 // ============================================
 
-export const trackFormSubmission = (formName: string, branch?: string) => {
-  trackEvent('form_submit', 'engagement', formName, undefined);
-  if (branch) {
-    trackEvent('lead_generated', 'conversion', branch, undefined);
-  }
-};
+// DEPRECATED: Do not use - kept only for reference
+// export const trackFormSubmission = (formName: string, branch?: string) => { ... };
 
 export const trackProgrammeView = (programmeName: string) => {
   trackEvent('programme_view', 'engagement', programmeName, undefined);
