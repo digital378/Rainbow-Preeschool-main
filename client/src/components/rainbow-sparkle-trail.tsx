@@ -48,8 +48,8 @@ export function RainbowSparkleTrail({ enabled = true, intensity = 1 }: RainbowSp
     
     const z = Math.random();
     
-    const baseSize = isMobile ? 1.2 : 1.8;
-    const sizeVariance = isMobile ? 3 : 4;
+    const baseSize = isMobile ? 0.8 : 1.2;
+    const sizeVariance = isMobile ? 2 : 2.5;
     const depthScale = 0.4 + z * 0.6;
     const size = isScroll 
       ? (baseSize + Math.random() * 1.5) * depthScale 
@@ -232,14 +232,14 @@ export function RainbowSparkleTrail({ enabled = true, intensity = 1 }: RainbowSp
             ctx.arc(p.x, p.y, currentSize, 0, Math.PI * 2);
             ctx.fill();
             
-            ctx.globalAlpha = currentAlpha * 0.4 * (0.5 + p.z * 0.5);
-            ctx.fillStyle = `hsla(${p.hue}, 100%, ${80 + p.z * 10}%, 0.7)`;
+            ctx.globalAlpha = currentAlpha * 0.35 * (0.5 + p.z * 0.5);
+            ctx.fillStyle = `hsla(${p.hue}, 100%, ${80 + p.z * 10}%, 0.6)`;
             ctx.beginPath();
-            ctx.arc(p.x, p.y, currentSize * (1.8 + blurAmount), 0, Math.PI * 2);
+            ctx.arc(p.x, p.y, currentSize * (1.4 + blurAmount * 0.5), 0, Math.PI * 2);
             ctx.fill();
           } else {
-            const innerGlow = currentSize * 1.2;
-            const outerGlow = currentSize * (2 + (1 - p.z) * 1.5);
+            const innerGlow = currentSize * 1.0;
+            const outerGlow = currentSize * (1.5 + (1 - p.z) * 0.8);
             
             const gradient = ctx.createRadialGradient(
               p.x, p.y, 0,
