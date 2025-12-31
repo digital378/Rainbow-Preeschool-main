@@ -35,15 +35,17 @@ export const initGA = () => {
   script1.src = `https://www.googletagmanager.com/gtag/js?id=${measurementId}`;
   document.head.appendChild(script1);
 
-  // Initialize gtag
+  // Initialize gtag - MUST set window.gtag for access from other code
   const script2 = document.createElement('script');
   script2.textContent = `
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', '${measurementId}');
+    window.gtag = function(){window.dataLayer.push(arguments);}
+    window.gtag('js', new Date());
+    window.gtag('config', '${measurementId}');
   `;
   document.head.appendChild(script2);
+  
+  console.debug('[GA4] Initialized with measurement ID:', measurementId);
 };
 
 // ============================================
@@ -147,8 +149,15 @@ export const trackFormSubmit = (params: FormTrackingParams = {}) => {
   const measurementId = import.meta.env.VITE_GA_MEASUREMENT_ID;
   const eventName = getFormEventName(params.formType || 'default');
   
+  // Log tracking attempt for debugging
+  console.log(`[GA4] Attempting to fire: ${eventName}`, {
+    hasGtag: typeof window.gtag === 'function',
+    hasMeasurementId: !!measurementId,
+    page: window.location.pathname,
+  });
+  
   // Fire GA4 event via gtag (primary method)
-  if (window.gtag && measurementId) {
+  if (typeof window.gtag === 'function' && measurementId) {
     window.gtag('event', eventName, {
       page_path: window.location.pathname,
       page_title: document.title,
@@ -159,8 +168,10 @@ export const trackFormSubmit = (params: FormTrackingParams = {}) => {
       locality: params.locality || undefined,
       send_to: measurementId,
     });
+    console.log(`[GA4] Event FIRED via gtag: ${eventName}`);
   } else {
     // Fallback to dataLayer push
+    console.warn('[GA4] gtag not available, using dataLayer fallback');
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({
       event: eventName,
@@ -172,12 +183,8 @@ export const trackFormSubmit = (params: FormTrackingParams = {}) => {
       centre: params.centre || undefined,
       locality: params.locality || undefined,
     });
+    console.log(`[GA4] Event pushed to dataLayer: ${eventName}`);
   }
-  
-  console.debug(`[GA4] Event fired: ${eventName}`, {
-    page: window.location.pathname,
-    formType: params.formType,
-  });
 };
 
 /**
