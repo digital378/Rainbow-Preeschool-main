@@ -18,28 +18,45 @@ interface RainbowSparkleTrailConfig {
   intensity?: number;
 }
 
-const MAX_PARTICLES = 300;
 const RAINBOW_HUES = [0, 30, 60, 120, 200, 260, 290];
 
 export function RainbowSparkleTrail({ enabled = true, intensity = 1 }: RainbowSparkleTrailConfig) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const particlesRef = useRef<Particle[]>([]);
   const lastPosRef = useRef({ x: 0, y: 0 });
-  const isScrollingRef = useRef(false);
-  const scrollTimeoutRef = useRef<number | null>(null);
   const animationFrameRef = useRef<number | null>(null);
   const prefersReducedMotionRef = useRef(false);
+  const isMobileRef = useRef(false);
+  const isScrollingRef = useRef(false);
+  const scrollRafRef = useRef<number | null>(null);
 
-  const createParticle = useCallback((x: number, y: number): Particle => {
+  useEffect(() => {
+    isMobileRef.current = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) 
+      || window.innerWidth < 768;
+  }, []);
+
+  const createParticle = useCallback((x: number, y: number, isScroll: boolean = false): Particle => {
     const hue = RAINBOW_HUES[Math.floor(Math.random() * RAINBOW_HUES.length)];
-    const life = 500 + Math.random() * 400;
+    const isMobile = isMobileRef.current;
+    
+    const baseLife = isMobile ? 300 : 500;
+    const lifeVariance = isMobile ? 200 : 400;
+    const life = baseLife + Math.random() * lifeVariance;
+    
+    const baseSize = isMobile ? 1 : 1.5;
+    const sizeVariance = isMobile ? 2.5 : 3.5;
+    const size = isScroll ? (baseSize + Math.random() * 1.5) : (baseSize + Math.random() * sizeVariance);
+    
+    const spread = isMobile ? 6 : 10;
+    const velocity = isMobile ? 1 : 1.5;
+    
     return {
-      x: x + (Math.random() - 0.5) * 10,
-      y: y + (Math.random() - 0.5) * 10,
-      vx: (Math.random() - 0.5) * 1.5,
-      vy: (Math.random() - 0.5) * 1.5 - 0.5,
-      size: 2 + Math.random() * 5,
-      alpha: 0.8 + Math.random() * 0.2,
+      x: x + (Math.random() - 0.5) * spread,
+      y: y + (Math.random() - 0.5) * spread,
+      vx: (Math.random() - 0.5) * velocity,
+      vy: (Math.random() - 0.5) * velocity - 0.3,
+      size,
+      alpha: 0.7 + Math.random() * 0.3,
       hue,
       life,
       maxLife: life,
@@ -47,15 +64,18 @@ export function RainbowSparkleTrail({ enabled = true, intensity = 1 }: RainbowSp
     };
   }, []);
 
-  const emitParticles = useCallback((x: number, y: number, count: number) => {
+  const emitParticles = useCallback((x: number, y: number, count: number, isScroll: boolean = false) => {
     if (prefersReducedMotionRef.current) return;
+    
+    const isMobile = isMobileRef.current;
+    const maxParticles = isMobile ? 150 : 300;
     
     const adjustedCount = Math.floor(count * intensity);
     for (let i = 0; i < adjustedCount; i++) {
-      if (particlesRef.current.length >= MAX_PARTICLES) {
+      if (particlesRef.current.length >= maxParticles) {
         particlesRef.current.shift();
       }
-      particlesRef.current.push(createParticle(x, y));
+      particlesRef.current.push(createParticle(x, y, isScroll));
     }
     lastPosRef.current = { x, y };
   }, [createParticle, intensity]);
@@ -66,7 +86,7 @@ export function RainbowSparkleTrail({ enabled = true, intensity = 1 }: RainbowSp
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d", { alpha: true });
     if (!ctx) return;
 
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -81,7 +101,7 @@ export function RainbowSparkleTrail({ enabled = true, intensity = 1 }: RainbowSp
     mediaQuery.addEventListener("change", handleMotionChange);
 
     const resizeCanvas = () => {
-      const dpr = window.devicePixelRatio || 1;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
       canvas.width = window.innerWidth * dpr;
       canvas.height = window.innerHeight * dpr;
       canvas.style.width = `${window.innerWidth}px`;
@@ -92,13 +112,14 @@ export function RainbowSparkleTrail({ enabled = true, intensity = 1 }: RainbowSp
     resizeCanvas();
 
     let lastEmitTime = 0;
-    const THROTTLE_MS = 16;
+    const isMobile = isMobileRef.current;
+    const THROTTLE_MS = isMobile ? 25 : 16;
 
     const handleMouseMove = (e: MouseEvent) => {
       const now = performance.now();
       if (now - lastEmitTime < THROTTLE_MS) return;
       lastEmitTime = now;
-      emitParticles(e.clientX, e.clientY, 6 + Math.random() * 4);
+      emitParticles(e.clientX, e.clientY, 4 + Math.random() * 3);
     };
 
     const handleTouchMove = (e: TouchEvent) => {
@@ -107,7 +128,7 @@ export function RainbowSparkleTrail({ enabled = true, intensity = 1 }: RainbowSp
       lastEmitTime = now;
       const touch = e.touches[0];
       if (touch) {
-        emitParticles(touch.clientX, touch.clientY, 8 + Math.random() * 6);
+        emitParticles(touch.clientX, touch.clientY, 3 + Math.random() * 2);
       }
     };
 
@@ -115,21 +136,33 @@ export function RainbowSparkleTrail({ enabled = true, intensity = 1 }: RainbowSp
       const touch = e.touches[0];
       if (touch) {
         lastPosRef.current = { x: touch.clientX, y: touch.clientY };
+        emitParticles(touch.clientX, touch.clientY, 5);
       }
     };
 
+    let lastScrollTime = 0;
+    const SCROLL_THROTTLE = isMobile ? 100 : 50;
+    
     const handleScroll = () => {
-      isScrollingRef.current = true;
-      if (scrollTimeoutRef.current) {
-        clearTimeout(scrollTimeoutRef.current);
-      }
-      scrollTimeoutRef.current = window.setTimeout(() => {
-        isScrollingRef.current = false;
-      }, 150);
+      const now = performance.now();
+      if (now - lastScrollTime < SCROLL_THROTTLE) return;
+      lastScrollTime = now;
       
-      if (lastPosRef.current.x > 0 || lastPosRef.current.y > 0) {
-        emitParticles(lastPosRef.current.x, lastPosRef.current.y, 2 + Math.random() * 3);
+      isScrollingRef.current = true;
+      
+      if (scrollRafRef.current) {
+        cancelAnimationFrame(scrollRafRef.current);
       }
+      scrollRafRef.current = requestAnimationFrame(() => {
+        if (lastPosRef.current.x > 0 || lastPosRef.current.y > 0) {
+          const count = isMobile ? 1 : 2;
+          emitParticles(lastPosRef.current.x, lastPosRef.current.y, count, true);
+        }
+        
+        setTimeout(() => {
+          isScrollingRef.current = false;
+        }, 150);
+      });
     };
 
     window.addEventListener("mousemove", handleMouseMove, { passive: true });
@@ -138,56 +171,80 @@ export function RainbowSparkleTrail({ enabled = true, intensity = 1 }: RainbowSp
     window.addEventListener("scroll", handleScroll, { passive: true });
     window.addEventListener("resize", resizeCanvas, { passive: true });
 
-    const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    let lastFrameTime = 0;
+    const TARGET_FPS = isMobile ? 30 : 60;
+    const FRAME_INTERVAL = 1000 / TARGET_FPS;
+
+    const animate = (currentTime: number) => {
+      const deltaTime = currentTime - lastFrameTime;
       
-      const now = performance.now();
-      
-      particlesRef.current = particlesRef.current.filter((p) => {
-        p.life -= 16;
-        if (p.life <= 0) return false;
+      if (deltaTime >= FRAME_INTERVAL) {
+        lastFrameTime = currentTime - (deltaTime % FRAME_INTERVAL);
+        
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        const now = performance.now();
+        const isMobileDevice = isMobileRef.current;
+        
+        particlesRef.current = particlesRef.current.filter((p) => {
+          const frameAdjust = isMobileDevice ? 33 : 16;
+          p.life -= frameAdjust;
+          if (p.life <= 0) return false;
 
-        p.x += p.vx;
-        p.y += p.vy;
-        p.vy += 0.02;
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vy += 0.015;
 
-        const lifeRatio = p.life / p.maxLife;
-        const currentAlpha = p.alpha * lifeRatio;
-        const twinkle = 0.7 + 0.3 * Math.sin(now * 0.01 + p.twinkleOffset);
-        const currentSize = p.size * twinkle * (0.5 + lifeRatio * 0.5);
+          const lifeRatio = p.life / p.maxLife;
+          const currentAlpha = p.alpha * lifeRatio;
+          const twinkle = 0.8 + 0.2 * Math.sin(now * 0.008 + p.twinkleOffset);
+          const currentSize = p.size * twinkle * (0.6 + lifeRatio * 0.4);
 
-        ctx.save();
-        ctx.globalCompositeOperation = "lighter";
-        ctx.globalAlpha = currentAlpha * twinkle;
+          ctx.save();
+          ctx.globalCompositeOperation = "lighter";
+          ctx.globalAlpha = currentAlpha * twinkle;
 
-        const gradient = ctx.createRadialGradient(
-          p.x, p.y, 0,
-          p.x, p.y, currentSize
-        );
-        gradient.addColorStop(0, `hsla(${p.hue}, 100%, 70%, 1)`);
-        gradient.addColorStop(0.5, `hsla(${p.hue}, 100%, 60%, 0.8)`);
-        gradient.addColorStop(1, `hsla(${p.hue}, 100%, 50%, 0)`);
+          if (isMobileDevice) {
+            ctx.fillStyle = `hsla(${p.hue}, 100%, 70%, 1)`;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, currentSize, 0, Math.PI * 2);
+            ctx.fill();
+            
+            ctx.globalAlpha = currentAlpha * 0.4;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, currentSize * 1.5, 0, Math.PI * 2);
+            ctx.fill();
+          } else {
+            const gradient = ctx.createRadialGradient(
+              p.x, p.y, 0,
+              p.x, p.y, currentSize
+            );
+            gradient.addColorStop(0, `hsla(${p.hue}, 100%, 75%, 1)`);
+            gradient.addColorStop(0.4, `hsla(${p.hue}, 100%, 65%, 0.7)`);
+            gradient.addColorStop(1, `hsla(${p.hue}, 100%, 55%, 0)`);
 
-        ctx.fillStyle = gradient;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, currentSize, 0, Math.PI * 2);
-        ctx.fill();
+            ctx.fillStyle = gradient;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, currentSize, 0, Math.PI * 2);
+            ctx.fill();
 
-        if (currentSize > 3) {
-          ctx.strokeStyle = `hsla(${p.hue}, 100%, 80%, ${currentAlpha * 0.5})`;
-          ctx.lineWidth = 0.5;
-          const starSize = currentSize * 0.8;
-          ctx.beginPath();
-          ctx.moveTo(p.x - starSize, p.y);
-          ctx.lineTo(p.x + starSize, p.y);
-          ctx.moveTo(p.x, p.y - starSize);
-          ctx.lineTo(p.x, p.y + starSize);
-          ctx.stroke();
-        }
+            if (currentSize > 2.5) {
+              ctx.strokeStyle = `hsla(${p.hue}, 100%, 85%, ${currentAlpha * 0.4})`;
+              ctx.lineWidth = 0.3;
+              const starSize = currentSize * 0.6;
+              ctx.beginPath();
+              ctx.moveTo(p.x - starSize, p.y);
+              ctx.lineTo(p.x + starSize, p.y);
+              ctx.moveTo(p.x, p.y - starSize);
+              ctx.lineTo(p.x, p.y + starSize);
+              ctx.stroke();
+            }
+          }
 
-        ctx.restore();
-        return true;
-      });
+          ctx.restore();
+          return true;
+        });
+      }
 
       animationFrameRef.current = requestAnimationFrame(animate);
     };
@@ -205,8 +262,8 @@ export function RainbowSparkleTrail({ enabled = true, intensity = 1 }: RainbowSp
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
       }
-      if (scrollTimeoutRef.current) {
-        clearTimeout(scrollTimeoutRef.current);
+      if (scrollRafRef.current) {
+        cancelAnimationFrame(scrollRafRef.current);
       }
     };
   }, [enabled, emitParticles]);
