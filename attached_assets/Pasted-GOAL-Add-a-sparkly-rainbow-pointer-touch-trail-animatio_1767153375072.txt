@@ -1,0 +1,76 @@
+GOAL:
+Add a “sparkly rainbow pointer/touch trail” animation across the main website.
+Behavior:
+- On desktop: show a trail following the mouse pointer.
+- On mobile: show a trail where the user touches and drags.
+- On scroll (desktop + mobile): emit subtle sparkles from the last known pointer/touch position so the effect still feels alive while scrolling.
+- The effect should be subtle (not heavy), performant, and not block clicks.
+- Must not interfere with forms, buttons, scrolling, or text selection.
+
+IMPLEMENTATION REQUIREMENTS:
+1) Create a single reusable module/component for the effect:
+   - Name: RainbowSparkleTrail (component or plain JS initializer depending on stack)
+2) Render particles on a full-screen fixed canvas overlay:
+   - <canvas id="rainbow-sparkle-canvas" ...>
+   - position: fixed; top:0; left:0; width:100vw; height:100vh;
+   - pointer-events: none; z-index: very high; background: transparent;
+3) Particle design:
+   - Sparkly rainbow dots/stars with gradient colors cycling (red → orange → yellow → green → blue → indigo → violet)
+   - Blend mode: “lighter” or “screen” so it glows softly
+   - Particle lifetime ~ 500–900ms
+   - Particle size 2–7px with slight twinkle (scale oscillation)
+   - Emit rate:
+     - mousemove: 6–10 particles per 16ms frame (throttled)
+     - touchmove: 8–14 particles per frame (throttled)
+     - scroll: 2–5 particles per frame only while scrolling (throttled)
+4) Performance:
+   - Use requestAnimationFrame loop
+   - Cap total particles in memory (e.g., 250–400 max; older particles removed)
+   - Throttle event handling so it doesn’t fire too often
+   - Use devicePixelRatio scaling for sharpness
+5) Accessibility:
+   - Respect prefers-reduced-motion:
+     - If user prefers reduced motion, disable the effect or drastically reduce emission.
+6) Controls:
+   - Add a simple config:
+     - enabled boolean (default true)
+     - intensity factor (default 1)
+   - Allow disabling on specific pages if needed (future proof)
+7) Integrate site-wide:
+   - If Next.js: add into app layout (app/layout.tsx) or pages/_app.tsx
+   - If React SPA: include in root App component
+   - If plain HTML: inject script into global layout template
+
+DELIVERABLE:
+- Implement the feature fully in the codebase with clean code and comments.
+- Provide:
+  1) Where the component/module lives
+  2) Where it is mounted globally
+  3) How to change intensity or disable it
+  4) How to test (desktop + mobile)
+
+DETAILS FOR THE CANVAS ANIMATION (write actual code, not pseudocode):
+- Maintain state:
+  - lastX, lastY
+  - isTouching boolean
+  - isScrolling boolean with timeout to detect scroll end
+- Event listeners:
+  - window.addEventListener("mousemove", ...)
+  - window.addEventListener("touchstart", ...)
+  - window.addEventListener("touchmove", ...)
+  - window.addEventListener("touchend", ...)
+  - window.addEventListener("scroll", ...) // emit from lastX,lastY
+  - window.addEventListener("resize", ...) // resize canvas
+- For touch events:
+  - Use passive listeners where safe
+- Use requestAnimationFrame to:
+  - clear with alpha (ctx.clearRect OR fade via translucent fill for trails)
+  - update particle positions with gentle drift (small velocity)
+  - reduce alpha until death
+  - render with gradient palette cycling + small star shape or round glow
+- Ensure the canvas does not cause layout shifts and doesn’t capture input
+
+IMPORTANT:
+- Do not break the existing website.
+- Do not add heavy dependencies.
+- Keep it minimal and branded with “Rainbow Preschool” feeling.

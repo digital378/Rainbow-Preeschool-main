@@ -7,6 +7,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
+import { RainbowSparkleTrail } from "@/components/rainbow-sparkle-trail";
 import { initGA, initGlobalFormTracking } from "./lib/analytics";
 import { useAnalytics } from "./hooks/use-analytics";
 import { useScrollRevealOnRoute } from "./hooks/use-scroll-reveal";
@@ -283,6 +284,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider defaultTheme="light" storageKey="rainbow-preschool-theme">
         <TooltipProvider>
+          <RainbowSparkleTrail enabled={true} intensity={1} />
           <AppContent />
           <Toaster />
         </TooltipProvider>
