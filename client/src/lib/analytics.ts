@@ -98,17 +98,19 @@ export const trackFormView = (params: LeadEventParams) => {
 let leadEventFired = false;
 
 // Track successful form submission - CANONICAL EVENT for all forms
+// This should ONLY be called after server confirms email was sent
 export const trackLeadFormSubmit = (params: LeadEventParams & { form_id?: string; form_name?: string }) => {
-  // Prevent duplicate fires within 3 seconds
+  // Prevent duplicate fires within 5 seconds (extended for safety)
   if (leadEventFired) return;
   leadEventFired = true;
   
   // Reset lock after delay
   setTimeout(() => {
     leadEventFired = false;
-  }, 3000);
+  }, 5000);
   
-  // Push CANONICAL conversion event to dataLayer (GTM picks this up)
+  // Push SINGLE conversion event to dataLayer (GTM picks this up)
+  // Removed duplicate gtag call to prevent double-counting
   pushToDataLayer({
     event: 'conversion_event_submit_lead_form',
     form_id: params.form_id || null,
@@ -123,22 +125,6 @@ export const trackLeadFormSubmit = (params: LeadEventParams & { form_id?: string
     utm_medium: params.utm_medium,
     utm_campaign: params.utm_campaign,
   });
-  
-  // Also push legacy event for backwards compatibility
-  pushToDataLayer({
-    event: 'lead_form_submit',
-    ...params,
-  });
-  
-  // Fire GA4 event directly as backup
-  if (typeof window !== 'undefined' && window.gtag) {
-    window.gtag('event', 'conversion_event_submit_lead_form', {
-      form_id: params.form_id,
-      form_name: params.form_name,
-      programme: params.programme,
-      locality: params.locality,
-    });
-  }
 };
 
 // Track WhatsApp click
@@ -225,33 +211,11 @@ export const getUTMParams = () => {
 // ============================================
 // GLOBAL FORM SUBMISSION TRACKING
 // ============================================
-// This catches ANY form submission as a fallback
-// Explicit trackLeadFormSubmit calls take priority
-
-let globalFormListenerAttached = false;
+// DISABLED: Global form listener removed to prevent duplicate GA4 events.
+// GA4 events are now fired ONLY after server confirms email was sent.
+// Each form component handles its own tracking in onSuccess callback.
 
 export const initGlobalFormTracking = () => {
-  if (typeof window === 'undefined' || globalFormListenerAttached) return;
-  globalFormListenerAttached = true;
-  
-  document.addEventListener('submit', (e) => {
-    const form = e.target as HTMLElement;
-    if (!form || form.tagName !== 'FORM') return;
-    
-    // Skip forms marked to ignore (like search forms)
-    if (form.classList.contains('ignore-lead-tracking')) return;
-    
-    // Get form details
-    const formElement = form as HTMLFormElement;
-    const formId = formElement.id || null;
-    const formName = formElement.getAttribute('name') || formElement.getAttribute('data-form-name') || null;
-    
-    // Fire the canonical event (deduplication is handled in trackLeadFormSubmit)
-    trackLeadFormSubmit({
-      form_id: formId || undefined,
-      form_name: formName || undefined,
-      source_page: window.location.pathname,
-      ...getUTMParams(),
-    });
-  }, true); // Use capture phase to ensure we catch it early
+  // Intentionally empty - global tracking disabled to prevent duplicates
+  // Forms now track individually only after confirmed email delivery
 };

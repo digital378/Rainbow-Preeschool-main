@@ -53,9 +53,10 @@ export async function registerRoutes(
       const validatedData = insertContactSchema.parse(formData);
       const contact = await storage.createContact(validatedData);
       
-      // Send email notification
+      // Send email notification and track success
+      let emailSent = false;
       try {
-        await sendLeadNotificationEmail({
+        emailSent = await sendLeadNotificationEmail({
           parentName: validatedData.parentName,
           childName: validatedData.childName,
           phone: validatedData.phone,
@@ -67,9 +68,11 @@ export async function registerRoutes(
         });
       } catch (emailError) {
         console.error("Failed to send email notification:", emailError);
+        emailSent = false;
       }
       
-      res.status(201).json({ success: true, id: contact.id });
+      // Return emailSent status so client can fire GA4 event only on confirmed delivery
+      res.status(201).json({ success: true, id: contact.id, emailSent });
     } catch (error) {
       if (error instanceof z.ZodError) {
         res.status(400).json({ error: "Invalid form data", details: error.errors });

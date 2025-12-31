@@ -87,7 +87,7 @@ export function LandingCallbackForm({ locality, sourcePage }: LandingCallbackFor
   const mutation = useMutation({
     mutationFn: async (data: FormData) => {
       const urlParams = new URLSearchParams(window.location.search);
-      return apiRequest("POST", "/api/contact", {
+      const response = await apiRequest("POST", "/api/contact", {
         parentName: data.parentName,
         phone: data.phone,
         childAge: data.childAge,
@@ -101,17 +101,21 @@ export function LandingCallbackForm({ locality, sourcePage }: LandingCallbackFor
         utmCampaign: urlParams.get("utm_campaign") || "",
         utmContent: urlParams.get("utm_content") || "",
       });
+      return response.json();
     },
-    onSuccess: () => {
-      const utmParams = getUTMParams();
-      trackLeadFormSubmit({
-        form_id: "landing-callback-form",
-        form_name: "Landing Callback Form",
-        locality,
-        programme: "Playgroup",
-        source_page: sourcePage,
-        ...utmParams,
-      });
+    onSuccess: (responseData: { success: boolean; id: number; emailSent: boolean }) => {
+      // Only fire GA4 event if email was actually sent (confirmed delivery)
+      if (responseData.emailSent) {
+        const utmParams = getUTMParams();
+        trackLeadFormSubmit({
+          form_id: "landing-callback-form",
+          form_name: "Landing Callback Form",
+          locality,
+          programme: "Playgroup",
+          source_page: sourcePage,
+          ...utmParams,
+        });
+      }
       setSubmitted(true);
       toast({
         title: "Thank you!",

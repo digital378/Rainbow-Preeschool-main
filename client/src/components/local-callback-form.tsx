@@ -79,7 +79,7 @@ export function LocalCallbackForm({
 
   const mutation = useMutation({
     mutationFn: async (data: typeof formData) => {
-      return apiRequest("POST", "/api/contact", {
+      const response = await apiRequest("POST", "/api/contact", {
         parentName: data.parentName,
         phone: data.phone,
         childAge: data.childAge,
@@ -88,18 +88,22 @@ export function LocalCallbackForm({
         childName: "Callback Request",
         message: `Local page enquiry from ${sourcePage || window.location.pathname}`,
       });
+      return response.json();
     },
-    onSuccess: () => {
-      const utmParams = getUTMParams();
-      trackLeadFormSubmit({
-        form_id: "local-callback-form",
-        form_name: "Local Callback Form",
-        programme,
-        locality,
-        centre,
-        source_page: sourcePage || window.location.pathname,
-        ...utmParams,
-      });
+    onSuccess: (responseData: { success: boolean; id: number; emailSent: boolean }) => {
+      // Only fire GA4 event if email was actually sent (confirmed delivery)
+      if (responseData.emailSent) {
+        const utmParams = getUTMParams();
+        trackLeadFormSubmit({
+          form_id: "local-callback-form",
+          form_name: "Local Callback Form",
+          programme,
+          locality,
+          centre,
+          source_page: sourcePage || window.location.pathname,
+          ...utmParams,
+        });
+      }
       setIsSubmitted(true);
       toast({
         title: "Thank you!",

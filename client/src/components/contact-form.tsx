@@ -144,23 +144,28 @@ export function ContactForm({ defaultBranch, defaultProgramme, compact = false, 
   const mutation = useMutation({
     mutationFn: async (data: ContactFormValues & { recaptchaToken?: string }) => {
       const response = await apiRequest("POST", "/api/contact", data);
-      return response;
+      return response.json();
     },
-    onSuccess: () => {
+    onSuccess: (responseData: { success: boolean; id: number; emailSent: boolean }) => {
       setIsSubmitted(true);
-      const utmParams = getUTMParams();
-      trackLeadFormSubmit({
-        form_id: "contact-form",
-        form_name: "Contact Form",
-        programme: form.getValues("programme"),
-        centre: form.getValues("branch"),
-        source_page: window.location.pathname,
-        ...utmParams,
-      });
-      // Fire Meta Pixel Lead conversion event
-      if (typeof window !== 'undefined' && (window as any).fbq) {
-        (window as any).fbq('track', 'Lead');
+      
+      // Only fire GA4 event if email was actually sent (confirmed delivery)
+      if (responseData.emailSent) {
+        const utmParams = getUTMParams();
+        trackLeadFormSubmit({
+          form_id: "contact-form",
+          form_name: "Contact Form",
+          programme: form.getValues("programme"),
+          centre: form.getValues("branch"),
+          source_page: window.location.pathname,
+          ...utmParams,
+        });
+        // Fire Meta Pixel Lead conversion event only on confirmed email
+        if (typeof window !== 'undefined' && (window as any).fbq) {
+          (window as any).fbq('track', 'Lead');
+        }
       }
+      
       toast({
         title: "Request Submitted!",
         description: "We'll get back to you within 24 hours.",
