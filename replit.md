@@ -108,33 +108,35 @@ All centre information is centralized in `shared/centre-data.ts`:
 - Schemas are dynamically injected via useEffect with proper cleanup
 
 ### Analytics Tracking
-Enhanced lead tracking via dataLayer pushes:
+Clean, page-based GA4 form tracking using gtag (no GTM Form Submission triggers).
 
-**Canonical Lead Conversion Event:**
-- `conversion_event_submit_lead_form` - **PRIMARY** conversion event for ALL form submissions
-  - Pushed to dataLayer for GTM pickup
-  - Also fired via gtag for direct GA4
-  - Includes form_id, form_name, page_path, page_url, programme, locality, centre, UTM params
-  - Deduplication lock prevents double-firing within 3 seconds
-  - Global form listener catches any forms that don't explicitly call tracking
+**Form Submission Events (Page-Based Naming):**
+- `Home_Instant_Form_Submit` - Instant/callback form on homepage "/"
+- `Home_Form_Submit` - Detailed contact form on homepage "/"
+- `Playgroup_Form_Submit` - Form on "/playgroup" page
+- `URLSlug_Form_Submit` - Dynamic naming for all other pages:
+  - `/admissions` → `Admissions_Form_Submit`
+  - `/contact` → `Contact_Form_Submit`
+  - `/preschool-in-manpada-thane` → `Preschool_In_Manpada_Thane_Form_Submit`
+  - Slugs are capitalized, hyphens replaced with underscores
+
+**Tracking Rules:**
+- Events fire ONLY after server confirms email was sent (`emailSent: true` in response)
+- Deduplication: 3-second timing lock prevents double-firing from multiple handlers
+- Single event per successful submission (no duplicates)
+- Forms use `formType` attribute: 'instant' | 'detailed' | 'default'
 
 **Other Events:**
 - `lead_form_view` - When callback form becomes visible
-- `lead_form_submit` - Legacy event (also fires alongside conversion event)
 - `whatsapp_click` - WhatsApp button clicks
 - `call_click` - Phone number clicks
 - `directions_click` - Map directions clicks
 - `local_page_click` - Local landing page link clicks
-- `homepage_location_click` - Homepage preschool card clicks
-- `header_centre_click` - Navigation dropdown centre clicks
-- `mobile_centre_click` - Mobile menu centre clicks
-
-All events capture UTM parameters for attribution tracking.
 
 **Form Tracking Architecture:**
-- `trackLeadFormSubmit()` in `client/src/lib/analytics.ts` is the single source of truth
-- `initGlobalFormTracking()` in App.tsx catches all form submissions as backup
-- Forms explicitly calling trackLeadFormSubmit: Contact Form, Landing Callback Form, Local Callback Form
+- `trackFormSubmit()` in `client/src/lib/analytics.ts` is the single source of truth
+- `getFormEventName()` generates page-based event names automatically
+- Forms call tracking in onSuccess after checking `emailSent` status from server
 
 ### SEO Files
 - `public/sitemap.xml` - All pages with priority weighting (local pages at 0.9)

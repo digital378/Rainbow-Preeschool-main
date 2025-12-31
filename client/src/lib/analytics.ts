@@ -11,7 +11,6 @@ declare global {
   interface Window {
     dataLayer: any[];
     gtag: (...args: any[]) => void;
-    __formSubmitted?: boolean; // Session-level deduplication flag
   }
 }
 
@@ -90,29 +89,37 @@ export const getFormEventName = (formType: FormType = 'default'): string => {
   }
   
   // ALL OTHER PAGES - dynamic slug-based naming
-  // Remove leading slash and convert to event name
+  // Remove leading/trailing slashes and convert to event name
   const slug = pathname.replace(/^\//, '').replace(/\/$/, '');
   
   if (!slug) {
     return 'Home_Form_Submit'; // Fallback for edge cases
   }
   
-  // Capitalize first letter of each word, replace hyphens with underscores
+  // Handle multi-segment paths: /preschool-in-manpada-thane → Preschool_In_Manpada_Thane
+  // Also handle paths with slashes: /programmes/playgroup → Programmes_Playgroup
   const eventSlug = slug
-    .split('-')
+    .split(/[-\/]/) // Split by both hyphens and slashes
+    .filter(word => word.length > 0)
     .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
     .join('_');
   
   return `${eventSlug}_Form_Submit`;
 };
 
-// Duplicate prevention: session-level flag + timing lock
+// Duplicate prevention: timing lock only (allows subsequent submissions)
 let formSubmitLock = false;
-const DEDUP_TIMEOUT_MS = 5000;
+const DEDUP_TIMEOUT_MS = 3000; // 3 seconds to prevent rapid double-clicks
 
 /**
  * Track form submission with GA4
  * ONLY call this after server confirms email was successfully sent
+ * 
+ * Fires exactly ONE event per successful submission.
+ * Deduplication prevents:
+ * - Multiple submit handlers firing for same click
+ * - Enter key + button click combo
+ * - AJAX + redirect combo
  * 
  * @param params.formType - 'instant' | 'detailed' | 'default'
  * @param params.programme - Programme name if applicable
@@ -122,23 +129,17 @@ const DEDUP_TIMEOUT_MS = 5000;
 export const trackFormSubmit = (params: FormTrackingParams = {}) => {
   if (typeof window === 'undefined') return;
   
-  // SAFEGUARD 1: Session-level flag
-  if (window.__formSubmitted) {
-    console.debug('[GA4] Form submit blocked - already submitted this session');
-    return;
-  }
-  
-  // SAFEGUARD 2: Timing lock to prevent rapid-fire duplicates
+  // SAFEGUARD: Timing lock to prevent rapid-fire duplicates from same submission
+  // This blocks double-firing from multiple handlers, but allows subsequent legitimate submissions
   if (formSubmitLock) {
-    console.debug('[GA4] Form submit blocked - dedup lock active');
+    console.debug('[GA4] Form submit blocked - dedup lock active (likely duplicate handler)');
     return;
   }
   
-  // Set locks
-  window.__formSubmitted = true;
+  // Set timing lock
   formSubmitLock = true;
   
-  // Reset timing lock after delay (session flag persists until page reload)
+  // Reset lock after delay to allow subsequent submissions
   setTimeout(() => {
     formSubmitLock = false;
   }, DEDUP_TIMEOUT_MS);
@@ -181,13 +182,10 @@ export const trackFormSubmit = (params: FormTrackingParams = {}) => {
 
 /**
  * Reset form submission tracking (call on SPA navigation)
- * This allows a new form submission to be tracked on subsequent pages
+ * This ensures any pending locks are cleared when navigating
  */
 export const resetFormTracking = () => {
-  if (typeof window !== 'undefined') {
-    window.__formSubmitted = false;
-    formSubmitLock = false;
-  }
+  formSubmitLock = false;
 };
 
 // ============================================
