@@ -29,7 +29,7 @@ import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
-import { trackFormSubmission, trackCTAClick } from "@/lib/analytics";
+import { trackFormSubmit, trackCTAClick } from "@/lib/analytics";
 import {
   Accordion,
   AccordionContent,
@@ -94,8 +94,14 @@ function QuickCallbackStrip() {
         childName: "Quick Callback",
       });
     },
-    onSuccess: () => {
-      trackFormSubmission("quick_callback", "homepage_strip");
+    onSuccess: async (response) => {
+      const data = await response.json();
+      if (data.emailSent) {
+        trackFormSubmit({
+          formType: 'instant',
+          programme: 'General Enquiry',
+        });
+      }
       toast({
         title: "Thank you!",
         description: "Our admissions team will call you shortly.",

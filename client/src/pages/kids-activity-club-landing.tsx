@@ -43,7 +43,7 @@ import { z } from "zod";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
-import { trackProgrammeView, trackFormSubmission } from "@/lib/analytics";
+import { trackProgrammeView, trackFormSubmit } from "@/lib/analytics";
 
 const callbackFormSchema = z.object({
   parentName: z.string().min(2, "Please enter your name"),
@@ -92,12 +92,18 @@ function MiniCallbackForm() {
       });
       return response.json();
     },
-    onSuccess: () => {
+    onSuccess: (responseData: { success: boolean; id: number; emailSent: boolean }) => {
       toast({
         title: "Callback Requested!",
         description: "Our team will call you shortly.",
       });
-      trackFormSubmission("Kids Activity Club", form.getValues().branch);
+      if (responseData.emailSent) {
+        trackFormSubmit({
+          formType: 'instant',
+          programme: 'Kids Activity Club',
+          centre: form.getValues().branch,
+        });
+      }
       form.reset();
     },
     onError: () => {
