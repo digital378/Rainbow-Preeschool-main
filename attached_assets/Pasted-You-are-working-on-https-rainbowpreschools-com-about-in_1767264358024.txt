@@ -1,0 +1,72 @@
+You are working on https://rainbowpreschools.com/about in Replit.
+
+Goal:
+Add a new “Teaching & Teacher Development” section that matches the existing design system of the /about page (Tailwind styling, spacing, card UI, same button styles). This new section must visually and structurally synchronise with the page.
+
+Placement:
+Insert the new section directly AFTER the “Rainbow Preschool International Curriculum” section (after Learning Domains + its CTA buttons) and BEFORE the “Why Parents Trust Rainbow Preschool” section.
+
+Do NOT add any forms or input fields anywhere on /about.
+
+Section ID:
+Add id="teaching-methodology" so we can link directly to it later.
+
+SECTION CONTENT & LAYOUT:
+
+1) Section Header (center aligned like other sections):
+H2: “Our Teaching & Teacher Development Approach”
+Subheading: “How our trained educators deliver joyful, research-based learning every day.”
+
+2) Two-column layout (responsive):
+- Left column: “Teaching–Learning Methodologies”
+- Right column: “Key Training Components for Teachers”
+
+Each column should use a card container similar to existing cards (rounded corners, light border, subtle shadow, padding).
+
+3) Teaching–Learning Methodologies (left card):
+Use three feature rows with icon + title + short description (same style as your “Why Parents Trust” icon cards but stacked vertically):
+- Project-Based Learning: Fostering in-depth exploration of topics through guided projects.
+- Blended Learning: Using traditional + age-appropriate digital tools to support modern learning.
+- Activity-Driven Learning: Hands-on, experiential learning that helps children learn by doing.
+
+4) Key Training Components (right card):
+Use numbered list style inside the card (clean spacing):
+1. Child Development Focus
+2. Experiential & Hands-On Learning
+3. Play-Based Learning
+4. Curriculum Planning
+5. Classroom Management
+6. Creative Teaching Techniques
+7. Parent Involvement
+Each item should have a 1-line explanation.
+
+5) Full-width card below (single row) titled:
+“Practical Skills Our Teachers Develop”
+Use bullet chips or small pill badges (like tags) that wrap on mobile:
+- Teaching Aids & Materials
+- Observation & Play-Based Assessment
+- Supervised Classroom Practice
+- Supporting Diverse Learning Needs
+
+6) CTA Buttons Row (no forms):
+Add two buttons matching existing button styles:
+- Primary button: “Explore Our Programmes” → /programmes
+- Secondary button: “Enquire for Admissions” → /contact
+Make sure these match your existing button size, radius, and hover effects.
+
+Design Requirements:
+- Match current typography scale and spacing used on /about
+- Keep consistent max-width container like other sections
+- Ensure mobile responsive stacking (2 columns → 1 column)
+- Use existing icon set used across the site (if using lucide/react-icons is already present, reuse that; otherwise use simple inline SVG icons)
+- Do not change existing sections except to insert this new section cleanly in the correct location.
+
+SEO Requirements:
+- Use semantic headings (H2 for section title, H3 for card titles)
+- Do not stuff keywords; keep natural
+- Ensure content is readable and scannable
+
+Final Validation:
+- /about page should render without layout shift or spacing inconsistency
+- New section blends with the existing Curriculum + Trust sections
+- No new forms added
