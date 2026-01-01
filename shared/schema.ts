@@ -117,7 +117,7 @@ export const branches = [
     name: "Aggarwal Centre (Manpada)",
     address: "Aggarwal Arcade, Near Khewra Circle, Manpada, Thane (W)",
     landline: "022-47762019",
-    calling: "93212 39367",
+    calling: "93218 39367",
     whatsapp: "88281 95788",
     mapUrl: "https://maps.app.goo.gl/jenJNhoqsExdWH5DA",
   },

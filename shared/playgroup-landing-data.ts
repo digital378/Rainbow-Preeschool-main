@@ -73,7 +73,7 @@ export const playgroundLandingPages: PlaygroupLandingData[] = [
     centre: {
       name: "Aggarwal Centre (Manpada)",
       address: "Aggarwal Arcade, Near Khewra Circle, Manpada, Thane (W)",
-      phones: ["022-47762019", "93212 39367"],
+      phones: ["022-47762019", "93218 39367"],
       whatsappNumber: "8828195788",
       directionsUrl: "https://maps.app.goo.gl/jenJNhoqsExdWH5DA",
       mapEmbedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3767.1234!2d72.9754!3d19.2187!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTnCsDEzJzA3LjMiTiA3MsKwNTgnMzEuNCJF!5e0!3m2!1sen!2sin!4v1234567890",

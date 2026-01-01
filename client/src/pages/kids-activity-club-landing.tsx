@@ -573,7 +573,7 @@ export default function KidsActivityClubLanding() {
               <Card className="text-center p-6">
                 <Users className="w-10 h-10 text-primary mx-auto mb-3" />
                 <div className="text-3xl font-bold text-foreground">
-                  <CountUp end={50000} duration={2000} suffix="+" />
+                  <CountUp end={100000} duration={2000} suffix="+" />
                 </div>
                 <div className="text-sm text-muted-foreground">Happy Students</div>
               </Card>

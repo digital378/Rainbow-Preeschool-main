@@ -68,7 +68,7 @@ export function LandingHero({
             <div className="w-8 h-8 rounded-full bg-secondary/10 flex items-center justify-center" data-float-icon>
               <Users className="w-4 h-4 text-secondary" />
             </div>
-            <span className="font-medium">50,000+ Students</span>
+            <span className="font-medium">1,00,000+ Students</span>
           </div>
           <div className="flex items-center gap-2 text-sm" data-reveal="pop">
             <div className="w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center" data-float-icon>

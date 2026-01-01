@@ -33,7 +33,7 @@ export const centres: CentreData[] = [
     playgroundLandingUrl: "/playgroup-in-manpada",
     preschoolLandingUrl: "/preschool-in-manpada-thane",
     address: "Aggarwal Arcade, Near Khewra Circle, Manpada, Thane (W)",
-    phoneNumbers: ["022-47762019", "93212 39367"],
+    phoneNumbers: ["022-47762019", "93218 39367"],
     whatsappNumber: "8828195788",
     googleMapsDirectionsUrl: "https://maps.app.goo.gl/jenJNhoqsExdWH5DA",
     googleMapsEmbedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3767.1234!2d72.9754!3d19.2187!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTnCsDEzJzA3LjMiTiA3MsKwNTgnMzEuNCJF!5e0!3m2!1sen!2sin!4v1234567890",
@@ -229,7 +229,7 @@ export const preschoolIntros: Record<string, { paragraph1: string; paragraph2: s
   "anand-nagar": {
     paragraph1: "Discover quality preschool education in Anand Nagar, Thane at Rainbow Preschool International. Located at Kris Commercial Plaza, opposite Tropical Lagoon, our centre offers exceptional Playgroup, Nursery, and Kindergarten programmes for children aged 1.5 to 5 years.",
     paragraph2: "Families in Anand Nagar appreciate our balanced approach to early learning. Our curriculum combines play-based activities with structured learning to prepare children for formal schooling while keeping the joy in learning. Art, music, movement, and storytelling are integral parts of every day.",
-    paragraph3: "Our Anand Nagar centre features well-equipped classrooms, experienced teachers, and a safe outdoor play area. With over 50,000 students nurtured across our network, Rainbow Preschool brings proven expertise to your neighborhood. Book a visit to experience our warm, welcoming environment.",
+    paragraph3: "Our Anand Nagar centre features well-equipped classrooms, experienced teachers, and a safe outdoor play area. With over 1,00,000 students nurtured across our network, Rainbow Preschool brings proven expertise to your neighborhood. Book a visit to experience our warm, welcoming environment.",
   },
   dhokali: {
     paragraph1: "Rainbow Preschool International's Dhokali centre on Kolshet Road serves families seeking quality early education in Thane West. Located opposite Aban Park Society at Dhokali Naka, we offer comprehensive Playgroup, Nursery, and Kindergarten programmes.",
@@ -296,7 +296,7 @@ export const whyParentsChoose: Record<string, string[]> = {
     "Spacious classrooms and dedicated outdoor play area",
     "Individual attention with small teacher-student ratios",
     "Comprehensive early learning curriculum",
-    "Trusted by 50,000+ families across Rainbow's network",
+    "Trusted by 1,00,000+ families across Rainbow's network",
   ],
 };
 
@@ -313,7 +313,7 @@ export const preschoolFAQs: Record<string, Array<{ question: string; answer: str
     },
     {
       question: "What is the fee structure for preschool in Manpada?",
-      answer: "For detailed fee information, please contact our Manpada centre at 022-47762019 or 93212 39367. We offer competitive fees with excellent education quality."
+      answer: "For detailed fee information, please contact our Manpada centre at 022-47762019 or 93218 39367. We offer competitive fees with excellent education quality."
     },
     {
       question: "What programmes are available at the Manpada centre?",
@@ -321,7 +321,7 @@ export const preschoolFAQs: Record<string, Array<{ question: string; answer: str
     },
     {
       question: "How do I enroll my child at Rainbow Preschool Manpada?",
-      answer: "Fill out the callback form on this page or call us at 93212 39367. Our team will schedule a visit and guide you through the enrollment process."
+      answer: "Fill out the callback form on this page or call us at 93218 39367. Our team will schedule a visit and guide you through the enrollment process."
     },
     {
       question: "Is Rainbow Preschool Manpada safe for my child?",
@@ -329,11 +329,11 @@ export const preschoolFAQs: Record<string, Array<{ question: string; answer: str
     },
     {
       question: "What makes Rainbow Preschool different from other preschools in Manpada?",
-      answer: "With 18+ years of experience and 50,000+ students nurtured, we offer proven play-based curriculum, experienced teachers, and a focus on holistic development that prepares children for life."
+      answer: "With 18+ years of experience and 1,00,000+ students nurtured, we offer proven play-based curriculum, experienced teachers, and a focus on holistic development that prepares children for life."
     },
     {
       question: "Can I visit the Manpada centre before enrolling?",
-      answer: "Yes, we encourage all parents to visit! Contact us at 93212 39367 or fill the callback form to schedule a free visit to our Manpada centre."
+      answer: "Yes, we encourage all parents to visit! Contact us at 93218 39367 or fill the callback form to schedule a free visit to our Manpada centre."
     },
   ],
   hariniwas: [
@@ -754,6 +754,6 @@ export const localityIntros: Record<string, string> = {
   kalwa: "Parents in Kalwa trust Rainbow Preschool for their toddler's first learning experience. Our centre near Sayba Hall offers a safe, fun environment where children aged 1.5-2.5 years develop essential skills through our play-based curriculum.",
   "ghodbunder-road": "Looking for a playgroup near Ghodbunder Road? Rainbow Preschool's Kasarvadavali centre, located behind Hypercity Mall, serves families across the Ghodbunder corridor. Our proven curriculum helps toddlers aged 1.5-2.5 years develop through joyful learning.",
   "anand-nagar": "Rainbow Preschool's Anand Nagar centre, opposite Tropical Lagoon, is the perfect choice for parents seeking quality early education. Our playgroup programme for toddlers aged 1.5-2.5 years combines play-based learning with a safe, caring environment.",
-  kasarvadavali: "Our Kasarvadavali centre at Rosa Gardenia welcomes families seeking a trusted playgroup for their toddlers. Located near Parijat Gardens and Hypercity Mall, we offer the same quality Rainbow education that 50,000+ students have experienced.",
+  kasarvadavali: "Our Kasarvadavali centre at Rosa Gardenia welcomes families seeking a trusted playgroup for their toddlers. Located near Parijat Gardens and Hypercity Mall, we offer the same quality Rainbow education that 1,00,000+ students have experienced.",
   dhokali: "Parents in Dhokali and Kolshet Road area trust Rainbow Preschool for their child's early education. Our centre opposite Aban Park Society provides a safe, stimulating environment where toddlers aged 1.5-2.5 years thrive and grow.",
 };

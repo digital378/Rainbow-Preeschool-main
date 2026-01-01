@@ -13,7 +13,7 @@ import heroBanner4 from "@assets/RPS_Hero_Banner_4_1766120729092.jpg";
 const banners = [heroBanner1, heroBanner2, heroBanner3, heroBanner4];
 
 const trustBadges = [
-  { icon: Users, label: "50,000+ Happy Students" },
+  { icon: Users, label: "1,00,000+ Happy Students" },
   { icon: Star, label: "18+ Years of Excellence" },
   { icon: MapPin, label: "6 Centres Across Thane" },
   { icon: Shield, label: "100% Female Staff" },

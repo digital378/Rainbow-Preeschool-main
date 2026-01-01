@@ -40,7 +40,7 @@ import {
 const faqs = [
   {
     question: "Which is the best preschool in Thane?",
-    answer: "Rainbow Preschool International is one of the most trusted preschools in Thane with 18+ years of experience and 50,000+ happy students. We offer safe, play-based learning with certified teachers across 6 centres in Thane."
+    answer: "Rainbow Preschool International is one of the most trusted preschools in Thane with 18+ years of experience and 1,00,000+ happy students. We offer safe, play-based learning with certified teachers across 6 centres in Thane."
   },
   {
     question: "What age can a child start playgroup?",
@@ -309,7 +309,7 @@ export default function Home() {
               <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">About</p>
               <h2 className="text-3xl md:text-4xl font-bold mb-6" data-sparkle>A Trusted Preschool in Thane Since 2007</h2>
               <p className="text-muted-foreground text-lg leading-relaxed mb-6">
-                Rainbow Preschool International is one of the most trusted preschools in Thane, having nurtured over 50,000 young learners through joyful early childhood education. Our playgroup in Thane provides a safe, secure, and happy learning environment built on a strong play-based philosophy.
+                Rainbow Preschool International is one of the most trusted preschools in Thane, having nurtured over 1,00,000 young learners through joyful early childhood education. Our playgroup in Thane provides a safe, secure, and happy learning environment built on a strong play-based philosophy.
               </p>
               <p className="text-muted-foreground leading-relaxed mb-8">
                 Our age-appropriate early childhood education curriculum helps children develop confidence, creativity, and early academic skills, preparing them smoothly for primary schooling while respecting every child's unique pace of growth.
@@ -327,7 +327,7 @@ export default function Home() {
                   <CardContent className="pt-6">
                     <Users className="w-10 h-10 text-primary mx-auto mb-3" data-float-icon />
                     <p className="text-3xl font-bold text-foreground mb-1">
-                      <CountUp end={50000} duration={2000} suffix="+" />
+                      <CountUp end={100000} duration={2000} suffix="+" />
                     </p>
                     <p className="text-sm text-muted-foreground">Happy Students</p>
                   </CardContent>
