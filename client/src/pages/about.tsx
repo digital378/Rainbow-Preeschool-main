@@ -113,9 +113,8 @@ export default function About() {
                 onClick={() => trackWhatsAppClick({ source_page: "about" })}
               >
                 <Button 
-                  variant="outline" 
                   size="lg" 
-                  className="text-base px-8"
+                  className="text-base px-8 bg-[#25D366] hover:bg-[#20BD5A] text-white border-[#25D366]"
                   data-testid="button-about-hero-whatsapp"
                 >
                   <SiWhatsapp className="mr-2 h-5 w-5" />
@@ -127,9 +126,8 @@ export default function About() {
                 onClick={() => trackCallClick({ source_page: "about" })}
               >
                 <Button 
-                  variant="outline" 
                   size="lg" 
-                  className="text-base px-8"
+                  className="text-base px-8 bg-white hover:bg-gray-100 text-gray-900 border border-gray-300"
                   data-testid="button-about-hero-call"
                 >
                   <Phone className="mr-2 h-5 w-5" />
