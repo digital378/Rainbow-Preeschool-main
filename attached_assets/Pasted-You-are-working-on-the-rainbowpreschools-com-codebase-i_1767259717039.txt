@@ -1,0 +1,115 @@
+You are working on the rainbowpreschools.com codebase in Replit.
+
+Goal:
+Revamp the /about page for clarity, trust, SEO, and lead generation.
+Use only the most necessary information. Reduce repetition. Keep the page fast and mobile-friendly.
+Do NOT create a new page. Update the existing /about route/component.
+
+1) Locate the About page file/component
+- likely app/about/page.tsx, pages/about.tsx, or similar.
+- keep the same header/footer layout.
+
+2) Replace the page content layout with this new structure (same branding, spacing, and UI style):
+
+SECTION A — Hero (Above the fold)
+- H1: "About Rainbow Preschool International"
+- Subheading: "Play-based early learning in Thane since 2007."
+- Add 2 CTA buttons:
+  - Primary: "Request a Callback" -> /contact (or scroll to contact form if present)
+  - Secondary: "Explore Programmes" -> /programmes
+- Show the 4 stat cards (keep existing design):
+  - 50,000+ Happy Students
+  - 18+ Years of Excellence
+  - 6 Centres in Thane
+  - 4.7★ Google Rating
+
+SECTION B — Our Story (Short + powerful)
+- H2: "Our Story"
+- 2 short paragraphs only (reduce length):
+  - Founded in 2007; grown to 6 centres across Thane West
+  - 50,000+ students; play-based approach builds confidence and school readiness
+
+SECTION C — Chairperson’s Note (Compressed)
+- H2: "A Note from Our Chairperson"
+- Show 2–3 lines summary only:
+  “Learning is a lifelong journey, and education succeeds when schools and families work together.”
+- Add optional accordion/toggle:
+  Button: "Read full note"
+  Expand to show the longer content (keep the Gandhi quote inside accordion, not visible by default)
+
+SECTION D — Curriculum Framework (NEW, replaces current “Research-Based Curriculum…” section)
+- H2: "Rainbow Preschool International Curriculum"
+- Intro paragraph:
+  “Our curriculum supports holistic development through joyful, play-based, developmentally appropriate learning.”
+- H3: Key Principles (bullets)
+  - Holistic Development
+  - Play-Based Learning
+  - Developmentally Appropriate Practice
+  - Cultural Sensitivity
+  - Focus on Learning Process
+  - Family & Community Engagement
+- H3: Learning Domains (table)
+  Domain | Focus Areas
+  Physical Development | Gross motor, fine motor, health & wellness
+  Cognitive Development | Problem-solving, critical thinking, early math, early science inquiry
+  Language & Communication | Receptive/expressive language, emergent literacy, storytelling
+  Social & Emotional | Self-awareness, self-regulation, social skills, positive relationships
+  Creative & Aesthetic | Music, dance, visual arts, imagination, dramatic play
+- H3: Effective Implementation (bullets)
+  - Observation & Assessment
+  - Intentional Teaching
+  - Differentiated Instruction
+  - Enriching Environment
+
+SECTION E — Why Parents Trust Us (Condensed)
+- H2: "Why Parents Trust Rainbow Preschool"
+- Use 6 cards max, 1–2 lines each:
+  - Safety & CCTV
+  - 100% Female Staff
+  - Certified Teachers
+  - Hygiene & Cleanliness
+  - Play-based Curriculum
+  - Parent Partnership
+
+SECTION F — Journey Timeline (Short)
+- H2: "Our Journey"
+- Keep only 4–5 milestones:
+  2007 Founded
+  2010 Expansion
+  2020 Digital Learning
+  2023 6 Centres
+  2024 50,000+ Alumni
+
+SECTION G — Strong CTA strip (final)
+- Keep your rainbow background CTA but refine copy:
+  H2: “Ready to begin your child’s learning journey in Thane?”
+  Subtitle: “Talk to our admissions team today.”
+  Buttons:
+   - "Request a Callback" -> /contact
+   - "WhatsApp Us" -> existing WhatsApp link
+   - "Call Now" -> existing call link
+
+3) SEO Requirements
+- Use correct heading hierarchy: H1 (once), then H2 for sections, H3 for subsections
+- Add internal links in curriculum section:
+  - link “Explore Programmes” to /programmes
+  - link “Contact admissions team” to /contact
+- Keep copy natural; avoid keyword stuffing, but include:
+  "preschool in Thane", "play-based learning", "early childhood education" once each
+
+4) UX Requirements
+- Mobile-friendly spacing
+- Avoid extra-long paragraphs
+- Chairperson note is collapsed by default
+- Table should scroll horizontally on small devices or become stacked cards
+
+5) Styling Requirements
+- Use existing design system / Tailwind classes already used on site
+- Keep brand colors (pink/blue/rainbow accent)
+- Buttons consistent with existing components
+
+6) Final Checks
+- Build passes
+- No broken imports
+- Looks consistent with current About page theme
+- Lighthouse-friendly (no heavy animations here)

@@ -1,110 +1,172 @@
+import { Link } from "wouter";
 import { Card, CardContent } from "@/components/ui/card";
-import { WhyChooseUs } from "@/components/why-choose-us";
-import { MethodologySection } from "@/components/methodology-section";
-import { CTASection } from "@/components/cta-section";
+import { Button } from "@/components/ui/button";
 import { SEO } from "@/components/seo";
 import { CountUp } from "@/components/count-up";
-import { Eye, Rocket, Star, Calendar } from "lucide-react";
+import { 
+  Phone, 
+  Star, 
+  ChevronDown, 
+  Shield, 
+  Users, 
+  GraduationCap, 
+  Sparkles,
+  Heart,
+  Handshake,
+  Calendar,
+  Brain,
+  MessageCircle,
+  Smile,
+  Palette
+} from "lucide-react";
+import { SiWhatsapp } from "react-icons/si";
+import { useState } from "react";
+import { trackCTAClick, trackCallClick, trackWhatsAppClick } from "@/lib/analytics";
 import heroImage from "@assets/16_1766236394926.jpg";
 
+const PHONE_NUMBER = "+918291568972";
+const WHATSAPP_LINK = "https://wa.me/918291568972?text=Hi%2C%20I%20would%20like%20to%20know%20more%20about%20Rainbow%20Preschool";
+
 const milestones = [
-  { year: "2007", title: "Founded", description: "Rainbow Preschool started with a vision to provide quality early education" },
-  { year: "2010", title: "Expansion", description: "Opened second centre to serve more families in Thane" },
-  { year: "2015", title: "10,000 Students", description: "Reached milestone of educating over 10,000 young learners" },
-  { year: "2020", title: "Digital Learning", description: "Successfully adapted to online learning during the pandemic" },
-  { year: "2023", title: "6 Centres", description: "Expanded to 6 centres across Thane West" },
-  { year: "2024", title: "50,000+ Alumni", description: "Celebrated over 50,000 students completing their preschool journey" },
+  { year: "2007", title: "Founded", description: "Rainbow Preschool started its journey in Thane" },
+  { year: "2010", title: "Expansion", description: "Opened additional centres to serve more families" },
+  { year: "2020", title: "Digital Learning", description: "Successfully adapted to online learning" },
+  { year: "2025", title: "1,00,000+ Alumni", description: "Celebrating generations of happy learners" },
 ];
 
-const visionMission = [
-  { 
-    icon: Eye, 
-    title: "Vision", 
-    description: "We aspire to live in a society where education and learning means thinking deeply about the purpose of life, sharing freedom, and spreading hope within families, communities, and throughout the globe. We hope the generations emerging out of our preschools & school will create such an inspiring society." 
-  },
-  { 
-    icon: Rocket, 
-    title: "Mission", 
-    description: "Our mission is to cultivate a community of parents and educators who collaborate to give children a secure, energizing and supportive environment which enables them to develop and learn." 
-  },
+const trustCards = [
+  { icon: Shield, title: "Safety & CCTV", description: "24/7 surveillance and secure premises" },
+  { icon: Users, title: "100% Female Staff", description: "Caring, nurturing environment" },
+  { icon: GraduationCap, title: "Certified Teachers", description: "Trained early childhood educators" },
+  { icon: Sparkles, title: "Hygiene & Cleanliness", description: "Sanitized spaces daily" },
+  { icon: Heart, title: "Play-Based Learning", description: "Joyful, hands-on education" },
+  { icon: Handshake, title: "Parent Partnership", description: "Regular updates and involvement" },
+];
+
+const learningDomains = [
+  { icon: Users, domain: "Physical Development", areas: "Gross motor, fine motor, health & wellness" },
+  { icon: Brain, domain: "Cognitive Development", areas: "Problem-solving, early math, early science inquiry" },
+  { icon: MessageCircle, domain: "Language & Communication", areas: "Literacy, expressive/receptive language, storytelling" },
+  { icon: Smile, domain: "Social & Emotional", areas: "Self-awareness, self-regulation, relationships" },
+  { icon: Palette, domain: "Creative & Aesthetic", areas: "Music, dance, arts, imagination, dramatic play" },
+];
+
+const keyPrinciples = [
+  "Holistic Development",
+  "Play-Based Learning",
+  "Developmentally Appropriate Practice",
+  "Cultural Sensitivity",
+  "Focus on Process",
+  "Family & Community Engagement",
+];
+
+const effectiveImplementation = [
+  "Observation & Assessment",
+  "Intentional Teaching",
+  "Differentiated Instruction",
+  "Enriching Environment",
 ];
 
 export default function About() {
+  const [isChairpersonExpanded, setIsChairpersonExpanded] = useState(false);
+
   return (
     <div className="pt-20">
       <SEO
-        title="About Us - Rainbow Preschool International | Best Preschool in Thane Since 2007"
-        description="Learn about Rainbow Preschool International, Thane's trusted preschool since 2007. 50,000+ alumni, 6 centres, play-based learning approach. Discover our vision, mission & story."
-        keywords="about rainbow preschool, best preschool thane, preschool history thane, early childhood education thane, play-based learning, preschool thane west, preschool near me, best nursery school, top preschools india, child care center, toddler school, pre primary school, montessori school thane"
+        title="About Rainbow Preschool International | Preschool in Thane"
+        description="Discover Rainbow Preschool International's play-based curriculum, learning domains and child-first approach in Thane since 2007. Explore programmes or contact admissions."
+        keywords="about rainbow preschool, preschool in thane, play-based learning, early childhood education, best preschool thane, preschool history thane"
         canonical="https://rainbowpreschools.com/about"
       />
-      {/* Hero Section */}
-      <section className="py-24 md:py-32 lg:py-40 flex items-center justify-center relative overflow-hidden">
+
+      {/* SECTION A - Hero */}
+      <section className="py-16 md:py-24 lg:py-32 flex items-center justify-center relative overflow-hidden">
         <div 
           className="absolute inset-0 bg-cover bg-center opacity-[0.15]"
           style={{ backgroundImage: `url(${heroImage})` }}
         />
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-accent/5 to-secondary/5" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center">
-            <h1 className="text-4xl md:text-5xl font-bold">About Us</h1>
-          </div>
-        </div>
-      </section>
-
-      {/* Story Section */}
-      <section className="py-16 md:py-20 lg:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-            <div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">Our Story</h2>
-              <div className="space-y-4 text-muted-foreground leading-relaxed">
-                <p>
-                  Rainbow Preschool International was founded in 2007 with a simple yet powerful vision: to provide every child with the best possible start in their educational journey. Over the years, we have grown from a single school to six thriving centres across Thane West.
-                </p>
-                <p>
-                  More than 50,000 young students have completed their Pre-Primary education with us, each one carrying forward the values and skills they learned at Rainbow. Our spontaneous, adaptable, play-based approach helps children learn with joy and confidence while preparing them for primary school.
-                </p>
-                <p>
-                  Today, we continue to evolve and adapt our teaching methods to meet the needs of today's young learners, making us the best preschool in Thane for a strong and happy start to education.
-                </p>
-              </div>
+          <div className="text-center max-w-4xl mx-auto">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
+              About Rainbow Preschool International
+            </h1>
+            <p className="text-xl md:text-2xl text-muted-foreground mb-8">
+              Leading Preschool in Thane since 2007.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
+              <Link href="/contact">
+                <Button 
+                  size="lg" 
+                  className="text-base px-8"
+                  onClick={() => trackCTAClick("request_callback", "about_hero")}
+                  data-testid="button-about-hero-callback"
+                >
+                  Request a Callback
+                </Button>
+              </Link>
+              <a 
+                href={WHATSAPP_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => trackWhatsAppClick({ source_page: "about" })}
+              >
+                <Button 
+                  variant="outline" 
+                  size="lg" 
+                  className="text-base px-8"
+                  data-testid="button-about-hero-whatsapp"
+                >
+                  <SiWhatsapp className="mr-2 h-5 w-5" />
+                  WhatsApp Us
+                </Button>
+              </a>
+              <a 
+                href={`tel:${PHONE_NUMBER}`}
+                onClick={() => trackCallClick({ source_page: "about" })}
+              >
+                <Button 
+                  variant="outline" 
+                  size="lg" 
+                  className="text-base px-8"
+                  data-testid="button-about-hero-call"
+                >
+                  <Phone className="mr-2 h-5 w-5" />
+                  Call Now
+                </Button>
+              </a>
             </div>
-            <div className="grid grid-cols-2 gap-4">
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <Card className="text-center">
-                <CardContent className="pt-6">
-                  <div className="flex items-center justify-center gap-1 mb-2">
-                    <p className="text-3xl font-bold text-primary">
-                      <CountUp end={50000} duration={2000} suffix="+" />
-                    </p>
-                  </div>
+                <CardContent className="pt-6 pb-4">
+                  <p className="text-2xl md:text-3xl font-bold text-primary">
+                    <CountUp end={50000} duration={2000} suffix="+" />
+                  </p>
                   <p className="text-sm text-muted-foreground">Happy Students</p>
                 </CardContent>
               </Card>
               <Card className="text-center">
-                <CardContent className="pt-6">
-                  <div className="flex items-center justify-center gap-1 mb-2">
-                    <p className="text-3xl font-bold text-primary">
-                      <CountUp end={18} duration={1500} delay={200} suffix="+" />
-                    </p>
-                  </div>
+                <CardContent className="pt-6 pb-4">
+                  <p className="text-2xl md:text-3xl font-bold text-primary">
+                    <CountUp end={18} duration={1500} delay={200} suffix="+" />
+                  </p>
                   <p className="text-sm text-muted-foreground">Years of Excellence</p>
                 </CardContent>
               </Card>
               <Card className="text-center">
-                <CardContent className="pt-6">
-                  <div className="flex items-center justify-center gap-1 mb-2">
-                    <p className="text-3xl font-bold text-primary">
-                      <CountUp end={6} duration={1500} delay={400} prefix="0" />
-                    </p>
-                  </div>
+                <CardContent className="pt-6 pb-4">
+                  <p className="text-2xl md:text-3xl font-bold text-primary">
+                    <CountUp end={6} duration={1500} delay={400} />
+                  </p>
                   <p className="text-sm text-muted-foreground">Centres in Thane</p>
                 </CardContent>
               </Card>
               <Card className="text-center">
-                <CardContent className="pt-6">
-                  <div className="flex items-center justify-center gap-1 mb-2">
-                    <p className="text-3xl font-bold text-primary">
+                <CardContent className="pt-6 pb-4">
+                  <div className="flex items-center justify-center gap-1">
+                    <p className="text-2xl md:text-3xl font-bold text-primary">
                       <CountUp end={4.7} duration={1500} delay={600} decimals={1} />
                     </p>
                     <Star className="w-5 h-5 fill-yellow-400 text-yellow-400" />
@@ -117,14 +179,44 @@ export default function About() {
         </div>
       </section>
 
-      {/* Chairperson's Note Section */}
-      <section className="py-16 md:py-20 lg:py-24 bg-card">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-            <div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">Chairperson's Note</h2>
-              <div className="space-y-4 text-muted-foreground leading-relaxed">
-                <p className="italic">
+      {/* SECTION B - Our Story */}
+      <section className="py-16 md:py-20">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-center">Our Story</h2>
+          <div className="space-y-4 text-muted-foreground leading-relaxed text-center max-w-3xl mx-auto">
+            <p>
+              Rainbow Preschool International was founded in 2007 with a simple vision: to be the best preschool in Thane by providing quality early childhood education to every child. Today, we have grown to six thriving centres across Thane West.
+            </p>
+            <p>
+              Our play-based approach helps children learn confidently and joyfully, preparing them for a brighter future through hands-on exploration and discovery.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION C - Chairperson's Note (Collapsed by default) */}
+      <section className="py-16 md:py-20 bg-card">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-center">A Note from Our Chairperson</h2>
+          <div className="max-w-3xl mx-auto">
+            <p className="text-muted-foreground leading-relaxed text-center mb-4">
+              At Rainbow, parents play a vital role in our journey towards excellence. Together, we shape each child into a confident, skilled learner with a global perspective.
+            </p>
+            
+            <div className="text-center">
+              <button
+                onClick={() => setIsChairpersonExpanded(!isChairpersonExpanded)}
+                className="inline-flex items-center gap-2 text-primary hover:underline font-medium"
+                data-testid="button-chairperson-toggle"
+              >
+                {isChairpersonExpanded ? "Show less" : "Read full note"}
+                <ChevronDown className={`w-4 h-4 transition-transform ${isChairpersonExpanded ? "rotate-180" : ""}`} />
+              </button>
+            </div>
+            
+            {isChairpersonExpanded && (
+              <div className="mt-6 space-y-4 text-muted-foreground leading-relaxed bg-background/50 rounded-lg p-6">
+                <p className="italic text-center">
                   "Live as if you were to die tomorrow, Learn as if you were to live forever." – Mahatma Gandhi
                 </p>
                 <p>
@@ -134,42 +226,109 @@ export default function About() {
                   Education is a joint venture: an association between the school and the home to ensure that children become successful in whatever they choose to pursue. Right education materializes out of co-operation among the learners, mentors, parents and the community.
                 </p>
                 <p>
-                  At Rainbow, you, the parents, play a vital role in our journey towards excellence and your contribution is priceless to us.
+                  I assure you that the entire team of Rainbow Preschool International helps shape each child into an intelligent, skilled and committed Indian citizen with a global perspective. I look forward to your kind association, valuable support and a healthy rapport that shall assist us in the holistic development of each child.
                 </p>
-                <p>
-                  I assure you that the entire team of Rainbow Preschool International & Rainbow International School helps shape each child into an intelligent, skilled and committed Indian citizen with a global perspective. I look forward to your kind association, valuable support and a healthy rapport that shall assist us in the holistic development of each child.
-                </p>
-                <p className="pt-4">
+                <p className="pt-2">
                   Yours Sincerely,<br />
                   <span className="font-semibold text-foreground">Mrs. Akila Balbale</span>
                 </p>
               </div>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION D - Curriculum Framework */}
+      <section className="py-16 md:py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Rainbow Preschool International Curriculum</h2>
+            <p className="text-muted-foreground text-lg">
+              Our curriculum is holistic, play-based, and developmentally appropriate, designed to nurture every aspect of your child's growth through joyful learning experiences.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-12">
+            <div>
+              <h3 className="text-xl font-semibold mb-4">Key Principles</h3>
+              <ul className="space-y-2">
+                {keyPrinciples.map((principle, i) => (
+                  <li key={i} className="flex items-center gap-3 text-muted-foreground">
+                    <div className="w-2 h-2 rounded-full bg-primary shrink-0" />
+                    {principle}
+                  </li>
+                ))}
+              </ul>
             </div>
             <div>
-              {/* Space reserved for chairperson image */}
+              <h3 className="text-xl font-semibold mb-4">Effective Implementation</h3>
+              <ul className="space-y-2">
+                {effectiveImplementation.map((item, i) => (
+                  <li key={i} className="flex items-center gap-3 text-muted-foreground">
+                    <div className="w-2 h-2 rounded-full bg-accent shrink-0" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
+
+          <h3 className="text-xl font-semibold mb-6 text-center">Learning Domains</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
+            {learningDomains.map((domain, i) => (
+              <Card key={i} className="text-center" data-testid={`card-domain-${i}`}>
+                <CardContent className="pt-6">
+                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-3">
+                    <domain.icon className="w-6 h-6 text-primary" />
+                  </div>
+                  <h4 className="font-semibold text-sm mb-2">{domain.domain}</h4>
+                  <p className="text-xs text-muted-foreground">{domain.areas}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Link href="/programmes">
+              <Button 
+                variant="outline" 
+                size="lg"
+                onClick={() => trackCTAClick("explore_programmes", "about_curriculum")}
+                data-testid="link-about-programmes"
+              >
+                Explore our Programmes
+              </Button>
+            </Link>
+            <Link href="/contact">
+              <Button 
+                size="lg"
+                onClick={() => trackCTAClick("enquire_admissions", "about_curriculum")}
+                data-testid="link-about-admissions"
+              >
+                Enquire For Admissions
+              </Button>
+            </Link>
+          </div>
         </div>
       </section>
 
-      {/* Values Section */}
-      <section className="py-16 md:py-20 lg:py-24">
+      {/* SECTION E - Why Parents Trust Us */}
+      <section className="py-16 md:py-20 bg-card">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Core Values</h2>
-            <p className="text-muted-foreground text-lg">Better Future Through Play.</p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {visionMission.map((item, i) => (
-              <Card key={i} className="bg-card shadow-sm" data-testid={`card-value-${i}`}>
+          <h2 className="text-3xl md:text-4xl font-bold mb-8 text-center">Why Parents Trust Rainbow Preschool</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {trustCards.map((card, i) => (
+              <Card key={i} data-testid={`card-trust-${i}`}>
                 <CardContent className="pt-6">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                      <item.icon className="w-5 h-5 text-primary" />
+                  <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                      <card.icon className="w-5 h-5 text-primary" />
                     </div>
-                    <h3 className="text-2xl font-bold text-primary">{item.title}</h3>
+                    <div>
+                      <h3 className="font-semibold">{card.title}</h3>
+                      <p className="text-sm text-muted-foreground">{card.description}</p>
+                    </div>
                   </div>
-                  <p className="text-muted-foreground leading-relaxed">{item.description}</p>
                 </CardContent>
               </Card>
             ))}
@@ -177,25 +336,20 @@ export default function About() {
         </div>
       </section>
 
-      {/* Timeline Section */}
-      <section className="py-16 md:py-20 lg:py-24">
+      {/* SECTION F - Our Journey */}
+      <section className="py-16 md:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Journey</h2>
-            <p className="text-muted-foreground text-lg">Key milestones in Rainbow Preschool's history.</p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <h2 className="text-3xl md:text-4xl font-bold mb-8 text-center">Our Journey</h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {milestones.map((milestone, i) => (
               <Card key={i} data-testid={`card-milestone-${i}`}>
-                <CardContent className="pt-6">
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                      <Calendar className="w-5 h-5 text-primary" />
-                    </div>
-                    <span className="text-2xl font-bold text-primary">{milestone.year}</span>
+                <CardContent className="pt-6 text-center">
+                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-3">
+                    <Calendar className="w-5 h-5 text-primary" />
                   </div>
-                  <h3 className="font-semibold text-base mb-2">{milestone.title}</h3>
-                  <p className="text-sm text-muted-foreground">{milestone.description}</p>
+                  <span className="text-2xl font-bold text-primary">{milestone.year}</span>
+                  <h3 className="font-semibold text-sm mt-1">{milestone.title}</h3>
+                  <p className="text-xs text-muted-foreground mt-1">{milestone.description}</p>
                 </CardContent>
               </Card>
             ))}
@@ -203,9 +357,69 @@ export default function About() {
         </div>
       </section>
 
-      <WhyChooseUs />
-      <MethodologySection />
-      <CTASection />
+      {/* SECTION G - CTA Strip */}
+      <section className="py-16 md:py-20 relative overflow-hidden">
+        <div className="absolute inset-0 rainbow-gradient opacity-90" />
+        <div className="absolute inset-0 bg-black/40" />
+        <div 
+          className="absolute inset-0 opacity-10"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+          }}
+        />
+
+        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
+            Ready to begin your child's learning journey in Thane?
+          </h2>
+          <p className="text-lg md:text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+            Speak with our admissions team today.
+          </p>
+          
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Link href="/contact">
+              <Button 
+                size="lg" 
+                className="bg-white text-primary hover:bg-white/90 text-base px-8"
+                onClick={() => trackCTAClick("request_callback", "about_cta")}
+                data-testid="button-about-cta-callback"
+              >
+                Request a Callback
+              </Button>
+            </Link>
+            <a 
+              href={WHATSAPP_LINK}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackWhatsAppClick({ source_page: "about" })}
+            >
+              <Button 
+                variant="outline" 
+                size="lg" 
+                className="border-white text-white hover:bg-white/10 text-base px-8"
+                data-testid="button-about-cta-whatsapp"
+              >
+                <SiWhatsapp className="mr-2 h-5 w-5" />
+                WhatsApp Us
+              </Button>
+            </a>
+            <a 
+              href={`tel:${PHONE_NUMBER}`}
+              onClick={() => trackCallClick({ source_page: "about" })}
+            >
+              <Button 
+                variant="outline" 
+                size="lg" 
+                className="border-white text-white hover:bg-white/10 text-base px-8"
+                data-testid="button-about-cta-call"
+              >
+                <Phone className="mr-2 h-5 w-5" />
+                Call Now
+              </Button>
+            </a>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

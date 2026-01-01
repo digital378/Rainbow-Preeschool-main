@@ -1,0 +1,106 @@
+You are working on rainbowpreschools.com in Replit.
+
+Target page (must be edited): https://rainbowpreschools.com/about
+
+Hard requirement:
+- DO NOT add any forms on /about (no embedded forms, no instant forms, no newsletter forms, no enquiry forms).
+- Lead generation objective must be achieved using ONLY:
+  - Clear CTA buttons (Contact / WhatsApp / Call)
+  - Internal links to relevant pages (/contact, /programmes, /playgroup, etc.)
+  - Trust-building content (curriculum framework, safety, teachers, outcomes)
+  - SEO structure (headings, internal linking, clean content)
+
+Task:
+Revamp the /about page content and layout for clarity + SEO + conversions, using only necessary information.
+
+1) Locate the About page route/component powering /about
+Common locations:
+- app/about/page.tsx (Next.js App Router)
+- pages/about.tsx (Next.js Pages Router)
+- routes/about.* or similar (React router)
+Update the existing /about page ONLY.
+
+2) Replace /about content with this final structure (keep existing header/footer/nav exactly as-is):
+
+SECTION A — Hero (Above the fold)
+- H1: "About Rainbow Preschool International"
+- Subheading: "Play-based early learning in Thane since 2007."
+- 3 CTA buttons (NO forms):
+  1) Primary: "Request a Callback" -> link to /contact
+  2) Secondary: "WhatsApp Us" -> existing WhatsApp click-to-chat link (same as site)
+  3) Tertiary: "Call Now" -> tel: link (same as site)
+- Keep the 4 stat cards (existing UI style):
+  - 50,000+ Happy Students
+  - 18+ Years of Excellence
+  - 6 Centres in Thane
+  - 4.7★ Google Rating
+
+SECTION B — Our Story (Short, non-repetitive)
+- H2: "Our Story"
+- Keep only 2 short paragraphs:
+  - Founded in 2007; expanded to 6 centres across Thane West
+  - Play-based approach helping children learn confidently and prepare for primary school
+
+SECTION C — A Note from Our Chairperson (Collapsed default)
+- H2: "A Note from Our Chairperson"
+- Show only a 2–3 line summary by default (no long text)
+- Add an accordion/toggle: "Read full note"
+- Put the longer existing chairperson content inside the collapsed area
+- Keep the Gandhi quote inside the accordion, not visible by default
+
+SECTION D — Curriculum Framework (New + SEO structured)
+- H2: "Rainbow Preschool International Curriculum"
+- 1 intro paragraph: holistic + play-based + developmentally appropriate
+- H3: "Key Principles" (bullets)
+  - Holistic Development
+  - Play-Based Learning
+  - Developmentally Appropriate Practice
+  - Cultural Sensitivity
+  - Focus on Process
+  - Family & Community Engagement
+- H3: "Learning Domains" (table OR stacked cards on mobile)
+  Physical Development — gross motor, fine motor, health & wellness
+  Cognitive Development — problem-solving, early math, early science inquiry
+  Language & Communication — literacy, expressive/receptive language, storytelling
+  Social & Emotional — self-awareness, self-regulation, relationships
+  Creative & Aesthetic — music, dance, arts, imagination, dramatic play
+- H3: "Effective Implementation" (bullets)
+  - Observation & Assessment
+  - Intentional Teaching
+  - Differentiated Instruction
+  - Enriching Environment
+
+Add 2 internal links in this section:
+- "Explore our Programmes" -> /programmes
+- "Talk to admissions" -> /contact
+(links only, no forms)
+
+SECTION E — Why Parents Trust Us (Condensed, 6 cards max)
+- H2: "Why Parents Trust Rainbow Preschool"
+6 short cards, 1–2 lines each:
+  - Safety & CCTV
+  - 100% Female Staff
+  - Certified Teachers
+  - Hygiene & Cleanliness
+  - Play-based Learning
+  - Parent Partnership
+
+SECTION F — Our Journey (Short timeline)
+- H2: "Our Journey"
+Keep 4–5 milestones only:
+  2007 Founded
+  2010 Expansion
+  2020 Digital Learning
+  2023 6 Centres
+  2024 50,000+ Alumni
+
+SECTION G — CTA Strip (No forms)
+Use existing rainbow CTA style but update copy:
+- H2: "Ready to begin your child’s learning journey in Thane?"
+- Subtext: "Speak with our admissions team today."
+Buttons:
+  - "Request a Callback" -> /contact
+  - "WhatsApp Us" -> WhatsApp link
+  - "Call Now" -> tel: link
+
+3) SEO Requirements
