@@ -32,10 +32,23 @@ export function RainbowSparkleTrail({ enabled = true, intensity = 1 }: RainbowSp
   const isMobileRef = useRef(false);
   const isScrollingRef = useRef(false);
   const scrollRafRef = useRef<number | null>(null);
+  const isDarkModeRef = useRef(true);
 
   useEffect(() => {
     isMobileRef.current = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) 
       || window.innerWidth < 768;
+    
+    // Detect dark mode
+    const checkDarkMode = () => {
+      isDarkModeRef.current = document.documentElement.classList.contains('dark');
+    };
+    checkDarkMode();
+    
+    // Watch for theme changes
+    const observer = new MutationObserver(checkDarkMode);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    
+    return () => observer.disconnect();
   }, []);
 
   const createParticle = useCallback((x: number, y: number, isScroll: boolean = false): Particle => {
@@ -153,12 +166,20 @@ export function RainbowSparkleTrail({ enabled = true, intensity = 1 }: RainbowSp
     };
 
     let lastScrollTime = 0;
-    const SCROLL_THROTTLE = isMobile ? 100 : 50;
+    let lastScrollY = window.scrollY;
+    const SCROLL_THROTTLE = isMobile ? 60 : 50;
     
     const handleScroll = () => {
       const now = performance.now();
       if (now - lastScrollTime < SCROLL_THROTTLE) return;
       lastScrollTime = now;
+      
+      const currentScrollY = window.scrollY;
+      const scrollDelta = Math.abs(currentScrollY - lastScrollY);
+      lastScrollY = currentScrollY;
+      
+      // Only emit if there's meaningful scroll movement
+      if (scrollDelta < 2) return;
       
       isScrollingRef.current = true;
       
@@ -166,9 +187,25 @@ export function RainbowSparkleTrail({ enabled = true, intensity = 1 }: RainbowSp
         cancelAnimationFrame(scrollRafRef.current);
       }
       scrollRafRef.current = requestAnimationFrame(() => {
-        if (lastPosRef.current.x > 0 || lastPosRef.current.y > 0) {
-          const count = isMobile ? 1 : 2;
-          emitParticles(lastPosRef.current.x, lastPosRef.current.y, count, true);
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+        
+        if (isMobile) {
+          // On mobile: emit particles across the screen edges during scroll
+          const particleCount = Math.min(Math.floor(scrollDelta / 10), 4) + 1;
+          for (let i = 0; i < particleCount; i++) {
+            // Random position along left or right edge, random height
+            const side = Math.random() > 0.5 ? 0.1 : 0.9;
+            const x = viewportWidth * side + (Math.random() - 0.5) * 100;
+            const y = Math.random() * viewportHeight;
+            emitParticles(x, y, 2, true);
+          }
+        } else {
+          // On desktop: use last mouse position if available
+          if (lastPosRef.current.x > 0 || lastPosRef.current.y > 0) {
+            const count = 2;
+            emitParticles(lastPosRef.current.x, lastPosRef.current.y, count, true);
+          }
         }
         
         setTimeout(() => {
@@ -221,34 +258,53 @@ export function RainbowSparkleTrail({ enabled = true, intensity = 1 }: RainbowSp
           const currentSize = p.size * twinkle * (0.6 + lifeRatio * 0.4) * depthScale;
 
           ctx.save();
-          ctx.globalCompositeOperation = "lighter";
-          ctx.globalAlpha = currentAlpha * twinkle;
+          
+          // Use different blend mode for light mode - source-over with more saturated colors
+          const isDark = isDarkModeRef.current;
+          ctx.globalCompositeOperation = isDark ? "lighter" : "source-over";
+          ctx.globalAlpha = currentAlpha * twinkle * (isDark ? 1 : 0.9);
+
+          // Light mode color adjustments - more saturated and darker for visibility
+          const lightness = isDark 
+            ? (70 + p.z * 15) 
+            : (45 + p.z * 10); // Darker, more vibrant in light mode
+          const saturation = isDark ? 100 : 100;
 
           if (isMobileDevice) {
             const blurAmount = (1 - p.z) * 1.5;
             
-            ctx.fillStyle = `hsla(${p.hue}, 100%, ${70 + p.z * 15}%, 1)`;
+            ctx.fillStyle = `hsla(${p.hue}, ${saturation}%, ${lightness}%, 1)`;
             ctx.beginPath();
-            ctx.arc(p.x, p.y, currentSize, 0, Math.PI * 2);
+            ctx.arc(p.x, p.y, currentSize * (isDark ? 1 : 1.2), 0, Math.PI * 2);
             ctx.fill();
             
-            ctx.globalAlpha = currentAlpha * 0.35 * (0.5 + p.z * 0.5);
-            ctx.fillStyle = `hsla(${p.hue}, 100%, ${80 + p.z * 10}%, 0.6)`;
+            ctx.globalAlpha = currentAlpha * (isDark ? 0.35 : 0.5) * (0.5 + p.z * 0.5);
+            ctx.fillStyle = `hsla(${p.hue}, ${saturation}%, ${isDark ? 80 + p.z * 10 : 55 + p.z * 10}%, ${isDark ? 0.6 : 0.8})`;
             ctx.beginPath();
             ctx.arc(p.x, p.y, currentSize * (1.4 + blurAmount * 0.5), 0, Math.PI * 2);
             ctx.fill();
           } else {
             const innerGlow = currentSize * 1.0;
-            const outerGlow = currentSize * (1.5 + (1 - p.z) * 0.8);
+            const outerGlow = currentSize * (1.5 + (1 - p.z) * 0.8) * (isDark ? 1 : 1.3);
             
             const gradient = ctx.createRadialGradient(
               p.x, p.y, 0,
               p.x, p.y, outerGlow
             );
-            gradient.addColorStop(0, `hsla(${p.hue}, 100%, ${85 + p.z * 10}%, 1)`);
-            gradient.addColorStop(0.2, `hsla(${p.hue}, 100%, ${75 + p.z * 10}%, 0.9)`);
-            gradient.addColorStop(0.5, `hsla(${p.hue}, 100%, ${65 + p.z * 5}%, 0.5)`);
-            gradient.addColorStop(1, `hsla(${p.hue}, 100%, 55%, 0)`);
+            
+            if (isDark) {
+              // Dark mode - original glowing effect
+              gradient.addColorStop(0, `hsla(${p.hue}, 100%, ${85 + p.z * 10}%, 1)`);
+              gradient.addColorStop(0.2, `hsla(${p.hue}, 100%, ${75 + p.z * 10}%, 0.9)`);
+              gradient.addColorStop(0.5, `hsla(${p.hue}, 100%, ${65 + p.z * 5}%, 0.5)`);
+              gradient.addColorStop(1, `hsla(${p.hue}, 100%, 55%, 0)`);
+            } else {
+              // Light mode - more saturated, vibrant colors
+              gradient.addColorStop(0, `hsla(${p.hue}, 100%, ${50 + p.z * 5}%, 1)`);
+              gradient.addColorStop(0.2, `hsla(${p.hue}, 100%, ${45 + p.z * 5}%, 0.95)`);
+              gradient.addColorStop(0.5, `hsla(${p.hue}, 100%, ${40 + p.z * 5}%, 0.7)`);
+              gradient.addColorStop(1, `hsla(${p.hue}, 100%, 35%, 0)`);
+            }
 
             ctx.fillStyle = gradient;
             ctx.beginPath();
@@ -256,8 +312,10 @@ export function RainbowSparkleTrail({ enabled = true, intensity = 1 }: RainbowSp
             ctx.fill();
 
             if (currentSize > 2 && p.z > 0.3) {
-              ctx.strokeStyle = `hsla(${p.hue}, 100%, 92%, ${currentAlpha * 0.7 * p.z})`;
-              ctx.lineWidth = 0.3 + p.z * 0.3;
+              ctx.strokeStyle = isDark 
+                ? `hsla(${p.hue}, 100%, 92%, ${currentAlpha * 0.7 * p.z})`
+                : `hsla(${p.hue}, 100%, 40%, ${currentAlpha * 0.9 * p.z})`;
+              ctx.lineWidth = (0.3 + p.z * 0.3) * (isDark ? 1 : 1.5);
               const starSize = currentSize * (0.6 + p.z * 0.4);
               
               ctx.save();
@@ -282,10 +340,12 @@ export function RainbowSparkleTrail({ enabled = true, intensity = 1 }: RainbowSp
             }
             
             if (p.z > 0.7) {
-              ctx.globalAlpha = currentAlpha * 0.3 * (p.z - 0.7) * 3;
-              ctx.fillStyle = `hsla(${p.hue}, 100%, 95%, 0.8)`;
+              ctx.globalAlpha = currentAlpha * (isDark ? 0.3 : 0.6) * (p.z - 0.7) * 3;
+              ctx.fillStyle = isDark 
+                ? `hsla(${p.hue}, 100%, 95%, 0.8)`
+                : `hsla(${p.hue}, 100%, 45%, 0.95)`;
               ctx.beginPath();
-              ctx.arc(p.x, p.y, currentSize * 0.3, 0, Math.PI * 2);
+              ctx.arc(p.x, p.y, currentSize * (isDark ? 0.3 : 0.4), 0, Math.PI * 2);
               ctx.fill();
             }
           }
