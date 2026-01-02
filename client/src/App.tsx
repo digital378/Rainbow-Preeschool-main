@@ -27,6 +27,7 @@ import Contact from "@/pages/contact";
 import Blog from "@/pages/blog";
 import BlogPost from "@/pages/blog-post";
 import NotFound from "@/pages/not-found";
+import AdLanding from "@/pages/ad-landing";
 
 // Local Playgroup Pages (Standalone Landing Pages)
 import {
@@ -122,6 +123,7 @@ const STANDALONE_LANDING_PATHS = [
   "/preschool-in-dhokali-thane",
   "/preschool-in-kalwa-thane",
   "/preschool-in-kasarvadavali-thane",
+  "/ad",
   ...legacySlugs.map(slug => slug.replace(/\/$/, '')),
   "/author/rainbowpreschools",
   "/author/rainbow-preschools",
@@ -158,6 +160,9 @@ function Router() {
       <Route path="/contact" component={Contact} />
       <Route path="/blog" component={Blog} />
       <Route path="/blog/:slug" component={BlogPost} />
+      
+      {/* Ad Landing Page (Standalone - noindex, no nav/footer) */}
+      <Route path="/ad" component={AdLanding} />
       
       {/* Local Playgroup Landing Pages (Standalone - no nav/footer) */}
       <Route path="/playgroup-in-thane" component={PlaygroupInThane} />
