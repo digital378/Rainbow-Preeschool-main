@@ -124,100 +124,23 @@ export default function AdLanding() {
       </header>
 
       <main className="max-w-6xl mx-auto px-4 py-8">
-        <div className="grid lg:grid-cols-2 gap-8 items-start">
-          <div className="space-y-6">
-            <div className="space-y-4">
-              <div className="inline-block bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-200 px-4 py-1 rounded-full text-sm font-medium">
-                Admissions Open 2026-27
-              </div>
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">
-                Give Your Child the{" "}
-                <span className="text-primary">Best Start</span> in Life
-              </h1>
-              <p className="text-lg text-muted-foreground">
-                Join Thane's most trusted preschool with 18+ years of excellence in early childhood education.
-              </p>
+        <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8 items-start">
+          {/* Headline - Always first */}
+          <div className="space-y-4 order-1 lg:order-none">
+            <div className="inline-block bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-200 px-4 py-1 rounded-full text-sm font-medium">
+              Admissions Open 2026-27
             </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <div className="flex items-center gap-3 p-3 bg-card rounded-lg border">
-                <div className="p-2 bg-primary/10 rounded-full">
-                  <Users className="h-5 w-5 text-primary" />
-                </div>
-                <div>
-                  <div className="font-bold text-lg">1,00,000+</div>
-                  <div className="text-xs text-muted-foreground">Happy Students</div>
-                </div>
-              </div>
-              <div className="flex items-center gap-3 p-3 bg-card rounded-lg border">
-                <div className="p-2 bg-primary/10 rounded-full">
-                  <Award className="h-5 w-5 text-primary" />
-                </div>
-                <div>
-                  <div className="font-bold text-lg">18+ Years</div>
-                  <div className="text-xs text-muted-foreground">Experience</div>
-                </div>
-              </div>
-              <div className="flex items-center gap-3 p-3 bg-card rounded-lg border">
-                <div className="p-2 bg-primary/10 rounded-full">
-                  <MapPin className="h-5 w-5 text-primary" />
-                </div>
-                <div>
-                  <div className="font-bold text-lg">6 Centres</div>
-                  <div className="text-xs text-muted-foreground">Across Thane</div>
-                </div>
-              </div>
-              <div className="flex items-center gap-3 p-3 bg-card rounded-lg border">
-                <div className="p-2 bg-primary/10 rounded-full">
-                  <Star className="h-5 w-5 text-primary" />
-                </div>
-                <div>
-                  <div className="font-bold text-lg">4.9/5</div>
-                  <div className="text-xs text-muted-foreground">Parent Rating</div>
-                </div>
-              </div>
-            </div>
-
-            <div className="space-y-3">
-              <h2 className="font-semibold text-lg">Our Programmes</h2>
-              <div className="space-y-2">
-                {programmes.map((prog) => (
-                  <div
-                    key={prog.name}
-                    className="flex items-center gap-3 p-3 bg-card rounded-lg border"
-                  >
-                    <CheckCircle2 className="h-5 w-5 text-green-500 shrink-0" />
-                    <div>
-                      <span className="font-medium">{prog.name}</span>
-                      <span className="text-muted-foreground ml-2 text-sm">
-                        ({prog.age})
-                      </span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="space-y-3">
-              <h2 className="font-semibold text-lg">Why Parents Choose Us</h2>
-              <ul className="space-y-2">
-                {[
-                  "Child-centric, play-based learning approach",
-                  "Safe, hygienic & CCTV-monitored environment",
-                  "Experienced & trained faculty",
-                  "AC classrooms with modern facilities",
-                  "Regular parent communication & updates",
-                ].map((item, i) => (
-                  <li key={i} className="flex items-start gap-2">
-                    <CheckCircle2 className="h-4 w-4 text-primary mt-1 shrink-0" />
-                    <span className="text-sm">{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">
+              Give Your Child the{" "}
+              <span className="text-primary">Best Start</span> in Life
+            </h1>
+            <p className="text-lg text-muted-foreground">
+              Join Thane's most trusted preschool with 18+ years of excellence in early childhood education.
+            </p>
           </div>
 
-          <div className="lg:sticky lg:top-24">
+          {/* Form - Second on mobile, right column on desktop */}
+          <div className="order-2 lg:order-none lg:sticky lg:top-24 lg:row-span-2">
             <Card className="shadow-xl border-2 border-primary/20">
               <CardContent className="p-6">
                 {isSubmitted ? (
@@ -294,17 +217,16 @@ export default function AdLanding() {
                           render={({ field }) => (
                             <FormItem>
                               <Label>Child's Age</Label>
-                              <Select onValueChange={field.onChange} value={field.value}>
+                              <Select onValueChange={field.onChange} defaultValue={field.value}>
                                 <FormControl>
                                   <SelectTrigger data-testid="select-ad-age">
                                     <SelectValue placeholder="Select age" />
                                   </SelectTrigger>
                                 </FormControl>
                                 <SelectContent>
-                                  <SelectItem value="1-2">1-2 years</SelectItem>
-                                  <SelectItem value="2-3">2-3 years</SelectItem>
-                                  <SelectItem value="3-4">3-4 years</SelectItem>
-                                  <SelectItem value="4-5">4-5 years</SelectItem>
+                                  <SelectItem value="1.5-2.5">1.5 - 2.5 years</SelectItem>
+                                  <SelectItem value="2.5-3.5">2.5 - 3.5 years</SelectItem>
+                                  <SelectItem value="3.5-5">3.5 - 5 years</SelectItem>
                                   <SelectItem value="5+">5+ years</SelectItem>
                                 </SelectContent>
                               </Select>
@@ -319,7 +241,7 @@ export default function AdLanding() {
                           render={({ field }) => (
                             <FormItem>
                               <Label>Your Area</Label>
-                              <Select onValueChange={field.onChange} value={field.value}>
+                              <Select onValueChange={field.onChange} defaultValue={field.value}>
                                 <FormControl>
                                   <SelectTrigger data-testid="select-ad-area">
                                     <SelectValue placeholder="Select area" />
@@ -340,8 +262,8 @@ export default function AdLanding() {
 
                         <Button
                           type="submit"
-                          size="lg"
                           className="w-full"
+                          size="lg"
                           disabled={mutation.isPending}
                           data-testid="button-ad-submit"
                         >
@@ -357,10 +279,85 @@ export default function AdLanding() {
                 )}
               </CardContent>
             </Card>
+          </div>
 
-            <div className="mt-4 flex items-center justify-center gap-2 text-sm text-muted-foreground">
-              <Clock className="h-4 w-4" />
-              <span>Quick Response Time: Under 24 Hours</span>
+          {/* Rest of content - Third on mobile, left column on desktop */}
+          <div className="space-y-6 order-3 lg:order-none">
+            <div className="grid grid-cols-2 gap-4">
+              <div className="flex items-center gap-3 p-3 bg-card rounded-lg border">
+                <div className="p-2 bg-primary/10 rounded-full">
+                  <Users className="h-5 w-5 text-primary" />
+                </div>
+                <div>
+                  <div className="font-bold text-lg">1,00,000+</div>
+                  <div className="text-xs text-muted-foreground">Happy Students</div>
+                </div>
+              </div>
+              <div className="flex items-center gap-3 p-3 bg-card rounded-lg border">
+                <div className="p-2 bg-primary/10 rounded-full">
+                  <Award className="h-5 w-5 text-primary" />
+                </div>
+                <div>
+                  <div className="font-bold text-lg">18+ Years</div>
+                  <div className="text-xs text-muted-foreground">Experience</div>
+                </div>
+              </div>
+              <div className="flex items-center gap-3 p-3 bg-card rounded-lg border">
+                <div className="p-2 bg-primary/10 rounded-full">
+                  <MapPin className="h-5 w-5 text-primary" />
+                </div>
+                <div>
+                  <div className="font-bold text-lg">6 Centres</div>
+                  <div className="text-xs text-muted-foreground">Across Thane</div>
+                </div>
+              </div>
+              <div className="flex items-center gap-3 p-3 bg-card rounded-lg border">
+                <div className="p-2 bg-primary/10 rounded-full">
+                  <Star className="h-5 w-5 text-primary" />
+                </div>
+                <div>
+                  <div className="font-bold text-lg">4.9/5</div>
+                  <div className="text-xs text-muted-foreground">Parent Rating</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              <h2 className="font-semibold text-lg">Our Programmes</h2>
+              <div className="space-y-2">
+                {programmes.map((prog) => (
+                  <div
+                    key={prog.name}
+                    className="flex items-center gap-3 p-3 bg-card rounded-lg border"
+                  >
+                    <CheckCircle2 className="h-5 w-5 text-green-500 shrink-0" />
+                    <div>
+                      <span className="font-medium">{prog.name}</span>
+                      <span className="text-muted-foreground ml-2 text-sm">
+                        ({prog.age})
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              <h2 className="font-semibold text-lg">Why Parents Choose Us</h2>
+              <ul className="space-y-2">
+                {[
+                  "Child-centric, play-based learning approach",
+                  "Safe, hygienic & CCTV-monitored environment",
+                  "Experienced & trained faculty",
+                  "AC classrooms with modern facilities",
+                  "Regular parent communication & updates",
+                ].map((item, i) => (
+                  <li key={i} className="flex items-start gap-2">
+                    <CheckCircle2 className="h-4 w-4 text-primary mt-1 shrink-0" />
+                    <span className="text-sm">{item}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </div>
