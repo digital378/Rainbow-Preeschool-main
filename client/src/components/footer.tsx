@@ -31,35 +31,38 @@ export function Footer() {
                 href="https://facebook.com/rainbowpreschools"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Follow us on Facebook"
                 className="w-9 h-9 rounded-full bg-muted flex items-center justify-center hover-elevate"
                 data-testid="link-social-facebook"
               >
-                <SiFacebook className="h-4 w-4" />
+                <SiFacebook className="h-4 w-4" aria-hidden="true" />
               </a>
               <a
                 href="https://instagram.com/rainbowpreschools"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Follow us on Instagram"
                 className="w-9 h-9 rounded-full bg-muted flex items-center justify-center hover-elevate"
                 data-testid="link-social-instagram"
               >
-                <SiInstagram className="h-4 w-4" />
+                <SiInstagram className="h-4 w-4" aria-hidden="true" />
               </a>
               <a
                 href="https://youtube.com/rainbowpreschools"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Watch us on YouTube"
                 className="w-9 h-9 rounded-full bg-muted flex items-center justify-center hover-elevate"
                 data-testid="link-social-youtube"
               >
-                <SiYoutube className="h-4 w-4" />
+                <SiYoutube className="h-4 w-4" aria-hidden="true" />
               </a>
             </div>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h4 className="font-semibold text-base mb-4">Quick Links</h4>
+            <h2 className="font-semibold text-base mb-4">Quick Links</h2>
             <ul className="space-y-2">
               <li>
                 <Link href="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors" data-testid="link-footer-home">
@@ -91,7 +94,7 @@ export function Footer() {
 
           {/* Programmes */}
           <div>
-            <h4 className="font-semibold text-base mb-4">Our Programmes</h4>
+            <h2 className="font-semibold text-base mb-4">Our Programmes</h2>
             <ul className="space-y-2">
               <li>
                 <Link
@@ -143,7 +146,7 @@ export function Footer() {
 
           {/* Preschool Centres in Thane */}
           <div>
-            <h4 className="font-semibold text-base mb-4">Preschool in Thane</h4>
+            <h2 className="font-semibold text-base mb-4">Preschool in Thane</h2>
             <ul className="space-y-2">
               {preschoolLandingPages.map((location) => (
                 <li key={location.slug}>
@@ -161,7 +164,7 @@ export function Footer() {
 
           {/* Contact Info */}
           <div>
-            <h4 className="font-semibold text-base mb-4">Contact Info</h4>
+            <h2 className="font-semibold text-base mb-4">Contact Info</h2>
             <ul className="space-y-3">
               <li className="flex items-start gap-3">
                 <MapPin className="h-4 w-4 text-primary mt-0.5 shrink-0" />
