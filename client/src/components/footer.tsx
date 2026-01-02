@@ -29,7 +29,7 @@ export function Footer() {
             </p>
             <div className="flex items-center gap-3">
               <a
-                href="https://facebook.com/rainbowpreschools"
+                href="https://www.facebook.com/RainbowPreschoolsInternational"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Follow us on Facebook"
@@ -39,7 +39,7 @@ export function Footer() {
                 <SiFacebook className="h-4 w-4" aria-hidden="true" />
               </a>
               <a
-                href="https://instagram.com/rainbowpreschools"
+                href="https://www.instagram.com/rainbowpreschools/"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Follow us on Instagram"
@@ -49,7 +49,7 @@ export function Footer() {
                 <SiInstagram className="h-4 w-4" aria-hidden="true" />
               </a>
               <a
-                href="https://youtube.com/rainbowpreschools"
+                href="https://www.youtube.com/c/RainbowPreschoolInternational"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Watch us on YouTube"
