@@ -128,7 +128,7 @@ export default function AdLanding() {
           <div className="space-y-6">
             <div className="space-y-4">
               <div className="inline-block bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-200 px-4 py-1 rounded-full text-sm font-medium">
-                Admissions Open 2025-26
+                Admissions Open 2026-27
               </div>
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">
                 Give Your Child the{" "}
