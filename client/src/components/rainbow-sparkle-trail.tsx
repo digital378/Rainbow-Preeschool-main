@@ -170,6 +170,9 @@ export function RainbowSparkleTrail({ enabled = true, intensity = 1 }: RainbowSp
     const SCROLL_THROTTLE = isMobile ? 60 : 50;
     
     const handleScroll = () => {
+      // On mobile, skip scroll animation - use touch animation only
+      if (isMobile) return;
+      
       const now = performance.now();
       if (now - lastScrollTime < SCROLL_THROTTLE) return;
       lastScrollTime = now;
@@ -187,25 +190,10 @@ export function RainbowSparkleTrail({ enabled = true, intensity = 1 }: RainbowSp
         cancelAnimationFrame(scrollRafRef.current);
       }
       scrollRafRef.current = requestAnimationFrame(() => {
-        const viewportWidth = window.innerWidth;
-        const viewportHeight = window.innerHeight;
-        
-        if (isMobile) {
-          // On mobile: emit particles across the screen edges during scroll
-          const particleCount = Math.min(Math.floor(scrollDelta / 10), 4) + 1;
-          for (let i = 0; i < particleCount; i++) {
-            // Random position along left or right edge, random height
-            const side = Math.random() > 0.5 ? 0.1 : 0.9;
-            const x = viewportWidth * side + (Math.random() - 0.5) * 100;
-            const y = Math.random() * viewportHeight;
-            emitParticles(x, y, 2, true);
-          }
-        } else {
-          // On desktop: use last mouse position if available
-          if (lastPosRef.current.x > 0 || lastPosRef.current.y > 0) {
-            const count = 2;
-            emitParticles(lastPosRef.current.x, lastPosRef.current.y, count, true);
-          }
+        // On desktop: use last mouse position if available
+        if (lastPosRef.current.x > 0 || lastPosRef.current.y > 0) {
+          const count = 2;
+          emitParticles(lastPosRef.current.x, lastPosRef.current.y, count, true);
         }
         
         setTimeout(() => {
