@@ -55,21 +55,22 @@ export function RainbowSparkleTrail({ enabled = true, intensity = 1 }: RainbowSp
     const hue = RAINBOW_HUES[Math.floor(Math.random() * RAINBOW_HUES.length)];
     const isMobile = isMobileRef.current;
     
-    const baseLife = isMobile ? 350 : 550;
-    const lifeVariance = isMobile ? 250 : 450;
+    const baseLife = isMobile ? 450 : 550;
+    const lifeVariance = isMobile ? 350 : 450;
     const life = baseLife + Math.random() * lifeVariance;
     
     const z = Math.random();
     
-    const baseSize = isMobile ? 0.8 : 1.2;
-    const sizeVariance = isMobile ? 2 : 2.5;
+    // Mobile: larger, thicker particles for better visibility on touch
+    const baseSize = isMobile ? 2.0 : 1.2;
+    const sizeVariance = isMobile ? 3.5 : 2.5;
     const depthScale = 0.4 + z * 0.6;
     const size = isScroll 
       ? (baseSize + Math.random() * 1.5) * depthScale 
       : (baseSize + Math.random() * sizeVariance) * depthScale;
     
-    const spread = isMobile ? 8 : 14;
-    const velocity = isMobile ? 1.2 : 1.8;
+    const spread = isMobile ? 18 : 14;
+    const velocity = isMobile ? 1.8 : 1.8;
     const depthVelocity = 0.5 + z * 0.5;
     
     return {
@@ -93,7 +94,7 @@ export function RainbowSparkleTrail({ enabled = true, intensity = 1 }: RainbowSp
     if (prefersReducedMotionRef.current) return;
     
     const isMobile = isMobileRef.current;
-    const maxParticles = isMobile ? 150 : 300;
+    const maxParticles = isMobile ? 250 : 300;
     
     const adjustedCount = Math.floor(count * intensity);
     for (let i = 0; i < adjustedCount; i++) {
@@ -153,7 +154,8 @@ export function RainbowSparkleTrail({ enabled = true, intensity = 1 }: RainbowSp
       lastEmitTime = now;
       const touch = e.touches[0];
       if (touch) {
-        emitParticles(touch.clientX, touch.clientY, 4 + Math.random() * 2);
+        // More particles on touch move for thicker trail
+        emitParticles(touch.clientX, touch.clientY, 8 + Math.random() * 4);
       }
     };
 
@@ -161,7 +163,8 @@ export function RainbowSparkleTrail({ enabled = true, intensity = 1 }: RainbowSp
       const touch = e.touches[0];
       if (touch) {
         lastPosRef.current = { x: touch.clientX, y: touch.clientY };
-        emitParticles(touch.clientX, touch.clientY, 6);
+        // Burst of particles on touch start
+        emitParticles(touch.clientX, touch.clientY, 12);
       }
     };
 
