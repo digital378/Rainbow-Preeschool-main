@@ -48,8 +48,6 @@ const areas = [
   "Dhokali",
   "Kalwa",
   "Kasarvadavali",
-  "Ghodbunder Road",
-  "Other",
 ];
 
 export default function AdLanding() {
