@@ -83,11 +83,11 @@ export default function AdLanding() {
       const response = await apiRequest("POST", "/api/contact", {
         parentName: data.parentName,
         phone: data.phone,
+        childName: "Not provided",
         childAge: data.childAge,
-        preferredCentre: data.area,
         programme: "General Enquiry",
+        branch: data.area,
         message: `Ad Landing Page Lead - Area: ${data.area}`,
-        source: "ad-landing",
       });
       return response.json();
     },
@@ -96,6 +96,9 @@ export default function AdLanding() {
         trackAdLead();
       }
       setIsSubmitted(true);
+    },
+    onError: (error) => {
+      console.error("Form submission error:", error);
     },
   });
 
