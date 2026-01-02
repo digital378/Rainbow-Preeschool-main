@@ -195,6 +195,42 @@ export const resetFormTracking = () => {
   formSubmitLock = false;
 };
 
+/**
+ * Track ad landing page form submissions with "ad_leads" event
+ * Used exclusively for /ad page to track paid campaign conversions
+ */
+export const trackAdLead = () => {
+  if (typeof window === 'undefined') return;
+  
+  const measurementId = import.meta.env.VITE_GA_MEASUREMENT_ID;
+  const eventName = 'ad_leads';
+  
+  console.log(`[GA4] Attempting to fire: ${eventName}`, {
+    hasGtag: typeof window.gtag === 'function',
+    hasMeasurementId: !!measurementId,
+    page: window.location.pathname,
+  });
+  
+  if (typeof window.gtag === 'function' && measurementId) {
+    window.gtag('event', eventName, {
+      page_path: window.location.pathname,
+      page_title: document.title,
+      page_category: 'ad_conversion',
+      send_to: measurementId,
+    });
+    console.log(`[GA4] Event FIRED via gtag: ${eventName}`);
+  } else {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: eventName,
+      page_path: window.location.pathname,
+      page_title: document.title,
+      page_category: 'ad_conversion',
+    });
+    console.log(`[GA4] Event pushed to dataLayer: ${eventName}`);
+  }
+};
+
 // ============================================
 // LEGACY TRACKING FUNCTION (for backwards compatibility)
 // Maps to new trackFormSubmit with appropriate form type

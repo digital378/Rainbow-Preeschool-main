@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/form";
 import { Phone, MapPin, CheckCircle2, Star, Users, Award, Clock } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
-import { trackFormSubmit } from "@/lib/analytics";
+import { trackAdLead } from "@/lib/analytics";
 import logoImage from "@assets/Rainbow_Pre_School.Logo_1766035853658.png";
 
 const formSchema = z.object({
@@ -93,7 +93,7 @@ export default function AdLanding() {
     },
     onSuccess: (data) => {
       if (data.emailSent) {
-        trackFormSubmit();
+        trackAdLead();
       }
       setIsSubmitted(true);
     },
