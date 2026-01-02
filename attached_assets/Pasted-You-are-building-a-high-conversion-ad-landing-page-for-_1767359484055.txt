@@ -1,0 +1,105 @@
+You are building a high-conversion ad landing page for Rainbow Preschool International (Thane, Maharashtra). This page is NOT the main website; it’s a dedicated campaign landing page focused only on lead generation for these programs:
+1) Playgroup
+2) Nursery
+3) Kindergarten
+4) Happy Times (Daycare)
+
+GOAL
+- Maximize qualified leads from Google + Meta ads.
+- Mobile-first, fast load, minimal distractions, clear CTA.
+- Capture UTM parameters from ads and submit them with the lead.
+
+TECH STACK
+- Use Vite + React + TypeScript.
+- Styling: Tailwind CSS.
+- Single-page layout (no complex routing).
+- Must be easy to deploy on Replit.
+- Keep dependencies minimal.
+
+PAGE UX / STRUCTURE (IN THIS ORDER)
+1) Sticky top bar with Call + WhatsApp + primary CTA button.
+2) Hero (above the fold):
+   - Headline: “Admissions Open – Rainbow Preschool International, Thane”
+   - Subheadline: play-based learning + safe environment + trusted by parents
+   - Primary CTA: “Book a Free Campus Visit”
+   - Secondary CTA: “Get Fee Details”
+   - Small trust chips: “Since 2007”, “CCTV”, “Hygiene First”, “Trained Staff”
+3) Lead form (visible above the fold on desktop; early on mobile too)
+4) Benefits grid (4–6 key reasons to choose Rainbow)
+5) Program cards (ONLY these 4):
+   - Playgroup (1.5–2.5 years)
+   - Nursery (2.5–3.5 years)
+   - Kindergarten (3.5–6 years)
+   - Happy Times (Daycare) (mention flexible hours / safe care; avoid making unverified claims)
+6) Gallery strip (placeholder images; easy to replace)
+7) Testimonials (3 cards; placeholder names; do not invent awards or numbers)
+8) Locations / Centres (Thane) + map embed placeholder
+9) FAQ accordion (6 questions)
+10) Final CTA banner + repeat lead form
+
+LEAD FORM (CRITICAL)
+- Fields:
+  - Parent Name (required)
+  - Phone (required; validate Indian mobile: 10 digits, starts 6-9)
+  - Email (optional)
+  - Program Interested In (required dropdown):
+      Playgroup / Nursery / Kindergarten / Happy Times (Daycare)
+  - Child Age (required dropdown):
+      1.5–2.5, 2.5–3.5, 3.5–4.5, 4.5–6, Daycare enquiry
+    (Show “Daycare enquiry” for Happy Times)
+  - Preferred Centre (required dropdown; include placeholder options like “Thane – Centre 1”, “Thane – Centre 2” and make it easy to edit)
+  - Preferred Callback Time (Morning/Afternoon/Evening)
+  - Consent checkbox (required): “I agree to be contacted by Rainbow Preschool International.”
+- Behaviors:
+  - Inline validation + friendly error messages
+  - Loading state on submit
+  - Prevent double submit
+  - Success screen: “Thank you — our team will call you soon.”
+
+UTM CAPTURE
+- On load, read: utm_source, utm_medium, utm_campaign, utm_content, utm_term, gclid, fbclid
+- Store in localStorage for 7 days
+- Submit with the lead payload
+- Also capture landing_page_url and timestamp
+
+BACKEND / LEAD DELIVERY
+- Build a Node/Express API inside the same Replit project:
+  - POST /api/leads to receive submissions
+  - Validate required fields server-side too
+  - Store leads in SQLite (preferred) OR local JSON file (fallback)
+- Webhook forwarding:
+  - Read WEBHOOK_URL from env vars
+  - If WEBHOOK_URL exists, POST the lead JSON to it
+  - If webhook fails, still store locally and return success (do not lose leads)
+- Admin view:
+  - Protected route/page to view leads
+  - Use Basic Auth with ADMIN_USER and ADMIN_PASS env vars
+
+TRACKING (OPTIONAL, CONFIG-DRIVEN)
+- Meta Pixel:
+  - Read VITE_META_PIXEL_ID from env vars; if present, inject pixel script
+- Google Ads / GA4:
+  - Read VITE_GA_MEASUREMENT_ID from env vars; if present, inject gtag
+- Fire “Lead” conversion event ONLY after successful form submission, and only if the corresponding tracking ID is set.
+
+PERFORMANCE / QUALITY
+- Lighthouse-minded: keep it light, fast, minimal JS overhead
+- Responsive, accessible (labels, focus states, proper contrast)
+- Basic SEO tags: title, description, OG tags for the landing page
+
+DELIVERABLES
+- Full Replit project with:
+  - Frontend (Vite React TS + Tailwind)
+  - Backend (Express API)
+  - README containing:
+    - How to run
+    - Env vars: WEBHOOK_URL, ADMIN_USER, ADMIN_PASS, VITE_META_PIXEL_ID, VITE_GA_MEASUREMENT_ID
+    - Where to edit centres list, phone, WhatsApp link, program copy, FAQs, testimonials
+- Use placeholder images and copy where needed, but keep everything realistic and not misleading.
+
+START NOW:
+1) Scaffold the project.
+2) Build the landing page UI to the structure above.
+3) Implement form + API + storage.
+4) Implement UTM capture + tracking toggles.
+5) Write README + run instructions.
