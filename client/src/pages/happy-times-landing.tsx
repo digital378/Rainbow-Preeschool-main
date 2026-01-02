@@ -253,8 +253,8 @@ function StickyMobileCTA() {
             <CardContent className="p-6">
               <div className="flex justify-between items-center mb-4">
                 <h3 className="text-xl font-bold">Request Callback</h3>
-                <Button variant="ghost" size="icon" onClick={() => setShowForm(false)} data-testid="button-happytimes-modal-close">
-                  <span className="text-xl">&times;</span>
+                <Button variant="ghost" size="icon" aria-label="Close form" onClick={() => setShowForm(false)} data-testid="button-happytimes-modal-close">
+                  <span className="text-xl" aria-hidden="true">&times;</span>
                 </Button>
               </div>
               <ContactForm defaultProgramme="Happy Times" onSuccess={() => setShowForm(false)} />

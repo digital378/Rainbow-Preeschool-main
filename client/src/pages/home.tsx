@@ -559,7 +559,7 @@ export default function Home() {
           rel="noopener noreferrer"
           className="shrink-0"
         >
-          <Button variant="outline" size="icon" onClick={() => trackCTAClick("whatsapp_chat", "sticky_mobile")}>
+          <Button variant="outline" size="icon" aria-label="Chat on WhatsApp" onClick={() => trackCTAClick("whatsapp_chat", "sticky_mobile")}>
             <SiWhatsapp className="h-5 w-5 text-green-500" />
           </Button>
         </a>

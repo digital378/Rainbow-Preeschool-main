@@ -37,17 +37,13 @@
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet"></noscript>
     
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=GT-55BFZCQT"></script>
+    <!-- GTM REMOVED - was causing duplicate events. Using direct gtag tracking instead -->
+    
+    <!-- Defer analytics loading until after page load for better FCP/LCP -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'GT-55BFZCQT');
-    </script>
-    
-    <!-- Google tag (gtag.js) event - delayed navigation helper -->
-    <script>
+      
       function gtagSendEvent(url) {
         var callback = function () {
           if (typeof url === 'string') {
@@ -60,25 +56,40 @@
         });
         return false;
       }
+      
+      // Load analytics after page is interactive
+      if (document.readyState === 'complete') {
+        loadAnalytics();
+      } else {
+        window.addEventListener('load', loadAnalytics);
+      }
+      
+      function loadAnalytics() {
+        // Google Analytics
+        var gs = document.createElement('script');
+        gs.src = 'https://www.googletagmanager.com/gtag/js?id=GT-55BFZCQT';
+        gs.async = true;
+        document.head.appendChild(gs);
+        gs.onload = function() {
+          gtag('js', new Date());
+          gtag('config', 'GT-55BFZCQT');
+        };
+        
+        // Facebook Pixel
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '876471444795481');
+        fbq('init', '1577162793423268');
+        fbq('track', 'PageView');
+      }
     </script>
-    
-    <!-- GTM REMOVED - was causing duplicate events. Using direct gtag tracking instead -->
-    
-    <!-- Meta Pixel Code (Two Pixels: Main + Dataset) -->
-    <script>
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '876471444795481');
-    fbq('init', '1577162793423268');
-    fbq('track', 'PageView');
-    </script>
-    <!-- End Meta Pixel Code -->
+    <!-- End Analytics Code -->
   </head>
   <body>
     <!-- GTM noscript removed -->

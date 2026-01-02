@@ -206,6 +206,7 @@ export function Navigation() {
                 useTransparentHeader && "text-white hover:text-white hover:bg-white/20"
               )}
               onClick={() => setIsOpen(!isOpen)}
+              aria-label={isOpen ? "Close menu" : "Open menu"}
               data-testid="button-mobile-menu"
             >
               {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
