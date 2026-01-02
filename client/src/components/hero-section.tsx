@@ -5,10 +5,10 @@ import { ArrowRight, Phone, Users, Star, MapPin, Shield } from "lucide-react";
 import { SiWhatsapp } from "react-icons/si";
 import { trackCTAClick } from "@/lib/analytics";
 
-import heroBanner1 from "@assets/RPS_Hero_Banner_1_1766120729093.jpg";
-import heroBanner2 from "@assets/RPS_Hero_Banner_2_1766120729092.jpg";
-import heroBanner3 from "@assets/RPS_Hero_Banner_3_1766120729093.jpg";
-import heroBanner4 from "@assets/RPS_Hero_Banner_4_1766120729092.jpg";
+import heroBanner1 from "@assets/optimized/hero_1.webp";
+import heroBanner2 from "@assets/optimized/hero_2.webp";
+import heroBanner3 from "@assets/optimized/hero_3.webp";
+import heroBanner4 from "@assets/optimized/hero_4.webp";
 
 const banners = [heroBanner1, heroBanner2, heroBanner3, heroBanner4];
 
@@ -83,7 +83,6 @@ export function HeroSection() {
                 alt={`Preschool classroom in Thane - Rainbow Preschool ${index + 1}`}
                 className="w-full h-full object-cover"
                 loading={index === 0 ? "eager" : "lazy"}
-                fetchPriority={index === 0 ? "high" : "low"}
                 decoding="async"
               />
             </div>
