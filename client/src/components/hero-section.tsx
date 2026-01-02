@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Phone, Users, Star, MapPin, Shield } from "lucide-react";
 import { SiWhatsapp } from "react-icons/si";
@@ -12,6 +12,15 @@ import heroBanner4 from "@assets/RPS_Hero_Banner_4_1766120729092.jpg";
 
 const banners = [heroBanner1, heroBanner2, heroBanner3, heroBanner4];
 
+function preloadImage(src: string): Promise<void> {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => resolve();
+    img.onerror = () => resolve();
+    img.src = src;
+  });
+}
+
 const trustBadges = [
   { icon: Users, label: "1,00,000+ Happy Students" },
   { icon: Star, label: "18+ Years of Excellence" },
@@ -21,33 +30,65 @@ const trustBadges = [
 
 export function HeroSection() {
   const [currentBanner, setCurrentBanner] = useState(0);
+  const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set([0]));
+  const preloadedRef = useRef<Set<number>>(new Set([0]));
+
+  const preloadNext = useCallback((current: number) => {
+    const next = (current + 1) % banners.length;
+    if (!preloadedRef.current.has(next)) {
+      preloadedRef.current.add(next);
+      preloadImage(banners[next]).then(() => {
+        setLoadedImages(prev => {
+          const newSet = new Set(Array.from(prev));
+          newSet.add(next);
+          return newSet;
+        });
+      });
+    }
+  }, []);
 
   useEffect(() => {
+    preloadNext(0);
+    
     const interval = setInterval(() => {
-      setCurrentBanner((prev) => (prev + 1) % banners.length);
+      setCurrentBanner((prev) => {
+        const next = (prev + 1) % banners.length;
+        preloadNext(next);
+        return next;
+      });
     }, 5000);
     return () => clearInterval(interval);
-  }, []);
+  }, [preloadNext]);
 
   return (
     <section className="relative min-h-[75vh] flex items-center overflow-hidden">
-      {/* Animated Background Banners */}
+      {/* Animated Background Banners - Only render loaded images */}
       <div className="absolute inset-0">
-        {banners.map((banner, index) => (
-          <div
-            key={index}
-            className="absolute inset-0 transition-opacity duration-1000 ease-in-out"
-            style={{
-              opacity: currentBanner === index ? 1 : 0,
-            }}
-          >
-            <img
-              src={banner}
-              alt={`Preschool classroom in Thane - Rainbow Preschool ${index + 1}`}
-              className="w-full h-full object-cover"
-            />
-          </div>
-        ))}
+        {banners.map((banner, index) => {
+          const isLoaded = loadedImages.has(index);
+          const isActive = currentBanner === index;
+          
+          if (!isLoaded && index !== 0) return null;
+          
+          return (
+            <div
+              key={index}
+              className="absolute inset-0 transition-opacity duration-1000 ease-in-out"
+              style={{
+                opacity: isActive ? 1 : 0,
+              }}
+            >
+              <img
+                src={banner}
+                alt={`Preschool classroom in Thane - Rainbow Preschool ${index + 1}`}
+                className="w-full h-full object-cover"
+                loading={index === 0 ? "eager" : "lazy"}
+                fetchPriority={index === 0 ? "high" : "low"}
+                decoding="async"
+              />
+            </div>
+          );
+        })}
         
         {/* Gradient overlay for text readability */}
         <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/30 dark:from-black/85 dark:via-black/65 dark:to-black/35" />
