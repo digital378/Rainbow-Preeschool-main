@@ -339,24 +339,28 @@ const dailyRoutine = [
 
 const faqs = [
   {
-    question: "What is the right age for playgroup?",
-    answer: "Playgroup is ideal for children aged 1.5 to 2.5 years. This is the perfect age for introducing structured social interaction and early learning in a safe environment."
+    question: "Where can I find a good playgroup near me in Thane?",
+    answer: "Rainbow Preschool has 6 playgroup centres across Thane including Manpada, Kalwa, Anand Nagar, Dhokali, Kasarvadavali, and Hariniwas. Call 82915 68972 to find the playgroup nearest to your home."
   },
   {
-    question: "Is playgroup safe for my toddler?",
-    answer: "Absolutely! Safety is our top priority. We have 100% female staff, CCTV surveillance, sanitized premises, and trained caregivers who ensure your child's wellbeing at all times."
+    question: "What is the playgroup admission process near me?",
+    answer: "Our playgroup admission process is simple. Fill out our enquiry form or call us to schedule a campus visit. Meet our teachers, see our safe environment, and complete the enrollment."
+  },
+  {
+    question: "What is the right age for playgroup in Thane?",
+    answer: "Playgroup is ideal for toddlers aged 1.5 to 2.5 years. This is the perfect age for introducing early learning through play-based activities at our Thane centres."
+  },
+  {
+    question: "Is the playgroup safe for my toddler?",
+    answer: "Absolutely! Safety is our top priority. We have 100% female staff, CCTV surveillance, sanitized premises, and trained caregivers at all our playgroup centres in Thane."
   },
   {
     question: "What will my child learn in playgroup?",
-    answer: "Your child will develop social skills, motor coordination, language abilities, and cognitive skills through play-based activities, songs, stories, and sensory exploration."
+    answer: "Your child will develop social skills, motor coordination, language abilities, and cognitive skills through our play-based early learning playgroup activities, songs, and sensory exploration."
   },
   {
-    question: "What is the batch size?",
-    answer: "We maintain small batch sizes of 10-12 children per teacher to ensure individual attention and personalized care for each child."
-  },
-  {
-    question: "What are the playgroup timings?",
-    answer: "We offer two batches: Morning Batch (8:30 AM - 11:30 AM) and Afternoon Batch (12:30 PM - 3:30 PM). You can choose the timing that suits your schedule."
+    question: "How can I enquire about playgroup admission in Thane?",
+    answer: "Book a campus visit by calling 82915 68972 or fill out our admission enquiry form. Our team will schedule a convenient time for you to visit your nearest playgroup in Thane."
   },
 ];
 
@@ -370,9 +374,9 @@ export default function PlaygroupLanding() {
   return (
     <div className="pt-20">
       <SEO
-        title="Playgroup in Thane (1.5-2.5 Years) | Rainbow Preschool"
-        description="Best playgroup in Thane for toddlers aged 1.5-2.5 years. Safe, play-based learning with trained teachers across multiple centres. Book a callback today."
-        keywords="playgroup in thane, best playgroup in thane, playgroup for toddlers in thane, playgroup in kalwa, playgroup in manpada thane, playgroup near ghodbunder road, playgroup in anand nagar thane, playgroup near me in thane, toddler school thane, early childhood development"
+        title="Playgroup in Thane | Ages 1.5-2.5 Years | Rainbow Preschool"
+        description="Playgroup in Thane for toddlers aged 1.5-2.5 years. Best early learning playgroup with safe environment since 2007. Enquire for admission near you!"
+        keywords="playgroup in thane, playgroup near me, best playgroup, playgroup admission near me, playgroup for toddlers, playgroup school in thane, early learning playgroup, play based playgroup, best playgroup in thane"
         canonical="https://rainbowpreschools.com/playgroup"
       />
 

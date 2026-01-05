@@ -340,20 +340,28 @@ const dailyRoutine = [
 
 const faqs = [
   {
-    question: "What are the Happy Times operating hours?",
-    answer: "Happy Times operates from 2:00 PM to 7:00 PM on school days. We offer flexible pickup times within this window to accommodate working parents' schedules."
+    question: "Where can I find a good daycare near me in Thane?",
+    answer: "Rainbow Preschool has 6 daycare centres across Thane including Manpada, Kalwa, Anand Nagar, Dhokali, Kasarvadavali, and Hariniwas. Call 82915 68972 to find the daycare nearest to your home."
   },
   {
-    question: "Are meals provided at Happy Times?",
-    answer: "Yes! We provide healthy, nutritious snacks in the afternoon. If your child requires a meal, please let us know in advance and we can accommodate special dietary requirements."
+    question: "What are the daycare timings for working parents?",
+    answer: "Our daycare operates from 2:00 PM to 7:00 PM on school days. We offer flexible pickup times within this window to accommodate working parents' schedules across Thane."
   },
   {
-    question: "What age group is Happy Times suitable for?",
-    answer: "Happy Times is designed for children aged 3 to 10 years who need after-school care. We group children by age to ensure age-appropriate activities and supervision."
+    question: "Is the daycare safe for my child?",
+    answer: "Absolutely! Safety is our top priority. We have CCTV surveillance, 100% female staff, secure entry/exit, and trained caregivers at all our daycare centres in Thane."
   },
   {
-    question: "How do I enroll my child in Happy Times?",
-    answer: "Simply fill out our enquiry form or call us to schedule a centre visit. We'll discuss your child's needs, timings, and complete the enrollment process."
+    question: "What age group is daycare suitable for in Thane?",
+    answer: "Our daycare is designed for children aged 3 to 10 years who need after-school care. We group children by age to ensure age-appropriate activities and supervision."
+  },
+  {
+    question: "Are healthy snacks provided at daycare?",
+    answer: "Yes! We provide healthy, nutritious snacks in the afternoon. Our safe daycare for kids also accommodates special dietary requirements if needed."
+  },
+  {
+    question: "How can I enquire about daycare admission in Thane?",
+    answer: "Book a centre visit by calling 82915 68972 or fill out our enquiry form. Our team will schedule a convenient time for you to visit your nearest daycare for working parents."
   },
 ];
 
@@ -367,9 +375,9 @@ export default function HappyTimesLanding() {
   return (
     <div className="pt-20">
       <SEO
-        title="Happy Times After School Care in Thane | Rainbow Preschool"
-        description="Best after-school care in Thane for children aged 3-10 years. Safe environment, homework help, supervised play, and healthy snacks. Extended hours until 7 PM for working parents."
-        keywords="after school care thane, after school programme thane, daycare for school kids thane, extended care for children thane, after school activities thane"
+        title="Daycare in Thane | Safe After-School Care | Rainbow Preschool"
+        description="Daycare in Thane for children aged 3-10 years. Best daycare with CCTV, homework help & healthy snacks for working parents. Book a visit today!"
+        keywords="daycare in thane, daycare near me, best daycare in thane, daycare for children near me, daycare for working parents, safe daycare for kids, daycare with cctv, full day daycare, preschool daycare"
         canonical="https://rainbowpreschools.com/happy-times"
       />
 
@@ -387,7 +395,7 @@ export default function HappyTimesLanding() {
                 Ages 3 - 10 Years
               </Badge>
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-                Happy Times After-School Care in Thane
+                Daycare in Thane for Children Aged 3 to 10 Years
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed">
                 A safe, nurturing after-school programme with homework help, supervised play, and healthy snacks. Peace of mind for working parents.

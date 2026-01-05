@@ -43,24 +43,28 @@ const faqs = [
     answer: "Rainbow Preschool International is one of the most trusted preschools in Thane with 18+ years of experience and 1,00,000+ happy students. We offer safe, play-based learning with certified teachers across 6 centres in Thane."
   },
   {
-    question: "What age can a child start playgroup?",
-    answer: "Children can start playgroup at Rainbow Preschool from 1.5 years (18 months) of age. Our playgroup programme is designed for children aged 1.5 to 2.5 years, introducing learning through fun activities like puppet shows, play, and colours."
+    question: "How do I find a good preschool near me in Thane?",
+    answer: "Rainbow Preschool has 6 conveniently located centres across Thane including Manpada, Kalwa, Anand Nagar, Dhokali, Kasarvadavali, and Hariniwas. Call 82915 68972 to find the centre nearest to your home in Thane."
+  },
+  {
+    question: "What is the preschool admission process near me?",
+    answer: "Our preschool admission enquiry process is simple. Fill out our contact form or call us to schedule a campus visit. Meet our teachers, see our facilities, and choose a programme suitable for your child's age group."
+  },
+  {
+    question: "What age can a child start playgroup in Thane?",
+    answer: "Children can start playgroup at Rainbow Preschool from 1.5 years (18 months) of age. Our playgroup programme is designed for children aged 1.5 to 2.5 years, with a safe environment for early learning."
   },
   {
     question: "Is Rainbow Preschool safe for toddlers?",
-    answer: "Absolutely! Safety is our top priority. We have CCTV-monitored premises, 100% female teaching staff, secure entry/exit procedures, and follow strict health and hygiene protocols. Our ideal 30:2 student-teacher ratio ensures personalised care."
-  },
-  {
-    question: "Do you offer playgroup in Thane West?",
-    answer: "Yes! We have multiple centres in Thane West including Manpada, Anand Nagar, Dhokali, and Kasarvadavali. All centres offer playgroup programmes for children aged 1.5 to 2.5 years."
-  },
-  {
-    question: "How can I book a visit to Rainbow Preschool?",
-    answer: "You can book a visit by calling us at 82915 68972 or 022 6114 7114, or fill out our contact form. Our admissions team will schedule a convenient time for you to visit your nearest centre."
+    answer: "Absolutely! Safety is our top priority. We have CCTV-monitored premises, 100% female teaching staff, secure entry/exit procedures, and follow strict health and hygiene protocols at all our Thane centres."
   },
   {
     question: "What programmes does Rainbow Preschool offer?",
-    answer: "We offer Playgroup (1.5-2.5 years), Nursery (2.5-3.5 years), Kindergarten (3.5-5.5 years), Kids Activity Club (3-10 years), Summer Camp (2-10 years), and Happy Times after-school care (3-10 years)."
+    answer: "We offer Playgroup (1.5-2.5 years), Nursery (2.5-3.5 years), Kindergarten (3.5-5.5 years), Kids Activity Club (3-10 years), Summer Camp (2-10 years), and Happy Times daycare (3-10 years) across Thane."
+  },
+  {
+    question: "How can I enquire about preschool admission in Thane?",
+    answer: "Book a campus visit by calling 82915 68972 or fill out our admission enquiry form. Our team will schedule a convenient time for you to visit your nearest centre and discuss your child's needs."
   },
 ];
 
@@ -293,9 +297,9 @@ export default function Home() {
   return (
     <div>
       <SEO
-        title="Best Preschool & Playgroup in Thane | Rainbow Preschool International"
-        description="Trusted preschool and playgroup in Thane for children 1.5-6 years. Play-based learning, safe campus, trained teachers. 6 centres across Thane. Request a callback today."
-        keywords="preschool in thane, playgroup in thane, best preschool thane, nursery school thane, early childhood education thane, rainbow preschool"
+        title="Preschool in Thane | Best Play-Based Learning | Rainbow Preschool"
+        description="Preschool in Thane for children 1.5-6 years. Safe, play-based learning since 2007 at 6 centres. Book a campus visit or admission enquiry today!"
+        keywords="preschool in thane, preschool near me, best preschool in thane, preschool admission near me, preschool admission enquiry, early childhood education, play based preschool, international preschool, top preschool in thane"
         canonical="/"
       />
       <HeroSection />

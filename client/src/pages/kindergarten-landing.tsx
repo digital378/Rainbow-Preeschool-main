@@ -329,28 +329,28 @@ const dailyRoutine = [
 
 const faqs = [
   {
-    question: "What age is appropriate for Jr. KG and Sr. KG?",
-    answer: "Jr. KG is suitable for children aged 3.5 to 4.5 years, while Sr. KG is designed for children aged 4.5 to 5.5 years. This ensures age-appropriate learning and development at each stage."
+    question: "Where can I find a good kindergarten near me in Thane?",
+    answer: "Rainbow Preschool has 6 kindergarten centres across Thane including Manpada, Kalwa, Anand Nagar, Dhokali, Kasarvadavali, and Hariniwas. Call 82915 68972 to find the kindergarten nearest to your home."
   },
   {
-    question: "How does Kindergarten prepare my child for Grade 1?",
-    answer: "Our Kindergarten curriculum builds strong foundations in reading, writing, and math. Children learn phonics, basic sentence formation, number concepts up to 100, and develop the discipline and focus needed for formal schooling."
+    question: "What is the LKG and UKG admission process near me?",
+    answer: "Our kindergarten admission process is simple. Fill out our enquiry form or call us to schedule a campus visit. Meet our teachers, see our facilities, and choose Jr. KG or Sr. KG based on your child's age."
   },
   {
-    question: "What curriculum do you follow for Kindergarten?",
-    answer: "We follow a comprehensive curriculum covering English, Mathematics, Environmental Science, General Knowledge, Art & Craft, and Physical Education. Our approach balances academic learning with play-based activities."
+    question: "What age is appropriate for Jr. KG and Sr. KG in Thane?",
+    answer: "Jr. KG (LKG) is suitable for children aged 3.5 to 4.5 years, while Sr. KG (UKG) is designed for children aged 4.5 to 5.5 years. Our Thane centres ensure age-appropriate learning at each stage."
   },
   {
-    question: "Is there homework in Kindergarten?",
-    answer: "Yes, we give age-appropriate homework to reinforce learning at home. Homework is designed to be simple, engaging, and takes about 15-20 minutes. It helps build good study habits for future years."
+    question: "How does kindergarten in Thane prepare my child for Grade 1?",
+    answer: "Our school readiness program builds strong foundations in reading, writing, and math. Children learn phonics, sentence formation, number concepts up to 100, and develop discipline needed for formal schooling."
   },
   {
-    question: "What are the batch timings for Kindergarten?",
-    answer: "We offer two options: Morning Batch (8:30 AM - 12:30 PM) and Extended Day (12:00 PM - 4:00 PM). Choose the timing that works best for your family schedule."
+    question: "What curriculum do you follow for kindergarten?",
+    answer: "We follow a comprehensive kindergarten curriculum covering English, Mathematics, Environmental Science, General Knowledge, Art & Craft, and Physical Education at all our Thane centres."
   },
   {
-    question: "How do you assess progress in Kindergarten?",
-    answer: "We use continuous assessment through activities, worksheets, and observations. Parents receive regular progress reports and can schedule meetings with teachers to discuss their child's development."
+    question: "How can I enquire about kindergarten admission in Thane?",
+    answer: "Book a campus visit by calling 82915 68972 or fill out our admission enquiry form. Our team will schedule a convenient time for you to visit your nearest kindergarten centre in Thane."
   },
 ];
 
@@ -364,9 +364,9 @@ export default function KindergartenLanding() {
   return (
     <div className="pt-20">
       <SEO
-        title="Kindergarten in Thane (Jr. KG & Sr. KG) | Rainbow Preschool"
-        description="Best Kindergarten in Thane for children aged 3.5-5.5 years. Jr. KG and Sr. KG with comprehensive curriculum preparing children for Grade 1. Book a callback today."
-        keywords="kindergarten in thane, jr kg in thane, sr kg in thane, best kindergarten in thane, pre-primary school thane, kg school in kalwa, kindergarten manpada thane"
+        title="Kindergarten School in Thane | LKG UKG | Rainbow Preschool"
+        description="Kindergarten school in Thane for ages 3.5-5.5 years. Best LKG & UKG with comprehensive school readiness program since 2007. Enquire for admission today!"
+        keywords="kindergarten school in thane, kindergarten near me, best kindergarten school, kindergarten admission near me, lkg admission near me, ukg admission near me, kindergarten curriculum, school readiness program, kindergarten for kids"
         canonical="https://rainbowpreschools.com/kindergarten"
       />
 
@@ -384,7 +384,7 @@ export default function KindergartenLanding() {
                 Ages 3.5 - 5.5 Years (Jr. KG & Sr. KG)
               </Badge>
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-                Kindergarten in Thane for Children Aged 3.5 to 5.5 Years
+                Kindergarten School in Thane for Children Aged 3.5 to 5.5 Years
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed">
                 Building strong foundations in reading, writing, and math to prepare your child for Grade 1 success.

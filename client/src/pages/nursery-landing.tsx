@@ -339,24 +339,28 @@ const dailyRoutine = [
 
 const faqs = [
   {
-    question: "What is the right age for nursery?",
-    answer: "Nursery is ideal for children aged 2.5 to 3.5 years. At this stage, children are ready for more structured learning while still learning through play-based activities."
+    question: "Where can I find a good nursery school near me in Thane?",
+    answer: "Rainbow Preschool has 6 nursery school centres across Thane including Manpada, Kalwa, Anand Nagar, Dhokali, Kasarvadavali, and Hariniwas. Call 82915 68972 to find the nursery nearest to your home."
+  },
+  {
+    question: "What is the nursery school admission process near me?",
+    answer: "Our nursery admission process is simple. Fill out our enquiry form or call us to schedule a campus visit. Meet our teachers, see our facilities, and complete the enrollment for your child."
+  },
+  {
+    question: "What is the right age for nursery school in Thane?",
+    answer: "Nursery school is ideal for children aged 2.5 to 3.5 years. At this stage, children are ready for structured learning through play-based activities at our Thane centres."
   },
   {
     question: "How is nursery different from playgroup?",
-    answer: "Nursery builds upon the foundation laid in playgroup. While playgroup focuses on social interaction and sensory exploration, nursery introduces structured learning including phonics, numbers, and pre-writing skills in an age-appropriate manner."
+    answer: "Nursery builds upon playgroup foundations. While playgroup focuses on social interaction, nursery introduces structured learning including phonics, numbers, and pre-writing skills in an age-appropriate manner."
   },
   {
-    question: "What will my child learn in nursery?",
-    answer: "Your child will learn phonics basics, number recognition (1-20), pre-writing skills, art & creativity, and develop strong social and communication skills through interactive activities, stories, and group learning."
+    question: "What will my child learn in nursery class?",
+    answer: "Your child will learn phonics basics, number recognition (1-20), pre-writing skills, art & creativity, and develop strong social skills through our play-based nursery education program."
   },
   {
-    question: "What is the batch size in nursery?",
-    answer: "We maintain small batch sizes of 12-15 children per teacher to ensure individual attention and personalized learning for each child."
-  },
-  {
-    question: "What are the nursery timings?",
-    answer: "We offer two batches: Morning Batch (8:30 AM - 11:30 AM) and Afternoon Batch (12:30 PM - 3:30 PM). You can choose the timing that suits your schedule."
+    question: "How can I enquire about nursery admission in Thane?",
+    answer: "Book a campus visit by calling 82915 68972 or fill out our admission enquiry form. Our team will schedule a convenient time for you to visit your nearest nursery centre in Thane."
   },
 ];
 
@@ -370,9 +374,9 @@ export default function NurseryLanding() {
   return (
     <div className="pt-20">
       <SEO
-        title="Nursery in Thane (2.5-3.5 Years) | Rainbow Preschool"
-        description="Best nursery school in Thane for children aged 2.5-3.5 years. Structured learning with phonics, numbers, and creative activities. Book a callback today."
-        keywords="nursery in thane, best nursery in thane, nursery school in thane, nursery class in kalwa, nursery in manpada thane, nursery near ghodbunder road, preschool nursery thane"
+        title="Nursery School in Thane | Ages 2.5-3.5 | Rainbow Preschool"
+        description="Nursery school in Thane for kids aged 2.5-3.5 years. Best play-based nursery with trained teachers and safe environment since 2007. Enquire for admission today!"
+        keywords="nursery school in thane, nursery school near me, best nursery school, nursery school admission near me, nursery school admission enquiry, nursery class for kids, play based nursery school, nursery education program, top nursery school in thane"
         canonical="https://rainbowpreschools.com/nursery"
       />
 
@@ -390,7 +394,7 @@ export default function NurseryLanding() {
                 Ages 2.5 - 3.5 Years
               </Badge>
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-                Nursery in Thane for Children Aged 2.5 to 3.5 Years
+                Nursery School in Thane for Children Aged 2.5 to 3.5 Years
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed">
                 Building on playgroup foundations with structured learning, phonics, numbers, and creative expression.

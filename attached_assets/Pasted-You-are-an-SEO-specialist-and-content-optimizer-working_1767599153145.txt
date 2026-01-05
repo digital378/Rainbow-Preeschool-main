@@ -1,0 +1,181 @@
+You are an SEO specialist and content optimizer working on the Rainbow Preschool International website.
+Your goal is to optimize each page below to rank on Google (India) for high-intent local searches such as
+“near me”, “in Thane”, “admission”, and “best”.
+
+TARGET LOCATION:
+Thane, Maharashtra
+
+OPTIMIZE THE FOLLOWING PAGES INDIVIDUALLY:
+
+--------------------------------------------------
+1) PRESCHOOL / HOMEPAGE
+URL: https://rainbowpreschools.com/
+
+PRIMARY KEYWORD:
+preschool in Thane
+
+SECONDARY KEYWORDS:
+preschool near me,
+best preschool in Thane,
+preschool admission near me,
+preschool admission enquiry,
+early childhood education,
+play based preschool,
+international preschool,
+top preschool in Thane
+
+--------------------------------------------------
+2) NURSERY SCHOOL
+URL: https://rainbowpreschools.com/nursery
+
+PRIMARY KEYWORD:
+nursery school in Thane
+
+SECONDARY KEYWORDS:
+nursery school near me,
+best nursery school,
+nursery school admission near me,
+nursery school admission enquiry,
+nursery class for kids,
+play based nursery school,
+nursery education program,
+top nursery school in Thane
+
+--------------------------------------------------
+3) PLAYGROUP
+URL: https://rainbowpreschools.com/playgroup
+
+PRIMARY KEYWORD:
+playgroup in Thane
+
+SECONDARY KEYWORDS:
+playgroup near me,
+best playgroup,
+playgroup admission near me,
+playgroup for toddlers,
+playgroup school in Thane,
+early learning playgroup,
+play based playgroup,
+best playgroup in Thane
+
+--------------------------------------------------
+4) DAYCARE (HAPPY TIMES)
+URL: https://rainbowpreschools.com/happy-times
+
+PRIMARY KEYWORD:
+daycare in Thane
+
+SECONDARY KEYWORDS:
+daycare near me,
+best daycare in Thane,
+daycare for children near me,
+daycare for working parents,
+safe daycare for kids,
+daycare with CCTV,
+full day daycare,
+preschool daycare
+
+--------------------------------------------------
+5) KINDERGARTEN
+URL: https://rainbowpreschools.com/kindergarten
+
+PRIMARY KEYWORD:
+kindergarten school in Thane
+
+SECONDARY KEYWORDS:
+kindergarten near me,
+best kindergarten school,
+kindergarten admission near me,
+LKG admission near me,
+UKG admission near me,
+kindergarten curriculum,
+school readiness program,
+kindergarten for kids
+
+--------------------------------------------------
+
+FOR EACH PAGE, EXECUTE THE FOLLOWING STEPS STRICTLY:
+
+STEP 1: META SEO
+- Create SEO Title (50–60 characters)
+  - Start with the PRIMARY keyword
+  - Include “Thane”
+- Create Meta Description (140–155 characters)
+  - Include primary + 1 secondary keyword
+  - Mention trust factor (since 2007 / safe environment)
+  - End with soft CTA (Admission Enquiry / Campus Visit)
+
+STEP 2: PAGE STRUCTURE
+- ONE H1 using the PRIMARY keyword
+- Intro paragraph (first 100 words):
+  - Include primary keyword once
+  - Mention Thane once
+  - Mention age group and parent benefit
+- 6–8 H2 sections:
+  - Each H2 must target a DIFFERENT secondary keyword
+  - 120–180 words per section
+  - Parent-friendly language (safety, learning, care, trust)
+
+STEP 3: LOCAL SEO SIGNALS
+- Mention “Thane” naturally 6–10 times
+- Use phrases like:
+  - “near your home in Thane”
+  - “families across Thane”
+  - “conveniently located preschool in Thane”
+- Add a short paragraph:
+  “Serving families across Thane with quality early childhood education.”
+
+STEP 4: INTERNAL LINKING
+- Add at least 3 contextual internal links to:
+  - Preschool
+  - Nursery
+  - Playgroup
+  - Daycare
+- Use keyword-rich anchor text (not “click here”).
+
+STEP 5: FAQ SECTION
+- Add 5–7 FAQs per page
+- At least 2 FAQs must include:
+  - “near me”
+  - “in Thane”
+  - “admission”
+- Answers: 40–60 words, clear and factual
+
+STEP 6: SCHEMA MARKUP
+Generate valid JSON-LD for:
+1) LocalBusiness
+   - Name: Rainbow Preschool International
+   - Address: Thane, Maharashtra
+   - URL: page URL
+   - Phone: existing site number
+2) FAQPage
+   - FAQs must match content exactly
+
+STEP 7: IMAGE SEO
+- Suggest SEO-friendly image filenames
+- Write ALT text using program + location naturally
+- No keyword stuffing
+
+STEP 8: CTA OPTIMIZATION
+- Minimum 3 CTAs per page:
+  - Above the fold
+  - Mid-page
+  - Bottom
+- CTA examples:
+  - “Preschool Admission Enquiry in Thane”
+  - “Book a Campus Visit”
+  - “Speak to Our Admission Team”
+
+STEP 9: QUALITY CHECK
+- No duplicate content across pages
+- No fake claims or awards
+- Written for parents, not search engines
+- Page length target: 900–1200 words
+- SEO optimized but natural
+
+FINAL OUTPUT REQUIRED FOR EACH PAGE:
+- SEO title & meta description
+- Full SEO-optimized page content
+- FAQ section
+- JSON-LD schema blocks
+- Keyword usage summary
