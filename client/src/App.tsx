@@ -1,5 +1,5 @@
 import { Switch, Route, useLocation } from "wouter";
-import { useEffect, lazy, Suspense, ComponentType } from "react";
+import { useEffect, lazy, Suspense } from "react";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
@@ -30,109 +30,74 @@ const AdLanding = lazy(() => import("@/pages/ad-landing"));
 
 const RainbowSparkleTrail = lazy(() => import("@/components/rainbow-sparkle-trail").then(m => ({ default: m.RainbowSparkleTrail })));
 
-let cachedLocalPlaygroupModule: Promise<typeof import("@/pages/local-playgroup")> | null = null;
-let cachedPreschoolLocationModule: Promise<typeof import("@/pages/preschool-location")> | null = null;
-let cachedLegacyPagesModule: Promise<typeof import("@/pages/legacy-pages")> | null = null;
+const LazyPlaygroupInThane = lazy(() => import("@/pages/local-playgroup").then(m => ({ default: m.PlaygroupInThane })));
+const LazyPlaygroupInManpada = lazy(() => import("@/pages/local-playgroup").then(m => ({ default: m.PlaygroupInManpada })));
+const LazyPlaygroupInKalwa = lazy(() => import("@/pages/local-playgroup").then(m => ({ default: m.PlaygroupInKalwa })));
+const LazyPlaygroupNearGhodbunderRoad = lazy(() => import("@/pages/local-playgroup").then(m => ({ default: m.PlaygroupNearGhodbunderRoad })));
+const LazyPlaygroupInAnandNagar = lazy(() => import("@/pages/local-playgroup").then(m => ({ default: m.PlaygroupInAnandNagar })));
+const LazyPlaygroupInKasarvadavali = lazy(() => import("@/pages/local-playgroup").then(m => ({ default: m.PlaygroupInKasarvadavali })));
+const LazyPlaygroupInDhokali = lazy(() => import("@/pages/local-playgroup").then(m => ({ default: m.PlaygroupInDhokali })));
 
-function getLocalPlaygroupModule() {
-  if (!cachedLocalPlaygroupModule) {
-    cachedLocalPlaygroupModule = import("@/pages/local-playgroup");
-  }
-  return cachedLocalPlaygroupModule;
-}
+const LazyPreschoolInManpada = lazy(() => import("@/pages/preschool-location").then(m => ({ default: m.PreschoolInManpada })));
+const LazyPreschoolInHariniwas = lazy(() => import("@/pages/preschool-location").then(m => ({ default: m.PreschoolInHariniwas })));
+const LazyPreschoolInAnandNagar = lazy(() => import("@/pages/preschool-location").then(m => ({ default: m.PreschoolInAnandNagar })));
+const LazyPreschoolInDhokali = lazy(() => import("@/pages/preschool-location").then(m => ({ default: m.PreschoolInDhokali })));
+const LazyPreschoolInKalwa = lazy(() => import("@/pages/preschool-location").then(m => ({ default: m.PreschoolInKalwa })));
+const LazyPreschoolInKasarvadavali = lazy(() => import("@/pages/preschool-location").then(m => ({ default: m.PreschoolInKasarvadavali })));
 
-function getPreschoolLocationModule() {
-  if (!cachedPreschoolLocationModule) {
-    cachedPreschoolLocationModule = import("@/pages/preschool-location");
-  }
-  return cachedPreschoolLocationModule;
-}
-
-function getLegacyPagesModule() {
-  if (!cachedLegacyPagesModule) {
-    cachedLegacyPagesModule = import("@/pages/legacy-pages");
-  }
-  return cachedLegacyPagesModule;
-}
-
-function createLazyComponent<T extends Record<string, ComponentType<unknown>>>(
-  getModule: () => Promise<T>,
-  exportName: keyof T
-) {
-  return lazy(async () => {
-    const mod = await getModule();
-    return { default: mod[exportName] as ComponentType<unknown> };
-  });
-}
-
-const LazyPlaygroupInThane = createLazyComponent(getLocalPlaygroupModule, 'PlaygroupInThane');
-const LazyPlaygroupInManpada = createLazyComponent(getLocalPlaygroupModule, 'PlaygroupInManpada');
-const LazyPlaygroupInKalwa = createLazyComponent(getLocalPlaygroupModule, 'PlaygroupInKalwa');
-const LazyPlaygroupNearGhodbunderRoad = createLazyComponent(getLocalPlaygroupModule, 'PlaygroupNearGhodbunderRoad');
-const LazyPlaygroupInAnandNagar = createLazyComponent(getLocalPlaygroupModule, 'PlaygroupInAnandNagar');
-const LazyPlaygroupInKasarvadavali = createLazyComponent(getLocalPlaygroupModule, 'PlaygroupInKasarvadavali');
-const LazyPlaygroupInDhokali = createLazyComponent(getLocalPlaygroupModule, 'PlaygroupInDhokali');
-
-const LazyPreschoolInManpada = createLazyComponent(getPreschoolLocationModule, 'PreschoolInManpada');
-const LazyPreschoolInHariniwas = createLazyComponent(getPreschoolLocationModule, 'PreschoolInHariniwas');
-const LazyPreschoolInAnandNagar = createLazyComponent(getPreschoolLocationModule, 'PreschoolInAnandNagar');
-const LazyPreschoolInDhokali = createLazyComponent(getPreschoolLocationModule, 'PreschoolInDhokali');
-const LazyPreschoolInKalwa = createLazyComponent(getPreschoolLocationModule, 'PreschoolInKalwa');
-const LazyPreschoolInKasarvadavali = createLazyComponent(getPreschoolLocationModule, 'PreschoolInKasarvadavali');
-
-const LazyMotivationalThoughtsForKids = createLazyComponent(getLegacyPagesModule, 'MotivationalThoughtsForKids');
-const LazyFruitsVegetablesEnglishHindi = createLazyComponent(getLegacyPagesModule, 'FruitsVegetablesEnglishHindi');
-const LazyMidTermPlaygroupBenefits = createLazyComponent(getLegacyPagesModule, 'MidTermPlaygroupBenefits');
-const LazyNationalSymbolsOfIndia = createLazyComponent(getLegacyPagesModule, 'NationalSymbolsOfIndia');
-const LazySolitaryPlayActivities = createLazyComponent(getLegacyPagesModule, 'SolitaryPlayActivities');
-const LazyPreKgAgeGuide = createLazyComponent(getLegacyPagesModule, 'PreKgAgeGuide');
-const LazySpringGardeningActivities = createLazyComponent(getLegacyPagesModule, 'SpringGardeningActivities');
-const LazyMotivateKidsForSchool = createLazyComponent(getLegacyPagesModule, 'MotivateKidsForSchool');
-const LazyIndoorGamesForKids = createLazyComponent(getLegacyPagesModule, 'IndoorGamesForKids');
-const LazyTeachingAidsHelp = createLazyComponent(getLegacyPagesModule, 'TeachingAidsHelp');
-const LazyPreschoolVsPreKg = createLazyComponent(getLegacyPagesModule, 'PreschoolVsPreKg');
-const LazyPreschoolAdmissionGuide = createLazyComponent(getLegacyPagesModule, 'PreschoolAdmissionGuide');
-const LazySportsDayActivities = createLazyComponent(getLegacyPagesModule, 'SportsDayActivities');
-const LazyGoodTouchBadTouch = createLazyComponent(getLegacyPagesModule, 'GoodTouchBadTouch');
-const LazyBodyPartsNames = createLazyComponent(getLegacyPagesModule, 'BodyPartsNames');
-const LazyRainySeasonActivities = createLazyComponent(getLegacyPagesModule, 'RainySeasonActivities');
-const LazyListeningSkillsTips = createLazyComponent(getLegacyPagesModule, 'ListeningSkillsTips');
-const LazyDiwaliActivities = createLazyComponent(getLegacyPagesModule, 'DiwaliActivities');
-const LazyParentTeacherCommunication = createLazyComponent(getLegacyPagesModule, 'ParentTeacherCommunication');
-const LazyHoliActivities = createLazyComponent(getLegacyPagesModule, 'HoliActivities');
-const LazyOvercomeFear = createLazyComponent(getLegacyPagesModule, 'OvercomeFear');
-const LazyPlayEmotionalGrowth = createLazyComponent(getLegacyPagesModule, 'PlayEmotionalGrowth');
-const LazyForgetManners = createLazyComponent(getLegacyPagesModule, 'ForgetManners');
-const LazyTrendsEarlyChildhood = createLazyComponent(getLegacyPagesModule, 'TrendsEarlyChildhood');
-const LazyHealthyPreschoolMeals = createLazyComponent(getLegacyPagesModule, 'HealthyPreschoolMeals');
-const LazyEducationalToys = createLazyComponent(getLegacyPagesModule, 'EducationalToys');
-const LazyMidTermSocialDevelopment = createLazyComponent(getLegacyPagesModule, 'MidTermSocialDevelopment');
-const LazyAdmissions2425 = createLazyComponent(getLegacyPagesModule, 'Admissions2425');
-const LazyInnovativeLearning = createLazyComponent(getLegacyPagesModule, 'InnovativeLearning');
-const LazyMidTermPlaygroup = createLazyComponent(getLegacyPagesModule, 'MidTermPlaygroup');
-const LazyBrainGymActivities = createLazyComponent(getLegacyPagesModule, 'BrainGymActivities');
-const LazyImmunityBoostingFoods = createLazyComponent(getLegacyPagesModule, 'ImmunityBoostingFoods');
-const LazyColorsAndShapes = createLazyComponent(getLegacyPagesModule, 'ColorsAndShapes');
-const LazyCookingForKids = createLazyComponent(getLegacyPagesModule, 'CookingForKids');
-const LazyParentsGuideMidTerm = createLazyComponent(getLegacyPagesModule, 'ParentsGuideMidTerm');
-const LazyLearnWritingTips = createLazyComponent(getLegacyPagesModule, 'LearnWritingTips');
-const LazyEvenOddNumbers = createLazyComponent(getLegacyPagesModule, 'EvenOddNumbers');
-const LazyPreschoolTourQuestions = createLazyComponent(getLegacyPagesModule, 'PreschoolTourQuestions');
-const LazyChoosingPreschoolQuestions = createLazyComponent(getLegacyPagesModule, 'ChoosingPreschoolQuestions');
-const LazyInteractiveLearning = createLazyComponent(getLegacyPagesModule, 'InteractiveLearning');
-const LazySummerActivities = createLazyComponent(getLegacyPagesModule, 'SummerActivities');
-const LazyCleanestSchoolAward = createLazyComponent(getLegacyPagesModule, 'CleanestSchoolAward');
-const LazyPreschoolDevelopment = createLazyComponent(getLegacyPagesModule, 'PreschoolDevelopment');
-const LazyMidTermPlaygroupAdmission = createLazyComponent(getLegacyPagesModule, 'MidTermPlaygroupAdmission');
-const LazyNurseryImportance = createLazyComponent(getLegacyPagesModule, 'NurseryImportance');
-const LazyPromisingPreschoolAward = createLazyComponent(getLegacyPagesModule, 'PromisingPreschoolAward');
-const LazyLifeLessonsConfidence = createLazyComponent(getLegacyPagesModule, 'LifeLessonsConfidence');
-const LazyGamesMakeKidsSmarter = createLazyComponent(getLegacyPagesModule, 'GamesMakeKidsSmarter');
-const LazyPhysicalDevelopmentSigns = createLazyComponent(getLegacyPagesModule, 'PhysicalDevelopmentSigns');
-const LazyMidTermVisitQuestions = createLazyComponent(getLegacyPagesModule, 'MidTermVisitQuestions');
-const LazyFAQsPage = createLazyComponent(getLegacyPagesModule, 'FAQsPage');
-const LazyUnderstandingPreschoolImportance = createLazyComponent(getLegacyPagesModule, 'UnderstandingPreschoolImportance');
-const LazyAuthorArchivePage = createLazyComponent(getLegacyPagesModule, 'AuthorArchivePage');
+const LazyMotivationalThoughtsForKids = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.MotivationalThoughtsForKids })));
+const LazyFruitsVegetablesEnglishHindi = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.FruitsVegetablesEnglishHindi })));
+const LazyMidTermPlaygroupBenefits = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.MidTermPlaygroupBenefits })));
+const LazyNationalSymbolsOfIndia = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.NationalSymbolsOfIndia })));
+const LazySolitaryPlayActivities = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.SolitaryPlayActivities })));
+const LazyPreKgAgeGuide = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.PreKgAgeGuide })));
+const LazySpringGardeningActivities = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.SpringGardeningActivities })));
+const LazyMotivateKidsForSchool = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.MotivateKidsForSchool })));
+const LazyIndoorGamesForKids = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.IndoorGamesForKids })));
+const LazyTeachingAidsHelp = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.TeachingAidsHelp })));
+const LazyPreschoolVsPreKg = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.PreschoolVsPreKg })));
+const LazyPreschoolAdmissionGuide = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.PreschoolAdmissionGuide })));
+const LazySportsDayActivities = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.SportsDayActivities })));
+const LazyGoodTouchBadTouch = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.GoodTouchBadTouch })));
+const LazyBodyPartsNames = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.BodyPartsNames })));
+const LazyRainySeasonActivities = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.RainySeasonActivities })));
+const LazyListeningSkillsTips = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.ListeningSkillsTips })));
+const LazyDiwaliActivities = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.DiwaliActivities })));
+const LazyParentTeacherCommunication = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.ParentTeacherCommunication })));
+const LazyHoliActivities = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.HoliActivities })));
+const LazyOvercomeFear = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.OvercomeFear })));
+const LazyPlayEmotionalGrowth = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.PlayEmotionalGrowth })));
+const LazyForgetManners = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.ForgetManners })));
+const LazyTrendsEarlyChildhood = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.TrendsEarlyChildhood })));
+const LazyHealthyPreschoolMeals = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.HealthyPreschoolMeals })));
+const LazyEducationalToys = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.EducationalToys })));
+const LazyMidTermSocialDevelopment = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.MidTermSocialDevelopment })));
+const LazyAdmissions2425 = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.Admissions2425 })));
+const LazyInnovativeLearning = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.InnovativeLearning })));
+const LazyMidTermPlaygroup = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.MidTermPlaygroup })));
+const LazyBrainGymActivities = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.BrainGymActivities })));
+const LazyImmunityBoostingFoods = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.ImmunityBoostingFoods })));
+const LazyColorsAndShapes = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.ColorsAndShapes })));
+const LazyCookingForKids = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.CookingForKids })));
+const LazyParentsGuideMidTerm = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.ParentsGuideMidTerm })));
+const LazyLearnWritingTips = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.LearnWritingTips })));
+const LazyEvenOddNumbers = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.EvenOddNumbers })));
+const LazyPreschoolTourQuestions = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.PreschoolTourQuestions })));
+const LazyChoosingPreschoolQuestions = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.ChoosingPreschoolQuestions })));
+const LazyInteractiveLearning = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.InteractiveLearning })));
+const LazySummerActivities = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.SummerActivities })));
+const LazyCleanestSchoolAward = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.CleanestSchoolAward })));
+const LazyPreschoolDevelopment = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.PreschoolDevelopment })));
+const LazyMidTermPlaygroupAdmission = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.MidTermPlaygroupAdmission })));
+const LazyNurseryImportance = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.NurseryImportance })));
+const LazyPromisingPreschoolAward = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.PromisingPreschoolAward })));
+const LazyLifeLessonsConfidence = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.LifeLessonsConfidence })));
+const LazyGamesMakeKidsSmarter = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.GamesMakeKidsSmarter })));
+const LazyPhysicalDevelopmentSigns = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.PhysicalDevelopmentSigns })));
+const LazyMidTermVisitQuestions = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.MidTermVisitQuestions })));
+const LazyFAQsPage = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.FAQsPage })));
+const LazyUnderstandingPreschoolImportance = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.UnderstandingPreschoolImportance })));
+const LazyAuthorArchivePage = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.AuthorArchivePage })));
 
 import { legacySlugs } from "@/pages/legacy-pages";
 
