@@ -5,12 +5,11 @@ import { ArrowRight, Phone, Users, Star, MapPin, Shield } from "lucide-react";
 import { SiWhatsapp } from "react-icons/si";
 import { trackCTAClick } from "@/lib/analytics";
 
-import heroBanner1 from "@assets/optimized/hero_1.webp";
 import heroBanner2 from "@assets/optimized/hero_2.webp";
 import heroBanner3 from "@assets/optimized/hero_3.webp";
 import heroBanner4 from "@assets/optimized/hero_4.webp";
 
-const banners = [heroBanner1, heroBanner2, heroBanner3, heroBanner4];
+const banners = ["/hero_1.webp", heroBanner2, heroBanner3, heroBanner4];
 
 function preloadImage(src: string): Promise<void> {
   return new Promise((resolve) => {
