@@ -82,7 +82,8 @@ export function HeroSection() {
                 alt={`Preschool classroom in Thane - Rainbow Preschool ${index + 1}`}
                 className="w-full h-full object-cover"
                 loading={index === 0 ? "eager" : "lazy"}
-                decoding="async"
+                decoding={index === 0 ? "sync" : "async"}
+                fetchPriority={index === 0 ? "high" : "low"}
               />
             </div>
           );
