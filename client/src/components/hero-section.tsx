@@ -104,7 +104,7 @@ export function HeroSection() {
 
           {/* Main heading - Single H1 for SEO */}
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 text-white leading-tight">
-            Preschool in Thane for Children Aged 1.5 to 6 Years
+            Best Preschool in Thane for Children Aged 1.5 to 6 Years
           </h1>
 
           {/* Subheading */}
