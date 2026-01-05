@@ -1,0 +1,78 @@
+The site has Lighthouse Mobile Performance ~56 with very slow FCP (~8.9s) and LCP (~12.5s). Fix performance without breaking layout, SEO, or lead forms.
+
+TARGETS
+- Mobile Performance score >= 85
+- LCP < 2.5s (or as low as possible on throttling)
+- FCP < 2s
+- Keep CLS ~0 (already 0)
+- Reduce unused JS (~585 KiB) and unused CSS (~110 KiB)
+- Fix: Improve image delivery, efficient cache lifetimes, render-blocking requests, LCP request discovery, forced reflow, network dependency tree, legacy JS
+
+STEP 1: AUDIT FIRST (NO GUESSING)
+1) Identify the stack by checking package.json: is it Next.js, Vite+React, CRA, or something else?
+2) Identify the LCP element on the homepage (usually hero image or hero heading). Print which element is LCP and the file that renders it.
+3) List largest network resources by size and the biggest JS/CSS bundles.
+4) Identify render-blocking CSS/JS and any third-party scripts (Meta pixel, GA/gtag, fonts, chat widgets).
+
+STEP 2: FIX LCP + IMAGES (HIGHEST IMPACT)
+- If hero uses a large JPG/PNG:
+  - Convert hero to responsive WebP/AVIF and serve correct sizes (srcset).
+  - Preload the hero image with <link rel="preload" as="image" ...>.
+  - Ensure the hero image is requested early (fix “LCP request discovery”).
+  - Set explicit width/height to avoid layout shifts.
+- Lazy-load all below-the-fold images (loading="lazy") and add decoding="async".
+- Compress and optimize images used in sliders/carousels.
+- If using background-image for hero, replace with <img> (or Next/Image) so it can be preloaded and optimized.
+
+STEP 3: REMOVE RENDER-BLOCKING + SPEED UP FCP
+- Inline only minimal critical CSS for above-the-fold if needed; defer the rest.
+- Defer non-critical scripts:
+  - Move analytics/pixels to load after first paint / on idle / after user interaction.
+  - If using GA/gtag or Meta Pixel, load with async/defer and only initialize after page interactive.
+- Optimize fonts:
+  - Use system font stack OR self-hosted font with subset and `font-display: swap`.
+  - Preconnect to font origin if external fonts are unavoidable.
+  - Avoid multiple font weights.
+
+STEP 4: CUT UNUSED JS/CSS (585 KiB JS, 110 KiB CSS)
+- Remove unused libraries and components from the homepage bundle.
+- Implement route-level or component-level code splitting:
+  - dynamically import heavy components (sliders, maps, modals, animations) so they load only when needed.
+- Ensure production build uses tree-shaking + minification:
+  - If Vite/React: confirm build is optimized and no dev-only libs ship to prod.
+  - If Next.js: ensure production build + SWC minify enabled.
+- Purge CSS:
+  - If Tailwind: ensure content paths are correct so unused classes are purged.
+  - If plain CSS: remove unused styles or split critical CSS.
+- Eliminate “legacy JavaScript” by adjusting build targets (modern browsers) while keeping compatibility.
+
+STEP 5: CACHE LIFETIMES + STATIC DELIVERY (REPLIT DEPLOYMENT)
+- Configure long-term caching for hashed static assets:
+  - Cache-Control: public, max-age=31536000, immutable for /assets/* or built bundle files.
+  - Short cache for HTML (max-age=0 or small, must-revalidate).
+- If using Express/Node server, update static middleware headers accordingly.
+- Ensure gzip/brotli compression is enabled if possible.
+- Reduce network dependency chain by bundling efficiently and avoiding multiple blocking requests.
+
+STEP 6: FIX FORCED REFLOW / MAIN THREAD WORK
+- Find and fix forced synchronous layout:
+  - Avoid reading layout (offsetHeight/getBoundingClientRect) immediately after writing styles.
+  - Batch DOM reads/writes.
+- Remove heavy scroll listeners; use passive listeners.
+- Avoid large animation libraries on initial load; prefer CSS animations.
+
+STEP 7: VERIFY
+- Run a production build locally in Replit and re-run Lighthouse.
+- Report new metrics (FCP, LCP, TBT, Speed Index) and what changed.
+- Provide a short checklist of what was improved and any remaining bottlenecks.
+
+IMPORTANT CONSTRAINTS
+- Do not remove lead forms, WhatsApp button, or essential tracking. You can defer tracking scripts safely.
+- Do not change copy meaningfully.
+- Do not introduce heavy new dependencies.
+- Keep SEO intact (meta tags, indexability).
+
+DELIVERABLE
+- Make the code changes in the project.
+- Summarize changes by file with a brief explanation.
+- Show before/after bundle sizes if possible.
