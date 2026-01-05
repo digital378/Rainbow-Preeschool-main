@@ -24,7 +24,7 @@ import {
 import { Phone, MapPin, CheckCircle2, Star, Users, Award, Clock } from "lucide-react";
 import { SiWhatsapp } from "react-icons/si";
 import { apiRequest } from "@/lib/queryClient";
-import { trackAdLead, trackAdCall } from "@/lib/analytics";
+import { trackAdLead, trackAdCall, trackAdWhatsApp } from "@/lib/analytics";
 import logoImage from "@assets/Rainbow_Pre_School.Logo_1766035853658.png";
 
 const formSchema = z.object({
@@ -392,6 +392,7 @@ export default function AdLanding() {
         className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-green-500 shadow-lg transition-transform hover:scale-105"
         data-testid="button-ad-whatsapp-floating"
         aria-label="Chat on WhatsApp"
+        onClick={() => trackAdWhatsApp()}
       >
         <SiWhatsapp className="w-7 h-7 text-white" />
       </a>
