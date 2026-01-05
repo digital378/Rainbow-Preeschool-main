@@ -70,6 +70,19 @@ const redirectMap: Record<string, string> = {
 };
 
 export function setupRedirects(app: Express) {
+  // Canonical www redirect - enforce www.rainbowpreschools.com
+  app.use((req: Request, res: Response, next: NextFunction) => {
+    const host = req.get('host') || '';
+    
+    // In production, redirect non-www to www
+    if (host === 'rainbowpreschools.com') {
+      const protocol = req.protocol || 'https';
+      return res.redirect(301, `https://www.rainbowpreschools.com${req.originalUrl}`);
+    }
+    
+    next();
+  });
+  
   app.use((req: Request, res: Response, next: NextFunction) => {
     const path = req.path.toLowerCase();
     

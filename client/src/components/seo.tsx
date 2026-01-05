@@ -11,7 +11,7 @@ interface SEOProps {
   structuredData?: object | object[];
 }
 
-const BASE_URL = "https://rainbowpreschools.com";
+const BASE_URL = "https://www.rainbowpreschools.com";
 const DEFAULT_OG_IMAGE = `${BASE_URL}/og-image.jpg`;
 
 export function SEO({
