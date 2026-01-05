@@ -22,6 +22,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Phone, MapPin, CheckCircle2, Star, Users, Award, Clock } from "lucide-react";
+import { SiWhatsapp } from "react-icons/si";
 import { apiRequest } from "@/lib/queryClient";
 import { trackAdLead } from "@/lib/analytics";
 import logoImage from "@assets/Rainbow_Pre_School.Logo_1766035853658.png";
@@ -380,6 +381,18 @@ export default function AdLanding() {
           </p>
         </div>
       </footer>
+
+      {/* Floating WhatsApp Button */}
+      <a
+        href="https://wa.me/918291568972?text=Hi%2C%20I%20saw%20your%20ad%20and%20would%20like%20to%20know%20more%20about%20admissions"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-green-500 shadow-lg transition-transform hover:scale-105"
+        data-testid="button-ad-whatsapp-floating"
+        aria-label="Chat on WhatsApp"
+      >
+        <SiWhatsapp className="w-7 h-7 text-white" />
+      </a>
     </div>
   );
 }
