@@ -1,3 +1,4 @@
+import { Link } from "wouter";
 import { Phone } from "lucide-react";
 import { SiWhatsapp } from "react-icons/si";
 import { Button } from "@/components/ui/button";
@@ -23,14 +24,14 @@ export function MinimalHeader({
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b h-14">
       <div className="max-w-7xl mx-auto px-4 h-full flex items-center justify-between gap-4">
-        <div className="flex items-center gap-2">
+        <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity" data-testid="header-logo-link">
           <img
             src={logoImage}
             alt="Rainbow Preschool"
             className="h-10 w-10 object-contain"
           />
           <span className="font-semibold text-sm hidden sm:block">Rainbow Preschool</span>
-        </div>
+        </Link>
         
         <div className="flex items-center gap-2">
           <a

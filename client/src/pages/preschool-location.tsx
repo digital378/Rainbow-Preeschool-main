@@ -11,6 +11,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { LocalCallbackForm } from "@/components/local-callback-form";
+import { MinimalHeader } from "@/components/landing/minimal-header";
 import { 
   getCentreBySlug, 
   preschoolPageSEO, 
@@ -199,7 +200,15 @@ function PreschoolLocationTemplate({ localitySlug }: PreschoolLocationPageProps)
   };
 
   return (
-    <div className="min-h-screen pt-20 md:pt-24">
+    <div className="min-h-screen">
+      <MinimalHeader
+        whatsappNumber={centre.whatsappNumber}
+        phoneNumber={centre.phoneNumbers[0] || ""}
+        locality={centre.localityName}
+        onCallClick={() => handleCallClick(centre.phoneNumbers[0])}
+        onWhatsAppClick={handleWhatsAppClick}
+      />
+      <div className="pt-14">
       <nav className="bg-muted/50 py-2 px-4" aria-label="Breadcrumb">
         <div className="max-w-7xl mx-auto">
           <ol className="flex items-center gap-2 text-sm text-muted-foreground flex-wrap">
@@ -544,6 +553,7 @@ function PreschoolLocationTemplate({ localitySlug }: PreschoolLocationPageProps)
           </div>
         </div>
       </section>
+      </div>
     </div>
   );
 }
