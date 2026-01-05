@@ -154,12 +154,12 @@ export function HeroSection() {
         </div>
       </div>
 
-      {/* WhatsApp Floating Button */}
+      {/* WhatsApp Floating Button - hidden on mobile where sticky CTA has WhatsApp */}
       <a
         href="https://wa.me/918291568972?text=Hi%2C%20I%20would%20like%20to%20know%20more%20about%20Rainbow%20Preschool"
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-green-500 flex items-center justify-center shadow-lg hover:bg-green-600 transition-colors"
+        className="hidden md:flex fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-green-500 items-center justify-center shadow-lg hover:bg-green-600 transition-colors"
         onClick={() => trackCTAClick("whatsapp_chat", "floating")}
         data-testid="button-whatsapp-floating"
         aria-label="Chat on WhatsApp"
