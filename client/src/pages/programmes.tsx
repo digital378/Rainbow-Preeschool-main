@@ -68,11 +68,11 @@ export default function Programmes() {
         canonical="https://rainbowpreschools.com/programmes"
       />
       {/* Hero Section */}
-      <section className="py-24 md:py-32 lg:py-40 bg-gradient-to-br from-primary/5 via-accent/5 to-secondary/5 flex items-center justify-center">
+      <section className="py-12 md:py-16 lg:py-20 bg-gradient-to-br from-primary/5 via-accent/5 to-secondary/5 flex items-center justify-center">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">Programmes</h1>
-            <p className="text-lg text-muted-foreground leading-relaxed">
+            <h1 className="text-3xl md:text-4xl font-bold mb-4">Programmes</h1>
+            <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
               Curriculum designed to nurture every aspect of your child's development.
             </p>
           </div>
