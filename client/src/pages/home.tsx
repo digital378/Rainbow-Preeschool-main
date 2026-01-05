@@ -60,7 +60,7 @@ const faqs = [
   },
   {
     question: "What programmes does Rainbow Preschool offer?",
-    answer: "We offer Playgroup (1.5-2.5 years), Nursery (2.5-3.5 years), Kindergarten (3.5-5.5 years), Kids Activity Club (3-10 years), Summer Camp (2-10 years), and Happy Times daycare (3-10 years) across Thane."
+    answer: "We offer Playgroup (1.5-2.5 years), Nursery (2.5-3.5 years), Kindergarten (3.5-5.5 years), and Happy Times daycare (3-10 years) across our 6 centres in Thane."
   },
   {
     question: "How can I enquire about preschool admission in Thane?",

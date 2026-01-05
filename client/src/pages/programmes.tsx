@@ -6,7 +6,10 @@ import { Button } from "@/components/ui/button";
 import { CTASection } from "@/components/cta-section";
 import { SEO } from "@/components/seo";
 import { programmes } from "@shared/schema";
-import { Baby, BookOpen, GraduationCap, Palette, Sun, Heart, CheckCircle, ArrowRight } from "lucide-react";
+import { Baby, BookOpen, GraduationCap, Heart, CheckCircle, ArrowRight } from "lucide-react";
+
+// Filter out Kids Activity Club and Summer Camp - they are standalone landing pages
+const mainProgrammes = programmes.filter(p => !["kids-activity-club", "summer-camp"].includes(p.id));
 import { Link } from "wouter";
 import { trackProgrammeView } from "@/lib/analytics";
 
@@ -14,8 +17,6 @@ const iconMap = {
   baby: Baby,
   "book-open": BookOpen,
   "graduation-cap": GraduationCap,
-  palette: Palette,
-  sun: Sun,
   heart: Heart,
 };
 
@@ -34,16 +35,6 @@ const programmeDetails: Record<string, { features: string[]; schedule: string; a
     features: ["Reading and writing readiness", "Math concepts and problem solving", "Science exploration (EVS)", "General knowledge building"],
     schedule: "Morning Batch - 8:30AM to 11:30AM\nAfternoon Batch - 12:30PM to 3:30PM",
     activities: ["English language arts", "Mathematics", "Art & Craft", "Sports and games"],
-  },
-  "kids-activity-club": {
-    features: ["20+ engaging activities", "Brain gym exercises", "Creative arts and drama", "Physical fitness programs"],
-    schedule: "Flexible after-school hours",
-    activities: ["Aerobics", "Drama", "Art classes", "Brain development games"],
-  },
-  "summer-camp": {
-    features: ["Fun holiday activities", "Creative workshops", "Team building games", "New friendships"],
-    schedule: "Summer vacation period",
-    activities: ["Arts and crafts", "Sports", "Music", "Outdoor adventures"],
   },
   "happy-times": {
     features: ["Safe and nurturing environment", "Flexible hours for working parents", "Nutritious meals", "Engaging activities throughout the day"],
@@ -72,8 +63,8 @@ export default function Programmes() {
     <div className="pt-20">
       <SEO
         title="Programmes - Rainbow Preschool International | Playgroup, Nursery, Kindergarten"
-        description="Explore Rainbow Preschool programmes: Playgroup (1.5-2.5 yrs), Nursery (2.5-3.5 yrs), Kindergarten (3.5-5.5 yrs), Summer Camp & Daycare. Play-based curriculum for holistic development."
-        keywords="preschool programmes thane, playgroup thane, nursery admission thane, kindergarten thane, daycare thane, summer camp kids thane, early childhood curriculum, playgroup for 2 year old, nursery school syllabus, kg admission, lkg ukg admission, best playgroup, toddler classes, pre nursery classes, junior kg admission"
+        description="Explore Rainbow Preschool programmes: Playgroup (1.5-2.5 yrs), Nursery (2.5-3.5 yrs), Kindergarten (3.5-5.5 yrs) & Daycare. Play-based curriculum for holistic development."
+        keywords="preschool programmes thane, playgroup thane, nursery admission thane, kindergarten thane, daycare thane, early childhood curriculum, playgroup for 2 year old, nursery school syllabus, kg admission, lkg ukg admission, best playgroup, toddler classes, pre nursery classes, junior kg admission"
         canonical="https://rainbowpreschools.com/programmes"
       />
       {/* Hero Section */}
@@ -91,7 +82,7 @@ export default function Programmes() {
       {/* Programmes List */}
       <section className="py-16 md:py-20 lg:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
-          {programmes.map((programme, index) => {
+          {mainProgrammes.map((programme, index) => {
             const Icon = iconMap[programme.icon as keyof typeof iconMap] || Baby;
             const details = programmeDetails[programme.id];
 

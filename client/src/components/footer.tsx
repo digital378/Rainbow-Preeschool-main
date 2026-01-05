@@ -124,24 +124,6 @@ export function Footer() {
                   Kindergarten
                 </Link>
               </li>
-              <li>
-                <Link
-                  href="/kids-activity-club"
-                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                  data-testid="link-footer-programme-kids-activity-club"
-                >
-                  Kids Activity Club
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/summer-camp"
-                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                  data-testid="link-footer-programme-summer-camp"
-                >
-                  Summer Camp
-                </Link>
-              </li>
             </ul>
           </div>
 
