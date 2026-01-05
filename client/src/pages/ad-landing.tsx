@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "wouter";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -110,11 +111,13 @@ export default function AdLanding() {
     <div className="min-h-screen bg-gradient-to-b from-pink-50 to-white dark:from-pink-950/20 dark:to-background">
       <header className="bg-white dark:bg-card shadow-sm py-3 px-4 sticky top-0 z-50">
         <div className="max-w-6xl mx-auto flex items-center justify-between gap-4">
-          <img
-            src={logoImage}
-            alt="Rainbow Preschool International"
-            className="h-12 w-12 object-contain"
-          />
+          <Link href="/" className="hover:opacity-80 transition-opacity" data-testid="ad-header-logo-link">
+            <img
+              src={logoImage}
+              alt="Rainbow Preschool International"
+              className="h-12 w-12 object-contain"
+            />
+          </Link>
           <a
             href="tel:+918291568972"
             className="flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 rounded-full font-semibold text-sm"
