@@ -75,8 +75,8 @@ export function Navigation() {
                 variant="ghost"
                 className={cn(
                   "text-sm font-medium",
-                  useTransparentHeader && "text-white hover:text-white hover:bg-white/20",
-                  location === "/" && (useTransparentHeader ? "bg-white/20" : "bg-accent")
+                  useTransparentHeader && "text-white bg-primary/80 hover:bg-primary hover:text-white",
+                  location === "/" && (useTransparentHeader ? "bg-primary" : "bg-accent")
                 )}
                 data-testid="link-nav-home"
               >
@@ -90,8 +90,8 @@ export function Navigation() {
                 variant="ghost"
                 className={cn(
                   "text-sm font-medium",
-                  useTransparentHeader && "text-white hover:text-white hover:bg-white/20",
-                  location === "/about" && (useTransparentHeader ? "bg-white/20" : "bg-accent")
+                  useTransparentHeader && "text-white bg-primary/80 hover:bg-primary hover:text-white",
+                  location === "/about" && (useTransparentHeader ? "bg-primary" : "bg-accent")
                 )}
                 data-testid="link-nav-about-us"
               >
@@ -105,8 +105,8 @@ export function Navigation() {
                 variant="ghost"
                 className={cn(
                   "text-sm font-medium",
-                  useTransparentHeader && "text-white hover:text-white hover:bg-white/20",
-                  location.startsWith("/programmes") && (useTransparentHeader ? "bg-white/20" : "bg-accent")
+                  useTransparentHeader && "text-white bg-primary/80 hover:bg-primary hover:text-white",
+                  location.startsWith("/programmes") && (useTransparentHeader ? "bg-primary" : "bg-accent")
                 )}
                 data-testid="link-nav-programmes"
               >
@@ -120,8 +120,8 @@ export function Navigation() {
                 variant="ghost"
                 className={cn(
                   "text-sm font-medium",
-                  useTransparentHeader && "text-white hover:text-white hover:bg-white/20",
-                  location === "/blog" && (useTransparentHeader ? "bg-white/20" : "bg-accent")
+                  useTransparentHeader && "text-white bg-primary/80 hover:bg-primary hover:text-white",
+                  location === "/blog" && (useTransparentHeader ? "bg-primary" : "bg-accent")
                 )}
                 data-testid="link-nav-news-blog"
               >
@@ -135,8 +135,8 @@ export function Navigation() {
                 variant="ghost"
                 className={cn(
                   "text-sm font-medium",
-                  useTransparentHeader && "text-white hover:text-white hover:bg-white/20",
-                  location === "/contact" && (useTransparentHeader ? "bg-white/20" : "bg-accent")
+                  useTransparentHeader && "text-white bg-primary/80 hover:bg-primary hover:text-white",
+                  location === "/contact" && (useTransparentHeader ? "bg-primary" : "bg-accent")
                 )}
                 data-testid="link-nav-contact"
               >
@@ -151,7 +151,7 @@ export function Navigation() {
                   variant="ghost" 
                   className={cn(
                     "text-sm font-medium",
-                    useTransparentHeader && "text-white hover:text-white hover:bg-white/20"
+                    useTransparentHeader && "text-white bg-primary/80 hover:bg-primary hover:text-white"
                   )} 
                   data-testid="button-centres-dropdown"
                 >
