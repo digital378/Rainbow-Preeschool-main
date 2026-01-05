@@ -5,11 +5,12 @@ import { ArrowRight, Phone, Users, Star, MapPin, Shield } from "lucide-react";
 import { SiWhatsapp } from "react-icons/si";
 import { trackCTAClick } from "@/lib/analytics";
 
-import heroBanner2 from "@assets/optimized/hero_2.webp";
-import heroBanner3 from "@assets/optimized/hero_3.webp";
-import heroBanner4 from "@assets/optimized/hero_4.webp";
+import heroBanner1 from "@assets/RPS_Hero_Banner_1_1766120180205.jpg";
+import heroBanner2 from "@assets/RPS_Hero_Banner_2_1766120180204.jpg";
+import heroBanner3 from "@assets/RPS_Hero_Banner_3_1766120180205.jpg";
+import heroBanner4 from "@assets/RPS_Hero_Banner_4_1766120180204.jpg";
 
-const banners = [heroBanner2, heroBanner3, heroBanner4];
+const banners = [heroBanner1, heroBanner2, heroBanner3, heroBanner4];
 
 function preloadImage(src: string): Promise<void> {
   return new Promise((resolve) => {
