@@ -9,7 +9,7 @@ import heroBanner2 from "@assets/optimized/hero_2.webp";
 import heroBanner3 from "@assets/optimized/hero_3.webp";
 import heroBanner4 from "@assets/optimized/hero_4.webp";
 
-const banners = ["/hero_1.webp", heroBanner2, heroBanner3, heroBanner4];
+const banners = [heroBanner2, heroBanner3, heroBanner4];
 
 function preloadImage(src: string): Promise<void> {
   return new Promise((resolve) => {
