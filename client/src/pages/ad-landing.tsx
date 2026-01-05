@@ -24,7 +24,7 @@ import {
 import { Phone, MapPin, CheckCircle2, Star, Users, Award, Clock } from "lucide-react";
 import { SiWhatsapp } from "react-icons/si";
 import { apiRequest } from "@/lib/queryClient";
-import { trackAdLead } from "@/lib/analytics";
+import { trackAdLead, trackAdCall } from "@/lib/analytics";
 import logoImage from "@assets/Rainbow_Pre_School.Logo_1766035853658.png";
 
 const formSchema = z.object({
@@ -119,6 +119,7 @@ export default function AdLanding() {
             href="tel:+918291568972"
             className="flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 rounded-full font-semibold text-sm"
             data-testid="link-ad-call"
+            onClick={() => trackAdCall()}
           >
             <Phone className="h-4 w-4" />
             <span>+91 82915 68972</span>
@@ -372,6 +373,7 @@ export default function AdLanding() {
             href="tel:+918291568972"
             className="inline-flex items-center gap-2 text-lg font-semibold text-primary"
             data-testid="link-ad-footer-call"
+            onClick={() => trackAdCall()}
           >
             <Phone className="h-5 w-5" />
             +91 82915 68972
