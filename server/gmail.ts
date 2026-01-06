@@ -10,6 +10,8 @@ interface ContactFormData {
   programme: string;
   branch: string;
   message?: string;
+  leadSource?: string;
+  leadMedium?: string;
 }
 
 const transporter = nodemailer.createTransport({
@@ -58,8 +60,8 @@ export async function sendLeadNotificationEmail(data: ContactFormData): Promise<
     <tr><td>Child_Age</td><td>${data.childAge}</td></tr>
     <tr><td>Programme</td><td>${data.programme}</td></tr>
     <tr><td>Preferred_Centre</td><td>${data.branch}</td></tr>
-    <tr><td>LeadSource</td><td>Website</td></tr>
-    <tr><td>LeadMedium</td><td>Website Enquiry Form</td></tr>
+    <tr><td>LeadSource</td><td>${data.leadSource || 'Website'}</td></tr>
+    <tr><td>LeadMedium</td><td>${data.leadMedium || 'Website Enquiry Form'}</td></tr>
     <tr><td>Message</td><td>${data.message || 'No message provided'}</td></tr>
   </table>
   
@@ -82,8 +84,8 @@ Email_Id                | ${data.email || 'Not provided'}
 Child_Age               | ${data.childAge}
 Programme               | ${data.programme}
 Preferred_Centre        | ${data.branch}
-LeadSource              | Website
-LeadMedium              | Website Enquiry Form
+LeadSource              | ${data.leadSource || 'Website'}
+LeadMedium              | ${data.leadMedium || 'Website Enquiry Form'}
 Message                 | ${data.message || 'No message provided'}
 
 Best regards,

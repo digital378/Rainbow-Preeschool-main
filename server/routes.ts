@@ -64,7 +64,9 @@ export async function registerRoutes(
           childAge: validatedData.childAge,
           programme: validatedData.programme,
           branch: validatedData.branch,
-          message: validatedData.message || undefined
+          message: validatedData.message || undefined,
+          leadSource: formData.leadSource || undefined,
+          leadMedium: formData.leadMedium || undefined
         });
       } catch (emailError) {
         console.error("Failed to send email notification:", emailError);

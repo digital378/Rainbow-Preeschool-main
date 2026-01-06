@@ -53,8 +53,51 @@ const areas = [
   "Kasarvadavali",
 ];
 
+// Helper to get UTM parameters from URL
+function getUtmParams() {
+  const params = new URLSearchParams(window.location.search);
+  const utmSource = params.get('utm_source');
+  const utmMedium = params.get('utm_medium');
+  const utmCampaign = params.get('utm_campaign');
+  
+  // Map common UTM sources to readable names
+  let leadSource = 'Website';
+  let leadMedium = 'Ad Landing Page';
+  
+  if (utmSource) {
+    const sourceMap: Record<string, string> = {
+      'google': 'Google Ads',
+      'meta': 'Meta Ads',
+      'facebook': 'Meta Ads',
+      'instagram': 'Meta Ads',
+      'fb': 'Meta Ads',
+      'ig': 'Meta Ads',
+    };
+    leadSource = sourceMap[utmSource.toLowerCase()] || utmSource;
+  }
+  
+  if (utmMedium) {
+    const mediumMap: Record<string, string> = {
+      'cpc': 'Paid Search',
+      'ppc': 'Paid Search',
+      'paid_social': 'Paid Social',
+      'social': 'Paid Social',
+      'display': 'Display Ads',
+    };
+    leadMedium = mediumMap[utmMedium.toLowerCase()] || utmMedium;
+  }
+  
+  // Add campaign info if present
+  if (utmCampaign) {
+    leadMedium = `${leadMedium} - ${utmCampaign}`;
+  }
+  
+  return { leadSource, leadMedium };
+}
+
 export default function AdLanding() {
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [utmData] = useState(() => getUtmParams());
 
   useEffect(() => {
     const metaRobots = document.createElement('meta');
@@ -89,6 +132,8 @@ export default function AdLanding() {
         programme: "General Enquiry",
         branch: data.area,
         message: `Ad Landing Page Lead - Area: ${data.area}`,
+        leadSource: utmData.leadSource,
+        leadMedium: utmData.leadMedium,
       });
       return response.json();
     },
