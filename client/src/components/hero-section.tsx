@@ -105,7 +105,7 @@ export function HeroSection() {
 
           {/* Main heading - Single H1 for SEO */}
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 text-white leading-tight">
-            A <span className="text-primary">Safe Preschool</span> for Children in Thane
+            Thane Born Preschool <span className="text-primary">Trusted by Parents</span>
           </h1>
 
           {/* Subheading */}
