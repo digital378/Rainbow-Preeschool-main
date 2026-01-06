@@ -383,10 +383,12 @@ export default function Home() {
               From playgroup to kindergarten, we offer age-appropriate programmes that nurture your child's growth through play-based learning.
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {programmes.slice(0, 6).map((programme, index) => (
-              <ProgrammeCard key={programme.id} programme={programme} index={index} />
-            ))}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {programmes
+              .filter(p => !['kids-activity-club', 'summer-camp'].includes(p.id))
+              .map((programme, index) => (
+                <ProgrammeCard key={programme.id} programme={programme} index={index} />
+              ))}
           </div>
           <div className="text-center mt-8">
             <Link href="/programmes">
