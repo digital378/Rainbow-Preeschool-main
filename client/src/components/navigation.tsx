@@ -68,15 +68,18 @@ export function Navigation() {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-1">
+          <div className={cn(
+            "hidden lg:flex items-center rounded-md overflow-hidden",
+            useTransparentHeader && "bg-primary"
+          )}>
             {/* Home link */}
             <Link href="/">
               <Button
                 variant="ghost"
                 className={cn(
-                  "text-sm font-medium",
-                  useTransparentHeader && "text-white bg-primary/80 hover:bg-primary hover:text-white",
-                  location === "/" && (useTransparentHeader ? "bg-primary" : "bg-accent")
+                  "text-sm font-medium rounded-none",
+                  useTransparentHeader && "text-white hover:bg-white/20 hover:text-white",
+                  location === "/" && (useTransparentHeader ? "bg-white/20" : "bg-accent")
                 )}
                 data-testid="link-nav-home"
               >
@@ -89,9 +92,9 @@ export function Navigation() {
               <Button
                 variant="ghost"
                 className={cn(
-                  "text-sm font-medium",
-                  useTransparentHeader && "text-white bg-primary/80 hover:bg-primary hover:text-white",
-                  location === "/about" && (useTransparentHeader ? "bg-primary" : "bg-accent")
+                  "text-sm font-medium rounded-none",
+                  useTransparentHeader && "text-white hover:bg-white/20 hover:text-white",
+                  location === "/about" && (useTransparentHeader ? "bg-white/20" : "bg-accent")
                 )}
                 data-testid="link-nav-about-us"
               >
@@ -104,9 +107,9 @@ export function Navigation() {
               <Button
                 variant="ghost"
                 className={cn(
-                  "text-sm font-medium",
-                  useTransparentHeader && "text-white bg-primary/80 hover:bg-primary hover:text-white",
-                  location.startsWith("/programmes") && (useTransparentHeader ? "bg-primary" : "bg-accent")
+                  "text-sm font-medium rounded-none",
+                  useTransparentHeader && "text-white hover:bg-white/20 hover:text-white",
+                  location.startsWith("/programmes") && (useTransparentHeader ? "bg-white/20" : "bg-accent")
                 )}
                 data-testid="link-nav-programmes"
               >
@@ -119,9 +122,9 @@ export function Navigation() {
               <Button
                 variant="ghost"
                 className={cn(
-                  "text-sm font-medium",
-                  useTransparentHeader && "text-white bg-primary/80 hover:bg-primary hover:text-white",
-                  location === "/blog" && (useTransparentHeader ? "bg-primary" : "bg-accent")
+                  "text-sm font-medium rounded-none",
+                  useTransparentHeader && "text-white hover:bg-white/20 hover:text-white",
+                  location === "/blog" && (useTransparentHeader ? "bg-white/20" : "bg-accent")
                 )}
                 data-testid="link-nav-news-blog"
               >
@@ -134,9 +137,9 @@ export function Navigation() {
               <Button
                 variant="ghost"
                 className={cn(
-                  "text-sm font-medium",
-                  useTransparentHeader && "text-white bg-primary/80 hover:bg-primary hover:text-white",
-                  location === "/contact" && (useTransparentHeader ? "bg-primary" : "bg-accent")
+                  "text-sm font-medium rounded-none",
+                  useTransparentHeader && "text-white hover:bg-white/20 hover:text-white",
+                  location === "/contact" && (useTransparentHeader ? "bg-white/20" : "bg-accent")
                 )}
                 data-testid="link-nav-contact"
               >
@@ -150,8 +153,8 @@ export function Navigation() {
                 <Button 
                   variant="ghost" 
                   className={cn(
-                    "text-sm font-medium",
-                    useTransparentHeader && "text-white bg-primary/80 hover:bg-primary hover:text-white"
+                    "text-sm font-medium rounded-none",
+                    useTransparentHeader && "text-white hover:bg-white/20 hover:text-white"
                   )} 
                   data-testid="button-centres-dropdown"
                 >
