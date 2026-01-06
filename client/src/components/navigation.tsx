@@ -68,18 +68,14 @@ export function Navigation() {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className={cn(
-            "hidden lg:flex items-center rounded-md overflow-hidden",
-            useTransparentHeader && "bg-primary"
-          )}>
+          <div className="hidden lg:flex items-center rounded-md overflow-hidden bg-primary">
             {/* Home link */}
             <Link href="/">
               <Button
                 variant="ghost"
                 className={cn(
-                  "text-sm font-medium rounded-none",
-                  useTransparentHeader && "text-white hover:bg-white/20 hover:text-white",
-                  location === "/" && (useTransparentHeader ? "bg-white/20" : "bg-accent")
+                  "text-sm font-medium rounded-none text-white hover:bg-white/20 hover:text-white",
+                  location === "/" && "bg-white/20"
                 )}
                 data-testid="link-nav-home"
               >
@@ -92,9 +88,8 @@ export function Navigation() {
               <Button
                 variant="ghost"
                 className={cn(
-                  "text-sm font-medium rounded-none",
-                  useTransparentHeader && "text-white hover:bg-white/20 hover:text-white",
-                  location === "/about" && (useTransparentHeader ? "bg-white/20" : "bg-accent")
+                  "text-sm font-medium rounded-none text-white hover:bg-white/20 hover:text-white",
+                  location === "/about" && "bg-white/20"
                 )}
                 data-testid="link-nav-about-us"
               >
@@ -107,9 +102,8 @@ export function Navigation() {
               <Button
                 variant="ghost"
                 className={cn(
-                  "text-sm font-medium rounded-none",
-                  useTransparentHeader && "text-white hover:bg-white/20 hover:text-white",
-                  location.startsWith("/programmes") && (useTransparentHeader ? "bg-white/20" : "bg-accent")
+                  "text-sm font-medium rounded-none text-white hover:bg-white/20 hover:text-white",
+                  location.startsWith("/programmes") && "bg-white/20"
                 )}
                 data-testid="link-nav-programmes"
               >
@@ -122,9 +116,8 @@ export function Navigation() {
               <Button
                 variant="ghost"
                 className={cn(
-                  "text-sm font-medium rounded-none",
-                  useTransparentHeader && "text-white hover:bg-white/20 hover:text-white",
-                  location === "/blog" && (useTransparentHeader ? "bg-white/20" : "bg-accent")
+                  "text-sm font-medium rounded-none text-white hover:bg-white/20 hover:text-white",
+                  location === "/blog" && "bg-white/20"
                 )}
                 data-testid="link-nav-news-blog"
               >
@@ -137,9 +130,8 @@ export function Navigation() {
               <Button
                 variant="ghost"
                 className={cn(
-                  "text-sm font-medium rounded-none",
-                  useTransparentHeader && "text-white hover:bg-white/20 hover:text-white",
-                  location === "/contact" && (useTransparentHeader ? "bg-white/20" : "bg-accent")
+                  "text-sm font-medium rounded-none text-white hover:bg-white/20 hover:text-white",
+                  location === "/contact" && "bg-white/20"
                 )}
                 data-testid="link-nav-contact"
               >
@@ -152,10 +144,7 @@ export function Navigation() {
               <DropdownMenuTrigger asChild>
                 <Button 
                   variant="ghost" 
-                  className={cn(
-                    "text-sm font-medium rounded-none",
-                    useTransparentHeader && "text-white hover:bg-white/20 hover:text-white"
-                  )} 
+                  className="text-sm font-medium rounded-none text-white hover:bg-white/20 hover:text-white"
                   data-testid="button-centres-dropdown"
                 >
                   Centres <ChevronDown className="ml-1 h-4 w-4" />
