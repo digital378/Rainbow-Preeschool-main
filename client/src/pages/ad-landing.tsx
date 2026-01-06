@@ -178,12 +178,16 @@ export default function AdLanding() {
     <div className="min-h-screen bg-gradient-to-b from-pink-50 to-white dark:from-pink-950/20 dark:to-background">
       <header className="bg-white dark:bg-card shadow-sm py-3 px-4 sticky top-0 z-50">
         <div className="max-w-6xl mx-auto flex items-center justify-between gap-4">
-          <Link href="/" className="hover:opacity-80 transition-opacity" data-testid="ad-header-logo-link">
+          <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity" data-testid="ad-header-logo-link">
             <img
               src={logoImage}
               alt="Rainbow Preschool International"
-              className="h-12 w-12 object-contain"
+              className="h-14 w-14 object-contain"
             />
+            <div className="hidden sm:block">
+              <p className="font-bold text-foreground text-lg leading-tight">Rainbow Preschool</p>
+              <p className="text-xs text-muted-foreground">International</p>
+            </div>
           </Link>
           <a
             href="tel:+918291568972"
