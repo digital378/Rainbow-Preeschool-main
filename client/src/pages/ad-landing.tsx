@@ -53,18 +53,40 @@ const areas = [
   "Kasarvadavali",
 ];
 
-// Helper to get UTM parameters from URL
+// Helper to get UTM parameters and ad platform identifiers from URL
 function getUtmParams() {
   const params = new URLSearchParams(window.location.search);
+  
+  // Standard UTM parameters
   const utmSource = params.get('utm_source');
   const utmMedium = params.get('utm_medium');
   const utmCampaign = params.get('utm_campaign');
   
-  // Map common UTM sources to readable names
+  // Google Ads specific parameters
+  const gclid = params.get('gclid');
+  const gadSource = params.get('gad_source');
+  const gbraid = params.get('gbraid');
+  const wbraid = params.get('wbraid');
+  
+  // Meta/Facebook Ads specific parameters
+  const fbclid = params.get('fbclid');
+  
+  // Default values
   let leadSource = 'Website';
   let leadMedium = 'Ad Landing Page';
   
-  if (utmSource) {
+  // Detect Google Ads (gclid, gad_source, gbraid, or wbraid present)
+  if (gclid || gadSource || gbraid || wbraid) {
+    leadSource = 'Google Ads';
+    leadMedium = 'Paid Search';
+  }
+  // Detect Meta/Facebook Ads (fbclid present)
+  else if (fbclid) {
+    leadSource = 'Meta Ads';
+    leadMedium = 'Paid Social';
+  }
+  // Fall back to UTM parameters if present
+  else if (utmSource) {
     const sourceMap: Record<string, string> = {
       'google': 'Google Ads',
       'meta': 'Meta Ads',
@@ -74,17 +96,17 @@ function getUtmParams() {
       'ig': 'Meta Ads',
     };
     leadSource = sourceMap[utmSource.toLowerCase()] || utmSource;
-  }
-  
-  if (utmMedium) {
-    const mediumMap: Record<string, string> = {
-      'cpc': 'Paid Search',
-      'ppc': 'Paid Search',
-      'paid_social': 'Paid Social',
-      'social': 'Paid Social',
-      'display': 'Display Ads',
-    };
-    leadMedium = mediumMap[utmMedium.toLowerCase()] || utmMedium;
+    
+    if (utmMedium) {
+      const mediumMap: Record<string, string> = {
+        'cpc': 'Paid Search',
+        'ppc': 'Paid Search',
+        'paid_social': 'Paid Social',
+        'social': 'Paid Social',
+        'display': 'Display Ads',
+      };
+      leadMedium = mediumMap[utmMedium.toLowerCase()] || utmMedium;
+    }
   }
   
   // Add campaign info if present
