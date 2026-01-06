@@ -74,9 +74,9 @@ export function setupRedirects(app: Express) {
   app.use((req: Request, res: Response, next: NextFunction) => {
     const host = req.get('host') || '';
     
-    // In production, redirect non-www to www
+    // Only redirect if host is exactly the non-www domain
+    // With 'trust proxy' enabled, req.protocol will correctly reflect HTTPS
     if (host === 'rainbowpreschools.com') {
-      const protocol = req.protocol || 'https';
       return res.redirect(301, `https://www.rainbowpreschools.com${req.originalUrl}`);
     }
     

@@ -7,6 +7,10 @@ import path from "path";
 import fs from "fs";
 
 const app = express();
+
+// Trust proxy for proper protocol detection behind load balancers (Replit Deployment)
+app.set('trust proxy', true);
+
 const httpServer = createServer(app);
 
 declare module "http" {
