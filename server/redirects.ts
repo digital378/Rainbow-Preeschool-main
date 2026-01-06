@@ -70,18 +70,8 @@ const redirectMap: Record<string, string> = {
 };
 
 export function setupRedirects(app: Express) {
-  // Canonical www redirect - enforce www.rainbowpreschools.com
-  app.use((req: Request, res: Response, next: NextFunction) => {
-    const host = req.get('host') || '';
-    
-    // Only redirect if host is exactly the non-www domain
-    // With 'trust proxy' enabled, req.protocol will correctly reflect HTTPS
-    if (host === 'rainbowpreschools.com') {
-      return res.redirect(301, `https://www.rainbowpreschools.com${req.originalUrl}`);
-    }
-    
-    next();
-  });
+  // Note: www canonicalization should be handled at DNS/CDN level, not in app
+  // to avoid redirect loops behind load balancers
   
   app.use((req: Request, res: Response, next: NextFunction) => {
     const path = req.path.toLowerCase();
