@@ -204,7 +204,7 @@ export default function AdLanding() {
     try {
       // Initialize reCAPTCHA if needed
       if (recaptchaContainerRef.current) {
-        initRecaptcha('recaptcha-container');
+        await initRecaptcha('recaptcha-container');
       }
       
       const result = await sendOTP(data.phone);
@@ -217,6 +217,8 @@ export default function AdLanding() {
         setOtpError('Too many attempts. Please try again later.');
       } else if (error.code === 'auth/invalid-phone-number') {
         setOtpError('Invalid phone number. Please check and try again.');
+      } else if (error.message?.includes('container')) {
+        setOtpError('Page loading issue. Please refresh and try again.');
       } else {
         setOtpError('Failed to send OTP. Please try again.');
       }
@@ -259,7 +261,7 @@ export default function AdLanding() {
     try {
       resetRecaptcha();
       if (recaptchaContainerRef.current) {
-        initRecaptcha('recaptcha-container');
+        await initRecaptcha('recaptcha-container');
       }
       const result = await sendOTP(formDataRef.current.phone);
       setConfirmationResult(result);

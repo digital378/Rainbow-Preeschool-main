@@ -13,12 +13,23 @@ export const auth = getAuth(app);
 
 let recaptchaVerifier: RecaptchaVerifier | null = null;
 
-export function initRecaptcha(containerId: string): RecaptchaVerifier {
+export async function initRecaptcha(containerId: string): Promise<RecaptchaVerifier> {
   if (recaptchaVerifier) {
-    recaptchaVerifier.clear();
+    try {
+      recaptchaVerifier.clear();
+    } catch (e) {
+      // Ignore clear errors
+    }
+    recaptchaVerifier = null;
   }
   
-  recaptchaVerifier = new RecaptchaVerifier(auth, containerId, {
+  const container = document.getElementById(containerId);
+  if (!container) {
+    throw new Error(`reCAPTCHA container ${containerId} not found`);
+  }
+  
+  // Firebase v9+ modular API: new RecaptchaVerifier(auth, container, options)
+  recaptchaVerifier = new RecaptchaVerifier(auth, container, {
     size: 'invisible',
     callback: () => {
       console.log('reCAPTCHA solved');
@@ -27,6 +38,9 @@ export function initRecaptcha(containerId: string): RecaptchaVerifier {
       console.log('reCAPTCHA expired');
     }
   });
+  
+  // Render the reCAPTCHA widget
+  await recaptchaVerifier.render();
   
   return recaptchaVerifier;
 }

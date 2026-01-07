@@ -57,6 +57,7 @@ The backend provides:
 ### Third-Party Services
 - **Google Analytics 4**: Client-side analytics tracking via `VITE_GA_MEASUREMENT_ID` environment variable
 - **Google Fonts**: Poppins and Inter font families loaded from fonts.googleapis.com
+- **Firebase Phone Authentication**: OTP verification for ad landing page leads (10,000 free SMS/month)
 
 ### Database
 - **PostgreSQL**: Configured via `DATABASE_URL` environment variable
@@ -141,3 +142,32 @@ Clean, page-based GA4 form tracking using gtag (no GTM Form Submission triggers)
 ### SEO Files
 - `public/sitemap.xml` - All pages with priority weighting (local pages at 0.9)
 - `public/robots.txt` - Allow all, disallow /api/
+
+## Ad Landing Page (/ad)
+
+### Purpose
+Dedicated landing page for Google Ads and Meta Ads campaigns with OTP-verified lead capture.
+
+### OTP Verification Flow
+1. User fills form (parent name, phone, child age, area)
+2. On submit, Firebase Phone Auth sends OTP via invisible reCAPTCHA
+3. User enters 6-digit OTP to verify phone number
+4. Only after OTP verification does the form submit to backend
+5. GA4 `ad_leads` event fires only after email confirmation
+
+### Lead Source Tracking
+Automatic detection of ad platform without manual UTM parameters:
+- **Google Ads**: Detected via `gclid`, `gad_source`, or `gbraid` URL parameters
+- **Meta Ads**: Detected via `fbclid` URL parameter
+- Lead source stored in contact submission for attribution
+
+### Firebase Configuration
+Environment variables required:
+- `VITE_FIREBASE_API_KEY`
+- `VITE_FIREBASE_AUTH_DOMAIN`
+- `VITE_FIREBASE_PROJECT_ID`
+- `VITE_FIREBASE_APP_ID`
+
+### Key Files
+- `client/src/pages/ad-landing.tsx` - Landing page with OTP form flow
+- `client/src/lib/firebase-auth.ts` - Firebase Phone Auth utility functions
