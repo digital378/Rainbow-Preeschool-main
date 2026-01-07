@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link } from "wouter";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -22,10 +22,12 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import { Phone, MapPin, CheckCircle2, Star, Users, Award, Clock } from "lucide-react";
+import { Phone, MapPin, CheckCircle2, Star, Users, Award, Clock, Loader2 } from "lucide-react";
 import { SiWhatsapp } from "react-icons/si";
 import { apiRequest } from "@/lib/queryClient";
 import { trackAdLead, trackAdCall, trackAdWhatsApp } from "@/lib/analytics";
+import { initRecaptcha, sendOTP, verifyOTP, resetRecaptcha } from "@/lib/firebase-auth";
+import { ConfirmationResult } from "firebase/auth";
 import logoImage from "@assets/Rainbow_Pre_School.Logo_1766035853658.png";
 
 const formSchema = z.object({
@@ -120,6 +122,17 @@ function getUtmParams() {
 export default function AdLanding() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [utmData] = useState(() => getUtmParams());
+  
+  // OTP verification states
+  const [otpStep, setOtpStep] = useState<'form' | 'otp' | 'submitting'>('form');
+  const [otp, setOtp] = useState('');
+  const [otpError, setOtpError] = useState('');
+  const [confirmationResult, setConfirmationResult] = useState<ConfirmationResult | null>(null);
+  const [sendingOtp, setSendingOtp] = useState(false);
+  const [verifyingOtp, setVerifyingOtp] = useState(false);
+  const [countdown, setCountdown] = useState(0);
+  const recaptchaContainerRef = useRef<HTMLDivElement>(null);
+  const formDataRef = useRef<FormData | null>(null);
 
   useEffect(() => {
     const metaRobots = document.createElement('meta');
@@ -131,8 +144,17 @@ export default function AdLanding() {
 
     return () => {
       document.head.removeChild(metaRobots);
+      resetRecaptcha();
     };
   }, []);
+
+  // Countdown timer for resend OTP
+  useEffect(() => {
+    if (countdown > 0) {
+      const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [countdown]);
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -153,7 +175,7 @@ export default function AdLanding() {
         childAge: data.childAge,
         programme: "General Enquiry",
         branch: data.area,
-        message: `Ad Landing Page Lead - Area: ${data.area}`,
+        message: `Ad Landing Page Lead - Area: ${data.area} (OTP Verified)`,
         leadSource: utmData.leadSource,
         leadMedium: utmData.leadMedium,
       });
@@ -164,14 +186,103 @@ export default function AdLanding() {
         trackAdLead();
       }
       setIsSubmitted(true);
+      setOtpStep('form');
     },
     onError: (error) => {
       console.error("Form submission error:", error);
+      setOtpError("Failed to submit form. Please try again.");
+      setOtpStep('form');
     },
   });
 
+  // Step 1: Send OTP when form is submitted
+  const handleSendOtp = async (data: FormData) => {
+    formDataRef.current = data;
+    setSendingOtp(true);
+    setOtpError('');
+    
+    try {
+      // Initialize reCAPTCHA if needed
+      if (recaptchaContainerRef.current) {
+        initRecaptcha('recaptcha-container');
+      }
+      
+      const result = await sendOTP(data.phone);
+      setConfirmationResult(result);
+      setOtpStep('otp');
+      setCountdown(30); // 30 second resend cooldown
+    } catch (error: any) {
+      console.error("Error sending OTP:", error);
+      if (error.code === 'auth/too-many-requests') {
+        setOtpError('Too many attempts. Please try again later.');
+      } else if (error.code === 'auth/invalid-phone-number') {
+        setOtpError('Invalid phone number. Please check and try again.');
+      } else {
+        setOtpError('Failed to send OTP. Please try again.');
+      }
+      resetRecaptcha();
+    } finally {
+      setSendingOtp(false);
+    }
+  };
+
+  // Step 2: Verify OTP and submit form
+  const handleVerifyOtp = async () => {
+    if (!confirmationResult || !formDataRef.current) return;
+    
+    setVerifyingOtp(true);
+    setOtpError('');
+    
+    try {
+      const isValid = await verifyOTP(confirmationResult, otp);
+      if (isValid) {
+        setOtpStep('submitting');
+        mutation.mutate(formDataRef.current);
+      } else {
+        setOtpError('Invalid OTP. Please try again.');
+      }
+    } catch (error) {
+      console.error("OTP verification error:", error);
+      setOtpError('Invalid OTP. Please try again.');
+    } finally {
+      setVerifyingOtp(false);
+    }
+  };
+
+  // Resend OTP
+  const handleResendOtp = async () => {
+    if (!formDataRef.current || countdown > 0) return;
+    
+    setSendingOtp(true);
+    setOtpError('');
+    
+    try {
+      resetRecaptcha();
+      if (recaptchaContainerRef.current) {
+        initRecaptcha('recaptcha-container');
+      }
+      const result = await sendOTP(formDataRef.current.phone);
+      setConfirmationResult(result);
+      setCountdown(30);
+      setOtp('');
+    } catch (error) {
+      console.error("Error resending OTP:", error);
+      setOtpError('Failed to resend OTP. Please try again.');
+    } finally {
+      setSendingOtp(false);
+    }
+  };
+
+  // Go back to form
+  const handleBackToForm = () => {
+    setOtpStep('form');
+    setOtp('');
+    setOtpError('');
+    resetRecaptcha();
+  };
+
   const onSubmit = (data: FormData) => {
-    mutation.mutate(data);
+    handleSendOtp(data);
   };
 
   return (
@@ -241,14 +352,92 @@ export default function AdLanding() {
                       </a>
                     </div>
                   </div>
+                ) : otpStep === 'otp' ? (
+                  <>
+                    <div className="text-center mb-6">
+                      <h2 className="text-xl font-bold">Verify Your Phone</h2>
+                      <p className="text-sm text-muted-foreground mt-1">
+                        Enter the 6-digit OTP sent to +91 {formDataRef.current?.phone}
+                      </p>
+                    </div>
+
+                    <div className="space-y-4">
+                      <div>
+                        <Label>Enter OTP</Label>
+                        <Input
+                          type="text"
+                          inputMode="numeric"
+                          maxLength={6}
+                          placeholder="Enter 6-digit OTP"
+                          value={otp}
+                          onChange={(e) => setOtp(e.target.value.replace(/\D/g, '').slice(0, 6))}
+                          className="text-center text-2xl tracking-widest"
+                          data-testid="input-otp"
+                        />
+                      </div>
+
+                      {otpError && (
+                        <p className="text-sm text-destructive text-center">{otpError}</p>
+                      )}
+
+                      <Button
+                        type="button"
+                        className="w-full"
+                        size="lg"
+                        disabled={otp.length !== 6 || verifyingOtp}
+                        onClick={handleVerifyOtp}
+                        data-testid="button-verify-otp"
+                      >
+                        {verifyingOtp ? (
+                          <>
+                            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                            Verifying...
+                          </>
+                        ) : (
+                          "Verify & Submit"
+                        )}
+                      </Button>
+
+                      <div className="flex items-center justify-between text-sm">
+                        <button
+                          type="button"
+                          onClick={handleBackToForm}
+                          className="text-muted-foreground hover:text-foreground"
+                          data-testid="button-back-to-form"
+                        >
+                          Change Number
+                        </button>
+                        <button
+                          type="button"
+                          onClick={handleResendOtp}
+                          disabled={countdown > 0 || sendingOtp}
+                          className={countdown > 0 ? "text-muted-foreground" : "text-primary hover:underline"}
+                          data-testid="button-resend-otp"
+                        >
+                          {sendingOtp ? "Sending..." : countdown > 0 ? `Resend in ${countdown}s` : "Resend OTP"}
+                        </button>
+                      </div>
+                    </div>
+                  </>
+                ) : otpStep === 'submitting' ? (
+                  <div className="text-center py-8 space-y-4">
+                    <Loader2 className="h-12 w-12 animate-spin mx-auto text-primary" />
+                    <p className="text-muted-foreground">Submitting your enquiry...</p>
+                  </div>
                 ) : (
                   <>
                     <div className="text-center mb-6">
                       <h2 className="text-xl font-bold">Get Free Counselling</h2>
                       <p className="text-sm text-muted-foreground mt-1">
-                        Fill the form & our team will contact you
+                        Fill the form & verify with OTP
                       </p>
                     </div>
+
+                    {otpError && (
+                      <p className="text-sm text-destructive text-center mb-4">{otpError}</p>
+                    )}
+
+                    <div id="recaptcha-container" ref={recaptchaContainerRef} />
 
                     <Form {...form}>
                       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -279,7 +468,7 @@ export default function AdLanding() {
                               <FormControl>
                                 <Input
                                   type="tel"
-                                  placeholder="Enter phone number"
+                                  placeholder="Enter 10-digit phone number"
                                   {...field}
                                   data-testid="input-ad-phone"
                                 />
@@ -342,14 +531,21 @@ export default function AdLanding() {
                           type="submit"
                           className="w-full"
                           size="lg"
-                          disabled={mutation.isPending}
+                          disabled={sendingOtp}
                           data-testid="button-ad-submit"
                         >
-                          {mutation.isPending ? "Submitting..." : "Get Free Callback"}
+                          {sendingOtp ? (
+                            <>
+                              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                              Sending OTP...
+                            </>
+                          ) : (
+                            "Get OTP & Submit"
+                          )}
                         </Button>
 
                         <p className="text-xs text-center text-muted-foreground">
-                          By submitting, you agree to receive calls regarding admissions
+                          We'll send an OTP to verify your phone number
                         </p>
                       </form>
                     </Form>
