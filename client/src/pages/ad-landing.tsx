@@ -39,10 +39,10 @@ const formSchema = z.object({
 type FormData = z.infer<typeof formSchema>;
 
 const programmes = [
-  { age: "1.5-2.5 years", name: "Playgroup" },
-  { age: "2.5-3.5 years", name: "Nursery" },
-  { age: "3.5-5 years", name: "Kindergarten" },
-  { age: "1.5-5 years", name: "Daycare (Happy Times)" },
+  { age: "1.5-2.5 years", name: "Playgroup", link: "/playgroup" },
+  { age: "2.5-3.5 years", name: "Nursery", link: "/nursery" },
+  { age: "3.5-5 years", name: "Kindergarten", link: "/kindergarten" },
+  { age: "3-10 years", name: "Daycare (Happy Times)", link: "/happy-times" },
 ];
 
 const areas = [
@@ -215,18 +215,6 @@ export default function AdLanding() {
             <p className="text-lg text-muted-foreground">
               Join Thane's most trusted preschool with 18+ years of excellence in early childhood education.
             </p>
-            
-            {/* Child Image */}
-            <div className="relative mt-6 rounded-2xl overflow-hidden shadow-lg max-w-md">
-              <img 
-                src={childImage} 
-                alt="Happy child learning at Rainbow Preschool" 
-                className="w-full h-auto object-cover"
-              />
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-4">
-                <p className="text-white text-sm font-medium">Learning through play and creativity</p>
-              </div>
-            </div>
           </div>
 
           {/* Form - Second on mobile, right column on desktop */}
@@ -423,22 +411,40 @@ export default function AdLanding() {
               <h2 className="font-semibold text-lg">Our Programmes</h2>
               <div className="space-y-2">
                 {programmes.map((prog) => (
-                  <div
+                  <Link
                     key={prog.name}
-                    className="flex items-center gap-3 p-3 bg-card rounded-lg border"
+                    href={prog.link}
+                    className="flex items-center gap-3 p-3 bg-card rounded-lg border hover-elevate cursor-pointer"
+                    data-testid={`link-ad-programme-${prog.name.toLowerCase().replace(/[^a-z]/g, '-')}`}
                   >
                     <CheckCircle2 className="h-5 w-5 text-green-500 shrink-0" />
-                    <div>
+                    <div className="flex-1">
                       <span className="font-medium">{prog.name}</span>
                       <span className="text-muted-foreground ml-2 text-sm">
                         ({prog.age})
                       </span>
                     </div>
-                  </div>
+                  </Link>
                 ))}
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Child Image - Bottom section */}
+        <div className="mt-12 max-w-6xl mx-auto">
+          <Link href="/programmes" className="block" data-testid="link-ad-programmes-image">
+            <div className="relative rounded-2xl overflow-hidden shadow-lg max-w-xs mx-auto hover-elevate cursor-pointer">
+              <img 
+                src={childImage} 
+                alt="Explore our programmes at Rainbow Preschool" 
+                className="w-full h-auto object-cover"
+              />
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
+                <p className="text-white text-sm font-medium text-center">View All Programmes</p>
+              </div>
+            </div>
+          </Link>
         </div>
       </main>
 
