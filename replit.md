@@ -146,14 +146,12 @@ Clean, page-based GA4 form tracking using gtag (no GTM Form Submission triggers)
 ## Ad Landing Page (/ad)
 
 ### Purpose
-Dedicated landing page for Google Ads and Meta Ads campaigns with OTP-verified lead capture.
+Dedicated landing page for Google Ads and Meta Ads campaigns with streamlined lead capture.
 
-### OTP Verification Flow
+### Form Flow
 1. User fills form (parent name, phone, child age, area)
-2. On submit, Firebase Phone Auth sends OTP via invisible reCAPTCHA
-3. User enters 6-digit OTP to verify phone number
-4. Only after OTP verification does the form submit to backend
-5. GA4 `ad_leads` event fires only after email confirmation
+2. Form submits directly to backend
+3. GA4 `ad_leads` event fires only after email confirmation
 
 ### Lead Source Tracking
 Automatic detection of ad platform without manual UTM parameters:
@@ -161,13 +159,15 @@ Automatic detection of ad platform without manual UTM parameters:
 - **Meta Ads**: Detected via `fbclid` URL parameter
 - Lead source stored in contact submission for attribution
 
-### Firebase Configuration
-Environment variables required:
+### Key Files
+- `client/src/pages/ad-landing.tsx` - Landing page with form
+
+### Firebase Phone Auth (For Future Use)
+Firebase Phone Auth is configured for OTP verification on other pages.
+Environment variables available:
 - `VITE_FIREBASE_API_KEY`
 - `VITE_FIREBASE_AUTH_DOMAIN`
 - `VITE_FIREBASE_PROJECT_ID`
 - `VITE_FIREBASE_APP_ID`
 
-### Key Files
-- `client/src/pages/ad-landing.tsx` - Landing page with OTP form flow
-- `client/src/lib/firebase-auth.ts` - Firebase Phone Auth utility functions
+Key file: `client/src/lib/firebase-auth.ts` - Firebase Phone Auth utility functions
