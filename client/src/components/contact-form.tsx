@@ -157,6 +157,11 @@ export function ContactForm({ defaultBranch, defaultProgramme, compact = false, 
           formType: 'detailed' as FormType,
           programme: form.getValues("programme"),
           centre: form.getValues("branch"),
+          // MCB-aligned parameters
+          parentName: form.getValues("parentName"),
+          studentName: form.getValues("childName"),
+          phone: form.getValues("phone"),
+          childAge: form.getValues("childAge"),
         });
         // Fire Meta Pixel Lead conversion event only on confirmed email
         if (typeof window !== 'undefined' && (window as any).fbq) {

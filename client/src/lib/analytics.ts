@@ -60,6 +60,26 @@ interface FormTrackingParams {
   programme?: string;
   centre?: string;
   locality?: string;
+  // MCB-aligned parameters
+  parentName?: string;
+  studentName?: string;
+  phone?: string;
+  childAge?: string;
+  leadSource?: string;
+  leadMedium?: string;
+  utmCampaign?: string;
+  utmTerm?: string;
+  utmContent?: string;
+}
+
+// Ad landing page lead data (for /ad and /ad-google pages)
+interface AdLeadParams {
+  parentName?: string;
+  phone?: string;
+  childAge?: string;
+  area?: string;
+  leadSource?: string;
+  leadMedium?: string;
 }
 
 /**
@@ -156,16 +176,31 @@ export const trackFormSubmit = (params: FormTrackingParams = {}) => {
     page: window.location.pathname,
   });
   
+  // Build event data with MCB-aligned parameters
+  const eventData: Record<string, any> = {
+    page_path: window.location.pathname,
+    page_title: document.title,
+    form_type: params.formType || 'default',
+    page_category: 'lead_form',
+    programme: params.programme || undefined,
+    centre: params.centre || undefined,
+    locality: params.locality || undefined,
+    // MCB-aligned parameters
+    parent_name: params.parentName || undefined,
+    student_name: params.studentName || undefined,
+    phone: params.phone || undefined,
+    child_age: params.childAge || undefined,
+    lead_source: params.leadSource || undefined,
+    lead_medium: params.leadMedium || undefined,
+    utm_campaign: params.utmCampaign || undefined,
+    utm_term: params.utmTerm || undefined,
+    utm_content: params.utmContent || undefined,
+  };
+
   // Fire GA4 event via gtag (primary method)
   if (typeof window.gtag === 'function' && measurementId) {
     window.gtag('event', eventName, {
-      page_path: window.location.pathname,
-      page_title: document.title,
-      form_type: params.formType || 'default',
-      page_category: 'lead_form',
-      programme: params.programme || undefined,
-      centre: params.centre || undefined,
-      locality: params.locality || undefined,
+      ...eventData,
       send_to: measurementId,
     });
     console.log(`[GA4] Event FIRED via gtag: ${eventName}`);
@@ -175,13 +210,7 @@ export const trackFormSubmit = (params: FormTrackingParams = {}) => {
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({
       event: eventName,
-      page_path: window.location.pathname,
-      page_title: document.title,
-      form_type: params.formType || 'default',
-      page_category: 'lead_form',
-      programme: params.programme || undefined,
-      centre: params.centre || undefined,
-      locality: params.locality || undefined,
+      ...eventData,
     });
     console.log(`[GA4] Event pushed to dataLayer: ${eventName}`);
   }
@@ -199,7 +228,7 @@ export const resetFormTracking = () => {
  * Track ad landing page form submissions with "ad_leads" event
  * Used exclusively for /ad page to track paid campaign conversions
  */
-export const trackAdLead = () => {
+export const trackAdLead = (params: AdLeadParams = {}) => {
   if (typeof window === 'undefined') return;
   
   const measurementId = import.meta.env.VITE_GA_MEASUREMENT_ID;
@@ -211,11 +240,22 @@ export const trackAdLead = () => {
     page: window.location.pathname,
   });
   
+  const eventData: Record<string, any> = {
+    page_path: window.location.pathname,
+    page_title: document.title,
+    page_category: 'ad_conversion',
+    // MCB-aligned parameters
+    parent_name: params.parentName || undefined,
+    phone: params.phone || undefined,
+    child_age: params.childAge || undefined,
+    branch: params.area || undefined,
+    lead_source: params.leadSource || undefined,
+    lead_medium: params.leadMedium || undefined,
+  };
+  
   if (typeof window.gtag === 'function' && measurementId) {
     window.gtag('event', eventName, {
-      page_path: window.location.pathname,
-      page_title: document.title,
-      page_category: 'ad_conversion',
+      ...eventData,
       send_to: measurementId,
     });
     console.log(`[GA4] Event FIRED via gtag: ${eventName}`);
@@ -223,9 +263,7 @@ export const trackAdLead = () => {
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({
       event: eventName,
-      page_path: window.location.pathname,
-      page_title: document.title,
-      page_category: 'ad_conversion',
+      ...eventData,
     });
     console.log(`[GA4] Event pushed to dataLayer: ${eventName}`);
   }
@@ -311,7 +349,7 @@ export const trackAdWhatsApp = () => {
  * Track Google Ads landing page form submissions with "google_ads_leads" event
  * Used exclusively for /ad-google page to track Google Ads conversions
  */
-export const trackGoogleAdsLead = () => {
+export const trackGoogleAdsLead = (params: AdLeadParams = {}) => {
   if (typeof window === 'undefined') return;
   
   const measurementId = import.meta.env.VITE_GA_MEASUREMENT_ID;
@@ -323,11 +361,22 @@ export const trackGoogleAdsLead = () => {
     page: window.location.pathname,
   });
   
+  const eventData: Record<string, any> = {
+    page_path: window.location.pathname,
+    page_title: document.title,
+    page_category: 'google_ads_conversion',
+    // MCB-aligned parameters
+    parent_name: params.parentName || undefined,
+    phone: params.phone || undefined,
+    child_age: params.childAge || undefined,
+    branch: params.area || undefined,
+    lead_source: params.leadSource || undefined,
+    lead_medium: params.leadMedium || undefined,
+  };
+  
   if (typeof window.gtag === 'function' && measurementId) {
     window.gtag('event', eventName, {
-      page_path: window.location.pathname,
-      page_title: document.title,
-      page_category: 'google_ads_conversion',
+      ...eventData,
       send_to: measurementId,
     });
     console.log(`[GA4] Event FIRED via gtag: ${eventName}`);
@@ -335,9 +384,7 @@ export const trackGoogleAdsLead = () => {
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({
       event: eventName,
-      page_path: window.location.pathname,
-      page_title: document.title,
-      page_category: 'google_ads_conversion',
+      ...eventData,
     });
     console.log(`[GA4] Event pushed to dataLayer: ${eventName}`);
   }

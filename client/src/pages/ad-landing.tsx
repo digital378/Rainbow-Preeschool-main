@@ -160,9 +160,16 @@ export default function AdLanding() {
       });
       return response.json();
     },
-    onSuccess: (data) => {
+    onSuccess: (data, variables) => {
       if (data.emailSent) {
-        trackAdLead();
+        trackAdLead({
+          parentName: variables.parentName,
+          phone: variables.phone,
+          childAge: variables.childAge,
+          area: variables.area,
+          leadSource: utmData.leadSource,
+          leadMedium: utmData.leadMedium,
+        });
       }
       setIsSubmitted(true);
     },

@@ -112,6 +112,10 @@ export function LandingCallbackForm({ locality, sourcePage }: LandingCallbackFor
           formType: 'instant' as FormType,
           programme: "Playgroup",
           locality,
+          // MCB-aligned parameters
+          parentName: form.getValues().parentName,
+          phone: form.getValues().phone,
+          childAge: form.getValues().childAge,
         });
       }
       setSubmitted(true);

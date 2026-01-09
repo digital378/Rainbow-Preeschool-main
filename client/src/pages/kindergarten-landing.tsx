@@ -89,6 +89,10 @@ function MiniCallbackForm() {
           formType: 'instant',
           programme: 'Kindergarten',
           centre: form.getValues().branch,
+          // MCB-aligned parameters
+          parentName: form.getValues().parentName,
+          phone: form.getValues().phone,
+          childAge: form.getValues().childAge,
         });
       }
       form.reset();

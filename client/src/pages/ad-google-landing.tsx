@@ -143,9 +143,16 @@ export default function AdGoogleLanding() {
       });
       return response.json();
     },
-    onSuccess: (data) => {
+    onSuccess: (data, variables) => {
       if (data.emailSent) {
-        trackGoogleAdsLead();
+        trackGoogleAdsLead({
+          parentName: variables.parentName,
+          phone: variables.phone,
+          childAge: variables.childAge,
+          area: variables.area,
+          leadSource: utmData.leadSource,
+          leadMedium: utmData.leadMedium,
+        });
       }
       setIsSubmitted(true);
       setOtpStep('form');

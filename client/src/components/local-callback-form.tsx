@@ -100,6 +100,10 @@ export function LocalCallbackForm({
           programme,
           centre,
           locality,
+          // MCB-aligned parameters
+          parentName: formData.parentName,
+          phone: formData.phone,
+          childAge: formData.childAge,
         });
       }
       setIsSubmitted(true);

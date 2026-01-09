@@ -104,6 +104,10 @@ function QuickCallbackStrip() {
         trackFormSubmit({
           formType: 'instant',
           programme: 'General Enquiry',
+          // MCB-aligned parameters
+          parentName: formData.parentName,
+          phone: formData.phone,
+          childAge: formData.childAge,
         });
       }
       toast({
