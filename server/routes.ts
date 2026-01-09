@@ -74,8 +74,29 @@ export async function registerRoutes(
         emailSent = false;
       }
       
+      // Send lead to MCB CRM (non-blocking - don't fail if MCB fails)
+      let mcbSent = false;
+      try {
+        const branchID = validatedData.branch ? getBranchID(validatedData.branch) : 88;
+        const mcbResult = await sendLeadToMCB({
+          studentName: validatedData.childName || "Not Provided",
+          fatherName: validatedData.parentName,
+          fatherMobile: validatedData.phone,
+          branchID,
+          utmSource: formData.leadSource || "",
+          utmMedium: formData.leadMedium || "",
+          utmCampaign: formData.utmCampaign || "",
+        });
+        mcbSent = mcbResult.success;
+        if (!mcbSent) {
+          console.error("[MCB] Failed to send lead:", mcbResult.error);
+        }
+      } catch (mcbError) {
+        console.error("[MCB] Error sending lead:", mcbError);
+      }
+      
       // Return emailSent status so client can fire GA4 event only on confirmed delivery
-      res.status(201).json({ success: true, id: contact.id, emailSent });
+      res.status(201).json({ success: true, id: contact.id, emailSent, mcbSent });
     } catch (error) {
       if (error instanceof z.ZodError) {
         res.status(400).json({ error: "Invalid form data", details: error.errors });
