@@ -27,6 +27,7 @@ const Blog = lazy(() => import("@/pages/blog"));
 const BlogPost = lazy(() => import("@/pages/blog-post"));
 const NotFound = lazy(() => import("@/pages/not-found"));
 const AdLanding = lazy(() => import("@/pages/ad-landing"));
+const AdGoogleLanding = lazy(() => import("@/pages/ad-google-landing"));
 
 const RainbowSparkleTrail = lazy(() => import("@/components/rainbow-sparkle-trail").then(m => ({ default: m.RainbowSparkleTrail })));
 
@@ -116,6 +117,7 @@ const STANDALONE_LANDING_PATHS = [
   "/preschool-in-kalwa-thane",
   "/preschool-in-kasarvadavali-thane",
   "/ad",
+  "/ad-google",
   ...legacySlugs.map(slug => slug.replace(/\/$/, '')),
   "/author/rainbowpreschools",
   "/author/rainbow-preschools",
@@ -163,6 +165,7 @@ function Router() {
         <Route path="/blog/:slug" component={BlogPost} />
         
         <Route path="/ad" component={AdLanding} />
+        <Route path="/ad-google" component={AdGoogleLanding} />
         
         <Route path="/playgroup-in-thane" component={LazyPlaygroupInThane} />
         <Route path="/playgroup-in-manpada" component={LazyPlaygroupInManpada} />

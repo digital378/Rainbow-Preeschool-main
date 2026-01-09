@@ -304,6 +304,118 @@ export const trackAdWhatsApp = () => {
 };
 
 // ============================================
+// GOOGLE ADS SPECIFIC TRACKING (/ad-google page)
+// ============================================
+
+/**
+ * Track Google Ads landing page form submissions with "google_ads_leads" event
+ * Used exclusively for /ad-google page to track Google Ads conversions
+ */
+export const trackGoogleAdsLead = () => {
+  if (typeof window === 'undefined') return;
+  
+  const measurementId = import.meta.env.VITE_GA_MEASUREMENT_ID;
+  const eventName = 'google_ads_leads';
+  
+  console.log(`[GA4] Attempting to fire: ${eventName}`, {
+    hasGtag: typeof window.gtag === 'function',
+    hasMeasurementId: !!measurementId,
+    page: window.location.pathname,
+  });
+  
+  if (typeof window.gtag === 'function' && measurementId) {
+    window.gtag('event', eventName, {
+      page_path: window.location.pathname,
+      page_title: document.title,
+      page_category: 'google_ads_conversion',
+      send_to: measurementId,
+    });
+    console.log(`[GA4] Event FIRED via gtag: ${eventName}`);
+  } else {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: eventName,
+      page_path: window.location.pathname,
+      page_title: document.title,
+      page_category: 'google_ads_conversion',
+    });
+    console.log(`[GA4] Event pushed to dataLayer: ${eventName}`);
+  }
+};
+
+/**
+ * Track call button clicks on /ad-google page with "google_ads_call" event
+ * Used exclusively for /ad-google page to track call intent from Google Ads
+ */
+export const trackGoogleAdsCall = () => {
+  if (typeof window === 'undefined') return;
+  
+  const measurementId = import.meta.env.VITE_GA_MEASUREMENT_ID;
+  const eventName = 'google_ads_call';
+  
+  console.log(`[GA4] Attempting to fire: ${eventName}`, {
+    hasGtag: typeof window.gtag === 'function',
+    hasMeasurementId: !!measurementId,
+    page: window.location.pathname,
+  });
+  
+  if (typeof window.gtag === 'function' && measurementId) {
+    window.gtag('event', eventName, {
+      page_path: window.location.pathname,
+      page_title: document.title,
+      page_category: 'google_ads_engagement',
+      send_to: measurementId,
+    });
+    console.log(`[GA4] Event FIRED via gtag: ${eventName}`);
+  } else {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: eventName,
+      page_path: window.location.pathname,
+      page_title: document.title,
+      page_category: 'google_ads_engagement',
+    });
+    console.log(`[GA4] Event pushed to dataLayer: ${eventName}`);
+  }
+};
+
+/**
+ * Track WhatsApp button clicks on /ad-google page with "google_ads_whatsapp" event
+ * Used exclusively for /ad-google page to track WhatsApp engagement from Google Ads
+ */
+export const trackGoogleAdsWhatsApp = () => {
+  if (typeof window === 'undefined') return;
+  
+  const measurementId = import.meta.env.VITE_GA_MEASUREMENT_ID;
+  const eventName = 'google_ads_whatsapp';
+  
+  console.log(`[GA4] Attempting to fire: ${eventName}`, {
+    hasGtag: typeof window.gtag === 'function',
+    hasMeasurementId: !!measurementId,
+    page: window.location.pathname,
+  });
+  
+  if (typeof window.gtag === 'function' && measurementId) {
+    window.gtag('event', eventName, {
+      page_path: window.location.pathname,
+      page_title: document.title,
+      page_category: 'google_ads_engagement',
+      send_to: measurementId,
+    });
+    console.log(`[GA4] Event FIRED via gtag: ${eventName}`);
+  } else {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: eventName,
+      page_path: window.location.pathname,
+      page_title: document.title,
+      page_category: 'google_ads_engagement',
+    });
+    console.log(`[GA4] Event pushed to dataLayer: ${eventName}`);
+  }
+};
+
+// ============================================
 // LEGACY TRACKING FUNCTION (for backwards compatibility)
 // Maps to new trackFormSubmit with appropriate form type
 // ============================================

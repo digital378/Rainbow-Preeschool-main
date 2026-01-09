@@ -143,28 +143,35 @@ Clean, page-based GA4 form tracking using gtag (no GTM Form Submission triggers)
 - `public/sitemap.xml` - All pages with priority weighting (local pages at 0.9)
 - `public/robots.txt` - Allow all, disallow /api/
 
-## Ad Landing Page (/ad)
+## Ad Landing Pages
 
-### Purpose
-Dedicated landing page for Google Ads and Meta Ads campaigns with streamlined lead capture.
+### /ad - General Ad Landing Page
+Dedicated landing page for Meta Ads and general paid campaigns with streamlined lead capture.
+- **No OTP verification** - Direct form submission
+- **GA4 Events**: `ad_leads`, `ad_call`, `ad_whatsapp`
+- File: `client/src/pages/ad-landing.tsx`
 
-### Form Flow
+### /ad-google - Google Ads Landing Page
+Dedicated landing page specifically for Google Ads campaigns with OTP verification.
+- **Has noindex meta tag** - Prevents SERP indexing
+- **OTP verification required** - Uses Firebase Phone Auth
+- **GA4 Events**: `google_ads_leads`, `google_ads_call`, `google_ads_whatsapp`
+- File: `client/src/pages/ad-google-landing.tsx`
+
+### Form Flow (Both Pages)
 1. User fills form (parent name, phone, child age, area)
-2. Form submits directly to backend
-3. GA4 `ad_leads` event fires only after email confirmation
+2. /ad: Submits directly | /ad-google: Sends OTP first, then submits after verification
+3. GA4 event fires only after email confirmation from server
 
 ### Lead Source Tracking
 Automatic detection of ad platform without manual UTM parameters:
-- **Google Ads**: Detected via `gclid`, `gad_source`, or `gbraid` URL parameters
+- **Google Ads**: Detected via `gclid`, `gad_source`, `gbraid`, or `wbraid` URL parameters
 - **Meta Ads**: Detected via `fbclid` URL parameter
 - Lead source stored in contact submission for attribution
 
-### Key Files
-- `client/src/pages/ad-landing.tsx` - Landing page with form
-
-### Firebase Phone Auth (For Future Use)
-Firebase Phone Auth is configured for OTP verification on other pages.
-Environment variables available:
+### Firebase Phone Auth
+Used on /ad-google page for OTP verification.
+Environment variables:
 - `VITE_FIREBASE_API_KEY`
 - `VITE_FIREBASE_AUTH_DOMAIN`
 - `VITE_FIREBASE_PROJECT_ID`
