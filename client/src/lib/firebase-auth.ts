@@ -1,5 +1,5 @@
-import { initializeApp } from 'firebase/app';
-import { getAuth, RecaptchaVerifier, signInWithPhoneNumber, ConfirmationResult } from 'firebase/auth';
+import { initializeApp, FirebaseApp } from 'firebase/app';
+import { getAuth, RecaptchaVerifier, signInWithPhoneNumber, ConfirmationResult, Auth } from 'firebase/auth';
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -8,17 +8,32 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
 
-const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
-
+let app: FirebaseApp | null = null;
+let auth: Auth | null = null;
 let recaptchaVerifier: RecaptchaVerifier | null = null;
+
+function getFirebaseApp(): FirebaseApp {
+  if (!app) {
+    if (!firebaseConfig.apiKey || !firebaseConfig.projectId) {
+      throw new Error('Firebase configuration is missing. Please check environment variables.');
+    }
+    app = initializeApp(firebaseConfig);
+  }
+  return app;
+}
+
+function getFirebaseAuth(): Auth {
+  if (!auth) {
+    auth = getAuth(getFirebaseApp());
+  }
+  return auth;
+}
 
 export async function initRecaptcha(containerId: string): Promise<RecaptchaVerifier> {
   if (recaptchaVerifier) {
     try {
       recaptchaVerifier.clear();
     } catch (e) {
-      // Ignore clear errors
     }
     recaptchaVerifier = null;
   }
@@ -28,8 +43,9 @@ export async function initRecaptcha(containerId: string): Promise<RecaptchaVerif
     throw new Error(`reCAPTCHA container ${containerId} not found`);
   }
   
-  // Firebase v9+ modular API: new RecaptchaVerifier(auth, container, options)
-  recaptchaVerifier = new RecaptchaVerifier(auth, container, {
+  const firebaseAuth = getFirebaseAuth();
+  
+  recaptchaVerifier = new RecaptchaVerifier(firebaseAuth, container, {
     size: 'invisible',
     callback: () => {
       console.log('reCAPTCHA solved');
@@ -39,7 +55,6 @@ export async function initRecaptcha(containerId: string): Promise<RecaptchaVerif
     }
   });
   
-  // Render the reCAPTCHA widget
   await recaptchaVerifier.render();
   
   return recaptchaVerifier;
@@ -52,7 +67,8 @@ export async function sendOTP(phoneNumber: string): Promise<ConfirmationResult> 
     throw new Error('reCAPTCHA not initialized');
   }
   
-  const confirmationResult = await signInWithPhoneNumber(auth, formattedPhone, recaptchaVerifier);
+  const firebaseAuth = getFirebaseAuth();
+  const confirmationResult = await signInWithPhoneNumber(firebaseAuth, formattedPhone, recaptchaVerifier);
   return confirmationResult;
 }
 
@@ -68,7 +84,10 @@ export async function verifyOTP(confirmationResult: ConfirmationResult, otp: str
 
 export function resetRecaptcha() {
   if (recaptchaVerifier) {
-    recaptchaVerifier.clear();
+    try {
+      recaptchaVerifier.clear();
+    } catch (e) {
+    }
     recaptchaVerifier = null;
   }
 }
