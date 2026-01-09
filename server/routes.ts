@@ -4,6 +4,7 @@ import { storage } from "./storage";
 import { insertContactSchema } from "@shared/schema";
 import { z } from "zod";
 import { sendLeadNotificationEmail } from "./gmail";
+import { sendLeadToMCB, getBranchID } from "./mcb";
 
 const RECAPTCHA_SECRET_KEY = process.env.RECAPTCHA_SECRET_KEY || "";
 
@@ -119,6 +120,39 @@ export async function registerRoutes(
     } catch (error) {
       console.error("Get blog post error:", error);
       res.status(500).json({ error: "Failed to fetch blog post" });
+    }
+  });
+
+  // Test MCB CRM integration endpoint
+  app.post("/api/test-mcb", async (req, res) => {
+    try {
+      const { studentName, fatherName, fatherMobile, branch, utmSource, utmCampaign, utmMedium } = req.body;
+      
+      if (!fatherName || !fatherMobile) {
+        res.status(400).json({ error: "fatherName and fatherMobile are required" });
+        return;
+      }
+
+      const branchID = branch ? getBranchID(branch) : 88;
+      
+      const result = await sendLeadToMCB({
+        studentName: studentName || "Test Child",
+        fatherName,
+        fatherMobile,
+        branchID,
+        utmSource,
+        utmCampaign,
+        utmMedium,
+      });
+
+      if (result.success) {
+        res.json({ success: true, message: "Lead sent to MCB successfully" });
+      } else {
+        res.status(500).json({ success: false, error: result.error });
+      }
+    } catch (error) {
+      console.error("MCB test error:", error);
+      res.status(500).json({ error: "Failed to send test lead to MCB" });
     }
   });
 
