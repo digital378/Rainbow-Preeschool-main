@@ -1,17 +1,10 @@
-import indiaToday from "@assets/logos/india-today.png";
-import scooNews from "@assets/logos/scoo-news.png";
-import worldEducationSummit from "@assets/logos/world-education-summit.png";
-import economicTimes from "@assets/logos/economic-times.png";
-import nsaAward from "@assets/logos/nsa-award.png";
-import awardShield from "@assets/logos/award-shield.png";
-
 const awardLogos = [
-  { name: "India Today", src: indiaToday, alt: "India Today Award" },
-  { name: "Award Shield", src: awardShield, alt: "Excellence Award" },
-  { name: "Scoo News", src: scooNews, alt: "Scoo News Recognition" },
-  { name: "World Education Summit", src: worldEducationSummit, alt: "World Education Summit Mumbai" },
-  { name: "Economic Times", src: economicTimes, alt: "Economic Times Feature" },
-  { name: "NSA Award", src: nsaAward, alt: "National School Award 2023" },
+  { name: "India Today", displayName: "INDIA TODAY", color: "text-red-600" },
+  { name: "Award Shield", displayName: "Excellence Award", color: "text-amber-600" },
+  { name: "Scoo News", displayName: "SCOO NEWS", color: "text-gray-800 dark:text-gray-200" },
+  { name: "World Education Summit", displayName: "World Education Summit", color: "text-blue-700 dark:text-blue-400" },
+  { name: "Economic Times", displayName: "ET", color: "text-gray-900 dark:text-gray-100" },
+  { name: "NSA Award", displayName: "NSA 2023", color: "text-amber-500" },
 ];
 
 export function AwardedBySection() {
@@ -28,13 +21,10 @@ export function AwardedBySection() {
               key={logo.name}
               className="flex items-center"
             >
-              <div className="px-4 md:px-8 py-2 flex items-center justify-center">
-                <img
-                  src={logo.src}
-                  alt={logo.alt}
-                  className="h-12 md:h-16 lg:h-20 w-auto object-contain max-w-[120px] md:max-w-[150px] grayscale-0 dark:brightness-110"
-                  loading="lazy"
-                />
+              <div className="px-4 md:px-8 py-2 flex items-center justify-center min-w-[100px] md:min-w-[140px]">
+                <span className={`font-bold text-lg md:text-xl ${logo.color}`}>
+                  {logo.displayName}
+                </span>
               </div>
               {index < awardLogos.length - 1 && (
                 <div className="hidden md:block h-12 w-px bg-border/50" />
