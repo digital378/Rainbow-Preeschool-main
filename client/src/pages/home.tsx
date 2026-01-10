@@ -11,6 +11,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { HeroSection } from "@/components/hero-section";
+import { AwardedBySection } from "@/components/awarded-by-section";
 import { ProgrammeCard } from "@/components/programme-card";
 import { BranchCard } from "@/components/branch-card";
 import { TestimonialCard } from "@/components/testimonial-card";
@@ -308,6 +309,7 @@ export default function Home() {
       />
       <HeroSection />
       <QuickCallbackStrip />
+      <AwardedBySection />
 
       {/* About Section - SEO Enhanced */}
       <section className="py-16 md:py-20 lg:py-24">

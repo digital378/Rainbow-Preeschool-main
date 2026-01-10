@@ -1,0 +1,180 @@
+Here’s a **copy-paste developer task prompt** you can drop into Replit (or hand to an AI dev) to implement the “Awarded By” logos section exactly like your reference, with your responsive + light/dark + mobile behavior requirements.
+
+---
+
+## Replit Developer Task Prompt (Homepage “Awarded By” Logos Section)
+
+### Goal
+
+Add an **“Awarded By:”** logos section **directly below the hero section** on the homepage, visually matching the provided reference screenshots:
+
+* Centered title **“Awarded By:”**
+* A horizontal row of **award/media logos**
+* Clean spacing, subtle separators (thin vertical lines) between logos (optional but matches reference)
+
+### Placement
+
+* Insert the section **immediately after the hero section** and before the next homepage content block.
+* Ensure it aligns with the site container/grid width used elsewhere.
+
+---
+
+## Functional Requirements
+
+### 1) Light & Dark Mode Support
+
+* Section background, text, and logo treatment must adapt to **Light and Dark themes**.
+* Use theme tokens / CSS variables already present (preferred), e.g.:
+
+  * `--bg`, `--text`, `--muted`, `--card`, `--border`, etc.
+* Title text should remain high contrast in both modes.
+* Logos should look clean in both themes:
+
+  * If logos are colored PNG/SVG, keep as-is.
+  * If logos are single-color SVGs, allow tinting via CSS (optional).
+
+### 2) Responsive Layout (Mobile → Desktop)
+
+* **Mobile:** show the logos in a single row with **Right-to-Left continuous scrolling** (marquee-like).
+* **Tablet / Laptop / Desktop:** no marquee. Show as a centered static row/grid with **hover zoom-in** and **soft shadows per logo card**.
+
+Breakpoints (suggested, adjust to your design system):
+
+* Mobile: `< 768px` → scrolling RTL
+* Large screens: `>= 768px` → static layout + hover effects
+
+### 3) Mobile Right-to-Left Scrolling Behavior
+
+* Implement a smooth, continuous loop (no jump).
+* Logos should scroll **from right to left**.
+* Pause animation on touch/hover is optional but nice.
+* Must respect accessibility:
+
+  * If user has `prefers-reduced-motion: reduce`, disable marquee and show static wrapped layout.
+
+Implementation suggestion:
+
+* Duplicate logo list (two tracks) for seamless looping.
+* Use CSS keyframes translateX from `0` to `-50%` (depending on track width).
+
+### 4) Desktop/Tablet Hover Effects (No Scrolling)
+
+* Each logo should be in its own “card” or “pill” container:
+
+  * subtle border
+  * soft shadow
+  * slight background tint depending on theme
+* On hover:
+
+  * scale up slightly (e.g. `transform: scale(1.06)`)
+  * increase shadow depth
+* Keep spacing consistent and aligned.
+* Logos should not look “stuck together”—each one feels separate like the reference.
+
+---
+
+## UI Specifications
+
+### Section Structure
+
+* Title: “Awarded By:”
+* Logos row below title
+* Optional: thin vertical separators between items (especially in desktop view)
+
+### Spacing & Sizing
+
+* Section padding: ~40–60px vertical on desktop, ~24–36px on mobile
+* Logo height: ~40–56px desktop, ~28–44px mobile (auto width)
+* Keep consistent alignment and baseline.
+
+### Assets
+
+* Use these example logo keys (replace with actual assets/URLs already in project):
+
+  * India Today
+  * (School crest / icon)
+  * ScooNews
+  * World Education Summit Mumbai
+  * ET
+  * NSA 2023 badge
+
+Provide an easy config array/object so future logos can be added without rewriting layout.
+
+---
+
+## Technical Requirements
+
+### If React/Next.js
+
+Create a reusable component, e.g.:
+
+* `components/AwardedBy.tsx`
+* Use it in `pages/index.tsx` or `app/page.tsx` right after Hero.
+
+Component props:
+
+* `logos: { name: string; src: string; alt: string; href?: string }[]`
+
+Behavior:
+
+* Determine marquee vs static using CSS media queries (preferred) or JS `useMediaQuery`.
+* Ensure images have `alt` text.
+* Use `loading="lazy"` where appropriate.
+
+### If plain HTML/CSS/JS
+
+* Add a section block in homepage template
+* Create CSS for:
+
+  * `.awardedBy`
+  * `.awardedBy__track`
+  * `.awardedBy__item`
+  * marquee animation for mobile only
+
+### Performance
+
+* Optimize logo images:
+
+  * Prefer SVG where possible
+  * Otherwise compressed PNG/WebP
+* Avoid layout shift: set width/height or use consistent logo container height.
+
+### Accessibility
+
+* Proper heading level (e.g. `<h2>Awarded By:</h2>`)
+* `alt` for each logo
+* Disable animation for `prefers-reduced-motion`
+
+---
+
+## Acceptance Criteria (Checklist)
+
+* ✅ Section appears below hero exactly as requested
+* ✅ Light & dark mode look correct (no washed-out logos / low contrast text)
+* ✅ Mobile: RTL continuous scrolling logos (smooth loop)
+* ✅ Tablet/Desktop: static row/grid, no scrolling, each logo has hover zoom + shadow
+* ✅ Works on common screen sizes (mobile, tablet, laptop, desktop)
+* ✅ `prefers-reduced-motion` disables marquee and shows static layout
+
+---
+
+## Optional Enhancements (Recommended UX/UI)
+
+1. **Clickable logos**: Link each logo to a press/award mention page (or internal “Awards” page).
+2. **Subtle gradient edge mask** on mobile marquee (fade on left/right edges) to look premium.
+3. **Consistent logo treatment**: If some logos are too tall/wide, apply `object-fit: contain` and standard container size so the row looks balanced.
+4. **Auto-wrap fallback** for very small screens or reduced motion.
+
+---
+
+## Deliverables
+
+* New component/section added
+* CSS (theme-aware + responsive)
+* Logo list config
+* Confirmed behavior on mobile + desktop
+* Short notes in code comments for adjusting speed, breakpoints, logo sizes
+
+---
+
+If you tell me what stack your Replit project uses (**Next.js/React** vs **plain HTML**), I can also generate the exact code (component + CSS) in your project style with your theme variables and breakpoints.
