@@ -22,47 +22,79 @@ const awardLogos: AwardLogo[] = [
   { name: "NSA Award", src: nsaAward, alt: "National School Awards 2023" },
 ];
 
+function LogoImage({ logo }: { logo: AwardLogo }) {
+  if (logo.srcDark) {
+    return (
+      <>
+        <img
+          src={logo.src}
+          alt={logo.alt}
+          className="h-10 md:h-16 lg:h-20 w-auto object-contain max-w-[100px] md:max-w-[150px] dark:hidden"
+          loading="lazy"
+        />
+        <img
+          src={logo.srcDark}
+          alt={logo.alt}
+          className="h-10 md:h-16 lg:h-20 w-auto object-contain max-w-[100px] md:max-w-[150px] hidden dark:block"
+          loading="lazy"
+        />
+      </>
+    );
+  }
+  return (
+    <img
+      src={logo.src}
+      alt={logo.alt}
+      className="h-10 md:h-16 lg:h-20 w-auto object-contain max-w-[100px] md:max-w-[150px]"
+      loading="lazy"
+    />
+  );
+}
+
 export function AwardedBySection() {
   return (
-    <section className="py-12 md:py-16 bg-background">
+    <section className="py-10 md:py-16 bg-background overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 md:mb-12 text-foreground">
+        <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-center mb-6 md:mb-12 text-foreground">
           Awarded By:
         </h2>
         
-        <div className="flex flex-wrap justify-center items-center gap-6 md:gap-0">
+        {/* Mobile: Scrolling animation */}
+        <div className="md:hidden relative">
+          <div className="flex animate-scroll-rtl">
+            {/* First set of logos */}
+            {awardLogos.map((logo) => (
+              <div
+                key={logo.name}
+                className="flex-shrink-0 px-6 flex items-center justify-center"
+              >
+                <LogoImage logo={logo} />
+              </div>
+            ))}
+            {/* Duplicate set for seamless loop */}
+            {awardLogos.map((logo) => (
+              <div
+                key={`${logo.name}-dup`}
+                className="flex-shrink-0 px-6 flex items-center justify-center"
+              >
+                <LogoImage logo={logo} />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Desktop: Static row with separators */}
+        <div className="hidden md:flex justify-center items-center">
           {awardLogos.map((logo, index) => (
             <div
               key={logo.name}
               className="flex items-center"
             >
-              <div className="px-4 md:px-8 py-2 flex items-center justify-center">
-                {logo.srcDark ? (
-                  <>
-                    <img
-                      src={logo.src}
-                      alt={logo.alt}
-                      className="h-12 md:h-16 lg:h-20 w-auto object-contain max-w-[120px] md:max-w-[150px] dark:hidden"
-                      loading="lazy"
-                    />
-                    <img
-                      src={logo.srcDark}
-                      alt={logo.alt}
-                      className="h-12 md:h-16 lg:h-20 w-auto object-contain max-w-[120px] md:max-w-[150px] hidden dark:block"
-                      loading="lazy"
-                    />
-                  </>
-                ) : (
-                  <img
-                    src={logo.src}
-                    alt={logo.alt}
-                    className="h-12 md:h-16 lg:h-20 w-auto object-contain max-w-[120px] md:max-w-[150px]"
-                    loading="lazy"
-                  />
-                )}
+              <div className="px-8 py-2 flex items-center justify-center">
+                <LogoImage logo={logo} />
               </div>
               {index < awardLogos.length - 1 && (
-                <div className="hidden md:block h-12 w-px bg-border/50" />
+                <div className="h-12 w-px bg-border/50" />
               )}
             </div>
           ))}

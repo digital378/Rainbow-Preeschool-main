@@ -404,6 +404,15 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
+  @keyframes scroll-rtl {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  .animate-scroll-rtl {
+    animation: scroll-rtl 20s linear infinite;
+  }
+
   .animate-blob {
     animation: blob 12s ease-in-out infinite;
   }
@@ -433,7 +442,8 @@
     .animate-blob,
     .animate-float,
     .animate-fade-in,
-    .animate-fade-in-up {
+    .animate-fade-in-up,
+    .animate-scroll-rtl {
       animation: none;
       opacity: 1;
       transform: none;
