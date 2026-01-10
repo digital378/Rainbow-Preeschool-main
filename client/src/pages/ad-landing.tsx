@@ -251,7 +251,7 @@ export default function AdLanding() {
                 ) : (
                   <>
                     <div className="text-center mb-6">
-                      <h2 className="text-xl font-bold">Book A Visit</h2>
+                      <h2 className="text-xl font-bold">Get Details</h2>
                       <p className="text-sm text-muted-foreground mt-1">
                         Fill the form & our team will contact you
                       </p>
@@ -358,7 +358,7 @@ export default function AdLanding() {
                               Submitting...
                             </>
                           ) : (
-                            "Book A Visit"
+                            "Enquire Now"
                           )}
                         </Button>
 

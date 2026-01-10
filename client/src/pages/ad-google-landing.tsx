@@ -396,7 +396,7 @@ export default function AdGoogleLanding() {
                 ) : (
                   <>
                     <div className="text-center mb-6">
-                      <h2 className="text-xl font-bold">Book A Visit</h2>
+                      <h2 className="text-xl font-bold">Get Details</h2>
                       <p className="text-sm text-muted-foreground mt-1">
                         Fill the form & verify with OTP
                       </p>
@@ -509,7 +509,7 @@ export default function AdGoogleLanding() {
                               Sending OTP...
                             </>
                           ) : (
-                            "Get OTP & Book Visit"
+                            "Enquire Now"
                           )}
                         </Button>
 
