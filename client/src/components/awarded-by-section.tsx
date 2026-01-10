@@ -1,10 +1,25 @@
-const awardLogos = [
-  { name: "India Today", displayName: "INDIA TODAY", color: "text-red-600" },
-  { name: "Award Shield", displayName: "Excellence Award", color: "text-amber-600" },
-  { name: "Scoo News", displayName: "SCOO NEWS", color: "text-gray-800 dark:text-gray-200" },
-  { name: "World Education Summit", displayName: "World Education Summit", color: "text-blue-700 dark:text-blue-400" },
-  { name: "Economic Times", displayName: "ET", color: "text-gray-900 dark:text-gray-100" },
-  { name: "NSA Award", displayName: "NSA 2023", color: "text-amber-500" },
+import indiaToday from "@assets/India_Today_1768032635727.png";
+import thaneMunicipal from "@assets/Thane_Municipal_Cooperation_1768032635727.png";
+import scooNewsLight from "@assets/Scoo_News_(For_Light_Mode)_1768032635727.png";
+import scooNewsDark from "@assets/Scoo_News_(For_Dark_Mode)_1768032635727.png";
+import worldEducationSummit from "@assets/15th_WES_Mumbai_1768032635726.png";
+import economicTimes from "@assets/The_Economic_Times_1768032635728.png";
+import nsaAward from "@assets/National_School_Awards_1768032635727.png";
+
+interface AwardLogo {
+  name: string;
+  src: string;
+  srcDark?: string;
+  alt: string;
+}
+
+const awardLogos: AwardLogo[] = [
+  { name: "India Today", src: indiaToday, alt: "India Today Award" },
+  { name: "Thane Municipal Corporation", src: thaneMunicipal, alt: "Thane Municipal Corporation Recognition" },
+  { name: "Scoo News", src: scooNewsLight, srcDark: scooNewsDark, alt: "Scoo News Feature" },
+  { name: "World Education Summit", src: worldEducationSummit, alt: "15th World Education Summit Mumbai" },
+  { name: "Economic Times", src: economicTimes, alt: "Economic Times Feature" },
+  { name: "NSA Award", src: nsaAward, alt: "National School Awards 2023" },
 ];
 
 export function AwardedBySection() {
@@ -21,10 +36,30 @@ export function AwardedBySection() {
               key={logo.name}
               className="flex items-center"
             >
-              <div className="px-4 md:px-8 py-2 flex items-center justify-center min-w-[100px] md:min-w-[140px]">
-                <span className={`font-bold text-lg md:text-xl ${logo.color}`}>
-                  {logo.displayName}
-                </span>
+              <div className="px-4 md:px-8 py-2 flex items-center justify-center">
+                {logo.srcDark ? (
+                  <>
+                    <img
+                      src={logo.src}
+                      alt={logo.alt}
+                      className="h-12 md:h-16 lg:h-20 w-auto object-contain max-w-[120px] md:max-w-[150px] dark:hidden"
+                      loading="lazy"
+                    />
+                    <img
+                      src={logo.srcDark}
+                      alt={logo.alt}
+                      className="h-12 md:h-16 lg:h-20 w-auto object-contain max-w-[120px] md:max-w-[150px] hidden dark:block"
+                      loading="lazy"
+                    />
+                  </>
+                ) : (
+                  <img
+                    src={logo.src}
+                    alt={logo.alt}
+                    className="h-12 md:h-16 lg:h-20 w-auto object-contain max-w-[120px] md:max-w-[150px]"
+                    loading="lazy"
+                  />
+                )}
               </div>
               {index < awardLogos.length - 1 && (
                 <div className="hidden md:block h-12 w-px bg-border/50" />
