@@ -1,5 +1,5 @@
 import indiaToday from "@assets/India_Today_1768032635727.png";
-import thaneMunicipal from "@assets/Thane_Municipal_Cooperation_1768032635727.png";
+import thaneMunicipal from "@assets/Thane-Municipal-Cooperation-Logo_1768033856127.png";
 import scooNewsLight from "@assets/Scoo_News_(For_Light_Mode)_1768032635727.png";
 import scooNewsDark from "@assets/Scoo_News_(For_Dark_Mode)_1768032635727.png";
 import worldEducationSummit from "@assets/15th_WES_Mumbai_1768032635726.png";
