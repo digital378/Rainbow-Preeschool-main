@@ -165,7 +165,12 @@ export function ContactForm({ defaultBranch, defaultProgramme, compact = false, 
         });
         // Fire Meta Pixel Lead conversion event only on confirmed email
         if (typeof window !== 'undefined' && (window as any).fbq) {
-          (window as any).fbq('track', 'Lead');
+          (window as any).fbq('track', 'Lead', {
+            value: 0,
+            currency: 'INR',
+            content_name: 'Contact Form Lead',
+            content_category: 'preschool_enquiry',
+          });
         }
       }
       

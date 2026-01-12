@@ -267,6 +267,17 @@ export const trackAdLead = (params: AdLeadParams = {}) => {
     });
     console.log(`[GA4] Event pushed to dataLayer: ${eventName}`);
   }
+  
+  // Also fire Meta Pixel Lead event for Meta Ads tracking
+  if ((window as any).fbq) {
+    (window as any).fbq('track', 'Lead', {
+      value: 0,
+      currency: 'INR',
+      content_name: 'Ad Landing Lead',
+      content_category: 'meta_ads_conversion',
+    });
+    console.log('[Meta Pixel] Lead event fired for /ad page');
+  }
 };
 
 /**
@@ -387,6 +398,17 @@ export const trackGoogleAdsLead = (params: AdLeadParams = {}) => {
       ...eventData,
     });
     console.log(`[GA4] Event pushed to dataLayer: ${eventName}`);
+  }
+  
+  // Also fire Meta Pixel Lead event for Meta Ads tracking (in case user runs both platforms)
+  if ((window as any).fbq) {
+    (window as any).fbq('track', 'Lead', {
+      value: 0,
+      currency: 'INR',
+      content_name: 'Google Ads Landing Lead',
+      content_category: 'google_ads_conversion',
+    });
+    console.log('[Meta Pixel] Lead event fired for /ad-google page');
   }
 };
 
