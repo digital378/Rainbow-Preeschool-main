@@ -165,12 +165,35 @@ export function ContactForm({ defaultBranch, defaultProgramme, compact = false, 
         });
         // Fire Meta Pixel Lead conversion event only on confirmed email
         if (typeof window !== 'undefined' && (window as any).fbq) {
+          // Get form values for advanced matching
+          const parentName = form.getValues("parentName") || '';
+          const phone = form.getValues("phone") || '';
+          const email = form.getValues("email") || '';
+          
+          // Split name for Meta matching
+          const nameParts = parentName.trim().split(' ');
+          const firstName = nameParts[0] || '';
+          const lastName = nameParts.slice(1).join(' ') || '';
+          const cleanPhone = phone.replace(/[\s\-\+]/g, '').replace(/^91/, '');
+          
           (window as any).fbq('track', 'Lead', {
             value: 0,
             currency: 'INR',
             content_name: 'Contact Form Lead',
             content_category: 'preschool_enquiry',
+          }, {
+            eventID: `contact_lead_${Date.now()}`,
           });
+          
+          // Update user data for advanced matching (improves Event Match Quality)
+          if (firstName || cleanPhone || email) {
+            (window as any).fbq('init', '876471444795481', {
+              fn: firstName.toLowerCase(),
+              ln: lastName.toLowerCase(),
+              ph: cleanPhone,
+              em: email.toLowerCase(),
+            });
+          }
         }
       }
       
