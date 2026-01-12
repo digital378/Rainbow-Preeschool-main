@@ -69,18 +69,18 @@ export const HowToChooseBestPreschool = createLegacyPage("/how-to-choose-best-pr
 export const PlaygroupAdmissionGuide = createLegacyPage("/playgroup-admission-thane-complete-guide/");
 
 // Homepage supporting posts
-export const RainbowPreschoolCentresThane = createLegacyPage("/rainbow-preschool-centres-thane/");
-export const ComparingPreschoolsThane = createLegacyPage("/comparing-preschools-thane/");
-export const QualityPreschoolIndicators = createLegacyPage("/quality-preschool-indicators-parents-guide/");
-export const PreschoolVsDaycare = createLegacyPage("/preschool-vs-daycare-difference/");
-export const EarlyChildhoodEducationImportance = createLegacyPage("/early-childhood-education-importance/");
+export const RainbowPreschoolCentresThane = createLegacyPage("/why-rainbow-preschool-best-thane-2026/");
+export const ComparingPreschoolsThane = createLegacyPage("/top-10-preschools-thane-comparison-guide/");
+export const QualityPreschoolIndicators = createLegacyPage("/what-makes-great-preschool-checklist/");
+export const PreschoolVsDaycare = createLegacyPage("/preschool-vs-daycare-difference-explained/");
+export const EarlyChildhoodEducationImportance = createLegacyPage("/early-childhood-education-importance-india/");
 
 // About page supporting posts
-export const RainbowPreschoolJourneySince2007 = createLegacyPage("/rainbow-preschool-journey-since-2007/");
-export const RainbowPreschoolAwards = createLegacyPage("/rainbow-preschool-awards-recognition/");
-export const TeacherTrainingQuality = createLegacyPage("/teacher-training-quality-preschool/");
-export const ParentTestimonialsExperiences = createLegacyPage("/parent-testimonials-rainbow-preschool/");
-export const ChildSafetyPreschool = createLegacyPage("/child-safety-preschool-standards/");
+export const RainbowPreschoolJourneySince2007 = createLegacyPage("/rainbow-preschool-journey-2007-to-2026/");
+export const RainbowPreschoolAwards = createLegacyPage("/rainbow-preschool-awards-achievements/");
+export const TeacherTrainingQuality = createLegacyPage("/rainbow-preschool-teacher-training-philosophy/");
+export const ParentTestimonialsExperiences = createLegacyPage("/parent-testimonials-rainbow-preschool-thane/");
+export const ChildSafetyPreschool = createLegacyPage("/rainbow-preschool-safety-measures-child-security/");
 
 // Programmes page supporting posts
 export const PlayBasedLearningBenefits = createLegacyPage("/play-based-learning-benefits-children/");
