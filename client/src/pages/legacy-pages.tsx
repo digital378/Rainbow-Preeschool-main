@@ -64,6 +64,10 @@ export const MidTermVisitQuestions = createLegacyPage("/questions-ask-school-vis
 export const FAQsPage = createLegacyPage("/faqs/");
 export const UnderstandingPreschoolImportance = createLegacyPage("/understanding-the-importance-of-preschool-in-early-childhood-development/");
 
+export const BestPreschoolCurriculumThane = createLegacyPage("/best-preschool-curriculum-thane/");
+export const HowToChooseBestPreschool = createLegacyPage("/how-to-choose-best-preschool-thane/");
+export const PlaygroupAdmissionGuide = createLegacyPage("/playgroup-admission-thane-complete-guide/");
+
 export { AuthorArchivePage };
 
 export const legacySlugs = Object.keys(legacyPagesData);

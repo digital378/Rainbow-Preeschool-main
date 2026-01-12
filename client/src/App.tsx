@@ -98,6 +98,9 @@ const LazyPhysicalDevelopmentSigns = lazy(() => import("@/pages/legacy-pages").t
 const LazyMidTermVisitQuestions = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.MidTermVisitQuestions })));
 const LazyFAQsPage = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.FAQsPage })));
 const LazyUnderstandingPreschoolImportance = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.UnderstandingPreschoolImportance })));
+const LazyBestPreschoolCurriculumThane = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.BestPreschoolCurriculumThane })));
+const LazyHowToChooseBestPreschool = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.HowToChooseBestPreschool })));
+const LazyPlaygroupAdmissionGuide = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.PlaygroupAdmissionGuide })));
 const LazyAuthorArchivePage = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.AuthorArchivePage })));
 
 const LazyTermsPage = lazy(() => import("@/pages/legal").then(m => ({ default: m.TermsPage })));
@@ -237,6 +240,10 @@ function Router() {
         <Route path="/questions-ask-school-visit-mid-term-playgroup-admissions" component={LazyMidTermVisitQuestions} />
         <Route path="/faqs" component={LazyFAQsPage} />
         <Route path="/understanding-the-importance-of-preschool-in-early-childhood-development" component={LazyUnderstandingPreschoolImportance} />
+        
+        <Route path="/best-preschool-curriculum-thane" component={LazyBestPreschoolCurriculumThane} />
+        <Route path="/how-to-choose-best-preschool-thane" component={LazyHowToChooseBestPreschool} />
+        <Route path="/playgroup-admission-thane-complete-guide" component={LazyPlaygroupAdmissionGuide} />
         
         <Route path="/author/rainbowpreschools" component={LazyAuthorArchivePage} />
         <Route path="/author/rainbow-preschools" component={LazyAuthorArchivePage} />

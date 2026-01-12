@@ -62,18 +62,18 @@ export default function Programmes() {
   return (
     <div className="pt-20">
       <SEO
-        title="Programmes - Rainbow Preschool International | Playgroup, Nursery, Kindergarten"
-        description="Explore Rainbow Preschool programmes: Playgroup (1.5-2.5 yrs), Nursery (2.5-3.5 yrs), Kindergarten (3.5-5.5 yrs) & Daycare. Play-based curriculum for holistic development."
-        keywords="preschool programmes thane, playgroup thane, nursery admission thane, kindergarten thane, daycare thane, early childhood curriculum, playgroup for 2 year old, nursery school syllabus, kg admission, lkg ukg admission, best playgroup, toddler classes, pre nursery classes, junior kg admission"
-        canonical="https://rainbowpreschools.com/programmes"
+        title="Preschool Programmes in Thane | Playgroup, Nursery, Kindergarten Near Me"
+        description="Explore preschool programmes in Thane: Playgroup (1.5-2.5 yrs), Nursery (2.5-3.5 yrs), Kindergarten (3.5-5.5 yrs) & Daycare. Best play-based curriculum near you!"
+        keywords="preschool programmes in thane, preschool programmes near me, playgroup in thane, nursery in thane, kindergarten thane, daycare thane, playgroup programme, nursery curriculum, kg admission thane, lkg ukg thane, best playgroup near me"
+        canonical="/programmes"
       />
       {/* Hero Section */}
       <section className="py-12 md:py-16 lg:py-20 bg-gradient-to-br from-primary/5 via-accent/5 to-secondary/5 flex items-center justify-center">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h1 className="text-3xl md:text-4xl font-bold mb-4">Programmes</h1>
+            <h1 className="text-3xl md:text-4xl font-bold mb-4">Preschool Programmes in Thane</h1>
             <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
-              Curriculum designed to nurture every aspect of your child's development.
+              Explore our play-based preschool programmes near you - designed to nurture every aspect of your child's development.
             </p>
           </div>
         </div>

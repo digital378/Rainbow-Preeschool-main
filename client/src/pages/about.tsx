@@ -73,10 +73,10 @@ export default function About() {
   return (
     <div className="pt-20">
       <SEO
-        title="About Rainbow Preschool International | Preschool in Thane"
-        description="Discover Rainbow Preschool International's play-based curriculum, learning domains and child-first approach in Thane since 2007. Explore programmes or contact admissions."
-        keywords="about rainbow preschool, preschool in thane, play-based learning, early childhood education, best preschool thane, preschool history thane"
-        canonical="https://rainbowpreschools.com/about"
+        title="About Rainbow Preschool Thane | Rainbow School Near Me | Since 2007"
+        description="Rainbow Preschool Thane - trusted by 1,00,000+ families since 2007. Discover our play-based curriculum, certified teachers & 6 centres across Thane. Rainbow school near you!"
+        keywords="rainbow preschool thane, rainbow school near me, about rainbow preschool, rainbow preschool international, rainbow school thane, best preschool thane, preschool thane history, trusted preschool thane"
+        canonical="/about"
       />
 
       {/* SECTION A - Hero */}

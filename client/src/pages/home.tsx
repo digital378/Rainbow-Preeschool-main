@@ -302,9 +302,9 @@ export default function Home() {
   return (
     <div>
       <SEO
-        title="Preschool in Thane | Best Play-Based Learning | Rainbow Preschool"
-        description="Preschool in Thane for children 1.5-6 years. Safe, play-based learning since 2007 at 6 centres. Book a campus visit or admission enquiry today!"
-        keywords="preschool in thane, preschool near me, best preschool in thane, preschool admission near me, preschool admission enquiry, early childhood education, play based preschool, international preschool, top preschool in thane"
+        title="Best Preschool in Thane | Top Preschool Near Me | Rainbow Preschool International"
+        description="Looking for the best preschool in Thane? Rainbow Preschool International - top-rated preschool near you with 6 centres, 18+ years experience & 1,00,000+ happy students. Call 82915 68972!"
+        keywords="best preschool in thane, top preschool in thane, preschool near me, best preschool near me, preschool in thane, playgroup in thane, nursery school thane, kindergarten thane, preschool admission thane, top rated preschool thane"
         canonical="/"
       />
       <HeroSection />
