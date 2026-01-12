@@ -314,17 +314,27 @@ function Router() {
         
         {/* Homepage supporting blog posts */}
         <Route path="/why-rainbow-preschool-best-thane-2026" component={LazyRainbowPreschoolCentresThane} />
+        <Route path="/rainbow-preschool-centres-thane" component={LazyRainbowPreschoolCentresThane} />
         <Route path="/top-10-preschools-thane-comparison-guide" component={LazyComparingPreschoolsThane} />
+        <Route path="/comparing-preschools-thane" component={LazyComparingPreschoolsThane} />
         <Route path="/what-makes-great-preschool-checklist" component={LazyQualityPreschoolIndicators} />
+        <Route path="/quality-preschool-indicators-parents-guide" component={LazyQualityPreschoolIndicators} />
         <Route path="/preschool-vs-daycare-difference-explained" component={LazyPreschoolVsDaycare} />
+        <Route path="/preschool-vs-daycare-difference" component={LazyPreschoolVsDaycare} />
         <Route path="/early-childhood-education-importance-india" component={LazyEarlyChildhoodEducationImportance} />
+        <Route path="/early-childhood-education-importance" component={LazyEarlyChildhoodEducationImportance} />
         
         {/* About page supporting blog posts */}
         <Route path="/rainbow-preschool-journey-2007-to-2026" component={LazyRainbowPreschoolJourneySince2007} />
+        <Route path="/rainbow-preschool-journey-since-2007" component={LazyRainbowPreschoolJourneySince2007} />
         <Route path="/rainbow-preschool-awards-achievements" component={LazyRainbowPreschoolAwards} />
+        <Route path="/rainbow-preschool-awards-recognition" component={LazyRainbowPreschoolAwards} />
         <Route path="/rainbow-preschool-teacher-training-philosophy" component={LazyTeacherTrainingQuality} />
+        <Route path="/teacher-training-quality-preschool" component={LazyTeacherTrainingQuality} />
         <Route path="/parent-testimonials-rainbow-preschool-thane" component={LazyParentTestimonialsExperiences} />
+        <Route path="/parent-testimonials-rainbow-preschool" component={LazyParentTestimonialsExperiences} />
         <Route path="/rainbow-preschool-safety-measures-child-security" component={LazyChildSafetyPreschool} />
+        <Route path="/child-safety-preschool-standards" component={LazyChildSafetyPreschool} />
         
         {/* Programmes page supporting blog posts */}
         <Route path="/play-based-learning-benefits-children" component={LazyPlayBasedLearningBenefits} />

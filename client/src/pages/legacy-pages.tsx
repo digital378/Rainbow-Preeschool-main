@@ -68,19 +68,31 @@ export const BestPreschoolCurriculumThane = createLegacyPage("/best-preschool-cu
 export const HowToChooseBestPreschool = createLegacyPage("/how-to-choose-best-preschool-thane/");
 export const PlaygroupAdmissionGuide = createLegacyPage("/playgroup-admission-thane-complete-guide/");
 
-// Homepage supporting posts
+// Homepage supporting posts (primary URLs)
 export const RainbowPreschoolCentresThane = createLegacyPage("/why-rainbow-preschool-best-thane-2026/");
 export const ComparingPreschoolsThane = createLegacyPage("/top-10-preschools-thane-comparison-guide/");
 export const QualityPreschoolIndicators = createLegacyPage("/what-makes-great-preschool-checklist/");
 export const PreschoolVsDaycare = createLegacyPage("/preschool-vs-daycare-difference-explained/");
 export const EarlyChildhoodEducationImportance = createLegacyPage("/early-childhood-education-importance-india/");
 
-// About page supporting posts
+// About page supporting posts (primary URLs)
 export const RainbowPreschoolJourneySince2007 = createLegacyPage("/rainbow-preschool-journey-2007-to-2026/");
 export const RainbowPreschoolAwards = createLegacyPage("/rainbow-preschool-awards-achievements/");
 export const TeacherTrainingQuality = createLegacyPage("/rainbow-preschool-teacher-training-philosophy/");
 export const ParentTestimonialsExperiences = createLegacyPage("/parent-testimonials-rainbow-preschool-thane/");
 export const ChildSafetyPreschool = createLegacyPage("/rainbow-preschool-safety-measures-child-security/");
+
+// Alias exports for old URLs (point to same data as primary URLs)
+export const RainbowPreschoolCentresThaneOld = RainbowPreschoolCentresThane;
+export const ComparingPreschoolsThaneOld = ComparingPreschoolsThane;
+export const QualityPreschoolIndicatorsOld = QualityPreschoolIndicators;
+export const PreschoolVsDaycareOld = PreschoolVsDaycare;
+export const EarlyChildhoodEducationImportanceOld = EarlyChildhoodEducationImportance;
+export const RainbowPreschoolJourneySince2007Old = RainbowPreschoolJourneySince2007;
+export const RainbowPreschoolAwardsOld = RainbowPreschoolAwards;
+export const TeacherTrainingQualityOld = TeacherTrainingQuality;
+export const ParentTestimonialsExperiencesOld = ParentTestimonialsExperiences;
+export const ChildSafetyPreschoolOld = ChildSafetyPreschool;
 
 // Programmes page supporting posts
 export const PlayBasedLearningBenefits = createLegacyPage("/play-based-learning-benefits-children/");
