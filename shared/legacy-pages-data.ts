@@ -2867,5 +2867,382 @@ Object.assign(legacyPagesData, {
     ],
     internalLinks: commonInternalLinks,
     category: "Education"
+  },
+
+  // ============================================
+  // ABOUT PAGE SUPPORTING BLOG POSTS (Posts 6-10)
+  // Target: "Rainbow Preschool Thane", "Rainbow School Near Me"
+  // ============================================
+
+  "/rainbow-preschool-journey-2007-to-2026/": {
+    slug: "/rainbow-preschool-journey-2007-to-2026/",
+    title: "Rainbow Preschool Journey: From 2007 to 2026 | Our Story of Excellence",
+    metaDescription: "Discover the inspiring journey of Rainbow Preschool International from 2007 to 2026. Learn how we grew from one centre to 6 locations serving 1,00,000+ children in Thane.",
+    h1: "Rainbow Preschool Journey: From 2007 to 2026",
+    intro: "Every great institution has a story. <a href=\"/about\">Rainbow Preschool International's</a> journey from a single centre with a vision to Thane's most trusted preschool network is a story of passion, dedication, and unwavering commitment to early childhood education. Here's how we became the <a href=\"/\">best preschool in Thane</a>.",
+    sections: [
+      {
+        heading: "2007: The Beginning of a Dream",
+        content: "Rainbow Preschool International was founded in 2007 with a simple but powerful vision: to provide joyful, holistic early childhood education that nurtures every child's unique potential. At a time when many preschools focused on rote learning and academic pressure, our founders believed in a different approach - one where children learn through play, exploration, and loving guidance.\n\nOur first centre opened its doors with a small group of children and a team of passionate educators who shared the founder's vision. From day one, we committed to quality over quantity, investing in trained teachers, research-based curriculum, and child-safe facilities.",
+        bulletPoints: [
+          "Founded with a vision for joyful, play-based learning",
+          "First centre established with focus on quality",
+          "Pioneered child-centered approach in Thane",
+          "Invested in trained teachers from the start"
+        ]
+      },
+      {
+        heading: "2010-2015: Growing Trust, Expanding Reach",
+        content: "Word spread quickly among parents about the positive experiences at Rainbow Preschool. Children were happy, learning, and thriving. Parents noticed the difference in their children's confidence, social skills, and love for learning.\n\nThis trust drove our expansion. We opened new centres across Thane to serve more families, always maintaining the same quality standards that made our first centre successful. Each new centre was designed with the same care, staffed with trained teachers, and implemented our proven curriculum.",
+        bulletPoints: [
+          "Organic growth driven by parent referrals",
+          "Maintained quality standards during expansion",
+          "Developed comprehensive teacher training programme",
+          "Refined and enhanced curriculum based on experience"
+        ]
+      },
+      {
+        heading: "2016-2020: Innovation and Recognition",
+        content: "By 2016, Rainbow Preschool had established itself as a leader in early childhood education in Thane. We continued to innovate, updating our curriculum to reflect the latest research in child development and education.\n\nOur efforts earned recognition. We received the 'Most Promising Preschool Chain in Maharashtra' award and the 'Cleanest School in Thane' award, validating our commitment to excellence. But the greatest recognition came from our alumni families - children who had graduated from Rainbow Preschool and were excelling in their primary schools.",
+        bulletPoints: [
+          "Awarded 'Most Promising Preschool Chain in Maharashtra'",
+          "Received 'Cleanest School in Thane' recognition",
+          "Alumni excelling in prestigious primary schools",
+          "Continued curriculum innovation and teacher development"
+        ]
+      },
+      {
+        heading: "2020-2022: Adapting Through Challenges",
+        content: "The pandemic years tested every educational institution. Rainbow Preschool rose to the challenge, quickly adapting to hybrid learning while maintaining our commitment to quality education. We developed innovative online engagement methods for young learners and provided support to anxious parents navigating unprecedented times.\n\nWhen schools reopened, we implemented enhanced safety protocols while ensuring children's emotional well-being during the transition back to in-person learning. This period reinforced our resilience and deepened the trust parents place in us.",
+        bulletPoints: [
+          "Quickly adapted to hybrid learning during pandemic",
+          "Developed innovative online engagement for young learners",
+          "Supported families through challenging times",
+          "Enhanced safety protocols for safe reopening"
+        ]
+      },
+      {
+        heading: "2023-2026: Leading into the Future",
+        content: "Today, Rainbow Preschool International operates 6 centres across Thane: <a href=\"/preschool-in-manpada-thane\">Manpada</a>, <a href=\"/preschool-in-hariniwas-thane\">Hariniwas</a>, <a href=\"/preschool-in-anand-nagar-thane\">Anand Nagar</a>, <a href=\"/preschool-in-dhokali-thane\">Dhokali</a>, <a href=\"/preschool-in-kalwa-thane\">Kalwa</a>, and <a href=\"/preschool-in-kasarvadavali-thane\">Kasarvadavali</a>. We've served over 1,00,000 children, and our alumni network spans across Thane and beyond.\n\nOur <a href=\"/programmes\">curriculum</a> is now fully aligned with NEP 2020, ensuring our students receive education that meets national standards. We continue to invest in teacher training, facility upgrades, and curriculum enhancement because we believe the best is yet to come.",
+        bulletPoints: [
+          "6 centres serving families across Thane",
+          "Over 1,00,000 children educated since 2007",
+          "NEP 2020 aligned curriculum",
+          "Continued investment in quality and innovation"
+        ]
+      },
+      {
+        heading: "Our Commitment to the Next Generation",
+        content: "As we look ahead, Rainbow Preschool remains committed to our founding vision: joyful, holistic education for every child. We continue to evolve, incorporating new research, technology, and best practices while staying true to our core values.\n\nEvery child who joins Rainbow Preschool becomes part of our extended family. We're honored by the trust families place in us and dedicated to nurturing the next generation of confident, curious learners.\n\n<a href=\"/contact\">Contact us</a> to become part of the Rainbow Preschool story.",
+        bulletPoints: []
+      }
+    ],
+    faqs: [
+      { question: "When was Rainbow Preschool founded?", answer: "Rainbow Preschool International was founded in 2007 with a vision to provide joyful, play-based early childhood education in Thane." },
+      { question: "How many children has Rainbow Preschool educated?", answer: "Since 2007, over 1,00,000 children have graduated from our <a href=\"/programmes\">programmes</a> across our 6 centres in Thane." },
+      { question: "How many Rainbow Preschool centres are there in Thane?", answer: "We have 6 centres: <a href=\"/preschool-in-manpada-thane\">Manpada</a>, <a href=\"/preschool-in-hariniwas-thane\">Hariniwas</a>, <a href=\"/preschool-in-anand-nagar-thane\">Anand Nagar</a>, <a href=\"/preschool-in-dhokali-thane\">Dhokali</a>, <a href=\"/preschool-in-kalwa-thane\">Kalwa</a>, and <a href=\"/preschool-in-kasarvadavali-thane\">Kasarvadavali</a>." },
+      { question: "What awards has Rainbow Preschool won?", answer: "We've received 'Most Promising Preschool Chain in Maharashtra' and 'Cleanest School in Thane' awards among other recognitions." }
+    ],
+    relatedLinks: [
+      { title: "About Us", url: "/about", description: "Learn more about Rainbow Preschool" },
+      { title: "Our Programmes", url: "/programmes", description: "Explore our curriculum" },
+      { title: "Our Centres", url: "/contact", description: "Find a centre near you" },
+      { title: "Admissions", url: "/admissions", description: "Join the Rainbow family" }
+    ],
+    internalLinks: commonInternalLinks,
+    category: "About Rainbow"
+  },
+
+  "/rainbow-preschool-awards-achievements/": {
+    slug: "/rainbow-preschool-awards-achievements/",
+    title: "Rainbow Preschool Awards & Achievements | Thane's Award-Winning Preschool",
+    metaDescription: "Explore Rainbow Preschool International's awards and achievements. From 'Most Promising Preschool Chain' to 'Cleanest School in Thane', discover why we're Thane's most recognized preschool.",
+    h1: "Rainbow Preschool Awards and Achievements",
+    intro: "At <a href=\"/about\">Rainbow Preschool International</a>, our commitment to excellence has been recognized through numerous awards and achievements over our 18+ years of serving families in Thane. These recognitions validate our dedication to providing the <a href=\"/\">best preschool education</a> and motivate us to continue raising the bar.",
+    sections: [
+      {
+        heading: "Most Promising Preschool Chain in Maharashtra",
+        content: "Rainbow Preschool International was honored with the 'Most Promising Preschool Chain of the Year - Maharashtra' award, recognizing our outstanding contribution to early childhood education in the state. This prestigious award acknowledged our:\n\n- Consistent quality across multiple centres\n- Innovative curriculum and teaching methodology\n- Impact on early childhood education in Thane\n- Commitment to teacher training and development\n- Positive outcomes for thousands of children",
+        bulletPoints: []
+      },
+      {
+        heading: "Cleanest School in Thane",
+        content: "Hygiene and cleanliness are non-negotiable at Rainbow Preschool. Our recognition as the 'Cleanest School in Thane' reflects our rigorous standards for sanitation and child safety across all our centres in <a href=\"/preschool-in-manpada-thane\">Manpada</a>, <a href=\"/preschool-in-hariniwas-thane\">Hariniwas</a>, <a href=\"/preschool-in-anand-nagar-thane\">Anand Nagar</a>, <a href=\"/preschool-in-dhokali-thane\">Dhokali</a>, <a href=\"/preschool-in-kalwa-thane\">Kalwa</a>, and <a href=\"/preschool-in-kasarvadavali-thane\">Kasarvadavali</a>.",
+        bulletPoints: [
+          "Daily sanitization of all classrooms and play areas",
+          "Child-safe cleaning products",
+          "Regular hygiene audits",
+          "Clean washrooms maintained throughout the day",
+          "Safe food handling practices"
+        ]
+      },
+      {
+        heading: "Our Greatest Achievement: 1,00,000+ Happy Alumni",
+        content: "While awards and recognitions are gratifying, our greatest achievement is the success of our alumni. Over 1,00,000 children have graduated from Rainbow Preschool since 2007, and many have gone on to excel in prestigious primary schools across Thane, Mumbai, and beyond.\n\nOur alumni demonstrate strong foundational skills, confidence, social competence, and love for learning - the hallmarks of quality early education. Many families have enrolled multiple children with us, and we frequently receive referrals from satisfied parents.",
+        bulletPoints: [
+          "1,00,000+ children educated since 2007",
+          "Alumni in top primary schools across Thane and Mumbai",
+          "Strong referral network from satisfied families",
+          "Multiple siblings enrolled across years",
+          "Long-term relationships with Rainbow families"
+        ]
+      },
+      {
+        heading: "Parent and Community Recognition",
+        content: "Beyond formal awards, Rainbow Preschool is consistently recognized by the community we serve:\n\n- High ratings on parent review platforms\n- Featured in local media for educational excellence\n- Invited to share best practices at education forums\n- Trusted partner for child development initiatives\n- Active community engagement programmes",
+        bulletPoints: []
+      },
+      {
+        heading: "Our Commitment to Continued Excellence",
+        content: "Awards are a recognition of past achievements, but our focus remains on the future. We continue to invest in:\n\n- Curriculum enhancement aligned with NEP 2020\n- Ongoing teacher training and development\n- Facility upgrades across all centres\n- Research-based improvements to our methodology\n- Technology integration for enhanced learning\n\nEvery award we receive reinforces our commitment to providing the best possible start for every child who joins our <a href=\"/programmes\">programmes</a>.\n\n<a href=\"/contact\">Contact us</a> to experience our award-winning education firsthand.",
+        bulletPoints: []
+      }
+    ],
+    faqs: [
+      { question: "What awards has Rainbow Preschool won?", answer: "We've received 'Most Promising Preschool Chain in Maharashtra', 'Cleanest School in Thane', and various other recognitions for excellence in early childhood education." },
+      { question: "Why is Rainbow Preschool considered the best in Thane?", answer: "Our 18+ years of experience, 1,00,000+ successful alumni, award-winning curriculum, and commitment to quality make us Thane's most trusted preschool. Visit <a href=\"/\">our homepage</a> to learn more." },
+      { question: "How can I verify Rainbow Preschool's quality?", answer: "Visit any of our <a href=\"/contact\">6 centres</a> to see our standards firsthand. Talk to current parents, observe classrooms, and experience our nurturing environment." }
+    ],
+    relatedLinks: [
+      { title: "About Us", url: "/about", description: "Our story and values" },
+      { title: "Our Programmes", url: "/programmes", description: "Award-winning curriculum" },
+      { title: "Contact Us", url: "/contact", description: "Visit our centres" }
+    ],
+    internalLinks: commonInternalLinks,
+    category: "About Rainbow"
+  },
+
+  "/rainbow-preschool-teacher-training-philosophy/": {
+    slug: "/rainbow-preschool-teacher-training-philosophy/",
+    title: "Rainbow Preschool Teacher Training & Philosophy | Expert Educators",
+    metaDescription: "Learn about Rainbow Preschool's rigorous teacher training and teaching philosophy. Our qualified, trained teachers make the difference in your child's early education.",
+    h1: "Rainbow Preschool Teacher Training and Teaching Philosophy",
+    intro: "At <a href=\"/about\">Rainbow Preschool International</a>, we believe that great teachers make great schools. Our teaching staff undergoes rigorous selection, training, and continuous professional development to ensure they deliver the highest quality early childhood education. Here's what makes Rainbow Preschool teachers exceptional.",
+    sections: [
+      {
+        heading: "Our Rigorous Teacher Selection Process",
+        content: "Not everyone can be a Rainbow Preschool teacher. We look for individuals who not only have the right qualifications but also possess the patience, warmth, and genuine love for children that this role demands.",
+        bulletPoints: [
+          "Formal qualifications in early childhood education or related fields",
+          "Demonstrated experience working with young children",
+          "Clear background verification and reference checks",
+          "Assessment of teaching aptitude and child-friendly demeanor",
+          "Alignment with Rainbow Preschool's values and philosophy",
+          "100% female teaching staff for child comfort and safety"
+        ]
+      },
+      {
+        heading: "Comprehensive Pre-Service Training",
+        content: "Before entering a classroom, every Rainbow Preschool teacher completes our comprehensive training programme covering:\n\n<strong>Child Development:</strong> Understanding physical, cognitive, social, emotional, and language development in early years.\n\n<strong>Curriculum Implementation:</strong> Mastering our <a href=\"/programmes\">play-based curriculum</a> and activity planning.\n\n<strong>Classroom Management:</strong> Creating positive learning environments and handling behavioral challenges with patience.\n\n<strong>Safety Protocols:</strong> Emergency response, first aid, hygiene practices, and child protection.\n\n<strong>Parent Communication:</strong> Building positive relationships with parents and providing constructive feedback.",
+        bulletPoints: []
+      },
+      {
+        heading: "Ongoing Professional Development",
+        content: "Learning never stops for Rainbow Preschool teachers. We invest in continuous professional development to ensure our teachers stay updated with the latest in early childhood education.",
+        bulletPoints: [
+          "Regular in-service training workshops",
+          "Updates on latest child development research",
+          "NEP 2020 curriculum alignment training",
+          "Inclusive education and special needs awareness",
+          "Technology integration for modern learning",
+          "Peer learning and best practice sharing",
+          "External certification programmes"
+        ]
+      },
+      {
+        heading: "Our Teaching Philosophy",
+        content: "Rainbow Preschool's teaching philosophy is rooted in respect for childhood and the natural ways children learn. Our teachers are guided by these principles:\n\n<strong>Child-Centered Approach:</strong> Every activity is designed around children's interests, abilities, and developmental needs.\n\n<strong>Play-Based Learning:</strong> We believe children learn best through purposeful play. Our teachers facilitate learning through guided and free play activities.\n\n<strong>Positive Discipline:</strong> We use encouragement, clear expectations, and natural consequences rather than punishment. Every child is treated with respect and dignity.\n\n<strong>Individual Attention:</strong> Our low teacher-student ratios allow teachers to know each child personally and adapt to their unique needs.\n\n<strong>Joyful Environment:</strong> Learning should be fun. Our teachers create classrooms filled with warmth, laughter, and excitement for discovery.",
+        bulletPoints: []
+      },
+      {
+        heading: "What Parents Notice About Rainbow Teachers",
+        content: "Parents consistently highlight these qualities in Rainbow Preschool teachers:",
+        bulletPoints: [
+          "Genuine warmth and care for children",
+          "Patience in handling young children's needs",
+          "Skill in managing separation anxiety",
+          "Creativity in making learning fun",
+          "Regular, helpful communication about child's progress",
+          "Approachable and responsive to parent concerns",
+          "Visible passion for early childhood education"
+        ]
+      },
+      {
+        heading: "Meet Our Teachers at Our Centres",
+        content: "We invite you to visit any of our centres - <a href=\"/preschool-in-manpada-thane\">Manpada</a>, <a href=\"/preschool-in-hariniwas-thane\">Hariniwas</a>, <a href=\"/preschool-in-anand-nagar-thane\">Anand Nagar</a>, <a href=\"/preschool-in-dhokali-thane\">Dhokali</a>, <a href=\"/preschool-in-kalwa-thane\">Kalwa</a>, or <a href=\"/preschool-in-kasarvadavali-thane\">Kasarvadavali</a> - and meet our exceptional teaching team. See how they interact with children and experience the Rainbow difference.\n\n<a href=\"/contact\">Contact us</a> to schedule a campus visit.",
+        bulletPoints: []
+      }
+    ],
+    faqs: [
+      { question: "Are Rainbow Preschool teachers qualified?", answer: "Yes, all our teachers have formal qualifications in early childhood education or related fields, and complete our comprehensive training programme before teaching." },
+      { question: "What is the teacher-student ratio at Rainbow Preschool?", answer: "We maintain low teacher-student ratios to ensure individual attention. The exact ratio varies by age group but is always within recommended standards for early childhood." },
+      { question: "How does Rainbow Preschool train its teachers?", answer: "Teachers complete pre-service training covering child development, curriculum, safety, and communication, followed by ongoing professional development throughout their career with us." },
+      { question: "Why does Rainbow Preschool have all-female staff?", answer: "Our 100% female teaching and support staff creates a nurturing environment where young children feel comfortable and safe, especially during sensitive times like diaper changes and toileting." }
+    ],
+    relatedLinks: [
+      { title: "About Us", url: "/about", description: "Our values and mission" },
+      { title: "Our Programmes", url: "/programmes", description: "What our teachers deliver" },
+      { title: "Contact Us", url: "/contact", description: "Meet our teachers" }
+    ],
+    internalLinks: commonInternalLinks,
+    category: "About Rainbow"
+  },
+
+  "/parent-testimonials-rainbow-preschool-thane/": {
+    slug: "/parent-testimonials-rainbow-preschool-thane/",
+    title: "Parent Testimonials | What Parents Say About Rainbow Preschool Thane",
+    metaDescription: "Read real parent testimonials about Rainbow Preschool Thane. Discover why thousands of families trust us for their child's early education since 2007.",
+    h1: "What Parents Say About Rainbow Preschool",
+    intro: "The best endorsement of <a href=\"/about\">Rainbow Preschool International</a> comes from the families we serve. Over 18+ years and 1,00,000+ children, we've built lasting relationships with parents who trust us with their most precious responsibility - their child's early education. Here's what parents say about their Rainbow Preschool experience.",
+    sections: [
+      {
+        heading: "Why Parents Choose Rainbow Preschool",
+        content: "When parents search for the <a href=\"/\">best preschool in Thane</a>, they have many options. Here's why families consistently choose Rainbow Preschool:",
+        bulletPoints: [
+          "Reputation built over 18+ years in Thane",
+          "Recommendations from friends, family, and neighbors",
+          "Visible quality during campus visits",
+          "Warm, welcoming environment",
+          "Professional, caring teachers",
+          "Clear focus on holistic child development",
+          "Convenient locations near home or work"
+        ]
+      },
+      {
+        heading: "What Parents Appreciate Most",
+        content: "Based on feedback from thousands of families, parents consistently highlight these aspects of the Rainbow Preschool experience:",
+        bulletPoints: [
+          "TEACHERS: \"The teachers genuinely love and care for our children. My daughter couldn't wait to go to school every day.\"",
+          "CURRICULUM: \"The play-based approach works! My son learned so much without ever feeling pressured.\"",
+          "SAFETY: \"The safety measures gave us complete peace of mind. CCTV, controlled entry, trained staff - they think of everything.\"",
+          "COMMUNICATION: \"Regular updates and responsive teachers. We always knew what our child was doing and learning.\"",
+          "DEVELOPMENT: \"The change in our child was remarkable - more confident, more social, more curious about learning.\"",
+          "TRANSITION: \"When our child moved to primary school, she was more than ready. Rainbow Preschool built a strong foundation.\""
+        ]
+      },
+      {
+        heading: "Multi-Child Families Trust Rainbow",
+        content: "One of the strongest indicators of parent satisfaction is when families enroll multiple children with us. At Rainbow Preschool, we see this regularly:\n\n- Younger siblings following older ones\n- Cousins and extended family members enrolling\n- Families recommending us to friends and neighbors\n- Multi-generational trust spanning years\n\nThis organic growth through referrals is our greatest source of pride. It means we're delivering on our promises, one child at a time.",
+        bulletPoints: []
+      },
+      {
+        heading: "Alumni Success Stories",
+        content: "Rainbow Preschool alumni have gone on to excel in prestigious primary schools across Thane, Mumbai, and beyond. Parents regularly share stories of their children's success:\n\n- Strong academic foundation for primary school readiness\n- Confidence in new social situations\n- Love for learning that continues through school years\n- Leadership qualities and social skills\n- Creativity and problem-solving abilities\n\nThese success stories across our 1,00,000+ alumni validate the effectiveness of our <a href=\"/programmes\">play-based curriculum</a>.",
+        bulletPoints: []
+      },
+      {
+        heading: "Join Our Community of Happy Parents",
+        content: "We invite you to become part of the Rainbow Preschool family. Visit any of our centres - <a href=\"/preschool-in-manpada-thane\">Manpada</a>, <a href=\"/preschool-in-hariniwas-thane\">Hariniwas</a>, <a href=\"/preschool-in-anand-nagar-thane\">Anand Nagar</a>, <a href=\"/preschool-in-dhokali-thane\">Dhokali</a>, <a href=\"/preschool-in-kalwa-thane\">Kalwa</a>, or <a href=\"/preschool-in-kasarvadavali-thane\">Kasarvadavali</a> - and speak to current parents. Ask them about their experience. We're confident you'll hear the same positive feedback that has made us Thane's most trusted preschool.\n\n<a href=\"/contact\">Contact us</a> today to schedule a campus visit and start your Rainbow Preschool journey.",
+        bulletPoints: []
+      }
+    ],
+    faqs: [
+      { question: "How can I read Rainbow Preschool reviews?", answer: "Visit any of our <a href=\"/contact\">6 centres</a> and we'll connect you with current parents. You can also check online reviews and ask for referrals in your neighborhood." },
+      { question: "Why do parents recommend Rainbow Preschool?", answer: "Parents appreciate our caring teachers, play-based curriculum, safety standards, regular communication, and the visible development in their children." },
+      { question: "What do Rainbow Preschool alumni achieve?", answer: "Our 1,00,000+ alumni have joined prestigious primary schools and demonstrate strong academics, confidence, social skills, and love for learning." }
+    ],
+    relatedLinks: [
+      { title: "About Us", url: "/about", description: "Our story since 2007" },
+      { title: "Our Programmes", url: "/programmes", description: "What parents love" },
+      { title: "Admissions", url: "/admissions", description: "Join our family" },
+      { title: "Contact Us", url: "/contact", description: "Visit and meet parents" }
+    ],
+    internalLinks: commonInternalLinks,
+    category: "About Rainbow"
+  },
+
+  "/rainbow-preschool-safety-measures-child-security/": {
+    slug: "/rainbow-preschool-safety-measures-child-security/",
+    title: "Rainbow Preschool Safety Measures | Child Security & Protection Standards",
+    metaDescription: "Learn about Rainbow Preschool's comprehensive safety measures. CCTV surveillance, 100% female staff, controlled entry, emergency protocols, and more for complete child protection.",
+    h1: "Rainbow Preschool Safety Measures and Child Security",
+    intro: "At <a href=\"/about\">Rainbow Preschool International</a>, child safety is our highest priority. Every decision we make - from staff hiring to facility design - is guided by the question: \"Is this safe for children?\" Parents can rest assured that when they drop their child at Rainbow Preschool, they're leaving them in the safest possible environment.",
+    sections: [
+      {
+        heading: "100% Female Staff Policy",
+        content: "Rainbow Preschool maintains a 100% female teaching and support staff across all our centres. This policy ensures a nurturing environment where young children feel comfortable, especially during sensitive moments like diaper changes, toileting assistance, and comforting during distress.\n\nAll staff members undergo thorough background verification before joining, and we maintain strict protocols for staff conduct around children.",
+        bulletPoints: [
+          "All teachers and support staff are female",
+          "Thorough background verification for every staff member",
+          "Clear code of conduct and child protection policies",
+          "Regular training on child safety protocols",
+          "Zero tolerance for any form of mistreatment"
+        ]
+      },
+      {
+        heading: "CCTV Surveillance and Monitoring",
+        content: "Every Rainbow Preschool centre is equipped with comprehensive CCTV surveillance covering classrooms, play areas, corridors, and entry/exit points. This provides:\n\n- Real-time monitoring during school hours\n- Recording for later review if needed\n- Deterrent against any inappropriate behavior\n- Documentation for security purposes\n- Transparency for parent peace of mind",
+        bulletPoints: []
+      },
+      {
+        heading: "Controlled Entry and Exit Systems",
+        content: "We take access control seriously at all our centres in <a href=\"/preschool-in-manpada-thane\">Manpada</a>, <a href=\"/preschool-in-hariniwas-thane\">Hariniwas</a>, <a href=\"/preschool-in-anand-nagar-thane\">Anand Nagar</a>, <a href=\"/preschool-in-dhokali-thane\">Dhokali</a>, <a href=\"/preschool-in-kalwa-thane\">Kalwa</a>, and <a href=\"/preschool-in-kasarvadavali-thane\">Kasarvadavali</a>.",
+        bulletPoints: [
+          "Controlled entry points with staff supervision",
+          "Strict pickup authorization protocols",
+          "Visitor management system for all guests",
+          "No unsupervised access to children's areas",
+          "Clear procedures for authorized pickups",
+          "Immediate parent notification for any concerns"
+        ]
+      },
+      {
+        heading: "Emergency Preparedness",
+        content: "Rainbow Preschool is prepared for emergencies. Our staff is trained to handle various situations:",
+        bulletPoints: [
+          "First aid trained staff at every centre",
+          "Well-stocked first aid kits",
+          "Clear emergency evacuation plans",
+          "Regular fire and evacuation drills",
+          "Emergency contact protocols for parents",
+          "Tie-ups with nearby medical facilities",
+          "Staff trained in handling medical emergencies"
+        ]
+      },
+      {
+        heading: "Hygiene and Sanitation Standards",
+        content: "Our recognition as 'Cleanest School in Thane' reflects our commitment to hygiene. We maintain rigorous sanitation standards to protect children's health.",
+        bulletPoints: [
+          "Daily sanitization of all surfaces and materials",
+          "Regular deep cleaning of facilities",
+          "Child-safe, non-toxic cleaning products",
+          "Clean washrooms maintained throughout the day",
+          "Hand hygiene protocols for children and staff",
+          "Safe food handling practices",
+          "Sick child policies to prevent spread of illness"
+        ]
+      },
+      {
+        heading: "Child-Safe Facilities",
+        content: "Our centres are designed with child safety in mind:",
+        bulletPoints: [
+          "Rounded corners on all furniture",
+          "Age-appropriate, safety-certified equipment",
+          "Non-slip flooring in wet areas",
+          "Secured outdoor play areas",
+          "Child-proof electrical outlets and fixtures",
+          "Safe, well-maintained playground equipment",
+          "Proper ventilation and lighting"
+        ]
+      },
+      {
+        heading: "Visit and See Our Safety Standards",
+        content: "We invite parents to visit any of our <a href=\"/contact\">6 centres</a> and inspect our safety measures firsthand. We're proud of the comprehensive safety environment we provide and are happy to answer any questions about our protocols.\n\n<a href=\"/contact\">Contact us</a> to schedule a campus safety tour.",
+        bulletPoints: []
+      }
+    ],
+    faqs: [
+      { question: "Is Rainbow Preschool safe for my child?", answer: "Yes, we maintain comprehensive safety measures including 100% female staff, CCTV surveillance, controlled entry, emergency protocols, and rigorous hygiene standards across all centres." },
+      { question: "Does Rainbow Preschool have CCTV cameras?", answer: "Yes, all our centres have comprehensive CCTV coverage in classrooms, play areas, corridors, and entry/exit points for monitoring and security." },
+      { question: "How does Rainbow Preschool handle emergencies?", answer: "Our staff is trained in first aid and emergency response. We have clear evacuation plans, emergency contacts, and tie-ups with nearby medical facilities." },
+      { question: "Why does Rainbow Preschool have only female staff?", answer: "Our 100% female staff policy creates a nurturing environment where young children feel comfortable, especially during sensitive moments like diaper changes and toileting." }
+    ],
+    relatedLinks: [
+      { title: "About Us", url: "/about", description: "Our commitment to safety" },
+      { title: "Our Centres", url: "/contact", description: "Visit and see our safety" },
+      { title: "Admissions", url: "/admissions", description: "Join a safe environment" }
+    ],
+    internalLinks: commonInternalLinks,
+    category: "About Rainbow"
   }
 });
