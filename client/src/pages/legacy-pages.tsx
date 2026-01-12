@@ -68,6 +68,72 @@ export const BestPreschoolCurriculumThane = createLegacyPage("/best-preschool-cu
 export const HowToChooseBestPreschool = createLegacyPage("/how-to-choose-best-preschool-thane/");
 export const PlaygroupAdmissionGuide = createLegacyPage("/playgroup-admission-thane-complete-guide/");
 
+// Homepage supporting posts
+export const RainbowPreschoolCentresThane = createLegacyPage("/rainbow-preschool-centres-thane/");
+export const ComparingPreschoolsThane = createLegacyPage("/comparing-preschools-thane/");
+export const QualityPreschoolIndicators = createLegacyPage("/quality-preschool-indicators-parents-guide/");
+export const PreschoolVsDaycare = createLegacyPage("/preschool-vs-daycare-difference/");
+export const EarlyChildhoodEducationImportance = createLegacyPage("/early-childhood-education-importance/");
+
+// About page supporting posts
+export const RainbowPreschoolJourneySince2007 = createLegacyPage("/rainbow-preschool-journey-since-2007/");
+export const RainbowPreschoolAwards = createLegacyPage("/rainbow-preschool-awards-recognition/");
+export const TeacherTrainingQuality = createLegacyPage("/teacher-training-quality-preschool/");
+export const ParentTestimonialsExperiences = createLegacyPage("/parent-testimonials-rainbow-preschool/");
+export const ChildSafetyPreschool = createLegacyPage("/child-safety-preschool-standards/");
+
+// Programmes page supporting posts
+export const PlayBasedLearningBenefits = createLegacyPage("/play-based-learning-benefits-children/");
+export const NEP2020EarlyChildhoodGuide = createLegacyPage("/nep-2020-early-childhood-education-guide/");
+export const HolisticChildDevelopment = createLegacyPage("/holistic-child-development-preschool/");
+export const PreschoolLearningOutcomes = createLegacyPage("/preschool-learning-outcomes-what-to-expect/");
+
+// Playgroup page supporting posts
+export const BenefitsPlaygroupToddlers = createLegacyPage("/benefits-playgroup-toddlers-development/");
+export const PlaygroupVsStayingHome = createLegacyPage("/playgroup-vs-staying-home-which-better/");
+export const SeparationAnxietyPlaygroup = createLegacyPage("/separation-anxiety-playgroup-tips-parents/");
+export const PlaygroupActivities = createLegacyPage("/playgroup-activities-toddler-development/");
+export const RightAgeStartPlaygroup = createLegacyPage("/right-age-start-playgroup-india/");
+
+// Nursery page supporting posts
+export const NurserySchoolBenefits = createLegacyPage("/nursery-school-benefits-2-3-year-olds/");
+export const NurseryVsPlaygroup = createLegacyPage("/nursery-vs-playgroup-difference/");
+export const NurseryCurriculum = createLegacyPage("/nursery-curriculum-what-children-learn/");
+export const PreparingChildNursery = createLegacyPage("/preparing-child-nursery-school/");
+export const NurseryAdmissionAge = createLegacyPage("/nursery-admission-age-requirements-india/");
+
+// Kindergarten page supporting posts
+export const KindergartenReadiness = createLegacyPage("/kindergarten-readiness-checklist-parents/");
+export const JrKgSrKgDifference = createLegacyPage("/jr-kg-sr-kg-difference-explained/");
+export const KindergartenCurriculumPreparation = createLegacyPage("/kindergarten-curriculum-primary-school-preparation/");
+export const ChoosingRightKindergarten = createLegacyPage("/choosing-right-kindergarten-child/");
+export const KindergartenAdmissionThane = createLegacyPage("/kindergarten-admission-thane-guide/");
+
+// Admissions page supporting posts
+export const PreschoolAdmissionProcess = createLegacyPage("/preschool-admission-process-explained/");
+export const PreschoolAdmissionDocuments = createLegacyPage("/preschool-admission-documents-checklist/");
+export const WhenApplyPreschoolTimeline = createLegacyPage("/when-apply-preschool-admission-timeline/");
+export const QuestionsAskPreschoolVisit = createLegacyPage("/questions-ask-preschool-admission-visit/");
+export const PreschoolFeesThane = createLegacyPage("/preschool-fees-thane-what-to-expect/");
+
+// Contact page supporting posts
+export const VisitingPreschoolGuide = createLegacyPage("/visiting-preschool-what-to-look-for/");
+export const HowReachRainbowPreschool = createLegacyPage("/how-reach-rainbow-preschool-thane/");
+
+// Centre-specific local SEO posts
+export const EarlyChildhoodManpadaGB = createLegacyPage("/early-childhood-education-manpada-ghodbunder-road/");
+export const ChildDevelopmentHariniwas = createLegacyPage("/child-development-programs-hariniwas-naupada/");
+export const BestPlayschoolAnandNagar = createLegacyPage("/best-playschool-anand-nagar-majiwada/");
+export const PreschoolOptionsDhokali = createLegacyPage("/preschool-options-dhokali-kolshet-road/");
+export const TrustedPreschoolKalwa = createLegacyPage("/trusted-preschool-kalwa-thane/");
+export const QualityPreschoolKasarvadavali = createLegacyPage("/quality-preschool-kasarvadavali-ghodbunder/");
+export const ToddlerActivitiesManpada = createLegacyPage("/toddler-activities-manpada-preschool/");
+export const SchoolReadinessHariniwas = createLegacyPage("/school-readiness-hariniwas-kindergarten/");
+export const NurseryAdmissionsAnandNagar = createLegacyPage("/nursery-admissions-anand-nagar-thane/");
+export const PlaygroupEnrollmentDhokali = createLegacyPage("/playgroup-enrollment-dhokali-thane/");
+export const KindergartenProgramsKalwa = createLegacyPage("/kindergarten-programs-kalwa-thane/");
+export const BestNurseryKasarvadavali = createLegacyPage("/best-nursery-school-kasarvadavali/");
+
 export { AuthorArchivePage };
 
 export const legacySlugs = Object.keys(legacyPagesData);

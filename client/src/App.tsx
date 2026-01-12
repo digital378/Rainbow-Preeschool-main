@@ -101,6 +101,73 @@ const LazyUnderstandingPreschoolImportance = lazy(() => import("@/pages/legacy-p
 const LazyBestPreschoolCurriculumThane = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.BestPreschoolCurriculumThane })));
 const LazyHowToChooseBestPreschool = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.HowToChooseBestPreschool })));
 const LazyPlaygroupAdmissionGuide = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.PlaygroupAdmissionGuide })));
+
+// Homepage supporting posts
+const LazyRainbowPreschoolCentresThane = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.RainbowPreschoolCentresThane })));
+const LazyComparingPreschoolsThane = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.ComparingPreschoolsThane })));
+const LazyQualityPreschoolIndicators = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.QualityPreschoolIndicators })));
+const LazyPreschoolVsDaycare = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.PreschoolVsDaycare })));
+const LazyEarlyChildhoodEducationImportance = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.EarlyChildhoodEducationImportance })));
+
+// About page supporting posts
+const LazyRainbowPreschoolJourneySince2007 = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.RainbowPreschoolJourneySince2007 })));
+const LazyRainbowPreschoolAwards = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.RainbowPreschoolAwards })));
+const LazyTeacherTrainingQuality = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.TeacherTrainingQuality })));
+const LazyParentTestimonialsExperiences = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.ParentTestimonialsExperiences })));
+const LazyChildSafetyPreschool = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.ChildSafetyPreschool })));
+
+// Programmes page supporting posts
+const LazyPlayBasedLearningBenefits = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.PlayBasedLearningBenefits })));
+const LazyNEP2020EarlyChildhoodGuide = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.NEP2020EarlyChildhoodGuide })));
+const LazyHolisticChildDevelopment = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.HolisticChildDevelopment })));
+const LazyPreschoolLearningOutcomes = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.PreschoolLearningOutcomes })));
+
+// Playgroup page supporting posts
+const LazyBenefitsPlaygroupToddlers = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.BenefitsPlaygroupToddlers })));
+const LazyPlaygroupVsStayingHome = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.PlaygroupVsStayingHome })));
+const LazySeparationAnxietyPlaygroup = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.SeparationAnxietyPlaygroup })));
+const LazyPlaygroupActivities = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.PlaygroupActivities })));
+const LazyRightAgeStartPlaygroup = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.RightAgeStartPlaygroup })));
+
+// Nursery page supporting posts
+const LazyNurserySchoolBenefits = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.NurserySchoolBenefits })));
+const LazyNurseryVsPlaygroup = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.NurseryVsPlaygroup })));
+const LazyNurseryCurriculum = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.NurseryCurriculum })));
+const LazyPreparingChildNursery = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.PreparingChildNursery })));
+const LazyNurseryAdmissionAge = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.NurseryAdmissionAge })));
+
+// Kindergarten page supporting posts
+const LazyKindergartenReadiness = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.KindergartenReadiness })));
+const LazyJrKgSrKgDifference = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.JrKgSrKgDifference })));
+const LazyKindergartenCurriculumPreparation = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.KindergartenCurriculumPreparation })));
+const LazyChoosingRightKindergarten = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.ChoosingRightKindergarten })));
+const LazyKindergartenAdmissionThane = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.KindergartenAdmissionThane })));
+
+// Admissions page supporting posts
+const LazyPreschoolAdmissionProcess = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.PreschoolAdmissionProcess })));
+const LazyPreschoolAdmissionDocuments = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.PreschoolAdmissionDocuments })));
+const LazyWhenApplyPreschoolTimeline = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.WhenApplyPreschoolTimeline })));
+const LazyQuestionsAskPreschoolVisit = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.QuestionsAskPreschoolVisit })));
+const LazyPreschoolFeesThane = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.PreschoolFeesThane })));
+
+// Contact page supporting posts
+const LazyVisitingPreschoolGuide = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.VisitingPreschoolGuide })));
+const LazyHowReachRainbowPreschool = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.HowReachRainbowPreschool })));
+
+// Centre-specific local SEO posts
+const LazyEarlyChildhoodManpadaGB = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.EarlyChildhoodManpadaGB })));
+const LazyChildDevelopmentHariniwas = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.ChildDevelopmentHariniwas })));
+const LazyBestPlayschoolAnandNagar = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.BestPlayschoolAnandNagar })));
+const LazyPreschoolOptionsDhokali = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.PreschoolOptionsDhokali })));
+const LazyTrustedPreschoolKalwa = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.TrustedPreschoolKalwa })));
+const LazyQualityPreschoolKasarvadavali = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.QualityPreschoolKasarvadavali })));
+const LazyToddlerActivitiesManpada = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.ToddlerActivitiesManpada })));
+const LazySchoolReadinessHariniwas = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.SchoolReadinessHariniwas })));
+const LazyNurseryAdmissionsAnandNagar = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.NurseryAdmissionsAnandNagar })));
+const LazyPlaygroupEnrollmentDhokali = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.PlaygroupEnrollmentDhokali })));
+const LazyKindergartenProgramsKalwa = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.KindergartenProgramsKalwa })));
+const LazyBestNurseryKasarvadavali = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.BestNurseryKasarvadavali })));
+
 const LazyAuthorArchivePage = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.AuthorArchivePage })));
 
 const LazyTermsPage = lazy(() => import("@/pages/legal").then(m => ({ default: m.TermsPage })));
@@ -244,6 +311,72 @@ function Router() {
         <Route path="/best-preschool-curriculum-thane" component={LazyBestPreschoolCurriculumThane} />
         <Route path="/how-to-choose-best-preschool-thane" component={LazyHowToChooseBestPreschool} />
         <Route path="/playgroup-admission-thane-complete-guide" component={LazyPlaygroupAdmissionGuide} />
+        
+        {/* Homepage supporting blog posts */}
+        <Route path="/rainbow-preschool-centres-thane" component={LazyRainbowPreschoolCentresThane} />
+        <Route path="/comparing-preschools-thane" component={LazyComparingPreschoolsThane} />
+        <Route path="/quality-preschool-indicators-parents-guide" component={LazyQualityPreschoolIndicators} />
+        <Route path="/preschool-vs-daycare-difference" component={LazyPreschoolVsDaycare} />
+        <Route path="/early-childhood-education-importance" component={LazyEarlyChildhoodEducationImportance} />
+        
+        {/* About page supporting blog posts */}
+        <Route path="/rainbow-preschool-journey-since-2007" component={LazyRainbowPreschoolJourneySince2007} />
+        <Route path="/rainbow-preschool-awards-recognition" component={LazyRainbowPreschoolAwards} />
+        <Route path="/teacher-training-quality-preschool" component={LazyTeacherTrainingQuality} />
+        <Route path="/parent-testimonials-rainbow-preschool" component={LazyParentTestimonialsExperiences} />
+        <Route path="/child-safety-preschool-standards" component={LazyChildSafetyPreschool} />
+        
+        {/* Programmes page supporting blog posts */}
+        <Route path="/play-based-learning-benefits-children" component={LazyPlayBasedLearningBenefits} />
+        <Route path="/nep-2020-early-childhood-education-guide" component={LazyNEP2020EarlyChildhoodGuide} />
+        <Route path="/holistic-child-development-preschool" component={LazyHolisticChildDevelopment} />
+        <Route path="/preschool-learning-outcomes-what-to-expect" component={LazyPreschoolLearningOutcomes} />
+        
+        {/* Playgroup page supporting blog posts */}
+        <Route path="/benefits-playgroup-toddlers-development" component={LazyBenefitsPlaygroupToddlers} />
+        <Route path="/playgroup-vs-staying-home-which-better" component={LazyPlaygroupVsStayingHome} />
+        <Route path="/separation-anxiety-playgroup-tips-parents" component={LazySeparationAnxietyPlaygroup} />
+        <Route path="/playgroup-activities-toddler-development" component={LazyPlaygroupActivities} />
+        <Route path="/right-age-start-playgroup-india" component={LazyRightAgeStartPlaygroup} />
+        
+        {/* Nursery page supporting blog posts */}
+        <Route path="/nursery-school-benefits-2-3-year-olds" component={LazyNurserySchoolBenefits} />
+        <Route path="/nursery-vs-playgroup-difference" component={LazyNurseryVsPlaygroup} />
+        <Route path="/nursery-curriculum-what-children-learn" component={LazyNurseryCurriculum} />
+        <Route path="/preparing-child-nursery-school" component={LazyPreparingChildNursery} />
+        <Route path="/nursery-admission-age-requirements-india" component={LazyNurseryAdmissionAge} />
+        
+        {/* Kindergarten page supporting blog posts */}
+        <Route path="/kindergarten-readiness-checklist-parents" component={LazyKindergartenReadiness} />
+        <Route path="/jr-kg-sr-kg-difference-explained" component={LazyJrKgSrKgDifference} />
+        <Route path="/kindergarten-curriculum-primary-school-preparation" component={LazyKindergartenCurriculumPreparation} />
+        <Route path="/choosing-right-kindergarten-child" component={LazyChoosingRightKindergarten} />
+        <Route path="/kindergarten-admission-thane-guide" component={LazyKindergartenAdmissionThane} />
+        
+        {/* Admissions page supporting blog posts */}
+        <Route path="/preschool-admission-process-explained" component={LazyPreschoolAdmissionProcess} />
+        <Route path="/preschool-admission-documents-checklist" component={LazyPreschoolAdmissionDocuments} />
+        <Route path="/when-apply-preschool-admission-timeline" component={LazyWhenApplyPreschoolTimeline} />
+        <Route path="/questions-ask-preschool-admission-visit" component={LazyQuestionsAskPreschoolVisit} />
+        <Route path="/preschool-fees-thane-what-to-expect" component={LazyPreschoolFeesThane} />
+        
+        {/* Contact page supporting blog posts */}
+        <Route path="/visiting-preschool-what-to-look-for" component={LazyVisitingPreschoolGuide} />
+        <Route path="/how-reach-rainbow-preschool-thane" component={LazyHowReachRainbowPreschool} />
+        
+        {/* Centre-specific local SEO blog posts */}
+        <Route path="/early-childhood-education-manpada-ghodbunder-road" component={LazyEarlyChildhoodManpadaGB} />
+        <Route path="/child-development-programs-hariniwas-naupada" component={LazyChildDevelopmentHariniwas} />
+        <Route path="/best-playschool-anand-nagar-majiwada" component={LazyBestPlayschoolAnandNagar} />
+        <Route path="/preschool-options-dhokali-kolshet-road" component={LazyPreschoolOptionsDhokali} />
+        <Route path="/trusted-preschool-kalwa-thane" component={LazyTrustedPreschoolKalwa} />
+        <Route path="/quality-preschool-kasarvadavali-ghodbunder" component={LazyQualityPreschoolKasarvadavali} />
+        <Route path="/toddler-activities-manpada-preschool" component={LazyToddlerActivitiesManpada} />
+        <Route path="/school-readiness-hariniwas-kindergarten" component={LazySchoolReadinessHariniwas} />
+        <Route path="/nursery-admissions-anand-nagar-thane" component={LazyNurseryAdmissionsAnandNagar} />
+        <Route path="/playgroup-enrollment-dhokali-thane" component={LazyPlaygroupEnrollmentDhokali} />
+        <Route path="/kindergarten-programs-kalwa-thane" component={LazyKindergartenProgramsKalwa} />
+        <Route path="/best-nursery-school-kasarvadavali" component={LazyBestNurseryKasarvadavali} />
         
         <Route path="/author/rainbowpreschools" component={LazyAuthorArchivePage} />
         <Route path="/author/rainbow-preschools" component={LazyAuthorArchivePage} />
