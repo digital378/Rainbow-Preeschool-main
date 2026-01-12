@@ -1,4 +1,4 @@
-import type { Express } from "express";
+import type { Express, Request, Response, NextFunction } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertContactSchema } from "@shared/schema";
@@ -7,6 +7,160 @@ import { sendLeadNotificationEmail } from "./gmail";
 import { sendLeadToMCB, getBranchID } from "./mcb";
 
 const RECAPTCHA_SECRET_KEY = process.env.RECAPTCHA_SECRET_KEY || "";
+
+// SEO Redirect Map: Old WordPress URLs → New URLs
+// These are 301 permanent redirects to preserve SEO value
+const REDIRECT_MAP: Record<string, string> = {
+  // Main navigation redirects
+  '/about-us': '/about',
+  '/about-us/': '/about',
+  '/contact-us': '/contact',
+  '/contact-us/': '/contact',
+  '/home': '/',
+  '/home/': '/',
+  '/Home': '/',
+  '/overview': '/about',
+  '/overview/': '/about',
+  '/gallery': '/',
+  '/gallery/': '/',
+  
+  // Programme redirects
+  '/classroom/playgroup': '/playgroup',
+  '/classroom/playgroup/': '/playgroup',
+  '/day-care': '/programmes',
+  
+  // Ad landing page redirects (old WordPress forms)
+  '/meta-enquiry-2025-26': '/ad',
+  '/meta-enquiry-2025-26/': '/ad',
+  '/google-enquiry-2025-26': '/ad-google',
+  '/google-enquiry-2025-26/': '/ad-google',
+  '/mid-term-playgroup/google-admissions-2025-01': '/ad-google',
+  '/mid-term-playgroup/google-admissions-2025-01/': '/ad-google',
+  
+  // Blog post redirects (old posts → blog listing)
+  '/benefits-of-enrolling-a-child-in-preschool': '/blog',
+  '/benefits-of-enrolling-a-child-in-preschool/': '/blog',
+  '/9-things-fairy-tales-teach-children': '/blog',
+  '/9-things-fairy-tales-teach-children/': '/blog',
+  '/yoga-poses-for-kids-a-fun-way-to-improve-concentration-and-flexibility': '/blog',
+  '/yoga-poses-for-kids-a-fun-way-to-improve-concentration-and-flexibility/': '/blog',
+  '/why-100-female-faculty-matters-for-your-childs-growth': '/blog',
+  '/why-100-female-faculty-matters-for-your-childs-growth/': '/blog',
+  '/christmas-celebration-in-preschool-rainbow-preschools-festive-fun': '/blog',
+  '/christmas-celebration-in-preschool-rainbow-preschools-festive-fun/': '/blog',
+  '/winter-season-activities-for-kindergarten': '/blog',
+  '/winter-season-activities-for-kindergarten/': '/blog',
+  '/8-security-facilities-that-make-preschools-safe': '/blog',
+  '/8-security-facilities-that-make-preschools-safe/': '/blog',
+  '/8-ways-to-prevent-smartphone-addiction-in-kids': '/blog',
+  '/8-ways-to-prevent-smartphone-addiction-in-kids/': '/blog',
+  '/how-to-cure-child-obesity-6-steps': '/blog',
+  '/how-to-cure-child-obesity-6-steps/': '/blog',
+  '/your-simple-guide-to-phonics-for-children': '/blog',
+  '/your-simple-guide-to-phonics-for-children/': '/blog',
+  '/how-to-expand-your-childrens-vocabulary': '/blog',
+  '/how-to-expand-your-childrens-vocabulary/': '/blog',
+  '/christmas-celebration-at-aarna-foundation': '/blog',
+  '/christmas-celebration-at-aarna-foundation/': '/blog',
+  '/dandiya-night-2018': '/blog',
+  '/dandiya-night-2018/': '/blog',
+  '/6-interesting-ways-of-take-care-of-moody-toddlers': '/blog',
+  '/6-interesting-ways-of-take-care-of-moody-toddlers/': '/blog',
+  '/mid-term-admission-open-for-playgroup-enhances-development': '/blog',
+  '/mid-term-admission-open-for-playgroup-enhances-development/': '/blog',
+  '/rainbow-preschools-featured-in-knowledge-review-magazine': '/blog',
+  '/rainbow-preschools-featured-in-knowledge-review-magazine/': '/blog',
+  '/rainbow-awarded-as-best-preschool-and-secondary-school-in-thane': '/blog',
+  '/rainbow-awarded-as-best-preschool-and-secondary-school-in-thane/': '/blog',
+  '/rainbow-wins-award-for-excellence': '/blog',
+  '/rainbow-wins-award-for-excellence/': '/blog',
+  '/51-inspiring-life-lessons-that-make-children-confident': '/blog',
+  '/51-inspiring-life-lessons-that-make-children-confident/': '/blog',
+  '/how-to-handle-fussy-eating-habits-in-small-children': '/blog',
+  '/how-to-handle-fussy-eating-habits-in-small-children/': '/blog',
+  '/10-exciting-ways-to-help-children-read-more': '/blog',
+  '/10-exciting-ways-to-help-children-read-more/': '/blog',
+  '/Brain-gym-activities-for-preschoolers': '/brain-gym-activities-for-preschoolers',
+  
+  // WordPress system pages
+  '/author/admin_rps': '/blog',
+  '/author/admin_rps/': '/blog',
+  '/author/admin_rps/page/3': '/blog',
+  '/author/admin_rps/page/3/': '/blog',
+  '/category/uncategorized/page/4': '/blog',
+  '/category/uncategorized/page/4/': '/blog',
+  '/category/uncategorized/page/5': '/blog',
+  '/category/uncategorized/page/5/': '/blog',
+  '/category/uncategorized/page/7': '/blog',
+  '/category/uncategorized/page/7/': '/blog',
+  '/page/1': '/',
+  '/page/1/': '/',
+  
+  // Legal pages
+  '/terms-of-use': '/terms',
+  '/terms-of-use/': '/terms',
+  '/privacy-policy': '/privacy',
+  '/privacy-policy/': '/privacy',
+  
+  // Thank you page
+  '/thank-you': '/',
+  
+  // Misc WordPress URLs
+  '/elements': '/',
+  '/elements/': '/',
+  '/landing/elements': '/',
+  '/landing/elements/': '/',
+  '/landing__trashed/elements': '/',
+  '/landing__trashed/elements/': '/',
+  '/teachers': '/about',
+  '/home/rainbow': '/',
+  '/home/rainbow/': '/',
+  '/rain': '/',
+  '/rain/': '/',
+};
+
+// Patterns that should return 404 (malformed URLs)
+const MALFORMED_URL_PATTERNS = [
+  /\/\/1000$/,       // URLs ending with //1000
+  /\/1000$/,         // URLs ending with /1000
+  /\/\/$/,           // URLs ending with double slashes
+  /\?amp=1$/,        // AMP versions of non-existent pages
+  /\?noamp=mobile$/, // noamp versions
+  /\/feed\/?$/,      // RSS feed URLs
+  /\/attachment\/\d+\/?$/, // WordPress attachment URLs
+  /^\/.You$/,        // Malformed .You URL
+  /^\/\d+$/,         // Just numbers like /1, /5, /10
+];
+
+// SEO Redirect Middleware
+function seoRedirectMiddleware(req: Request, res: Response, next: NextFunction) {
+  const path = req.path;
+  
+  // Skip API routes
+  if (path.startsWith('/api/')) {
+    return next();
+  }
+  
+  // Check for exact redirect match first
+  const redirectTo = REDIRECT_MAP[path];
+  if (redirectTo) {
+    console.log(`[SEO] 301 Redirect: ${path} → ${redirectTo}`);
+    return res.redirect(301, redirectTo);
+  }
+  
+  // Check for malformed URL patterns (return 404)
+  for (const pattern of MALFORMED_URL_PATTERNS) {
+    if (pattern.test(path)) {
+      console.log(`[SEO] 404 for malformed URL: ${path}`);
+      return res.status(404).send('Page not found');
+    }
+  }
+  
+  // Handle query string redirects (strip tracking parameters for canonical)
+  // But allow the page to load - canonical tags will handle SEO
+  
+  next();
+}
 
 async function verifyRecaptcha(token: string): Promise<{ success: boolean; score?: number }> {
   if (!RECAPTCHA_SECRET_KEY) {
@@ -37,6 +191,9 @@ export async function registerRoutes(
   httpServer: Server,
   app: Express
 ): Promise<Server> {
+  
+  // Apply SEO redirect middleware for old WordPress URLs
+  app.use(seoRedirectMiddleware);
   
   // Contact form submission
   app.post("/api/contact", async (req, res) => {

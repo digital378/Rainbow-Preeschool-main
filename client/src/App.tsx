@@ -100,6 +100,9 @@ const LazyFAQsPage = lazy(() => import("@/pages/legacy-pages").then(m => ({ defa
 const LazyUnderstandingPreschoolImportance = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.UnderstandingPreschoolImportance })));
 const LazyAuthorArchivePage = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.AuthorArchivePage })));
 
+const LazyTermsPage = lazy(() => import("@/pages/legal").then(m => ({ default: m.TermsPage })));
+const LazyPrivacyPage = lazy(() => import("@/pages/legal").then(m => ({ default: m.PrivacyPage })));
+
 import { legacySlugs } from "@/pages/legacy-pages";
 
 const STANDALONE_LANDING_PATHS = [
@@ -237,6 +240,9 @@ function Router() {
         
         <Route path="/author/rainbowpreschools" component={LazyAuthorArchivePage} />
         <Route path="/author/rainbow-preschools" component={LazyAuthorArchivePage} />
+        
+        <Route path="/terms" component={LazyTermsPage} />
+        <Route path="/privacy" component={LazyPrivacyPage} />
         
         <Route component={NotFound} />
       </Switch>
