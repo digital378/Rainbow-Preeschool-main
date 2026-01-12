@@ -3244,5 +3244,817 @@ Object.assign(legacyPagesData, {
     ],
     internalLinks: commonInternalLinks,
     category: "About Rainbow"
+  },
+
+  // ============================================
+  // PROGRAMMES PAGE SUPPORTING BLOG POSTS (Posts 11-15)
+  // Target: "Preschool Programmes in Thane"
+  // Note: /best-preschool-curriculum-thane/ already created above
+  // ============================================
+
+  "/play-based-learning-benefits-children/": {
+    slug: "/play-based-learning-benefits-children/",
+    title: "Play-Based Learning Benefits for Children | Why Play Matters in Preschool",
+    metaDescription: "Discover the science-backed benefits of play-based learning for children. Learn why play is essential for cognitive, social, emotional, and physical development in preschool.",
+    h1: "The Benefits of Play-Based Learning for Children",
+    intro: "At <a href=\"/about\">Rainbow Preschool International</a>, play isn't just recreation - it's the foundation of our <a href=\"/programmes\">curriculum</a>. Research consistently shows that play-based learning is the most effective approach for young children. Here's why play matters and how it shapes your child's development.",
+    sections: [
+      {
+        heading: "What is Play-Based Learning?",
+        content: "Play-based learning is an educational approach where children learn through play rather than direct instruction. It's not about letting children play without purpose - it's about creating purposeful play experiences that build skills and knowledge.\n\nAt Rainbow Preschool, our teachers design play activities that align with learning objectives while allowing children the freedom to explore, discover, and create. This approach respects how young brains naturally learn best.",
+        bulletPoints: [
+          "Learning through guided and free play activities",
+          "Child-led exploration with teacher facilitation",
+          "Hands-on experiences with concrete materials",
+          "Social interaction and collaborative play",
+          "Integration of academic concepts through playful activities"
+        ]
+      },
+      {
+        heading: "Cognitive Benefits of Play",
+        content: "Play stimulates brain development and builds cognitive skills:",
+        bulletPoints: [
+          "PROBLEM-SOLVING: Children figure out how to make things work, overcome challenges",
+          "CREATIVITY: Open-ended play encourages imagination and creative thinking",
+          "LANGUAGE: Pretend play and social play build vocabulary and communication skills",
+          "MEMORY: Games and activities strengthen working memory",
+          "ATTENTION: Engaging play activities build focus and concentration",
+          "EARLY MATH: Block play, sorting, and patterns develop mathematical thinking",
+          "LITERACY: Story play, rhymes, and symbol play build pre-reading skills"
+        ]
+      },
+      {
+        heading: "Social-Emotional Benefits of Play",
+        content: "Play is essential for developing social skills and emotional intelligence:",
+        bulletPoints: [
+          "COOPERATION: Children learn to share, take turns, and work together",
+          "EMPATHY: Pretend play helps children understand others' perspectives",
+          "SELF-REGULATION: Games with rules teach impulse control",
+          "CONFIDENCE: Mastering play challenges builds self-esteem",
+          "RESILIENCE: Play helps children cope with stress and emotions",
+          "FRIENDSHIP: Play is how children form relationships",
+          "COMMUNICATION: Play requires negotiation, expression, and listening"
+        ]
+      },
+      {
+        heading: "Physical Benefits of Play",
+        content: "Active play develops motor skills and physical health:",
+        bulletPoints: [
+          "GROSS MOTOR: Running, climbing, jumping develop large muscle skills",
+          "FINE MOTOR: Manipulating small objects, art activities build hand control",
+          "COORDINATION: Physical play improves balance and body awareness",
+          "HEALTH: Active play promotes physical fitness",
+          "SENSORY: Sensory play develops neural pathways"
+        ]
+      },
+      {
+        heading: "How Rainbow Preschool Implements Play-Based Learning",
+        content: "At our centres in <a href=\"/preschool-in-manpada-thane\">Manpada</a>, <a href=\"/preschool-in-hariniwas-thane\">Hariniwas</a>, <a href=\"/preschool-in-anand-nagar-thane\">Anand Nagar</a>, <a href=\"/preschool-in-dhokali-thane\">Dhokali</a>, <a href=\"/preschool-in-kalwa-thane\">Kalwa</a>, and <a href=\"/preschool-in-kasarvadavali-thane\">Kasarvadavali</a>, play-based learning happens through:\n\n- <strong>Circle Time:</strong> Songs, stories, and group activities\n- <strong>Learning Centres:</strong> Stations for different types of play and learning\n- <strong>Art and Craft:</strong> Creative expression and fine motor development\n- <strong>Outdoor Play:</strong> Physical activity and nature exploration\n- <strong>Pretend Play:</strong> Role play and imagination\n- <strong>Sensory Play:</strong> Exploring textures, sounds, and materials\n- <strong>Block and Construction:</strong> Building and problem-solving\n\n<a href=\"/contact\">Contact us</a> to see our play-based curriculum in action.",
+        bulletPoints: []
+      }
+    ],
+    faqs: [
+      { question: "What is play-based learning?", answer: "Play-based learning is an educational approach where children learn through purposeful play rather than direct instruction. It respects how young children naturally learn best." },
+      { question: "Is play-based learning effective?", answer: "Yes, research consistently shows play-based learning is the most effective approach for children under 6. It develops cognitive, social, emotional, and physical skills naturally." },
+      { question: "Will my child learn academics through play?", answer: "Yes, play-based learning incorporates literacy, numeracy, and other academic foundations through engaging activities. Children learn concepts without the pressure of formal instruction." },
+      { question: "Does Rainbow Preschool use play-based learning?", answer: "Yes, play-based learning is the foundation of our <a href=\"/programmes\">curriculum</a> across <a href=\"/playgroup\">Playgroup</a>, <a href=\"/nursery\">Nursery</a>, and <a href=\"/kindergarten\">Kindergarten</a>." }
+    ],
+    relatedLinks: [
+      { title: "Our Programmes", url: "/programmes", description: "Play-based curriculum" },
+      { title: "Playgroup", url: "/playgroup", description: "Ages 1.5-2.5 years" },
+      { title: "Nursery", url: "/nursery", description: "Ages 2.5-3.5 years" },
+      { title: "Kindergarten", url: "/kindergarten", description: "Ages 3.5-5.5 years" }
+    ],
+    internalLinks: commonInternalLinks,
+    category: "Education"
+  },
+
+  "/nep-2020-early-childhood-education-guide/": {
+    slug: "/nep-2020-early-childhood-education-guide/",
+    title: "NEP 2020 Early Childhood Education Guide | What Parents Need to Know",
+    metaDescription: "Understand NEP 2020's impact on preschool education in India. Learn about foundational stage, play-based learning requirements, and how to choose an NEP-aligned preschool.",
+    h1: "NEP 2020 and Early Childhood Education: A Parent's Guide",
+    intro: "India's National Education Policy (NEP) 2020 has transformed early childhood education, recognizing its critical importance for the first time in national policy. As a parent in Thane, understanding NEP 2020 helps you choose the <a href=\"/\">best preschool</a> for your child. At <a href=\"/about\">Rainbow Preschool International</a>, our <a href=\"/programmes\">curriculum</a> is fully aligned with NEP 2020 guidelines.",
+    sections: [
+      {
+        heading: "Why NEP 2020 Matters for Preschool",
+        content: "NEP 2020 marks a paradigm shift in how India views early childhood education. For the first time, preschool education (ages 3-6) is integrated into the formal education system. This recognition acknowledges what research has long shown: early years are the most critical for brain development and learning.",
+        bulletPoints: [
+          "First national policy to formally integrate preschool into education system",
+          "Recognizes age 3-6 as 'Foundational Stage' of education",
+          "Emphasizes play-based, activity-based learning",
+          "Focuses on holistic development, not just academics",
+          "Mandates qualified teachers for early childhood education",
+          "Sets quality standards for preschool programmes"
+        ]
+      },
+      {
+        heading: "The Foundational Stage (Ages 3-6)",
+        content: "NEP 2020 defines the 'Foundational Stage' as a 5-year period covering ages 3-8, with the first 3 years (ages 3-6) in preschool/Anganwadi settings. The policy outlines specific goals for this stage:\n\n<strong>Foundational Literacy:</strong> Building a strong foundation for reading and writing through play, conversation, and exposure to print.\n\n<strong>Foundational Numeracy:</strong> Developing number sense, spatial understanding, and problem-solving through hands-on activities.\n\n<strong>Holistic Development:</strong> Nurturing cognitive, social, emotional, physical, and creative development equally.",
+        bulletPoints: []
+      },
+      {
+        heading: "Play-Based Learning is Now Policy",
+        content: "NEP 2020 explicitly mandates play-based, activity-based learning for young children. This aligns with what Rainbow Preschool has practiced since 2007. The policy discourages:\n\n- Formal reading and writing instruction before age 6\n- Worksheet-based learning for young children\n- Emphasis on rote memorization\n- Academic pressure in early years\n\nInstead, it encourages the play-based approach that research proves is most effective for young learners.",
+        bulletPoints: []
+      },
+      {
+        heading: "How Rainbow Preschool Aligns with NEP 2020",
+        content: "Our <a href=\"/programmes\">programmes</a> - <a href=\"/playgroup\">Playgroup</a>, <a href=\"/nursery\">Nursery</a>, and <a href=\"/kindergarten\">Kindergarten</a> - fully align with NEP 2020 requirements:",
+        bulletPoints: [
+          "Play-based, activity-centered curriculum",
+          "Focus on foundational literacy and numeracy through play",
+          "Holistic development across all domains",
+          "Qualified, trained teachers",
+          "Age-appropriate learning expectations",
+          "Mother tongue and bilingual approach",
+          "Regular assessment without formal tests"
+        ]
+      },
+      {
+        heading: "Choosing an NEP 2020 Aligned Preschool",
+        content: "When choosing a preschool in Thane, check for NEP 2020 alignment:",
+        bulletPoints: [
+          "Ask about curriculum approach - should be play-based, not worksheet-heavy",
+          "Check teacher qualifications and training",
+          "Observe classroom activities - should be hands-on and engaging",
+          "Look for focus on all developmental areas, not just academics",
+          "Ask how foundational literacy/numeracy is developed",
+          "Understand their assessment approach - should not involve formal tests"
+        ]
+      },
+      {
+        heading: "Visit Rainbow Preschool",
+        content: "Visit any of our centres in <a href=\"/preschool-in-manpada-thane\">Manpada</a>, <a href=\"/preschool-in-hariniwas-thane\">Hariniwas</a>, <a href=\"/preschool-in-anand-nagar-thane\">Anand Nagar</a>, <a href=\"/preschool-in-dhokali-thane\">Dhokali</a>, <a href=\"/preschool-in-kalwa-thane\">Kalwa</a>, or <a href=\"/preschool-in-kasarvadavali-thane\">Kasarvadavali</a> to see our NEP 2020 aligned curriculum in action.\n\n<a href=\"/contact\">Contact us</a> to schedule a campus visit.",
+        bulletPoints: []
+      }
+    ],
+    faqs: [
+      { question: "What is NEP 2020 for preschool?", answer: "NEP 2020 (National Education Policy 2020) integrates preschool into India's formal education system for the first time, defining ages 3-6 as part of the 'Foundational Stage' with specific play-based learning guidelines." },
+      { question: "Does NEP 2020 affect my child's preschool?", answer: "Yes, NEP 2020 sets standards for preschool education including play-based learning, qualified teachers, and holistic development focus. Choose a preschool that aligns with these guidelines." },
+      { question: "Is Rainbow Preschool NEP 2020 aligned?", answer: "Yes, Rainbow Preschool's <a href=\"/programmes\">curriculum</a> is fully aligned with NEP 2020 guidelines, focusing on play-based learning, foundational literacy/numeracy, and holistic child development." },
+      { question: "What is the Foundational Stage in NEP 2020?", answer: "The Foundational Stage covers ages 3-8, with the first 3 years (ages 3-6) in preschool settings. It focuses on building strong foundations in literacy, numeracy, and overall development through play." }
+    ],
+    relatedLinks: [
+      { title: "Our Programmes", url: "/programmes", description: "NEP 2020 aligned curriculum" },
+      { title: "About Us", url: "/about", description: "Our educational philosophy" },
+      { title: "Admissions", url: "/admissions", description: "Join an NEP-aligned preschool" }
+    ],
+    internalLinks: commonInternalLinks,
+    category: "Education"
+  },
+
+  "/holistic-child-development-preschool/": {
+    slug: "/holistic-child-development-preschool/",
+    title: "Holistic Child Development in Preschool | The 5 Key Developmental Domains",
+    metaDescription: "Learn about holistic child development and the 5 key developmental domains. Discover how quality preschool nurtures cognitive, social, emotional, physical, and creative development.",
+    h1: "Holistic Child Development in Preschool: The Complete Guide",
+    intro: "Quality preschool education isn't just about teaching ABCs and 123s. At <a href=\"/about\">Rainbow Preschool International</a>, we focus on holistic child development - nurturing every aspect of your child's growth. Our <a href=\"/programmes\">curriculum</a> addresses all five developmental domains to help your child thrive.",
+    sections: [
+      {
+        heading: "What is Holistic Child Development?",
+        content: "Holistic child development means nurturing the whole child - not just their academic abilities. It recognizes that all areas of development are interconnected and equally important. A child who is emotionally secure learns better cognitively. A child who is physically active develops better focus. Everything is connected.\n\nThe <a href=\"/\">best preschools</a> understand this and design programmes that address all developmental domains simultaneously through integrated activities.",
+        bulletPoints: []
+      },
+      {
+        heading: "Domain 1: Cognitive Development",
+        content: "Cognitive development involves how children think, learn, and solve problems. In preschool, this includes:",
+        bulletPoints: [
+          "Problem-solving and critical thinking skills",
+          "Memory and attention development",
+          "Language and communication skills",
+          "Pre-literacy foundations (letter recognition, phonics)",
+          "Pre-numeracy foundations (counting, patterns, spatial sense)",
+          "Scientific thinking (observing, questioning, experimenting)",
+          "Understanding of concepts (colors, shapes, size, time)"
+        ]
+      },
+      {
+        heading: "Domain 2: Social Development",
+        content: "Social development involves how children interact with others. Quality preschool nurtures:",
+        bulletPoints: [
+          "Ability to form friendships",
+          "Sharing and turn-taking skills",
+          "Cooperation and teamwork",
+          "Following social norms and rules",
+          "Communication with peers and adults",
+          "Conflict resolution skills",
+          "Respect for others and diversity"
+        ]
+      },
+      {
+        heading: "Domain 3: Emotional Development",
+        content: "Emotional development involves understanding and managing feelings. Preschool helps children develop:",
+        bulletPoints: [
+          "Emotional awareness - recognizing feelings in self and others",
+          "Self-regulation - managing emotions appropriately",
+          "Self-esteem and confidence",
+          "Independence and self-help skills",
+          "Resilience and coping strategies",
+          "Empathy and caring for others",
+          "Security and trust in relationships"
+        ]
+      },
+      {
+        heading: "Domain 4: Physical Development",
+        content: "Physical development includes both gross motor (large muscle) and fine motor (small muscle) skills:",
+        bulletPoints: [
+          "GROSS MOTOR: Running, jumping, climbing, balancing, throwing, catching",
+          "FINE MOTOR: Drawing, cutting, writing, manipulating small objects",
+          "Body awareness and coordination",
+          "Physical fitness and health habits",
+          "Self-care skills (dressing, toileting, eating)",
+          "Sensory processing and integration"
+        ]
+      },
+      {
+        heading: "Domain 5: Creative Development",
+        content: "Creative development involves imagination, artistic expression, and aesthetic appreciation:",
+        bulletPoints: [
+          "Artistic expression through drawing, painting, sculpting",
+          "Musical awareness and expression",
+          "Dramatic play and role-playing",
+          "Creative problem-solving",
+          "Imagination and fantasy play",
+          "Appreciation for beauty in nature and art",
+          "Dance and movement expression"
+        ]
+      },
+      {
+        heading: "How Rainbow Preschool Nurtures Holistic Development",
+        content: "Our <a href=\"/programmes\">programmes</a> at centres in <a href=\"/preschool-in-manpada-thane\">Manpada</a>, <a href=\"/preschool-in-hariniwas-thane\">Hariniwas</a>, <a href=\"/preschool-in-anand-nagar-thane\">Anand Nagar</a>, <a href=\"/preschool-in-dhokali-thane\">Dhokali</a>, <a href=\"/preschool-in-kalwa-thane\">Kalwa</a>, and <a href=\"/preschool-in-kasarvadavali-thane\">Kasarvadavali</a> integrate activities that develop all five domains:\n\n- Circle time builds social-emotional and cognitive skills\n- Art activities develop creativity and fine motor skills\n- Outdoor play builds physical and social skills\n- Pretend play nurtures cognitive, social, and creative development\n- Music and movement integrate physical, creative, and emotional expression\n\n<a href=\"/contact\">Contact us</a> to learn more about our holistic approach.",
+        bulletPoints: []
+      }
+    ],
+    faqs: [
+      { question: "What is holistic child development?", answer: "Holistic child development means nurturing all aspects of a child's growth - cognitive, social, emotional, physical, and creative - recognizing that all areas are interconnected and equally important." },
+      { question: "Why is holistic development important in preschool?", answer: "Children develop as whole beings. A child who is emotionally secure learns better cognitively. All areas support each other, so addressing all domains leads to better overall outcomes." },
+      { question: "What are the 5 developmental domains?", answer: "The five domains are: Cognitive (thinking, learning), Social (relationships, cooperation), Emotional (feelings, self-regulation), Physical (motor skills, health), and Creative (imagination, artistic expression)." },
+      { question: "Does Rainbow Preschool focus on holistic development?", answer: "Yes, our <a href=\"/programmes\">curriculum</a> is designed to nurture all five developmental domains through integrated, play-based activities." }
+    ],
+    relatedLinks: [
+      { title: "Our Programmes", url: "/programmes", description: "Holistic curriculum" },
+      { title: "Playgroup", url: "/playgroup", description: "Ages 1.5-2.5 years" },
+      { title: "Nursery", url: "/nursery", description: "Ages 2.5-3.5 years" },
+      { title: "Kindergarten", url: "/kindergarten", description: "Ages 3.5-5.5 years" }
+    ],
+    internalLinks: commonInternalLinks,
+    category: "Education"
+  },
+
+  "/preschool-learning-outcomes-what-to-expect/": {
+    slug: "/preschool-learning-outcomes-what-to-expect/",
+    title: "Preschool Learning Outcomes: What Your Child Will Learn | Parent's Guide",
+    metaDescription: "Understand preschool learning outcomes and what children learn at each stage. From Playgroup to Kindergarten, know what to expect from quality early childhood education.",
+    h1: "Preschool Learning Outcomes: What to Expect at Each Stage",
+    intro: "Parents often wonder what their child will actually learn in preschool. At <a href=\"/about\">Rainbow Preschool International</a>, our <a href=\"/programmes\">programmes</a> have clear learning outcomes aligned with child development milestones and NEP 2020 guidelines. Here's what you can expect at each stage.",
+    sections: [
+      {
+        heading: "Playgroup Learning Outcomes (Ages 1.5-2.5)",
+        content: "The <a href=\"/playgroup\">Playgroup</a> programme focuses on helping toddlers adjust to school, develop basic social skills, and explore their world safely.",
+        bulletPoints: [
+          "SOCIAL: Comfortable separating from parents, begins interacting with peers",
+          "EMOTIONAL: Recognizes own emotions, begins self-soothing",
+          "COMMUNICATION: Expands vocabulary, follows simple instructions",
+          "MOTOR: Walks confidently, begins running, holds crayons, stacks blocks",
+          "COGNITIVE: Explores cause and effect, sorts objects, recognizes colors",
+          "SELF-HELP: Begins independent eating, assists with dressing"
+        ]
+      },
+      {
+        heading: "Nursery Learning Outcomes (Ages 2.5-3.5)",
+        content: "The <a href=\"/nursery\">Nursery</a> programme builds on Playgroup foundations, developing more structured learning skills.",
+        bulletPoints: [
+          "SOCIAL: Plays cooperatively, shares with guidance, makes friends",
+          "EMOTIONAL: Names feelings, uses words instead of tantrums, shows empathy",
+          "LANGUAGE: Speaks in sentences, tells simple stories, understands conversations",
+          "PRE-LITERACY: Recognizes some letters, enjoys books, attempts writing name",
+          "PRE-NUMERACY: Counts to 10, recognizes shapes, understands 'more/less'",
+          "MOTOR: Runs, jumps, climbs, draws shapes, uses scissors with supervision",
+          "SELF-HELP: Independent toileting, dresses with minimal help"
+        ]
+      },
+      {
+        heading: "Junior Kindergarten Outcomes (Ages 3.5-4.5)",
+        content: "Junior Kindergarten in our <a href=\"/kindergarten\">Kindergarten programme</a> introduces more structured pre-academic skills.",
+        bulletPoints: [
+          "SOCIAL: Works in groups, follows classroom rules, resolves conflicts with help",
+          "EMOTIONAL: Manages emotions better, shows increased independence",
+          "LANGUAGE: Speaks clearly, asks questions, participates in discussions",
+          "PRE-LITERACY: Recognizes most letters, knows letter sounds, writes name",
+          "PRE-NUMERACY: Counts to 20, basic addition/subtraction concepts, patterns",
+          "MOTOR: Improved coordination, draws recognizable pictures, cuts accurately",
+          "KNOWLEDGE: Understands community helpers, seasons, basic science concepts"
+        ]
+      },
+      {
+        heading: "Senior Kindergarten Outcomes (Ages 4.5-5.5)",
+        content: "Senior Kindergarten prepares children for transition to primary school.",
+        bulletPoints: [
+          "SOCIAL: Strong peer relationships, collaborative learning, leadership skills",
+          "EMOTIONAL: Self-regulated, confident, resilient, independent",
+          "LANGUAGE: Clear communication, storytelling, questioning, early reading",
+          "LITERACY: Reads simple words, writes letters and simple words, enjoys books",
+          "NUMERACY: Counts to 100, basic operations, measurement, time concepts",
+          "MOTOR: Well-coordinated, writes neatly, athletic activities",
+          "KNOWLEDGE: Science concepts, environmental awareness, cultural understanding"
+        ]
+      },
+      {
+        heading: "How We Track Progress",
+        content: "At Rainbow Preschool, we track each child's progress through:\n\n- Ongoing observation by trained teachers\n- Portfolio of children's work samples\n- Regular parent-teacher communication\n- Developmental assessments (without formal tests)\n- Progress reports at key points\n\nThis allows us to support each child's individual development journey and address any concerns early.",
+        bulletPoints: []
+      },
+      {
+        heading: "Ready for Primary School",
+        content: "Children graduating from Rainbow Preschool are ready for primary school with:\n\n- Strong foundation in literacy and numeracy\n- Social skills for classroom participation\n- Emotional readiness for new challenges\n- Confidence and love for learning\n- Self-help skills for independence\n\nVisit our centres in <a href=\"/preschool-in-manpada-thane\">Manpada</a>, <a href=\"/preschool-in-hariniwas-thane\">Hariniwas</a>, <a href=\"/preschool-in-anand-nagar-thane\">Anand Nagar</a>, <a href=\"/preschool-in-dhokali-thane\">Dhokali</a>, <a href=\"/preschool-in-kalwa-thane\">Kalwa</a>, or <a href=\"/preschool-in-kasarvadavali-thane\">Kasarvadavali</a> to learn more.\n\n<a href=\"/contact\">Contact us</a> for admissions.",
+        bulletPoints: []
+      }
+    ],
+    faqs: [
+      { question: "What will my child learn in preschool?", answer: "Children develop across cognitive, social, emotional, physical, and creative domains. Specific outcomes depend on age - see our detailed stage-wise outcomes above." },
+      { question: "Will my child be ready for primary school after preschool?", answer: "Yes, quality preschool like Rainbow Preschool prepares children with the academic foundations, social skills, and emotional readiness needed for successful primary school transition." },
+      { question: "How do I know if my child is progressing well?", answer: "Rainbow Preschool provides regular updates, progress reports, and parent-teacher meetings to keep you informed about your child's development across all areas." },
+      { question: "What if my child isn't meeting milestones?", answer: "Our trained teachers identify developmental concerns early and work with parents to provide additional support. We focus on each child's individual growth journey." }
+    ],
+    relatedLinks: [
+      { title: "Playgroup", url: "/playgroup", description: "Ages 1.5-2.5 years" },
+      { title: "Nursery", url: "/nursery", description: "Ages 2.5-3.5 years" },
+      { title: "Kindergarten", url: "/kindergarten", description: "Ages 3.5-5.5 years" },
+      { title: "Admissions", url: "/admissions", description: "Start your child's journey" }
+    ],
+    internalLinks: commonInternalLinks,
+    category: "Education"
+  },
+
+  // ============================================
+  // PLAYGROUP PAGE SUPPORTING BLOG POSTS (Posts 16-21)
+  // Target: "Playgroup in Thane", "Playgroup Near Me"
+  // Note: /playgroup-admission-thane-complete-guide/ already created above
+  // ============================================
+
+  "/benefits-playgroup-toddlers-development/": {
+    slug: "/benefits-playgroup-toddlers-development/",
+    title: "Benefits of Playgroup for Toddlers | Why Your 1.5 Year Old Needs Playgroup",
+    metaDescription: "Discover the developmental benefits of playgroup for toddlers. Learn why enrolling your 1.5-2.5 year old in playgroup supports social, emotional, and cognitive growth.",
+    h1: "Benefits of Playgroup for Toddler Development",
+    intro: "Is your toddler ready for playgroup? Many parents wonder if their 1.5-year-old is too young for preschool. At <a href=\"/about\">Rainbow Preschool International</a>, our <a href=\"/playgroup\">Playgroup programme</a> is specially designed for children aged 1.5-2.5 years. Here's why playgroup is beneficial for toddler development.",
+    sections: [
+      {
+        heading: "Social Development Benefits",
+        content: "Playgroup is often a child's first experience with regular peer interaction outside the family. This early socialization has lasting benefits:",
+        bulletPoints: [
+          "Learns to share toys and space with others",
+          "Develops turn-taking skills through guided activities",
+          "Begins forming friendships with peers",
+          "Learns to interact with adults outside family",
+          "Observes and imitates positive behaviors from peers",
+          "Experiences being part of a group"
+        ]
+      },
+      {
+        heading: "Emotional Development Benefits",
+        content: "The toddler years are crucial for emotional development. Playgroup supports:",
+        bulletPoints: [
+          "Healthy separation from parents (builds independence)",
+          "Developing trust in caregivers outside home",
+          "Recognizing and naming emotions",
+          "Beginning to regulate feelings with support",
+          "Building confidence through new experiences",
+          "Developing a sense of self and identity"
+        ]
+      },
+      {
+        heading: "Language and Communication Benefits",
+        content: "Toddlers are in a critical period for language development. Playgroup accelerates language growth through:",
+        bulletPoints: [
+          "Exposure to rich language from teachers",
+          "Songs, rhymes, and stories that build vocabulary",
+          "Conversation and interaction opportunities",
+          "Learning to express needs and wants",
+          "Introduction to multiple languages (English and Hindi)",
+          "Listening skills development"
+        ]
+      },
+      {
+        heading: "Cognitive Development Benefits",
+        content: "Play-based activities in playgroup stimulate cognitive growth:",
+        bulletPoints: [
+          "Sensory exploration with varied materials",
+          "Cause and effect understanding through play",
+          "Early problem-solving experiences",
+          "Color, shape, and size recognition",
+          "Memory development through routines and songs",
+          "Attention span building through engaging activities"
+        ]
+      },
+      {
+        heading: "Motor Skills Benefits",
+        content: "Playgroup provides opportunities for physical development:",
+        bulletPoints: [
+          "GROSS MOTOR: Walking, running, climbing in safe environments",
+          "FINE MOTOR: Manipulating toys, art materials, sensory items",
+          "Coordination through action songs and movement activities",
+          "Body awareness through active play",
+          "Sensory integration through varied experiences"
+        ]
+      },
+      {
+        heading: "Preparation for Nursery School",
+        content: "Children who attend playgroup transition more smoothly to <a href=\"/nursery\">Nursery</a> because they:\n\n- Are comfortable with school routines\n- Can separate from parents confidently\n- Have basic social skills\n- Are used to structured activities\n- Know how to interact with teachers and peers\n\nThis foundation makes the next stage of preschool easier for both child and parent.",
+        bulletPoints: []
+      },
+      {
+        heading: "Rainbow Preschool Playgroup Centres",
+        content: "Our Playgroup programme is available at all 6 Rainbow Preschool centres: <a href=\"/preschool-in-manpada-thane\">Manpada</a>, <a href=\"/preschool-in-hariniwas-thane\">Hariniwas</a>, <a href=\"/preschool-in-anand-nagar-thane\">Anand Nagar</a>, <a href=\"/preschool-in-dhokali-thane\">Dhokali</a>, <a href=\"/preschool-in-kalwa-thane\">Kalwa</a>, and <a href=\"/preschool-in-kasarvadavali-thane\">Kasarvadavali</a>.\n\n<a href=\"/contact\">Contact us</a> to learn more about enrolling your toddler.",
+        bulletPoints: []
+      }
+    ],
+    faqs: [
+      { question: "Is 1.5 years too young for playgroup?", answer: "No, 1.5 years is an ideal age to start <a href=\"/playgroup\">Playgroup</a>. Children at this age are developmentally ready for structured socialization and benefit greatly from the experience." },
+      { question: "What does a toddler learn in playgroup?", answer: "Toddlers develop social, emotional, language, cognitive, and motor skills through play-based activities. They also learn routines, separation from parents, and interaction with peers." },
+      { question: "Will playgroup help with separation anxiety?", answer: "Yes, our experienced teachers are skilled at helping toddlers and parents navigate separation anxiety with patience and proven strategies." },
+      { question: "How long is Rainbow Preschool's playgroup?", answer: "Our Playgroup sessions are approximately 3 hours. We offer morning and afternoon batches for parent convenience." }
+    ],
+    relatedLinks: [
+      { title: "Playgroup Programme", url: "/playgroup", description: "For ages 1.5-2.5" },
+      { title: "Nursery Programme", url: "/nursery", description: "Next step after Playgroup" },
+      { title: "Admissions", url: "/admissions", description: "Enroll your toddler" },
+      { title: "Contact Us", url: "/contact", description: "Learn more" }
+    ],
+    internalLinks: commonInternalLinks,
+    category: "Parenting Tips"
+  },
+
+  "/playgroup-vs-staying-home-which-better/": {
+    slug: "/playgroup-vs-staying-home-which-better/",
+    title: "Playgroup vs Staying Home: Which is Better for Your Toddler?",
+    metaDescription: "Should your toddler go to playgroup or stay home? Compare the benefits and considerations to decide what's best for your 1.5-2.5 year old child.",
+    h1: "Playgroup vs Staying Home: What's Best for Your Toddler?",
+    intro: "One of the biggest decisions parents of toddlers face is whether to enroll in <a href=\"/playgroup\">Playgroup</a> or keep them home until they're older. Both options have their merits. At <a href=\"/about\">Rainbow Preschool International</a>, we've seen the benefits of early socialization for thousands of children. Here's an honest comparison to help you decide.",
+    sections: [
+      {
+        heading: "Benefits of Playgroup",
+        content: "Enrolling in a quality playgroup like <a href=\"/playgroup\">Rainbow Preschool's programme</a> offers unique advantages:",
+        bulletPoints: [
+          "Structured socialization with peers of same age",
+          "Expert-designed activities for development",
+          "Preparation for later schooling",
+          "Builds independence and confidence",
+          "Exposure to new experiences, materials, environments",
+          "Language development through rich interactions",
+          "Routine and structure beneficial for toddlers",
+          "Gives primary caregivers respite",
+          "Trained teachers skilled in early childhood"
+        ]
+      },
+      {
+        heading: "Benefits of Staying Home",
+        content: "Keeping toddlers home also has valid advantages:",
+        bulletPoints: [
+          "One-on-one attention from caregiver",
+          "Familiar, comfortable environment",
+          "Flexibility in schedule and activities",
+          "No exposure to illnesses from other children",
+          "No separation anxiety challenges",
+          "Can still socialize through playdates, family",
+          "Parents maintain full control of experiences"
+        ]
+      },
+      {
+        heading: "What Research Says",
+        content: "Child development research generally supports the benefits of quality early childhood programmes:\n\n- Children in quality preschool programmes show better cognitive and social outcomes\n- The key is <em>quality</em> - not all programmes are equal\n- Short, age-appropriate sessions are beneficial for toddlers\n- Trained teachers add value beyond what most home environments provide\n- Peer interaction accelerates social-emotional development\n\nHowever, children can thrive in either setting if their developmental needs are met.",
+        bulletPoints: []
+      },
+      {
+        heading: "Questions to Consider",
+        content: "When deciding between playgroup and staying home, ask yourself:",
+        bulletPoints: [
+          "Does my child have regular opportunities for peer interaction?",
+          "Am I able to provide varied developmental activities at home?",
+          "Is my child showing readiness for social interaction?",
+          "Would my child benefit from structure and routine?",
+          "How will separation affect my child and me?",
+          "What is the quality of playgroups available near me?",
+          "What are my work and personal needs?"
+        ]
+      },
+      {
+        heading: "Signs Your Toddler is Ready for Playgroup",
+        content: "Consider enrolling in playgroup if your child:",
+        bulletPoints: [
+          "Shows interest in other children",
+          "Can follow simple instructions",
+          "Has basic communication (doesn't need to speak fluently)",
+          "Is comfortable with short separations from parents",
+          "Is curious and likes exploring",
+          "Is at least 1.5 years (18 months) old"
+        ]
+      },
+      {
+        heading: "Why Rainbow Preschool Playgroup?",
+        content: "If you decide playgroup is right for your toddler, Rainbow Preschool offers:\n\n- Gentle approach to separation anxiety\n- Age-appropriate activities for 1.5-2.5 years\n- Low teacher-student ratios\n- 100% female, trained staff\n- Safe, stimulating environment\n- 6 convenient locations: <a href=\"/preschool-in-manpada-thane\">Manpada</a>, <a href=\"/preschool-in-hariniwas-thane\">Hariniwas</a>, <a href=\"/preschool-in-anand-nagar-thane\">Anand Nagar</a>, <a href=\"/preschool-in-dhokali-thane\">Dhokali</a>, <a href=\"/preschool-in-kalwa-thane\">Kalwa</a>, <a href=\"/preschool-in-kasarvadavali-thane\">Kasarvadavali</a>\n\n<a href=\"/contact\">Contact us</a> to schedule a visit.",
+        bulletPoints: []
+      }
+    ],
+    faqs: [
+      { question: "Is it better for toddlers to stay home or go to playgroup?", answer: "Both options can work well. Playgroup offers structured socialization and development activities, while home provides one-on-one attention and familiarity. Consider your child's readiness and available options." },
+      { question: "At what age should a toddler start playgroup?", answer: "Children can start <a href=\"/playgroup\">Playgroup</a> from 1.5 years (18 months). At this age, they're developmentally ready for peer interaction and structured activities." },
+      { question: "Will my child get sick more often in playgroup?", answer: "Initially, children may catch more illnesses due to exposure to other children. However, this also helps build immunity, and most children's health stabilizes within a few months." },
+      { question: "How do I handle separation anxiety when starting playgroup?", answer: "Our experienced teachers help families navigate separation anxiety with gradual transitions and proven strategies. It typically resolves within a few weeks for most children." }
+    ],
+    relatedLinks: [
+      { title: "Playgroup Programme", url: "/playgroup", description: "For ages 1.5-2.5" },
+      { title: "Admissions", url: "/admissions", description: "Enroll your child" },
+      { title: "Contact Us", url: "/contact", description: "Visit us" }
+    ],
+    internalLinks: commonInternalLinks,
+    category: "Parenting Tips"
+  },
+
+  "/separation-anxiety-playgroup-tips-parents/": {
+    slug: "/separation-anxiety-playgroup-tips-parents/",
+    title: "Separation Anxiety in Playgroup: Tips for Parents | First Day Success",
+    metaDescription: "Help your toddler overcome separation anxiety when starting playgroup. Expert tips from Rainbow Preschool for parents navigating the first day and beyond.",
+    h1: "Separation Anxiety in Playgroup: A Guide for Parents",
+    intro: "Separation anxiety when starting <a href=\"/playgroup\">Playgroup</a> is completely normal. At <a href=\"/about\">Rainbow Preschool International</a>, we've helped thousands of toddlers and parents navigate this transition successfully. Here's everything you need to know about managing separation anxiety.",
+    sections: [
+      {
+        heading: "Understanding Separation Anxiety",
+        content: "Separation anxiety is a normal developmental stage, typically peaking between 10-18 months. When toddlers start playgroup, it may resurface or intensify. This anxiety actually signals healthy attachment and cognitive development - your child knows you exist even when you're not there and prefers you to strangers.\n\nMost children adjust within 2-4 weeks with consistent attendance and supportive strategies. Your calm, confident approach makes a big difference.",
+        bulletPoints: []
+      },
+      {
+        heading: "Before the First Day: Preparation Strategies",
+        content: "Start preparing your child for playgroup before the first day:",
+        bulletPoints: [
+          "Talk positively about school in simple terms",
+          "Read books about going to school",
+          "Practice short separations with trusted caregivers",
+          "Visit the school during enrollment process",
+          "Maintain consistent routines at home",
+          "Avoid expressing your own anxiety in front of child",
+          "Prepare familiar comfort items (blanket, toy) if allowed"
+        ]
+      },
+      {
+        heading: "On the First Day: Drop-Off Tips",
+        content: "How you handle the drop-off sets the tone for adjustment:",
+        bulletPoints: [
+          "Keep your goodbye brief and confident",
+          "Create a quick, consistent goodbye ritual",
+          "Don't sneak away - always say goodbye",
+          "Avoid prolonged goodbyes and hovering",
+          "Trust the teachers to comfort your child",
+          "Leave even if your child is crying (they usually calm down quickly)",
+          "Don't come back to 'check' - this confuses the child",
+          "Pick up on time to build trust"
+        ]
+      },
+      {
+        heading: "What Teachers Do to Help",
+        content: "At Rainbow Preschool, our trained teachers are experienced in handling separation anxiety:",
+        bulletPoints: [
+          "Warmly receive children at the door",
+          "Distract and engage children after parent leaves",
+          "Provide comfort items if needed",
+          "Maintain consistent, predictable routines",
+          "Give extra attention to anxious children",
+          "Communicate with parents about adjustment progress",
+          "Create a sense of security and belonging"
+        ]
+      },
+      {
+        heading: "The First Few Weeks: What to Expect",
+        content: "Understanding the typical adjustment timeline helps manage expectations:",
+        bulletPoints: [
+          "WEEK 1: Crying at drop-off is common, but most children calm within minutes",
+          "WEEK 2: Resistance may decrease, or may temporarily increase (this is normal)",
+          "WEEK 3-4: Most children show significant improvement",
+          "ONGOING: Some days may still be harder than others"
+        ]
+      },
+      {
+        heading: "Red Flags: When to Seek Additional Support",
+        content: "While most separation anxiety resolves with time, consult with teachers or a child development specialist if:",
+        bulletPoints: [
+          "Anxiety persists beyond 4-6 weeks without improvement",
+          "Child shows extreme distress that doesn't calm after you leave",
+          "Sleep, eating, or behavior changes significantly at home",
+          "Child develops physical symptoms (stomachaches, etc.)",
+          "Anxiety seems excessive compared to peers"
+        ]
+      },
+      {
+        heading: "Rainbow Preschool's Gentle Approach",
+        content: "At all our centres - <a href=\"/preschool-in-manpada-thane\">Manpada</a>, <a href=\"/preschool-in-hariniwas-thane\">Hariniwas</a>, <a href=\"/preschool-in-anand-nagar-thane\">Anand Nagar</a>, <a href=\"/preschool-in-dhokali-thane\">Dhokali</a>, <a href=\"/preschool-in-kalwa-thane\">Kalwa</a>, and <a href=\"/preschool-in-kasarvadavali-thane\">Kasarvadavali</a> - we understand that starting school is a big transition. Our 100% female staff, warm environment, and experienced teachers create a safe space for your child to build trust and confidence.\n\n<a href=\"/contact\">Contact us</a> to learn about our gentle approach to helping children adjust.",
+        bulletPoints: []
+      }
+    ],
+    faqs: [
+      { question: "How long does separation anxiety last when starting playgroup?", answer: "Most children adjust within 2-4 weeks with consistent attendance. Some may take longer, and that's normal. If anxiety persists beyond 6 weeks without improvement, consult with teachers." },
+      { question: "Should I stay with my child at playgroup?", answer: "Brief transitions are usually best. Staying too long can prolong anxiety. Trust the teachers to comfort your child, and leave after your goodbye ritual even if your child is upset." },
+      { question: "My child cries every day at drop-off. Is this normal?", answer: "Crying at drop-off is common in the first few weeks. Most children calm down within minutes after the parent leaves. Teachers will keep you updated on how your child is doing." },
+      { question: "How can I make the first day of playgroup easier?", answer: "Prepare your child by talking about school positively, practicing short separations, and visiting the school beforehand. On the day, keep goodbyes brief and confident." }
+    ],
+    relatedLinks: [
+      { title: "Playgroup Programme", url: "/playgroup", description: "Ages 1.5-2.5 years" },
+      { title: "Benefits of Playgroup", url: "/benefits-playgroup-toddlers-development", description: "Why playgroup matters" },
+      { title: "Contact Us", url: "/contact", description: "Visit our centres" }
+    ],
+    internalLinks: commonInternalLinks,
+    category: "Parenting Tips"
+  },
+
+  "/playgroup-activities-toddler-development/": {
+    slug: "/playgroup-activities-toddler-development/",
+    title: "Playgroup Activities for Toddler Development | Learning Through Play",
+    metaDescription: "Discover the playgroup activities that support toddler development. Learn what children do in Rainbow Preschool's play-based Playgroup programme for ages 1.5-2.5.",
+    h1: "Playgroup Activities for Toddler Development",
+    intro: "What do toddlers actually do in <a href=\"/playgroup\">Playgroup</a>? At <a href=\"/about\">Rainbow Preschool International</a>, our Playgroup activities are carefully designed to support development in 1.5-2.5 year olds. Here's a look at the types of activities your toddler will experience and how they support growth.",
+    sections: [
+      {
+        heading: "Circle Time Activities",
+        content: "Circle time brings toddlers together for group activities that build social and language skills:",
+        bulletPoints: [
+          "Welcome songs that help children feel part of the group",
+          "Action songs and fingerplays for movement and coordination",
+          "Simple stories with pictures and repetition",
+          "Identifying days, weather, and routines",
+          "Name recognition activities",
+          "Group discussions about themes and topics"
+        ]
+      },
+      {
+        heading: "Sensory Play Activities",
+        content: "Sensory play is essential for brain development in toddlers. Our sensory activities include:",
+        bulletPoints: [
+          "Water play - pouring, splashing, floating objects",
+          "Sand and grain play - digging, filling, pouring",
+          "Playdough - squishing, rolling, molding",
+          "Texture exploration - soft, rough, smooth materials",
+          "Sound exploration - instruments, sound bottles",
+          "Messy play with safe materials like cooked pasta, rice"
+        ]
+      },
+      {
+        heading: "Art and Craft Activities",
+        content: "Creative activities develop fine motor skills and self-expression:",
+        bulletPoints: [
+          "Finger painting with non-toxic paints",
+          "Crayon and marker scribbling",
+          "Collage with paper, fabric, natural materials",
+          "Stamping and printing activities",
+          "Sticker play for fine motor control",
+          "Simple cutting (with supervision) and tearing"
+        ]
+      },
+      {
+        heading: "Movement and Music Activities",
+        content: "Physical activities build gross motor skills and coordination:",
+        bulletPoints: [
+          "Dancing to music and rhythm",
+          "Action songs (Head, Shoulders, Knees and Toes, etc.)",
+          "Simple obstacle courses (stepping, climbing, balancing)",
+          "Ball play (rolling, throwing, catching)",
+          "Running and chasing games in safe spaces",
+          "Yoga-inspired stretches and poses for toddlers"
+        ]
+      },
+      {
+        heading: "Pretend Play Activities",
+        content: "Imaginative play develops cognitive and social skills:",
+        bulletPoints: [
+          "Home corner - cooking, caring for dolls",
+          "Role play - doctor, shopkeeper, teacher",
+          "Dress-up with costumes and accessories",
+          "Puppet play and storytelling",
+          "Toy animals and farms",
+          "Transportation play with cars, trains, planes"
+        ]
+      },
+      {
+        heading: "Construction and Manipulation Activities",
+        content: "Building and manipulation activities develop problem-solving and motor skills:",
+        bulletPoints: [
+          "Block stacking and building",
+          "Puzzles with large pieces",
+          "Shape sorters and stackers",
+          "Threading and lacing activities",
+          "LEGO Duplo and similar construction toys",
+          "Cause-and-effect toys"
+        ]
+      },
+      {
+        heading: "Outdoor Play Activities",
+        content: "Outdoor time provides physical activity and nature exploration:",
+        bulletPoints: [
+          "Safe climbing and sliding equipment",
+          "Sand play in outdoor sandpits",
+          "Water play on warm days",
+          "Running and chasing games",
+          "Nature exploration - leaves, flowers, insects",
+          "Gardening activities"
+        ]
+      },
+      {
+        heading: "Experience Our Activities",
+        content: "Visit any Rainbow Preschool centre - <a href=\"/preschool-in-manpada-thane\">Manpada</a>, <a href=\"/preschool-in-hariniwas-thane\">Hariniwas</a>, <a href=\"/preschool-in-anand-nagar-thane\">Anand Nagar</a>, <a href=\"/preschool-in-dhokali-thane\">Dhokali</a>, <a href=\"/preschool-in-kalwa-thane\">Kalwa</a>, or <a href=\"/preschool-in-kasarvadavali-thane\">Kasarvadavali</a> - to see our Playgroup activities in action.\n\n<a href=\"/contact\">Contact us</a> to schedule a visit.",
+        bulletPoints: []
+      }
+    ],
+    faqs: [
+      { question: "What do toddlers do in playgroup?", answer: "Toddlers participate in play-based activities including sensory play, art, music, movement, pretend play, construction, and outdoor play - all designed to support their development." },
+      { question: "Will my toddler learn academics in playgroup?", answer: "Playgroup focuses on foundational skills like language, social-emotional development, and motor skills through play. Formal academics are not appropriate for this age." },
+      { question: "How do playgroup activities help development?", answer: "Each activity type targets specific developmental areas - sensory play for brain development, art for motor skills, music for language, pretend play for social skills, and so on." },
+      { question: "What is the daily routine in Rainbow Preschool's Playgroup?", answer: "A typical day includes circle time, free play, structured activities, snack time, outdoor play, and story time - all designed for the attention span and needs of toddlers." }
+    ],
+    relatedLinks: [
+      { title: "Playgroup Programme", url: "/playgroup", description: "Programme details" },
+      { title: "Benefits of Playgroup", url: "/benefits-playgroup-toddlers-development", description: "Why playgroup matters" },
+      { title: "Admissions", url: "/admissions", description: "Enroll your toddler" }
+    ],
+    internalLinks: commonInternalLinks,
+    category: "Education"
+  },
+
+  "/right-age-start-playgroup-india/": {
+    slug: "/right-age-start-playgroup-india/",
+    title: "Right Age to Start Playgroup in India | When to Enroll Your Child",
+    metaDescription: "What is the right age to start playgroup in India? Expert guidance on when to enroll your child, readiness signs, and age requirements for preschool admission.",
+    h1: "The Right Age to Start Playgroup in India",
+    intro: "\"What is the right age to start playgroup?\" is one of the most common questions parents ask. At <a href=\"/about\">Rainbow Preschool International</a>, we welcome children from 1.5 years in our <a href=\"/playgroup\">Playgroup programme</a>. Here's expert guidance on the ideal age to start and what to consider.",
+    sections: [
+      {
+        heading: "Standard Playgroup Age in India",
+        content: "In India, the typical age for starting playgroup is:",
+        bulletPoints: [
+          "MINIMUM AGE: 1.5 years (18 months)",
+          "MAXIMUM AGE: 2.5 years (30 months)",
+          "IDEAL START: Between 18-24 months",
+          "Age calculation: Usually as of admission date or start of academic year"
+        ]
+      },
+      {
+        heading: "Why 1.5 Years is a Good Starting Age",
+        content: "Developmental research supports 1.5 years as an appropriate age to begin structured group experiences:",
+        bulletPoints: [
+          "Walking is well established, allowing participation in activities",
+          "Language is developing rapidly, benefiting from rich language exposure",
+          "Social interest in other children is emerging",
+          "Attention span can handle short structured activities",
+          "Separation from parents becomes developmentally manageable",
+          "Brain is in a critical period for learning and stimulation"
+        ]
+      },
+      {
+        heading: "Signs Your Child is Ready for Playgroup",
+        content: "Beyond chronological age, look for these readiness signs:",
+        bulletPoints: [
+          "Shows interest in other children",
+          "Can walk and is becoming more mobile",
+          "Has some basic communication (pointing, words, gestures)",
+          "Can follow simple instructions",
+          "Has some ability to focus on activities briefly",
+          "Can tolerate short separations from primary caregiver",
+          "Is curious and interested in exploring"
+        ]
+      },
+      {
+        heading: "Is My Child Too Young for Playgroup?",
+        content: "Consider waiting if your child:",
+        bulletPoints: [
+          "Is under 18 months old",
+          "Has significant developmental delays",
+          "Is extremely distressed by any separation",
+          "Is not yet walking",
+          "Has health conditions requiring special care"
+        ]
+      },
+      {
+        heading: "Is My Child Too Old for Playgroup?",
+        content: "If your child is over 2.5 years and hasn't attended playgroup, they may be ready to start directly in <a href=\"/nursery\">Nursery</a>. However, some children benefit from starting in Playgroup to catch up on socialization and school routines. Consult with the school to determine the best fit.",
+        bulletPoints: []
+      },
+      {
+        heading: "Rainbow Preschool Age Requirements",
+        content: "At Rainbow Preschool, our age requirements are:\n\n- <a href=\"/playgroup\">Playgroup</a>: 1.5 - 2.5 years\n- <a href=\"/nursery\">Nursery</a>: 2.5 - 3.5 years\n- <a href=\"/kindergarten\">Kindergarten</a>: 3.5 - 5.5 years\n\nWe assess each child individually and may recommend the most appropriate programme based on their development.\n\nVisit our centres in <a href=\"/preschool-in-manpada-thane\">Manpada</a>, <a href=\"/preschool-in-hariniwas-thane\">Hariniwas</a>, <a href=\"/preschool-in-anand-nagar-thane\">Anand Nagar</a>, <a href=\"/preschool-in-dhokali-thane\">Dhokali</a>, <a href=\"/preschool-in-kalwa-thane\">Kalwa</a>, or <a href=\"/preschool-in-kasarvadavali-thane\">Kasarvadavali</a> for admission guidance.\n\n<a href=\"/contact\">Contact us</a> for admissions.",
+        bulletPoints: []
+      }
+    ],
+    faqs: [
+      { question: "What is the minimum age for playgroup in India?", answer: "The minimum age for playgroup is typically 1.5 years (18 months). At Rainbow Preschool, we accept children from 1.5 years in our <a href=\"/playgroup\">Playgroup programme</a>." },
+      { question: "Can I start my child in playgroup at 1 year?", answer: "One year is generally too young for playgroup. Children benefit most from starting at 1.5 years when they're developmentally ready for structured group experiences." },
+      { question: "My child is 2.5 years. Is it too late for playgroup?", answer: "At 2.5 years, your child may be ready for <a href=\"/nursery\">Nursery</a> instead. However, some children benefit from starting in Playgroup. <a href=\"/contact\">Contact us</a> for personalized guidance." },
+      { question: "How do I know if my child is ready for playgroup?", answer: "Look for signs like interest in other children, ability to walk, basic communication, following simple instructions, and tolerance for short separations from you." }
+    ],
+    relatedLinks: [
+      { title: "Playgroup Programme", url: "/playgroup", description: "For ages 1.5-2.5" },
+      { title: "Nursery Programme", url: "/nursery", description: "For ages 2.5-3.5" },
+      { title: "Admissions", url: "/admissions", description: "Enroll your child" },
+      { title: "Contact Us", url: "/contact", description: "Get guidance" }
+    ],
+    internalLinks: commonInternalLinks,
+    category: "Admissions"
   }
 });
