@@ -162,6 +162,20 @@ export const PreschoolAccreditationImportance = createLegacyPage("/preschool-acc
 export const RainbowCommunityInitiatives = createLegacyPage("/rainbow-preschool-community-initiatives/");
 export const ExperiencedTeachersImportance = createLegacyPage("/experienced-preschool-teachers-importance/");
 
+// Programmes page supporting posts (new)
+export const EarlyChildhoodCurriculumExplained = createLegacyPage("/early-childhood-curriculum-explained/");
+export const ActivityBasedLearningBenefits = createLegacyPage("/activity-based-learning-preschool-benefits/");
+export const CreativeArtsPreschool = createLegacyPage("/creative-arts-preschool-importance/");
+export const PhysicalDevelopmentPreschool = createLegacyPage("/physical-development-preschool-activities/");
+export const LanguageDevelopmentPreschool = createLegacyPage("/language-development-preschool-activities/");
+
+// Playgroup page supporting posts (new)
+export const ToddlerSeparationAnxiety = createLegacyPage("/toddler-separation-anxiety-guide/");
+export const ToddlerSocialSkills = createLegacyPage("/toddler-social-skills-development/");
+export const PlaygroupDailySchedule = createLegacyPage("/playgroup-daily-schedule-activities/");
+export const ToddlerReadyForPlaygroup = createLegacyPage("/is-my-toddler-ready-for-playgroup/");
+export const BenefitsEarlyPlaygroup = createLegacyPage("/benefits-of-early-playgroup-enrollment/");
+
 export { AuthorArchivePage };
 
 export const legacySlugs = Object.keys(legacyPagesData);

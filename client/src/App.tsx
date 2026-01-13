@@ -180,6 +180,20 @@ const LazyPreschoolAccreditationImportance = lazy(() => import("@/pages/legacy-p
 const LazyRainbowCommunityInitiatives = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.RainbowCommunityInitiatives })));
 const LazyExperiencedTeachersImportance = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.ExperiencedTeachersImportance })));
 
+// Programmes page supporting posts (new)
+const LazyEarlyChildhoodCurriculumExplained = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.EarlyChildhoodCurriculumExplained })));
+const LazyActivityBasedLearningBenefits = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.ActivityBasedLearningBenefits })));
+const LazyCreativeArtsPreschool = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.CreativeArtsPreschool })));
+const LazyPhysicalDevelopmentPreschool = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.PhysicalDevelopmentPreschool })));
+const LazyLanguageDevelopmentPreschool = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.LanguageDevelopmentPreschool })));
+
+// Playgroup page supporting posts (new)
+const LazyToddlerSeparationAnxiety = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.ToddlerSeparationAnxiety })));
+const LazyToddlerSocialSkills = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.ToddlerSocialSkills })));
+const LazyPlaygroupDailySchedule = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.PlaygroupDailySchedule })));
+const LazyToddlerReadyForPlaygroup = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.ToddlerReadyForPlaygroup })));
+const LazyBenefitsEarlyPlaygroup = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.BenefitsEarlyPlaygroup })));
+
 const LazyAuthorArchivePage = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.AuthorArchivePage })));
 
 const LazyTermsPage = lazy(() => import("@/pages/legal").then(m => ({ default: m.TermsPage })));
@@ -414,6 +428,20 @@ function Router() {
         <Route path="/preschool-accreditation-importance-india" component={LazyPreschoolAccreditationImportance} />
         <Route path="/rainbow-preschool-community-initiatives" component={LazyRainbowCommunityInitiatives} />
         <Route path="/experienced-preschool-teachers-importance" component={LazyExperiencedTeachersImportance} />
+        
+        {/* Programmes page supporting posts (new) */}
+        <Route path="/early-childhood-curriculum-explained" component={LazyEarlyChildhoodCurriculumExplained} />
+        <Route path="/activity-based-learning-preschool-benefits" component={LazyActivityBasedLearningBenefits} />
+        <Route path="/creative-arts-preschool-importance" component={LazyCreativeArtsPreschool} />
+        <Route path="/physical-development-preschool-activities" component={LazyPhysicalDevelopmentPreschool} />
+        <Route path="/language-development-preschool-activities" component={LazyLanguageDevelopmentPreschool} />
+        
+        {/* Playgroup page supporting posts (new) */}
+        <Route path="/toddler-separation-anxiety-guide" component={LazyToddlerSeparationAnxiety} />
+        <Route path="/toddler-social-skills-development" component={LazyToddlerSocialSkills} />
+        <Route path="/playgroup-daily-schedule-activities" component={LazyPlaygroupDailySchedule} />
+        <Route path="/is-my-toddler-ready-for-playgroup" component={LazyToddlerReadyForPlaygroup} />
+        <Route path="/benefits-of-early-playgroup-enrollment" component={LazyBenefitsEarlyPlaygroup} />
         
         <Route path="/author/rainbowpreschools" component={LazyAuthorArchivePage} />
         <Route path="/author/rainbow-preschools" component={LazyAuthorArchivePage} />
