@@ -11,15 +11,16 @@ interface AwardLogo {
   src: string;
   srcDark?: string;
   alt: string;
+  url: string;
 }
 
 const awardLogos: AwardLogo[] = [
-  { name: "India Today", src: indiaToday, alt: "India Today Award" },
-  { name: "Thane Municipal Corporation", src: thaneMunicipal, alt: "Thane Municipal Corporation Recognition" },
-  { name: "Scoo News", src: scooNewsLight, srcDark: scooNewsDark, alt: "Scoo News Feature" },
-  { name: "World Education Summit", src: worldEducationSummit, alt: "15th World Education Summit Mumbai" },
-  { name: "Economic Times", src: economicTimes, alt: "Economic Times Feature" },
-  { name: "NSA Award", src: nsaAward, alt: "National School Awards 2023" },
+  { name: "India Today", src: indiaToday, alt: "India Today Award", url: "https://www.indiatoday.in" },
+  { name: "Thane Municipal Corporation", src: thaneMunicipal, alt: "Thane Municipal Corporation Recognition", url: "https://thanecity.gov.in/tmc/CitizenHome.html" },
+  { name: "Scoo News", src: scooNewsLight, srcDark: scooNewsDark, alt: "Scoo News Feature", url: "https://scoonews.com/" },
+  { name: "World Education Summit", src: worldEducationSummit, alt: "15th World Education Summit Mumbai", url: "https://www.educationsummit.com/" },
+  { name: "Economic Times", src: economicTimes, alt: "Economic Times Feature", url: "https://economictimes.indiatimes.com/" },
+  { name: "NSA Award", src: nsaAward, alt: "National School Awards 2023", url: "http://nationalschoolawards.in/" },
 ];
 
 function LogoImage({ logo }: { logo: AwardLogo }) {
@@ -64,21 +65,28 @@ export function AwardedBySection() {
           <div className="flex animate-scroll-rtl">
             {/* First set of logos */}
             {awardLogos.map((logo) => (
-              <div
+              <a
                 key={logo.name}
-                className="flex-shrink-0 px-6 flex items-center justify-center"
+                href={logo.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-shrink-0 px-6 flex items-center justify-center hover:opacity-80 transition-opacity"
+                data-testid={`link-award-${logo.name.toLowerCase().replace(/\s+/g, '-')}`}
               >
                 <LogoImage logo={logo} />
-              </div>
+              </a>
             ))}
             {/* Duplicate set for seamless loop */}
             {awardLogos.map((logo) => (
-              <div
+              <a
                 key={`${logo.name}-dup`}
-                className="flex-shrink-0 px-6 flex items-center justify-center"
+                href={logo.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-shrink-0 px-6 flex items-center justify-center hover:opacity-80 transition-opacity"
               >
                 <LogoImage logo={logo} />
-              </div>
+              </a>
             ))}
           </div>
         </div>
@@ -90,9 +98,15 @@ export function AwardedBySection() {
               key={logo.name}
               className="flex items-center"
             >
-              <div className="px-8 py-2 flex items-center justify-center">
+              <a 
+                href={logo.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-8 py-2 flex items-center justify-center hover:opacity-80 transition-opacity"
+                data-testid={`link-award-desktop-${logo.name.toLowerCase().replace(/\s+/g, '-')}`}
+              >
                 <LogoImage logo={logo} />
-              </div>
+              </a>
               {index < awardLogos.length - 1 && (
                 <div className="h-12 w-px bg-border/50" />
               )}
