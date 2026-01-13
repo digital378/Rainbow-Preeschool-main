@@ -8046,3 +8046,19 @@ Object.assign(legacyPagesData, {
         ]
       }
     ],
+    faqs: [
+      { question: "Isn't 1.5-2 years too young for school?", answer: "Quality playgroup is designed for this age. It's not 'school' with academics and worksheets – it's developmentally appropriate learning through play. Research shows children this age benefit from quality group experiences." },
+      { question: "Will my child get sick more in playgroup?", answer: "Children in group care may have more minor illnesses initially, but research shows their immune systems strengthen and they have fewer illnesses later. Good hygiene practices reduce illness spread." },
+      { question: "Don't children need their mothers during early years?", answer: "Children need secure attachment relationships, which can be maintained alongside quality care. Research shows quality early education alongside warm parenting produces excellent outcomes." },
+      { question: "What makes Rainbow Preschool's playgroup quality?", answer: "Our trained teachers, research-based curriculum, language-rich environment, social-emotional focus, and 18+ years of experience ensure quality. Visit us to see the difference." }
+    ],
+    relatedLinks: [
+      { title: "Playgroup Programme", url: "/playgroup", description: "Programme details" },
+      { title: "Is My Child Ready?", url: "/is-my-toddler-ready-for-playgroup", description: "Readiness assessment" },
+      { title: "Daily Schedule", url: "/playgroup-daily-schedule-activities", description: "What happens daily" },
+      { title: "Visit Us", url: "/contact", description: "See our programme" }
+    ],
+    internalLinks: commonInternalLinks,
+    category: "Education"
+  }
+});
