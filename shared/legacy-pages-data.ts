@@ -8021,3 +8021,28 @@ Object.assign(legacyPagesData, {
           "Confidence through accomplishment"
         ]
       },
+      {
+        heading: "Benefits for the Whole Family",
+        content: "Playgroup benefits extend to the whole family, not just the enrolled child.\n\n<strong>Parent Relief:</strong>\nHonestly, having regular breaks from intensive toddler care benefits parent wellbeing. Refreshed parents are better parents.\n\n<strong>Work Enablement:</strong>\nFor working parents, quality childcare enables career participation. This benefits family economics.\n\n<strong>Parent Community:</strong>\nPreschool connects parents with other families, building community and support networks.\n\n<strong>Parenting Information:</strong>\nQuality programmes share child development information and parenting strategies with families.\n\n<strong>Recognition of Needs:</strong>\nTeachers may notice developmental concerns early, enabling timely intervention.\n\n<strong>Transition to School:</strong>\nStarting early eases the later transition to formal school. Children who've been in group care adjust more easily.",
+        bulletPoints: [
+          "Parent wellbeing and breaks",
+          "Enables work participation",
+          "Community connection for parents",
+          "Parenting information and support",
+          "Early recognition of concerns",
+          "Smoother school transition"
+        ]
+      },
+      {
+        heading: "Rainbow Preschool's Early Learning",
+        content: "At <a href=\"/about\">Rainbow Preschool International</a>, our <a href=\"/playgroup\">Playgroup programme</a> is designed to maximize the benefits of early education.\n\n<strong>Research-Based Curriculum:</strong>\nOur programme is based on child development research, ensuring age-appropriate, effective experiences.\n\n<strong>Quality Teachers:</strong>\nTrained, caring teachers provide the responsive relationships that produce positive outcomes.\n\n<strong>Rich Environment:</strong>\nOur classrooms offer varied materials and experiences that stimulate development across domains.\n\n<strong>Language Focus:</strong>\nLanguage development is a priority, with rich conversation, books, and songs throughout the day.\n\n<strong>Social-Emotional Support:</strong>\nWe actively teach and support social-emotional skills, not just academic readiness.\n\n<strong>18+ Years Experience:</strong>\nOur experience with thousands of toddlers has refined our approach. We know what works.\n\nVisit our centres in <a href=\"/preschool-in-manpada-thane\">Manpada</a>, <a href=\"/preschool-in-hariniwas-thane\">Hariniwas</a>, <a href=\"/preschool-in-anand-nagar-thane\">Anand Nagar</a>, <a href=\"/preschool-in-dhokali-thane\">Dhokali</a>, <a href=\"/preschool-in-kalwa-thane\">Kalwa</a>, or <a href=\"/preschool-in-kasarvadavali-thane\">Kasarvadavali</a> to see the benefits of quality early education.",
+        bulletPoints: [
+          "Research-based age-appropriate curriculum",
+          "Trained, caring quality teachers",
+          "Rich stimulating environment",
+          "Strong language focus",
+          "Social-emotional priority",
+          "18+ years of refined experience"
+        ]
+      }
+    ],
