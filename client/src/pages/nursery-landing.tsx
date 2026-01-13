@@ -617,19 +617,19 @@ export default function NurseryLanding() {
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="md:col-span-2 md:row-span-2 relative overflow-hidden rounded-xl aspect-square">
-              <img src="/images/optimized/DSC00461.webp" alt="Teacher teaching nursery children at Rainbow Preschool" className="w-full h-full object-cover" loading="lazy" data-testid="img-nursery-gallery-1" />
+              <img src="/images/optimized/teacher-teaching-children-classroom.webp" alt="Teacher teaching nursery children at Rainbow Preschool" className="w-full h-full object-cover" loading="lazy" data-testid="img-nursery-gallery-1" />
             </div>
             <div className="relative overflow-hidden rounded-xl aspect-square">
-              <img src="/images/optimized/DSC00410.webp" alt="Kids drawing and coloring at nursery" className="w-full h-full object-cover" loading="lazy" data-testid="img-nursery-gallery-2" />
+              <img src="/images/optimized/nursery-kids-classroom-activity.webp" alt="Kids drawing and coloring at nursery" className="w-full h-full object-cover" loading="lazy" data-testid="img-nursery-gallery-2" />
             </div>
             <div className="relative overflow-hidden rounded-xl aspect-square">
-              <img src="/images/optimized/DSC00421.webp" alt="Children building with blocks in nursery classroom" className="w-full h-full object-cover" loading="lazy" data-testid="img-nursery-gallery-3" />
+              <img src="/images/optimized/kids-building-blocks-classroom.webp" alt="Children building with blocks in nursery classroom" className="w-full h-full object-cover" loading="lazy" data-testid="img-nursery-gallery-3" />
             </div>
             <div className="relative overflow-hidden rounded-xl aspect-square">
-              <img src="/images/optimized/DSC00495.webp" alt="Reading session at Rainbow Preschool nursery" className="w-full h-full object-cover" loading="lazy" data-testid="img-nursery-gallery-4" />
+              <img src="/images/optimized/nursery-reading-session.webp" alt="Reading session at Rainbow Preschool nursery" className="w-full h-full object-cover" loading="lazy" data-testid="img-nursery-gallery-4" />
             </div>
             <div className="relative overflow-hidden rounded-xl aspect-square">
-              <img src="/images/optimized/DSC00525.webp" alt="Music and movement activity in nursery" className="w-full h-full object-cover" loading="lazy" data-testid="img-nursery-gallery-5" />
+              <img src="/images/optimized/children-learning-colorful-toys-preschool.webp" alt="Music and movement activity in nursery" className="w-full h-full object-cover" loading="lazy" data-testid="img-nursery-gallery-5" />
             </div>
           </div>
         </div>

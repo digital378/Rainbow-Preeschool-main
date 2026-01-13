@@ -617,19 +617,19 @@ export default function PlaygroupLanding() {
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="md:col-span-2 md:row-span-2 relative overflow-hidden rounded-xl aspect-square">
-              <img src="/images/optimized/DSC00051.webp" alt="Toddlers playing in colorful ball pit at Rainbow Preschool" className="w-full h-full object-cover" loading="lazy" data-testid="img-playgroup-gallery-1" />
+              <img src="/images/optimized/kids-playing-ball-pit-rainbow-preschool.webp" alt="Toddlers playing in colorful ball pit at Rainbow Preschool" className="w-full h-full object-cover" loading="lazy" data-testid="img-playgroup-gallery-1" />
             </div>
             <div className="relative overflow-hidden rounded-xl aspect-square">
-              <img src="/images/optimized/DSC00070.webp" alt="Happy kids peeking over ball pit at playgroup" className="w-full h-full object-cover" loading="lazy" data-testid="img-playgroup-gallery-2" />
+              <img src="/images/optimized/happy-girls-ball-pit-playgroup.webp" alt="Happy kids peeking over ball pit at playgroup" className="w-full h-full object-cover" loading="lazy" data-testid="img-playgroup-gallery-2" />
             </div>
             <div className="relative overflow-hidden rounded-xl aspect-square">
-              <img src="/images/optimized/DSC00002.webp" alt="Children playing with colorful toys at Rainbow Preschool" className="w-full h-full object-cover" loading="lazy" data-testid="img-playgroup-gallery-3" />
+              <img src="/images/optimized/children-learning-colorful-toys-preschool.webp" alt="Children playing with colorful toys at Rainbow Preschool" className="w-full h-full object-cover" loading="lazy" data-testid="img-playgroup-gallery-3" />
             </div>
             <div className="relative overflow-hidden rounded-xl aspect-square">
-              <img src="/images/optimized/DSC00379.webp" alt="Toddler learning with educational toys" className="w-full h-full object-cover" loading="lazy" data-testid="img-playgroup-gallery-4" />
+              <img src="/images/optimized/toddler-playing-educational-toys.webp" alt="Toddler learning with educational toys" className="w-full h-full object-cover" loading="lazy" data-testid="img-playgroup-gallery-4" />
             </div>
             <div className="relative overflow-hidden rounded-xl aspect-square">
-              <img src="/images/optimized/DSC00389.webp" alt="Child playing with stacking rings at playgroup" className="w-full h-full object-cover" loading="lazy" data-testid="img-playgroup-gallery-5" />
+              <img src="/images/optimized/child-stacking-rings-playgroup.webp" alt="Child playing with stacking rings at playgroup" className="w-full h-full object-cover" loading="lazy" data-testid="img-playgroup-gallery-5" />
             </div>
           </div>
         </div>

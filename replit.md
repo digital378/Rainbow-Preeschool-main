@@ -187,6 +187,7 @@ All classroom and activity photos are optimized using sharp and stored as WebP f
 - **Format**: WebP with quality setting of 80
 - **Script**: `scripts/compress-images.js` (ESM syntax)
 - **Loading**: All images use `loading="lazy"` for performance
+- **Naming**: SEO-friendly filenames (e.g., `kids-playing-ball-pit-rainbow-preschool.webp`)
 
 ### Image Implementation by Page
 - **Homepage** (`home.tsx`): ClassroomGallery component with 6 featured images
@@ -195,6 +196,14 @@ All classroom and activity photos are optimized using sharp and stored as WebP f
 - **Playgroup Landing** (`playgroup-landing.tsx`): 5-image gallery section
 - **Nursery Landing** (`nursery-landing.tsx`): 5-image gallery section  
 - **Kindergarten Landing** (`kindergarten-landing.tsx`): 5-image gallery section
+
+### Key Images (SEO-friendly names)
+- `kids-playing-ball-pit-rainbow-preschool.webp` - Playgroup featured
+- `children-learning-colorful-toys-preschool.webp` - Learning activity
+- `children-playing-snakes-ladders-game.webp` - Kindergarten featured
+- `kids-building-blocks-classroom.webp` - Daycare/blocks activity
+- `teacher-teaching-children-classroom.webp` - Nursery featured
+- `happy-girls-ball-pit-playgroup.webp` - Playgroup fun activity
 
 ### Key Component
 - `client/src/components/classroom-gallery.tsx` - Responsive masonry-style image gallery

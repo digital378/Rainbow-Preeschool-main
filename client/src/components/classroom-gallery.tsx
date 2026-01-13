@@ -5,32 +5,32 @@ import { cn } from "@/lib/utils";
 
 const galleryImages = [
   {
-    src: "/images/optimized/DSC00051.webp",
+    src: "/images/optimized/kids-playing-ball-pit-rainbow-preschool.webp",
     alt: "Children playing in colorful ball pit at Rainbow Preschool Thane",
     category: "Play"
   },
   {
-    src: "/images/optimized/DSC00002.webp",
+    src: "/images/optimized/children-learning-colorful-toys-preschool.webp",
     alt: "Kids learning with colorful toys on play mat at Rainbow Preschool",
     category: "Learning"
   },
   {
-    src: "/images/optimized/DSC00146.webp",
+    src: "/images/optimized/children-playing-snakes-ladders-game.webp",
     alt: "Children playing giant snakes and ladders game at preschool",
     category: "Games"
   },
   {
-    src: "/images/optimized/DSC00421.webp",
+    src: "/images/optimized/kids-building-blocks-classroom.webp",
     alt: "Two children building with blocks on classroom floor",
     category: "Play"
   },
   {
-    src: "/images/optimized/DSC00461.webp",
+    src: "/images/optimized/teacher-teaching-children-classroom.webp",
     alt: "Teacher teaching letters to children in classroom",
     category: "Learning"
   },
   {
-    src: "/images/optimized/DSC00070.webp",
+    src: "/images/optimized/happy-girls-ball-pit-playgroup.webp",
     alt: "Three happy girls peeking over colorful ball pit fence",
     category: "Fun"
   },

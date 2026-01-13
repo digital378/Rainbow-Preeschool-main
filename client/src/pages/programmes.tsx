@@ -25,25 +25,25 @@ const programmeDetails: Record<string, { features: string[]; schedule: string; a
     features: ["Introduction to colors and shapes", "Puppet shows and storytelling", "Sensory play activities", "Basic motor skill development"],
     schedule: "Morning Batch - 8:30AM to 11:30AM\nAfternoon Batch - 12:30PM to 3:30PM",
     activities: ["Circle time", "Music and movement", "Art exploration", "Free play"],
-    image: "/images/optimized/DSC00051.webp",
+    image: "/images/optimized/kids-playing-ball-pit-rainbow-preschool.webp",
   },
   nursery: {
     features: ["Alphabet and number recognition", "Group reading sessions", "Creative arts and crafts", "Physical development through yoga"],
     schedule: "Morning Batch - 8:30AM to 11:30AM\nAfternoon Batch - 12:30PM to 3:30PM",
     activities: ["Phonics introduction", "Dancing and singing", "Puppet shows", "Outdoor play"],
-    image: "/images/optimized/DSC00461.webp",
+    image: "/images/optimized/teacher-teaching-children-classroom.webp",
   },
   kindergarten: {
     features: ["Reading and writing readiness", "Math concepts and problem solving", "Science exploration (EVS)", "General knowledge building"],
     schedule: "Morning Batch - 8:30AM to 11:30AM\nAfternoon Batch - 12:30PM to 3:30PM",
     activities: ["English language arts", "Mathematics", "Art & Craft", "Sports and games"],
-    image: "/images/optimized/DSC00146.webp",
+    image: "/images/optimized/children-playing-snakes-ladders-game.webp",
   },
   "happy-times": {
     features: ["Safe and nurturing environment", "Flexible hours for working parents", "Nutritious meals", "Engaging activities throughout the day"],
     schedule: "Extended hours available",
     activities: ["100% female staff", "Homely care for children", "CCTV surveillance across all daycare areas"],
-    image: "/images/optimized/DSC00421.webp",
+    image: "/images/optimized/kids-building-blocks-classroom.webp",
   },
 };
 

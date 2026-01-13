@@ -607,19 +607,19 @@ export default function KindergartenLanding() {
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="md:col-span-2 md:row-span-2 relative overflow-hidden rounded-xl aspect-square">
-              <img src="/images/optimized/DSC00146.webp" alt="Kindergarten students learning at Rainbow Preschool" className="w-full h-full object-cover" loading="lazy" data-testid="img-kindergarten-gallery-1" />
+              <img src="/images/optimized/children-playing-snakes-ladders-game.webp" alt="Kindergarten students learning at Rainbow Preschool" className="w-full h-full object-cover" loading="lazy" data-testid="img-kindergarten-gallery-1" />
             </div>
             <div className="relative overflow-hidden rounded-xl aspect-square">
-              <img src="/images/optimized/DSC00151.webp" alt="Kids in classroom at kindergarten" className="w-full h-full object-cover" loading="lazy" data-testid="img-kindergarten-gallery-2" />
+              <img src="/images/optimized/kindergarten-classroom-learning.webp" alt="Kids in classroom at kindergarten" className="w-full h-full object-cover" loading="lazy" data-testid="img-kindergarten-gallery-2" />
             </div>
             <div className="relative overflow-hidden rounded-xl aspect-square">
-              <img src="/images/optimized/DSC00306.webp" alt="Children learning in Rainbow Preschool classroom" className="w-full h-full object-cover" loading="lazy" data-testid="img-kindergarten-gallery-3" />
+              <img src="/images/optimized/children-learning-rainbow-preschool.webp" alt="Children learning in Rainbow Preschool classroom" className="w-full h-full object-cover" loading="lazy" data-testid="img-kindergarten-gallery-3" />
             </div>
             <div className="relative overflow-hidden rounded-xl aspect-square">
-              <img src="/images/optimized/DSC00168.webp" alt="Creative art activity at kindergarten" className="w-full h-full object-cover" loading="lazy" data-testid="img-kindergarten-gallery-4" />
+              <img src="/images/optimized/creative-art-activity-preschool.webp" alt="Creative art activity at kindergarten" className="w-full h-full object-cover" loading="lazy" data-testid="img-kindergarten-gallery-4" />
             </div>
             <div className="relative overflow-hidden rounded-xl aspect-square">
-              <img src="/images/optimized/DSC00186.webp" alt="Group learning activity in kindergarten classroom" className="w-full h-full object-cover" loading="lazy" data-testid="img-kindergarten-gallery-5" />
+              <img src="/images/optimized/group-learning-kindergarten.webp" alt="Group learning activity in kindergarten classroom" className="w-full h-full object-cover" loading="lazy" data-testid="img-kindergarten-gallery-5" />
             </div>
           </div>
         </div>
