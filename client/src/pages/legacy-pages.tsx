@@ -176,6 +176,32 @@ export const PlaygroupDailySchedule = createLegacyPage("/playgroup-daily-schedul
 export const ToddlerReadyForPlaygroup = createLegacyPage("/is-my-toddler-ready-for-playgroup/");
 export const BenefitsEarlyPlaygroup = createLegacyPage("/benefits-of-early-playgroup-enrollment/");
 
+// NEW SEO BLOG POSTS - BATCH 2 ADDITIONAL
+// Homepage supporting
+export const WhyEarlyChildhoodEducation = createLegacyPage("/why-early-childhood-education-matters-thane-parents/");
+export const ChoosingBestPreschool = createLegacyPage("/choosing-best-preschool-thane-parent-guide/");
+export const HolisticChildDevelopmentRainbow = createLegacyPage("/holistic-child-development-rainbow-approach/");
+export const PreschoolVsDaycareDifference = createLegacyPage("/preschool-vs-daycare-understanding-difference/");
+export const PreparingChildForPreschool = createLegacyPage("/preparing-child-for-preschool-thane-tips/");
+
+// About page supporting
+export const RainbowTeachingPhilosophy = createLegacyPage("/rainbow-preschool-teaching-philosophy-explained/");
+export const HistoryEarlyChildhoodThane = createLegacyPage("/history-early-childhood-education-thane/");
+export const QualityPreschoolTeacher = createLegacyPage("/what-makes-quality-preschool-teacher/");
+export const ParentTeacherPartnership = createLegacyPage("/parent-teacher-partnership-early-education/");
+export const RainbowAwardsRecognition = createLegacyPage("/rainbow-preschool-awards-recognition-thane/");
+
+// Programmes page supporting
+export const AgeAppropriateLearning = createLegacyPage("/age-appropriate-learning-activities-explained/");
+export const PlayBasedVsAcademic = createLegacyPage("/play-based-learning-vs-academic-approach/");
+export const RainbowCurriculumSchoolReadiness = createLegacyPage("/how-rainbow-curriculum-prepares-school-readiness/");
+export const CreativeArtsEarlyChildhood = createLegacyPage("/importance-creative-arts-early-childhood/");
+export const PhysicalDevelopmentActivities = createLegacyPage("/physical-development-activities-preschoolers/");
+
+// Playgroup page supporting
+export const SeparationAnxietyTips = createLegacyPage("/separation-anxiety-tips-playgroup-parents/");
+export const SocialisationBenefitsToddlers = createLegacyPage("/socialisation-benefits-toddlers-playgroup/");
+
 export { AuthorArchivePage };
 
 export const legacySlugs = Object.keys(legacyPagesData);
