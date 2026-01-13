@@ -27,12 +27,13 @@ export interface CentreData {
 }
 
 // Default gallery images for all centres
+// Note: These must be different from programme card images to avoid duplicates on same page
 export const defaultCentreGalleryImages = [
-  "/images/optimized/kids-playing-ball-pit-rainbow-preschool.webp",
-  "/images/optimized/teacher-teaching-children-classroom.webp",
-  "/images/optimized/children-learning-colorful-toys-preschool.webp",
-  "/images/optimized/kids-building-blocks-classroom.webp",
-  "/images/optimized/happy-girls-ball-pit-playgroup.webp",
+  "/images/optimized/children-learning-rainbow-preschool.webp",
+  "/images/optimized/child-stacking-rings-playgroup.webp",
+  "/images/optimized/DSC00010.webp",
+  "/images/optimized/DSC00011.webp",
+  "/images/optimized/DSC00054.webp",
 ];
 
 export const centres: CentreData[] = [

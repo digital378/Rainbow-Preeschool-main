@@ -14,45 +14,58 @@ export function CTASection({
   description = "Join the Rainbow family and give your child a foundation for lifelong learning and success.",
 }: CTASectionProps) {
   return (
-    <section className="py-16 md:py-20 relative overflow-hidden">
-      {/* Background gradient */}
-      <div className="absolute inset-0 rainbow-gradient opacity-90" />
-      
-      {/* Dark overlay for text readability */}
-      <div className="absolute inset-0 bg-black/40" />
-      
-      {/* Pattern overlay */}
+    <section className="relative overflow-hidden">
       <div 
-        className="absolute inset-0 opacity-10"
+        className="absolute inset-0 bg-cover bg-no-repeat md:bg-center"
         style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+          backgroundImage: `url('/images/optimized/footer-banner-rainbow-preschool.webp')`,
+          backgroundPosition: 'center 40%',
         }}
       />
+      
+      <div className="absolute inset-0 bg-black/40 md:bg-gradient-to-r md:from-black/30 md:via-black/20 md:to-black/30" />
 
-      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
+      <div className="relative z-10 py-12 md:py-16 lg:py-20 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 
+          className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-3 md:mb-4"
+          style={{
+            textShadow: `
+              2px 2px 0px #e11d48,
+              4px 4px 0px #be123c,
+              6px 6px 8px rgba(0, 0, 0, 0.4)
+            `,
+          }}
+        >
           {title}
         </h2>
-        <p className="text-lg md:text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+        <p 
+          className="text-base md:text-lg lg:text-xl text-white mb-6 md:mb-8 max-w-2xl mx-auto font-medium"
+          style={{
+            textShadow: `
+              1px 1px 0px rgba(0, 0, 0, 0.5),
+              2px 2px 4px rgba(0, 0, 0, 0.3)
+            `,
+          }}
+        >
           {description}
         </p>
         
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-4">
           <Link href="/contact">
             <Button 
               size="lg" 
-              className="bg-white text-primary hover:bg-white/90 text-base px-8"
+              className="bg-white text-primary hover:bg-white/90 text-base px-6 md:px-8 shadow-lg w-full sm:w-auto"
               onClick={() => trackCTAClick("request_callback", "cta_section")}
               data-testid="button-cta-callback"
             >
               Request Callback
             </Button>
           </Link>
-          <a href="tel:+918291568972">
+          <a href="tel:+918291568972" className="w-full sm:w-auto">
             <Button 
               variant="outline" 
               size="lg" 
-              className="border-white text-white hover:bg-white/10 text-base px-8"
+              className="border-white border-2 text-white hover:bg-white/20 text-base px-6 md:px-8 shadow-lg backdrop-blur-sm bg-black/20 w-full"
               onClick={() => trackCTAClick("call_now", "cta_section")}
               data-testid="button-cta-call"
             >
@@ -64,11 +77,12 @@ export function CTASection({
             href="https://wa.me/918291568972?text=Hi%2C%20I%20would%20like%20to%20know%20more%20about%20Rainbow%20Preschool"
             target="_blank"
             rel="noopener noreferrer"
+            className="w-full sm:w-auto"
           >
             <Button 
               variant="outline" 
               size="lg" 
-              className="border-white text-white hover:bg-white/10 text-base px-8"
+              className="border-white border-2 text-white hover:bg-white/20 text-base px-6 md:px-8 shadow-lg backdrop-blur-sm bg-black/20 w-full"
               onClick={() => trackCTAClick("whatsapp_chat", "cta_section")}
               data-testid="button-cta-whatsapp"
             >

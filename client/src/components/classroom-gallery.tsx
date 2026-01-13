@@ -3,35 +3,36 @@ import { Card } from "@/components/ui/card";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 
+// Note: These images must be different from programme card images on the same page
 const galleryImages = [
   {
-    src: "/images/optimized/kids-playing-ball-pit-rainbow-preschool.webp",
-    alt: "Children playing in colorful ball pit at Rainbow Preschool Thane",
-    category: "Play"
-  },
-  {
-    src: "/images/optimized/children-learning-colorful-toys-preschool.webp",
-    alt: "Kids learning with colorful toys on play mat at Rainbow Preschool",
+    src: "/images/optimized/children-learning-rainbow-preschool.webp",
+    alt: "Children learning at Rainbow Preschool Thane",
     category: "Learning"
   },
   {
-    src: "/images/optimized/children-playing-snakes-ladders-game.webp",
-    alt: "Children playing giant snakes and ladders game at preschool",
-    category: "Games"
-  },
-  {
-    src: "/images/optimized/kids-building-blocks-classroom.webp",
-    alt: "Two children building with blocks on classroom floor",
+    src: "/images/optimized/child-stacking-rings-playgroup.webp",
+    alt: "Child stacking colorful rings at playgroup",
     category: "Play"
   },
   {
-    src: "/images/optimized/teacher-teaching-children-classroom.webp",
-    alt: "Teacher teaching letters to children in classroom",
+    src: "/images/optimized/DSC00010.webp",
+    alt: "Children enjoying activities at Rainbow Preschool",
+    category: "Activities"
+  },
+  {
+    src: "/images/optimized/DSC00011.webp",
+    alt: "Happy children at Rainbow Preschool classroom",
+    category: "Classroom"
+  },
+  {
+    src: "/images/optimized/DSC00054.webp",
+    alt: "Fun learning activities at preschool",
     category: "Learning"
   },
   {
-    src: "/images/optimized/happy-girls-ball-pit-playgroup.webp",
-    alt: "Three happy girls peeking over colorful ball pit fence",
+    src: "/images/optimized/DSC00257.webp",
+    alt: "Children's joyful moments at Rainbow Preschool",
     category: "Fun"
   },
 ];
