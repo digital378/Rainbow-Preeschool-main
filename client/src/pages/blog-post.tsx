@@ -467,21 +467,21 @@ function BlogPostSchema({ post }: { post: BlogPostData }) {
       "author": {
         "@type": "Organization",
         "name": "Rainbow Preschool International",
-        "url": "https://rainbowpreschools.com"
+        "url": "https://www.rainbowpreschools.com"
       },
       "publisher": {
         "@type": "Organization",
         "name": "Rainbow Preschool International",
         "logo": {
           "@type": "ImageObject",
-          "url": "https://rainbowpreschools.com/logo.png"
+          "url": "https://www.rainbowpreschools.com/logo.png"
         }
       },
       "datePublished": post.publishedAt.toISOString(),
       "dateModified": post.publishedAt.toISOString(),
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": `https://rainbowpreschools.com/blog/${post.slug}`
+        "@id": `https://www.rainbowpreschools.com/blog/${post.slug}`
       },
       "wordCount": post.wordCount,
       "articleSection": "Early Childhood Education",
@@ -538,7 +538,7 @@ export default function BlogPost() {
         title={post.seoTitle}
         description={post.seoDescription}
         keywords={post.seoKeywords}
-        canonical={`https://rainbowpreschools.com/blog/${post.slug}`}
+        canonical={`https://www.rainbowpreschools.com/blog/${post.slug}`}
       />
       <BlogPostSchema post={post} />
 

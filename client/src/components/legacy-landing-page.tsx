@@ -88,7 +88,7 @@ interface LegacyLandingPageProps {
 export function LegacyLandingPage({ data }: LegacyLandingPageProps) {
   // Remove trailing slash from slug for canonical URL to match actual routes
   const slugWithoutTrailingSlash = data.slug.replace(/\/$/, '');
-  const canonicalUrl = `https://rainbowpreschools.com${slugWithoutTrailingSlash}`;
+  const canonicalUrl = `https://www.rainbowpreschools.com${slugWithoutTrailingSlash}`;
   const category = data.category || "Resources";
 
   useEffect(() => {
@@ -149,13 +149,13 @@ export function LegacyLandingPage({ data }: LegacyLandingPageProps) {
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://rainbowpreschools.com"
+          "item": "https://www.rainbowpreschools.com"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": category,
-          "item": "https://rainbowpreschools.com/blog"
+          "item": "https://www.rainbowpreschools.com/blog"
         },
         {
           "@type": "ListItem",
@@ -175,7 +175,7 @@ export function LegacyLandingPage({ data }: LegacyLandingPageProps) {
       "publisher": {
         "@type": "Organization",
         "name": "Rainbow Preschool International",
-        "url": "https://rainbowpreschools.com"
+        "url": "https://www.rainbowpreschools.com"
       }
     };
 
@@ -429,7 +429,7 @@ export function LegacyLandingPage({ data }: LegacyLandingPageProps) {
 }
 
 export function AuthorArchivePage() {
-  const canonicalUrl = "https://rainbowpreschools.com/blog";
+  const canonicalUrl = "https://www.rainbowpreschools.com/blog";
 
   useEffect(() => {
     document.title = "Resources & Articles | Rainbow Preschool International";

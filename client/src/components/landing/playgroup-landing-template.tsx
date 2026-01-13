@@ -28,8 +28,8 @@ export function PlaygroupLandingTemplate({ data }: PlaygroupLandingTemplateProps
       "@context": "https://schema.org",
       "@type": "EducationalOrganization",
       name: "Rainbow Preschool International",
-      url: "https://rainbowpreschools.com",
-      logo: "https://rainbowpreschools.com/assets/Rainbow_Pre_School.Logo.png",
+      url: "https://www.rainbowpreschools.com",
+      logo: "https://www.rainbowpreschools.com/assets/Rainbow_Pre_School.Logo.png",
       description: "Trusted preschool in Thane since 2007",
       foundingDate: "2007",
     };
@@ -39,7 +39,7 @@ export function PlaygroupLandingTemplate({ data }: PlaygroupLandingTemplateProps
       "@context": "https://schema.org",
       "@type": "WebSite",
       name: "Rainbow Preschool International",
-      url: "https://rainbowpreschools.com",
+      url: "https://www.rainbowpreschools.com",
     };
 
     // Breadcrumb schema
@@ -47,8 +47,8 @@ export function PlaygroupLandingTemplate({ data }: PlaygroupLandingTemplateProps
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
       itemListElement: [
-        { "@type": "ListItem", position: 1, name: "Home", item: "https://rainbowpreschools.com/" },
-        { "@type": "ListItem", position: 2, name: "Playgroup", item: "https://rainbowpreschools.com/playgroup" },
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://www.rainbowpreschools.com/" },
+        { "@type": "ListItem", position: 2, name: "Playgroup", item: "https://www.rainbowpreschools.com/playgroup" },
         { "@type": "ListItem", position: 3, name: data.seo.h1, item: data.seo.canonical },
       ],
     };

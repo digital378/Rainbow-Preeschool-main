@@ -382,7 +382,7 @@ export default function HappyTimesLanding() {
         title="Daycare in Thane | Safe After-School Care | Rainbow Preschool"
         description="Daycare in Thane for children aged 3-10 years. Best daycare with CCTV, homework help & healthy snacks for working parents. Book a visit today!"
         keywords="daycare in thane, daycare near me, best daycare in thane, daycare for children near me, daycare for working parents, safe daycare for kids, daycare with cctv, full day daycare, preschool daycare"
-        canonical="https://rainbowpreschools.com/happy-times"
+        canonical="https://www.rainbowpreschools.com/happy-times"
       />
 
       {/* Hero Section with Inline Callback Form */}

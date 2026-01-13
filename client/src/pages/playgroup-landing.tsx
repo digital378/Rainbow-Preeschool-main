@@ -381,7 +381,7 @@ export default function PlaygroupLanding() {
         title="Playgroup in Thane | Ages 1.5-2.5 Years | Rainbow Preschool"
         description="Playgroup in Thane for toddlers aged 1.5-2.5 years. Best early learning playgroup with safe environment since 2007. Enquire for admission near you!"
         keywords="playgroup in thane, playgroup near me, best playgroup, playgroup admission near me, playgroup for toddlers, playgroup school in thane, early learning playgroup, play based playgroup, best playgroup in thane"
-        canonical="https://rainbowpreschools.com/playgroup"
+        canonical="https://www.rainbowpreschools.com/playgroup"
       />
 
       {/* Hero Section with Inline Callback Form */}

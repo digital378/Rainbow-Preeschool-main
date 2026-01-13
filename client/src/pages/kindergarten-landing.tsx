@@ -371,7 +371,7 @@ export default function KindergartenLanding() {
         title="Kindergarten School in Thane | LKG UKG | Rainbow Preschool"
         description="Kindergarten school in Thane for ages 3.5-5.5 years. Best LKG & UKG with comprehensive school readiness program since 2007. Enquire for admission today!"
         keywords="kindergarten school in thane, kindergarten near me, best kindergarten school, kindergarten admission near me, lkg admission near me, ukg admission near me, kindergarten curriculum, school readiness program, kindergarten for kids"
-        canonical="https://rainbowpreschools.com/kindergarten"
+        canonical="https://www.rainbowpreschools.com/kindergarten"
       />
 
       {/* Hero Section with Inline Callback Form */}

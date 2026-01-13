@@ -35,7 +35,7 @@ export const playgroundLandingPages: PlaygroupLandingData[] = [
       title: "Playgroup in Thane (1.5-2.5 Years) | Rainbow Preschool International",
       description: "Looking for a playgroup in Thane? Safe, play-based early learning for toddlers aged 1.5-2.5 years. 6 centres across Thane West. Request a callback today.",
       h1: "Playgroup in Thane (1.5-2.5 Years)",
-      canonical: "https://rainbowpreschools.com/playgroup-in-thane",
+      canonical: "https://www.rainbowpreschools.com/playgroup-in-thane",
     },
     introParagraph: "Rainbow Preschool International offers the best playgroup programme in Thane for toddlers aged 1.5 to 2.5 years. With 6 centres across Thane West and over 18 years of trusted experience, we provide a safe, nurturing environment where your child's first learning journey begins through joyful play-based activities.",
     centre: {
@@ -67,7 +67,7 @@ export const playgroundLandingPages: PlaygroupLandingData[] = [
       title: "Playgroup in Manpada, Thane (1.5-2.5 Years) | Rainbow Preschool",
       description: "Best playgroup in Manpada, Thane near Khewra Circle. Rainbow Preschool offers play-based learning for children aged 1.5-2.5 years. Safe, nurturing environment. Book a visit!",
       h1: "Playgroup in Manpada, Thane (1.5-2.5 Years)",
-      canonical: "https://rainbowpreschools.com/playgroup-in-manpada",
+      canonical: "https://www.rainbowpreschools.com/playgroup-in-manpada",
     },
     introParagraph: "Looking for a trusted playgroup in Manpada? Our Aggarwal Centre near Khewra Circle offers the perfect start for your toddler's learning journey. With experienced teachers, a safe campus, and a play-based curriculum, Rainbow Preschool Manpada has been nurturing young minds since 2007.",
     centre: {
@@ -99,7 +99,7 @@ export const playgroundLandingPages: PlaygroupLandingData[] = [
       title: "Playgroup in Kalwa, Thane (1.5-2.5 Years) | Rainbow Preschool",
       description: "Looking for playgroup in Kalwa? Rainbow Preschool near Manisha Nagar offers safe, fun early learning for toddlers aged 1.5-2.5 years. Book a free visit today!",
       h1: "Playgroup in Kalwa, Thane (1.5-2.5 Years)",
-      canonical: "https://rainbowpreschools.com/playgroup-in-kalwa",
+      canonical: "https://www.rainbowpreschools.com/playgroup-in-kalwa",
     },
     introParagraph: "Rainbow Preschool Kalwa, located near Manisha Nagar, provides a nurturing playgroup experience for toddlers in the Kalwa area. Our safe, play-based environment helps children aged 1.5-2.5 years develop social skills, creativity, and confidence through joyful learning activities.",
     centre: {
@@ -131,7 +131,7 @@ export const playgroundLandingPages: PlaygroupLandingData[] = [
       title: "Playgroup near Ghodbunder Road, Thane (1.5-2.5 Years) | Rainbow Preschool",
       description: "Best playgroup near Ghodbunder Road in Kasarvadavali. Rainbow Preschool offers play-based learning for children aged 1.5-2.5 years. Near Hypercity Mall. Book a visit!",
       h1: "Playgroup near Ghodbunder Road, Thane (1.5-2.5 Years)",
-      canonical: "https://rainbowpreschools.com/playgroup-near-ghodbunder-road",
+      canonical: "https://www.rainbowpreschools.com/playgroup-near-ghodbunder-road",
     },
     introParagraph: "Looking for a quality playgroup near Ghodbunder Road? Rainbow Preschool Kasarvadavali, conveniently located behind Hypercity Mall, offers excellent early childhood education for toddlers aged 1.5-2.5 years. Our experienced teachers and safe environment make learning a joyful experience.",
     centre: {
@@ -163,7 +163,7 @@ export const playgroundLandingPages: PlaygroupLandingData[] = [
       title: "Playgroup in Anand Nagar, Thane (1.5-2.5 Years) | Rainbow Preschool",
       description: "Best playgroup in Anand Nagar, Thane near Tropical Lagoon. Rainbow Preschool offers safe, play-based learning for toddlers aged 1.5-2.5 years. Book a visit today!",
       h1: "Playgroup in Anand Nagar, Thane (1.5-2.5 Years)",
-      canonical: "https://rainbowpreschools.com/playgroup-in-anand-nagar",
+      canonical: "https://www.rainbowpreschools.com/playgroup-in-anand-nagar",
     },
     introParagraph: "Rainbow Preschool Anand Nagar, located opposite Tropical Lagoon, is the ideal choice for parents seeking quality early education in the area. Our playgroup programme for toddlers aged 1.5-2.5 years combines fun activities with foundational learning in a safe, caring environment.",
     centre: {
@@ -195,7 +195,7 @@ export const playgroundLandingPages: PlaygroupLandingData[] = [
       title: "Playgroup in Kasarvadavali, Thane (1.5-2.5 Years) | Rainbow Preschool",
       description: "Looking for playgroup in Kasarvadavali? Rainbow Preschool near Hypercity Mall offers play-based early learning for toddlers aged 1.5-2.5 years. Book a free visit!",
       h1: "Playgroup in Kasarvadavali, Thane (1.5-2.5 Years)",
-      canonical: "https://rainbowpreschools.com/playgroup-in-kasarvadavali",
+      canonical: "https://www.rainbowpreschools.com/playgroup-in-kasarvadavali",
     },
     introParagraph: "Rainbow Preschool Kasarvadavali brings trusted early education to families in the Ghodbunder Road area. Located at Rosa Gardenia near Hypercity Mall, our playgroup programme provides a safe and stimulating environment for toddlers aged 1.5-2.5 years to learn through play.",
     centre: {
@@ -227,7 +227,7 @@ export const playgroundLandingPages: PlaygroupLandingData[] = [
       title: "Playgroup in Dhokali, Thane (1.5-2.5 Years) | Rainbow Preschool",
       description: "Best playgroup in Dhokali, Thane on Kolshet Road. Rainbow Preschool offers safe, nurturing early learning for toddlers aged 1.5-2.5 years. Book a visit today!",
       h1: "Playgroup in Dhokali, Thane (1.5-2.5 Years)",
-      canonical: "https://rainbowpreschools.com/playgroup-in-dhokali",
+      canonical: "https://www.rainbowpreschools.com/playgroup-in-dhokali",
     },
     introParagraph: "Rainbow Preschool Dhokali on Kolshet Road offers a warm, welcoming playgroup experience for families in the Dhokali area. Our programme for toddlers aged 1.5-2.5 years focuses on play-based learning, helping children develop social skills, creativity, and early academic foundations.",
     centre: {

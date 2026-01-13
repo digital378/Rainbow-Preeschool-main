@@ -370,7 +370,7 @@ export default function SummerCampLanding() {
         title="Summer Camp for Kids in Thane 2025 | Rainbow Preschool"
         description="Best Summer Camp in Thane for children aged 2-10 years. Fun activities including art, dance, sports, cooking, science experiments, and swimming. Book now!"
         keywords="summer camp thane, summer camp for kids thane, summer activities for children thane, summer vacation classes thane, kids summer camp near me thane"
-        canonical="https://rainbowpreschools.com/summer-camp"
+        canonical="https://www.rainbowpreschools.com/summer-camp"
       />
 
       {/* Hero Section with Inline Callback Form */}

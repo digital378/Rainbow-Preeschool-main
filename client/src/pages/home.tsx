@@ -211,8 +211,8 @@ export default function Home() {
       "@type": "EducationalOrganization",
       "name": "Rainbow Preschool International",
       "alternateName": "Rainbow Preschools",
-      "url": "https://rainbowpreschools.com",
-      "logo": "https://rainbowpreschools.com/assets/Rainbow_Pre_School.Logo.png",
+      "url": "https://www.rainbowpreschools.com",
+      "logo": "https://www.rainbowpreschools.com/assets/Rainbow_Pre_School.Logo.png",
       "description": "Trusted preschool in Thane since 2007. Play-based early learning for children aged 1.5-5 years. 6 centres across Thane West.",
       "foundingDate": "2007",
       "areaServed": {
@@ -246,7 +246,7 @@ export default function Home() {
       "@context": "https://schema.org",
       "@type": "WebSite",
       "name": "Rainbow Preschool International",
-      "url": "https://rainbowpreschools.com",
+      "url": "https://www.rainbowpreschools.com",
       "description": "Trusted preschool in Thane since 2007"
     };
 

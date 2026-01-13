@@ -381,7 +381,7 @@ export default function NurseryLanding() {
         title="Nursery School in Thane | Ages 2.5-3.5 | Rainbow Preschool"
         description="Nursery school in Thane for kids aged 2.5-3.5 years. Best play-based nursery with trained teachers and safe environment since 2007. Enquire for admission today!"
         keywords="nursery school in thane, nursery school near me, best nursery school, nursery school admission near me, nursery school admission enquiry, nursery class for kids, play based nursery school, nursery education program, top nursery school in thane"
-        canonical="https://rainbowpreschools.com/nursery"
+        canonical="https://www.rainbowpreschools.com/nursery"
       />
 
       {/* Hero Section with Inline Callback Form */}

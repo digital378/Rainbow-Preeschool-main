@@ -53,7 +53,7 @@ function PreschoolLocationTemplate({ localitySlug }: PreschoolLocationPageProps)
     updateMeta('og:title', seo.title, true);
     updateMeta('og:description', seo.description, true);
     updateMeta('og:type', 'website', true);
-    updateMeta('og:url', `https://rainbowpreschools.com${seo.canonicalPath}`, true);
+    updateMeta('og:url', `https://www.rainbowpreschools.com${seo.canonicalPath}`, true);
     updateMeta('twitter:card', 'summary_large_image');
     updateMeta('twitter:title', seo.title);
     updateMeta('twitter:description', seo.description);
@@ -64,7 +64,7 @@ function PreschoolLocationTemplate({ localitySlug }: PreschoolLocationPageProps)
       canonical.setAttribute('rel', 'canonical');
       document.head.appendChild(canonical);
     }
-    canonical.setAttribute('href', `https://rainbowpreschools.com${seo.canonicalPath}`);
+    canonical.setAttribute('href', `https://www.rainbowpreschools.com${seo.canonicalPath}`);
 
     return () => {
       document.title = "Rainbow Preschool International";
@@ -79,7 +79,7 @@ function PreschoolLocationTemplate({ localitySlug }: PreschoolLocationPageProps)
       "@type": "Preschool",
       "name": `Rainbow Preschool International - ${centre.name}`,
       "description": seo.description,
-      "url": `https://rainbowpreschools.com${seo.canonicalPath}`,
+      "url": `https://www.rainbowpreschools.com${seo.canonicalPath}`,
       "telephone": centre.phoneNumbers[0]?.replace(/\s/g, ''),
       "address": {
         "@type": "PostalAddress",
@@ -91,7 +91,7 @@ function PreschoolLocationTemplate({ localitySlug }: PreschoolLocationPageProps)
       "parentOrganization": {
         "@type": "Organization",
         "name": "Rainbow Preschool International",
-        "url": "https://rainbowpreschools.com"
+        "url": "https://www.rainbowpreschools.com"
       }
     };
 
@@ -116,19 +116,19 @@ function PreschoolLocationTemplate({ localitySlug }: PreschoolLocationPageProps)
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://rainbowpreschools.com"
+          "item": "https://www.rainbowpreschools.com"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "Centres",
-          "item": "https://rainbowpreschools.com/contact#centres"
+          "item": "https://www.rainbowpreschools.com/contact#centres"
         },
         {
           "@type": "ListItem",
           "position": 3,
           "name": seo.h1,
-          "item": `https://rainbowpreschools.com${seo.canonicalPath}`
+          "item": `https://www.rainbowpreschools.com${seo.canonicalPath}`
         }
       ]
     };
