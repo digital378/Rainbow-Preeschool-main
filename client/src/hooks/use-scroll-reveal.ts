@@ -30,13 +30,25 @@ export function useScrollReveal() {
  */
 export function useScrollRevealOnRoute(pathname: string) {
   useEffect(() => {
-    // initReveal internally calls cleanupReveal first to prevent duplicates
-    const timeoutId = setTimeout(() => {
+    // Initial call after a short delay for lazy-loaded components
+    const timeoutId1 = setTimeout(() => {
       initReveal();
     }, 150);
 
+    // Secondary call to catch elements that loaded after the first init
+    const timeoutId2 = setTimeout(() => {
+      initReveal();
+    }, 500);
+
+    // Final fallback for slower connections/devices
+    const timeoutId3 = setTimeout(() => {
+      initReveal();
+    }, 1000);
+
     return () => {
-      clearTimeout(timeoutId);
+      clearTimeout(timeoutId1);
+      clearTimeout(timeoutId2);
+      clearTimeout(timeoutId3);
     };
   }, [pathname]);
 }

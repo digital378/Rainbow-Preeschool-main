@@ -259,3 +259,26 @@
 [data-reveal].is-inview {
   will-change: auto;
 }
+
+/* ============================================
+   FALLBACK - Ensure visibility after timeout
+   If JS doesn't add is-inview class, still show content
+   ============================================ */
+
+@keyframes reveal-fallback {
+  0%, 99% {
+    opacity: var(--reveal-initial-opacity, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+[data-reveal] {
+  animation: reveal-fallback 0.01s 1.5s forwards;
+}
+
+[data-reveal].is-inview {
+  animation: none;
+}
