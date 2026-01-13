@@ -22,7 +22,18 @@ export interface CentreData {
     nursery: string;
     kindergarten: string;
   };
+  // Gallery images for centre page
+  galleryImages?: string[];
 }
+
+// Default gallery images for all centres
+export const defaultCentreGalleryImages = [
+  "/images/optimized/kids-playing-ball-pit-rainbow-preschool.webp",
+  "/images/optimized/teacher-teaching-children-classroom.webp",
+  "/images/optimized/children-learning-colorful-toys-preschool.webp",
+  "/images/optimized/kids-building-blocks-classroom.webp",
+  "/images/optimized/happy-girls-ball-pit-playgroup.webp",
+];
 
 export const centres: CentreData[] = [
   {

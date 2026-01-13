@@ -18,6 +18,7 @@ import {
   preschoolIntros, 
   whyParentsChoose, 
   preschoolFAQs,
+  defaultCentreGalleryImages,
   type CentreData 
 } from "@shared/centre-data";
 import { trackCallClick, trackWhatsAppClick, trackDirectionsClick, pushToDataLayer } from "@/lib/analytics";
@@ -346,8 +347,35 @@ function PreschoolLocationTemplate({ localitySlug }: PreschoolLocationPageProps)
         </div>
       </section>
 
+      <section className="py-12 md:py-16 bg-muted/30">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center">
+            Our Learning Spaces in {centre.localityName}
+          </h2>
+          <p className="text-center text-muted-foreground max-w-2xl mx-auto mb-8">
+            Explore our vibrant classrooms and play areas designed to inspire curiosity and learning
+          </p>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+            {(centre.galleryImages || defaultCentreGalleryImages).map((image, index) => (
+              <div 
+                key={index} 
+                className="aspect-square rounded-xl overflow-hidden"
+              >
+                <img
+                  src={image}
+                  alt={`Rainbow Preschool ${centre.localityName} classroom activities ${index + 1}`}
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                  loading="lazy"
+                  data-testid={`img-gallery-centre-${index}`}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {whyChoose && whyChoose.length > 0 && (
-        <section className="py-12 md:py-16 bg-muted/30">
+        <section className="py-12 md:py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center">
               Why Parents in {centre.localityName} Choose Rainbow

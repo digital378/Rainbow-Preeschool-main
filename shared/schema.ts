@@ -70,6 +70,7 @@ export const programmes = [
     ageRange: "1.5 - 2.5 years",
     description: "Learning introduced with fun activities like puppet shows, play, and colours",
     icon: "baby",
+    image: "/images/optimized/kids-playing-ball-pit-rainbow-preschool.webp",
   },
   {
     id: "nursery",
@@ -77,6 +78,7 @@ export const programmes = [
     ageRange: "2.5 - 3.5 years",
     description: "Curriculum in sync with children's mental and physical development - group reading, writing, puppet shows, dancing, yoga and more",
     icon: "book-open",
+    image: "/images/optimized/teacher-teaching-children-classroom.webp",
   },
   {
     id: "kindergarten",
@@ -84,6 +86,7 @@ export const programmes = [
     ageRange: "3.5 - 5 years",
     description: "Exciting learning experience adding sophisticated skills in different subjects: English, Math, EVS, GK, Art & Craft",
     icon: "graduation-cap",
+    image: "/images/optimized/children-playing-snakes-ladders-game.webp",
   },
   {
     id: "kids-activity-club",
@@ -91,6 +94,7 @@ export const programmes = [
     ageRange: "2 - 10 years",
     description: "Developing talents with 20+ activities like brain gym, aerobics and drama",
     icon: "palette",
+    image: "/images/optimized/creative-art-activity-preschool.webp",
   },
   {
     id: "summer-camp",
@@ -98,6 +102,7 @@ export const programmes = [
     ageRange: "2 - 10 years",
     description: "Special programmes for perfect holiday planning - nurturing creativity and spending fun time with friends and hobbies",
     icon: "sun",
+    image: "/images/optimized/happy-girls-ball-pit-playgroup.webp",
   },
   {
     id: "happy-times",
@@ -105,6 +110,7 @@ export const programmes = [
     ageRange: "1.5 - 6 years",
     description: "Safe and nurturing environment for extended care with engaging activities",
     icon: "heart",
+    image: "/images/optimized/kids-building-blocks-classroom.webp",
   },
 ] as const;
 
