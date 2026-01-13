@@ -596,8 +596,37 @@ export default function KindergartenLanding() {
         </div>
       </section>
 
-      {/* Safety & Hygiene Promise */}
+      {/* Kindergarten Gallery */}
       <section className="py-16 md:py-20 lg:py-24 bg-muted/30">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Glimpses of Our Kindergarten</h2>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              See our kindergarteners preparing for school through structured learning, creative activities, and sports.
+            </p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="md:col-span-2 md:row-span-2 relative overflow-hidden rounded-xl aspect-square">
+              <img src="/images/optimized/DSC00146.webp" alt="Kindergarten students learning at Rainbow Preschool" className="w-full h-full object-cover" loading="lazy" data-testid="img-kindergarten-gallery-1" />
+            </div>
+            <div className="relative overflow-hidden rounded-xl aspect-square">
+              <img src="/images/optimized/DSC00151.webp" alt="Kids in classroom at kindergarten" className="w-full h-full object-cover" loading="lazy" data-testid="img-kindergarten-gallery-2" />
+            </div>
+            <div className="relative overflow-hidden rounded-xl aspect-square">
+              <img src="/images/optimized/DSC00306.webp" alt="Children learning in Rainbow Preschool classroom" className="w-full h-full object-cover" loading="lazy" data-testid="img-kindergarten-gallery-3" />
+            </div>
+            <div className="relative overflow-hidden rounded-xl aspect-square">
+              <img src="/images/optimized/DSC00168.webp" alt="Creative art activity at kindergarten" className="w-full h-full object-cover" loading="lazy" data-testid="img-kindergarten-gallery-4" />
+            </div>
+            <div className="relative overflow-hidden rounded-xl aspect-square">
+              <img src="/images/optimized/DSC00186.webp" alt="Group learning activity in kindergarten classroom" className="w-full h-full object-cover" loading="lazy" data-testid="img-kindergarten-gallery-5" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Safety & Hygiene Promise */}
+      <section className="py-16 md:py-20 lg:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Safety & Hygiene Promise</h2>

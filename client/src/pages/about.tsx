@@ -22,8 +22,6 @@ import {
 import { SiWhatsapp } from "react-icons/si";
 import { useState } from "react";
 import { trackCTAClick, trackCallClick, trackWhatsAppClick } from "@/lib/analytics";
-import heroImage from "@assets/16_1766236394926.jpg";
-
 const PHONE_NUMBER = "+918291568972";
 const WHATSAPP_LINK = "https://wa.me/918291568972?text=Hi%2C%20I%20would%20like%20to%20know%20more%20about%20Rainbow%20Preschool";
 
@@ -83,7 +81,7 @@ export default function About() {
       <section className="py-16 md:py-24 lg:py-32 flex items-center justify-center relative overflow-hidden">
         <div 
           className="absolute inset-0 bg-cover bg-center opacity-[0.15]"
-          style={{ backgroundImage: `url(${heroImage})` }}
+          style={{ backgroundImage: `url('/images/optimized/DSC00306.webp')` }}
         />
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-accent/5 to-secondary/5" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -181,13 +179,27 @@ export default function About() {
       <section className="py-16 md:py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl md:text-4xl font-bold mb-6 text-center">Our Story</h2>
-          <div className="space-y-4 text-muted-foreground leading-relaxed text-center max-w-3xl mx-auto">
+          <div className="space-y-4 text-muted-foreground leading-relaxed text-center max-w-3xl mx-auto mb-12">
             <p>
               Rainbow Preschool International was founded in 2007 with a simple vision: to be the best preschool in Thane by providing quality early childhood education to every child. Today, we have grown to six thriving centres across Thane West.
             </p>
             <p>
               Our play-based approach helps children learn confidently and joyfully, preparing them for a brighter future through hands-on exploration and discovery.
             </p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <div className="relative overflow-hidden rounded-lg aspect-square">
+              <img src="/images/optimized/DSC00051.webp" alt="Children enjoying ball pit at Rainbow Preschool" className="w-full h-full object-cover" loading="lazy" data-testid="img-about-gallery-1" />
+            </div>
+            <div className="relative overflow-hidden rounded-lg aspect-square">
+              <img src="/images/optimized/DSC00461.webp" alt="Teacher teaching children at Rainbow Preschool" className="w-full h-full object-cover" loading="lazy" data-testid="img-about-gallery-2" />
+            </div>
+            <div className="relative overflow-hidden rounded-lg aspect-square">
+              <img src="/images/optimized/DSC00421.webp" alt="Kids building blocks at preschool" className="w-full h-full object-cover" loading="lazy" data-testid="img-about-gallery-3" />
+            </div>
+            <div className="relative overflow-hidden rounded-lg aspect-square">
+              <img src="/images/optimized/DSC00002.webp" alt="Children playing with colorful toys" className="w-full h-full object-cover" loading="lazy" data-testid="img-about-gallery-4" />
+            </div>
           </div>
         </div>
       </section>

@@ -606,8 +606,37 @@ export default function PlaygroupLanding() {
         </div>
       </section>
 
-      {/* Safety & Hygiene Promise */}
+      {/* Playgroup Gallery */}
       <section className="py-16 md:py-20 lg:py-24 bg-muted/30">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Glimpses of Our Playgroup</h2>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              See our toddlers exploring, playing, and learning in our safe and colorful classrooms.
+            </p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="md:col-span-2 md:row-span-2 relative overflow-hidden rounded-xl aspect-square">
+              <img src="/images/optimized/DSC00051.webp" alt="Toddlers playing in colorful ball pit at Rainbow Preschool" className="w-full h-full object-cover" loading="lazy" data-testid="img-playgroup-gallery-1" />
+            </div>
+            <div className="relative overflow-hidden rounded-xl aspect-square">
+              <img src="/images/optimized/DSC00070.webp" alt="Happy kids peeking over ball pit at playgroup" className="w-full h-full object-cover" loading="lazy" data-testid="img-playgroup-gallery-2" />
+            </div>
+            <div className="relative overflow-hidden rounded-xl aspect-square">
+              <img src="/images/optimized/DSC00002.webp" alt="Children playing with colorful toys at Rainbow Preschool" className="w-full h-full object-cover" loading="lazy" data-testid="img-playgroup-gallery-3" />
+            </div>
+            <div className="relative overflow-hidden rounded-xl aspect-square">
+              <img src="/images/optimized/DSC00379.webp" alt="Toddler learning with educational toys" className="w-full h-full object-cover" loading="lazy" data-testid="img-playgroup-gallery-4" />
+            </div>
+            <div className="relative overflow-hidden rounded-xl aspect-square">
+              <img src="/images/optimized/DSC00389.webp" alt="Child playing with stacking rings at playgroup" className="w-full h-full object-cover" loading="lazy" data-testid="img-playgroup-gallery-5" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Safety & Hygiene Promise */}
+      <section className="py-16 md:py-20 lg:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Safety & Hygiene Promise</h2>

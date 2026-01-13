@@ -178,3 +178,25 @@ Environment variables:
 - `VITE_FIREBASE_APP_ID`
 
 Key file: `client/src/lib/firebase-auth.ts` - Firebase Phone Auth utility functions
+
+## Image Optimization
+
+### Optimized Images
+All classroom and activity photos are optimized using sharp and stored as WebP format in `public/images/optimized/`.
+- **Compression**: 80-98% size reduction from original JPG files
+- **Format**: WebP with quality setting of 80
+- **Script**: `scripts/compress-images.js` (ESM syntax)
+- **Loading**: All images use `loading="lazy"` for performance
+
+### Image Implementation by Page
+- **Homepage** (`home.tsx`): ClassroomGallery component with 6 featured images
+- **About** (`about.tsx`): 4-image grid after "Our Story" section
+- **Programmes** (`programmes.tsx`): Programme-specific activity images for each section
+- **Playgroup Landing** (`playgroup-landing.tsx`): 5-image gallery section
+- **Nursery Landing** (`nursery-landing.tsx`): 5-image gallery section  
+- **Kindergarten Landing** (`kindergarten-landing.tsx`): 5-image gallery section
+
+### Key Component
+- `client/src/components/classroom-gallery.tsx` - Responsive masonry-style image gallery
+
+Note: Images are only implemented on primary pages, not on blog posts or regional SEO pages.

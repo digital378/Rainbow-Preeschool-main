@@ -606,8 +606,37 @@ export default function NurseryLanding() {
         </div>
       </section>
 
-      {/* Safety & Hygiene Promise */}
+      {/* Nursery Gallery */}
       <section className="py-16 md:py-20 lg:py-24 bg-muted/30">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Glimpses of Our Nursery</h2>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              Watch our nursery kids learn and grow through fun activities, creative play, and engaging lessons.
+            </p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="md:col-span-2 md:row-span-2 relative overflow-hidden rounded-xl aspect-square">
+              <img src="/images/optimized/DSC00461.webp" alt="Teacher teaching nursery children at Rainbow Preschool" className="w-full h-full object-cover" loading="lazy" data-testid="img-nursery-gallery-1" />
+            </div>
+            <div className="relative overflow-hidden rounded-xl aspect-square">
+              <img src="/images/optimized/DSC00410.webp" alt="Kids drawing and coloring at nursery" className="w-full h-full object-cover" loading="lazy" data-testid="img-nursery-gallery-2" />
+            </div>
+            <div className="relative overflow-hidden rounded-xl aspect-square">
+              <img src="/images/optimized/DSC00421.webp" alt="Children building with blocks in nursery classroom" className="w-full h-full object-cover" loading="lazy" data-testid="img-nursery-gallery-3" />
+            </div>
+            <div className="relative overflow-hidden rounded-xl aspect-square">
+              <img src="/images/optimized/DSC00495.webp" alt="Reading session at Rainbow Preschool nursery" className="w-full h-full object-cover" loading="lazy" data-testid="img-nursery-gallery-4" />
+            </div>
+            <div className="relative overflow-hidden rounded-xl aspect-square">
+              <img src="/images/optimized/DSC00525.webp" alt="Music and movement activity in nursery" className="w-full h-full object-cover" loading="lazy" data-testid="img-nursery-gallery-5" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Safety & Hygiene Promise */}
+      <section className="py-16 md:py-20 lg:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Safety & Hygiene Promise</h2>

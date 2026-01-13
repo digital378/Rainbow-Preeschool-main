@@ -20,26 +20,30 @@ const iconMap = {
   heart: Heart,
 };
 
-const programmeDetails: Record<string, { features: string[]; schedule: string; activities: string[] }> = {
+const programmeDetails: Record<string, { features: string[]; schedule: string; activities: string[]; image: string }> = {
   playgroup: {
     features: ["Introduction to colors and shapes", "Puppet shows and storytelling", "Sensory play activities", "Basic motor skill development"],
     schedule: "Morning Batch - 8:30AM to 11:30AM\nAfternoon Batch - 12:30PM to 3:30PM",
     activities: ["Circle time", "Music and movement", "Art exploration", "Free play"],
+    image: "/images/optimized/DSC00051.webp",
   },
   nursery: {
     features: ["Alphabet and number recognition", "Group reading sessions", "Creative arts and crafts", "Physical development through yoga"],
     schedule: "Morning Batch - 8:30AM to 11:30AM\nAfternoon Batch - 12:30PM to 3:30PM",
     activities: ["Phonics introduction", "Dancing and singing", "Puppet shows", "Outdoor play"],
+    image: "/images/optimized/DSC00461.webp",
   },
   kindergarten: {
     features: ["Reading and writing readiness", "Math concepts and problem solving", "Science exploration (EVS)", "General knowledge building"],
     schedule: "Morning Batch - 8:30AM to 11:30AM\nAfternoon Batch - 12:30PM to 3:30PM",
     activities: ["English language arts", "Mathematics", "Art & Craft", "Sports and games"],
+    image: "/images/optimized/DSC00146.webp",
   },
   "happy-times": {
     features: ["Safe and nurturing environment", "Flexible hours for working parents", "Nutritious meals", "Engaging activities throughout the day"],
     schedule: "Extended hours available",
     activities: ["100% female staff", "Homely care for children", "CCTV surveillance across all daycare areas"],
+    image: "/images/optimized/DSC00421.webp",
   },
 };
 
@@ -140,23 +144,36 @@ export default function Programmes() {
                     </Link>
                   </div>
                   
-                  <Card>
-                    <CardHeader>
-                      <h3 className="font-semibold">Activities Include:</h3>
-                    </CardHeader>
-                    <CardContent>
-                      {details && (
-                        <div className="grid grid-cols-2 gap-3">
-                          {details.activities.map((activity, i) => (
-                            <div key={i} className="flex items-center gap-2 text-sm">
-                              <div className="w-2 h-2 rounded-full bg-primary" />
-                              {activity}
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                    </CardContent>
-                  </Card>
+                  <div className="space-y-4">
+                    {details?.image && (
+                      <div className="relative overflow-hidden rounded-xl aspect-video">
+                        <img 
+                          src={details.image} 
+                          alt={`${programme.name} activities at Rainbow Preschool`} 
+                          className="w-full h-full object-cover"
+                          loading="lazy"
+                          data-testid={`img-programme-${programme.id}`}
+                        />
+                      </div>
+                    )}
+                    <Card>
+                      <CardHeader>
+                        <h3 className="font-semibold">Activities Include:</h3>
+                      </CardHeader>
+                      <CardContent>
+                        {details && (
+                          <div className="grid grid-cols-2 gap-3">
+                            {details.activities.map((activity, i) => (
+                              <div key={i} className="flex items-center gap-2 text-sm">
+                                <div className="w-2 h-2 rounded-full bg-primary" />
+                                {activity}
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </CardContent>
+                    </Card>
+                  </div>
                 </div>
                 {index < programmes.length - 1 && <div className="border-t mt-16" />}
               </div>

@@ -17,6 +17,7 @@ import { BranchCard } from "@/components/branch-card";
 import { TestimonialCard } from "@/components/testimonial-card";
 import { WhyChooseUs } from "@/components/why-choose-us";
 import { MethodologySection } from "@/components/methodology-section";
+import { ClassroomGallery } from "@/components/classroom-gallery";
 import { CTASection } from "@/components/cta-section";
 import { ContactForm } from "@/components/contact-form";
 import { CountUp } from "@/components/count-up";
@@ -409,6 +410,7 @@ export default function Home() {
 
       <WhyChooseUs />
       <MethodologySection />
+      <ClassroomGallery />
 
       {/* Testimonials Section - Local SEO Enhanced */}
       <section id="testimonials" className="py-16 md:py-20 lg:py-24 bg-card">
