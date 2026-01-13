@@ -146,6 +146,22 @@ export const PlaygroupEnrollmentDhokali = createLegacyPage("/playgroup-enrollmen
 export const KindergartenProgramsKalwa = createLegacyPage("/kindergarten-programs-kalwa-thane/");
 export const BestNurseryKasarvadavali = createLegacyPage("/best-nursery-school-kasarvadavali/");
 
+// NEW SEO BLOG POSTS - BATCH 2
+
+// Homepage supporting posts (new)
+export const BestEarlyLearningCentresThane = createLegacyPage("/best-early-learning-centres-thane-2026/");
+export const MontessoriVsPlayBased = createLegacyPage("/montessori-vs-play-based-preschool-thane/");
+export const FranchiseVsStandalone = createLegacyPage("/preschool-franchise-vs-standalone-which-better/");
+export const WorkingParentsGuide = createLegacyPage("/working-parents-guide-preschool-thane/");
+export const AffordableQualityPreschools = createLegacyPage("/affordable-quality-preschools-thane/");
+
+// About page supporting posts (new)
+export const RainbowTeachingMethodology = createLegacyPage("/rainbow-preschool-teaching-methodology/");
+export const RainbowInfrastructureFacilities = createLegacyPage("/rainbow-preschool-infrastructure-facilities/");
+export const PreschoolAccreditationImportance = createLegacyPage("/preschool-accreditation-importance-india/");
+export const RainbowCommunityInitiatives = createLegacyPage("/rainbow-preschool-community-initiatives/");
+export const ExperiencedTeachersImportance = createLegacyPage("/experienced-preschool-teachers-importance/");
+
 export { AuthorArchivePage };
 
 export const legacySlugs = Object.keys(legacyPagesData);

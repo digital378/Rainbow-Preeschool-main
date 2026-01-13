@@ -168,6 +168,18 @@ const LazyPlaygroupEnrollmentDhokali = lazy(() => import("@/pages/legacy-pages")
 const LazyKindergartenProgramsKalwa = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.KindergartenProgramsKalwa })));
 const LazyBestNurseryKasarvadavali = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.BestNurseryKasarvadavali })));
 
+// NEW SEO BLOG POSTS - BATCH 2
+const LazyBestEarlyLearningCentresThane = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.BestEarlyLearningCentresThane })));
+const LazyMontessoriVsPlayBased = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.MontessoriVsPlayBased })));
+const LazyFranchiseVsStandalone = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.FranchiseVsStandalone })));
+const LazyWorkingParentsGuide = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.WorkingParentsGuide })));
+const LazyAffordableQualityPreschools = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.AffordableQualityPreschools })));
+const LazyRainbowTeachingMethodology = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.RainbowTeachingMethodology })));
+const LazyRainbowInfrastructureFacilities = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.RainbowInfrastructureFacilities })));
+const LazyPreschoolAccreditationImportance = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.PreschoolAccreditationImportance })));
+const LazyRainbowCommunityInitiatives = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.RainbowCommunityInitiatives })));
+const LazyExperiencedTeachersImportance = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.ExperiencedTeachersImportance })));
+
 const LazyAuthorArchivePage = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.AuthorArchivePage })));
 
 const LazyTermsPage = lazy(() => import("@/pages/legal").then(m => ({ default: m.TermsPage })));
@@ -387,6 +399,21 @@ function Router() {
         <Route path="/playgroup-enrollment-dhokali-thane" component={LazyPlaygroupEnrollmentDhokali} />
         <Route path="/kindergarten-programs-kalwa-thane" component={LazyKindergartenProgramsKalwa} />
         <Route path="/best-nursery-school-kasarvadavali" component={LazyBestNurseryKasarvadavali} />
+        
+        {/* NEW SEO BLOG POSTS - BATCH 2 */}
+        {/* Homepage supporting posts (new) */}
+        <Route path="/best-early-learning-centres-thane-2026" component={LazyBestEarlyLearningCentresThane} />
+        <Route path="/montessori-vs-play-based-preschool-thane" component={LazyMontessoriVsPlayBased} />
+        <Route path="/preschool-franchise-vs-standalone-which-better" component={LazyFranchiseVsStandalone} />
+        <Route path="/working-parents-guide-preschool-thane" component={LazyWorkingParentsGuide} />
+        <Route path="/affordable-quality-preschools-thane" component={LazyAffordableQualityPreschools} />
+        
+        {/* About page supporting posts (new) */}
+        <Route path="/rainbow-preschool-teaching-methodology" component={LazyRainbowTeachingMethodology} />
+        <Route path="/rainbow-preschool-infrastructure-facilities" component={LazyRainbowInfrastructureFacilities} />
+        <Route path="/preschool-accreditation-importance-india" component={LazyPreschoolAccreditationImportance} />
+        <Route path="/rainbow-preschool-community-initiatives" component={LazyRainbowCommunityInitiatives} />
+        <Route path="/experienced-preschool-teachers-importance" component={LazyExperiencedTeachersImportance} />
         
         <Route path="/author/rainbowpreschools" component={LazyAuthorArchivePage} />
         <Route path="/author/rainbow-preschools" component={LazyAuthorArchivePage} />
