@@ -67,7 +67,7 @@
       }
       
       function loadAnalytics() {
-        // Google Analytics
+        // Google Analytics + Google Ads
         var gs = document.createElement('script');
         gs.src = 'https://www.googletagmanager.com/gtag/js?id=GT-55BFZCQT';
         gs.async = true;
@@ -75,6 +75,8 @@
         gs.onload = function() {
           gtag('js', new Date());
           gtag('config', 'GT-55BFZCQT');
+          // Second Google Ads account
+          gtag('config', 'AW-690465943');
         };
         
         // Facebook Pixel
