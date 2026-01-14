@@ -42,7 +42,7 @@ const programmes = [
   { age: "1.5-2.5 years", name: "Playgroup", link: "/playgroup" },
   { age: "2.5-3.5 years", name: "Nursery", link: "/nursery" },
   { age: "3.5-5 years", name: "Kindergarten", link: "/kindergarten" },
-  { age: "3-10 years", name: "Daycare (Happy Times)", link: "/happy-times" },
+  { age: "2-10 years", name: "Daycare (Happy Times)", link: "/happy-times" },
 ];
 
 const areas = [

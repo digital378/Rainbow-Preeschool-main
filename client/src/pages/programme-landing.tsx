@@ -221,7 +221,7 @@ const programmeDetails: Record<string, {
       "Flexible timing options"
     ],
     seoTitle: "Daycare in Thane | Happy Times | Rainbow Preschool International",
-    seoDescription: "Rainbow Preschool's Happy Times daycare in Thane for children 1.5-6 years. 100% female staff, CCTV monitoring, nutritious meals. Best daycare facility near Thane West.",
+    seoDescription: "Rainbow Preschool's Happy Times daycare in Thane for children 2-10 years. 100% female staff, CCTV monitoring, nutritious meals. Best daycare facility near Thane West.",
     seoKeywords: "daycare thane, daycare near me, best daycare thane, childcare thane, creche thane, baby daycare, toddler daycare, working parents daycare, extended daycare thane, child care center thane"
   },
 };

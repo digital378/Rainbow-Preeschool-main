@@ -607,7 +607,7 @@ export default function KindergartenLanding() {
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="md:col-span-2 md:row-span-2 relative overflow-hidden rounded-xl aspect-square">
-              <img src="/images/optimized/children-playing-snakes-ladders-game.webp" alt="Kindergarten students learning at Rainbow Preschool" className="w-full h-full object-cover" loading="lazy" data-testid="img-kindergarten-gallery-1" />
+              <img src="/images/optimized/kindergarten-kids-colorful-mats.webp" alt="Kindergarten kids on colorful mats at Rainbow Preschool" className="w-full h-full object-cover" loading="lazy" data-testid="img-kindergarten-gallery-1" />
             </div>
             <div className="relative overflow-hidden rounded-xl aspect-square">
               <img src="/images/optimized/kindergarten-classroom-learning.webp" alt="Kids in classroom at kindergarten" className="w-full h-full object-cover" loading="lazy" data-testid="img-kindergarten-gallery-2" />

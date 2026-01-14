@@ -617,7 +617,7 @@ export default function NurseryLanding() {
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="md:col-span-2 md:row-span-2 relative overflow-hidden rounded-xl aspect-square">
-              <img src="/images/optimized/teacher-teaching-children-classroom.webp" alt="Teacher teaching nursery children at Rainbow Preschool" className="w-full h-full object-cover" loading="lazy" data-testid="img-nursery-gallery-1" />
+              <img src="/images/optimized/nursery-girl-drawing.webp" alt="Girl drawing at Rainbow Preschool nursery" className="w-full h-full object-cover" loading="lazy" data-testid="img-nursery-gallery-1" />
             </div>
             <div className="relative overflow-hidden rounded-xl aspect-square">
               <img src="/images/optimized/nursery-kids-classroom-activity.webp" alt="Kids drawing and coloring at nursery" className="w-full h-full object-cover" loading="lazy" data-testid="img-nursery-gallery-2" />

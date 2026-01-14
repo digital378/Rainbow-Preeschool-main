@@ -189,13 +189,13 @@ export default function About() {
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             <div className="relative overflow-hidden rounded-lg aspect-square">
-              <img src="/images/optimized/kids-playing-ball-pit-rainbow-preschool.webp" alt="Children enjoying ball pit at Rainbow Preschool" className="w-full h-full object-cover" loading="lazy" data-testid="img-about-gallery-1" />
+              <img src="/images/optimized/playgroup-child-toy-car.webp" alt="Children enjoying activities at Rainbow Preschool" className="w-full h-full object-cover" loading="lazy" data-testid="img-about-gallery-1" />
             </div>
             <div className="relative overflow-hidden rounded-lg aspect-square">
-              <img src="/images/optimized/teacher-teaching-children-classroom.webp" alt="Teacher teaching children at Rainbow Preschool" className="w-full h-full object-cover" loading="lazy" data-testid="img-about-gallery-2" />
+              <img src="/images/optimized/nursery-girl-drawing.webp" alt="Child drawing at Rainbow Preschool" className="w-full h-full object-cover" loading="lazy" data-testid="img-about-gallery-2" />
             </div>
             <div className="relative overflow-hidden rounded-lg aspect-square">
-              <img src="/images/optimized/kids-building-blocks-classroom.webp" alt="Kids building blocks at preschool" className="w-full h-full object-cover" loading="lazy" data-testid="img-about-gallery-3" />
+              <img src="/images/optimized/kindergarten-kids-colorful-mats.webp" alt="Kids on colorful mats at preschool" className="w-full h-full object-cover" loading="lazy" data-testid="img-about-gallery-3" />
             </div>
             <div className="relative overflow-hidden rounded-lg aspect-square">
               <img src="/images/optimized/children-learning-colorful-toys-preschool.webp" alt="Children playing with colorful toys" className="w-full h-full object-cover" loading="lazy" data-testid="img-about-gallery-4" />

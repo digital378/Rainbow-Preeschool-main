@@ -617,7 +617,7 @@ export default function PlaygroupLanding() {
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="md:col-span-2 md:row-span-2 relative overflow-hidden rounded-xl aspect-square">
-              <img src="/images/optimized/kids-playing-ball-pit-rainbow-preschool.webp" alt="Toddlers playing in colorful ball pit at Rainbow Preschool" className="w-full h-full object-cover" loading="lazy" data-testid="img-playgroup-gallery-1" />
+              <img src="/images/optimized/playgroup-child-toy-car.webp" alt="Toddler playing with toy car at Rainbow Preschool playgroup" className="w-full h-full object-cover" loading="lazy" data-testid="img-playgroup-gallery-1" />
             </div>
             <div className="relative overflow-hidden rounded-xl aspect-square">
               <img src="/images/optimized/happy-girls-ball-pit-playgroup.webp" alt="Happy kids peeking over ball pit at playgroup" className="w-full h-full object-cover" loading="lazy" data-testid="img-playgroup-gallery-2" />

@@ -110,7 +110,7 @@ export function HeroSection() {
 
           {/* Subheading */}
           <p className="text-lg md:text-xl text-white/90 max-w-xl mb-8 md:mb-10 leading-relaxed">
-            Nurturing children aged 1.5 to 6 years with play-based learning, care, and confidence since 2007.
+            Nurturing children aged 1.5 to 10 years with play-based learning, care, and confidence since 2007.
           </p>
 
           {/* Trust Badges */}

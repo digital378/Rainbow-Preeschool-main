@@ -357,7 +357,7 @@ const faqs = [
   },
   {
     question: "What age group is daycare suitable for in Thane?",
-    answer: "Our daycare is designed for children aged 3 to 10 years who need after-school care. We group children by age to ensure age-appropriate activities and supervision."
+    answer: "Our daycare is designed for children aged 2 to 10 years who need after-school care. We group children by age to ensure age-appropriate activities and supervision."
   },
   {
     question: "Are healthy snacks provided at daycare?",
@@ -380,7 +380,7 @@ export default function HappyTimesLanding() {
     <div className="pt-20">
       <SEO
         title="Daycare in Thane | Safe After-School Care | Rainbow Preschool"
-        description="Daycare in Thane for children aged 3-10 years. Best daycare with CCTV, homework help & healthy snacks for working parents. Book a visit today!"
+        description="Daycare in Thane for children aged 2-10 years. Best daycare with CCTV, homework help & healthy snacks for working parents. Book a visit today!"
         keywords="daycare in thane, daycare near me, best daycare in thane, daycare for children near me, daycare for working parents, safe daycare for kids, daycare with cctv, full day daycare, preschool daycare"
         canonical="https://www.rainbowpreschools.com/happy-times"
       />
@@ -396,10 +396,10 @@ export default function HappyTimesLanding() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
               <Badge variant="secondary" className="text-base px-4 py-1 mb-4">
-                Ages 3 - 10 Years
+                Ages 2 - 10 Years
               </Badge>
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-                Daycare in Thane for Children Aged 3 to 10 Years
+                Daycare in Thane for Children Aged 2 to 10 Years
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed">
                 A safe, nurturing after-school programme with homework help, supervised play, and healthy snacks. Peace of mind for working parents.
@@ -432,7 +432,7 @@ export default function HappyTimesLanding() {
             <h2 className="text-3xl md:text-4xl font-bold mb-6 text-center">Why After-School Care Matters</h2>
             <div className="prose prose-lg max-w-none text-muted-foreground">
               <p className="text-lg leading-relaxed mb-4">
-                <strong>After-school care</strong> provides a safe and structured environment for children when school ends but parents are still at work. For families in Thane, Happy Times offers the perfect solution for children aged 3 to 10 years.
+                <strong>After-school care</strong> provides a safe and structured environment for children when school ends but parents are still at work. For families in Thane, Happy Times offers the perfect solution for children aged 2 to 10 years.
               </p>
               <p className="text-lg leading-relaxed mb-4">
                 At Rainbow Preschool's Happy Times, children receive dedicated homework assistance, ensuring they complete assignments with guidance and develop strong study habits. Our supervised play activities promote physical development and social skills in a secure setting.

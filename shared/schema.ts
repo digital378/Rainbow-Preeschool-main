@@ -107,7 +107,7 @@ export const programmes = [
   {
     id: "happy-times",
     name: "Happy Times",
-    ageRange: "1.5 - 6 years",
+    ageRange: "2 - 10 years",
     description: "Safe and nurturing environment for extended care with engaging activities",
     icon: "heart",
     image: "/images/optimized/happy-times-daycare-kids.webp",

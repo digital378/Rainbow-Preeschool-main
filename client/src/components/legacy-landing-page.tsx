@@ -501,7 +501,7 @@ export function AuthorArchivePage() {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground mb-4">
-                  Discover our Playgroup, Nursery, Kindergarten, and enrichment programmes designed for children aged 1.5 to 6 years.
+                  Discover our Playgroup, Nursery, Kindergarten, and enrichment programmes designed for children aged 1.5 to 10 years.
                 </p>
                 <Button asChild variant="outline" className="w-full">
                   <Link href="/programmes">View Programmes</Link>

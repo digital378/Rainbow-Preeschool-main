@@ -111,7 +111,7 @@ export const organizationSchema = {
   url: BASE_URL,
   logo: `${BASE_URL}/logo.png`,
   description:
-    "Rainbow Preschool International is a trusted preschool and playgroup in Thane, offering quality early childhood education for children aged 1.5 to 6 years.",
+    "Rainbow Preschool International is a trusted preschool and playgroup in Thane, offering quality early childhood education for children aged 1.5 to 10 years.",
   foundingDate: "2007",
   address: {
     "@type": "PostalAddress",
@@ -168,7 +168,7 @@ export function createLocalBusinessSchema(centre: {
     "@type": "Preschool",
     "@id": `${BASE_URL}${centre.url}`,
     name: `Rainbow Preschool International - ${centre.locality}`,
-    description: `Quality preschool and playgroup in ${centre.locality}, Thane offering Playgroup, Nursery, and Kindergarten programmes for children aged 1.5-6 years.`,
+    description: `Quality preschool and playgroup in ${centre.locality}, Thane offering Playgroup, Nursery, and Kindergarten programmes for children aged 1.5-10 years.`,
     url: `${BASE_URL}${centre.url}`,
     telephone: centre.phone,
     address: {
