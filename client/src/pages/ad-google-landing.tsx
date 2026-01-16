@@ -22,10 +22,17 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import { Phone, MapPin, CheckCircle2, Star, Users, Award, Loader2 } from "lucide-react";
+import { Phone, MapPin, CheckCircle2, Star, Users, Award, Loader2, ChevronDown, Menu, X } from "lucide-react";
 import { SiWhatsapp } from "react-icons/si";
 import { apiRequest } from "@/lib/queryClient";
 import { trackGoogleAdsLead, trackGoogleAdsCall, trackGoogleAdsWhatsApp } from "@/lib/analytics";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { centres } from "@shared/centre-data";
 import { initRecaptcha, sendOTP, verifyOTP, resetRecaptcha } from "@/lib/firebase-auth";
 import { ConfirmationResult } from "firebase/auth";
 import logoImage from "@assets/Rainbow_Pre_School.Logo_1766035853658.png";
@@ -56,6 +63,14 @@ const areas = [
   "Kasarvadavali",
 ];
 
+const navLinks = [
+  { href: "/", label: "Home" },
+  { href: "/about", label: "About Us" },
+  { href: "/programmes", label: "Programmes" },
+  { href: "/blog", label: "News & Blog" },
+  { href: "/contact", label: "Contact" },
+];
+
 // Helper to get UTM parameters and ad platform identifiers from URL
 function getUtmParams() {
   const params = new URLSearchParams(window.location.search);
@@ -84,6 +99,7 @@ function getUtmParams() {
 export default function AdGoogleLanding() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [utmData] = useState(() => getUtmParams());
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   
   // OTP verification states
   const [otpStep, setOtpStep] = useState<'form' | 'otp' | 'submitting'>('form');
@@ -257,6 +273,7 @@ export default function AdGoogleLanding() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-pink-50 to-white dark:from-pink-950/20 dark:to-background">
+      {/* Header with Logo and Phone */}
       <header className="bg-white dark:bg-card shadow-sm py-3 px-4 sticky top-0 z-50">
         <div className="max-w-6xl mx-auto flex items-center justify-between gap-4">
           <Link href="/" className="flex items-center gap-3">
@@ -269,17 +286,116 @@ export default function AdGoogleLanding() {
               Rainbow Preschool International
             </span>
           </Link>
-          <a
-            href="tel:+918291568972"
-            className="flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 rounded-full font-semibold text-sm"
-            data-testid="link-ad-google-call"
-            onClick={() => trackGoogleAdsCall()}
-          >
-            <Phone className="h-4 w-4" />
-            <span>+91 82915 68972</span>
-          </a>
+          <div className="flex items-center gap-2">
+            <a
+              href="tel:+918291568972"
+              className="flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 rounded-full font-semibold text-sm"
+              data-testid="link-ad-google-call"
+              onClick={() => trackGoogleAdsCall()}
+            >
+              <Phone className="h-4 w-4" />
+              <span className="hidden sm:inline">+91 82915 68972</span>
+              <span className="sm:hidden">Call</span>
+            </a>
+            {/* Mobile menu button */}
+            <Button
+              variant="ghost"
+              size="icon"
+              className="lg:hidden"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+              data-testid="button-ad-google-mobile-menu"
+            >
+              {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </Button>
+          </div>
         </div>
       </header>
+
+      {/* Navigation Bar */}
+      <nav className="bg-primary hidden lg:block">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="flex items-center">
+            {navLinks.map((link) => (
+              <Link key={link.href} href={link.href}>
+                <Button
+                  variant="ghost"
+                  className="text-sm font-medium rounded-none text-white hover:bg-white/20 hover:text-white"
+                  data-testid={`link-ad-google-nav-${link.label.toLowerCase().replace(/\s+/g, "-")}`}
+                >
+                  {link.label}
+                </Button>
+              </Link>
+            ))}
+            {/* Centres Dropdown */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button 
+                  variant="ghost" 
+                  className="text-sm font-medium rounded-none text-white hover:bg-white/20 hover:text-white"
+                  data-testid="button-ad-google-centres-dropdown"
+                >
+                  Centres <ChevronDown className="ml-1 h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-72">
+                {centres.map((centre) => (
+                  <DropdownMenuItem key={centre.id} asChild>
+                    <Link
+                      href={centre.preschoolLandingUrl}
+                      className="flex flex-col items-start gap-1 py-2 cursor-pointer"
+                      data-testid={`link-ad-google-centre-${centre.id}`}
+                    >
+                      <span className="font-medium text-sm">{centre.name}</span>
+                      <span className="text-xs text-muted-foreground flex items-center gap-1">
+                        <MapPin className="h-3 w-3" />
+                        Preschool in {centre.localityName}
+                      </span>
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        </div>
+      </nav>
+
+      {/* Mobile Navigation Menu */}
+      {mobileMenuOpen && (
+        <div className="lg:hidden bg-background border-b shadow-sm">
+          <div className="flex flex-col px-4 py-2">
+            {navLinks.map((link) => (
+              <Link key={link.href} href={link.href}>
+                <Button
+                  variant="ghost"
+                  className="w-full justify-start"
+                  data-testid={`link-ad-google-mobile-${link.label.toLowerCase().replace(/\s+/g, "-")}`}
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {link.label}
+                </Button>
+              </Link>
+            ))}
+            {/* Mobile Centres */}
+            <div className="py-2 border-t mt-2">
+              <p className="text-sm font-medium text-muted-foreground px-4 py-2">Our Centres</p>
+              {centres.map((centre) => (
+                <Link key={centre.id} href={centre.preschoolLandingUrl}>
+                  <Button
+                    variant="ghost"
+                    className="w-full justify-start text-sm"
+                    onClick={() => setMobileMenuOpen(false)}
+                    data-testid={`link-ad-google-mobile-centre-${centre.id}`}
+                  >
+                    <MapPin className="h-3 w-3 mr-2" />
+                    {centre.name}
+                  </Button>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
 
       <main className="max-w-6xl mx-auto px-4 py-8">
         <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8 items-start">
