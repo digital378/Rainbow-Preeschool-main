@@ -23,6 +23,18 @@ interface RainbowSparkleTrailConfig {
 
 const RAINBOW_HUES = [0, 30, 60, 120, 200, 260, 290];
 
+// Detect if browser might have performance issues
+const isLowPerformance = () => {
+  // Check for low-end device indicators
+  const hardwareConcurrency = navigator.hardwareConcurrency || 2;
+  const isLowCores = hardwareConcurrency <= 2;
+  
+  // Check if user prefers reduced motion
+  const prefersReduced = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+  
+  return isLowCores || prefersReduced;
+};
+
 export function RainbowSparkleTrail({ enabled = true, intensity = 1 }: RainbowSparkleTrailConfig) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const particlesRef = useRef<Particle[]>([]);
@@ -33,10 +45,15 @@ export function RainbowSparkleTrail({ enabled = true, intensity = 1 }: RainbowSp
   const isScrollingRef = useRef(false);
   const scrollRafRef = useRef<number | null>(null);
   const isDarkModeRef = useRef(true);
+  const isAnimatingRef = useRef(false);
+  const lowPerfModeRef = useRef(false);
 
   useEffect(() => {
     isMobileRef.current = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) 
       || window.innerWidth < 768;
+    
+    // Check for low performance mode
+    lowPerfModeRef.current = isLowPerformance();
     
     // Detect dark mode
     const checkDarkMode = () => {
@@ -94,9 +111,12 @@ export function RainbowSparkleTrail({ enabled = true, intensity = 1 }: RainbowSp
     if (prefersReducedMotionRef.current) return;
     
     const isMobile = isMobileRef.current;
-    const maxParticles = isMobile ? 250 : 300;
+    const isLowPerf = lowPerfModeRef.current;
     
-    const adjustedCount = Math.floor(count * intensity);
+    // Reduce particles for low-performance mode
+    const maxParticles = isLowPerf ? 100 : (isMobile ? 200 : 250);
+    const adjustedCount = Math.floor(count * intensity * (isLowPerf ? 0.5 : 1));
+    
     for (let i = 0; i < adjustedCount; i++) {
       if (particlesRef.current.length >= maxParticles) {
         particlesRef.current.shift();
@@ -205,17 +225,22 @@ export function RainbowSparkleTrail({ enabled = true, intensity = 1 }: RainbowSp
       });
     };
 
-    window.addEventListener("mousemove", handleMouseMove, { passive: true });
-    window.addEventListener("touchstart", handleTouchStart, { passive: true });
-    window.addEventListener("touchmove", handleTouchMove, { passive: true });
     window.addEventListener("scroll", handleScroll, { passive: true });
     window.addEventListener("resize", resizeCanvas, { passive: true });
 
     let lastFrameTime = 0;
-    const TARGET_FPS = isMobile ? 30 : 60;
+    const isLowPerf = lowPerfModeRef.current;
+    // Lower FPS for low-performance devices to prevent freezing
+    const TARGET_FPS = isLowPerf ? 24 : (isMobile ? 30 : 60);
     const FRAME_INTERVAL = 1000 / TARGET_FPS;
 
     const animate = (currentTime: number) => {
+      // Stop animation loop if no particles (saves CPU)
+      if (particlesRef.current.length === 0) {
+        isAnimatingRef.current = false;
+        return;
+      }
+      
       const deltaTime = currentTime - lastFrameTime;
       
       if (deltaTime >= FRAME_INTERVAL) {
@@ -225,11 +250,15 @@ export function RainbowSparkleTrail({ enabled = true, intensity = 1 }: RainbowSp
         
         const now = performance.now();
         const isMobileDevice = isMobileRef.current;
+        const useSimpleRender = lowPerfModeRef.current;
         
-        particlesRef.current.sort((a, b) => a.z - b.z);
+        // Skip sorting in low-perf mode (expensive operation)
+        if (!useSimpleRender) {
+          particlesRef.current.sort((a, b) => a.z - b.z);
+        }
         
         particlesRef.current = particlesRef.current.filter((p) => {
-          const frameAdjust = isMobileDevice ? 33 : 16;
+          const frameAdjust = useSimpleRender ? 40 : (isMobileDevice ? 33 : 16);
           p.life -= frameAdjust;
           if (p.life <= 0) return false;
 
@@ -243,7 +272,7 @@ export function RainbowSparkleTrail({ enabled = true, intensity = 1 }: RainbowSp
           const lifeRatio = p.life / p.maxLife;
           const depthAlpha = 0.4 + p.z * 0.6;
           const currentAlpha = p.alpha * lifeRatio * depthAlpha;
-          const twinkle = 0.75 + 0.25 * Math.sin(now * 0.01 + p.twinkleOffset);
+          const twinkle = useSimpleRender ? 1 : (0.75 + 0.25 * Math.sin(now * 0.01 + p.twinkleOffset));
           
           const depthScale = 0.5 + p.z * 0.5;
           const currentSize = p.size * twinkle * (0.6 + lifeRatio * 0.4) * depthScale;
@@ -260,6 +289,16 @@ export function RainbowSparkleTrail({ enabled = true, intensity = 1 }: RainbowSp
             ? (70 + p.z * 15) 
             : (45 + p.z * 10); // Darker, more vibrant in light mode
           const saturation = isDark ? 100 : 100;
+
+          // Simple render mode for low-performance devices - no gradients
+          if (useSimpleRender) {
+            ctx.fillStyle = `hsla(${p.hue}, ${saturation}%, ${lightness}%, ${currentAlpha})`;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, currentSize, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+            return true;
+          }
 
           if (isMobileDevice) {
             const blurAmount = (1 - p.z) * 1.5;
@@ -349,12 +388,42 @@ export function RainbowSparkleTrail({ enabled = true, intensity = 1 }: RainbowSp
       animationFrameRef.current = requestAnimationFrame(animate);
     };
 
+    // Function to restart animation if it stopped
+    const startAnimationIfNeeded = () => {
+      if (!isAnimatingRef.current && particlesRef.current.length > 0) {
+        isAnimatingRef.current = true;
+        animationFrameRef.current = requestAnimationFrame(animate);
+      }
+    };
+
+    // Wrap event handlers to restart animation
+    const wrappedMouseMove = (e: MouseEvent) => {
+      handleMouseMove(e);
+      startAnimationIfNeeded();
+    };
+    
+    const wrappedTouchMove = (e: TouchEvent) => {
+      handleTouchMove(e);
+      startAnimationIfNeeded();
+    };
+    
+    const wrappedTouchStart = (e: TouchEvent) => {
+      handleTouchStart(e);
+      startAnimationIfNeeded();
+    };
+
+    // Add wrapped event listeners
+    window.addEventListener("mousemove", wrappedMouseMove, { passive: true });
+    window.addEventListener("touchstart", wrappedTouchStart, { passive: true });
+    window.addEventListener("touchmove", wrappedTouchMove, { passive: true });
+
+    isAnimatingRef.current = true;
     animationFrameRef.current = requestAnimationFrame(animate);
 
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("touchstart", handleTouchStart);
-      window.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("mousemove", wrappedMouseMove);
+      window.removeEventListener("touchstart", wrappedTouchStart);
+      window.removeEventListener("touchmove", wrappedTouchMove);
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", resizeCanvas);
       mediaQuery.removeEventListener("change", handleMotionChange);
@@ -365,6 +434,7 @@ export function RainbowSparkleTrail({ enabled = true, intensity = 1 }: RainbowSp
       if (scrollRafRef.current) {
         cancelAnimationFrame(scrollRafRef.current);
       }
+      isAnimatingRef.current = false;
     };
   }, [enabled, emitParticles]);
 
