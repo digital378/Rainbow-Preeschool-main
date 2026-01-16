@@ -541,10 +541,9 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider defaultTheme="light" storageKey="rainbow-preschool-theme">
         <TooltipProvider>
-          {/* Rainbow cursor effect disabled - causes freezing in some Chrome browsers */}
-          {/* <Suspense fallback={null}>
+          <Suspense fallback={null}>
             <RainbowSparkleTrail enabled={true} intensity={1} />
-          </Suspense> */}
+          </Suspense>
           <AppContent />
           <Toaster />
         </TooltipProvider>
