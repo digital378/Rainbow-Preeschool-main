@@ -32,6 +32,16 @@ export class MemStorage implements IStorage {
     const defaultPosts: BlogPost[] = [
       {
         id: randomUUID(),
+        title: "Republic Day 2026 in India: History, Significance, Parade, Speeches, Essays, Quotes, Images & Wishes",
+        slug: "republic-day-2026-india-history-significance-parade-speeches-essays-quotes-images-wishes",
+        excerpt: "Celebrate India's 77th Republic Day 2026 with complete information on history, significance, parade highlights, speeches in English and Hindi, essays for students, inspiring quotes, downloadable DP images, and heartfelt wishes.",
+        content: "Complete guide to Republic Day 2026 covering history, parade, speeches, essays, quotes, images and wishes.",
+        imageUrl: "/images/republic-day-dp-4.png",
+        publishedAt: new Date("2026-01-20"),
+        isPublished: true,
+      },
+      {
+        id: randomUUID(),
         title: "What To Ask During A Tour Of A Preschool In Thane",
         slug: "what-to-ask-during-a-tour-of-a-preschool-in-thane",
         excerpt: "Visiting preschools honestly feels a bit like house-hunting. You step in, look around for a few seconds, and something inside you instantly says either 'hmm' or 'yes!'",

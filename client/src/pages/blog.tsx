@@ -6,6 +6,16 @@ import { type BlogPost } from "@shared/schema";
 
 const defaultBlogPosts: BlogPost[] = [
   {
+    id: "republic-day-2026",
+    title: "Republic Day 2026 in India: History, Significance, Parade, Speeches, Essays, Quotes, Images & Wishes",
+    slug: "republic-day-2026-india-history-significance-parade-speeches-essays-quotes-images-wishes",
+    excerpt: "Celebrate India's 77th Republic Day 2026 with complete information on history, significance, parade highlights, speeches, essays, inspiring quotes, downloadable DP images, and heartfelt wishes.",
+    content: "",
+    imageUrl: "/images/republic-day-dp-4.png",
+    publishedAt: new Date("2026-01-20"),
+    isPublished: true,
+  },
+  {
     id: "1",
     title: "What To Ask During A Tour Of A Preschool In Thane",
     slug: "what-to-ask-during-a-tour-of-a-preschool-in-thane",
