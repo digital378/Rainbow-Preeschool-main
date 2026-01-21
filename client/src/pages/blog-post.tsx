@@ -455,10 +455,10 @@ const blogPostsData: Record<string, BlogPostData> = {
       "Contact us today to schedule a visit and give your child the safe, loving start they deserve."
     ]
   },
-  "republic-day-2026-india-history-significance-parade-speeches-essays-quotes-images-wishes": {
+  "republic-day-2026": {
     id: "republic-day-2026",
     title: "Republic Day 2026 in India: History, Significance, Parade, Speeches, Essays, Quotes, Images & Wishes",
-    slug: "republic-day-2026-india-history-significance-parade-speeches-essays-quotes-images-wishes",
+    slug: "republic-day-2026",
     excerpt: "Celebrate Republic Day 2026 with complete information on India's 77th Republic Day, including history, significance, parade highlights, speeches in English and Hindi, essays for students, inspiring quotes, Republic Day DP images, and heartfelt wishes.",
     author: "Rainbow Preschool Education Team",
     readTime: "12 min read",
