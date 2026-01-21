@@ -97,11 +97,13 @@ export function HeroSection() {
       {/* Content - Left Aligned */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28 w-full">
         <div className="max-w-2xl">
-          {/* Welcome badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-6 md:mb-8">
-            <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-            <span className="text-sm font-medium text-white/90">Admissions Open for 2026-27</span>
-          </div>
+          {/* Welcome badge - Clickable */}
+          <Link href="/contact" data-testid="link-admissions-badge">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-6 md:mb-8 cursor-pointer hover:bg-white/20 transition-colors">
+              <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+              <span className="text-sm font-medium text-white/90">Admissions Open for 2026-27</span>
+            </div>
+          </Link>
 
           {/* Main heading - Single H1 for SEO */}
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 text-white leading-tight">
