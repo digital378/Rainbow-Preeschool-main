@@ -733,7 +733,7 @@ export default function BlogPost() {
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                       {dpImages.map((img, i) => (
                         <div key={i} className="relative group">
-                          <div className="aspect-square rounded-lg overflow-hidden border-2 border-orange-500 shadow-lg">
+                          <div className="aspect-square rounded-lg overflow-hidden border-4 border-orange-500 shadow-lg ring-2 ring-orange-300">
                             <img 
                               src={img.src} 
                               alt={img.alt}
@@ -760,6 +760,45 @@ export default function BlogPost() {
                       Tap or click on any image to download. Perfect for WhatsApp, Instagram, and Facebook profile pictures!
                     </p>
                   </div>
+                );
+              }
+              // Handle bullet list items (paragraphs with multiple **bold:** entries separated by \n)
+              if (paragraph.includes("\n**") && paragraph.includes(":**")) {
+                const items = paragraph.split("\n").filter(item => item.trim());
+                return (
+                  <ul key={index} className="space-y-3 mb-6">
+                    {items.map((item, i) => {
+                      const parts = item.split(/\*\*/);
+                      return (
+                        <li key={i} className="flex gap-2 text-muted-foreground leading-relaxed">
+                          <span className="text-primary mt-1">•</span>
+                          <span>
+                            {parts.map((part, j) => 
+                              j % 2 === 1 ? <strong key={j} className="text-foreground">{part}</strong> : part
+                            )}
+                          </span>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                );
+              }
+              // Handle numbered list items (paragraphs starting with number and containing \n followed by numbers)
+              if (/^\d+\.\s/.test(paragraph) && paragraph.includes("\n")) {
+                const items = paragraph.split("\n").filter(item => item.trim());
+                return (
+                  <ol key={index} className="space-y-3 mb-6">
+                    {items.map((item, i) => {
+                      // Remove the number prefix for cleaner display
+                      const cleanItem = item.replace(/^\d+\.\s*/, '');
+                      return (
+                        <li key={i} className="flex gap-3 text-muted-foreground leading-relaxed">
+                          <span className="text-primary font-semibold min-w-[1.5rem]">{i + 1}.</span>
+                          <span>{cleanItem}</span>
+                        </li>
+                      );
+                    })}
+                  </ol>
                 );
               }
               if (paragraph.includes("**")) {
