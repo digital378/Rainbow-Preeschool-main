@@ -328,9 +328,14 @@ export default function AdLanding() {
         <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8 items-start">
           {/* Headline - Always first */}
           <div className="space-y-4 order-1 lg:order-none">
-            <div className="inline-block bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-200 px-4 py-1 rounded-full text-sm font-medium">
+            <button
+              type="button"
+              onClick={() => document.getElementById('enquiry-form')?.scrollIntoView({ behavior: 'smooth' })}
+              className="inline-block bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-200 px-4 py-1 rounded-full text-sm font-medium cursor-pointer hover:bg-yellow-200 dark:hover:bg-yellow-900/50 transition-colors"
+              data-testid="button-admissions-badge"
+            >
               Admissions Open 2026-27
-            </div>
+            </button>
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">
               Give Your Child the{" "}
               <span className="text-primary">Best Start</span> in Life
@@ -342,7 +347,7 @@ export default function AdLanding() {
 
           {/* Form - Second on mobile, right column on desktop */}
           <div className="order-2 lg:order-none lg:sticky lg:top-24 lg:row-span-2">
-            <Card className="shadow-xl border-2 border-primary/20">
+            <Card id="enquiry-form" className="shadow-xl border-2 border-primary/20">
               <CardContent className="p-6">
                 {isSubmitted ? (
                   <div className="text-center py-8 space-y-4">

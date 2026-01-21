@@ -407,6 +407,49 @@ export default function RepublicDay2026() {
               At Rainbow Preschool International, we believe in nurturing young minds with values of patriotism, unity, and respect for our nation's heritage. Our centres across Thane celebrate Republic Day with flag hoisting ceremonies, patriotic songs, and activities that help young children understand and appreciate their country.
             </p>
             <p className="text-xl font-bold text-center mt-8 text-primary">Happy Republic Day 2026! Jai Hind!</p>
+
+            {/* Related Content Section for Better Engagement */}
+            <div className="mt-12 pt-8 border-t border-border">
+              <h3 className="text-xl font-bold text-foreground mb-6">Explore More at Rainbow Preschool</h3>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <Link href="/programmes" data-testid="link-related-programmes">
+                  <div className="p-4 bg-muted/50 rounded-lg hover:bg-muted transition-colors cursor-pointer group">
+                    <h4 className="font-semibold text-foreground group-hover:text-primary transition-colors">Our Programmes</h4>
+                    <p className="text-sm text-muted-foreground mt-1">Discover age-appropriate learning for children 1.5-10 years</p>
+                  </div>
+                </Link>
+                <Link href="/about" data-testid="link-related-about">
+                  <div className="p-4 bg-muted/50 rounded-lg hover:bg-muted transition-colors cursor-pointer group">
+                    <h4 className="font-semibold text-foreground group-hover:text-primary transition-colors">About Us</h4>
+                    <p className="text-sm text-muted-foreground mt-1">18+ years of nurturing young minds in Thane</p>
+                  </div>
+                </Link>
+                <Link href="/blog" data-testid="link-related-blog">
+                  <div className="p-4 bg-muted/50 rounded-lg hover:bg-muted transition-colors cursor-pointer group">
+                    <h4 className="font-semibold text-foreground group-hover:text-primary transition-colors">News & Blog</h4>
+                    <p className="text-sm text-muted-foreground mt-1">Latest updates and parenting insights</p>
+                  </div>
+                </Link>
+                <Link href="/admissions" data-testid="link-related-admissions">
+                  <div className="p-4 bg-muted/50 rounded-lg hover:bg-muted transition-colors cursor-pointer group">
+                    <h4 className="font-semibold text-foreground group-hover:text-primary transition-colors">Admissions 2026-27</h4>
+                    <p className="text-sm text-muted-foreground mt-1">Join the Rainbow family - limited seats available</p>
+                  </div>
+                </Link>
+                <Link href="/playgroup" data-testid="link-related-playgroup">
+                  <div className="p-4 bg-muted/50 rounded-lg hover:bg-muted transition-colors cursor-pointer group">
+                    <h4 className="font-semibold text-foreground group-hover:text-primary transition-colors">Playgroup (1.5-2.5 yrs)</h4>
+                    <p className="text-sm text-muted-foreground mt-1">First steps in learning through play</p>
+                  </div>
+                </Link>
+                <Link href="/contact" data-testid="link-related-contact">
+                  <div className="p-4 bg-muted/50 rounded-lg hover:bg-muted transition-colors cursor-pointer group">
+                    <h4 className="font-semibold text-foreground group-hover:text-primary transition-colors">Contact Us</h4>
+                    <p className="text-sm text-muted-foreground mt-1">Visit our centres across Thane</p>
+                  </div>
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </article>
