@@ -217,6 +217,7 @@ const LazyAuthorArchivePage = lazy(() => import("@/pages/legacy-pages").then(m =
 
 const LazyTermsPage = lazy(() => import("@/pages/legal").then(m => ({ default: m.TermsPage })));
 const LazyPrivacyPage = lazy(() => import("@/pages/legal").then(m => ({ default: m.PrivacyPage })));
+const RepublicDay2026 = lazy(() => import("@/pages/republic-day-2026"));
 
 import { legacySlugs } from "@/pages/legacy-pages";
 
@@ -239,6 +240,7 @@ const STANDALONE_LANDING_PATHS = [
   ...legacySlugs.map(slug => slug.replace(/\/$/, '')),
   "/author/rainbowpreschools",
   "/author/rainbow-preschools",
+  "/republic-day-2026",
 ];
 
 function PageLoader() {
@@ -284,6 +286,7 @@ function Router() {
         
         <Route path="/ad" component={AdLanding} />
         <Route path="/ad-google" component={AdGoogleLanding} />
+        <Route path="/republic-day-2026" component={RepublicDay2026} />
         
         <Route path="/playgroup-in-thane" component={LazyPlaygroupInThane} />
         <Route path="/playgroup-in-manpada" component={LazyPlaygroupInManpada} />
