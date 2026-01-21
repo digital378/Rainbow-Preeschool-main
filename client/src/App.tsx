@@ -240,7 +240,6 @@ const STANDALONE_LANDING_PATHS = [
   ...legacySlugs.map(slug => slug.replace(/\/$/, '')),
   "/author/rainbowpreschools",
   "/author/rainbow-preschools",
-  "/republic-day-2026",
 ];
 
 function PageLoader() {
