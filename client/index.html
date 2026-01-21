@@ -30,6 +30,7 @@
     <!-- DNS Prefetch for third-party domains -->
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     <link rel="dns-prefetch" href="https://connect.facebook.net">
+    <link rel="dns-prefetch" href="https://www.clarity.ms">
     
     <!-- Hero images loaded via JS imports -->
     
@@ -90,6 +91,13 @@
         'https://connect.facebook.net/en_US/fbevents.js');
         fbq('init', '876471444795481');
         fbq('track', 'PageView');
+        
+        // Microsoft Clarity
+        (function(c,l,a,r,i,t,y){
+          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "m20xf4ffec");
       }
     </script>
     <!-- End Analytics Code -->
