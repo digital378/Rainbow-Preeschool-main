@@ -51,6 +51,9 @@ app.get("/robots.txt", (req, res) => {
   }
 });
 
+// Serve static files from public folder (for ad landing pages)
+app.use(express.static(path.join(process.cwd(), "public")));
+
 setupRedirects(app);
 
 export function log(message: string, source = "express") {
