@@ -12,6 +12,18 @@ import heroBanner4 from "@assets/RPS_Hero_Banner_4_1766120180204.jpg";
 
 const banners = [heroBanner1, heroBanner2, heroBanner3, heroBanner4];
 
+// Add preload link for the first hero banner to improve LCP
+if (typeof document !== 'undefined') {
+  const preloadLink = document.createElement('link');
+  preloadLink.rel = 'preload';
+  preloadLink.as = 'image';
+  preloadLink.href = heroBanner1;
+  preloadLink.fetchPriority = 'high';
+  if (!document.head.querySelector(`link[href="${heroBanner1}"]`)) {
+    document.head.appendChild(preloadLink);
+  }
+}
+
 function preloadImage(src: string): Promise<void> {
   return new Promise((resolve) => {
     const img = new Image();
@@ -82,8 +94,11 @@ export function HeroSection() {
                 src={banner}
                 alt={`Preschool classroom in Thane - Rainbow Preschool ${index + 1}`}
                 className="w-full h-full object-cover"
+                width={1920}
+                height={1080}
                 loading={index === 0 ? "eager" : "lazy"}
                 decoding={index === 0 ? "sync" : "async"}
+                fetchPriority={index === 0 ? "high" : "low"}
               />
             </div>
           );

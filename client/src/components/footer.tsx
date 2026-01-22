@@ -22,6 +22,8 @@ export function Footer() {
                 alt="Rainbow Preschool International" 
                 loading="lazy"
                 className="w-20 h-20 object-contain"
+                width={80}
+                height={80}
               />
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed">

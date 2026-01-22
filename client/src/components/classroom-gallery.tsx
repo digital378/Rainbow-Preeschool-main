@@ -71,6 +71,8 @@ export function ClassroomGallery() {
                   alt={image.alt}
                   loading="lazy"
                   className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  width={400}
+                  height={400}
                   data-testid={`img-home-gallery-${index + 1}`}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -92,6 +94,8 @@ export function ClassroomGallery() {
               src={selectedImage}
               alt="Enlarged view of preschool activity"
               className="w-full h-auto rounded-lg"
+              width={800}
+              height={600}
             />
           )}
         </DialogContent>

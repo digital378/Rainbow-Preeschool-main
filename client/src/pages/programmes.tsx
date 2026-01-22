@@ -152,6 +152,8 @@ export default function Programmes() {
                           alt={`${programme.name} activities at Rainbow Preschool`} 
                           className="w-full h-full object-cover"
                           loading="lazy"
+                          width={640}
+                          height={360}
                           data-testid={`img-programme-${programme.id}`}
                         />
                       </div>

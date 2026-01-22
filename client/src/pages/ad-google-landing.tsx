@@ -281,6 +281,8 @@ export default function AdGoogleLanding() {
               src={logoImage}
               alt="Rainbow Preschool International"
               className="h-12 w-auto"
+              width={48}
+              height={48}
             />
             <span className="font-bold text-lg hidden sm:inline text-foreground">
               Rainbow Preschool International
@@ -718,6 +720,9 @@ export default function AdGoogleLanding() {
                 src={childImage} 
                 alt="Explore our programmes at Rainbow Preschool" 
                 className="w-full h-auto object-cover"
+                width={320}
+                height={400}
+                loading="lazy"
               />
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
                 <p className="text-white text-sm font-medium text-center">View All Programmes</p>

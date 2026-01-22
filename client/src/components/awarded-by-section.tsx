@@ -32,12 +32,16 @@ function LogoImage({ logo }: { logo: AwardLogo }) {
           alt={logo.alt}
           className="h-10 md:h-16 lg:h-20 w-auto object-contain max-w-[100px] md:max-w-[150px] dark:hidden"
           loading="lazy"
+          width={150}
+          height={80}
         />
         <img
           src={logo.srcDark}
           alt={logo.alt}
           className="h-10 md:h-16 lg:h-20 w-auto object-contain max-w-[100px] md:max-w-[150px] hidden dark:block"
           loading="lazy"
+          width={150}
+          height={80}
         />
       </>
     );
@@ -48,6 +52,8 @@ function LogoImage({ logo }: { logo: AwardLogo }) {
       alt={logo.alt}
       className="h-10 md:h-16 lg:h-20 w-auto object-contain max-w-[100px] md:max-w-[150px]"
       loading="lazy"
+      width={150}
+      height={80}
     />
   );
 }

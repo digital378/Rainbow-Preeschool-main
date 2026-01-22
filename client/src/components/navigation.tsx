@@ -34,7 +34,7 @@ export function Navigation() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -63,6 +63,8 @@ export function Navigation() {
                 src={logoImage} 
                 alt="Rainbow Preschool International" 
                 className="w-16 h-16 md:w-20 md:h-20 object-contain"
+                width={80}
+                height={80}
               />
             </div>
           </Link>

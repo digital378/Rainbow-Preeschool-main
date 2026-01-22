@@ -29,6 +29,8 @@ export function MinimalHeader({
             src={logoImage}
             alt="Rainbow Preschool"
             className="h-10 w-10 object-contain"
+            width={40}
+            height={40}
           />
           <span className="font-semibold text-sm hidden sm:block">Rainbow Preschool</span>
         </Link>
