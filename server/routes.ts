@@ -202,6 +202,23 @@ export async function registerRoutes(
     res.sendFile(path.join(process.cwd(), "public", "ad-google.html"));
   });
   
+  // Serve fast static HTML for programme pages (for ad traffic - instant load)
+  app.get("/playgroup-fast", (req, res) => {
+    res.sendFile(path.join(process.cwd(), "public", "playgroup-fast.html"));
+  });
+  
+  app.get("/nursery-fast", (req, res) => {
+    res.sendFile(path.join(process.cwd(), "public", "nursery-fast.html"));
+  });
+  
+  app.get("/kindergarten-fast", (req, res) => {
+    res.sendFile(path.join(process.cwd(), "public", "kindergarten-fast.html"));
+  });
+  
+  app.get("/daycare-fast", (req, res) => {
+    res.sendFile(path.join(process.cwd(), "public", "daycare-fast.html"));
+  });
+  
   // Apply SEO redirect middleware for old WordPress URLs
   app.use(seoRedirectMiddleware);
   
