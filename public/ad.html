@@ -63,11 +63,21 @@
     .programmes{margin-top:32px}
     .programmes h2{font-size:1.125rem;font-weight:600;margin-bottom:12px}
     .prog-list{display:grid;gap:8px}
-    .prog-item{display:flex;align-items:center;gap:12px;padding:12px;background:#fff;border-radius:8px;border:1px solid #e5e7eb;text-decoration:none;color:inherit}
-    .prog-item:hover{background:#f9fafb}
-    .prog-item svg{width:20px;height:20px;color:#22c55e;flex-shrink:0}
+    .prog-item{background:#fff;border-radius:8px;border:1px solid #e5e7eb;overflow:hidden}
+    .prog-header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px;cursor:pointer;user-select:none}
+    .prog-header:hover{background:#f9fafb}
+    .prog-header svg.check{width:20px;height:20px;color:#22c55e;flex-shrink:0}
+    .prog-header svg.chevron{width:20px;height:20px;color:#6b7280;transition:transform .2s}
+    .prog-item.open .prog-header svg.chevron{transform:rotate(180deg)}
+    .prog-left{display:flex;align-items:center;gap:12px}
     .prog-name{font-weight:500}
     .prog-age{color:#6b7280;font-size:.875rem;margin-left:8px}
+    .prog-content{max-height:0;overflow:hidden;transition:max-height .3s ease}
+    .prog-item.open .prog-content{max-height:300px}
+    .prog-details{padding:0 12px 12px;border-top:1px solid #e5e7eb;margin-top:0}
+    .prog-details p{font-size:.875rem;color:#4b5563;margin:12px 0 8px}
+    .prog-features{display:flex;flex-wrap:wrap;gap:6px}
+    .prog-feat{display:inline-flex;align-items:center;gap:4px;font-size:.75rem;padding:4px 8px;background:#f3f4f6;border-radius:9999px;color:#374151}
     .wa-float{position:fixed;bottom:24px;right:24px;z-index:50;background:#22c55e;color:#fff;padding:16px;border-radius:50%;box-shadow:0 4px 12px rgba(0,0,0,.2);text-decoration:none}
     .wa-float svg{width:24px;height:24px}
     footer{background:#f3f4f6;padding:24px 16px;margin-top:32px;text-align:center;font-size:.875rem;color:#6b7280}
@@ -173,22 +183,86 @@
     <div class="programmes">
       <h2>Our Programmes</h2>
       <div class="prog-list">
-        <a href="/playgroup-fast" class="prog-item" data-testid="link-ad-programme-playgroup">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-          <span class="prog-name">Playgroup in Thane</span><span class="prog-age">(1.5-2.5 years)</span>
-        </a>
-        <a href="/nursery-fast" class="prog-item" data-testid="link-ad-programme-nursery">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-          <span class="prog-name">Nursery in Thane</span><span class="prog-age">(2.5-3.5 years)</span>
-        </a>
-        <a href="/kindergarten-fast" class="prog-item" data-testid="link-ad-programme-kindergarten">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-          <span class="prog-name">Kindergarten in Thane</span><span class="prog-age">(3.5-5 years)</span>
-        </a>
-        <a href="/daycare-fast" class="prog-item" data-testid="link-ad-programme-daycare">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-          <span class="prog-name">Daycare in Thane</span><span class="prog-age">(2-10 years)</span>
-        </a>
+        <div class="prog-item" data-testid="accordion-ad-playgroup">
+          <div class="prog-header" onclick="toggleProg(this)">
+            <div class="prog-left">
+              <svg class="check" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              <span class="prog-name">Playgroup in Thane</span><span class="prog-age">(1.5-2.5 years)</span>
+            </div>
+            <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </div>
+          <div class="prog-content">
+            <div class="prog-details">
+              <p>Play-based learning for toddlers. Building social skills, motor development, and early curiosity through fun activities.</p>
+              <div class="prog-features">
+                <span class="prog-feat">Play-Based Learning</span>
+                <span class="prog-feat">Sensory Activities</span>
+                <span class="prog-feat">Social Skills</span>
+                <span class="prog-feat">AC Classrooms</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="prog-item" data-testid="accordion-ad-nursery">
+          <div class="prog-header" onclick="toggleProg(this)">
+            <div class="prog-left">
+              <svg class="check" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              <span class="prog-name">Nursery in Thane</span><span class="prog-age">(2.5-3.5 years)</span>
+            </div>
+            <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </div>
+          <div class="prog-content">
+            <div class="prog-details">
+              <p>Early literacy and phonics foundation. Introduction to numbers, colors, shapes, and creative expression.</p>
+              <div class="prog-features">
+                <span class="prog-feat">Phonics & Literacy</span>
+                <span class="prog-feat">Number Concepts</span>
+                <span class="prog-feat">Creative Arts</span>
+                <span class="prog-feat">Music & Movement</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="prog-item" data-testid="accordion-ad-kindergarten">
+          <div class="prog-header" onclick="toggleProg(this)">
+            <div class="prog-left">
+              <svg class="check" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              <span class="prog-name">Kindergarten in Thane</span><span class="prog-age">(3.5-5 years)</span>
+            </div>
+            <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </div>
+          <div class="prog-content">
+            <div class="prog-details">
+              <p>School readiness program. Advanced reading, writing, math foundations, and critical thinking skills.</p>
+              <div class="prog-features">
+                <span class="prog-feat">School Readiness</span>
+                <span class="prog-feat">Reading & Writing</span>
+                <span class="prog-feat">Math Foundations</span>
+                <span class="prog-feat">Problem Solving</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="prog-item" data-testid="accordion-ad-daycare">
+          <div class="prog-header" onclick="toggleProg(this)">
+            <div class="prog-left">
+              <svg class="check" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              <span class="prog-name">Daycare in Thane</span><span class="prog-age">(2-10 years)</span>
+            </div>
+            <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </div>
+          <div class="prog-content">
+            <div class="prog-details">
+              <p>Safe, nurturing after-school care. Homework help, fun activities, and nutritious meals for working parents.</p>
+              <div class="prog-features">
+                <span class="prog-feat">Flexible Hours</span>
+                <span class="prog-feat">Homework Help</span>
+                <span class="prog-feat">Fun Activities</span>
+                <span class="prog-feat">Nutritious Meals</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </main>
@@ -219,6 +293,7 @@
     var utm=getUtmParams();
     function trackCall(){if(window.gtag)gtag('event','ad_call');}
     function trackWhatsApp(){if(window.gtag)gtag('event','ad_whatsapp');}
+    function toggleProg(el){el.parentElement.classList.toggle('open');}
     function handleSubmit(e){
       e.preventDefault();
       var n=document.getElementById('parentName').value.trim();
