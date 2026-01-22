@@ -29,7 +29,6 @@ import { trackGoogleAdsLead, trackGoogleAdsCall, trackGoogleAdsWhatsApp } from "
 import { initRecaptcha, sendOTP, verifyOTP, resetRecaptcha } from "@/lib/firebase-auth";
 import { ConfirmationResult } from "firebase/auth";
 import logoImage from "@assets/Rainbow_Pre_School.Logo_1766035853658.png";
-import childImage from "@assets/2_1767880168388.png";
 
 const formSchema = z.object({
   parentName: z.string().min(2, "Please enter your name"),
@@ -41,10 +40,10 @@ const formSchema = z.object({
 type FormData = z.infer<typeof formSchema>;
 
 const programmes = [
-  { age: "1.5-2.5 years", name: "Playgroup", link: "/playgroup" },
-  { age: "2.5-3.5 years", name: "Nursery", link: "/nursery" },
-  { age: "3.5-5 years", name: "Kindergarten", link: "/kindergarten" },
-  { age: "2-10 years", name: "Daycare (Happy Times)", link: "/happy-times" },
+  { age: "1.5-2.5 years", name: "Playgroup in Thane", link: "/playgroup" },
+  { age: "2.5-3.5 years", name: "Nursery in Thane", link: "/nursery" },
+  { age: "3.5-5 years", name: "Kindergarten in Thane", link: "/kindergarten" },
+  { age: "2-10 years", name: "Daycare in Thane", link: "/happy-times" },
 ];
 
 const areas = [
@@ -655,24 +654,6 @@ export default function AdGoogleLanding() {
           </div>
         </div>
 
-        {/* Child Image - Bottom section */}
-        <div className="mt-12 max-w-6xl mx-auto">
-          <Link href="/programmes" className="block" data-testid="link-ad-google-programmes-image">
-            <div className="relative rounded-2xl overflow-hidden shadow-lg max-w-xs mx-auto hover-elevate cursor-pointer">
-              <img 
-                src={childImage} 
-                alt="Explore our programmes at Rainbow Preschool" 
-                className="w-full h-auto object-cover"
-                width={320}
-                height={400}
-                loading="lazy"
-              />
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
-                <p className="text-white text-sm font-medium text-center">View All Programmes</p>
-              </div>
-            </div>
-          </Link>
-        </div>
       </main>
 
       {/* Sticky WhatsApp Button */}
