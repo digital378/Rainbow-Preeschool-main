@@ -5,6 +5,7 @@ import { insertContactSchema } from "@shared/schema";
 import { z } from "zod";
 import { sendLeadNotificationEmail } from "./gmail";
 import { sendLeadToMCB, getBranchID } from "./mcb";
+import path from "path";
 
 const RECAPTCHA_SECRET_KEY = process.env.RECAPTCHA_SECRET_KEY || "";
 
@@ -191,6 +192,15 @@ export async function registerRoutes(
   httpServer: Server,
   app: Express
 ): Promise<Server> {
+  
+  // Serve static HTML for ad landing pages (instant load - no React bundle needed)
+  app.get("/ad", (req, res) => {
+    res.sendFile(path.join(process.cwd(), "public", "ad.html"));
+  });
+  
+  app.get("/ad-google", (req, res) => {
+    res.sendFile(path.join(process.cwd(), "public", "ad-google.html"));
+  });
   
   // Apply SEO redirect middleware for old WordPress URLs
   app.use(seoRedirectMiddleware);
