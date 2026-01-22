@@ -22,17 +22,10 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import { Phone, MapPin, CheckCircle2, Star, Users, Award, Loader2, ChevronDown, Menu, X } from "lucide-react";
+import { Phone, MapPin, CheckCircle2, Star, Users, Award, Loader2 } from "lucide-react";
 import { SiWhatsapp } from "react-icons/si";
 import { apiRequest } from "@/lib/queryClient";
 import { trackAdLead, trackAdCall, trackAdWhatsApp } from "@/lib/analytics";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { centres } from "@shared/centre-data";
 import logoImage from "@assets/Rainbow_Pre_School.Logo_1766035853658.png";
 import childImage from "@assets/2_1767880168388.png";
 
@@ -125,18 +118,9 @@ function getUtmParams() {
   return { leadSource, leadMedium };
 }
 
-const navLinks = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About Us" },
-  { href: "/programmes", label: "Programmes" },
-  { href: "/blog", label: "News & Blog" },
-  { href: "/contact", label: "Contact" },
-];
-
 export default function AdLanding() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [utmData] = useState(() => getUtmParams());
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const metaRobots = document.createElement('meta');
@@ -226,105 +210,9 @@ export default function AdLanding() {
               <span className="hidden sm:inline">+91 82915 68972</span>
               <span className="sm:hidden">Call</span>
             </a>
-            {/* Mobile menu button */}
-            <Button
-              variant="ghost"
-              size="icon"
-              className="lg:hidden"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
-              data-testid="button-ad-mobile-menu"
-            >
-              {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-            </Button>
           </div>
         </div>
       </header>
-
-      {/* Navigation Bar */}
-      <nav className="bg-primary hidden lg:block">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="flex items-center">
-            {navLinks.map((link) => (
-              <Link key={link.href} href={link.href}>
-                <Button
-                  variant="ghost"
-                  className="text-sm font-medium rounded-none text-white hover:bg-white/20 hover:text-white"
-                  data-testid={`link-ad-nav-${link.label.toLowerCase().replace(/\s+/g, "-")}`}
-                >
-                  {link.label}
-                </Button>
-              </Link>
-            ))}
-            {/* Centres Dropdown */}
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button 
-                  variant="ghost" 
-                  className="text-sm font-medium rounded-none text-white hover:bg-white/20 hover:text-white"
-                  data-testid="button-ad-centres-dropdown"
-                >
-                  Centres <ChevronDown className="ml-1 h-4 w-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-72">
-                {centres.map((centre) => (
-                  <DropdownMenuItem key={centre.id} asChild>
-                    <Link
-                      href={centre.preschoolLandingUrl}
-                      className="flex flex-col items-start gap-1 py-2 cursor-pointer"
-                      data-testid={`link-ad-centre-${centre.id}`}
-                    >
-                      <span className="font-medium text-sm">{centre.name}</span>
-                      <span className="text-xs text-muted-foreground flex items-center gap-1">
-                        <MapPin className="h-3 w-3" />
-                        Preschool in {centre.localityName}
-                      </span>
-                    </Link>
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-        </div>
-      </nav>
-
-      {/* Mobile Navigation Menu */}
-      {mobileMenuOpen && (
-        <div className="lg:hidden bg-background border-b shadow-sm">
-          <div className="flex flex-col px-4 py-2">
-            {navLinks.map((link) => (
-              <Link key={link.href} href={link.href}>
-                <Button
-                  variant="ghost"
-                  className="w-full justify-start"
-                  data-testid={`link-ad-mobile-${link.label.toLowerCase().replace(/\s+/g, "-")}`}
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  {link.label}
-                </Button>
-              </Link>
-            ))}
-            {/* Mobile Centres */}
-            <div className="py-2 border-t mt-2">
-              <p className="text-sm font-medium text-muted-foreground px-4 py-2">Our Centres</p>
-              {centres.map((centre) => (
-                <Link key={centre.id} href={centre.preschoolLandingUrl}>
-                  <Button
-                    variant="ghost"
-                    className="w-full justify-start text-sm"
-                    onClick={() => setMobileMenuOpen(false)}
-                    data-testid={`link-ad-mobile-centre-${centre.id}`}
-                  >
-                    <MapPin className="h-3 w-3 mr-2" />
-                    {centre.name}
-                  </Button>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
 
       <main className="max-w-6xl mx-auto px-4 py-8">
         <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8 items-start">
