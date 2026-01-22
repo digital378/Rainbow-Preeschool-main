@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, lazy, Suspense } from "react";
 import { Link } from "wouter";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -26,9 +26,18 @@ import { Phone, MapPin, CheckCircle2, Star, Users, Award, Loader2 } from "lucide
 import { SiWhatsapp } from "react-icons/si";
 import { apiRequest } from "@/lib/queryClient";
 import { trackGoogleAdsLead, trackGoogleAdsCall, trackGoogleAdsWhatsApp } from "@/lib/analytics";
-import { initRecaptcha, sendOTP, verifyOTP, resetRecaptcha } from "@/lib/firebase-auth";
-import { ConfirmationResult } from "firebase/auth";
 import logoImage from "@assets/Rainbow_Pre_School.Logo_1766035853658.png";
+
+// Lazy load Firebase - only when user needs OTP
+let firebaseAuthModule: typeof import("@/lib/firebase-auth") | null = null;
+async function getFirebaseAuth() {
+  if (!firebaseAuthModule) {
+    firebaseAuthModule = await import("@/lib/firebase-auth");
+  }
+  return firebaseAuthModule;
+}
+
+type ConfirmationResultType = { confirm: (code: string) => Promise<unknown> } | null;
 
 const formSchema = z.object({
   parentName: z.string().min(2, "Please enter your name"),
@@ -88,7 +97,7 @@ export default function AdGoogleLanding() {
   const [otpStep, setOtpStep] = useState<'form' | 'otp' | 'submitting'>('form');
   const [otp, setOtp] = useState('');
   const [otpError, setOtpError] = useState('');
-  const [confirmationResult, setConfirmationResult] = useState<ConfirmationResult | null>(null);
+  const [confirmationResult, setConfirmationResult] = useState<ConfirmationResultType>(null);
   const [sendingOtp, setSendingOtp] = useState(false);
   const [verifyingOtp, setVerifyingOtp] = useState(false);
   const [countdown, setCountdown] = useState(0);
@@ -105,7 +114,10 @@ export default function AdGoogleLanding() {
 
     return () => {
       document.head.removeChild(metaRobots);
-      resetRecaptcha();
+      // Reset recaptcha on cleanup if Firebase was loaded
+      if (firebaseAuthModule) {
+        firebaseAuthModule.resetRecaptcha();
+      }
     };
   }, []);
 
@@ -163,18 +175,21 @@ export default function AdGoogleLanding() {
     },
   });
 
-  // Step 1: Send OTP when form is submitted
+  // Step 1: Send OTP when form is submitted (lazy load Firebase)
   const handleSendOtp = async (data: FormData) => {
     formDataRef.current = data;
     setSendingOtp(true);
     setOtpError('');
     
     try {
+      // Lazy load Firebase only when needed
+      const firebase = await getFirebaseAuth();
+      
       if (recaptchaContainerRef.current) {
-        await initRecaptcha('recaptcha-container-google');
+        await firebase.initRecaptcha('recaptcha-container-google');
       }
       
-      const result = await sendOTP(data.phone);
+      const result = await firebase.sendOTP(data.phone);
       setConfirmationResult(result);
       setOtpStep('otp');
       setCountdown(30);
@@ -189,7 +204,9 @@ export default function AdGoogleLanding() {
       } else {
         setOtpError('Failed to send OTP. Please try again.');
       }
-      resetRecaptcha();
+      if (firebaseAuthModule) {
+        firebaseAuthModule.resetRecaptcha();
+      }
     } finally {
       setSendingOtp(false);
     }
@@ -203,7 +220,8 @@ export default function AdGoogleLanding() {
     setOtpError('');
     
     try {
-      const isValid = await verifyOTP(confirmationResult, otp);
+      const firebase = await getFirebaseAuth();
+      const isValid = await firebase.verifyOTP(confirmationResult as any, otp);
       if (isValid) {
         setOtpStep('submitting');
         mutation.mutate(formDataRef.current);
@@ -226,11 +244,12 @@ export default function AdGoogleLanding() {
     setOtpError('');
     
     try {
-      resetRecaptcha();
+      const firebase = await getFirebaseAuth();
+      firebase.resetRecaptcha();
       if (recaptchaContainerRef.current) {
-        await initRecaptcha('recaptcha-container-google');
+        await firebase.initRecaptcha('recaptcha-container-google');
       }
-      const result = await sendOTP(formDataRef.current.phone);
+      const result = await firebase.sendOTP(formDataRef.current.phone);
       setConfirmationResult(result);
       setCountdown(30);
       setOtp('');
@@ -247,7 +266,9 @@ export default function AdGoogleLanding() {
     setOtpStep('form');
     setOtp('');
     setOtpError('');
-    resetRecaptcha();
+    if (firebaseAuthModule) {
+      firebaseAuthModule.resetRecaptcha();
+    }
   };
 
   const onSubmit = (data: FormData) => {
