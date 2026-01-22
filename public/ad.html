@@ -73,11 +73,29 @@
     .prog-name{font-weight:500}
     .prog-age{color:#6b7280;font-size:.875rem;margin-left:8px}
     .prog-content{max-height:0;overflow:hidden;transition:max-height .3s ease}
-    .prog-item.open .prog-content{max-height:300px}
-    .prog-details{padding:0 12px 12px;border-top:1px solid #e5e7eb;margin-top:0}
-    .prog-details p{font-size:.875rem;color:#4b5563;margin:12px 0 8px}
-    .prog-features{display:flex;flex-wrap:wrap;gap:6px}
-    .prog-feat{display:inline-flex;align-items:center;gap:4px;font-size:.75rem;padding:4px 8px;background:#f3f4f6;border-radius:9999px;color:#374151}
+    .prog-item.open .prog-content{max-height:500px}
+    .prog-details{padding:16px;border-top:1px solid #e5e7eb}
+    .prog-details p{font-size:.9rem;color:#374151;margin:0 0 12px;line-height:1.5}
+    .prog-features{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+    .prog-feat{display:flex;align-items:center;gap:8px;font-size:.8rem;padding:8px 12px;border-radius:8px;color:#374151}
+    .prog-feat svg{width:18px;height:18px;flex-shrink:0}
+    .prog-item[data-theme="pink"] .prog-details{background:linear-gradient(to bottom,#fdf2f8,#fff)}
+    .prog-item[data-theme="pink"] .prog-feat{background:#fce7f3}
+    .prog-item[data-theme="pink"] .prog-feat svg{color:#ec4899}
+    .prog-item[data-theme="blue"] .prog-details{background:linear-gradient(to bottom,#eff6ff,#fff)}
+    .prog-item[data-theme="blue"] .prog-feat{background:#dbeafe}
+    .prog-item[data-theme="blue"] .prog-feat svg{color:#2563eb}
+    .prog-item[data-theme="purple"] .prog-details{background:linear-gradient(to bottom,#f5f3ff,#fff)}
+    .prog-item[data-theme="purple"] .prog-feat{background:#ede9fe}
+    .prog-item[data-theme="purple"] .prog-feat svg{color:#7c3aed}
+    .prog-item[data-theme="amber"] .prog-details{background:linear-gradient(to bottom,#fef3c7,#fff)}
+    .prog-item[data-theme="amber"] .prog-feat{background:#fef3c7}
+    .prog-item[data-theme="amber"] .prog-feat svg{color:#d97706}
+    .prog-item.open{border-color:#d1d5db}
+    .prog-item[data-theme="pink"].open{border-color:#f9a8d4}
+    .prog-item[data-theme="blue"].open{border-color:#93c5fd}
+    .prog-item[data-theme="purple"].open{border-color:#c4b5fd}
+    .prog-item[data-theme="amber"].open{border-color:#fcd34d}
     .wa-float{position:fixed;bottom:24px;right:24px;z-index:50;background:#22c55e;color:#fff;padding:16px;border-radius:50%;box-shadow:0 4px 12px rgba(0,0,0,.2);text-decoration:none}
     .wa-float svg{width:24px;height:24px}
     footer{background:#f3f4f6;padding:24px 16px;margin-top:32px;text-align:center;font-size:.875rem;color:#6b7280}
@@ -183,7 +201,7 @@
     <div class="programmes">
       <h2>Our Programmes</h2>
       <div class="prog-list">
-        <div class="prog-item" data-testid="accordion-ad-playgroup">
+        <div class="prog-item" data-theme="pink" data-testid="accordion-ad-playgroup">
           <div class="prog-header" onclick="toggleProg(this)">
             <div class="prog-left">
               <svg class="check" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
@@ -193,17 +211,17 @@
           </div>
           <div class="prog-content">
             <div class="prog-details">
-              <p>Play-based learning for toddlers. Building social skills, motor development, and early curiosity through fun activities.</p>
+              <p>Our Playgroup programme is designed for toddlers aged 1.5-2.5 years. Through play-based learning, we help children develop social skills, motor coordination, and early curiosity. Our trained female staff create a safe and nurturing environment where your child can explore and grow.</p>
               <div class="prog-features">
-                <span class="prog-feat">Play-Based Learning</span>
-                <span class="prog-feat">Sensory Activities</span>
-                <span class="prog-feat">Social Skills</span>
-                <span class="prog-feat">AC Classrooms</span>
+                <span class="prog-feat"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Play-Based Learning</span>
+                <span class="prog-feat"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>Sensory Activities</span>
+                <span class="prog-feat"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"/></svg>Social Skills</span>
+                <span class="prog-feat"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>Safe Environment</span>
               </div>
             </div>
           </div>
         </div>
-        <div class="prog-item" data-testid="accordion-ad-nursery">
+        <div class="prog-item" data-theme="blue" data-testid="accordion-ad-nursery">
           <div class="prog-header" onclick="toggleProg(this)">
             <div class="prog-left">
               <svg class="check" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
@@ -213,17 +231,17 @@
           </div>
           <div class="prog-content">
             <div class="prog-details">
-              <p>Early literacy and phonics foundation. Introduction to numbers, colors, shapes, and creative expression.</p>
+              <p>Our Nursery programme builds strong foundations in literacy and numeracy for children aged 2.5-3.5 years. With phonics-based learning, creative arts, and structured activities, we prepare your child for the next stage of education while fostering independence and confidence.</p>
               <div class="prog-features">
-                <span class="prog-feat">Phonics & Literacy</span>
-                <span class="prog-feat">Number Concepts</span>
-                <span class="prog-feat">Creative Arts</span>
-                <span class="prog-feat">Music & Movement</span>
+                <span class="prog-feat"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>Phonics & Literacy</span>
+                <span class="prog-feat"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>Number Concepts</span>
+                <span class="prog-feat"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/></svg>Creative Arts</span>
+                <span class="prog-feat"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>Music & Movement</span>
               </div>
             </div>
           </div>
         </div>
-        <div class="prog-item" data-testid="accordion-ad-kindergarten">
+        <div class="prog-item" data-theme="purple" data-testid="accordion-ad-kindergarten">
           <div class="prog-header" onclick="toggleProg(this)">
             <div class="prog-left">
               <svg class="check" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
@@ -233,17 +251,17 @@
           </div>
           <div class="prog-content">
             <div class="prog-details">
-              <p>School readiness program. Advanced reading, writing, math foundations, and critical thinking skills.</p>
+              <p>Our Kindergarten programme prepares children aged 3.5-5 years for formal schooling. With focus on advanced reading, writing, and math skills, we build confidence, critical thinking, and problem-solving abilities. Your child will be ready to excel in their school journey.</p>
               <div class="prog-features">
-                <span class="prog-feat">School Readiness</span>
-                <span class="prog-feat">Reading & Writing</span>
-                <span class="prog-feat">Math Foundations</span>
-                <span class="prog-feat">Problem Solving</span>
+                <span class="prog-feat"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>School Readiness</span>
+                <span class="prog-feat"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>Reading & Writing</span>
+                <span class="prog-feat"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>Math Foundations</span>
+                <span class="prog-feat"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>Critical Thinking</span>
               </div>
             </div>
           </div>
         </div>
-        <div class="prog-item" data-testid="accordion-ad-daycare">
+        <div class="prog-item" data-theme="amber" data-testid="accordion-ad-daycare">
           <div class="prog-header" onclick="toggleProg(this)">
             <div class="prog-left">
               <svg class="check" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
@@ -253,12 +271,12 @@
           </div>
           <div class="prog-content">
             <div class="prog-details">
-              <p>Safe, nurturing after-school care. Homework help, fun activities, and nutritious meals for working parents.</p>
+              <p>Our Daycare provides a safe, nurturing environment for children aged 2-10 years. With flexible hours for working parents, we offer homework assistance, engaging activities, and nutritious meals. Your child will be well cared for while you're at work.</p>
               <div class="prog-features">
-                <span class="prog-feat">Flexible Hours</span>
-                <span class="prog-feat">Homework Help</span>
-                <span class="prog-feat">Fun Activities</span>
-                <span class="prog-feat">Nutritious Meals</span>
+                <span class="prog-feat"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Flexible Hours</span>
+                <span class="prog-feat"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>Homework Help</span>
+                <span class="prog-feat"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Fun Activities</span>
+                <span class="prog-feat"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>Nutritious Meals</span>
               </div>
             </div>
           </div>
