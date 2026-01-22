@@ -13,7 +13,7 @@
     .logo-link{display:flex;align-items:center;gap:8px;text-decoration:none}
     .logo-img{height:40px;width:auto}
     .logo-text{font-weight:700;font-size:1rem;color:#dc2626}
-    @media(max-width:480px){.logo-text{display:none}}
+    @media(max-width:480px){.logo-text{font-size:.875rem}}
     .call-btn{display:flex;align-items:center;gap:8px;background:#dc2626;color:#fff;padding:8px 16px;border-radius:9999px;font-size:.875rem;font-weight:600;text-decoration:none}
     .call-btn svg{width:16px;height:16px}
     main{max-width:896px;margin:0 auto;padding:24px 16px}
@@ -25,13 +25,8 @@
     h1{font-size:1.875rem;font-weight:700;line-height:1.2;margin:16px 0}
     @media(min-width:768px){h1{font-size:2.25rem}}
     h1 span{color:#dc2626}
-    .subtitle{color:#4b5563;font-size:1rem}
+    .subtitle{color:#4b5563;font-size:1rem;margin-bottom:8px}
     .subtitle strong{color:#1f2937}
-    .locations{margin-top:16px;padding:12px 16px;background:#fef2f2;border:1px solid #fecaca;border-radius:12px}
-    .locations-title{font-size:.875rem;font-weight:600;color:#dc2626;margin-bottom:8px}
-    .locations-list{display:flex;flex-wrap:wrap;gap:8px}
-    .location-tag{display:inline-flex;align-items:center;gap:4px;font-size:.875rem;background:#fff;border:1px solid #fecaca;padding:4px 10px;border-radius:9999px;color:#991b1b}
-    .location-tag svg{width:14px;height:14px;color:#dc2626}
     .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
     .tag{display:inline-flex;align-items:center;gap:4px;font-size:.875rem;padding:4px 8px;border-radius:9999px}
     .tag-green{background:#dcfce7;color:#15803d}
@@ -95,7 +90,7 @@
   <header class="header">
     <div class="header-inner">
       <a href="/" class="logo-link">
-        <img src="/logo.png" alt="Rainbow Preschool" class="logo-img" width="40" height="40">
+        <img src="/images/logo.png" alt="Rainbow Preschool" class="logo-img" width="40" height="40">
         <span class="logo-text">Rainbow Preschool</span>
       </a>
       <a href="tel:+918291568972" class="call-btn" data-testid="link-ad-google-call" onclick="trackCall()">
@@ -110,19 +105,7 @@
       <div>
         <div class="badge"><span class="badge-dot"></span>Limited Seats for 2026-27</div>
         <h1>Best Preschool in <span>Thane</span> Near You</h1>
-        <p class="subtitle">6 centres across Thane. <strong>Walk-in within 10 mins!</strong></p>
-        
-        <div class="locations">
-          <div class="locations-title">Our 6 Centres in Thane:</div>
-          <div class="locations-list">
-            <span class="location-tag"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>Manpada</span>
-            <span class="location-tag"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>Kalwa</span>
-            <span class="location-tag"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>Dhokali</span>
-            <span class="location-tag"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>Kasarvadavali</span>
-            <span class="location-tag"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>Anand Nagar</span>
-            <span class="location-tag"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>Hariniwas</span>
-          </div>
-        </div>
+        <p class="subtitle">6 centres across Thane. Walk-in within 10 mins!</p>
         
         <div class="tags">
           <span class="tag tag-green"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>CCTV</span>
@@ -138,7 +121,6 @@
       <div class="form-card" id="enquiry-form">
         <div id="recaptcha-container"></div>
         
-        <!-- Form View -->
         <div id="form-view">
           <div class="form-title">
             <h2>Book Free School Visit</h2>
@@ -192,7 +174,6 @@
           </form>
         </div>
 
-        <!-- OTP View -->
         <div id="otp-view" class="hidden">
           <div class="form-title">
             <h2>Verify OTP</h2>
@@ -210,13 +191,11 @@
           </div>
         </div>
 
-        <!-- Loading View -->
         <div id="loading-view" class="hidden" style="padding:40px 0;text-align:center">
           <div class="spinner" style="border-color:#dc2626;border-top-color:transparent;width:32px;height:32px;margin:0 auto 16px"></div>
           <p>Submitting your enquiry...</p>
         </div>
 
-        <!-- Success View -->
         <div id="success-view" class="success hidden">
           <div class="success-icon"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
           <h3>Thank You!</h3>
@@ -256,7 +235,6 @@
   <footer>
     <p>Rainbow Preschool International</p>
     <p>Thane's #1 Preschool Since 2007</p>
-    <p style="margin-top:8px;font-size:.75rem">Manpada | Kalwa | Dhokali | Kasarvadavali | Anand Nagar | Hariniwas</p>
     <div class="links">
       <a href="tel:+918291568972" style="color:#dc2626;font-weight:500" data-testid="link-ad-google-footer-call">+91 82915 68972</a>
       <a href="https://wa.me/918291568972" style="color:#16a34a;font-weight:500" data-testid="link-ad-google-footer-whatsapp" onclick="trackWhatsApp()">WhatsApp</a>
