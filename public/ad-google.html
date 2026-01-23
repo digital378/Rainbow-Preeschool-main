@@ -377,12 +377,7 @@
           var s2=document.createElement('script');
           s2.src='https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js';
           s2.onload=function(){
-            firebase.initializeApp({
-              apiKey:"AIzaSyAh6h3_t-mBQ2pQxVOjJxe1VdE7bpmk-Qg",
-              authDomain:"rainbow-preschool-otp.firebaseapp.com",
-              projectId:"rainbow-preschool-otp",
-              appId:"1:123456789:web:abcdef123456"
-            });
+            firebase.initializeApp({apiKey:"FIREBASE_API_KEY",authDomain:"FIREBASE_AUTH_DOMAIN",projectId:"FIREBASE_PROJECT_ID",appId:"FIREBASE_APP_ID"});
             firebaseLoaded=true;
             resolve();
           };

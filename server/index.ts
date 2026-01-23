@@ -57,16 +57,10 @@ app.get("/ad-google.html", (req, res) => {
   if (fs.existsSync(htmlPath)) {
     let html = fs.readFileSync(htmlPath, "utf-8");
     // Inject Firebase config from environment variables
-    const firebaseConfig = {
-      apiKey: process.env.VITE_FIREBASE_API_KEY || "",
-      authDomain: process.env.VITE_FIREBASE_AUTH_DOMAIN || "",
-      projectId: process.env.VITE_FIREBASE_PROJECT_ID || "",
-      appId: process.env.VITE_FIREBASE_APP_ID || ""
-    };
-    html = html.replace(
-      /firebase\.initializeApp\(\{[^}]+\}\);/,
-      `firebase.initializeApp(${JSON.stringify(firebaseConfig)});`
-    );
+    html = html.replace("FIREBASE_API_KEY", process.env.VITE_FIREBASE_API_KEY || "");
+    html = html.replace("FIREBASE_AUTH_DOMAIN", process.env.VITE_FIREBASE_AUTH_DOMAIN || "");
+    html = html.replace("FIREBASE_PROJECT_ID", process.env.VITE_FIREBASE_PROJECT_ID || "");
+    html = html.replace("FIREBASE_APP_ID", process.env.VITE_FIREBASE_APP_ID || "");
     res.setHeader("Content-Type", "text/html");
     res.send(html);
   } else {
