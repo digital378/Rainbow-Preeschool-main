@@ -1,7 +1,7 @@
 import { Link } from "wouter";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
 import { SiFacebook, SiInstagram, SiYoutube } from "react-icons/si";
-import logoImage from "@assets/Rainbow_Pre_School.Logo_1766035853658.png";
+const logoImage = "/images/optimized/rainbow-logo.webp";
 import { localityLandingPages, preschoolLandingPages } from "@shared/centre-data";
 
 export function Footer() {

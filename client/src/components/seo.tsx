@@ -109,7 +109,7 @@ export const organizationSchema = {
   "@type": "Organization",
   name: "Rainbow Preschool International",
   url: BASE_URL,
-  logo: `${BASE_URL}/logo.png`,
+  logo: `${BASE_URL}/images/logo.webp`,
   description:
     "Rainbow Preschool International is a trusted preschool and playgroup in Thane, offering quality early childhood education for children aged 1.5 to 10 years.",
   foundingDate: "2007",
@@ -241,7 +241,7 @@ export function createBlogPostSchema(post: {
       name: "Rainbow Preschool International",
       logo: {
         "@type": "ImageObject",
-        url: `${BASE_URL}/logo.png`,
+        url: `${BASE_URL}/images/logo.webp`,
       },
     },
     mainEntityOfPage: {

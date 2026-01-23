@@ -29,7 +29,7 @@ export function PlaygroupLandingTemplate({ data }: PlaygroupLandingTemplateProps
       "@type": "EducationalOrganization",
       name: "Rainbow Preschool International",
       url: "https://www.rainbowpreschools.com",
-      logo: "https://www.rainbowpreschools.com/assets/Rainbow_Pre_School.Logo.png",
+      logo: "https://www.rainbowpreschools.com/images/logo.webp",
       description: "Trusted preschool in Thane since 2007",
       foundingDate: "2007",
     };

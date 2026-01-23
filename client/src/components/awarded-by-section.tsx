@@ -1,10 +1,10 @@
-import indiaToday from "@assets/India_Today_1768032635727.png";
-import thaneMunicipal from "@assets/Thane-Municipal-Cooperation-Logo_1768033856127.png";
-import scooNewsLight from "@assets/Scoo_News_(For_Light_Mode)_1768032635727.png";
-import scooNewsDark from "@assets/Scoo_News_(For_Dark_Mode)_1768032635727.png";
-import worldEducationSummit from "@assets/15th_WES_Mumbai_1768032635726.png";
-import economicTimes from "@assets/The_Economic_Times_1768032635728.png";
-import nsaAward from "@assets/National_School_Awards_1768032635727.png";
+const indiaToday = "/images/optimized/india-today.webp";
+const thaneMunicipal = "/images/optimized/tmc-logo.webp";
+const scooNewsLight = "/images/optimized/scoonews-light.webp";
+const scooNewsDark = "/images/optimized/scoonews-dark.webp";
+const worldEducationSummit = "/images/optimized/wes-mumbai.webp";
+const economicTimes = "/images/optimized/economic-times.webp";
+const nsaAward = "/images/optimized/nsa-award.webp";
 
 interface AwardLogo {
   name: string;

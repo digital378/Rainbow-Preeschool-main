@@ -2,7 +2,7 @@ import { Link } from "wouter";
 import { Phone } from "lucide-react";
 import { SiWhatsapp } from "react-icons/si";
 import { Button } from "@/components/ui/button";
-import logoImage from "@assets/Rainbow_Pre_School.Logo_1766035853658.png";
+const logoImage = "/images/optimized/rainbow-logo.webp";
 
 interface MinimalHeaderProps {
   whatsappNumber: string;

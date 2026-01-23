@@ -12,7 +12,7 @@ import {
 import { centres } from "@shared/centre-data";
 import { pushToDataLayer } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
-import logoImage from "@assets/Rainbow_Pre_School.Logo_1766035853658.png";
+const logoImage = "/images/optimized/rainbow-logo.webp";
 
 const navLinks = [
   { href: "/", label: "Home" },

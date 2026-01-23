@@ -23,7 +23,7 @@ function RepublicDaySchema() {
         "name": "Rainbow Preschool International",
         "logo": {
           "@type": "ImageObject",
-          "url": "https://www.rainbowpreschools.com/logo.png"
+          "url": "https://www.rainbowpreschools.com/images/logo.webp"
         }
       },
       "datePublished": "2026-01-20T00:00:00.000Z",

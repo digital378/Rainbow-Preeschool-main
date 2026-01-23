@@ -474,7 +474,7 @@ function BlogPostSchema({ post }: { post: BlogPostData }) {
         "name": "Rainbow Preschool International",
         "logo": {
           "@type": "ImageObject",
-          "url": "https://www.rainbowpreschools.com/logo.png"
+          "url": "https://www.rainbowpreschools.com/images/logo.webp"
         }
       },
       "datePublished": post.publishedAt.toISOString(),
