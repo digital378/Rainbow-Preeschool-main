@@ -51,6 +51,29 @@ app.get("/robots.txt", (req, res) => {
   }
 });
 
+// Serve ad-google.html with Firebase config injected
+app.get("/ad-google.html", (req, res) => {
+  const htmlPath = path.join(process.cwd(), "public", "ad-google.html");
+  if (fs.existsSync(htmlPath)) {
+    let html = fs.readFileSync(htmlPath, "utf-8");
+    // Inject Firebase config from environment variables
+    const firebaseConfig = {
+      apiKey: process.env.VITE_FIREBASE_API_KEY || "",
+      authDomain: process.env.VITE_FIREBASE_AUTH_DOMAIN || "",
+      projectId: process.env.VITE_FIREBASE_PROJECT_ID || "",
+      appId: process.env.VITE_FIREBASE_APP_ID || ""
+    };
+    html = html.replace(
+      /firebase\.initializeApp\(\{[^}]+\}\);/,
+      `firebase.initializeApp(${JSON.stringify(firebaseConfig)});`
+    );
+    res.setHeader("Content-Type", "text/html");
+    res.send(html);
+  } else {
+    res.status(404).send("Page not found");
+  }
+});
+
 // Serve static files from public folder (for ad landing pages)
 app.use(express.static(path.join(process.cwd(), "public")));
 
