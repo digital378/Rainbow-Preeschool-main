@@ -6,13 +6,13 @@ import { cn } from "@/lib/utils";
 // Note: These images must be different from programme card images on the same page
 const galleryImages = [
   {
-    src: "/images/optimized/children-learning-rainbow-preschool.webp",
+    src: "/images/optimized/DSC00002.webp",
     alt: "Children learning at Rainbow Preschool Thane",
     category: "Learning"
   },
   {
-    src: "/images/optimized/child-stacking-rings-playgroup.webp",
-    alt: "Child stacking colorful rings at playgroup",
+    src: "/images/optimized/DSC00011.webp",
+    alt: "Children playing at Rainbow Preschool",
     category: "Play"
   },
   {
@@ -21,7 +21,7 @@ const galleryImages = [
     category: "Activities"
   },
   {
-    src: "/images/optimized/classroom-rainbow-preschool.webp",
+    src: "/images/optimized/DSC00051.webp",
     alt: "Bright colorful classroom at Rainbow Preschool Thane",
     category: "Classroom"
   },
@@ -31,7 +31,7 @@ const galleryImages = [
     category: "Learning"
   },
   {
-    src: "/images/optimized/DSC00257.webp",
+    src: "/images/optimized/DSC00146.webp",
     alt: "Children's joyful moments at Rainbow Preschool",
     category: "Fun"
   },

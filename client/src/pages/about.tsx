@@ -81,7 +81,7 @@ export default function About() {
       <section className="py-16 md:py-24 lg:py-32 flex items-center justify-center relative overflow-hidden">
         <div 
           className="absolute inset-0 bg-cover bg-center opacity-[0.15]"
-          style={{ backgroundImage: `url('/images/optimized/children-learning-rainbow-preschool.webp')` }}
+          style={{ backgroundImage: `url('/images/optimized/DSC00002.webp')` }}
         />
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-accent/5 to-secondary/5" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -189,16 +189,16 @@ export default function About() {
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             <div className="relative overflow-hidden rounded-lg aspect-square">
-              <img src="/images/optimized/playgroup-child-toy-car.webp" alt="Children enjoying activities at Rainbow Preschool" className="w-full h-full object-cover" loading="lazy" data-testid="img-about-gallery-1" />
+              <img src="/images/optimized/DSC00002.webp" alt="Children enjoying activities at Rainbow Preschool" className="w-full h-full object-cover" loading="lazy" data-testid="img-about-gallery-1" />
             </div>
             <div className="relative overflow-hidden rounded-lg aspect-square">
-              <img src="/images/optimized/nursery-girl-drawing.webp" alt="Child drawing at Rainbow Preschool" className="w-full h-full object-cover" loading="lazy" data-testid="img-about-gallery-2" />
+              <img src="/images/optimized/DSC00010.webp" alt="Child at Rainbow Preschool" className="w-full h-full object-cover" loading="lazy" data-testid="img-about-gallery-2" />
             </div>
             <div className="relative overflow-hidden rounded-lg aspect-square">
-              <img src="/images/optimized/kindergarten-kids-colorful-mats.webp" alt="Kids on colorful mats at preschool" className="w-full h-full object-cover" loading="lazy" data-testid="img-about-gallery-3" />
+              <img src="/images/optimized/DSC00051.webp" alt="Kids at preschool" className="w-full h-full object-cover" loading="lazy" data-testid="img-about-gallery-3" />
             </div>
             <div className="relative overflow-hidden rounded-lg aspect-square">
-              <img src="/images/optimized/children-learning-colorful-toys-preschool.webp" alt="Children playing with colorful toys" className="w-full h-full object-cover" loading="lazy" data-testid="img-about-gallery-4" />
+              <img src="/images/optimized/DSC00054.webp" alt="Children playing with colorful toys" className="w-full h-full object-cover" loading="lazy" data-testid="img-about-gallery-4" />
             </div>
           </div>
         </div>

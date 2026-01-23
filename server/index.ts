@@ -68,8 +68,19 @@ app.get("/ad-google.html", (req, res) => {
   }
 });
 
-// Serve static files from public folder (for ad landing pages)
-app.use(express.static(path.join(process.cwd(), "public")));
+// Serve static files from public folder with caching headers for performance
+app.use(express.static(path.join(process.cwd(), "public"), {
+  maxAge: '1y',
+  immutable: true,
+  etag: true,
+  setHeaders: (res, filePath) => {
+    if (filePath.endsWith('.webp') || filePath.endsWith('.jpg') || filePath.endsWith('.png')) {
+      res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+    } else if (filePath.endsWith('.js') || filePath.endsWith('.css')) {
+      res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+    }
+  }
+}));
 
 setupRedirects(app);
 

@@ -18,7 +18,7 @@ export function CTASection({
       <div 
         className="absolute inset-0 bg-cover bg-no-repeat md:bg-center"
         style={{
-          backgroundImage: `url('/images/optimized/footer-banner-rainbow-preschool.webp')`,
+          backgroundImage: `url('/images/optimized/hero-banner-4.webp')`,
           backgroundPosition: 'center 40%',
         }}
       />
