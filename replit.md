@@ -190,11 +190,23 @@ All classroom and activity photos are optimized using sharp and stored as WebP f
 - **Loading**: First hero banner eager, all others use `loading="lazy"`
 - **Preload**: Hero banner 1 is preloaded in index.html for fast LCP
 
+### Logo (public/images/optimized/)
+- `rainbow-logo.webp` (5KB) - Navigation and footer logo
+- `logo.webp` (16KB) - SEO schema logo in public/images/
+
 ### Hero Banners (public/images/optimized/)
 - `hero-banner-1.webp` (37KB) - Primary hero, preloaded
 - `hero-banner-2.webp` (52KB)
 - `hero-banner-3.webp` (35KB)
 - `hero-banner-4.webp` (111KB) - Also used in CTA section
+
+### Award Logos (public/images/optimized/)
+- `india-today.webp` (10KB)
+- `tmc-logo.webp` (14KB) - Thane Municipal Corporation
+- `scoonews-light.webp` (12KB), `scoonews-dark.webp` (12KB)
+- `wes-mumbai.webp` (11KB) - World Education Summit
+- `economic-times.webp` (2KB)
+- `nsa-award.webp` (10KB) - National School Awards
 
 ### Gallery Images (public/images/optimized/)
 - `DSC00002.webp` through `DSC00229.webp` - Classroom activity photos (23-67KB each)
