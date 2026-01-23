@@ -6,6 +6,7 @@ import { z } from "zod";
 import { sendLeadNotificationEmail } from "./gmail";
 import { sendLeadToMCB, getBranchID } from "./mcb";
 import path from "path";
+import fs from "fs";
 
 const RECAPTCHA_SECRET_KEY = process.env.RECAPTCHA_SECRET_KEY || "";
 
@@ -199,7 +200,19 @@ export async function registerRoutes(
   });
   
   app.get("/ad-google", (req, res) => {
-    res.sendFile(path.join(process.cwd(), "public", "ad-google.html"));
+    const htmlPath = path.join(process.cwd(), "public", "ad-google.html");
+    if (fs.existsSync(htmlPath)) {
+      let html = fs.readFileSync(htmlPath, "utf-8");
+      // Inject Firebase config from environment variables
+      html = html.replace(/FIREBASE_API_KEY/g, process.env.VITE_FIREBASE_API_KEY || "");
+      html = html.replace(/FIREBASE_AUTH_DOMAIN/g, process.env.VITE_FIREBASE_AUTH_DOMAIN || "");
+      html = html.replace(/FIREBASE_PROJECT_ID/g, process.env.VITE_FIREBASE_PROJECT_ID || "");
+      html = html.replace(/FIREBASE_APP_ID/g, process.env.VITE_FIREBASE_APP_ID || "");
+      res.setHeader("Content-Type", "text/html");
+      res.send(html);
+    } else {
+      res.status(404).send("Page not found");
+    }
   });
   
   // Serve fast static HTML for programme pages (for ad traffic - instant load)
