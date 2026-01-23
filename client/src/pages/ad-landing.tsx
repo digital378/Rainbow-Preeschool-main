@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 
+// Ad landing page for Meta/Google Ads campaigns
 const areas = ["Manpada", "Hariniwas", "Anand Nagar", "Dhokali", "Kalwa", "Kasarvadavali"];
 
 function getUtmParams() {

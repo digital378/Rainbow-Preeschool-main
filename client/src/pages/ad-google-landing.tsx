@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 
+// Google Ads landing page with OTP verification
 const areas = ["Manpada", "Hariniwas", "Anand Nagar", "Dhokali", "Kalwa", "Kasarvadavali"];
 
 function getUtmParams() {
