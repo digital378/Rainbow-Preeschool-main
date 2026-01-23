@@ -183,29 +183,35 @@ Key file: `client/src/lib/firebase-auth.ts` - Firebase Phone Auth utility functi
 
 ### Optimized Images
 All classroom and activity photos are optimized using sharp and stored as WebP format in `public/images/optimized/`.
-- **Compression**: 80-98% size reduction from original JPG files
-- **Format**: WebP with quality setting of 80
-- **Script**: `scripts/compress-images.js` (ESM syntax)
-- **Loading**: All images use `loading="lazy"` for performance
-- **Naming**: SEO-friendly filenames (e.g., `kids-playing-ball-pit-rainbow-preschool.webp`)
+- **Compression**: 92-97% size reduction from original JPG files
+- **Format**: WebP with quality 70-75 for gallery, 75 for hero
+- **Max Width**: 1200px for hero banners, 800px for gallery images
+- **Script**: `scripts/optimize-images.mjs` (ESM syntax)
+- **Loading**: First hero banner eager, all others use `loading="lazy"`
+- **Preload**: Hero banner 1 is preloaded in index.html for fast LCP
+
+### Hero Banners (public/images/optimized/)
+- `hero-banner-1.webp` (37KB) - Primary hero, preloaded
+- `hero-banner-2.webp` (52KB)
+- `hero-banner-3.webp` (35KB)
+- `hero-banner-4.webp` (111KB) - Also used in CTA section
+
+### Gallery Images (public/images/optimized/)
+- `DSC00002.webp` through `DSC00229.webp` - Classroom activity photos (23-67KB each)
+
+### Caching Strategy
+- Images/fonts: 1 year cache (immutable)
+- JS/CSS: 1 year cache (immutable, versioned by bundler)
+- HTML: No cache (always fresh)
 
 ### Image Implementation by Page
-- **Homepage** (`home.tsx`): ClassroomGallery component with 6 featured images
-- **About** (`about.tsx`): 4-image grid after "Our Story" section
-- **Programmes** (`programmes.tsx`): Programme-specific activity images for each section
-- **Playgroup Landing** (`playgroup-landing.tsx`): 5-image gallery section
-- **Nursery Landing** (`nursery-landing.tsx`): 5-image gallery section  
-- **Kindergarten Landing** (`kindergarten-landing.tsx`): 5-image gallery section
-
-### Key Images (SEO-friendly names)
-- `kids-playing-ball-pit-rainbow-preschool.webp` - Playgroup featured
-- `children-learning-colorful-toys-preschool.webp` - Learning activity
-- `children-playing-snakes-ladders-game.webp` - Kindergarten featured
-- `kids-building-blocks-classroom.webp` - Daycare/blocks activity
-- `teacher-teaching-children-classroom.webp` - Nursery featured
-- `happy-girls-ball-pit-playgroup.webp` - Playgroup fun activity
+- **Homepage** (`home.tsx`): ClassroomGallery component with 6 DSC images
+- **Hero Section** (`hero-section.tsx`): 4 optimized hero banners with rotation
+- **About** (`about.tsx`): 4-image grid with DSC images
+- **Programmes** (`programmes.tsx`): Programme-specific DSC images
+- **Playgroup/Nursery/Kindergarten Landing**: 5-image galleries with DSC images
+- **Blog** (`blog.tsx`): DSC images for blog post thumbnails
+- **CTA Section** (`cta-section.tsx`): hero-banner-4.webp as background
 
 ### Key Component
 - `client/src/components/classroom-gallery.tsx` - Responsive masonry-style image gallery
-
-Note: Images are only implemented on primary pages, not on blog posts or regional SEO pages.
