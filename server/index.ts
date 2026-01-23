@@ -68,17 +68,21 @@ app.get("/ad-google.html", (req, res) => {
   }
 });
 
-// Serve static files from public folder with caching headers for performance
+// Serve static files from public folder with appropriate caching headers
 app.use(express.static(path.join(process.cwd(), "public"), {
-  maxAge: '1y',
-  immutable: true,
   etag: true,
   setHeaders: (res, filePath) => {
-    if (filePath.endsWith('.webp') || filePath.endsWith('.jpg') || filePath.endsWith('.png')) {
+    // Long cache for immutable assets (images, fonts)
+    if (filePath.endsWith('.webp') || filePath.endsWith('.jpg') || filePath.endsWith('.png') || filePath.endsWith('.woff2')) {
       res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
     } else if (filePath.endsWith('.js') || filePath.endsWith('.css')) {
+      // Long cache for JS/CSS (versioned by bundler)
       res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+    } else if (filePath.endsWith('.html')) {
+      // No cache for HTML files
+      res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
     }
+    // Other files use Express defaults (no explicit header)
   }
 }));
 
