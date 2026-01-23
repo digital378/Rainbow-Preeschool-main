@@ -45,9 +45,7 @@
     .form-group label{display:block;font-size:.875rem;font-weight:500;margin-bottom:4px}
     .form-group input,.form-group select{width:100%;padding:8px 12px;border:1px solid #d1d5db;border-radius:8px;font-size:1rem}
     .form-group input:focus,.form-group select:focus{outline:none;border-color:#dc2626;box-shadow:0 0 0 2px rgba(220,38,38,.2)}
-    .otp-input{text-align:center;font-size:1.5rem;letter-spacing:.5em;padding:12px}
     .error{color:#dc2626;font-size:.75rem;margin-top:4px;display:none}
-    .error-visible{display:block}
     .submit-btn{width:100%;background:#16a34a;color:#fff;padding:12px;border-radius:8px;font-weight:600;font-size:1.125rem;border:none;cursor:pointer;margin-top:8px}
     .submit-btn:hover{background:#15803d}
     .submit-btn:disabled{opacity:.5;cursor:not-allowed}
@@ -62,13 +60,6 @@
     .success h3{font-size:1.25rem;font-weight:700}
     .success p{color:#6b7280;margin-top:8px}
     .success a{display:inline-flex;align-items:center;gap:8px;color:#dc2626;font-weight:600;margin-top:16px;text-decoration:none}
-    .otp-links{display:flex;justify-content:space-between;font-size:.875rem;margin-top:12px}
-    .otp-links button{background:none;border:none;cursor:pointer;padding:0}
-    .otp-links .change{color:#6b7280}
-    .otp-links .resend{color:#dc2626}
-    .otp-links .resend:disabled{color:#9ca3af;cursor:not-allowed}
-    .spinner{width:24px;height:24px;border:3px solid #fff;border-top-color:transparent;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto}
-    @keyframes spin{to{transform:rotate(360deg)}}
     .programmes{margin-top:32px}
     .programmes h2{font-size:1.125rem;font-weight:600;margin-bottom:12px}
     .prog-list{display:grid;gap:8px}
@@ -147,14 +138,12 @@
       </div>
 
       <div class="form-card" id="enquiry-form">
-        <div id="recaptcha-container"></div>
-        
         <div id="form-view">
           <div class="form-title">
             <h2>Enquire Now</h2>
-            <p>Verify with OTP - Get callback in 30 mins</p>
+            <p>Get callback within 30 mins</p>
           </div>
-          <form id="leadForm" onsubmit="return sendOtp(event)">
+          <form id="leadForm" onsubmit="return handleSubmit(event)">
             <div class="form-group">
               <label>Parent's Name</label>
               <input type="text" id="parentName" placeholder="Enter your name" data-testid="input-ad-google-name" required>
@@ -189,7 +178,6 @@
               </select>
               <div class="error" id="areaError">Please select area</div>
             </div>
-            <div class="error" id="otpSendError" style="text-align:center"></div>
             <button type="submit" class="submit-btn" id="submitBtn" data-testid="button-ad-google-submit">Request Call Back</button>
             <div class="alt-btns">
               <a href="tel:+918291568972" class="alt-btn alt-btn-call" data-testid="link-ad-google-form-call" onclick="trackCall()">
@@ -201,29 +189,6 @@
             </div>
           </form>
         </div>
-
-        <div id="otp-view" class="hidden">
-          <div class="form-title">
-            <h2>Verify OTP</h2>
-            <p>Sent to +91 <span id="otpPhone"></span></p>
-          </div>
-          <div class="form-group">
-            <label>Enter 6-digit OTP</label>
-            <input type="text" id="otpInput" class="otp-input" maxlength="6" placeholder="------" inputmode="numeric" data-testid="input-ad-google-otp">
-            <div class="error" id="otpError"></div>
-          </div>
-          <button type="button" class="submit-btn" id="verifyBtn" onclick="verifyOtp()" data-testid="button-ad-google-verify">Verify & Submit</button>
-          <div class="otp-links">
-            <button type="button" class="change" onclick="backToForm()" data-testid="button-back-to-form-google">Change Number</button>
-            <button type="button" class="resend" id="resendBtn" onclick="resendOtp()" data-testid="button-resend-otp-google">Resend OTP</button>
-          </div>
-        </div>
-
-        <div id="loading-view" class="hidden" style="padding:40px 0;text-align:center">
-          <div class="spinner" style="border-color:#dc2626;border-top-color:transparent;width:32px;height:32px;margin:0 auto 16px"></div>
-          <p>Submitting your enquiry...</p>
-        </div>
-
         <div id="success-view" class="success hidden">
           <div class="success-icon"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
           <h3>Thank You!</h3>
@@ -334,165 +299,21 @@
   </footer>
 
   <script>
-    var utm={leadSource:'Google Ads',leadMedium:'Paid Search'};
-    var p=new URLSearchParams(window.location.search);
-    if(p.get('utm_campaign'))utm.leadMedium+=' - '+p.get('utm_campaign');
-    
-    var confirmationResult=null;
-    var countdown=0;
-    var countdownTimer=null;
-    var firebaseLoaded=false;
-    
+    function getUtmParams(){
+      var p=new URLSearchParams(window.location.search);
+      var src='Website',med='Ad Landing Page';
+      if(p.get('gclid')||p.get('gad_source')||p.get('gbraid')||p.get('wbraid')){src='Google Ads';med='Paid Search';}
+      else if(p.get('fbclid')){src='Meta Ads';med='Paid Social';}
+      else if(p.get('utm_source')){src=p.get('utm_source');}
+      if(p.get('utm_campaign'))med+=(' - '+p.get('utm_campaign'));
+      return{leadSource:src,leadMedium:med};
+    }
+    var utm=getUtmParams();
     function trackCall(){if(window.gtag)gtag('event','google_ads_call');}
     function trackWhatsApp(){if(window.gtag)gtag('event','google_ads_whatsapp');}
     function toggleProg(el){el.parentElement.classList.toggle('open');}
-    
-    function showView(id){
-      ['form-view','otp-view','loading-view','success-view'].forEach(function(v){
-        document.getElementById(v).classList.add('hidden');
-      });
-      document.getElementById(id).classList.remove('hidden');
-    }
-    
-    function loadFirebase(){
-      return new Promise(function(resolve,reject){
-        if(firebaseLoaded){resolve();return;}
-        var s=document.createElement('script');
-        s.src='https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js';
-        s.onload=function(){
-          var s2=document.createElement('script');
-          s2.src='https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js';
-          s2.onload=function(){
-            firebase.initializeApp({apiKey:"FIREBASE_API_KEY",authDomain:"FIREBASE_AUTH_DOMAIN",projectId:"FIREBASE_PROJECT_ID",appId:"FIREBASE_APP_ID"});
-            firebaseLoaded=true;
-            resolve();
-          };
-          s2.onerror=reject;
-          document.head.appendChild(s2);
-        };
-        s.onerror=reject;
-        document.head.appendChild(s);
-      });
-    }
-    
-    function sendOtp(e){
+    function handleSubmit(e){
       e.preventDefault();
-      if(!validateForm())return false;
-      
-      var btn=document.getElementById('submitBtn');
-      btn.disabled=true;btn.textContent='Sending OTP...';
-      var errEl=document.getElementById('otpSendError');
-      errEl.style.display='none';
-      
-      loadFirebase().then(function(){
-        window.recaptchaVerifier=new firebase.auth.RecaptchaVerifier('recaptcha-container',{size:'invisible'});
-        var phone='+91'+document.getElementById('phone').value.trim().replace(/^0+/,'');
-        return firebase.auth().signInWithPhoneNumber(phone,window.recaptchaVerifier);
-      }).then(function(result){
-        confirmationResult=result;
-        document.getElementById('otpPhone').textContent=document.getElementById('phone').value;
-        showView('otp-view');
-        startCountdown();
-        btn.disabled=false;btn.textContent='Request Call Back';
-      }).catch(function(err){
-        console.error(err);
-        var msg='Failed to send OTP. Please try again.';
-        if(err.code==='auth/too-many-requests')msg='Too many attempts. Try later.';
-        if(err.code==='auth/invalid-phone-number')msg='Invalid phone number.';
-        errEl.textContent=msg;
-        errEl.style.display='block';
-        btn.disabled=false;btn.textContent='Request Call Back';
-        if(window.recaptchaVerifier){window.recaptchaVerifier.clear();window.recaptchaVerifier=null;}
-      });
-      return false;
-    }
-    
-    function startCountdown(){
-      countdown=30;
-      updateResendBtn();
-      countdownTimer=setInterval(function(){
-        countdown--;
-        updateResendBtn();
-        if(countdown<=0)clearInterval(countdownTimer);
-      },1000);
-    }
-    
-    function updateResendBtn(){
-      var btn=document.getElementById('resendBtn');
-      if(countdown>0){btn.textContent='Resend in '+countdown+'s';btn.disabled=true;}
-      else{btn.textContent='Resend OTP';btn.disabled=false;}
-    }
-    
-    function verifyOtp(){
-      var otp=document.getElementById('otpInput').value.trim();
-      var errEl=document.getElementById('otpError');
-      if(otp.length<6){errEl.textContent='Please enter 6-digit OTP';errEl.style.display='block';return;}
-      
-      var btn=document.getElementById('verifyBtn');
-      btn.disabled=true;btn.textContent='Verifying...';
-      errEl.style.display='none';
-      
-      confirmationResult.confirm(otp).then(function(){
-        showView('loading-view');
-        submitForm();
-      }).catch(function(err){
-        console.error(err);
-        errEl.textContent='Invalid OTP. Try again.';
-        errEl.style.display='block';
-        btn.disabled=false;btn.textContent='Verify & Submit';
-      });
-    }
-    
-    function submitForm(){
-      var n=document.getElementById('parentName').value.trim();
-      var ph=document.getElementById('phone').value.trim();
-      var age=document.getElementById('childAge').value;
-      var ar=document.getElementById('area').value;
-      
-      fetch('/api/contact',{
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({parentName:n,phone:ph,childName:'Not provided',childAge:age,programme:'General Enquiry',branch:ar,message:'Google Ads Lead - Area: '+ar+' (OTP Verified)',leadSource:utm.leadSource,leadMedium:utm.leadMedium})
-      }).then(function(r){return r.json();}).then(function(d){
-        if(d.emailSent&&window.gtag)gtag('event','google_ads_leads',{parent_name:n,phone:ph,lead_source:utm.leadSource});
-        showView('success-view');
-      }).catch(function(){
-        document.getElementById('otpError').textContent='Failed to submit. Please try again.';
-        document.getElementById('otpError').style.display='block';
-        showView('otp-view');
-        document.getElementById('verifyBtn').disabled=false;
-        document.getElementById('verifyBtn').textContent='Verify & Submit';
-      });
-    }
-    
-    function backToForm(){
-      showView('form-view');
-      if(window.recaptchaVerifier){window.recaptchaVerifier.clear();window.recaptchaVerifier=null;}
-    }
-    
-    function resendOtp(){
-      if(countdown>0)return;
-      var btn=document.getElementById('resendBtn');
-      btn.disabled=true;btn.textContent='Sending...';
-      
-      if(window.recaptchaVerifier){window.recaptchaVerifier.clear();window.recaptchaVerifier=null;}
-      
-      loadFirebase().then(function(){
-        window.recaptchaVerifier=new firebase.auth.RecaptchaVerifier('recaptcha-container',{size:'invisible'});
-        var phone='+91'+document.getElementById('phone').value.trim().replace(/^0+/,'');
-        return firebase.auth().signInWithPhoneNumber(phone,window.recaptchaVerifier);
-      }).then(function(result){
-        confirmationResult=result;
-        startCountdown();
-      }).catch(function(err){
-        console.error(err);
-        document.getElementById('otpError').textContent='Failed to resend. Try again.';
-        document.getElementById('otpError').style.display='block';
-        btn.disabled=false;btn.textContent='Resend OTP';
-      });
-    }
-    
-    function validateForm(){
       var n=document.getElementById('parentName').value.trim();
       var ph=document.getElementById('phone').value.trim();
       var age=document.getElementById('childAge').value;
@@ -503,150 +324,20 @@
       if(ph.length<10){document.getElementById('phoneError').style.display='block';valid=false;}
       if(!age){document.getElementById('ageError').style.display='block';valid=false;}
       if(!ar){document.getElementById('areaError').style.display='block';valid=false;}
-      return valid;
-    }
-    
-    function loadFirebase(){
-      return new Promise(function(resolve,reject){
-        if(firebaseLoaded){resolve();return;}
-        var s=document.createElement('script');
-        s.src='https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js';
-        s.onload=function(){
-          var s2=document.createElement('script');
-          s2.src='https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js';
-          s2.onload=function(){
-            firebase.initializeApp({apiKey:"FIREBASE_API_KEY",authDomain:"FIREBASE_AUTH_DOMAIN",projectId:"FIREBASE_PROJECT_ID",appId:"FIREBASE_APP_ID"});
-            firebaseLoaded=true;
-            resolve();
-          };
-          s2.onerror=reject;
-          document.head.appendChild(s2);
-        };
-        s.onerror=reject;
-        document.head.appendChild(s);
-      });
-    }
-    
-    function sendOtp(e){
-      e.preventDefault();
-      if(!validateForm())return false;
-      
+      if(!valid)return false;
       var btn=document.getElementById('submitBtn');
-      btn.disabled=true;btn.textContent='Sending OTP...';
-      var errEl=document.getElementById('otpSendError');
-      errEl.style.display='none';
-      
-      loadFirebase().then(function(){
-        window.recaptchaVerifier=new firebase.auth.RecaptchaVerifier('recaptcha-container',{size:'invisible'});
-        var phone='+91'+document.getElementById('phone').value.trim().replace(/^0+/,'');
-        return firebase.auth().signInWithPhoneNumber(phone,window.recaptchaVerifier);
-      }).then(function(result){
-        confirmationResult=result;
-        document.getElementById('otpPhone').textContent=document.getElementById('phone').value;
-        showView('otp-view');
-        startCountdown();
-        btn.disabled=false;btn.textContent='Request Call Back';
-      }).catch(function(err){
-        console.error(err);
-        var msg='Failed to send OTP. Please try again.';
-        if(err.code==='auth/too-many-requests')msg='Too many attempts. Try later.';
-        if(err.code==='auth/invalid-phone-number')msg='Invalid phone number.';
-        errEl.textContent=msg;
-        errEl.style.display='block';
-        btn.disabled=false;btn.textContent='Request Call Back';
-        if(window.recaptchaVerifier){window.recaptchaVerifier.clear();window.recaptchaVerifier=null;}
-      });
-      return false;
-    }
-    
-    function startCountdown(){
-      countdown=30;
-      updateResendBtn();
-      countdownTimer=setInterval(function(){
-        countdown--;
-        updateResendBtn();
-        if(countdown<=0)clearInterval(countdownTimer);
-      },1000);
-    }
-    
-    function updateResendBtn(){
-      var btn=document.getElementById('resendBtn');
-      if(countdown>0){btn.textContent='Resend in '+countdown+'s';btn.disabled=true;}
-      else{btn.textContent='Resend OTP';btn.disabled=false;}
-    }
-    
-    function verifyOtp(){
-      var otp=document.getElementById('otpInput').value.trim();
-      var errEl=document.getElementById('otpError');
-      if(otp.length<6){errEl.textContent='Please enter 6-digit OTP';errEl.style.display='block';return;}
-      
-      var btn=document.getElementById('verifyBtn');
-      btn.disabled=true;btn.textContent='Verifying...';
-      errEl.style.display='none';
-      
-      confirmationResult.confirm(otp).then(function(){
-        showView('loading-view');
-        submitForm();
-      }).catch(function(err){
-        console.error(err);
-        errEl.textContent='Invalid OTP. Try again.';
-        errEl.style.display='block';
-        btn.disabled=false;btn.textContent='Verify & Submit';
-      });
-    }
-    
-    function submitForm(){
-      var n=document.getElementById('parentName').value.trim();
-      var ph=document.getElementById('phone').value.trim();
-      var age=document.getElementById('childAge').value;
-      var ar=document.getElementById('area').value;
-      
+      btn.disabled=true;btn.textContent='Submitting...';
       fetch('/api/contact',{
         method:'POST',
         headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({parentName:n,phone:ph,childName:'Not provided',childAge:age,programme:'General Enquiry',branch:ar,message:'Google Ads Lead - Area: '+ar+' (OTP Verified)',leadSource:utm.leadSource,leadMedium:utm.leadMedium})
+        body:JSON.stringify({parentName:n,phone:ph,childName:'Not provided',childAge:age,programme:'General Enquiry',branch:ar,message:'Ad Landing - Area: '+ar,leadSource:utm.leadSource,leadMedium:utm.leadMedium})
       }).then(function(r){return r.json();}).then(function(d){
         if(d.emailSent&&window.gtag)gtag('event','google_ads_leads',{parent_name:n,phone:ph,lead_source:utm.leadSource});
-        showView('success-view');
-      }).catch(function(){
-        document.getElementById('otpError').textContent='Failed to submit. Please try again.';
-        document.getElementById('otpError').style.display='block';
-        showView('otp-view');
-        document.getElementById('verifyBtn').disabled=false;
-        document.getElementById('verifyBtn').textContent='Verify & Submit';
-      });
+        document.getElementById('form-view').classList.add('hidden');
+        document.getElementById('success-view').classList.remove('hidden');
+      }).catch(function(){btn.disabled=false;btn.textContent='Book Free Visit Now';alert('Error submitting. Please try again.');});
+      return false;
     }
-    
-    function resendOtp(){
-      if(countdown>0)return;
-      var btn=document.getElementById('resendBtn');
-      btn.disabled=true;btn.textContent='Sending...';
-      
-      if(window.recaptchaVerifier){window.recaptchaVerifier.clear();window.recaptchaVerifier=null;}
-      window.recaptchaVerifier=new firebase.auth.RecaptchaVerifier('recaptcha-container',{size:'invisible'});
-      var phone='+91'+document.getElementById('phone').value.trim().replace(/^0+/,'');
-      firebase.auth().signInWithPhoneNumber(phone,window.recaptchaVerifier).then(function(result){
-        confirmationResult=result;
-        document.getElementById('otpInput').value='';
-        startCountdown();
-      }).catch(function(err){
-        console.error(err);
-        document.getElementById('otpError').textContent='Failed to resend OTP.';
-        document.getElementById('otpError').style.display='block';
-        updateResendBtn();
-      });
-    }
-    
-    function backToForm(){
-      showView('form-view');
-      document.getElementById('otpInput').value='';
-      document.getElementById('otpError').style.display='none';
-      if(countdownTimer)clearInterval(countdownTimer);
-    }
-    
-    document.getElementById('otpInput').addEventListener('input',function(e){
-      this.value=this.value.replace(/\D/g,'');
-    });
   </script>
   <style>@media(max-width:639px){.hide-mobile{display:none}.show-mobile{display:inline}}@media(min-width:640px){.show-mobile{display:none}}</style>
 </body>
