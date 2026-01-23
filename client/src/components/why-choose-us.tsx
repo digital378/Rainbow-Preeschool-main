@@ -61,9 +61,9 @@ export function WhyChooseUs() {
           <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">
             Why Choose Us
           </p>
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+          <h1 className="text-3xl md:text-4xl font-bold mb-4">
             Best Preschool in Thane
-          </h2>
+          </h1>
           <p className="text-muted-foreground text-lg">
             At Rainbow Preschools, we believe every child deserves the best start in life. 
             Here's what makes us different.

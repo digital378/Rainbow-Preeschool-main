@@ -120,10 +120,10 @@ export function HeroSection() {
             </div>
           </Link>
 
-          {/* Main heading - Single H1 for SEO */}
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 text-white leading-tight">
-            Best <span className="text-yellow-400">Preschool</span> in Thane
-          </h1>
+          {/* Hero heading - styled as h2 since H1 is in Why Choose Us section */}
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 text-white leading-tight">
+            Thane Born Preschool <span className="text-yellow-400">Trusted</span> by Parents
+          </h2>
 
           {/* Subheading */}
           <p className="text-lg md:text-xl text-white/90 max-w-xl mb-8 md:mb-10 leading-relaxed">
