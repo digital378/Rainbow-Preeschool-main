@@ -330,7 +330,7 @@ export default function AdGoogleLanding() {
             ) : (
               <>
                 <div className="text-center mb-4">
-                  <h2 className="text-lg font-bold text-pink-600">Book Free School Visit</h2>
+                  <h2 className="text-lg font-bold text-pink-600">Enquire Now</h2>
                   <p className="text-sm text-gray-500">Verify with OTP - Get callback in 30 mins</p>
                 </div>
                 <form onSubmit={(e) => { e.preventDefault(); sendOtp(); }} className="space-y-3">
@@ -394,7 +394,7 @@ export default function AdGoogleLanding() {
                     className="w-full bg-green-600 text-white py-3 rounded-lg font-semibold text-lg disabled:opacity-50"
                     data-testid="button-ad-google-submit"
                   >
-                    {isSubmitting ? 'Sending OTP...' : 'Get OTP & Book Visit'}
+                    {isSubmitting ? 'Sending OTP...' : 'Request Call Back'}
                   </button>
                   <div className="flex gap-2 pt-2">
                     <a

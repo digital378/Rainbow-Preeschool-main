@@ -195,7 +195,7 @@ export default function AdLanding() {
             ) : (
               <>
                 <div className="text-center mb-4">
-                  <h2 className="text-lg font-bold text-pink-600">Book Free School Visit</h2>
+                  <h2 className="text-lg font-bold text-pink-600">Enquire Now</h2>
                   <p className="text-sm text-gray-500">Get callback within 30 mins</p>
                 </div>
                 <form onSubmit={handleSubmit} className="space-y-3">
@@ -258,7 +258,7 @@ export default function AdLanding() {
                     className="w-full bg-green-600 text-white py-3 rounded-lg font-semibold text-lg disabled:opacity-50"
                     data-testid="button-ad-submit"
                   >
-                    {isSubmitting ? 'Submitting...' : 'Book Free Visit Now'}
+                    {isSubmitting ? 'Submitting...' : 'Request Call Back'}
                   </button>
                   <div className="flex gap-2 pt-2">
                     <a
