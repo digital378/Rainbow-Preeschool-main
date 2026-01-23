@@ -18,7 +18,7 @@ if (typeof document !== 'undefined') {
   preloadLink.rel = 'preload';
   preloadLink.as = 'image';
   preloadLink.href = heroBanner1;
-  preloadLink.fetchPriority = 'high';
+  (preloadLink as any).fetchPriority = 'high';
   if (!document.head.querySelector(`link[href="${heroBanner1}"]`)) {
     document.head.appendChild(preloadLink);
   }
@@ -98,7 +98,6 @@ export function HeroSection() {
                 height={1080}
                 loading={index === 0 ? "eager" : "lazy"}
                 decoding={index === 0 ? "sync" : "async"}
-                fetchPriority={index === 0 ? "high" : "low"}
               />
             </div>
           );
@@ -145,29 +144,31 @@ export function HeroSection() {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row items-start gap-4">
-            <Link href="/contact">
-              <Button 
-                size="lg" 
-                className="text-base px-8 bg-primary hover:bg-primary/90"
-                onClick={() => trackCTAClick("request_callback", "hero")}
-                data-testid="button-hero-callback"
-              >
-                <Phone className="mr-2 h-5 w-5" />
-                Request a Callback
-              </Button>
-            </Link>
-            <Link href="/programmes">
-              <Button 
-                variant="outline" 
-                size="lg" 
-                className="text-base px-8 border-white/30 text-white bg-white/10 backdrop-blur-sm hover:bg-white/20"
-                onClick={() => trackCTAClick("explore_programmes", "hero")}
-                data-testid="button-hero-programmes"
-              >
-                Explore Programmes
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </Link>
+            <Button 
+              size="lg" 
+              className="text-base px-8 bg-primary hover:bg-primary/90"
+              onClick={() => {
+                trackCTAClick("request_callback", "hero");
+                window.location.href = "/contact";
+              }}
+              data-testid="button-hero-callback"
+            >
+              <Phone className="mr-2 h-5 w-5" />
+              Request a Callback
+            </Button>
+            <Button 
+              variant="outline" 
+              size="lg" 
+              className="text-base px-8 border-white/30 text-white bg-white/10 backdrop-blur-sm hover:bg-white/20"
+              onClick={() => {
+                trackCTAClick("explore_programmes", "hero");
+                window.location.href = "/programmes";
+              }}
+              data-testid="button-hero-programmes"
+            >
+              Explore Programmes
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Button>
           </div>
         </div>
       </div>
