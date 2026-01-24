@@ -31,8 +31,8 @@ const galleryImages = [
     category: "Learning"
   },
   {
-    src: "/images/optimized/DSC00146.webp",
-    alt: "Children's joyful moments at Rainbow Preschool",
+    src: "/images/optimized/DSC00147.webp",
+    alt: "Children enjoying ball pit activities at Rainbow Preschool",
     category: "Fun"
   },
 ];
