@@ -109,7 +109,7 @@ export function HeroSection() {
 
           {/* Hero heading - styled as h2 since H1 is in Why Choose Us section */}
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 text-white leading-tight">
-            Thane Born Preschool <span className="text-yellow-400">Trusted</span> by Parents
+            Best Preschool Born in Thane <span className="text-yellow-400">Trusted</span> by Parents
           </h2>
 
           {/* Subheading */}
