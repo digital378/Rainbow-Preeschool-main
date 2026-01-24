@@ -42,31 +42,31 @@ import {
 const faqs = [
   {
     question: "Which is the best preschool in Thane?",
-    answer: "Rainbow Preschool International is one of the most trusted preschools in Thane with 18+ years of experience and 1,00,000+ happy students. We offer safe, play-based learning with certified teachers across 6 centres in Thane."
+    answer: "Rainbow Preschool International is widely recognised as one of the best preschools in Thane, trusted by over 1,00,000 families since 2007. With certified ECCEd teachers, CCTV-monitored premises, and a proven play-based curriculum, we provide a safe and enriching start to your child's educational journey across our 6 conveniently located centres in Thane West."
   },
   {
     question: "How do I find a good preschool near me in Thane?",
-    answer: "Rainbow Preschool has 6 conveniently located centres across Thane including Manpada, Kalwa, Anand Nagar, Dhokali, Kasarvadavali, and Hariniwas. Call 82915 68972 to find the centre nearest to your home in Thane."
+    answer: "Finding a quality preschool near you is simple with Rainbow Preschools. We have 6 centres located in Manpada, Kalwa, Anand Nagar, Dhokali, Kasarvadavali, and Hariniwas, all within Thane West. Each centre offers the same trusted curriculum and caring environment, so you can choose the one closest to your home. Call 82915 68972 or visit our website to schedule a campus tour."
   },
   {
     question: "What is the preschool admission process near me?",
-    answer: "Our preschool admission enquiry process is simple. Fill out our contact form or call us to schedule a campus visit. Meet our teachers, see our facilities, and choose a programme suitable for your child's age group."
+    answer: "Our admission process is parent-friendly and transparent. Begin by filling out our enquiry form or calling 82915 68972. We will invite you for a campus tour at the centre nearest to you, where you can meet our staff and see our facilities. Once you are satisfied, complete the registration form and secure your child's seat for the upcoming term."
   },
   {
     question: "What age can a child start playgroup in Thane?",
-    answer: "Children can start playgroup at Rainbow Preschool from 1.5 years (18 months) of age. Our playgroup programme is designed for children aged 1.5 to 2.5 years, with a safe environment for early learning."
+    answer: "Children can join our playgroup in Thane from 1.5 years (18 months) of age. Our playgroup programme is thoughtfully designed for toddlers aged 1.5 to 2.5 years, focusing on sensory exploration, social interaction, and early motor skill development in a safe, nurturing setting with trained female teachers."
   },
   {
     question: "Is Rainbow Preschool safe for toddlers?",
-    answer: "Absolutely! Safety is our top priority. We have CCTV-monitored premises, 100% female teaching staff, secure entry/exit procedures, and follow strict health and hygiene protocols at all our Thane centres."
+    answer: "Absolutely. Safety is at the heart of everything we do. All Rainbow Preschool centres in Thane feature CCTV monitoring, 100% female teaching and support staff, secure entry and exit procedures, child-safe furniture, and rigorous daily hygiene protocols. Parents can be confident their little ones are in a protected, loving environment."
   },
   {
     question: "What programmes does Rainbow Preschool offer?",
-    answer: "We offer Playgroup (1.5-2.5 years), Nursery (2.5-3.5 years), Kindergarten (3.5-5.5 years), and Happy Times daycare (2-10 years) across our 6 centres in Thane."
+    answer: "Rainbow Preschool offers a complete early learning pathway: Playgroup for toddlers aged 1.5 to 2.5 years, Nursery for 2.5 to 3.5 years, and Kindergarten for 3.5 to 5.5 years. We also run Happy Times daycare for children aged 2 to 10 years, ideal for working parents. All programmes are available across our six Thane centres."
   },
   {
     question: "How can I enquire about preschool admission in Thane?",
-    answer: "Book a campus visit by calling 82915 68972 or fill out our admission enquiry form. Our team will schedule a convenient time for you to visit your nearest centre and discuss your child's needs."
+    answer: "Getting started is easy. Simply call us at 82915 68972 or fill out our online enquiry form. Our friendly admissions team will contact you within 24 hours to arrange a campus visit at your nearest Rainbow Preschool centre. During the tour you can meet our teachers, explore our classrooms, and learn more about our programmes."
   },
 ];
 
@@ -322,8 +322,11 @@ export default function Home() {
               <p className="text-muted-foreground text-lg leading-relaxed mb-6">
                 Rainbow Preschool International is one of the most trusted preschools in Thane, having nurtured over 1,00,000 young learners through joyful early childhood education. Our playgroup in Thane provides a safe, secure, and happy learning environment built on a strong play-based philosophy.
               </p>
-              <p className="text-muted-foreground leading-relaxed mb-8">
+              <p className="text-muted-foreground leading-relaxed mb-4">
                 Our age-appropriate early childhood education curriculum helps children develop confidence, creativity, and early academic skills, preparing them smoothly for primary schooling while respecting every child's unique pace of growth.
+              </p>
+              <p className="text-muted-foreground leading-relaxed mb-8">
+                Parents across Thane choose Rainbow Preschool because we combine a proven play-based methodology with genuine care and attention. Whether you are searching for a preschool near you in Manpada, Kalwa, or anywhere along Ghodbunder Road, our six conveniently located centres make quality early education accessible close to your home.
               </p>
               <Link href="/about">
                 <Button variant="outline" data-testid="button-learn-more">
@@ -386,8 +389,11 @@ export default function Home() {
           <div className="text-center max-w-3xl mx-auto mb-12" data-reveal="float">
             <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">Our Programmes</p>
             <h2 className="text-3xl md:text-4xl font-bold mb-4" data-sparkle>Programmes Designed for Every Stage of Early Learning</h2>
-            <p className="text-muted-foreground text-lg">
+            <p className="text-muted-foreground text-lg mb-4">
               From playgroup to kindergarten, we offer age-appropriate programmes that nurture your child's growth through play-based learning.
+            </p>
+            <p className="text-muted-foreground">
+              Our nursery school in Thane welcomes toddlers from 1.5 years, guiding them through playgroup, nursery, and kindergarten stages. Each programme is designed by early childhood specialists to build social skills, curiosity, and school readiness in a safe, joyful environment that parents trust.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -473,8 +479,11 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8" data-reveal="float">
             <h2 className="text-2xl md:text-3xl font-bold mb-2" data-sparkle>Find Preschool Near You in Thane</h2>
-            <p className="text-muted-foreground">
+            <p className="text-muted-foreground mb-2">
               Choose the Rainbow Preschool centre closest to your home
+            </p>
+            <p className="text-muted-foreground text-sm max-w-2xl mx-auto">
+              Finding a quality preschool near you in Thane is easy with Rainbow Preschools. Each of our centres offers the same trusted curriculum, certified teachers, and safe learning spaces that families across Thane have loved for over 18 years.
             </p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
@@ -512,8 +521,11 @@ export default function Home() {
           <div className="text-center max-w-3xl mx-auto mb-12" data-reveal="float">
             <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">Our Locations</p>
             <h2 className="text-3xl md:text-4xl font-bold mb-4" data-sparkle>Our Preschool Centres Across Thane</h2>
-            <p className="text-muted-foreground text-lg">
+            <p className="text-muted-foreground text-lg mb-4">
               Looking for a preschool or playgroup near you in Thane? Find your nearest centre.
+            </p>
+            <p className="text-muted-foreground">
+              With six branches spread across Thane West, a Rainbow Preschool centre is always close to home. Whether you live near Manpada, Kasarvadavali, Dhokali, or Kalwa, you can give your child the best start without a long commute. Visit the centre nearest to you and experience our warm, welcoming classrooms firsthand.
             </p>
           </div>
           

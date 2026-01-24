@@ -64,9 +64,12 @@ export function WhyChooseUs() {
           <h1 className="text-3xl md:text-4xl font-bold mb-4">
             Best Preschool in Thane
           </h1>
-          <p className="text-muted-foreground text-lg">
+          <p className="text-muted-foreground text-lg mb-4">
             At Rainbow Preschools, we believe every child deserves the best start in life. 
             Here's what makes us different.
+          </p>
+          <p className="text-muted-foreground">
+            Parents searching for the best preschool near them in Thane consistently choose Rainbow for our proven blend of safety, qualified teachers, and a research-backed curriculum. Our centres across Thane West provide a nurturing space where toddlers grow into confident, curious learners ready for formal school.
           </p>
         </div>
 
