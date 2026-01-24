@@ -479,10 +479,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8" data-reveal="float">
             <h2 className="text-2xl md:text-3xl font-bold mb-2" data-sparkle>Find Preschool Near You in Thane</h2>
-            <p className="text-muted-foreground mb-2">
-              Choose the Rainbow Preschool centre closest to your home
-            </p>
-            <p className="text-muted-foreground text-sm max-w-2xl mx-auto">
+            <p className="text-muted-foreground max-w-2xl mx-auto">
               Finding a quality preschool near you in Thane is easy with Rainbow Preschools. Each of our centres offers the same trusted curriculum, certified teachers, and safe learning spaces that families across Thane have loved for over 18 years.
             </p>
           </div>
