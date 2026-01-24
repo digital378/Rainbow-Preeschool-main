@@ -518,11 +518,8 @@ export default function Home() {
           <div className="text-center max-w-3xl mx-auto mb-12" data-reveal="float">
             <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">Our Locations</p>
             <h2 className="text-3xl md:text-4xl font-bold mb-4" data-sparkle>Our Preschool Centres Across Thane</h2>
-            <p className="text-muted-foreground text-lg mb-4">
-              Looking for a preschool or playgroup near you in Thane? Find your nearest centre.
-            </p>
-            <p className="text-muted-foreground">
-              With six branches spread across Thane West, a Rainbow Preschool centre is always close to home. Whether you live near Manpada, Kasarvadavali, Dhokali, or Kalwa, you can give your child the best start without a long commute. Visit the centre nearest to you and experience our warm, welcoming classrooms firsthand.
+            <p className="text-muted-foreground text-lg">
+              Looking for a preschool or playgroup near you in Thane? With six branches spread across Thane West, a Rainbow Preschool centre is always close to home. Whether you live near Manpada, Kasarvadavali, Dhokali, or Kalwa, you can give your child the best start without a long commute. Visit the centre nearest to you and experience our warm, welcoming classrooms firsthand.
             </p>
           </div>
           
