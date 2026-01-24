@@ -36,7 +36,7 @@ export class MemStorage implements IStorage {
         slug: "what-to-ask-during-a-tour-of-a-preschool-in-thane",
         excerpt: "Visiting preschools honestly feels a bit like house-hunting. You step in, look around for a few seconds, and something inside you instantly says either 'hmm' or 'yes!'",
         content: "When visiting a preschool, it's important to ask the right questions. Look for signs of a nurturing environment, qualified teachers, and age-appropriate curriculum.",
-        imageUrl: "/images/optimized/teacher-teaching-children-classroom.webp",
+        imageUrl: "/images/optimized/DSC00011.webp",
         publishedAt: new Date("2025-11-15"),
         isPublished: true,
       },
