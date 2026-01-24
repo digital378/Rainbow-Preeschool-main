@@ -303,7 +303,7 @@ export default function Home() {
   return (
     <div>
       <SEO
-        title="Best Preschool in Thane | Top Preschool Near Me | Rainbow Preschool International"
+        title="Best Preschool in Thane - Rainbow Preschool International"
         description="Looking for the best preschool in Thane? Rainbow Preschool International - top-rated preschool near you with 6 centres, 18+ years experience & 1,00,000+ happy students. Call 82915 68972!"
         keywords="best preschool in thane, top preschool in thane, preschool near me, best preschool near me, preschool in thane, playgroup in thane, nursery school thane, kindergarten thane, preschool admission thane, top rated preschool thane"
         canonical="/"
