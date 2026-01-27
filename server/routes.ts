@@ -251,10 +251,13 @@ export async function registerRoutes(
       const validatedData = insertContactSchema.parse(formData);
       const contact = await storage.createContact(validatedData);
       
-      // Send email notification and track success
-      let emailSent = false;
-      try {
-        emailSent = await sendLeadNotificationEmail({
+      // Return immediately for fast user experience
+      res.status(201).json({ success: true, id: contact.id });
+      
+      // Send email and MCB in background (non-blocking)
+      Promise.all([
+        // Email notification
+        sendLeadNotificationEmail({
           parentName: validatedData.parentName,
           childName: validatedData.childName,
           phone: validatedData.phone,
@@ -265,35 +268,22 @@ export async function registerRoutes(
           message: validatedData.message || undefined,
           leadSource: formData.leadSource || undefined,
           leadMedium: formData.leadMedium || undefined
-        });
-      } catch (emailError) {
-        console.error("Failed to send email notification:", emailError);
-        emailSent = false;
-      }
-      
-      // Send lead to MCB CRM (non-blocking - don't fail if MCB fails)
-      let mcbSent = false;
-      try {
-        const branchID = validatedData.branch ? getBranchID(validatedData.branch) : 88;
-        const mcbResult = await sendLeadToMCB({
-          studentName: validatedData.childName || "Not Provided",
-          fatherName: validatedData.parentName,
-          fatherMobile: validatedData.phone,
-          branchID,
-          utmSource: formData.leadSource || "",
-          utmMedium: formData.leadMedium || "",
-          utmCampaign: formData.utmCampaign || "",
-        });
-        mcbSent = mcbResult.success;
-        if (!mcbSent) {
-          console.error("[MCB] Failed to send lead:", mcbResult.error);
-        }
-      } catch (mcbError) {
-        console.error("[MCB] Error sending lead:", mcbError);
-      }
-      
-      // Return emailSent status so client can fire GA4 event only on confirmed delivery
-      res.status(201).json({ success: true, id: contact.id, emailSent, mcbSent });
+        }).catch(err => console.error("Email failed:", err)),
+        
+        // MCB CRM
+        (async () => {
+          const branchID = validatedData.branch ? getBranchID(validatedData.branch) : 88;
+          return sendLeadToMCB({
+            studentName: validatedData.childName || "Not Provided",
+            fatherName: validatedData.parentName,
+            fatherMobile: validatedData.phone,
+            branchID,
+            utmSource: formData.leadSource || "",
+            utmMedium: formData.leadMedium || "",
+            utmCampaign: formData.utmCampaign || "",
+          });
+        })().catch(err => console.error("MCB failed:", err))
+      ]);
     } catch (error) {
       if (error instanceof z.ZodError) {
         res.status(400).json({ error: "Invalid form data", details: error.errors });
