@@ -11,13 +11,17 @@
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-G1MX1N0M05"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
+    function gtag(){
+      console.log('[GA4 DEBUG] gtag called:', arguments[0], arguments[1]);
+      dataLayer.push(arguments);
+    }
     gtag('js', new Date());
     gtag('config', 'G-G1MX1N0M05', {
       page_title: 'Google Ads Landing Page',
-      page_path: '/ad-google'
+      page_path: '/ad-google',
+      debug_mode: true
     });
-    console.log('[GA4 Google Ad Page] Tracking initialized');
+    console.log('[GA4 Google Ad Page] Tracking initialized with debug_mode');
   </script>
   
   <style>
@@ -327,8 +331,9 @@
     // Send event to GA4 via gtag
     function sendGA4Event(eventName, params) {
       if(typeof gtag === 'function') {
-        gtag('event', eventName, params || {});
-        console.log('[GA4] ' + eventName + ' event sent via gtag');
+        var eventParams = Object.assign({send_to: 'G-G1MX1N0M05'}, params || {});
+        gtag('event', eventName, eventParams);
+        console.log('[GA4] ' + eventName + ' event sent to G-G1MX1N0M05');
       } else {
         console.log('[GA4] gtag not available for ' + eventName);
       }
