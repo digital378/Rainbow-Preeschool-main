@@ -332,20 +332,25 @@
       return{leadSource:src,leadMedium:med};
     }
     var utm=getUtmParams();
+    function sendGA4Event(eventName, params) {
+      window.dataLayer = window.dataLayer || [];
+      dataLayer.push(Object.assign({'event': eventName}, params || {}));
+      // Also send via gtag if available
+      if (typeof gtag === 'function') {
+        gtag('event', eventName, params || {});
+      }
+      console.log('[GA4] ' + eventName + ' event fired');
+    }
     function trackCall(e){
       e.preventDefault();
-      window.dataLayer = window.dataLayer || [];
-      dataLayer.push({'event': 'ad_call', 'page_path': '/ad', 'page_title': 'Ad Landing Page'});
-      console.log('[GA4] ad_call event fired');
-      setTimeout(function(){window.location.href='tel:+918291568972';}, 150);
+      sendGA4Event('ad_call', {'page_path': '/ad', 'page_title': 'Ad Landing Page'});
+      setTimeout(function(){window.location.href='tel:+918291568972';}, 200);
     }
     function trackWhatsApp(e){
       e.preventDefault();
-      window.dataLayer = window.dataLayer || [];
-      dataLayer.push({'event': 'ad_whatsapp', 'page_path': '/ad', 'page_title': 'Ad Landing Page'});
-      console.log('[GA4] ad_whatsapp event fired');
+      sendGA4Event('ad_whatsapp', {'page_path': '/ad', 'page_title': 'Ad Landing Page'});
       var href = e.currentTarget.href;
-      setTimeout(function(){window.open(href, '_blank');}, 150);
+      setTimeout(function(){window.open(href, '_blank');}, 200);
     }
     function toggleProg(el){el.parentElement.classList.toggle('open');}
     function handleSubmit(e){
