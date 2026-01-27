@@ -332,33 +332,11 @@
       return{leadSource:src,leadMedium:med};
     }
     var utm=getUtmParams();
-    // Fire page_view on load for GA4 tracking
-    (function(){
-      window.dataLayer = window.dataLayer || [];
-      dataLayer.push({
-        'event': 'page_view',
-        'page_title': 'Google Ads Landing Page',
-        'page_location': window.location.href,
-        'page_path': '/ad-google'
-      });
-      // Send directly to GA4 via Measurement Protocol
-      try {
-        var cid = localStorage.getItem('ga_cid') || (Math.random().toString(36).substr(2, 9) + '.' + Date.now());
-        localStorage.setItem('ga_cid', cid);
-        var url = 'https://www.google-analytics.com/g/collect?v=2&tid=G-G1MX1N0M05&cid=' + cid + '&en=page_view&ep.page_path=/ad-google&ep.page_title=Google%20Ads%20Landing%20Page&dl=' + encodeURIComponent(window.location.href) + '&dt=Google%20Ads%20Landing%20Page';
-        navigator.sendBeacon(url);
-        console.log('[GA4] page_view sent for /ad-google');
-      } catch(err) { console.log('Page view beacon error:', err); }
-    })();
+    // Send event to GA4 via GTM dataLayer only
     function sendGA4Event(eventName, params) {
       window.dataLayer = window.dataLayer || [];
       dataLayer.push(Object.assign({'event': eventName}, params || {}));
-      // Send via navigator.sendBeacon for reliability during navigation
-      try {
-        var url = 'https://www.google-analytics.com/g/collect?v=2&tid=G-G1MX1N0M05&cid=' + (Math.random().toString(36).substr(2, 9)) + '&en=' + eventName + '&ep.page_path=' + encodeURIComponent(params.page_path || '/ad-google');
-        navigator.sendBeacon(url);
-      } catch(err) { console.log('Beacon error:', err); }
-      console.log('[GA4] ' + eventName + ' event fired');
+      console.log('[GA4] ' + eventName + ' event pushed to dataLayer');
     }
     function trackCall(e){
       sendGA4Event('google_ads_call', {'page_path': '/ad-google', 'page_title': 'Google Ads Landing Page'});
