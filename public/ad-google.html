@@ -332,6 +332,16 @@
       return{leadSource:src,leadMedium:med};
     }
     var utm=getUtmParams();
+    // Fire page_view on load for GA4 tracking
+    (function(){
+      window.dataLayer = window.dataLayer || [];
+      dataLayer.push({
+        'event': 'page_view',
+        'page_title': 'Google Ads Landing Page',
+        'page_location': window.location.href,
+        'page_path': '/ad-google'
+      });
+    })();
     function sendGA4Event(eventName, params) {
       window.dataLayer = window.dataLayer || [];
       dataLayer.push(Object.assign({'event': eventName}, params || {}));
