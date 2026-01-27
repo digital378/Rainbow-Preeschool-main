@@ -14,10 +14,18 @@
     gtag('js', new Date());
     gtag('config', 'G-G1MX1N0M05', {
       page_title: 'Ad Landing Page - Rainbow Preschool',
-      page_path: '/ad'
+      page_path: '/ad',
+      send_page_view: true
     });
     gtag('config', 'GT-55BFZCQT');
     gtag('config', 'AW-690465943');
+    console.log('[GA4 Ad Page] Tracking initialized');
+    setTimeout(function(){
+      if(typeof gtag === 'function'){
+        console.log('[GA4 Ad Page] gtag ready, sending test event');
+        gtag('event', 'ad_page_load');
+      }
+    }, 1000);
   </script>
   
   <style>
