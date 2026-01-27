@@ -332,8 +332,16 @@
       return{leadSource:src,leadMedium:med};
     }
     var utm=getUtmParams();
-    function trackCall(){if(window.gtag)gtag('event','google_ads_call');}
-    function trackWhatsApp(){if(window.gtag)gtag('event','google_ads_whatsapp');}
+    function trackCall(){
+      window.dataLayer = window.dataLayer || [];
+      dataLayer.push({'event': 'google_ads_call', 'page_path': '/ad-google', 'page_title': 'Google Ads Landing Page'});
+      console.log('[GA4] google_ads_call event fired');
+    }
+    function trackWhatsApp(){
+      window.dataLayer = window.dataLayer || [];
+      dataLayer.push({'event': 'google_ads_whatsapp', 'page_path': '/ad-google', 'page_title': 'Google Ads Landing Page'});
+      console.log('[GA4] google_ads_whatsapp event fired');
+    }
     function toggleProg(el){el.parentElement.classList.toggle('open');}
     function handleSubmit(e){
       e.preventDefault();
