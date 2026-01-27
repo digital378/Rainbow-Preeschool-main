@@ -328,15 +328,46 @@
       return{leadSource:src,leadMedium:med};
     }
     var utm=getUtmParams();
-    // Send event to GA4 via gtag
+    // Send event to GA4 via Measurement Protocol (direct server-side-like request)
     function sendGA4Event(eventName, params) {
-      if(typeof gtag === 'function') {
-        var eventParams = Object.assign({send_to: 'G-G1MX1N0M05'}, params || {});
-        gtag('event', eventName, eventParams);
-        console.log('[GA4] ' + eventName + ' event sent to G-G1MX1N0M05');
-      } else {
-        console.log('[GA4] gtag not available for ' + eventName);
+      var measurementId = 'G-G1MX1N0M05';
+      var apiSecret = '';
+      
+      // Get or create client_id
+      var clientId = localStorage.getItem('ga_client_id');
+      if (!clientId) {
+        clientId = Math.random().toString(36).substring(2) + '.' + Date.now();
+        localStorage.setItem('ga_client_id', clientId);
       }
+      
+      // Build event payload
+      var payload = {
+        client_id: clientId,
+        events: [{
+          name: eventName,
+          params: Object.assign({
+            page_location: window.location.href,
+            page_title: document.title,
+            engagement_time_msec: 100
+          }, params || {})
+        }]
+      };
+      
+      // Send via gtag (standard way)
+      if(typeof gtag === 'function') {
+        gtag('event', eventName, Object.assign({send_to: measurementId}, params || {}));
+      }
+      
+      // Also send via collect endpoint (backup/reliable way)
+      var collectUrl = 'https://www.google-analytics.com/g/collect?' +
+        'v=2&tid=' + measurementId + 
+        '&cid=' + clientId +
+        '&en=' + encodeURIComponent(eventName) +
+        '&ep.page_path=' + encodeURIComponent(window.location.pathname) +
+        '&_p=' + Date.now();
+      
+      navigator.sendBeacon(collectUrl);
+      console.log('[GA4] ' + eventName + ' event sent via collect endpoint');
     }
     function trackCall(e){
       sendGA4Event('google_ads_call', {'page_path': '/ad-google', 'page_title': 'Google Ads Landing Page'});
