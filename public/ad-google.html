@@ -335,22 +335,23 @@
     function sendGA4Event(eventName, params) {
       window.dataLayer = window.dataLayer || [];
       dataLayer.push(Object.assign({'event': eventName}, params || {}));
-      // Also send via gtag if available
-      if (typeof gtag === 'function') {
-        gtag('event', eventName, params || {});
-      }
+      // Send via navigator.sendBeacon for reliability during navigation
+      try {
+        var url = 'https://www.google-analytics.com/g/collect?v=2&tid=G-G1MX1N0M05&cid=' + (Math.random().toString(36).substr(2, 9)) + '&en=' + eventName + '&ep.page_path=' + encodeURIComponent(params.page_path || '/ad-google');
+        navigator.sendBeacon(url);
+      } catch(err) { console.log('Beacon error:', err); }
       console.log('[GA4] ' + eventName + ' event fired');
     }
     function trackCall(e){
-      e.preventDefault();
+      // Don't prevent default - let the tel: link work naturally
       sendGA4Event('google_ads_call', {'page_path': '/ad-google', 'page_title': 'Google Ads Landing Page'});
-      setTimeout(function(){window.location.href='tel:+918291568972';}, 200);
+      // Return true to allow default behavior
+      return true;
     }
     function trackWhatsApp(e){
-      e.preventDefault();
+      // Don't prevent default - let the link work naturally
       sendGA4Event('google_ads_whatsapp', {'page_path': '/ad-google', 'page_title': 'Google Ads Landing Page'});
-      var href = e.currentTarget.href;
-      setTimeout(function(){window.open(href, '_blank');}, 200);
+      return true;
     }
     function toggleProg(el){el.parentElement.classList.toggle('open');}
     function handleSubmit(e){
@@ -375,17 +376,14 @@
       }).then(function(r){return r.json();}).then(function(d){
         console.log('Form response:', d);
         if(d.success){
-          console.log('Firing google_ads_leads event via dataLayer');
-          window.dataLayer = window.dataLayer || [];
-          dataLayer.push({
-            'event': 'google_ads_leads',
+          console.log('Firing google_ads_leads event');
+          sendGA4Event('google_ads_leads', {
+            'page_path': '/ad-google',
+            'page_title': 'Google Ads Landing Page',
             'parent_name': n,
-            'phone': ph,
             'child_age': age,
             'branch': ar,
-            'lead_source': utm.leadSource,
-            'page_path': '/ad-google',
-            'page_title': 'Google Ads Landing Page - Rainbow Preschool'
+            'lead_source': utm.leadSource
           });
         }
         document.getElementById('form-view').classList.add('hidden');
