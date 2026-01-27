@@ -344,10 +344,14 @@
         headers:{'Content-Type':'application/json'},
         body:JSON.stringify({parentName:n,phone:ph,childName:'Not provided',childAge:age,programme:'General Enquiry',branch:ar,message:'Ad Landing - Area: '+ar,leadSource:utm.leadSource,leadMedium:utm.leadMedium})
       }).then(function(r){return r.json();}).then(function(d){
-        if(d.emailSent&&window.gtag)gtag('event','ad_leads',{parent_name:n,phone:ph,lead_source:utm.leadSource});
+        console.log('Form response:', d);
+        if(d.success && window.gtag){
+          console.log('Firing ad_leads event');
+          gtag('event','ad_leads',{parent_name:n,phone:ph,lead_source:utm.leadSource});
+        }
         document.getElementById('form-view').classList.add('hidden');
         document.getElementById('success-view').classList.remove('hidden');
-      }).catch(function(){btn.disabled=false;btn.textContent='Book Free Visit Now';alert('Error submitting. Please try again.');});
+      }).catch(function(e){console.error('Form error:',e);btn.disabled=false;btn.textContent='Book Free Visit Now';alert('Error submitting. Please try again.');});
       return false;
     }
   </script>
