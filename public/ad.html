@@ -15,12 +15,12 @@
   })(window,document,'script','dataLayer','GT-55BFZCQT');</script>
   
   <!-- Google Analytics (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-G1MX1NOM05"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-G1MX1N0M05"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config', 'G-G1MX1NOM05', {
+    gtag('config', 'G-G1MX1N0M05', {
       page_title: 'Ad Landing Page - Rainbow Preschool',
       page_path: '/ad',
       send_page_view: true
@@ -358,7 +358,16 @@
         console.log('Form response:', d);
         if(d.success && window.gtag){
           console.log('Firing ad_leads event');
-          gtag('event','ad_leads',{parent_name:n,phone:ph,lead_source:utm.leadSource});
+          gtag('event','ad_leads',{
+            parent_name:n,
+            phone:ph,
+            child_age:age,
+            branch:ar,
+            lead_source:utm.leadSource,
+            page_path:'/ad',
+            page_title:'Ad Landing Page',
+            send_to:'G-G1MX1N0M05'
+          });
         }
         document.getElementById('form-view').classList.add('hidden');
         document.getElementById('success-view').classList.remove('hidden');
