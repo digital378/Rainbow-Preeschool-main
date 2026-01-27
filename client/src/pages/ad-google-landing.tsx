@@ -162,6 +162,7 @@ export default function AdGoogleLanding() {
       });
       const data = await res.json();
       if (data.emailSent && typeof window !== 'undefined' && (window as any).gtag) {
+        console.log('[GA4 Debug] Firing google_ads_leads event');
         (window as any).gtag('event', 'google_ads_leads', {
           parent_name: formData.parentName,
           phone: formData.phone,

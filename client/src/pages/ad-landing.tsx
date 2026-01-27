@@ -98,11 +98,14 @@ export default function AdLanding() {
       });
       const data = await res.json();
       if (data.emailSent && typeof window !== 'undefined' && (window as any).gtag) {
+        console.log('[GA4 Debug] Firing ad_leads event');
         (window as any).gtag('event', 'ad_leads', {
           parent_name: formData.parentName,
           phone: formData.phone,
           lead_source: utmData.leadSource,
         });
+      } else {
+        console.log('[GA4 Debug] Event NOT fired - emailSent:', data.emailSent, 'gtag:', !!(window as any).gtag);
       }
       setIsSubmitted(true);
     } catch (err) {
