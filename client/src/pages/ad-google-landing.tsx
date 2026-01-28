@@ -265,8 +265,9 @@ export default function AdGoogleLanding() {
       {/* Header */}
       <header className="bg-white shadow-sm py-3 px-4 sticky top-0 z-50">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
-          <a href="/" className="flex items-center">
+          <a href="/" className="flex items-center gap-2">
             <img src="/images/optimized/rainbow-logo.webp" alt="Rainbow Preschool" className="h-10 w-auto" />
+            <span className="font-bold text-red-600 text-lg">Rainbow Preschool</span>
           </a>
           <a
             href="tel:+918291568972"
