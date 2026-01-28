@@ -64,6 +64,7 @@ export default function AdGoogleLanding() {
   const [confirmationResult, setConfirmationResult] = useState<any>(null);
   const recaptchaRef = useRef<HTMLDivElement>(null);
   const [utmData] = useState(() => getUtmParams());
+  const [expandedProgramme, setExpandedProgramme] = useState<string | null>(null);
 
   useEffect(() => {
     // Add noindex meta tag
@@ -463,26 +464,69 @@ export default function AdGoogleLanding() {
           <h2 className="font-semibold text-lg text-gray-900">Our Programmes</h2>
           <div className="grid gap-2">
             {[
-              { name: 'Playgroup in Thane', age: '1.5-2.5 years', link: '/playgroup' },
-              { name: 'Nursery in Thane', age: '2.5-3.5 years', link: '/nursery' },
-              { name: 'Kindergarten in Thane', age: '3.5-5 years', link: '/kindergarten' },
-              { name: 'Daycare in Thane', age: '2-10 years', link: '/happy-times' },
+              { 
+                id: 'playgroup',
+                name: 'Playgroup in Thane', 
+                age: '1.5-2.5 years', 
+                desc: 'Our Playgroup programme is designed for toddlers aged 1.5-2.5 years. Through play-based learning, we help children develop social skills, motor coordination, and early curiosity. Our trained female staff create a safe and nurturing environment where your child can explore and grow.',
+                features: ['Play-Based Learning', 'Sensory Activities', 'Social Skills', 'Safe Environment']
+              },
+              { 
+                id: 'nursery',
+                name: 'Nursery in Thane', 
+                age: '2.5-3.5 years',
+                desc: 'Our Nursery programme builds on early learning with structured activities for children aged 2.5-3.5 years. We focus on language development, creativity, and preparing children for kindergarten.',
+                features: ['Language Development', 'Creative Arts', 'Early Literacy', 'Social Interaction']
+              },
+              { 
+                id: 'kindergarten',
+                name: 'Kindergarten in Thane', 
+                age: '3.5-5 years',
+                desc: 'Our Kindergarten programme prepares children aged 3.5-5 years for formal schooling. We focus on reading, writing, math concepts, and building confidence.',
+                features: ['Reading & Writing', 'Math Concepts', 'Science Exploration', 'School Readiness']
+              },
+              { 
+                id: 'daycare',
+                name: 'Daycare in Thane', 
+                age: '2-10 years',
+                desc: 'Happy Times Daycare provides extended care for children aged 2-10 years. With 100% female staff and CCTV surveillance, parents can work peacefully knowing their children are safe.',
+                features: ['100% Female Staff', 'CCTV Surveillance', 'Flexible Hours', 'Nutritious Meals']
+              },
             ].map((p) => (
-              <a
-                key={p.name}
-                href={p.link}
-                className="flex items-center justify-between p-3 bg-white rounded-lg border border-gray-200 hover:bg-gray-50"
-                data-testid={`link-ad-google-programme-${p.name.toLowerCase().replace(/\s+/g, '-')}`}
-              >
-                <div className="flex items-center gap-3">
-                  <CheckIcon />
-                  <span className="font-medium text-gray-900">{p.name}</span>
-                  <span className="text-gray-500 text-sm">({p.age})</span>
-                </div>
-                <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </a>
+              <div key={p.id} className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+                <button
+                  onClick={() => setExpandedProgramme(expandedProgramme === p.id ? null : p.id)}
+                  className="w-full flex items-center justify-between p-3 hover:bg-gray-50 text-left"
+                  data-testid={`button-ad-google-programme-${p.id}`}
+                >
+                  <div className="flex items-center gap-3">
+                    <CheckIcon />
+                    <span className="font-medium text-gray-900">{p.name}</span>
+                    <span className="text-gray-500 text-sm">({p.age})</span>
+                  </div>
+                  <svg 
+                    className={`w-5 h-5 text-gray-400 transition-transform ${expandedProgramme === p.id ? 'rotate-180' : ''}`} 
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                {expandedProgramme === p.id && (
+                  <div className="px-4 pb-4 pt-2 border-t border-gray-100">
+                    <p className="text-gray-600 text-sm mb-3">{p.desc}</p>
+                    <div className="grid grid-cols-2 gap-2">
+                      {p.features.map((feature) => (
+                        <div key={feature} className="flex items-center gap-2 text-sm text-gray-700">
+                          <CheckIcon />
+                          <span>{feature}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
             ))}
           </div>
         </div>
