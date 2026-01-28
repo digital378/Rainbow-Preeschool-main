@@ -155,7 +155,7 @@ export default function AdLanding() {
         }),
       });
       const data = await res.json();
-      if (data.emailSent) {
+      if (data.success) {
         // Fire GA4 event
         if (typeof window !== 'undefined' && (window as any).gtag) {
           console.log('[GA4] Firing ad_leads event');
@@ -173,10 +173,10 @@ export default function AdLanding() {
             lead_source: utmData.leadSource,
           });
         }
+        setIsSubmitted(true);
       } else {
-        console.log('[Tracking] Event NOT fired - emailSent:', data.emailSent);
+        console.log('[Tracking] Event NOT fired - success:', data.success);
       }
-      setIsSubmitted(true);
     } catch (err) {
       console.error(err);
     } finally {
@@ -184,9 +184,17 @@ export default function AdLanding() {
     }
   };
 
-  const trackCall = () => {
+  const trackCall = (e: React.MouseEvent) => {
     if (typeof window !== 'undefined' && (window as any).gtag) {
       (window as any).gtag('event', 'ad_call');
+    }
+    // On desktop, copy phone number to clipboard since tel: links don't work
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    if (!isMobile) {
+      e.preventDefault();
+      navigator.clipboard?.writeText('+918291568972').then(() => {
+        alert('Phone number +91 82915 68972 copied to clipboard!');
+      });
     }
   };
 
