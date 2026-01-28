@@ -220,7 +220,9 @@ export default function AdLanding() {
       {/* Header */}
       <header className="bg-white shadow-sm py-3 px-4 sticky top-0 z-50">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
-          <a href="/" className="font-bold text-lg text-red-600">Rainbow Preschool</a>
+          <a href="/" className="flex items-center">
+            <img src="/images/optimized/rainbow-logo.webp" alt="Rainbow Preschool" className="h-10 w-auto" />
+          </a>
           <a
             href="tel:+918291568972"
             onClick={trackCall}
