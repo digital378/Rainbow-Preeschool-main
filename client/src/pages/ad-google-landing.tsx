@@ -469,34 +469,54 @@ export default function AdGoogleLanding() {
                 name: 'Playgroup in Thane', 
                 age: '1.5-2.5 years', 
                 desc: 'Our Playgroup programme is designed for toddlers aged 1.5-2.5 years. Through play-based learning, we help children develop social skills, motor coordination, and early curiosity. Our trained female staff create a safe and nurturing environment where your child can explore and grow.',
-                features: ['Play-Based Learning', 'Sensory Activities', 'Social Skills', 'Safe Environment']
+                features: [
+                  { name: 'Play-Based Learning', icon: '🎯' },
+                  { name: 'Sensory Activities', icon: '👤' },
+                  { name: 'Social Skills', icon: '👥' },
+                  { name: 'Safe Environment', icon: '🛡️' }
+                ]
               },
               { 
                 id: 'nursery',
                 name: 'Nursery in Thane', 
                 age: '2.5-3.5 years',
-                desc: 'Our Nursery programme builds on early learning with structured activities for children aged 2.5-3.5 years. We focus on language development, creativity, and preparing children for kindergarten.',
-                features: ['Language Development', 'Creative Arts', 'Early Literacy', 'Social Interaction']
+                desc: 'Our Nursery programme builds strong foundations in literacy and numeracy for children aged 2.5-3.5 years. With phonics-based learning, creative arts, and structured activities, we prepare your child for the next stage of education while fostering independence and confidence.',
+                features: [
+                  { name: 'Phonics & Literacy', icon: '📚' },
+                  { name: 'Number Concepts', icon: '🔢' },
+                  { name: 'Creative Arts', icon: '🎨' },
+                  { name: 'Music & Movement', icon: '🎵' }
+                ]
               },
               { 
                 id: 'kindergarten',
                 name: 'Kindergarten in Thane', 
                 age: '3.5-5 years',
-                desc: 'Our Kindergarten programme prepares children aged 3.5-5 years for formal schooling. We focus on reading, writing, math concepts, and building confidence.',
-                features: ['Reading & Writing', 'Math Concepts', 'Science Exploration', 'School Readiness']
+                desc: 'Our Kindergarten programme prepares children aged 3.5-5 years for formal schooling. With focus on advanced reading, writing, and math skills, we build confidence, critical thinking, and problem-solving abilities. Your child will be ready to excel in their school journey.',
+                features: [
+                  { name: 'School Readiness', icon: '🎓' },
+                  { name: 'Reading & Writing', icon: '✏️' },
+                  { name: 'Math Foundations', icon: '📐' },
+                  { name: 'Critical Thinking', icon: '💡' }
+                ]
               },
               { 
                 id: 'daycare',
                 name: 'Daycare in Thane', 
                 age: '2-10 years',
-                desc: 'Happy Times Daycare provides extended care for children aged 2-10 years. With 100% female staff and CCTV surveillance, parents can work peacefully knowing their children are safe.',
-                features: ['100% Female Staff', 'CCTV Surveillance', 'Flexible Hours', 'Nutritious Meals']
+                desc: 'Our Daycare provides a safe, nurturing environment for children aged 2-10 years. With flexible hours for working parents, we offer homework assistance, engaging activities, and nutritious meals. Your child will be well cared for while you\'re at work.',
+                features: [
+                  { name: 'Flexible Hours', icon: '⏰' },
+                  { name: 'Homework Help', icon: '📝' },
+                  { name: 'Fun Activities', icon: '🎮' },
+                  { name: 'Nutritious Meals', icon: '🍎' }
+                ]
               },
             ].map((p) => (
               <div key={p.id} className="bg-white rounded-lg border border-gray-200 overflow-hidden">
                 <button
                   onClick={() => setExpandedProgramme(expandedProgramme === p.id ? null : p.id)}
-                  className="w-full flex items-center justify-between p-3 hover:bg-gray-50 text-left"
+                  className="w-full flex items-center justify-between p-4 hover:bg-gray-50 text-left"
                   data-testid={`button-ad-google-programme-${p.id}`}
                 >
                   <div className="flex items-center gap-3">
@@ -515,12 +535,12 @@ export default function AdGoogleLanding() {
                 </button>
                 {expandedProgramme === p.id && (
                   <div className="px-4 pb-4 pt-2 border-t border-gray-100">
-                    <p className="text-gray-600 text-sm mb-3">{p.desc}</p>
+                    <p className="text-gray-600 text-sm mb-4">{p.desc}</p>
                     <div className="grid grid-cols-2 gap-2">
                       {p.features.map((feature) => (
-                        <div key={feature} className="flex items-center gap-2 text-sm text-gray-700">
-                          <CheckIcon />
-                          <span>{feature}</span>
+                        <div key={feature.name} className="flex items-center gap-2 text-sm text-gray-700 bg-red-50 px-3 py-2 rounded-lg">
+                          <span>{feature.icon}</span>
+                          <span>{feature.name}</span>
                         </div>
                       ))}
                     </div>
