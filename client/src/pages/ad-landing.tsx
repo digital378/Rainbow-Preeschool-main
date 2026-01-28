@@ -63,7 +63,9 @@ export default function AdLanding() {
   const [expandedProgramme, setExpandedProgramme] = useState<string | null>(null);
 
   useEffect(() => {
-    // Add noindex meta tag
+    // Remove existing robots meta tag and add noindex
+    const existingRobots = document.querySelector('meta[name="robots"]');
+    if (existingRobots) existingRobots.remove();
     const meta = document.createElement('meta');
     meta.name = 'robots';
     meta.content = 'noindex, nofollow';
