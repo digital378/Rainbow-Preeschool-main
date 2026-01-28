@@ -264,7 +264,7 @@ export default function AdLanding() {
             <div className="grid grid-cols-2 gap-3 pt-4">
               <div className="bg-white p-4 rounded-lg border border-gray-200 text-center">
                 <div className="font-bold text-xl text-gray-900">1,00,000+</div>
-                <div className="text-xs text-gray-500">Thane Families</div>
+                <div className="text-xs text-gray-500">Students</div>
               </div>
               <div className="bg-white p-4 rounded-lg border border-gray-200 text-center">
                 <div className="font-bold text-xl text-gray-900">18+ Years</div>
