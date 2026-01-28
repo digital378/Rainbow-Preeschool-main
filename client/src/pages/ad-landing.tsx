@@ -3,6 +3,11 @@ import { useState, useEffect } from "react";
 // Ad landing page for Meta/Google Ads campaigns
 const areas = ["Manpada", "Hariniwas", "Anand Nagar", "Dhokali", "Kalwa", "Kasarvadavali"];
 
+// GA4 Measurement ID
+const GA4_ID = "G-G1MX1N0M05";
+// Meta Pixel ID
+const META_PIXEL_ID = "876471444795481";
+
 function getUtmParams() {
   const params = new URLSearchParams(window.location.search);
   const gclid = params.get('gclid');
@@ -57,11 +62,63 @@ export default function AdLanding() {
   const [utmData] = useState(() => getUtmParams());
 
   useEffect(() => {
+    // Add noindex meta tag
     const meta = document.createElement('meta');
     meta.name = 'robots';
     meta.content = 'noindex, nofollow';
     document.head.appendChild(meta);
     document.title = "Admissions Open - Rainbow Preschool Thane";
+
+    // Load GA4 gtag.js if not already loaded
+    if (!(window as any).gtag) {
+      const gtagScript = document.createElement('script');
+      gtagScript.async = true;
+      gtagScript.src = `https://www.googletagmanager.com/gtag/js?id=${GA4_ID}`;
+      document.head.appendChild(gtagScript);
+      
+      (window as any).dataLayer = (window as any).dataLayer || [];
+      (window as any).gtag = function() { (window as any).dataLayer.push(arguments); };
+      (window as any).gtag('js', new Date());
+      (window as any).gtag('config', GA4_ID, { page_path: '/ad', page_title: 'Ad Landing Page' });
+      console.log('[GA4] Initialized on /ad page');
+    } else {
+      (window as any).gtag('config', GA4_ID, { page_path: '/ad', page_title: 'Ad Landing Page' });
+    }
+
+    // Load Meta Pixel
+    if (!(window as any).fbq) {
+      const fbScript = document.createElement('script');
+      fbScript.innerHTML = `
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '${META_PIXEL_ID}');
+        fbq('track', 'PageView');
+      `;
+      document.head.appendChild(fbScript);
+      console.log('[Meta Pixel] Initialized on /ad page');
+    } else {
+      (window as any).fbq('track', 'PageView');
+    }
+
+    // Load Microsoft Clarity
+    if (!(window as any).clarity) {
+      const clarityScript = document.createElement('script');
+      clarityScript.innerHTML = `
+        (function(c,l,a,r,i,t,y){
+          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "m20xf4ffec");
+      `;
+      document.head.appendChild(clarityScript);
+    }
+
     return () => { document.head.removeChild(meta); };
   }, []);
 
@@ -97,15 +154,26 @@ export default function AdLanding() {
         }),
       });
       const data = await res.json();
-      if (data.emailSent && typeof window !== 'undefined' && (window as any).gtag) {
-        console.log('[GA4 Debug] Firing ad_leads event');
-        (window as any).gtag('event', 'ad_leads', {
-          parent_name: formData.parentName,
-          phone: formData.phone,
-          lead_source: utmData.leadSource,
-        });
+      if (data.emailSent) {
+        // Fire GA4 event
+        if (typeof window !== 'undefined' && (window as any).gtag) {
+          console.log('[GA4] Firing ad_leads event');
+          (window as any).gtag('event', 'ad_leads', {
+            parent_name: formData.parentName,
+            phone: formData.phone,
+            lead_source: utmData.leadSource,
+          });
+        }
+        // Fire Meta Pixel Lead event
+        if (typeof window !== 'undefined' && (window as any).fbq) {
+          console.log('[Meta Pixel] Firing Lead event');
+          (window as any).fbq('track', 'Lead', {
+            content_name: 'Ad Landing Form',
+            lead_source: utmData.leadSource,
+          });
+        }
       } else {
-        console.log('[GA4 Debug] Event NOT fired - emailSent:', data.emailSent, 'gtag:', !!(window as any).gtag);
+        console.log('[Tracking] Event NOT fired - emailSent:', data.emailSent);
       }
       setIsSubmitted(true);
     } catch (err) {

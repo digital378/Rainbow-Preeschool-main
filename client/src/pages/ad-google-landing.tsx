@@ -3,6 +3,9 @@ import { useState, useEffect, useRef } from "react";
 // Google Ads landing page with OTP verification
 const areas = ["Manpada", "Hariniwas", "Anand Nagar", "Dhokali", "Kalwa", "Kasarvadavali"];
 
+// GA4 Measurement ID
+const GA4_ID = "G-G1MX1N0M05";
+
 function getUtmParams() {
   const params = new URLSearchParams(window.location.search);
   const gclid = params.get('gclid');
@@ -63,11 +66,42 @@ export default function AdGoogleLanding() {
   const [utmData] = useState(() => getUtmParams());
 
   useEffect(() => {
+    // Add noindex meta tag
     const meta = document.createElement('meta');
     meta.name = 'robots';
     meta.content = 'noindex, nofollow';
     document.head.appendChild(meta);
     document.title = "Admissions Open - Rainbow Preschool Thane";
+
+    // Load GA4 gtag.js if not already loaded
+    if (!(window as any).gtag) {
+      const gtagScript = document.createElement('script');
+      gtagScript.async = true;
+      gtagScript.src = `https://www.googletagmanager.com/gtag/js?id=${GA4_ID}`;
+      document.head.appendChild(gtagScript);
+      
+      (window as any).dataLayer = (window as any).dataLayer || [];
+      (window as any).gtag = function() { (window as any).dataLayer.push(arguments); };
+      (window as any).gtag('js', new Date());
+      (window as any).gtag('config', GA4_ID, { page_path: '/ad-google', page_title: 'Google Ads Landing Page' });
+      console.log('[GA4] Initialized on /ad-google page');
+    } else {
+      (window as any).gtag('config', GA4_ID, { page_path: '/ad-google', page_title: 'Google Ads Landing Page' });
+    }
+
+    // Load Microsoft Clarity
+    if (!(window as any).clarity) {
+      const clarityScript = document.createElement('script');
+      clarityScript.innerHTML = `
+        (function(c,l,a,r,i,t,y){
+          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "m20xf4ffec");
+      `;
+      document.head.appendChild(clarityScript);
+    }
+
     return () => {
       document.head.removeChild(meta);
       if (firebaseModule) firebaseModule.resetRecaptcha();
