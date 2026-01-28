@@ -7,13 +7,6 @@
   <title>Google Ads Landing Page - Rainbow Preschool</title>
   <link rel="icon" type="image/png" href="/favicon.png">
   
-  <!-- Google Tag Manager -->
-  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-  })(window,document,'script','dataLayer','GT-55BFZCQT');</script>
-  
   <!-- Microsoft Clarity -->
   <script type="text/javascript">
     (function(c,l,a,r,i,t,y){
@@ -23,18 +16,16 @@
     })(window, document, "clarity", "script", "m20xf4ffec");
   </script>
   
-  <!-- GA4 via GTM dataLayer -->
+  <!-- GA4 Direct Tracking -->
   <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    // Push page view to dataLayer for GTM
-    dataLayer.push({
-      'event': 'page_view',
-      'page_title': 'Google Ads Landing Page - Rainbow Preschool',
-      'page_path': '/ad-google'
-    });
-    console.log('[GA4 Google Ad Page] Tracking initialized via GTM');
+    // Send page_view directly to GA4 via sendBeacon
+    (function(){
+      var cid = localStorage.getItem('ga_cid') || (Math.random().toString(36).substr(2, 9) + '.' + Date.now());
+      localStorage.setItem('ga_cid', cid);
+      var url = 'https://www.google-analytics.com/g/collect?v=2&tid=G-G1MX1N0M05&cid=' + cid + '&en=page_view&ep.page_path=/ad-google&ep.page_title=Google%20Ads%20Landing%20Page&dl=' + encodeURIComponent(window.location.href) + '&dt=Google%20Ads%20Landing%20Page';
+      navigator.sendBeacon(url);
+      console.log('[GA4] page_view sent for /ad-google');
+    })();
   </script>
   
   <style>
@@ -360,14 +351,13 @@
       } catch(err) { console.log('Page view beacon error:', err); }
     })();
     function sendGA4Event(eventName, params) {
-      window.dataLayer = window.dataLayer || [];
-      dataLayer.push(Object.assign({'event': eventName}, params || {}));
-      // Send via navigator.sendBeacon for reliability during navigation
       try {
-        var url = 'https://www.google-analytics.com/g/collect?v=2&tid=G-G1MX1N0M05&cid=' + (Math.random().toString(36).substr(2, 9)) + '&en=' + eventName + '&ep.page_path=' + encodeURIComponent(params.page_path || '/ad-google');
+        var cid = localStorage.getItem('ga_cid') || (Math.random().toString(36).substr(2, 9) + '.' + Date.now());
+        localStorage.setItem('ga_cid', cid);
+        var url = 'https://www.google-analytics.com/g/collect?v=2&tid=G-G1MX1N0M05&cid=' + cid + '&en=' + eventName + '&ep.page_path=' + encodeURIComponent(params.page_path || '/ad-google') + '&dl=' + encodeURIComponent(window.location.href);
         navigator.sendBeacon(url);
+        console.log('[GA4] ' + eventName + ' event sent');
       } catch(err) { console.log('Beacon error:', err); }
-      console.log('[GA4] ' + eventName + ' event fired');
     }
     function trackCall(e){
       sendGA4Event('google_ads_call', {'page_path': '/ad-google', 'page_title': 'Google Ads Landing Page'});
