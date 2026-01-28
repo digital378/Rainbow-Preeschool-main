@@ -68,7 +68,7 @@ export default function AdLanding() {
     meta.name = 'robots';
     meta.content = 'noindex, nofollow';
     document.head.appendChild(meta);
-    document.title = "Preschool Admissions 2026-27 | Rainbow Preschool Thane";
+    document.title = "ad landing page";
     
     // Add meta description
     const descMeta = document.createElement('meta');

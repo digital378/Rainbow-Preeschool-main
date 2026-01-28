@@ -72,7 +72,7 @@ export default function AdGoogleLanding() {
     meta.name = 'robots';
     meta.content = 'noindex, nofollow';
     document.head.appendChild(meta);
-    document.title = "Best Preschool in Thane | Admissions 2026-27 | Rainbow Preschool";
+    document.title = "google ads landing page";
     
     // Add meta description
     const descMeta = document.createElement('meta');
