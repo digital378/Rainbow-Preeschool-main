@@ -14,15 +14,6 @@
   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
   })(window,document,'script','dataLayer','GT-55BFZCQT');</script>
   
-  <!-- Google Analytics 4 (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-G1MX1N0M05"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-G1MX1N0M05', { send_page_view: false });
-  </script>
-  
   <!-- Meta Pixel Code -->
   <script>
   !function(f,b,e,v,n,t,s)
@@ -49,6 +40,19 @@
     })(window, document, "clarity", "script", "m20xf4ffec");
   </script>
   
+  <!-- GA4 via GTM dataLayer -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    // Push page view to dataLayer for GTM
+    dataLayer.push({
+      'event': 'page_view',
+      'page_title': 'Ad Landing Page - Rainbow Preschool',
+      'page_path': '/ad'
+    });
+    console.log('[GA4 Ad Page] Tracking initialized via GTM');
+  </script>
   
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
@@ -355,19 +359,32 @@
     }
     var utm=getUtmParams();
     // Fire page_view on load for GA4 tracking
-    // Send page_view via gtag
     (function(){
-      gtag('event', 'page_view', {
-        page_title: 'Ad Landing Page',
-        page_location: window.location.href,
-        page_path: '/ad'
+      window.dataLayer = window.dataLayer || [];
+      dataLayer.push({
+        'event': 'page_view',
+        'page_title': 'Ad Landing Page',
+        'page_location': window.location.href,
+        'page_path': '/ad'
       });
-      console.log('[GA4] page_view sent for /ad via gtag');
+      // Send directly to GA4 via Measurement Protocol
+      try {
+        var cid = localStorage.getItem('ga_cid') || (Math.random().toString(36).substr(2, 9) + '.' + Date.now());
+        localStorage.setItem('ga_cid', cid);
+        var url = 'https://www.google-analytics.com/g/collect?v=2&tid=G-G1MX1N0M05&cid=' + cid + '&en=page_view&ep.page_path=/ad&ep.page_title=Ad%20Landing%20Page&dl=' + encodeURIComponent(window.location.href) + '&dt=Ad%20Landing%20Page';
+        navigator.sendBeacon(url);
+        console.log('[GA4] page_view sent for /ad');
+      } catch(err) { console.log('Page view beacon error:', err); }
     })();
     function sendGA4Event(eventName, params) {
-      // Send via gtag for proper GA4 tracking
-      gtag('event', eventName, params || {});
-      console.log('[GA4] ' + eventName + ' event fired via gtag');
+      window.dataLayer = window.dataLayer || [];
+      dataLayer.push(Object.assign({'event': eventName}, params || {}));
+      // Send via navigator.sendBeacon for reliability during navigation
+      try {
+        var url = 'https://www.google-analytics.com/g/collect?v=2&tid=G-G1MX1N0M05&cid=' + (Math.random().toString(36).substr(2, 9)) + '&en=' + eventName + '&ep.page_path=' + encodeURIComponent(params.page_path || '/ad');
+        navigator.sendBeacon(url);
+      } catch(err) { console.log('Beacon error:', err); }
+      console.log('[GA4] ' + eventName + ' event fired');
     }
     function trackCall(e){
       sendGA4Event('ad_call', {'page_path': '/ad', 'page_title': 'Ad Landing Page'});
