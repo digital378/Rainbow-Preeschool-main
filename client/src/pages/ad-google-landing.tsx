@@ -72,7 +72,13 @@ export default function AdGoogleLanding() {
     meta.name = 'robots';
     meta.content = 'noindex, nofollow';
     document.head.appendChild(meta);
-    document.title = "Admissions Open - Rainbow Preschool Thane";
+    document.title = "Best Preschool in Thane | Admissions 2026-27 | Rainbow Preschool";
+    
+    // Add meta description
+    const descMeta = document.createElement('meta');
+    descMeta.name = 'description';
+    descMeta.content = 'Join the best preschool in Thane! Rainbow Preschool offers playgroup, nursery & kindergarten with CCTV, female staff & transport. Admissions open 2026-27.';
+    document.head.appendChild(descMeta);
 
     // Load GA4 gtag.js if not already loaded
     if (!(window as any).gtag) {
@@ -105,6 +111,7 @@ export default function AdGoogleLanding() {
 
     return () => {
       document.head.removeChild(meta);
+      document.head.removeChild(descMeta);
       if (firebaseModule) firebaseModule.resetRecaptcha();
     };
   }, []);

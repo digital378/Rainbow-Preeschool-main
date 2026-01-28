@@ -68,7 +68,13 @@ export default function AdLanding() {
     meta.name = 'robots';
     meta.content = 'noindex, nofollow';
     document.head.appendChild(meta);
-    document.title = "Admissions Open - Rainbow Preschool Thane";
+    document.title = "Preschool Admissions 2026-27 | Rainbow Preschool Thane";
+    
+    // Add meta description
+    const descMeta = document.createElement('meta');
+    descMeta.name = 'description';
+    descMeta.content = 'Limited seats for preschool admissions 2026-27 at Rainbow Preschool Thane. CCTV surveillance, 100% female staff, transport facility. Book your visit today!';
+    document.head.appendChild(descMeta);
 
     // Load GA4 gtag.js if not already loaded
     if (!(window as any).gtag) {
@@ -120,7 +126,10 @@ export default function AdLanding() {
       document.head.appendChild(clarityScript);
     }
 
-    return () => { document.head.removeChild(meta); };
+    return () => { 
+      document.head.removeChild(meta); 
+      document.head.removeChild(descMeta);
+    };
   }, []);
 
   const validate = () => {
