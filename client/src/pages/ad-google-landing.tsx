@@ -243,15 +243,15 @@ export default function AdGoogleLanding() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-pink-50 to-white dark:from-gray-900 dark:to-gray-950">
+    <div className="min-h-screen bg-gradient-to-b from-red-50 to-white" style={{ colorScheme: 'light' }}>
       {/* Header */}
-      <header className="bg-white dark:bg-gray-800 shadow-sm py-3 px-4 sticky top-0 z-50">
+      <header className="bg-white shadow-sm py-3 px-4 sticky top-0 z-50">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
-          <a href="/" className="font-bold text-lg text-pink-600">Rainbow Preschool</a>
+          <a href="/" className="font-bold text-lg text-red-600">Rainbow Preschool</a>
           <a
             href="tel:+918291568972"
             onClick={trackCall}
-            className="flex items-center gap-2 bg-pink-500 text-white px-4 py-2 rounded-full text-sm font-semibold"
+            className="flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded-full text-sm font-semibold"
             data-testid="link-ad-google-call"
           >
             <PhoneIcon /> <span className="hidden sm:inline">+91 82915 68972</span><span className="sm:hidden">Call</span>
@@ -263,42 +263,42 @@ export default function AdGoogleLanding() {
         <div className="grid md:grid-cols-2 gap-6">
           {/* Left Column */}
           <div className="space-y-4">
-            <div className="inline-flex items-center gap-2 bg-red-100 text-red-700 px-3 py-1 rounded-full text-sm font-semibold animate-pulse">
-              <span className="w-2 h-2 bg-red-500 rounded-full"></span>
+            <div className="inline-flex items-center gap-2 bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-semibold">
+              <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
               Limited Seats for 2026-27
             </div>
-            <h1 className="text-3xl md:text-4xl font-bold leading-tight">
-              Best Preschool in <span className="text-pink-600">Thane</span> Near You
+            <h1 className="text-3xl md:text-4xl font-bold leading-tight text-gray-900">
+              Best Preschool in <span className="text-red-600">Thane</span> Near You
             </h1>
-            <p className="text-gray-600 dark:text-gray-300">
-              6 centres across Thane. <strong>Walk-in within 10 mins!</strong>
+            <p className="text-gray-600">
+              Branches in Manpada (Aggarwal), Kalwa, Dhokali, Kasarvadavali, Anand Nagar & Hariniwas. <strong>Walk-in within 10 mins!</strong>
             </p>
             <div className="flex flex-wrap gap-2">
-              <span className="inline-flex items-center gap-1 text-sm bg-green-100 text-green-700 px-2 py-1 rounded-full">
+              <span className="inline-flex items-center gap-1 text-sm bg-green-50 text-green-700 px-3 py-1 rounded-full border border-green-200">
                 <CheckIcon /> CCTV
               </span>
-              <span className="inline-flex items-center gap-1 text-sm bg-blue-100 text-blue-700 px-2 py-1 rounded-full">
+              <span className="inline-flex items-center gap-1 text-sm bg-green-50 text-green-700 px-3 py-1 rounded-full border border-green-200">
                 <CheckIcon /> Transport
               </span>
-              <span className="inline-flex items-center gap-1 text-sm bg-purple-100 text-purple-700 px-2 py-1 rounded-full">
+              <span className="inline-flex items-center gap-1 text-sm bg-green-50 text-green-700 px-3 py-1 rounded-full border border-green-200">
                 <CheckIcon /> Female Staff
               </span>
             </div>
             
             <div className="grid grid-cols-2 gap-3 pt-4">
-              <div className="bg-white dark:bg-gray-800 p-3 rounded-lg border text-center">
-                <div className="font-bold text-lg">1,00,000+</div>
+              <div className="bg-white p-4 rounded-lg border border-gray-200 text-center">
+                <div className="font-bold text-xl text-gray-900">1,00,000+</div>
                 <div className="text-xs text-gray-500">Thane Families</div>
               </div>
-              <div className="bg-white dark:bg-gray-800 p-3 rounded-lg border text-center">
-                <div className="font-bold text-lg">18+ Years</div>
+              <div className="bg-white p-4 rounded-lg border border-gray-200 text-center">
+                <div className="font-bold text-xl text-gray-900">18+ Years</div>
                 <div className="text-xs text-gray-500">Experience</div>
               </div>
             </div>
           </div>
 
           {/* Form */}
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-xl border-2 border-pink-200 p-5" id="enquiry-form">
+          <div className="bg-white rounded-xl shadow-xl border border-gray-200 p-5" id="enquiry-form">
             <div id="recaptcha-container" ref={recaptchaRef}></div>
             
             {step === 'success' ? (
@@ -306,32 +306,32 @@ export default function AdGoogleLanding() {
                 <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto">
                   <CheckIcon />
                 </div>
-                <h3 className="text-xl font-bold">Thank You!</h3>
+                <h3 className="text-xl font-bold text-gray-900">Thank You!</h3>
                 <p className="text-gray-600">We'll call you within 24 hours.</p>
-                <a href="tel:+918291568972" className="inline-flex items-center gap-2 text-pink-600 font-semibold">
+                <a href="tel:+918291568972" className="inline-flex items-center gap-2 text-red-600 font-semibold">
                   <PhoneIcon /> Call Now: +91 82915 68972
                 </a>
               </div>
             ) : step === 'submitting' ? (
               <div className="text-center py-8">
-                <div className="animate-spin w-8 h-8 border-4 border-pink-500 border-t-transparent rounded-full mx-auto mb-4"></div>
-                <p>Submitting your enquiry...</p>
+                <div className="animate-spin w-8 h-8 border-4 border-red-500 border-t-transparent rounded-full mx-auto mb-4"></div>
+                <p className="text-gray-700">Submitting your enquiry...</p>
               </div>
             ) : step === 'otp' ? (
               <div className="space-y-4">
                 <div className="text-center">
-                  <h2 className="text-lg font-bold text-pink-600">Verify OTP</h2>
+                  <h2 className="text-lg font-bold text-red-600">Verify OTP</h2>
                   <p className="text-sm text-gray-500">Sent to +91 {formData.phone}</p>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-1">Enter 6-digit OTP</label>
+                  <label className="block text-sm font-medium mb-1 text-gray-700">Enter 6-digit OTP</label>
                   <input
                     type="text"
                     inputMode="numeric"
                     maxLength={6}
                     value={otp}
                     onChange={(e) => setOtp(e.target.value.replace(/\D/g, ''))}
-                    className="w-full px-3 py-3 border rounded-lg text-center text-2xl tracking-widest focus:ring-2 focus:ring-pink-500 dark:bg-gray-700"
+                    className="w-full px-3 py-3 border border-gray-300 rounded-lg text-center text-2xl tracking-widest focus:ring-2 focus:ring-red-500 bg-white text-gray-900"
                     placeholder="------"
                     data-testid="input-ad-google-otp"
                   />
@@ -340,7 +340,7 @@ export default function AdGoogleLanding() {
                 <button
                   onClick={verifyOtp}
                   disabled={isSubmitting || otp.length < 6}
-                  className="w-full bg-green-600 text-white py-3 rounded-lg font-semibold disabled:opacity-50"
+                  className="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-full font-semibold disabled:opacity-50"
                   data-testid="button-ad-google-verify"
                 >
                   {isSubmitting ? 'Verifying...' : 'Verify & Submit'}
@@ -348,7 +348,7 @@ export default function AdGoogleLanding() {
                 <div className="flex justify-between text-sm">
                   <button
                     onClick={() => { setStep('form'); setOtp(''); setOtpError(''); }}
-                    className="text-gray-500"
+                    className="text-gray-500 hover:text-gray-700"
                     data-testid="button-back-to-form-google"
                   >
                     Change Number
@@ -356,7 +356,7 @@ export default function AdGoogleLanding() {
                   <button
                     onClick={resendOtp}
                     disabled={countdown > 0 || isSubmitting}
-                    className={countdown > 0 ? 'text-gray-400' : 'text-pink-600'}
+                    className={countdown > 0 ? 'text-gray-400' : 'text-red-600 hover:text-red-700'}
                     data-testid="button-resend-otp-google"
                   >
                     {countdown > 0 ? `Resend in ${countdown}s` : 'Resend OTP'}
@@ -366,40 +366,40 @@ export default function AdGoogleLanding() {
             ) : (
               <>
                 <div className="text-center mb-4">
-                  <h2 className="text-lg font-bold text-pink-600">Enquire Now</h2>
-                  <p className="text-sm text-gray-500">Verify with OTP - Get callback in 30 mins</p>
+                  <h2 className="text-lg font-bold text-red-600">Enquire Now</h2>
+                  <p className="text-sm text-gray-500">Get callback within 30 mins</p>
                 </div>
                 <form onSubmit={(e) => { e.preventDefault(); sendOtp(); }} className="space-y-3">
                   <div>
-                    <label className="block text-sm font-medium mb-1">Parent's Name</label>
+                    <label className="block text-sm font-medium mb-1 text-gray-700">Parent's Name</label>
                     <input
                       type="text"
                       value={formData.parentName}
                       onChange={(e) => setFormData({...formData, parentName: e.target.value})}
-                      className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-pink-500 dark:bg-gray-700 dark:border-gray-600"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 bg-white text-gray-900"
                       placeholder="Enter your name"
                       data-testid="input-ad-google-name"
                     />
                     {errors.parentName && <p className="text-red-500 text-xs mt-1">{errors.parentName}</p>}
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-1">Phone Number</label>
+                    <label className="block text-sm font-medium mb-1 text-gray-700">Phone Number</label>
                     <input
                       type="tel"
                       value={formData.phone}
                       onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                      className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-pink-500 dark:bg-gray-700 dark:border-gray-600"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 bg-white text-gray-900"
                       placeholder="10-digit number"
                       data-testid="input-ad-google-phone"
                     />
                     {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone}</p>}
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-1">Child's Age</label>
+                    <label className="block text-sm font-medium mb-1 text-gray-700">Child's Age</label>
                     <select
                       value={formData.childAge}
                       onChange={(e) => setFormData({...formData, childAge: e.target.value})}
-                      className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-pink-500 dark:bg-gray-700 dark:border-gray-600"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 bg-white text-gray-900"
                       data-testid="select-ad-google-age"
                     >
                       <option value="">Select age</option>
@@ -411,11 +411,11 @@ export default function AdGoogleLanding() {
                     {errors.childAge && <p className="text-red-500 text-xs mt-1">{errors.childAge}</p>}
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-1">Your Area</label>
+                    <label className="block text-sm font-medium mb-1 text-gray-700">Your Area</label>
                     <select
                       value={formData.area}
                       onChange={(e) => setFormData({...formData, area: e.target.value})}
-                      className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-pink-500 dark:bg-gray-700 dark:border-gray-600"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 bg-white text-gray-900"
                       data-testid="select-ad-google-area"
                     >
                       <option value="">Select area</option>
@@ -427,7 +427,7 @@ export default function AdGoogleLanding() {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full bg-green-600 text-white py-3 rounded-lg font-semibold text-lg disabled:opacity-50"
+                    className="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-full font-semibold text-lg disabled:opacity-50"
                     data-testid="button-ad-google-submit"
                   >
                     {isSubmitting ? 'Sending OTP...' : 'Request Call Back'}
@@ -436,7 +436,7 @@ export default function AdGoogleLanding() {
                     <a
                       href="tel:+918291568972"
                       onClick={trackCall}
-                      className="flex-1 flex items-center justify-center gap-2 bg-pink-100 text-pink-700 py-2 rounded-lg font-medium text-sm"
+                      className="flex-1 flex items-center justify-center gap-2 border border-red-500 text-red-600 py-2 rounded-full font-medium text-sm hover:bg-red-50"
                       data-testid="link-ad-google-form-call"
                     >
                       <PhoneIcon /> Call
@@ -446,7 +446,7 @@ export default function AdGoogleLanding() {
                       onClick={trackWhatsApp}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex-1 flex items-center justify-center gap-2 bg-green-100 text-green-700 py-2 rounded-lg font-medium text-sm"
+                      className="flex-1 flex items-center justify-center gap-2 border border-green-500 text-green-600 py-2 rounded-full font-medium text-sm hover:bg-green-50"
                       data-testid="link-ad-google-form-whatsapp"
                     >
                       <WhatsAppIcon /> WhatsApp
@@ -460,7 +460,7 @@ export default function AdGoogleLanding() {
 
         {/* Programmes */}
         <div className="mt-8 space-y-3">
-          <h2 className="font-semibold text-lg">Our Programmes</h2>
+          <h2 className="font-semibold text-lg text-gray-900">Our Programmes</h2>
           <div className="grid gap-2">
             {[
               { name: 'Playgroup in Thane', age: '1.5-2.5 years', link: '/playgroup' },
@@ -471,12 +471,17 @@ export default function AdGoogleLanding() {
               <a
                 key={p.name}
                 href={p.link}
-                className="flex items-center gap-3 p-3 bg-white dark:bg-gray-800 rounded-lg border hover:bg-gray-50 dark:hover:bg-gray-700"
+                className="flex items-center justify-between p-3 bg-white rounded-lg border border-gray-200 hover:bg-gray-50"
                 data-testid={`link-ad-google-programme-${p.name.toLowerCase().replace(/\s+/g, '-')}`}
               >
-                <CheckIcon />
-                <span className="font-medium">{p.name}</span>
-                <span className="text-gray-500 text-sm">({p.age})</span>
+                <div className="flex items-center gap-3">
+                  <CheckIcon />
+                  <span className="font-medium text-gray-900">{p.name}</span>
+                  <span className="text-gray-500 text-sm">({p.age})</span>
+                </div>
+                <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
               </a>
             ))}
           </div>
@@ -489,18 +494,18 @@ export default function AdGoogleLanding() {
         onClick={trackWhatsApp}
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 z-50 bg-green-500 text-white p-4 rounded-full shadow-lg"
+        className="fixed bottom-6 right-6 z-50 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-lg"
         data-testid="link-ad-google-whatsapp"
       >
         <WhatsAppIcon />
       </a>
 
       {/* Footer */}
-      <footer className="bg-gray-100 dark:bg-gray-800 py-6 px-4 mt-8 text-center text-sm text-gray-600 dark:text-gray-300">
-        <p className="font-medium">Rainbow Preschool International</p>
+      <footer className="bg-gray-100 py-6 px-4 mt-8 text-center text-sm text-gray-600">
+        <p className="font-medium text-gray-900">Rainbow Preschool International</p>
         <p>Thane's #1 Preschool Since 2007</p>
         <div className="mt-3 flex items-center justify-center gap-4">
-          <a href="tel:+918291568972" className="text-pink-600 font-medium" data-testid="link-ad-google-footer-call">
+          <a href="tel:+918291568972" className="text-red-600 font-medium" data-testid="link-ad-google-footer-call">
             +91 82915 68972
           </a>
           <a
