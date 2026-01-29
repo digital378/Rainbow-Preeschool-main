@@ -55,52 +55,52 @@ export default function PreschoolAdmissions() {
         structuredData={structuredData}
       />
 
-      <div className="pt-20 min-h-screen bg-gradient-to-b from-red-50 to-white">
+      <div className="pt-20 min-h-screen bg-gradient-to-b from-red-50 to-white dark:from-gray-900 dark:to-gray-800">
         {/* Hero Section */}
         <section className="py-12 md:py-16 px-4">
           <div className="max-w-6xl mx-auto">
             <div className="grid md:grid-cols-2 gap-8 items-start">
               <div>
-                <span className="inline-block px-4 py-1 bg-green-100 text-green-700 rounded-full text-sm font-medium mb-4">
+                <span className="inline-block px-4 py-1 bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300 rounded-full text-sm font-medium mb-4">
                   Admissions Open 2025-26
                 </span>
-                <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
                   Preschool Admissions at Rainbow Preschool International
                 </h1>
-                <p className="text-lg text-gray-600 mb-6">
+                <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
                   Give your child the best start with Rainbow Preschool. We offer Playgroup, Nursery, and Kindergarten programmes designed for holistic development. 6 convenient locations across Thane.
                 </p>
 
                 {/* Trust Badges */}
                 <div className="flex flex-wrap gap-3 mb-6">
-                  <span className="flex items-center gap-2 px-3 py-2 bg-white rounded-lg border text-sm">
+                  <span className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-gray-800 rounded-lg border dark:border-gray-700 text-sm text-gray-900 dark:text-white">
                     <Check className="w-4 h-4 text-green-500" /> 18+ Years Experience
                   </span>
-                  <span className="flex items-center gap-2 px-3 py-2 bg-white rounded-lg border text-sm">
+                  <span className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-gray-800 rounded-lg border dark:border-gray-700 text-sm text-gray-900 dark:text-white">
                     <Check className="w-4 h-4 text-green-500" /> 1,00,000+ Students
                   </span>
-                  <span className="flex items-center gap-2 px-3 py-2 bg-white rounded-lg border text-sm">
+                  <span className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-gray-800 rounded-lg border dark:border-gray-700 text-sm text-gray-900 dark:text-white">
                     <Check className="w-4 h-4 text-green-500" /> Award-Winning
                   </span>
                 </div>
 
                 {/* Programme Cards */}
                 <div className="grid grid-cols-2 gap-3 mb-6">
-                  <Link href="/playgroup" className="p-4 bg-yellow-50 rounded-lg border border-yellow-200 hover:shadow-md transition-shadow">
-                    <h3 className="font-semibold text-gray-900">Playgroup</h3>
-                    <p className="text-sm text-gray-600">Age: 1.5 - 2.5 years</p>
+                  <Link href="/playgroup" className="p-4 bg-yellow-50 dark:bg-yellow-900/30 rounded-lg border border-yellow-200 dark:border-yellow-800 hover:shadow-md transition-shadow">
+                    <h3 className="font-semibold text-gray-900 dark:text-white">Playgroup</h3>
+                    <p className="text-sm text-gray-600 dark:text-gray-300">Age: 1.5 - 2.5 years</p>
                   </Link>
-                  <Link href="/nursery" className="p-4 bg-blue-50 rounded-lg border border-blue-200 hover:shadow-md transition-shadow">
-                    <h3 className="font-semibold text-gray-900">Nursery</h3>
-                    <p className="text-sm text-gray-600">Age: 2.5 - 3.5 years</p>
+                  <Link href="/nursery" className="p-4 bg-blue-50 dark:bg-blue-900/30 rounded-lg border border-blue-200 dark:border-blue-800 hover:shadow-md transition-shadow">
+                    <h3 className="font-semibold text-gray-900 dark:text-white">Nursery</h3>
+                    <p className="text-sm text-gray-600 dark:text-gray-300">Age: 2.5 - 3.5 years</p>
                   </Link>
-                  <Link href="/kindergarten" className="p-4 bg-green-50 rounded-lg border border-green-200 hover:shadow-md transition-shadow">
-                    <h3 className="font-semibold text-gray-900">Jr. KG</h3>
-                    <p className="text-sm text-gray-600">Age: 3.5 - 4.5 years</p>
+                  <Link href="/kindergarten" className="p-4 bg-green-50 dark:bg-green-900/30 rounded-lg border border-green-200 dark:border-green-800 hover:shadow-md transition-shadow">
+                    <h3 className="font-semibold text-gray-900 dark:text-white">Jr. KG</h3>
+                    <p className="text-sm text-gray-600 dark:text-gray-300">Age: 3.5 - 4.5 years</p>
                   </Link>
-                  <Link href="/kindergarten" className="p-4 bg-purple-50 rounded-lg border border-purple-200 hover:shadow-md transition-shadow">
-                    <h3 className="font-semibold text-gray-900">Sr. KG</h3>
-                    <p className="text-sm text-gray-600">Age: 4.5 - 5.5 years</p>
+                  <Link href="/kindergarten" className="p-4 bg-purple-50 dark:bg-purple-900/30 rounded-lg border border-purple-200 dark:border-purple-800 hover:shadow-md transition-shadow">
+                    <h3 className="font-semibold text-gray-900 dark:text-white">Sr. KG</h3>
+                    <p className="text-sm text-gray-600 dark:text-gray-300">Age: 4.5 - 5.5 years</p>
                   </Link>
                 </div>
               </div>
@@ -140,18 +140,18 @@ export default function PreschoolAdmissions() {
         </section>
 
         {/* Our Centres */}
-        <section className="py-12 px-4 bg-white">
+        <section className="py-12 px-4 bg-white dark:bg-gray-800">
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Our Centres in Thane</h2>
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">Our Centres in Thane</h2>
             <div className="grid md:grid-cols-3 gap-4">
               {centres.map((centre) => (
                 <Link
                   key={centre.id}
                   href={centre.preschoolLandingUrl || `/contact`}
-                  className="p-4 bg-gray-50 rounded-lg border hover:shadow-md transition-shadow"
+                  className="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg border dark:border-gray-600 hover:shadow-md transition-shadow"
                 >
-                  <h3 className="font-semibold text-gray-900">{centre.name}</h3>
-                  <p className="text-sm text-gray-600">{centre.localityName}</p>
+                  <h3 className="font-semibold text-gray-900 dark:text-white">{centre.name}</h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-300">{centre.localityName}</p>
                   <span className="text-primary text-sm font-medium mt-2 inline-block">View Details →</span>
                 </Link>
               ))}
@@ -162,12 +162,12 @@ export default function PreschoolAdmissions() {
         {/* FAQ Section */}
         <section className="py-12 px-4">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Frequently Asked Questions</h2>
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">Frequently Asked Questions</h2>
             <div className="space-y-4">
               {faqs.map((faq, index) => (
-                <div key={index} className="bg-white p-5 rounded-lg border">
-                  <h3 className="font-semibold text-gray-900 mb-2">{faq.question}</h3>
-                  <p className="text-gray-600 text-sm">{faq.answer}</p>
+                <div key={index} className="bg-white dark:bg-gray-800 p-5 rounded-lg border dark:border-gray-700">
+                  <h3 className="font-semibold text-gray-900 dark:text-white mb-2">{faq.question}</h3>
+                  <p className="text-gray-600 dark:text-gray-300 text-sm">{faq.answer}</p>
                 </div>
               ))}
             </div>

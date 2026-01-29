@@ -62,48 +62,48 @@ export default function BestPreschoolInThane() {
         structuredData={structuredData}
       />
 
-      <div className="pt-20 min-h-screen bg-gradient-to-b from-yellow-50 to-white">
+      <div className="pt-20 min-h-screen bg-gradient-to-b from-yellow-50 to-white dark:from-gray-900 dark:to-gray-800">
         {/* Hero Section */}
         <section className="py-12 md:py-16 px-4">
           <div className="max-w-6xl mx-auto">
             <div className="grid md:grid-cols-2 gap-8 items-start">
               <div>
-                <span className="inline-block px-4 py-1 bg-yellow-100 text-yellow-700 rounded-full text-sm font-medium mb-4">
+                <span className="inline-block px-4 py-1 bg-yellow-100 dark:bg-yellow-900/50 text-yellow-700 dark:text-yellow-300 rounded-full text-sm font-medium mb-4">
                   Award-Winning Since 2007
                 </span>
-                <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
                   Best Preschool in Thane - Rainbow Preschool International
                 </h1>
-                <p className="text-lg text-gray-600 mb-6">
+                <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
                   Trusted by over 1,00,000 families, Rainbow Preschool is Thane's leading early childhood education centre. Our award-winning curriculum, experienced teachers, and safe environment make us the top choice for parents.
                 </p>
 
                 {/* Stats */}
                 <div className="grid grid-cols-3 gap-4 mb-6">
-                  <div className="text-center p-4 bg-white rounded-lg border">
+                  <div className="text-center p-4 bg-white dark:bg-gray-800 rounded-lg border dark:border-gray-700">
                     <div className="text-2xl font-bold text-primary">18+</div>
-                    <div className="text-xs text-gray-600">Years Experience</div>
+                    <div className="text-xs text-gray-600 dark:text-gray-300">Years Experience</div>
                   </div>
-                  <div className="text-center p-4 bg-white rounded-lg border">
+                  <div className="text-center p-4 bg-white dark:bg-gray-800 rounded-lg border dark:border-gray-700">
                     <div className="text-2xl font-bold text-primary">1L+</div>
-                    <div className="text-xs text-gray-600">Students</div>
+                    <div className="text-xs text-gray-600 dark:text-gray-300">Students</div>
                   </div>
-                  <div className="text-center p-4 bg-white rounded-lg border">
+                  <div className="text-center p-4 bg-white dark:bg-gray-800 rounded-lg border dark:border-gray-700">
                     <div className="text-2xl font-bold text-primary">6</div>
-                    <div className="text-xs text-gray-600">Centres</div>
+                    <div className="text-xs text-gray-600 dark:text-gray-300">Centres</div>
                   </div>
                 </div>
 
                 {/* Awards */}
-                <div className="bg-white p-4 rounded-lg border mb-6">
-                  <h3 className="font-semibold text-gray-900 mb-3">Awards & Recognition</h3>
+                <div className="bg-white dark:bg-gray-800 p-4 rounded-lg border dark:border-gray-700 mb-6">
+                  <h3 className="font-semibold text-gray-900 dark:text-white mb-3">Awards & Recognition</h3>
                   <div className="grid grid-cols-2 gap-2">
                     {awards.map((award, idx) => (
                       <div key={idx} className="flex items-center gap-2 text-sm">
                         <Award className="w-4 h-4 text-yellow-500" />
                         <div>
-                          <div className="font-medium text-gray-900">{award.name}</div>
-                          <div className="text-xs text-gray-500">{award.description}</div>
+                          <div className="font-medium text-gray-900 dark:text-white">{award.name}</div>
+                          <div className="text-xs text-gray-500 dark:text-gray-400">{award.description}</div>
                         </div>
                       </div>
                     ))}
@@ -115,10 +115,10 @@ export default function BestPreschoolInThane() {
                   <Link href="/preschool-admissions" className="px-4 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:bg-red-700">
                     Apply Now
                   </Link>
-                  <Link href="/preschool-near-me" className="px-4 py-2 border border-primary text-primary rounded-lg text-sm font-medium hover:bg-red-50">
+                  <Link href="/preschool-near-me" className="px-4 py-2 border border-primary text-primary rounded-lg text-sm font-medium hover:bg-red-50 dark:hover:bg-red-900/20">
                     Find Centre Near You
                   </Link>
-                  <Link href="/programmes" className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-50">
+                  <Link href="/programmes" className="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 rounded-lg text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-700">
                     View Programmes
                   </Link>
                 </div>
@@ -159,51 +159,51 @@ export default function BestPreschoolInThane() {
         </section>
 
         {/* Why Best Section */}
-        <section className="py-12 px-4 bg-white">
+        <section className="py-12 px-4 bg-white dark:bg-gray-800">
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">What Makes Us the Best?</h2>
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-8 text-center">What Makes Us the Best?</h2>
             <div className="grid md:grid-cols-3 gap-6">
-              <div className="p-6 border rounded-xl">
-                <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-4">
+              <div className="p-6 border dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800">
+                <div className="w-12 h-12 bg-red-100 dark:bg-red-900/50 rounded-lg flex items-center justify-center mb-4">
                   <GraduationCap className="w-6 h-6 text-primary" />
                 </div>
-                <h3 className="font-semibold text-gray-900 mb-2">Expert Educators</h3>
-                <p className="text-sm text-gray-600">100% female staff with specialized training in early childhood education. Low 1:10 student-teacher ratio.</p>
+                <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Expert Educators</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-300">100% female staff with specialized training in early childhood education. Low 1:10 student-teacher ratio.</p>
               </div>
-              <div className="p-6 border rounded-xl">
-                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
-                  <BookOpen className="w-6 h-6 text-blue-600" />
+              <div className="p-6 border dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800">
+                <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/50 rounded-lg flex items-center justify-center mb-4">
+                  <BookOpen className="w-6 h-6 text-blue-600 dark:text-blue-400" />
                 </div>
-                <h3 className="font-semibold text-gray-900 mb-2">Rainbow Curriculum</h3>
-                <p className="text-sm text-gray-600">NEP 2020 aligned, play-based learning focusing on cognitive, social, emotional, and physical development.</p>
+                <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Rainbow Curriculum</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-300">NEP 2020 aligned, play-based learning focusing on cognitive, social, emotional, and physical development.</p>
               </div>
-              <div className="p-6 border rounded-xl">
-                <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
-                  <Shield className="w-6 h-6 text-green-600" />
+              <div className="p-6 border dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800">
+                <div className="w-12 h-12 bg-green-100 dark:bg-green-900/50 rounded-lg flex items-center justify-center mb-4">
+                  <Shield className="w-6 h-6 text-green-600 dark:text-green-400" />
                 </div>
-                <h3 className="font-semibold text-gray-900 mb-2">Safety First</h3>
-                <p className="text-sm text-gray-600">CCTV surveillance, secure entry, GPS-tracked transport, and strict hygiene protocols at all centres.</p>
+                <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Safety First</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-300">CCTV surveillance, secure entry, GPS-tracked transport, and strict hygiene protocols at all centres.</p>
               </div>
-              <div className="p-6 border rounded-xl">
-                <div className="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center mb-4">
-                  <Palette className="w-6 h-6 text-yellow-600" />
+              <div className="p-6 border dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800">
+                <div className="w-12 h-12 bg-yellow-100 dark:bg-yellow-900/50 rounded-lg flex items-center justify-center mb-4">
+                  <Palette className="w-6 h-6 text-yellow-600 dark:text-yellow-400" />
                 </div>
-                <h3 className="font-semibold text-gray-900 mb-2">Holistic Development</h3>
-                <p className="text-sm text-gray-600">Beyond academics - we focus on creativity, sports, music, and social skills through varied activities.</p>
+                <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Holistic Development</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-300">Beyond academics - we focus on creativity, sports, music, and social skills through varied activities.</p>
               </div>
-              <div className="p-6 border rounded-xl">
-                <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
-                  <MapPin className="w-6 h-6 text-purple-600" />
+              <div className="p-6 border dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800">
+                <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900/50 rounded-lg flex items-center justify-center mb-4">
+                  <MapPin className="w-6 h-6 text-purple-600 dark:text-purple-400" />
                 </div>
-                <h3 className="font-semibold text-gray-900 mb-2">Convenient Locations</h3>
-                <p className="text-sm text-gray-600">6 centres across Thane - Manpada, Hariniwas, Anand Nagar, Dhokali, Kalwa, Kasarvadavali.</p>
+                <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Convenient Locations</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-300">6 centres across Thane - Manpada, Hariniwas, Anand Nagar, Dhokali, Kalwa, Kasarvadavali.</p>
               </div>
-              <div className="p-6 border rounded-xl">
-                <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-4">
+              <div className="p-6 border dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800">
+                <div className="w-12 h-12 bg-red-100 dark:bg-red-900/50 rounded-lg flex items-center justify-center mb-4">
                   <MessageCircle className="w-6 h-6 text-primary" />
                 </div>
-                <h3 className="font-semibold text-gray-900 mb-2">Parent Partnership</h3>
-                <p className="text-sm text-gray-600">Regular updates, parent-teacher meetings, and open communication to keep you involved in your child's growth.</p>
+                <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Parent Partnership</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-300">Regular updates, parent-teacher meetings, and open communication to keep you involved in your child's growth.</p>
               </div>
             </div>
           </div>
@@ -212,16 +212,16 @@ export default function BestPreschoolInThane() {
         {/* Centres */}
         <section className="py-12 px-4">
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Visit Our Centres</h2>
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">Visit Our Centres</h2>
             <div className="grid md:grid-cols-3 gap-4">
               {centres.map((centre) => (
                 <Link
                   key={centre.id}
                   href={centre.preschoolLandingUrl || `/contact`}
-                  className="p-4 bg-white rounded-lg border hover:shadow-md transition-shadow"
+                  className="p-4 bg-white dark:bg-gray-800 rounded-lg border dark:border-gray-700 hover:shadow-md transition-shadow"
                 >
-                  <h3 className="font-semibold text-gray-900">{centre.localityName}</h3>
-                  <p className="text-sm text-gray-600 mb-2">{centre.address}</p>
+                  <h3 className="font-semibold text-gray-900 dark:text-white">{centre.localityName}</h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-300 mb-2">{centre.address}</p>
                   <span className="text-primary text-sm font-medium">Learn More →</span>
                 </Link>
               ))}
@@ -230,14 +230,14 @@ export default function BestPreschoolInThane() {
         </section>
 
         {/* FAQ Section */}
-        <section className="py-12 px-4 bg-white">
+        <section className="py-12 px-4 bg-white dark:bg-gray-800">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Frequently Asked Questions</h2>
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">Frequently Asked Questions</h2>
             <div className="space-y-4">
               {faqs.map((faq, index) => (
-                <div key={index} className="bg-gray-50 p-5 rounded-lg">
-                  <h3 className="font-semibold text-gray-900 mb-2">{faq.question}</h3>
-                  <p className="text-gray-600 text-sm">{faq.answer}</p>
+                <div key={index} className="bg-gray-50 dark:bg-gray-700 p-5 rounded-lg">
+                  <h3 className="font-semibold text-gray-900 dark:text-white mb-2">{faq.question}</h3>
+                  <p className="text-gray-600 dark:text-gray-300 text-sm">{faq.answer}</p>
                 </div>
               ))}
             </div>

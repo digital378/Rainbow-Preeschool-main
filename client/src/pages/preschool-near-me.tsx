@@ -51,18 +51,18 @@ export default function PreschoolNearMe() {
         structuredData={structuredData}
       />
 
-      <div className="pt-20 min-h-screen bg-gradient-to-b from-red-50 to-white">
+      <div className="pt-20 min-h-screen bg-gradient-to-b from-red-50 to-white dark:from-gray-900 dark:to-gray-800">
         {/* Hero Section */}
         <section className="py-12 md:py-16 px-4">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-10">
-              <span className="inline-block px-4 py-1 bg-red-100 text-primary rounded-full text-sm font-medium mb-4">
+              <span className="inline-block px-4 py-1 bg-red-100 dark:bg-red-900/50 text-primary rounded-full text-sm font-medium mb-4">
                 6 Centres Across Thane
               </span>
-              <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
                 Find a Rainbow Preschool Near You
               </h1>
-              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
                 With 6 convenient locations across Thane, there's always a Rainbow Preschool close to your home or workplace. Each centre offers the same quality education and care.
               </p>
             </div>
@@ -70,19 +70,19 @@ export default function PreschoolNearMe() {
             {/* Centre Grid */}
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
               {centres.map((centre) => (
-                <div key={centre.id} className="bg-white p-6 rounded-xl shadow-md border hover:shadow-lg transition-shadow">
+                <div key={centre.id} className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md border dark:border-gray-700 hover:shadow-lg transition-shadow">
                   <div className="flex items-start justify-between mb-3">
                     <div>
-                      <h2 className="text-lg font-bold text-gray-900">{centre.name}</h2>
+                      <h2 className="text-lg font-bold text-gray-900 dark:text-white">{centre.name}</h2>
                       <p className="text-primary font-medium">{centre.localityName}</p>
                     </div>
-                    <span className="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">Open</span>
+                    <span className="px-2 py-1 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 text-xs rounded-full">Open</span>
                   </div>
-                  <p className="text-sm text-gray-600 mb-4">{centre.address}</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">{centre.address}</p>
                   <div className="flex flex-wrap gap-2 mb-4">
-                    <span className="text-xs px-2 py-1 bg-gray-100 rounded">CCTV</span>
-                    <span className="text-xs px-2 py-1 bg-gray-100 rounded">Transport</span>
-                    <span className="text-xs px-2 py-1 bg-gray-100 rounded">Female Staff</span>
+                    <span className="text-xs px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 rounded">CCTV</span>
+                    <span className="text-xs px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 rounded">Transport</span>
+                    <span className="text-xs px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 rounded">Female Staff</span>
                   </div>
                   <div className="flex gap-2">
                     <a 
@@ -94,7 +94,7 @@ export default function PreschoolNearMe() {
                     {centre.preschoolLandingUrl && (
                       <Link
                         href={centre.preschoolLandingUrl}
-                        className="flex-1 text-center px-3 py-2 border border-primary text-primary rounded-lg text-sm font-medium hover:bg-red-50 transition-colors"
+                        className="flex-1 text-center px-3 py-2 border border-primary text-primary rounded-lg text-sm font-medium hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
                       >
                         View Details
                       </Link>
@@ -138,30 +138,30 @@ export default function PreschoolNearMe() {
         </section>
 
         {/* Why Choose Nearby */}
-        <section className="py-12 px-4 bg-white">
+        <section className="py-12 px-4 bg-white dark:bg-gray-800">
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">Why Choose a Preschool Near You?</h2>
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-8 text-center">Why Choose a Preschool Near You?</h2>
             <div className="grid md:grid-cols-3 gap-6">
               <div className="text-center p-6">
-                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Car className="w-8 h-8 text-blue-600" />
+                <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900/50 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Car className="w-8 h-8 text-blue-600 dark:text-blue-400" />
                 </div>
-                <h3 className="font-semibold text-gray-900 mb-2">Less Commute Time</h3>
-                <p className="text-sm text-gray-600">Shorter travel means more time for your child to rest and play at home</p>
+                <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Less Commute Time</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-300">Shorter travel means more time for your child to rest and play at home</p>
               </div>
               <div className="text-center p-6">
-                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Users className="w-8 h-8 text-green-600" />
+                <div className="w-16 h-16 bg-green-100 dark:bg-green-900/50 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Users className="w-8 h-8 text-green-600 dark:text-green-400" />
                 </div>
-                <h3 className="font-semibold text-gray-900 mb-2">Community Connection</h3>
-                <p className="text-sm text-gray-600">Your child makes friends in the neighborhood who they can play with after school</p>
+                <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Community Connection</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-300">Your child makes friends in the neighborhood who they can play with after school</p>
               </div>
               <div className="text-center p-6">
-                <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Zap className="w-8 h-8 text-yellow-600" />
+                <div className="w-16 h-16 bg-yellow-100 dark:bg-yellow-900/50 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Zap className="w-8 h-8 text-yellow-600 dark:text-yellow-400" />
                 </div>
-                <h3 className="font-semibold text-gray-900 mb-2">Quick Access</h3>
-                <p className="text-sm text-gray-600">Easy to reach in case of emergencies or for parent-teacher meetings</p>
+                <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Quick Access</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-300">Easy to reach in case of emergencies or for parent-teacher meetings</p>
               </div>
             </div>
           </div>
@@ -170,12 +170,12 @@ export default function PreschoolNearMe() {
         {/* FAQ Section */}
         <section className="py-12 px-4">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Frequently Asked Questions</h2>
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">Frequently Asked Questions</h2>
             <div className="space-y-4">
               {faqs.map((faq, index) => (
-                <div key={index} className="bg-white p-5 rounded-lg border">
-                  <h3 className="font-semibold text-gray-900 mb-2">{faq.question}</h3>
-                  <p className="text-gray-600 text-sm">{faq.answer}</p>
+                <div key={index} className="bg-white dark:bg-gray-800 p-5 rounded-lg border dark:border-gray-700">
+                  <h3 className="font-semibold text-gray-900 dark:text-white mb-2">{faq.question}</h3>
+                  <p className="text-gray-600 dark:text-gray-300 text-sm">{faq.answer}</p>
                 </div>
               ))}
             </div>
@@ -183,21 +183,21 @@ export default function PreschoolNearMe() {
         </section>
 
         {/* Related Links */}
-        <section className="py-12 px-4 bg-gray-50">
+        <section className="py-12 px-4 bg-gray-50 dark:bg-gray-800/50">
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-xl font-bold text-gray-900 mb-6 text-center">Explore More</h2>
+            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-6 text-center">Explore More</h2>
             <div className="grid md:grid-cols-4 gap-4">
-              <Link href="/preschool-admissions" className="p-4 bg-white rounded-lg border text-center hover:shadow-md transition-shadow">
-                <span className="font-medium text-gray-900">Preschool Admissions</span>
+              <Link href="/preschool-admissions" className="p-4 bg-white dark:bg-gray-800 rounded-lg border dark:border-gray-700 text-center hover:shadow-md transition-shadow">
+                <span className="font-medium text-gray-900 dark:text-white">Preschool Admissions</span>
               </Link>
-              <Link href="/best-preschool-in-thane" className="p-4 bg-white rounded-lg border text-center hover:shadow-md transition-shadow">
-                <span className="font-medium text-gray-900">Best Preschool in Thane</span>
+              <Link href="/best-preschool-in-thane" className="p-4 bg-white dark:bg-gray-800 rounded-lg border dark:border-gray-700 text-center hover:shadow-md transition-shadow">
+                <span className="font-medium text-gray-900 dark:text-white">Best Preschool in Thane</span>
               </Link>
-              <Link href="/playgroup" className="p-4 bg-white rounded-lg border text-center hover:shadow-md transition-shadow">
-                <span className="font-medium text-gray-900">Playgroup Programme</span>
+              <Link href="/playgroup" className="p-4 bg-white dark:bg-gray-800 rounded-lg border dark:border-gray-700 text-center hover:shadow-md transition-shadow">
+                <span className="font-medium text-gray-900 dark:text-white">Playgroup Programme</span>
               </Link>
-              <Link href="/programmes" className="p-4 bg-white rounded-lg border text-center hover:shadow-md transition-shadow">
-                <span className="font-medium text-gray-900">All Programmes</span>
+              <Link href="/programmes" className="p-4 bg-white dark:bg-gray-800 rounded-lg border dark:border-gray-700 text-center hover:shadow-md transition-shadow">
+                <span className="font-medium text-gray-900 dark:text-white">All Programmes</span>
               </Link>
             </div>
           </div>
