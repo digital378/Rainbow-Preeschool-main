@@ -1,0 +1,135 @@
+You are an expert Technical SEO + Frontend Developer working on a React + TypeScript + Vite SPA using Wouter routing.
+Website: https://www.rainbowpreschools.com/
+Goal: Fix ONLY the HOMEPAGE SEO/content structure so it supports (but does not cannibalize) our money pages and increases impressions & clicks.
+
+Context:
+- The homepage currently uses strong “Best Preschool in Thane” style language in prominent headings/sections.
+- We have (or will have) dedicated landing pages for:
+  /best-preschool-in-thane
+  /preschool-near-me
+  /preschool-admissions
+- The homepage should primarily target BRAND + TRUST intent and act as an internal-link hub to the above pages, not compete with them.
+- SEO is handled by: client/src/components/seo.tsx
+- Home page component exists (find it via routing in client/src/App.tsx).
+
+CRITICAL RULES:
+- Do NOT redesign the UI. Keep layout, spacing, and components.
+- Only change heading text, on-page copy (lightly), and internal link placement.
+- Must preserve conversion elements (callback form, CTA buttons).
+- Ensure semantic HTML and heading hierarchy is correct (exactly ONE H1).
+- Ensure internal links are plain <a href="..."> crawlable links.
+- After changes, output a checklist and specify EXACT files modified.
+
+========================================================
+STEP-BY-STEP HOMEPAGE FIX (EXECUTE IN ORDER)
+========================================================
+
+STEP 0 — Locate homepage implementation (no changes yet)
+0.1 In client/src/App.tsx, identify route for "/".
+0.2 Open the component file for homepage (likely under client/src/pages/ or client/src/components/).
+0.3 Identify the current SEO props passed into <SEO /> (title, description, canonical, robots, schema).
+
+STEP 1 — Homepage SEO metadata (brand-led)
+1.1 Set homepage <SEO> title EXACTLY:
+"Rainbow Preschool International | Early Learning & Admissions"
+1.2 Set homepage meta description EXACTLY:
+"Rainbow Preschool International offers safe, joyful early learning in Thane with experienced educators. Explore programmes, centres, and admissions information."
+1.3 Ensure canonical uses preferred domain:
+https://www.rainbowpreschools.com/
+1.4 Ensure robots is:
+index,follow
+1.5 Ensure OpenGraph/Twitter tags mirror title/description (if SEO component supports it).
+
+STEP 2 — Fix Heading hierarchy (most important)
+2.1 Ensure there is EXACTLY ONE H1 on the homepage.
+2.2 Set the H1 text to EXACTLY:
+"Rainbow Preschool International"
+2.3 If the hero currently has a single big heading containing “Best Preschool …”, replace it with:
+- H1: "Rainbow Preschool International"
+- Subheading (paragraph or H2/H3 depending on design): "A trusted preschool in Thane, nurturing joyful early learning since 2007."
+2.4 Convert any other accidental H1s on the page to H2/H3 as appropriate.
+
+STEP 3 — Remove homepage cannibalization with “Best Preschool in Thane”
+3.1 Find the section currently titled “Best Preschool in Thane”.
+3.2 Change its heading to EXACTLY:
+"Why Parents Trust Rainbow Preschools"
+3.3 Add a short supporting sentence under heading:
+"What sets our centres apart for early childhood education in Thane."
+3.4 Remove repetitive “best preschool” phrases inside the paragraph text.
+Keep ONE natural mention of “preschool in Thane” if needed, but do not repeat.
+
+STEP 4 — Strengthen the internal link hub (quick links)
+4.1 Confirm the homepage has a visible row of quick links/pills/buttons near the top.
+4.2 These must be crawlable HTML links:
+<a href="/best-preschool-in-thane">Best Preschool in Thane</a>
+<a href="/preschool-near-me">Preschool Near Me</a>
+<a href="/preschool-admissions">Preschool Admissions</a>
+<a href="/playgroup">Playgroup</a>
+<a href="/nursery">Nursery</a>
+<a href="/kindergarten">Kindergarten</a>
+4.3 Ensure these are NOT buttons with onClick routing only. They must be actual anchors.
+4.4 Ensure the link texts match EXACTLY as above (anchor text matters).
+
+STEP 5 — Add text support for Awards logos (logos alone aren’t readable)
+5.1 Under “Awarded By” logos add one short sentence (plain text):
+"Recognised by leading national and education platforms for excellence in early childhood education."
+5.2 Do not add keyword lists. Keep it natural.
+
+STEP 6 — Improve “About” copy to reduce location repetition
+6.1 Keep the About section heading as an H2:
+"A Trusted Preschool in Thane Since 2007"
+6.2 Edit paragraph copy so that:
+- “Thane” appears max 1–2 times in this section
+- Focus on trust signals: years, students, teachers, play-based learning, safety
+- Remove phrases like “best preschool near me in Thane” from this section
+
+STEP 7 — Programmes section: add a short intro line + ensure correct heading levels
+7.1 Ensure section title remains H2.
+7.2 Add one sentence above the programme cards:
+"Explore our age-appropriate programmes designed to support your child’s development at every stage."
+7.3 Ensure programme cards link using <a href="/playgroup">, /nursery, /kindergarten.
+
+STEP 8 — Locations section: treat as navigation directory (not keyword stuffing)
+8.1 Keep "Find Preschool Near You in Thane" as an H2 (NOT H1).
+8.2 Each location tile must link to the correct local page:
+- /preschool-in-manpada-thane
+- /preschool-in-hariniwas-thane
+- /preschool-in-anand-nagar-thane
+- /preschool-in-dhokali-thane
+- /preschool-in-kalwa-thane
+- /preschool-in-kasarvadavali-thane
+8.3 Ensure anchor tags are crawlable.
+8.4 Avoid repeating “preschool near me” multiple times in this section.
+
+STEP 9 — Images: add clean alt text
+9.1 For key homepage images, add descriptive alt text without stuffing:
+Examples:
+"Children learning through play at Rainbow Preschool"
+"Preschool classroom activity at Rainbow Preschool Thane"
+9.2 Do not use repeated keyword strings.
+
+STEP 10 — Validate (must do and report)
+10.1 Confirm:
+- Only ONE H1 exists
+- Homepage title/description updated
+- “Best Preschool in Thane” section heading removed from homepage and replaced as specified
+- Quick links are real <a href> anchors and point to correct pages
+- Location links point to correct /preschool-in-* pages
+10.2 Print an “SEO QA Report” with:
+- H1 text
+- Page title
+- Meta description length
+- Canonical URL
+- List of the 6 quick links (href + anchor text)
+- Count of H1 tags detected
+
+OUTPUT REQUIREMENTS:
+- Provide the exact file paths changed and a brief summary of edits per file.
+- Provide the final homepage text for:
+  H1 + hero subheading
+  “Why Parents Trust…” heading + 1 paragraph
+  Awards supporting sentence
+  Programmes intro sentence
+- Do NOT ask for approval. Implement fully.
+
+Proceed now and complete all steps.
