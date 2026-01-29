@@ -19,7 +19,7 @@ export function BlogInternalLinks({ currentSlug = "" }: BlogInternalLinksProps) 
   const locationLink = getLocationLink();
 
   return (
-    <div className="mt-12 p-6 bg-gradient-to-r from-pink-50 to-yellow-50 rounded-xl border border-pink-100">
+    <div className="mt-12 p-6 bg-gradient-to-r from-red-50 to-yellow-50 rounded-xl border border-red-100">
       <h3 className="text-lg font-semibold text-gray-900 mb-4">
         Explore Rainbow Preschool
       </h3>
@@ -27,28 +27,28 @@ export function BlogInternalLinks({ currentSlug = "" }: BlogInternalLinksProps) 
       <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
         <Link 
           href="/preschool-admissions"
-          className="flex items-center gap-2 px-4 py-3 bg-white rounded-lg border border-gray-200 hover:border-pink-300 hover:shadow-sm transition-all text-sm font-medium text-gray-700"
+          className="flex items-center gap-2 px-4 py-3 bg-white rounded-lg border border-gray-200 hover:border-red-300 hover:shadow-sm transition-all text-sm font-medium text-gray-700"
           data-testid="link-blog-admissions"
         >
-          <FileText className="w-4 h-4 text-pink-500 flex-shrink-0" />
+          <FileText className="w-4 h-4 text-primary flex-shrink-0" />
           Preschool Admissions
         </Link>
         
         <Link 
           href="/preschool-near-me"
-          className="flex items-center gap-2 px-4 py-3 bg-white rounded-lg border border-gray-200 hover:border-pink-300 hover:shadow-sm transition-all text-sm font-medium text-gray-700"
+          className="flex items-center gap-2 px-4 py-3 bg-white rounded-lg border border-gray-200 hover:border-red-300 hover:shadow-sm transition-all text-sm font-medium text-gray-700"
           data-testid="link-blog-near-me"
         >
-          <MapPin className="w-4 h-4 text-pink-500 flex-shrink-0" />
+          <MapPin className="w-4 h-4 text-primary flex-shrink-0" />
           Find Preschool Near You
         </Link>
         
         <Link 
           href="/best-preschool-in-thane"
-          className="flex items-center gap-2 px-4 py-3 bg-white rounded-lg border border-gray-200 hover:border-pink-300 hover:shadow-sm transition-all text-sm font-medium text-gray-700"
+          className="flex items-center gap-2 px-4 py-3 bg-white rounded-lg border border-gray-200 hover:border-red-300 hover:shadow-sm transition-all text-sm font-medium text-gray-700"
           data-testid="link-blog-best-preschool"
         >
-          <Award className="w-4 h-4 text-pink-500 flex-shrink-0" />
+          <Award className="w-4 h-4 text-primary flex-shrink-0" />
           Best Preschool in Thane
         </Link>
         
@@ -81,10 +81,10 @@ export function BlogInternalLinks({ currentSlug = "" }: BlogInternalLinksProps) 
       </div>
       
       {locationLink && (
-        <div className="mt-4 pt-4 border-t border-pink-100">
+        <div className="mt-4 pt-4 border-t border-red-100">
           <Link 
             href={locationLink.url}
-            className="inline-flex items-center gap-2 px-5 py-3 bg-pink-600 text-white rounded-lg hover:bg-pink-700 transition-colors text-sm font-semibold"
+            className="inline-flex items-center gap-2 px-5 py-3 bg-primary text-white rounded-lg hover:bg-red-700 transition-colors text-sm font-semibold"
             data-testid="link-blog-location"
           >
             <MapPin className="w-4 h-4" />

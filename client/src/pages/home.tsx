@@ -311,12 +311,12 @@ export default function Home() {
       <HeroSection />
       
       {/* Quick Navigation Links for SEO */}
-      <section className="py-6 bg-gradient-to-r from-pink-50 to-yellow-50 border-y border-pink-100">
+      <section className="py-6 bg-gradient-to-r from-red-50 to-yellow-50 border-y border-red-100">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex flex-wrap justify-center gap-3 md:gap-4">
             <Link href="/best-preschool-in-thane">
               <Button variant="outline" size="sm" className="rounded-full" data-testid="link-best-preschool">
-                <Award className="w-4 h-4 text-pink-500" />
+                <Award className="w-4 h-4 text-primary" />
                 Best Preschool in Thane
               </Button>
             </Link>

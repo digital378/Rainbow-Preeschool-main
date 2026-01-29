@@ -2,6 +2,7 @@ import { Link } from "wouter";
 import { SEO, organizationSchema, websiteSchema, createBreadcrumbSchema, createFAQSchema } from "@/components/seo";
 import { ContactForm } from "@/components/contact-form";
 import { centres } from "@shared/centre-data";
+import { Car, Users, Zap } from "lucide-react";
 
 const faqs = [
   {
@@ -49,12 +50,12 @@ export default function PreschoolNearMe() {
         structuredData={structuredData}
       />
 
-      <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
+      <div className="pt-20 min-h-screen bg-gradient-to-b from-red-50 to-white">
         {/* Hero Section */}
         <section className="py-12 md:py-16 px-4">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-10">
-              <span className="inline-block px-4 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium mb-4">
+              <span className="inline-block px-4 py-1 bg-red-100 text-primary rounded-full text-sm font-medium mb-4">
                 6 Centres Across Thane
               </span>
               <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
@@ -72,7 +73,7 @@ export default function PreschoolNearMe() {
                   <div className="flex items-start justify-between mb-3">
                     <div>
                       <h2 className="text-lg font-bold text-gray-900">{centre.name}</h2>
-                      <p className="text-pink-600 font-medium">{centre.localityName}</p>
+                      <p className="text-primary font-medium">{centre.localityName}</p>
                     </div>
                     <span className="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">Open</span>
                   </div>
@@ -85,14 +86,14 @@ export default function PreschoolNearMe() {
                   <div className="flex gap-2">
                     <a 
                       href={`tel:${centre.phoneNumbers[0]}`}
-                      className="flex-1 text-center px-3 py-2 bg-pink-600 text-white rounded-lg text-sm font-medium hover:bg-pink-700 transition-colors"
+                      className="flex-1 text-center px-3 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:bg-red-700 transition-colors"
                     >
                       Call Now
                     </a>
                     {centre.preschoolLandingUrl && (
                       <Link
                         href={centre.preschoolLandingUrl}
-                        className="flex-1 text-center px-3 py-2 border border-pink-600 text-pink-600 rounded-lg text-sm font-medium hover:bg-pink-50 transition-colors"
+                        className="flex-1 text-center px-3 py-2 border border-primary text-primary rounded-lg text-sm font-medium hover:bg-red-50 transition-colors"
                       >
                         View Details
                       </Link>
@@ -118,21 +119,21 @@ export default function PreschoolNearMe() {
             <div className="grid md:grid-cols-3 gap-6">
               <div className="text-center p-6">
                 <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl">🚗</span>
+                  <Car className="w-8 h-8 text-blue-600" />
                 </div>
                 <h3 className="font-semibold text-gray-900 mb-2">Less Commute Time</h3>
                 <p className="text-sm text-gray-600">Shorter travel means more time for your child to rest and play at home</p>
               </div>
               <div className="text-center p-6">
                 <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl">👨‍👩‍👧</span>
+                  <Users className="w-8 h-8 text-green-600" />
                 </div>
                 <h3 className="font-semibold text-gray-900 mb-2">Community Connection</h3>
                 <p className="text-sm text-gray-600">Your child makes friends in the neighborhood who they can play with after school</p>
               </div>
               <div className="text-center p-6">
                 <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl">⚡</span>
+                  <Zap className="w-8 h-8 text-yellow-600" />
                 </div>
                 <h3 className="font-semibold text-gray-900 mb-2">Quick Access</h3>
                 <p className="text-sm text-gray-600">Easy to reach in case of emergencies or for parent-teacher meetings</p>

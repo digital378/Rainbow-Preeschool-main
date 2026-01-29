@@ -2,6 +2,7 @@ import { Link } from "wouter";
 import { SEO, organizationSchema, websiteSchema, createBreadcrumbSchema, createFAQSchema } from "@/components/seo";
 import { ContactForm } from "@/components/contact-form";
 import { centres } from "@shared/centre-data";
+import { GraduationCap, BookOpen, Shield, Palette, MapPin, MessageCircle, Award } from "lucide-react";
 
 const faqs = [
   {
@@ -60,7 +61,7 @@ export default function BestPreschoolInThane() {
         structuredData={structuredData}
       />
 
-      <div className="min-h-screen bg-gradient-to-b from-yellow-50 to-white">
+      <div className="pt-20 min-h-screen bg-gradient-to-b from-yellow-50 to-white">
         {/* Hero Section */}
         <section className="py-12 md:py-16 px-4">
           <div className="max-w-6xl mx-auto">
@@ -79,15 +80,15 @@ export default function BestPreschoolInThane() {
                 {/* Stats */}
                 <div className="grid grid-cols-3 gap-4 mb-6">
                   <div className="text-center p-4 bg-white rounded-lg border">
-                    <div className="text-2xl font-bold text-pink-600">18+</div>
+                    <div className="text-2xl font-bold text-primary">18+</div>
                     <div className="text-xs text-gray-600">Years Experience</div>
                   </div>
                   <div className="text-center p-4 bg-white rounded-lg border">
-                    <div className="text-2xl font-bold text-pink-600">1L+</div>
+                    <div className="text-2xl font-bold text-primary">1L+</div>
                     <div className="text-xs text-gray-600">Students</div>
                   </div>
                   <div className="text-center p-4 bg-white rounded-lg border">
-                    <div className="text-2xl font-bold text-pink-600">6</div>
+                    <div className="text-2xl font-bold text-primary">6</div>
                     <div className="text-xs text-gray-600">Centres</div>
                   </div>
                 </div>
@@ -98,7 +99,7 @@ export default function BestPreschoolInThane() {
                   <div className="grid grid-cols-2 gap-2">
                     {awards.map((award, idx) => (
                       <div key={idx} className="flex items-center gap-2 text-sm">
-                        <span className="text-yellow-500">🏆</span>
+                        <Award className="w-4 h-4 text-yellow-500" />
                         <div>
                           <div className="font-medium text-gray-900">{award.name}</div>
                           <div className="text-xs text-gray-500">{award.description}</div>
@@ -110,10 +111,10 @@ export default function BestPreschoolInThane() {
 
                 {/* Quick Links */}
                 <div className="flex flex-wrap gap-2">
-                  <Link href="/preschool-admissions" className="px-4 py-2 bg-pink-600 text-white rounded-lg text-sm font-medium hover:bg-pink-700">
+                  <Link href="/preschool-admissions" className="px-4 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:bg-red-700">
                     Apply Now
                   </Link>
-                  <Link href="/preschool-near-me" className="px-4 py-2 border border-pink-600 text-pink-600 rounded-lg text-sm font-medium hover:bg-pink-50">
+                  <Link href="/preschool-near-me" className="px-4 py-2 border border-primary text-primary rounded-lg text-sm font-medium hover:bg-red-50">
                     Find Centre Near You
                   </Link>
                   <Link href="/programmes" className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-50">
@@ -138,43 +139,43 @@ export default function BestPreschoolInThane() {
             <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">What Makes Us the Best?</h2>
             <div className="grid md:grid-cols-3 gap-6">
               <div className="p-6 border rounded-xl">
-                <div className="w-12 h-12 bg-pink-100 rounded-lg flex items-center justify-center mb-4">
-                  <span className="text-xl">👩‍🏫</span>
+                <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-4">
+                  <GraduationCap className="w-6 h-6 text-primary" />
                 </div>
                 <h3 className="font-semibold text-gray-900 mb-2">Expert Educators</h3>
                 <p className="text-sm text-gray-600">100% female staff with specialized training in early childhood education. Low 1:10 student-teacher ratio.</p>
               </div>
               <div className="p-6 border rounded-xl">
                 <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
-                  <span className="text-xl">📚</span>
+                  <BookOpen className="w-6 h-6 text-blue-600" />
                 </div>
                 <h3 className="font-semibold text-gray-900 mb-2">Rainbow Curriculum</h3>
                 <p className="text-sm text-gray-600">NEP 2020 aligned, play-based learning focusing on cognitive, social, emotional, and physical development.</p>
               </div>
               <div className="p-6 border rounded-xl">
                 <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
-                  <span className="text-xl">🛡️</span>
+                  <Shield className="w-6 h-6 text-green-600" />
                 </div>
                 <h3 className="font-semibold text-gray-900 mb-2">Safety First</h3>
                 <p className="text-sm text-gray-600">CCTV surveillance, secure entry, GPS-tracked transport, and strict hygiene protocols at all centres.</p>
               </div>
               <div className="p-6 border rounded-xl">
                 <div className="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center mb-4">
-                  <span className="text-xl">🎨</span>
+                  <Palette className="w-6 h-6 text-yellow-600" />
                 </div>
                 <h3 className="font-semibold text-gray-900 mb-2">Holistic Development</h3>
                 <p className="text-sm text-gray-600">Beyond academics - we focus on creativity, sports, music, and social skills through varied activities.</p>
               </div>
               <div className="p-6 border rounded-xl">
                 <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
-                  <span className="text-xl">📍</span>
+                  <MapPin className="w-6 h-6 text-purple-600" />
                 </div>
                 <h3 className="font-semibold text-gray-900 mb-2">Convenient Locations</h3>
                 <p className="text-sm text-gray-600">6 centres across Thane - Manpada, Hariniwas, Anand Nagar, Dhokali, Kalwa, Kasarvadavali.</p>
               </div>
               <div className="p-6 border rounded-xl">
                 <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-4">
-                  <span className="text-xl">💬</span>
+                  <MessageCircle className="w-6 h-6 text-primary" />
                 </div>
                 <h3 className="font-semibold text-gray-900 mb-2">Parent Partnership</h3>
                 <p className="text-sm text-gray-600">Regular updates, parent-teacher meetings, and open communication to keep you involved in your child's growth.</p>
@@ -196,7 +197,7 @@ export default function BestPreschoolInThane() {
                 >
                   <h3 className="font-semibold text-gray-900">{centre.localityName}</h3>
                   <p className="text-sm text-gray-600 mb-2">{centre.address}</p>
-                  <span className="text-pink-600 text-sm font-medium">Learn More →</span>
+                  <span className="text-primary text-sm font-medium">Learn More →</span>
                 </Link>
               ))}
             </div>
@@ -219,15 +220,15 @@ export default function BestPreschoolInThane() {
         </section>
 
         {/* CTA */}
-        <section className="py-12 px-4 bg-gradient-to-r from-pink-600 to-purple-600 text-white">
+        <section className="py-12 px-4 bg-primary text-white">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-2xl font-bold mb-4">Experience the Rainbow Difference</h2>
             <p className="mb-6">Join the family of 1,00,000+ happy parents who chose Rainbow Preschool for their children.</p>
             <div className="flex flex-wrap justify-center gap-4">
-              <Link href="/preschool-admissions" className="px-6 py-3 bg-white text-pink-600 rounded-lg font-semibold hover:shadow-lg transition-shadow">
+              <Link href="/preschool-admissions" className="px-6 py-3 bg-white text-primary rounded-lg font-semibold hover:shadow-lg transition-shadow">
                 Start Admission
               </Link>
-              <a href="tel:+918291568972" className="px-6 py-3 border-2 border-white text-white rounded-lg font-semibold hover:bg-white hover:text-pink-600 transition-colors">
+              <a href="tel:+918291568972" className="px-6 py-3 border-2 border-white text-white rounded-lg font-semibold hover:bg-white hover:text-primary transition-colors">
                 Call +91 82915 68972
               </a>
             </div>

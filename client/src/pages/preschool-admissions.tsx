@@ -2,6 +2,7 @@ import { Link } from "wouter";
 import { SEO, organizationSchema, websiteSchema, createBreadcrumbSchema, createFAQSchema } from "@/components/seo";
 import { ContactForm } from "@/components/contact-form";
 import { centres } from "@shared/centre-data";
+import { Check } from "lucide-react";
 
 const faqs = [
   {
@@ -53,7 +54,7 @@ export default function PreschoolAdmissions() {
         structuredData={structuredData}
       />
 
-      <div className="min-h-screen bg-gradient-to-b from-pink-50 to-white">
+      <div className="pt-20 min-h-screen bg-gradient-to-b from-red-50 to-white">
         {/* Hero Section */}
         <section className="py-12 md:py-16 px-4">
           <div className="max-w-6xl mx-auto">
@@ -72,13 +73,13 @@ export default function PreschoolAdmissions() {
                 {/* Trust Badges */}
                 <div className="flex flex-wrap gap-3 mb-6">
                   <span className="flex items-center gap-2 px-3 py-2 bg-white rounded-lg border text-sm">
-                    <span className="text-green-500">✓</span> 18+ Years Experience
+                    <Check className="w-4 h-4 text-green-500" /> 18+ Years Experience
                   </span>
                   <span className="flex items-center gap-2 px-3 py-2 bg-white rounded-lg border text-sm">
-                    <span className="text-green-500">✓</span> 1,00,000+ Students
+                    <Check className="w-4 h-4 text-green-500" /> 1,00,000+ Students
                   </span>
                   <span className="flex items-center gap-2 px-3 py-2 bg-white rounded-lg border text-sm">
-                    <span className="text-green-500">✓</span> Award-Winning
+                    <Check className="w-4 h-4 text-green-500" /> Award-Winning
                   </span>
                 </div>
 
@@ -126,7 +127,7 @@ export default function PreschoolAdmissions() {
                 >
                   <h3 className="font-semibold text-gray-900">{centre.name}</h3>
                   <p className="text-sm text-gray-600">{centre.localityName}</p>
-                  <span className="text-pink-600 text-sm font-medium mt-2 inline-block">View Details →</span>
+                  <span className="text-primary text-sm font-medium mt-2 inline-block">View Details →</span>
                 </Link>
               ))}
             </div>
@@ -149,12 +150,12 @@ export default function PreschoolAdmissions() {
         </section>
 
         {/* CTA Section */}
-        <section className="py-12 px-4 bg-pink-600 text-white">
+        <section className="py-12 px-4 bg-primary text-white">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-2xl font-bold mb-4">Ready to Start Your Child's Journey?</h2>
             <p className="mb-6">Book a campus tour and see why Rainbow Preschool is the right choice for your family.</p>
             <div className="flex flex-wrap justify-center gap-4">
-              <a href="tel:+918291568972" className="px-6 py-3 bg-white text-pink-600 rounded-lg font-semibold hover:shadow-lg transition-shadow">
+              <a href="tel:+918291568972" className="px-6 py-3 bg-white text-primary rounded-lg font-semibold hover:shadow-lg transition-shadow">
                 Call +91 82915 68972
               </a>
               <a href="https://wa.me/918291568972" className="px-6 py-3 bg-green-500 text-white rounded-lg font-semibold hover:shadow-lg transition-shadow">
