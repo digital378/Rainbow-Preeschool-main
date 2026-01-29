@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { CTASection } from "@/components/cta-section";
 import { SEO } from "@/components/seo";
+import { BlogInternalLinks } from "@/components/blog-internal-links";
 import { Calendar, ArrowLeft, User, Clock, CheckCircle, MapPin, Phone, Download } from "lucide-react";
 import { format } from "date-fns";
 
@@ -750,6 +751,9 @@ export default function BlogPost() {
               </div>
             </CardContent>
           </Card>
+
+          {/* Internal Links Section */}
+          <BlogInternalLinks currentSlug={post.slug} />
 
           <div className="mt-12 pt-8 border-t">
             <h3 className="text-lg font-semibold mb-4">Related Articles</h3>

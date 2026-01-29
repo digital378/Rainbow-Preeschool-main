@@ -1,11 +1,12 @@
 # robots.txt for Rainbow Preschool International
-# https://rainbowpreschools.com
+# https://www.rainbowpreschools.com
 
 User-agent: *
 Allow: /
 
-# Sitemap location
-Sitemap: https://rainbowpreschools.com/sitemap.xml
+# Disallow ad landing pages
+Disallow: /ad
+Disallow: /ad-google
 
-# Crawl-delay for polite crawling
-Crawl-delay: 1
+# Sitemap location
+Sitemap: https://www.rainbowpreschools.com/sitemap.xml

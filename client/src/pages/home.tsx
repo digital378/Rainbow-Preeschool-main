@@ -25,7 +25,7 @@ import { SEO } from "@/components/seo";
 import { programmes, branches, testimonials } from "@shared/schema";
 import { preschoolLandingPages } from "@shared/centre-data";
 import { pushToDataLayer } from "@/lib/analytics";
-import { ArrowRight, Star, Users, MapPin, Shield, Lock, Phone } from "lucide-react";
+import { ArrowRight, Star, Users, MapPin, Shield, Lock, Phone, Award, FileText, Palette, BookOpen, GraduationCap } from "lucide-react";
 import { SiGoogle, SiWhatsapp } from "react-icons/si";
 import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
@@ -303,12 +303,56 @@ export default function Home() {
   return (
     <div>
       <SEO
-        title="Best Preschool in Thane - Rainbow Preschool International"
-        description="Looking for the best preschool in Thane? Rainbow Preschool International - top-rated preschool near you with 6 centres, 18+ years experience & 1,00,000+ happy students. Call 82915 68972!"
-        keywords="best preschool in thane, top preschool in thane, preschool near me, best preschool near me, preschool in thane, playgroup in thane, nursery school thane, kindergarten thane, preschool admission thane, top rated preschool thane"
+        title="Rainbow Preschool International | Early Learning & Admissions"
+        description="Rainbow Preschool International - Thane's most trusted preschool since 2007. Award-winning early childhood education with 6 centres, 18+ years experience & 1,00,000+ students. Enquire now!"
+        keywords="preschool in thane, best preschool in thane, rainbow preschool, playgroup in thane, nursery school thane, kindergarten thane, preschool admissions"
         canonical="/"
       />
       <HeroSection />
+      
+      {/* Quick Navigation Links for SEO */}
+      <section className="py-6 bg-gradient-to-r from-pink-50 to-yellow-50 border-y border-pink-100">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex flex-wrap justify-center gap-3 md:gap-4">
+            <Link href="/best-preschool-in-thane">
+              <Button variant="outline" size="sm" className="rounded-full" data-testid="link-best-preschool">
+                <Award className="w-4 h-4 text-pink-500" />
+                Best Preschool in Thane
+              </Button>
+            </Link>
+            <Link href="/preschool-near-me">
+              <Button variant="outline" size="sm" className="rounded-full" data-testid="link-preschool-near-me">
+                <MapPin className="w-4 h-4 text-blue-500" />
+                Preschool Near Me
+              </Button>
+            </Link>
+            <Link href="/preschool-admissions">
+              <Button variant="outline" size="sm" className="rounded-full" data-testid="link-preschool-admissions">
+                <FileText className="w-4 h-4 text-green-500" />
+                Preschool Admissions
+              </Button>
+            </Link>
+            <Link href="/playgroup">
+              <Button variant="outline" size="sm" className="rounded-full" data-testid="link-playgroup">
+                <Palette className="w-4 h-4 text-yellow-500" />
+                Playgroup
+              </Button>
+            </Link>
+            <Link href="/nursery">
+              <Button variant="outline" size="sm" className="rounded-full" data-testid="link-nursery">
+                <BookOpen className="w-4 h-4 text-blue-500" />
+                Nursery
+              </Button>
+            </Link>
+            <Link href="/kindergarten">
+              <Button variant="outline" size="sm" className="rounded-full" data-testid="link-kindergarten">
+                <GraduationCap className="w-4 h-4 text-green-500" />
+                Kindergarten
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
       <QuickCallbackStrip />
       <AwardedBySection />
 

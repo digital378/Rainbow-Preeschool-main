@@ -1,0 +1,239 @@
+import { Link } from "wouter";
+import { SEO, organizationSchema, websiteSchema, createBreadcrumbSchema, createFAQSchema } from "@/components/seo";
+import { ContactForm } from "@/components/contact-form";
+import { centres } from "@shared/centre-data";
+
+const faqs = [
+  {
+    question: "What makes Rainbow Preschool the best preschool in Thane?",
+    answer: "Rainbow Preschool stands out with 18+ years of experience, 1,00,000+ students taught, award-winning curriculum, 100% female trained staff, CCTV in all classrooms, 6 convenient locations, and a focus on holistic child development through play-based learning."
+  },
+  {
+    question: "What awards has Rainbow Preschool received?",
+    answer: "Rainbow Preschool has been recognized as the 'Most Promising Preschool Chain' by India Today, received the 'Cleanest School Award' from Thane Municipal Corporation, and has been featured in Economic Times and other leading publications."
+  },
+  {
+    question: "What curriculum does Rainbow Preschool follow?",
+    answer: "We follow a play-based, activity-oriented curriculum aligned with NEP 2020 guidelines. Our Rainbow Curriculum focuses on cognitive development, language skills, motor skills, social-emotional learning, and creativity through hands-on activities."
+  },
+  {
+    question: "How is Rainbow Preschool different from other preschools in Thane?",
+    answer: "We differentiate through: 1) Experienced educators with specialized training, 2) Low student-teacher ratio (1:10), 3) Focus on individual attention, 4) Regular parent communication, 5) Safe and hygienic environment, 6) Transport facility with GPS tracking."
+  },
+  {
+    question: "What are the fee structure and payment options?",
+    answer: "Fees vary by programme and centre. We offer flexible payment options including monthly, quarterly, and annual plans. Contact us for a detailed fee structure. We believe quality education should be accessible to all families."
+  },
+  {
+    question: "What age groups does Rainbow Preschool cater to?",
+    answer: "We offer programmes for children aged 1.5 to 6 years: Playgroup (1.5-2.5 years), Nursery (2.5-3.5 years), Jr. KG (3.5-4.5 years), and Sr. KG (4.5-5.5 years). We also have Kids Activity Club for ages 3-10 years."
+  }
+];
+
+const awards = [
+  { name: "India Today", description: "Most Promising Preschool Chain" },
+  { name: "TMC Award", description: "Cleanest School in Thane" },
+  { name: "ScooNews", description: "Best Early Learning Centre" },
+  { name: "Economic Times", description: "Featured as Top Preschool" }
+];
+
+export default function BestPreschoolInThane() {
+  const breadcrumbs = [
+    { name: "Home", url: "/" },
+    { name: "Best Preschool in Thane", url: "/best-preschool-in-thane" }
+  ];
+
+  const structuredData = [
+    organizationSchema,
+    websiteSchema,
+    createBreadcrumbSchema(breadcrumbs),
+    createFAQSchema(faqs)
+  ];
+
+  return (
+    <>
+      <SEO
+        title="Best Preschool in Thane | Rainbow Preschool International - Award Winning"
+        description="Rainbow Preschool is the best preschool in Thane with 18+ years experience, 1 lakh+ students, award-winning curriculum. Playgroup, Nursery, KG. 6 centres. Enquire now!"
+        keywords="best preschool in thane, top preschool thane, best playgroup in thane, best nursery school thane, rainbow preschool thane, preschool thane"
+        canonical="/best-preschool-in-thane"
+        structuredData={structuredData}
+      />
+
+      <div className="min-h-screen bg-gradient-to-b from-yellow-50 to-white">
+        {/* Hero Section */}
+        <section className="py-12 md:py-16 px-4">
+          <div className="max-w-6xl mx-auto">
+            <div className="grid md:grid-cols-2 gap-8 items-start">
+              <div>
+                <span className="inline-block px-4 py-1 bg-yellow-100 text-yellow-700 rounded-full text-sm font-medium mb-4">
+                  Award-Winning Since 2007
+                </span>
+                <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                  Best Preschool in Thane - Rainbow Preschool International
+                </h1>
+                <p className="text-lg text-gray-600 mb-6">
+                  Trusted by over 1,00,000 families, Rainbow Preschool is Thane's leading early childhood education centre. Our award-winning curriculum, experienced teachers, and safe environment make us the top choice for parents.
+                </p>
+
+                {/* Stats */}
+                <div className="grid grid-cols-3 gap-4 mb-6">
+                  <div className="text-center p-4 bg-white rounded-lg border">
+                    <div className="text-2xl font-bold text-pink-600">18+</div>
+                    <div className="text-xs text-gray-600">Years Experience</div>
+                  </div>
+                  <div className="text-center p-4 bg-white rounded-lg border">
+                    <div className="text-2xl font-bold text-pink-600">1L+</div>
+                    <div className="text-xs text-gray-600">Students</div>
+                  </div>
+                  <div className="text-center p-4 bg-white rounded-lg border">
+                    <div className="text-2xl font-bold text-pink-600">6</div>
+                    <div className="text-xs text-gray-600">Centres</div>
+                  </div>
+                </div>
+
+                {/* Awards */}
+                <div className="bg-white p-4 rounded-lg border mb-6">
+                  <h3 className="font-semibold text-gray-900 mb-3">Awards & Recognition</h3>
+                  <div className="grid grid-cols-2 gap-2">
+                    {awards.map((award, idx) => (
+                      <div key={idx} className="flex items-center gap-2 text-sm">
+                        <span className="text-yellow-500">🏆</span>
+                        <div>
+                          <div className="font-medium text-gray-900">{award.name}</div>
+                          <div className="text-xs text-gray-500">{award.description}</div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Quick Links */}
+                <div className="flex flex-wrap gap-2">
+                  <Link href="/preschool-admissions" className="px-4 py-2 bg-pink-600 text-white rounded-lg text-sm font-medium hover:bg-pink-700">
+                    Apply Now
+                  </Link>
+                  <Link href="/preschool-near-me" className="px-4 py-2 border border-pink-600 text-pink-600 rounded-lg text-sm font-medium hover:bg-pink-50">
+                    Find Centre Near You
+                  </Link>
+                  <Link href="/programmes" className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-50">
+                    View Programmes
+                  </Link>
+                </div>
+              </div>
+
+              {/* Enquiry Form */}
+              <div className="bg-white p-6 rounded-xl shadow-lg border">
+                <h2 className="text-xl font-bold text-gray-900 mb-2">Schedule a Campus Visit</h2>
+                <p className="text-sm text-gray-600 mb-4">See why we're rated the best preschool in Thane</p>
+                <ContactForm />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Why Best Section */}
+        <section className="py-12 px-4 bg-white">
+          <div className="max-w-6xl mx-auto">
+            <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">What Makes Us the Best?</h2>
+            <div className="grid md:grid-cols-3 gap-6">
+              <div className="p-6 border rounded-xl">
+                <div className="w-12 h-12 bg-pink-100 rounded-lg flex items-center justify-center mb-4">
+                  <span className="text-xl">👩‍🏫</span>
+                </div>
+                <h3 className="font-semibold text-gray-900 mb-2">Expert Educators</h3>
+                <p className="text-sm text-gray-600">100% female staff with specialized training in early childhood education. Low 1:10 student-teacher ratio.</p>
+              </div>
+              <div className="p-6 border rounded-xl">
+                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                  <span className="text-xl">📚</span>
+                </div>
+                <h3 className="font-semibold text-gray-900 mb-2">Rainbow Curriculum</h3>
+                <p className="text-sm text-gray-600">NEP 2020 aligned, play-based learning focusing on cognitive, social, emotional, and physical development.</p>
+              </div>
+              <div className="p-6 border rounded-xl">
+                <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
+                  <span className="text-xl">🛡️</span>
+                </div>
+                <h3 className="font-semibold text-gray-900 mb-2">Safety First</h3>
+                <p className="text-sm text-gray-600">CCTV surveillance, secure entry, GPS-tracked transport, and strict hygiene protocols at all centres.</p>
+              </div>
+              <div className="p-6 border rounded-xl">
+                <div className="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center mb-4">
+                  <span className="text-xl">🎨</span>
+                </div>
+                <h3 className="font-semibold text-gray-900 mb-2">Holistic Development</h3>
+                <p className="text-sm text-gray-600">Beyond academics - we focus on creativity, sports, music, and social skills through varied activities.</p>
+              </div>
+              <div className="p-6 border rounded-xl">
+                <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
+                  <span className="text-xl">📍</span>
+                </div>
+                <h3 className="font-semibold text-gray-900 mb-2">Convenient Locations</h3>
+                <p className="text-sm text-gray-600">6 centres across Thane - Manpada, Hariniwas, Anand Nagar, Dhokali, Kalwa, Kasarvadavali.</p>
+              </div>
+              <div className="p-6 border rounded-xl">
+                <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-4">
+                  <span className="text-xl">💬</span>
+                </div>
+                <h3 className="font-semibold text-gray-900 mb-2">Parent Partnership</h3>
+                <p className="text-sm text-gray-600">Regular updates, parent-teacher meetings, and open communication to keep you involved in your child's growth.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Centres */}
+        <section className="py-12 px-4">
+          <div className="max-w-6xl mx-auto">
+            <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Visit Our Centres</h2>
+            <div className="grid md:grid-cols-3 gap-4">
+              {centres.map((centre) => (
+                <Link
+                  key={centre.id}
+                  href={centre.preschoolLandingUrl || `/contact`}
+                  className="p-4 bg-white rounded-lg border hover:shadow-md transition-shadow"
+                >
+                  <h3 className="font-semibold text-gray-900">{centre.localityName}</h3>
+                  <p className="text-sm text-gray-600 mb-2">{centre.address}</p>
+                  <span className="text-pink-600 text-sm font-medium">Learn More →</span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ Section */}
+        <section className="py-12 px-4 bg-white">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Frequently Asked Questions</h2>
+            <div className="space-y-4">
+              {faqs.map((faq, index) => (
+                <div key={index} className="bg-gray-50 p-5 rounded-lg">
+                  <h3 className="font-semibold text-gray-900 mb-2">{faq.question}</h3>
+                  <p className="text-gray-600 text-sm">{faq.answer}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* CTA */}
+        <section className="py-12 px-4 bg-gradient-to-r from-pink-600 to-purple-600 text-white">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-2xl font-bold mb-4">Experience the Rainbow Difference</h2>
+            <p className="mb-6">Join the family of 1,00,000+ happy parents who chose Rainbow Preschool for their children.</p>
+            <div className="flex flex-wrap justify-center gap-4">
+              <Link href="/preschool-admissions" className="px-6 py-3 bg-white text-pink-600 rounded-lg font-semibold hover:shadow-lg transition-shadow">
+                Start Admission
+              </Link>
+              <a href="tel:+918291568972" className="px-6 py-3 border-2 border-white text-white rounded-lg font-semibold hover:bg-white hover:text-pink-600 transition-colors">
+                Call +91 82915 68972
+              </a>
+            </div>
+          </div>
+        </section>
+      </div>
+    </>
+  );
+}

@@ -140,8 +140,20 @@ Clean, page-based GA4 form tracking using gtag (no GTM Form Submission triggers)
 - Forms call tracking in onSuccess after checking `emailSent` status from server
 
 ### SEO Files
-- `public/sitemap.xml` - All pages with priority weighting (local pages at 0.9)
-- `public/robots.txt` - Allow all, disallow /api/
+- `client/public/sitemap.xml` - Auto-generated with 34 URLs (run `npx tsx scripts/generate-sitemap.ts` to regenerate)
+- `client/public/robots.txt` - Allow all, disallow /api/, canonical www domain
+- `shared/seo-config.ts` - Centralized SEO configuration (noindex rules, redirects, location links)
+- `scripts/generate-sitemap.ts` - Automated sitemap generator
+
+### High-Intent SEO Landing Pages (Added Jan 2026)
+- `/best-preschool-in-thane` - Primary SEO target page
+- `/preschool-near-me` - Proximity-focused landing with all centres
+- `/preschool-admissions` - Admission process and requirements
+
+### Internal Linking
+- Homepage quick navigation links to key SEO pages (uses Button components with lucide icons)
+- `BlogInternalLinks` component added to blog-post.tsx for contextual linking
+- Location-aware linking detects context from blog slugs
 
 ## Ad Landing Pages
 

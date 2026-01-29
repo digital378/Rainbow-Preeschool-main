@@ -1,0 +1,169 @@
+import { Link } from "wouter";
+import { SEO, organizationSchema, websiteSchema, createBreadcrumbSchema, createFAQSchema } from "@/components/seo";
+import { ContactForm } from "@/components/contact-form";
+import { centres } from "@shared/centre-data";
+
+const faqs = [
+  {
+    question: "What is the admission process for Rainbow Preschool?",
+    answer: "The admission process involves: 1) Submit an enquiry form online or visit our centre, 2) Schedule a campus tour, 3) Meet with our educators, 4) Complete the registration form and submit required documents, 5) Pay the admission fee to confirm your child's seat."
+  },
+  {
+    question: "What documents are required for preschool admission?",
+    answer: "Required documents include: Child's birth certificate, 4-6 passport-sized photographs, Parent/guardian ID proof (Aadhaar/Passport), Address proof, Child's Aadhaar card (if available), and any previous school records if applicable."
+  },
+  {
+    question: "What is the age criteria for admission?",
+    answer: "Age criteria: Playgroup (1.5-2.5 years), Nursery (2.5-3.5 years), Jr. KG (3.5-4.5 years), Sr. KG (4.5-5.5 years). Age is calculated as of June 1st of the academic year."
+  },
+  {
+    question: "When do admissions open for the new academic year?",
+    answer: "Admissions typically open in October-November for the next academic year starting in June. However, we accept mid-term admissions throughout the year subject to seat availability."
+  },
+  {
+    question: "What are the fees for preschool admission?",
+    answer: "Fees vary by programme and centre location. Please contact us or visit your nearest Rainbow Preschool centre for detailed fee structure. We offer flexible payment options."
+  },
+  {
+    question: "Do you offer mid-term admissions?",
+    answer: "Yes, Rainbow Preschool offers mid-term admissions throughout the academic year, subject to seat availability. This allows children to join at any point without waiting for the new session."
+  }
+];
+
+export default function PreschoolAdmissions() {
+  const breadcrumbs = [
+    { name: "Home", url: "/" },
+    { name: "Preschool Admissions", url: "/preschool-admissions" }
+  ];
+
+  const structuredData = [
+    organizationSchema,
+    websiteSchema,
+    createBreadcrumbSchema(breadcrumbs),
+    createFAQSchema(faqs)
+  ];
+
+  return (
+    <>
+      <SEO
+        title="Preschool Admissions 2025-26 | Rainbow Preschool International Thane"
+        description="Apply for preschool admissions at Rainbow Preschool International. Playgroup, Nursery, Jr. KG & Sr. KG admissions open. 6 centres in Thane. Book a campus tour today!"
+        keywords="preschool admissions, preschool admission 2025, nursery admission thane, playgroup admission, kindergarten admission, rainbow preschool admission"
+        canonical="/preschool-admissions"
+        structuredData={structuredData}
+      />
+
+      <div className="min-h-screen bg-gradient-to-b from-pink-50 to-white">
+        {/* Hero Section */}
+        <section className="py-12 md:py-16 px-4">
+          <div className="max-w-6xl mx-auto">
+            <div className="grid md:grid-cols-2 gap-8 items-start">
+              <div>
+                <span className="inline-block px-4 py-1 bg-green-100 text-green-700 rounded-full text-sm font-medium mb-4">
+                  Admissions Open 2025-26
+                </span>
+                <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                  Preschool Admissions at Rainbow Preschool International
+                </h1>
+                <p className="text-lg text-gray-600 mb-6">
+                  Give your child the best start with Rainbow Preschool. We offer Playgroup, Nursery, and Kindergarten programmes designed for holistic development. 6 convenient locations across Thane.
+                </p>
+
+                {/* Trust Badges */}
+                <div className="flex flex-wrap gap-3 mb-6">
+                  <span className="flex items-center gap-2 px-3 py-2 bg-white rounded-lg border text-sm">
+                    <span className="text-green-500">✓</span> 18+ Years Experience
+                  </span>
+                  <span className="flex items-center gap-2 px-3 py-2 bg-white rounded-lg border text-sm">
+                    <span className="text-green-500">✓</span> 1,00,000+ Students
+                  </span>
+                  <span className="flex items-center gap-2 px-3 py-2 bg-white rounded-lg border text-sm">
+                    <span className="text-green-500">✓</span> Award-Winning
+                  </span>
+                </div>
+
+                {/* Programme Cards */}
+                <div className="grid grid-cols-2 gap-3 mb-6">
+                  <Link href="/playgroup" className="p-4 bg-yellow-50 rounded-lg border border-yellow-200 hover:shadow-md transition-shadow">
+                    <h3 className="font-semibold text-gray-900">Playgroup</h3>
+                    <p className="text-sm text-gray-600">Age: 1.5 - 2.5 years</p>
+                  </Link>
+                  <Link href="/nursery" className="p-4 bg-blue-50 rounded-lg border border-blue-200 hover:shadow-md transition-shadow">
+                    <h3 className="font-semibold text-gray-900">Nursery</h3>
+                    <p className="text-sm text-gray-600">Age: 2.5 - 3.5 years</p>
+                  </Link>
+                  <Link href="/kindergarten" className="p-4 bg-green-50 rounded-lg border border-green-200 hover:shadow-md transition-shadow">
+                    <h3 className="font-semibold text-gray-900">Jr. KG</h3>
+                    <p className="text-sm text-gray-600">Age: 3.5 - 4.5 years</p>
+                  </Link>
+                  <Link href="/kindergarten" className="p-4 bg-purple-50 rounded-lg border border-purple-200 hover:shadow-md transition-shadow">
+                    <h3 className="font-semibold text-gray-900">Sr. KG</h3>
+                    <p className="text-sm text-gray-600">Age: 4.5 - 5.5 years</p>
+                  </Link>
+                </div>
+              </div>
+
+              {/* Enquiry Form */}
+              <div className="bg-white p-6 rounded-xl shadow-lg border">
+                <h2 className="text-xl font-bold text-gray-900 mb-2">Start Your Admission Enquiry</h2>
+                <p className="text-sm text-gray-600 mb-4">Fill the form below and we'll contact you within 24 hours</p>
+                <ContactForm />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Our Centres */}
+        <section className="py-12 px-4 bg-white">
+          <div className="max-w-6xl mx-auto">
+            <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Our Centres in Thane</h2>
+            <div className="grid md:grid-cols-3 gap-4">
+              {centres.map((centre) => (
+                <Link
+                  key={centre.id}
+                  href={centre.preschoolLandingUrl || `/contact`}
+                  className="p-4 bg-gray-50 rounded-lg border hover:shadow-md transition-shadow"
+                >
+                  <h3 className="font-semibold text-gray-900">{centre.name}</h3>
+                  <p className="text-sm text-gray-600">{centre.localityName}</p>
+                  <span className="text-pink-600 text-sm font-medium mt-2 inline-block">View Details →</span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ Section */}
+        <section className="py-12 px-4">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Frequently Asked Questions</h2>
+            <div className="space-y-4">
+              {faqs.map((faq, index) => (
+                <div key={index} className="bg-white p-5 rounded-lg border">
+                  <h3 className="font-semibold text-gray-900 mb-2">{faq.question}</h3>
+                  <p className="text-gray-600 text-sm">{faq.answer}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* CTA Section */}
+        <section className="py-12 px-4 bg-pink-600 text-white">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-2xl font-bold mb-4">Ready to Start Your Child's Journey?</h2>
+            <p className="mb-6">Book a campus tour and see why Rainbow Preschool is the right choice for your family.</p>
+            <div className="flex flex-wrap justify-center gap-4">
+              <a href="tel:+918291568972" className="px-6 py-3 bg-white text-pink-600 rounded-lg font-semibold hover:shadow-lg transition-shadow">
+                Call +91 82915 68972
+              </a>
+              <a href="https://wa.me/918291568972" className="px-6 py-3 bg-green-500 text-white rounded-lg font-semibold hover:shadow-lg transition-shadow">
+                WhatsApp Us
+              </a>
+            </div>
+          </div>
+        </section>
+      </div>
+    </>
+  );
+}

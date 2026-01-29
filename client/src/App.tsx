@@ -29,6 +29,11 @@ const NotFound = lazy(() => import("@/pages/not-found"));
 const AdLanding = lazy(() => import("@/pages/ad-landing"));
 const AdGoogleLanding = lazy(() => import("@/pages/ad-google-landing"));
 
+// High-intent SEO landing pages
+const PreschoolAdmissions = lazy(() => import("@/pages/preschool-admissions"));
+const PreschoolNearMe = lazy(() => import("@/pages/preschool-near-me"));
+const BestPreschoolInThane = lazy(() => import("@/pages/best-preschool-in-thane"));
+
 const RainbowSparkleTrail = lazy(() => import("@/components/rainbow-sparkle-trail").then(m => ({ default: m.RainbowSparkleTrail })));
 
 const LazyPlaygroupInThane = lazy(() => import("@/pages/local-playgroup").then(m => ({ default: m.PlaygroupInThane })));
@@ -282,6 +287,11 @@ function Router() {
         <Route path="/contact" component={Contact} />
         <Route path="/blog" component={Blog} />
         <Route path="/blog/:slug" component={BlogPost} />
+        
+        {/* High-intent SEO landing pages */}
+        <Route path="/preschool-admissions" component={PreschoolAdmissions} />
+        <Route path="/preschool-near-me" component={PreschoolNearMe} />
+        <Route path="/best-preschool-in-thane" component={BestPreschoolInThane} />
         
         <Route path="/ad" component={AdLanding} />
         <Route path="/ad-google" component={AdGoogleLanding} />
