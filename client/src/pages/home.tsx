@@ -304,52 +304,40 @@ export default function Home() {
     <div>
       <SEO
         title="Rainbow Preschool International | Early Learning & Admissions"
-        description="Rainbow Preschool International - Thane's most trusted preschool since 2007. Award-winning early childhood education with 6 centres, 18+ years experience & 1,00,000+ students. Enquire now!"
-        keywords="preschool in thane, best preschool in thane, rainbow preschool, playgroup in thane, nursery school thane, kindergarten thane, preschool admissions"
-        canonical="/"
+        description="Rainbow Preschool International offers safe, joyful early learning in Thane with experienced educators. Explore programmes, centres, and admissions information."
+        keywords="rainbow preschool, preschool in thane, playgroup in thane, nursery school thane, kindergarten thane, early childhood education"
+        canonical="https://www.rainbowpreschools.com/"
       />
       <HeroSection />
       
-      {/* Quick Navigation Links for SEO */}
-      <section className="py-6 bg-gradient-to-r from-red-50 to-yellow-50 border-y border-red-100">
+      {/* Quick Navigation Links for SEO - Crawlable anchor tags */}
+      <section className="py-6 bg-gradient-to-r from-red-50 to-yellow-50 dark:from-red-950/20 dark:to-yellow-950/20 border-y border-red-100 dark:border-red-900/30">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex flex-wrap justify-center gap-3 md:gap-4">
-            <Link href="/best-preschool-in-thane">
-              <Button variant="outline" size="sm" className="rounded-full" data-testid="link-best-preschool">
-                <Award className="w-4 h-4 text-primary" />
-                Best Preschool in Thane
-              </Button>
-            </Link>
-            <Link href="/preschool-near-me">
-              <Button variant="outline" size="sm" className="rounded-full" data-testid="link-preschool-near-me">
-                <MapPin className="w-4 h-4 text-blue-500" />
-                Preschool Near Me
-              </Button>
-            </Link>
-            <Link href="/preschool-admissions">
-              <Button variant="outline" size="sm" className="rounded-full" data-testid="link-preschool-admissions">
-                <FileText className="w-4 h-4 text-green-500" />
-                Preschool Admissions
-              </Button>
-            </Link>
-            <Link href="/playgroup">
-              <Button variant="outline" size="sm" className="rounded-full" data-testid="link-playgroup">
-                <Palette className="w-4 h-4 text-yellow-500" />
-                Playgroup
-              </Button>
-            </Link>
-            <Link href="/nursery">
-              <Button variant="outline" size="sm" className="rounded-full" data-testid="link-nursery">
-                <BookOpen className="w-4 h-4 text-blue-500" />
-                Nursery
-              </Button>
-            </Link>
-            <Link href="/kindergarten">
-              <Button variant="outline" size="sm" className="rounded-full" data-testid="link-kindergarten">
-                <GraduationCap className="w-4 h-4 text-green-500" />
-                Kindergarten
-              </Button>
-            </Link>
+            <a href="/best-preschool-in-thane" className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-input bg-background hover:bg-accent hover:text-accent-foreground text-sm font-medium transition-colors" data-testid="link-best-preschool">
+              <Award className="w-4 h-4 text-primary" />
+              Best Preschool in Thane
+            </a>
+            <a href="/preschool-near-me" className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-input bg-background hover:bg-accent hover:text-accent-foreground text-sm font-medium transition-colors" data-testid="link-preschool-near-me">
+              <MapPin className="w-4 h-4 text-blue-500" />
+              Preschool Near Me
+            </a>
+            <a href="/preschool-admissions" className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-input bg-background hover:bg-accent hover:text-accent-foreground text-sm font-medium transition-colors" data-testid="link-preschool-admissions">
+              <FileText className="w-4 h-4 text-green-500" />
+              Preschool Admissions
+            </a>
+            <a href="/playgroup" className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-input bg-background hover:bg-accent hover:text-accent-foreground text-sm font-medium transition-colors" data-testid="link-playgroup">
+              <Palette className="w-4 h-4 text-yellow-500" />
+              Playgroup
+            </a>
+            <a href="/nursery" className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-input bg-background hover:bg-accent hover:text-accent-foreground text-sm font-medium transition-colors" data-testid="link-nursery">
+              <BookOpen className="w-4 h-4 text-blue-500" />
+              Nursery
+            </a>
+            <a href="/kindergarten" className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-input bg-background hover:bg-accent hover:text-accent-foreground text-sm font-medium transition-colors" data-testid="link-kindergarten">
+              <GraduationCap className="w-4 h-4 text-green-500" />
+              Kindergarten
+            </a>
           </div>
         </div>
       </section>
@@ -362,15 +350,16 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <div data-reveal="float">
               <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">About</p>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6" data-sparkle>A Trusted Preschool in Thane Since 2007</h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6" data-sparkle>Why Parents Trust Rainbow Preschools</h2>
+              <p className="text-sm text-muted-foreground mb-4">What sets our centres apart for early childhood education in Thane.</p>
               <p className="text-muted-foreground text-lg leading-relaxed mb-6">
-                Rainbow Preschool International is one of the most trusted preschools in Thane, having nurtured over 1,00,000 young learners through joyful early childhood education. Our playgroup in Thane provides a safe, secure, and happy learning environment built on a strong play-based philosophy.
+                Rainbow Preschool International has nurtured over 1,00,000 young learners through joyful early childhood education since 2007. Our play-based philosophy creates a safe, secure, and happy learning environment where every child thrives.
               </p>
               <p className="text-muted-foreground leading-relaxed mb-4">
-                Our age-appropriate early childhood education curriculum helps children develop confidence, creativity, and early academic skills, preparing them smoothly for primary schooling while respecting every child's unique pace of growth.
+                Our age-appropriate curriculum helps children develop confidence, creativity, and early academic skills, preparing them smoothly for primary schooling while respecting every child's unique pace of growth.
               </p>
               <p className="text-muted-foreground leading-relaxed mb-8">
-                Parents across Thane choose Rainbow Preschool because we combine a proven play-based methodology with genuine care and attention. Whether you are searching for a preschool near you in Manpada, Kalwa, or anywhere along Ghodbunder Road, our six conveniently located centres make quality early education accessible close to your home.
+                With six conveniently located centres and 18+ years of experience, we combine a proven play-based methodology with genuine care and attention. Our 100% female staff and CCTV-monitored premises ensure complete peace of mind for parents.
               </p>
               <Link href="/about">
                 <Button variant="outline" data-testid="button-learn-more">
@@ -433,8 +422,11 @@ export default function Home() {
           <div className="text-center max-w-3xl mx-auto mb-12" data-reveal="float">
             <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">Our Programmes</p>
             <h2 className="text-3xl md:text-4xl font-bold mb-4" data-sparkle>Programmes Designed for Every Stage of Early Learning</h2>
-            <p className="text-muted-foreground text-lg">
-              Our nursery school in Thane welcomes toddlers from 1.5 years, guiding them through playgroup, nursery, and kindergarten stages. Each programme is designed by early childhood specialists to build social skills, curiosity, and school readiness in a safe, joyful environment that parents trust.
+            <p className="text-muted-foreground text-lg mb-2">
+              Explore our age-appropriate programmes designed to support your child's development at every stage.
+            </p>
+            <p className="text-muted-foreground">
+              We welcome toddlers from 1.5 years, guiding them through playgroup, nursery, and kindergarten stages. Each programme is designed by early childhood specialists to build social skills, curiosity, and school readiness in a safe, joyful environment.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -519,14 +511,14 @@ export default function Home() {
       <section className="py-12 md:py-16 bg-primary/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8" data-reveal="float">
-            <h2 className="text-2xl md:text-3xl font-bold mb-2" data-sparkle>Find Preschool Near You in Thane</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-2" data-sparkle>Find a Centre Near You</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Finding a quality preschool near you in Thane is easy with Rainbow Preschools. Each of our centres offers the same trusted curriculum, certified teachers, and safe learning spaces that families across Thane have loved for over 18 years.
+              Each of our six centres offers the same trusted curriculum, certified teachers, and safe learning spaces that families have loved for over 18 years.
             </p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
             {preschoolLandingPages.map((locality) => (
-              <Link 
+              <a 
                 key={locality.slug} 
                 href={locality.url}
                 onClick={() => {
@@ -537,6 +529,7 @@ export default function Home() {
                   });
                 }}
                 data-testid={`link-preschool-${locality.slug}`}
+                className="block"
               >
                 <Card 
                   className="text-center hover-elevate cursor-pointer h-full"
@@ -547,7 +540,7 @@ export default function Home() {
                     <p className="font-medium text-sm">{locality.name}</p>
                   </CardContent>
                 </Card>
-              </Link>
+              </a>
             ))}
           </div>
         </div>
@@ -560,7 +553,7 @@ export default function Home() {
             <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">Our Locations</p>
             <h2 className="text-3xl md:text-4xl font-bold mb-4" data-sparkle>Our Preschool Centres Across Thane</h2>
             <p className="text-muted-foreground text-lg">
-              Looking for a preschool or playgroup near you in Thane? With six branches spread across Thane West, a Rainbow Preschool centre is always close to home. Whether you live near Manpada, Kasarvadavali, Dhokali, or Kalwa, you can give your child the best start without a long commute. Visit the centre nearest to you and experience our warm, welcoming classrooms firsthand.
+              With six branches spread across Thane West, a Rainbow Preschool centre is always close to home. Visit the centre nearest to you and experience our warm, welcoming classrooms firsthand.
             </p>
           </div>
           

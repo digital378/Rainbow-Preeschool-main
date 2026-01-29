@@ -107,14 +107,14 @@ export function HeroSection() {
             </div>
           </Link>
 
-          {/* Hero heading - styled as h2 since H1 is in Why Choose Us section */}
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 text-white leading-tight">
-            Best Preschool Born in Thane <span className="text-yellow-400">Trusted</span> by Parents
-          </h2>
+          {/* Hero H1 - Brand focused */}
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 text-white leading-tight">
+            Rainbow Preschool International
+          </h1>
 
           {/* Subheading */}
           <p className="text-lg md:text-xl text-white/90 max-w-xl mb-8 md:mb-10 leading-relaxed">
-            Nurturing children aged 1.5 to 10 years with play-based learning, care, and confidence since 2007.
+            A trusted preschool in Thane, nurturing joyful early learning since 2007.
           </p>
 
           {/* Trust Badges */}

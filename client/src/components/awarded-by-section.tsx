@@ -62,9 +62,12 @@ export function AwardedBySection() {
   return (
     <section className="py-10 md:py-16 bg-background overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-center mb-6 md:mb-12 text-foreground">
+        <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-center mb-4 md:mb-6 text-foreground">
           Awarded By:
         </h2>
+        <p className="text-center text-muted-foreground mb-6 md:mb-10 max-w-2xl mx-auto">
+          Recognised by leading national and education platforms for excellence in early childhood education.
+        </p>
         
         {/* Mobile: Scrolling animation */}
         <div className="md:hidden relative">
