@@ -1,0 +1,82 @@
+You are a senior Frontend Developer working on a React + TypeScript + Vite SPA.
+
+Issue:
+On the homepage “quick links/pills” section (Best Preschool in Thane / Preschool Near Me / Preschool Admissions / Playgroup / Nursery / Kindergarten), the selected/active pill gets a red background, and the left icon is getting visually overlapped/covered by the red background (icon looks clipped or hidden).
+
+Goal:
+Fix the UI so the icon remains fully visible and correctly colored on both:
+- default pill (white background)
+- active/selected pill (red background)
+
+Constraints:
+- Do NOT change layout/spacing of the whole section.
+- Make the smallest possible CSS/markup fix.
+- Fix must work across Chrome/Safari/Firefox and on mobile.
+- Keep the selected pill background red, but ensure icon is not covered/clipped.
+- Do not break hover/focus states and keep good contrast (accessibility).
+
+Step-by-step tasks:
+
+1) Locate the component:
+- Find the homepage section that renders these pills (likely a component like QuickLinks / PillNav / HomeLinks).
+- Identify the markup structure: container, icon element (svg/img), label text.
+
+2) Identify the active styles:
+- Find the CSS/Tailwind styles applied when pill is active/selected (red background).
+- Confirm whether overlap is caused by:
+  a) icon inside an element with background overlay/pseudo-element,
+  b) icon being clipped by overflow:hidden / border-radius,
+  c) icon having negative margin or absolute positioning,
+  d) z-index stacking issue with ::before/::after,
+  e) icon inheriting same color as background.
+
+3) Apply the correct fix based on root cause (choose the minimal one):
+
+A) If clipping is the issue:
+- Ensure the pill does NOT clip the icon:
+  - remove/override overflow:hidden OR
+  - keep overflow hidden but add icon wrapper with padding + proper line-height so it stays inside
+- Make sure icon wrapper has min-width and is vertically centered.
+
+B) If z-index overlay is the issue (common with ::before):
+- If active pill uses a pseudo-element for background (e.g., ::before with red),
+  set:
+  - pseudo-element z-index: 0
+  - icon wrapper z-index: 1
+  - text wrapper z-index: 1
+  - pill position: relative
+
+Example:
+.pill { position: relative; }
+.pill::before { z-index: 0; }
+.pill .pill-icon, .pill .pill-text { position: relative; z-index: 1; }
+
+C) If icon color is blending into background:
+- On active pill, force icon stroke/fill to white:
+  - svg { color: #fff; fill: currentColor; stroke: currentColor; }
+- On inactive pill, keep icon red/brand color.
+
+4) Implement the fix properly:
+- Wrap the icon in a span with a stable layout:
+  <span className="pill-icon">…svg…</span>
+- Ensure:
+  - display: inline-flex
+  - align-items: center
+  - justify-content: center
+  - width/height fixed (e.g., 18–20px)
+  - margin-right consistent (e.g., 8px)
+  - no negative margins
+
+5) Verify states:
+- Default pill: icon visible, correct color
+- Active pill: icon visible, NOT clipped, correct contrast
+- Hover: no regression
+- Focus ring: still visible
+- Mobile: pills wrap without icon issues
+
+6) Output requirements:
+- Mention the exact files edited (component + CSS/Tailwind file).
+- Provide a short explanation of the root cause and why your fix works.
+- Provide before/after screenshots description (no need to attach images).
+
+Now implement this fix with the smallest safe change.
