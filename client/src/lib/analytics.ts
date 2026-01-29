@@ -135,7 +135,7 @@ const DEDUP_TIMEOUT_MS = 3000; // 3 seconds to prevent rapid double-clicks
 
 /**
  * Track form submission with GA4
- * ONLY call this after server confirms email was successfully sent
+ * Call this after server confirms successful form submission
  * 
  * Fires exactly ONE event per successful submission.
  * Deduplication prevents:

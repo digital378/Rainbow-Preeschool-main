@@ -146,13 +146,14 @@ export function ContactForm({ defaultBranch, defaultProgramme, compact = false, 
       const response = await apiRequest("POST", "/api/contact", data);
       return response.json();
     },
-    onSuccess: (responseData: { success: boolean; id: number; emailSent: boolean }) => {
+    onSuccess: (responseData: { success: boolean; id: number }) => {
       setIsSubmitted(true);
       
-      // Only fire GA4 event if email was actually sent (confirmed delivery)
+      // Fire GA4 event on successful form submission
+      // Email is sent in background - track the lead capture, not email delivery
       // HOME PAGE "/" detailed form → Home_Form_Submit
       // OTHER PAGES → URLSlug_Form_Submit
-      if (responseData.emailSent) {
+      if (responseData.success) {
         trackFormSubmit({
           formType: 'detailed' as FormType,
           programme: form.getValues("programme"),

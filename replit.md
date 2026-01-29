@@ -122,7 +122,7 @@ Clean, page-based GA4 form tracking using gtag (no GTM Form Submission triggers)
   - Slugs are capitalized, hyphens replaced with underscores
 
 **Tracking Rules:**
-- Events fire ONLY after server confirms email was sent (`emailSent: true` in response)
+- Events fire after successful form submission (`success: true` in response)
 - Deduplication: 3-second timing lock prevents double-firing from multiple handlers
 - Single event per successful submission (no duplicates)
 - Forms use `formType` attribute: 'instant' | 'detailed' | 'default'
