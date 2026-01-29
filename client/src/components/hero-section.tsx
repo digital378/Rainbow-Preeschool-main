@@ -114,7 +114,7 @@ export function HeroSection() {
 
           {/* Subheading */}
           <p className="text-lg md:text-xl text-white/90 max-w-xl mb-8 md:mb-10 leading-relaxed">
-            A trusted preschool in Thane, nurturing joyful early learning since 2007.
+            A trusted preschool born in Thane, nurturing joyful early learning since 2007.
           </p>
 
           {/* Trust Badges */}
