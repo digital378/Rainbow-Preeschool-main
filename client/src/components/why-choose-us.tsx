@@ -62,7 +62,7 @@ export function WhyChooseUs() {
             Why Choose Us
           </p>
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            What Makes Rainbow Preschools Different
+            Award Winning Preschool Born in Thane
           </h2>
         </div>
 
