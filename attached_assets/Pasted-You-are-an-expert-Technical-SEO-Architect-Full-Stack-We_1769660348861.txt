@@ -1,0 +1,244 @@
+You are an expert Technical SEO Architect + Full-Stack Web Developer.
+
+WEBSITE:
+https://www.rainbowpreschools.com/
+
+PRIMARY GOAL:
+Increase Google Search impressions and clicks for high-intent preschool keywords by:
+1) removing keyword cannibalisation,
+2) consolidating/redirecting duplicate blog URLs,
+3) noindexing low-intent blog content (but keeping links),
+4) strengthening “money pages” (programme + local pages),
+5) improving internal linking, schema, sitemap, and canonicalisation.
+
+CRITICAL CONSTRAINTS:
+- DO NOT delete content unless explicitly instructed. Prefer 301 redirects + noindex.
+- DO NOT change existing money-page URLs unless unavoidable.
+- Do not break current navigation, tracking, or form submissions.
+- All changes must be reversible and version-controlled.
+- Provide a “dry-run” plan + final implementation steps.
+- Any redirect must preserve UTM params and query strings.
+
+INPUTS (available page groups):
+A) Core pages:
+- / (homepage), /about, /programmes, /contact, /blog
+
+B) Programme pillars (index, follow):
+- /playgroup, /nursery, /kindergarten
+(also: /kids-activity-club, /summer-camp, /happy-times)
+
+C) Local SEO - Preschool pages (primary):
+- /preschool-in-manpada-thane
+- /preschool-in-hariniwas-thane
+- /preschool-in-anand-nagar-thane
+- /preschool-in-dhokali-thane
+- /preschool-in-kalwa-thane
+- /preschool-in-kasarvadavali-thane
+
+D) Local SEO - Playgroup pages:
+- /playgroup-in-thane
+- /playgroup-in-manpada
+- /playgroup-in-kalwa
+- /playgroup-near-ghodbunder-road
+- /playgroup-in-anand-nagar
+- /playgroup-in-kasarvadavali
+- /playgroup-in-dhokali
+
+E) Ad landing pages (must remain noindex):
+- /ad, /ad-google
+
+F) Event pages:
+- /republic-day-2026 (handle as seasonal)
+
+G) Blog articles:
+100+ URLs (provided separately); many are overlapping/duplicate topics.
+
+DELIVERABLES (must output all):
+1) A “Change Plan” (step-by-step checklist with exact files/locations to edit).
+2) A redirect map table: Old URL → New URL (301) + reason.
+3) A noindex list: URL → reason + whether to keep in sitemap (usually remove).
+4) Canonical rules (www vs non-www, trailing slash, http→https).
+5) Updated sitemap strategy: what stays, what is excluded, priorities & changefreq.
+6) Internal linking rules + where to implement them (templates/components).
+7) Schema JSON-LD snippets for:
+   - Organization + WebSite
+   - BreadcrumbList (sitewide)
+   - LocalBusiness for each centre page
+   - FAQPage for programme + local pages (only if FAQ exists on page)
+8) QA test plan:
+   - crawl test
+   - redirect validation
+   - indexation checks
+   - page speed quick checks
+   - GSC checks after deployment
+
+IMPORTANT:
+Before modifying anything, inspect the repository structure and identify:
+- framework (WordPress, Next.js, React, static, etc.)
+- where pages are rendered (templates/routes)
+- how sitemap is generated
+- whether there is an existing redirects config
+Then follow the steps below.
+
+========================================================
+STEP-BY-STEP IMPLEMENTATION REQUIREMENTS
+========================================================
+
+STEP 0 — Repo discovery (NO changes yet)
+0.1 Print the project tree and identify:
+- routing system (e.g., pages/, app/, routes/, wp theme)
+- sitemap generator (sitemap.xml file, script, plugin, etc.)
+- robots.txt location
+- canonical tags location
+- where meta title/description are set
+- server config for redirects (Netlify, Vercel, nginx, Apache, next.config, etc.)
+0.2 Confirm preferred domain is:
+https://www.rainbowpreschools.com/
+(If not, detect current canonical usage and recommend ONE standard.)
+
+STEP 1 — Fix canonicalisation (sitewide)
+1.1 Enforce:
+- http → https
+- non-www → www (or whichever is already canonical; choose ONE)
+- trailing slash consistency (pick one and enforce across)
+1.2 Add/verify canonical tag output on every indexable page.
+1.3 Ensure paginated blog pages have correct canonical/prev/next if applicable.
+
+STEP 2 — Define “indexation rules” by page type
+2.1 Ensure index,follow for:
+- /, /about, /programmes, /contact
+- programme pages: /playgroup, /nursery, /kindergarten
+- local pages: all /preschool-in-... and /playgroup-...
+2.2 Ensure noindex,follow for:
+- /ad, /ad-google
+- seasonal/event page: /republic-day-2026 (set noindex after event ends; keep index only if it’s evergreen)
+2.3 Identify low-intent informational blogs to noindex,follow:
+- festivals (holi, diwali, rainy season)
+- games, GK, general kids activities unrelated to admissions intent
+- generic motivational quotes etc.
+Create a list of these URLs and implement conditional noindex based on slug patterns and/or a config list.
+
+STEP 3 — Remove duplication with “topic clusters” (blogs)
+3.1 Parse all blog URLs.
+3.2 Group them into clusters by similarity (slug keywords) including:
+- “preschool vs daycare” cluster
+- “preschool admission process” cluster
+- “mid-term playgroup admission” cluster
+- “rainbow awards/recognition” cluster
+- “rainbow journey since 2007” cluster
+3.3 For each cluster:
+- choose ONE canonical “best” URL (shortest, clearest, most comprehensive, not year-stuffed unless needed)
+- mark all others as duplicates
+3.4 Implement 301 redirects:
+Duplicate URL → Canonical URL
+Ensure redirects preserve query strings.
+
+STEP 4 — Prevent cannibalisation between blogs and money pages
+4.1 Detect any blog post that targets “preschool in [area]”, “best preschool in thane”, “playgroup in thane”, etc.
+4.2 For those:
+- either redirect to the relevant local landing page (if the blog is basically a landing page),
+OR
+- rewrite its title/meta and add a prominent internal link block pointing to the landing page,
+AND consider noindex if it still competes.
+4.3 Create a central ruleset:
+- blogs must NOT target exact-match “best preschool in thane / preschool in thane / playgroup in thane”
+- those keywords belong to dedicated landing pages.
+
+STEP 5 — Homepage fix (make it brand-led and link to intent pages)
+5.1 Set homepage SEO:
+- Title: "Rainbow Preschool International | Early Learning & Admissions"
+- Meta description: brand + trust + admissions (no heavy location stuffing)
+5.2 H1: only one H1 = “Rainbow Preschool International”
+5.3 Add an “Explore” block near the top with crawlable internal links:
+- Best Preschool in Thane → /best-preschool-in-thane/ (create page if missing, otherwise link to best available Thane hub)
+- Preschool Near Me → /preschool-near-me/ (create if missing)
+- Preschool Admissions → /admissions/ (or closest equivalent)
+- Centres in Thane → link to best local hub page (or /preschool-in-... list page)
+5.4 Keep centre cards, but avoid stuffing repeated “best preschool in…” phrases.
+
+STEP 6 — Create missing high-intent landing pages (ONLY if not present)
+6.1 Create:
+- /preschool-near-me/
+- /best-preschool-in-thane/
+- /preschool-admissions/ (or /admissions/ if it exists)
+Each page must have:
+- clear H1
+- title/meta
+- short sections: trust, programs, locations, admissions CTA
+- FAQ section + FAQ schema
+- strong internal links to local pages and programme pages
+
+STEP 7 — Internal linking system (sitewide)
+7.1 Create a reusable internal link module (component/partial) for:
+- blog posts → programme pages + admissions + relevant local pages
+7.2 Add it automatically:
+- at the end of every blog post
+- optionally mid-article after 2nd section
+7.3 Anchor text rules:
+- exact-match, but natural:
+  “playgroup programme”, “nursery programme”, “kindergarten programme”
+  “preschool in [area]”, “playgroup in [area]”
+  “preschool admissions”
+
+STEP 8 — Schema (JSON-LD)
+8.1 Sitewide in <head>:
+- Organization schema (name, logo, url, sameAs)
+- WebSite schema
+- BreadcrumbList schema
+8.2 For local pages:
+- LocalBusiness schema with:
+  name, address, phone, url, geo (if available), openingHours (if available)
+8.3 For pages with FAQs:
+- FAQPage schema using the visible FAQ content only (no hidden FAQs)
+
+STEP 9 — Sitemap and robots.txt
+9.1 Generate sitemap.xml that includes ONLY indexable URLs:
+Include:
+- core pages
+- programme pages
+- local pages
+- the 3 high-intent landing pages created
+- only “supporting” blogs that help admissions intent
+Exclude:
+- noindexed pages
+- redirected URLs
+- ad pages
+9.2 Update robots.txt:
+- allow crawling sitewide
+- reference sitemap URL:
+  https://www.rainbowpreschools.com/sitemap.xml
+
+STEP 10 — QA + Validation (must run before shipping)
+10.1 Create a local crawl script (or use existing tooling) to verify:
+- no 4xx/5xx on important pages
+- canonicals resolve to preferred domain
+- redirected URLs return 301 and land on correct canonical page
+- sitemap contains only 200 OK indexable pages
+10.2 Validate structured data (basic JSON validity).
+10.3 Spot-check page titles, H1 uniqueness, meta descriptions.
+10.4 Confirm that:
+- /ad and /ad-google remain noindex,follow
+- blog duplicates are redirected
+- low intent blogs are noindex,follow
+
+STEP 11 — Deployment notes
+11.1 Provide a “Release Notes” section listing:
+- redirects added
+- pages noindexed
+- new pages created
+- internal links added
+- sitemap updated
+11.2 Provide a GSC follow-up checklist:
+- submit sitemap
+- inspect the new landing pages
+- monitor Coverage + Performance for 14 days
+- track impressions for target pages
+
+OUTPUT FORMAT REQUIRED:
+- First: Summary of what you found about the tech stack + where changes were made.
+- Then: Redirect map (table).
+- Then: Noindex list (table).
+- Then: Exact files/paths edited and what changed.
+- Then: Final QA checklist with pass/fail criteria.
+
+Now proceed carefully, step-by-step, and do not skip validation. 
