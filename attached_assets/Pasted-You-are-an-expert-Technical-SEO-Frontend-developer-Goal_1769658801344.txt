@@ -1,0 +1,53 @@
+You are an expert Technical SEO + Frontend developer.
+
+Goal: Fix the homepage of https://rainbowpreschools.com/ so it ranks strongly for BRAND + GENERAL terms, while not diluting relevance by targeting too many location and “near me” keywords. Create a clean, SEO-safe structure and internal linking that pushes local-intent keywords to dedicated landing pages.
+
+Context:
+- Current homepage tries to rank for many terms like “best preschool in Thane”, “preschool near me”, “nursery school Thane”, “kindergarten Thane”, etc.
+- We want the homepage to focus on: Brand + Trust + Overview + Admissions CTA.
+- We will create separate pages for: /best-preschool-in-thane/, /preschool-near-me/, /preschool-admission-thane/ etc.
+- The homepage should link prominently to these pages using exact-match anchors.
+
+Tasks:
+1) Update SEO metadata:
+   - Title: "Rainbow Preschool International | Early Learning & Admissions"
+   - Meta description: "Rainbow Preschool International offers safe, joyful early learning with experienced educators. Explore programs, centres, and admissions information."
+   - Add OpenGraph + Twitter tags using same title/description.
+   - Remove/ignore meta keywords (do not include them).
+
+2) Fix heading structure:
+   - Exactly one H1: "Rainbow Preschool International"
+   - Use H2 sections for Programs, Centres, Why Rainbow, Admissions, Testimonials, FAQs.
+   - Ensure headings are hierarchical (H1 → H2 → H3 only).
+
+3) Add “SEO landing links” section near the top (above the fold or just below hero):
+   Create 3–6 internal links with exact anchor text:
+   - "Best Preschool in Thane" → /best-preschool-in-thane/
+   - "Preschool Near Me" → /preschool-near-me/
+   - "Preschool Admissions" → /admissions/
+   - If city pages exist: "Preschool in Hyderabad" → /preschool-in-hyderabad/ etc.
+   These should be styled as trust buttons/cards but remain crawlable HTML links.
+
+4) Improve content for brand intent:
+   - Add a short paragraph explaining who we are + safety + educators + learning approach.
+   - Do NOT repeat city names excessively on homepage.
+   - Keep location list in “Centres” section but treat it as navigation, not keyword stuffing.
+
+5) Add structured data:
+   - Organization schema (name, logo, url, sameAs social links).
+   - WebSite schema with SearchAction (site search if available).
+   - Breadcrumb schema.
+   - FAQ schema for 4 FAQs (brand + admissions + age + centres). Use valid JSON-LD.
+
+6) Technical checks:
+   - Ensure canonical is consistent (https://www.rainbowpreschools.com/ if that’s the preferred).
+   - Ensure robots meta is index,follow.
+   - Ensure core links are not blocked by JS-only rendering (server-render if possible).
+   - Optimize images: add alt text relevant to brand/programs (not keyword spam).
+   - Ensure page speed basics: lazyload below-fold images, compress hero.
+
+Deliverables:
+- Provide the updated homepage HTML (or React/Next template depending on stack).
+- Provide JSON-LD blocks for schema.
+- Provide a short checklist of changes done and where they are implemented.
+- Ensure the homepage is focused on brand + overview and pushes local intent to dedicated pages via internal links.
