@@ -314,28 +314,28 @@ export default function Home() {
       <section className="py-6 bg-gradient-to-r from-red-50 to-yellow-50 dark:from-red-950/20 dark:to-yellow-950/20 border-y border-red-100 dark:border-red-900/30">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex flex-wrap justify-center gap-3 md:gap-4">
-            <a href="/best-preschool-in-thane" className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-input bg-background hover:bg-accent hover:text-accent-foreground text-sm font-medium transition-colors" data-testid="link-best-preschool">
+            <a href="/best-preschool-in-thane" className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-input bg-background hover:bg-primary hover:text-primary-foreground text-sm font-medium transition-colors" data-testid="link-best-preschool">
               <Award className="w-4 h-4 text-primary" />
               Best Preschool in Thane
             </a>
-            <a href="/preschool-near-me" className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-input bg-background hover:bg-accent hover:text-accent-foreground text-sm font-medium transition-colors" data-testid="link-preschool-near-me">
-              <MapPin className="w-4 h-4 text-blue-500" />
+            <a href="/preschool-near-me" className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-input bg-background hover:bg-primary hover:text-primary-foreground text-sm font-medium transition-colors" data-testid="link-preschool-near-me">
+              <MapPin className="w-4 h-4 text-primary" />
               Preschool Near Me
             </a>
-            <a href="/preschool-admissions" className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-input bg-background hover:bg-accent hover:text-accent-foreground text-sm font-medium transition-colors" data-testid="link-preschool-admissions">
-              <FileText className="w-4 h-4 text-green-500" />
+            <a href="/preschool-admissions" className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-input bg-background hover:bg-primary hover:text-primary-foreground text-sm font-medium transition-colors" data-testid="link-preschool-admissions">
+              <FileText className="w-4 h-4 text-primary" />
               Preschool Admissions
             </a>
-            <a href="/playgroup" className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-input bg-background hover:bg-accent hover:text-accent-foreground text-sm font-medium transition-colors" data-testid="link-playgroup">
-              <Palette className="w-4 h-4 text-yellow-500" />
+            <a href="/playgroup" className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-input bg-background hover:bg-primary hover:text-primary-foreground text-sm font-medium transition-colors" data-testid="link-playgroup">
+              <Palette className="w-4 h-4 text-primary" />
               Playgroup
             </a>
-            <a href="/nursery" className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-input bg-background hover:bg-accent hover:text-accent-foreground text-sm font-medium transition-colors" data-testid="link-nursery">
-              <BookOpen className="w-4 h-4 text-blue-500" />
+            <a href="/nursery" className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-input bg-background hover:bg-primary hover:text-primary-foreground text-sm font-medium transition-colors" data-testid="link-nursery">
+              <BookOpen className="w-4 h-4 text-primary" />
               Nursery
             </a>
-            <a href="/kindergarten" className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-input bg-background hover:bg-accent hover:text-accent-foreground text-sm font-medium transition-colors" data-testid="link-kindergarten">
-              <GraduationCap className="w-4 h-4 text-green-500" />
+            <a href="/kindergarten" className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-input bg-background hover:bg-primary hover:text-primary-foreground text-sm font-medium transition-colors" data-testid="link-kindergarten">
+              <GraduationCap className="w-4 h-4 text-primary" />
               Kindergarten
             </a>
           </div>
