@@ -125,7 +125,7 @@ export default function BestPreschoolInThane() {
               </div>
 
               {/* Enquiry Form */}
-              <div className="bg-white p-6 rounded-xl shadow-lg border">
+              <div className="bg-white p-6 rounded-xl shadow-lg border text-gray-900">
                 <h2 className="text-xl font-bold text-gray-900 mb-2">Schedule a Campus Visit</h2>
                 <p className="text-sm text-gray-600 mb-4">See why we're rated the best preschool in Thane</p>
                 <ContactForm />

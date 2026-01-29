@@ -105,7 +105,7 @@ export default function PreschoolNearMe() {
             </div>
 
             {/* Quick Enquiry Form */}
-            <div className="max-w-xl mx-auto bg-white p-6 rounded-xl shadow-lg border">
+            <div className="max-w-xl mx-auto bg-white p-6 rounded-xl shadow-lg border text-gray-900">
               <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">Not Sure Which Centre?</h2>
               <p className="text-sm text-gray-600 mb-4 text-center">Tell us your area and we'll recommend the best centre for you</p>
               <ContactForm />

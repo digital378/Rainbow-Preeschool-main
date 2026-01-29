@@ -106,7 +106,7 @@ export default function PreschoolAdmissions() {
               </div>
 
               {/* Enquiry Form */}
-              <div className="bg-white p-6 rounded-xl shadow-lg border">
+              <div className="bg-white p-6 rounded-xl shadow-lg border text-gray-900">
                 <h2 className="text-xl font-bold text-gray-900 mb-2">Start Your Admission Enquiry</h2>
                 <p className="text-sm text-gray-600 mb-4">Fill the form below and we'll contact you within 24 hours</p>
                 <ContactForm />
