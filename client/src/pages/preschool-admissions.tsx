@@ -48,7 +48,7 @@ export default function PreschoolAdmissions() {
   return (
     <>
       <SEO
-        title="Preschool Admissions 2025-26 | Rainbow Preschool International Thane"
+        title="Preschool Admissions 2026-27 | Rainbow Preschool International Thane"
         description="Apply for preschool admissions at Rainbow Preschool International. Playgroup, Nursery, Jr. KG & Sr. KG admissions open. 6 centres in Thane. Book a campus tour today!"
         keywords="preschool admissions, preschool admission 2025, nursery admission thane, playgroup admission, kindergarten admission, rainbow preschool admission"
         canonical="/preschool-admissions"
@@ -62,7 +62,7 @@ export default function PreschoolAdmissions() {
             <div className="grid md:grid-cols-2 gap-8 items-start">
               <div>
                 <span className="inline-block px-4 py-1 bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300 rounded-full text-sm font-medium mb-4">
-                  Admissions Open 2025-26
+                  Admissions Open 2026-27
                 </span>
                 <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
                   Preschool Admissions at Rainbow Preschool International
