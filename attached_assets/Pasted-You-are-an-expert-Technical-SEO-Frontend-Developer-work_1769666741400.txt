@@ -1,0 +1,133 @@
+You are an expert Technical SEO + Frontend Developer working on a React + TypeScript + Vite SPA using Wouter routing.
+Task: Fix ONLY the HOMEPAGE FAQ section so it does NOT cannibalize our dedicated landing pages and so FAQ schema remains valid and helpful.
+
+Context:
+- Homepage currently has FAQs like:
+  “Which is the best preschool in Thane?”
+  “How do I find a good preschool near me in Thane?”
+  “What is the preschool admission process near me?”
+- We have (or will have) dedicated pages for these intents:
+  /best-preschool-in-thane
+  /preschool-near-me
+  /preschool-admissions
+- SEO + FAQ schema is handled by: client/src/components/seo.tsx (already generates FAQ schema)
+- Homepage includes an FAQ accordion component (find it in homepage component).
+
+Goal:
+- Homepage FAQ should be BRAND/TRUST focused and should funnel users via internal links to the correct dedicated pages.
+- Remove “best preschool in Thane” and “near me” keyword-heavy questions from homepage.
+- Keep max 6 FAQs on homepage.
+- Ensure visible FAQ content exactly matches FAQPage JSON-LD (Google requirement).
+
+CRITICAL RULES:
+- Do NOT remove the FAQ section from homepage.
+- Do NOT change UI styling or component layout (only text + links + data structure).
+- Ensure all links in answers are crawlable <a href="..."> anchors.
+- Ensure there is no mismatch between visible Q/A and schema Q/A.
+- After changes, print a QA report: list of FAQs + schema count + which pages are linked.
+
+========================================================
+STEP-BY-STEP FIX (EXECUTE IN ORDER)
+========================================================
+
+STEP 0 — Locate the homepage FAQ implementation
+0.1 In client/src/App.tsx, locate route "/" and the homepage component file.
+0.2 In the homepage component, find the FAQ accordion section (likely an array of {question, answer}).
+0.3 Find how FAQ schema is produced:
+    - Either SEO component receives an "faq" prop,
+    - OR homepage renders a <SEO faq={...}/> style prop,
+    - OR seo.tsx detects FAQ data based on route.
+0.4 Confirm where the FAQ data must be updated so BOTH the UI and schema match.
+
+STEP 1 — Replace the homepage FAQ list with this exact set (6 FAQs max)
+Replace the existing FAQ items with the following EXACT questions and answers (you may format answers as JSX/HTML, but keep wording the same):
+
+FAQ 1
+Q: "What makes Rainbow Preschool International trusted by parents?"
+A: "Rainbow Preschool International focuses on safe, joyful early learning with experienced educators and a child-first approach. Explore our programmes to see how we support every stage of development."
+
+Include link in answer:
+<a href="/programmes">Explore our programmes</a>
+
+FAQ 2
+Q: "What programmes does Rainbow Preschool International offer?"
+A: "We offer age-appropriate programmes including Playgroup, Nursery, and Kindergarten, designed to build confidence, curiosity, and school readiness."
+
+Include links:
+<a href="/playgroup">Playgroup</a>, <a href="/nursery">Nursery</a>, <a href="/kindergarten">Kindergarten</a>
+
+FAQ 3
+Q: "What age can a child start Playgroup?"
+A: "Most children can start Playgroup from around 1.5 years, depending on readiness. Our team can guide you based on your child’s age and needs."
+
+Include link:
+<a href="/playgroup">Learn about Playgroup</a>
+
+FAQ 4
+Q: "Is Rainbow Preschool safe for toddlers?"
+A: "Yes. We follow child-safety practices, hygiene protocols, and supervised classroom routines to create a secure learning environment for young children."
+
+Include link (choose the best existing page; prefer /contact if no safety page exists):
+<a href="/contact">Contact us</a>
+
+FAQ 5
+Q: "What is the preschool admission process at Rainbow?"
+A: "Admissions typically involve choosing a programme, selecting a preferred centre, and scheduling a callback or visit. You can start by sharing your details and our admissions team will assist you."
+
+Include link:
+<a href="/preschool-admissions">View admissions details</a>
+(If /preschool-admissions does not exist yet, use /contact for now and also output a TODO note.)
+
+FAQ 6
+Q: "How can I find the nearest Rainbow Preschool centre in Thane?"
+A: "Rainbow Preschools have multiple centres across Thane. You can browse locations and choose the centre closest to your area."
+
+Include link:
+<a href="/preschool-near-me">Find a centre near you</a>
+(If /preschool-near-me does not exist yet, link to the homepage locations section anchor e.g. /#centres and output a TODO.)
+
+IMPORTANT: Remove/replace these homepage intents entirely:
+- “best preschool in Thane”
+- “preschool near me” phrasing as questions (allowed only in link text)
+- “admission process near me”
+These belong to dedicated pages.
+
+STEP 2 — Ensure schema matches visible content (mandatory)
+2.1 Update whichever data structure feeds the FAQ schema so it uses the EXACT same questions/answers.
+2.2 If seo.tsx expects plain strings (not JSX), create a parallel “faqSchema” array with plain text answers that match the visible answers (minus link HTML).
+2.3 Ensure FAQPage JSON-LD includes exactly 6 questions.
+
+STEP 3 — Add lightweight supporting subtitle (optional, safe)
+3.1 Keep section title "Frequently Asked Questions".
+3.2 Subtitle can remain, but reduce heavy keyword intent:
+Change subtitle to:
+"Common questions about Rainbow Preschool International"
+
+(Do NOT emphasize “best preschool” or “near me” here.)
+
+STEP 4 — Internal link validation
+4.1 Confirm all links are standard anchors:
+- /programmes
+- /playgroup
+- /nursery
+- /kindergarten
+- /contact
+- /preschool-admissions (or fallback)
+- /preschool-near-me (or fallback)
+4.2 If routes don’t exist yet, implement safe fallbacks:
+- admissions fallback: /contact
+- near-me fallback: /#centres (ensure the centres section has id="centres")
+
+STEP 5 — QA report (must output)
+After implementation, output:
+
+A) "Homepage FAQ Final List" showing all 6 questions.
+B) "Schema QA":
+- number of FAQ items in JSON-LD
+- confirm it equals 6
+C) "Link QA":
+- list each link found in answers and confirm it points to an existing route (or fallback).
+D) "Files changed":
+- exact paths and what changed.
+
+Do NOT ask for approval. Implement changes fully now.

@@ -39,34 +39,38 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-const faqs = [
+// Homepage FAQs - Brand/Trust focused (NOT keyword cannibalization)
+// Links in answers point to dedicated pages for specific intents
+const faqs: Array<{question: string; answer: React.ReactNode; answerText: string}> = [
   {
-    question: "Which is the best preschool in Thane?",
-    answer: "Rainbow Preschool International is widely recognised as one of the best preschools in Thane, trusted by over 1,00,000 families since 2007. With certified ECCEd teachers, CCTV-monitored premises, and a proven play-based curriculum, we provide a safe and enriching start to your child's educational journey across our 6 conveniently located centres in Thane West."
+    question: "What makes Rainbow Preschool International trusted by parents?",
+    answer: <>Rainbow Preschool International focuses on safe, joyful early learning with experienced educators and a child-first approach. <a href="/programmes" className="text-primary hover:underline">Explore our programmes</a> to see how we support every stage of development.</>,
+    answerText: "Rainbow Preschool International focuses on safe, joyful early learning with experienced educators and a child-first approach. Explore our programmes to see how we support every stage of development."
   },
   {
-    question: "How do I find a good preschool near me in Thane?",
-    answer: "Finding a quality preschool near you is simple with Rainbow Preschools. We have 6 centres located in Manpada, Kalwa, Anand Nagar, Dhokali, Kasarvadavali, and Hariniwas, all within Thane West. Each centre offers the same trusted curriculum and caring environment, so you can choose the one closest to your home. Call 82915 68972 or visit our website to schedule a campus tour."
+    question: "What programmes does Rainbow Preschool International offer?",
+    answer: <>We offer age-appropriate programmes including <a href="/playgroup" className="text-primary hover:underline">Playgroup</a>, <a href="/nursery" className="text-primary hover:underline">Nursery</a>, and <a href="/kindergarten" className="text-primary hover:underline">Kindergarten</a>, designed to build confidence, curiosity, and school readiness.</>,
+    answerText: "We offer age-appropriate programmes including Playgroup, Nursery, and Kindergarten, designed to build confidence, curiosity, and school readiness."
   },
   {
-    question: "What is the preschool admission process near me?",
-    answer: "Our admission process is parent-friendly and transparent. Begin by filling out our enquiry form or calling 82915 68972. We will invite you for a campus tour at the centre nearest to you, where you can meet our staff and see our facilities. Once you are satisfied, complete the registration form and secure your child's seat for the upcoming term."
-  },
-  {
-    question: "What age can a child start playgroup in Thane?",
-    answer: "Children can join our playgroup in Thane from 1.5 years (18 months) of age. Our playgroup programme is thoughtfully designed for toddlers aged 1.5 to 2.5 years, focusing on sensory exploration, social interaction, and early motor skill development in a safe, nurturing setting with trained female teachers."
+    question: "What age can a child start Playgroup?",
+    answer: <>Most children can start Playgroup from around 1.5 years, depending on readiness. Our team can guide you based on your child's age and needs. <a href="/playgroup" className="text-primary hover:underline">Learn about Playgroup</a>.</>,
+    answerText: "Most children can start Playgroup from around 1.5 years, depending on readiness. Our team can guide you based on your child's age and needs."
   },
   {
     question: "Is Rainbow Preschool safe for toddlers?",
-    answer: "Absolutely. Safety is at the heart of everything we do. All Rainbow Preschool centres in Thane feature CCTV monitoring, 100% female teaching and support staff, secure entry and exit procedures, child-safe furniture, and rigorous daily hygiene protocols. Parents can be confident their little ones are in a protected, loving environment."
+    answer: <>Yes. We follow child-safety practices, hygiene protocols, and supervised classroom routines to create a secure learning environment for young children. <a href="/contact" className="text-primary hover:underline">Contact us</a> to learn more.</>,
+    answerText: "Yes. We follow child-safety practices, hygiene protocols, and supervised classroom routines to create a secure learning environment for young children."
   },
   {
-    question: "What programmes does Rainbow Preschool offer?",
-    answer: "Rainbow Preschool offers a complete early learning pathway: Playgroup for toddlers aged 1.5 to 2.5 years, Nursery for 2.5 to 3.5 years, and Kindergarten for 3.5 to 5.5 years. We also run Happy Times daycare for children aged 2 to 10 years, ideal for working parents. All programmes are available across our six Thane centres."
+    question: "What is the preschool admission process at Rainbow?",
+    answer: <>Admissions typically involve choosing a programme, selecting a preferred centre, and scheduling a callback or visit. You can start by sharing your details and our admissions team will assist you. <a href="/preschool-admissions" className="text-primary hover:underline">View admissions details</a>.</>,
+    answerText: "Admissions typically involve choosing a programme, selecting a preferred centre, and scheduling a callback or visit. You can start by sharing your details and our admissions team will assist you."
   },
   {
-    question: "How can I enquire about preschool admission in Thane?",
-    answer: "Getting started is easy. Simply call us at 82915 68972 or fill out our online enquiry form. Our friendly admissions team will contact you within 24 hours to arrange a campus visit at your nearest Rainbow Preschool centre. During the tour you can meet our teachers, explore our classrooms, and learn more about our programmes."
+    question: "How can I find the nearest Rainbow Preschool centre in Thane?",
+    answer: <>Rainbow Preschools have multiple centres across Thane. You can browse locations and choose the centre closest to your area. <a href="/preschool-near-me" className="text-primary hover:underline">Find a centre near you</a>.</>,
+    answerText: "Rainbow Preschools have multiple centres across Thane. You can browse locations and choose the centre closest to your area."
   },
 ];
 
@@ -251,7 +255,7 @@ export default function Home() {
       "description": "Trusted preschool in Thane since 2007"
     };
 
-    // FAQ Schema
+    // FAQ Schema - uses plain text answers (not JSX) for valid JSON-LD
     const faqSchema = {
       "@context": "https://schema.org",
       "@type": "FAQPage",
@@ -260,7 +264,7 @@ export default function Home() {
         "name": faq.question,
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": faq.answer
+          "text": faq.answerText
         }
       }))
     };
@@ -567,7 +571,7 @@ export default function Home() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12" data-reveal="float">
             <h2 className="text-3xl md:text-4xl font-bold" data-sparkle>Frequently Asked Questions</h2>
-            <p className="text-muted-foreground mt-2">Common questions about our preschool in Thane</p>
+            <p className="text-muted-foreground mt-2">Common questions about Rainbow Preschool International</p>
           </div>
           <Accordion type="single" collapsible className="w-full">
             {faqs.map((faq, index) => (
