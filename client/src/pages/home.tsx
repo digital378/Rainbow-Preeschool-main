@@ -422,11 +422,8 @@ export default function Home() {
           <div className="text-center max-w-3xl mx-auto mb-12" data-reveal="float">
             <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">Our Programmes</p>
             <h2 className="text-3xl md:text-4xl font-bold mb-4" data-sparkle>Programmes Designed for Every Stage of Early Learning</h2>
-            <p className="text-muted-foreground text-lg mb-2">
+            <p className="text-muted-foreground text-lg">
               Explore our age-appropriate programmes designed to support your child's development at every stage.
-            </p>
-            <p className="text-muted-foreground">
-              We welcome toddlers from 1.5 years, guiding them through playgroup, nursery, and kindergarten stages. Each programme is designed by early childhood specialists to build social skills, curiosity, and school readiness in a safe, joyful environment.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
