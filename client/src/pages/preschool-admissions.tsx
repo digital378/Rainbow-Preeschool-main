@@ -55,7 +55,7 @@ export default function PreschoolAdmissions() {
         structuredData={structuredData}
       />
 
-      <div className="pt-20 min-h-screen bg-gradient-to-b from-red-50 to-white dark:from-gray-900 dark:to-gray-800">
+      <div className="pt-20 min-h-screen bg-gradient-to-b from-red-50 to-white dark:from-red-950 dark:to-gray-900">
         {/* Hero Section */}
         <section className="py-12 md:py-16 px-4">
           <div className="max-w-6xl mx-auto">
