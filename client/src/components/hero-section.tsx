@@ -109,7 +109,7 @@ export function HeroSection() {
 
           {/* Hero H1 - Brand focused */}
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 text-white leading-tight">
-            Rainbow Preschool International
+            Rainbow <span className="text-yellow-400">Preschool</span> International
           </h1>
 
           {/* Subheading */}
