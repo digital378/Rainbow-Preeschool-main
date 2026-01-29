@@ -2,7 +2,8 @@ import { Link } from "wouter";
 import { SEO, organizationSchema, websiteSchema, createBreadcrumbSchema, createFAQSchema } from "@/components/seo";
 import { ContactForm } from "@/components/contact-form";
 import { centres } from "@shared/centre-data";
-import { Check } from "lucide-react";
+import { Check, MessageCircle, Phone } from "lucide-react";
+import { trackWhatsAppClick, trackCallClick } from "@/lib/analytics";
 
 const faqs = [
   {
@@ -109,6 +110,30 @@ export default function PreschoolAdmissions() {
                 <h2 className="text-xl font-bold text-gray-900 mb-2">Start Your Admission Enquiry</h2>
                 <p className="text-sm text-gray-600 mb-4">Fill the form below and we'll contact you within 24 hours</p>
                 <ContactForm />
+                
+                {/* WhatsApp & Call Buttons */}
+                <div className="flex gap-3 mt-4 pt-4 border-t">
+                  <a
+                    href="https://wa.me/918291568972?text=Hi%2C%20I%20am%20interested%20in%20preschool%20admissions%20at%20Rainbow%20Preschool"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => trackWhatsAppClick({ source_page: 'preschool-admissions' })}
+                    className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-green-500 hover:bg-green-600 text-white rounded-lg font-medium transition-colors"
+                    data-testid="button-whatsapp-admissions"
+                  >
+                    <MessageCircle className="w-5 h-5" />
+                    WhatsApp
+                  </a>
+                  <a
+                    href="tel:+918291568972"
+                    onClick={() => trackCallClick({ phone: '8291568972', source_page: 'preschool-admissions' })}
+                    className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-medium transition-colors"
+                    data-testid="button-call-admissions"
+                  >
+                    <Phone className="w-5 h-5" />
+                    Call Now
+                  </a>
+                </div>
               </div>
             </div>
           </div>

@@ -2,7 +2,8 @@ import { Link } from "wouter";
 import { SEO, organizationSchema, websiteSchema, createBreadcrumbSchema, createFAQSchema } from "@/components/seo";
 import { ContactForm } from "@/components/contact-form";
 import { centres } from "@shared/centre-data";
-import { Car, Users, Zap } from "lucide-react";
+import { Car, Users, Zap, MessageCircle, Phone } from "lucide-react";
+import { trackWhatsAppClick, trackCallClick } from "@/lib/analytics";
 
 const faqs = [
   {
@@ -108,6 +109,30 @@ export default function PreschoolNearMe() {
               <h2 className="text-xl font-bold text-gray-900 mb-2 text-center">Not Sure Which Centre?</h2>
               <p className="text-sm text-gray-600 mb-4 text-center">Tell us your area and we'll recommend the best centre for you</p>
               <ContactForm />
+              
+              {/* WhatsApp & Call Buttons */}
+              <div className="flex gap-3 mt-4 pt-4 border-t">
+                <a
+                  href="https://wa.me/918291568972?text=Hi%2C%20I%20am%20interested%20in%20finding%20a%20Rainbow%20Preschool%20near%20me"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => trackWhatsAppClick({ source_page: 'preschool-near-me' })}
+                  className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-green-500 hover:bg-green-600 text-white rounded-lg font-medium transition-colors"
+                  data-testid="button-whatsapp-near-me"
+                >
+                  <MessageCircle className="w-5 h-5" />
+                  WhatsApp
+                </a>
+                <a
+                  href="tel:+918291568972"
+                  onClick={() => trackCallClick({ phone: '8291568972', source_page: 'preschool-near-me' })}
+                  className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-medium transition-colors"
+                  data-testid="button-call-near-me"
+                >
+                  <Phone className="w-5 h-5" />
+                  Call Now
+                </a>
+              </div>
             </div>
           </div>
         </section>

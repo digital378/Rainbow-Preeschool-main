@@ -2,7 +2,8 @@ import { Link } from "wouter";
 import { SEO, organizationSchema, websiteSchema, createBreadcrumbSchema, createFAQSchema } from "@/components/seo";
 import { ContactForm } from "@/components/contact-form";
 import { centres } from "@shared/centre-data";
-import { GraduationCap, BookOpen, Shield, Palette, MapPin, MessageCircle, Award } from "lucide-react";
+import { GraduationCap, BookOpen, Shield, Palette, MapPin, MessageCircle, Award, Phone } from "lucide-react";
+import { trackWhatsAppClick, trackCallClick } from "@/lib/analytics";
 
 const faqs = [
   {
@@ -128,6 +129,30 @@ export default function BestPreschoolInThane() {
                 <h2 className="text-xl font-bold text-gray-900 mb-2">Schedule a Campus Visit</h2>
                 <p className="text-sm text-gray-600 mb-4">See why we're rated the best preschool in Thane</p>
                 <ContactForm />
+                
+                {/* WhatsApp & Call Buttons */}
+                <div className="flex gap-3 mt-4 pt-4 border-t">
+                  <a
+                    href="https://wa.me/918291568972?text=Hi%2C%20I%20am%20interested%20in%20admissions%20at%20Rainbow%20Preschool%20(Best%20Preschool%20page)"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => trackWhatsAppClick({ source_page: 'best-preschool-in-thane' })}
+                    className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-green-500 hover:bg-green-600 text-white rounded-lg font-medium transition-colors"
+                    data-testid="button-whatsapp-best-preschool"
+                  >
+                    <MessageCircle className="w-5 h-5" />
+                    WhatsApp
+                  </a>
+                  <a
+                    href="tel:+918291568972"
+                    onClick={() => trackCallClick({ phone: '8291568972', source_page: 'best-preschool-in-thane' })}
+                    className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-medium transition-colors"
+                    data-testid="button-call-best-preschool"
+                  >
+                    <Phone className="w-5 h-5" />
+                    Call Now
+                  </a>
+                </div>
               </div>
             </div>
           </div>
