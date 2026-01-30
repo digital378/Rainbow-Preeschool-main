@@ -68,6 +68,33 @@ export const REDIRECT_MAP: Record<string, string> = {
   
   // Outdated admissions page
   "/admissions-24-25": "/preschool-admissions",
+  
+  // WordPress feed URLs → blog
+  "/understanding-the-importance-of-preschool-in-early-childhood-development/feed": "/blog",
+  "/rainbow-family-wins-cleanest-school-thane/feed": "/blog",
+  "/category/uncategorized/feed": "/blog",
+  "/impact-of-parent-teacher-communication-on-student-success/feed": "/blog",
+  
+  // Typos
+  "/plyagroup": "/playgroup",
+  
+  // Old blog posts
+  "/solitary-play-activities-for-preschoolers-types-and-benefits": "/blog",
+  "/teaching-the-preschoolers-value-of-money": "/blog",
+  
+  // Old WordPress pages
+  "/midterm-playgroup-test": "/playgroup",
+  "/rotaract-club-": "/about",
+  "/rotaract-club-events": "/about",
+  "/image-gallery": "/about",
+  "/school-admission-virtual-learning": "/preschool-admissions",
+  "/category/event": "/blog",
+  
+  // Incomplete/malformed URLs
+  "/10-incredible-5-": "/blog",
+  "/raise-a-reader-easy-": "/blog",
+  "/teaching-the-": "/blog",
+  "/playgroup/": "/playgroup",
 };
 
 // Core pages for sitemap (priority 1.0-0.9)

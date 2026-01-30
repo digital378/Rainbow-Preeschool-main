@@ -119,6 +119,44 @@ const REDIRECT_MAP: Record<string, string> = {
   '/home/rainbow/': '/',
   '/rain': '/',
   '/rain/': '/',
+  
+  // WordPress feed URLs → blog (added Jan 2026)
+  '/understanding-the-importance-of-preschool-in-early-childhood-development/feed': '/blog',
+  '/understanding-the-importance-of-preschool-in-early-childhood-development/feed/': '/blog',
+  '/rainbow-family-wins-cleanest-school-thane/feed': '/blog',
+  '/rainbow-family-wins-cleanest-school-thane/feed/': '/blog',
+  '/category/uncategorized/feed': '/blog',
+  '/category/uncategorized/feed/': '/blog',
+  '/impact-of-parent-teacher-communication-on-student-success/feed': '/blog',
+  '/impact-of-parent-teacher-communication-on-student-success/feed/': '/blog',
+  
+  // Typos
+  '/plyagroup': '/playgroup',
+  '/plyagroup/': '/playgroup',
+  
+  // Old blog posts
+  '/solitary-play-activities-for-preschoolers-types-and-benefits': '/blog',
+  '/solitary-play-activities-for-preschoolers-types-and-benefits/': '/blog',
+  '/teaching-the-preschoolers-value-of-money': '/blog',
+  '/teaching-the-preschoolers-value-of-money/': '/blog',
+  
+  // Old WordPress pages
+  '/midterm-playgroup-test': '/playgroup',
+  '/midterm-playgroup-test/': '/playgroup',
+  '/rotaract-club-': '/about',
+  '/rotaract-club-events': '/about',
+  '/rotaract-club-events/': '/about',
+  '/image-gallery': '/about',
+  '/image-gallery/': '/about',
+  '/school-admission-virtual-learning': '/preschool-admissions',
+  '/school-admission-virtual-learning/': '/preschool-admissions',
+  '/category/event': '/blog',
+  '/category/event/': '/blog',
+  
+  // Incomplete/malformed URLs
+  '/10-incredible-5-': '/blog',
+  '/raise-a-reader-easy-': '/blog',
+  '/teaching-the-': '/blog',
 };
 
 // Patterns that should return 404 (malformed URLs)
