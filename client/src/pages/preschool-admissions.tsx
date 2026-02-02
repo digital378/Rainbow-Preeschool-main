@@ -4,6 +4,7 @@ import { ContactForm } from "@/components/contact-form";
 import { centres } from "@shared/centre-data";
 import { Check, MessageCircle, Phone } from "lucide-react";
 import { trackWhatsAppClick, trackCallClick } from "@/lib/analytics";
+import { useState, useEffect } from "react";
 
 const faqs = [
   {
@@ -33,6 +34,14 @@ const faqs = [
 ];
 
 export default function PreschoolAdmissions() {
+  const [showBelowFold, setShowBelowFold] = useState(false);
+  
+  // Lazy load below-fold content after initial render for mobile performance
+  useEffect(() => {
+    const timer = setTimeout(() => setShowBelowFold(true), 100);
+    return () => clearTimeout(timer);
+  }, []);
+
   const breadcrumbs = [
     { name: "Home", url: "/" },
     { name: "Preschool Admissions", url: "/preschool-admissions" }
@@ -56,81 +65,82 @@ export default function PreschoolAdmissions() {
       />
 
       <div className="pt-20 min-h-screen bg-gradient-to-b from-red-50 to-white dark:from-red-950 dark:to-gray-900">
-        {/* Hero Section */}
-        <section className="py-12 md:py-16 px-4">
+        {/* Hero Section - Critical above-fold content */}
+        <section className="py-8 md:py-16 px-4">
           <div className="max-w-6xl mx-auto">
-            <div className="grid md:grid-cols-2 gap-8 items-start">
-              <div>
-                <span className="inline-block px-4 py-1 bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300 rounded-full text-sm font-medium mb-4">
+            <div className="grid md:grid-cols-2 gap-6 md:gap-8 items-start">
+              {/* Left column - Text content */}
+              <div className="min-h-[400px] md:min-h-0">
+                <span className="inline-block px-4 py-1 bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300 rounded-full text-sm font-medium mb-3">
                   Admissions Open 2026-27
                 </span>
-                <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+                <h1 className="text-2xl md:text-4xl font-bold text-gray-900 dark:text-white mb-3 leading-tight">
                   Preschool Admissions at Rainbow Preschool International
                 </h1>
-                <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
-                  Give your child the best start with Rainbow Preschool. We offer Playgroup, Nursery, and Kindergarten programmes designed for holistic development. 6 convenient locations across Thane.
+                <p className="text-base md:text-lg text-gray-600 dark:text-gray-300 mb-4">
+                  Give your child the best start with Rainbow Preschool. Playgroup, Nursery, and Kindergarten programmes. 6 locations across Thane.
                 </p>
 
-                {/* Trust Badges */}
-                <div className="flex flex-wrap gap-3 mb-6">
-                  <span className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-gray-800 rounded-lg border dark:border-gray-700 text-sm text-gray-900 dark:text-white">
-                    <Check className="w-4 h-4 text-green-500" /> 18+ Years Experience
+                {/* Trust Badges - Simplified on mobile */}
+                <div className="flex flex-wrap gap-2 mb-4 h-[40px] md:h-auto">
+                  <span className="flex items-center gap-1 px-2 py-1 bg-white dark:bg-gray-800 rounded-lg border dark:border-gray-700 text-xs md:text-sm text-gray-900 dark:text-white">
+                    <Check className="w-3 h-3 md:w-4 md:h-4 text-green-500 flex-shrink-0" /> 18+ Years
                   </span>
-                  <span className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-gray-800 rounded-lg border dark:border-gray-700 text-sm text-gray-900 dark:text-white">
-                    <Check className="w-4 h-4 text-green-500" /> 1,00,000+ Students
+                  <span className="flex items-center gap-1 px-2 py-1 bg-white dark:bg-gray-800 rounded-lg border dark:border-gray-700 text-xs md:text-sm text-gray-900 dark:text-white">
+                    <Check className="w-3 h-3 md:w-4 md:h-4 text-green-500 flex-shrink-0" /> 1L+ Students
                   </span>
-                  <span className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-gray-800 rounded-lg border dark:border-gray-700 text-sm text-gray-900 dark:text-white">
+                  <span className="hidden md:flex items-center gap-2 px-3 py-2 bg-white dark:bg-gray-800 rounded-lg border dark:border-gray-700 text-sm text-gray-900 dark:text-white">
                     <Check className="w-4 h-4 text-green-500" /> Award-Winning
                   </span>
                 </div>
 
-                {/* Programme Cards */}
-                <div className="grid grid-cols-2 gap-3 mb-6">
-                  <Link href="/playgroup" className="p-4 bg-yellow-50 dark:bg-yellow-900/30 rounded-lg border border-yellow-200 dark:border-yellow-800 hover:shadow-md transition-shadow">
-                    <h3 className="font-semibold text-gray-900 dark:text-white">Playgroup</h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-300">Age: 1.5 - 2.5 years</p>
+                {/* Programme Cards - Fixed height */}
+                <div className="grid grid-cols-2 gap-2 md:gap-3 mb-4">
+                  <Link href="/playgroup" className="p-3 md:p-4 bg-yellow-50 dark:bg-yellow-900/30 rounded-lg border border-yellow-200 dark:border-yellow-800">
+                    <h3 className="font-semibold text-gray-900 dark:text-white text-sm md:text-base">Playgroup</h3>
+                    <p className="text-xs md:text-sm text-gray-600 dark:text-gray-300">1.5 - 2.5 years</p>
                   </Link>
-                  <Link href="/nursery" className="p-4 bg-blue-50 dark:bg-blue-900/30 rounded-lg border border-blue-200 dark:border-blue-800 hover:shadow-md transition-shadow">
-                    <h3 className="font-semibold text-gray-900 dark:text-white">Nursery</h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-300">Age: 2.5 - 3.5 years</p>
+                  <Link href="/nursery" className="p-3 md:p-4 bg-blue-50 dark:bg-blue-900/30 rounded-lg border border-blue-200 dark:border-blue-800">
+                    <h3 className="font-semibold text-gray-900 dark:text-white text-sm md:text-base">Nursery</h3>
+                    <p className="text-xs md:text-sm text-gray-600 dark:text-gray-300">2.5 - 3.5 years</p>
                   </Link>
-                  <Link href="/kindergarten" className="p-4 bg-green-50 dark:bg-green-900/30 rounded-lg border border-green-200 dark:border-green-800 hover:shadow-md transition-shadow">
-                    <h3 className="font-semibold text-gray-900 dark:text-white">Jr. KG</h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-300">Age: 3.5 - 4.5 years</p>
+                  <Link href="/kindergarten" className="p-3 md:p-4 bg-green-50 dark:bg-green-900/30 rounded-lg border border-green-200 dark:border-green-800">
+                    <h3 className="font-semibold text-gray-900 dark:text-white text-sm md:text-base">Jr. KG</h3>
+                    <p className="text-xs md:text-sm text-gray-600 dark:text-gray-300">3.5 - 4.5 years</p>
                   </Link>
-                  <Link href="/kindergarten" className="p-4 bg-purple-50 dark:bg-purple-900/30 rounded-lg border border-purple-200 dark:border-purple-800 hover:shadow-md transition-shadow">
-                    <h3 className="font-semibold text-gray-900 dark:text-white">Sr. KG</h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-300">Age: 4.5 - 5.5 years</p>
+                  <Link href="/kindergarten" className="p-3 md:p-4 bg-purple-50 dark:bg-purple-900/30 rounded-lg border border-purple-200 dark:border-purple-800">
+                    <h3 className="font-semibold text-gray-900 dark:text-white text-sm md:text-base">Sr. KG</h3>
+                    <p className="text-xs md:text-sm text-gray-600 dark:text-gray-300">4.5 - 5.5 years</p>
                   </Link>
                 </div>
               </div>
 
-              {/* Enquiry Form */}
-              <div className="bg-white p-6 rounded-xl shadow-lg border text-gray-900">
-                <h2 className="text-xl font-bold text-gray-900 mb-2">Start Your Admission Enquiry</h2>
-                <p className="text-sm text-gray-600 mb-4">Fill the form below and we'll contact you within 24 hours</p>
+              {/* Enquiry Form - Fixed min-height */}
+              <div className="bg-white p-4 md:p-6 rounded-xl shadow-lg border text-gray-900 min-h-[480px]">
+                <h2 className="text-lg md:text-xl font-bold text-gray-900 mb-1">Start Your Admission Enquiry</h2>
+                <p className="text-sm text-gray-600 mb-3">Fill the form and we'll contact you within 24 hours</p>
                 <ContactForm />
                 
                 {/* WhatsApp & Call Buttons */}
-                <div className="flex gap-3 mt-4 pt-4 border-t">
+                <div className="flex gap-2 md:gap-3 mt-3 pt-3 border-t">
                   <a
                     href="https://wa.me/918291568972?text=Hi%2C%20I%20am%20interested%20in%20preschool%20admissions%20at%20Rainbow%20Preschool"
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={() => trackWhatsAppClick({ source_page: 'preschool-admissions' })}
-                    className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-green-500 hover:bg-green-600 text-white rounded-lg font-medium transition-colors"
+                    className="flex-1 flex items-center justify-center gap-1 md:gap-2 px-3 md:px-4 py-2 md:py-3 bg-green-500 text-white rounded-lg font-medium text-sm"
                     data-testid="button-whatsapp-admissions"
                   >
-                    <MessageCircle className="w-5 h-5" />
+                    <MessageCircle className="w-4 h-4 md:w-5 md:h-5" />
                     WhatsApp
                   </a>
                   <a
                     href="tel:+918291568972"
                     onClick={() => trackCallClick({ phone: '8291568972', source_page: 'preschool-admissions' })}
-                    className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-medium transition-colors"
+                    className="flex-1 flex items-center justify-center gap-1 md:gap-2 px-3 md:px-4 py-2 md:py-3 bg-blue-500 text-white rounded-lg font-medium text-sm"
                     data-testid="button-call-admissions"
                   >
-                    <Phone className="w-5 h-5" />
+                    <Phone className="w-4 h-4 md:w-5 md:h-5" />
                     Call Now
                   </a>
                 </div>
@@ -139,56 +149,62 @@ export default function PreschoolAdmissions() {
           </div>
         </section>
 
-        {/* Our Centres */}
-        <section className="py-12 px-4 bg-white dark:bg-gray-800">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">Our Centres in Thane</h2>
-            <div className="grid md:grid-cols-3 gap-4">
-              {centres.map((centre) => (
-                <Link
-                  key={centre.id}
-                  href={centre.preschoolLandingUrl || `/contact`}
-                  className="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg border dark:border-gray-600 hover:shadow-md transition-shadow"
-                >
-                  <h3 className="font-semibold text-gray-900 dark:text-white">{centre.name}</h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-300">{centre.localityName}</p>
-                  <span className="text-primary text-sm font-medium mt-2 inline-block">View Details →</span>
-                </Link>
-              ))}
+        {/* Our Centres - Lazy loaded */}
+        {showBelowFold && (
+          <section className="py-8 md:py-12 px-4 bg-white dark:bg-gray-800" style={{ contentVisibility: 'auto', containIntrinsicSize: '0 300px' }}>
+            <div className="max-w-6xl mx-auto">
+              <h2 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-4 md:mb-6 text-center">Our Centres in Thane</h2>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
+                {centres.map((centre) => (
+                  <Link
+                    key={centre.id}
+                    href={centre.preschoolLandingUrl || `/contact`}
+                    className="p-3 md:p-4 bg-gray-50 dark:bg-gray-700 rounded-lg border dark:border-gray-600"
+                  >
+                    <h3 className="font-semibold text-gray-900 dark:text-white text-sm md:text-base">{centre.name}</h3>
+                    <p className="text-xs md:text-sm text-gray-600 dark:text-gray-300">{centre.localityName}</p>
+                    <span className="text-primary text-xs md:text-sm font-medium mt-1 inline-block">Details →</span>
+                  </Link>
+                ))}
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+        )}
 
-        {/* FAQ Section */}
-        <section className="py-12 px-4">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">Frequently Asked Questions</h2>
-            <div className="space-y-4">
-              {faqs.map((faq, index) => (
-                <div key={index} className="bg-white dark:bg-gray-800 p-5 rounded-lg border dark:border-gray-700">
-                  <h3 className="font-semibold text-gray-900 dark:text-white mb-2">{faq.question}</h3>
-                  <p className="text-gray-600 dark:text-gray-300 text-sm">{faq.answer}</p>
-                </div>
-              ))}
+        {/* FAQ Section - Lazy loaded */}
+        {showBelowFold && (
+          <section className="py-8 md:py-12 px-4" style={{ contentVisibility: 'auto', containIntrinsicSize: '0 600px' }}>
+            <div className="max-w-4xl mx-auto">
+              <h2 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-4 md:mb-6 text-center">Frequently Asked Questions</h2>
+              <div className="space-y-3 md:space-y-4">
+                {faqs.map((faq, index) => (
+                  <div key={index} className="bg-white dark:bg-gray-800 p-4 md:p-5 rounded-lg border dark:border-gray-700">
+                    <h3 className="font-semibold text-gray-900 dark:text-white mb-1 md:mb-2 text-sm md:text-base">{faq.question}</h3>
+                    <p className="text-gray-600 dark:text-gray-300 text-xs md:text-sm">{faq.answer}</p>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+        )}
 
-        {/* CTA Section */}
-        <section className="py-12 px-4 bg-primary text-white">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-2xl font-bold mb-4">Ready to Start Your Child's Journey?</h2>
-            <p className="mb-6">Book a campus tour and see why Rainbow Preschool is the right choice for your family.</p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <a href="tel:+918291568972" className="px-6 py-3 bg-white text-primary rounded-lg font-semibold hover:shadow-lg transition-shadow">
-                Call +91 82915 68972
-              </a>
-              <a href="https://wa.me/918291568972" className="px-6 py-3 bg-green-500 text-white rounded-lg font-semibold hover:shadow-lg transition-shadow">
-                WhatsApp Us
-              </a>
+        {/* CTA Section - Lazy loaded */}
+        {showBelowFold && (
+          <section className="py-8 md:py-12 px-4 bg-primary text-white">
+            <div className="max-w-4xl mx-auto text-center">
+              <h2 className="text-xl md:text-2xl font-bold mb-3 md:mb-4">Ready to Start Your Child's Journey?</h2>
+              <p className="mb-4 md:mb-6 text-sm md:text-base">Book a campus tour and see why Rainbow Preschool is the right choice.</p>
+              <div className="flex flex-wrap justify-center gap-3 md:gap-4">
+                <a href="tel:+918291568972" className="px-5 md:px-6 py-2 md:py-3 bg-white text-primary rounded-lg font-semibold text-sm md:text-base">
+                  Call Now
+                </a>
+                <a href="https://wa.me/918291568972" className="px-5 md:px-6 py-2 md:py-3 bg-green-500 text-white rounded-lg font-semibold text-sm md:text-base">
+                  WhatsApp
+                </a>
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+        )}
       </div>
     </>
   );
