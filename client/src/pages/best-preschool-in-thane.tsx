@@ -55,7 +55,7 @@ export default function BestPreschoolInThane() {
   return (
     <>
       <SEO
-        title="Best Preschool in Thane | Rainbow Preschool International - Award Winning"
+        title="Best Preschool in Thane - Rainbow Preschool International"
         description="Rainbow Preschool is the best preschool in Thane with 18+ years experience, 1 lakh+ students, award-winning curriculum. Playgroup, Nursery, KG. 6 centres. Enquire now!"
         keywords="best preschool in thane, top preschool thane, best playgroup in thane, best nursery school thane, rainbow preschool thane, preschool thane"
         canonical="/best-preschool-in-thane"
