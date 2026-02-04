@@ -105,8 +105,20 @@ const redirectMap: Record<string, string> = {
 };
 
 export function setupRedirects(app: Express) {
-  // Note: www canonicalization should be handled at DNS/CDN level, not in app
-  // to avoid redirect loops behind load balancers
+  // www canonicalization - only triggers in production for non-www requests
+  // Primary redirect is handled by Cloudflare, this is a fallback
+  app.use((req: Request, res: Response, next: NextFunction) => {
+    const host = req.get('host') || '';
+    
+    // Only redirect if explicitly accessing non-www domain in production
+    if (process.env.NODE_ENV === 'production' && host === 'rainbowpreschools.com') {
+      const newUrl = `https://www.rainbowpreschools.com${req.originalUrl}`;
+      console.log(`[SEO] www redirect: ${host}${req.originalUrl} → ${newUrl}`);
+      return res.redirect(301, newUrl);
+    }
+    
+    next();
+  });
   
   app.use((req: Request, res: Response, next: NextFunction) => {
     const path = req.path.toLowerCase();
