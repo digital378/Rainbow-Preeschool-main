@@ -586,9 +586,14 @@ export const trackPageView = (url: string) => {
   // Reset form tracking on page navigation (SPA support)
   resetFormTracking();
   
-  window.gtag('config', measurementId, {
-    page_path: url
-  });
+  // Delay pageview to allow React to set document.title in useEffect
+  // This ensures GA4 captures the correct page title for SPAs
+  setTimeout(() => {
+    window.gtag('config', measurementId, {
+      page_path: url,
+      page_title: document.title
+    });
+  }, 100);
 };
 
 // Track custom events (GA4)
