@@ -83,6 +83,21 @@ export function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/best-preschool-in-thane" className="text-sm text-muted-foreground hover:text-foreground transition-colors" data-testid="link-footer-best-preschool">
+                  Best Preschool in Thane
+                </Link>
+              </li>
+              <li>
+                <Link href="/preschool-near-me" className="text-sm text-muted-foreground hover:text-foreground transition-colors" data-testid="link-footer-preschool-near-me">
+                  Preschool Near Me
+                </Link>
+              </li>
+              <li>
+                <Link href="/preschool-admissions" className="text-sm text-muted-foreground hover:text-foreground transition-colors" data-testid="link-footer-preschool-admissions">
+                  Preschool Admissions
+                </Link>
+              </li>
+              <li>
                 <Link href="/blog" className="text-sm text-muted-foreground hover:text-foreground transition-colors" data-testid="link-footer-blog">
                   News & Blog
                 </Link>
