@@ -66,7 +66,7 @@ export default function Programmes() {
   return (
     <div className="pt-20">
       <SEO
-        title="Preschool Programmes in Thane | Playgroup, Nursery, Kindergarten Near Me"
+        title="Preschool Programmes Thane | Playgroup Nursery KG"
         description="Explore preschool programmes in Thane: Playgroup (1.5-2.5 yrs), Nursery (2.5-3.5 yrs), Kindergarten (3.5-5.5 yrs) & Daycare. Best play-based curriculum near you!"
         keywords="preschool programmes in thane, preschool programmes near me, playgroup in thane, nursery in thane, kindergarten thane, daycare thane, playgroup programme, nursery curriculum, kg admission thane, lkg ukg thane, best playgroup near me"
         canonical="/programmes"

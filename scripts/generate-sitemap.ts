@@ -80,10 +80,10 @@ const entries: SitemapEntry[] = [
   { url: '/blog', priority: 0.7, changefreq: 'weekly' },
   { url: '/faqs', priority: 0.6, changefreq: 'monthly' },
   
-  // High-intent landing pages (priority 0.95)
-  { url: '/preschool-admissions', priority: 0.95, changefreq: 'weekly' },
-  { url: '/preschool-near-me', priority: 0.95, changefreq: 'weekly' },
-  { url: '/best-preschool-in-thane', priority: 0.95, changefreq: 'weekly' },
+  // High-intent landing pages (priority 1.0 - PRIMARY SEO TARGETS)
+  { url: '/best-preschool-in-thane', priority: 1.0, changefreq: 'weekly' },
+  { url: '/preschool-admissions', priority: 1.0, changefreq: 'weekly' },
+  { url: '/preschool-near-me', priority: 1.0, changefreq: 'weekly' },
   
   // Programme pages (priority 0.9)
   { url: '/playgroup', priority: 0.9, changefreq: 'monthly' },

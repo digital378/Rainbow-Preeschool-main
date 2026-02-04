@@ -219,7 +219,7 @@ export const preschoolPageSEO: Record<string, PreschoolPageSEO> = {
     canonicalPath: "/preschool-in-kalwa-thane",
   },
   kasarvadavali: {
-    title: "Preschool in Kasarvadavali, Thane | Rainbow Preschool International",
+    title: "Preschool in Kasarvadavali Thane | Rainbow Preschool",
     description: "Looking for a preschool in Kasarvadavali, Thane? Rainbow Preschool offers playgroup, nursery & kindergarten with safe, play-based learning. Enquire now.",
     h1: "Preschool in Kasarvadavali, Thane",
     canonicalPath: "/preschool-in-kasarvadavali-thane",
@@ -554,13 +554,13 @@ export const localPageSEO: Record<string, LocalPageSEO> = {
     canonicalPath: "/playgroup-near-ghodbunder-road",
   },
   "anand-nagar": {
-    title: "Playgroup in Anand Nagar, Thane | Rainbow Preschool (1.5-2.5 Years)",
+    title: "Playgroup in Anand Nagar Thane | Rainbow Preschool",
     description: "Best playgroup in Anand Nagar, Thane near Tropical Lagoon. Rainbow Preschool offers safe, play-based learning for toddlers aged 1.5-2.5 years. Book a visit today!",
     h1: "Playgroup in Anand Nagar, Thane (1.5-2.5 Years)",
     canonicalPath: "/playgroup-in-anand-nagar",
   },
   kasarvadavali: {
-    title: "Playgroup in Kasarvadavali, Thane | Rainbow Preschool (1.5-2.5 Years)",
+    title: "Playgroup in Kasarvadavali Thane | Rainbow Preschool",
     description: "Looking for playgroup in Kasarvadavali? Rainbow Preschool near Hypercity Mall offers play-based early learning for toddlers aged 1.5-2.5 years. Book a free visit!",
     h1: "Playgroup in Kasarvadavali, Thane (1.5-2.5 Years)",
     canonicalPath: "/playgroup-in-kasarvadavali",

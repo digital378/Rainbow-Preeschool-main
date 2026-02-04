@@ -71,7 +71,7 @@ export default function About() {
   return (
     <div className="pt-20">
       <SEO
-        title="About Rainbow Preschool Thane | Rainbow School Near Me | Since 2007"
+        title="About Rainbow Preschool Thane | Since 2007"
         description="Rainbow Preschool Thane - trusted by 1,00,000+ families since 2007. Discover our play-based curriculum, certified teachers & 6 centres across Thane. Rainbow school near you!"
         keywords="rainbow preschool thane, rainbow school near me, about rainbow preschool, rainbow preschool international, rainbow school thane, best preschool thane, preschool thane history, trusted preschool thane"
         canonical="/about"

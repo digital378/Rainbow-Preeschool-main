@@ -57,7 +57,7 @@ export default function PreschoolAdmissions() {
   return (
     <>
       <SEO
-        title="Preschool Admissions 2026-27 | Rainbow Preschool International Thane"
+        title="Preschool Admissions 2026-27 | Rainbow Thane"
         description="Apply for preschool admissions at Rainbow Preschool International. Playgroup, Nursery, Jr. KG & Sr. KG admissions open. 6 centres in Thane. Book a campus tour today!"
         keywords="preschool admissions, preschool admission 2025, nursery admission thane, playgroup admission, kindergarten admission, rainbow preschool admission"
         canonical="/preschool-admissions"
