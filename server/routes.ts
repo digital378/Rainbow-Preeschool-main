@@ -271,13 +271,12 @@ export async function registerRoutes(
       const validatedData = insertContactSchema.parse(formData);
       const contact = await storage.createContact(validatedData);
       
-      // Return immediately for fast user experience
-      res.status(201).json({ success: true, id: contact.id });
+      console.log(`[Contact] New lead received: ${validatedData.parentName}, ${validatedData.phone}, ${validatedData.programme}`);
       
-      // Send email and MCB in background (non-blocking)
-      Promise.all([
-        // Email notification
-        sendLeadNotificationEmail({
+      // Send email synchronously so we know if it succeeds
+      let emailSent = false;
+      try {
+        emailSent = await sendLeadNotificationEmail({
           parentName: validatedData.parentName,
           childName: validatedData.childName,
           phone: validatedData.phone,
@@ -288,12 +287,21 @@ export async function registerRoutes(
           message: validatedData.message || undefined,
           leadSource: formData.leadSource || undefined,
           leadMedium: formData.leadMedium || undefined
-        }).catch(err => console.error("Email failed:", err)),
-        
-        // MCB CRM
-        (async () => {
+        });
+        console.log(`[Contact] Email ${emailSent ? 'sent successfully' : 'FAILED'} for ${validatedData.parentName}`);
+      } catch (err) {
+        console.error("[Contact] Email error:", err);
+        emailSent = false;
+      }
+      
+      // Return success with email status
+      res.status(201).json({ success: true, id: contact.id, emailSent });
+      
+      // Send to MCB CRM in background (non-blocking)
+      (async () => {
+        try {
           const branchID = validatedData.branch ? getBranchID(validatedData.branch) : 88;
-          return sendLeadToMCB({
+          const result = await sendLeadToMCB({
             studentName: validatedData.childName || "Not Provided",
             fatherName: validatedData.parentName,
             fatherMobile: validatedData.phone,
@@ -302,8 +310,11 @@ export async function registerRoutes(
             utmMedium: formData.leadMedium || "",
             utmCampaign: formData.utmCampaign || "",
           });
-        })().catch(err => console.error("MCB failed:", err))
-      ]);
+          console.log(`[Contact] MCB ${result.success ? 'success' : 'FAILED'} for ${validatedData.parentName}`);
+        } catch (err) {
+          console.error("[Contact] MCB error:", err);
+        }
+      })();
     } catch (error) {
       if (error instanceof z.ZodError) {
         res.status(400).json({ error: "Invalid form data", details: error.errors });
