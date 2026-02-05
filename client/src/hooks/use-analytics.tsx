@@ -4,10 +4,12 @@ import { trackPageView } from '../lib/analytics';
 
 export const useAnalytics = () => {
   const [location] = useLocation();
-  const prevLocationRef = useRef<string>(location);
+  const prevLocationRef = useRef<string | null>(null);
   
   useEffect(() => {
-    if (location !== prevLocationRef.current) {
+    // Track initial page load (prevLocationRef.current is null on first render)
+    // Track navigation changes (when location differs from previous)
+    if (prevLocationRef.current === null || location !== prevLocationRef.current) {
       trackPageView(location);
       prevLocationRef.current = location;
     }
