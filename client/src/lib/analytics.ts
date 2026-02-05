@@ -576,15 +576,25 @@ export const pushToDataLayer = (event: Record<string, any>) => {
   window.dataLayer.push(event);
 };
 
-// Track page views
-export const trackPageView = (url: string) => {
-  if (typeof window === 'undefined' || !window.gtag) return;
+// Track page views with retry for initial page load
+export const trackPageView = (url: string, retryCount = 0) => {
+  if (typeof window === 'undefined') return;
   
   const measurementId = import.meta.env.VITE_GA_MEASUREMENT_ID;
   if (!measurementId) return;
   
   // Reset form tracking on page navigation (SPA support)
   resetFormTracking();
+  
+  // If gtag isn't ready yet (async script loading), retry up to 10 times
+  if (!window.gtag) {
+    if (retryCount < 10) {
+      setTimeout(() => trackPageView(url, retryCount + 1), 200);
+    } else {
+      console.warn('[GA4] gtag not available after retries, pageview not tracked');
+    }
+    return;
+  }
   
   // Delay pageview to allow React to set document.title in useEffect
   // This ensures GA4 captures the correct page title for SPAs
@@ -593,6 +603,7 @@ export const trackPageView = (url: string) => {
       page_path: url,
       page_title: document.title
     });
+    console.debug('[GA4] Pageview tracked:', url, document.title);
   }, 100);
 };
 
