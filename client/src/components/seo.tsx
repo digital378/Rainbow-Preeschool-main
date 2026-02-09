@@ -95,7 +95,7 @@ export function SEO({
     }
 
     return () => {
-      document.title = "Rainbow Preschool International - Best Preschool in Thane";
+      document.title = "Best Preschool - Rainbow Preschool Thane";
       const seoScripts = document.querySelectorAll('script[data-seo-schema="true"]');
       seoScripts.forEach((script) => script.remove());
     };
