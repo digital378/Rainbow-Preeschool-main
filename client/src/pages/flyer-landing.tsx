@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 const areas = ["Manpada", "Hariniwas", "Anand Nagar", "Dhokali", "Kalwa", "Kasarvadavali"];
 
@@ -28,6 +28,8 @@ export default function FlyerLanding() {
   const [formData, setFormData] = useState({ parentName: '', phone: '', childName: '', childAge: '', area: '' });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [expandedProgramme, setExpandedProgramme] = useState<string | null>(null);
+  const [videoVisible, setVideoVisible] = useState(false);
+  const videoRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const existingRobots = document.querySelector('meta[name="robots"]');
@@ -62,6 +64,16 @@ export default function FlyerLanding() {
       document.head.removeChild(meta);
       document.head.removeChild(descMeta);
     };
+  }, []);
+
+  useEffect(() => {
+    if (!videoRef.current) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setVideoVisible(true); observer.disconnect(); } },
+      { rootMargin: '200px' }
+    );
+    observer.observe(videoRef.current);
+    return () => observer.disconnect();
   }, []);
 
   const validate = () => {
@@ -141,7 +153,7 @@ export default function FlyerLanding() {
       <header className="bg-white shadow-sm py-3 px-4 sticky top-0 z-50">
         <div className="max-w-4xl mx-auto flex items-center justify-between gap-2">
           <a href="/" className="flex items-center gap-2">
-            <img src="/images/optimized/rainbow-logo.webp" alt="Rainbow Preschool" className="h-10 w-auto" />
+            <img src="/images/optimized/rainbow-logo.webp" alt="Rainbow Preschool" className="h-10 w-auto" width="40" height="40" />
             <span className="font-bold text-red-600 text-lg">Rainbow Preschool</span>
           </a>
           <a
@@ -157,7 +169,7 @@ export default function FlyerLanding() {
 
       <main className="max-w-4xl mx-auto px-4 py-6">
         <div className="grid md:grid-cols-2 gap-6">
-          <div className="space-y-4">
+          <div className="space-y-4 order-2 md:order-1">
             <div className="inline-flex items-center gap-2 bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-semibold">
               <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
               Admissions Open 2026-27
@@ -192,7 +204,7 @@ export default function FlyerLanding() {
             </div>
           </div>
 
-          <div className="bg-white rounded-xl shadow-xl border border-gray-200 p-5" id="enquiry-form">
+          <div className="bg-white rounded-xl shadow-xl border border-gray-200 p-5 order-1 md:order-2" id="enquiry-form">
             {isSubmitted ? (
               <div className="text-center py-8 space-y-4">
                 <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto">
@@ -310,21 +322,27 @@ export default function FlyerLanding() {
           </div>
         </div>
 
-        {/* Video Section */}
-        <div className="mt-8">
+        {/* Video Section - lazy loaded */}
+        <div className="mt-8" ref={videoRef}>
           <h2 className="font-semibold text-lg text-gray-900 mb-3">Take a Virtual Tour</h2>
-          <div className="rounded-xl overflow-hidden shadow-md border border-gray-200">
-            <video
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="w-full h-auto"
-              data-testid="video-flyer-walkthrough"
-            >
-              <source src="/assets/RPS_Walkthrough_Video_-_Website_1_1766126796450.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
+          <div className="rounded-xl overflow-hidden shadow-md border border-gray-200 bg-gray-100" style={{ aspectRatio: '16/9' }}>
+            {videoVisible ? (
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="metadata"
+                className="w-full h-full object-cover"
+                data-testid="video-flyer-walkthrough"
+              >
+                <source src="/assets/RPS_Walkthrough_Video_-_Website_1_1766126796450.mp4" type="video/mp4" />
+              </video>
+            ) : (
+              <div className="w-full h-full flex items-center justify-center">
+                <div className="w-8 h-8 border-4 border-red-200 border-t-red-600 rounded-full animate-spin" />
+              </div>
+            )}
           </div>
         </div>
 
