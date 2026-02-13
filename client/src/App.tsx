@@ -28,6 +28,7 @@ const BlogPost = lazy(() => import("@/pages/blog-post"));
 const NotFound = lazy(() => import("@/pages/not-found"));
 const AdLanding = lazy(() => import("@/pages/ad-landing"));
 const AdGoogleLanding = lazy(() => import("@/pages/ad-google-landing"));
+const FlyerLanding = lazy(() => import("@/pages/flyer-landing"));
 
 // High-intent SEO landing pages
 const PreschoolAdmissions = lazy(() => import("@/pages/preschool-admissions"));
@@ -242,6 +243,7 @@ const STANDALONE_LANDING_PATHS = [
   "/preschool-in-kasarvadavali-thane",
   "/ad",
   "/ad-google",
+  "/flyer",
   ...legacySlugs.map(slug => slug.replace(/\/$/, '')),
   "/author/rainbowpreschools",
   "/author/rainbow-preschools",
@@ -295,6 +297,7 @@ function Router() {
         
         <Route path="/ad" component={AdLanding} />
         <Route path="/ad-google" component={AdGoogleLanding} />
+        <Route path="/flyer" component={FlyerLanding} />
         <Route path="/republic-day-2026" component={RepublicDay2026} />
         
         <Route path="/playgroup-in-thane" component={LazyPlaygroupInThane} />

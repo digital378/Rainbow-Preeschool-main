@@ -8,6 +8,7 @@ export const NOINDEX_SLUGS: string[] = [
   // Ad landing pages
   "/ad",
   "/ad-google",
+  "/flyer",
   
   // Author archives
   "/author/rainbow-preschools",
