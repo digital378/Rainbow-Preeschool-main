@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 
 const GA4_ID = "G-G1MX1N0M05";
+const RIS_GA4_ID = "G-ZEJE3FPLBF";
 
 const seatData = [
   { grade: "Nursery", seats: 10 },
@@ -75,8 +76,10 @@ export default function RISLanding() {
       (window as any).gtag = function() { (window as any).dataLayer.push(arguments); };
       (window as any).gtag('js', new Date());
       (window as any).gtag('config', GA4_ID, { page_path: '/RIS', page_title: 'RIS Thane Landing' });
+      (window as any).gtag('config', RIS_GA4_ID, { page_path: '/RIS', page_title: 'RIS Thane Landing' });
     } else {
       (window as any).gtag('config', GA4_ID, { page_path: '/RIS', page_title: 'RIS Thane Landing' });
+      (window as any).gtag('config', RIS_GA4_ID, { page_path: '/RIS', page_title: 'RIS Thane Landing' });
     }
 
     if (typeof window !== 'undefined' && (window as any).gtag) {
