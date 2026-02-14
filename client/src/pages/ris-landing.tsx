@@ -149,6 +149,11 @@ export default function RISLanding() {
             grade: formData.grade,
             lead_source: 'RIS',
           });
+          (window as any).gtag('event', 'google_ads_leads', {
+            send_to: RIS_GA4_ID,
+            grade: formData.grade,
+            lead_source: 'RIS',
+          });
         }
         setIsSubmitted(true);
       }
