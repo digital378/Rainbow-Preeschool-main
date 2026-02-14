@@ -57,11 +57,11 @@ export default function RISLanding() {
     meta.name = 'robots';
     meta.content = 'noindex, nofollow';
     document.head.appendChild(meta);
-    document.title = "Rainbow International School Bhramhand - Limited Seats";
+    document.title = "Rainbow International School Thane - Limited Seats";
 
     const descMeta = document.createElement('meta');
     descMeta.name = 'description';
-    descMeta.content = 'Limited seats available at Rainbow International School, Bhramhand. Nursery to Grade X admissions open. Secure your child\'s seat now!';
+    descMeta.content = 'Limited seats available at Rainbow International School, Thane. Nursery to Grade X admissions open. Secure your child\'s seat now!';
     document.head.appendChild(descMeta);
 
     if (!(window as any).gtag) {
@@ -114,7 +114,7 @@ export default function RISLanding() {
           childAge: formData.grade,
           programme: `Grade ${formData.grade}`,
           branch: 'Bhramhand',
-          message: `RIS Enquiry - Grade: ${formData.grade} (${selectedSeat?.seats ?? '?'} seats left)`,
+          message: `RIS Thane Enquiry - Grade: ${formData.grade} (${selectedSeat?.seats ?? '?'} seats left)`,
           leadSource: 'RIS',
           leadMedium: 'Google Ads - RIS',
         }),
@@ -198,10 +198,10 @@ export default function RISLanding() {
               Only {totalSeatsAvailable} Seats Left!
             </div>
             <h1 className="text-3xl md:text-4xl font-bold leading-tight text-gray-900">
-              Rainbow International School <span className="text-blue-600">Bhramhand</span>
+              Rainbow International School <span className="text-blue-600">Thane</span>
             </h1>
             <p className="text-gray-600 text-lg">
-              Admissions 2025-26 closing fast. <strong className="text-red-600">Limited seats available</strong> across Nursery to Grade X. Don't miss out — secure your child's future today!
+              Admissions 2026-27 closing fast. <strong className="text-red-600">Limited seats available</strong> across Nursery to Grade X. Don't miss out — secure your child's future today!
             </p>
 
             <div className="flex flex-wrap gap-2">
@@ -328,7 +328,7 @@ export default function RISLanding() {
                       <PhoneIcon /> Call
                     </a>
                     <a
-                      href="https://wa.me/918291568972?text=Hi, I'm interested in admission at Rainbow International School Bhramhand"
+                      href="https://wa.me/918291568972?text=Hi, I'm interested in admission at Rainbow International School Thane"
                       onClick={trackWhatsApp}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -346,7 +346,7 @@ export default function RISLanding() {
 
         {/* Seat Availability Table */}
         <div className="mt-8">
-          <h2 className="font-bold text-xl text-gray-900 mb-1">Seat Availability 2025-26</h2>
+          <h2 className="font-bold text-xl text-gray-900 mb-1">Seat Availability 2026-27</h2>
           <p className="text-sm text-gray-500 mb-4">Updated regularly. Seats are limited and allocated on a first-come, first-served basis.</p>
           <div className="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
             <table className="w-full text-left" data-testid="table-ris-seats">
@@ -442,7 +442,7 @@ export default function RISLanding() {
       </main>
 
       <a
-        href="https://wa.me/918291568972?text=Hi, I'm interested in admission at Rainbow International School Bhramhand"
+        href="https://wa.me/918291568972?text=Hi, I'm interested in admission at Rainbow International School Thane"
         onClick={trackWhatsApp}
         target="_blank"
         rel="noopener noreferrer"
@@ -453,7 +453,7 @@ export default function RISLanding() {
       </a>
 
       <footer className="bg-gray-100 py-6 px-4 mt-8 text-center text-sm text-gray-600">
-        <p className="font-medium text-gray-900">Rainbow International School, Bhramhand</p>
+        <p className="font-medium text-gray-900">Rainbow International School, Thane</p>
         <p>Passion for Excellence</p>
         <div className="mt-3 flex items-center justify-center gap-4">
           <a href="tel:+918291568972" onClick={trackCall} className="text-blue-600 font-medium" data-testid="link-ris-footer-call">
