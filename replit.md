@@ -157,7 +157,7 @@ Clean, page-based GA4 form tracking using gtag (no GTM Form Submission triggers)
 
 ## Ad Landing Pages
 
-### /rainbow-international-School-Bhramhand - RIS Google Ads Landing Page
+### /RIS - RIS Google Ads Landing Page
 Dedicated landing page for Rainbow International School (RIS) Google Ads campaigns.
 - **Has noindex meta tag** - Prevents SERP indexing
 - **No OTP verification** - Direct form submission

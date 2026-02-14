@@ -245,7 +245,7 @@ const STANDALONE_LANDING_PATHS = [
   "/ad",
   "/ad-google",
   "/flyer",
-  "/rainbow-international-School-Bhramhand",
+  "/RIS",
   ...legacySlugs.map(slug => slug.replace(/\/$/, '')),
   "/author/rainbowpreschools",
   "/author/rainbow-preschools",
@@ -300,7 +300,7 @@ function Router() {
         <Route path="/ad" component={AdLanding} />
         <Route path="/ad-google" component={AdGoogleLanding} />
         <Route path="/flyer" component={FlyerLanding} />
-        <Route path="/rainbow-international-School-Bhramhand" component={RISLanding} />
+        <Route path="/RIS" component={RISLanding} />
         <Route path="/republic-day-2026" component={RepublicDay2026} />
         
         <Route path="/playgroup-in-thane" component={LazyPlaygroupInThane} />

@@ -72,13 +72,13 @@ export default function RISLanding() {
       (window as any).dataLayer = (window as any).dataLayer || [];
       (window as any).gtag = function() { (window as any).dataLayer.push(arguments); };
       (window as any).gtag('js', new Date());
-      (window as any).gtag('config', GA4_ID, { page_path: '/rainbow-international-School-Bhramhand', page_title: 'RIS Bhramhand Landing' });
+      (window as any).gtag('config', GA4_ID, { page_path: '/RIS', page_title: 'RIS Bhramhand Landing' });
     } else {
-      (window as any).gtag('config', GA4_ID, { page_path: '/rainbow-international-School-Bhramhand', page_title: 'RIS Bhramhand Landing' });
+      (window as any).gtag('config', GA4_ID, { page_path: '/RIS', page_title: 'RIS Bhramhand Landing' });
     }
 
     if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('event', 'ris_page_view', { page: '/rainbow-international-School-Bhramhand' });
+      (window as any).gtag('event', 'ris_page_view', { page: '/RIS' });
     }
 
     return () => {
