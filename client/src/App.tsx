@@ -301,6 +301,7 @@ function Router() {
         <Route path="/ad-google" component={AdGoogleLanding} />
         <Route path="/flyer" component={FlyerLanding} />
         <Route path="/RIS" component={RISLanding} />
+        <Route path="/ris" component={RISLanding} />
         <Route path="/republic-day-2026" component={RepublicDay2026} />
         
         <Route path="/playgroup-in-thane" component={LazyPlaygroupInThane} />
@@ -522,7 +523,7 @@ function AppContent() {
   const [location] = useLocation();
   const pathWithoutQuery = location.split("?")[0];
   const normalizedPath = pathWithoutQuery.replace(/\/$/, '') || '/';
-  const isStandaloneLanding = STANDALONE_LANDING_PATHS.includes(normalizedPath);
+  const isStandaloneLanding = STANDALONE_LANDING_PATHS.some(p => p.toLowerCase() === normalizedPath.toLowerCase());
 
   if (isStandaloneLanding) {
     return (
