@@ -9,6 +9,7 @@ export const NOINDEX_SLUGS: string[] = [
   "/ad",
   "/ad-google",
   "/flyer",
+  "/rainbow-international-School-Bhramhand",
   
   // Author archives
   "/author/rainbow-preschools",
