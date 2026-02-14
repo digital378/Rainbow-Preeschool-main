@@ -173,16 +173,16 @@ export default function RISLanding() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white" style={{ colorScheme: 'light' }}>
-      <header className="bg-white shadow-sm py-3 px-4 sticky top-0 z-50">
-        <div className="max-w-4xl mx-auto flex items-center justify-between gap-2">
-          <div className="flex items-center gap-2">
-            <img src="/images/ris-logo.png" alt="Rainbow International School" className="h-10 w-auto" width="40" height="40" />
-            <span className="font-bold text-blue-700 text-sm sm:text-lg leading-tight">Rainbow International School</span>
+      <header className="bg-white shadow-sm py-2 px-4 sticky top-0 z-50">
+        <div className="max-w-4xl mx-auto flex items-center justify-between gap-3">
+          <div className="flex items-center gap-2 min-w-0">
+            <img src="/images/ris-logo.png" alt="Rainbow International School" className="h-9 w-9 flex-shrink-0 rounded-full" width="36" height="36" />
+            <span className="font-bold text-blue-700 text-sm sm:text-base leading-tight truncate">Rainbow International School</span>
           </div>
           <a
             href="tel:+918291568972"
             onClick={trackCall}
-            className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-full text-sm font-semibold"
+            className="flex items-center gap-1.5 bg-blue-600 text-white px-3 py-1.5 rounded-full text-sm font-semibold flex-shrink-0 whitespace-nowrap"
             data-testid="link-ris-call"
           >
             <PhoneIcon /> <span className="hidden sm:inline">+91 82915 68972</span><span className="sm:hidden">Call</span>
@@ -190,7 +190,7 @@ export default function RISLanding() {
         </div>
       </header>
 
-      <main className="max-w-4xl mx-auto px-4 py-6">
+      <main className="max-w-4xl mx-auto px-4 py-5">
         <div className="grid md:grid-cols-2 gap-6">
           <div className="space-y-4 order-2 md:order-1">
             <div className="inline-flex items-center gap-2 bg-red-100 text-red-700 px-3 py-1.5 rounded-full text-sm font-bold animate-pulse">
