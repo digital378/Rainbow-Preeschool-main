@@ -193,10 +193,15 @@ export default function RISLanding() {
       <main className="max-w-4xl mx-auto px-4 py-5">
         <div className="grid md:grid-cols-2 gap-6">
           <div className="space-y-4 order-2 md:order-1">
-            <div className="inline-flex items-center gap-2 bg-red-100 text-red-700 px-3 py-1.5 rounded-full text-sm font-bold animate-pulse">
+            <a
+              href="#seat-availability"
+              onClick={(e) => { e.preventDefault(); document.getElementById('seat-availability')?.scrollIntoView({ behavior: 'smooth' }); }}
+              className="inline-flex items-center gap-2 bg-red-100 text-red-700 px-3 py-1.5 rounded-full text-sm font-bold animate-pulse cursor-pointer hover:bg-red-200"
+              data-testid="link-ris-check-seats"
+            >
               <AlertIcon />
-              Only {totalSeatsAvailable} Seats Left!
-            </div>
+              Check Seat Availability
+            </a>
             <h1 className="text-3xl md:text-4xl font-bold leading-tight text-gray-900">
               Rainbow International School <span className="text-blue-600">Thane</span>
             </h1>
@@ -345,7 +350,7 @@ export default function RISLanding() {
         </div>
 
         {/* Seat Availability Table */}
-        <div className="mt-8">
+        <div className="mt-8" id="seat-availability">
           <h2 className="font-bold text-xl text-gray-900 mb-1">Seat Availability 2026-27</h2>
           <p className="text-sm text-gray-500 mb-4">Updated regularly. Seats are limited and allocated on a first-come, first-served basis.</p>
           <div className="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
