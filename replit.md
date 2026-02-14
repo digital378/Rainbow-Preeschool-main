@@ -157,6 +157,17 @@ Clean, page-based GA4 form tracking using gtag (no GTM Form Submission triggers)
 
 ## Ad Landing Pages
 
+### /rainbow-international-School-Bhramhand - RIS Google Ads Landing Page
+Dedicated landing page for Rainbow International School (RIS) Google Ads campaigns.
+- **Has noindex meta tag** - Prevents SERP indexing
+- **No OTP verification** - Direct form submission
+- **Urgency messaging** - Seat availability table (Nursery to Grade X) with color-coded status
+- **YouTube video embed** - School tour video (DUFPGBjo94M)
+- **RIS branding** - Blue color scheme, RIS logo at `/images/ris-logo.png`
+- **GA4 Events**: `ris_leads`, `ris_form_submit`, `ris_call`, `ris_whatsapp`, `ris_video_play`, `ris_cta_click`, `ris_page_view`
+- **Form source**: leadSource: "RIS", leadMedium: "Google Ads - RIS"
+- File: `client/src/pages/ris-landing.tsx`
+
 ### /ad - General Ad Landing Page
 Dedicated landing page for Meta Ads and general paid campaigns with streamlined lead capture.
 - **No OTP verification** - Direct form submission
