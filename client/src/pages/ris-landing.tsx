@@ -201,7 +201,7 @@ export default function RISLanding() {
               Rainbow International School <span className="text-blue-600">Thane</span>
             </h1>
             <p className="text-gray-600 text-lg">
-              Admissions 2026-27 closing fast. <strong className="text-red-600">Limited seats available</strong> across Nursery to Grade X. Don't miss out — secure your child's future today!
+              Admissions 2026-27 closing on <span className="bg-yellow-200 text-red-700 font-extrabold px-1.5 py-0.5 rounded">28th Feb</span>. <strong className="text-red-600">Limited seats available</strong> across Nursery to Grade X. Don't miss out — secure your child's future today!
             </p>
 
             <div className="flex flex-wrap gap-2">
