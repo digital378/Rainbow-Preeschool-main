@@ -1,4 +1,5 @@
 import express, { type Request, Response, NextFunction } from "express";
+import compression from "compression";
 import { registerRoutes } from "./routes";
 import { serveStatic } from "./static";
 import { setupRedirects } from "./redirects";
@@ -10,6 +11,8 @@ const app = express();
 
 // Trust proxy for proper protocol detection behind load balancers (Replit Deployment)
 app.set('trust proxy', true);
+
+app.use(compression());
 
 const httpServer = createServer(app);
 

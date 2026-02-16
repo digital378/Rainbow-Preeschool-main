@@ -507,8 +507,10 @@ export default function HoliActivitiesPage() {
                             alt={image.alt}
                             className="w-full h-full object-cover"
                             loading="lazy"
-                            width="400"
-                            height="400"
+                            decoding="async"
+                            width="600"
+                            height="600"
+                            fetchPriority="low"
                           />
                         </div>
                         <div className="p-3 flex items-center justify-between gap-2">
