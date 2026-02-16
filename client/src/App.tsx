@@ -72,7 +72,7 @@ const LazyRainySeasonActivities = lazy(() => import("@/pages/legacy-pages").then
 const LazyListeningSkillsTips = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.ListeningSkillsTips })));
 const LazyDiwaliActivities = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.DiwaliActivities })));
 const LazyParentTeacherCommunication = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.ParentTeacherCommunication })));
-const LazyHoliActivities = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.HoliActivities })));
+const LazyHoliActivities = lazy(() => import("@/pages/holi-activities"));
 const LazyOvercomeFear = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.OvercomeFear })));
 const LazyPlayEmotionalGrowth = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.PlayEmotionalGrowth })));
 const LazyForgetManners = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.ForgetManners })));

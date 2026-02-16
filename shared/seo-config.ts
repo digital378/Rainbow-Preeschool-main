@@ -17,7 +17,6 @@ export const NOINDEX_SLUGS: string[] = [
   
   // Festival/seasonal content
   "/diwali-activity-for-kindergarten",
-  "/holi-activities-for-kids",
   "/rainy-season-activities-for-kindergarten",
   "/sports-day-activities-for-kindergarten",
   "/republic-day-2026",

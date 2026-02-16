@@ -24,7 +24,6 @@ const EXCLUDED_SLUGS = new Set([
   
   // Festival/seasonal content (noindex)
   '/diwali-activity-for-kindergarten',
-  '/holi-activities-for-kids',
   '/rainy-season-activities-for-kindergarten',
   '/sports-day-activities-for-kindergarten',
   '/republic-day-2026',
@@ -109,6 +108,9 @@ const entries: SitemapEntry[] = [
   { url: '/playgroup-in-anand-nagar', priority: 0.85, changefreq: 'monthly' },
   { url: '/playgroup-in-kasarvadavali', priority: 0.85, changefreq: 'monthly' },
   { url: '/playgroup-in-dhokali', priority: 0.85, changefreq: 'monthly' },
+  
+  // Legacy blog articles with dedicated pages (priority 0.7)
+  { url: '/holi-activities-for-kids', priority: 0.7, changefreq: 'monthly' },
   
   // Blog articles - only include actually existing posts (priority 0.6)
   { url: '/blog/what-to-ask-during-a-tour-of-a-preschool-in-thane', priority: 0.6, changefreq: 'monthly' },
