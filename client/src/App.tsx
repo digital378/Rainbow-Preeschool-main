@@ -12,7 +12,7 @@ import { useAnalytics } from "./hooks/use-analytics";
 import { useScrollRevealOnRoute } from "./hooks/use-scroll-reveal";
 import "@/styles/scroll-reveal.css";
 
-import Home from "@/pages/home";
+const Home = lazy(() => import("@/pages/home"));
 
 const About = lazy(() => import("@/pages/about"));
 const Programmes = lazy(() => import("@/pages/programmes"));
@@ -226,7 +226,7 @@ const LazyTermsPage = lazy(() => import("@/pages/legal").then(m => ({ default: m
 const LazyPrivacyPage = lazy(() => import("@/pages/legal").then(m => ({ default: m.PrivacyPage })));
 const RepublicDay2026 = lazy(() => import("@/pages/republic-day-2026"));
 
-import { legacySlugs } from "@/pages/legacy-pages";
+import { legacySlugs } from "@shared/legacy-slugs";
 
 const STANDALONE_LANDING_PATHS = [
   "/playgroup-in-thane",

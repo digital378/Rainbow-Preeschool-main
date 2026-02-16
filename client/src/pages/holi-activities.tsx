@@ -510,7 +510,6 @@ export default function HoliActivitiesPage() {
                             decoding="async"
                             width="600"
                             height="600"
-                            fetchPriority="low"
                           />
                         </div>
                         <div className="p-3 flex items-center justify-between gap-2">
