@@ -455,32 +455,27 @@ export default function AdLanding() {
           <style>{`
             .mosaic-grid {
               display: grid;
-              grid-template-columns: repeat(3, 1fr);
-              gap: 6px;
+              grid-template-columns: repeat(6, 1fr);
+              grid-auto-rows: minmax(80px, auto);
+              gap: 5px;
             }
             @media (min-width: 640px) {
-              .mosaic-grid { gap: 8px; }
+              .mosaic-grid { grid-auto-rows: minmax(100px, auto); gap: 6px; }
             }
             .mosaic-item {
               position: relative;
               overflow: hidden;
               cursor: pointer;
-              border-radius: 12px;
+              border-radius: 14px;
               transition: transform 0.3s ease, box-shadow 0.3s ease;
             }
             .mosaic-item:hover {
-              transform: scale(1.05);
-              box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+              transform: scale(1.06);
+              box-shadow: 0 8px 25px rgba(0,0,0,0.25);
               z-index: 10;
             }
             .mosaic-item:active {
               transform: scale(0.97);
-            }
-            .mosaic-item.span-2 {
-              grid-column: span 2;
-            }
-            .mosaic-item.tall {
-              grid-row: span 2;
             }
             .mosaic-item img {
               width: 100%;
@@ -490,7 +485,7 @@ export default function AdLanding() {
               transition: transform 0.4s ease;
             }
             .mosaic-item:hover img {
-              transform: scale(1.1);
+              transform: scale(1.12);
             }
             .mosaic-label {
               position: absolute;
@@ -498,11 +493,11 @@ export default function AdLanding() {
               left: 0;
               right: 0;
               padding: 4px 8px;
-              font-size: 0.65rem;
+              font-size: 0.6rem;
               font-weight: 700;
               color: white;
               text-transform: uppercase;
-              letter-spacing: 0.05em;
+              letter-spacing: 0.04em;
               opacity: 0;
               transform: translateY(100%);
               transition: all 0.3s ease;
@@ -515,18 +510,19 @@ export default function AdLanding() {
               .mosaic-label {
                 opacity: 1;
                 transform: translateY(0);
-                font-size: 0.6rem;
-                padding: 3px 6px;
+                font-size: 0.55rem;
+                padding: 2px 6px;
               }
             }
             .mosaic-dot {
               position: absolute;
-              top: 6px;
-              right: 6px;
-              width: 8px;
-              height: 8px;
+              top: 5px;
+              right: 5px;
+              width: 7px;
+              height: 7px;
               border-radius: 50%;
-              opacity: 0.8;
+              opacity: 0.85;
+              border: 1.5px solid rgba(255,255,255,0.6);
             }
             .lightbox-overlay {
               position: fixed;
@@ -550,13 +546,33 @@ export default function AdLanding() {
           `}</style>
           <div className="mosaic-grid">
             {campusImages.map((img, i) => {
-              const isSpan2 = i === 0 || i === 5 || i === 11 || i === 16;
-              const isTall = i === 3 || i === 8 || i === 14;
+              const layouts: Record<number, { col: string; row: string }> = {
+                0:  { col: '1 / 4', row: '1 / 3' },
+                1:  { col: '4 / 7', row: '1 / 2' },
+                2:  { col: '4 / 7', row: '2 / 3' },
+                3:  { col: '1 / 3', row: '3 / 5' },
+                4:  { col: '3 / 5', row: '3 / 4' },
+                5:  { col: '5 / 7', row: '3 / 5' },
+                6:  { col: '3 / 5', row: '4 / 5' },
+                7:  { col: '1 / 3', row: '5 / 6' },
+                8:  { col: '3 / 5', row: '5 / 7' },
+                9:  { col: '5 / 7', row: '5 / 6' },
+                10: { col: '1 / 3', row: '6 / 7' },
+                11: { col: '5 / 7', row: '6 / 7' },
+                12: { col: '1 / 3', row: '7 / 8' },
+                13: { col: '3 / 5', row: '7 / 9' },
+                14: { col: '5 / 7', row: '7 / 8' },
+                15: { col: '1 / 3', row: '8 / 9' },
+                16: { col: '5 / 7', row: '8 / 9' },
+                17: { col: '1 / 4', row: '9 / 10' },
+                18: { col: '4 / 7', row: '9 / 10' },
+              };
+              const pos = layouts[i] || { col: 'auto', row: 'auto' };
               return (
                 <div
                   key={i}
-                  className={`mosaic-item${isSpan2 ? ' span-2' : ''}${isTall ? ' tall' : ''}`}
-                  style={{ aspectRatio: isSpan2 ? '2/1' : isTall ? '1/2' : '1/1' }}
+                  className="mosaic-item"
+                  style={{ gridColumn: pos.col, gridRow: pos.row }}
                   onClick={() => setLightboxIndex(i)}
                   data-testid={`gallery-item-${i}`}
                 >
