@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import { Link } from "wouter";
+import { centres } from "@shared/centre-data";
 
 // Ad landing page for Meta/Google Ads campaigns
 const areas = ["Manpada", "Hariniwas", "Anand Nagar", "Dhokali", "Kalwa", "Kasarvadavali"];
@@ -719,6 +721,44 @@ export default function AdLanding() {
                 )}
               </div>
             ))}
+          </div>
+        </div>
+
+        {/* Our Centres in Thane */}
+        <div className="mt-8 space-y-3">
+          <h2 className="font-semibold text-lg text-gray-900">Our Centres in Thane</h2>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+            {centres.map((centre) => {
+              const centreImages: Record<string, string> = {
+                'manpada': '/images/centres/manpada.png',
+                'hariniwas': '/images/centres/hariniwas.png',
+                'anand-nagar': '/images/centres/anand-nagar.png',
+                'dhokali': '/images/centres/dhokali.png',
+                'kalwa': '/images/centres/kalwa.png',
+                'kasarvadavali': '/images/centres/kasarvadavali.png',
+              };
+              return (
+                <Link
+                  key={centre.id}
+                  href={centre.preschoolLandingUrl || `/contact`}
+                  className="bg-white rounded-lg border border-gray-200 overflow-hidden group"
+                >
+                  {centreImages[centre.id] && (
+                    <img
+                      src={centreImages[centre.id]}
+                      alt={`Rainbow Preschool ${centre.name}`}
+                      loading="lazy"
+                      className="w-full h-28 md:h-36 object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                  )}
+                  <div className="p-3">
+                    <h3 className="font-semibold text-gray-900 text-sm">{centre.name}</h3>
+                    <p className="text-xs text-gray-600">{centre.localityName}</p>
+                    <span className="text-primary text-xs font-medium mt-1 inline-block">Details →</span>
+                  </div>
+                </Link>
+              );
+            })}
           </div>
         </div>
       </main>
