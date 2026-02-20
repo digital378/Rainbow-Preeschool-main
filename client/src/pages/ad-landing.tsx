@@ -286,10 +286,10 @@ export default function AdLanding() {
               Limited Seats for 2026-27
             </div>
             <h1 className="text-3xl md:text-4xl font-bold leading-tight text-gray-900">
-              Best Preschool in <span className="text-red-600">Thane</span> Near You
+              Enquire about admissions before <span className="text-red-600">Visiting the Campus</span>
             </h1>
             <p className="text-gray-600">
-              Branches in Manpada (Aggarwal), Kalwa, Dhokali, Kasarvadavali, Anand Nagar & Hariniwas. <strong>Walk-in within 10 mins!</strong>
+              Branches in Manpada (Aggarwal), Kalwa, Dhokali, Kasarvadavali, Anand Nagar & Hariniwas. Walk-in within 10 mins! <strong>Calls us before visiting the branch to check for seat availability</strong>
             </p>
             <div className="flex flex-wrap gap-2">
               <span className="inline-flex items-center gap-1 text-sm bg-green-50 text-green-700 px-3 py-1 rounded-full border border-green-200">
