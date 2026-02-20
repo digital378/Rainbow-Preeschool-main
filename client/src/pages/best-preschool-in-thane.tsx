@@ -252,17 +252,37 @@ export default function BestPreschoolInThane() {
             <div className="max-w-6xl mx-auto">
               <h2 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-4 md:mb-6 text-center">Visit Our Centres</h2>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
-                {centres.map((centre) => (
-                  <Link
-                    key={centre.id}
-                    href={centre.preschoolLandingUrl || `/contact`}
-                    className="p-3 md:p-4 bg-white dark:bg-gray-800 rounded-lg border dark:border-gray-700 hover:shadow-md transition-shadow"
-                  >
-                    <h3 className="font-semibold text-gray-900 dark:text-white text-sm md:text-base">{centre.localityName}</h3>
-                    <p className="text-xs md:text-sm text-gray-600 dark:text-gray-300 mb-1 md:mb-2 line-clamp-2">{centre.address}</p>
-                    <span className="text-primary text-xs md:text-sm font-medium">Learn More →</span>
-                  </Link>
-                ))}
+                {centres.map((centre) => {
+                  const centreImages: Record<string, string> = {
+                    'manpada': '/images/centres/manpada.png',
+                    'hariniwas': '/images/centres/hariniwas.png',
+                    'anand-nagar': '/images/centres/anand-nagar.png',
+                    'dhokali': '/images/centres/dhokali.png',
+                    'kalwa': '/images/centres/kalwa.png',
+                    'kasarvadavali': '/images/centres/kasarvadavali.png',
+                  };
+                  return (
+                    <Link
+                      key={centre.id}
+                      href={centre.preschoolLandingUrl || `/contact`}
+                      className="bg-white dark:bg-gray-800 rounded-lg border dark:border-gray-700 hover:shadow-md transition-shadow overflow-hidden group"
+                    >
+                      {centreImages[centre.id] && (
+                        <img
+                          src={centreImages[centre.id]}
+                          alt={`Rainbow Preschool ${centre.localityName}`}
+                          loading="lazy"
+                          className="w-full h-28 md:h-36 object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                      )}
+                      <div className="p-3 md:p-4">
+                        <h3 className="font-semibold text-gray-900 dark:text-white text-sm md:text-base">{centre.localityName}</h3>
+                        <p className="text-xs md:text-sm text-gray-600 dark:text-gray-300 mb-1 md:mb-2 line-clamp-2">{centre.address}</p>
+                        <span className="text-primary text-xs md:text-sm font-medium">Learn More →</span>
+                      </div>
+                    </Link>
+                  );
+                })}
               </div>
             </div>
           </section>

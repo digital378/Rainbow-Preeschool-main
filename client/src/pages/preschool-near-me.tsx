@@ -78,8 +78,21 @@ export default function PreschoolNearMe() {
 
             {/* Centre Grid - Show first 3 on mobile initially */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mb-8 md:mb-12">
-              {centres.slice(0, 3).map((centre) => (
-                <div key={centre.id} className="bg-white dark:bg-gray-800 p-4 md:p-6 rounded-xl shadow-md border dark:border-gray-700">
+              {centres.slice(0, 3).map((centre) => {
+                const centreImages: Record<string, string> = {
+                  'manpada': '/images/centres/manpada.png',
+                  'hariniwas': '/images/centres/hariniwas.png',
+                  'anand-nagar': '/images/centres/anand-nagar.png',
+                  'dhokali': '/images/centres/dhokali.png',
+                  'kalwa': '/images/centres/kalwa.png',
+                  'kasarvadavali': '/images/centres/kasarvadavali.png',
+                };
+                return (
+                <div key={centre.id} className="bg-white dark:bg-gray-800 rounded-xl shadow-md border dark:border-gray-700 overflow-hidden">
+                  {centreImages[centre.id] && (
+                    <img src={centreImages[centre.id]} alt={`Rainbow Preschool ${centre.name}`} loading="lazy" className="w-full h-36 md:h-44 object-cover" />
+                  )}
+                  <div className="p-4 md:p-6">
                   <div className="flex items-start justify-between mb-2">
                     <div>
                       <h2 className="text-base md:text-lg font-bold text-gray-900 dark:text-white">{centre.name}</h2>
@@ -109,15 +122,30 @@ export default function PreschoolNearMe() {
                       </Link>
                     )}
                   </div>
+                  </div>
                 </div>
-              ))}
+              );
+              })}
             </div>
 
             {/* Remaining centres - lazy loaded */}
             {showBelowFold && (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mb-8 md:mb-12">
-                {centres.slice(3).map((centre) => (
-                  <div key={centre.id} className="bg-white dark:bg-gray-800 p-4 md:p-6 rounded-xl shadow-md border dark:border-gray-700">
+                {centres.slice(3).map((centre) => {
+                  const centreImages2: Record<string, string> = {
+                    'manpada': '/images/centres/manpada.png',
+                    'hariniwas': '/images/centres/hariniwas.png',
+                    'anand-nagar': '/images/centres/anand-nagar.png',
+                    'dhokali': '/images/centres/dhokali.png',
+                    'kalwa': '/images/centres/kalwa.png',
+                    'kasarvadavali': '/images/centres/kasarvadavali.png',
+                  };
+                  return (
+                  <div key={centre.id} className="bg-white dark:bg-gray-800 rounded-xl shadow-md border dark:border-gray-700 overflow-hidden">
+                    {centreImages2[centre.id] && (
+                      <img src={centreImages2[centre.id]} alt={`Rainbow Preschool ${centre.name}`} loading="lazy" className="w-full h-36 md:h-44 object-cover" />
+                    )}
+                    <div className="p-4 md:p-6">
                     <div className="flex items-start justify-between mb-2">
                       <div>
                         <h2 className="text-base md:text-lg font-bold text-gray-900 dark:text-white">{centre.name}</h2>
@@ -147,8 +175,10 @@ export default function PreschoolNearMe() {
                         </Link>
                       )}
                     </div>
+                    </div>
                   </div>
-                ))}
+                  );
+                })}
               </div>
             )}
 
