@@ -88,10 +88,17 @@ export default function AdLanding() {
       (window as any).dataLayer = (window as any).dataLayer || [];
       (window as any).gtag = function() { (window as any).dataLayer.push(arguments); };
       (window as any).gtag('js', new Date());
+      (window as any).gtag('config', 'GT-55BFZCQT');
       (window as any).gtag('config', GA4_ID, { page_path: '/ad', page_title: 'Ad Landing Page' });
-      console.log('[GA4] Initialized on /ad page');
+      (window as any).gtag('config', 'AW-1747212533/a68zCIykmPsbEJnzrYtB', {
+        phone_conversion_number: '82915 68972'
+      });
+      console.log('[GA4] Initialized on /ad page with Google Ads tracking');
     } else {
       (window as any).gtag('config', GA4_ID, { page_path: '/ad', page_title: 'Ad Landing Page' });
+      (window as any).gtag('config', 'AW-1747212533/a68zCIykmPsbEJnzrYtB', {
+        phone_conversion_number: '82915 68972'
+      });
     }
 
     // Load Meta Pixel
@@ -378,6 +385,74 @@ export default function AdLanding() {
                 </form>
               </>
             )}
+          </div>
+        </div>
+
+        {/* Walkthrough Video */}
+        <div className="mt-6 rounded-xl overflow-hidden shadow-md">
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full h-auto block"
+            data-testid="video-ad-walkthrough"
+          >
+            <source src="/assets/RPS_Walkthrough_Video_-_Website_1_1766126796450.mp4" type="video/mp4" />
+          </video>
+        </div>
+
+        {/* Campus Tour Gallery */}
+        <div className="mt-6">
+          <h3 className="text-center text-lg font-bold text-gray-900 mb-3">Take a Virtual Campus Tour</h3>
+          <div
+            className="flex gap-3 overflow-x-auto pb-2"
+            style={{ scrollSnapType: 'x mandatory', WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none' }}
+            data-testid="gallery-ad-campus"
+          >
+            {[
+              { src: '/images/campus/campus-building.webp', label: 'Our Campus' },
+              { src: '/images/campus/campus-grounds.webp', label: 'Open Playground' },
+              { src: '/images/campus/campus-lobby.webp', label: 'Welcome Lobby' },
+              { src: '/images/campus/campus-corridor.webp', label: 'Decorated Corridors' },
+              { src: '/images/campus/campus-hallway.webp', label: 'Vibrant Hallways' },
+              { src: '/images/campus/campus-nature-room.webp', label: 'Nature Room' },
+              { src: '/images/campus/campus-sky-room.webp', label: 'Sky Room' },
+              { src: '/images/campus/campus-space-room.webp', label: 'Space Room' },
+              { src: '/images/campus/campus-ocean-room.webp', label: 'Ocean Room' },
+              { src: '/images/campus/campus-cloud-room.webp', label: 'Cloud Room' },
+              { src: '/images/campus/campus-blue-room.webp', label: 'Blue Room' },
+              { src: '/images/campus/campus-library.webp', label: 'Library' },
+              { src: '/images/campus/campus-reading-room.webp', label: 'Reading Room' },
+              { src: '/images/campus/campus-computer-lab.webp', label: 'Computer Lab' },
+              { src: '/images/campus/campus-play-corner.webp', label: 'Play Corner' },
+              { src: '/images/campus/campus-classroom-1.webp', label: 'Classroom' },
+              { src: '/images/campus/campus-classroom-2.webp', label: 'Activity Room' },
+              { src: '/images/campus/campus-classroom-3.webp', label: 'Study Room' },
+              { src: '/images/campus/campus-uniforms.webp', label: 'School Essentials' },
+            ].map((img, i) => (
+              <div
+                key={i}
+                className="flex-shrink-0 rounded-lg overflow-hidden relative shadow-md"
+                style={{ scrollSnapAlign: 'start', minWidth: '75%' }}
+              >
+                <img
+                  src={img.src}
+                  alt={img.label}
+                  loading="lazy"
+                  className="w-full h-44 object-cover block"
+                />
+                <div className="absolute bottom-0 left-0 right-0 px-3 py-1.5 text-white text-xs font-semibold" style={{ background: 'linear-gradient(transparent, rgba(0,0,0,0.7))' }}>
+                  {img.label}
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="flex items-center justify-center gap-1 mt-2">
+            <span className="text-xs text-gray-400">Swipe to explore</span>
+            <svg className="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
           </div>
         </div>
 
