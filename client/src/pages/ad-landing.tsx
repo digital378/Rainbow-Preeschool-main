@@ -61,6 +61,41 @@ export default function AdLanding() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [utmData] = useState(() => getUtmParams());
   const [expandedProgramme, setExpandedProgramme] = useState<string | null>(null);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (lightboxIndex === null) return;
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setLightboxIndex(null);
+      if (e.key === 'ArrowRight') setLightboxIndex((prev) => prev !== null ? (prev + 1) % campusImages.length : null);
+      if (e.key === 'ArrowLeft') setLightboxIndex((prev) => prev !== null ? (prev - 1 + campusImages.length) % campusImages.length : null);
+    };
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', handleKey);
+    return () => { window.removeEventListener('keydown', handleKey); document.body.style.overflow = ''; };
+  }, [lightboxIndex]);
+
+  const campusImages = [
+    { src: '/images/campus/campus-building.webp', label: 'Our Campus', color: '#ef4444' },
+    { src: '/images/campus/campus-grounds.webp', label: 'Open Playground', color: '#f59e0b' },
+    { src: '/images/campus/campus-lobby.webp', label: 'Welcome Lobby', color: '#10b981' },
+    { src: '/images/campus/campus-corridor.webp', label: 'Decorated Corridors', color: '#3b82f6' },
+    { src: '/images/campus/campus-hallway.webp', label: 'Vibrant Hallways', color: '#8b5cf6' },
+    { src: '/images/campus/campus-nature-room.webp', label: 'Nature Room', color: '#22c55e' },
+    { src: '/images/campus/campus-sky-room.webp', label: 'Sky Room', color: '#06b6d4' },
+    { src: '/images/campus/campus-space-room.webp', label: 'Space Room', color: '#6366f1' },
+    { src: '/images/campus/campus-ocean-room.webp', label: 'Ocean Room', color: '#0ea5e9' },
+    { src: '/images/campus/campus-cloud-room.webp', label: 'Cloud Room', color: '#a78bfa' },
+    { src: '/images/campus/campus-blue-room.webp', label: 'Blue Room', color: '#2563eb' },
+    { src: '/images/campus/campus-library.webp', label: 'Library', color: '#d97706' },
+    { src: '/images/campus/campus-reading-room.webp', label: 'Reading Room', color: '#ea580c' },
+    { src: '/images/campus/campus-computer-lab.webp', label: 'Computer Lab', color: '#7c3aed' },
+    { src: '/images/campus/campus-play-corner.webp', label: 'Play Corner', color: '#ec4899' },
+    { src: '/images/campus/campus-classroom-1.webp', label: 'Classroom', color: '#14b8a6' },
+    { src: '/images/campus/campus-classroom-2.webp', label: 'Activity Room', color: '#f43f5e' },
+    { src: '/images/campus/campus-classroom-3.webp', label: 'Study Room', color: '#84cc16' },
+    { src: '/images/campus/campus-uniforms.webp', label: 'School Essentials', color: '#e11d48' },
+  ];
 
   useEffect(() => {
     // Remove existing robots meta tag and add noindex
@@ -402,59 +437,182 @@ export default function AdLanding() {
           </video>
         </div>
 
-        {/* Campus Tour Gallery */}
-        <div className="mt-6">
-          <h3 className="text-center text-lg font-bold text-gray-900 mb-3">Take a Virtual Campus Tour</h3>
-          <div
-            className="flex gap-3 overflow-x-auto pb-2"
-            style={{ scrollSnapType: 'x mandatory', WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none' }}
-            data-testid="gallery-ad-campus"
-          >
-            {[
-              { src: '/images/campus/campus-building.webp', label: 'Our Campus' },
-              { src: '/images/campus/campus-grounds.webp', label: 'Open Playground' },
-              { src: '/images/campus/campus-lobby.webp', label: 'Welcome Lobby' },
-              { src: '/images/campus/campus-corridor.webp', label: 'Decorated Corridors' },
-              { src: '/images/campus/campus-hallway.webp', label: 'Vibrant Hallways' },
-              { src: '/images/campus/campus-nature-room.webp', label: 'Nature Room' },
-              { src: '/images/campus/campus-sky-room.webp', label: 'Sky Room' },
-              { src: '/images/campus/campus-space-room.webp', label: 'Space Room' },
-              { src: '/images/campus/campus-ocean-room.webp', label: 'Ocean Room' },
-              { src: '/images/campus/campus-cloud-room.webp', label: 'Cloud Room' },
-              { src: '/images/campus/campus-blue-room.webp', label: 'Blue Room' },
-              { src: '/images/campus/campus-library.webp', label: 'Library' },
-              { src: '/images/campus/campus-reading-room.webp', label: 'Reading Room' },
-              { src: '/images/campus/campus-computer-lab.webp', label: 'Computer Lab' },
-              { src: '/images/campus/campus-play-corner.webp', label: 'Play Corner' },
-              { src: '/images/campus/campus-classroom-1.webp', label: 'Classroom' },
-              { src: '/images/campus/campus-classroom-2.webp', label: 'Activity Room' },
-              { src: '/images/campus/campus-classroom-3.webp', label: 'Study Room' },
-              { src: '/images/campus/campus-uniforms.webp', label: 'School Essentials' },
-            ].map((img, i) => (
-              <div
-                key={i}
-                className="flex-shrink-0 rounded-lg overflow-hidden relative shadow-md"
-                style={{ scrollSnapAlign: 'start', minWidth: '75%' }}
-              >
-                <img
-                  src={img.src}
-                  alt={img.label}
-                  loading="lazy"
-                  className="w-full h-44 object-cover block"
-                />
-                <div className="absolute bottom-0 left-0 right-0 px-3 py-1.5 text-white text-xs font-semibold" style={{ background: 'linear-gradient(transparent, rgba(0,0,0,0.7))' }}>
-                  {img.label}
-                </div>
-              </div>
-            ))}
+        {/* Campus Tour Gallery - Playful Mosaic */}
+        <div className="mt-8" data-testid="gallery-ad-campus">
+          <div className="text-center mb-4">
+            <h3 className="text-xl font-bold text-gray-900">
+              <span style={{ color: '#ef4444' }}>E</span>
+              <span style={{ color: '#f59e0b' }}>x</span>
+              <span style={{ color: '#22c55e' }}>p</span>
+              <span style={{ color: '#3b82f6' }}>l</span>
+              <span style={{ color: '#8b5cf6' }}>o</span>
+              <span style={{ color: '#ec4899' }}>r</span>
+              <span style={{ color: '#ef4444' }}>e</span>
+              {' '}Our Campus
+            </h3>
+            <p className="text-xs text-gray-500 mt-1">Tap any photo to see it full size</p>
           </div>
-          <div className="flex items-center justify-center gap-1 mt-2">
-            <span className="text-xs text-gray-400">Swipe to explore</span>
-            <svg className="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
+          <style>{`
+            .mosaic-grid {
+              display: grid;
+              grid-template-columns: repeat(3, 1fr);
+              gap: 6px;
+            }
+            @media (min-width: 640px) {
+              .mosaic-grid { gap: 8px; }
+            }
+            .mosaic-item {
+              position: relative;
+              overflow: hidden;
+              cursor: pointer;
+              border-radius: 12px;
+              transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+            .mosaic-item:hover {
+              transform: scale(1.05);
+              box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+              z-index: 10;
+            }
+            .mosaic-item:active {
+              transform: scale(0.97);
+            }
+            .mosaic-item.span-2 {
+              grid-column: span 2;
+            }
+            .mosaic-item.tall {
+              grid-row: span 2;
+            }
+            .mosaic-item img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+              display: block;
+              transition: transform 0.4s ease;
+            }
+            .mosaic-item:hover img {
+              transform: scale(1.1);
+            }
+            .mosaic-label {
+              position: absolute;
+              bottom: 0;
+              left: 0;
+              right: 0;
+              padding: 4px 8px;
+              font-size: 0.65rem;
+              font-weight: 700;
+              color: white;
+              text-transform: uppercase;
+              letter-spacing: 0.05em;
+              opacity: 0;
+              transform: translateY(100%);
+              transition: all 0.3s ease;
+            }
+            .mosaic-item:hover .mosaic-label {
+              opacity: 1;
+              transform: translateY(0);
+            }
+            @media (max-width: 639px) {
+              .mosaic-label {
+                opacity: 1;
+                transform: translateY(0);
+                font-size: 0.6rem;
+                padding: 3px 6px;
+              }
+            }
+            .mosaic-dot {
+              position: absolute;
+              top: 6px;
+              right: 6px;
+              width: 8px;
+              height: 8px;
+              border-radius: 50%;
+              opacity: 0.8;
+            }
+            .lightbox-overlay {
+              position: fixed;
+              inset: 0;
+              background: rgba(0,0,0,0.92);
+              z-index: 999;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              animation: fadeIn 0.2s ease;
+            }
+            @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+            .lightbox-img {
+              max-width: 92vw;
+              max-height: 80vh;
+              object-fit: contain;
+              border-radius: 12px;
+              animation: zoomIn 0.3s ease;
+            }
+            @keyframes zoomIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+          `}</style>
+          <div className="mosaic-grid">
+            {campusImages.map((img, i) => {
+              const isSpan2 = i === 0 || i === 5 || i === 11 || i === 16;
+              const isTall = i === 3 || i === 8 || i === 14;
+              return (
+                <div
+                  key={i}
+                  className={`mosaic-item${isSpan2 ? ' span-2' : ''}${isTall ? ' tall' : ''}`}
+                  style={{ aspectRatio: isSpan2 ? '2/1' : isTall ? '1/2' : '1/1' }}
+                  onClick={() => setLightboxIndex(i)}
+                  data-testid={`gallery-item-${i}`}
+                >
+                  <img src={img.src} alt={img.label} loading="lazy" />
+                  <div className="mosaic-dot" style={{ background: img.color }} />
+                  <div className="mosaic-label" style={{ background: `linear-gradient(transparent, ${img.color}dd)` }}>
+                    {img.label}
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
+
+        {/* Lightbox */}
+        {lightboxIndex !== null && (
+          <div
+            className="lightbox-overlay"
+            onClick={() => setLightboxIndex(null)}
+            data-testid="lightbox-overlay"
+          >
+            <button
+              onClick={(e) => { e.stopPropagation(); setLightboxIndex(null); }}
+              className="absolute top-4 right-4 text-white bg-black/50 rounded-full w-10 h-10 flex items-center justify-center text-2xl font-light hover:bg-white/20 z-[1000]"
+              data-testid="lightbox-close"
+            >
+              &times;
+            </button>
+            <button
+              onClick={(e) => { e.stopPropagation(); setLightboxIndex((lightboxIndex - 1 + campusImages.length) % campusImages.length); }}
+              className="absolute left-3 top-1/2 -translate-y-1/2 text-white bg-black/40 hover:bg-white/20 rounded-full w-10 h-10 flex items-center justify-center text-xl z-[1000]"
+              data-testid="lightbox-prev"
+            >
+              &#8249;
+            </button>
+            <div className="flex flex-col items-center gap-3" onClick={(e) => e.stopPropagation()}>
+              <img
+                src={campusImages[lightboxIndex].src}
+                alt={campusImages[lightboxIndex].label}
+                className="lightbox-img"
+              />
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full" style={{ background: campusImages[lightboxIndex].color }} />
+                <span className="text-white font-semibold text-sm">{campusImages[lightboxIndex].label}</span>
+                <span className="text-white/50 text-xs ml-2">{lightboxIndex + 1} / {campusImages.length}</span>
+              </div>
+            </div>
+            <button
+              onClick={(e) => { e.stopPropagation(); setLightboxIndex((lightboxIndex + 1) % campusImages.length); }}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-white bg-black/40 hover:bg-white/20 rounded-full w-10 h-10 flex items-center justify-center text-xl z-[1000]"
+              data-testid="lightbox-next"
+            >
+              &#8250;
+            </button>
+          </div>
+        )}
 
         {/* Programmes */}
         <div className="mt-8 space-y-3">
