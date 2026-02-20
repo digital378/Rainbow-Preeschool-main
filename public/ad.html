@@ -156,6 +156,8 @@
     footer .links{margin-top:12px;display:flex;justify-content:center;gap:16px}
     footer a{text-decoration:none}
     .hidden{display:none!important}
+    .campus-scroll::-webkit-scrollbar{display:none}
+    .campus-card{box-shadow:0 2px 8px rgba(0,0,0,.12);transition:transform .2s}
   </style>
 </head>
 <body>
@@ -254,6 +256,93 @@
         <video autoplay loop muted playsinline style="width:100%;height:auto;display:block">
           <source src="/assets/RPS_Walkthrough_Video_-_Website_1_1766126796450.mp4" type="video/mp4">
         </video>
+      </div>
+
+      <!-- Campus Tour Gallery -->
+      <div style="margin-top:20px">
+        <h3 style="text-align:center;font-size:1.1rem;font-weight:700;color:#1f2937;margin-bottom:12px">Take a Virtual Campus Tour</h3>
+        <div class="campus-scroll" style="display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-bottom:8px;scrollbar-width:none">
+          <div class="campus-card" style="scroll-snap-align:start;min-width:75%;border-radius:10px;overflow:hidden;position:relative;flex-shrink:0">
+            <img src="/images/campus/campus-building.webp" alt="Rainbow Preschool Building" loading="lazy" style="width:100%;height:180px;object-fit:cover;display:block">
+            <div style="position:absolute;bottom:0;left:0;right:0;padding:6px 10px;background:linear-gradient(transparent,rgba(0,0,0,.7));color:#fff;font-size:.75rem;font-weight:600">Our Campus</div>
+          </div>
+          <div class="campus-card" style="scroll-snap-align:start;min-width:75%;border-radius:10px;overflow:hidden;position:relative;flex-shrink:0">
+            <img src="/images/campus/campus-grounds.webp" alt="Open Green Playground" loading="lazy" style="width:100%;height:180px;object-fit:cover;display:block">
+            <div style="position:absolute;bottom:0;left:0;right:0;padding:6px 10px;background:linear-gradient(transparent,rgba(0,0,0,.7));color:#fff;font-size:.75rem;font-weight:600">Open Playground</div>
+          </div>
+          <div class="campus-card" style="scroll-snap-align:start;min-width:75%;border-radius:10px;overflow:hidden;position:relative;flex-shrink:0">
+            <img src="/images/campus/campus-lobby.webp" alt="Colourful School Lobby" loading="lazy" style="width:100%;height:180px;object-fit:cover;display:block">
+            <div style="position:absolute;bottom:0;left:0;right:0;padding:6px 10px;background:linear-gradient(transparent,rgba(0,0,0,.7));color:#fff;font-size:.75rem;font-weight:600">Welcome Lobby</div>
+          </div>
+          <div class="campus-card" style="scroll-snap-align:start;min-width:75%;border-radius:10px;overflow:hidden;position:relative;flex-shrink:0">
+            <img src="/images/campus/campus-corridor.webp" alt="Decorated Corridor" loading="lazy" style="width:100%;height:180px;object-fit:cover;display:block">
+            <div style="position:absolute;bottom:0;left:0;right:0;padding:6px 10px;background:linear-gradient(transparent,rgba(0,0,0,.7));color:#fff;font-size:.75rem;font-weight:600">Decorated Corridors</div>
+          </div>
+          <div class="campus-card" style="scroll-snap-align:start;min-width:75%;border-radius:10px;overflow:hidden;position:relative;flex-shrink:0">
+            <img src="/images/campus/campus-hallway.webp" alt="Colourful Hallway" loading="lazy" style="width:100%;height:180px;object-fit:cover;display:block">
+            <div style="position:absolute;bottom:0;left:0;right:0;padding:6px 10px;background:linear-gradient(transparent,rgba(0,0,0,.7));color:#fff;font-size:.75rem;font-weight:600">Vibrant Hallways</div>
+          </div>
+          <div class="campus-card" style="scroll-snap-align:start;min-width:75%;border-radius:10px;overflow:hidden;position:relative;flex-shrink:0">
+            <img src="/images/campus/campus-nature-room.webp" alt="Nature Themed Classroom" loading="lazy" style="width:100%;height:180px;object-fit:cover;display:block">
+            <div style="position:absolute;bottom:0;left:0;right:0;padding:6px 10px;background:linear-gradient(transparent,rgba(0,0,0,.7));color:#fff;font-size:.75rem;font-weight:600">Nature Room</div>
+          </div>
+          <div class="campus-card" style="scroll-snap-align:start;min-width:75%;border-radius:10px;overflow:hidden;position:relative;flex-shrink:0">
+            <img src="/images/campus/campus-sky-room.webp" alt="Sky Themed Classroom" loading="lazy" style="width:100%;height:180px;object-fit:cover;display:block">
+            <div style="position:absolute;bottom:0;left:0;right:0;padding:6px 10px;background:linear-gradient(transparent,rgba(0,0,0,.7));color:#fff;font-size:.75rem;font-weight:600">Sky Room</div>
+          </div>
+          <div class="campus-card" style="scroll-snap-align:start;min-width:75%;border-radius:10px;overflow:hidden;position:relative;flex-shrink:0">
+            <img src="/images/campus/campus-space-room.webp" alt="Space Themed Classroom" loading="lazy" style="width:100%;height:180px;object-fit:cover;display:block">
+            <div style="position:absolute;bottom:0;left:0;right:0;padding:6px 10px;background:linear-gradient(transparent,rgba(0,0,0,.7));color:#fff;font-size:.75rem;font-weight:600">Space Room</div>
+          </div>
+          <div class="campus-card" style="scroll-snap-align:start;min-width:75%;border-radius:10px;overflow:hidden;position:relative;flex-shrink:0">
+            <img src="/images/campus/campus-ocean-room.webp" alt="Ocean Themed Classroom" loading="lazy" style="width:100%;height:180px;object-fit:cover;display:block">
+            <div style="position:absolute;bottom:0;left:0;right:0;padding:6px 10px;background:linear-gradient(transparent,rgba(0,0,0,.7));color:#fff;font-size:.75rem;font-weight:600">Ocean Room</div>
+          </div>
+          <div class="campus-card" style="scroll-snap-align:start;min-width:75%;border-radius:10px;overflow:hidden;position:relative;flex-shrink:0">
+            <img src="/images/campus/campus-cloud-room.webp" alt="Cloud Themed Classroom" loading="lazy" style="width:100%;height:180px;object-fit:cover;display:block">
+            <div style="position:absolute;bottom:0;left:0;right:0;padding:6px 10px;background:linear-gradient(transparent,rgba(0,0,0,.7));color:#fff;font-size:.75rem;font-weight:600">Cloud Room</div>
+          </div>
+          <div class="campus-card" style="scroll-snap-align:start;min-width:75%;border-radius:10px;overflow:hidden;position:relative;flex-shrink:0">
+            <img src="/images/campus/campus-blue-room.webp" alt="Blue Classroom" loading="lazy" style="width:100%;height:180px;object-fit:cover;display:block">
+            <div style="position:absolute;bottom:0;left:0;right:0;padding:6px 10px;background:linear-gradient(transparent,rgba(0,0,0,.7));color:#fff;font-size:.75rem;font-weight:600">Blue Room</div>
+          </div>
+          <div class="campus-card" style="scroll-snap-align:start;min-width:75%;border-radius:10px;overflow:hidden;position:relative;flex-shrink:0">
+            <img src="/images/campus/campus-library.webp" alt="Library with Books and Toys" loading="lazy" style="width:100%;height:180px;object-fit:cover;display:block">
+            <div style="position:absolute;bottom:0;left:0;right:0;padding:6px 10px;background:linear-gradient(transparent,rgba(0,0,0,.7));color:#fff;font-size:.75rem;font-weight:600">Library</div>
+          </div>
+          <div class="campus-card" style="scroll-snap-align:start;min-width:75%;border-radius:10px;overflow:hidden;position:relative;flex-shrink:0">
+            <img src="/images/campus/campus-reading-room.webp" alt="Reading Room" loading="lazy" style="width:100%;height:180px;object-fit:cover;display:block">
+            <div style="position:absolute;bottom:0;left:0;right:0;padding:6px 10px;background:linear-gradient(transparent,rgba(0,0,0,.7));color:#fff;font-size:.75rem;font-weight:600">Reading Room</div>
+          </div>
+          <div class="campus-card" style="scroll-snap-align:start;min-width:75%;border-radius:10px;overflow:hidden;position:relative;flex-shrink:0">
+            <img src="/images/campus/campus-computer-lab.webp" alt="Computer Lab" loading="lazy" style="width:100%;height:180px;object-fit:cover;display:block">
+            <div style="position:absolute;bottom:0;left:0;right:0;padding:6px 10px;background:linear-gradient(transparent,rgba(0,0,0,.7));color:#fff;font-size:.75rem;font-weight:600">Computer Lab</div>
+          </div>
+          <div class="campus-card" style="scroll-snap-align:start;min-width:75%;border-radius:10px;overflow:hidden;position:relative;flex-shrink:0">
+            <img src="/images/campus/campus-play-corner.webp" alt="Play Corner with Activities" loading="lazy" style="width:100%;height:180px;object-fit:cover;display:block">
+            <div style="position:absolute;bottom:0;left:0;right:0;padding:6px 10px;background:linear-gradient(transparent,rgba(0,0,0,.7));color:#fff;font-size:.75rem;font-weight:600">Play Corner</div>
+          </div>
+          <div class="campus-card" style="scroll-snap-align:start;min-width:75%;border-radius:10px;overflow:hidden;position:relative;flex-shrink:0">
+            <img src="/images/campus/campus-classroom-1.webp" alt="Colourful Classroom" loading="lazy" style="width:100%;height:180px;object-fit:cover;display:block">
+            <div style="position:absolute;bottom:0;left:0;right:0;padding:6px 10px;background:linear-gradient(transparent,rgba(0,0,0,.7));color:#fff;font-size:.75rem;font-weight:600">Classroom</div>
+          </div>
+          <div class="campus-card" style="scroll-snap-align:start;min-width:75%;border-radius:10px;overflow:hidden;position:relative;flex-shrink:0">
+            <img src="/images/campus/campus-classroom-2.webp" alt="Classroom with Activity Board" loading="lazy" style="width:100%;height:180px;object-fit:cover;display:block">
+            <div style="position:absolute;bottom:0;left:0;right:0;padding:6px 10px;background:linear-gradient(transparent,rgba(0,0,0,.7));color:#fff;font-size:.75rem;font-weight:600">Activity Room</div>
+          </div>
+          <div class="campus-card" style="scroll-snap-align:start;min-width:75%;border-radius:10px;overflow:hidden;position:relative;flex-shrink:0">
+            <img src="/images/campus/campus-classroom-3.webp" alt="Classroom with Colourful Desks" loading="lazy" style="width:100%;height:180px;object-fit:cover;display:block">
+            <div style="position:absolute;bottom:0;left:0;right:0;padding:6px 10px;background:linear-gradient(transparent,rgba(0,0,0,.7));color:#fff;font-size:.75rem;font-weight:600">Study Room</div>
+          </div>
+          <div class="campus-card" style="scroll-snap-align:start;min-width:75%;border-radius:10px;overflow:hidden;position:relative;flex-shrink:0">
+            <img src="/images/campus/campus-uniforms.webp" alt="School Uniforms and Essentials" loading="lazy" style="width:100%;height:180px;object-fit:cover;display:block">
+            <div style="position:absolute;bottom:0;left:0;right:0;padding:6px 10px;background:linear-gradient(transparent,rgba(0,0,0,.7));color:#fff;font-size:.75rem;font-weight:600">School Essentials</div>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:center;gap:4px;margin-top:8px">
+          <span style="font-size:.7rem;color:#9ca3af">Swipe to explore</span>
+          <svg style="width:14px;height:14px;color:#9ca3af" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </div>
       </div>
     </div>
 
