@@ -164,6 +164,11 @@ export default function BestPreschoolInThane() {
                   </a>
                 </div>
               </div>
+              <div className="mt-4 rounded-xl overflow-hidden shadow-md">
+                <video autoPlay loop muted playsInline className="w-full h-auto" data-testid="video-walkthrough-best-preschool">
+                  <source src="/assets/RPS_Walkthrough_Video_-_Website_1_1766126796450.mp4" type="video/mp4" />
+                </video>
+              </div>
             </div>
           </div>
         </section>
