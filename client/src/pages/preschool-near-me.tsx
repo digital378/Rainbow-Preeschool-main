@@ -69,7 +69,7 @@ export default function PreschoolNearMe() {
                 6 Centres Across Thane
               </span>
               <h1 className="text-2xl md:text-4xl font-bold text-gray-900 dark:text-white mb-3">
-                Rainbow Preschool Near You in Thane
+                Rainbow Preschool Near You
               </h1>
               <p className="text-base md:text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
                 With 6 convenient locations across Thane, there's always a Rainbow Preschool close to your home or workplace.
