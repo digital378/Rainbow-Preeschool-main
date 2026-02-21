@@ -70,6 +70,7 @@ export function ClassroomGallery() {
                   src={image.src}
                   alt={image.alt}
                   loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                   width={400}
                   height={400}

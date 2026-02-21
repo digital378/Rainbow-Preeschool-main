@@ -201,7 +201,7 @@ export default function PreschoolAdmissions() {
               </div>
             </div>
             <div className="mt-4 rounded-xl overflow-hidden shadow-md">
-              <video autoPlay loop muted playsInline className="w-full h-auto" data-testid="video-walkthrough-admissions">
+              <video autoPlay loop muted playsInline preload="none" className="w-full h-auto" data-testid="video-walkthrough-admissions">
                 <source src="/assets/RPS_Walkthrough_Video_-_Website_1_1766126796450.mp4" type="video/mp4" />
               </video>
             </div>
@@ -234,6 +234,7 @@ export default function PreschoolAdmissions() {
                           src={centreImages[centre.id]}
                           alt={`Rainbow Preschool ${centre.name}`}
                           loading="lazy"
+                          decoding="async"
                           className="w-full h-28 md:h-36 object-cover group-hover:scale-105 transition-transform duration-300"
                         />
                       )}

@@ -10,6 +10,7 @@ import { Footer } from "@/components/footer";
 import { initGA, initGlobalFormTracking } from "./lib/analytics";
 import { useAnalytics } from "./hooks/use-analytics";
 import { useScrollRevealOnRoute } from "./hooks/use-scroll-reveal";
+import { setupLinkPrefetching } from "./lib/prefetch";
 import "@/styles/scroll-reveal.css";
 
 const Home = lazy(() => import("@/pages/home"));
@@ -554,6 +555,7 @@ function App() {
       initGA();
     }
     initGlobalFormTracking();
+    setupLinkPrefetching();
   }, []);
 
   return (

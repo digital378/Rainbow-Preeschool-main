@@ -134,7 +134,7 @@ export default function PreschoolNearMe() {
                 return (
                 <div key={centre.id} className="bg-white dark:bg-gray-800 rounded-xl shadow-md border dark:border-gray-700 overflow-hidden">
                   {centreImages[centre.id] && (
-                    <img src={centreImages[centre.id]} alt={`Rainbow Preschool ${centre.name}`} loading="lazy" className="w-full h-36 md:h-44 object-cover" />
+                    <img src={centreImages[centre.id]} alt={`Rainbow Preschool ${centre.name}`} loading="lazy" decoding="async" className="w-full h-36 md:h-44 object-cover" />
                   )}
                   <div className="p-4 md:p-6">
                   <div className="flex items-start justify-between mb-2">
@@ -187,7 +187,7 @@ export default function PreschoolNearMe() {
                   return (
                   <div key={centre.id} className="bg-white dark:bg-gray-800 rounded-xl shadow-md border dark:border-gray-700 overflow-hidden">
                     {centreImages2[centre.id] && (
-                      <img src={centreImages2[centre.id]} alt={`Rainbow Preschool ${centre.name}`} loading="lazy" className="w-full h-36 md:h-44 object-cover" />
+                      <img src={centreImages2[centre.id]} alt={`Rainbow Preschool ${centre.name}`} loading="lazy" decoding="async" className="w-full h-36 md:h-44 object-cover" />
                     )}
                     <div className="p-4 md:p-6">
                     <div className="flex items-start justify-between mb-2">
@@ -258,7 +258,7 @@ export default function PreschoolNearMe() {
             </div>
           </div>
           <div className="mt-6 rounded-xl overflow-hidden shadow-md">
-            <video autoPlay loop muted playsInline className="w-full h-auto" data-testid="video-walkthrough-near-me">
+            <video autoPlay loop muted playsInline preload="none" className="w-full h-auto" data-testid="video-walkthrough-near-me">
               <source src="/assets/RPS_Walkthrough_Video_-_Website_1_1766126796450.mp4" type="video/mp4" />
             </video>
           </div>

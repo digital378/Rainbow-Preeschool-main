@@ -15,11 +15,6 @@ import { AwardedBySection } from "@/components/awarded-by-section";
 import { ProgrammeCard } from "@/components/programme-card";
 import { BranchCard } from "@/components/branch-card";
 import { TestimonialCard } from "@/components/testimonial-card";
-import { WhyChooseUs } from "@/components/why-choose-us";
-import { MethodologySection } from "@/components/methodology-section";
-import { ClassroomGallery } from "@/components/classroom-gallery";
-import { CTASection } from "@/components/cta-section";
-import { ContactForm } from "@/components/contact-form";
 import { CountUp } from "@/components/count-up";
 import { SEO } from "@/components/seo";
 import { programmes, branches, testimonials } from "@shared/schema";
@@ -27,7 +22,13 @@ import { preschoolLandingPages } from "@shared/centre-data";
 import { pushToDataLayer } from "@/lib/analytics";
 import { ArrowRight, Star, Users, MapPin, Shield, Lock, Phone, Award, FileText, Palette, BookOpen, GraduationCap } from "lucide-react";
 import { SiGoogle, SiWhatsapp } from "react-icons/si";
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
+
+const WhyChooseUs = lazy(() => import("@/components/why-choose-us").then(m => ({ default: m.WhyChooseUs })));
+const MethodologySection = lazy(() => import("@/components/methodology-section").then(m => ({ default: m.MethodologySection })));
+const ClassroomGallery = lazy(() => import("@/components/classroom-gallery").then(m => ({ default: m.ClassroomGallery })));
+const CTASection = lazy(() => import("@/components/cta-section").then(m => ({ default: m.CTASection })));
+const ContactForm = lazy(() => import("@/components/contact-form").then(m => ({ default: m.ContactForm })));
 import { useToast } from "@/hooks/use-toast";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
@@ -449,12 +450,18 @@ export default function Home() {
         </div>
       </section>
 
-      <WhyChooseUs />
-      <MethodologySection />
-      <ClassroomGallery />
+      <Suspense fallback={null}>
+        <WhyChooseUs />
+      </Suspense>
+      <Suspense fallback={null}>
+        <MethodologySection />
+      </Suspense>
+      <Suspense fallback={null}>
+        <ClassroomGallery />
+      </Suspense>
 
       {/* Testimonials Section - Local SEO Enhanced */}
-      <section id="testimonials" className="py-16 md:py-20 lg:py-24 bg-card">
+      <section id="testimonials" className="py-16 md:py-20 lg:py-24 bg-card cv-auto">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-12" data-reveal="float">
             <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">Testimonials</p>
@@ -477,7 +484,7 @@ export default function Home() {
       </section>
 
       {/* Contact Form Section - Get In Touch */}
-      <section className="py-16 md:py-20 lg:py-24 bg-card">
+      <section className="py-16 md:py-20 lg:py-24 bg-card cv-auto">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
             <div data-reveal="slide" data-direction="left">
@@ -492,6 +499,7 @@ export default function Home() {
                   loop 
                   muted 
                   playsInline
+                  preload="none"
                   className="w-full h-auto"
                   data-testid="video-walkthrough"
                 >
@@ -502,7 +510,9 @@ export default function Home() {
             </div>
             <Card data-reveal="slide" data-direction="right">
               <CardContent className="pt-6">
-                <ContactForm />
+                <Suspense fallback={null}>
+                  <ContactForm />
+                </Suspense>
               </CardContent>
             </Card>
           </div>
@@ -549,7 +559,7 @@ export default function Home() {
       </section>
 
       {/* Centres Section - Local SEO Gold */}
-      <section id="centres" className="py-16 md:py-20 lg:py-24">
+      <section id="centres" className="py-16 md:py-20 lg:py-24 cv-auto">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-12" data-reveal="float">
             <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">Our Locations</p>
@@ -599,7 +609,9 @@ export default function Home() {
         </div>
       </section>
 
-      <CTASection />
+      <Suspense fallback={null}>
+        <CTASection />
+      </Suspense>
 
       {/* Sticky Mobile CTA */}
       <div className="fixed bottom-0 left-0 right-0 z-40 md:hidden bg-background border-t p-3 flex items-center gap-2">

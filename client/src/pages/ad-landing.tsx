@@ -432,6 +432,7 @@ export default function AdLanding() {
             loop
             muted
             playsInline
+            preload="none"
             className="w-full h-auto block"
             data-testid="video-ad-walkthrough"
           >
