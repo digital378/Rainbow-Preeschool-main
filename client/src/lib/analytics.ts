@@ -598,13 +598,15 @@ export const trackPageView = (url: string, retryCount = 0) => {
   
   // Delay pageview to allow React to set document.title in useEffect
   // This ensures GA4 captures the correct page title for SPAs
+  // send_page_view:false is set in index.html, so this is the ONLY page_view source
   setTimeout(() => {
-    window.gtag('config', measurementId, {
+    window.gtag('event', 'page_view', {
       page_path: url,
-      page_title: document.title
+      page_title: document.title,
+      page_location: window.location.href
     });
     console.debug('[GA4] Pageview tracked:', url, document.title);
-  }, 100);
+  }, 300);
 };
 
 // Track custom events (GA4)
