@@ -164,12 +164,12 @@ export default function BestPreschoolInThane() {
                   </a>
                 </div>
               </div>
-              <div className="mt-4 rounded-xl overflow-hidden shadow-md">
-                <video autoPlay loop muted playsInline className="w-full h-auto" data-testid="video-walkthrough-best-preschool">
-                  <source src="/assets/RPS_Walkthrough_Video_-_Website_1_1766126796450.mp4" type="video/mp4" />
-                </video>
-              </div>
             </div>
+          </div>
+          <div className="mt-6 rounded-xl overflow-hidden shadow-md">
+            <video autoPlay loop muted playsInline className="w-full h-auto" data-testid="video-walkthrough-best-preschool">
+              <source src="/assets/RPS_Walkthrough_Video_-_Website_1_1766126796450.mp4" type="video/mp4" />
+            </video>
           </div>
         </section>
 
@@ -197,49 +197,76 @@ export default function BestPreschoolInThane() {
         {showBelowFold && (
           <section className="py-8 md:py-12 px-4 bg-white dark:bg-gray-800" style={{ contentVisibility: 'auto', containIntrinsicSize: '0 600px' }}>
             <div className="max-w-6xl mx-auto">
-              <h2 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-6 md:mb-8 text-center">What Makes Us the Best?</h2>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6">
+              <h2 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-3 text-center">What Makes Us the Best Preschool in Thane?</h2>
+              <p className="text-sm md:text-base text-gray-600 dark:text-gray-300 text-center max-w-3xl mx-auto mb-6 md:mb-8">
+                Choosing the best preschool in Thane for your child is one of the most important decisions you'll make as a parent. Here's why thousands of families across Thane trust Rainbow Preschool International with their children's early education.
+              </p>
+              <div className="space-y-4 md:space-y-6">
                 <div className="p-4 md:p-6 border dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800">
-                  <div className="w-10 h-10 md:w-12 md:h-12 bg-red-100 dark:bg-red-900/50 rounded-lg flex items-center justify-center mb-3 md:mb-4">
-                    <GraduationCap className="w-5 h-5 md:w-6 md:h-6 text-primary" />
+                  <div className="flex items-start gap-3 md:gap-4">
+                    <div className="w-10 h-10 md:w-12 md:h-12 bg-red-100 dark:bg-red-900/50 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                      <GraduationCap className="w-5 h-5 md:w-6 md:h-6 text-primary" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-gray-900 dark:text-white mb-1 md:mb-2 text-sm md:text-lg">100% Trained Female Educators</h3>
+                      <p className="text-xs md:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">At Rainbow Preschool, every teacher is a trained early childhood educator with specialised certifications. Our 100% female teaching staff creates a warm, nurturing environment where young children feel safe and cared for. Each educator undergoes rigorous training in child psychology, Montessori methods, and age-appropriate pedagogy, ensuring your child receives the best early learning experience in Thane.</p>
+                    </div>
                   </div>
-                  <h3 className="font-semibold text-gray-900 dark:text-white mb-1 md:mb-2 text-sm md:text-base">Expert Educators</h3>
-                  <p className="text-xs md:text-sm text-gray-600 dark:text-gray-300">100% female staff with specialized early childhood training.</p>
                 </div>
                 <div className="p-4 md:p-6 border dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800">
-                  <div className="w-10 h-10 md:w-12 md:h-12 bg-blue-100 dark:bg-blue-900/50 rounded-lg flex items-center justify-center mb-3 md:mb-4">
-                    <BookOpen className="w-5 h-5 md:w-6 md:h-6 text-blue-600 dark:text-blue-400" />
+                  <div className="flex items-start gap-3 md:gap-4">
+                    <div className="w-10 h-10 md:w-12 md:h-12 bg-blue-100 dark:bg-blue-900/50 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                      <BookOpen className="w-5 h-5 md:w-6 md:h-6 text-blue-600 dark:text-blue-400" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-gray-900 dark:text-white mb-1 md:mb-2 text-sm md:text-lg">NEP 2020-Aligned Rainbow Curriculum</h3>
+                      <p className="text-xs md:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">Our proprietary Rainbow Curriculum is fully aligned with the National Education Policy (NEP) 2020, combining play-based learning with structured academic readiness. Unlike traditional preschools in Thane that rely on rote memorisation, our curriculum focuses on experiential learning through storytelling, art, music, sensory exploration, and hands-on activities. Children develop foundational literacy, numeracy, and critical thinking skills naturally, making the transition to formal schooling seamless and confident.</p>
+                    </div>
                   </div>
-                  <h3 className="font-semibold text-gray-900 dark:text-white mb-1 md:mb-2 text-sm md:text-base">Rainbow Curriculum</h3>
-                  <p className="text-xs md:text-sm text-gray-600 dark:text-gray-300">NEP 2020 aligned, play-based learning approach.</p>
                 </div>
                 <div className="p-4 md:p-6 border dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800">
-                  <div className="w-10 h-10 md:w-12 md:h-12 bg-green-100 dark:bg-green-900/50 rounded-lg flex items-center justify-center mb-3 md:mb-4">
-                    <Shield className="w-5 h-5 md:w-6 md:h-6 text-green-600 dark:text-green-400" />
+                  <div className="flex items-start gap-3 md:gap-4">
+                    <div className="w-10 h-10 md:w-12 md:h-12 bg-green-100 dark:bg-green-900/50 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                      <Shield className="w-5 h-5 md:w-6 md:h-6 text-green-600 dark:text-green-400" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-gray-900 dark:text-white mb-1 md:mb-2 text-sm md:text-lg">Uncompromising Safety & Security Standards</h3>
+                      <p className="text-xs md:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">Safety is non-negotiable at Rainbow Preschool. Every centre is equipped with 24/7 CCTV surveillance, secure biometric entry systems, and GPS-tracked school transport. Our campuses are designed with child-safe furniture, non-toxic materials, and hygienic facilities. Parents receive real-time updates and can monitor their child's activities through our communication channels. This level of security and transparency is what makes us the most trusted preschool in Thane for safety-conscious parents.</p>
+                    </div>
                   </div>
-                  <h3 className="font-semibold text-gray-900 dark:text-white mb-1 md:mb-2 text-sm md:text-base">Safety First</h3>
-                  <p className="text-xs md:text-sm text-gray-600 dark:text-gray-300">CCTV, secure entry, GPS transport.</p>
                 </div>
                 <div className="p-4 md:p-6 border dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800">
-                  <div className="w-10 h-10 md:w-12 md:h-12 bg-yellow-100 dark:bg-yellow-900/50 rounded-lg flex items-center justify-center mb-3 md:mb-4">
-                    <Palette className="w-5 h-5 md:w-6 md:h-6 text-yellow-600 dark:text-yellow-400" />
+                  <div className="flex items-start gap-3 md:gap-4">
+                    <div className="w-10 h-10 md:w-12 md:h-12 bg-yellow-100 dark:bg-yellow-900/50 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                      <Palette className="w-5 h-5 md:w-6 md:h-6 text-yellow-600 dark:text-yellow-400" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-gray-900 dark:text-white mb-1 md:mb-2 text-sm md:text-lg">Holistic Development Beyond Academics</h3>
+                      <p className="text-xs md:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">The best preschool in Thane should develop the whole child, not just academics. At Rainbow, children participate in art and craft, music and movement, yoga, sports, drama, and outdoor play every day. Our programme nurtures creativity, emotional intelligence, social skills, and physical coordination. From celebrating cultural festivals to organising annual sports days and concerts, we ensure every child discovers their unique strengths and builds confidence to express themselves.</p>
+                    </div>
                   </div>
-                  <h3 className="font-semibold text-gray-900 dark:text-white mb-1 md:mb-2 text-sm md:text-base">Holistic Development</h3>
-                  <p className="text-xs md:text-sm text-gray-600 dark:text-gray-300">Creativity, sports, music & social skills.</p>
                 </div>
                 <div className="p-4 md:p-6 border dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800">
-                  <div className="w-10 h-10 md:w-12 md:h-12 bg-purple-100 dark:bg-purple-900/50 rounded-lg flex items-center justify-center mb-3 md:mb-4">
-                    <MapPin className="w-5 h-5 md:w-6 md:h-6 text-purple-600 dark:text-purple-400" />
+                  <div className="flex items-start gap-3 md:gap-4">
+                    <div className="w-10 h-10 md:w-12 md:h-12 bg-purple-100 dark:bg-purple-900/50 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                      <MapPin className="w-5 h-5 md:w-6 md:h-6 text-purple-600 dark:text-purple-400" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-gray-900 dark:text-white mb-1 md:mb-2 text-sm md:text-lg">6 Convenient Locations Across Thane</h3>
+                      <p className="text-xs md:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">With 6 centres in Manpada, Hariniwas, Anand Nagar, Dhokali, Kalwa, and Kasarvadavali, Rainbow Preschool is the most accessible preschool network in Thane. Whether you live near Ghodbunder Road, Kalwa, or central Thane, there's a Rainbow centre close to your home or workplace. Each centre maintains the same high standards of infrastructure, teaching quality, and safety, so your child gets the best preschool experience regardless of which location you choose.</p>
+                    </div>
                   </div>
-                  <h3 className="font-semibold text-gray-900 dark:text-white mb-1 md:mb-2 text-sm md:text-base">6 Locations</h3>
-                  <p className="text-xs md:text-sm text-gray-600 dark:text-gray-300">Centres across all major Thane areas.</p>
                 </div>
                 <div className="p-4 md:p-6 border dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800">
-                  <div className="w-10 h-10 md:w-12 md:h-12 bg-red-100 dark:bg-red-900/50 rounded-lg flex items-center justify-center mb-3 md:mb-4">
-                    <MessageCircle className="w-5 h-5 md:w-6 md:h-6 text-primary" />
+                  <div className="flex items-start gap-3 md:gap-4">
+                    <div className="w-10 h-10 md:w-12 md:h-12 bg-red-100 dark:bg-red-900/50 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                      <MessageCircle className="w-5 h-5 md:w-6 md:h-6 text-primary" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-gray-900 dark:text-white mb-1 md:mb-2 text-sm md:text-lg">Strong Parent-School Partnership</h3>
+                      <p className="text-xs md:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">We believe parents are a child's first teachers, and at Rainbow Preschool we maintain open, transparent communication with every family. Parents receive daily updates on their child's activities, regular progress reports, and are invited to participate in school events, parent-teacher meetings, and workshops. Our dedicated parent communication channels ensure you're always connected to your child's learning journey. This collaborative approach is what sets Rainbow apart as the best preschool in Thane for involved, caring families.</p>
+                    </div>
                   </div>
-                  <h3 className="font-semibold text-gray-900 dark:text-white mb-1 md:mb-2 text-sm md:text-base">Parent Partnership</h3>
-                  <p className="text-xs md:text-sm text-gray-600 dark:text-gray-300">Regular updates & open communication.</p>
                 </div>
               </div>
             </div>
