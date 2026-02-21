@@ -198,7 +198,7 @@ export function createLocalBusinessSchema(centre: {
   };
 }
 
-export function createFAQSchema(faqs: Array<{ question: string; answer: string }>) {
+export function createFAQSchema(faqs: Array<{ question: string; answer: string; bullets?: string[] }>) {
   return {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -207,7 +207,7 @@ export function createFAQSchema(faqs: Array<{ question: string; answer: string }
       name: faq.question,
       acceptedAnswer: {
         "@type": "Answer",
-        text: faq.answer,
+        text: faq.bullets ? `${faq.answer} ${faq.bullets.join('. ')}` : faq.answer,
       },
     })),
   };

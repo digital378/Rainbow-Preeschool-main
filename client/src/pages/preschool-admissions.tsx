@@ -9,27 +9,82 @@ import { useState, useEffect } from "react";
 const faqs = [
   {
     question: "What is the admission process for Rainbow Preschool?",
-    answer: "The admission process involves: 1) Submit an enquiry form online or visit our centre, 2) Schedule a campus tour, 3) Meet with our educators, 4) Complete the registration form and submit required documents, 5) Pay the admission fee to confirm your child's seat."
+    answer: "The admission process at Rainbow Preschool is simple, transparent, and designed to help both parents and children feel confident about their decision. Here is the step-by-step process:",
+    bullets: [
+      "Step 1: Submit an enquiry — Fill out the online enquiry form on this page, call us at 82915 68972, or visit your nearest Rainbow Preschool centre in person",
+      "Step 2: Schedule a campus tour — We'll arrange a guided tour of the centre where you can see our classrooms, play areas, safety installations, and meet the teaching staff",
+      "Step 3: Interaction session — Your child is invited for a short, informal interaction with our educators to help them feel comfortable in the new environment",
+      "Step 4: Complete registration — Fill out the admission form and submit the required documents (listed below)",
+      "Step 5: Fee payment — Pay the admission fee to confirm your child's seat. We offer flexible payment options including monthly, quarterly, and annual plans",
+      "Step 6: Orientation day — Before the first day, attend our parent orientation session to understand the daily schedule, curriculum, and communication channels",
+      "The entire process typically takes 3-5 working days from enquiry to confirmed admission"
+    ]
   },
   {
     question: "What documents are required for preschool admission?",
-    answer: "Required documents include: Child's birth certificate, 4-6 passport-sized photographs, Parent/guardian ID proof (Aadhaar/Passport), Address proof, Child's Aadhaar card (if available), and any previous school records if applicable."
+    answer: "To complete your child's admission at Rainbow Preschool, please keep the following documents ready. All documents should be submitted as original copies along with one photocopy each:",
+    bullets: [
+      "Child's birth certificate — Original and one photocopy (mandatory for age verification)",
+      "4-6 recent passport-sized photographs of the child — White background preferred",
+      "Parent/guardian ID proof — Aadhaar card, passport, voter ID, or driving licence of both parents",
+      "Address proof — Aadhaar card, utility bill (electricity/gas), or rental agreement showing current Thane address",
+      "Child's Aadhaar card — If available (not mandatory but recommended)",
+      "Previous school records — Transfer certificate and progress report if the child has attended another preschool or daycare",
+      "Medical records — Vaccination card and any relevant medical history or allergy information",
+      "Two passport-sized photographs of both parents for ID card purposes",
+      "Note: If any document is not immediately available, provisional admission can be granted with a commitment to submit within 30 days"
+    ]
   },
   {
     question: "What is the age criteria for admission?",
-    answer: "Age criteria: Playgroup (1.5-2.5 years), Nursery (2.5-3.5 years), Jr. KG (3.5-4.5 years), Sr. KG (4.5-5.5 years). Age is calculated as of June 1st of the academic year."
+    answer: "Rainbow Preschool follows a structured age-based programme where each level is designed for a specific developmental stage. Age is calculated as of June 1st of the academic year:",
+    bullets: [
+      "Playgroup — 1.5 to 2.5 years: Designed for toddlers who are being introduced to a structured learning environment for the first time. Focus on sensory exploration, basic social skills, and separation from parents",
+      "Nursery — 2.5 to 3.5 years: Builds foundational literacy and numeracy through phonics, storytelling, and hands-on activities. Children develop language skills, fine motor coordination, and independence",
+      "Jr. KG — 3.5 to 4.5 years: Advanced pre-reading, writing, and math concepts. Children engage in project-based learning, science experiments, and creative expression",
+      "Sr. KG — 4.5 to 5.5 years: Comprehensive school-readiness programme that prepares children for formal schooling with reading fluency, writing skills, mental math, and general knowledge",
+      "Children who turn the minimum age by June 1st of the academic year are eligible for that programme",
+      "If your child's age falls between two programmes, our educators will assess and recommend the best fit based on the child's developmental readiness"
+    ]
   },
   {
     question: "When do admissions open for the new academic year?",
-    answer: "Admissions typically open in October-November for the next academic year starting in June. However, we accept mid-term admissions throughout the year subject to seat availability."
+    answer: "Rainbow Preschool follows an annual admission cycle, but we also welcome children throughout the year. Here's the typical admission timeline:",
+    bullets: [
+      "October–November — Early bird admissions open for the next academic year (June start). Families who apply early often get their preferred centre and batch timing",
+      "December–February — Main admission window with maximum seat availability across all 6 centres in Thane",
+      "March–May — Final admission round. Seats fill up quickly during this period, especially at popular centres like Manpada and Hariniwas",
+      "June onwards — Academic year begins. Mid-term admissions are accepted subject to seat availability at each centre",
+      "Throughout the year — We accept admissions at any point during the academic year if seats are available. This is ideal for families relocating to Thane or those who missed the regular admission window",
+      "We recommend enquiring early as seats at some centres fill up well before the academic year begins. Fill out the form above to check current availability"
+    ]
   },
   {
     question: "What are the fees for preschool admission?",
-    answer: "Fees vary by programme and centre location. Please contact us or visit your nearest Rainbow Preschool centre for detailed fee structure. We offer flexible payment options."
+    answer: "Rainbow Preschool offers competitive and transparent pricing that reflects the quality of education, safety infrastructure, and care your child receives. While specific fees vary, here is a general overview:",
+    bullets: [
+      "Admission fee — One-time payment at the time of enrolment, which covers registration, orientation, and initial kit",
+      "Tuition fee — Monthly or term-based fee covering curriculum delivery, teaching staff, learning materials, and activities",
+      "Activity fee — Covers special activities like art, music, dance, yoga, sports, and field trips throughout the year",
+      "Transport fee — Optional, based on distance and route. GPS-tracked vehicles with female attendants",
+      "Flexible payment plans — Choose from monthly, quarterly, half-yearly, or annual payment schedules to suit your budget",
+      "Sibling discount — Special concessions available for families enrolling more than one child at any Rainbow centre",
+      "No hidden charges — All costs are communicated upfront with a detailed fee breakdown before admission",
+      "For an exact fee quote, contact us at 82915 68972 or visit your nearest centre. Fees may vary slightly between our 6 Thane locations"
+    ]
   },
   {
     question: "Do you offer mid-term admissions?",
-    answer: "Yes, Rainbow Preschool offers mid-term admissions throughout the academic year, subject to seat availability. This allows children to join at any point without waiting for the new session."
+    answer: "Yes, Rainbow Preschool welcomes mid-term admissions throughout the academic year, making it convenient for families who need flexibility. Here's how mid-term admission works:",
+    bullets: [
+      "Available year-round — Children can join at any point during the academic year, subject to seat availability at the chosen centre",
+      "Smooth onboarding — Our educators conduct a brief assessment to understand the child's current developmental level and place them in the appropriate group",
+      "Catch-up support — Teachers provide additional attention to help mid-term joiners settle in and catch up with their peers comfortably",
+      "Pro-rata fees — Fees are calculated on a pro-rata basis from the month of joining, so you only pay for the remaining months of the term",
+      "Ideal for relocating families — If you've recently moved to Thane from another city, mid-term admission ensures your child's education continues without a gap",
+      "Ideal for children switching preschools — If your child was attending another preschool and you'd like to make a change, we make the transition smooth and stress-free",
+      "Check seat availability at your preferred centre by calling 82915 68972 or filling out the enquiry form above"
+    ]
   }
 ];
 
@@ -206,6 +261,16 @@ export default function PreschoolAdmissions() {
                   <div key={index} className="bg-white dark:bg-gray-800 p-4 md:p-5 rounded-lg border dark:border-gray-700">
                     <h3 className="font-semibold text-gray-900 dark:text-white mb-1 md:mb-2 text-sm md:text-base">{faq.question}</h3>
                     <p className="text-gray-600 dark:text-gray-300 text-xs md:text-sm">{faq.answer}</p>
+                    {faq.bullets && (
+                      <ul className="mt-2 space-y-1.5 text-gray-600 dark:text-gray-300 text-xs md:text-sm">
+                        {faq.bullets.map((bullet, bIdx) => (
+                          <li key={bIdx} className="flex items-start gap-2">
+                            <span className="text-primary mt-1 flex-shrink-0">•</span>
+                            <span>{bullet}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                   </div>
                 ))}
               </div>

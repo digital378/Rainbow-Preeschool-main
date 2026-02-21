@@ -9,23 +9,67 @@ import { useState, useEffect } from "react";
 const faqs = [
   {
     question: "How do I find the nearest Rainbow Preschool centre?",
-    answer: "Rainbow Preschool has 6 centres across Thane: Manpada (Aggarwal), Hariniwas (Naupada), Anand Nagar (Majiwada), Dhokali, Kalwa, and Kasarvadavali. Use the centre cards below to find the one closest to your home or workplace."
+    answer: "Rainbow Preschool has 6 centres strategically located across Thane to ensure every family has a quality preschool nearby. Here are all our locations:",
+    bullets: [
+      "Manpada (Aggarwal Centre) — Aggarwal Arcade, Near Khewra Circle, Manpada, Thane (W). Ideal for families in Manpada, Hiranandani Estate, and Ghodbunder Road areas",
+      "Hariniwas Centre — M.V. Apartments, Bhakti Mandir Road, Opp. Thanawala Garage, Hariniwas Circle, Panchpakhadi. Convenient for Naupada, Panchpakhadi, and central Thane residents",
+      "Anand Nagar Centre — Kris Commercial Plaza, 1st Floor, Opp. Tropical Lagoon, Anand Nagar, Thane (W). Serves Anand Nagar, Majiwada, and surrounding areas",
+      "Dhokali Centre — Kolshet Road, Dhokali Naka, Opp. Aban Park Society, Thane (W). Perfect for families near Kolshet Road, Balaji Symphony, and Dhokali",
+      "Kalwa Centre — Harsh Prasad Co-op Hsg. Soc, Near Sayba Hall, Manisha Nagar, Gate No.1, Kalwa. Accessible for Kalwa, Vitawa, and Mumbra border residents",
+      "Kasarvadavali Centre — Rosa Gardenia, Next to Parijat Gardens, Behind Hypercity Mall, Thane (W). Ideal for Kasarvadavali, Gaimukh, and upper Ghodbunder Road families",
+      "Use the centre cards above to view details, call directly, or get directions to your nearest Rainbow Preschool"
+    ]
   },
   {
-    question: "What areas does Rainbow Preschool serve?",
-    answer: "We serve all major areas of Thane including Manpada, Ghodbunder Road, Majiwada, Naupada, Dhokali, Kolshet Road, Kalwa, Kasarvadavali, Hiranandani Estate, and surrounding localities."
+    question: "What areas in Thane does Rainbow Preschool serve?",
+    answer: "With 6 centres spread across Thane, Rainbow Preschool serves families from virtually every major locality in the city. Our centres collectively cover:",
+    bullets: [
+      "Ghodbunder Road corridor — Manpada, Kasarvadavali, Gaimukh, Owale, Kolshet, and Hiranandani Estate",
+      "Central Thane — Naupada, Panchpakhadi, Hariniwas, Ram Maruti Road, and Gokhale Road areas",
+      "Majiwada and surroundings — Anand Nagar, Waghbil, Kapurbawdi, and Brahmand",
+      "Dhokali and Kolshet — Dhokali Naka, Kolshet Road, Balaji Symphony, Lodha Amara, and Runwal areas",
+      "Kalwa and eastern Thane — Kalwa East and West, Vitawa, Parsik Hill, and Dombivli border",
+      "No matter where you live in Thane, there's likely a Rainbow Preschool within 10-15 minutes of your home"
+    ]
   },
   {
     question: "Can I visit the preschool before enrolling my child?",
-    answer: "Absolutely! We encourage all parents to schedule a campus tour before making a decision. You can meet our teachers, see our classrooms, and understand our teaching methodology during the visit."
+    answer: "Absolutely! We strongly encourage every parent to schedule a campus tour before making their decision. Here's what you can expect during your visit:",
+    bullets: [
+      "Guided tour of the entire campus — classrooms, play areas, washrooms, kitchen, and safety installations",
+      "Meet the centre head and teaching staff who will be working with your child daily",
+      "Observe an ongoing class session to see our teaching methodology in action",
+      "Understand our Rainbow Curriculum, daily schedule, and activity calendar in detail",
+      "Get answers to all your questions about fees, timings, transport, and admission process",
+      "Your child is welcome to join for a trial class to experience the environment firsthand",
+      "To schedule a visit, call us at 82915 68972, fill out the enquiry form above, or WhatsApp us directly"
+    ]
   },
   {
-    question: "Do you provide transport facility?",
-    answer: "Yes, most of our centres offer transport facility with GPS-enabled vehicles and trained attendants. The transport route and fees depend on your location. Please contact your nearest centre for details."
+    question: "Do you provide transport facility from my area?",
+    answer: "Yes, Rainbow Preschool offers safe and reliable transport services at most of our centres. Our transport system is designed with your child's safety and your convenience in mind:",
+    bullets: [
+      "GPS-tracked vehicles — Every school bus/van is equipped with live GPS tracking so you always know your child's location",
+      "Trained female attendants — A dedicated female attendant accompanies children on every trip for safety and comfort",
+      "Door-step pickup and drop — Routes are planned to minimise travel time and pick up children as close to home as possible",
+      "Air-conditioned vehicles — Select routes offer AC transport for added comfort during hot months",
+      "Transport fees vary based on distance and route — contact your nearest centre for specific route availability and pricing",
+      "Many parents also choose to walk or drive given the proximity of our centres to residential areas across Thane"
+    ]
   },
   {
     question: "What safety measures are in place at Rainbow Preschool?",
-    answer: "All our centres have CCTV surveillance, 100% female staff, secure entry/exit systems, first-aid trained staff, and strict visitor management protocols to ensure your child's safety."
+    answer: "Child safety is our highest priority at Rainbow Preschool. Every centre implements multiple layers of security and safety protocols to give parents complete peace of mind:",
+    bullets: [
+      "24/7 CCTV surveillance — High-definition cameras installed in every classroom, play area, corridor, and entry/exit point",
+      "100% female teaching and support staff — Creates a safe, nurturing, and comfortable environment for young children",
+      "Biometric and secure entry systems — Only authorised parents and staff can enter the premises, with strict visitor management",
+      "First-aid trained staff — All teachers and support staff are trained in paediatric first aid and emergency response",
+      "Child-safe infrastructure — Rounded furniture edges, non-toxic materials, anti-skid flooring, and hygienic washrooms designed for young children",
+      "Fire safety equipment — Fire extinguishers, smoke detectors, and regular fire drills at every centre",
+      "Daily sanitisation — All classrooms, toys, and common areas are sanitised multiple times daily following strict hygiene protocols",
+      "Emergency contact system — Instant parent notification system for any health or safety concerns"
+    ]
   }
 ];
 
@@ -299,6 +343,16 @@ export default function PreschoolNearMe() {
                   <div key={index} className="bg-white dark:bg-gray-800 p-4 md:p-5 rounded-lg border dark:border-gray-700">
                     <h3 className="font-semibold text-gray-900 dark:text-white mb-1 md:mb-2 text-sm md:text-base">{faq.question}</h3>
                     <p className="text-gray-600 dark:text-gray-300 text-xs md:text-sm">{faq.answer}</p>
+                    {faq.bullets && (
+                      <ul className="mt-2 space-y-1.5 text-gray-600 dark:text-gray-300 text-xs md:text-sm">
+                        {faq.bullets.map((bullet, bIdx) => (
+                          <li key={bIdx} className="flex items-start gap-2">
+                            <span className="text-primary mt-1 flex-shrink-0">•</span>
+                            <span>{bullet}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                   </div>
                 ))}
               </div>

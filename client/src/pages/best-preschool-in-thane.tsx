@@ -9,27 +9,78 @@ import { lazy, Suspense, useState, useEffect } from "react";
 const faqs = [
   {
     question: "What makes Rainbow Preschool the best preschool in Thane?",
-    answer: "Rainbow Preschool stands out with 18+ years of experience, 1,00,000+ students taught, award-winning curriculum, 100% female trained staff, CCTV in all classrooms, 6 convenient locations, and a focus on holistic child development through play-based learning."
+    answer: "Rainbow Preschool International has been a trusted name in early childhood education in Thane for over 18 years. Several factors contribute to our reputation as the best preschool in Thane:",
+    bullets: [
+      "18+ years of experience nurturing over 1,00,000 children across Thane",
+      "Award-winning Rainbow Curriculum aligned with NEP 2020, focusing on play-based and experiential learning",
+      "100% trained female teaching staff with specialised early childhood education certifications",
+      "24/7 CCTV surveillance in every classroom and secure biometric entry at all centres",
+      "6 conveniently located centres covering all major areas of Thane — Manpada, Hariniwas, Anand Nagar, Dhokali, Kalwa, and Kasarvadavali",
+      "Holistic development approach covering academics, arts, sports, music, and social-emotional learning",
+      "Low student-to-teacher ratio (1:10) ensuring individual attention for every child"
+    ]
   },
   {
     question: "What awards has Rainbow Preschool received?",
-    answer: "Rainbow Preschool has been recognized as the 'Most Promising Preschool Chain' by India Today, received the 'Cleanest School Award' from Thane Municipal Corporation, and has been featured in Economic Times and other leading publications."
+    answer: "Rainbow Preschool has consistently been recognised by leading education bodies and media organisations for excellence in early childhood education:",
+    bullets: [
+      "India Today — Recognised as 'Most Promising Preschool Chain' for innovative teaching methodology",
+      "Thane Municipal Corporation (TMC) — 'Cleanest School Award' for maintaining exceptional hygiene and sanitation standards",
+      "ScooNews — Awarded 'Best Early Learning Centre' for outstanding curriculum design",
+      "Economic Times — Featured as a 'Top Preschool' in their education excellence series",
+      "World Education Summit (WES Mumbai) — Recognised for contribution to early childhood education in Maharashtra",
+      "National School Awards — Honoured for setting benchmarks in preschool education quality"
+    ]
   },
   {
     question: "What curriculum does Rainbow Preschool follow?",
-    answer: "We follow a play-based, activity-oriented curriculum aligned with NEP 2020 guidelines. Our Rainbow Curriculum focuses on cognitive development, language skills, motor skills, social-emotional learning, and creativity through hands-on activities."
+    answer: "Our proprietary Rainbow Curriculum is a comprehensive, research-backed programme designed specifically for children aged 1.5 to 6 years. It is fully aligned with the National Education Policy (NEP) 2020 and incorporates the best practices from global early learning frameworks:",
+    bullets: [
+      "Play-based learning — Children learn through structured play, sensory exploration, and hands-on activities rather than rote memorisation",
+      "Phonics and early literacy — Systematic phonics programme builds strong reading and writing foundations from an early age",
+      "Numeracy and logical thinking — Age-appropriate math concepts introduced through manipulatives, games, and real-world applications",
+      "Creative arts — Daily art, craft, music, and dance sessions encourage self-expression and creativity",
+      "Social-emotional learning (SEL) — Circle time, group activities, and storytelling develop empathy, cooperation, and emotional regulation",
+      "Physical development — Yoga, outdoor play, sports, and fine motor activities ensure balanced physical growth",
+      "Environmental awareness — Nature walks, gardening, and sustainability projects build ecological consciousness from a young age"
+    ]
   },
   {
     question: "How is Rainbow Preschool different from other preschools in Thane?",
-    answer: "We differentiate through: 1) Experienced educators with specialized training, 2) Low student-teacher ratio (1:10), 3) Focus on individual attention, 4) Regular parent communication, 5) Safe and hygienic environment, 6) Transport facility with GPS tracking."
+    answer: "While Thane has many preschool options, Rainbow Preschool International stands apart in several meaningful ways that directly impact your child's learning experience:",
+    bullets: [
+      "Experienced educators — All our teachers hold specialised early childhood education qualifications and undergo continuous professional development",
+      "Low student-teacher ratio (1:10) — Every child receives personalised attention, unlike crowded classrooms in many other preschools",
+      "Individual learning plans — We assess each child's strengths and areas for growth, tailoring activities to their developmental pace",
+      "Transparent parent communication — Daily updates, regular progress reports, parent-teacher meetings, and open-door policy keep you connected",
+      "Safety-first approach — CCTV in all classrooms, 100% female staff, GPS-tracked transport, and strict visitor management protocols",
+      "Hygienic environment — Regular sanitisation, clean drinking water, ventilated classrooms, and dedicated housekeeping staff",
+      "6 centres across Thane — Convenient locations mean less travel time for your child and easy access for parent meetings"
+    ]
   },
   {
     question: "What are the fee structure and payment options?",
-    answer: "Fees vary by programme and centre. We offer flexible payment options including monthly, quarterly, and annual plans. Contact us for a detailed fee structure. We believe quality education should be accessible to all families."
+    answer: "Rainbow Preschool offers competitive and transparent pricing that reflects the quality of education and care your child receives. While specific fees vary by programme and centre location, here is what you can expect:",
+    bullets: [
+      "Programme-based pricing — Fees differ for Playgroup, Nursery, Jr. KG, and Sr. KG based on curriculum depth and resources",
+      "Centre-specific rates — Each of our 6 Thane centres has a fee structure reflecting local considerations",
+      "Flexible payment plans — Choose from monthly, quarterly, half-yearly, or annual payment options to suit your budget",
+      "No hidden charges — Our fee structure is fully transparent with all costs clearly communicated upfront",
+      "Sibling discounts — Special concessions available for families enrolling more than one child",
+      "Contact us or visit your nearest Rainbow Preschool centre for a detailed, personalised fee breakdown"
+    ]
   },
   {
     question: "What age groups does Rainbow Preschool cater to?",
-    answer: "We offer programmes for children aged 1.5 to 6 years: Playgroup (1.5-2.5 years), Nursery (2.5-3.5 years), Jr. KG (3.5-4.5 years), and Sr. KG (4.5-5.5 years). We also have Kids Activity Club for ages 3-10 years."
+    answer: "Rainbow Preschool offers carefully structured programmes for every stage of early childhood development, from toddlers to pre-primary children:",
+    bullets: [
+      "Playgroup (1.5–2.5 years) — Introduction to a structured environment through sensory play, music, movement, and social interaction",
+      "Nursery (2.5–3.5 years) — Foundation building in phonics, numbers, art, and language development with a focus on curiosity and exploration",
+      "Jr. KG (3.5–4.5 years) — Advanced literacy, numeracy, science concepts, and critical thinking skills to prepare for formal schooling",
+      "Sr. KG (4.5–5.5 years) — Comprehensive school-readiness programme covering reading, writing, math, general knowledge, and life skills",
+      "Kids Activity Club (3–10 years) — After-school enrichment programmes including homework support, creative arts, sports, and personality development",
+      "Daycare (2–10 years) — Safe, engaging daycare services with flexible hours for working parents, including meals and structured activities"
+    ]
   }
 ];
 
@@ -325,6 +376,16 @@ export default function BestPreschoolInThane() {
                   <div key={index} className="bg-gray-50 dark:bg-gray-700 p-4 md:p-5 rounded-lg">
                     <h3 className="font-semibold text-gray-900 dark:text-white mb-1 md:mb-2 text-sm md:text-base">{faq.question}</h3>
                     <p className="text-gray-600 dark:text-gray-300 text-xs md:text-sm">{faq.answer}</p>
+                    {faq.bullets && (
+                      <ul className="mt-2 space-y-1.5 text-gray-600 dark:text-gray-300 text-xs md:text-sm">
+                        {faq.bullets.map((bullet, bIdx) => (
+                          <li key={bIdx} className="flex items-start gap-2">
+                            <span className="text-primary mt-1 flex-shrink-0">•</span>
+                            <span>{bullet}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                   </div>
                 ))}
               </div>
