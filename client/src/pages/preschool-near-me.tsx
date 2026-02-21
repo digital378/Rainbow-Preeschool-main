@@ -2,7 +2,7 @@ import { Link } from "wouter";
 import { SEO, organizationSchema, websiteSchema, createBreadcrumbSchema, createFAQSchema } from "@/components/seo";
 import { ContactForm } from "@/components/contact-form";
 import { centres } from "@shared/centre-data";
-import { Car, Users, Zap, MessageCircle, Phone } from "lucide-react";
+import { Car, Users, Zap, MessageCircle, Phone, Shield, MapPin } from "lucide-react";
 import { trackWhatsAppClick, trackCallClick } from "@/lib/analytics";
 import { useState, useEffect } from "react";
 
@@ -212,11 +212,11 @@ export default function PreschoolNearMe() {
                 </a>
               </div>
             </div>
-            <div className="max-w-xl mx-auto mt-4 rounded-xl overflow-hidden shadow-md">
-              <video autoPlay loop muted playsInline className="w-full h-auto" data-testid="video-walkthrough-near-me">
-                <source src="/assets/RPS_Walkthrough_Video_-_Website_1_1766126796450.mp4" type="video/mp4" />
-              </video>
-            </div>
+          </div>
+          <div className="mt-6 rounded-xl overflow-hidden shadow-md">
+            <video autoPlay loop muted playsInline className="w-full h-auto" data-testid="video-walkthrough-near-me">
+              <source src="/assets/RPS_Walkthrough_Video_-_Website_1_1766126796450.mp4" type="video/mp4" />
+            </video>
           </div>
         </section>
 
@@ -224,28 +224,65 @@ export default function PreschoolNearMe() {
         {showBelowFold && (
           <section className="py-8 md:py-12 px-4 bg-white dark:bg-gray-800" style={{ contentVisibility: 'auto', containIntrinsicSize: '0 300px' }}>
             <div className="max-w-6xl mx-auto">
-              <h2 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-6 md:mb-8 text-center">Why Choose a Preschool Near You?</h2>
-              <div className="grid grid-cols-3 md:grid-cols-3 gap-3 md:gap-6">
-                <div className="text-center p-3 md:p-6">
-                  <div className="w-12 h-12 md:w-16 md:h-16 bg-blue-100 dark:bg-blue-900/50 rounded-full flex items-center justify-center mx-auto mb-3">
-                    <Car className="w-6 h-6 md:w-8 md:h-8 text-blue-600 dark:text-blue-400" />
+              <h2 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-3 text-center">Why Choose a Preschool Near You?</h2>
+              <p className="text-sm md:text-base text-gray-600 dark:text-gray-300 text-center max-w-3xl mx-auto mb-6 md:mb-8">
+                Finding a quality preschool near your home in Thane isn't just convenient — it's one of the best decisions you can make for your child's early years. Here's why proximity matters when choosing a preschool.
+              </p>
+              <div className="space-y-4 md:space-y-6">
+                <div className="p-4 md:p-6 border dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800">
+                  <div className="flex items-start gap-3 md:gap-4">
+                    <div className="w-10 h-10 md:w-12 md:h-12 bg-blue-100 dark:bg-blue-900/50 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                      <Car className="w-5 h-5 md:w-6 md:h-6 text-blue-600 dark:text-blue-400" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-gray-900 dark:text-white mb-1 md:mb-2 text-sm md:text-lg">Less Commute, More Quality Time</h3>
+                      <p className="text-xs md:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">A preschool near your home in Thane means shorter travel time for your little one. Young children between 1.5 to 5 years tire easily during long commutes, which affects their mood, energy, and ability to learn. With Rainbow Preschool's 6 centres across Thane — in Manpada, Hariniwas, Anand Nagar, Dhokali, Kalwa, and Kasarvadavali — your child spends less time in traffic and more time playing, learning, and growing. A nearby preschool also means less stress for parents during morning drop-offs and evening pickups.</p>
+                    </div>
                   </div>
-                  <h3 className="font-semibold text-gray-900 dark:text-white mb-1 text-sm md:text-base">Less Commute</h3>
-                  <p className="text-xs md:text-sm text-gray-600 dark:text-gray-300 hidden md:block">Shorter travel means more time for your child</p>
                 </div>
-                <div className="text-center p-3 md:p-6">
-                  <div className="w-12 h-12 md:w-16 md:h-16 bg-green-100 dark:bg-green-900/50 rounded-full flex items-center justify-center mx-auto mb-3">
-                    <Users className="w-6 h-6 md:w-8 md:h-8 text-green-600 dark:text-green-400" />
+                <div className="p-4 md:p-6 border dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800">
+                  <div className="flex items-start gap-3 md:gap-4">
+                    <div className="w-10 h-10 md:w-12 md:h-12 bg-green-100 dark:bg-green-900/50 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                      <Users className="w-5 h-5 md:w-6 md:h-6 text-green-600 dark:text-green-400" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-gray-900 dark:text-white mb-1 md:mb-2 text-sm md:text-lg">Neighbourhood Community & Friendships</h3>
+                      <p className="text-xs md:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">When your child attends a preschool near home, they build friendships with children from the same neighbourhood. These aren't just school friends — they become playmates who live nearby, making socialisation natural and ongoing even after school hours. Parents also connect with other families in the area, building a supportive local community. At Rainbow Preschool, many of our centres serve families from the same residential complexes and localities, creating lasting bonds between children and parents alike.</p>
+                    </div>
                   </div>
-                  <h3 className="font-semibold text-gray-900 dark:text-white mb-1 text-sm md:text-base">Community</h3>
-                  <p className="text-xs md:text-sm text-gray-600 dark:text-gray-300 hidden md:block">Make friends in the neighborhood</p>
                 </div>
-                <div className="text-center p-3 md:p-6">
-                  <div className="w-12 h-12 md:w-16 md:h-16 bg-yellow-100 dark:bg-yellow-900/50 rounded-full flex items-center justify-center mx-auto mb-3">
-                    <Zap className="w-6 h-6 md:w-8 md:h-8 text-yellow-600 dark:text-yellow-400" />
+                <div className="p-4 md:p-6 border dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800">
+                  <div className="flex items-start gap-3 md:gap-4">
+                    <div className="w-10 h-10 md:w-12 md:h-12 bg-yellow-100 dark:bg-yellow-900/50 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                      <Zap className="w-5 h-5 md:w-6 md:h-6 text-yellow-600 dark:text-yellow-400" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-gray-900 dark:text-white mb-1 md:mb-2 text-sm md:text-lg">Quick Access for Parent Meetings & Emergencies</h3>
+                      <p className="text-xs md:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">Having a preschool close by means you can reach your child quickly whenever needed — whether it's a parent-teacher meeting, a school event, or an unexpected situation. You won't have to take half a day off work just to attend a 30-minute meeting. Rainbow Preschool encourages active parent involvement through regular events, open days, and workshops, and being nearby makes it easy for you to participate in your child's early learning journey without disrupting your schedule.</p>
+                    </div>
                   </div>
-                  <h3 className="font-semibold text-gray-900 dark:text-white mb-1 text-sm md:text-base">Quick Access</h3>
-                  <p className="text-xs md:text-sm text-gray-600 dark:text-gray-300 hidden md:block">Easy to reach for meetings</p>
+                </div>
+                <div className="p-4 md:p-6 border dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800">
+                  <div className="flex items-start gap-3 md:gap-4">
+                    <div className="w-10 h-10 md:w-12 md:h-12 bg-purple-100 dark:bg-purple-900/50 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                      <Shield className="w-5 h-5 md:w-6 md:h-6 text-purple-600 dark:text-purple-400" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-gray-900 dark:text-white mb-1 md:mb-2 text-sm md:text-lg">Familiar Surroundings Build Confidence</h3>
+                      <p className="text-xs md:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">Children feel more secure and comfortable when their preschool is in a familiar neighbourhood. Recognising nearby landmarks, shops, and parks on the way to school gives them a sense of belonging and reduces separation anxiety. At Rainbow Preschool, our centres are located in well-known residential areas across Thane, ensuring your child feels at home from day one. This comfort translates directly into better engagement, happier mornings, and smoother transitions into the school routine.</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="p-4 md:p-6 border dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800">
+                  <div className="flex items-start gap-3 md:gap-4">
+                    <div className="w-10 h-10 md:w-12 md:h-12 bg-red-100 dark:bg-red-900/50 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                      <MapPin className="w-5 h-5 md:w-6 md:h-6 text-primary" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-gray-900 dark:text-white mb-1 md:mb-2 text-sm md:text-lg">Same Quality at Every Rainbow Centre</h3>
+                      <p className="text-xs md:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">No matter which Rainbow Preschool centre is nearest to you, your child receives the same award-winning education. All 6 centres follow our NEP 2020-aligned Rainbow Curriculum, maintain identical safety standards with CCTV and secure entry, and are staffed by trained female educators. Whether you choose our Manpada centre near Ghodbunder Road or our Kalwa centre, you can be confident your child is getting the best preschool experience in Thane — right in your own neighbourhood.</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
