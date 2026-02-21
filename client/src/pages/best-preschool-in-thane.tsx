@@ -66,7 +66,6 @@ const faqs = [
       "Centre-specific rates — Each of our 6 Thane centres has a fee structure reflecting local considerations",
       "Flexible payment plans — Choose from monthly, quarterly, half-yearly, or annual payment options to suit your budget",
       "No hidden charges — Our fee structure is fully transparent with all costs clearly communicated upfront",
-      "Sibling discounts — Special concessions available for families enrolling more than one child",
       "Contact us or visit your nearest Rainbow Preschool centre for a detailed, personalised fee breakdown"
     ]
   },

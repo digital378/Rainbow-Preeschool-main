@@ -68,7 +68,6 @@ const faqs = [
       "Activity fee — Covers special activities like art, music, dance, yoga, sports, and field trips throughout the year",
       "Transport fee — Optional, based on distance and route. GPS-tracked vehicles with female attendants",
       "Flexible payment plans — Choose from monthly, quarterly, half-yearly, or annual payment schedules to suit your budget",
-      "Sibling discount — Special concessions available for families enrolling more than one child at any Rainbow centre",
       "No hidden charges — All costs are communicated upfront with a detailed fee breakdown before admission",
       "For an exact fee quote, contact us at 82915 68972 or visit your nearest centre. Fees may vary slightly between our 6 Thane locations"
     ]
