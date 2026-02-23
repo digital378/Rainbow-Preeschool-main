@@ -95,7 +95,6 @@ export function SEO({
     }
 
     return () => {
-      document.title = "Rainbow Preschool International - Thane";
       const seoScripts = document.querySelectorAll('script[data-seo-schema="true"]');
       seoScripts.forEach((script) => script.remove());
     };
