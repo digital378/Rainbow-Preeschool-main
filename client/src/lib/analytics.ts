@@ -26,24 +26,14 @@ export const initGA = () => {
     return;
   }
 
-  // Initialize dataLayer
-  window.dataLayer = window.dataLayer || [];
-
-  // Add Google Analytics script to the head
-  const script1 = document.createElement('script');
-  script1.async = true;
-  script1.src = `https://www.googletagmanager.com/gtag/js?id=${measurementId}`;
-  document.head.appendChild(script1);
-
-  // Initialize gtag - MUST set window.gtag for access from other code
-  const script2 = document.createElement('script');
-  script2.textContent = `
+  // Ensure gtag function is available immediately for trackPageView retries
+  // index.html already loads the gtag script and configures all GA4/Ads properties
+  // with send_page_view: false. We only need to ensure window.gtag exists early
+  // so React's trackPageView doesn't fail while index.html's deferred script loads.
+  if (!window.gtag) {
     window.dataLayer = window.dataLayer || [];
-    window.gtag = function(){window.dataLayer.push(arguments);}
-    window.gtag('js', new Date());
-    window.gtag('config', '${measurementId}');
-  `;
-  document.head.appendChild(script2);
+    window.gtag = function() { window.dataLayer.push(arguments); };
+  }
   
   console.debug('[GA4] Initialized with measurement ID:', measurementId);
 };
@@ -577,6 +567,8 @@ export const pushToDataLayer = (event: Record<string, any>) => {
 };
 
 // Track page views with retry for initial page load
+const DEFAULT_TITLE = 'Rainbow Preschool International - Thane';
+
 export const trackPageView = (url: string, retryCount = 0) => {
   if (typeof window === 'undefined') return;
   
@@ -596,17 +588,26 @@ export const trackPageView = (url: string, retryCount = 0) => {
     return;
   }
   
-  // Delay pageview to allow React to set document.title in useEffect
-  // This ensures GA4 captures the correct page title for SPAs
+  // Wait for React SEO component to set the correct page title
   // send_page_view:false is set in index.html, so this is the ONLY page_view source
-  setTimeout(() => {
+  const sendPageView = (attempt: number) => {
+    const title = document.title;
+    // If title is still the default and we haven't exceeded attempts,
+    // wait longer for SEO component to set the correct title
+    if (title === DEFAULT_TITLE && attempt < 5 && url !== '/') {
+      setTimeout(() => sendPageView(attempt + 1), 200);
+      return;
+    }
     window.gtag('event', 'page_view', {
       page_path: url,
-      page_title: document.title,
+      page_title: title,
       page_location: window.location.href
     });
-    console.debug('[GA4] Pageview tracked:', url, document.title);
-  }, 300);
+    console.debug('[GA4] Pageview tracked:', url, title);
+  };
+  
+  // Initial delay to allow React useEffect to fire
+  setTimeout(() => sendPageView(0), 100);
 };
 
 // Track custom events (GA4)
