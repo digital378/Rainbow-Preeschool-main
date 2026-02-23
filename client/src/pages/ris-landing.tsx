@@ -51,7 +51,21 @@ export default function RISLanding() {
   const [formData, setFormData] = useState({ parentName: '', phone: '', childName: '', grade: '' });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [showVideo, setShowVideo] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const videoRef = useRef<HTMLDivElement>(null);
+
+  const campusImages = [
+    { src: '/images/ris-campus/ris-building.jpg', label: 'School Building', color: '#2563eb' },
+    { src: '/images/ris-campus/ris-classroom.jpg', label: 'Junior Classroom', color: '#ef4444' },
+    { src: '/images/ris-campus/ris-senior-classroom.jpg', label: 'Senior Classroom', color: '#f59e0b' },
+    { src: '/images/ris-campus/ris-sports-ground.jpg', label: 'Sports Ground', color: '#22c55e' },
+    { src: '/images/ris-campus/ris-science-lab.jpg', label: 'Science Lab', color: '#8b5cf6' },
+    { src: '/images/ris-campus/ris-chemistry-lab.jpg', label: 'Chemistry Lab', color: '#06b6d4' },
+    { src: '/images/ris-campus/ris-physics-lab.jpg', label: 'Physics Lab', color: '#6366f1' },
+    { src: '/images/ris-campus/ris-nature-garden.jpg', label: 'Nature Garden', color: '#16a34a' },
+    { src: '/images/ris-campus/ris-ambulance.jpg', label: 'Ambulance Service', color: '#dc2626' },
+    { src: '/images/ris-campus/ris-building-2.jpg', label: 'Campus View', color: '#3b82f6' },
+  ];
 
   useEffect(() => {
     const existingRobots = document.querySelector('meta[name="robots"]');
@@ -91,6 +105,17 @@ export default function RISLanding() {
       document.head.removeChild(descMeta);
     };
   }, []);
+
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (lightboxIndex === null) return;
+      if (e.key === 'Escape') setLightboxIndex(null);
+      if (e.key === 'ArrowRight') setLightboxIndex((prev) => prev !== null ? (prev + 1) % campusImages.length : null);
+      if (e.key === 'ArrowLeft') setLightboxIndex((prev) => prev !== null ? (prev - 1 + campusImages.length) % campusImages.length : null);
+    };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [lightboxIndex]);
 
   useEffect(() => {
     if (!videoRef.current) return;
@@ -445,6 +470,126 @@ export default function RISLanding() {
               </div>
             ))}
           </div>
+
+          {/* Campus Gallery */}
+          <div className="mt-4" data-testid="gallery-ris-campus">
+            <p className="text-xs text-gray-500 mb-2">Tap any photo to see it full size</p>
+            <style>{`
+              .ris-mosaic {
+                display: grid;
+                grid-template-columns: repeat(6, 1fr);
+                grid-auto-rows: minmax(70px, auto);
+                gap: 4px;
+              }
+              @media (min-width: 640px) {
+                .ris-mosaic { grid-auto-rows: minmax(90px, auto); gap: 5px; }
+              }
+              .ris-mosaic-item {
+                position: relative;
+                overflow: hidden;
+                cursor: pointer;
+                border-radius: 10px;
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+              }
+              .ris-mosaic-item:hover {
+                transform: scale(1.05);
+                box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+                z-index: 10;
+              }
+              .ris-mosaic-item:active { transform: scale(0.97); }
+              .ris-mosaic-item img {
+                width: 100%; height: 100%; object-fit: cover; display: block;
+                transition: transform 0.4s ease;
+              }
+              .ris-mosaic-item:hover img { transform: scale(1.1); }
+              .ris-mosaic-label {
+                position: absolute; bottom: 0; left: 0; right: 0;
+                padding: 3px 6px; font-size: 0.55rem; font-weight: 700;
+                color: white; text-transform: uppercase; letter-spacing: 0.04em;
+                opacity: 0; transform: translateY(100%); transition: all 0.3s ease;
+              }
+              .ris-mosaic-item:hover .ris-mosaic-label { opacity: 1; transform: translateY(0); }
+              @media (max-width: 639px) {
+                .ris-mosaic-label { opacity: 1; transform: translateY(0); font-size: 0.5rem; padding: 2px 5px; }
+              }
+              .ris-mosaic-dot {
+                position: absolute; top: 4px; right: 4px; width: 6px; height: 6px;
+                border-radius: 50%; opacity: 0.85; border: 1.5px solid rgba(255,255,255,0.6);
+              }
+              .ris-lightbox {
+                position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 999;
+                display: flex; align-items: center; justify-content: center;
+                animation: risLbFade 0.2s ease;
+              }
+              @keyframes risLbFade { from { opacity: 0; } to { opacity: 1; } }
+              .ris-lightbox-img {
+                max-width: 92vw; max-height: 80vh; object-fit: contain; border-radius: 10px;
+                animation: risLbZoom 0.3s ease;
+              }
+              @keyframes risLbZoom { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+            `}</style>
+            <div className="ris-mosaic">
+              {campusImages.map((img, i) => {
+                const layouts: Record<number, { col: string; row: string }> = {
+                  0: { col: '1 / 4', row: '1 / 3' },
+                  1: { col: '4 / 7', row: '1 / 2' },
+                  2: { col: '4 / 7', row: '2 / 3' },
+                  3: { col: '1 / 4', row: '3 / 4' },
+                  4: { col: '4 / 7', row: '3 / 4' },
+                  5: { col: '1 / 3', row: '4 / 5' },
+                  6: { col: '3 / 5', row: '4 / 5' },
+                  7: { col: '5 / 7', row: '4 / 5' },
+                  8: { col: '1 / 4', row: '5 / 6' },
+                  9: { col: '4 / 7', row: '5 / 6' },
+                };
+                const pos = layouts[i] || { col: 'auto', row: 'auto' };
+                return (
+                  <div
+                    key={i}
+                    className="ris-mosaic-item"
+                    style={{ gridColumn: pos.col, gridRow: pos.row }}
+                    onClick={() => setLightboxIndex(i)}
+                    data-testid={`ris-gallery-item-${i}`}
+                  >
+                    <img src={img.src} alt={img.label} loading="lazy" decoding="async" />
+                    <div className="ris-mosaic-dot" style={{ background: img.color }} />
+                    <div className="ris-mosaic-label" style={{ background: `linear-gradient(transparent, ${img.color}dd)` }}>
+                      {img.label}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Lightbox */}
+          {lightboxIndex !== null && (
+            <div className="ris-lightbox" onClick={() => setLightboxIndex(null)} data-testid="ris-lightbox-overlay">
+              <button
+                onClick={(e) => { e.stopPropagation(); setLightboxIndex(null); }}
+                className="absolute top-4 right-4 text-white bg-black/50 rounded-full w-10 h-10 flex items-center justify-center text-2xl font-light hover:bg-white/20 z-[1000]"
+                data-testid="ris-lightbox-close"
+              >&times;</button>
+              <button
+                onClick={(e) => { e.stopPropagation(); setLightboxIndex((lightboxIndex - 1 + campusImages.length) % campusImages.length); }}
+                className="absolute left-3 top-1/2 -translate-y-1/2 text-white bg-black/40 hover:bg-white/20 rounded-full w-10 h-10 flex items-center justify-center text-xl z-[1000]"
+                data-testid="ris-lightbox-prev"
+              >&#8249;</button>
+              <div className="flex flex-col items-center gap-3" onClick={(e) => e.stopPropagation()}>
+                <img src={campusImages[lightboxIndex].src} alt={campusImages[lightboxIndex].label} className="ris-lightbox-img" />
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded-full" style={{ background: campusImages[lightboxIndex].color }} />
+                  <span className="text-white font-semibold text-sm">{campusImages[lightboxIndex].label}</span>
+                  <span className="text-white/50 text-xs ml-2">{lightboxIndex + 1} / {campusImages.length}</span>
+                </div>
+              </div>
+              <button
+                onClick={(e) => { e.stopPropagation(); setLightboxIndex((lightboxIndex + 1) % campusImages.length); }}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-white bg-black/40 hover:bg-white/20 rounded-full w-10 h-10 flex items-center justify-center text-xl z-[1000]"
+                data-testid="ris-lightbox-next"
+              >&#8250;</button>
+            </div>
+          )}
         </div>
 
         {/* Bottom CTA */}
