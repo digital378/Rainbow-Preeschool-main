@@ -49,7 +49,7 @@ function MobileCarousel() {
     if (autoplayRef.current) clearInterval(autoplayRef.current);
     autoplayRef.current = setInterval(() => {
       setCurrent((prev) => (prev + 1) % total);
-    }, 4500);
+    }, 2500);
   }, [total]);
 
   const stopAutoplay = useCallback(() => {
