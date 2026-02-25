@@ -16,8 +16,8 @@ const galleryImages = [
     category: "Play"
   },
   {
-    src: "/images/optimized/classroom-rainbow-preschool.webp",
-    alt: "Bright and colorful classroom at Rainbow Preschool Thane",
+    src: "/images/optimized/classroom-kids-playing.webp",
+    alt: "Children playing with colorful letters at Rainbow Preschool Thane",
     category: "Classroom"
   },
   {
