@@ -8,32 +8,32 @@ const galleryImages = [
   {
     src: "/images/campus/campus-nature-room.webp",
     alt: "Nature Room at Rainbow Preschool Thane",
-    category: "Learning"
+    category: "Nature Room"
   },
   {
     src: "/images/campus/campus-reading-room.webp",
     alt: "Reading Room at Rainbow Preschool",
-    category: "Play"
+    category: "Reading Room"
   },
   {
     src: "/images/optimized/classroom-kids-playing.webp",
-    alt: "Children playing with colorful letters at Rainbow Preschool Thane",
-    category: "Classroom"
+    alt: "Preschoolers playing with colorful letters at Rainbow Preschool Thane",
+    category: "Preschoolers"
   },
   {
     src: "/images/optimized/DSC00051.webp",
-    alt: "Bright colorful classroom at Rainbow Preschool Thane",
-    category: "Classroom"
+    alt: "Preschoolers in bright colorful classroom at Rainbow Preschool Thane",
+    category: "Preschoolers"
   },
   {
     src: "/images/optimized/DSC00054.webp",
-    alt: "Fun learning activities at preschool",
-    category: "Learning"
+    alt: "Preschoolers enjoying learning activities at Rainbow Preschool",
+    category: "Preschoolers"
   },
   {
     src: "/images/campus/campus-space-room.webp",
     alt: "Space Room at Rainbow Preschool Thane",
-    category: "Fun"
+    category: "Space Room"
   },
 ];
 
