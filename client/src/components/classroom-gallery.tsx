@@ -41,8 +41,10 @@ function MobileCarousel() {
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [translateX, setTranslateX] = useState(0);
+  const [expandedImage, setExpandedImage] = useState<number | null>(null);
   const autoplayRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const didSwipe = useRef(false);
   const total = galleryImages.length;
 
   const startAutoplay = useCallback(() => {
@@ -69,11 +71,13 @@ function MobileCarousel() {
     setIsDragging(true);
     setStartX(e.touches[0].clientX);
     setTranslateX(0);
+    didSwipe.current = false;
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
     if (!isDragging) return;
     const diff = e.touches[0].clientX - startX;
+    if (Math.abs(diff) > 10) didSwipe.current = true;
     setTranslateX(diff);
   };
 
@@ -88,6 +92,16 @@ function MobileCarousel() {
     }
     setTranslateX(0);
     startAutoplay();
+  };
+
+  const handleImageTap = (index: number) => {
+    if (didSwipe.current) return;
+    if (index === current) {
+      stopAutoplay();
+      setExpandedImage(index);
+    } else {
+      setCurrent(index);
+    }
   };
 
   return (
@@ -110,6 +124,7 @@ function MobileCarousel() {
               key={index}
               className="flex-shrink-0 px-1.5"
               style={{ width: '85%' }}
+              onClick={() => handleImageTap(index)}
             >
               <div
                 className={cn(
@@ -156,6 +171,35 @@ function MobileCarousel() {
           />
         ))}
       </div>
+
+      {expandedImage !== null && (
+        <div
+          className="fixed inset-0 z-50 bg-black/85 flex items-center justify-center p-4"
+          onClick={() => { setExpandedImage(null); startAutoplay(); }}
+          data-testid="mobile-lightbox"
+        >
+          <button
+            className="absolute top-4 right-4 text-white/80 text-3xl font-light z-10 w-10 h-10 flex items-center justify-center"
+            onClick={(e) => { e.stopPropagation(); setExpandedImage(null); startAutoplay(); }}
+            aria-label="Close"
+            data-testid="mobile-lightbox-close"
+          >
+            ✕
+          </button>
+          <img
+            src={galleryImages[expandedImage].src}
+            alt={galleryImages[expandedImage].alt}
+            className="max-w-full max-h-[80vh] object-contain rounded-lg"
+            width={800}
+            height={600}
+          />
+          <div className="absolute bottom-6 left-0 right-0 text-center">
+            <span className="inline-block px-3 py-1 bg-primary/90 text-primary-foreground text-sm font-medium rounded-full">
+              {galleryImages[expandedImage].category}
+            </span>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
