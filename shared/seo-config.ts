@@ -123,6 +123,7 @@ export const HIGH_INTENT_PAGES = [
   { url: "/preschool-admissions", priority: 0.95, changefreq: "weekly" },
   { url: "/preschool-near-me", priority: 0.95, changefreq: "weekly" },
   { url: "/best-preschool-in-thane", priority: 0.95, changefreq: "weekly" },
+  { url: "/play-school-near-me", priority: 0.95, changefreq: "weekly" },
 ];
 
 // Local SEO pages (priority 0.9)

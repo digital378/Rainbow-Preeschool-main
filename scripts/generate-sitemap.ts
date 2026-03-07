@@ -83,6 +83,7 @@ const entries: SitemapEntry[] = [
   { url: '/best-preschool-in-thane', priority: 1.0, changefreq: 'weekly' },
   { url: '/preschool-admissions', priority: 1.0, changefreq: 'weekly' },
   { url: '/preschool-near-me', priority: 1.0, changefreq: 'weekly' },
+  { url: '/play-school-near-me', priority: 1.0, changefreq: 'weekly' },
   
   // Programme pages (priority 0.9)
   { url: '/playgroup', priority: 0.9, changefreq: 'monthly' },
@@ -152,7 +153,7 @@ console.log(`📊 Total URLs: ${filteredEntries.length}`);
 console.log('');
 console.log('Breakdown by type:');
 console.log(`  - Core pages: ${filteredEntries.filter(e => ['/', '/about', '/programmes', '/contact', '/blog', '/faqs'].includes(e.url)).length}`);
-console.log(`  - High-intent landing: ${filteredEntries.filter(e => ['/preschool-admissions', '/preschool-near-me', '/best-preschool-in-thane'].includes(e.url)).length}`);
+console.log(`  - High-intent landing: ${filteredEntries.filter(e => ['/preschool-admissions', '/preschool-near-me', '/best-preschool-in-thane', '/play-school-near-me'].includes(e.url)).length}`);
 console.log(`  - Programme pages: ${filteredEntries.filter(e => ['/playgroup', '/nursery', '/kindergarten', '/kids-activity-club', '/summer-camp', '/happy-times'].includes(e.url)).length}`);
 console.log(`  - Local preschool: ${filteredEntries.filter(e => e.url.includes('/preschool-in-')).length}`);
 console.log(`  - Local playgroup: ${filteredEntries.filter(e => e.url.includes('/playgroup-')).length}`);

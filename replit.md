@@ -149,6 +149,7 @@ Clean, page-based GA4 form tracking using gtag (no GTM Form Submission triggers)
 - `/best-preschool-in-thane` - Primary SEO target page
 - `/preschool-near-me` - Proximity-focused landing with all centres
 - `/preschool-admissions` - Admission process and requirements
+- `/play-school-near-me` - Play school search intent targeting "play school near me", "top playschool in mumbai" (comparison-style top preschools section)
 
 ### Internal Linking
 - Homepage quick navigation links to key SEO pages (uses Button components with lucide icons)

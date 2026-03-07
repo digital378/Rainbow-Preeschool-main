@@ -36,6 +36,7 @@ const RISLanding = lazy(() => import("@/pages/ris-landing"));
 const PreschoolAdmissions = lazy(() => import("@/pages/preschool-admissions"));
 const PreschoolNearMe = lazy(() => import("@/pages/preschool-near-me"));
 const BestPreschoolInThane = lazy(() => import("@/pages/best-preschool-in-thane"));
+const PlaySchoolNearMe = lazy(() => import("@/pages/play-school-near-me"));
 
 const RainbowSparkleTrail = lazy(() => import("@/components/rainbow-sparkle-trail").then(m => ({ default: m.RainbowSparkleTrail })));
 
@@ -297,6 +298,7 @@ function Router() {
         <Route path="/preschool-admissions" component={PreschoolAdmissions} />
         <Route path="/preschool-near-me" component={PreschoolNearMe} />
         <Route path="/best-preschool-in-thane" component={BestPreschoolInThane} />
+        <Route path="/play-school-near-me" component={PlaySchoolNearMe} />
         
         <Route path="/ad" component={AdLanding} />
         <Route path="/ad-google" component={AdGoogleLanding} />
