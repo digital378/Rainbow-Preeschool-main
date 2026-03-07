@@ -97,7 +97,7 @@ export default function PreschoolNearMe() {
   return (
     <>
       <SEO
-        title="Preschool Near You in Thane | Find Rainbow Preschool Centres"
+        title="Preschool Near You in Thane - Rainbow Preschools"
         description="Looking for a preschool in Thane or Thane West? Rainbow Preschool has 6 centres in Manpada, Hariniwas, Anand Nagar, Dhokali, Kalwa & Kasarvadavali. Find a preschool near you today!"
         keywords="preschool near me, preschool in thane, preschool in thane west, preschool near me thane, playgroup near me, nursery near me, kindergarten near me, rainbow preschool locations, best preschool in thane west"
         canonical="/preschool-near-me"
