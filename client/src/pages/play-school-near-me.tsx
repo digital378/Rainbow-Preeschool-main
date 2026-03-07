@@ -380,6 +380,16 @@ const whyChooseItems = [
   { icon: TreePine, title: "Exploration & Creativity", description: "Art, music, storytelling, and nature exploration ignite curiosity and creativity that textbooks alone cannot provide." },
 ];
 
+const dailyRoutine = [
+  { time: "8:30 AM", activity: "Welcome Circle & Attendance", description: "Warm greetings and settling in" },
+  { time: "9:00 AM", activity: "Free Play & Exploration", description: "Open-ended play with toys and materials" },
+  { time: "9:30 AM", activity: "Rhymes & Songs", description: "Music, movement, and language development" },
+  { time: "10:00 AM", activity: "Snack Time", description: "Healthy snacks and social interaction" },
+  { time: "10:30 AM", activity: "Learning Activity", description: "Colors, shapes, or sensory exploration" },
+  { time: "11:00 AM", activity: "Outdoor Play", description: "Physical activity and motor skill development" },
+  { time: "11:30 AM", activity: "Story Time & Goodbye", description: "Calming stories and preparation for pickup" },
+];
+
 const activities = [
   "Circle Time", "Rhymes & Songs", "Free Play", "Art & Craft",
   "Sensory Activities", "Story Time", "Outdoor Play", "Building Blocks",
@@ -527,7 +537,7 @@ export default function PlaySchoolNearMe() {
                 Ages 1.5 - 2.5 Years
               </Badge>
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-                Looking for the Best Play School Near You in Thane?
+                Looking for the Best Play School Near You in Thane West?
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed">
                 Rainbow Preschool International offers a safe, joyful, and developmentally rich play school experience across 6 centres in Thane. Trusted by 1,00,000+ families since 2007.
@@ -629,8 +639,37 @@ export default function PlaySchoolNearMe() {
         </div>
       </section>
 
-      {/* Top Preschools Comparison */}
+      {/* A Day in Our Playgroup - Timeline */}
       <section className="py-16 md:py-20 lg:py-24 bg-muted/30">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">A Day in Our Playgroup</h2>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              A structured yet flexible routine that balances learning, play, and rest.
+            </p>
+          </div>
+          <div className="max-w-3xl mx-auto">
+            <div className="relative">
+              <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-primary/20 transform md:-translate-x-1/2" />
+              {dailyRoutine.map((item, index) => (
+                <div key={index} className={`relative flex items-start gap-4 mb-8 ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
+                  <div className="absolute left-4 md:left-1/2 w-3 h-3 bg-primary rounded-full transform -translate-x-1/2 mt-2" />
+                  <div className={`ml-12 md:ml-0 md:w-1/2 ${index % 2 === 0 ? 'md:pr-12 md:text-right' : 'md:pl-12'}`}>
+                    <div className="bg-background p-4 rounded-lg shadow-sm border">
+                      <Badge variant="secondary" className="mb-2">{item.time}</Badge>
+                      <h4 className="font-semibold text-lg">{item.activity}</h4>
+                      <p className="text-sm text-muted-foreground">{item.description}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Top Preschools Comparison */}
+      <section className="py-16 md:py-20 lg:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">What Makes a Top Play School in India?</h2>
@@ -805,6 +844,9 @@ export default function PlaySchoolNearMe() {
                   <Link href="/best-preschool-in-thane">
                     <Button variant="outline" size="sm" data-testid="link-ps-best-preschool">Best Preschool in Thane</Button>
                   </Link>
+                  <Link href="/happy-times">
+                    <Button variant="outline" size="sm" data-testid="link-ps-happy-times">Happy Times</Button>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -838,10 +880,13 @@ export default function PlaySchoolNearMe() {
               <img src="/images/optimized/DSC00051.webp" alt="Play school sensory activities for toddlers" className="w-full h-full object-cover" loading="lazy" data-testid="img-ps-gallery-3" />
             </div>
             <div className="relative overflow-hidden rounded-xl aspect-square">
-              <img src="/images/optimized/DSC00175.webp" alt="Child learning with toys at play school" className="w-full h-full object-cover" loading="lazy" data-testid="img-ps-gallery-4" />
+              <img src="/images/optimized/play-school-classroom.webp" alt="Rainbow Preschool space-themed classroom with colourful furniture" className="w-full h-full object-cover" loading="lazy" data-testid="img-ps-gallery-4" />
             </div>
             <div className="relative overflow-hidden rounded-xl aspect-square">
-              <img src="/images/optimized/DSC00177.webp" alt="Happy toddlers at Rainbow play school" className="w-full h-full object-cover" loading="lazy" data-testid="img-ps-gallery-5" />
+              <img src="/images/optimized/kid-playing-rainbow.webp" alt="Toddler playing with stacking rings at Rainbow play school" className="w-full h-full object-cover" loading="lazy" data-testid="img-ps-gallery-5" />
+            </div>
+            <div className="md:hidden relative overflow-hidden rounded-xl aspect-square">
+              <img src="/images/optimized/rainbow-students-classroom.webp" alt="Rainbow Preschool students smiling in classroom" className="w-full h-full object-cover" loading="lazy" data-testid="img-ps-gallery-6" />
             </div>
           </div>
         </div>
@@ -856,7 +901,7 @@ export default function PlaySchoolNearMe() {
               <ul className="space-y-4">
                 <li className="flex items-start gap-3">
                   <Star className="w-5 h-5 text-secondary mt-0.5 shrink-0" />
-                  <span className="text-lg">Small batch sizes of 10-12 children for individual attention</span>
+                  <span className="text-lg">Small batch sizes with 15 children for individual attention</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <Star className="w-5 h-5 text-secondary mt-0.5 shrink-0" />
