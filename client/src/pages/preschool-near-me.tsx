@@ -97,9 +97,9 @@ export default function PreschoolNearMe() {
   return (
     <>
       <SEO
-        title="Preschool Near Me in Thane | Find Rainbow Preschool Centres"
-        description="Find Rainbow Preschool near you in Thane. 6 convenient locations in Manpada, Hariniwas, Anand Nagar, Dhokali, Kalwa & Kasarvadavali. CCTV, transport & experienced teachers."
-        keywords="preschool near me, preschool near me thane, playgroup near me, nursery near me, kindergarten near me, rainbow preschool locations"
+        title="Preschool Near You in Thane | Find Rainbow Preschool Centres"
+        description="Looking for a preschool in Thane or Thane West? Rainbow Preschool has 6 centres in Manpada, Hariniwas, Anand Nagar, Dhokali, Kalwa & Kasarvadavali. Find a preschool near you today!"
+        keywords="preschool near me, preschool in thane, preschool in thane west, preschool near me thane, playgroup near me, nursery near me, kindergarten near me, rainbow preschool locations, best preschool in thane west"
         canonical="/preschool-near-me"
         structuredData={structuredData}
       />
@@ -113,10 +113,10 @@ export default function PreschoolNearMe() {
                 6 Centres Across Thane
               </span>
               <h1 className="text-2xl md:text-4xl font-bold text-gray-900 dark:text-white mb-3">
-                Rainbow Preschool Near You
+                Find a Preschool Near You in Thane
               </h1>
               <p className="text-base md:text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-                With 6 convenient locations across Thane, there's always a Rainbow Preschool close to your home or workplace.
+                Looking for a trusted preschool in Thane West? Rainbow Preschool International has 6 centres across Thane, so there's always a quality preschool close to your home.
               </p>
             </div>
 
@@ -228,8 +228,8 @@ export default function PreschoolNearMe() {
 
             {/* Quick Enquiry Form - Fixed min-height */}
             <div className="max-w-xl mx-auto bg-white p-4 md:p-6 rounded-xl shadow-lg border text-gray-900 min-h-[480px]">
-              <h2 className="text-lg md:text-xl font-bold text-gray-900 mb-1 text-center">Not Sure Which Centre?</h2>
-              <p className="text-sm text-gray-600 mb-3 text-center">Tell us your area and we'll recommend the best centre</p>
+              <h2 className="text-lg md:text-xl font-bold text-gray-900 mb-1 text-center">Find the Best Preschool in Thane for Your Child</h2>
+              <p className="text-sm text-gray-600 mb-3 text-center">Tell us your area and we'll recommend the nearest preschool in Thane West or central Thane</p>
               <ContactForm />
               
               {/* WhatsApp & Call Buttons */}
@@ -268,9 +268,9 @@ export default function PreschoolNearMe() {
         {showBelowFold && (
           <section className="py-8 md:py-12 px-4 bg-white dark:bg-gray-800" style={{ contentVisibility: 'auto', containIntrinsicSize: '0 300px' }}>
             <div className="max-w-6xl mx-auto">
-              <h2 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-3 text-center">Why Choose a Preschool Near You?</h2>
+              <h2 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-3 text-center">Why Choose a Preschool in Thane West Near Your Home?</h2>
               <p className="text-sm md:text-base text-gray-600 dark:text-gray-300 text-center max-w-3xl mx-auto mb-6 md:mb-8">
-                Finding a quality preschool near your home in Thane isn't just convenient — it's one of the best decisions you can make for your child's early years. Here's why proximity matters when choosing a preschool.
+                Finding a quality preschool in Thane near your home isn't just convenient — it's one of the best decisions you can make for your child's early years. Rainbow Preschool has 6 centres across Thane West and central Thane, making it easy for every family to find a trusted preschool nearby.
               </p>
               <div className="space-y-4 md:space-y-6">
                 <div className="p-4 md:p-6 border dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800">
@@ -280,7 +280,7 @@ export default function PreschoolNearMe() {
                     </div>
                     <div>
                       <h3 className="font-semibold text-gray-900 dark:text-white mb-1 md:mb-2 text-sm md:text-lg">Less Commute, More Quality Time</h3>
-                      <p className="text-xs md:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">A preschool near your home in Thane means shorter travel time for your little one. Young children between 1.5 to 5 years tire easily during long commutes, which affects their mood, energy, and ability to learn. With Rainbow Preschool's 6 centres across Thane — in Manpada, Hariniwas, Anand Nagar, Dhokali, Kalwa, and Kasarvadavali — your child spends less time in traffic and more time playing, learning, and growing. A nearby preschool also means less stress for parents during morning drop-offs and evening pickups.</p>
+                      <p className="text-xs md:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">A preschool in Thane near your home means shorter travel time for your little one. Young children between 1.5 to 5 years tire easily during long commutes, which affects their mood, energy, and ability to learn. With Rainbow Preschool's 6 centres across Thane West and central Thane — in Manpada, Hariniwas, Anand Nagar, Dhokali, Kalwa, and Kasarvadavali — your child spends less time in traffic and more time playing, learning, and growing. Choosing a preschool in Thane West close to home also means less stress for parents during morning drop-offs and evening pickups.</p>
                     </div>
                   </div>
                 </div>
@@ -324,7 +324,7 @@ export default function PreschoolNearMe() {
                     </div>
                     <div>
                       <h3 className="font-semibold text-gray-900 dark:text-white mb-1 md:mb-2 text-sm md:text-lg">Same Quality at Every Rainbow Centre</h3>
-                      <p className="text-xs md:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">No matter which Rainbow Preschool centre is nearest to you, your child receives the same award-winning education. All 6 centres follow our NEP 2020-aligned Rainbow Curriculum, maintain identical safety standards with CCTV and secure entry, and are staffed by trained female educators. Whether you choose our Manpada centre near Ghodbunder Road or our Kalwa centre, you can be confident your child is getting the best preschool experience in Thane — right in your own neighbourhood.</p>
+                      <p className="text-xs md:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">No matter which Rainbow Preschool centre is nearest to you, your child receives the same award-winning education. All 6 centres follow our NEP 2020-aligned Rainbow Curriculum, maintain identical safety standards with CCTV and secure entry, and are staffed by trained female educators. Whether you're looking for a preschool in Thane West near Ghodbunder Road or a preschool in central Thane near Panchpakhadi, you can be confident your child is getting the best preschool experience — right in your own neighbourhood.</p>
                     </div>
                   </div>
                 </div>
