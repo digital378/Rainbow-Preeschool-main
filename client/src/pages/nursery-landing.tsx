@@ -344,27 +344,43 @@ const dailyRoutine = [
 const faqs = [
   {
     question: "Where can I find a good nursery school near me in Thane?",
-    answer: "Rainbow Preschool has 6 nursery school centres across Thane including Manpada, Kalwa, Anand Nagar, Dhokali, Kasarvadavali, and Hariniwas. Call 82915 68972 to find the nursery nearest to your home."
+    answer: "Rainbow Preschool International has 6 nursery school centres located across Thane — in Manpada, Kalwa, Anand Nagar, Dhokali, Kasarvadavali, and Hariniwas. Each centre offers the same quality nursery education with trained teachers, structured phonics-based curriculum, and safe classrooms designed for children aged 2.5 to 3.5 years. Call 82915 68972 to find the nursery school nearest to your home."
   },
   {
-    question: "What is the nursery school admission process near me?",
-    answer: "Our nursery admission process is simple. Fill out our enquiry form or call us to schedule a campus visit. Meet our teachers, see our facilities, and complete the enrollment for your child."
+    question: "What is the nursery school admission process at Rainbow Preschool Thane?",
+    answer: "The nursery admission process at Rainbow Preschool Thane is simple and hassle-free. Start by filling out our online enquiry form or calling 82915 68972 to book a campus visit. During the visit, you can explore the classrooms, meet the teachers, and understand our nursery curriculum in detail. Once you decide to enrol, complete the admission form and your child can begin their structured early learning journey at the nearest nursery centre in Thane."
   },
   {
     question: "What is the right age for nursery school in Thane?",
-    answer: "Nursery school is ideal for children aged 2.5 to 3.5 years. At this stage, children are ready for structured learning through play-based activities at our Thane centres."
+    answer: "The ideal age for nursery school at Rainbow Preschool Thane is 2.5 to 3.5 years. At this developmental stage, children are naturally ready to move beyond free play and begin structured learning. Our nursery programme introduces phonics, number recognition, pre-writing skills, and social interaction in an age-appropriate and engaging way, building a strong academic foundation for kindergarten."
   },
   {
     question: "How is nursery different from playgroup?",
-    answer: "Nursery builds upon playgroup foundations. While playgroup focuses on social interaction, nursery introduces structured learning including phonics, numbers, and pre-writing skills in an age-appropriate manner."
+    answer: "While playgroup focuses on socialisation and sensory exploration for toddlers aged 1.5-2.5 years, nursery at Rainbow Preschool Thane is a more structured programme designed for children aged 2.5-3.5 years. In nursery, children begin formal learning through phonics, number concepts (1-20), pre-writing exercises, and guided creative activities. The transition from playgroup to nursery is gentle, building on the social confidence and motor skills your child developed during playgroup."
   },
   {
     question: "What will my child learn in nursery class?",
-    answer: "Your child will learn phonics basics, number recognition (1-20), pre-writing skills, art & creativity, and develop strong social skills through our play-based nursery education program."
+    answer: "In the nursery programme at Rainbow Preschool Thane, your child will learn phonics basics and letter recognition, number concepts from 1 to 20, pre-writing skills including pencil grip and tracing, art and creative expression through drawing and craft activities, and essential social skills like sharing, listening, and following instructions. The curriculum is delivered through a balanced mix of structured activities and play-based learning, ensuring children stay engaged while building real academic skills."
+  },
+  {
+    question: "What does a typical day at Rainbow Nursery look like?",
+    answer: "A typical day at Rainbow Nursery in Thane begins with an energising circle time, followed by structured lessons in phonics, numbers, and language. Children then participate in creative activities like art, craft, and music. The day also includes guided outdoor play, story time, and rhyme sessions. Each activity is carefully planned to develop your child's cognitive, motor, and social skills while keeping the atmosphere fun and encouraging."
+  },
+  {
+    question: "Is the nursery environment safe for my child?",
+    answer: "Every Rainbow Preschool nursery centre in Thane is designed with your child's safety as the top priority. All centres have 100% trained female staff, 24/7 CCTV monitoring, child-proofed classrooms with rounded furniture, and regularly sanitised spaces. We maintain small batch sizes of 12-15 children per class, ensuring each child receives personalised attention and care throughout the day."
+  },
+  {
+    question: "How does nursery prepare my child for kindergarten?",
+    answer: "Rainbow Preschool's nursery programme in Thane is specifically designed to prepare children for a smooth transition into kindergarten. By the end of the nursery year, children can recognise letters and their sounds, count and identify numbers up to 20, hold a pencil correctly and trace basic shapes, follow classroom routines independently, and interact confidently with peers and teachers. This strong foundation ensures your child is kindergarten-ready both academically and emotionally."
+  },
+  {
+    question: "Do you provide regular updates on my child's progress?",
+    answer: "Yes, Rainbow Preschool Thane believes in active parent-teacher communication. Nursery parents receive regular progress updates through parent-teacher meetings, informal daily feedback, and periodic assessments that track your child's growth in language, numeracy, motor skills, and social development. We encourage parents to stay involved in their child's learning journey."
   },
   {
     question: "How can I enquire about nursery admission in Thane?",
-    answer: "Book a campus visit by calling 82915 68972 or fill out our admission enquiry form. Our team will schedule a convenient time for you to visit your nearest nursery centre in Thane."
+    answer: "You can enquire about nursery school admission at Rainbow Preschool Thane by calling us directly at 82915 68972 or by filling out the admission enquiry form on this page. Our admissions team will respond promptly and arrange a free campus visit at any of our 6 nursery centres across Thane — Manpada, Kalwa, Anand Nagar, Dhokali, Kasarvadavali, or Hariniwas."
   },
 ];
 
@@ -373,6 +389,31 @@ const activities = ["Circle time", "Phonics", "Number games", "Art & craft", "Ou
 export default function NurseryLanding() {
   useEffect(() => {
     trackProgrammeView("nursery");
+
+    const faqSchema = {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": faqs.map((faq) => ({
+        "@type": "Question",
+        "name": faq.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": faq.answer
+        }
+      }))
+    };
+    const faqScript = document.createElement('script');
+    faqScript.type = 'application/ld+json';
+    faqScript.id = 'nursery-faq-schema';
+    faqScript.textContent = JSON.stringify(faqSchema);
+    const existing = document.getElementById('nursery-faq-schema');
+    if (existing) existing.remove();
+    document.head.appendChild(faqScript);
+
+    return () => {
+      const el = document.getElementById('nursery-faq-schema');
+      if (el) el.remove();
+    };
   }, []);
 
   return (

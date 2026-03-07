@@ -334,27 +334,43 @@ const dailyRoutine = [
 const faqs = [
   {
     question: "Where can I find a good kindergarten near me in Thane?",
-    answer: "Rainbow Preschool has 6 kindergarten centres across Thane including Manpada, Kalwa, Anand Nagar, Dhokali, Kasarvadavali, and Hariniwas. Call 82915 68972 to find the kindergarten nearest to your home."
+    answer: "Rainbow Preschool International has 6 kindergarten centres across Thane — in Manpada, Kalwa, Anand Nagar, Dhokali, Kasarvadavali, and Hariniwas. Each centre offers the same comprehensive Jr. KG and Sr. KG curriculum with experienced teachers, well-equipped classrooms, and a strong focus on school readiness. Call 82915 68972 to find the kindergarten nearest to your home and schedule a free campus visit."
   },
   {
-    question: "What is the LKG and UKG admission process near me?",
-    answer: "Our kindergarten admission process is simple. Fill out our enquiry form or call us to schedule a campus visit. Meet our teachers, see our facilities, and choose Jr. KG or Sr. KG based on your child's age."
+    question: "What is the LKG and UKG admission process at Rainbow Preschool Thane?",
+    answer: "The kindergarten admission process at Rainbow Preschool Thane is straightforward. Start by filling out our online enquiry form or calling 82915 68972 to schedule a campus visit. During the visit, you can explore the classrooms, meet the teachers, and understand the Jr. KG or Sr. KG curriculum based on your child's age. Once you decide to enrol, complete the admission form and your child can begin their kindergarten journey at the nearest centre in Thane."
   },
   {
     question: "What age is appropriate for Jr. KG and Sr. KG in Thane?",
-    answer: "Jr. KG (LKG) is suitable for children aged 3.5 to 4.5 years, while Sr. KG (UKG) is designed for children aged 4.5 to 5.5 years. Our Thane centres ensure age-appropriate learning at each stage."
+    answer: "At Rainbow Preschool Thane, Jr. KG (LKG) is designed for children aged 3.5 to 4.5 years, and Sr. KG (UKG) is for children aged 4.5 to 5.5 years. Each level has an age-appropriate curriculum — Jr. KG focuses on building foundational literacy and numeracy skills, while Sr. KG concentrates on school readiness with advanced reading, writing, and math concepts to prepare children for Grade 1."
   },
   {
-    question: "How does kindergarten in Thane prepare my child for Grade 1?",
-    answer: "Our school readiness program builds strong foundations in reading, writing, and math. Children learn phonics, sentence formation, number concepts up to 100, and develop discipline needed for formal schooling."
+    question: "How does kindergarten at Rainbow Preschool prepare my child for Grade 1?",
+    answer: "Rainbow Preschool's kindergarten programme in Thane is specifically designed as a complete school readiness programme. By the end of Sr. KG, children can read and write simple sentences, understand number concepts up to 100 including basic addition and subtraction, think independently and follow multi-step instructions, and interact confidently in a structured classroom setting. Our curriculum covers English, Mathematics, Environmental Science, General Knowledge, and value-based education — giving your child a strong academic and emotional foundation for a smooth transition into Grade 1."
   },
   {
     question: "What curriculum do you follow for kindergarten?",
-    answer: "We follow a comprehensive kindergarten curriculum covering English, Mathematics, Environmental Science, General Knowledge, Art & Craft, and Physical Education at all our Thane centres."
+    answer: "Rainbow Preschool Thane follows a comprehensive and well-structured kindergarten curriculum that covers English language and phonics, Mathematics with hands-on number activities, Environmental Science and awareness, General Knowledge, Art and Craft for creative expression, Physical Education for gross motor development, and value-based education for character building. The curriculum balances structured academics with creative and physical activities, ensuring children develop holistically."
+  },
+  {
+    question: "What is the difference between Jr. KG and Sr. KG?",
+    answer: "Jr. KG (LKG) at Rainbow Preschool Thane introduces children to formal learning with phonics, letter writing, number recognition up to 50, and basic concepts of shapes, colours, and the environment. Sr. KG (UKG) builds on this foundation with advanced reading and sentence formation, number concepts up to 100, simple addition and subtraction, and greater focus on independent thinking and classroom discipline. Together, the two years prepare your child thoroughly for Grade 1 at any school."
+  },
+  {
+    question: "What does a typical day at Rainbow Kindergarten look like?",
+    answer: "A typical day at Rainbow Kindergarten in Thane starts with a morning assembly featuring prayers and value-based activities. This is followed by structured lessons in English, Mathematics, and Environmental Science. Children also participate in art and craft sessions, music, sports, and story time. The day is planned to maintain a healthy balance between focused academics and engaging creative activities, keeping children motivated and excited about learning."
+  },
+  {
+    question: "Is the kindergarten environment safe for my child?",
+    answer: "Every Rainbow Preschool kindergarten centre in Thane prioritises child safety. All centres have trained and experienced female teachers, 24/7 CCTV monitoring, child-safe classrooms with age-appropriate furniture, and regularly sanitised premises. We also maintain a secure entry-exit system and ensure that every child is supervised at all times, whether in the classroom, during outdoor play, or at assembly."
+  },
+  {
+    question: "Do you send regular updates on my child's progress in kindergarten?",
+    answer: "Yes, Rainbow Preschool Thane believes in keeping parents actively involved. Kindergarten parents receive regular progress reports, periodic assessments, and feedback through scheduled parent-teacher meetings. Teachers also share daily observations and milestones informally so you always know how your child is progressing in academics, social skills, and overall development."
   },
   {
     question: "How can I enquire about kindergarten admission in Thane?",
-    answer: "Book a campus visit by calling 82915 68972 or fill out our admission enquiry form. Our team will schedule a convenient time for you to visit your nearest kindergarten centre in Thane."
+    answer: "You can enquire about Jr. KG or Sr. KG admission at Rainbow Preschool Thane by calling us directly at 82915 68972 or by filling out the admission enquiry form on this page. Our admissions team will respond promptly and arrange a free campus visit at any of our 6 kindergarten centres across Thane — Manpada, Kalwa, Anand Nagar, Dhokali, Kasarvadavali, or Hariniwas."
   },
 ];
 
@@ -363,6 +379,31 @@ const activities = ["Assembly", "Reading", "Writing", "Math games", "Science act
 export default function KindergartenLanding() {
   useEffect(() => {
     trackProgrammeView("kindergarten");
+
+    const faqSchema = {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": faqs.map((faq) => ({
+        "@type": "Question",
+        "name": faq.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": faq.answer
+        }
+      }))
+    };
+    const faqScript = document.createElement('script');
+    faqScript.type = 'application/ld+json';
+    faqScript.id = 'kindergarten-faq-schema';
+    faqScript.textContent = JSON.stringify(faqSchema);
+    const existing = document.getElementById('kindergarten-faq-schema');
+    if (existing) existing.remove();
+    document.head.appendChild(faqScript);
+
+    return () => {
+      const el = document.getElementById('kindergarten-faq-schema');
+      if (el) el.remove();
+    };
   }, []);
 
   return (
