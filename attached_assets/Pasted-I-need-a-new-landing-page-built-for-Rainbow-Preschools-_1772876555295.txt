@@ -1,0 +1,65 @@
+I need a new landing page built for Rainbow Preschools.
+
+Goal:
+Create a high-converting, highly SEO-optimized landing page targeting preschool search intent, especially users searching for playschools in Mumbai and nearby locations.
+
+New page slug:
+ /play-school-near-me
+
+Design reference:
+- Match the overall structure, layout style, and conversion flow of the existing /playgroup page
+- However, the content must be fully rewritten and unique so it does not appear duplicate or canonical to /playgroup
+
+Page must include the following sections:
+- What is a playschool?
+- How to choose a playschool?
+- Why choose a playschool?
+- Six centre locations of Rainbow Preschools
+- Top Preschools in India
+
+For “Top Preschools in India”:
+- Show 5 best preschools in India
+- Rank Rainbow Preschools at #1
+- Format this section professionally and persuasively
+
+Also include:
+- Enquiry form similar to /playgroup
+- Video section similar to /playgroup
+
+Primary SEO keywords:
+- Play School Near Me
+- Play Schools Near Me
+- Best Play School Near Me
+- Top Playschool In Mumbai
+
+SEO expectations:
+- Use keyword-rich but natural content
+- Follow best SEO practices for on-page optimization
+- Index the page
+- Create an optimized title tag and meta description
+- Proper heading hierarchy
+- Strong internal linking opportunities
+- Good local SEO signals
+- Mobile-first responsive design
+- Fast page load
+- Use structured data/schema where helpful
+- Optimize for ranking on top of SERPs for relevant searches
+
+Content expectations:
+- Original and non-duplicate
+- Parent-focused and conversion-focused
+- Trust-building tone
+- Strong CTA placement
+- Highlight Rainbow Preschools as the preferred choice
+- Keep content detailed enough to support SEO
+
+Development expectations:
+- Clean and production-ready implementation
+- Same design language as /playgroup
+- Easy to maintain
+- Form and video placed strategically for lead generation
+
+Before proceeding:
+Review the requirement and first confirm:
+- Whether you need any more information
+- Whether you have any suggestions to improve SEO, page structure, content flow, or conversions before implementation
