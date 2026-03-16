@@ -517,7 +517,7 @@ export default function PlaySchoolNearMe() {
   return (
     <div className="pt-20">
       <SEO
-        title="Best Play School Near Me | Top Playschool in Thane & Mumbai"
+        title="Best Play School Near Me in Thane"
         description="Looking for a play school near you? Rainbow Preschool has 6 centres in Thane for children aged 1.5–2.5 years. Award-winning curriculum, safe environment, 18+ years of trust. Enquire now!"
         keywords="play school near me, play schools near me, best play school near me, top playschool in mumbai, play school in thane, playschool near me, best playschool thane, play school admission, preschool near me thane"
         canonical="https://www.rainbowpreschools.com/play-school-near-me"
