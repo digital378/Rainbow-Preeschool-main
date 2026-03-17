@@ -4,15 +4,15 @@ const GA4_ID = "G-G1MX1N0M05";
 const RIS_GA4_ID = "G-ZEJE3FPLBF";
 
 const seatData = [
-  { grade: "Nursery", seats: 5 },
+  { grade: "Nursery", seats: 12 },
   { grade: "Jr. KG", seats: 4 },
-  { grade: "Sr. KG", seats: 4 },
-  { grade: "I", seats: 1 },
+  { grade: "Sr. KG", seats: 5 },
+  { grade: "I", seats: 3 },
   { grade: "II", seats: 3 },
   { grade: "III", seats: 4 },
-  { grade: "IV", seats: 7 },
-  { grade: "V", seats: 5 },
-  { grade: "VI", seats: 7 },
+  { grade: "IV", seats: 1 },
+  { grade: "V", seats: 1 },
+  { grade: "VI", seats: 2 },
   { grade: "VII", seats: 0 },
   { grade: "VIII", seats: 0 },
   { grade: "IX", seats: 0 },
