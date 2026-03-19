@@ -55,16 +55,16 @@ export default function RISLanding() {
   const videoRef = useRef<HTMLDivElement>(null);
 
   const campusImages = [
-    { src: '/images/ris-campus/ris-building.jpg', label: 'School Building', color: '#2563eb' },
-    { src: '/images/ris-campus/ris-classroom.jpg', label: 'Junior Classroom', color: '#ef4444' },
-    { src: '/images/ris-campus/ris-senior-classroom.jpg', label: 'Senior Classroom', color: '#f59e0b' },
-    { src: '/images/ris-campus/ris-sports-ground.jpg', label: 'Sports Ground', color: '#22c55e' },
-    { src: '/images/ris-campus/ris-science-lab.jpg', label: 'Science Lab', color: '#8b5cf6' },
-    { src: '/images/ris-campus/ris-chemistry-lab.jpg', label: 'Chemistry Lab', color: '#06b6d4' },
-    { src: '/images/ris-campus/ris-physics-lab.jpg', label: 'Physics Lab', color: '#6366f1' },
-    { src: '/images/ris-campus/ris-nature-garden.jpg', label: 'Nature Garden', color: '#16a34a' },
-    { src: '/images/ris-campus/ris-ambulance.jpg', label: 'Ambulance Service', color: '#dc2626' },
-    { src: '/images/ris-campus/ris-building-2.jpg', label: 'Campus View', color: '#3b82f6' },
+    { src: '/images/ris-campus/ris-building.webp', label: 'School Building', color: '#2563eb' },
+    { src: '/images/ris-campus/ris-classroom.webp', label: 'Junior Classroom', color: '#ef4444' },
+    { src: '/images/ris-campus/ris-senior-classroom.webp', label: 'Senior Classroom', color: '#f59e0b' },
+    { src: '/images/ris-campus/ris-sports-ground.webp', label: 'Sports Ground', color: '#22c55e' },
+    { src: '/images/ris-campus/ris-science-lab.webp', label: 'Science Lab', color: '#8b5cf6' },
+    { src: '/images/ris-campus/ris-chemistry-lab.webp', label: 'Chemistry Lab', color: '#06b6d4' },
+    { src: '/images/ris-campus/ris-physics-lab.webp', label: 'Physics Lab', color: '#6366f1' },
+    { src: '/images/ris-campus/ris-nature-garden.webp', label: 'Nature Garden', color: '#16a34a' },
+    { src: '/images/ris-campus/ris-ambulance.webp', label: 'Ambulance Service', color: '#dc2626' },
+    { src: '/images/ris-campus/ris-swimming-pool.webp', label: 'Swimming Pool', color: '#0ea5e9' },
   ];
 
   useEffect(() => {
@@ -367,7 +367,7 @@ export default function RISLanding() {
               Rainbow International School <span className="text-blue-600">Thane</span>
             </h1>
             <p className="text-gray-600 text-sm sm:text-base">
-              Admissions 2026-27 closing on <span className="bg-yellow-200 text-red-700 font-extrabold px-1 py-0.5 rounded text-sm">28th Feb</span>. <strong className="text-red-600">Limited seats available</strong> across Nursery to Grade X.
+              Admissions 2026-27 closing on <span className="bg-yellow-200 text-red-700 font-extrabold px-1 py-0.5 rounded text-sm">31st March</span>. <strong className="text-red-600">Limited seats available!</strong> Get details below.
             </p>
 
             <div className="flex flex-wrap gap-1.5">
@@ -551,7 +551,7 @@ export default function RISLanding() {
                     onClick={() => setLightboxIndex(i)}
                     data-testid={`ris-gallery-item-${i}`}
                   >
-                    <img src={img.src} alt={img.label} loading="lazy" decoding="async" />
+                    <img src={img.src} alt={img.label} loading={i === 0 ? "eager" : "lazy"} decoding="async" />
                     <div className="ris-mosaic-dot" style={{ background: img.color }} />
                     <div className="ris-mosaic-label" style={{ background: `linear-gradient(transparent, ${img.color}dd)` }}>
                       {img.label}
