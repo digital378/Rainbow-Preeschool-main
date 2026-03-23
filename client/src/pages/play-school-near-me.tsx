@@ -515,7 +515,7 @@ export default function PlaySchoolNearMe() {
   }, []);
 
   return (
-    <div className="pt-20">
+    <div className="pt-20 md:pt-24">
       <SEO
         title="Best Play School Near Me in Thane"
         description="Looking for a play school near you? Rainbow Preschool has 6 centres in Thane for children aged 1.5–2.5 years. Award-winning curriculum, safe environment, 18+ years of trust. Enquire now!"

@@ -5,7 +5,7 @@ import { Phone, Mail, ArrowLeft } from "lucide-react";
 
 export function TermsPage() {
   return (
-    <div className="pt-20">
+    <div className="pt-20 md:pt-24">
       <SEO
         title="Terms of Service | Rainbow Preschool International"
         description="Terms and conditions for using Rainbow Preschool International website and services."
@@ -67,7 +67,7 @@ export function TermsPage() {
 
 export function PrivacyPage() {
   return (
-    <div className="pt-20">
+    <div className="pt-20 md:pt-24">
       <SEO
         title="Privacy Policy | Rainbow Preschool International"
         description="Privacy policy for Rainbow Preschool International website. Learn how we collect, use, and protect your personal information."

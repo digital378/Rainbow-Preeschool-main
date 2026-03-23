@@ -69,7 +69,7 @@ export default function About() {
   const [isChairpersonExpanded, setIsChairpersonExpanded] = useState(false);
 
   return (
-    <div className="pt-20">
+    <div className="pt-20 md:pt-24">
       <SEO
         title="About Rainbow Preschool Thane | Since 2007"
         description="Rainbow Preschool Thane - trusted by 1,00,000+ families since 2007. Discover our play-based curriculum, certified teachers & 6 centres across Thane. Rainbow school near you!"

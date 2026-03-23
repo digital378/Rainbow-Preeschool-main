@@ -377,7 +377,7 @@ export default function HappyTimesLanding() {
   }, []);
 
   return (
-    <div className="pt-20">
+    <div className="pt-20 md:pt-24">
       <SEO
         title="Daycare in Thane | Safe After-School Care | Rainbow Preschool"
         description="Daycare in Thane for children aged 2-10 years. Best daycare with CCTV, homework help & healthy snacks for working parents. Book a visit today!"

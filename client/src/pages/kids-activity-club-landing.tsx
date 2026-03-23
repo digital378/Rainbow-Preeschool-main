@@ -377,7 +377,7 @@ export default function KidsActivityClubLanding() {
   }, []);
 
   return (
-    <div className="pt-20">
+    <div className="pt-20 md:pt-24">
       <SEO
         title="Kids Activity Club Thane | After School | Rainbow"
         description="Best kids activity club in Thane for children aged 3-10 years. After school activities including dance, art, music, drama, public speaking & sports. Flexible weekend and evening batches."

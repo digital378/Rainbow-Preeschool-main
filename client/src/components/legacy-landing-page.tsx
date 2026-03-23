@@ -205,7 +205,7 @@ export function LegacyLandingPage({ data }: LegacyLandingPageProps) {
     <div className="min-h-screen bg-background">
       <Navigation />
       
-      <main className="pt-20">
+      <main className="pt-20 md:pt-24">
         <article>
           <nav aria-label="Breadcrumb" className="bg-muted/30 border-b">
             <div className="container mx-auto px-4 py-3">
@@ -473,7 +473,7 @@ export function AuthorArchivePage() {
     <div className="min-h-screen bg-background">
       <Navigation />
       
-      <main className="pt-20">
+      <main className="pt-20 md:pt-24">
         <div className="container mx-auto px-4 py-12">
           <nav aria-label="Breadcrumb" className="mb-8">
             <ol className="flex items-center gap-2 text-sm text-muted-foreground">

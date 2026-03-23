@@ -417,7 +417,7 @@ export default function NurseryLanding() {
   }, []);
 
   return (
-    <div className="pt-20">
+    <div className="pt-20 md:pt-24">
       <SEO
         title="Nursery School in Thane | Ages 2.5-3.5 | Rainbow Preschool"
         description="Nursery school in Thane for kids aged 2.5-3.5 years. Best play-based nursery with trained teachers and safe environment since 2007. Enquire for admission today!"

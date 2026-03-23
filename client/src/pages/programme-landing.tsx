@@ -273,7 +273,7 @@ export default function ProgrammeLanding({ programmeSlug }: ProgrammeLandingProp
 
   if (!programme || !details) {
     return (
-      <div className="pt-20 min-h-screen flex items-center justify-center">
+      <div className="pt-20 md:pt-24 min-h-screen flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl font-bold mb-4">Programme Not Found</h1>
           <Link href="/programmes">
@@ -287,7 +287,7 @@ export default function ProgrammeLanding({ programmeSlug }: ProgrammeLandingProp
   const Icon = iconMap[programme.icon as keyof typeof iconMap] || Baby;
 
   return (
-    <div className="pt-20">
+    <div className="pt-20 md:pt-24 md:pt-24">
       <SEO
         title={details.seoTitle}
         description={details.seoDescription}

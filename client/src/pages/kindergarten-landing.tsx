@@ -407,7 +407,7 @@ export default function KindergartenLanding() {
   }, []);
 
   return (
-    <div className="pt-20">
+    <div className="pt-20 md:pt-24">
       <SEO
         title="Kindergarten School in Thane | LKG UKG | Rainbow Preschool"
         description="Kindergarten school in Thane for ages 3.5-5.5 years. Best LKG & UKG with comprehensive school readiness program since 2007. Enquire for admission today!"

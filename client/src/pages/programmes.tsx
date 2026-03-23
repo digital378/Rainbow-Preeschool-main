@@ -64,7 +64,7 @@ export default function Programmes() {
   }, [location]);
 
   return (
-    <div className="pt-20">
+    <div className="pt-20 md:pt-24">
       <SEO
         title="Preschool Programmes Thane | Playgroup Nursery KG"
         description="Explore preschool programmes in Thane: Playgroup (1.5-2.5 yrs), Nursery (2.5-3.5 yrs), Kindergarten (3.5-5.5 yrs) & Daycare. Best play-based curriculum near you!"

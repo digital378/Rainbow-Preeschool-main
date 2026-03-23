@@ -121,7 +121,7 @@ export default function BestPreschoolInThane() {
         structuredData={structuredData}
       />
 
-      <div className="pt-20 min-h-screen bg-gradient-to-b from-yellow-50 to-white dark:from-yellow-950 dark:to-gray-900">
+      <div className="pt-20 md:pt-24 min-h-screen bg-gradient-to-b from-yellow-50 to-white dark:from-yellow-950 dark:to-gray-900">
         {/* Hero Section - Critical above-fold content */}
         <section className="py-8 md:py-16 px-4">
           <div className="max-w-6xl mx-auto">

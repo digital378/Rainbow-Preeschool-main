@@ -512,7 +512,7 @@ export default function BlogPost() {
 
   if (!post) {
     return (
-      <div className="pt-20 min-h-screen">
+      <div className="pt-20 md:pt-24 min-h-screen">
         <SEO
           title="Blog Post Not Found | Rainbow Preschool"
           description="The requested blog post could not be found."
@@ -534,7 +534,7 @@ export default function BlogPost() {
   const formattedDate = format(new Date(post.publishedAt), "MMMM dd, yyyy");
 
   return (
-    <div className="pt-20">
+    <div className="pt-20 md:pt-24 md:pt-24">
       <SEO
         title={post.seoTitle}
         description={post.seoDescription}

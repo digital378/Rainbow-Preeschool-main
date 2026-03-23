@@ -173,7 +173,7 @@ export default function HoliActivitiesPage() {
     <div className="min-h-screen bg-background">
       <Navigation />
       
-      <main className="pt-20">
+      <main className="pt-20 md:pt-24">
         <article>
           <nav aria-label="Breadcrumb" className="bg-muted/30 border-b">
             <div className="container mx-auto px-4 py-3">

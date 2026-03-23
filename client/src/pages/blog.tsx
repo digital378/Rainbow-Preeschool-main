@@ -85,7 +85,7 @@ export default function Blog() {
   const displayPosts = posts?.length ? posts : defaultBlogPosts;
 
   return (
-    <div className="pt-20">
+    <div className="pt-20 md:pt-24">
       <SEO
         title="Parenting Tips & Blog | Rainbow Preschool Thane"
         description="Read the latest news, parenting tips & early education articles from Rainbow Preschool Thane. Expert advice on child development, preschool preparation & learning activities."

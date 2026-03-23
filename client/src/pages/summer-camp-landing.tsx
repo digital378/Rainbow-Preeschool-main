@@ -365,7 +365,7 @@ export default function SummerCampLanding() {
   }, []);
 
   return (
-    <div className="pt-20">
+    <div className="pt-20 md:pt-24">
       <SEO
         title="Summer Camp for Kids in Thane 2025 | Rainbow Preschool"
         description="Best Summer Camp in Thane for children aged 2-10 years. Fun activities including art, dance, sports, cooking, science experiments, and swimming. Book now!"

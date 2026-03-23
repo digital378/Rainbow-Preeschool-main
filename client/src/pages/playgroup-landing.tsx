@@ -417,7 +417,7 @@ export default function PlaygroupLanding() {
   }, []);
 
   return (
-    <div className="pt-20">
+    <div className="pt-20 md:pt-24">
       <SEO
         title="Playgroup in Thane | Ages 1.5-2.5 Years | Rainbow Preschool"
         description="Playgroup in Thane for toddlers aged 1.5-2.5 years. Best early learning playgroup with safe environment since 2007. Enquire for admission near you!"
