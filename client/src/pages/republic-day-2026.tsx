@@ -114,6 +114,7 @@ export default function RepublicDay2026() {
         description="Complete guide to Republic Day 2026 in India. Learn about 26 January history, significance, parade highlights, speeches in English & Hindi, essays for students, inspiring quotes, DP images & wishes."
         keywords="republic day 2026, 26 january 2026, republic day parade, republic day speech, republic day essay, republic day quotes, republic day wishes, republic day images, republic day dp, indian constitution day, republic day india, gantantra diwas 2026, 77th republic day"
         canonical="https://www.rainbowpreschools.com/republic-day-2026"
+        noIndex={true}
       />
       <RepublicDaySchema />
 

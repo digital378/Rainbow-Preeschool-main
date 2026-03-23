@@ -1,6 +1,7 @@
 import { useEffect, useMemo } from "react";
 import { Link } from "wouter";
 import { ChevronRight, Phone, MessageCircle, BookOpen, GraduationCap, MapPin } from "lucide-react";
+import { shouldNoIndex } from "@shared/seo-config";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -90,6 +91,7 @@ export function LegacyLandingPage({ data }: LegacyLandingPageProps) {
   const slugWithoutTrailingSlash = data.slug.replace(/\/$/, '');
   const canonicalUrl = `https://www.rainbowpreschools.com${slugWithoutTrailingSlash}`;
   const category = data.category || "Resources";
+  const noIndex = shouldNoIndex(slugWithoutTrailingSlash);
 
   useEffect(() => {
     document.title = data.title;
@@ -106,6 +108,7 @@ export function LegacyLandingPage({ data }: LegacyLandingPageProps) {
     };
 
     updateMeta('description', data.metaDescription);
+    updateMeta('robots', noIndex ? 'noindex, nofollow' : 'index, follow');
     updateMeta('og:title', data.title, true);
     updateMeta('og:description', data.metaDescription, true);
     updateMeta('og:type', 'article', true);
@@ -124,8 +127,9 @@ export function LegacyLandingPage({ data }: LegacyLandingPageProps) {
 
     return () => {
       document.title = "Rainbow Preschool International";
+      updateMeta('robots', 'index, follow');
     };
-  }, [data, canonicalUrl]);
+  }, [data, canonicalUrl, noIndex]);
 
   useEffect(() => {
     const faqSchema = {
