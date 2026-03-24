@@ -115,6 +115,32 @@ const CONFIG = {
     heading: "Preschool Near You in Thane",
     subtext: "Conveniently located centres for easy access across Thane.",
   },
+  faq: {
+    heading: "Frequently Asked Questions",
+    subtext: "Everything parents commonly ask before choosing a preschool",
+    items: [
+      {
+        question: "How does Rainbow Preschools compare to other schools in Thane like Mindseed, Kangaroo Kids, The Learning Curve, Orchids International School, or Smt. Sulochanadevi Singhania School?",
+        answer: "Rainbow Preschools focuses on strong early childhood development through activity-based learning, helping children build confidence, communication skills, and a solid foundation in their early years.\n\nWhile preschools like Mindseed, Kangaroo Kids, and The Learning Curve offer structured early learning programmes, and larger institutions such as Orchids International School and Smt. Sulochanadevi Singhania School provide broader K–12 education, Rainbow offers the advantage of both.\n\nWith a dedicated preschool environment and the option to transition into our K–12 branch at Brahmand, parents benefit from continuity in their child's learning journey along with personalized attention during the early years.",
+      },
+      {
+        question: "What is the right age to start preschool?",
+        answer: "Most children start preschool between 1.5 to 2.5 years of age. At Rainbow Preschools, our programmes are designed to support children at each stage of early development in a safe and engaging environment.",
+      },
+      {
+        question: "What curriculum does Rainbow Preschools follow?",
+        answer: "Rainbow Preschools follows a structured, activity-based learning approach that focuses on overall development including communication, social skills, creativity, and early academic readiness.",
+      },
+      {
+        question: "How do you ensure safety for children?",
+        answer: "We provide a safe and child-friendly environment with trained staff, secure premises, and age-appropriate infrastructure to ensure the well-being of every child.",
+      },
+      {
+        question: "How can I book a visit or get admission details?",
+        answer: "You can fill out the enquiry form on this page, and our admission counsellor will contact you shortly to assist you with the next steps.",
+      },
+    ],
+  },
   urgency: {
     heading: "Limited Seats Available for 2026–27",
     subtext: "Enquire today to check seat availability and speak with our admission counsellor.",
@@ -186,6 +212,7 @@ export default function AdLanding() {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const [sliderIndex, setSliderIndex] = useState(0);
   const [sliderPaused, setSliderPaused] = useState(false);
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   const campusImages = [
     { src: "/images/campus/campus-building.webp", label: "Our Campus", color: "#ef4444" },
@@ -799,6 +826,56 @@ export default function AdLanding() {
                 </div>
               </Link>
             ))}
+          </div>
+        </div>
+
+        {/* ── FAQ ────────────────────────────────────────────────────────────── */}
+        <div className="mt-10" data-testid="section-faq">
+          <h2 className="text-xl font-bold text-gray-900 text-center mb-1">{CONFIG.faq.heading}</h2>
+          <p className="text-sm text-gray-500 text-center mb-6">{CONFIG.faq.subtext}</p>
+          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm divide-y divide-gray-100 overflow-hidden">
+            {CONFIG.faq.items.map((item, i) => {
+              const isOpen = openFaq === i;
+              const toggle = () => {
+                const next = isOpen ? null : i;
+                setOpenFaq(next);
+                if ((window as any).gtag) {
+                  (window as any).gtag("event", next !== null ? "faq_expand" : "faq_collapse", {
+                    faq_question: item.question.slice(0, 60),
+                    faq_index: i,
+                  });
+                }
+              };
+              return (
+                <div key={i} data-testid={`faq-item-${i}`}>
+                  <button
+                    onClick={toggle}
+                    className="w-full flex items-start gap-3 px-5 py-4 text-left hover:bg-gray-50 transition-colors group"
+                    aria-expanded={isOpen}
+                    data-testid={`faq-trigger-${i}`}
+                  >
+                    <span className="flex-1 font-semibold text-sm text-gray-900 leading-snug pr-2">{item.question}</span>
+                    <svg
+                      className="w-5 h-5 text-gray-400 flex-shrink-0 mt-0.5 transition-transform duration-250"
+                      style={{ transform: isOpen ? "rotate(180deg)" : "rotate(0deg)" }}
+                      fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
+                  <div
+                    className="overflow-hidden transition-all duration-300 ease-in-out"
+                    style={{ maxHeight: isOpen ? "600px" : "0px", opacity: isOpen ? 1 : 0 }}
+                  >
+                    <div className="px-5 pb-5 pt-1 space-y-2">
+                      {item.answer.split("\n\n").map((para, p) => (
+                        <p key={p} className="text-sm text-gray-600 leading-relaxed">{para}</p>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
 

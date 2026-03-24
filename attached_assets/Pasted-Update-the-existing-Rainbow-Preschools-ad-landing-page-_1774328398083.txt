@@ -1,0 +1,182 @@
+Update the existing Rainbow Preschools /ad landing page by adding a new FAQ section with dropdown (accordion) functionality, optimized for conversion and subtle competitor keyword inclusion.
+
+CONTEXT
+This is a Google Ads landing page focused on lead generation.
+The page already includes:
+- hero with form
+- trust elements
+- programmes
+- centres
+- CTA sections
+
+We are adding an FAQ section near the bottom of the page (above footer or final CTA) to:
+- reduce parent hesitation
+- improve trust
+- subtly include competitor keywords
+- maintain high conversion
+
+IMPORTANT
+- Keep design consistent with current UI (soft colors, rounded cards, clean layout)
+- Do NOT make FAQ visually dominant
+- It should support decision-making, not distract
+- Mobile responsiveness is critical
+
+---
+
+SECTION TO ADD: FAQ (ACCORDION DROPDOWN)
+
+Create a new section:
+
+SECTION TITLE:
+Frequently Asked Questions
+
+OPTIONAL SUBTEXT:
+Everything parents commonly ask before choosing a preschool
+
+---
+
+COMPONENT REQUIREMENTS
+
+Create a reusable accordion component with:
+- single open at a time (auto-collapse others)
+- smooth expand/collapse animation
+- clear visual indicator (chevron icon rotate)
+- good spacing for readability
+- touch-friendly for mobile
+
+Each FAQ item:
+- clickable header
+- hidden content revealed on click
+
+---
+
+FAQ CONTENT (ADD EXACTLY AS BELOW)
+
+FAQ 1 (COMPETITOR FAQ – MOST IMPORTANT)
+
+Question:
+How does Rainbow Preschools compare to other schools in Thane like Mindseed, Kangaroo Kids, The Learning Curve, Orchids International School, or Smt. Sulochanadevi Singhania School?
+
+Answer:
+Rainbow Preschools focuses on strong early childhood development through activity-based learning, helping children build confidence, communication skills, and a solid foundation in their early years.
+
+While preschools like Mindseed, Kangaroo Kids, and The Learning Curve offer structured early learning programmes, and larger institutions such as Orchids International School and Smt. Sulochanadevi Singhania School provide broader K–12 education, Rainbow offers the advantage of both.
+
+With a dedicated preschool environment and the option to transition into our K–12 branch at Brahmand, parents benefit from continuity in their child’s learning journey along with personalized attention during the early years.
+
+---
+
+FAQ 2
+
+Question:
+What is the right age to start preschool?
+
+Answer:
+Most children start preschool between 1.5 to 2.5 years of age. At Rainbow Preschools, our programmes are designed to support children at each stage of early development in a safe and engaging environment.
+
+---
+
+FAQ 3
+
+Question:
+What curriculum does Rainbow Preschools follow?
+
+Answer:
+Rainbow Preschools follows a structured, activity-based learning approach that focuses on overall development including communication, social skills, creativity, and early academic readiness.
+
+---
+
+FAQ 4
+
+Question:
+How do you ensure safety for children?
+
+Answer:
+We provide a safe and child-friendly environment with trained staff, secure premises, and age-appropriate infrastructure to ensure the well-being of every child.
+
+---
+
+FAQ 5
+
+Question:
+How can I book a visit or get admission details?
+
+Answer:
+You can fill out the enquiry form on this page, and our admission counsellor will contact you shortly to assist you with the next steps.
+
+---
+
+DESIGN & UX DETAILS
+
+- Section background should match existing page (light or soft neutral)
+- Use card-style container for FAQ
+- Add subtle shadow or border
+- Maintain consistent font hierarchy with rest of page
+- Ensure spacing between questions is comfortable
+
+Accordion behavior:
+- First item can be closed by default (recommended)
+- Smooth transition animation (200–300ms)
+- Chevron rotates on open
+
+---
+
+PLACEMENT
+
+Insert this FAQ section:
+- above the final CTA section OR
+- just before footer
+
+Ensure it appears after:
+- programmes
+- benefits
+- centres
+- testimonials (if present)
+
+---
+
+MOBILE OPTIMIZATION
+
+- full-width accordion
+- large tap targets
+- readable font size
+- no text overflow
+- proper padding
+
+---
+
+ANALYTICS PREP
+
+Add IDs or tracking hooks:
+- faq_section_view
+- faq_question_click (with question text)
+- faq_expand
+- faq_collapse
+
+---
+
+EDITABLE STRUCTURE
+
+Store FAQ data in a single config array/object so it can be updated easily later.
+
+Example:
+faqData = [
+  { question: "...", answer: "..." }
+]
+
+---
+
+FINAL OUTPUT
+
+- Fully implemented accordion FAQ section
+- Styled to match existing landing page
+- Smooth animations
+- Clean, readable layout
+- Mobile optimized
+- No placeholder text
+- Production-ready
+
+Also provide:
+1. location of FAQ component in code
+2. how to edit FAQ content
+3. where to attach analytics tracking
