@@ -88,6 +88,7 @@ const CONFIG = {
       { icon: "🤝", title: "Social Interaction", desc: "Learning to share, collaborate and make friends with peers." },
       { icon: "🌟", title: "Independence", desc: "Nurturing self-reliance through guided age-appropriate tasks." },
       { icon: "📖", title: "Strong Learning Foundation", desc: "Early literacy, numeracy and curiosity that carries forward for life." },
+      { icon: "🎨", title: "Creativity", desc: "Art, music and imaginative play that nurture original thinking and expression." },
     ],
   },
   testimonials: {
@@ -741,7 +742,7 @@ export default function AdLanding() {
         <div className="mt-10">
           <h2 className="text-xl font-bold text-gray-900 text-center mb-2">{CONFIG.development.heading}</h2>
           <p className="text-sm text-gray-500 text-center mb-6">Holistic growth that prepares your child for life, not just school.</p>
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
             {CONFIG.development.items.map((item) => (
               <div key={item.title} className="bg-white rounded-2xl border border-gray-100 p-4 text-center shadow-sm">
                 <div className="text-3xl mb-2">{item.icon}</div>
