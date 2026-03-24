@@ -220,12 +220,12 @@ export default function AdLanding() {
     return () => { window.removeEventListener("keydown", handleKey); document.body.style.overflow = ""; };
   }, [lightboxIndex]);
 
-  // Auto-advance slider every 3 seconds (pauses on hover or when lightbox is open)
+  // Auto-advance slider every 2.5 seconds (pauses on hover or when lightbox is open)
   useEffect(() => {
     if (sliderPaused || lightboxIndex !== null) return;
     const timer = setInterval(() => {
       setSliderIndex((prev) => (prev + 1) % campusImages.length);
-    }, 3000);
+    }, 2500);
     return () => clearInterval(timer);
   }, [sliderPaused, lightboxIndex, campusImages.length]);
 
@@ -596,52 +596,96 @@ export default function AdLanding() {
             <p className="text-sm text-gray-500 mt-1">{CONFIG.campus.gallerySubtext}</p>
           </div>
 
-          {/* Slider */}
+          {/* Coverflow Slider */}
           <div
-            className="relative rounded-2xl overflow-hidden shadow-lg select-none"
+            className="relative select-none"
+            style={{ height: "260px" }}
             onMouseEnter={() => setSliderPaused(true)}
             onMouseLeave={() => setSliderPaused(false)}
             onTouchStart={() => setSliderPaused(true)}
             onTouchEnd={() => setSliderPaused(false)}
             data-testid="slider-campus"
           >
-            {/* Images — absolute stacked, fade transition */}
-            <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
-              {campusImages.map((img, i) => (
-                <div
-                  key={i}
-                  className="absolute inset-0 transition-opacity duration-700"
-                  style={{ opacity: i === sliderIndex ? 1 : 0, zIndex: i === sliderIndex ? 1 : 0 }}
-                >
-                  <img
-                    src={img.src}
-                    alt={img.label}
-                    loading={i === 0 ? "eager" : "lazy"}
-                    className="w-full h-full object-cover cursor-pointer"
-                    onClick={() => { setSliderPaused(true); setLightboxIndex(i); }}
-                    data-testid={`slider-image-${i}`}
-                  />
-                  {/* Label overlay */}
+            {/* Overflow clip layer (rounded corners on the visible strip) */}
+            <div className="absolute inset-0 overflow-hidden rounded-2xl">
+              {campusImages.map((img, i) => {
+                const n = campusImages.length;
+                const diff = ((i - sliderIndex) % n + n) % n;
+                const isPrev = diff === n - 1;
+                const isNext = diff === 1;
+                const isCurrent = diff === 0;
+
+                let translateX = "0%";
+                let opacity = 0;
+                let zIndex = 0;
+                let scale = 1;
+
+                if (isCurrent) {
+                  translateX = "0%";
+                  opacity = 1;
+                  zIndex = 10;
+                  scale = 1;
+                } else if (isNext) {
+                  translateX = "82%";
+                  opacity = 0.42;
+                  zIndex = 5;
+                  scale = 0.92;
+                } else if (isPrev) {
+                  translateX = "-82%";
+                  opacity = 0.42;
+                  zIndex = 5;
+                  scale = 0.92;
+                }
+
+                return (
                   <div
-                    className="absolute bottom-0 left-0 right-0 px-4 py-3 flex items-center gap-2"
-                    style={{ background: `linear-gradient(transparent, ${img.color}cc)` }}
+                    key={i}
+                    className="absolute inset-0"
+                    style={{
+                      transform: `translateX(${translateX}) scale(${scale})`,
+                      opacity,
+                      zIndex,
+                      transition: "transform 0.65s cubic-bezier(0.4,0,0.2,1), opacity 0.65s ease",
+                    }}
                   >
-                    <div className="w-2 h-2 rounded-full bg-white/80 flex-shrink-0" />
-                    <span className="text-white text-sm font-semibold tracking-wide drop-shadow">{img.label}</span>
-                    <span className="ml-auto text-white/70 text-xs">{i + 1} / {campusImages.length}</span>
+                    <img
+                      src={img.src}
+                      alt={img.label}
+                      loading={i === 0 ? "eager" : "lazy"}
+                      className="w-full h-full object-cover"
+                      style={{ cursor: isCurrent ? "pointer" : "default" }}
+                      onClick={() => { if (isCurrent) { setSliderPaused(true); setLightboxIndex(i); } }}
+                      data-testid={`slider-image-${i}`}
+                    />
+                    {/* Label + expand hint — only on current */}
+                    {isCurrent && (
+                      <>
+                        <div
+                          className="absolute bottom-0 left-0 right-0 px-4 py-3 flex items-center gap-2"
+                          style={{ background: `linear-gradient(transparent, ${img.color}cc)` }}
+                        >
+                          <div className="w-2 h-2 rounded-full bg-white/80 flex-shrink-0" />
+                          <span className="text-white text-sm font-semibold tracking-wide drop-shadow">{img.label}</span>
+                          <span className="ml-auto text-white/70 text-xs">{i + 1} / {n}</span>
+                        </div>
+                        <div className="absolute top-3 right-3 bg-black/40 text-white text-xs px-2 py-1 rounded-full backdrop-blur-sm">
+                          🔍 Tap to expand
+                        </div>
+                      </>
+                    )}
                   </div>
-                  {/* Click-to-expand hint */}
-                  <div className="absolute top-3 right-3 bg-black/40 text-white text-xs px-2 py-1 rounded-full backdrop-blur-sm">
-                    🔍 Tap to expand
-                  </div>
-                </div>
-              ))}
+                );
+              })}
+
+              {/* Left edge gradient fade (blends side images into bg) */}
+              <div className="absolute inset-y-0 left-0 w-[12%] z-20 pointer-events-none" style={{ background: "linear-gradient(to right, rgba(249,250,251,0.85), transparent)" }} />
+              <div className="absolute inset-y-0 right-0 w-[12%] z-20 pointer-events-none" style={{ background: "linear-gradient(to left, rgba(249,250,251,0.85), transparent)" }} />
             </div>
 
-            {/* Prev / Next arrows */}
+            {/* Prev / Next arrows (outside the clip so they're always fully visible) */}
             <button
               onClick={() => { setSliderIndex((sliderIndex - 1 + campusImages.length) % campusImages.length); setSliderPaused(true); setTimeout(() => setSliderPaused(false), 5000); }}
-              className="absolute left-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 flex items-center justify-center bg-black/40 hover:bg-black/60 text-white rounded-full text-lg transition-colors"
+              className="absolute left-1 top-1/2 -translate-y-1/2 z-30 w-9 h-9 flex items-center justify-center bg-white/80 hover:bg-white shadow-md text-gray-700 rounded-full text-xl transition-all"
               aria-label="Previous"
               data-testid="slider-prev"
             >
@@ -649,7 +693,7 @@ export default function AdLanding() {
             </button>
             <button
               onClick={() => { setSliderIndex((sliderIndex + 1) % campusImages.length); setSliderPaused(true); setTimeout(() => setSliderPaused(false), 5000); }}
-              className="absolute right-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 flex items-center justify-center bg-black/40 hover:bg-black/60 text-white rounded-full text-lg transition-colors"
+              className="absolute right-1 top-1/2 -translate-y-1/2 z-30 w-9 h-9 flex items-center justify-center bg-white/80 hover:bg-white shadow-md text-gray-700 rounded-full text-xl transition-all"
               aria-label="Next"
               data-testid="slider-next"
             >
@@ -657,11 +701,11 @@ export default function AdLanding() {
             </button>
 
             {/* Progress bar */}
-            <div className="absolute top-0 left-0 right-0 h-0.5 bg-white/20 z-10">
+            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-black/10 z-30">
               <div
                 key={sliderIndex}
-                className="h-full bg-white/80"
-                style={{ animation: sliderPaused ? "none" : "sliderProgress 3s linear forwards" }}
+                className="h-full bg-gray-600/60"
+                style={{ animation: sliderPaused ? "none" : "sliderProgress 2.5s linear forwards" }}
               />
             </div>
           </div>
@@ -688,6 +732,7 @@ export default function AdLanding() {
         {/* Progress bar keyframe */}
         <style>{`
           @keyframes sliderProgress { from { width: 0% } to { width: 100% } }
+          /* coverflow: side images visible at edges */
           .lightbox-overlay{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:999;display:flex;align-items:center;justify-content:center;animation:fadeIn .2s ease}
           @keyframes fadeIn{from{opacity:0}to{opacity:1}}
           .lightbox-img{max-width:92vw;max-height:85vh;object-fit:contain;border-radius:12px;animation:zoomIn .25s ease}
