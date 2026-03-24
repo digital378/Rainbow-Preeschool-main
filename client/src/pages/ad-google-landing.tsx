@@ -570,6 +570,123 @@ export default function AdGoogleLanding() {
             ))}
           </div>
         </div>
+
+        {/* Competitor Comparison Section */}
+        <div className="mt-8">
+          <h2 className="font-semibold text-lg text-gray-900 mb-1">Why Parents in Thane Choose Rainbow Preschool</h2>
+          <p className="text-sm text-gray-500 mb-4">Comparing top preschools in Thane — Mindseed, EuroKids, Kangaroo Kids, Little Elly & more</p>
+
+          <div className="overflow-x-auto rounded-xl border border-gray-200">
+            <table className="w-full text-sm border-collapse">
+              <thead>
+                <tr className="bg-red-600 text-white">
+                  <th className="text-left px-4 py-3 font-semibold rounded-tl-xl">Feature</th>
+                  <th className="px-3 py-3 font-semibold text-center bg-red-700">
+                    <span className="block text-xs text-red-200 font-normal">Our School</span>
+                    Rainbow
+                  </th>
+                  <th className="px-3 py-3 font-semibold text-center text-red-100">Mindseed</th>
+                  <th className="px-3 py-3 font-semibold text-center text-red-100">EuroKids</th>
+                  <th className="px-3 py-3 font-semibold text-center text-red-100 rounded-tr-xl">Kangaroo Kids</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  {
+                    feature: "Centres in Thane",
+                    rainbow: "6 Centres",
+                    mindseed: "1–2",
+                    eurokids: "2–3",
+                    kangaroo: "1",
+                    rainbowWins: true,
+                  },
+                  {
+                    feature: "Established Since",
+                    rainbow: "2007 (18 yrs)",
+                    mindseed: "~2012",
+                    eurokids: "~2015",
+                    kangaroo: "~2010",
+                    rainbowWins: true,
+                  },
+                  {
+                    feature: "CCTV Surveillance",
+                    rainbow: "✅ Yes",
+                    mindseed: "✅ Yes",
+                    eurokids: "✅ Yes",
+                    kangaroo: "✅ Yes",
+                    rainbowWins: false,
+                  },
+                  {
+                    feature: "Female Staff Only",
+                    rainbow: "✅ Yes",
+                    mindseed: "✅ Yes",
+                    eurokids: "⚠️ Mixed",
+                    kangaroo: "⚠️ Mixed",
+                    rainbowWins: true,
+                  },
+                  {
+                    feature: "Transport Available",
+                    rainbow: "✅ Yes",
+                    mindseed: "⚠️ Limited",
+                    eurokids: "✅ Yes",
+                    kangaroo: "⚠️ Limited",
+                    rainbowWins: false,
+                  },
+                  {
+                    feature: "Activity-Based Learning",
+                    rainbow: "✅ Full",
+                    mindseed: "✅ Full",
+                    eurokids: "✅ Full",
+                    kangaroo: "✅ Full",
+                    rainbowWins: false,
+                  },
+                  {
+                    feature: "Fees (Monthly)",
+                    rainbow: "₹₹ Affordable",
+                    mindseed: "₹₹₹ Higher",
+                    eurokids: "₹₹₹ Higher",
+                    kangaroo: "₹₹₹ Higher",
+                    rainbowWins: true,
+                  },
+                  {
+                    feature: "Award-Winning",
+                    rainbow: "✅ TMC, India Today",
+                    mindseed: "—",
+                    eurokids: "✅ National",
+                    kangaroo: "—",
+                    rainbowWins: false,
+                  },
+                ].map((row, i) => (
+                  <tr key={i} className={i % 2 === 0 ? "bg-white" : "bg-gray-50"}>
+                    <td className="px-4 py-3 text-gray-700 font-medium">{row.feature}</td>
+                    <td className={`px-3 py-3 text-center font-semibold ${row.rainbowWins ? "text-green-700 bg-green-50" : "text-gray-800"}`}>
+                      {row.rainbow}
+                    </td>
+                    <td className="px-3 py-3 text-center text-gray-500">{row.mindseed}</td>
+                    <td className="px-3 py-3 text-center text-gray-500">{row.eurokids}</td>
+                    <td className="px-3 py-3 text-center text-gray-500">{row.kangaroo}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <p className="text-xs text-gray-400 mt-2">* Data based on publicly available information. Competitor details may vary by branch.</p>
+
+          {/* Also mentioned for search relevance */}
+          <div className="mt-4 p-4 bg-gray-50 rounded-xl border border-gray-100">
+            <p className="text-sm text-gray-600 leading-relaxed">
+              Parents in Thane who have considered <strong className="text-gray-800">Mindseed Preschool</strong>, <strong className="text-gray-800">EuroKids Thane</strong>, <strong className="text-gray-800">Kangaroo Kids</strong>, <strong className="text-gray-800">Little Elly</strong>, <strong className="text-gray-800">Orchids International</strong>, and <strong className="text-gray-800">Little Millennium</strong> frequently choose Rainbow Preschool International for its 6 convenient locations across Thane, 18+ years of experience, and significantly more affordable fees — without compromising on quality.
+            </p>
+            <button
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              className="mt-3 w-full bg-red-600 hover:bg-red-700 text-white py-2.5 rounded-full font-semibold text-sm"
+              data-testid="button-comparison-cta"
+            >
+              Book a Free School Tour →
+            </button>
+          </div>
+        </div>
       </main>
 
       {/* Sticky WhatsApp */}
