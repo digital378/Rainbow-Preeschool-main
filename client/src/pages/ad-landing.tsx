@@ -8,7 +8,7 @@ const CONFIG = {
   phoneDisplay: "+91 82915 68972",
   whatsappText: "Hi, I'm from Thane interested in Rainbow Preschool admissions",
   hero: {
-    badge: "Limited Seats for 2026–27 · Admissions Open",
+    badge: "Admissions For 2026-27 Closing On 30th March",
     headline: "Best Preschool in Thane for Your Child's Early Development",
     subheadline: "A safe, nurturing and activity-based learning environment trusted by parents for over 18 years.",
     locationLine: "Conveniently located in Manpada, Kalwa, Dhokali, Kasarvadavali, Anand Nagar & Hariniwas.",
