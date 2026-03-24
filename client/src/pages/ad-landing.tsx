@@ -386,8 +386,8 @@ export default function AdLanding() {
         <div className="grid md:grid-cols-2 gap-6 md:gap-8">
           {/* Left: copy */}
           <div className="space-y-4">
-            <div className="inline-flex items-center gap-2 bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-semibold">
-              <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+            <div className="inline-flex items-center gap-2 bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs font-semibold">
+              <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
               {CONFIG.hero.badge}
             </div>
 
