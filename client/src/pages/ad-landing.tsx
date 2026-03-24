@@ -72,7 +72,7 @@ const CONFIG = {
     },
     {
       id: "daycare",
-      name: "Daycare",
+      name: "Happy Times",
       location: "in Thane",
       age: "2 – 10 years",
       summary: "A safe, structured environment for children beyond school hours.",
@@ -524,7 +524,7 @@ export default function AdLanding() {
                       <option value="1.5-2.5">1.5 – 2.5 years (Playgroup)</option>
                       <option value="2.5-3.5">2.5 – 3.5 years (Nursery)</option>
                       <option value="3.5-5">3.5 – 5 years (Kindergarten)</option>
-                      <option value="5+">5+ years (Daycare / Other)</option>
+                      <option value="5+">5+ years (Happy Times / Other)</option>
                     </select>
                     {errors.childAge && <p className="text-red-500 text-xs mt-1">{errors.childAge}</p>}
                   </div>
