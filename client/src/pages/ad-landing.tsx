@@ -183,6 +183,8 @@ export default function AdLanding() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [utmData] = useState(() => getUtmParams());
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const [sliderIndex, setSliderIndex] = useState(0);
+  const [sliderPaused, setSliderPaused] = useState(false);
 
   const campusImages = [
     { src: "/images/campus/campus-building.webp", label: "Our Campus", color: "#ef4444" },
@@ -217,6 +219,15 @@ export default function AdLanding() {
     window.addEventListener("keydown", handleKey);
     return () => { window.removeEventListener("keydown", handleKey); document.body.style.overflow = ""; };
   }, [lightboxIndex]);
+
+  // Auto-advance slider every 3 seconds (pauses on hover or when lightbox is open)
+  useEffect(() => {
+    if (sliderPaused || lightboxIndex !== null) return;
+    const timer = setInterval(() => {
+      setSliderIndex((prev) => (prev + 1) % campusImages.length);
+    }, 3000);
+    return () => clearInterval(timer);
+  }, [sliderPaused, lightboxIndex, campusImages.length]);
 
   useEffect(() => {
     const existingRobots = document.querySelector('meta[name="robots"]');
@@ -578,72 +589,133 @@ export default function AdLanding() {
           </div>
         </div>
 
-        {/* ── CAMPUS GALLERY ─────────────────────────────────────────────────── */}
+        {/* ── CAMPUS GALLERY SLIDER ──────────────────────────────────────────── */}
         <div className="mt-8" data-testid="gallery-ad-campus">
           <div className="text-center mb-4">
             <h3 className="text-xl font-bold text-gray-900">{CONFIG.campus.galleryHeading}</h3>
             <p className="text-sm text-gray-500 mt-1">{CONFIG.campus.gallerySubtext}</p>
           </div>
-          <style>{`
-            .mosaic-grid{display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:minmax(80px,auto);gap:5px}
-            @media(min-width:640px){.mosaic-grid{grid-auto-rows:minmax(100px,auto);gap:6px}}
-            .mosaic-item{position:relative;overflow:hidden;cursor:pointer;border-radius:14px;transition:transform .3s ease,box-shadow .3s ease}
-            .mosaic-item:hover{transform:scale(1.06);box-shadow:0 8px 25px rgba(0,0,0,.25);z-index:10}
-            .mosaic-item:active{transform:scale(0.97)}
-            .mosaic-item img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s ease}
-            .mosaic-item:hover img{transform:scale(1.12)}
-            .mosaic-label{position:absolute;bottom:0;left:0;right:0;padding:4px 8px;font-size:.6rem;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:.04em;opacity:0;transform:translateY(100%);transition:all .3s ease}
-            .mosaic-item:hover .mosaic-label{opacity:1;transform:translateY(0)}
-            @media(max-width:639px){.mosaic-label{opacity:1;transform:translateY(0);font-size:.55rem;padding:2px 6px}}
-            .mosaic-dot{position:absolute;top:5px;right:5px;width:7px;height:7px;border-radius:50%;opacity:.85;border:1.5px solid rgba(255,255,255,.6)}
-            .lightbox-overlay{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:999;display:flex;align-items:center;justify-content:center;animation:fadeIn .2s ease}
-            @keyframes fadeIn{from{opacity:0}to{opacity:1}}
-            .lightbox-img{max-width:92vw;max-height:80vh;object-fit:contain;border-radius:12px;animation:zoomIn .3s ease}
-            @keyframes zoomIn{from{transform:scale(.8);opacity:0}to{transform:scale(1);opacity:1}}
-          `}</style>
-          <div className="mosaic-grid">
-            {campusImages.map((img, i) => {
-              const layouts: Record<number, { col: string; row: string }> = {
-                0: { col: "1 / 4", row: "1 / 3" }, 1: { col: "4 / 7", row: "1 / 2" }, 2: { col: "4 / 7", row: "2 / 3" },
-                3: { col: "1 / 3", row: "3 / 5" }, 4: { col: "3 / 5", row: "3 / 4" }, 5: { col: "5 / 7", row: "3 / 5" },
-                6: { col: "3 / 5", row: "4 / 5" }, 7: { col: "1 / 3", row: "5 / 6" }, 8: { col: "3 / 5", row: "5 / 7" },
-                9: { col: "5 / 7", row: "5 / 6" }, 10: { col: "1 / 3", row: "6 / 7" }, 11: { col: "5 / 7", row: "6 / 7" },
-                12: { col: "1 / 3", row: "7 / 8" }, 13: { col: "3 / 5", row: "7 / 9" }, 14: { col: "5 / 7", row: "7 / 8" },
-                15: { col: "1 / 3", row: "8 / 9" }, 16: { col: "5 / 7", row: "8 / 9" }, 17: { col: "1 / 4", row: "9 / 10" },
-                18: { col: "4 / 7", row: "9 / 10" },
-              };
-              const pos = layouts[i] || { col: "auto", row: "auto" };
-              return (
+
+          {/* Slider */}
+          <div
+            className="relative rounded-2xl overflow-hidden shadow-lg select-none"
+            onMouseEnter={() => setSliderPaused(true)}
+            onMouseLeave={() => setSliderPaused(false)}
+            onTouchStart={() => setSliderPaused(true)}
+            onTouchEnd={() => setSliderPaused(false)}
+            data-testid="slider-campus"
+          >
+            {/* Images — absolute stacked, fade transition */}
+            <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
+              {campusImages.map((img, i) => (
                 <div
                   key={i}
-                  className="mosaic-item"
-                  style={{ gridColumn: pos.col, gridRow: pos.row }}
-                  onClick={() => setLightboxIndex(i)}
-                  data-testid={`gallery-item-${i}`}
+                  className="absolute inset-0 transition-opacity duration-700"
+                  style={{ opacity: i === sliderIndex ? 1 : 0, zIndex: i === sliderIndex ? 1 : 0 }}
                 >
-                  <img src={img.src} alt={img.label} loading="lazy" />
-                  <div className="mosaic-dot" style={{ background: img.color }} />
-                  <div className="mosaic-label" style={{ background: `linear-gradient(transparent, ${img.color}dd)` }}>{img.label}</div>
+                  <img
+                    src={img.src}
+                    alt={img.label}
+                    loading={i === 0 ? "eager" : "lazy"}
+                    className="w-full h-full object-cover cursor-pointer"
+                    onClick={() => { setSliderPaused(true); setLightboxIndex(i); }}
+                    data-testid={`slider-image-${i}`}
+                  />
+                  {/* Label overlay */}
+                  <div
+                    className="absolute bottom-0 left-0 right-0 px-4 py-3 flex items-center gap-2"
+                    style={{ background: `linear-gradient(transparent, ${img.color}cc)` }}
+                  >
+                    <div className="w-2 h-2 rounded-full bg-white/80 flex-shrink-0" />
+                    <span className="text-white text-sm font-semibold tracking-wide drop-shadow">{img.label}</span>
+                    <span className="ml-auto text-white/70 text-xs">{i + 1} / {campusImages.length}</span>
+                  </div>
+                  {/* Click-to-expand hint */}
+                  <div className="absolute top-3 right-3 bg-black/40 text-white text-xs px-2 py-1 rounded-full backdrop-blur-sm">
+                    🔍 Tap to expand
+                  </div>
                 </div>
-              );
-            })}
+              ))}
+            </div>
+
+            {/* Prev / Next arrows */}
+            <button
+              onClick={() => { setSliderIndex((sliderIndex - 1 + campusImages.length) % campusImages.length); setSliderPaused(true); setTimeout(() => setSliderPaused(false), 5000); }}
+              className="absolute left-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 flex items-center justify-center bg-black/40 hover:bg-black/60 text-white rounded-full text-lg transition-colors"
+              aria-label="Previous"
+              data-testid="slider-prev"
+            >
+              &#8249;
+            </button>
+            <button
+              onClick={() => { setSliderIndex((sliderIndex + 1) % campusImages.length); setSliderPaused(true); setTimeout(() => setSliderPaused(false), 5000); }}
+              className="absolute right-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 flex items-center justify-center bg-black/40 hover:bg-black/60 text-white rounded-full text-lg transition-colors"
+              aria-label="Next"
+              data-testid="slider-next"
+            >
+              &#8250;
+            </button>
+
+            {/* Progress bar */}
+            <div className="absolute top-0 left-0 right-0 h-0.5 bg-white/20 z-10">
+              <div
+                key={sliderIndex}
+                className="h-full bg-white/80"
+                style={{ animation: sliderPaused ? "none" : "sliderProgress 3s linear forwards" }}
+              />
+            </div>
+          </div>
+
+          {/* Dot indicators */}
+          <div className="flex justify-center gap-1.5 mt-3 flex-wrap">
+            {campusImages.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => { setSliderIndex(i); setSliderPaused(true); setTimeout(() => setSliderPaused(false), 5000); }}
+                className="transition-all duration-300 rounded-full"
+                style={{
+                  width: i === sliderIndex ? "20px" : "7px",
+                  height: "7px",
+                  background: i === sliderIndex ? campusImages[sliderIndex].color : "#d1d5db",
+                }}
+                aria-label={`Go to image ${i + 1}`}
+                data-testid={`slider-dot-${i}`}
+              />
+            ))}
           </div>
         </div>
 
+        {/* Progress bar keyframe */}
+        <style>{`
+          @keyframes sliderProgress { from { width: 0% } to { width: 100% } }
+          .lightbox-overlay{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:999;display:flex;align-items:center;justify-content:center;animation:fadeIn .2s ease}
+          @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+          .lightbox-img{max-width:92vw;max-height:85vh;object-fit:contain;border-radius:12px;animation:zoomIn .25s ease}
+          @keyframes zoomIn{from{transform:scale(.85);opacity:0}to{transform:scale(1);opacity:1}}
+        `}</style>
+
         {/* Lightbox */}
         {lightboxIndex !== null && (
-          <div className="lightbox-overlay" onClick={() => setLightboxIndex(null)} data-testid="lightbox-overlay">
-            <button onClick={(e) => { e.stopPropagation(); setLightboxIndex(null); }} className="absolute top-4 right-4 text-white bg-black/50 rounded-full w-10 h-10 flex items-center justify-center text-2xl hover:bg-white/20 z-[1000]" data-testid="lightbox-close">&times;</button>
-            <button onClick={(e) => { e.stopPropagation(); setLightboxIndex((lightboxIndex - 1 + campusImages.length) % campusImages.length); }} className="absolute left-3 top-1/2 -translate-y-1/2 text-white bg-black/40 hover:bg-white/20 rounded-full w-10 h-10 flex items-center justify-center text-xl z-[1000]" data-testid="lightbox-prev">&#8249;</button>
+          <div className="lightbox-overlay" onClick={() => { setLightboxIndex(null); setSliderPaused(false); }} data-testid="lightbox-overlay">
+            <button onClick={(e) => { e.stopPropagation(); setLightboxIndex(null); setSliderPaused(false); }} className="absolute top-4 right-4 text-white bg-black/50 rounded-full w-10 h-10 flex items-center justify-center text-2xl hover:bg-white/20 z-[1000]" data-testid="lightbox-close">&times;</button>
+            <button
+              onClick={(e) => { e.stopPropagation(); const prev = (lightboxIndex - 1 + campusImages.length) % campusImages.length; setLightboxIndex(prev); setSliderIndex(prev); }}
+              className="absolute left-3 top-1/2 -translate-y-1/2 text-white bg-black/40 hover:bg-white/20 rounded-full w-11 h-11 flex items-center justify-center text-2xl z-[1000]"
+              data-testid="lightbox-prev"
+            >&#8249;</button>
             <div className="flex flex-col items-center gap-3" onClick={(e) => e.stopPropagation()}>
               <img src={campusImages[lightboxIndex].src} alt={campusImages[lightboxIndex].label} className="lightbox-img" />
               <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full" style={{ background: campusImages[lightboxIndex].color }} />
+                <div className="w-3 h-3 rounded-full flex-shrink-0" style={{ background: campusImages[lightboxIndex].color }} />
                 <span className="text-white font-semibold text-sm">{campusImages[lightboxIndex].label}</span>
                 <span className="text-white/50 text-xs ml-2">{lightboxIndex + 1} / {campusImages.length}</span>
               </div>
             </div>
-            <button onClick={(e) => { e.stopPropagation(); setLightboxIndex((lightboxIndex + 1) % campusImages.length); }} className="absolute right-3 top-1/2 -translate-y-1/2 text-white bg-black/40 hover:bg-white/20 rounded-full w-10 h-10 flex items-center justify-center text-xl z-[1000]" data-testid="lightbox-next">&#8250;</button>
+            <button
+              onClick={(e) => { e.stopPropagation(); const next = (lightboxIndex + 1) % campusImages.length; setLightboxIndex(next); setSliderIndex(next); }}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-white bg-black/40 hover:bg-white/20 rounded-full w-11 h-11 flex items-center justify-center text-2xl z-[1000]"
+              data-testid="lightbox-next"
+            >&#8250;</button>
           </div>
         )}
 
