@@ -1,0 +1,406 @@
+Optimize the existing Rainbow International School (RIS) admissions /ris landing page for higher K–12 conversion, based on the current live layout and sections shown in the reference screenshots.
+
+IMPORTANT CONTEXT
+This is not a fresh redesign.
+This page already has:
+- top header with logo and call button
+- hero section with enquiry form
+- urgency message and seat availability table
+- school tour video
+- “Why Rainbow International School?” feature cards
+- large image gallery grid
+- final CTA strip
+- footer and WhatsApp floating button
+
+This is a paid-traffic ad landing page for Rainbow International School, Brahmand, Thane.
+The goal is to improve conversion rate for admissions enquiries and campus visit intent.
+
+Do not redesign the visual identity from scratch.
+Keep the existing clean layout, white/light background, blue highlights, green CTA for form submission, rounded form card styling, and premium school feel.
+Improve what is already there by making it more trust-building, more scannable, more parent-focused, and more conversion-optimized.
+
+PRIMARY GOAL
+Increase form submissions, callbacks, WhatsApp enquiries, and campus visit bookings.
+
+SECONDARY GOALS
+- improve hero clarity
+- improve parent trust above the fold
+- strengthen K–12 positioning
+- improve mobile usability
+- convert the current standalone image gallery into a slidable carousel
+- add a FAQ section in dropdown accordion format
+- keep the page focused on admissions
+
+DO NOT
+- add top navigation menus
+- add distracting outbound links
+- overcomplicate the design
+- make the gallery feel heavy or cluttered
+- use vague generic school copy
+- remove the seat availability section entirely
+
+SECTION-BY-SECTION CHANGES TO IMPLEMENT
+
+1. HERO SECTION OPTIMIZATION
+Keep the existing structure:
+- left content
+- right enquiry form
+
+But improve the copy and hierarchy.
+
+Replace/update hero copy with:
+
+Eyebrow / top badge:
+Check Seat Availability
+
+Main headline:
+Rainbow International School, Thane
+
+Subheadline:
+Admissions open for 2026–27. A trusted CBSE school in Brahmand focused on academics, confidence, leadership, and holistic development from Nursery to Grade 12.
+
+Keep urgency line but refine it:
+Limited seats available in select grades. Enquire now for updated seat status.
+
+Keep trust chips, but make them consistent and visually stronger:
+- CBSE Curriculum
+- Smart Classrooms
+- Transport
+- CCTV Campus
+
+Replace current orange urgency box copy with a more polished version:
+Several grades have limited seats remaining. Admissions are processed on a first-come, first-served basis.
+
+Improve spacing and visual hierarchy so the headline and form feel more balanced.
+
+2. HERO FORM OPTIMIZATION
+Keep the form in the hero card on the right.
+
+Update copy to:
+
+Form title:
+Secure Your Seat Now
+
+Form subtitle:
+Get a callback within 30 minutes
+
+Keep fields:
+- Parent’s Name
+- Phone Number
+- Child’s Name
+- Grade Applying For
+
+Add optional helper text below CTA:
+Our admission counsellor will contact you shortly.
+No spam. Only admission-related assistance.
+
+Primary button:
+Reserve Seat Now
+
+Keep secondary buttons:
+- Call
+- WhatsApp
+
+Improve:
+- field spacing
+- placeholder contrast
+- button spacing
+- mobile padding
+- validation states
+- loading state
+- success state
+
+3. SEAT AVAILABILITY SECTION IMPROVEMENT
+Keep the seat availability section because it supports urgency well.
+
+Current issue:
+It looks useful, but visually reads more like raw data than a decision-driving module.
+
+Improve it without changing its purpose:
+- keep title: Seat Availability 2026–27
+- improve subtext:
+Updated regularly. Admissions are subject to seat availability and processed on a first-come, first-served basis.
+- improve table styling for readability
+- make status pills more consistent
+- ensure color coding is accessible
+- improve mobile responsiveness of the table
+
+If needed, allow horizontal scrolling on smaller screens while keeping it clean.
+
+4. VIDEO SECTION POLISH
+Keep the school tour video section.
+
+Improve presentation:
+- stronger spacing above and below section
+- clean heading:
+Watch Our School Tour
+- optional supporting line:
+Take a closer look at the Rainbow International School campus and learning environment.
+
+Keep embed responsive and polished.
+
+5. WHY RIS SECTION IMPROVEMENT
+Keep the “Why Rainbow International School?” section but improve its scannability and parent relevance.
+
+Current cards:
+- CBSE Affiliated
+- Smart Classrooms
+- Experienced Faculty
+- Safe Campus
+- Transport
+- Co-Curricular
+
+Refine the subtext to feel stronger and more benefit-led:
+- CBSE Affiliated
+  Strong academic foundation aligned with national standards.
+- Smart Classrooms
+  Digital learning tools that support better understanding and engagement.
+- Experienced Faculty
+  Qualified educators focused on academic and personal growth.
+- Safe Campus
+  Secure infrastructure with CCTV and monitored access.
+- Transport
+  Reliable bus service covering key nearby areas.
+- Co-Curricular
+  Sports, arts, music, and activities for holistic development.
+
+Improve consistency of icon alignment, card spacing, and card height.
+
+6. GALLERY SECTION — CONVERT FROM GRID TO SLIDABLE CAROUSEL
+This is a required update.
+
+Current issue:
+The current image gallery is a long standalone masonry/grid display that adds a lot of scroll length and feels visually heavy.
+
+Replace the current gallery block with a slidable carousel section.
+
+Section heading:
+Explore Our Campus
+
+Supporting line:
+Browse our classrooms, activity spaces, labs, sports areas, and campus facilities.
+
+Carousel requirements:
+- horizontal slider / carousel
+- swipe support on mobile
+- arrow navigation on desktop
+- pagination dots or slide indicator
+- smooth transitions
+- responsive layout
+- lazy load images
+- optimized for performance
+- keep image quality strong
+- elegant rounded cards/slides
+- not too tall on mobile
+- allow captions/titles per slide
+
+Suggested slide categories/titles:
+- School Building
+- Pre-Primary Classroom
+- Senior Classroom
+- Sports Ground
+- Science Lab
+- Library / Activity Space
+- Medical / Safety Support
+- Swimming Pool / Sports Facility
+
+If a carousel library already exists in the stack, use it.
+Otherwise create a lightweight clean carousel using the existing component system.
+Do not keep the old grid under the carousel.
+Fully replace the standalone gallery display.
+
+7. ADD NEW SECTION: COMPLETE LEARNING JOURNEY
+Add a new conversion-focused section after “Why RIS” or after the gallery.
+
+Heading:
+A Complete Learning Journey from Nursery to Grade 12
+
+Subtext:
+Rainbow International School supports students through every stage of their academic journey with consistency, care, and a strong focus on overall development.
+
+Add 3 or 4 cards:
+- Strong Academic Foundation
+- Confidence and Communication
+- Leadership and Life Skills
+- Holistic Growth Through Activities
+
+Keep this section clean and premium.
+
+8. ADD TESTIMONIALS SECTION
+Add a testimonial section before the final CTA or before the FAQ.
+
+Heading:
+What Parents Value About RIS
+
+Add 3 to 4 testimonial cards.
+Use realistic editable placeholder content if actual testimonials are not yet available.
+
+Example style:
+“Rainbow International School offers a great balance of academics and overall development. We were impressed by the campus and faculty.”
+— Parent, Thane
+
+“From infrastructure to safety and learning support, the experience has been very reassuring for us as parents.”
+— Parent, Brahmand
+
+Keep testimonial data editable from config.
+
+9. ADD FAQ SECTION IN DROPDOWN ACCORDION FORMAT
+Add a FAQ section near the bottom of the page, above the final CTA strip or just before the footer.
+
+Section title:
+Frequently Asked Questions
+
+Optional subtext:
+Everything parents commonly ask before choosing the right K–12 school
+
+Component requirements:
+- accordion dropdown
+- one item open at a time
+- smooth open/close animation
+- rotating chevron icon
+- touch-friendly on mobile
+- full-width clean card styling
+- consistent with current design language
+
+Add these FAQ items exactly:
+
+FAQ 1
+Question:
+How does Rainbow International School compare to schools in Thane like Orchids International School, CP Goenka International School, or Smt. Sulochanadevi Singhania School?
+
+Answer:
+Rainbow International School offers a balanced approach combining strong academics with overall development, focusing on building confidence, communication, and real-world skills.
+
+While schools like Orchids International School, CP Goenka International School, and Smt. Sulochanadevi Singhania School provide well-established K–12 education, Rainbow focuses on delivering a structured CBSE curriculum along with personalized attention and a holistic learning environment.
+
+With a seamless journey from early years to Grade 12, students benefit from consistency in learning and development throughout their academic journey.
+
+FAQ 2
+Question:
+What curriculum does Rainbow International School follow?
+
+Answer:
+Rainbow International School follows the CBSE curriculum, designed to provide strong academic foundations along with conceptual understanding and practical learning.
+
+FAQ 3
+Question:
+What are the admission criteria for different grades?
+
+Answer:
+Admissions are based on age criteria and interaction or assessment depending on the grade level.
+
+FAQ 4
+Question:
+How do you ensure safety and security?
+
+Answer:
+The school provides a secure campus with CCTV surveillance, trained staff, and child-friendly infrastructure.
+
+FAQ 5
+Question:
+Can my child continue from preschool to higher grades here?
+
+Answer:
+Yes, Rainbow offers a complete learning journey from preschool to Grade 12, ensuring continuity and stability in your child’s education.
+
+Store FAQ content in a single editable data array.
+
+10. FINAL CTA STRIP IMPROVEMENT
+Keep the current blue final CTA strip but improve its copy and spacing.
+
+Replace with:
+Headline:
+Seats Are Filling Fast
+
+Subtext:
+Enquire today to check availability and secure admission for the 2026–27 academic year.
+
+Primary CTA:
+Reserve Seat Now
+
+Ensure this CTA scrolls to form or opens the enquiry flow.
+
+11. FOOTER CLEANUP
+Keep footer minimal and useful.
+
+Ensure it includes:
+- Rainbow International School, Thane
+- short line such as:
+A CBSE school focused on academic excellence and holistic development.
+- phone number
+- WhatsApp link if already present
+
+Keep it clean and non-distracting.
+
+12. MOBILE CONVERSION IMPROVEMENTS
+Add a sticky bottom CTA bar on mobile only if it fits cleanly with the current UI.
+
+Suggested buttons:
+- Call Now
+- Enquire Now
+
+Keep it compact, premium, and non-intrusive.
+
+Ensure:
+- hero form remains visible early
+- table is usable on mobile
+- carousel swipe is smooth
+- FAQ tap targets are large enough
+
+13. COPY / POSITIONING DIRECTION
+All content should feel:
+- K–12 focused
+- parent-friendly
+- trustworthy
+- premium but accessible
+- outcome-oriented
+- local to Brahmand / Thane
+
+The page should clearly communicate:
+- strong CBSE foundation
+- complete academic journey
+- safe campus
+- smart infrastructure
+- balanced academics + holistic development
+- admissions urgency
+
+14. EDITABLE CONTENT STRUCTURE
+Create or update a central constants/config file for easy editing of:
+- hero text
+- urgency text
+- trust chips
+- seat availability labels/status text
+- feature cards
+- gallery slide data
+- learning journey cards
+- testimonials
+- FAQ items
+- CTA labels
+- footer copy
+
+15. ANALYTICS PREP
+Add clear ids/classes/hooks for later analytics integration:
+- hero_form_submit
+- hero_call_click
+- hero_whatsapp_click
+- seat_table_view
+- video_section_view
+- gallery_slide_view
+- gallery_arrow_click
+- gallery_dot_click
+- faq_click
+- faq_expand
+- final_cta_click
+
+16. FINAL OUTPUT EXPECTATION
+Implement these updates directly in the existing RIS landing page project.
+Do not leave any lorem ipsum or unfinished placeholder sections.
+Maintain production-quality polish.
+The final page should feel like an optimized K–12 ad landing page, not a generic school information page.
+
+At the end, provide:
+1. summary of page optimizations completed
+2. summary of gallery-to-carousel replacement
+3. location of FAQ and gallery components in code
+4. list of editable config values
+5. suggested analytics event names
