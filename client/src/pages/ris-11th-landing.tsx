@@ -8,7 +8,7 @@ const CONFIG = {
   whatsappUrl: "https://wa.me/918291568972?text=Hi, I'm interested in Grade 11 admission at Rainbow International School Thane",
   hero: {
     eyebrow: "Admissions Open for Grade 11",
-    headline: "CBSE 11th Grade Admissions Open at Rainbow International School, Bhramand Thane",
+    headline: "CBSE 11th Grade Admissions Open at Rainbow International School, Brahmand Thane",
     subheadline: "Apply for Science, Commerce, or Humanities in a structured academic environment focused on board preparation, student growth, and future readiness.",
     supportLine: "Regular school admissions for Grade 11. Enquire for stream availability, eligibility, and admission guidance.",
     urgency: "Limited seats available across select streams for the 2026–27 academic year.",
@@ -88,6 +88,7 @@ const CONFIG = {
       { icon: "🎤", title: "Communication & Presentation", desc: "Confidence to express ideas, speak clearly, and present well." },
       { icon: "⚡", title: "Discipline and Responsibility", desc: "Self-management habits that carry students through school and beyond." },
       { icon: "🚀", title: "Future-Ready Learning", desc: "Skills and mindset to transition smoothly into college, career, or higher study." },
+      { icon: "🎯", title: "Goal-Oriented Mindset", desc: "Students learn to set targets, plan effectively, and stay focused on long-term outcomes." },
     ],
   },
   testimonials: {
@@ -368,7 +369,7 @@ export default function RIS11thLanding() {
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold leading-tight text-gray-900">
               <span className="text-blue-600">CBSE</span>
               {" 11th Grade Admissions Open at Rainbow International School, "}
-              <span className="text-blue-600">Bhramand Thane</span>
+              <span className="text-blue-600">Brahmand Thane</span>
             </h1>
 
             <p className="text-gray-600 text-sm sm:text-base leading-relaxed">{CONFIG.hero.subheadline}</p>
