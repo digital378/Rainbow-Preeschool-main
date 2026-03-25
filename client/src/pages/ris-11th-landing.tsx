@@ -489,14 +489,6 @@ export default function RIS11thLanding() {
           </div>
         </div>
 
-        {/* ── ANTI-INTEGRATED QUALIFIER CARD ─────────────────────────────────── */}
-        <div className="mt-6 bg-blue-50 border border-blue-200 rounded-2xl p-4 flex gap-3">
-          <div className="text-2xl flex-shrink-0">ℹ️</div>
-          <div>
-            <h3 className="font-semibold text-blue-900 text-sm mb-1">{CONFIG.qualifier.heading}</h3>
-            <p className="text-blue-700 text-sm leading-relaxed">{CONFIG.qualifier.body}</p>
-          </div>
-        </div>
 
         {/* ── STREAMS ────────────────────────────────────────────────────────── */}
         <div className="mt-10" data-testid="section-streams">
