@@ -337,7 +337,7 @@ export default function RIS11thLanding() {
         <div className="grid md:grid-cols-2 gap-5 md:gap-8">
 
           {/* Left copy */}
-          <div className="space-y-3 order-2 md:order-1">
+          <div className="space-y-3 order-1">
             <div className="inline-flex items-center gap-2 bg-blue-100 text-blue-700 px-3 py-1.5 rounded-full text-xs font-bold">
               <span className="w-2 h-2 bg-blue-500 rounded-full animate-pulse" />
               {CONFIG.hero.eyebrow}
@@ -375,7 +375,7 @@ export default function RIS11thLanding() {
           </div>
 
           {/* Right form */}
-          <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-5 order-1 md:order-2" id="enquiry-form">
+          <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-5 order-2" id="enquiry-form">
             {isSubmitted ? (
               <div className="text-center py-8 space-y-4">
                 <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto">
