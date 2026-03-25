@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { trackFormSubmit } from "@/lib/analytics";
+import { trackFormSubmit, trackCallClick, trackWhatsAppClick } from "@/lib/analytics";
 
 // ─── EDITABLE CONFIG ─────────────────────────────────────────────────────────
 const CONFIG = {
@@ -317,6 +317,7 @@ export default function RIS11thLanding() {
   const trackCall = (location = "unknown") => (e: React.MouseEvent) => {
     gtag("event", "ris_11th_call", { click_location: location });
     gtag("event", "hero_call_click", { location });
+    trackCallClick({ source_page: "/ris-11th", centre: "RIS Thane", locality: location });
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     if (!isMobile) { e.preventDefault(); navigator.clipboard?.writeText(CONFIG.phone).then(() => alert(`${CONFIG.phoneDisplay} copied!`)); }
   };
@@ -324,6 +325,7 @@ export default function RIS11thLanding() {
   const trackWhatsApp = (location = "unknown") => () => {
     gtag("event", "ris_11th_whatsapp", { click_location: location });
     gtag("event", "hero_whatsapp_click", { location });
+    trackWhatsAppClick({ source_page: "/ris-11th", centre: "RIS Thane", locality: location });
   };
 
   const scrollToForm = () => document.getElementById("enquiry-form")?.scrollIntoView({ behavior: "smooth" });
