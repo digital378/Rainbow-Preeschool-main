@@ -249,6 +249,7 @@ const STANDALONE_LANDING_PATHS = [
   "/ad-google",
   "/flyer",
   "/RIS",
+  "/ris-11th",
   ...legacySlugs.map(slug => slug.replace(/\/$/, '')),
   "/author/rainbowpreschools",
   "/author/rainbow-preschools",
