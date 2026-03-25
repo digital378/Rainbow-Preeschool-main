@@ -14,6 +14,8 @@ export const contactSubmissions = pgTable("contact_submissions", {
   programme: text("programme").notNull(),
   branch: text("branch").notNull(),
   message: text("message"),
+  leadSource: text("lead_source"),
+  leadMedium: text("lead_medium"),
   createdAt: timestamp("created_at").defaultNow(),
   isRead: boolean("is_read").default(false),
 });
