@@ -646,7 +646,7 @@ export default function RIS11thLanding() {
         <div className="mt-10">
           <h2 className="text-xl font-bold text-gray-900 mb-1 text-center">{CONFIG.outcomes.heading}</h2>
           <p className="text-sm text-gray-500 text-center mb-6">{CONFIG.outcomes.subtext}</p>
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
             {CONFIG.outcomes.cards.map(card => (
               <div key={card.title} className="bg-white rounded-2xl border border-gray-100 p-4 text-center shadow-sm">
                 <div className="text-3xl mb-2">{card.icon}</div>
