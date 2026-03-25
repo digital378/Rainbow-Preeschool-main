@@ -1,0 +1,457 @@
+Create a new high-converting admissions landing page for Rainbow International School similar in style, layout logic, and conversion structure to the existing RIS landing page at /ris.
+
+NEW PAGE DETAILS
+- URL slug: /ris-11th
+- Brand: Rainbow International School
+- Purpose: lead generation for 11th grade admissions only
+- Streams to promote:
+  - Science
+  - Commerce
+  - Humanities
+
+IMPORTANT BUSINESS GOAL
+This page should be optimized only for 11th grade admissions and should intentionally reduce or discourage low-intent leads for integrated admissions, especially for Science integrated enquiries.
+
+This is a paid-traffic landing page, so the page must be:
+- conversion-focused
+- trust-building
+- highly scannable
+- mobile-first
+- built for ad traffic
+- designed to generate serious parent/student enquiries
+
+DO NOT
+- make this a general school admissions page
+- talk broadly about Nursery to Grade 12
+- attract preschool or lower-grade enquiries
+- encourage integrated coaching / JEE-NEET style integrated admission leads
+- add unnecessary navigation or outbound distractions
+- overload the page with long generic school text
+
+PAGE POSITIONING
+This page should clearly position RIS as a strong choice for students seeking 11th grade admission in:
+- Science
+- Commerce
+- Humanities
+
+The messaging should appeal to:
+- parents of students entering junior college / senior secondary
+- students looking for a structured school environment, board preparation, and overall development
+- families who want regular school education, not integrated coaching-heavy admission routes
+
+The page should subtly make it clear that this is for regular 11th grade school admissions and not for integrated programme enquiries.
+
+OVERALL DESIGN DIRECTION
+Use the current RIS landing page as the visual inspiration:
+- clean layout
+- premium school brand feel
+- light background
+- blue accents
+- rounded cards
+- clear form-driven layout
+- trust-first design
+
+But this new page should feel more focused, sharper, and specific to 11th admissions.
+
+RECOMMENDED PAGE STRUCTURE
+
+1. HERO SECTION
+Create a strong above-the-fold hero section with:
+- school logo / brand
+- call button
+- clear 11th admissions messaging
+- enquiry form on the right on desktop
+- stacked layout on mobile
+
+Hero copy:
+
+Eyebrow:
+Admissions Open for Grade 11
+
+Main headline:
+11th Grade Admissions Open at Rainbow International School, Thane
+
+Subheadline:
+Apply for Science, Commerce, or Humanities in a structured academic environment focused on board preparation, student growth, and future readiness.
+
+Add a support line under the headline:
+Regular school admissions for Grade 11. Enquire for stream availability, eligibility, and admission guidance.
+
+Trust chips:
+- CBSE Curriculum
+- Science, Commerce & Humanities
+- Experienced Faculty
+- Safe Campus
+
+Urgency strip / notice:
+Limited seats available across select streams for the 2026–27 academic year.
+
+Primary CTA:
+Enquire for 11th Admission
+
+Secondary CTA:
+Call Now
+
+2. HERO FORM
+Add a prominent enquiry form in the hero section.
+
+Form title:
+Secure Your 11th Admission Enquiry
+
+Form subtitle:
+Get a callback from our admission counsellor
+
+Recommended fields:
+- Parent / Student Name
+- Phone Number
+- Student Name
+- Preferred Stream
+- Current School / Board (optional)
+- Marks / Expected Percentage (optional)
+- Message / Query (optional)
+
+Preferred Stream options:
+- Science
+- Commerce
+- Humanities
+
+IMPORTANT FILTERING REQUIREMENT
+Add a visible but polite qualifier near the form to reduce integrated programme leads.
+
+Example helper text:
+This page is for regular Grade 11 school admissions in Science, Commerce, and Humanities.
+
+Do not prominently promote integrated admissions anywhere on the page.
+Do not add “integrated” as a stream option.
+Do not use copy that attracts coaching-focused enquiries.
+
+Primary button:
+Request Admission Callback
+
+Below button microcopy:
+Our admission team will contact you shortly with stream availability and admission guidance.
+
+3. ADD ANTI-INTEGRATED LEAD QUALIFICATION
+This is important.
+
+Somewhere near the hero form or just below the hero, add a subtle clarification card:
+
+Heading:
+For Regular Grade 11 School Admissions
+
+Copy:
+This admission page is intended for students seeking regular Grade 11 school admissions in Science, Commerce, or Humanities at Rainbow International School.
+
+This should be styled as an informative note, not a warning.
+
+The purpose is to reduce irrelevant integrated admissions leads without sounding negative.
+
+4. STREAMS SECTION
+Add a dedicated section highlighting the 3 streams.
+
+Heading:
+Choose the Right Stream for Your Future
+
+Subheading:
+Rainbow International School offers structured Grade 11 education across key academic pathways.
+
+Create 3 premium cards:
+
+Science
+Strong academic support for students interested in future pathways in engineering, medicine, research, technology, and related fields through regular school education.
+
+Commerce
+A balanced foundation for students interested in business, finance, economics, management, entrepreneurship, and professional careers.
+
+Humanities
+A broad and thoughtful pathway for students interested in psychology, media, law, design, social sciences, liberal arts, and civil services-related futures.
+
+IMPORTANT
+Keep Science attractive, but do not make it sound like an integrated coaching programme.
+
+5. WHY RIS FOR GRADE 11 SECTION
+Add a section specifically targeted to Grade 11 decision-making.
+
+Heading:
+Why Students and Parents Choose RIS for Grade 11
+
+Create cards such as:
+- Structured Academic Environment
+- Experienced Subject Faculty
+- Focus on Board Preparation
+- Stream Options Under One Campus
+- Safe and Supportive School Environment
+- Holistic Development Beyond Academics
+
+Each card should have 1 short supporting line.
+
+6. ADD ACADEMIC POSITIONING SECTION
+Add a section that makes RIS feel serious and future-ready.
+
+Heading:
+A Strong Foundation for Senior Secondary Success
+
+Suggested copy direction:
+Grade 11 is a crucial transition year. RIS helps students move into senior secondary with the right balance of academic discipline, conceptual learning, guidance, and confidence.
+
+Add 3 or 4 highlight points:
+- smooth transition from secondary to senior secondary
+- focused academic environment
+- concept clarity and classroom support
+- preparation for future academic decisions
+
+7. CAMPUS / SCHOOL EXPERIENCE SECTION
+Add a section similar in quality to the existing RIS page but tailored to 11th grade admissions.
+
+Heading:
+Explore the RIS Learning Environment
+
+Subtext:
+Take a closer look at the academic spaces, classrooms, labs, and campus environment that support senior secondary students.
+
+Use a slidable carousel instead of a static gallery grid.
+
+Carousel requirements:
+- swipeable on mobile
+- arrows on desktop
+- pagination dots
+- smooth transitions
+- responsive
+- optimized images
+- lazy loading
+- rounded premium cards
+
+Suggested slide labels:
+- Senior Secondary Classrooms
+- Science Lab
+- Campus Building
+- Library / Learning Space
+- Activity Areas
+- Safety & Infrastructure
+
+8. OUTCOME / FUTURE READINESS SECTION
+Add a section that answers the parent question: what happens after Grade 11 and 12 here?
+
+Heading:
+Preparing Students for the Next Step
+
+Suggested cards:
+- Academic Confidence
+- Career Awareness
+- Communication & Presentation Skills
+- Discipline and Responsibility
+- Future-Ready Learning
+
+Keep this broad and school-oriented, not coaching-oriented.
+
+9. TESTIMONIALS SECTION
+Add a testimonial section designed for senior school parents/students.
+
+Heading:
+What Parents and Students Value About RIS
+
+Use 3 to 4 testimonial cards.
+If real testimonials are unavailable, structure editable placeholder content.
+
+Tone should reflect:
+- academics
+- discipline
+- environment
+- faculty
+- confidence
+
+10. FAQ SECTION IN ACCORDION / DROPDOWN FORMAT
+Add a FAQ section near the bottom of the page.
+This section must be in dropdown accordion format.
+
+Section title:
+Frequently Asked Questions
+
+Optional subtext:
+Everything parents and students commonly ask about Grade 11 admissions
+
+Accordion requirements:
+- one item open at a time
+- smooth expand/collapse
+- chevron rotate animation
+- touch-friendly on mobile
+- premium clean styling
+
+Add these FAQs exactly or with polished wording very close to this intent:
+
+FAQ 1
+Question:
+Which streams are available for 11th grade admission at Rainbow International School?
+
+Answer:
+Rainbow International School offers Grade 11 admissions in Science, Commerce, and Humanities, subject to seat availability and eligibility criteria.
+
+FAQ 2
+Question:
+Is this page for regular 11th school admissions?
+
+Answer:
+Yes, this page is specifically for regular Grade 11 school admissions at Rainbow International School. Parents and students can enquire for Science, Commerce, or Humanities stream admission guidance and seat availability.
+
+FAQ 3
+Question:
+How can I know which stream is right for my child?
+
+Answer:
+Our admission team can guide parents and students based on academic background, interests, and future goals to help them understand the available stream options.
+
+FAQ 4
+Question:
+What is the admission process for Grade 11?
+
+Answer:
+The admission process usually includes enquiry submission, eligibility review, interaction or counselling, and confirmation based on stream availability and school admission requirements.
+
+FAQ 5
+Question:
+Does Rainbow International School offer Science, Commerce, and Humanities under one campus?
+
+Answer:
+Yes, Rainbow International School offers multiple Grade 11 stream options under one campus, making it easier for families looking for a structured senior secondary school environment.
+
+FAQ 6
+Question:
+How does Rainbow International School compare to other schools in Thane for Grade 11 admissions?
+
+Answer:
+Rainbow International School provides a balanced senior secondary environment with regular school academics, experienced faculty, and a focus on student growth. For families seeking a structured Grade 11 school experience in Thane across Science, Commerce, and Humanities, RIS offers a strong and supportive option.
+
+IMPORTANT
+Do not add FAQ content that invites integrated admissions.
+Do not use phrases like JEE/NEET integrated unless explicitly framed as not the purpose of this page.
+
+11. FINAL CTA SECTION
+Add a strong final CTA band before the footer.
+
+Heading:
+Apply Early for Grade 11 Admission
+
+Subtext:
+Speak with our admission team to check stream availability and begin the admission process.
+
+Primary CTA:
+Enquire for 11th Admission
+
+Secondary CTA:
+Call Now
+
+12. FOOTER
+Keep footer minimal and conversion-safe.
+
+Include:
+- Rainbow International School, Thane
+- short line about Grade 11 admissions in Science, Commerce, and Humanities
+- contact number
+- WhatsApp link if already used on RIS pages
+
+13. MOBILE OPTIMIZATION
+The page must be strongly mobile-optimized because ad traffic will mostly be mobile.
+
+Ensure:
+- fast load
+- form appears high on page
+- sticky bottom CTA on mobile if appropriate
+- tap-friendly buttons
+- carousel swipe works smoothly
+- FAQ accordion works cleanly
+
+Recommended sticky mobile CTA buttons:
+- Call Now
+- Enquire Now
+
+14. COPYWRITING DIRECTION
+Use language that is:
+- serious but approachable
+- parent-trust oriented
+- future-focused
+- stream-specific
+- high-conversion
+- not overly salesy
+
+The page should communicate:
+- Grade 11 only
+- Science, Commerce, Humanities available
+- regular school admissions
+- structured academic environment
+- strong campus and faculty support
+- limited seats and early action
+
+15. FILTERING / LEAD QUALITY REQUIREMENTS
+This is important.
+
+Throughout the page, make it clear that:
+- this page is for regular Grade 11 school admissions
+- stream selection is Science, Commerce, or Humanities
+- admission support is school-based, not coaching-led
+
+Avoid:
+- integrated science heavy messaging
+- coaching exam prep keywords
+- competitive exam language
+- words likely to attract only integrated leads
+
+The goal is not to openly reject such enquiries harshly, but to naturally qualify the traffic and reduce mismatch.
+
+16. EDITABLE CONTENT STRUCTURE
+Create a central config/constants file so the team can easily edit:
+- hero text
+- urgency text
+- stream card content
+- trust chips
+- learning highlights
+- carousel slides
+- testimonials
+- FAQ content
+- CTA labels
+- contact info
+
+17. ANALYTICS PREP
+Prepare tracking hooks / ids for:
+- hero_form_submit
+- hero_call_click
+- hero_whatsapp_click
+- stream_card_view
+- carousel_slide_view
+- faq_click
+- faq_expand
+- final_cta_click
+
+18. SEO / TECHNICAL NOTES
+This is a landing page, not a general school page.
+Keep metadata optimized for:
+- 11th admission in Thane
+- Science Commerce Humanities school admission
+- Grade 11 admission school in Thane
+
+Suggested title direction:
+11th Grade Admission in Thane | Science, Commerce, Humanities | Rainbow International School
+
+Suggested meta description direction:
+Apply for Grade 11 admission at Rainbow International School, Thane. Admissions open for Science, Commerce, and Humanities in a structured academic environment.
+
+Make the page indexable only if intended by the business team; otherwise keep it aligned with the ad landing page setup.
+
+19. FINAL OUTPUT EXPECTATION
+Build a complete new landing page at:
+/ris-11th
+
+Use the current RIS landing page as structural inspiration, but tailor everything specifically for Grade 11 admissions.
+
+The final page must:
+- look premium
+- feel focused
+- convert ad traffic
+- reduce integrated admission mismatch
+- support both parents and students in making an enquiry
+
+At the end, provide:
+1. summary of sections created
+2. summary of how the page was optimized for Grade 11 only
+3. summary of how the page reduces integrated admission lead mismatch
+4. list of editable config values
+5. recommended analytics events
