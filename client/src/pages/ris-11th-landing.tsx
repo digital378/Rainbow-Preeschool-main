@@ -7,7 +7,7 @@ const CONFIG = {
   whatsappUrl: "https://wa.me/918291568972?text=Hi, I'm interested in Grade 11 admission at Rainbow International School Thane",
   hero: {
     eyebrow: "Admissions Open for Grade 11",
-    headline: "11th Grade Admissions Open at Rainbow International School, Thane",
+    headline: "CBSE 11th Grade Admissions Open at Rainbow International School, Thane",
     subheadline: "Apply for Science, Commerce, or Humanities in a structured academic environment focused on board preparation, student growth, and future readiness.",
     supportLine: "Regular school admissions for Grade 11. Enquire for stream availability, eligibility, and admission guidance.",
     urgency: "Limited seats available across select streams for the 2026–27 academic year.",
