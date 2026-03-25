@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { trackFormSubmit } from "@/lib/analytics";
 
 // ─── EDITABLE CONFIG ─────────────────────────────────────────────────────────
 const CONFIG = {
@@ -286,8 +287,27 @@ export default function RIS11thLanding() {
       });
       const data = await res.json();
       if (data.success) {
-        gtag("event", "hero_form_submit", { page: "ris_11th", stream: formData.stream });
-        gtag("event", "ris_11th_lead", { stream: formData.stream, phone: formData.phone });
+        // Use central trackFormSubmit (handles dedup + consistent naming → Ris_11Th_Form_Submit)
+        if (data.emailSent) {
+          trackFormSubmit({
+            formType: "default",
+            programme: `Grade 11 — ${formData.stream}`,
+            parentName: formData.name,
+            phone: formData.phone,
+            studentName: formData.studentName,
+            leadSource: "RIS-11th",
+            leadMedium: "Google Ads - RIS 11th",
+          });
+        }
+        // Campaign-specific events for RIS 11th
+        gtag("event", "ris_11th_lead", {
+          stream: formData.stream,
+          phone: formData.phone,
+          parent_name: formData.name,
+        });
+        gtag("event", "ris_11th_form_submit", { stream: formData.stream });
+        // Also fire to RIS-specific GA4 property
+        gtag("event", "ris_11th_lead", { send_to: RIS_GA4_ID, stream: formData.stream });
         setIsSubmitted(true);
       }
     } catch (err) { console.error(err); }
