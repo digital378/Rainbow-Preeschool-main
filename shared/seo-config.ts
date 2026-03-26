@@ -36,6 +36,27 @@ export const NOINDEX_SLUGS: string[] = [
   "/fun-games-teach-even-odd-numbers",
   "/brain-gym-activities-for-preschoolers",
   "/solitary-play-activities",
+
+  // Thin / low-admission-intent blog posts (crawled but not indexed by Google)
+  "/how-to-motivate-your-kids-for-school-8-ways",
+  "/8-amazing-reasons-why-cooking-is-important-for-kids",
+  "/8-ways-to-prevent-smartphone-addiction-in-kids",
+  "/6-simple-tips-for-improving-listening-skills-in-preschoolers",
+  "/6-quick-tips-to-help-children-learn-writing",
+  "/creative-arts-preschool-importance",
+  "/how-to-cure-child-obesity-6-steps",
+  "/your-simple-guide-to-phonics-for-children",
+  "/8-security-facilities-that-make-preschools-safe",
+  "/9-things-fairy-tales-teach-children",
+  "/6-important-hygiene-tips-that-you-can-teach-your-child",
+  "/how-to-make-general-knowledge-exciting-in-preschool",
+  "/christmas-celebration-in-preschool-rainbow-preschools-festive-fun",
+  "/winter-season-activities-for-kindergarten",
+  "/7-ways-teaching-aids-help-children-learn-better",
+  "/10-exciting-ways-to-help-children-read-more",
+  "/healthy-preschool-meals-for-bright-minds-and-bodies",
+  "/rainbow-preschools-featured-in-knowledge-review-magazine",
+  "/why-100-female-faculty-matters-for-your-childs-growth",
 ];
 
 // 301 Redirects for duplicate content consolidation

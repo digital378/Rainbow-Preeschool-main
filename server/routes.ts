@@ -10,9 +10,8 @@ import fs from "fs";
 
 const RECAPTCHA_SECRET_KEY = process.env.RECAPTCHA_SECRET_KEY || "";
 
-// SEO Redirect Map: Old WordPress URLs → New URLs
-// These are 301 permanent redirects to preserve SEO value
-const REDIRECT_MAP: Record<string, string> = {
+// Legacy redirect map removed — all redirects now handled in server/redirects.ts
+const _LEGACY_REDIRECT_MAP: Record<string, string> = {
   // Main navigation redirects
   '/about-us': '/about',
   '/about-us/': '/about',
@@ -172,33 +171,9 @@ const MALFORMED_URL_PATTERNS = [
   /^\/\d+$/,         // Just numbers like /1, /5, /10
 ];
 
-// SEO Redirect Middleware
+// Redirects are now fully handled in server/redirects.ts (setupRedirects)
+// This stub is kept to avoid removing the app.use call below in one shot
 function seoRedirectMiddleware(req: Request, res: Response, next: NextFunction) {
-  const path = req.path;
-  
-  // Skip API routes
-  if (path.startsWith('/api/')) {
-    return next();
-  }
-  
-  // Check for exact redirect match first
-  const redirectTo = REDIRECT_MAP[path];
-  if (redirectTo) {
-    console.log(`[SEO] 301 Redirect: ${path} → ${redirectTo}`);
-    return res.redirect(301, redirectTo);
-  }
-  
-  // Check for malformed URL patterns (return 404)
-  for (const pattern of MALFORMED_URL_PATTERNS) {
-    if (pattern.test(path)) {
-      console.log(`[SEO] 404 for malformed URL: ${path}`);
-      return res.status(404).send('Page not found');
-    }
-  }
-  
-  // Handle query string redirects (strip tracking parameters for canonical)
-  // But allow the page to load - canonical tags will handle SEO
-  
   next();
 }
 

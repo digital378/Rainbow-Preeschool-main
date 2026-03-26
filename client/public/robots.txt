@@ -4,9 +4,43 @@
 User-agent: *
 Allow: /
 
-# Disallow ad landing pages
+# ── Ad landing pages (noindex, don't crawl) ───────────────────────────────────
 Disallow: /ad
 Disallow: /ad-google
+Disallow: /RIS
+Disallow: /ris
+Disallow: /ris-11th
+Disallow: /flyer
 
-# Sitemap location
+# ── WordPress admin / system paths ───────────────────────────────────────────
+Disallow: /wp-admin
+Disallow: /wp-login.php
+Disallow: /wp-content/
+Disallow: /wp-includes/
+Disallow: /administrator
+Disallow: /xmlrpc.php
+
+# ── WordPress author & pagination archives ────────────────────────────────────
+Disallow: /author/
+Disallow: /page/
+Disallow: /category/
+Disallow: /tag/
+
+# ── RSS / feed URLs ───────────────────────────────────────────────────────────
+Disallow: /feed
+Disallow: */feed/
+Disallow: */feed$
+
+# ── Old WordPress attachment URLs ─────────────────────────────────────────────
+Disallow: */attachment/
+
+# ── Old city / franchise pages no longer active ──────────────────────────────
+Disallow: /navi-mumbai/
+Disallow: /mumbai/
+Disallow: /thane/kalyan-bhiwandi
+
+# ── API routes ────────────────────────────────────────────────────────────────
+Disallow: /api/
+
+# ── Sitemap ───────────────────────────────────────────────────────────────────
 Sitemap: https://www.rainbowpreschools.com/sitemap.xml
