@@ -78,8 +78,8 @@ const CONFIG = {
     subtext: "Everything parents commonly ask before choosing the right K–12 school",
     items: [
       {
-        question: "How does Rainbow International School compare to schools in Thane like Orchids International School, CP Goenka International School, or Smt. Sulochanadevi Singhania School?",
-        answer: "Rainbow International School offers a balanced approach combining strong academics with overall development, focusing on building confidence, communication, and real-world skills.\n\nWhile schools like Orchids International School, CP Goenka International School, and Smt. Sulochanadevi Singhania School provide well-established K–12 education, Rainbow focuses on delivering a structured CBSE curriculum along with personalized attention and a holistic learning environment.\n\nWith a seamless journey from early years to Grade 12, students benefit from consistency in learning and development throughout their academic journey.",
+        question: "How does Rainbow International School compare to schools in Thane like Orchids International School, CP Goenka International School, Podar International School, or Smt. Sulochanadevi Singhania School?",
+        answer: "Rainbow International School offers a balanced approach combining strong academics with overall development, focusing on building confidence, communication, and real-world skills.\n\nWhile schools like Orchids International School, CP Goenka International School, Podar International School, and Smt. Sulochanadevi Singhania School provide well-established K–12 education, Rainbow focuses on delivering a structured CBSE curriculum along with personalized attention and a holistic learning environment.\n\nWith a seamless journey from early years to Grade 12, students benefit from consistency in learning and development throughout their academic journey.",
       },
       {
         question: "What curriculum does Rainbow International School follow?",
