@@ -86,6 +86,7 @@ const entries: SitemapEntry[] = [
   { url: '/', priority: 1.0, changefreq: 'weekly' },
   { url: '/about', priority: 0.8, changefreq: 'monthly' },
   { url: '/programmes', priority: 0.9, changefreq: 'monthly' },
+  { url: '/gallery', priority: 0.8, changefreq: 'monthly' },
   { url: '/contact', priority: 0.9, changefreq: 'monthly' },
   { url: '/blog', priority: 0.7, changefreq: 'weekly' },
   { url: '/faqs', priority: 0.6, changefreq: 'monthly' },

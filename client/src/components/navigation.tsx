@@ -18,6 +18,7 @@ const navLinks = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About Us" },
   { href: "/programmes", label: "Programmes" },
+  { href: "/gallery", label: "Gallery" },
   { href: "/blog", label: "News & Blog" },
   { href: "/contact", label: "Contact" },
 ];
@@ -113,6 +114,20 @@ export function Navigation() {
               </Button>
             </Link>
             
+            {/* Gallery link */}
+            <Link href="/gallery">
+              <Button
+                variant="ghost"
+                className={cn(
+                  "text-sm font-medium rounded-none text-white hover:bg-white/20 hover:text-white",
+                  location === "/gallery" && "bg-white/20"
+                )}
+                data-testid="link-nav-gallery"
+              >
+                Gallery
+              </Button>
+            </Link>
+
             {/* News & Blog link */}
             <Link href="/blog">
               <Button

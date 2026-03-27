@@ -35,6 +35,7 @@ const RIS11thLanding = lazy(() => import("@/pages/ris-11th-landing"));
 
 // High-intent SEO landing pages
 const PreschoolAdmissions = lazy(() => import("@/pages/preschool-admissions"));
+const Gallery = lazy(() => import("@/pages/gallery"));
 const PreschoolNearMe = lazy(() => import("@/pages/preschool-near-me"));
 const BestPreschoolInThane = lazy(() => import("@/pages/best-preschool-in-thane"));
 const PlaySchoolNearMe = lazy(() => import("@/pages/play-school-near-me"));
@@ -286,6 +287,7 @@ function Router() {
         <Route path="/" component={Home} />
         <Route path="/about" component={About} />
         <Route path="/programmes" component={Programmes} />
+        <Route path="/gallery" component={Gallery} />
         <Route path="/playgroup" component={PlaygroupLanding} />
         <Route path="/nursery" component={NurseryLanding} />
         <Route path="/kindergarten" component={KindergartenLanding} />

@@ -1,0 +1,218 @@
+Create a premium Gallery page.
+
+PAGE DETAILS
+- URL slug: /gallery
+- This is a main website page (NOT a landing page)
+- It must be added in the header navigation between:
+  "Programmes" and "News & Blog"
+
+OBJECTIVE
+Build a visually rich, mobile-first gallery that:
+- showcases real school life
+- builds trust for parents
+- improves engagement
+- supports SEO
+
+IMPORTANT INSTRUCTION
+Use existing images already available on the website and intelligently map them into relevant categories. 
+
+--------------------------------------------------
+
+DESIGN & UI DIRECTION
+
+The gallery must look:
+- premium
+- clean
+- modern
+- fast-loading
+- mobile-first
+
+Use:
+- light background
+- rounded image cards
+- subtle shadows
+- smooth hover effects
+- clean spacing
+
+--------------------------------------------------
+
+PAGE STRUCTURE
+
+1. HERO SECTION
+
+Title:
+Gallery – Life at Rainbow Preschools
+
+Subtitle:
+Explore our classrooms, activities, events, and joyful learning moments
+
+Optional:
+- subtle animated image strip or collage
+
+--------------------------------------------------
+
+2. STICKY FILTER BAR (VERY IMPORTANT)
+
+Add a sticky horizontal filter bar below the hero section.
+
+Filters:
+- All
+- Classrooms
+- Activities
+- Events & Celebrations
+- Outdoor Play
+- Learning & Curriculum
+- Facilities
+- Safety & Security
+- Happy Times
+- Centres
+
+IMPORTANT:
+- Use “Happy Times” instead of Daycare
+- Filters must work without page reload
+- Active filter should be visually highlighted
+
+--------------------------------------------------
+
+3. GALLERY LAYOUT (CORE FEATURE)
+
+Use a Pinterest-style MASONRY GRID:
+- mixed image sizes
+- dynamic layout
+- visually engaging
+
+Each image card:
+- rounded corners
+- soft shadow
+- hover zoom effect
+- optional overlay with category name
+
+--------------------------------------------------
+
+4. IMAGE LIGHTBOX (MUST HAVE)
+
+On clicking any image:
+- open fullscreen lightbox
+- enable:
+  - swipe (mobile)
+  - next/previous arrows (desktop)
+  - smooth transitions
+
+Show:
+- image
+- category label
+- optional caption
+
+--------------------------------------------------
+
+5. IMAGE SOURCE LOGIC
+
+- Pull and reuse existing website images
+- Categorize images intelligently into filters
+- Avoid duplicates
+- Ensure good quality images only
+
+--------------------------------------------------
+
+6. PERFORMANCE OPTIMIZATION
+
+- Lazy load all images
+- Optimize image sizes
+- Ensure fast load speed
+- Smooth scrolling and transitions
+
+--------------------------------------------------
+
+7. SEO OPTIMIZATION
+
+VERY IMPORTANT
+
+For every image:
+- Use descriptive file names
+  Example: preschool-activity-thane.jpg
+
+- Add ALT text
+  Example: Kids doing classroom activity at Rainbow Preschool Thane
+
+Add SEO content block below gallery:
+
+Example content:
+Rainbow Preschools in Thane offers a safe, engaging, and nurturing environment for children across playgroup, nursery, and kindergarten programs. Explore our classrooms, activities, events, and facilities through our gallery.
+
+Meta Title:
+Gallery | Rainbow Preschools Thane
+
+Meta Description:
+Explore the gallery of Rainbow Preschools in Thane. देखें classrooms, activities, events, and facilities designed for early childhood learning.
+
+Ensure page is indexable.
+
+--------------------------------------------------
+
+8. CTA SECTION (BOTTOM)
+
+Add a conversion-focused section:
+
+Heading:
+Want your child to experience this environment?
+
+Buttons:
+- Book a Visit
+- Enquire Now
+
+--------------------------------------------------
+
+9. MOBILE EXPERIENCE (CRITICAL)
+
+Ensure:
+- swipe works smoothly
+- filters are scrollable horizontally
+- buttons are tap-friendly
+- fast loading
+- lightbox is mobile optimized
+
+--------------------------------------------------
+
+10. ANALYTICS TRACKING
+
+Add tracking hooks for:
+- gallery_filter_click
+- image_click
+- lightbox_open
+- CTA_click
+
+--------------------------------------------------
+
+11. EDITABLE CONFIGURATION
+
+Create a central config file where we can easily edit:
+- categories
+- image mapping
+- captions
+- alt text
+- CTA text
+
+--------------------------------------------------
+
+12. FINAL OUTPUT REQUIREMENTS
+
+The gallery page must:
+- look premium and modern
+- feel fast and smooth
+- improve trust for parents
+- increase engagement time
+- support SEO rankings
+
+Also ensure:
+- proper header placement
+- responsive design
+- clean UX
+
+--------------------------------------------------
+
+At the end, provide:
+1. summary of gallery structure
+2. categories used
+3. how images were mapped
+4. SEO implementation details
+5. performance optimizations applied
