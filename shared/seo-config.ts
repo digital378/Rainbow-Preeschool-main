@@ -15,6 +15,10 @@ export const NOINDEX_SLUGS: string[] = [
   "/author/rainbow-preschools",
   "/author/rainbowpreschools",
   
+  // Programme landing pages (not for organic indexing)
+  "/kids-activity-club",
+  "/summer-camp",
+
   // Festival/seasonal content
   "/diwali-activity-for-kindergarten",
   "/rainy-season-activities-for-kindergarten",
@@ -134,8 +138,6 @@ export const PROGRAMME_PAGES = [
   { url: "/playgroup", priority: 0.9, changefreq: "monthly" },
   { url: "/nursery", priority: 0.9, changefreq: "monthly" },
   { url: "/kindergarten", priority: 0.9, changefreq: "monthly" },
-  { url: "/kids-activity-club", priority: 0.7, changefreq: "monthly" },
-  { url: "/summer-camp", priority: 0.7, changefreq: "monthly" },
   { url: "/happy-times", priority: 0.7, changefreq: "monthly" },
 ];
 

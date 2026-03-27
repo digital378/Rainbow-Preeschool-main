@@ -383,6 +383,7 @@ export default function KidsActivityClubLanding() {
         description="Best kids activity club in Thane for children aged 3-10 years. After school activities including dance, art, music, drama, public speaking & sports. Flexible weekend and evening batches."
         keywords="kids activity club thane, after school activities thane, extracurricular activities for kids thane, hobby classes for children thane, dance classes for kids thane, art classes for children thane"
         canonical="https://www.rainbowpreschools.com/kids-activity-club"
+        noIndex={true}
       />
 
       {/* Hero Section with Inline Callback Form */}

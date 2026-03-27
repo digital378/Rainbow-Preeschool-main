@@ -100,8 +100,6 @@ const entries: SitemapEntry[] = [
   { url: '/playgroup', priority: 0.9, changefreq: 'monthly' },
   { url: '/nursery', priority: 0.9, changefreq: 'monthly' },
   { url: '/kindergarten', priority: 0.9, changefreq: 'monthly' },
-  { url: '/kids-activity-club', priority: 0.7, changefreq: 'monthly' },
-  { url: '/summer-camp', priority: 0.7, changefreq: 'monthly' },
   { url: '/happy-times', priority: 0.7, changefreq: 'monthly' },
 
   // ── LOCAL SEO – PRESCHOOL CENTRE PAGES ──────────────────
