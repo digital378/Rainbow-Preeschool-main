@@ -124,6 +124,12 @@ const seatData = [
   { grade: "VIII", seats: 0 },
   { grade: "IX", seats: 0 },
   { grade: "X", seats: 0 },
+  { grade: "XI Science", seats: 20 },
+  { grade: "XI Commerce", seats: 18 },
+  { grade: "XI Humanities", seats: 18 },
+  { grade: "XII Science", seats: 11 },
+  { grade: "XII Commerce", seats: 13 },
+  { grade: "XII Humanities", seats: 10 },
 ];
 
 const GA4_ID = "G-G1MX1N0M05";
