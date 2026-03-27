@@ -181,6 +181,7 @@ const StarIcon = () => (
 export default function RISLanding() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [confirmed, setConfirmed] = useState(false);
   const [formData, setFormData] = useState({ parentName: "", phone: "", childName: "", grade: "" });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [showVideo, setShowVideo] = useState(false);
@@ -456,8 +457,21 @@ export default function RISLanding() {
                     })()}
                   </div>
 
-                  <button type="submit" disabled={isSubmitting}
-                    className="w-full bg-green-600 hover:bg-green-700 active:bg-green-800 text-white py-3 rounded-full font-bold text-base disabled:opacity-60 transition-colors"
+                  <label className="flex items-start gap-2.5 cursor-pointer select-none">
+                    <input
+                      type="checkbox"
+                      checked={confirmed}
+                      onChange={(e) => setConfirmed(e.target.checked)}
+                      className="mt-0.5 w-4 h-4 accent-blue-600 flex-shrink-0 cursor-pointer"
+                      data-testid="checkbox-confirm"
+                    />
+                    <span className="text-xs text-gray-600 leading-snug">
+                      I confirm the details above are correct
+                    </span>
+                  </label>
+
+                  <button type="submit" disabled={isSubmitting || !confirmed}
+                    className="w-full bg-green-600 hover:bg-green-700 active:bg-green-800 text-white py-3 rounded-full font-bold text-base disabled:opacity-60 disabled:cursor-not-allowed transition-colors"
                     data-testid="button-ris-submit">
                     {isSubmitting ? (
                       <span className="flex items-center justify-center gap-2">

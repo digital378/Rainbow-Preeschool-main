@@ -206,6 +206,7 @@ const StarIcon = () => (
 export default function AdLanding() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [confirmed, setConfirmed] = useState(false);
   const [formData, setFormData] = useState({ parentName: "", phone: "", childAge: "", area: "" });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [utmData] = useState(() => getUtmParams());
@@ -544,11 +545,24 @@ export default function AdLanding() {
                     {errors.area && <p className="text-red-500 text-xs mt-1">{errors.area}</p>}
                   </div>
 
+                  <label className="flex items-start gap-2.5 cursor-pointer select-none">
+                    <input
+                      type="checkbox"
+                      checked={confirmed}
+                      onChange={(e) => setConfirmed(e.target.checked)}
+                      className="mt-0.5 w-4 h-4 accent-green-600 flex-shrink-0 cursor-pointer"
+                      data-testid="checkbox-confirm"
+                    />
+                    <span className="text-xs text-gray-600 leading-snug">
+                      I confirm the details above are correct
+                    </span>
+                  </label>
+
                   <button
                     type="submit"
-                    disabled={isSubmitting}
+                    disabled={isSubmitting || !confirmed}
                     onClick={trackCta("hero_form_submit")}
-                    className="w-full bg-green-600 hover:bg-green-700 active:bg-green-800 text-white py-3 rounded-full font-bold text-base disabled:opacity-60 transition-colors"
+                    className="w-full bg-green-600 hover:bg-green-700 active:bg-green-800 text-white py-3 rounded-full font-bold text-base disabled:opacity-60 disabled:cursor-not-allowed transition-colors"
                     data-testid="button-ad-submit"
                   >
                     {isSubmitting ? (
