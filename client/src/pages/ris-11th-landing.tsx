@@ -58,21 +58,21 @@ const CONFIG = {
       {
         icon: "🔬",
         name: "Science",
-        color: "#3b82f6",
+        color: "#0E6160",
         desc: "Strong academic support for students interested in future pathways in engineering, medicine, research, technology, and related fields through regular school education.",
         subjects: ["Physics", "Chemistry", "Biology / Maths", "English", "Optional Subject"],
       },
       {
         icon: "📊",
         name: "Commerce",
-        color: "#10b981",
+        color: "#FEBB14",
         desc: "A balanced foundation for students interested in business, finance, economics, management, entrepreneurship, and professional careers.",
         subjects: ["Accountancy", "Business Studies", "Economics", "English", "Optional Subject"],
       },
       {
         icon: "🎨",
         name: "Humanities",
-        color: "#8b5cf6",
+        color: "#0A4847",
         desc: "A broad and thoughtful pathway for students interested in psychology, media, law, design, social sciences, liberal arts, and civil services-related futures.",
         subjects: ["History / Political Science", "Psychology / Economics", "Sociology", "English", "Optional Subject"],
       },
@@ -359,7 +359,7 @@ export default function RIS11thLanding() {
   const clearError = (field: string) => setErrors(prev => ({ ...prev, [field]: "" }));
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white pb-20 md:pb-0" style={{ colorScheme: "light" }}>
+    <div className="min-h-screen bg-gradient-to-b from-teal-50 to-white pb-20 md:pb-0" style={{ colorScheme: "light" }}>
 
       {/* ── HEADER ─────────────────────────────────────────────────────────── */}
       <header className="bg-white shadow-sm py-2.5 px-4 sticky top-0 z-50">
@@ -367,12 +367,13 @@ export default function RIS11thLanding() {
           <div className="flex items-center gap-2 min-w-0">
             <img src="/images/ris-logo.png" alt="Rainbow International School" className="h-9 w-9 flex-shrink-0 rounded-full" width="36" height="36" />
             <div className="min-w-0">
-              <div className="font-bold text-blue-700 text-sm leading-tight truncate">Rainbow International School</div>
-              <div className="text-[10px] text-blue-500 font-medium">Grade 11 Admissions — 2026–27</div>
+              <div className="font-bold text-[#0A4847] text-sm leading-tight truncate">Rainbow International School</div>
+              <div className="text-[10px] text-[#0E6160] font-medium">Grade 11 Admissions — 2026–27</div>
             </div>
           </div>
           <a href={`tel:${CONFIG.phone}`} onClick={trackCall("header")}
-            className="flex items-center gap-1.5 bg-blue-600 text-white px-3 py-2 rounded-full text-xs font-semibold flex-shrink-0 whitespace-nowrap"
+            className="flex items-center gap-1.5 text-white px-3 py-2 rounded-full text-xs font-semibold flex-shrink-0 whitespace-nowrap"
+            style={{ background: "linear-gradient(135deg, #0A4847, #0E6160)" }}
             data-testid="link-11th-header-call">
             <PhoneIcon sm /> <span className="hidden sm:inline">{CONFIG.phoneDisplay}</span><span className="sm:hidden">Call Us</span>
           </a>
@@ -387,26 +388,27 @@ export default function RIS11thLanding() {
           {/* Left copy */}
           <div className="space-y-3 order-1">
             {/* Other grades redirect */}
-            <div className="bg-blue-50 border border-blue-200 rounded-xl p-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
-              <span className="text-sm text-blue-800">Looking for admissions in Nursery to Grade X?</span>
+            <div className="bg-teal-50 border border-[#0E6160]/30 rounded-xl p-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+              <span className="text-sm text-[#0A4847]">Looking for admissions in Nursery to Grade X?</span>
               <a
                 href="/RIS"
-                className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-lg bg-blue-600 text-white text-xs font-semibold hover:bg-blue-700 transition-colors whitespace-nowrap"
+                className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-lg text-white text-xs font-semibold transition-colors whitespace-nowrap"
+                style={{ background: "linear-gradient(135deg, #0A4847, #0E6160)" }}
                 data-testid="link-ris11th-other-grades"
               >
                 View All Grade Admissions →
               </a>
             </div>
 
-            <div className="inline-flex items-center gap-2 bg-blue-100 text-blue-700 px-3 py-1.5 rounded-full text-xs font-bold">
-              <span className="w-2 h-2 bg-blue-500 rounded-full animate-pulse" />
+            <div className="inline-flex items-center gap-2 bg-teal-100 text-[#0A4847] px-3 py-1.5 rounded-full text-xs font-bold">
+              <span className="w-2 h-2 bg-[#0E6160] rounded-full animate-pulse" />
               {CONFIG.hero.eyebrow}
             </div>
 
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold leading-tight text-gray-900">
-              <span className="text-blue-600">CBSE</span>
+              <span className="text-[#0E6160]">CBSE</span>
               {" 11th Grade Admissions Open at Rainbow International School, "}
-              <span className="text-blue-600">Brahmand Thane</span>
+              <span className="text-[#0E6160]">Brahmand Thane</span>
             </h1>
 
             <p className="text-gray-600 text-sm sm:text-base leading-relaxed">{CONFIG.hero.subheadline}</p>
@@ -446,7 +448,8 @@ export default function RIS11thLanding() {
                 <h3 className="text-xl font-bold text-gray-900">{CONFIG.form.successHeading}</h3>
                 <p className="text-gray-600 text-sm">{CONFIG.form.successText}</p>
                 <a href={`tel:${CONFIG.phone}`} onClick={trackCall("success")}
-                  className="inline-flex items-center gap-2 bg-blue-600 text-white px-5 py-2.5 rounded-full font-semibold text-sm"
+                  className="inline-flex items-center gap-2 text-white px-5 py-2.5 rounded-full font-semibold text-sm"
+                  style={{ background: "linear-gradient(135deg, #0A4847, #0E6160)" }}
                   data-testid="link-11th-success-call">
                   <PhoneIcon /> Call Now: {CONFIG.phoneDisplay}
                 </a>
@@ -459,7 +462,7 @@ export default function RIS11thLanding() {
             ) : (
               <>
                 <div className="text-center mb-4">
-                  <h2 className="text-base font-bold text-blue-700">{CONFIG.form.heading}</h2>
+                  <h2 className="text-base font-bold text-[#0A4847]">{CONFIG.form.heading}</h2>
                   <p className="text-xs text-gray-500 mt-0.5">{CONFIG.form.subtext}</p>
                 </div>
                 <form onSubmit={handleSubmit} className="space-y-3" data-testid="form-11th-enquiry">
@@ -467,7 +470,7 @@ export default function RIS11thLanding() {
                   <div>
                     <label className="block text-xs font-medium text-gray-700 mb-1">Parent / Your Name <span className="text-red-500">*</span></label>
                     <input type="text" value={formData.name} onChange={e => { setFormData({ ...formData, name: e.target.value }); clearError("name"); }}
-                      className={`w-full px-3 py-2.5 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900 text-sm ${errors.name ? "border-red-400" : "border-gray-300"}`}
+                      className={`w-full px-3 py-2.5 border rounded-lg focus:ring-2 focus:ring-[#0E6160] focus:border-[#0E6160] bg-white text-gray-900 text-sm ${errors.name ? "border-red-400" : "border-gray-300"}`}
                       placeholder="Your full name" data-testid="input-11th-name" />
                     {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
                   </div>
@@ -475,7 +478,7 @@ export default function RIS11thLanding() {
                   <div>
                     <label className="block text-xs font-medium text-gray-700 mb-1">Phone Number <span className="text-red-500">*</span></label>
                     <input type="tel" value={formData.phone} onChange={e => { setFormData({ ...formData, phone: e.target.value }); clearError("phone"); }}
-                      className={`w-full px-3 py-2.5 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900 text-sm ${errors.phone ? "border-red-400" : "border-gray-300"}`}
+                      className={`w-full px-3 py-2.5 border rounded-lg focus:ring-2 focus:ring-[#0E6160] focus:border-[#0E6160] bg-white text-gray-900 text-sm ${errors.phone ? "border-red-400" : "border-gray-300"}`}
                       placeholder="10-digit mobile number" data-testid="input-11th-phone" />
                     {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone}</p>}
                   </div>
@@ -483,7 +486,7 @@ export default function RIS11thLanding() {
                   <div>
                     <label className="block text-xs font-medium text-gray-700 mb-1">Student's Name <span className="text-red-500">*</span></label>
                     <input type="text" value={formData.studentName} onChange={e => { setFormData({ ...formData, studentName: e.target.value }); clearError("studentName"); }}
-                      className={`w-full px-3 py-2.5 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900 text-sm ${errors.studentName ? "border-red-400" : "border-gray-300"}`}
+                      className={`w-full px-3 py-2.5 border rounded-lg focus:ring-2 focus:ring-[#0E6160] focus:border-[#0E6160] bg-white text-gray-900 text-sm ${errors.studentName ? "border-red-400" : "border-gray-300"}`}
                       placeholder="Student's full name" data-testid="input-11th-student" />
                     {errors.studentName && <p className="text-red-500 text-xs mt-1">{errors.studentName}</p>}
                   </div>
@@ -491,7 +494,7 @@ export default function RIS11thLanding() {
                   <div>
                     <label className="block text-xs font-medium text-gray-700 mb-1">Preferred Stream <span className="text-red-500">*</span></label>
                     <select value={formData.stream} onChange={e => { setFormData({ ...formData, stream: e.target.value }); clearError("stream"); }}
-                      className={`w-full px-3 py-2.5 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900 text-sm ${errors.stream ? "border-red-400" : "border-gray-300"}`}
+                      className={`w-full px-3 py-2.5 border rounded-lg focus:ring-2 focus:ring-[#0E6160] focus:border-[#0E6160] bg-white text-gray-900 text-sm ${errors.stream ? "border-red-400" : "border-gray-300"}`}
                       data-testid="select-11th-stream">
                       <option value="">Select stream</option>
                       <option value="Science">Science</option>
@@ -504,19 +507,19 @@ export default function RIS11thLanding() {
                   <div>
                     <label className="block text-xs font-medium text-gray-700 mb-1">Current School / Board <span className="text-gray-400">(optional)</span></label>
                     <input type="text" value={formData.currentSchool} onChange={e => setFormData({ ...formData, currentSchool: e.target.value })}
-                      className="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white text-gray-900 text-sm"
+                      className="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0E6160] bg-white text-gray-900 text-sm"
                       placeholder="e.g. XYZ School, CBSE" data-testid="input-11th-school" />
                   </div>
                   {/* Marks (optional) */}
                   <div>
                     <label className="block text-xs font-medium text-gray-700 mb-1">Grade 10 Marks / Expected % <span className="text-gray-400">(optional)</span></label>
                     <input type="text" value={formData.marks} onChange={e => setFormData({ ...formData, marks: e.target.value })}
-                      className="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white text-gray-900 text-sm"
+                      className="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0E6160] bg-white text-gray-900 text-sm"
                       placeholder="e.g. 85%" data-testid="input-11th-marks" />
                   </div>
 
                   {/* Qualifier note */}
-                  <div className="bg-blue-50 border border-blue-100 rounded-lg p-2.5 text-xs text-blue-700 leading-relaxed">
+                  <div className="bg-teal-50 border border-[#0E6160]/20 rounded-lg p-2.5 text-xs text-[#0A4847] leading-relaxed">
                     ℹ️ {CONFIG.form.qualifier}
                   </div>
 
@@ -525,7 +528,7 @@ export default function RIS11thLanding() {
                       type="checkbox"
                       checked={confirmed}
                       onChange={(e) => setConfirmed(e.target.checked)}
-                      className="mt-0.5 w-4 h-4 accent-blue-600 flex-shrink-0 cursor-pointer"
+                      className="mt-0.5 w-4 h-4 accent-[#0E6160] flex-shrink-0 cursor-pointer"
                       data-testid="checkbox-confirm"
                     />
                     <span className="text-xs text-gray-600 leading-snug">
@@ -548,7 +551,7 @@ export default function RIS11thLanding() {
 
                   <div className="flex gap-2">
                     <a href={`tel:${CONFIG.phone}`} onClick={trackCall("form")}
-                      className="flex-1 flex items-center justify-center gap-1.5 border border-blue-500 text-blue-600 py-2.5 rounded-full font-semibold text-sm hover:bg-blue-50 transition-colors"
+                      className="flex-1 flex items-center justify-center gap-1.5 border border-[#0E6160] text-[#0E6160] py-2.5 rounded-full font-semibold text-sm hover:bg-teal-50 transition-colors"
                       data-testid="link-11th-form-call"><PhoneIcon sm /> Call
                     </a>
                     <a href={CONFIG.whatsappUrl} onClick={trackWhatsApp("form")} target="_blank" rel="noopener noreferrer"
@@ -758,15 +761,15 @@ export default function RIS11thLanding() {
         </div>
 
         {/* ── FINAL CTA ──────────────────────────────────────────────────────── */}
-        <div className="mt-10 bg-blue-600 rounded-2xl p-6 md:p-8 text-center text-white">
+        <div className="mt-10 rounded-2xl p-6 md:p-8 text-center text-white" style={{ background: "linear-gradient(135deg, #0A4847 0%, #0E6160 100%)" }}>
           <div className="inline-flex items-center gap-2 bg-white/20 text-white text-xs font-semibold px-3 py-1 rounded-full mb-3">
             <span className="w-2 h-2 bg-white rounded-full animate-pulse" /> Admissions 2026–27 Open
           </div>
           <h2 className="text-2xl md:text-3xl font-bold mb-2">{CONFIG.cta.heading}</h2>
-          <p className="text-blue-100 mb-6 max-w-md mx-auto text-sm leading-relaxed">{CONFIG.cta.subtext}</p>
+          <p className="text-teal-100 mb-6 max-w-md mx-auto text-sm leading-relaxed">{CONFIG.cta.subtext}</p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <button onClick={() => { scrollToForm(); gtag("event", "final_cta_click", { page: "ris_11th" }); }}
-              className="bg-white text-blue-600 font-bold py-3 px-6 rounded-full hover:bg-blue-50 transition-colors"
+              className="bg-white text-[#0E6160] font-bold py-3 px-6 rounded-full hover:bg-teal-50 transition-colors"
               data-testid="button-11th-final-cta">
               {CONFIG.cta.primaryButton}
             </button>
@@ -785,7 +788,7 @@ export default function RIS11thLanding() {
         <p className="font-semibold text-gray-900">{CONFIG.footer.name}</p>
         <p className="mt-0.5 text-xs text-gray-500">{CONFIG.footer.tagline}</p>
         <div className="mt-3 flex items-center justify-center gap-4">
-          <a href={`tel:${CONFIG.phone}`} onClick={trackCall("footer")} className="text-blue-600 font-semibold text-sm" data-testid="link-11th-footer-call">{CONFIG.phoneDisplay}</a>
+          <a href={`tel:${CONFIG.phone}`} onClick={trackCall("footer")} className="text-[#0E6160] font-semibold text-sm" data-testid="link-11th-footer-call">{CONFIG.phoneDisplay}</a>
           <a href={CONFIG.whatsappUrl} onClick={trackWhatsApp("footer")} className="text-green-600 font-semibold text-sm" data-testid="link-11th-footer-whatsapp">WhatsApp</a>
         </div>
       </footer>
@@ -801,12 +804,13 @@ export default function RIS11thLanding() {
       <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-white border-t border-gray-200 shadow-lg">
         <div className="flex">
           <a href={`tel:${CONFIG.phone}`} onClick={trackCall("sticky_mobile")}
-            className="flex-1 flex flex-col items-center justify-center gap-0.5 py-3 text-blue-600 font-semibold text-xs"
+            className="flex-1 flex flex-col items-center justify-center gap-0.5 py-3 text-[#0E6160] font-semibold text-xs"
             data-testid="link-11th-sticky-call">
             <PhoneIcon sm /> Call Now
           </a>
           <button onClick={() => { scrollToForm(); gtag("event", "final_cta_click", { location: "sticky_mobile" }); }}
-            className="flex-1 flex flex-col items-center justify-center gap-0.5 py-3 bg-blue-600 text-white font-bold text-xs"
+            className="flex-1 flex flex-col items-center justify-center gap-0.5 py-3 text-white font-bold text-xs"
+            style={{ background: "linear-gradient(135deg, #0A4847, #0E6160)" }}
             data-testid="button-11th-sticky-enquire">
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
             Enquire Now
