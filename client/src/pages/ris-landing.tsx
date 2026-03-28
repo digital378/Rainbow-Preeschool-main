@@ -734,7 +734,7 @@ export default function RISLanding() {
             <span className="w-2 h-2 bg-white rounded-full animate-pulse" /> Admissions 2026–27 Open
           </div>
           <h2 className="text-2xl md:text-3xl font-bold mb-2">{CONFIG.cta.heading}</h2>
-          <p className="text-[#243B81]/20 mb-6 max-w-md mx-auto text-sm leading-relaxed">{CONFIG.cta.subtext}</p>
+          <p className="text-white/80 mb-6 max-w-md mx-auto text-sm leading-relaxed">{CONFIG.cta.subtext}</p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <button
               onClick={() => { scrollToForm(); gtag("event", "ris_cta_click", { location: "final_cta" }); gtag("event", "final_cta_click"); }}
