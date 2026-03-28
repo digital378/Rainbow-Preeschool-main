@@ -388,6 +388,18 @@ export default function RIS11thLanding() {
               <strong>⚠️ Limited Seats:</strong> {CONFIG.hero.urgency}
             </div>
 
+            {/* Other grades redirect */}
+            <div className="bg-blue-50 border border-blue-200 rounded-xl p-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+              <span className="text-sm text-blue-800">Looking for admissions in Nursery to Grade X?</span>
+              <a
+                href="/RIS"
+                className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-lg bg-blue-600 text-white text-xs font-semibold hover:bg-blue-700 transition-colors whitespace-nowrap"
+                data-testid="link-ris11th-other-grades"
+              >
+                View All Grade Admissions →
+              </a>
+            </div>
+
             {/* Stream pills */}
             <div className="flex flex-wrap gap-2 pt-1">
               {CONFIG.streams.cards.map(s => (
@@ -482,6 +494,14 @@ export default function RIS11thLanding() {
                   {/* Qualifier note */}
                   <div className="bg-blue-50 border border-blue-100 rounded-lg p-2.5 text-xs text-blue-700 leading-relaxed">
                     ℹ️ {CONFIG.form.qualifier}
+                  </div>
+
+                  {/* Other grades link */}
+                  <div className="text-center text-xs text-gray-500">
+                    Interested in other grades?{" "}
+                    <a href="/RIS" className="text-blue-600 font-semibold underline hover:text-blue-800" data-testid="link-ris11th-form-other-grades">
+                      View Nursery–Grade X admissions
+                    </a>
                   </div>
 
                   <label className="flex items-start gap-2.5 cursor-pointer select-none">
