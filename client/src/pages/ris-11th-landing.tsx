@@ -387,9 +387,9 @@ export default function RIS11thLanding() {
 
             <p className="text-gray-600 text-sm sm:text-base leading-relaxed">{CONFIG.hero.subheadline}</p>
 
-            <div className="flex flex-wrap gap-2">
+            <div className="grid grid-cols-3 gap-1.5">
               {CONFIG.hero.trustChips.map(chip => (
-                <span key={chip} className="inline-flex items-center gap-1 text-xs bg-green-50 text-green-700 px-2.5 py-1 rounded-full border border-green-200 font-medium">
+                <span key={chip} className="inline-flex items-center justify-center gap-1 text-xs bg-green-50 text-green-700 px-2 py-1 rounded-full border border-green-200 font-medium text-center">
                   <CheckIcon /> {chip}
                 </span>
               ))}
