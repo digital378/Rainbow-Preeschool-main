@@ -338,10 +338,10 @@ export default function RISLanding() {
       <main className="max-w-4xl mx-auto px-4 py-5 md:py-8">
 
         {/* ── HERO ───────────────────────────────────────────────────────────── */}
-        <div className="grid md:grid-cols-2 gap-5 md:gap-8">
+        <div className="flex flex-col gap-5">
 
-          {/* Left copy — shown below form on mobile */}
-          <div className="space-y-3 order-2 md:order-1">
+          {/* Hero copy */}
+          <div className="space-y-3">
             <a
               href="/ris-11th"
               className="inline-flex items-center gap-1.5 bg-blue-50 text-blue-700 border border-blue-200 px-3 py-1.5 rounded-full text-xs font-semibold hover:bg-blue-100 transition-colors"
@@ -391,8 +391,8 @@ export default function RISLanding() {
             </div>
           </div>
 
-          {/* Right form — shown first on mobile */}
-          <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-5 order-1 md:order-2" id="enquiry-form">
+          {/* Enquiry form */}
+          <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-5" id="enquiry-form">
             {isSubmitted ? (
               <div className="text-center py-8 space-y-4">
                 <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto">
