@@ -157,6 +157,13 @@ export const GALLERY_IMAGES: GalleryImage[] = [
     caption: "Under the Sea — exploring the ocean world",
     category: "activities",
   },
+  {
+    id: "act-10",
+    src: "/images/gallery/rainbow-preschool-picnic-to-namco-activity.webp",
+    alt: "Picnic to NAMCO fun zone — Rainbow Preschool children on a field trip in Thane",
+    caption: "Picnic to NAMCO — a day of adventure",
+    category: "activities",
+  },
 
   // ── EVENTS & CELEBRATIONS ───────────────────────────────────────────
   {
@@ -220,6 +227,13 @@ export const GALLERY_IMAGES: GalleryImage[] = [
     src: "/images/gallery/rainbow-preschool-sports-day-event-02.webp",
     alt: "Children competing in Sports Day at Rainbow Preschool International Thane",
     caption: "Sports Day — little champions",
+    category: "events",
+  },
+  {
+    id: "evt-10",
+    src: "/images/gallery/rainbow-preschool-impulse-2025-event.webp",
+    alt: "Impulse 2025 — Kalwa Branch Jr.KG Project Releaf at Rainbow Preschool Thane",
+    caption: "Impulse 2025 — Project Releaf showcase",
     category: "events",
   },
 
