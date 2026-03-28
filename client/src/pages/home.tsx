@@ -316,33 +316,40 @@ export default function Home() {
       <HeroSection />
       
       {/* Quick Navigation Links for SEO - Crawlable anchor tags */}
-      <section className="py-6 bg-gradient-to-r from-red-50 to-yellow-50 dark:from-red-950/20 dark:to-yellow-950/20 border-y border-red-100 dark:border-red-900/30">
+      <section className="py-6 bg-gradient-to-br from-red-50 via-yellow-50 to-pink-50 dark:from-red-950/20 dark:to-yellow-950/20 border-y border-red-100 dark:border-red-900/30">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="flex flex-wrap justify-center gap-3 md:gap-4">
-            <a href="/best-preschool-in-thane" className="group inline-flex items-center gap-2 px-4 py-2 rounded-full border border-input bg-background hover:bg-primary hover:text-primary-foreground text-sm font-medium transition-colors" data-testid="link-best-preschool">
-              <Award className="w-4 h-4 text-primary group-hover:text-primary-foreground transition-colors" />
-              Award-Winning Preschool
-            </a>
-            <a href="/preschool-near-me" className="group inline-flex items-center gap-2 px-4 py-2 rounded-full border border-input bg-background hover:bg-primary hover:text-primary-foreground text-sm font-medium transition-colors" data-testid="link-preschool-near-me">
-              <MapPin className="w-4 h-4 text-primary group-hover:text-primary-foreground transition-colors" />
-              Find Nearest Centre
-            </a>
-            <a href="/preschool-admissions" className="group inline-flex items-center gap-2 px-4 py-2 rounded-full border border-input bg-background hover:bg-primary hover:text-primary-foreground text-sm font-medium transition-colors" data-testid="link-preschool-admissions">
-              <FileText className="w-4 h-4 text-primary group-hover:text-primary-foreground transition-colors" />
-              Admission Process
-            </a>
-            <a href="/playgroup" className="group inline-flex items-center gap-2 px-4 py-2 rounded-full border border-input bg-background hover:bg-primary hover:text-primary-foreground text-sm font-medium transition-colors" data-testid="link-playgroup">
-              <Palette className="w-4 h-4 text-primary group-hover:text-primary-foreground transition-colors" />
-              Playgroup
-            </a>
-            <a href="/nursery" className="group inline-flex items-center gap-2 px-4 py-2 rounded-full border border-input bg-background hover:bg-primary hover:text-primary-foreground text-sm font-medium transition-colors" data-testid="link-nursery">
-              <BookOpen className="w-4 h-4 text-primary group-hover:text-primary-foreground transition-colors" />
-              Nursery
-            </a>
-            <a href="/kindergarten" className="group inline-flex items-center gap-2 px-4 py-2 rounded-full border border-input bg-background hover:bg-primary hover:text-primary-foreground text-sm font-medium transition-colors" data-testid="link-kindergarten">
-              <GraduationCap className="w-4 h-4 text-primary group-hover:text-primary-foreground transition-colors" />
-              Kindergarten
-            </a>
+          <div className="grid grid-cols-3 sm:grid-cols-6 gap-2 sm:gap-3">
+            {[
+              { href: "/best-preschool-in-thane", label: "Award-Winning Preschool", Icon: Award, color: "#ef4444", testid: "link-best-preschool" },
+              { href: "/preschool-near-me", label: "Find Nearest Centre", Icon: MapPin, color: "#10b981", testid: "link-preschool-near-me" },
+              { href: "/preschool-admissions", label: "Admission Process", Icon: FileText, color: "#3b82f6", testid: "link-preschool-admissions" },
+              { href: "/playgroup", label: "Playgroup", Icon: Palette, color: "#f97316", testid: "link-playgroup" },
+              { href: "/nursery", label: "Nursery", Icon: BookOpen, color: "#8b5cf6", testid: "link-nursery" },
+              { href: "/kindergarten", label: "Kindergarten", Icon: GraduationCap, color: "#ec4899", testid: "link-kindergarten" },
+            ].map(({ href, label, Icon, color, testid }) => (
+              <a
+                key={href}
+                href={href}
+                data-testid={testid}
+                className="group flex flex-col items-center gap-2 p-3 rounded-2xl text-center transition-all duration-200 hover:-translate-y-1"
+                style={{
+                  background: `radial-gradient(circle at 40% 30%, ${color}18, ${color}08)`,
+                  border: `1px solid ${color}30`,
+                  boxShadow: `0 4px 14px ${color}18, 0 1px 3px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.85)`,
+                }}
+              >
+                <div
+                  className="w-10 h-10 flex items-center justify-center rounded-full flex-shrink-0"
+                  style={{
+                    background: `radial-gradient(circle at 35% 35%, ${color}dd, ${color})`,
+                    boxShadow: `0 3px 8px ${color}80, inset 0 1px 0 rgba(255,255,255,0.4), inset 0 -1px 0 rgba(0,0,0,0.15)`,
+                  }}
+                >
+                  <Icon className="w-4.5 h-4.5 text-white" style={{ width: 18, height: 18 }} />
+                </div>
+                <span className="text-xs font-semibold leading-tight" style={{ color: color }}>{label}</span>
+              </a>
+            ))}
           </div>
         </div>
       </section>
