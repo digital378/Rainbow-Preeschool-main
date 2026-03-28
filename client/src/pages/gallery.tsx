@@ -264,18 +264,18 @@ export default function Gallery() {
         {filteredImages.length === 0 ? (
           <div className="text-center py-20 text-muted-foreground">No images in this category yet.</div>
         ) : (
-          <div className="columns-2 sm:columns-3 lg:columns-4 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
             {filteredImages.map((img, i) => (
               <div
                 key={img.id}
-                className="break-inside-avoid mb-3 group relative cursor-pointer rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300"
+                className="aspect-[4/3] group relative cursor-pointer rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300"
                 onClick={() => openLightbox(i)}
                 data-testid={`gallery-image-${img.id}`}
               >
                 <img
                   src={img.src}
                   alt={img.alt}
-                  className="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105"
+                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                   loading="lazy"
                 />
                 {/* Hover overlay */}
@@ -301,10 +301,15 @@ export default function Gallery() {
           </h2>
           <p className="text-sm text-muted-foreground leading-relaxed">{GALLERY_SEO_CONTENT}</p>
           <div className="flex flex-wrap gap-2 mt-4">
-            {["Playgroup", "Nursery", "Kindergarten", "Happy Times"].map((tag) => (
-              <span key={tag} className="text-xs bg-primary/10 text-primary rounded-full px-3 py-1 font-medium">
-                {tag}
-              </span>
+            {[
+              { label: "Playgroup",    href: "/playgroup" },
+              { label: "Nursery",      href: "/nursery" },
+              { label: "Kindergarten", href: "/kindergarten" },
+              { label: "Happy Times",  href: "/happy-times" },
+            ].map(({ label, href }) => (
+              <Link key={label} href={href} className="text-xs bg-primary/10 text-primary rounded-full px-3 py-1 font-medium hover:bg-primary/20 transition-colors">
+                {label}
+              </Link>
             ))}
           </div>
         </div>
