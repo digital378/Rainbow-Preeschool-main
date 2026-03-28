@@ -138,7 +138,7 @@ const RIS_GA4_ID = "G-ZEJE3FPLBF";
 const gradeOptions = seatData.filter(s => s.seats > 0).map(s => s.grade);
 
 const campusImages = [
-  { src: "/images/ris-campus/ris-building.webp", label: "School Building", color: "#2563eb" },
+  { src: "/images/ris-campus/ris-building.webp", label: "School Building", color: "#243B81" },
   { src: "/images/ris-campus/ris-classroom.webp", label: "Junior Classroom", color: "#ef4444" },
   { src: "/images/ris-campus/ris-senior-classroom.webp", label: "Senior Classroom", color: "#f59e0b" },
   { src: "/images/ris-campus/ris-sports-ground.webp", label: "Sports Ground", color: "#22c55e" },
@@ -315,19 +315,19 @@ export default function RISLanding() {
   const scrollToForm = () => document.getElementById("enquiry-form")?.scrollIntoView({ behavior: "smooth" });
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white pb-20 md:pb-0" style={{ colorScheme: "light" }}>
+    <div className="min-h-screen bg-gradient-to-b from-[#243B81]/8 to-white pb-20 md:pb-0" style={{ colorScheme: "light" }}>
 
       {/* ── HEADER ─────────────────────────────────────────────────────────── */}
       <header className="bg-white shadow-sm py-2.5 px-3 sticky top-0 z-50">
         <div className="max-w-4xl mx-auto flex items-center justify-between gap-2">
           <div className="flex items-center gap-2 min-w-0">
             <img src="/images/ris-logo.png" alt="Rainbow International School" className="h-9 w-9 flex-shrink-0 rounded-full" width="36" height="36" />
-            <span className="font-bold text-blue-700 text-sm leading-tight">Rainbow International School</span>
+            <span className="font-bold text-[#1b2e65] text-sm leading-tight">Rainbow International School</span>
           </div>
           <a
             href={`tel:${CONFIG.phone}`}
             onClick={trackCall("header")}
-            className="flex items-center gap-1.5 bg-blue-600 text-white px-3 py-2 rounded-full text-xs font-semibold flex-shrink-0 whitespace-nowrap"
+            className="flex items-center gap-1.5 bg-[#243B81] text-white px-3 py-2 rounded-full text-xs font-semibold flex-shrink-0 whitespace-nowrap"
             data-testid="link-ris-header-call"
           >
             <PhoneIcon sm /> <span className="hidden sm:inline">{CONFIG.phoneDisplay}</span><span className="sm:hidden">Call Us</span>
@@ -352,7 +352,7 @@ export default function RISLanding() {
             </a>
 
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold leading-tight text-gray-900">
-              Rainbow International School <span className="text-blue-600">Thane</span>
+              Rainbow International School <span className="text-[#243B81]">Thane</span>
             </h1>
 
             <p className="text-gray-600 text-sm sm:text-base leading-relaxed">{CONFIG.hero.subheadline}</p>
@@ -376,12 +376,12 @@ export default function RISLanding() {
                 { value: "K–12", label: "Full School" },
               ].map(stat => (
                 <div key={stat.label} className="bg-white rounded-xl border border-gray-100 p-2.5 text-center shadow-sm">
-                  <div className="font-bold text-lg text-blue-600 leading-tight">{stat.value}</div>
+                  <div className="font-bold text-lg text-[#243B81] leading-tight">{stat.value}</div>
                   <div className="text-xs text-gray-500 mt-0.5">{stat.label}</div>
                 </div>
               ))}
               <div className="bg-white rounded-xl border border-gray-100 p-2.5 text-center shadow-sm">
-                <div className="font-bold text-base text-blue-600 leading-tight">Premium School</div>
+                <div className="font-bold text-base text-[#243B81] leading-tight">Premium School</div>
                 <div className="text-xs text-gray-500 mt-0.5">In Thane</div>
               </div>
             </div>
@@ -398,7 +398,7 @@ export default function RISLanding() {
                 </div>
                 <h3 className="text-xl font-bold text-gray-900">Thank You!</h3>
                 <p className="text-gray-600 text-sm">{CONFIG.form.successText}</p>
-                <a href={`tel:${CONFIG.phone}`} onClick={trackCall("success")} className="inline-flex items-center gap-2 bg-blue-600 text-white px-5 py-2.5 rounded-full font-semibold text-sm" data-testid="link-ris-success-call">
+                <a href={`tel:${CONFIG.phone}`} onClick={trackCall("success")} className="inline-flex items-center gap-2 bg-[#243B81] text-white px-5 py-2.5 rounded-full font-semibold text-sm" data-testid="link-ris-success-call">
                   <PhoneIcon /> Call Now: {CONFIG.phoneDisplay}
                 </a>
                 <a href={CONFIG.whatsappUrl} onClick={trackWhatsApp("success")} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 border border-green-500 text-green-600 px-5 py-2.5 rounded-full font-semibold text-sm" data-testid="link-ris-success-whatsapp">
@@ -408,7 +408,7 @@ export default function RISLanding() {
             ) : (
               <>
                 <div className="text-center mb-4">
-                  <h2 className="text-base font-bold text-blue-700">{CONFIG.form.heading}</h2>
+                  <h2 className="text-base font-bold text-[#1b2e65]">{CONFIG.form.heading}</h2>
                   <p className="text-xs text-gray-500 mt-0.5">{CONFIG.form.subtext}</p>
                 </div>
                 <form onSubmit={handleSubmit} className="space-y-3" data-testid="form-ris-enquiry">
@@ -416,7 +416,7 @@ export default function RISLanding() {
                   <div>
                     <label className="block text-xs font-medium text-gray-700 mb-1">Parent's Name</label>
                     <input type="text" value={formData.parentName} onChange={e => { setFormData({ ...formData, parentName: e.target.value }); if (errors.parentName) setErrors({ ...errors, parentName: "" }); }}
-                      className={`w-full px-3 py-2.5 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900 text-sm ${errors.parentName ? "border-red-400" : "border-gray-300"}`}
+                      className={`w-full px-3 py-2.5 border rounded-lg focus:ring-2 focus:ring-[#243B81] focus:border-[#243B81] bg-white text-gray-900 text-sm ${errors.parentName ? "border-red-400" : "border-gray-300"}`}
                       placeholder="Enter your name" data-testid="input-ris-name" />
                     {errors.parentName && <p className="text-red-500 text-xs mt-1">{errors.parentName}</p>}
                   </div>
@@ -424,7 +424,7 @@ export default function RISLanding() {
                   <div>
                     <label className="block text-xs font-medium text-gray-700 mb-1">Phone Number</label>
                     <input type="tel" value={formData.phone} onChange={e => { setFormData({ ...formData, phone: e.target.value }); if (errors.phone) setErrors({ ...errors, phone: "" }); }}
-                      className={`w-full px-3 py-2.5 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900 text-sm ${errors.phone ? "border-red-400" : "border-gray-300"}`}
+                      className={`w-full px-3 py-2.5 border rounded-lg focus:ring-2 focus:ring-[#243B81] focus:border-[#243B81] bg-white text-gray-900 text-sm ${errors.phone ? "border-red-400" : "border-gray-300"}`}
                       placeholder="10-digit mobile number" data-testid="input-ris-phone" />
                     {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone}</p>}
                   </div>
@@ -432,7 +432,7 @@ export default function RISLanding() {
                   <div>
                     <label className="block text-xs font-medium text-gray-700 mb-1">Child's Name</label>
                     <input type="text" value={formData.childName} onChange={e => { setFormData({ ...formData, childName: e.target.value }); if (errors.childName) setErrors({ ...errors, childName: "" }); }}
-                      className={`w-full px-3 py-2.5 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900 text-sm ${errors.childName ? "border-red-400" : "border-gray-300"}`}
+                      className={`w-full px-3 py-2.5 border rounded-lg focus:ring-2 focus:ring-[#243B81] focus:border-[#243B81] bg-white text-gray-900 text-sm ${errors.childName ? "border-red-400" : "border-gray-300"}`}
                       placeholder="Child's full name" data-testid="input-ris-child-name" />
                     {errors.childName && <p className="text-red-500 text-xs mt-1">{errors.childName}</p>}
                   </div>
@@ -440,7 +440,7 @@ export default function RISLanding() {
                   <div>
                     <label className="block text-xs font-medium text-gray-700 mb-1">Grade Applying For</label>
                     <select value={formData.grade} onChange={e => { setFormData({ ...formData, grade: e.target.value }); if (errors.grade) setErrors({ ...errors, grade: "" }); }}
-                      className={`w-full px-3 py-2.5 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900 text-sm ${errors.grade ? "border-red-400" : "border-gray-300"}`}
+                      className={`w-full px-3 py-2.5 border rounded-lg focus:ring-2 focus:ring-[#243B81] focus:border-[#243B81] bg-white text-gray-900 text-sm ${errors.grade ? "border-red-400" : "border-gray-300"}`}
                       data-testid="select-ris-grade">
                       <option value="">Select grade</option>
                       {gradeOptions.map(g => {
@@ -465,7 +465,7 @@ export default function RISLanding() {
                       type="checkbox"
                       checked={confirmed}
                       onChange={(e) => setConfirmed(e.target.checked)}
-                      className="mt-0.5 w-4 h-4 accent-blue-600 flex-shrink-0 cursor-pointer"
+                      className="mt-0.5 w-4 h-4 accent-[#243B81] flex-shrink-0 cursor-pointer"
                       data-testid="checkbox-confirm"
                     />
                     <span className="text-xs text-gray-600 leading-snug">
@@ -488,7 +488,7 @@ export default function RISLanding() {
 
                   <div className="flex gap-2">
                     <a href={`tel:${CONFIG.phone}`} onClick={trackCall("form")}
-                      className="flex-1 flex items-center justify-center gap-1.5 border border-blue-500 text-blue-600 py-2.5 rounded-full font-semibold text-sm hover:bg-blue-50 transition-colors"
+                      className="flex-1 flex items-center justify-center gap-1.5 border border-[#243B81] text-[#243B81] py-2.5 rounded-full font-semibold text-sm hover:bg-[#243B81]/8 transition-colors"
                       data-testid="link-ris-form-call">
                       <PhoneIcon sm /> Call
                     </a>
@@ -511,7 +511,7 @@ export default function RISLanding() {
           <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden overflow-x-auto">
             <table className="w-full min-w-[320px] text-left text-sm" data-testid="table-ris-seats">
               <thead>
-                <tr className="bg-blue-600 text-white">
+                <tr className="bg-[#243B81] text-white">
                   <th className="px-4 py-2.5 font-semibold text-xs">Grade</th>
                   <th className="px-4 py-2.5 font-semibold text-xs text-center">Seats Available</th>
                   <th className="px-4 py-2.5 font-semibold text-xs text-center">Status</th>
@@ -729,16 +729,16 @@ export default function RISLanding() {
         </div>
 
         {/* ── FINAL CTA ──────────────────────────────────────────────────────── */}
-        <div className="mt-10 bg-blue-600 rounded-2xl p-6 md:p-8 text-center text-white">
+        <div className="mt-10 bg-[#243B81] rounded-2xl p-6 md:p-8 text-center text-white">
           <div className="inline-flex items-center gap-2 bg-white/20 text-white text-xs font-semibold px-3 py-1 rounded-full mb-3">
             <span className="w-2 h-2 bg-white rounded-full animate-pulse" /> Admissions 2026–27 Open
           </div>
           <h2 className="text-2xl md:text-3xl font-bold mb-2">{CONFIG.cta.heading}</h2>
-          <p className="text-blue-100 mb-6 max-w-md mx-auto text-sm leading-relaxed">{CONFIG.cta.subtext}</p>
+          <p className="text-[#243B81]/20 mb-6 max-w-md mx-auto text-sm leading-relaxed">{CONFIG.cta.subtext}</p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <button
               onClick={() => { scrollToForm(); gtag("event", "ris_cta_click", { location: "final_cta" }); gtag("event", "final_cta_click"); }}
-              className="bg-white text-blue-600 font-bold py-3 px-6 rounded-full hover:bg-blue-50 transition-colors"
+              className="bg-white text-[#243B81] font-bold py-3 px-6 rounded-full hover:bg-[#243B81]/8 transition-colors"
               data-testid="button-ris-final-cta">
               {CONFIG.cta.buttonText}
             </button>
@@ -757,7 +757,7 @@ export default function RISLanding() {
         <p className="font-semibold text-gray-900">{CONFIG.footer.name}</p>
         <p className="mt-0.5 text-xs text-gray-500">{CONFIG.footer.tagline}</p>
         <div className="mt-3 flex items-center justify-center gap-4">
-          <a href={`tel:${CONFIG.phone}`} onClick={trackCall("footer")} className="text-blue-600 font-semibold text-sm" data-testid="link-ris-footer-call">{CONFIG.phoneDisplay}</a>
+          <a href={`tel:${CONFIG.phone}`} onClick={trackCall("footer")} className="text-[#243B81] font-semibold text-sm" data-testid="link-ris-footer-call">{CONFIG.phoneDisplay}</a>
           <a href={CONFIG.whatsappUrl} onClick={trackWhatsApp("footer")} className="text-green-600 font-semibold text-sm" data-testid="link-ris-footer-whatsapp">WhatsApp</a>
         </div>
       </footer>
@@ -773,13 +773,13 @@ export default function RISLanding() {
       <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-white border-t border-gray-200 shadow-lg">
         <div className="flex">
           <a href={`tel:${CONFIG.phone}`} onClick={trackCall("sticky_mobile")}
-            className="flex-1 flex flex-col items-center justify-center gap-0.5 py-3 text-blue-600 font-semibold text-xs"
+            className="flex-1 flex flex-col items-center justify-center gap-0.5 py-3 text-[#243B81] font-semibold text-xs"
             data-testid="link-ris-sticky-call">
             <PhoneIcon sm /> Call Now
           </a>
           <button
             onClick={() => { scrollToForm(); gtag("event", "ris_cta_click", { location: "sticky_mobile" }); }}
-            className="flex-1 flex flex-col items-center justify-center gap-0.5 py-3 bg-blue-600 text-white font-bold text-xs"
+            className="flex-1 flex flex-col items-center justify-center gap-0.5 py-3 bg-[#243B81] text-white font-bold text-xs"
             data-testid="button-ris-sticky-enquire">
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
             Enquire Now
