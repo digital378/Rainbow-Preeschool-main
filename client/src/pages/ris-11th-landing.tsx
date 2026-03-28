@@ -1,5 +1,29 @@
 import { useState, useEffect, useRef } from "react";
+import { FlaskConical, TrendingUp, BookOpen } from "lucide-react";
 import { trackFormSubmit, trackCallClick, trackWhatsAppClick } from "@/lib/analytics";
+
+const STREAM_ICONS: Record<string, React.ElementType> = {
+  Science: FlaskConical,
+  Commerce: TrendingUp,
+  Humanities: BookOpen,
+};
+
+function Stream3DIcon({ name, color, size = "sm" }: { name: string; color: string; size?: "sm" | "lg" }) {
+  const Icon = STREAM_ICONS[name] ?? FlaskConical;
+  const dim = size === "lg" ? "w-12 h-12" : "w-5 h-5";
+  const iconDim = size === "lg" ? "w-6 h-6" : "w-3 h-3";
+  return (
+    <span
+      className={`${dim} rounded-full inline-flex items-center justify-center flex-shrink-0`}
+      style={{
+        background: `radial-gradient(circle at 35% 35%, ${color}ee, ${color})`,
+        boxShadow: `0 3px 8px ${color}99, inset 0 1px 0 rgba(255,255,255,0.45), inset 0 -1px 0 rgba(0,0,0,0.15)`,
+      }}
+    >
+      <Icon className={`${iconDim} text-white drop-shadow-sm`} strokeWidth={2.5} />
+    </span>
+  );
+}
 
 // ─── EDITABLE CONFIG ─────────────────────────────────────────────────────────
 const CONFIG = {
@@ -403,7 +427,8 @@ export default function RIS11thLanding() {
             <div className="flex flex-wrap gap-2 pt-1">
               {CONFIG.streams.cards.map(s => (
                 <span key={s.name} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold text-white" style={{ background: s.color }}>
-                  {s.icon} {s.name}
+                  <Stream3DIcon name={s.name} color={s.color} size="sm" />
+                  {s.name}
                 </span>
               ))}
             </div>
@@ -555,8 +580,8 @@ export default function RIS11thLanding() {
               <div key={stream.name} className="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm flex flex-col gap-3"
                 data-testid={`card-stream-${stream.name.toLowerCase()}`}
                 onClick={() => gtag("event", "stream_card_view", { stream: stream.name })}>
-                <div className="flex items-center gap-2">
-                  <span className="text-3xl">{stream.icon}</span>
+                <div className="flex items-center gap-3">
+                  <Stream3DIcon name={stream.name} color={stream.color} size="lg" />
                   <h3 className="font-bold text-gray-900 text-lg">{stream.name}</h3>
                 </div>
                 <p className="text-sm text-gray-600 leading-relaxed">{stream.desc}</p>
