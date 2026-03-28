@@ -235,6 +235,16 @@ All classroom and activity photos are optimized using sharp and stored as WebP f
 ### Gallery Images (public/images/optimized/)
 - `DSC00002.webp` through `DSC00229.webp` - Classroom activity photos (23-67KB each)
 
+### Gallery Page Images (public/images/gallery/)
+50 real school photos from 6 categories, all converted to WebP (quality 75, max 900px wide):
+- **Classrooms** (8 images): `rainbow-preschool-classroom-learning-01/02/03/04.webp`, `rainbow-preschool-classroom-activity-01/02/03/04.webp`
+- **Activities** (9 images): Book Character Day, Children's Day, Father's Day, Make Your Own Sandwich, Play Date With Mothers, Sleep Time Setup, Splashy Fun Day, Tom & Jerry Show, Under the Sea
+- **Events & Celebrations** (9 images): 3 annual celebration + Diwali, Eid, Field Trip to Fire Station, Ganesh Chaturthi, Sports Day x2
+- **Happy Times** (4 images): `rainbow-preschool-happy-times-01/02/03/04.webp`
+- **Infrastructure** (14 images): Activity Rooms, Admin Office, Computer Lab, Corridor, Entrance Area, Libraries, Outdoor Premises, School Essentials
+- **Centres in Thane** (6 images): Manpada (Aggarwal), Anand Nagar, Dhokali, Hariniwas, Kalwa, Kasarvadavali
+Gallery config: `client/src/lib/gallery-config.ts` (GALLERY_CATEGORIES, GALLERY_IMAGES, GALLERY_CTA, GALLERY_SEO_CONTENT)
+
 ### Caching Strategy
 - Images/fonts: 1 year cache (immutable)
 - JS/CSS: 1 year cache (immutable, versioned by bundler)
