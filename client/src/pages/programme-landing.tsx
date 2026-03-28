@@ -480,6 +480,30 @@ export default function ProgrammeLanding({ programmeSlug }: ProgrammeLandingProp
         </div>
       </section>
 
+      <section className="py-10 md:py-12 bg-gray-50 dark:bg-gray-800/50">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-lg md:text-xl font-bold text-gray-900 dark:text-white mb-5 text-center">Explore Rainbow Preschool</h2>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <Link href="/best-preschool-in-thane" className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center" data-testid="link-programme-best-preschool">
+              <span className="text-xl">🏆</span>
+              <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">Award-Winning Preschool</span>
+            </Link>
+            <Link href="/preschool-near-me" className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center" data-testid="link-programme-near-me">
+              <span className="text-xl">📍</span>
+              <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">Find Nearest Centre</span>
+            </Link>
+            <Link href="/preschool-admissions" className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center" data-testid="link-programme-admissions">
+              <span className="text-xl">📋</span>
+              <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">Admission Process</span>
+            </Link>
+            <Link href="/gallery" className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center" data-testid="link-programme-gallery">
+              <span className="text-xl">🖼️</span>
+              <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">Photo Gallery</span>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       <CTASection
         title={`Ready to Enroll in ${programme.name}?`}
         description="Contact us today to schedule a centre visit and learn more about our admission process."

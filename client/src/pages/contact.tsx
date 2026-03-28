@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { Link } from "wouter";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { ContactForm } from "@/components/contact-form";
 import { BranchCard } from "@/components/branch-card";
@@ -27,7 +28,7 @@ export default function Contact() {
       <SEO
         title="Contact Rainbow Preschool Thane | Admissions Enquiry"
         description="Contact Rainbow Preschool International for admissions, school tours & enquiries. 6 centres across Thane West. Call 82915 68972 or visit our nearest centre today."
-        keywords="contact rainbow preschool, preschool admissions thane, preschool enquiry, preschool near me thane, kindergarten admissions, nursery admissions thane, school admission 2025, nursery school fees, preschool registration, best playschool near me, kindergarten near me, daycare near me, preschool admission form"
+        keywords="contact rainbow preschool, preschool admissions thane, preschool enquiry, nursery admissions thane, school admission 2025, nursery school fees, preschool registration, preschool admission form, rainbow preschool enquiry thane"
         canonical="https://www.rainbowpreschools.com/contact"
       />
       {/* Hero Section */}
@@ -151,6 +152,31 @@ export default function Contact() {
             {branches.map((branch) => (
               <BranchCard key={branch.id} branch={branch} />
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Internal Links Section */}
+      <section className="py-10 md:py-12 bg-gray-50 dark:bg-gray-800/50">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-lg md:text-xl font-bold text-gray-900 dark:text-white mb-5 text-center">Explore Rainbow Preschool</h2>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <Link href="/best-preschool-in-thane" className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center" data-testid="link-contact-best-preschool">
+              <span className="text-xl">🏆</span>
+              <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">Award-Winning Preschool</span>
+            </Link>
+            <Link href="/preschool-near-me" className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center" data-testid="link-contact-near-me">
+              <span className="text-xl">📍</span>
+              <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">Find Nearest Centre</span>
+            </Link>
+            <Link href="/preschool-admissions" className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center" data-testid="link-contact-admissions">
+              <span className="text-xl">📋</span>
+              <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">Admission Process</span>
+            </Link>
+            <Link href="/gallery" className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center" data-testid="link-contact-gallery">
+              <span className="text-xl">🖼️</span>
+              <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">Photo Gallery</span>
+            </Link>
           </div>
         </div>
       </section>
