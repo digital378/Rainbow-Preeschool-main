@@ -386,7 +386,6 @@ export default function RIS11thLanding() {
             </h1>
 
             <p className="text-gray-600 text-sm sm:text-base leading-relaxed">{CONFIG.hero.subheadline}</p>
-            <p className="text-gray-500 text-sm italic">{CONFIG.hero.supportLine}</p>
 
             <div className="flex flex-wrap gap-2">
               {CONFIG.hero.trustChips.map(chip => (
