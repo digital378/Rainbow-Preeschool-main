@@ -520,14 +520,6 @@ export default function RIS11thLanding() {
                     ℹ️ {CONFIG.form.qualifier}
                   </div>
 
-                  {/* Other grades link */}
-                  <div className="text-center text-xs text-gray-500">
-                    Interested in other grades?{" "}
-                    <a href="/RIS" className="text-blue-600 font-semibold underline hover:text-blue-800" data-testid="link-ris11th-form-other-grades">
-                      View Nursery–Grade X admissions
-                    </a>
-                  </div>
-
                   <label className="flex items-start gap-2.5 cursor-pointer select-none">
                     <input
                       type="checkbox"
