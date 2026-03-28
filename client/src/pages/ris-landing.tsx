@@ -343,13 +343,6 @@ export default function RISLanding() {
           {/* Hero copy */}
           <div className="space-y-3">
             <a
-              href="/ris-11th"
-              className="inline-flex items-center gap-1.5 bg-blue-50 text-blue-700 border border-blue-200 px-3 py-1.5 rounded-full text-xs font-semibold hover:bg-blue-100 transition-colors"
-              data-testid="link-ris-grade11-redirect"
-            >
-              Looking for Grade 11 admissions? View 11th Grade Page →
-            </a>
-            <a
               href="#seat-availability"
               onClick={(e) => { e.preventDefault(); document.getElementById("seat-availability")?.scrollIntoView({ behavior: "smooth" }); gtag("event", "seat_table_view"); }}
               className="inline-flex items-center gap-1.5 bg-red-100 text-red-700 px-3 py-1.5 rounded-full text-xs font-bold cursor-pointer animate-pulse"
