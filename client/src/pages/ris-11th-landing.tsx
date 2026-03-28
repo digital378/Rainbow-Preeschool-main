@@ -604,7 +604,6 @@ export default function RIS11thLanding() {
           <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
             {CONFIG.whyRIS.cards.map(card => (
               <div key={card.title} className="bg-white rounded-2xl border border-gray-100 p-4 shadow-sm flex flex-col gap-1.5">
-                <div className="text-2xl">{card.icon}</div>
                 <h3 className="font-semibold text-gray-900 text-sm">{card.title}</h3>
                 <p className="text-gray-500 text-xs leading-relaxed">{card.desc}</p>
               </div>
@@ -707,7 +706,6 @@ export default function RIS11thLanding() {
           <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
             {CONFIG.outcomes.cards.map(card => (
               <div key={card.title} className="bg-white rounded-2xl border border-gray-100 p-4 text-center shadow-sm">
-                <div className="text-3xl mb-2">{card.icon}</div>
                 <div className="font-semibold text-gray-900 text-sm">{card.title}</div>
                 <p className="text-xs text-gray-500 mt-1.5 leading-relaxed">{card.desc}</p>
               </div>
