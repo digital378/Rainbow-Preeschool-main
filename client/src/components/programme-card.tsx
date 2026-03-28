@@ -25,8 +25,8 @@ export function ProgrammeCard({ programme, index = 0 }: ProgrammeCardProps) {
     playgroup: "/playgroup",
     nursery: "/nursery",
     kindergarten: "/kindergarten",
-    "kids-activity-club": "/kids-activity-club",
-    "summer-camp": "/summer-camp",
+    "kids-activity-club": "/programmes",
+    "summer-camp": "/programmes",
     "happy-times": "/happy-times",
   };
   

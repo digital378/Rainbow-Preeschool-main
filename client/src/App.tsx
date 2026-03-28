@@ -20,8 +20,6 @@ const Programmes = lazy(() => import("@/pages/programmes"));
 const PlaygroupLanding = lazy(() => import("@/pages/playgroup-landing"));
 const NurseryLanding = lazy(() => import("@/pages/nursery-landing"));
 const KindergartenLanding = lazy(() => import("@/pages/kindergarten-landing"));
-const KidsActivityClubLanding = lazy(() => import("@/pages/kids-activity-club-landing"));
-const SummerCampLanding = lazy(() => import("@/pages/summer-camp-landing"));
 const HappyTimesLanding = lazy(() => import("@/pages/happy-times-landing"));
 const Contact = lazy(() => import("@/pages/contact"));
 const Blog = lazy(() => import("@/pages/blog"));
@@ -291,8 +289,6 @@ function Router() {
         <Route path="/playgroup" component={PlaygroupLanding} />
         <Route path="/nursery" component={NurseryLanding} />
         <Route path="/kindergarten" component={KindergartenLanding} />
-        <Route path="/kids-activity-club" component={KidsActivityClubLanding} />
-        <Route path="/summer-camp" component={SummerCampLanding} />
         <Route path="/happy-times" component={HappyTimesLanding} />
         <Route path="/contact" component={Contact} />
         <Route path="/blog" component={Blog} />
