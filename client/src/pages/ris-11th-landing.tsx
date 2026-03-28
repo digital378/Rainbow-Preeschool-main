@@ -16,8 +16,8 @@ function Stream3DIcon({ name, color, size = "sm" }: { name: string; color: strin
     <span
       className={`${dim} rounded-full inline-flex items-center justify-center flex-shrink-0`}
       style={{
-        background: `radial-gradient(circle at 35% 35%, ${color}ee, ${color})`,
-        boxShadow: `0 3px 8px ${color}99, inset 0 1px 0 rgba(255,255,255,0.45), inset 0 -1px 0 rgba(0,0,0,0.15)`,
+        background: "radial-gradient(circle at 35% 35%, #0E6160, #0A4847)",
+        boxShadow: "0 3px 8px rgba(10,72,71,0.6), inset 0 1px 0 rgba(255,255,255,0.45), inset 0 -1px 0 rgba(0,0,0,0.15)",
       }}
     >
       <Icon className={`${iconDim} text-white drop-shadow-sm`} strokeWidth={2.5} />
@@ -58,14 +58,14 @@ const CONFIG = {
       {
         icon: "🔬",
         name: "Science",
-        color: "#0E6160",
+        color: "#0A4847",
         desc: "Strong academic support for students interested in future pathways in engineering, medicine, research, technology, and related fields through regular school education.",
         subjects: ["Physics", "Chemistry", "Biology / Maths", "English", "Optional Subject"],
       },
       {
         icon: "📊",
         name: "Commerce",
-        color: "#FEBB14",
+        color: "#0A4847",
         desc: "A balanced foundation for students interested in business, finance, economics, management, entrepreneurship, and professional careers.",
         subjects: ["Accountancy", "Business Studies", "Economics", "English", "Optional Subject"],
       },
