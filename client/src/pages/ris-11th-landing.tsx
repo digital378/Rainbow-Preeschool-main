@@ -389,8 +389,8 @@ export default function RIS11thLanding() {
 
             <div className="grid grid-cols-3 gap-1.5">
               {CONFIG.hero.trustChips.map(chip => (
-                <span key={chip} className="inline-flex items-center justify-center gap-1 text-xs bg-green-50 text-green-700 px-2 py-1 rounded-full border border-green-200 font-medium text-center">
-                  <CheckIcon /> {chip}
+                <span key={chip} className="inline-flex items-center justify-center text-xs bg-green-50 text-green-700 px-2 py-1 rounded-full border border-green-200 font-medium text-center">
+                  {chip}
                 </span>
               ))}
             </div>
