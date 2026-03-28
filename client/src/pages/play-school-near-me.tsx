@@ -839,10 +839,10 @@ export default function PlaySchoolNearMe() {
                     <Button variant="outline" size="sm" data-testid="link-ps-kindergarten">Kindergarten Programme</Button>
                   </Link>
                   <Link href="/preschool-near-me">
-                    <Button variant="outline" size="sm" data-testid="link-ps-preschool-near-me">Preschool Near Me</Button>
+                    <Button variant="outline" size="sm" data-testid="link-ps-preschool-near-me">Find Nearest Centre</Button>
                   </Link>
                   <Link href="/best-preschool-in-thane">
-                    <Button variant="outline" size="sm" data-testid="link-ps-best-preschool">Best Preschool in Thane</Button>
+                    <Button variant="outline" size="sm" data-testid="link-ps-best-preschool">Award-Winning Preschool</Button>
                   </Link>
                   <Link href="/happy-times">
                     <Button variant="outline" size="sm" data-testid="link-ps-happy-times">Happy Times</Button>

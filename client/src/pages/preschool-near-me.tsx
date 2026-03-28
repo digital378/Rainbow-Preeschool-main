@@ -228,7 +228,7 @@ export default function PreschoolNearMe() {
 
             {/* Quick Enquiry Form - Fixed min-height */}
             <div className="max-w-xl mx-auto bg-white p-4 md:p-6 rounded-xl shadow-lg border text-gray-900 min-h-[480px]">
-              <h2 className="text-lg md:text-xl font-bold text-gray-900 mb-1 text-center">Find the Best Preschool in Thane for Your Child</h2>
+              <h2 className="text-lg md:text-xl font-bold text-gray-900 mb-1 text-center">Find a Rainbow Preschool Centre Near You</h2>
               <p className="text-sm text-gray-600 mb-3 text-center">Tell us your area and we'll recommend the nearest preschool in Thane West or central Thane</p>
               <ContactForm />
               
@@ -370,7 +370,7 @@ export default function PreschoolNearMe() {
                   <span className="font-medium text-gray-900 dark:text-white text-sm md:text-base">Admissions</span>
                 </Link>
                 <Link href="/best-preschool-in-thane" className="p-3 md:p-4 bg-white dark:bg-gray-800 rounded-lg border dark:border-gray-700 text-center">
-                  <span className="font-medium text-gray-900 dark:text-white text-sm md:text-base">Best Preschool</span>
+                  <span className="font-medium text-gray-900 dark:text-white text-sm md:text-base">Award-Winning Preschool</span>
                 </Link>
                 <Link href="/playgroup" className="p-3 md:p-4 bg-white dark:bg-gray-800 rounded-lg border dark:border-gray-700 text-center">
                   <span className="font-medium text-gray-900 dark:text-white text-sm md:text-base">Playgroup</span>

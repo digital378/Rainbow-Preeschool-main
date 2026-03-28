@@ -181,7 +181,7 @@ export default function About() {
           <h2 className="text-3xl md:text-4xl font-bold mb-6 text-center">Our Story</h2>
           <div className="space-y-4 text-muted-foreground leading-relaxed text-center max-w-3xl mx-auto mb-12">
             <p>
-              Rainbow Preschool International was founded in 2007 with a simple vision: to be the best preschool in Thane by providing quality early childhood education to every child. Today, we have grown to six thriving centres across Thane West.
+              Rainbow Preschool International was founded in 2007 with a simple vision: to provide the finest early childhood education in Thane for every child. Today, we have grown to six thriving centres across Thane West.
             </p>
             <p>
               Our play-based approach helps children learn confidently and joyfully, preparing them for a brighter future through hands-on exploration and discovery.
@@ -363,6 +363,33 @@ export default function About() {
                 </CardContent>
               </Card>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Internal Links Section */}
+      <section className="py-10 md:py-12 bg-gray-50 dark:bg-gray-800/50">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-lg md:text-xl font-bold text-gray-900 dark:text-white mb-5 text-center">
+            Explore Rainbow Preschool
+          </h2>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <Link href="/best-preschool-in-thane" className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center" data-testid="link-about-best-preschool">
+              <span className="text-xl">🏆</span>
+              <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">Award-Winning Preschool</span>
+            </Link>
+            <Link href="/preschool-near-me" className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center" data-testid="link-about-near-me">
+              <span className="text-xl">📍</span>
+              <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">Find Nearest Centre</span>
+            </Link>
+            <Link href="/preschool-admissions" className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center" data-testid="link-about-admissions">
+              <span className="text-xl">📋</span>
+              <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">Admission Process</span>
+            </Link>
+            <Link href="/gallery" className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center" data-testid="link-about-gallery">
+              <span className="text-xl">🖼️</span>
+              <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">Photo Gallery</span>
+            </Link>
           </div>
         </div>
       </section>

@@ -321,15 +321,15 @@ export default function Home() {
           <div className="flex flex-wrap justify-center gap-3 md:gap-4">
             <a href="/best-preschool-in-thane" className="group inline-flex items-center gap-2 px-4 py-2 rounded-full border border-input bg-background hover:bg-primary hover:text-primary-foreground text-sm font-medium transition-colors" data-testid="link-best-preschool">
               <Award className="w-4 h-4 text-primary group-hover:text-primary-foreground transition-colors" />
-              Best Preschool in Thane
+              Award-Winning Preschool
             </a>
             <a href="/preschool-near-me" className="group inline-flex items-center gap-2 px-4 py-2 rounded-full border border-input bg-background hover:bg-primary hover:text-primary-foreground text-sm font-medium transition-colors" data-testid="link-preschool-near-me">
               <MapPin className="w-4 h-4 text-primary group-hover:text-primary-foreground transition-colors" />
-              Preschool Near Me
+              Find Nearest Centre
             </a>
             <a href="/preschool-admissions" className="group inline-flex items-center gap-2 px-4 py-2 rounded-full border border-input bg-background hover:bg-primary hover:text-primary-foreground text-sm font-medium transition-colors" data-testid="link-preschool-admissions">
               <FileText className="w-4 h-4 text-primary group-hover:text-primary-foreground transition-colors" />
-              Preschool Admissions
+              Admission Process
             </a>
             <a href="/playgroup" className="group inline-flex items-center gap-2 px-4 py-2 rounded-full border border-input bg-background hover:bg-primary hover:text-primary-foreground text-sm font-medium transition-colors" data-testid="link-playgroup">
               <Palette className="w-4 h-4 text-primary group-hover:text-primary-foreground transition-colors" />
