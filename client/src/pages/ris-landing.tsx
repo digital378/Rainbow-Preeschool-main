@@ -343,6 +343,13 @@ export default function RISLanding() {
           {/* Left copy — shown below form on mobile */}
           <div className="space-y-3 order-2 md:order-1">
             <a
+              href="/ris-11th"
+              className="inline-flex items-center gap-1.5 bg-blue-50 text-blue-700 border border-blue-200 px-3 py-1.5 rounded-full text-xs font-semibold hover:bg-blue-100 transition-colors"
+              data-testid="link-ris-grade11-redirect"
+            >
+              Looking for Grade 11 admissions? View 11th Grade Page →
+            </a>
+            <a
               href="#seat-availability"
               onClick={(e) => { e.preventDefault(); document.getElementById("seat-availability")?.scrollIntoView({ behavior: "smooth" }); gtag("event", "seat_table_view"); }}
               className="inline-flex items-center gap-1.5 bg-red-100 text-red-700 px-3 py-1.5 rounded-full text-xs font-bold cursor-pointer animate-pulse"
@@ -357,10 +364,10 @@ export default function RISLanding() {
 
             <p className="text-gray-600 text-sm sm:text-base leading-relaxed">{CONFIG.hero.subheadline}</p>
 
-            <div className="flex flex-wrap gap-2">
+            <div className="grid grid-cols-4 gap-1.5">
               {CONFIG.hero.trustChips.map(chip => (
-                <span key={chip} className="inline-flex items-center gap-1 text-xs bg-green-50 text-green-700 px-2.5 py-1 rounded-full border border-green-200 font-medium">
-                  <CheckIcon /> {chip}
+                <span key={chip} className="inline-flex items-center justify-center text-xs bg-green-50 text-green-700 px-2 py-1.5 rounded-full border border-green-200 font-medium text-center leading-tight">
+                  {chip}
                 </span>
               ))}
             </div>
@@ -571,7 +578,6 @@ export default function RISLanding() {
           <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
             {CONFIG.whyRIS.cards.map(item => (
               <div key={item.title} className="bg-white rounded-2xl border border-gray-100 p-4 shadow-sm flex flex-col gap-1.5">
-                <div className="text-2xl">{item.icon}</div>
                 <h3 className="font-semibold text-gray-900 text-sm">{item.title}</h3>
                 <p className="text-gray-500 text-xs leading-relaxed">{item.desc}</p>
               </div>
@@ -665,7 +671,6 @@ export default function RISLanding() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {CONFIG.learningJourney.cards.map(card => (
               <div key={card.title} className="bg-white rounded-2xl border border-gray-100 p-4 text-center shadow-sm">
-                <div className="text-3xl mb-2">{card.icon}</div>
                 <div className="font-semibold text-gray-900 text-sm">{card.title}</div>
                 <p className="text-xs text-gray-500 mt-1.5 leading-relaxed">{card.desc}</p>
               </div>
