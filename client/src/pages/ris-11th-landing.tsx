@@ -362,6 +362,18 @@ export default function RIS11thLanding() {
 
           {/* Left copy */}
           <div className="space-y-3 order-1">
+            {/* Other grades redirect */}
+            <div className="bg-blue-50 border border-blue-200 rounded-xl p-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+              <span className="text-sm text-blue-800">Looking for admissions in Nursery to Grade X?</span>
+              <a
+                href="/RIS"
+                className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-lg bg-blue-600 text-white text-xs font-semibold hover:bg-blue-700 transition-colors whitespace-nowrap"
+                data-testid="link-ris11th-other-grades"
+              >
+                View All Grade Admissions →
+              </a>
+            </div>
+
             <div className="inline-flex items-center gap-2 bg-blue-100 text-blue-700 px-3 py-1.5 rounded-full text-xs font-bold">
               <span className="w-2 h-2 bg-blue-500 rounded-full animate-pulse" />
               {CONFIG.hero.eyebrow}
@@ -386,18 +398,6 @@ export default function RIS11thLanding() {
 
             <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 text-sm text-amber-800 leading-relaxed">
               <strong>⚠️ Limited Seats:</strong> {CONFIG.hero.urgency}
-            </div>
-
-            {/* Other grades redirect */}
-            <div className="bg-blue-50 border border-blue-200 rounded-xl p-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
-              <span className="text-sm text-blue-800">Looking for admissions in Nursery to Grade X?</span>
-              <a
-                href="/RIS"
-                className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-lg bg-blue-600 text-white text-xs font-semibold hover:bg-blue-700 transition-colors whitespace-nowrap"
-                data-testid="link-ris11th-other-grades"
-              >
-                View All Grade Admissions →
-              </a>
             </div>
 
             {/* Stream pills */}
