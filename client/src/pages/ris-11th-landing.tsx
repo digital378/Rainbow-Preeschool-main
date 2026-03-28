@@ -12,7 +12,7 @@ const CONFIG = {
     subheadline: "Apply for Science, Commerce, or Humanities in a structured academic environment focused on board preparation, student growth, and future readiness.",
     supportLine: "Regular school admissions for Grade 11. Enquire for stream availability, eligibility, and admission guidance.",
     urgency: "Limited seats available across select streams for the 2026–27 academic year.",
-    trustChips: ["CBSE Curriculum", "Science, Commerce & Humanities", "Experienced Faculty", "Safe Campus"],
+    trustChips: ["CBSE Curriculum", "Experienced Faculty", "Safe Campus"],
   },
   form: {
     heading: "Secure Your 11th Admission Enquiry",
