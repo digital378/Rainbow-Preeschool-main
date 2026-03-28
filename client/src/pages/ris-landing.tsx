@@ -374,13 +374,16 @@ export default function RISLanding() {
               {[
                 { value: "CBSE", label: "Affiliated" },
                 { value: "K–12", label: "Full School" },
-                { value: totalSeatsAvailable + "+", label: "Seats Left" },
               ].map(stat => (
                 <div key={stat.label} className="bg-white rounded-xl border border-gray-100 p-2.5 text-center shadow-sm">
                   <div className="font-bold text-lg text-blue-600 leading-tight">{stat.value}</div>
                   <div className="text-xs text-gray-500 mt-0.5">{stat.label}</div>
                 </div>
               ))}
+              <div className="bg-white rounded-xl border border-gray-100 p-2.5 text-center shadow-sm">
+                <div className="font-bold text-base text-blue-600 leading-tight">Premium School</div>
+                <div className="text-xs text-gray-500 mt-0.5">In Thane</div>
+              </div>
             </div>
           </div>
 
