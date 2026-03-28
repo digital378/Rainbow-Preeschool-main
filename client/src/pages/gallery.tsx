@@ -301,7 +301,7 @@ export default function Gallery() {
           </h2>
           <p className="text-sm text-muted-foreground leading-relaxed">{GALLERY_SEO_CONTENT}</p>
           <div className="flex flex-wrap gap-2 mt-4">
-            {["Playgroup", "Nursery", "Kindergarten", "Happy Times", "Activity Club"].map((tag) => (
+            {["Playgroup", "Nursery", "Kindergarten", "Happy Times"].map((tag) => (
               <span key={tag} className="text-xs bg-primary/10 text-primary rounded-full px-3 py-1 font-medium">
                 {tag}
               </span>

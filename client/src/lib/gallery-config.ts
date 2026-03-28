@@ -3,7 +3,6 @@ export type GalleryCategoryId =
   | "classrooms"
   | "activities"
   | "events"
-  | "outdoor"
   | "curriculum"
   | "facilities"
   | "safety"
@@ -28,7 +27,6 @@ export const GALLERY_CATEGORIES: GalleryCategory[] = [
   { id: "classrooms", label: "Classrooms" },
   { id: "activities", label: "Activities" },
   { id: "events", label: "Events & Celebrations" },
-  { id: "outdoor", label: "Outdoor Play" },
   { id: "curriculum", label: "Learning & Curriculum" },
   { id: "facilities", label: "Facilities" },
   { id: "safety", label: "Safety & Security" },
@@ -224,42 +222,42 @@ export const GALLERY_IMAGES: GalleryImage[] = [
     src: "/images/optimized/kids-playing-ball-pit-rainbow-preschool.webp",
     alt: "Kids enjoying the ball pit play area at Rainbow Preschool International Thane",
     caption: "Ball pit — pure joy for little ones",
-    category: "outdoor",
+    category: "activities",
   },
   {
     id: "out-02",
     src: "/images/optimized/happy-girls-ball-pit-playgroup.webp",
     alt: "Happy girls playing in the ball pit during playgroup session at Rainbow Thane",
     caption: "Playtime brings endless smiles",
-    category: "outdoor",
+    category: "activities",
   },
   {
     id: "out-03",
     src: "/images/optimized/kid-playing-rainbow.webp",
     alt: "Child enjoying outdoor play activities at Rainbow Preschool Thane",
     caption: "Outdoor play for healthy development",
-    category: "outdoor",
+    category: "activities",
   },
   {
     id: "out-04",
     src: "/images/optimized/playgroup-child-toy-car.webp",
     alt: "Playgroup child riding a toy car at Rainbow Preschool International Thane",
     caption: "Toy car adventures in playgroup",
-    category: "outdoor",
+    category: "activities",
   },
   {
     id: "out-05",
     src: "/images/optimized/child-stacking-rings-playgroup.webp",
     alt: "Playgroup child stacking colourful rings during play session at Rainbow Preschool",
     caption: "Stacking rings — fine motor skills",
-    category: "outdoor",
+    category: "activities",
   },
   {
     id: "out-06",
     src: "/images/optimized/kindergarten-kids-colorful-mats.webp",
     alt: "Kindergarten children sitting on colourful activity mats at Rainbow Preschool Thane",
     caption: "Colourful mats, active learning",
-    category: "outdoor",
+    category: "activities",
   },
 
   // ── LEARNING & CURRICULUM ───────────────────────────────────────────

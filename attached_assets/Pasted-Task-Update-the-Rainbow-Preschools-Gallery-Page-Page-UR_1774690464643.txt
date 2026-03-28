@@ -1,0 +1,69 @@
+Task: Update the Rainbow Preschools Gallery Page
+
+Page URL:
+https://www.rainbowpreschools.com/gallery
+
+Objective:
+Update the existing Gallery page on the Rainbow Preschools website using the ZIP file I will provide. The ZIP will contain photo folders arranged according to the gallery categories.
+
+Requirements:
+
+1. Gallery Category & Image Update
+- Replace the existing gallery categories and gallery photos using the folders and images provided in the ZIP file.
+- Use the folder names from the ZIP as the gallery category names wherever applicable.
+- Remove the “Outdoor Play” category tab completely from the gallery page.
+- Ensure the gallery filters/tabs, image mapping, and frontend display are updated correctly as per the new folder structure.
+- Preserve a clean and responsive layout across desktop and mobile.
+
+2. Image Optimization
+- Review all uploaded gallery images and apply light enhancement where needed, especially:
+  - colour correction
+  - brightness/contrast balancing
+  - minor visual cleanup for web presentation
+- Do not over-edit the photos; they should still look natural and authentic.
+
+3. File Format & Performance
+- Convert all gallery images to WEBP wherever supported and beneficial for website performance.
+- If any image is not suitable for WEBP due to quality/rendering issues, use the best alternative format.
+- Compress and optimize all images for fast loading without visibly harming quality.
+- Implement lazy loading for gallery images if not already present.
+- Maintain proper dimensions and thumbnails to improve page speed and UX.
+
+4. SEO Optimization for Images
+- Add SEO-friendly file names for all images before deployment.
+- Add optimized alt text, title text, and image tags/captions where relevant using best SEO practices.
+- Keep naming descriptive, human-readable, and relevant to preschool activities, learning environments, celebrations, classrooms, events, children engagement, etc.
+- Avoid keyword stuffing, but ensure the metadata is discoverable and useful for image SEO.
+- Use category context in the naming structure wherever possible.
+
+5. About Section Update
+In the section:
+“About Rainbow Preschools — Thane’s Most Trusted Preschool”
+- Remove the “Activity Club” button only.
+- Keep the rest of the section unchanged unless needed for spacing/alignment after button removal.
+
+6. QA & Implementation Standards
+- Ensure no broken images, empty tabs, duplicate categories, or layout issues remain after the update.
+- Make sure the gallery continues to look premium, fast, and user-friendly.
+- Preserve existing design consistency with the website branding.
+- Ensure the update does not negatively affect SEO, Core Web Vitals, or mobile responsiveness.
+
+Expected Deliverables
+- Updated gallery categories based on ZIP folders
+- Updated gallery images
+- “Outdoor Play” tab removed
+- “Activity Club” button removed from the About section
+- Optimized image assets in best web-friendly format
+- SEO-friendly alt text, filenames, and metadata
+- Fully tested responsive implementation
+
+Suggestions / Best Practice Expectations
+Please also review the gallery UX and implement minor improvements if helpful, such as:
+- smoother category switching
+- better image spacing/cropping consistency
+- improved hover/lightbox behavior if already present
+- better loading performance for large galleries
+
+Important:
+Do not redesign the full page unless required.
+This is primarily a content, asset, optimization, and cleanup update to the existing gallery page.
