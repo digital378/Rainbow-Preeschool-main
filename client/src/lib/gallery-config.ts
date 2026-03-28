@@ -4,7 +4,9 @@ export type GalleryCategoryId =
   | "activities"
   | "events"
   | "happy-times"
+  | "learning-through-play"
   | "infrastructure"
+  | "safety"
   | "centres";
 
 export interface GalleryCategory {
@@ -21,13 +23,15 @@ export interface GalleryImage {
 }
 
 export const GALLERY_CATEGORIES: GalleryCategory[] = [
-  { id: "all",            label: "All" },
-  { id: "classrooms",    label: "Classrooms" },
-  { id: "activities",    label: "Activities" },
-  { id: "events",        label: "Events & Celebrations" },
-  { id: "happy-times",   label: "Happy Times" },
-  { id: "infrastructure",label: "Infrastructure" },
-  { id: "centres",       label: "Centres in Thane" },
+  { id: "all",                  label: "All" },
+  { id: "classrooms",           label: "Classrooms" },
+  { id: "activities",           label: "Activities" },
+  { id: "events",               label: "Events & Celebrations" },
+  { id: "learning-through-play",label: "Learning Through Play" },
+  { id: "happy-times",          label: "Happy Times" },
+  { id: "infrastructure",       label: "Infrastructure" },
+  { id: "safety",               label: "Safety & Security" },
+  { id: "centres",              label: "Centres in Thane" },
 ];
 
 export const GALLERY_IMAGES: GalleryImage[] = [
@@ -347,6 +351,87 @@ export const GALLERY_IMAGES: GalleryImage[] = [
     alt: "School essentials and learning materials at Rainbow Preschool International Thane",
     caption: "Quality learning materials",
     category: "infrastructure",
+  },
+
+  // ── LEARNING THROUGH PLAY ───────────────────────────────────────────
+  {
+    id: "ltp-01",
+    src: "/images/gallery/rainbow-preschool-learning-through-play-01.webp",
+    alt: "Children learning through play at Rainbow Preschool International Thane",
+    caption: "Learning through play — curiosity in action",
+    category: "learning-through-play",
+  },
+  {
+    id: "ltp-02",
+    src: "/images/gallery/rainbow-preschool-learning-through-play-02.webp",
+    alt: "Play-based learning session at Rainbow Preschool Thane",
+    caption: "Play-based learning for holistic growth",
+    category: "learning-through-play",
+  },
+  {
+    id: "ltp-03",
+    src: "/images/gallery/rainbow-preschool-learning-through-play-03.webp",
+    alt: "Hands-on learning through play activity at Rainbow Preschool Thane",
+    caption: "Hands-on, minds-on learning",
+    category: "learning-through-play",
+  },
+  {
+    id: "ltp-04",
+    src: "/images/gallery/rainbow-preschool-learning-through-play-04.webp",
+    alt: "Creative play-based activity at Rainbow Preschool International Thane",
+    caption: "Creativity sparked through play",
+    category: "learning-through-play",
+  },
+  {
+    id: "ltp-05",
+    src: "/images/gallery/rainbow-preschool-learning-through-play-05.webp",
+    alt: "Children exploring through guided play at Rainbow Preschool Thane",
+    caption: "Exploration drives early learning",
+    category: "learning-through-play",
+  },
+  {
+    id: "ltp-06",
+    src: "/images/gallery/rainbow-preschool-learning-through-play-06.webp",
+    alt: "Structured play learning activity at Rainbow Preschool International Thane",
+    caption: "Structured play for early development",
+    category: "learning-through-play",
+  },
+  {
+    id: "ltp-07",
+    src: "/images/gallery/rainbow-preschool-learning-through-play-07.webp",
+    alt: "Children learning through fun play activities at Rainbow Preschool Thane",
+    caption: "Fun is the foundation of learning",
+    category: "learning-through-play",
+  },
+
+  // ── SAFETY & SECURITY ───────────────────────────────────────────────
+  {
+    id: "saf-01",
+    src: "/images/gallery/rainbow-preschool-100-percent-female-staff.webp",
+    alt: "100% female staff at Rainbow Preschool International Thane — safe and nurturing environment",
+    caption: "100% female staff — safe & nurturing",
+    category: "safety",
+  },
+  {
+    id: "saf-02",
+    src: "/images/gallery/rainbow-preschool-cctv-enabled-transport.webp",
+    alt: "CCTV-enabled transport at Rainbow Preschool Thane — monitored school bus for child safety",
+    caption: "CCTV-enabled transport — monitored every journey",
+    category: "safety",
+  },
+  {
+    id: "saf-03",
+    src: "/images/gallery/rainbow-preschool-safety-at-every-step.webp",
+    alt: "Safety at every step at Rainbow Preschool International Thane",
+    caption: "Safety at every step, every day",
+    category: "safety",
+  },
+  {
+    id: "saf-04",
+    src: "/images/gallery/rainbow-preschool-verified-pickup-system.webp",
+    alt: "Verified pickup system at Rainbow Preschool Thane — child released only to verified guardians",
+    caption: "Verified pickup — peace of mind for parents",
+    category: "safety",
   },
 
   // ── CENTRES IN THANE ────────────────────────────────────────────────
