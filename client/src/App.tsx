@@ -7,6 +7,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
+import { ChatWidget } from "@/components/chat-widget";
 import { initGA, initGlobalFormTracking } from "./lib/analytics";
 import { useAnalytics } from "./hooks/use-analytics";
 import { useScrollRevealOnRoute } from "./hooks/use-scroll-reveal";
@@ -548,6 +549,7 @@ function AppContent() {
         <Router />
       </main>
       <Footer />
+      <ChatWidget />
     </div>
   );
 }
