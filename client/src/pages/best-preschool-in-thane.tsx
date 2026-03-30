@@ -139,6 +139,22 @@ export default function BestPreschoolInThane() {
                   Trusted by over 1,00,000 families, Rainbow Preschool is Thane's leading early childhood education centre. Our award-winning curriculum, experienced teachers, and safe environment make us the top choice for parents.
                 </p>
 
+                {/* Awards */}
+                <div className="bg-white dark:bg-gray-800 p-4 rounded-lg border dark:border-gray-700 mb-4">
+                  <h3 className="font-semibold text-gray-900 dark:text-white mb-3">Awards & Recognition</h3>
+                  <div className="grid grid-cols-2 gap-2">
+                    {awards.map((award, idx) => (
+                      <div key={idx} className="flex items-center gap-2 text-sm">
+                        <Award className="w-4 h-4 text-yellow-500 flex-shrink-0" />
+                        <div>
+                          <div className="font-medium text-gray-900 dark:text-white">{award.name}</div>
+                          <div className="text-xs text-gray-500 dark:text-gray-400">{award.description}</div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
                 {/* Stats - Fixed height to prevent CLS */}
                 <div className="grid grid-cols-3 gap-2 md:gap-4 mb-4 h-[72px] md:h-auto">
                   <div className="text-center p-2 md:p-4 bg-white dark:bg-gray-800 rounded-lg border dark:border-gray-700">
@@ -152,22 +168,6 @@ export default function BestPreschoolInThane() {
                   <div className="text-center p-2 md:p-4 bg-white dark:bg-gray-800 rounded-lg border dark:border-gray-700">
                     <div className="text-xl md:text-2xl font-bold text-primary">6</div>
                     <div className="text-[10px] md:text-xs text-gray-600 dark:text-gray-300">Centres</div>
-                  </div>
-                </div>
-
-                {/* Awards - Hidden on mobile initially to reduce LCP */}
-                <div className="hidden md:block bg-white dark:bg-gray-800 p-4 rounded-lg border dark:border-gray-700 mb-6">
-                  <h3 className="font-semibold text-gray-900 dark:text-white mb-3">Awards & Recognition</h3>
-                  <div className="grid grid-cols-2 gap-2">
-                    {awards.map((award, idx) => (
-                      <div key={idx} className="flex items-center gap-2 text-sm">
-                        <Award className="w-4 h-4 text-yellow-500 flex-shrink-0" />
-                        <div>
-                          <div className="font-medium text-gray-900 dark:text-white">{award.name}</div>
-                          <div className="text-xs text-gray-500 dark:text-gray-400">{award.description}</div>
-                        </div>
-                      </div>
-                    ))}
                   </div>
                 </div>
 
@@ -223,26 +223,6 @@ export default function BestPreschoolInThane() {
             </video>
           </div>
         </section>
-
-        {/* Mobile Awards - Shows after fold for mobile */}
-        {showBelowFold && (
-          <div className="md:hidden px-4 pb-6">
-            <div className="bg-white dark:bg-gray-800 p-4 rounded-lg border dark:border-gray-700">
-              <h3 className="font-semibold text-gray-900 dark:text-white mb-3">Awards & Recognition</h3>
-              <div className="grid grid-cols-2 gap-2">
-                {awards.map((award, idx) => (
-                  <div key={idx} className="flex items-center gap-2 text-sm">
-                    <Award className="w-4 h-4 text-yellow-500 flex-shrink-0" />
-                    <div>
-                      <div className="font-medium text-gray-900 dark:text-white">{award.name}</div>
-                      <div className="text-xs text-gray-500 dark:text-gray-400">{award.description}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        )}
 
         {/* Why Best Section - Lazy loaded on mobile */}
         {showBelowFold && (
