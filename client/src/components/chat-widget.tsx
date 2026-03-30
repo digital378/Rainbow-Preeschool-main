@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { MessageCircle, X, Send, ChevronDown } from "lucide-react";
+import { MessageCircle, X, ChevronDown } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
 import { trackFormSubmit } from "@/lib/analytics";
 
@@ -13,13 +13,30 @@ interface Message {
 
 const PHONE_NUMBER = "918291568972";
 
+const MAIN_MENU_REPLIES = [
+  { label: "Our Programmes", value: "programmes" },
+  { label: "Timings & Batches", value: "timings" },
+  { label: "Our Centres", value: "centres" },
+  { label: "Admissions Process", value: "admissions" },
+  { label: "Fees", value: "fees" },
+  { label: "Safety & Staff", value: "safety" },
+  { label: "Talk to Someone", value: "enquire" },
+];
+
+const BACK_REPLY = { label: "⬅ Main Menu", value: "main_menu" };
+
 const BOT_RESPONSES: Record<string, { text: string; quickReplies?: { label: string; value: string }[] }> = {
+  main_menu: {
+    text: "Sure! Here's what I can help you with:",
+    quickReplies: MAIN_MENU_REPLIES,
+  },
   programmes: {
     text: "We offer three core programmes at Rainbow Preschool International:\n\n🟡 Playgroup — Ages 1.5 to 2.5 years\n🔴 Nursery — Ages 2.5 to 3.5 years\n🟢 Kindergarten (Jr. KG & Sr. KG) — Ages 3.5 to 5.5 years\n\nAll programmes are play-based, with 100% female staff and small batch sizes for personal attention.",
     quickReplies: [
       { label: "Timings & Batches", value: "timings" },
       { label: "Admissions Process", value: "admissions" },
       { label: "Enquire Now", value: "enquire" },
+      BACK_REPLY,
     ],
   },
   timings: {
@@ -28,6 +45,7 @@ const BOT_RESPONSES: Record<string, { text: string; quickReplies?: { label: stri
       { label: "Find a Centre", value: "centres" },
       { label: "Our Programmes", value: "programmes" },
       { label: "Enquire Now", value: "enquire" },
+      BACK_REPLY,
     ],
   },
   centres: {
@@ -35,6 +53,7 @@ const BOT_RESPONSES: Record<string, { text: string; quickReplies?: { label: stri
     quickReplies: [
       { label: "Admissions Process", value: "admissions" },
       { label: "Enquire Now", value: "enquire" },
+      BACK_REPLY,
     ],
   },
   admissions: {
@@ -43,6 +62,7 @@ const BOT_RESPONSES: Record<string, { text: string; quickReplies?: { label: stri
       { label: "Enquire Now", value: "enquire" },
       { label: "Our Centres", value: "centres" },
       { label: "Our Programmes", value: "programmes" },
+      BACK_REPLY,
     ],
   },
   fees: {
@@ -51,6 +71,7 @@ const BOT_RESPONSES: Record<string, { text: string; quickReplies?: { label: stri
       { label: "Yes, Call Me", value: "enquire" },
       { label: "Our Programmes", value: "programmes" },
       { label: "Our Centres", value: "centres" },
+      BACK_REPLY,
     ],
   },
   safety: {
@@ -58,6 +79,7 @@ const BOT_RESPONSES: Record<string, { text: string; quickReplies?: { label: stri
     quickReplies: [
       { label: "Our Programmes", value: "programmes" },
       { label: "Enquire Now", value: "enquire" },
+      BACK_REPLY,
     ],
   },
   enquire: {
@@ -71,15 +93,7 @@ const WELCOME_MESSAGES: Message[] = [
     id: "w1",
     sender: "bot",
     text: "Hi there! 👋 I'm Priya, your Rainbow Preschool assistant.\n\nHow can I help you today?",
-    quickReplies: [
-      { label: "Our Programmes", value: "programmes" },
-      { label: "Timings & Batches", value: "timings" },
-      { label: "Our Centres", value: "centres" },
-      { label: "Admissions Process", value: "admissions" },
-      { label: "Fees", value: "fees" },
-      { label: "Safety & Staff", value: "safety" },
-      { label: "Talk to Someone", value: "enquire" },
-    ],
+    quickReplies: MAIN_MENU_REPLIES,
   },
 ];
 
@@ -101,6 +115,14 @@ const AREA_OPTIONS = [
   "Not sure / Other",
 ];
 
+const PROGRAMME_MAP: Record<string, string> = {
+  "1.5 - 2.5 years (Playgroup)": "Playgroup",
+  "2.5 - 3.5 years (Nursery)": "Nursery",
+  "3.5 - 4.5 years (Jr. KG)": "Kindergarten",
+  "4.5 - 5.5 years (Sr. KG)": "Kindergarten",
+  "Not sure yet": "Not sure",
+};
+
 function BotTypingIndicator() {
   return (
     <div className="flex items-end gap-2 mb-3">
@@ -116,7 +138,10 @@ function BotTypingIndicator() {
   );
 }
 
-function LeadForm({ onSubmit }: { onSubmit: (data: { name: string; phone: string; childAge: string; area: string }) => void }) {
+function LeadForm({ onSubmit, isSubmitting }: {
+  onSubmit: (data: { name: string; phone: string; childAge: string; area: string }) => void;
+  isSubmitting: boolean;
+}) {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [childAge, setChildAge] = useState("");
@@ -126,7 +151,7 @@ function LeadForm({ onSubmit }: { onSubmit: (data: { name: string; phone: string
   const validate = () => {
     const e: Record<string, string> = {};
     if (!name.trim()) e.name = "Please enter your name";
-    if (!phone.match(/^[6-9]\d{9}$/)) e.phone = "Enter a valid 10-digit number";
+    if (!phone.match(/^[6-9]\d{9}$/)) e.phone = "Enter a valid 10-digit mobile number";
     if (!childAge) e.childAge = "Please select child's age";
     if (!area) e.area = "Please select a centre area";
     setErrors(e);
@@ -135,10 +160,10 @@ function LeadForm({ onSubmit }: { onSubmit: (data: { name: string; phone: string
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (validate()) onSubmit({ name, phone, childAge, area });
+    if (!isSubmitting && validate()) onSubmit({ name, phone, childAge, area });
   };
 
-  const inputClass = "w-full text-sm border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary/40 bg-white";
+  const inputClass = "w-full text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary/40 bg-white";
   const errClass = "text-xs text-red-500 mt-0.5";
 
   return (
@@ -151,6 +176,7 @@ function LeadForm({ onSubmit }: { onSubmit: (data: { name: string; phone: string
           onChange={e => setName(e.target.value)}
           className={inputClass}
           data-testid="chatbot-input-name"
+          disabled={isSubmitting}
         />
         {errors.name && <p className={errClass}>{errors.name}</p>}
       </div>
@@ -163,6 +189,7 @@ function LeadForm({ onSubmit }: { onSubmit: (data: { name: string; phone: string
           onChange={e => setPhone(e.target.value.replace(/\D/g, ""))}
           className={inputClass}
           data-testid="chatbot-input-phone"
+          disabled={isSubmitting}
         />
         {errors.phone && <p className={errClass}>{errors.phone}</p>}
       </div>
@@ -172,6 +199,7 @@ function LeadForm({ onSubmit }: { onSubmit: (data: { name: string; phone: string
           onChange={e => setChildAge(e.target.value)}
           className={`${inputClass} text-gray-600`}
           data-testid="chatbot-select-age"
+          disabled={isSubmitting}
         >
           <option value="">Child's age group *</option>
           {AGE_OPTIONS.map(a => <option key={a} value={a}>{a}</option>)}
@@ -184,6 +212,7 @@ function LeadForm({ onSubmit }: { onSubmit: (data: { name: string; phone: string
           onChange={e => setArea(e.target.value)}
           className={`${inputClass} text-gray-600`}
           data-testid="chatbot-select-area"
+          disabled={isSubmitting}
         >
           <option value="">Preferred centre area *</option>
           {AREA_OPTIONS.map(a => <option key={a} value={a}>{a}</option>)}
@@ -192,10 +221,11 @@ function LeadForm({ onSubmit }: { onSubmit: (data: { name: string; phone: string
       </div>
       <button
         type="submit"
-        className="w-full bg-primary text-white text-sm font-semibold py-2.5 rounded-lg hover:bg-primary/90 transition-colors"
+        disabled={isSubmitting}
+        className="w-full bg-primary text-white text-sm font-semibold py-2.5 rounded-lg hover:bg-primary/90 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
         data-testid="chatbot-button-submit"
       >
-        Request a Callback
+        {isSubmitting ? "Sending…" : "Request a Callback"}
       </button>
     </form>
   );
@@ -209,7 +239,6 @@ export function ChatWidget() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [hasUnread, setHasUnread] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const chatRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (isOpen) {
@@ -244,11 +273,13 @@ export function ChatWidget() {
   };
 
   const handleQuickReply = (label: string, value: string) => {
-    const userMsg: Message = {
-      id: `${Date.now()}-user`,
-      sender: "user",
-      text: label,
-    };
+    if (value === "main_menu") {
+      const userMsg: Message = { id: `${Date.now()}-user`, sender: "user", text: label };
+      setMessages(prev => prev.map(m => ({ ...m, quickReplies: undefined })).concat(userMsg));
+      addBotMessage("main_menu");
+      return;
+    }
+    const userMsg: Message = { id: `${Date.now()}-user`, sender: "user", text: label };
     setMessages(prev => prev.map(m => ({ ...m, quickReplies: undefined })).concat(userMsg));
     addBotMessage(value);
   };
@@ -259,14 +290,17 @@ export function ChatWidget() {
       const res = await apiRequest("POST", "/api/contact", {
         parentName: data.name,
         phone: data.phone,
+        childName: "Not Provided",
         childAge: data.childAge,
-        message: `Centre preference: ${data.area}`,
+        programme: PROGRAMME_MAP[data.childAge] || "Not sure",
+        branch: data.area,
+        message: `Chat widget enquiry. Preferred centre: ${data.area}`,
         leadSource: "Chatbot",
         leadMedium: "Website Chat Widget",
       });
       const json = await res.json();
       if (json.success) {
-        trackFormSubmit();
+        trackFormSubmit({ formType: "default", parentName: data.name, phone: data.phone, childAge: data.childAge, leadSource: "Chatbot" });
         setFormSubmitted(true);
         const successMsg: Message = {
           id: `${Date.now()}-success`,
@@ -275,17 +309,21 @@ export function ChatWidget() {
           quickReplies: [
             { label: "Our Programmes", value: "programmes" },
             { label: "Our Centres", value: "centres" },
+            BACK_REPLY,
           ],
         };
         setMessages(prev =>
           prev.map(m => (m.isForm ? { ...m, isForm: false } : m)).concat(successMsg)
         );
+      } else {
+        throw new Error("Server returned failure");
       }
     } catch {
       const errMsg: Message = {
         id: `${Date.now()}-err`,
         sender: "bot",
         text: "Oops! Something went wrong. Please try WhatsApp or call us directly at 82915 68972.",
+        quickReplies: [BACK_REPLY],
       };
       setMessages(prev => [...prev, errMsg]);
     } finally {
@@ -294,20 +332,18 @@ export function ChatWidget() {
   };
 
   const renderBotText = (text: string) => {
-    return text.split("\n").map((line, i) => (
+    return text.split("\n").map((line, i, arr) => (
       <span key={i}>
         {line}
-        {i < text.split("\n").length - 1 && <br />}
+        {i < arr.length - 1 && <br />}
       </span>
     ));
   };
 
   return (
     <>
-      {/* Chat Window */}
       {isOpen && (
         <div
-          ref={chatRef}
           className="fixed bottom-24 right-4 sm:right-6 z-50 w-[calc(100vw-2rem)] sm:w-[380px] h-[520px] bg-white rounded-2xl shadow-2xl flex flex-col overflow-hidden border border-gray-100"
           data-testid="chatbot-window"
         >
@@ -356,10 +392,7 @@ export function ChatWidget() {
                         {renderBotText(msg.text)}
                         {msg.isForm && !formSubmitted && (
                           <div className="mt-3 border-t border-gray-100 pt-3">
-                            <LeadForm onSubmit={handleFormSubmit} />
-                            {isSubmitting && (
-                              <p className="text-xs text-center text-gray-500 mt-2">Sending…</p>
-                            )}
+                            <LeadForm onSubmit={handleFormSubmit} isSubmitting={isSubmitting} />
                           </div>
                         )}
                       </div>
