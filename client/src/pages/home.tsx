@@ -146,62 +146,71 @@ function QuickCallbackStrip() {
   };
 
   return (
-    <section className="py-6 md:py-8 bg-primary/5 border-b">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <form onSubmit={handleSubmit} className="flex flex-col md:flex-row items-center gap-4">
-          <div className="flex-1 w-full md:w-auto">
-            <Label htmlFor="quick-parent-name" className="sr-only">Parent Name</Label>
-            <Input
-              id="quick-parent-name"
-              placeholder="Parent Name"
-              value={formData.parentName}
-              onChange={(e) => setFormData({ ...formData, parentName: e.target.value })}
-              className="w-full"
-              data-testid="input-quick-parent-name"
-            />
+    <section className="py-8 md:py-10 relative overflow-hidden border-b">
+      {/* Warm gradient background */}
+      <div className="absolute inset-0 bg-gradient-to-r from-primary/8 via-amber-50/60 to-primary/5 dark:from-primary/10 dark:via-background dark:to-primary/8" />
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-6">
+          {/* Label */}
+          <div className="flex-shrink-0 hidden md:block">
+            <p className="text-sm font-bold text-foreground leading-tight">Quick Callback</p>
+            <p className="text-xs text-muted-foreground">Free consultation</p>
           </div>
-          <div className="flex-1 w-full md:w-auto">
-            <Label htmlFor="quick-phone" className="sr-only">Phone Number</Label>
-            <Input
-              id="quick-phone"
-              placeholder="Phone Number"
-              type="tel"
-              value={formData.phone}
-              onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-              className="w-full"
-              data-testid="input-quick-phone"
-            />
-          </div>
-          <div className="flex-1 w-full md:w-auto">
-            <Label htmlFor="quick-child-age" className="sr-only">Child's Age</Label>
-            <Select
-              value={formData.childAge}
-              onValueChange={(value) => setFormData({ ...formData, childAge: value })}
+          <div className="hidden md:block w-px h-10 bg-border flex-shrink-0" />
+          {/* Form */}
+          <form onSubmit={handleSubmit} className="flex flex-col md:flex-row items-center gap-3 flex-1">
+            <div className="flex-1 w-full md:w-auto">
+              <Label htmlFor="quick-parent-name" className="sr-only">Parent Name</Label>
+              <Input
+                id="quick-parent-name"
+                placeholder="Your Name"
+                value={formData.parentName}
+                onChange={(e) => setFormData({ ...formData, parentName: e.target.value })}
+                className="w-full bg-white/80 dark:bg-background/80 backdrop-blur-sm"
+                data-testid="input-quick-parent-name"
+              />
+            </div>
+            <div className="flex-1 w-full md:w-auto">
+              <Label htmlFor="quick-phone" className="sr-only">Phone Number</Label>
+              <Input
+                id="quick-phone"
+                placeholder="Phone Number"
+                type="tel"
+                value={formData.phone}
+                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                className="w-full bg-white/80 dark:bg-background/80 backdrop-blur-sm"
+                data-testid="input-quick-phone"
+              />
+            </div>
+            <div className="flex-1 w-full md:w-auto">
+              <Label htmlFor="quick-child-age" className="sr-only">Child's Age</Label>
+              <Select
+                value={formData.childAge}
+                onValueChange={(value) => setFormData({ ...formData, childAge: value })}
+              >
+                <SelectTrigger id="quick-child-age" data-testid="select-quick-child-age" className="bg-white/80 dark:bg-background/80 backdrop-blur-sm">
+                  <SelectValue placeholder="Child's Age" />
+                </SelectTrigger>
+                <SelectContent>
+                  {childAgeOptions.map((age) => (
+                    <SelectItem key={age} value={age}>{age}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <Button
+              type="submit"
+              disabled={mutation.isPending}
+              className="w-full md:w-auto px-8 shadow-[0_4px_14px_rgba(239,68,68,0.3)] hover:shadow-[0_6px_18px_rgba(239,68,68,0.4)] transition-all duration-300 hover:-translate-y-0.5 font-semibold"
+              data-testid="button-quick-callback"
             >
-              <SelectTrigger id="quick-child-age" data-testid="select-quick-child-age">
-                <SelectValue placeholder="Child's Age" />
-              </SelectTrigger>
-              <SelectContent>
-                {childAgeOptions.map((age) => (
-                  <SelectItem key={age} value={age}>
-                    {age}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-          <Button 
-            type="submit" 
-            disabled={mutation.isPending}
-            className="w-full md:w-auto px-8"
-            data-testid="button-quick-callback"
-          >
-            {mutation.isPending ? "Sending..." : "Get a Call Back"}
-          </Button>
-        </form>
-        <p className="text-center md:text-left text-xs text-muted-foreground mt-3 flex items-center justify-center md:justify-start gap-1">
-          <Lock className="w-3 h-3" />
-          No spam. One call from our admissions team.
+              {mutation.isPending ? "Sending..." : "Get a Free Callback"}
+            </Button>
+          </form>
+        </div>
+        <p className="text-xs text-muted-foreground mt-3 flex items-center gap-1.5">
+          <Lock className="w-3 h-3 text-green-500" />
+          <span>No spam · One call from our admissions team · Free</span>
         </p>
       </div>
     </section>
@@ -382,48 +391,50 @@ export default function Home() {
               </Link>
             </div>
             <div className="grid grid-cols-2 gap-4" data-stagger="children">
+              {/* Happy Students */}
               <Link href="#testimonials" data-reveal="pop">
-                <Card className="text-center hover-elevate cursor-pointer">
-                  <CardContent className="pt-6">
-                    <Users className="w-10 h-10 text-primary mx-auto mb-3" data-float-icon />
-                    <p className="text-3xl font-bold text-foreground mb-1">
-                      <CountUp end={100000} duration={2000} suffix="+" />
-                    </p>
-                    <p className="text-sm text-muted-foreground">Happy Students</p>
-                  </CardContent>
-                </Card>
+                <div className="relative rounded-2xl overflow-hidden p-5 cursor-pointer group hover:-translate-y-1 transition-all duration-300 bg-gradient-to-br from-primary/10 via-primary/5 to-transparent border border-primary/20 hover:border-primary/40 hover:shadow-lg dark:border-primary/30">
+                  <div className="absolute -top-5 -right-5 w-20 h-20 bg-primary/10 rounded-full" />
+                  <Users className="w-8 h-8 text-primary mb-3 relative z-10" />
+                  <p className="text-4xl font-extrabold text-foreground mb-0.5 relative z-10">
+                    <CountUp end={100000} duration={2000} suffix="+" />
+                  </p>
+                  <p className="text-sm text-muted-foreground font-medium relative z-10">Happy Students</p>
+                </div>
               </Link>
+              {/* Years */}
               <Link href="/about" data-reveal="pop">
-                <Card className="text-center hover-elevate cursor-pointer">
-                  <CardContent className="pt-6">
-                    <Star className="w-10 h-10 text-yellow-400 fill-yellow-400 mx-auto mb-3" data-float-icon />
-                    <p className="text-3xl font-bold text-foreground mb-1">
-                      <CountUp end={18} duration={1500} delay={200} suffix="+" />
-                    </p>
-                    <p className="text-sm text-muted-foreground">Years of Excellence</p>
-                  </CardContent>
-                </Card>
+                <div className="relative rounded-2xl overflow-hidden p-5 cursor-pointer group hover:-translate-y-1 transition-all duration-300 bg-gradient-to-br from-amber-50 via-yellow-50 to-transparent dark:from-amber-950/30 dark:via-yellow-950/20 dark:to-transparent border border-amber-200 dark:border-amber-800/40 hover:border-amber-400 hover:shadow-lg">
+                  <div className="absolute -top-5 -right-5 w-20 h-20 bg-amber-200/40 dark:bg-amber-700/20 rounded-full" />
+                  <Star className="w-8 h-8 text-amber-500 fill-amber-400 mb-3 relative z-10" />
+                  <p className="text-4xl font-extrabold text-foreground mb-0.5 relative z-10">
+                    <CountUp end={18} duration={1500} delay={200} suffix="+" />
+                  </p>
+                  <p className="text-sm text-muted-foreground font-medium relative z-10">Years of Excellence</p>
+                </div>
               </Link>
+              {/* Centres */}
               <Link href="#centres" data-reveal="pop">
-                <Card className="text-center hover-elevate cursor-pointer">
-                  <CardContent className="pt-6">
-                    <MapPin className="w-10 h-10 text-sky-500 mx-auto mb-3" data-float-icon />
-                    <p className="text-3xl font-bold text-foreground mb-1">
-                      <CountUp end={6} duration={1500} delay={400} prefix="0" />
-                    </p>
-                    <p className="text-sm text-muted-foreground">Centres in Thane</p>
-                  </CardContent>
-                </Card>
+                <div className="relative rounded-2xl overflow-hidden p-5 cursor-pointer group hover:-translate-y-1 transition-all duration-300 bg-gradient-to-br from-sky-50 via-blue-50 to-transparent dark:from-sky-950/30 dark:via-blue-950/20 dark:to-transparent border border-sky-200 dark:border-sky-800/40 hover:border-sky-400 hover:shadow-lg">
+                  <div className="absolute -top-5 -right-5 w-20 h-20 bg-sky-200/40 dark:bg-sky-700/20 rounded-full" />
+                  <MapPin className="w-8 h-8 text-sky-500 mb-3 relative z-10" />
+                  <p className="text-4xl font-extrabold text-foreground mb-0.5 relative z-10">
+                    <CountUp end={6} duration={1500} delay={400} prefix="0" />
+                  </p>
+                  <p className="text-sm text-muted-foreground font-medium relative z-10">Centres in Thane</p>
+                </div>
               </Link>
-              <Card className="text-center" data-reveal="pop">
-                <CardContent className="pt-6">
-                  <Shield className="w-10 h-10 text-green-500 mx-auto mb-3" data-float-icon />
-                  <p className="text-3xl font-bold text-foreground mb-1">
+              {/* Female Staff */}
+              <div data-reveal="pop">
+                <div className="relative rounded-2xl overflow-hidden p-5 bg-gradient-to-br from-green-50 via-emerald-50 to-transparent dark:from-green-950/30 dark:via-emerald-950/20 dark:to-transparent border border-green-200 dark:border-green-800/40">
+                  <div className="absolute -top-5 -right-5 w-20 h-20 bg-green-200/40 dark:bg-green-700/20 rounded-full" />
+                  <Shield className="w-8 h-8 text-green-500 mb-3 relative z-10" />
+                  <p className="text-4xl font-extrabold text-foreground mb-0.5 relative z-10">
                     <CountUp end={100} duration={1500} delay={600} suffix="%" />
                   </p>
-                  <p className="text-sm text-muted-foreground">Female Staff</p>
-                </CardContent>
-              </Card>
+                  <p className="text-sm text-muted-foreground font-medium relative z-10">Female Staff</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -468,18 +479,21 @@ export default function Home() {
       </Suspense>
 
       {/* Testimonials Section - Local SEO Enhanced */}
-      <section id="testimonials" className="py-16 md:py-20 lg:py-24 bg-card cv-auto">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="testimonials" className="py-16 md:py-20 lg:py-24 relative overflow-hidden cv-auto">
+        {/* Diagonal gradient background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-amber-50/80 via-background to-primary/5 dark:from-amber-950/20 dark:via-background dark:to-primary/10" />
+        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-amber-300/50 to-transparent" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-12" data-reveal="float">
             <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">Testimonials</p>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4" data-sparkle>Parents from Thane Say...</h2>
-            <div className="flex items-center justify-center gap-2 mt-4">
-              <SiGoogle className="w-5 h-5" />
-              <span className="font-semibold">4.7</span>
-              <div className="flex items-center">
-                {[1,2,3,4,5].map(i => <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />)}
+            <h2 className="text-3xl md:text-4xl font-bold mb-2" data-sparkle>Parents from Thane Say...</h2>
+            <div className="flex items-center justify-center gap-2 mt-4 bg-white/60 dark:bg-background/60 backdrop-blur-sm rounded-full px-5 py-2 inline-flex mx-auto border border-amber-200/60 dark:border-amber-700/30 w-fit">
+              <SiGoogle className="w-4 h-4 text-gray-600 dark:text-gray-400" />
+              <span className="font-bold text-foreground">4.7</span>
+              <div className="flex items-center gap-0.5">
+                {[1,2,3,4,5].map(i => <Star key={i} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />)}
               </div>
-              <span className="text-muted-foreground text-sm">(397 reviews)</span>
+              <span className="text-muted-foreground text-sm">· 397 Google reviews</span>
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
