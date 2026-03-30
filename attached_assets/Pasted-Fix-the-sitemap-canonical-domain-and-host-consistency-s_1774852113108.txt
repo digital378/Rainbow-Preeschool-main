@@ -1,0 +1,108 @@
+Fix the sitemap, canonical domain, and host consistency setup for rainbowpreschools.com so Google only sees one preferred sitemap/domain version and the old duplicate/error sitemap entries stop causing confusion.
+
+CONTEXT
+Google Search Console currently shows multiple sitemap variants such as:
+- https://www.rainbowpreschools.com/sitemap.xml
+- https://rainbowpreschools.com/sitemap.xml
+- https://rainbowpreschools.com/sitemap_index.xml
+- http://rainbowpreschools.com/sitemap.xml
+- http://www.rainbowpreschools.com/sitemap.xml
+
+Some are successful, some show errors, and some are outdated.
+We need to clean this up properly at the website/app level.
+
+PRIMARY GOAL
+Make the website use one single canonical domain and one single sitemap URL consistently across:
+- redirects
+- canonical tags
+- sitemap generation
+- robots.txt
+- internal links if relevant
+
+IMPORTANT
+Do not redesign the website.
+Do not change page content.
+This is a technical SEO / domain consistency fix.
+
+PREFERRED DOMAIN LOGIC
+Set the canonical primary domain to:
+https://www.rainbowpreschools.com
+
+This must be the preferred version everywhere.
+
+TECHNICAL TASKS TO IMPLEMENT
+
+1. CANONICAL HOST ENFORCEMENT
+Set up permanent redirects so only the preferred canonical host resolves as the final version.
+
+Required behavior:
+- redirect https://rainbowpreschools.com/* → https://www.rainbowpreschools.com/*
+- redirect http://rainbowpreschools.com/* → https://www.rainbowpreschools.com/*
+- redirect http://www.rainbowpreschools.com/* → https://www.rainbowpreschools.com/*
+
+Use 301 permanent redirects.
+
+No duplicate host versions should remain indexable.
+
+2. SITEMAP CONSISTENCY
+Ensure the site exposes only one valid sitemap URL for the canonical domain:
+
+https://www.rainbowpreschools.com/sitemap.xml
+
+If sitemap generation is automatic, make sure it always uses the canonical host only.
+If an old sitemap_index.xml path exists but is invalid or obsolete, remove or redirect it appropriately.
+
+3. ROBOTS.TXT CLEANUP
+Update robots.txt so it references only this canonical sitemap URL:
+
+Sitemap: https://www.rainbowpreschools.com/sitemap.xml
+
+Do not list multiple sitemap URLs.
+
+4. CANONICAL TAG CLEANUP
+Ensure every page outputs canonical tags using only:
+https://www.rainbowpreschools.com
+
+No page should point to the non-www version.
+
+5. INTERNAL URL CONSISTENCY
+Check whether important internal links, generated URLs, metadata, or any sitewide config are using mixed hostnames.
+Standardize them to the canonical domain:
+https://www.rainbowpreschools.com
+
+6. STRUCTURED DATA URL CONSISTENCY
+If schema markup contains page URLs, logo URLs, organization URLs, sameAs URLs, breadcrumb item URLs, or any absolute URLs, make sure they use:
+https://www.rainbowpreschools.com
+
+7. HANDLE LEGACY/ERROR SITEMAP PATHS
+Review old sitemap paths such as:
+- /sitemap_index.xml
+- http://rainbowpreschools.com/sitemap.xml
+- http://www.rainbowpreschools.com/sitemap.xml
+- https://rainbowpreschools.com/sitemap.xml
+
+If they are obsolete:
+- either 301 redirect them to https://www.rainbowpreschools.com/sitemap.xml if appropriate
+- or return the correct response in a clean way that does not keep them as active duplicate sitemap sources
+
+8. DO NOT CHANGE BUSINESS CONTENT
+Do not modify landing page copy, layout, forms, or UI beyond anything strictly needed for this technical SEO fix.
+
+9. VALIDATION
+After implementing the fix, ensure:
+- all host variants redirect correctly to https://www.rainbowpreschools.com
+- robots.txt points to one sitemap only
+- canonical tags use https://www.rainbowpreschools.com only
+- sitemap is accessible at https://www.rainbowpreschools.com/sitemap.xml
+- old invalid variants no longer behave like competing sitemap sources
+
+10. OUTPUT EXPECTATION
+Apply this fix directly in the existing Replit website project.
+
+At the end, provide:
+1. confirmation that https://www.rainbowpreschools.com was set as canonical
+2. which redirect rules were applied
+3. final sitemap URL
+4. robots.txt sitemap line used
+5. whether old sitemap variants were redirected or removed
+6. any follow-up step needed in Google Search Console

@@ -84,8 +84,7 @@ const redirectMap: Record<string, string> = {
   "/mulund-west/": "/",
 
   // ── Gallery / media ────────────────────────────────────────────────────────
-  "/gallery": "/about",
-  "/gallery/": "/about",
+  "/gallery/": "/gallery",
   "/photos": "/about",
   "/images": "/about",
   "/gallery-category/rainbow": "/about",
@@ -206,13 +205,28 @@ const redirectMap: Record<string, string> = {
 };
 
 export function setupRedirects(app: Express) {
-  // ── 1. www canonicalization (production fallback; Cloudflare handles primary) ──
+  // ── 1. Canonical host enforcement (production only) ────────────────────────
+  // Enforces https://www.rainbowpreschools.com as the single canonical host.
+  // Handles all four non-canonical variants:
+  //   http://rainbowpreschools.com/*  → https://www.rainbowpreschools.com/*
+  //   http://www.rainbowpreschools.com/* → https://www.rainbowpreschools.com/*
+  //   https://rainbowpreschools.com/* → https://www.rainbowpreschools.com/*
+  //   (www + https is the canonical — no redirect needed)
   app.use((req: Request, res: Response, next: NextFunction) => {
+    if (process.env.NODE_ENV !== "production") return next();
     const host = req.get("host") || "";
-    if (process.env.NODE_ENV === "production" && host === "rainbowpreschools.com") {
+    const proto = req.get("x-forwarded-proto") || req.protocol || "https";
+    const isNonWww = host === "rainbowpreschools.com";
+    const isHttp = proto === "http";
+    if (isNonWww || isHttp) {
       return res.redirect(301, `https://www.rainbowpreschools.com${req.originalUrl}`);
     }
     next();
+  });
+
+  // ── 1b. Legacy sitemap_index.xml → canonical sitemap ──────────────────────
+  app.get(["/sitemap_index.xml", "/sitemap-index.xml"], (_req: Request, res: Response) => {
+    res.redirect(301, "https://www.rainbowpreschools.com/sitemap.xml");
   });
 
   // ── 2. Main redirect middleware ────────────────────────────────────────────
