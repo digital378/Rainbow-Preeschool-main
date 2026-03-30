@@ -124,43 +124,31 @@ const whyUs = [
 const programmes = [
   {
     href: "/playgroup",
-    color: "border-yellow-200 dark:border-yellow-800 bg-yellow-50 dark:bg-yellow-950/40",
-    iconColor: "bg-yellow-100 dark:bg-yellow-900/50 text-yellow-600",
-    icon: Star,
+    borderColor: "border-l-yellow-400",
     name: "Playgroup in Thane",
-    age: "Ages 1.5 – 2.5 years",
+    age: "1.5 – 2.5 years",
     desc: "A gentle introduction to structured learning through sensory play, music, movement, and social interaction. Builds confidence and curiosity in young toddlers.",
-    focus: "Sensory development · Social skills · Language foundations",
   },
   {
     href: "/nursery",
-    color: "border-blue-200 dark:border-blue-800 bg-blue-50 dark:bg-blue-950/40",
-    iconColor: "bg-blue-100 dark:bg-blue-900/50 text-blue-600",
-    icon: BookOpen,
+    borderColor: "border-l-blue-400",
     name: "Nursery in Thane",
-    age: "Ages 2.5 – 3.5 years",
+    age: "2.5 – 3.5 years",
     desc: "Foundation-building in early phonics, numbers, art, and language. Children explore the world with curiosity while developing key pre-reading and pre-writing skills.",
-    focus: "Phonics · Numeracy · Creative arts",
   },
   {
     href: "/kindergarten",
-    color: "border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-950/40",
-    iconColor: "bg-green-100 dark:bg-green-900/50 text-green-600",
-    icon: GraduationCap,
+    borderColor: "border-l-green-400",
     name: "Kindergarten in Thane",
-    age: "Ages 3.5 – 5.5 years (Jr. & Sr. KG)",
+    age: "3.5 – 5.5 years",
     desc: "Comprehensive school-readiness covering advanced literacy, numeracy, science thinking, and life skills. Prepares children confidently for Class 1 and beyond.",
-    focus: "School readiness · Critical thinking · Life skills",
   },
   {
     href: "/happy-times",
-    color: "border-pink-200 dark:border-pink-800 bg-pink-50 dark:bg-pink-950/40",
-    iconColor: "bg-pink-100 dark:bg-pink-900/50 text-pink-600",
-    icon: Heart,
+    borderColor: "border-l-pink-400",
     name: "Happy Times in Thane",
-    age: "Ages 3 – 10 years",
-    desc: "After-school enrichment programme combining homework support, creative arts, sports, and personality development in a fun, structured environment.",
-    focus: "After-school care · Enrichment · Character building",
+    age: "3 – 10 years",
+    desc: "After-school enrichment combining homework support, creative arts, sports, and personality development in a fun, structured environment.",
   },
 ];
 
@@ -467,18 +455,15 @@ export default function BestPreschoolInThane() {
                 <p className="text-sm md:text-base text-gray-600 dark:text-gray-300 text-center max-w-3xl mx-auto mb-6 md:mb-8">
                   From playgroup to kindergarten and after-school enrichment, Rainbow offers carefully designed programmes for every stage of early childhood in Thane.
                 </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {programmes.map((prog, idx) => (
-                    <Link key={idx} href={prog.href} className={`block p-4 rounded-xl border ${prog.color} hover:shadow-md transition-shadow group`}>
-                      <div className={`w-10 h-10 ${prog.iconColor} rounded-lg flex items-center justify-center mb-3`}>
-                        <prog.icon className="w-5 h-5" />
+                    <Link key={idx} href={prog.href} className={`block p-4 md:p-5 bg-white dark:bg-gray-800 rounded-xl border-l-4 ${prog.borderColor} border border-gray-200 dark:border-gray-700 hover:shadow-md transition-all`}>
+                      <div className="flex items-center justify-between mb-1">
+                        <h3 className="font-bold text-gray-900 dark:text-white text-base md:text-lg">{prog.name}</h3>
+                        <span className="text-sm font-semibold text-primary whitespace-nowrap ml-2">{prog.age}</span>
                       </div>
-                      <h3 className="font-semibold text-gray-900 dark:text-white text-sm md:text-base mb-1 group-hover:text-primary transition-colors">{prog.name}</h3>
-                      <p className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-2 flex items-center gap-1">
-                        <Clock className="w-3 h-3" /> {prog.age}
-                      </p>
-                      <p className="text-xs md:text-sm text-gray-600 dark:text-gray-300 leading-relaxed mb-3">{prog.desc}</p>
-                      <p className="text-xs text-gray-400 dark:text-gray-500 italic">{prog.focus}</p>
+                      <p className="text-xs md:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">{prog.desc}</p>
+                      <span className="text-xs text-primary font-medium mt-2 inline-block">View programme →</span>
                     </Link>
                   ))}
                 </div>
