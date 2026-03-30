@@ -218,24 +218,6 @@ function StickyMobileCTA() {
 
   return (
     <>
-      <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-background border-t shadow-lg p-3 flex gap-2">
-        <Button
-          className="flex-1"
-          onClick={() => setShowForm(true)}
-          data-testid="button-ps-sticky-callback"
-        >
-          <Phone className="w-4 h-4 mr-2" /> Request Callback
-        </Button>
-        <Button
-          variant="outline"
-          className="flex-1"
-          onClick={() => window.open("https://wa.me/918291568972?text=Hi, I'm looking for a play school near me in Thane", "_blank")}
-          data-testid="button-ps-sticky-whatsapp"
-        >
-          <SiWhatsapp className="w-4 h-4 mr-2" /> WhatsApp Us
-        </Button>
-      </div>
-
       {showForm && (
         <div className="fixed inset-0 z-50 bg-black/50 flex items-end md:items-center justify-center p-4" role="dialog" aria-modal="true" aria-label="Request callback form">
           <Card className="w-full max-w-md max-h-[90vh] overflow-y-auto">

@@ -10,7 +10,6 @@ import { DayTimeline } from "./day-timeline";
 import { CentreCardWithMap } from "./centre-card-with-map";
 import { FAQAccordion } from "./faq-accordion";
 import { FinalCTA } from "./final-cta";
-import { StickyCTABar } from "./sticky-cta-bar";
 import { pushToDataLayer } from "@/lib/analytics";
 
 interface PlaygroupLandingTemplateProps {
@@ -215,14 +214,6 @@ export function PlaygroupLandingTemplate({ data }: PlaygroupLandingTemplateProps
         onWhatsAppClick={handleWhatsAppClick}
       />
 
-      <StickyCTABar
-        phoneNumber={phoneNumber}
-        whatsappNumber={whatsappNumber}
-        locality={data.localityName}
-        onCallClick={handleCallClick}
-        onWhatsAppClick={handleWhatsAppClick}
-        onCallbackClick={scrollToForm}
-      />
     </div>
   );
 }

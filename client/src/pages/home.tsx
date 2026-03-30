@@ -21,7 +21,7 @@ import { programmes, branches, testimonials } from "@shared/schema";
 import { preschoolLandingPages } from "@shared/centre-data";
 import { pushToDataLayer } from "@/lib/analytics";
 import { ArrowRight, Star, Users, MapPin, Shield, Lock, Phone, Award, FileText, Palette, BookOpen, GraduationCap } from "lucide-react";
-import { SiGoogle, SiWhatsapp } from "react-icons/si";
+import { SiGoogle } from "react-icons/si";
 import { useState, useEffect, lazy, Suspense } from "react";
 
 const WhyChooseUs = lazy(() => import("@/components/why-choose-us").then(m => ({ default: m.WhyChooseUs })));
@@ -637,28 +637,6 @@ export default function Home() {
         <CTASection />
       </Suspense>
 
-      {/* Sticky Mobile CTA */}
-      <div className="fixed bottom-0 left-0 right-0 z-40 md:hidden bg-background border-t p-3 flex items-center gap-2">
-        <Link href="/contact" className="flex-1">
-          <Button className="w-full" onClick={() => trackCTAClick("request_callback", "sticky_mobile")}>
-            <Phone className="mr-2 h-4 w-4" />
-            Request Callback
-          </Button>
-        </Link>
-        <a 
-          href="https://wa.me/918291568972?text=Hi%2C%20I%20would%20like%20to%20know%20more%20about%20Rainbow%20Preschool"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="shrink-0"
-        >
-          <Button variant="outline" size="icon" aria-label="Chat on WhatsApp" onClick={() => trackCTAClick("whatsapp_chat", "sticky_mobile")}>
-            <SiWhatsapp className="h-5 w-5 text-green-500" />
-          </Button>
-        </a>
-      </div>
-      
-      {/* Spacer for sticky mobile CTA */}
-      <div className="h-16 md:hidden" />
     </div>
   );
 }

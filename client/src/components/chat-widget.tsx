@@ -344,7 +344,7 @@ export function ChatWidget() {
     <>
       {isOpen && (
         <div
-          className="fixed bottom-[148px] md:bottom-24 right-4 sm:right-6 z-50 w-[calc(100vw-2rem)] sm:w-[380px] h-[480px] md:h-[520px] bg-white rounded-2xl shadow-2xl flex flex-col overflow-hidden border border-gray-100"
+          className="fixed bottom-24 right-4 sm:right-6 z-50 w-[calc(100vw-2rem)] sm:w-[380px] h-[520px] bg-white rounded-2xl shadow-2xl flex flex-col overflow-hidden border border-gray-100"
           data-testid="chatbot-window"
         >
           {/* Header */}
@@ -435,21 +435,28 @@ export function ChatWidget() {
       )}
 
       {/* Toggle Button */}
-      <button
-        onClick={() => setIsOpen(prev => !prev)}
-        className="fixed bottom-20 md:bottom-6 right-4 sm:right-6 z-50 w-14 h-14 rounded-full bg-primary flex items-center justify-center shadow-[0_4px_16px_rgba(220,38,38,0.45)] hover:bg-primary/90 hover:shadow-[0_6px_20px_rgba(220,38,38,0.55)] transition-all duration-300 hover:-translate-y-0.5"
-        data-testid="chatbot-button-toggle"
-        aria-label={isOpen ? "Close chat" : "Open chat"}
-      >
-        {isOpen ? (
-          <X className="w-6 h-6 text-white" />
-        ) : (
-          <MessageCircle className="w-6 h-6 text-white" />
+      <div className="fixed bottom-6 right-4 sm:right-6 z-50 flex items-center gap-2 group">
+        {!isOpen && (
+          <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-gray-900 text-white text-xs font-medium px-3 py-1.5 rounded-full whitespace-nowrap shadow-lg pointer-events-none">
+            Ask me anything
+          </span>
         )}
-        {!isOpen && hasUnread && (
-          <span className="absolute -top-1 -right-1 w-4 h-4 bg-yellow-400 rounded-full border-2 border-white" />
-        )}
-      </button>
+        <button
+          onClick={() => setIsOpen(prev => !prev)}
+          className="w-14 h-14 rounded-full bg-primary flex items-center justify-center shadow-[0_4px_16px_rgba(220,38,38,0.45)] hover:bg-primary/90 hover:shadow-[0_6px_20px_rgba(220,38,38,0.55)] transition-all duration-300 hover:-translate-y-0.5 relative"
+          data-testid="chatbot-button-toggle"
+          aria-label={isOpen ? "Close chat" : "Open chat"}
+        >
+          {isOpen ? (
+            <X className="w-6 h-6 text-white" />
+          ) : (
+            <MessageCircle className="w-6 h-6 text-white" />
+          )}
+          {!isOpen && hasUnread && (
+            <span className="absolute -top-1 -right-1 w-4 h-4 bg-yellow-400 rounded-full border-2 border-white" />
+          )}
+        </button>
+      </div>
     </>
   );
 }
