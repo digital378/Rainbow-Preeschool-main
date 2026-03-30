@@ -2477,7 +2477,7 @@ Object.assign(legacyPagesData, {
     relatedLinks: [
       { title: "About Rainbow Preschool", url: "/about", description: "Learn our story since 2007" },
       { title: "Our Programmes", url: "/programmes", description: "Explore Playgroup, Nursery, Kindergarten" },
-      { title: "Admissions", url: "/admissions", description: "Enroll your child" },
+      { title: "Admissions", url: "/preschool-admissions", description: "Enroll your child" },
       { title: "Contact Us", url: "/contact", description: "Schedule a campus visit" }
     ],
     internalLinks: commonInternalLinks,
@@ -2558,7 +2558,7 @@ Object.assign(legacyPagesData, {
       { title: "About Rainbow Preschool", url: "/about", description: "Why we're Thane's top choice" },
       { title: "Our Programmes", url: "/programmes", description: "Playgroup, Nursery, Kindergarten" },
       { title: "Our Centres", url: "/contact", description: "6 locations across Thane" },
-      { title: "Admissions", url: "/admissions", description: "Enroll your child today" }
+      { title: "Admissions", url: "/preschool-admissions", description: "Enroll your child today" }
     ],
     internalLinks: commonInternalLinks,
     category: "Education"
@@ -2682,7 +2682,7 @@ Object.assign(legacyPagesData, {
       { title: "About Rainbow Preschool", url: "/about", description: "Our commitment to quality" },
       { title: "Our Programmes", url: "/programmes", description: "Quality curriculum details" },
       { title: "Contact Us", url: "/contact", description: "Schedule a quality check visit" },
-      { title: "Admissions", url: "/admissions", description: "Join a quality preschool" }
+      { title: "Admissions", url: "/preschool-admissions", description: "Join a quality preschool" }
     ],
     internalLinks: commonInternalLinks,
     category: "Parenting Tips"
@@ -2783,7 +2783,7 @@ Object.assign(legacyPagesData, {
     relatedLinks: [
       { title: "Our Programmes", url: "/programmes", description: "Structured early education" },
       { title: "Playgroup", url: "/playgroup", description: "For ages 1.5-2.5 years" },
-      { title: "Admissions", url: "/admissions", description: "Enroll your child" },
+      { title: "Admissions", url: "/preschool-admissions", description: "Enroll your child" },
       { title: "Contact Us", url: "/contact", description: "Discuss your needs" }
     ],
     internalLinks: commonInternalLinks,
@@ -2863,7 +2863,7 @@ Object.assign(legacyPagesData, {
       { title: "Our Programmes", url: "/programmes", description: "NEP 2020 aligned curriculum" },
       { title: "About Us", url: "/about", description: "18+ years of ECE excellence" },
       { title: "Playgroup", url: "/playgroup", description: "Start at 1.5 years" },
-      { title: "Admissions", url: "/admissions", description: "Begin your child's journey" }
+      { title: "Admissions", url: "/preschool-admissions", description: "Begin your child's journey" }
     ],
     internalLinks: commonInternalLinks,
     category: "Education"
@@ -2947,7 +2947,7 @@ Object.assign(legacyPagesData, {
       { title: "About Us", url: "/about", description: "Learn more about Rainbow Preschool" },
       { title: "Our Programmes", url: "/programmes", description: "Explore our curriculum" },
       { title: "Our Centres", url: "/contact", description: "Find a centre near you" },
-      { title: "Admissions", url: "/admissions", description: "Join the Rainbow family" }
+      { title: "Admissions", url: "/preschool-admissions", description: "Join the Rainbow family" }
     ],
     internalLinks: commonInternalLinks,
     category: "About Rainbow"
@@ -3144,7 +3144,7 @@ Object.assign(legacyPagesData, {
     relatedLinks: [
       { title: "About Us", url: "/about", description: "Our story since 2007" },
       { title: "Our Programmes", url: "/programmes", description: "What parents love" },
-      { title: "Admissions", url: "/admissions", description: "Join our family" },
+      { title: "Admissions", url: "/preschool-admissions", description: "Join our family" },
       { title: "Contact Us", url: "/contact", description: "Visit and meet parents" }
     ],
     internalLinks: commonInternalLinks,
@@ -3240,7 +3240,7 @@ Object.assign(legacyPagesData, {
     relatedLinks: [
       { title: "About Us", url: "/about", description: "Our commitment to safety" },
       { title: "Our Centres", url: "/contact", description: "Visit and see our safety" },
-      { title: "Admissions", url: "/admissions", description: "Join a safe environment" }
+      { title: "Admissions", url: "/preschool-admissions", description: "Join a safe environment" }
     ],
     internalLinks: commonInternalLinks,
     category: "About Rainbow"
@@ -3398,7 +3398,7 @@ Object.assign(legacyPagesData, {
     relatedLinks: [
       { title: "Our Programmes", url: "/programmes", description: "NEP 2020 aligned curriculum" },
       { title: "About Us", url: "/about", description: "Our educational philosophy" },
-      { title: "Admissions", url: "/admissions", description: "Join an NEP-aligned preschool" }
+      { title: "Admissions", url: "/preschool-admissions", description: "Join an NEP-aligned preschool" }
     ],
     internalLinks: commonInternalLinks,
     category: "Education"
@@ -3581,7 +3581,7 @@ Object.assign(legacyPagesData, {
       { title: "Playgroup", url: "/playgroup", description: "Ages 1.5-2.5 years" },
       { title: "Nursery", url: "/nursery", description: "Ages 2.5-3.5 years" },
       { title: "Kindergarten", url: "/kindergarten", description: "Ages 3.5-5.5 years" },
-      { title: "Admissions", url: "/admissions", description: "Start your child's journey" }
+      { title: "Admissions", url: "/preschool-admissions", description: "Start your child's journey" }
     ],
     internalLinks: commonInternalLinks,
     category: "Education"
@@ -3679,7 +3679,7 @@ Object.assign(legacyPagesData, {
     relatedLinks: [
       { title: "Playgroup Programme", url: "/playgroup", description: "For ages 1.5-2.5" },
       { title: "Nursery Programme", url: "/nursery", description: "Next step after Playgroup" },
-      { title: "Admissions", url: "/admissions", description: "Enroll your toddler" },
+      { title: "Admissions", url: "/preschool-admissions", description: "Enroll your toddler" },
       { title: "Contact Us", url: "/contact", description: "Learn more" }
     ],
     internalLinks: commonInternalLinks,
@@ -3765,7 +3765,7 @@ Object.assign(legacyPagesData, {
     ],
     relatedLinks: [
       { title: "Playgroup Programme", url: "/playgroup", description: "For ages 1.5-2.5" },
-      { title: "Admissions", url: "/admissions", description: "Enroll your child" },
+      { title: "Admissions", url: "/preschool-admissions", description: "Enroll your child" },
       { title: "Contact Us", url: "/contact", description: "Visit us" }
     ],
     internalLinks: commonInternalLinks,
@@ -3972,7 +3972,7 @@ Object.assign(legacyPagesData, {
     relatedLinks: [
       { title: "Playgroup Programme", url: "/playgroup", description: "Programme details" },
       { title: "Benefits of Playgroup", url: "/benefits-playgroup-toddlers-development", description: "Why playgroup matters" },
-      { title: "Admissions", url: "/admissions", description: "Enroll your toddler" }
+      { title: "Admissions", url: "/preschool-admissions", description: "Enroll your toddler" }
     ],
     internalLinks: commonInternalLinks,
     category: "Education"
@@ -4051,7 +4051,7 @@ Object.assign(legacyPagesData, {
     relatedLinks: [
       { title: "Playgroup Programme", url: "/playgroup", description: "For ages 1.5-2.5" },
       { title: "Nursery Programme", url: "/nursery", description: "For ages 2.5-3.5" },
-      { title: "Admissions", url: "/admissions", description: "Enroll your child" },
+      { title: "Admissions", url: "/preschool-admissions", description: "Enroll your child" },
       { title: "Contact Us", url: "/contact", description: "Get guidance" }
     ],
     internalLinks: commonInternalLinks,
@@ -4144,7 +4144,7 @@ Object.assign(legacyPagesData, {
       { title: "Nursery Programme", url: "/nursery", description: "Ages 2.5-3.5" },
       { title: "Playgroup Programme", url: "/playgroup", description: "Prior stage" },
       { title: "Kindergarten", url: "/kindergarten", description: "Next step" },
-      { title: "Admissions", url: "/admissions", description: "Enroll now" }
+      { title: "Admissions", url: "/preschool-admissions", description: "Enroll now" }
     ],
     internalLinks: commonInternalLinks,
     category: "Education"
@@ -4210,7 +4210,7 @@ Object.assign(legacyPagesData, {
       { title: "Playgroup", url: "/playgroup", description: "Ages 1.5-2.5" },
       { title: "Nursery", url: "/nursery", description: "Ages 2.5-3.5" },
       { title: "All Programmes", url: "/programmes", description: "Overview" },
-      { title: "Admissions", url: "/admissions", description: "Enroll" }
+      { title: "Admissions", url: "/preschool-admissions", description: "Enroll" }
     ],
     internalLinks: commonInternalLinks,
     category: "Education"
@@ -4320,7 +4320,7 @@ Object.assign(legacyPagesData, {
       { title: "Nursery Programme", url: "/nursery", description: "Programme details" },
       { title: "Our Programmes", url: "/programmes", description: "All programmes" },
       { title: "Kindergarten", url: "/kindergarten", description: "Next step" },
-      { title: "Admissions", url: "/admissions", description: "Enroll now" }
+      { title: "Admissions", url: "/preschool-admissions", description: "Enroll now" }
     ],
     internalLinks: commonInternalLinks,
     category: "Education"
@@ -4414,7 +4414,7 @@ Object.assign(legacyPagesData, {
     relatedLinks: [
       { title: "Nursery Programme", url: "/nursery", description: "About our Nursery" },
       { title: "Separation Anxiety Tips", url: "/separation-anxiety-playgroup-tips-parents", description: "Managing transitions" },
-      { title: "Admissions", url: "/admissions", description: "Start enrollment" },
+      { title: "Admissions", url: "/preschool-admissions", description: "Start enrollment" },
       { title: "Contact Us", url: "/contact", description: "Schedule a visit" }
     ],
     internalLinks: commonInternalLinks,
@@ -4486,7 +4486,7 @@ Object.assign(legacyPagesData, {
     ],
     relatedLinks: [
       { title: "Nursery Programme", url: "/nursery", description: "Programme details" },
-      { title: "Admissions", url: "/admissions", description: "Apply now" },
+      { title: "Admissions", url: "/preschool-admissions", description: "Apply now" },
       { title: "Our Programmes", url: "/programmes", description: "All age groups" },
       { title: "Contact Us", url: "/contact", description: "Enquire" }
     ],
@@ -4592,7 +4592,7 @@ Object.assign(legacyPagesData, {
     relatedLinks: [
       { title: "Kindergarten", url: "/kindergarten", description: "Jr. KG & Sr. KG" },
       { title: "Nursery", url: "/nursery", description: "Build readiness here" },
-      { title: "Admissions", url: "/admissions", description: "Enroll now" }
+      { title: "Admissions", url: "/preschool-admissions", description: "Enroll now" }
     ],
     internalLinks: commonInternalLinks,
     category: "Education"
@@ -4669,7 +4669,7 @@ Object.assign(legacyPagesData, {
     relatedLinks: [
       { title: "Kindergarten", url: "/kindergarten", description: "Full programme" },
       { title: "Nursery", url: "/nursery", description: "Prior step" },
-      { title: "Admissions", url: "/admissions", description: "Join now" }
+      { title: "Admissions", url: "/preschool-admissions", description: "Join now" }
     ],
     internalLinks: commonInternalLinks,
     category: "Education"
@@ -4761,7 +4761,7 @@ Object.assign(legacyPagesData, {
     relatedLinks: [
       { title: "Kindergarten", url: "/kindergarten", description: "Programme details" },
       { title: "Our Programmes", url: "/programmes", description: "All programmes" },
-      { title: "Admissions", url: "/admissions", description: "Enroll now" }
+      { title: "Admissions", url: "/preschool-admissions", description: "Enroll now" }
     ],
     internalLinks: commonInternalLinks,
     category: "Education"
@@ -4845,7 +4845,7 @@ Object.assign(legacyPagesData, {
       { title: "Kindergarten", url: "/kindergarten", description: "Our programme" },
       { title: "About Us", url: "/about", description: "Why Rainbow" },
       { title: "Our Centres", url: "/contact", description: "Visit us" },
-      { title: "Admissions", url: "/admissions", description: "Apply now" }
+      { title: "Admissions", url: "/preschool-admissions", description: "Apply now" }
     ],
     internalLinks: commonInternalLinks,
     category: "Parenting Tips"
@@ -4915,7 +4915,7 @@ Object.assign(legacyPagesData, {
     ],
     relatedLinks: [
       { title: "Kindergarten Programme", url: "/kindergarten", description: "What children learn" },
-      { title: "Admissions", url: "/admissions", description: "Apply now" },
+      { title: "Admissions", url: "/preschool-admissions", description: "Apply now" },
       { title: "Our Centres", url: "/contact", description: "Find a centre" }
     ],
     internalLinks: commonInternalLinks,
@@ -5000,7 +5000,7 @@ Object.assign(legacyPagesData, {
       { question: "Do I need to prepare my child for admission?", answer: "No formal preparation is needed. Preschool admission at Rainbow Preschool involves basic interaction, not tests. Focus on making your child comfortable about starting school." }
     ],
     relatedLinks: [
-      { title: "Admissions", url: "/admissions", description: "Apply now" },
+      { title: "Admissions", url: "/preschool-admissions", description: "Apply now" },
       { title: "Contact Us", url: "/contact", description: "Visit our centres" },
       { title: "Our Programmes", url: "/programmes", description: "Choose a programme" }
     ],
@@ -5061,7 +5061,7 @@ Object.assign(legacyPagesData, {
       { question: "Do I need my child's Aadhaar for preschool?", answer: "Aadhaar is helpful but not always mandatory. If you don't have it, you can still proceed with admission and provide it later." }
     ],
     relatedLinks: [
-      { title: "Admissions", url: "/admissions", description: "Start application" },
+      { title: "Admissions", url: "/preschool-admissions", description: "Start application" },
       { title: "Admission Process", url: "/preschool-admission-process-explained", description: "Step-by-step guide" },
       { title: "Contact Us", url: "/contact", description: "Ask questions" }
     ],
@@ -5138,7 +5138,7 @@ Object.assign(legacyPagesData, {
       { question: "What if I miss the admission deadline?", answer: "Some schools maintain waiting lists or accept admissions later. Contact schools directly to check. Rainbow Preschool offers flexible admission timelines." }
     ],
     relatedLinks: [
-      { title: "Admissions", url: "/admissions", description: "Apply now" },
+      { title: "Admissions", url: "/preschool-admissions", description: "Apply now" },
       { title: "Our Programmes", url: "/programmes", description: "Choose programme" },
       { title: "Contact Us", url: "/contact", description: "Enquire" }
     ],
@@ -5235,7 +5235,7 @@ Object.assign(legacyPagesData, {
       { question: "What should I look for during a preschool visit?", answer: "Observe how teachers interact with children, cleanliness and safety of facilities, how happy children appear, and the overall environment." }
     ],
     relatedLinks: [
-      { title: "Admissions", url: "/admissions", description: "Start process" },
+      { title: "Admissions", url: "/preschool-admissions", description: "Start process" },
       { title: "Our Programmes", url: "/programmes", description: "Learn about programmes" },
       { title: "Contact Us", url: "/contact", description: "Schedule visit" }
     ],
@@ -5308,7 +5308,7 @@ Object.assign(legacyPagesData, {
       { question: "How can I get Rainbow Preschool's fee details?", answer: "<a href=\"/contact\">Contact us</a> or visit any of our centres to get current fee information for our programmes." }
     ],
     relatedLinks: [
-      { title: "Admissions", url: "/admissions", description: "Fee information" },
+      { title: "Admissions", url: "/preschool-admissions", description: "Fee information" },
       { title: "Our Programmes", url: "/programmes", description: "Programme options" },
       { title: "Contact Us", url: "/contact", description: "Get fee details" }
     ],
@@ -5406,7 +5406,7 @@ Object.assign(legacyPagesData, {
     relatedLinks: [
       { title: "Contact Us", url: "/contact", description: "Schedule a visit" },
       { title: "Questions to Ask", url: "/questions-ask-preschool-admission-visit", description: "Prepare your questions" },
-      { title: "Admissions", url: "/admissions", description: "Start enrollment" }
+      { title: "Admissions", url: "/preschool-admissions", description: "Start enrollment" }
     ],
     internalLinks: commonInternalLinks,
     category: "Parenting Tips"
@@ -5462,7 +5462,7 @@ Object.assign(legacyPagesData, {
     ],
     relatedLinks: [
       { title: "Contact Us", url: "/contact", description: "Centre details" },
-      { title: "Admissions", url: "/admissions", description: "Apply now" },
+      { title: "Admissions", url: "/preschool-admissions", description: "Apply now" },
       { title: "About Us", url: "/about", description: "Learn about Rainbow" }
     ],
     internalLinks: commonInternalLinks,
@@ -5524,7 +5524,7 @@ Object.assign(legacyPagesData, {
     relatedLinks: [
       { title: "Manpada Centre", url: "/preschool-in-manpada-thane", description: "Centre details" },
       { title: "Our Programmes", url: "/programmes", description: "What we offer" },
-      { title: "Admissions", url: "/admissions", description: "Enroll now" }
+      { title: "Admissions", url: "/preschool-admissions", description: "Enroll now" }
     ],
     internalLinks: commonInternalLinks,
     category: "Local"
@@ -5578,7 +5578,7 @@ Object.assign(legacyPagesData, {
     relatedLinks: [
       { title: "Hariniwas Centre", url: "/preschool-in-hariniwas-thane", description: "Centre details" },
       { title: "Our Programmes", url: "/programmes", description: "Curriculum" },
-      { title: "Admissions", url: "/admissions", description: "Join us" }
+      { title: "Admissions", url: "/preschool-admissions", description: "Join us" }
     ],
     internalLinks: commonInternalLinks,
     category: "Local"
@@ -5632,7 +5632,7 @@ Object.assign(legacyPagesData, {
     relatedLinks: [
       { title: "Anand Nagar Centre", url: "/preschool-in-anand-nagar-thane", description: "Centre details" },
       { title: "Playgroup", url: "/playgroup", description: "First programme" },
-      { title: "Admissions", url: "/admissions", description: "Apply now" }
+      { title: "Admissions", url: "/preschool-admissions", description: "Apply now" }
     ],
     internalLinks: commonInternalLinks,
     category: "Local"
@@ -5686,7 +5686,7 @@ Object.assign(legacyPagesData, {
     relatedLinks: [
       { title: "Dhokali Centre", url: "/preschool-in-dhokali-thane", description: "Centre details" },
       { title: "Our Programmes", url: "/programmes", description: "What we offer" },
-      { title: "Admissions", url: "/admissions", description: "Apply" }
+      { title: "Admissions", url: "/preschool-admissions", description: "Apply" }
     ],
     internalLinks: commonInternalLinks,
     category: "Local"
@@ -5739,7 +5739,7 @@ Object.assign(legacyPagesData, {
     relatedLinks: [
       { title: "Kalwa Centre", url: "/preschool-in-kalwa-thane", description: "Centre details" },
       { title: "About Us", url: "/about", description: "Our story" },
-      { title: "Admissions", url: "/admissions", description: "Join us" }
+      { title: "Admissions", url: "/preschool-admissions", description: "Join us" }
     ],
     internalLinks: commonInternalLinks,
     category: "Local"
@@ -5792,7 +5792,7 @@ Object.assign(legacyPagesData, {
     relatedLinks: [
       { title: "Kasarvadavali Centre", url: "/preschool-in-kasarvadavali-thane", description: "Centre details" },
       { title: "Our Programmes", url: "/programmes", description: "Curriculum" },
-      { title: "Admissions", url: "/admissions", description: "Enroll" }
+      { title: "Admissions", url: "/preschool-admissions", description: "Enroll" }
     ],
     internalLinks: commonInternalLinks,
     category: "Local"
@@ -5922,7 +5922,7 @@ Object.assign(legacyPagesData, {
     relatedLinks: [
       { title: "Hariniwas Centre", url: "/preschool-in-hariniwas-thane", description: "Centre details" },
       { title: "Kindergarten", url: "/kindergarten", description: "Programme" },
-      { title: "Admissions", url: "/admissions", description: "Apply now" }
+      { title: "Admissions", url: "/preschool-admissions", description: "Apply now" }
     ],
     internalLinks: commonInternalLinks,
     category: "Education"
@@ -5973,7 +5973,7 @@ Object.assign(legacyPagesData, {
     relatedLinks: [
       { title: "Anand Nagar Centre", url: "/preschool-in-anand-nagar-thane", description: "Centre details" },
       { title: "Nursery Programme", url: "/nursery", description: "Curriculum" },
-      { title: "Admissions", url: "/admissions", description: "Full process" }
+      { title: "Admissions", url: "/preschool-admissions", description: "Full process" }
     ],
     internalLinks: commonInternalLinks,
     category: "Admissions"
@@ -6025,7 +6025,7 @@ Object.assign(legacyPagesData, {
     relatedLinks: [
       { title: "Dhokali Centre", url: "/preschool-in-dhokali-thane", description: "Centre details" },
       { title: "Playgroup", url: "/playgroup", description: "Programme" },
-      { title: "Admissions", url: "/admissions", description: "Full process" }
+      { title: "Admissions", url: "/preschool-admissions", description: "Full process" }
     ],
     internalLinks: commonInternalLinks,
     category: "Admissions"
@@ -6083,7 +6083,7 @@ Object.assign(legacyPagesData, {
     relatedLinks: [
       { title: "Kalwa Centre", url: "/preschool-in-kalwa-thane", description: "Centre details" },
       { title: "Kindergarten", url: "/kindergarten", description: "Full programme" },
-      { title: "Admissions", url: "/admissions", description: "Apply now" }
+      { title: "Admissions", url: "/preschool-admissions", description: "Apply now" }
     ],
     internalLinks: commonInternalLinks,
     category: "Education"
@@ -6142,7 +6142,7 @@ Object.assign(legacyPagesData, {
     relatedLinks: [
       { title: "Kasarvadavali Centre", url: "/preschool-in-kasarvadavali-thane", description: "Centre details" },
       { title: "Nursery Programme", url: "/nursery", description: "Curriculum" },
-      { title: "Admissions", url: "/admissions", description: "Apply" }
+      { title: "Admissions", url: "/preschool-admissions", description: "Apply" }
     ],
     internalLinks: commonInternalLinks,
     category: "Local"
@@ -6256,7 +6256,7 @@ Object.assign(legacyPagesData, {
       { title: "Our Programmes", url: "/programmes", description: "Explore our curriculum" },
       { title: "About Rainbow Preschool", url: "/about", description: "18+ years of excellence" },
       { title: "Find a Centre Near You", url: "/contact", description: "Six locations in Thane" },
-      { title: "Admissions", url: "/admissions", description: "Join Rainbow Preschool" }
+      { title: "Admissions", url: "/preschool-admissions", description: "Join Rainbow Preschool" }
     ],
     internalLinks: commonInternalLinks,
     category: "Education"
@@ -6462,7 +6462,7 @@ Object.assign(legacyPagesData, {
       { title: "About Rainbow Preschool", url: "/about", description: "Our story and approach" },
       { title: "Our Centres", url: "/contact", description: "Six locations in Thane" },
       { title: "Our Programmes", url: "/programmes", description: "Our curriculum" },
-      { title: "Admissions", url: "/admissions", description: "Join us" }
+      { title: "Admissions", url: "/preschool-admissions", description: "Join us" }
     ],
     internalLinks: commonInternalLinks,
     category: "Education"
@@ -6568,7 +6568,7 @@ Object.assign(legacyPagesData, {
     relatedLinks: [
       { title: "Our Centres", url: "/contact", description: "Six convenient locations" },
       { title: "Our Programmes", url: "/programmes", description: "Programme options" },
-      { title: "Admissions", url: "/admissions", description: "Enroll your child" },
+      { title: "Admissions", url: "/preschool-admissions", description: "Enroll your child" },
       { title: "Playgroup", url: "/playgroup", description: "First preschool step" }
     ],
     internalLinks: commonInternalLinks,
@@ -6669,7 +6669,7 @@ Object.assign(legacyPagesData, {
       { title: "About Rainbow Preschool", url: "/about", description: "Our quality approach" },
       { title: "Our Programmes", url: "/programmes", description: "What we offer" },
       { title: "Find a Centre", url: "/contact", description: "Locations and fees" },
-      { title: "Admissions", url: "/admissions", description: "Join Rainbow Preschool" }
+      { title: "Admissions", url: "/preschool-admissions", description: "Join Rainbow Preschool" }
     ],
     internalLinks: commonInternalLinks,
     category: "Education"
@@ -6780,7 +6780,7 @@ Object.assign(legacyPagesData, {
       { title: "Our Programmes", url: "/programmes", description: "Curriculum details" },
       { title: "About Us", url: "/about", description: "Our story" },
       { title: "Visit Us", url: "/contact", description: "See our approach" },
-      { title: "Admissions", url: "/admissions", description: "Join Rainbow Preschool" }
+      { title: "Admissions", url: "/preschool-admissions", description: "Join Rainbow Preschool" }
     ],
     internalLinks: commonInternalLinks,
     category: "Education"
@@ -6881,7 +6881,7 @@ Object.assign(legacyPagesData, {
       { title: "Our Centres", url: "/contact", description: "Visit our locations" },
       { title: "Safety Standards", url: "/rainbow-preschool-safety-measures-child-security", description: "Our safety approach" },
       { title: "About Us", url: "/about", description: "Our story" },
-      { title: "Admissions", url: "/admissions", description: "Join us" }
+      { title: "Admissions", url: "/preschool-admissions", description: "Join us" }
     ],
     internalLinks: commonInternalLinks,
     category: "About Us"

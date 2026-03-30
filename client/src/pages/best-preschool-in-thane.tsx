@@ -14,7 +14,7 @@ import { useState, useEffect } from "react";
 const meta = {
   title: "Best Preschool in Thane | Playgroup, Nursery & KG | Rainbow Preschool International",
   description: "Looking for the best preschool in Thane? Explore Rainbow Preschool International's award-winning playgroup, nursery and kindergarten programmes, safe campuses, experienced educators, and 6 centres across Thane.",
-  keywords: "best preschool in thane, top preschool thane, best playgroup in thane, best nursery school thane, best preschool near me thane, rainbow preschool thane, preschool thane",
+  keywords: "best preschool in thane, top preschool in thane, best nursery school thane, award winning preschool thane, rainbow preschool thane, preschool thane",
 };
 
 const hero = {

@@ -1,0 +1,266 @@
+Do a full-site SEO cleanup and content-intent restructuring pass for the main Rainbow Preschools website so the right main pages rank for the right search queries, keyword cannibalization is removed, and overall Google Search Console performance improves for relevant searches.
+
+IMPORTANT CONTEXT
+This applies to the main Rainbow Preschools website only.
+Exclude ad landing pages and paid campaign-only pages from this project.
+The site has many indexable pages and the sitemap shows overlap risk across:
+- core commercial pages
+- centre pages
+- programme pages
+- nearby-intent pages
+- admissions pages
+- blog/supporting content
+- topical authority pages
+
+PRIMARY GOAL
+Ensure the main website pages appear in the correct search results by:
+- cleaning up keyword overlap
+- reducing cannibalization
+- sharpening page purpose
+- fixing metadata, headings, internal linking, and content intent
+- improving overall on-page SEO quality
+- strengthening main commercial pages in Google Search Console
+
+IMPORTANT
+Do not redesign the entire site from scratch.
+Do not change ad landing pages.
+Do not remove good pages unnecessarily.
+This is a strategic SEO cleanup and page-intent optimization project.
+
+HIGH-LEVEL OBJECTIVE
+Audit all main website pages and make the site structurally cleaner so:
+- each important page has a clearly defined search purpose
+- no major pages compete against each other for the same keyword intent
+- commercial pages rank for commercial queries
+- informational/support pages support commercial pages rather than compete with them
+- local/location pages rank for locality intent
+- programme pages rank for programme intent
+- admissions pages rank for admissions intent
+- “near me” pages rank for nearby-intent
+- “best preschool” pages rank for comparison/best intent
+
+EXCLUSIONS
+Do NOT modify:
+- ad landing pages
+- noindex campaign pages
+- purely paid acquisition pages unless they are wrongly indexable and require technical handling
+
+SITE-WIDE SEO CLEANUP TASKS
+
+1. CRAWL AND CLASSIFY ALL MAIN WEBSITE PAGES
+Audit every indexable page and classify pages into groups such as:
+- homepage
+- about
+- programme pages
+- admissions page
+- nearby-intent pages
+- “best preschool”/comparison pages
+- centre/location pages
+- gallery/contact/utility pages
+- blogs/news/articles
+- branded authority pages
+
+For each page identify:
+- page purpose
+- likely primary keyword intent
+- secondary keyword themes
+- overlap risk
+- whether the page is commercial, local, navigational, or informational
+
+2. CREATE A KEYWORD OWNERSHIP MAP
+Assign one clear primary search intent to each major commercial and SEO page so they stop competing against each other.
+
+Examples of ownership logic to implement:
+- /best-preschool-near-me-in-thane should own “best preschool in thane” and close variants
+- /preschool-near-me should own nearby-centre / nearest preschool intent
+- /preschool-admissions should own admission-intent queries
+- /playgroup should own broad programme intent
+- /playgroup-in-thane should own city-level playgroup local intent if retained
+- centre pages should own locality-specific preschool intent
+- support/blog pages should reinforce commercial pages, not outrank them accidentally
+
+Implement this mapping through content, metadata, headings, and internal linking.
+
+3. FIX KEYWORD CANNIBALIZATION
+Review all pages for overlapping keyword targets and clean them up.
+
+Important overlap areas likely include:
+- best preschool vs near me vs play school near me
+- admissions pages vs admission guide content
+- programme pages vs city-level programme pages vs locality-level programme pages
+- multiple informational articles covering nearly identical topics
+- branded methodology/safety/approach pages that may overlap each other
+
+For each overlap case, fix using one or more of:
+- sharpening page positioning
+- revising headings and copy direction
+- changing metadata
+- changing internal linking targets
+- adjusting keyword emphasis
+- making support pages more informational and less commercial
+- reducing overlap in hero/H1/title copy
+- consolidating or de-prioritizing pages only if truly necessary
+
+4. CLEAN UP COMMERCIAL PAGE INTENT
+Ensure major commercial pages are clearly distinct:
+
+A. Best Preschool page
+Should focus on:
+- comparison/best intent
+- why parents consider Rainbow one of the best
+- trust, proof, selection criteria, local relevance
+
+B. Preschool Near Me page
+Should focus on:
+- nearest centre discovery
+- convenience
+- locality proximity
+- finding the closest branch
+
+C. Preschool Admissions page
+Should focus on:
+- admission process
+- age criteria
+- documents
+- timelines
+- enquiry path
+
+D. Programme pages
+Should focus on their programme:
+- playgroup
+- nursery
+- kindergarten
+- Happy Times
+
+E. Centre pages
+Should focus on location-specific trust and enquiry intent.
+
+Make sure each page’s copy, H1, metadata, FAQs, and internal links support its distinct role.
+
+5. REVIEW AND IMPROVE BLOG / SUPPORT CONTENT STRATEGY
+Audit blog/support pages and identify where multiple URLs are too close in topic.
+
+Examples of likely overlap:
+- multiple preschool importance / early childhood importance pages
+- multiple “questions to ask” / school visit / preschool choosing guides
+- multiple nursery importance/benefits pages
+- multiple playgroup benefits/readiness pages
+- multiple curriculum/teaching philosophy pages
+
+For blog/support pages:
+- keep pages that are distinct and useful
+- revise overlapping pages so each supports a unique subtopic
+- ensure informational pages link to the correct commercial pages
+- stop support pages from directly competing with core money pages
+
+6. META TITLE + META DESCRIPTION CLEANUP
+Review all indexable pages and make metadata unique, intent-specific, and non-duplicative.
+
+Ensure:
+- no duplicate titles
+- no duplicate descriptions
+- titles match the actual search purpose of the page
+- support pages do not use overly commercial metadata that competes with money pages
+- commercial pages get stronger CTR-oriented metadata
+
+7. HEADING STRUCTURE CLEANUP
+Fix heading hierarchy site-wide.
+
+Ensure:
+- one clear H1 per page
+- H2/H3 support the page’s actual keyword intent
+- headings do not copy the same phrasing across overlapping pages
+- page sections reinforce differentiated search purpose
+
+8. INTERNAL LINKING RESTRUCTURE
+Update internal linking so it supports page hierarchy correctly.
+
+Goals:
+- blog/support pages should strengthen main commercial pages
+- commercial pages should not over-link to overlapping commercial pages in confusing ways
+- programme pages should link to admissions, centres, and relevant support content
+- centre pages should link to relevant programme/admissions pages
+- “best preschool” pages and “near me” pages should not cannibalize each other through mixed signals
+- important money pages should receive strong contextual links from relevant support pages
+
+Use natural anchor text variation and avoid repetitive exact-match stuffing.
+
+9. FAQ REFINEMENT ACROSS MAIN PAGES
+Where FAQ sections exist on main website pages:
+- ensure they use consistent accordion/dropdown UI
+- keep questions aligned to that page’s search intent
+- remove near-duplicate FAQ sets that make pages look too similar
+- make FAQ answers supportive rather than repetitive
+
+10. LOCAL SEO DIFFERENTIATION
+Review centre/location pages and local-intent pages to ensure:
+- locality keywords are handled naturally
+- centre pages remain distinct from city-wide pages
+- local pages have unique copy
+- nearby-intent pages don’t duplicate centre-page positioning
+- location clusters are logically separated
+
+11. STRUCTURED DATA CLEANUP
+Review and improve structured data across the main site where appropriate:
+- FAQ schema
+- EducationalOrganization / Preschool schema
+- Breadcrumb schema
+- Article / BlogPosting schema
+- LocalBusiness / centre-related schema where relevant
+
+Ensure schema supports page purpose and uses correct canonical URLs.
+
+12. TECHNICAL SEO HYGIENE
+Ensure across the main site:
+- canonical tags are correct
+- indexability is correct
+- sitemap coverage matches intent
+- internal links don’t point to the wrong canonical target
+- no conflicting canonical/index signals
+- no accidental duplication from mixed URL patterns
+- page titles/descriptions/headings don’t send conflicting topical signals
+
+13. MAINTAIN UX + CONVERSION QUALITY
+Do not break:
+- forms
+- centre discovery flow
+- admissions flow
+- programme exploration
+- CTA hierarchy
+
+All SEO cleanup should preserve or improve usability and conversion quality.
+
+14. CONTENT DIFFERENTIATION FRAMEWORK
+Create and apply a page-role framework across the site so every important URL falls into a clear bucket:
+- main commercial page
+- local/centre page
+- programme page
+- support/article page
+- trust/authority page
+- utility page
+
+Use this framework to prevent future overlap.
+
+15. EDITABLE CONTENT / MAINTAINABILITY
+Where practical, centralize or standardize reusable content systems for:
+- metadata blocks
+- FAQ content patterns
+- CTA labels
+- centre card data
+- programme card data
+- page-specific summary blocks
+
+Do not over-centralize if it reduces clarity, but improve maintainability.
+
+16. OUTPUT EXPECTATION
+This is not just a report.
+Apply the cleanup and optimization directly in the main website project.
+
+At the end, provide:
+1. summary of major overlap/cannibalization issues found
+2. summary of how page intent was separated
+3. summary of major SEO fixes implemented
+4. summary of metadata, headings, and internal linking cleanup
+5. summary of blog/support-content restructuring
+6. list of pages or clusters that still need manual business review if any content intent remains ambiguous
+7. expected impact areas in Google Search Console after the cleanup

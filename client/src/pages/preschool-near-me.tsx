@@ -11,7 +11,7 @@ import { useState, useEffect } from "react";
 const meta = {
   title: "Preschool Near Me in Thane | Find Your Nearest Rainbow Preschool Centre",
   description: "Looking for a preschool near you in Thane? Find the nearest Rainbow Preschool centre across Manpada, Hariniwas, Anand Nagar, Dhokali, Kalwa, and Kasarvadavali. Explore locations, facilities, and enquire online.",
-  keywords: "preschool near me, preschool near me in thane, preschool near home, nearest preschool in thane, preschool in thane west near me, playgroup near me thane, nursery near me thane",
+  keywords: "preschool near me, preschool near me in thane, preschool near home, nearest preschool in thane, preschool in thane west near me, nursery near me thane, daycare near me thane",
 };
 
 const hero = {

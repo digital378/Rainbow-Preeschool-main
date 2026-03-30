@@ -317,9 +317,9 @@ export default function Home() {
   return (
     <div>
       <SEO
-        title="Rainbow Preschool International | Early Learning & Admissions"
-        description="Rainbow Preschool International offers safe, joyful early learning in Thane with experienced educators. Explore programmes, centres, and admissions information."
-        keywords="rainbow preschool, preschool in thane, playgroup in thane, nursery school thane, kindergarten thane, early childhood education"
+        title="Rainbow Preschool International | Thane's Trusted Preschool Since 2007"
+        description="Rainbow Preschool International — Thane's award-winning early childhood education chain with 6 centres. Safe, joyful learning for children aged 1.5–5 years. Explore programmes and visit our campus."
+        keywords="rainbow preschool, rainbow preschool international, preschool in thane, playgroup in thane, nursery school thane, early childhood education thane"
         canonical="https://www.rainbowpreschools.com/"
       />
       <HeroSection />
