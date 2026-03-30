@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { SEO } from "@/components/seo";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
-import { X, ChevronLeft, ChevronRight, Images, Award, MapPin, ClipboardList, BookOpen } from "lucide-react";
+import { X, ChevronLeft, ChevronRight, Images, Award, MapPin, ClipboardList, BookOpen, ZoomIn, Users, Heart, Star } from "lucide-react";
 import {
   GALLERY_CATEGORIES,
   GALLERY_IMAGES,
@@ -124,6 +124,32 @@ function Lightbox({ images, index, onClose, onPrev, onNext }: LightboxProps) {
   );
 }
 
+// ── Category colour map ───────────────────────────────────────────────────────
+
+const CATEGORY_ACTIVE: Record<GalleryCategoryId, string> = {
+  "all":                   "bg-primary text-white shadow-md scale-105",
+  "classrooms":            "bg-blue-600 text-white shadow-md scale-105",
+  "activities":            "bg-amber-500 text-white shadow-md scale-105",
+  "events":                "bg-violet-600 text-white shadow-md scale-105",
+  "learning-through-play": "bg-green-600 text-white shadow-md scale-105",
+  "happy-times":           "bg-pink-500 text-white shadow-md scale-105",
+  "infrastructure":        "bg-slate-600 text-white shadow-md scale-105",
+  "safety":                "bg-teal-600 text-white shadow-md scale-105",
+  "centres":               "bg-orange-500 text-white shadow-md scale-105",
+};
+
+const CATEGORY_DOT: Record<GalleryCategoryId, string> = {
+  "all":                   "bg-primary",
+  "classrooms":            "bg-blue-600",
+  "activities":            "bg-amber-500",
+  "events":                "bg-violet-600",
+  "learning-through-play": "bg-green-600",
+  "happy-times":           "bg-pink-500",
+  "infrastructure":        "bg-slate-600",
+  "safety":                "bg-teal-600",
+  "centres":               "bg-orange-500",
+};
+
 // ── Gallery Page ─────────────────────────────────────────────────────────────
 
 export default function Gallery() {
@@ -218,6 +244,51 @@ export default function Gallery() {
         </div>
       </section>
 
+      {/* ── Stats Trust Bar ──────────────────────────────────────── */}
+      <div className="bg-white dark:bg-background border-b border-gray-100 dark:border-gray-800">
+        <div className="max-w-3xl mx-auto px-4 py-4 flex items-center justify-center gap-5 md:gap-10 flex-wrap">
+          <div className="flex items-center gap-2.5">
+            <div className="w-9 h-9 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+              <Images className="w-4 h-4 text-primary" />
+            </div>
+            <div>
+              <div className="text-base font-bold text-foreground leading-none">50+</div>
+              <div className="text-[11px] text-muted-foreground mt-0.5">Real Photos</div>
+            </div>
+          </div>
+          <div className="w-px h-7 bg-border hidden sm:block" />
+          <div className="flex items-center gap-2.5">
+            <div className="w-9 h-9 bg-blue-50 dark:bg-blue-950/30 rounded-full flex items-center justify-center flex-shrink-0">
+              <MapPin className="w-4 h-4 text-blue-600" />
+            </div>
+            <div>
+              <div className="text-base font-bold text-foreground leading-none">6</div>
+              <div className="text-[11px] text-muted-foreground mt-0.5">Unique Centres</div>
+            </div>
+          </div>
+          <div className="w-px h-7 bg-border hidden sm:block" />
+          <div className="flex items-center gap-2.5">
+            <div className="w-9 h-9 bg-amber-50 dark:bg-amber-950/30 rounded-full flex items-center justify-center flex-shrink-0">
+              <Star className="w-4 h-4 text-amber-500" />
+            </div>
+            <div>
+              <div className="text-base font-bold text-foreground leading-none">18+</div>
+              <div className="text-[11px] text-muted-foreground mt-0.5">Years of Joy</div>
+            </div>
+          </div>
+          <div className="w-px h-7 bg-border hidden sm:block" />
+          <div className="flex items-center gap-2.5">
+            <div className="w-9 h-9 bg-green-50 dark:bg-green-950/30 rounded-full flex items-center justify-center flex-shrink-0">
+              <Users className="w-4 h-4 text-green-600" />
+            </div>
+            <div>
+              <div className="text-base font-bold text-foreground leading-none">1 Lac+</div>
+              <div className="text-[11px] text-muted-foreground mt-0.5">Happy Families</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* ── Sticky Filter Bar ────────────────────────────────────── */}
       <div className="sticky top-[80px] md:top-[96px] z-30 bg-white/95 dark:bg-background/95 backdrop-blur-md border-b shadow-sm">
         <div
@@ -236,14 +307,17 @@ export default function Gallery() {
                 data-active={isActive}
                 data-testid={`filter-${cat.id}`}
                 onClick={() => handleFilterClick(cat.id)}
-                className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 whitespace-nowrap ${
+                className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 whitespace-nowrap flex items-center gap-1.5 ${
                   isActive
-                    ? "bg-primary text-white shadow-md scale-105"
+                    ? CATEGORY_ACTIVE[cat.id]
                     : "bg-gray-100 dark:bg-muted text-muted-foreground hover:bg-gray-200 dark:hover:bg-muted/70"
                 }`}
               >
+                {!isActive && (
+                  <span className={`w-2 h-2 rounded-full flex-shrink-0 ${CATEGORY_DOT[cat.id]}`} />
+                )}
                 {cat.label}
-                <span className={`ml-1.5 text-xs ${isActive ? "text-white/80" : "text-muted-foreground"}`}>
+                <span className={`text-xs ${isActive ? "text-white/80" : "text-muted-foreground"}`}>
                   ({count})
                 </span>
               </button>
@@ -264,28 +338,38 @@ export default function Gallery() {
         {filteredImages.length === 0 ? (
           <div className="text-center py-20 text-muted-foreground">No images in this category yet.</div>
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+          <div key={activeCategory} className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
             {filteredImages.map((img, i) => (
               <div
                 key={img.id}
-                className="aspect-[4/3] group relative cursor-pointer rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300"
+                className="aspect-[4/3] group relative cursor-pointer rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 opacity-0 animate-in fade-in"
+                style={{ animationDelay: `${Math.min(i * 40, 400)}ms`, animationFillMode: "forwards" }}
                 onClick={() => openLightbox(i)}
                 data-testid={`gallery-image-${img.id}`}
               >
                 <img
                   src={img.src}
                   alt={img.alt}
-                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                   loading="lazy"
                 />
                 {/* Hover overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-3">
-                  {img.caption && (
-                    <p className="text-white text-xs font-medium leading-snug">{img.caption}</p>
-                  )}
-                  <span className="text-white/70 text-[10px] mt-0.5 capitalize">
-                    {GALLERY_CATEGORIES.find((c) => c.id === img.category)?.label}
-                  </span>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-between p-3">
+                  {/* Zoom icon centred */}
+                  <div className="flex items-start justify-end">
+                    <div className="bg-white/20 backdrop-blur-sm rounded-full p-1.5 translate-y-1 group-hover:translate-y-0 transition-transform duration-300">
+                      <ZoomIn className="w-3.5 h-3.5 text-white" />
+                    </div>
+                  </div>
+                  {/* Caption at bottom */}
+                  <div>
+                    {img.caption && (
+                      <p className="text-white text-xs font-medium leading-snug">{img.caption}</p>
+                    )}
+                    <span className={`inline-block mt-1 text-[10px] px-2 py-0.5 rounded-full font-medium ${CATEGORY_DOT[img.category]} text-white/90`}>
+                      {GALLERY_CATEGORIES.find((c) => c.id === img.category)?.label}
+                    </span>
+                  </div>
                 </div>
               </div>
             ))}
