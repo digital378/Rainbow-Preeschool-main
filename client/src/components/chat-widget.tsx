@@ -3,12 +3,19 @@ import { MessageCircle, X, ChevronDown } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
 import { trackFormSubmit } from "@/lib/analytics";
 
+interface MessageLink {
+  label: string;
+  href: string;
+  color?: "green" | "primary";
+}
+
 interface Message {
   id: string;
   sender: "bot" | "user";
   text: string;
   quickReplies?: { label: string; value: string }[];
   isForm?: boolean;
+  links?: MessageLink[];
 }
 
 const PHONE_NUMBER = "918291568972";
@@ -92,7 +99,7 @@ const WELCOME_MESSAGES: Message[] = [
   {
     id: "w1",
     sender: "bot",
-    text: "Hi there! 👋 I'm Priya, your Rainbow Preschool assistant.\n\nHow can I help you today?",
+    text: "Hi there! 👋 I'm Bhumika, your Rainbow Preschool assistant.\n\nHow can I help you today?",
     quickReplies: MAIN_MENU_REPLIES,
   },
 ];
@@ -126,7 +133,7 @@ const PROGRAMME_MAP: Record<string, string> = {
 function BotTypingIndicator() {
   return (
     <div className="flex items-end gap-2 mb-3">
-      <div className="w-7 h-7 rounded-full bg-primary flex items-center justify-center flex-shrink-0 text-white text-xs font-bold">P</div>
+      <div className="w-7 h-7 rounded-full bg-primary flex items-center justify-center flex-shrink-0 text-white text-xs font-bold">B</div>
       <div className="bg-gray-100 rounded-2xl rounded-bl-sm px-4 py-3">
         <div className="flex gap-1 items-center h-4">
           <span className="w-2 h-2 rounded-full bg-gray-400 animate-bounce" style={{ animationDelay: "0ms" }} />
@@ -305,7 +312,11 @@ export function ChatWidget() {
         const successMsg: Message = {
           id: `${Date.now()}-success`,
           sender: "bot",
-          text: `Thank you, ${data.name}! 🎉\n\nOur team will call you at ${data.phone} within 24 hours.\n\nIn the meantime, feel free to explore our programmes or WhatsApp us directly.`,
+          text: `Thank you, ${data.name}! 🎉\n\nOur team will call you at ${data.phone} within 24 hours.\n\nCan't wait? Reach us directly:`,
+          links: [
+            { label: "📞 Call 82915 68972", href: "tel:8291568972", color: "primary" },
+            { label: "💬 WhatsApp Us", href: `https://wa.me/${PHONE_NUMBER}?text=Hi%2C%20I%20just%20submitted%20an%20enquiry%20and%20would%20like%20to%20know%20more`, color: "green" },
+          ],
           quickReplies: [
             { label: "Our Programmes", value: "programmes" },
             { label: "Our Centres", value: "centres" },
@@ -350,9 +361,9 @@ export function ChatWidget() {
           {/* Header */}
           <div className="bg-primary px-4 py-3 flex items-center justify-between flex-shrink-0">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center text-white font-bold text-sm">P</div>
+              <div className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center text-white font-bold text-sm">B</div>
               <div>
-                <p className="text-white font-semibold text-sm leading-tight">Priya</p>
+                <p className="text-white font-semibold text-sm leading-tight">Bhumika</p>
                 <p className="text-white/80 text-xs">Rainbow Preschool Assistant</p>
               </div>
             </div>
@@ -361,11 +372,11 @@ export function ChatWidget() {
                 href={`https://wa.me/${PHONE_NUMBER}?text=Hi%2C%20I%20would%20like%20to%20know%20more%20about%20Rainbow%20Preschool`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-white/80 hover:text-white transition-colors"
+                className="w-8 h-8 rounded-full bg-green-500 hover:bg-green-400 transition-colors flex items-center justify-center flex-shrink-0"
                 title="Open WhatsApp"
                 data-testid="chatbot-whatsapp-link"
               >
-                <svg viewBox="0 0 24 24" className="w-5 h-5 fill-current">
+                <svg viewBox="0 0 24 24" className="w-4 h-4 fill-white">
                   <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
                 </svg>
               </a>
@@ -386,10 +397,29 @@ export function ChatWidget() {
               <div key={msg.id}>
                 {msg.sender === "bot" ? (
                   <div className="flex items-end gap-2 mb-3">
-                    <div className="w-7 h-7 rounded-full bg-primary flex items-center justify-center flex-shrink-0 text-white text-xs font-bold">P</div>
+                    <div className="w-7 h-7 rounded-full bg-primary flex items-center justify-center flex-shrink-0 text-white text-xs font-bold">B</div>
                     <div className="max-w-[85%]">
                       <div className="bg-white rounded-2xl rounded-bl-sm px-4 py-3 shadow-sm text-sm text-gray-800 leading-relaxed">
                         {renderBotText(msg.text)}
+                        {msg.links && msg.links.length > 0 && (
+                          <div className="flex flex-col gap-2 mt-3">
+                            {msg.links.map((link, i) => (
+                              <a
+                                key={i}
+                                href={link.href}
+                                target={link.href.startsWith("tel:") ? undefined : "_blank"}
+                                rel="noopener noreferrer"
+                                className={`flex items-center justify-center gap-1.5 text-xs font-semibold py-2 px-3 rounded-lg transition-colors ${
+                                  link.color === "green"
+                                    ? "bg-green-500 hover:bg-green-600 text-white"
+                                    : "bg-primary hover:bg-primary/90 text-white"
+                                }`}
+                              >
+                                {link.label}
+                              </a>
+                            ))}
+                          </div>
+                        )}
                         {msg.isForm && !formSubmitted && (
                           <div className="mt-3 border-t border-gray-100 pt-3">
                             <LeadForm onSubmit={handleFormSubmit} isSubmitting={isSubmitting} />
