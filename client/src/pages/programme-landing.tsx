@@ -287,7 +287,7 @@ export default function ProgrammeLanding({ programmeSlug }: ProgrammeLandingProp
   const Icon = iconMap[programme.icon as keyof typeof iconMap] || Baby;
 
   return (
-    <div className="pt-20 md:pt-24 md:pt-24">
+    <div className="pt-20 md:pt-24">
       <SEO
         title={details.seoTitle}
         description={details.seoDescription}
@@ -296,7 +296,7 @@ export default function ProgrammeLanding({ programmeSlug }: ProgrammeLandingProp
       />
 
       {/* Hero Section */}
-      <section className="py-24 md:py-32 lg:py-40 bg-gradient-to-br from-primary/10 via-accent/5 to-secondary/10 flex items-center justify-center relative overflow-hidden">
+      <section className="py-14 sm:py-16 md:py-24 lg:py-32 bg-gradient-to-br from-primary/10 via-accent/5 to-secondary/10 flex items-center justify-center relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-10 left-10 w-32 h-32 bg-primary rounded-full blur-3xl" />
           <div className="absolute bottom-10 right-10 w-40 h-40 bg-secondary rounded-full blur-3xl" />
@@ -411,28 +411,28 @@ export default function ProgrammeLanding({ programmeSlug }: ProgrammeLandingProp
             <div className="grid grid-cols-2 gap-4">
               <Card className="text-center p-6">
                 <Users className="w-10 h-10 text-primary mx-auto mb-3" />
-                <div className="text-3xl font-bold text-foreground">
-                  <CountUp end={100000} duration={2000} suffix="+" />
+                <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground whitespace-nowrap">
+                  1 Lac+
                 </div>
                 <div className="text-sm text-muted-foreground">Happy Students</div>
               </Card>
               <Card className="text-center p-6">
                 <Star className="w-10 h-10 text-secondary mx-auto mb-3" />
-                <div className="text-3xl font-bold text-foreground">
+                <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground whitespace-nowrap">
                   <CountUp end={18} duration={1500} delay={200} suffix="+" />
                 </div>
                 <div className="text-sm text-muted-foreground">Years of Excellence</div>
               </Card>
               <Card className="text-center p-6">
                 <MapPin className="w-10 h-10 text-accent mx-auto mb-3" />
-                <div className="text-3xl font-bold text-foreground">
+                <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground whitespace-nowrap">
                   <CountUp end={6} duration={1500} delay={400} prefix="0" />
                 </div>
                 <div className="text-sm text-muted-foreground">Centres in Thane</div>
               </Card>
               <Card className="text-center p-6">
                 <Shield className="w-10 h-10 text-green-500 mx-auto mb-3" />
-                <div className="text-3xl font-bold text-foreground">
+                <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground whitespace-nowrap">
                   <CountUp end={100} duration={1500} delay={600} suffix="%" />
                 </div>
                 <div className="text-sm text-muted-foreground">Female Staff</div>

@@ -142,7 +142,7 @@ export default function About() {
               <Card className="text-center">
                 <CardContent className="pt-6 pb-4">
                   <p className="text-2xl md:text-3xl font-bold text-primary">
-                    <CountUp end={100000} duration={2000} suffix="+" />
+                    1 Lac+
                   </p>
                   <p className="text-sm text-muted-foreground">Happy Students</p>
                 </CardContent>

@@ -325,22 +325,22 @@ export default function Home() {
       <HeroSection />
       
       {/* Quick Navigation Links for SEO - Crawlable anchor tags */}
-      <section className="py-6 bg-gradient-to-br from-red-50 via-yellow-50 to-pink-50 dark:from-red-950/20 dark:to-yellow-950/20 border-y border-red-100 dark:border-red-900/30">
+      <section className="py-5 sm:py-6 bg-gradient-to-br from-red-50 via-yellow-50 to-pink-50 dark:from-red-950/20 dark:to-yellow-950/20 border-y border-red-100 dark:border-red-900/30">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="grid grid-cols-3 sm:grid-cols-6 gap-2 sm:gap-3">
+          <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-6 gap-2 sm:gap-3">
             {[
-              { href: "/best-preschool-near-me-in-thane", label: "Award-Winning Preschool", Icon: Award, color: "#ef4444", testid: "link-best-preschool" },
-              { href: "/preschool-near-me", label: "Find Nearest Centre", Icon: MapPin, color: "#10b981", testid: "link-preschool-near-me" },
-              { href: "/preschool-admissions", label: "Admission Process", Icon: FileText, color: "#3b82f6", testid: "link-preschool-admissions" },
-              { href: "/playgroup", label: "Playgroup", Icon: Palette, color: "#f97316", testid: "link-playgroup" },
-              { href: "/nursery", label: "Nursery", Icon: BookOpen, color: "#8b5cf6", testid: "link-nursery" },
-              { href: "/kindergarten", label: "Kindergarten", Icon: GraduationCap, color: "#ec4899", testid: "link-kindergarten" },
-            ].map(({ href, label, Icon, color, testid }) => (
+              { href: "/best-preschool-near-me-in-thane", label: "Award Winning", shortLabel: "Award Winning", Icon: Award, color: "#ef4444", testid: "link-best-preschool" },
+              { href: "/preschool-near-me", label: "Near Me", shortLabel: "Near Me", Icon: MapPin, color: "#10b981", testid: "link-preschool-near-me" },
+              { href: "/preschool-admissions", label: "Admissions", shortLabel: "Admissions", Icon: FileText, color: "#3b82f6", testid: "link-preschool-admissions" },
+              { href: "/playgroup", label: "Playgroup", shortLabel: "Playgroup", Icon: Palette, color: "#f97316", testid: "link-playgroup" },
+              { href: "/nursery", label: "Nursery", shortLabel: "Nursery", Icon: BookOpen, color: "#8b5cf6", testid: "link-nursery" },
+              { href: "/kindergarten", label: "Kindergarten", shortLabel: "KG", Icon: GraduationCap, color: "#ec4899", testid: "link-kindergarten" },
+            ].map(({ href, label, shortLabel, Icon, color, testid }) => (
               <a
                 key={href}
                 href={href}
                 data-testid={testid}
-                className="group flex flex-col items-center gap-2 p-3 rounded-2xl text-center transition-all duration-200 hover:-translate-y-1"
+                className="group flex flex-col items-center gap-1.5 sm:gap-2 p-2.5 sm:p-3 rounded-2xl text-center transition-all duration-200 hover:-translate-y-1 min-h-[72px] justify-center"
                 style={{
                   background: `radial-gradient(circle at 40% 30%, ${color}18, ${color}08)`,
                   border: `1px solid ${color}30`,
@@ -348,15 +348,18 @@ export default function Home() {
                 }}
               >
                 <div
-                  className="w-10 h-10 flex items-center justify-center rounded-full flex-shrink-0"
+                  className="w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-full flex-shrink-0"
                   style={{
                     background: `radial-gradient(circle at 35% 35%, ${color}dd, ${color})`,
                     boxShadow: `0 3px 8px ${color}80, inset 0 1px 0 rgba(255,255,255,0.4), inset 0 -1px 0 rgba(0,0,0,0.15)`,
                   }}
                 >
-                  <Icon className="w-4.5 h-4.5 text-white" style={{ width: 18, height: 18 }} />
+                  <Icon style={{ width: 16, height: 16, color: "white" }} />
                 </div>
-                <span className="text-xs font-semibold leading-tight" style={{ color: color }}>{label}</span>
+                <span className="text-[10px] sm:text-xs font-semibold leading-tight line-clamp-2" style={{ color: color }}>
+                  <span className="hidden sm:inline">{label}</span>
+                  <span className="sm:hidden">{shortLabel}</span>
+                </span>
               </a>
             ))}
           </div>
@@ -390,49 +393,49 @@ export default function Home() {
                 </Button>
               </Link>
             </div>
-            <div className="grid grid-cols-2 gap-4" data-stagger="children">
+            <div className="grid grid-cols-2 gap-3 sm:gap-4" data-stagger="children">
               {/* Happy Students */}
               <Link href="#testimonials" data-reveal="pop">
-                <div className="relative rounded-2xl overflow-hidden p-5 cursor-pointer group hover:-translate-y-1 transition-all duration-300 bg-gradient-to-br from-primary/10 via-primary/5 to-transparent border border-primary/20 hover:border-primary/40 hover:shadow-lg dark:border-primary/30">
+                <div className="relative rounded-2xl overflow-hidden p-4 sm:p-5 cursor-pointer group hover:-translate-y-1 transition-all duration-300 bg-gradient-to-br from-primary/10 via-primary/5 to-transparent border border-primary/20 hover:border-primary/40 hover:shadow-lg dark:border-primary/30">
                   <div className="absolute -top-5 -right-5 w-20 h-20 bg-primary/10 rounded-full" />
-                  <Users className="w-8 h-8 text-primary mb-3 relative z-10" />
-                  <p className="text-4xl font-extrabold text-foreground mb-0.5 relative z-10">
-                    <CountUp end={100000} duration={2000} suffix="+" />
+                  <Users className="w-6 h-6 sm:w-8 sm:h-8 text-primary mb-2 sm:mb-3 relative z-10" />
+                  <p className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-foreground mb-0.5 relative z-10 whitespace-nowrap">
+                    1 Lac+
                   </p>
-                  <p className="text-sm text-muted-foreground font-medium relative z-10">Happy Students</p>
+                  <p className="text-xs sm:text-sm text-muted-foreground font-medium relative z-10">Happy Students</p>
                 </div>
               </Link>
               {/* Years */}
               <Link href="/about" data-reveal="pop">
-                <div className="relative rounded-2xl overflow-hidden p-5 cursor-pointer group hover:-translate-y-1 transition-all duration-300 bg-gradient-to-br from-amber-50 via-yellow-50 to-transparent dark:from-amber-950/30 dark:via-yellow-950/20 dark:to-transparent border border-amber-200 dark:border-amber-800/40 hover:border-amber-400 hover:shadow-lg">
+                <div className="relative rounded-2xl overflow-hidden p-4 sm:p-5 cursor-pointer group hover:-translate-y-1 transition-all duration-300 bg-gradient-to-br from-amber-50 via-yellow-50 to-transparent dark:from-amber-950/30 dark:via-yellow-950/20 dark:to-transparent border border-amber-200 dark:border-amber-800/40 hover:border-amber-400 hover:shadow-lg">
                   <div className="absolute -top-5 -right-5 w-20 h-20 bg-amber-200/40 dark:bg-amber-700/20 rounded-full" />
-                  <Star className="w-8 h-8 text-amber-500 fill-amber-400 mb-3 relative z-10" />
-                  <p className="text-4xl font-extrabold text-foreground mb-0.5 relative z-10">
+                  <Star className="w-6 h-6 sm:w-8 sm:h-8 text-amber-500 fill-amber-400 mb-2 sm:mb-3 relative z-10" />
+                  <p className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-foreground mb-0.5 relative z-10 whitespace-nowrap">
                     <CountUp end={18} duration={1500} delay={200} suffix="+" />
                   </p>
-                  <p className="text-sm text-muted-foreground font-medium relative z-10">Years of Excellence</p>
+                  <p className="text-xs sm:text-sm text-muted-foreground font-medium relative z-10">Years of Excellence</p>
                 </div>
               </Link>
               {/* Centres */}
               <Link href="#centres" data-reveal="pop">
-                <div className="relative rounded-2xl overflow-hidden p-5 cursor-pointer group hover:-translate-y-1 transition-all duration-300 bg-gradient-to-br from-sky-50 via-blue-50 to-transparent dark:from-sky-950/30 dark:via-blue-950/20 dark:to-transparent border border-sky-200 dark:border-sky-800/40 hover:border-sky-400 hover:shadow-lg">
+                <div className="relative rounded-2xl overflow-hidden p-4 sm:p-5 cursor-pointer group hover:-translate-y-1 transition-all duration-300 bg-gradient-to-br from-sky-50 via-blue-50 to-transparent dark:from-sky-950/30 dark:via-blue-950/20 dark:to-transparent border border-sky-200 dark:border-sky-800/40 hover:border-sky-400 hover:shadow-lg">
                   <div className="absolute -top-5 -right-5 w-20 h-20 bg-sky-200/40 dark:bg-sky-700/20 rounded-full" />
-                  <MapPin className="w-8 h-8 text-sky-500 mb-3 relative z-10" />
-                  <p className="text-4xl font-extrabold text-foreground mb-0.5 relative z-10">
+                  <MapPin className="w-6 h-6 sm:w-8 sm:h-8 text-sky-500 mb-2 sm:mb-3 relative z-10" />
+                  <p className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-foreground mb-0.5 relative z-10 whitespace-nowrap">
                     <CountUp end={6} duration={1500} delay={400} prefix="0" />
                   </p>
-                  <p className="text-sm text-muted-foreground font-medium relative z-10">Centres in Thane</p>
+                  <p className="text-xs sm:text-sm text-muted-foreground font-medium relative z-10">Centres in Thane</p>
                 </div>
               </Link>
               {/* Female Staff */}
               <div data-reveal="pop">
-                <div className="relative rounded-2xl overflow-hidden p-5 bg-gradient-to-br from-green-50 via-emerald-50 to-transparent dark:from-green-950/30 dark:via-emerald-950/20 dark:to-transparent border border-green-200 dark:border-green-800/40">
+                <div className="relative rounded-2xl overflow-hidden p-4 sm:p-5 bg-gradient-to-br from-green-50 via-emerald-50 to-transparent dark:from-green-950/30 dark:via-emerald-950/20 dark:to-transparent border border-green-200 dark:border-green-800/40">
                   <div className="absolute -top-5 -right-5 w-20 h-20 bg-green-200/40 dark:bg-green-700/20 rounded-full" />
-                  <Shield className="w-8 h-8 text-green-500 mb-3 relative z-10" />
-                  <p className="text-4xl font-extrabold text-foreground mb-0.5 relative z-10">
+                  <Shield className="w-6 h-6 sm:w-8 sm:h-8 text-green-500 mb-2 sm:mb-3 relative z-10" />
+                  <p className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-foreground mb-0.5 relative z-10 whitespace-nowrap">
                     <CountUp end={100} duration={1500} delay={600} suffix="%" />
                   </p>
-                  <p className="text-sm text-muted-foreground font-medium relative z-10">Female Staff</p>
+                  <p className="text-xs sm:text-sm text-muted-foreground font-medium relative z-10">Female Staff</p>
                 </div>
               </div>
             </div>
