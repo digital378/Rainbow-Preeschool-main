@@ -342,8 +342,8 @@ export default function Gallery() {
             {filteredImages.map((img, i) => (
               <div
                 key={img.id}
-                className="aspect-[4/3] group relative cursor-pointer rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 opacity-0 animate-in fade-in"
-                style={{ animationDelay: `${Math.min(i * 40, 400)}ms`, animationFillMode: "forwards" }}
+                className="aspect-[4/3] group relative cursor-pointer rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 animate-in fade-in duration-500"
+                style={{ animationDelay: `${Math.min(i * 40, 400)}ms`, animationFillMode: "both" }}
                 onClick={() => openLightbox(i)}
                 data-testid={`gallery-image-${img.id}`}
               >
