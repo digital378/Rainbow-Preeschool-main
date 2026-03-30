@@ -130,6 +130,7 @@ const entries: SitemapEntry[] = [
 
   // ── SEASONAL / STANDALONE ────────────────────────────────
   { url: '/holi-activities-for-kids', priority: 0.6, changefreq: 'yearly' },
+  { url: '/april-fools-day-activities-for-kids', priority: 0.6, changefreq: 'yearly' },
 
   // ── LEGACY PAGES – ADMISSION & PLAYGROUP ────────────────
   { url: '/mid-term-playgroup-admissions-benefits', priority: 0.65, changefreq: 'monthly' },

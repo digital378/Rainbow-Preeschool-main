@@ -63,6 +63,7 @@ export const PhysicalDevelopmentSigns = createLegacyPage("/45-signs-of-healthy-p
 export const MidTermVisitQuestions = createLegacyPage("/questions-ask-school-visit-mid-term-playgroup-admissions/");
 export const FAQsPage = createLegacyPage("/faqs/");
 export const UnderstandingPreschoolImportance = createLegacyPage("/understanding-the-importance-of-preschool-in-early-childhood-development/");
+export const AprilFoolsActivities = createLegacyPage("/april-fools-day-activities-for-kids/");
 
 export const BestPreschoolCurriculumThane = createLegacyPage("/best-preschool-curriculum-thane/");
 export const HowToChooseBestPreschool = createLegacyPage("/how-to-choose-best-preschool-thane/");

@@ -75,6 +75,7 @@ const LazyListeningSkillsTips = lazy(() => import("@/pages/legacy-pages").then(m
 const LazyDiwaliActivities = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.DiwaliActivities })));
 const LazyParentTeacherCommunication = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.ParentTeacherCommunication })));
 const LazyHoliActivities = lazy(() => import("@/pages/holi-activities"));
+const LazyAprilFoolsActivities = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.AprilFoolsActivities })));
 const LazyOvercomeFear = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.OvercomeFear })));
 const LazyPlayEmotionalGrowth = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.PlayEmotionalGrowth })));
 const LazyForgetManners = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.ForgetManners })));
@@ -343,6 +344,7 @@ function Router() {
         <Route path="/diwali-activity-for-kindergarten" component={LazyDiwaliActivities} />
         <Route path="/impact-of-parent-teacher-communication-on-student-success" component={LazyParentTeacherCommunication} />
         <Route path="/holi-activities-for-kids" component={LazyHoliActivities} />
+        <Route path="/april-fools-day-activities-for-kids" component={LazyAprilFoolsActivities} />
         <Route path="/7-things-you-can-do-to-help-children-overcome-fear" component={LazyOvercomeFear} />
         <Route path="/importance-of-play-in-childrens-emotional-growth" component={LazyPlayEmotionalGrowth} />
         <Route path="/what-makes-children-forget-their-manners" component={LazyForgetManners} />
