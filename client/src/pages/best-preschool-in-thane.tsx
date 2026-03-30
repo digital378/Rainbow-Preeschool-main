@@ -170,6 +170,7 @@ const whyParentsChoose = [
   { icon: CheckCircle, title: "Strong Academic and Developmental Foundation", desc: "Children leave Rainbow with a strong foundation in literacy, numeracy, creativity, and emotional intelligence — fully prepared for formal schooling." },
   { icon: Shield, title: "Safe, Nurturing Preschool Environment", desc: "Every Rainbow centre prioritises child safety with CCTV, biometric access, 100% female staff, and clean, hygienic classrooms — always." },
   { icon: MapPin, title: "6 Centres Across Thane for Your Convenience", desc: "From Ghodbunder Road to Kalwa, Rainbow has a centre near your home or workplace so your child spends less time travelling and more time learning." },
+  { icon: Clock, title: "Flexible Programmes for Every Family", desc: "From half-day playgroup and nursery sessions to full-day daycare and after-school Happy Times, Rainbow has a schedule that works for every family in Thane." },
 ];
 
 const faqs = [
