@@ -156,6 +156,9 @@ const redirectMap: Record<string, string> = {
   "/mid-term-admission-open-for-playgroup-enhances-development": "/mid-term-playgroup-admissions-benefits",
   "/mid-term-admission-open-for-playgroup-enhances-development/": "/mid-term-playgroup-admissions-benefits",
 
+  // ── Best preschool slug change ─────────────────────────────────────────────
+  "/best-preschool-in-thane": "/best-preschool-near-me-in-thane",
+
   // ── Content duplicates & redirects ─────────────────────────────────────────
   "/preschool-vs-daycare-difference-explained": "/preschool-vs-daycare-difference",
   "/preschool-vs-daycare-understanding-difference": "/preschool-vs-daycare-difference",

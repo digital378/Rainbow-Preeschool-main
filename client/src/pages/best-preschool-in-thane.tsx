@@ -2,7 +2,7 @@ import { Link } from "wouter";
 import { SEO, organizationSchema, websiteSchema, createBreadcrumbSchema, createFAQSchema } from "@/components/seo";
 import { ContactForm } from "@/components/contact-form";
 import { centres } from "@shared/centre-data";
-import { GraduationCap, BookOpen, Shield, Palette, MapPin, MessageCircle, Award, Phone } from "lucide-react";
+import { GraduationCap, BookOpen, Shield, Palette, MapPin, MessageCircle, Award, Phone, ChevronDown } from "lucide-react";
 import { trackWhatsAppClick, trackCallClick } from "@/lib/analytics";
 import { lazy, Suspense, useState, useEffect } from "react";
 
@@ -92,6 +92,7 @@ const awards = [
 
 export default function BestPreschoolInThane() {
   const [showBelowFold, setShowBelowFold] = useState(false);
+  const [openFaq, setOpenFaq] = useState<number | null>(0);
   
   // Lazy load below-fold content after initial render for mobile performance
   useEffect(() => {
@@ -101,7 +102,7 @@ export default function BestPreschoolInThane() {
 
   const breadcrumbs = [
     { name: "Home", url: "/" },
-    { name: "Best Preschool in Thane", url: "/best-preschool-in-thane" }
+    { name: "Best Preschool in Thane", url: "/best-preschool-near-me-in-thane" }
   ];
 
   const structuredData = [
@@ -117,7 +118,7 @@ export default function BestPreschoolInThane() {
         title="Best Preschool - Rainbow Preschool Thane"
         description="Rainbow Preschool is the best preschool in Thane with 18+ years experience, 1 lakh+ students, award-winning curriculum. Playgroup, Nursery, KG. 6 centres. Enquire now!"
         keywords="best preschool in thane, top preschool thane, best playgroup in thane, best nursery school thane, rainbow preschool thane, preschool thane"
-        canonical="/best-preschool-in-thane"
+        canonical="/best-preschool-near-me-in-thane"
         structuredData={structuredData}
       />
 
@@ -371,23 +372,37 @@ export default function BestPreschoolInThane() {
           <section className="py-8 md:py-12 px-4 bg-white dark:bg-gray-800" style={{ contentVisibility: 'auto', containIntrinsicSize: '0 800px' }}>
             <div className="max-w-4xl mx-auto">
               <h2 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-4 md:mb-6 text-center">Frequently Asked Questions</h2>
-              <div className="space-y-3 md:space-y-4">
-                {faqs.map((faq, index) => (
-                  <div key={index} className="bg-gray-50 dark:bg-gray-700 p-4 md:p-5 rounded-lg">
-                    <h3 className="font-semibold text-gray-900 dark:text-white mb-1 md:mb-2 text-sm md:text-base">{faq.question}</h3>
-                    <p className="text-gray-600 dark:text-gray-300 text-xs md:text-sm">{faq.answer}</p>
-                    {faq.bullets && (
-                      <ul className="mt-2 space-y-1.5 text-gray-600 dark:text-gray-300 text-xs md:text-sm">
-                        {faq.bullets.map((bullet, bIdx) => (
-                          <li key={bIdx} className="flex items-start gap-2">
-                            <span className="text-primary mt-1 flex-shrink-0">•</span>
-                            <span>{bullet}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </div>
-                ))}
+              <div className="space-y-2 md:space-y-3">
+                {faqs.map((faq, index) => {
+                  const isOpen = openFaq === index;
+                  return (
+                    <div key={index} className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
+                      <button
+                        className="w-full flex items-center justify-between gap-4 p-4 md:p-5 bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors text-left"
+                        onClick={() => setOpenFaq(isOpen ? null : index)}
+                        aria-expanded={isOpen}
+                      >
+                        <h3 className="font-semibold text-gray-900 dark:text-white text-sm md:text-base">{faq.question}</h3>
+                        <ChevronDown className={`w-5 h-5 flex-shrink-0 text-primary transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`} />
+                      </button>
+                      {isOpen && (
+                        <div className="p-4 md:p-5 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+                          <p className="text-gray-600 dark:text-gray-300 text-xs md:text-sm mb-2">{faq.answer}</p>
+                          {faq.bullets && (
+                            <ul className="space-y-1.5 text-gray-600 dark:text-gray-300 text-xs md:text-sm">
+                              {faq.bullets.map((bullet, bIdx) => (
+                                <li key={bIdx} className="flex items-start gap-2">
+                                  <span className="text-primary mt-1 flex-shrink-0">•</span>
+                                  <span>{bullet}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </section>

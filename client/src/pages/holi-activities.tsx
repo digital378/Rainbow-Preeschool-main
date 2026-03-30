@@ -603,7 +603,7 @@ export default function HoliActivitiesPage() {
                       { text: "Admissions Information", url: "/preschool-admissions" },
                       { text: "Diwali Activities for Kindergarten", url: "/diwali-activity-for-kindergarten" },
                       { text: "Sports Day Activities for Kindergarten", url: "/sports-day-activities-for-kindergarten" },
-                      { text: "Best Preschool in Thane", url: "/best-preschool-in-thane" },
+                      { text: "Best Preschool in Thane", url: "/best-preschool-near-me-in-thane" },
                       { text: "Contact Us", url: "/contact" },
                     ].map((link, i) => (
                       <li key={i}>
@@ -683,7 +683,7 @@ export default function HoliActivitiesPage() {
                           { title: "Indoor Games for Kids at Home", url: "/best-indoor-games-for-kids-at-home" },
                           { title: "Brain Gym Activities for Preschoolers", url: "/brain-gym-activities-for-preschoolers" },
                           { title: "Innovative Learning Activities", url: "/innovative-learning-activities-for-preschoolers" },
-                          { title: "Best Preschool in Thane", url: "/best-preschool-in-thane" },
+                          { title: "Best Preschool in Thane", url: "/best-preschool-near-me-in-thane" },
                         ].map((link, i) => (
                           <li key={i}>
                             <Link href={link.url} className="text-sm text-primary hover:underline flex items-center gap-1" data-testid={`link-related-${i}`}>
@@ -730,7 +730,7 @@ export default function HoliActivitiesPage() {
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-lg md:text-xl font-bold text-gray-900 dark:text-white mb-5 text-center">Explore Rainbow Preschool</h2>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              <Link href="/best-preschool-in-thane" className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center" data-testid="link-holi-best-preschool">
+              <Link href="/best-preschool-near-me-in-thane" className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center" data-testid="link-holi-best-preschool">
                 <span className="text-xl">🏆</span>
                 <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">Award-Winning Preschool</span>
               </Link>

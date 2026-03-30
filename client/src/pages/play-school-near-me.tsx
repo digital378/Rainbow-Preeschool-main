@@ -841,7 +841,7 @@ export default function PlaySchoolNearMe() {
                   <Link href="/preschool-near-me">
                     <Button variant="outline" size="sm" data-testid="link-ps-preschool-near-me">Find Nearest Centre</Button>
                   </Link>
-                  <Link href="/best-preschool-in-thane">
+                  <Link href="/best-preschool-near-me-in-thane">
                     <Button variant="outline" size="sm" data-testid="link-ps-best-preschool">Award-Winning Preschool</Button>
                   </Link>
                   <Link href="/happy-times">

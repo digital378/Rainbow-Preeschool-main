@@ -369,7 +369,7 @@ export default function PreschoolNearMe() {
                 <Link href="/preschool-admissions" className="p-3 md:p-4 bg-white dark:bg-gray-800 rounded-lg border dark:border-gray-700 text-center">
                   <span className="font-medium text-gray-900 dark:text-white text-sm md:text-base">Admissions</span>
                 </Link>
-                <Link href="/best-preschool-in-thane" className="p-3 md:p-4 bg-white dark:bg-gray-800 rounded-lg border dark:border-gray-700 text-center">
+                <Link href="/best-preschool-near-me-in-thane" className="p-3 md:p-4 bg-white dark:bg-gray-800 rounded-lg border dark:border-gray-700 text-center">
                   <span className="font-medium text-gray-900 dark:text-white text-sm md:text-base">Award-Winning Preschool</span>
                 </Link>
                 <Link href="/playgroup" className="p-3 md:p-4 bg-white dark:bg-gray-800 rounded-lg border dark:border-gray-700 text-center">

@@ -320,7 +320,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid grid-cols-3 sm:grid-cols-6 gap-2 sm:gap-3">
             {[
-              { href: "/best-preschool-in-thane", label: "Award-Winning Preschool", Icon: Award, color: "#ef4444", testid: "link-best-preschool" },
+              { href: "/best-preschool-near-me-in-thane", label: "Award-Winning Preschool", Icon: Award, color: "#ef4444", testid: "link-best-preschool" },
               { href: "/preschool-near-me", label: "Find Nearest Centre", Icon: MapPin, color: "#10b981", testid: "link-preschool-near-me" },
               { href: "/preschool-admissions", label: "Admission Process", Icon: FileText, color: "#3b82f6", testid: "link-preschool-admissions" },
               { href: "/playgroup", label: "Playgroup", Icon: Palette, color: "#f97316", testid: "link-playgroup" },
