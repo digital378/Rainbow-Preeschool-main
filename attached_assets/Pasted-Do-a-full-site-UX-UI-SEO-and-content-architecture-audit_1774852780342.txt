@@ -1,0 +1,324 @@
+Do a full-site UX, UI, SEO, and content architecture audit and implementation pass across the entire Rainbow Preschools website, excluding ad landing pages.
+
+WEBSITE SCOPE
+This applies to the full main website for rainbowpreschools.com, including all indexable main pages and supporting pages.
+The site has 100+ pages approximately.
+Exclude ad landing pages from this project. Do not redesign or rewrite the ad landing pages.(/ad, /ris, /ris-11th)
+
+PRIMARY GOAL
+Standardize and optimize the full website so it:
+- follows a consistent premium UI/UX system
+- uses correct and modern SEO best practices
+- avoids keyword cannibalization and content overlap
+- has clean internal linking and clear keyword targeting
+- maintains brand consistency across all pages
+- improves crawlability, usability, and search performance
+- feels visually cohesive and up to date site-wide
+
+IMPORTANT
+Do not redesign the brand identity from scratch.
+Retain Rainbow Preschools’ current brand feel, colors, typography direction, and overall premium preschool positioning.
+This is a site-wide improvement and cleanup project, not a total rebrand.
+
+EXCLUSIONS
+Do NOT modify:
+- ad landing pages
+- paid campaign-only pages
+- any page explicitly marked as ad / noindex / campaign-specific if present
+
+HIGH-LEVEL OBJECTIVE
+Go through every main website page and ensure:
+1. UI consistency
+2. UX consistency
+3. SEO hygiene
+4. no cannibalization
+5. correct page purpose and keyword targeting
+6. strong internal linking
+7. correct metadata and heading structure
+8. modern technical SEO implementation
+9. consistent component styling across the whole site
+
+SITE-WIDE AUDIT + IMPLEMENTATION REQUIREMENTS
+
+1. FULL PAGE-BY-PAGE AUDIT
+Crawl and inspect all main website pages and classify them by page type, such as:
+- homepage
+- about page
+- programme pages
+- gallery page
+- blog/news pages
+- contact page
+- centre pages
+- SEO/location pages
+- admissions-related pages
+- utility pages
+- other indexable pages
+
+For each page, identify:
+- purpose
+- likely target keyword/theme
+- content overlap risk
+- UI inconsistency
+- UX weakness
+- technical SEO issues
+
+2. UI/UX DESIGN SYSTEM STANDARDIZATION
+Create a site-wide consistency pass so the full website uses a unified design system.
+
+Standardize as needed:
+- section spacing
+- heading spacing
+- card styles
+- border radius
+- button styles
+- form styles
+- icon treatment
+- CTA hierarchy
+- image aspect ratio handling
+- shadows and hover states
+- mobile responsiveness behavior
+- content width/container consistency
+- footer consistency
+- FAQ accordion styling
+- page hero structure where appropriate
+
+Do not make every page identical, but make them clearly part of one cohesive system.
+
+3. PAGE PURPOSE CLARITY
+Ensure every page has a clearly differentiated purpose.
+
+Examples:
+- “best preschool in thane” page should not clash with “preschool near me”
+- “preschool admissions” page should focus on admissions, not near-me or best-preschool intent
+- programme pages should target their specific programme intent
+- centre pages should focus on locality + centre-specific trust/info
+- blog pages should support topical authority and internal linking
+
+Refine each page so its intent is clear to both users and search engines.
+
+4. KEYWORD CANNIBALIZATION FIX
+Review the whole site for overlapping keyword targeting.
+
+Identify and resolve cases where multiple pages are competing for the same or very similar search intent.
+
+Actions may include:
+- rewriting page headings and copy focus
+- changing metadata
+- refining internal linking
+- narrowing or shifting content intent
+- consolidating overlapping content areas if necessary
+- differentiating SEO pages so each one owns a distinct target cluster
+
+Examples of themes to separate clearly:
+- best preschool in thane
+- preschool near me
+- preschool admissions
+- playgroup in thane
+- nursery in thane
+- kindergarten in thane
+- centre-specific locality searches
+- gallery / trust pages
+- blog informational topics
+
+5. META TITLE AND META DESCRIPTION OPTIMIZATION
+Review and improve metadata across all indexable pages.
+
+Ensure:
+- each page has a unique title
+- each page has a unique meta description
+- titles are not duplicated
+- metadata is written for CTR as well as SEO
+- keyword targeting aligns with actual page purpose
+- no stuffing
+- no generic repeated templates across many pages unless appropriate
+
+6. HEADING STRUCTURE CLEANUP
+Audit and fix page heading hierarchy across the site.
+
+Ensure:
+- one clear H1 per page
+- H2/H3 usage is logical
+- heading structure supports both readability and SEO
+- headings reflect the page’s actual topic and search intent
+- repeated or generic headings are cleaned up
+
+7. INTERNAL LINKING STRATEGY
+Implement stronger and more strategic internal linking across the site.
+
+Ensure:
+- major SEO pages are linked from relevant supporting pages
+- programme pages link to admissions, centres, and supporting blog content
+- centre pages link back to relevant programme/admission pages
+- blog pages support important commercial pages through contextual links
+- no orphan important pages
+- anchor texts are natural and varied
+- links reinforce the correct page hierarchy and search intent
+
+8. FAQ STANDARDIZATION
+Where FAQ sections exist, make sure they use a consistent accordion/dropdown UI pattern across the main website.
+
+Requirements:
+- closed by default
+- one item open at a time where suitable
+- smooth expand/collapse
+- consistent icon treatment
+- clean spacing
+- mobile-friendly
+- FAQ content aligned with the page’s search intent
+
+Also ensure FAQ sections do not duplicate the same exact questions site-wide unless necessary.
+
+9. COMPONENT-LEVEL CONSISTENCY
+Create reusable patterns where appropriate for:
+- hero sections
+- CTA blocks
+- centre cards
+- programme cards
+- testimonial cards
+- FAQ accordions
+- forms
+- content feature blocks
+- footer and subfooter
+- breadcrumb area if used
+- image gallery blocks
+
+Use shared components/configs where possible to reduce inconsistency.
+
+10. TECHNICAL SEO HYGIENE
+Review and fix technical SEO implementation across the main site.
+
+Ensure:
+- canonical tags are correct and consistent
+- preferred domain logic is respected
+- internal URLs are consistent
+- sitemap references are clean
+- robots directives are correct
+- no conflicting index/noindex usage on main site pages
+- structured data is present where relevant
+- broken internal links are fixed
+- duplicate metadata is removed
+- schema usage is truthful and page-appropriate
+
+11. STRUCTURED DATA IMPLEMENTATION
+Add or improve schema where appropriate across the site, such as:
+- EducationalOrganization / Preschool
+- FAQ schema
+- Breadcrumb schema
+- Article / BlogPosting schema for blogs
+- LocalBusiness / location schema for centres if appropriate
+- Image / gallery related schema if suitable
+
+Do not add unnecessary schema where it does not help.
+
+12. IMAGE SEO + MEDIA CLEANUP
+Audit image usage across the site and improve where needed.
+
+Ensure:
+- descriptive file naming where possible
+- alt text is meaningful and page-relevant
+- decorative images are handled appropriately
+- image display is consistent
+- no stretched or awkward image containers
+- galleries and thumbnails follow a consistent system
+- lazy loading is used where useful
+
+13. MOBILE UX IMPROVEMENT
+Review the full site for mobile usability.
+
+Ensure:
+- forms are usable on mobile
+- buttons are tap-friendly
+- cards stack well
+- accordions work properly
+- header/mobile navigation is clean
+- spacing is not cramped
+- page sections feel polished on smaller screens
+
+14. BLOG / NEWS CONTENT ARCHITECTURE
+Review blog/news pages and improve them for both UX and SEO support.
+
+Ensure:
+- consistent article templates
+- proper title hierarchy
+- readable spacing
+- strong internal linking to core pages
+- related content blocks if useful
+- no thin or duplicated blog layout issues
+
+Do not rewrite every article unnecessarily, but standardize template quality and support their role in the SEO ecosystem.
+
+15. CENTRE PAGE OPTIMIZATION
+For each centre/location page, ensure it has:
+- unique locality-relevant content
+- correct local keyword targeting
+- centre-specific trust information
+- CTA to enquire / visit
+- links to relevant programmes/admissions
+- structured data where useful
+- no duplicate centre-page copy across locations
+
+16. PROGRAMME PAGE OPTIMIZATION
+For each programme page, ensure:
+- clear programme-specific intent
+- age-group clarity
+- benefits and curriculum relevance
+- proper internal linking
+- no overlap with broader SEO pages
+- clean UI/UX consistency
+
+17. GLOBAL CTA STRATEGY
+Review CTA usage across the whole site and standardize CTA hierarchy.
+
+Use consistent intent-based CTA patterns like:
+- Enquire Now
+- Book a Visit
+- Find Centre Near You
+- View Programmes
+- Contact Us
+
+Avoid random CTA phrasing across pages unless page-specific intent requires it.
+
+18. CONTENT DIFFERENTIATION FRAMEWORK
+Create and apply a keyword/content mapping framework so each important page has:
+- a primary target intent
+- supporting secondary keyword themes
+- a clearly differentiated content role
+
+This framework should guide updates across the site and reduce overlap.
+
+19. EDITABLE CONTENT SYSTEM
+Where practical, centralize reusable editable data/config for:
+- CTA labels
+- FAQ data
+- centre data
+- programme card data
+- metadata blocks
+- shared hero patterns
+- footer links
+- common trust badges
+
+Do not force everything into one config if it becomes messy, but improve maintainability.
+
+20. DO NOT BREAK LIVE CONVERSION PATHS
+All upgrades must preserve and improve:
+- enquiry forms
+- contact paths
+- admissions paths
+- centre discovery
+- programme exploration
+- blog to conversion flow
+
+21. OUTPUT EXPECTATION
+Apply improvements across the full main website within the existing project.
+
+This is a full-site optimization pass, not just a report.
+Make actual improvements to the site.
+
+At the end, provide:
+1. summary of site-wide UI/UX improvements made
+2. summary of SEO fixes made
+3. summary of cannibalization/content overlap fixes
+4. list of major reusable patterns/components standardized
+5. summary of metadata/heading/internal linking improvements
+6. summary of structured data improvements
+7. any pages that still require manual business review because content intent was ambiguous

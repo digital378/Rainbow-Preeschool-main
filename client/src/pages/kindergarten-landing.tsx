@@ -33,7 +33,8 @@ import { branches } from "@shared/schema";
 import { 
   CheckCircle, ArrowRight, MapPin, Phone, Clock, Users, Star, Shield, 
   Lock, BookOpen, PenTool, Calculator, Microscope, Globe, Dumbbell,
-  ShieldCheck, UsersRound, Eye, MessageSquare, GraduationCap
+  ShieldCheck, UsersRound, Eye, MessageSquare, GraduationCap,
+  Award, ClipboardList
 } from "lucide-react";
 import { SiWhatsapp } from "react-icons/si";
 import { useForm } from "react-hook-form";
@@ -790,19 +791,19 @@ export default function KindergartenLanding() {
           <h2 className="text-lg md:text-xl font-bold text-gray-900 dark:text-white mb-5 text-center">Explore Rainbow Preschool</h2>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             <Link href="/best-preschool-near-me-in-thane" className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center" data-testid="link-kg-best-preschool">
-              <span className="text-xl">🏆</span>
+              <Award className="w-5 h-5 text-primary" />
               <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">Award-Winning Preschool</span>
             </Link>
             <Link href="/preschool-near-me" className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center" data-testid="link-kg-near-me">
-              <span className="text-xl">📍</span>
+              <MapPin className="w-5 h-5 text-primary" />
               <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">Find Nearest Centre</span>
             </Link>
             <Link href="/preschool-admissions" className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center" data-testid="link-kg-admissions">
-              <span className="text-xl">📋</span>
+              <ClipboardList className="w-5 h-5 text-primary" />
               <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">Admission Process</span>
             </Link>
             <Link href="/nursery" className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center" data-testid="link-kg-nursery">
-              <span className="text-xl">📚</span>
+              <BookOpen className="w-5 h-5 text-primary" />
               <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">Nursery Programme</span>
             </Link>
           </div>

@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { SEO } from "@/components/seo";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
-import { X, ChevronLeft, ChevronRight, Images } from "lucide-react";
+import { X, ChevronLeft, ChevronRight, Images, Award, MapPin, ClipboardList, BookOpen } from "lucide-react";
 import {
   GALLERY_CATEGORIES,
   GALLERY_IMAGES,
@@ -170,8 +170,8 @@ export default function Gallery() {
   return (
     <div className="min-h-screen bg-white dark:bg-background">
       <SEO
-        title="Gallery | Rainbow Preschools Thane"
-        description="Explore our gallery — classrooms, activities, events, and facilities at Rainbow Preschool International Thane. 18+ years of joyful early childhood education."
+        title="School Gallery | Rainbow Preschool International Thane"
+        description="Explore classrooms, activities, events, and facilities across Rainbow Preschool's 6 centres in Thane. 18+ years of joyful early childhood education trusted by 1,00,000+ families."
         keywords="rainbow preschool gallery, preschool photos thane, preschool classroom photos, kids activity photos thane, preschool facilities thane"
         canonical="https://www.rainbowpreschools.com/gallery"
       />
@@ -321,19 +321,19 @@ export default function Gallery() {
           <h2 className="text-lg md:text-xl font-bold text-gray-900 dark:text-white mb-5 text-center">Explore Rainbow Preschool</h2>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             <Link href="/best-preschool-near-me-in-thane" className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center" data-testid="link-gallery-best-preschool">
-              <span className="text-xl">🏆</span>
+              <Award className="w-5 h-5 text-primary" />
               <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">Award-Winning Preschool</span>
             </Link>
             <Link href="/preschool-near-me" className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center" data-testid="link-gallery-near-me">
-              <span className="text-xl">📍</span>
+              <MapPin className="w-5 h-5 text-primary" />
               <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">Find Nearest Centre</span>
             </Link>
             <Link href="/preschool-admissions" className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center" data-testid="link-gallery-admissions">
-              <span className="text-xl">📋</span>
+              <ClipboardList className="w-5 h-5 text-primary" />
               <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">Admission Process</span>
             </Link>
             <Link href="/programmes" className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center" data-testid="link-gallery-programmes">
-              <span className="text-xl">📚</span>
+              <BookOpen className="w-5 h-5 text-primary" />
               <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">Our Programmes</span>
             </Link>
           </div>

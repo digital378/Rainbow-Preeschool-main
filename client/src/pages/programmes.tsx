@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { CTASection } from "@/components/cta-section";
 import { SEO } from "@/components/seo";
 import { programmes } from "@shared/schema";
-import { Baby, BookOpen, GraduationCap, Heart, CheckCircle, ArrowRight } from "lucide-react";
+import { Baby, BookOpen, GraduationCap, Heart, CheckCircle, ArrowRight, Award, MapPin, ClipboardList, Images } from "lucide-react";
 
 // Filter out Kids Activity Club and Summer Camp - they are standalone landing pages
 const mainProgrammes = programmes.filter(p => !["kids-activity-club", "summer-camp"].includes(p.id));
@@ -66,8 +66,8 @@ export default function Programmes() {
   return (
     <div className="pt-20 md:pt-24">
       <SEO
-        title="Preschool Programmes Thane | Playgroup Nursery KG"
-        description="Explore preschool programmes in Thane: Playgroup (1.5-2.5 yrs), Nursery (2.5-3.5 yrs), Kindergarten (3.5-5.5 yrs) & Daycare. Best play-based curriculum near you!"
+        title="Preschool Programmes in Thane | Playgroup, Nursery & KG | Rainbow Preschool"
+        description="Explore all preschool programmes at Rainbow Preschool Thane: Playgroup (1.5–2.5 yrs), Nursery (2.5–3.5 yrs), Kindergarten (3.5–5.5 yrs) & Daycare. Award-winning play-based curriculum since 2007."
         keywords="preschool programmes in thane, rainbow preschool curriculum, playgroup in thane, nursery in thane, kindergarten thane, daycare thane, playgroup programme, nursery curriculum, kg admission thane, lkg ukg thane"
         canonical="/programmes"
       />
@@ -189,19 +189,19 @@ export default function Programmes() {
           <h2 className="text-lg md:text-xl font-bold text-gray-900 dark:text-white mb-5 text-center">Explore Rainbow Preschool</h2>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             <Link href="/best-preschool-near-me-in-thane" className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center" data-testid="link-programmes-best-preschool">
-              <span className="text-xl">🏆</span>
+              <Award className="w-5 h-5 text-primary" />
               <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">Award-Winning Preschool</span>
             </Link>
             <Link href="/preschool-near-me" className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center" data-testid="link-programmes-near-me">
-              <span className="text-xl">📍</span>
+              <MapPin className="w-5 h-5 text-primary" />
               <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">Find Nearest Centre</span>
             </Link>
             <Link href="/preschool-admissions" className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center" data-testid="link-programmes-admissions">
-              <span className="text-xl">📋</span>
+              <ClipboardList className="w-5 h-5 text-primary" />
               <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">Admission Process</span>
             </Link>
             <Link href="/gallery" className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center" data-testid="link-programmes-gallery">
-              <span className="text-xl">🖼️</span>
+              <Images className="w-5 h-5 text-primary" />
               <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">Photo Gallery</span>
             </Link>
           </div>

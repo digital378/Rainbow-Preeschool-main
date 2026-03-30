@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
-import { ChevronRight, Phone, MessageCircle, BookOpen, GraduationCap, MapPin, Download, ChevronDown, ChevronUp, Palette, Music, Shield, Users, Flame, PenTool, Award, Share2, Heart, Sparkles } from "lucide-react";
+import { ChevronRight, Phone, MessageCircle, BookOpen, GraduationCap, MapPin, Download, ChevronDown, ChevronUp, Palette, Music, Shield, Users, Flame, PenTool, Award, Share2, Heart, Sparkles, ClipboardList, Images } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -731,19 +731,19 @@ export default function HoliActivitiesPage() {
             <h2 className="text-lg md:text-xl font-bold text-gray-900 dark:text-white mb-5 text-center">Explore Rainbow Preschool</h2>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               <Link href="/best-preschool-near-me-in-thane" className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center" data-testid="link-holi-best-preschool">
-                <span className="text-xl">🏆</span>
+                <Award className="w-5 h-5 text-primary" />
                 <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">Award-Winning Preschool</span>
               </Link>
               <Link href="/preschool-near-me" className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center" data-testid="link-holi-near-me">
-                <span className="text-xl">📍</span>
+                <MapPin className="w-5 h-5 text-primary" />
                 <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">Find Nearest Centre</span>
               </Link>
               <Link href="/gallery" className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center" data-testid="link-holi-gallery">
-                <span className="text-xl">🖼️</span>
+                <Images className="w-5 h-5 text-primary" />
                 <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">Photo Gallery</span>
               </Link>
               <Link href="/preschool-admissions" className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center" data-testid="link-holi-admissions">
-                <span className="text-xl">📋</span>
+                <ClipboardList className="w-5 h-5 text-primary" />
                 <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">Admission Process</span>
               </Link>
             </div>

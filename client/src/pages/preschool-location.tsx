@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Link } from "wouter";
-import { MapPin, Phone, Clock, Shield, Users, BookOpen, Heart, Star, ChevronRight, MessageCircle, Navigation } from "lucide-react";
+import { MapPin, Phone, Clock, Shield, Users, BookOpen, Heart, Star, ChevronRight, MessageCircle, Navigation, Award, ClipboardList, Images } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -558,7 +558,7 @@ function PreschoolLocationTemplate({ localitySlug }: PreschoolLocationPageProps)
               className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center"
               data-testid="link-centre-best-preschool"
             >
-              <span className="text-xl">🏆</span>
+              <Award className="w-5 h-5 text-primary" />
               <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">Award-Winning Preschool</span>
             </Link>
             <Link
@@ -566,7 +566,7 @@ function PreschoolLocationTemplate({ localitySlug }: PreschoolLocationPageProps)
               className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center"
               data-testid="link-centre-near-me"
             >
-              <span className="text-xl">📍</span>
+              <MapPin className="w-5 h-5 text-primary" />
               <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">All Centre Locations</span>
             </Link>
             <Link
@@ -574,7 +574,7 @@ function PreschoolLocationTemplate({ localitySlug }: PreschoolLocationPageProps)
               className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center"
               data-testid="link-centre-admissions"
             >
-              <span className="text-xl">📋</span>
+              <ClipboardList className="w-5 h-5 text-primary" />
               <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">Admission Process</span>
             </Link>
             <Link
@@ -582,7 +582,7 @@ function PreschoolLocationTemplate({ localitySlug }: PreschoolLocationPageProps)
               className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center"
               data-testid="link-centre-gallery"
             >
-              <span className="text-xl">🖼️</span>
+              <Images className="w-5 h-5 text-primary" />
               <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">Photo Gallery</span>
             </Link>
           </div>
