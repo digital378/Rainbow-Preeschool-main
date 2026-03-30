@@ -9193,7 +9193,7 @@ Object.assign(legacyPagesData, {
     sections: [
       {
         heading: "Why April Fool's Day Activities Are Good for Preschoolers",
-        content: "A well-planned April Fool's Day celebration can do much more than create laughter. It can also support important areas of development in early childhood.\n\nFor young children, playful celebrations work best when they are kind, simple and predictable enough to feel safe. These theme-based days align naturally with the play-based learning approach we use across our <a href=\"/programmes\">Playgroup, Nursery and Kindergarten programmes</a>.",
+        content: "A well-planned April Fool's Day celebration can do much more than create laughter. It can also support important areas of development in early childhood.\n\nFor young children, playful celebrations work best when they are kind, simple and predictable enough to feel safe. These theme-based days align naturally with the play-based learning approach we use across our <a href=\"/programmes\">Playgroup, Nursery and Kindergarten programmes</a>. Families in Thane looking for a <a href=\"/preschool-near-me\">preschool near them</a> can explore our six centre locations and see this kind of joyful, activity-based learning in action.",
         bulletPoints: [
           "Build confidence through active participation",
           "Improve listening and language skills",
@@ -9275,7 +9275,7 @@ Object.assign(legacyPagesData, {
       },
       {
         heading: "April Fool's Day Classroom Tips for Teachers",
-        content: "Teachers can keep the day smooth and enjoyable by following a few simple guidelines. If you already use hands-on learning in your classroom, themed activities like these can blend beautifully into the day. At Rainbow Preschools, we often use interactive and creative classroom experiences to make learning more joyful. Parents can also explore our <a href=\"/playgroup\">Playgroup</a>, <a href=\"/nursery\">Nursery</a> and <a href=\"/kindergarten\">Kindergarten</a> programmes to see how age-appropriate activities support children's growth.",
+        content: "Teachers can keep the day smooth and enjoyable by following a few simple guidelines. If you already use hands-on learning in your classroom, themed activities like these can blend beautifully into the day. At Rainbow Preschools, we often use interactive and creative classroom experiences to make learning more joyful. Parents can also explore our <a href=\"/playgroup\">Playgroup</a>, <a href=\"/nursery\">Nursery</a> and <a href=\"/kindergarten\">Kindergarten</a> programmes to see how age-appropriate activities support children's growth. Families considering enrolment can read our detailed <a href=\"/preschool-admissions\">preschool admissions guide</a> to understand age criteria, the joining process and what to expect.",
         bulletPoints: [
           "Maintain the usual classroom routine as much as possible",
           "Include one or two surprise activities rather than changing everything",
@@ -9309,7 +9309,7 @@ Object.assign(legacyPagesData, {
       },
       {
         heading: "Why Rainbow Preschools Believes in Joyful Learning",
-        content: "At Rainbow Preschools, learning is designed to be engaging, interactive and development-focused. We believe children learn best when they feel secure, curious and happy in their environment.\n\nCelebrations like April Fool's Day, when handled with care, become opportunities to build confidence, encourage participation, strengthen social comfort, support creative thinking and make school feel exciting and welcoming.\n\nThat is why our approach to early childhood education includes activities that balance fun with purposeful learning. <a href=\"/contact\">Contact us</a> to learn more about how we create joyful, meaningful learning experiences across our six centres in Thane.",
+        content: "At Rainbow Preschools, learning is designed to be engaging, interactive and development-focused. We believe children learn best when they feel secure, curious and happy in their environment.\n\nCelebrations like April Fool's Day, when handled with care, become opportunities to build confidence, encourage participation, strengthen social comfort, support creative thinking and make school feel exciting and welcoming.\n\nThat is why our approach to early childhood education includes activities that balance fun with purposeful learning. Discover what sets us apart on our <a href=\"/best-preschool-near-me-in-thane\">best preschool in Thane</a> page, or <a href=\"/contact\">contact us</a> to learn more about our six centres and how to get started.",
         bulletPoints: []
       }
     ],
@@ -9340,6 +9340,9 @@ Object.assign(legacyPagesData, {
       }
     ],
     relatedLinks: [
+      { title: "Best Preschool in Thane", url: "/best-preschool-near-me-in-thane", description: "Why Rainbow stands out in Thane" },
+      { title: "Preschool Admissions Guide", url: "/preschool-admissions", description: "Age criteria, process and documents" },
+      { title: "Find a Preschool Near You", url: "/preschool-near-me", description: "All 6 Rainbow centre locations" },
       { title: "Playgroup Programme (Ages 1.5–2.5)", url: "/playgroup", description: "Early play-based learning" },
       { title: "Nursery Programme (Ages 2.5–3.5)", url: "/nursery", description: "Building foundations through fun" },
       { title: "Kindergarten Programme (Ages 3.5–5.5)", url: "/kindergarten", description: "School readiness through activity" },
