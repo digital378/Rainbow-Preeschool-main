@@ -283,7 +283,7 @@ export default function PreschoolNearMe() {
                     </div>
                     <div className="flex gap-2">
                       <a
-                        href={`tel:${centre.phoneNumbers[0]}`}
+                        href="tel:+918291568972"
                         className="flex-1 text-center px-3 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:bg-red-700 transition-colors"
                       >
                         Call Now
@@ -331,7 +331,7 @@ export default function PreschoolNearMe() {
                       </div>
                       <div className="flex gap-2">
                         <a
-                          href={`tel:${centre.phoneNumbers[0]}`}
+                          href="tel:+918291568972"
                           className="flex-1 text-center px-3 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:bg-red-700 transition-colors"
                         >
                           Call Now
