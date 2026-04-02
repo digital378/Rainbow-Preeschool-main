@@ -1,0 +1,110 @@
+I want to build a visually premium, realistic 3D-style interactive map section for a website (Rainbow Preschools).
+
+OBJECTIVE:
+Create a semi-realistic 3D isometric map where 6 preschool buildings appear to rise out of the ground (pop-out effect). The design should feel modern, clean, slightly playful, and highly premium — similar to Apple Maps 3D or a miniature city model.
+
+IMPORTANT REQUIREMENTS:
+- EXACTLY 6 buildings (no more, no less)
+- Only buildings, terrain, roads, trees, and markers
+- Ensure all 6 buildings are clearly visible and evenly distributed
+- Include the missing "center" building (balanced layout)
+
+---
+
+DESIGN SPECIFICATIONS:
+
+1. MAP BASE:
+- Soft 3D terrain with slight elevation (not flat)
+- Smooth curved roads with subtle emboss effect
+- Light pastel color palette (greens, beige, light grey)
+- Slight isometric tilt (~35–45 degrees)
+
+2. BUILDINGS:
+- 6 unique preschool-style buildings
+- realistic (not cartoon, not hyper-realistic)
+- Bright but soft colors (yellow, blue, red roofs)
+- Add depth, shadows, windows, doors
+- Buildings must appear extruded from the map surface
+
+3. MARKERS:
+- Red location pins above each building
+- Add soft glow at the base of pins
+- Slight floating effect (optional animation)
+
+4. CONNECTION PATHS:
+- Connect all 6 locations using glowing dotted or curved lines
+- Lines should feel elevated slightly above the surface
+- Soft red/orange glow
+
+5. ENVIRONMENT:
+- Add low-poly trees with shadows
+- Add slight terrain variations (small hills)
+- Maintain minimal clutter
+
+6. LIGHTING:
+- One directional light source (top-left)
+- Soft shadows under buildings and trees
+- Add ambient occlusion for realism
+
+---
+
+TECH IMPLEMENTATION (IMPORTANT):
+
+Use ONE of the following approaches:
+
+OPTION A (RECOMMENDED - BEST PERFORMANCE):
+- Create design using CSS + layered elements
+- Use perspective + transform (rotateX, rotateY)
+- Use shadows and gradients for 3D illusion
+- Export buildings as PNG/WebP assets if needed
+
+OPTION B (ADVANCED):
+- Use Three.js for true 3D rendering
+- Create low-poly building meshes
+- Add lighting, shadows, camera controls
+
+OPTION C (EASIEST + MODERN):
+- Use Spline (https://spline.design/)
+- Embed scene in webpage
+- Add hover/click interactions
+
+---
+
+INTERACTIONS:
+- On hover: building slightly scales up (1.05x)
+- On click: open Google Maps link (placeholder function)
+- Optional: subtle floating animation on load
+
+---
+
+PERFORMANCE:
+- Must load fast (optimize assets)
+- Use WebP images if applicable
+- Avoid heavy JS unless using Three.js
+
+---
+
+OUTPUT:
+- Fully responsive section
+- Clean container with rounded edges
+- Ready to integrate into homepage
+
+---
+
+EXTRA (OPTIONAL BUT RECOMMENDED):
+- Add subtle animation on load (fade + rise)
+- Add micro glow pulse on markers
+- Slight parallax on mouse movement
+
+---
+
+REFERENCE STYLE:
+- Apple Maps 3D
+- Google Maps 3D buildings
+- Miniature city model
+
+---
+
+DELIVERABLE:
+- Working code (HTML + CSS + JS OR Three.js)
+- Clean, modular, and production-ready
