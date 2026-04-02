@@ -123,7 +123,7 @@ function PreschoolLocationTemplate({ localitySlug }: PreschoolLocationPageProps)
           "@type": "ListItem",
           "position": 2,
           "name": "Centres",
-          "item": "https://www.rainbowpreschools.com/contact#centres"
+          "item": "https://www.rainbowpreschools.com/preschool-near-me"
         },
         {
           "@type": "ListItem",
@@ -220,7 +220,7 @@ function PreschoolLocationTemplate({ localitySlug }: PreschoolLocationPageProps)
             </li>
             <ChevronRight className="h-4 w-4" />
             <li>
-              <Link href="/contact#centres" className="hover:text-primary" data-testid="breadcrumb-centres">
+              <Link href="/preschool-near-me" className="hover:text-primary" data-testid="breadcrumb-centres">
                 Centres
               </Link>
             </li>

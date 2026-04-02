@@ -767,7 +767,7 @@ export default function BlogPost() {
                     Contact Us
                   </Button>
                 </Link>
-                <Link href="/#our-centres">
+                <Link href="/preschool-near-me">
                   <Button variant="outline" data-testid="button-view-centres">
                     <MapPin className="w-4 h-4 mr-2" />
                     View Our Centres

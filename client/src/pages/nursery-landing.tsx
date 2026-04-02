@@ -831,7 +831,7 @@ export default function NurseryLanding() {
               >
                 <SiWhatsapp className="mr-2 h-5 w-5" /> WhatsApp Us
               </Button>
-              <Link href="/contact">
+              <Link href="/preschool-near-me">
                 <Button 
                   size="lg" 
                   variant="outline"

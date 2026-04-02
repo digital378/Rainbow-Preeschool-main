@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
 import { CTASection } from "@/components/cta-section";
 import { SEO } from "@/components/seo";
 import { Calendar, User, Clock, Download, MapPin, Phone, Award, ClipboardList, Images } from "lucide-react";
@@ -477,6 +478,24 @@ export default function RepublicDay2026() {
             </Link>
           </div>
         </div>
+      </section>
+
+      <section className="container mx-auto px-4 py-8 max-w-4xl">
+        <Card className="border-blue-200/60 bg-blue-50/30">
+          <CardContent className="pt-5 pb-4">
+            <p className="text-xs font-medium text-blue-600 uppercase tracking-wide mb-2">Part of Rainbow Group</p>
+            <h3 className="text-lg font-semibold mb-2">Continue the Journey with Rainbow International School</h3>
+            <p className="text-sm text-muted-foreground mb-3">
+              Looking ahead to primary and secondary education? Our sister institution, <a href="https://rainbowinternationalschool.in" target="_blank" rel="noopener" className="text-blue-600 font-medium hover:underline">Rainbow International School</a>, offers a seamless CBSE-affiliated K–12 pathway from Nursery to Class 12 in Thane West.
+            </p>
+            <div className="flex flex-wrap gap-2">
+              <a href="https://rainbowinternationalschool.in/pre-primary-school-thane" target="_blank" rel="noopener" className="text-xs bg-blue-100 text-blue-700 rounded-full px-3 py-1 font-medium hover:bg-blue-200 transition-colors" data-testid="link-republic-ris-preprimary">Pre-Primary</a>
+              <a href="https://rainbowinternationalschool.in/primary-section" target="_blank" rel="noopener" className="text-xs bg-blue-100 text-blue-700 rounded-full px-3 py-1 font-medium hover:bg-blue-200 transition-colors" data-testid="link-republic-ris-primary">Primary School</a>
+              <a href="https://rainbowinternationalschool.in/curriculum" target="_blank" rel="noopener" className="text-xs bg-blue-100 text-blue-700 rounded-full px-3 py-1 font-medium hover:bg-blue-200 transition-colors" data-testid="link-republic-ris-curriculum">CBSE Curriculum</a>
+              <a href="https://rainbowinternationalschool.in/contact-us" target="_blank" rel="noopener" className="text-xs bg-blue-100 text-blue-700 rounded-full px-3 py-1 font-medium hover:bg-blue-200 transition-colors" data-testid="link-republic-ris-admissions">Admissions</a>
+            </div>
+          </CardContent>
+        </Card>
       </section>
 
       <CTASection />
