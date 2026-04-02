@@ -45,6 +45,7 @@ export function ProgrammeCard({ programme, index = 0 }: ProgrammeCardProps) {
               alt={`${programme.name} activities at Rainbow Preschool`}
               className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
               loading="lazy"
+              decoding="async"
               width={400}
               height={300}
               data-testid={`img-programme-card-${programme.id}`}

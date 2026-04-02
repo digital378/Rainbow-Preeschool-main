@@ -23,12 +23,12 @@ const hero = {
 };
 
 const centreImages: Record<string, string> = {
-  'manpada': '/images/centres/manpada.png',
-  'hariniwas': '/images/centres/hariniwas.png',
-  'anand-nagar': '/images/centres/anand-nagar.png',
-  'dhokali': '/images/centres/dhokali.png',
-  'kalwa': '/images/centres/kalwa.png',
-  'kasarvadavali': '/images/centres/kasarvadavali.png',
+  'manpada': '/images/centres/manpada.webp',
+  'hariniwas': '/images/centres/hariniwas.webp',
+  'anand-nagar': '/images/centres/anand-nagar.webp',
+  'dhokali': '/images/centres/dhokali.webp',
+  'kalwa': '/images/centres/kalwa.webp',
+  'kasarvadavali': '/images/centres/kasarvadavali.webp',
 };
 
 const centreAltText: Record<string, string> = {
