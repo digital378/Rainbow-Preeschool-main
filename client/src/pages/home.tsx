@@ -47,41 +47,57 @@ function LazySection({ children, rootMargin = "200px", minHeight = 400 }: { chil
   return <div ref={ref}>{visible ? children : <div style={{ minHeight }} />}</div>;
 }
 
-function LazyVideo({ src, className }: { src: string; className?: string }) {
-  const ref = useRef<HTMLDivElement>(null);
+function LazyVideo({ src, poster, className }: { src: string; poster: string; className?: string }) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [inView, setInView] = useState(false);
+  const [playing, setPlaying] = useState(false);
+
+  const handlePlay = () => {
+    setPlaying(true);
+  };
+
   useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) { setInView(true); obs.disconnect(); } },
-      { rootMargin: "100px" }
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, []);
-  useEffect(() => {
-    if (inView && videoRef.current) {
+    if (playing && videoRef.current) {
       videoRef.current.play().catch(() => {});
     }
-  }, [inView]);
+  }, [playing]);
+
   return (
-    <div ref={ref} className={className}>
-      {inView ? (
+    <div className={className} data-testid="video-walkthrough">
+      {playing ? (
         <video
           ref={videoRef}
           loop
           muted
           playsInline
-          preload="none"
+          preload="auto"
           className="w-full h-auto"
-          data-testid="video-walkthrough"
         >
           <source src={src} type="video/mp4" />
         </video>
       ) : (
-        <div className="w-full bg-muted rounded-xl" style={{ aspectRatio: "16/9" }} />
+        <button
+          onClick={handlePlay}
+          className="relative w-full cursor-pointer border-0 p-0 bg-transparent block"
+          aria-label="Play walkthrough video"
+          data-testid="button-play-video"
+        >
+          <img
+            src={poster}
+            alt="Rainbow Preschool walkthrough"
+            className="w-full h-auto"
+            width={800}
+            height={450}
+            loading="lazy"
+            decoding="async"
+          />
+          <div className="absolute inset-0 flex items-center justify-center bg-black/20 hover:bg-black/30 transition-colors">
+            <div className="w-16 h-16 rounded-full bg-white/90 flex items-center justify-center shadow-lg">
+              <svg viewBox="0 0 24 24" fill="none" className="w-8 h-8 ml-1">
+                <path d="M8 5v14l11-7z" fill="#E53935" />
+              </svg>
+            </div>
+          </div>
+        </button>
       )}
     </div>
   );
@@ -582,6 +598,7 @@ export default function Home() {
                 </p>
                 <LazyVideo
                   src="/assets/RPS_Walkthrough_Video_-_Website_1_1766126796450.mp4"
+                  poster="/assets/walkthrough-poster.webp"
                   className="rounded-xl overflow-hidden shadow-md"
                 />
               </div>
