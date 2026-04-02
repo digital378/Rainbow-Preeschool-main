@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from "react";
 import { Link } from "wouter";
-import { ChevronRight, Phone, MessageCircle, BookOpen, GraduationCap, MapPin } from "lucide-react";
+import { ChevronRight, Phone, MessageCircle, BookOpen, GraduationCap, MapPin, ArrowLeft } from "lucide-react";
 import { shouldNoIndex } from "@shared/seo-config";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -228,6 +228,15 @@ export function LegacyLandingPage({ data }: LegacyLandingPageProps) {
               </ol>
             </div>
           </nav>
+
+          <div className="container mx-auto px-4 pt-6">
+            <Link href="/blog">
+              <Button variant="ghost" className="mb-2" data-testid="button-back-to-blog">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Back to Blog
+              </Button>
+            </Link>
+          </div>
 
           <header className="bg-gradient-to-br from-pink-50 via-yellow-50 to-blue-50 dark:from-pink-950/20 dark:via-yellow-950/20 dark:to-blue-950/20 py-12 md:py-16">
             <div className="container mx-auto px-4">

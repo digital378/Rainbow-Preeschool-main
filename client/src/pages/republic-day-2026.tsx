@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { CTASection } from "@/components/cta-section";
 import { SEO } from "@/components/seo";
-import { Calendar, User, Clock, Download, MapPin, Phone, Award, ClipboardList, Images } from "lucide-react";
+import { Calendar, User, Clock, Download, MapPin, Phone, Award, ClipboardList, Images, ArrowLeft } from "lucide-react";
 
 function RepublicDaySchema() {
   useEffect(() => {
@@ -121,6 +121,13 @@ export default function RepublicDay2026() {
 
       <article className="py-12 md:py-16 lg:py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Link href="/blog">
+            <Button variant="ghost" className="mb-6" data-testid="button-back-to-blog">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Blog
+            </Button>
+          </Link>
+
           <header className="mb-8">
             <Badge variant="secondary" className="mb-4">Republic Day 2026</Badge>
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight">
