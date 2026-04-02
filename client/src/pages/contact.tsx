@@ -8,8 +8,8 @@ import { branches } from "@shared/schema";
 import { Phone, Mail, Clock, MapPin, Award, ClipboardList, Images, Navigation as NavigationIcon } from "lucide-react";
 
 const centreMapPins = [
-  { id: "kasarvadavali", label: "Kasarvadavali", mapUrl: "https://maps.app.goo.gl/9Bs1YpUM1cpBgiYA6", x: 15, y: 18, color: "#FFF3E0", roof: "#E53935", accent: "#FFC107" },
-  { id: "anand-nagar", label: "Anand Nagar", mapUrl: "https://maps.app.goo.gl/XWTsinHiPU5EjH3HA", x: 72, y: 12, color: "#E3F2FD", roof: "#1E88E5", accent: "#42A5F5" },
+  { id: "kasarvadavali", label: "Kasarvadavali", mapUrl: "https://maps.app.goo.gl/9Bs1YpUM1cpBgiYA6", x: 25, y: 24, color: "#FFF3E0", roof: "#E53935", accent: "#FFC107" },
+  { id: "anand-nagar", label: "Anand Nagar", mapUrl: "https://maps.app.goo.gl/XWTsinHiPU5EjH3HA", x: 62, y: 18, color: "#E3F2FD", roof: "#1E88E5", accent: "#42A5F5" },
   { id: "aggarwal", label: "Manpada", mapUrl: "https://maps.app.goo.gl/4sVVZ3K3x1MYsWFc7", x: 38, y: 44, color: "#FFF9C4", roof: "#F9A825", accent: "#FFD54F" },
   { id: "dhokali", label: "Dhokali", mapUrl: "https://maps.app.goo.gl/VFhUJXqVZRxKaeCWA", x: 65, y: 40, color: "#FCE4EC", roof: "#E53935", accent: "#EF9A9A" },
   { id: "hariniwas", label: "Hariniwas", mapUrl: "https://maps.app.goo.gl/NyiqKpYEiVsWoZdx5", x: 22, y: 72, color: "#E8F5E9", roof: "#43A047", accent: "#81C784" },
@@ -167,9 +167,9 @@ function Interactive3DMap() {
             <div className="absolute inset-0" style={{ overflow: "visible" }}>
               <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="none" style={{ overflow: "visible" }}>
                 {[
-                  [15, 18, 72, 12], [72, 12, 65, 40], [65, 40, 80, 70],
-                  [80, 70, 22, 72], [22, 72, 38, 44], [38, 44, 15, 18],
-                  [38, 44, 65, 40], [15, 18, 22, 72], [72, 12, 80, 70],
+                  [25, 24, 62, 18], [62, 18, 65, 40], [65, 40, 80, 70],
+                  [80, 70, 22, 72], [22, 72, 38, 44], [38, 44, 25, 24],
+                  [38, 44, 65, 40], [25, 24, 22, 72], [62, 18, 80, 70],
                 ].map(([x1, y1, x2, y2], i) => (
                   <line key={`conn-${i}`} x1={x1} y1={y1} x2={x2} y2={y2} stroke="#E53935" strokeWidth="0.3" strokeDasharray="1.5 1.5" opacity="0.25" className="map-path-animate" />
                 ))}
