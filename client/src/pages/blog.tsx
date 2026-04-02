@@ -19,9 +19,15 @@ const CATEGORY_COLORS: Record<string, { bg: string; text: string; border: string
   "Admissions": { bg: "bg-amber-50", text: "text-amber-700", border: "border-amber-200" },
   "Child Development": { bg: "bg-purple-50", text: "text-purple-700", border: "border-purple-200" },
   "School Events": { bg: "bg-orange-50", text: "text-orange-700", border: "border-orange-200" },
+  "About": { bg: "bg-teal-50", text: "text-teal-700", border: "border-teal-200" },
 };
 
 const DEFAULT_CATEGORY_COLOR = { bg: "bg-gray-50", text: "text-gray-700", border: "border-gray-200" };
+
+const CATEGORY_NORMALIZE: Record<string, string> = {
+  "About Rainbow": "About",
+  "About Us": "About",
+};
 
 const ACCENT_BORDERS = [
   "border-l-red-500",
@@ -86,7 +92,7 @@ function getAllBlogPosts(): BlogEntry[] {
       title: page.h1 || page.title.split("|")[0].trim(),
       excerpt: page.metaDescription,
       url: `/${cleanSlug}`,
-      category: page.category || "Education",
+      category: CATEGORY_NORMALIZE[page.category || ""] || page.category || "Education",
     };
   });
 
