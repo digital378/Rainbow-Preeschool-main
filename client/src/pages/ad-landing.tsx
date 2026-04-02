@@ -393,7 +393,7 @@ export default function AdLanding() {
       <header className="bg-white shadow-sm py-3 px-4 sticky top-0 z-50">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
           <a href="/" className="flex items-center gap-2">
-            <img src="/images/optimized/rainbow-logo.webp" alt="Rainbow Preschool" className="h-10 w-auto" />
+            <img src="/images/optimized/rainbow-logo.webp" alt="Rainbow Preschool" className="h-10 w-auto" width="40" height="40" />
             <span className="font-bold text-red-600 text-base md:text-lg">Rainbow Preschool</span>
           </a>
           <a
@@ -659,6 +659,7 @@ export default function AdLanding() {
                     src={img.src}
                     alt={img.label}
                     loading={i === 0 ? "eager" : "lazy"}
+                    width="800" height="450" decoding="async"
                     className="w-full h-full object-cover cursor-pointer"
                     onClick={() => { setSliderPaused(true); setLightboxIndex(i); }}
                     data-testid={`slider-image-${i}`}
@@ -746,7 +747,7 @@ export default function AdLanding() {
               data-testid="lightbox-prev"
             >&#8249;</button>
             <div className="flex flex-col items-center gap-3" onClick={(e) => e.stopPropagation()}>
-              <img src={campusImages[lightboxIndex].src} alt={campusImages[lightboxIndex].label} className="lightbox-img" />
+              <img src={campusImages[lightboxIndex].src} alt={campusImages[lightboxIndex].label} width="800" height="450" className="lightbox-img" />
               <div className="flex items-center gap-2">
                 <div className="w-3 h-3 rounded-full flex-shrink-0" style={{ background: campusImages[lightboxIndex].color }} />
                 <span className="text-white font-semibold text-sm">{campusImages[lightboxIndex].label}</span>
@@ -830,6 +831,9 @@ export default function AdLanding() {
                     src={centreImages[centre.id]}
                     alt={`Rainbow Preschool ${centre.name}`}
                     loading="lazy"
+                    decoding="async"
+                    width="400"
+                    height="200"
                     className="w-full h-28 md:h-36 object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                 )}

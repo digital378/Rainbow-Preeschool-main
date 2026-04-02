@@ -673,6 +673,9 @@ export default function BlogPost() {
                               src={img.src} 
                               alt={img.alt}
                               loading="lazy"
+                              decoding="async"
+                              width="300"
+                              height="300"
                               className="w-full h-full object-cover"
                             />
                           </div>

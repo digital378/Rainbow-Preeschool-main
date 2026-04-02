@@ -264,6 +264,8 @@ export default function PreschoolNearMe() {
                       alt={centreAltText[centre.id] || `Rainbow Preschool ${centre.localityName} Thane`}
                       loading="lazy"
                       decoding="async"
+                      width="400"
+                      height="200"
                       className="w-full h-40 object-cover"
                     />
                   )}
@@ -312,6 +314,8 @@ export default function PreschoolNearMe() {
                         alt={centreAltText[centre.id] || `Rainbow Preschool ${centre.localityName} Thane`}
                         loading="lazy"
                         decoding="async"
+                        width="400"
+                        height="200"
                         className="w-full h-40 object-cover"
                       />
                     )}

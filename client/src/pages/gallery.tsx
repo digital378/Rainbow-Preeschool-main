@@ -98,6 +98,8 @@ function Lightbox({ images, index, onClose, onPrev, onNext }: LightboxProps) {
           alt={img.alt}
           className="max-w-full max-h-[80vh] object-contain rounded-xl shadow-2xl"
           loading="eager"
+          width="800"
+          height="600"
         />
         <div className="text-center">
           {img.caption && (
@@ -237,6 +239,9 @@ export default function Gallery() {
                   alt={img.alt}
                   className="w-full h-full object-cover"
                   loading="lazy"
+                  decoding="async"
+                  width="144"
+                  height="96"
                 />
               </div>
             ))}
@@ -352,6 +357,9 @@ export default function Gallery() {
                   alt={img.alt}
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                   loading="lazy"
+                  decoding="async"
+                  width="400"
+                  height="300"
                 />
                 {/* Hover overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-between p-3">

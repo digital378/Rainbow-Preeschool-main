@@ -84,6 +84,7 @@ export default function HoliActivitiesPage() {
     updateMeta('twitter:card', 'summary_large_image');
     updateMeta('twitter:title', 'Holi Activities for Kids – Complete Guide with Speeches, Essays & Images');
     updateMeta('twitter:description', 'Free Holi resources: speeches, essays, downloadable images, school activities & safe celebration tips from Rainbow Preschool International.');
+    updateMeta('twitter:image', 'https://www.rainbowpreschools.com/images/holi/holi-img-1.webp');
     updateMeta('robots', 'index, follow');
 
     let canonical = document.querySelector('link[rel="canonical"]');

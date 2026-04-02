@@ -194,16 +194,16 @@ export default function About() {
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             <div className="relative overflow-hidden rounded-lg aspect-square">
-              <img src="/images/optimized/DSC00002.webp" alt="Children enjoying activities at Rainbow Preschool" className="w-full h-full object-cover" loading="lazy" data-testid="img-about-gallery-1" />
+              <img src="/images/optimized/DSC00002.webp" alt="Children enjoying activities at Rainbow Preschool" className="w-full h-full object-cover" loading="lazy" decoding="async" width="400" height="400" data-testid="img-about-gallery-1" />
             </div>
             <div className="relative overflow-hidden rounded-lg aspect-square">
-              <img src="/images/optimized/DSC00010.webp" alt="Child at Rainbow Preschool" className="w-full h-full object-cover" loading="lazy" data-testid="img-about-gallery-2" />
+              <img src="/images/optimized/DSC00010.webp" alt="Child at Rainbow Preschool" className="w-full h-full object-cover" loading="lazy" decoding="async" width="400" height="400" data-testid="img-about-gallery-2" />
             </div>
             <div className="relative overflow-hidden rounded-lg aspect-square">
-              <img src="/images/optimized/DSC00051.webp" alt="Kids at preschool" className="w-full h-full object-cover" loading="lazy" data-testid="img-about-gallery-3" />
+              <img src="/images/optimized/DSC00051.webp" alt="Kids at preschool" className="w-full h-full object-cover" loading="lazy" decoding="async" width="400" height="400" data-testid="img-about-gallery-3" />
             </div>
             <div className="relative overflow-hidden rounded-lg aspect-square">
-              <img src="/images/optimized/DSC00054.webp" alt="Children playing with colorful toys" className="w-full h-full object-cover" loading="lazy" data-testid="img-about-gallery-4" />
+              <img src="/images/optimized/DSC00054.webp" alt="Children playing with colorful toys" className="w-full h-full object-cover" loading="lazy" decoding="async" width="400" height="400" data-testid="img-about-gallery-4" />
             </div>
           </div>
         </div>

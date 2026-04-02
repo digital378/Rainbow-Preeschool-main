@@ -599,6 +599,7 @@ export default function RISLanding() {
                 <div key={i} className="absolute inset-0 transition-opacity duration-700"
                   style={{ opacity: i === sliderIndex ? 1 : 0, zIndex: i === sliderIndex ? 1 : 0 }}>
                   <img src={img.src} alt={img.label} loading={i === 0 ? "eager" : "lazy"}
+                    width="800" height="450" decoding="async"
                     className="w-full h-full object-cover cursor-pointer"
                     onClick={() => { setSliderPaused(true); setLightboxIndex(i); gtag("event", "gallery_slide_view", { label: img.label, index: i }); }}
                     data-testid={`slider-ris-image-${i}`} />
@@ -649,7 +650,7 @@ export default function RISLanding() {
             <button onClick={e => { e.stopPropagation(); setLightboxIndex(null); setSliderPaused(false); }} className="absolute top-4 right-4 text-white bg-black/50 rounded-full w-10 h-10 flex items-center justify-center text-2xl hover:bg-white/20 z-[1000]" data-testid="ris-lightbox-close">&times;</button>
             <button onClick={e => { e.stopPropagation(); const p = (lightboxIndex - 1 + campusImages.length) % campusImages.length; setLightboxIndex(p); setSliderIndex(p); }} className="absolute left-3 top-1/2 -translate-y-1/2 text-white bg-black/40 hover:bg-white/20 rounded-full w-11 h-11 flex items-center justify-center text-2xl z-[1000]" data-testid="ris-lightbox-prev">&#8249;</button>
             <div className="flex flex-col items-center gap-3" onClick={e => e.stopPropagation()} style={{ animation: "risLbZoom .25s ease" }}>
-              <img src={campusImages[lightboxIndex].src} alt={campusImages[lightboxIndex].label} className="max-w-[92vw] max-h-[80vh] object-contain rounded-xl" />
+              <img src={campusImages[lightboxIndex].src} alt={campusImages[lightboxIndex].label} width="800" height="450" className="max-w-[92vw] max-h-[80vh] object-contain rounded-xl" />
               <div className="flex items-center gap-2">
                 <div className="w-3 h-3 rounded-full flex-shrink-0" style={{ background: campusImages[lightboxIndex].color }} />
                 <span className="text-white font-semibold text-sm">{campusImages[lightboxIndex].label}</span>

@@ -853,22 +853,22 @@ export default function PlaySchoolNearMe() {
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="md:col-span-2 md:row-span-2 relative overflow-hidden rounded-xl aspect-square">
-              <img src="/images/optimized/DSC00002.webp" alt="Children playing at Rainbow Preschool play school classroom" className="w-full h-full object-cover" loading="lazy" data-testid="img-ps-gallery-1" />
+              <img src="/images/optimized/DSC00002.webp" alt="Children playing at Rainbow Preschool play school classroom" className="w-full h-full object-cover" loading="lazy" decoding="async" width="400" height="400" data-testid="img-ps-gallery-1" />
             </div>
             <div className="relative overflow-hidden rounded-xl aspect-square">
-              <img src="/images/optimized/DSC00070.webp" alt="Toddlers in play school activities" className="w-full h-full object-cover" loading="lazy" data-testid="img-ps-gallery-2" />
+              <img src="/images/optimized/DSC00070.webp" alt="Toddlers in play school activities" className="w-full h-full object-cover" loading="lazy" decoding="async" width="400" height="400" data-testid="img-ps-gallery-2" />
             </div>
             <div className="relative overflow-hidden rounded-xl aspect-square">
-              <img src="/images/optimized/DSC00051.webp" alt="Play school sensory activities for toddlers" className="w-full h-full object-cover" loading="lazy" data-testid="img-ps-gallery-3" />
+              <img src="/images/optimized/DSC00051.webp" alt="Play school sensory activities for toddlers" className="w-full h-full object-cover" loading="lazy" decoding="async" width="400" height="400" data-testid="img-ps-gallery-3" />
             </div>
             <div className="relative overflow-hidden rounded-xl aspect-square">
-              <img src="/images/optimized/play-school-classroom.webp" alt="Rainbow Preschool space-themed classroom with colourful furniture" className="w-full h-full object-cover" loading="lazy" data-testid="img-ps-gallery-4" />
+              <img src="/images/optimized/play-school-classroom.webp" alt="Rainbow Preschool space-themed classroom with colourful furniture" className="w-full h-full object-cover" loading="lazy" decoding="async" width="400" height="400" data-testid="img-ps-gallery-4" />
             </div>
             <div className="relative overflow-hidden rounded-xl aspect-square">
-              <img src="/images/optimized/kid-playing-rainbow.webp" alt="Toddler playing with stacking rings at Rainbow play school" className="w-full h-full object-cover" loading="lazy" data-testid="img-ps-gallery-5" />
+              <img src="/images/optimized/kid-playing-rainbow.webp" alt="Toddler playing with stacking rings at Rainbow play school" className="w-full h-full object-cover" loading="lazy" decoding="async" width="400" height="400" data-testid="img-ps-gallery-5" />
             </div>
             <div className="md:hidden relative overflow-hidden rounded-xl aspect-square">
-              <img src="/images/optimized/rainbow-students-classroom.webp" alt="Rainbow Preschool students smiling in classroom" className="w-full h-full object-cover" loading="lazy" data-testid="img-ps-gallery-6" />
+              <img src="/images/optimized/rainbow-students-classroom.webp" alt="Rainbow Preschool students smiling in classroom" className="w-full h-full object-cover" loading="lazy" decoding="async" width="400" height="400" data-testid="img-ps-gallery-6" />
             </div>
           </div>
         </div>

@@ -366,6 +366,9 @@ function PreschoolLocationTemplate({ localitySlug }: PreschoolLocationPageProps)
                   alt={`Rainbow Preschool ${centre.localityName} classroom activities ${index + 1}`}
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                   loading="lazy"
+                  decoding="async"
+                  width="400"
+                  height="400"
                   data-testid={`img-gallery-centre-${index}`}
                 />
               </div>
