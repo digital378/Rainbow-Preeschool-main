@@ -113,9 +113,14 @@ export function LegacyLandingPage({ data }: LegacyLandingPageProps) {
     updateMeta('og:description', data.metaDescription, true);
     updateMeta('og:type', 'article', true);
     updateMeta('og:url', canonicalUrl, true);
+    updateMeta('og:image', 'https://www.rainbowpreschools.com/og-image.jpg', true);
     updateMeta('twitter:card', 'summary_large_image');
     updateMeta('twitter:title', data.title);
     updateMeta('twitter:description', data.metaDescription);
+    updateMeta('twitter:image', 'https://www.rainbowpreschools.com/og-image.jpg');
+    if (data.metaKeywords) {
+      updateMeta('keywords', data.metaKeywords);
+    }
 
     let canonical = document.querySelector('link[rel="canonical"]');
     if (!canonical) {

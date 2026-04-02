@@ -546,6 +546,7 @@ export default function BlogPost() {
         description={post.seoDescription}
         keywords={post.seoKeywords}
         canonical={`https://www.rainbowpreschools.com/blog/${post.slug}`}
+        ogType="article"
       />
       <BlogPostSchema post={post} />
 
