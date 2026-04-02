@@ -14,6 +14,7 @@ import { HeroSection } from "@/components/hero-section";
 import { AwardedBySection } from "@/components/awarded-by-section";
 import { ProgrammeCard } from "@/components/programme-card";
 import { BranchCard } from "@/components/branch-card";
+import { Interactive3DMap } from "@/components/interactive-3d-map";
 import { TestimonialCard } from "@/components/testimonial-card";
 import { CountUp } from "@/components/count-up";
 import { SEO } from "@/components/seo";
@@ -614,6 +615,8 @@ export default function Home() {
               With six branches spread across Thane West, a Rainbow Preschool centre is always close to home. Visit the centre nearest to you and experience our warm, welcoming classrooms firsthand.
             </p>
           </div>
+
+          <Interactive3DMap />
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {branches.map((branch) => (
