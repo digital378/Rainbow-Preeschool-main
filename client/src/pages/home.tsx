@@ -542,10 +542,11 @@ export default function Home() {
                 </p>
                 <div className="rounded-xl overflow-hidden shadow-md">
                   <video 
+                    autoPlay
                     loop 
                     muted 
                     playsInline
-                    preload="none"
+                    preload="metadata"
                     className="w-full h-auto"
                     data-testid="video-walkthrough"
                   >
