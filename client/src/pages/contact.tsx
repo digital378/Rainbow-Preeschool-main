@@ -1,11 +1,188 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { ContactForm } from "@/components/contact-form";
 import { BranchCard } from "@/components/branch-card";
 import { SEO } from "@/components/seo";
 import { branches } from "@shared/schema";
-import { Phone, Mail, Clock, MapPin, Award, ClipboardList, Images } from "lucide-react";
+import { Phone, Mail, Clock, MapPin, Award, ClipboardList, Images, Navigation as NavigationIcon } from "lucide-react";
+
+const centreMapLinks = [
+  { id: "aggarwal", label: "Manpada", mapUrl: "https://maps.app.goo.gl/4sVVZ3K3x1MYsWFc7", lat: 19.2327, lng: 72.9711 },
+  { id: "anand-nagar", label: "Anand Nagar", mapUrl: "https://maps.app.goo.gl/XWTsinHiPU5EjH3HA", lat: 19.2649, lng: 72.9707 },
+  { id: "dhokali", label: "Dhokali", mapUrl: "https://maps.app.goo.gl/VFhUJXqVZRxKaeCWA", lat: 19.2290, lng: 72.9803 },
+  { id: "hariniwas", label: "Hariniwas", mapUrl: "https://maps.app.goo.gl/NyiqKpYEiVsWoZdx5", lat: 19.1917, lng: 72.9665 },
+  { id: "kalwa", label: "Kalwa", mapUrl: "https://maps.app.goo.gl/riB8TNUQdJa9yiSY7", lat: 19.1991, lng: 72.9914 },
+  { id: "kasarvadavali", label: "Kasarvadavali", mapUrl: "https://maps.app.goo.gl/9Bs1YpUM1cpBgiYA6", lat: 19.2669, lng: 72.9634 },
+];
+
+const mapBounds = { minLat: 19.185, maxLat: 19.275, minLng: 72.950, maxLng: 73.000 };
+
+function latLngToPosition(lat: number, lng: number) {
+  const x = ((lng - mapBounds.minLng) / (mapBounds.maxLng - mapBounds.minLng)) * 100;
+  const y = ((mapBounds.maxLat - lat) / (mapBounds.maxLat - mapBounds.minLat)) * 100;
+  return { x: Math.max(5, Math.min(95, x)), y: Math.max(5, Math.min(95, y)) };
+}
+
+function Interactive3DMap() {
+  const [hoveredCentre, setHoveredCentre] = useState<string | null>(null);
+
+  return (
+    <div className="mb-12" data-testid="map-3d-centres">
+      <div
+        className="relative w-full rounded-2xl overflow-hidden shadow-xl border border-gray-200 dark:border-gray-700"
+        style={{
+          perspective: "1200px",
+        }}
+      >
+        <div
+          className="relative w-full"
+          style={{
+            transform: "rotateX(15deg) rotateZ(-2deg)",
+            transformOrigin: "center center",
+            transformStyle: "preserve-3d",
+          }}
+        >
+          <div className="relative w-full aspect-[16/9] md:aspect-[2/1] bg-gradient-to-br from-green-50 via-blue-50 to-emerald-50 dark:from-green-950/40 dark:via-blue-950/40 dark:to-emerald-950/40 overflow-hidden">
+            <div className="absolute inset-0 opacity-30">
+              <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <pattern id="road-grid" width="80" height="80" patternUnits="userSpaceOnUse">
+                    <path d="M 80 0 L 0 0 0 80" fill="none" stroke="currentColor" strokeWidth="0.5" className="text-gray-300 dark:text-gray-600" />
+                  </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#road-grid)" />
+              </svg>
+            </div>
+
+            <div className="absolute top-3 left-3 md:top-5 md:left-5 z-20 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-lg px-3 py-2 shadow-lg border border-gray-200 dark:border-gray-700">
+              <p className="text-[10px] md:text-xs font-bold text-primary uppercase tracking-wider">Rainbow Preschool</p>
+              <p className="text-[9px] md:text-[11px] text-muted-foreground">6 Centres Across Thane</p>
+            </div>
+
+            <div className="absolute bottom-3 right-3 md:bottom-5 md:right-5 z-20 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-lg px-3 py-2 shadow-lg border border-gray-200 dark:border-gray-700 flex items-center gap-2">
+              <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-primary animate-pulse" />
+              <span className="text-[9px] md:text-[11px] font-medium text-foreground">Click a pin to open Google Maps</span>
+            </div>
+
+            {centreMapLinks.map((centre) => {
+              const pos = latLngToPosition(centre.lat, centre.lng);
+              const isHovered = hoveredCentre === centre.id;
+              return (
+                <a
+                  key={centre.id}
+                  href={centre.mapUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="absolute group cursor-pointer"
+                  style={{
+                    left: `${pos.x}%`,
+                    top: `${pos.y}%`,
+                    transform: "translate(-50%, -100%)",
+                    zIndex: isHovered ? 30 : 10,
+                  }}
+                  onMouseEnter={() => setHoveredCentre(centre.id)}
+                  onMouseLeave={() => setHoveredCentre(null)}
+                  data-testid={`map-pin-${centre.id}`}
+                >
+                  <div
+                    className="flex flex-col items-center transition-transform duration-300"
+                    style={{
+                      transform: isHovered ? "translateY(-8px) scale(1.15)" : "translateY(0) scale(1)",
+                      transformStyle: "preserve-3d",
+                    }}
+                  >
+                    <div className={`
+                      relative px-2 py-1 md:px-3 md:py-1.5 rounded-lg shadow-lg mb-1
+                      transition-all duration-300
+                      ${isHovered
+                        ? "bg-primary text-white shadow-primary/40 shadow-xl"
+                        : "bg-white dark:bg-gray-800 text-foreground shadow-md border border-gray-200 dark:border-gray-600"
+                      }
+                    `}
+                      style={{
+                        transform: "translateZ(20px)",
+                      }}
+                    >
+                      <span className="text-[9px] md:text-xs font-bold whitespace-nowrap block">{centre.label}</span>
+                      <div className={`
+                        flex items-center gap-0.5 mt-0.5 transition-all duration-300
+                        ${isHovered ? "opacity-100 max-h-6" : "opacity-0 max-h-0"}
+                      `}>
+                        <NavigationIcon className="w-2.5 h-2.5 md:w-3 md:h-3" />
+                        <span className="text-[8px] md:text-[10px]">Get Directions</span>
+                      </div>
+                      <div className={`
+                        absolute left-1/2 -bottom-1.5 w-3 h-3 rotate-45 -translate-x-1/2 transition-colors duration-300
+                        ${isHovered
+                          ? "bg-primary"
+                          : "bg-white dark:bg-gray-800 border-r border-b border-gray-200 dark:border-gray-600"
+                        }
+                      `} />
+                    </div>
+
+                    <div className="relative flex flex-col items-center" style={{ transform: "translateZ(10px)" }}>
+                      <svg width="24" height="36" viewBox="0 0 24 36" className="md:w-[30px] md:h-[44px] drop-shadow-lg">
+                        <defs>
+                          <linearGradient id={`pin-grad-${centre.id}`} x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stopColor="hsl(var(--primary))" />
+                            <stop offset="100%" stopColor="hsl(var(--primary) / 0.7)" />
+                          </linearGradient>
+                        </defs>
+                        <path
+                          d="M12 0C5.4 0 0 5.4 0 12c0 9 12 24 12 24s12-15 12-24C24 5.4 18.6 0 12 0z"
+                          fill={`url(#pin-grad-${centre.id})`}
+                          className="transition-all duration-300"
+                          style={{ filter: isHovered ? "brightness(1.2)" : "brightness(1)" }}
+                        />
+                        <circle cx="12" cy="11" r="5" fill="white" opacity="0.9" />
+                        <circle cx="12" cy="11" r="2.5" fill="hsl(var(--primary))" />
+                      </svg>
+                    </div>
+
+                    <div
+                      className="absolute -bottom-1 left-1/2 -translate-x-1/2 rounded-full bg-black/20 dark:bg-black/40 blur-sm transition-all duration-300"
+                      style={{
+                        width: isHovered ? "20px" : "14px",
+                        height: isHovered ? "6px" : "4px",
+                        transform: `translateX(-50%) translateZ(-5px)`,
+                      }}
+                    />
+                  </div>
+                </a>
+              );
+            })}
+
+            <svg className="absolute inset-0 w-full h-full pointer-events-none z-[5]" viewBox="0 0 100 100" preserveAspectRatio="none">
+              {(() => {
+                const points = centreMapLinks.map(c => latLngToPosition(c.lat, c.lng));
+                const sorted = [...points].sort((a, b) => a.y - b.y);
+                const pathData = sorted.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x} ${p.y}`).join(' ');
+                return (
+                  <path
+                    d={pathData}
+                    fill="none"
+                    stroke="hsl(var(--primary) / 0.15)"
+                    strokeWidth="0.3"
+                    strokeDasharray="1 0.8"
+                  />
+                );
+              })()}
+            </svg>
+          </div>
+        </div>
+
+        <div className="absolute inset-0 rounded-2xl pointer-events-none" style={{
+          background: "linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 40%, transparent 60%, rgba(0,0,0,0.05) 100%)",
+        }} />
+      </div>
+
+      <p className="text-center text-sm text-muted-foreground mt-4 mb-8">
+        Click on any centre pin to open directions in Google Maps.
+      </p>
+    </div>
+  );
+}
 
 export default function Contact() {
   useEffect(() => {
@@ -129,24 +306,7 @@ export default function Contact() {
             <p className="text-muted-foreground text-lg">Locate your nearest Rainbow Preschools Centre in Thane.</p>
           </div>
           
-          {/* Interactive Google Map with All 6 Centres */}
-          <div className="mb-12 rounded-xl overflow-hidden shadow-md">
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m52!1m12!1m3!1d60280!2d72.965!3d19.225!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m37!3e2!4m5!1s0x3be7b95ffb8bcb13:0x13688c8325ca683d!2sRainbow%20Preschool%20-%20Aggarwal%20Arcade%20Centre%2C%20Manpada%2C%20Thane!3m2!1d19.2326549!2d72.9710766!4m5!1s0x3be7b975b40427b7:0x242ddb15f6e8ed13!2sRainbow%20Preschool%20-%20Hariniwas%20Centre%2C%20Thane!3m2!1d19.1917133!2d72.966523!4m5!1s0x3be7bb97c41357b7:0x6fb38c5fc413efd!2sRainbow%20Preschool%20-%20Anand%20Nagar%20Centre%2C%20Thane!3m2!1d19.2648723!2d72.9707478!4m5!1s0x3be7b959c655a7df:0xe5f1220ddc82fa0e!2sRainbow%20Preschool%20-%20Dhokali%20Centre%2C%20Thane!3m2!1d19.228991!2d72.9802583!4m5!1s0x3be7b92cb119b52d:0xf0102245760e3e34!2sRainbow%20Preschool%20-%20Kalwa%20Centre%2C%20Thane!3m2!1d19.1990801!2d72.9913522!4m5!1s0x3be7bba6a93f26cb:0x946d1fefba8c8e88!2sRainbow%20Preschool%20-%20Kasarvadavli%20Centre%2C%20Thane!3m2!1d19.2669237!2d72.9634446!5e0!3m2!1sen!2sin!4v1703000000000"
-              width="100%"
-              height="500"
-              style={{ border: 0 }}
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              title="Rainbow Preschool International - All 6 Centres in Thane"
-              className="w-full"
-              data-testid="map-contact-centres"
-            />
-          </div>
-          <p className="text-center text-sm text-muted-foreground mb-8">
-            Click on any marker to view centre details. Use zoom controls to explore all 6 locations.
-          </p>
+          <Interactive3DMap />
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {branches.map((branch) => (
