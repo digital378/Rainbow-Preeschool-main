@@ -44,7 +44,7 @@ const richBlogPosts: BlogEntry[] = [
   {
     title: "Republic Day 2026 in India: History, Significance, Parade, Speeches, Essays, Quotes, Images & Wishes",
     excerpt: "Celebrate India's 77th Republic Day 2026 with complete information on history, significance, parade highlights, speeches, essays, inspiring quotes, downloadable DP images, and heartfelt wishes.",
-    url: "/blog/republic-day-2026",
+    url: "/republic-day-2026",
     category: "School Events",
   },
   {

@@ -158,6 +158,9 @@ const redirectMap: Record<string, string> = {
   // ── Best preschool slug change ─────────────────────────────────────────────
   "/best-preschool-in-thane": "/best-preschool-near-me-in-thane",
 
+  // ── Nursery importance redirect ────────────────────────────────────────────
+  "/nursery-importance": "/why-nursery-school-is-important-for-early-childhood-development",
+
   // ── Content duplicates & redirects ─────────────────────────────────────────
   "/preschool-vs-daycare-difference-explained": "/preschool-vs-daycare-difference",
   "/preschool-vs-daycare-understanding-difference": "/preschool-vs-daycare-difference",
