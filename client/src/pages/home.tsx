@@ -46,6 +46,46 @@ function LazySection({ children, rootMargin = "200px", minHeight = 400 }: { chil
   }, [rootMargin]);
   return <div ref={ref}>{visible ? children : <div style={{ minHeight }} />}</div>;
 }
+
+function LazyVideo({ src, className }: { src: string; className?: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [inView, setInView] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setInView(true); obs.disconnect(); } },
+      { rootMargin: "100px" }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+  useEffect(() => {
+    if (inView && videoRef.current) {
+      videoRef.current.play().catch(() => {});
+    }
+  }, [inView]);
+  return (
+    <div ref={ref} className={className}>
+      {inView ? (
+        <video
+          ref={videoRef}
+          loop
+          muted
+          playsInline
+          preload="none"
+          className="w-full h-auto"
+          data-testid="video-walkthrough"
+        >
+          <source src={src} type="video/mp4" />
+        </video>
+      ) : (
+        <div className="w-full bg-muted rounded-xl" style={{ aspectRatio: "16/9" }} />
+      )}
+    </div>
+  );
+}
 import { useToast } from "@/hooks/use-toast";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
@@ -540,20 +580,10 @@ export default function Home() {
                 <p className="text-muted-foreground text-lg mb-8">
                   Submit your details and queries here. We'd be glad to help you out!
                 </p>
-                <div className="rounded-xl overflow-hidden shadow-md">
-                  <video 
-                    autoPlay
-                    loop 
-                    muted 
-                    playsInline
-                    preload="metadata"
-                    className="w-full h-auto"
-                    data-testid="video-walkthrough"
-                  >
-                    <source src="/assets/RPS_Walkthrough_Video_-_Website_1_1766126796450.mp4" type="video/mp4" />
-                    Your browser does not support the video tag.
-                  </video>
-                </div>
+                <LazyVideo
+                  src="/assets/RPS_Walkthrough_Video_-_Website_1_1766126796450.mp4"
+                  className="rounded-xl overflow-hidden shadow-md"
+                />
               </div>
               <Card data-reveal="slide" data-direction="right">
                 <CardContent className="pt-6">
