@@ -97,20 +97,10 @@ function Interactive3DMap() {
   return (
     <div className="mb-12" data-testid="map-3d-centres">
       <div
-        className="relative w-full rounded-2xl overflow-hidden shadow-xl border border-gray-200 dark:border-gray-700"
-        style={{
-          perspective: "1200px",
-        }}
+        className="relative w-full rounded-2xl overflow-visible shadow-xl border border-gray-200 dark:border-gray-700"
       >
-        <div
-          className="relative w-full"
-          style={{
-            transform: "rotateX(12deg) rotateZ(-1deg)",
-            transformOrigin: "center center",
-            transformStyle: "preserve-3d",
-          }}
-        >
-          <div className="relative w-full aspect-[16/10] md:aspect-[2/1] bg-gradient-to-br from-green-50 via-blue-50 to-emerald-50 dark:from-green-950/40 dark:via-blue-950/40 dark:to-emerald-950/40 overflow-visible">
+        <div className="relative w-full">
+          <div className="relative w-full aspect-[16/10] md:aspect-[2/1] bg-gradient-to-br from-green-50 via-blue-50 to-emerald-50 dark:from-green-950/40 dark:via-blue-950/40 dark:to-emerald-950/40 rounded-2xl overflow-visible">
             <div className="absolute inset-0 opacity-20">
               <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
                 <defs>
@@ -203,12 +193,11 @@ function Interactive3DMap() {
                   onMouseLeave={() => setHoveredCentre(null)}
                   data-testid={`map-pin-${centre.id}`}
                 >
-                  <div className="relative" style={{ transformStyle: "preserve-3d" }}>
+                  <div className="relative">
                     <div
                       className="flex flex-col items-center transition-transform duration-300"
                       style={{
                         transform: isHovered ? "translateY(-12px) scale(1.12)" : "translateY(0) scale(1)",
-                        transformStyle: "preserve-3d",
                       }}
                     >
                       <div className={`
@@ -219,7 +208,7 @@ function Interactive3DMap() {
                           : "bg-white dark:bg-gray-800 text-foreground shadow-md border border-gray-200 dark:border-gray-600"
                         }
                       `}
-                        style={{ transform: "translateZ(25px)" }}
+                        style={{ position: "relative" }}
                       >
                         <span className="text-[9px] md:text-xs font-bold whitespace-nowrap block">{centre.label}</span>
                         <div className={`
@@ -238,7 +227,7 @@ function Interactive3DMap() {
                         `} />
                       </div>
 
-                      <div className="relative flex flex-col items-center" style={{ transform: "translateZ(15px)" }}>
+                      <div className="relative flex flex-col items-center">
                         <svg width="20" height="30" viewBox="0 0 24 36" className="md:w-[26px] md:h-[38px] drop-shadow-lg">
                           <defs>
                             <linearGradient id={`pin-grad-${centre.id}`} x1="0" y1="0" x2="0" y2="1">
@@ -262,7 +251,7 @@ function Interactive3DMap() {
                         style={{
                           width: isHovered ? "18px" : "12px",
                           height: isHovered ? "5px" : "3px",
-                          transform: "translateX(-50%) translateZ(-5px)",
+                          transform: "translateX(-50%)",
                         }}
                       />
                     </div>
@@ -290,9 +279,7 @@ function Interactive3DMap() {
           </div>
         </div>
 
-        <div className="absolute inset-0 rounded-2xl pointer-events-none" style={{
-          background: "linear-gradient(135deg, rgba(255,255,255,0.12) 0%, transparent 40%, transparent 60%, rgba(0,0,0,0.04) 100%)",
-        }} />
+        
       </div>
 
       <p className="text-center text-sm text-muted-foreground mt-4 mb-8">
