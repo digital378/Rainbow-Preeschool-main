@@ -161,8 +161,31 @@ function Interactive3DMap() {
             {centreMapLinks.map((centre, index) => {
               const pos = latLngToPosition(centre.lat, centre.lng);
               const isHovered = hoveredCentre === centre.id;
-              const buildingOffsetX = index % 2 === 0 ? -35 : 15;
-              const buildingOffsetY = 8;
+              const buildingOffsetX = index % 2 === 0 ? -55 : 25;
+              const buildingOffsetY = -10;
+              return (
+                <div key={`building-${centre.id}`} className="absolute pointer-events-none z-[3]" style={{
+                  left: `${pos.x}%`,
+                  top: `${pos.y}%`,
+                  transform: "translate(-50%, -50%)",
+                }}>
+                  <div
+                    className="transition-all duration-300"
+                    style={{
+                      transform: `translate(${buildingOffsetX}px, ${buildingOffsetY}px) scale(${isHovered ? 1.1 : 0.85})`,
+                      opacity: isHovered ? 1 : 0.65,
+                      filter: isHovered ? "drop-shadow(0 4px 8px rgba(0,0,0,0.15))" : "none",
+                    }}
+                  >
+                    <SchoolBuilding variant={index} isHovered={isHovered} />
+                  </div>
+                </div>
+              );
+            })}
+
+            {centreMapLinks.map((centre) => {
+              const pos = latLngToPosition(centre.lat, centre.lng);
+              const isHovered = hoveredCentre === centre.id;
               return (
                 <a
                   key={centre.id}
@@ -173,7 +196,7 @@ function Interactive3DMap() {
                   style={{
                     left: `${pos.x}%`,
                     top: `${pos.y}%`,
-                    transform: "translate(-50%, -50%)",
+                    transform: "translate(-50%, -100%)",
                     zIndex: isHovered ? 30 : 10,
                   }}
                   onMouseEnter={() => setHoveredCentre(centre.id)}
@@ -181,19 +204,6 @@ function Interactive3DMap() {
                   data-testid={`map-pin-${centre.id}`}
                 >
                   <div className="relative" style={{ transformStyle: "preserve-3d" }}>
-                    <div
-                      className="absolute pointer-events-none transition-all duration-300"
-                      style={{
-                        left: `${buildingOffsetX}px`,
-                        top: `${buildingOffsetY}px`,
-                        transform: `translateZ(5px) scale(${isHovered ? 1.1 : 0.85})`,
-                        opacity: isHovered ? 1 : 0.7,
-                        filter: isHovered ? "drop-shadow(0 4px 8px rgba(0,0,0,0.15))" : "none",
-                      }}
-                    >
-                      <SchoolBuilding variant={index} isHovered={isHovered} />
-                    </div>
-
                     <div
                       className="flex flex-col items-center transition-transform duration-300"
                       style={{
