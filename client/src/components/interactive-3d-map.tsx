@@ -82,7 +82,7 @@ function MapPin({ centre, isHovered, onHover, onLeave, idx }: {
   );
 }
 
-function SVGBuilding({ centre, bx, by, idx, isHov }: { centre: typeof centreMapPins[0]; bx: number; by: number; idx: number; isHov: boolean }) {
+function SVGBuilding({ centre, bx, by, idx, isHov, p = "" }: { centre: typeof centreMapPins[0]; bx: number; by: number; idx: number; isHov: boolean; p?: string }) {
   const variants = [
     { w: 44, h: 34, floors: 1 },
     { w: 50, h: 38, floors: 2 },
@@ -94,7 +94,7 @@ function SVGBuilding({ centre, bx, by, idx, isHov }: { centre: typeof centreMapP
   const v = variants[idx];
   const bScale = isHov ? 1.08 : 1;
   return (
-    <g transform={`translate(${bx}, ${by})`} filter="url(#building-shadow)">
+    <g transform={`translate(${bx}, ${by})`} filter={`url(#${p}building-shadow)`}>
       <g style={{ transform: `scale(${bScale})`, transformOrigin: "center bottom", transition: "transform 0.3s ease" }}>
         <rect x={-v.w/2} y={-v.h} width={v.w} height={v.h} rx="2" fill={centre.color} stroke="#BDBDBD" strokeWidth="0.6" />
         {v.floors === 2 && (
@@ -116,33 +116,33 @@ function SVGBuilding({ centre, bx, by, idx, isHov }: { centre: typeof centreMapP
   );
 }
 
-function SVGDefs() {
+function SVGDefs({ p = "" }: { p?: string }) {
   return (
     <defs>
-      <linearGradient id="terrain-bg" x1="0" y1="0" x2="0.2" y2="1">
+      <linearGradient id={`${p}terrain-bg`} x1="0" y1="0" x2="0.2" y2="1">
         <stop offset="0%" stopColor="#E8F5E9" />
         <stop offset="30%" stopColor="#C8E6C9" />
         <stop offset="70%" stopColor="#A5D6A7" />
         <stop offset="100%" stopColor="#81C784" />
       </linearGradient>
-      <linearGradient id="terrain-edge" x1="0" y1="0" x2="0" y2="1">
+      <linearGradient id={`${p}terrain-edge`} x1="0" y1="0" x2="0" y2="1">
         <stop offset="0%" stopColor="#8D6E63" />
         <stop offset="100%" stopColor="#5D4037" />
       </linearGradient>
-      <filter id="terrain-shadow">
+      <filter id={`${p}terrain-shadow`}>
         <feDropShadow dx="0" dy="8" stdDeviation="12" floodColor="#000" floodOpacity="0.2" />
       </filter>
-      <filter id="building-shadow">
+      <filter id={`${p}building-shadow`}>
         <feDropShadow dx="2" dy="3" stdDeviation="2" floodColor="#000" floodOpacity="0.25" />
       </filter>
-      <filter id="tree-shadow">
+      <filter id={`${p}tree-shadow`}>
         <feDropShadow dx="1" dy="2" stdDeviation="1.5" floodColor="#000" floodOpacity="0.2" />
       </filter>
-      <radialGradient id="hill-1" cx="0.5" cy="0.5" r="0.5">
+      <radialGradient id={`${p}hill-1`} cx="0.5" cy="0.5" r="0.5">
         <stop offset="0%" stopColor="#A5D6A7" />
         <stop offset="100%" stopColor="#C8E6C9" stopOpacity="0" />
       </radialGradient>
-      <radialGradient id="hill-2" cx="0.5" cy="0.5" r="0.5">
+      <radialGradient id={`${p}hill-2`} cx="0.5" cy="0.5" r="0.5">
         <stop offset="0%" stopColor="#81C784" />
         <stop offset="100%" stopColor="#A5D6A7" stopOpacity="0" />
       </radialGradient>
@@ -150,9 +150,9 @@ function SVGDefs() {
   );
 }
 
-function SVGTree({ tx, ty, i }: { tx: number; ty: number; i: number }) {
+function SVGTree({ tx, ty, i, p = "" }: { tx: number; ty: number; i: number; p?: string }) {
   return (
-    <g transform={`translate(${tx}, ${ty})`} filter="url(#tree-shadow)" opacity={0.8 + (i % 3) * 0.07}>
+    <g transform={`translate(${tx}, ${ty})`} filter={`url(#${p}tree-shadow)`} opacity={0.8 + (i % 3) * 0.07}>
       <rect x="-2" y="2" width="4" height="10" rx="1.5" fill="#6D4C41" />
       <ellipse cx="0" cy="-2" rx={8 + (i % 3) * 2} ry={7 + (i % 2) * 2} fill={i % 3 === 0 ? "#388E3C" : i % 3 === 1 ? "#43A047" : "#2E7D32"} />
       <ellipse cx={-3 + (i % 2) * 6} cy="1" rx={5 + (i % 2)} ry={5 + (i % 3)} fill={i % 2 === 0 ? "#4CAF50" : "#66BB6A"} opacity="0.7" />
@@ -173,15 +173,15 @@ function DesktopMap({ hoveredCentre, setHoveredCentre, loaded }: { hoveredCentre
       >
         <div className="relative rounded-2xl shadow-2xl" style={{ overflow: "visible" }}>
           <svg viewBox="0 0 900 520" className="w-full h-auto block rounded-2xl" preserveAspectRatio="xMidYMid meet">
-            <SVGDefs />
-            <g filter="url(#terrain-shadow)">
-              <rect x="10" y="10" width="880" height="480" rx="20" fill="url(#terrain-bg)" />
-              <rect x="10" y="470" width="880" height="24" rx="0" fill="url(#terrain-edge)" opacity="0.6" />
+            <SVGDefs p="d-" />
+            <g filter="url(#d-terrain-shadow)">
+              <rect x="10" y="10" width="880" height="480" rx="20" fill="url(#d-terrain-bg)" />
+              <rect x="10" y="470" width="880" height="24" rx="0" fill="url(#d-terrain-edge)" opacity="0.6" />
               <rect x="10" y="488" width="880" height="6" rx="3" fill="#4E342E" opacity="0.3" />
             </g>
-            <ellipse cx="200" cy="150" rx="120" ry="80" fill="url(#hill-1)" opacity="0.5" />
-            <ellipse cx="650" cy="350" rx="140" ry="90" fill="url(#hill-2)" opacity="0.4" />
-            <ellipse cx="450" cy="250" rx="100" ry="60" fill="url(#hill-1)" opacity="0.3" />
+            <ellipse cx="200" cy="150" rx="120" ry="80" fill="url(#d-hill-1)" opacity="0.5" />
+            <ellipse cx="650" cy="350" rx="140" ry="90" fill="url(#d-hill-2)" opacity="0.4" />
+            <ellipse cx="450" cy="250" rx="100" ry="60" fill="url(#d-hill-1)" opacity="0.3" />
             <g opacity="0.06">
               {Array.from({ length: 40 }).map((_, i) => (
                 <circle key={`g-${i}`} cx={20 + (i * 53) % 860} cy={20 + (i * 37) % 460} r={1 + (i % 3) * 0.5} fill="#1B5E20" />
@@ -201,10 +201,10 @@ function DesktopMap({ hoveredCentre, setHoveredCentre, loaded }: { hoveredCentre
               [500, 380], [730, 420], [680, 200], [260, 330], [400, 450], [50, 260],
               [860, 300], [540, 90], [370, 200], [770, 340],
             ].map(([tx, ty], i) => (
-              <SVGTree key={`tree-${i}`} tx={tx} ty={ty} i={i} />
+              <SVGTree key={`tree-${i}`} tx={tx} ty={ty} i={i} p="d-" />
             ))}
             {centreMapPins.map((centre, idx) => (
-              <SVGBuilding key={`bld-${centre.id}`} centre={centre} bx={(centre.x / 100) * 900} by={(centre.y / 100) * 520} idx={idx} isHov={hoveredCentre === centre.id} />
+              <SVGBuilding key={`bld-${centre.id}`} centre={centre} bx={(centre.x / 100) * 900} by={(centre.y / 100) * 520} idx={idx} isHov={hoveredCentre === centre.id} p="d-" />
             ))}
           </svg>
 
@@ -253,15 +253,15 @@ function MobileMap({ hoveredCentre, setHoveredCentre }: { hoveredCentre: string 
     <div className="block md:hidden">
       <div className="relative rounded-2xl shadow-xl overflow-visible">
         <svg viewBox="0 0 400 900" className="w-full h-auto block rounded-2xl" preserveAspectRatio="xMidYMid meet">
-          <SVGDefs />
-          <g filter="url(#terrain-shadow)">
-            <rect x="5" y="5" width="390" height="870" rx="16" fill="url(#terrain-bg)" />
-            <rect x="5" y="855" width="390" height="18" rx="0" fill="url(#terrain-edge)" opacity="0.6" />
+          <SVGDefs p="m-" />
+          <g filter="url(#m-terrain-shadow)">
+            <rect x="5" y="5" width="390" height="870" rx="16" fill="url(#m-terrain-bg)" />
+            <rect x="5" y="855" width="390" height="18" rx="0" fill="url(#m-terrain-edge)" opacity="0.6" />
             <rect x="5" y="870" width="390" height="5" rx="2" fill="#4E342E" opacity="0.3" />
           </g>
-          <ellipse cx="120" cy="200" rx="80" ry="60" fill="url(#hill-1)" opacity="0.4" />
-          <ellipse cx="280" cy="500" rx="90" ry="70" fill="url(#hill-2)" opacity="0.35" />
-          <ellipse cx="200" cy="700" rx="70" ry="50" fill="url(#hill-1)" opacity="0.3" />
+          <ellipse cx="120" cy="200" rx="80" ry="60" fill="url(#m-hill-1)" opacity="0.4" />
+          <ellipse cx="280" cy="500" rx="90" ry="70" fill="url(#m-hill-2)" opacity="0.35" />
+          <ellipse cx="200" cy="700" rx="70" ry="50" fill="url(#m-hill-1)" opacity="0.3" />
           <g opacity="0.06">
             {Array.from({ length: 25 }).map((_, i) => (
               <circle key={`mg-${i}`} cx={15 + (i * 37) % 370} cy={15 + (i * 53) % 860} r={1 + (i % 3) * 0.4} fill="#1B5E20" />
@@ -279,10 +279,10 @@ function MobileMap({ hoveredCentre, setHoveredCentre }: { hoveredCentre: string 
             [50, 60], [340, 100], [80, 300], [320, 350], [60, 520], [350, 580],
             [200, 150], [300, 650], [100, 750], [350, 800], [40, 430], [250, 250],
           ].map(([tx, ty], i) => (
-            <SVGTree key={`mtree-${i}`} tx={tx} ty={ty} i={i} />
+            <SVGTree key={`mtree-${i}`} tx={tx} ty={ty} i={i} p="m-" />
           ))}
           {centreMapPins.map((centre, idx) => (
-            <SVGBuilding key={`mbld-${centre.id}`} centre={centre} bx={(centre.mx / 100) * 400} by={(centre.my / 100) * 900} idx={idx} isHov={hoveredCentre === centre.id} />
+            <SVGBuilding key={`mbld-${centre.id}`} centre={centre} bx={(centre.mx / 100) * 400} by={(centre.my / 100) * 900} idx={idx} isHov={hoveredCentre === centre.id} p="m-" />
           ))}
         </svg>
 
