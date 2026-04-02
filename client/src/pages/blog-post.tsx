@@ -108,7 +108,8 @@ const blogPostsData: Record<string, BlogPostData> = {
       "## Ready to Schedule Your Tour?",
       "Choosing the right preschool is one of the most important decisions you'll make for your child's early years. Take your time, ask questions, and trust your instincts.",
       "At Rainbow Preschool International, we welcome parents to visit our centres and experience firsthand how we nurture young minds through play-based learning, personalised attention, and a safe, loving environment.",
-      "Contact us today at 82915 68972 or visit any of our six centres across Thane to schedule your tour. Let us show you why thousands of Thane families have trusted Rainbow Preschool with their children's early education journey."
+      "Contact us today at 82915 68972 or visit any of our six centres across Thane to schedule your tour. Let us show you why thousands of Thane families have trusted Rainbow Preschool with their children's early education journey.",
+      "RIS_BACKLINK:Looking beyond preschool? Our sister institution, [Rainbow International School](https://rainbowinternationalschool.in), offers a seamless CBSE-affiliated K–12 education pathway. From [pre-primary](https://rainbowinternationalschool.in/pre-primary-school-thane) through [senior secondary](https://rainbowinternationalschool.in/senior-secondary-section), your child's educational journey continues with the same values and quality you've come to trust."
     ]
   },
   "understanding-the-importance-of-preschool-in-early-childhood-development": {
@@ -211,7 +212,8 @@ const blogPostsData: Record<string, BlogPostData> = {
       "## Conclusion: Investing in Your Child's Future",
       "The research is clear: quality early childhood education is one of the most impactful investments you can make in your child's future. During the critical window of birth to age 5, the experiences children have - including their time in preschool - shape the brain architecture that supports all future learning, behaviour, and health.",
       "At Rainbow Preschool International, we're committed to providing the nurturing, stimulating environment that supports optimal development. With six centres across Thane and 17 years of experience, we've helped thousands of children build the foundation for lifelong success.",
-      "Ready to give your child the best possible start? Contact Rainbow Preschool International today at 82915 68972 to schedule a visit to any of our centres in Manpada, Hariniwas, Anand Nagar, Dhokali, Kalwa, or Kasarvadavali."
+      "Ready to give your child the best possible start? Contact Rainbow Preschool International today at 82915 68972 to schedule a visit to any of our centres in Manpada, Hariniwas, Anand Nagar, Dhokali, Kalwa, or Kasarvadavali.",
+      "RIS_BACKLINK:As your child grows, [Rainbow International School](https://rainbowinternationalschool.in) provides a natural continuation with a strong [CBSE curriculum](https://rainbowinternationalschool.in/curriculum) from [primary school](https://rainbowinternationalschool.in/primary-section) through [senior secondary](https://rainbowinternationalschool.in/senior-secondary-section) — ensuring consistent educational excellence from age 2 to 18."
     ]
   },
   "how-play-based-learning-shapes-young-minds": {
@@ -327,7 +329,8 @@ const blogPostsData: Record<string, BlogPostData> = {
       "At Rainbow Preschool International, play-based learning is more than a philosophy - it's how we nurture every child's potential. With six centres across Thane and over 17 years of experience, we've seen firsthand how play transforms children into confident, curious learners.",
       "**Our Programmes:**\n- Playgroup (1.5-2.5 years): First steps in social play and exploration\n- Nursery (2.5-3.5 years): Expanding language, creativity, and friendships\n- Kindergarten (3.5-5.5 years): Building school readiness through purposeful play\n- Happy Times: Extended care with play-based activities\n- Kids Activity Club: After-school enrichment through play",
       "**Visit Our Centres:**\n- Manpada, Thane West\n- Hariniwas, Thane West\n- Anand Nagar, Thane West\n- Dhokali, Thane West\n- Kalwa, Thane East\n- Kasarvadavali, Thane West",
-      "Ready to give your child the gift of learning through play? Contact Rainbow Preschool International at 82915 68972 to schedule a visit. Come see play-based learning in action and discover why Thane families trust Rainbow with their children's early education."
+      "Ready to give your child the gift of learning through play? Contact Rainbow Preschool International at 82915 68972 to schedule a visit. Come see play-based learning in action and discover why Thane families trust Rainbow with their children's early education.",
+      "RIS_BACKLINK:Play-based learning continues to be valuable as children grow. [Rainbow International School](https://rainbowinternationalschool.in) extends this approach through their [pre-primary section](https://rainbowinternationalschool.in/pre-primary-school-thane) and innovative [CBSE curriculum](https://rainbowinternationalschool.in/curriculum) from Nursery to Class 12."
     ]
   },
   "preparing-your-child-for-first-day-preschool": {
@@ -366,7 +369,8 @@ const blogPostsData: Record<string, BlogPostData> = {
       "At Rainbow Preschool International, we understand that every child adjusts differently. Our teachers are trained to provide extra comfort and attention during the settling-in period. We also keep parents informed with regular updates.",
       "## Final Thoughts",
       "Remember: it's okay for both you and your child to have mixed feelings about this transition. Starting preschool is a significant step toward independence and growth. With patience and support, most children soon look forward to their school days.",
-      "Ready to take the first step? Contact Rainbow Preschool International to schedule a visit and begin your child's educational journey with us."
+      "Ready to take the first step? Contact Rainbow Preschool International to schedule a visit and begin your child's educational journey with us.",
+      "RIS_BACKLINK:When your child is ready for primary school, [Rainbow International School](https://rainbowinternationalschool.in) provides a smooth transition with excellent [school amenities](https://rainbowinternationalschool.in/amenities) and a comprehensive [CBSE curriculum](https://rainbowinternationalschool.in/curriculum) from pre-primary to Class 12."
     ]
   },
   "role-of-parents-early-education": {
@@ -406,7 +410,8 @@ const blogPostsData: Record<string, BlogPostData> = {
       "It's natural to want your child to excel, but pressure can backfire. Focus on effort rather than results. Celebrate curiosity and persistence rather than just achievements.",
       "## At Rainbow Preschool International",
       "We believe that parents are our partners in education. We keep you informed about what your child is learning, provide suggestions for home activities, and welcome your involvement in your child's educational journey.",
-      "Together, we can give your child the best possible start in life."
+      "Together, we can give your child the best possible start in life.",
+      "RIS_BACKLINK:Parental involvement continues to be important through primary school and beyond. Explore how [Rainbow International School](https://rainbowinternationalschool.in) maintains strong parent-school partnerships across their [primary](https://rainbowinternationalschool.in/primary-section) and [middle school](https://rainbowinternationalschool.in/middle-school-section) programmes."
     ]
   },
   "creating-safe-nurturing-learning-environment": {
@@ -453,7 +458,8 @@ const blogPostsData: Record<string, BlogPostData> = {
       "Parents play a role in maintaining a safe environment:\n- Communicate any health concerns or allergies\n- Update emergency contact information\n- Share relevant information about your child\n- Follow pickup and drop-off protocols",
       "## Visit Rainbow Preschool",
       "We invite you to visit any of our six centres in Thane to see our safe, nurturing environment firsthand. When you walk through our doors, you'll feel the warmth and care that defines Rainbow Preschool International.",
-      "Contact us today to schedule a visit and give your child the safe, loving start they deserve."
+      "Contact us today to schedule a visit and give your child the safe, loving start they deserve.",
+      "RIS_BACKLINK:Our commitment to safety and nurturing environments extends beyond preschool. [Rainbow International School](https://rainbowinternationalschool.in) continues this tradition with [world-class amenities](https://rainbowinternationalschool.in/amenities) and [award-winning](https://rainbowinternationalschool.in/awards-achievements) educational programmes for children from pre-primary through Class 12."
     ]
   },
 };
@@ -575,6 +581,25 @@ export default function BlogPost() {
 
           <div className="prose prose-lg max-w-none dark:prose-invert">
             {post.content.map((paragraph, index) => {
+              if (paragraph.startsWith("RIS_BACKLINK:")) {
+                const text = paragraph.replace("RIS_BACKLINK:", "");
+                const parts = text.split(/(\[[^\]]+\]\([^)]+\))/g);
+                return (
+                  <div key={index} className="my-6 p-4 bg-blue-50/50 border border-blue-200/50 rounded-lg">
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      {parts.map((part, i) => {
+                        const linkMatch = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+                        if (linkMatch) {
+                          return (
+                            <a key={i} href={linkMatch[2]} target="_blank" rel="noopener" className="text-blue-600 font-medium hover:underline">{linkMatch[1]}</a>
+                          );
+                        }
+                        return part;
+                      })}
+                    </p>
+                  </div>
+                );
+              }
               if (paragraph.startsWith("## ")) {
                 return (
                   <h2 key={index} className="text-2xl font-bold mt-10 mb-4 text-foreground">
@@ -748,6 +773,22 @@ export default function BlogPost() {
                     View Our Centres
                   </Button>
                 </Link>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="mt-6 border-blue-200/60 bg-blue-50/30">
+            <CardContent className="pt-5 pb-4">
+              <p className="text-xs font-medium text-blue-600 uppercase tracking-wide mb-2">Part of Rainbow Group</p>
+              <h3 className="text-lg font-semibold mb-2">Continue the Journey with Rainbow International School</h3>
+              <p className="text-sm text-muted-foreground mb-3">
+                Looking ahead to primary and secondary education? Our sister institution, <a href="https://rainbowinternationalschool.in" target="_blank" rel="noopener" className="text-blue-600 font-medium hover:underline">Rainbow International School</a>, offers a seamless CBSE-affiliated K–12 pathway from Nursery to Class 12 in Thane West.
+              </p>
+              <div className="flex flex-wrap gap-2">
+                <a href="https://rainbowinternationalschool.in/pre-primary-school-thane" target="_blank" rel="noopener" className="text-xs bg-blue-100 text-blue-700 rounded-full px-3 py-1 font-medium hover:bg-blue-200 transition-colors" data-testid="link-ris-preprimary">Pre-Primary</a>
+                <a href="https://rainbowinternationalschool.in/primary-section" target="_blank" rel="noopener" className="text-xs bg-blue-100 text-blue-700 rounded-full px-3 py-1 font-medium hover:bg-blue-200 transition-colors" data-testid="link-ris-primary">Primary School</a>
+                <a href="https://rainbowinternationalschool.in/curriculum" target="_blank" rel="noopener" className="text-xs bg-blue-100 text-blue-700 rounded-full px-3 py-1 font-medium hover:bg-blue-200 transition-colors" data-testid="link-ris-curriculum">CBSE Curriculum</a>
+                <a href="https://rainbowinternationalschool.in/contact-us" target="_blank" rel="noopener" className="text-xs bg-blue-100 text-blue-700 rounded-full px-3 py-1 font-medium hover:bg-blue-200 transition-colors" data-testid="link-ris-admissions">Admissions</a>
               </div>
             </CardContent>
           </Card>

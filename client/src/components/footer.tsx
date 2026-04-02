@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import { Phone, Mail, MapPin, Clock } from "lucide-react";
+import { Phone, Mail, MapPin, Clock, GraduationCap } from "lucide-react";
 import { SiFacebook, SiInstagram, SiYoutube } from "react-icons/si";
 const logoImage = "/images/optimized/rainbow-logo.webp";
 import { localityLandingPages, preschoolLandingPages } from "@shared/centre-data";
@@ -211,8 +211,28 @@ export function Footer() {
           </div>
         </div>
 
+        {/* Our Network / Sister School */}
+        <div className="mt-10 pt-8 border-t">
+          <h2 className="font-semibold text-base mb-3">Our Network</h2>
+          <div className="flex items-start gap-3">
+            <GraduationCap className="h-5 w-5 text-primary mt-0.5 shrink-0" />
+            <div>
+              <a
+                href="https://rainbowinternationalschool.in"
+                target="_blank"
+                rel="noopener"
+                className="text-sm font-medium text-foreground hover:text-primary transition-colors"
+                data-testid="link-footer-ris"
+              >
+                Rainbow International School
+              </a>
+              <p className="text-xs text-muted-foreground mt-0.5">CBSE-affiliated K–12 school in Thane West — Nursery to Class 12</p>
+            </div>
+          </div>
+        </div>
+
         {/* Bottom bar */}
-        <div className="mt-12 pt-8 border-t flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="mt-8 pt-8 border-t flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-sm text-muted-foreground text-center md:text-left">
             &copy; {currentYear} Rainbow Preschool International. All rights reserved.
           </p>

@@ -1,0 +1,45 @@
+Prompt for RPS Site Upgrade:
+
+Goal: Upgrade the Rainbow Preschools International website from client-side React SPA rendering to Server-Side Rendering (SSR) for all pages — while keeping the current design, layout, and content exactly as-is. Additionally, add backlinks to Rainbow International School (RIS) in two places: the footer and within blog posts.
+
+Part 1 — SSR Conversion
+
+Convert all existing React pages to be server-side rendered. The approach should match what was done on our sister site (Rainbow International School):
+
+For search engine bots (Googlebot, Bingbot, Yandex, WhatsApp bot, Facebook bot, Twitter bot, LinkedIn bot, etc.), serve fully pre-rendered HTML with all content, structured data (Schema.org), OG/Twitter meta tags, and inline critical CSS. Regular browser visitors can still get the React SPA with full interactivity.
+Alternatively, if the stack supports it, SSR all pages for all visitors (not just bots) using a framework like Next.js or Express-based SSR — whichever fits the current codebase best without a full rewrite.
+Every page must have complete <head> meta tags (title, description, keywords, canonical URL, og:title, og:description, og:image, twitter:card) pre-rendered in the HTML response.
+Add JSON-LD structured data (Schema.org Preschool/EducationalOrganization) to the home page SSR output.
+Keep all existing pages, routes, content, styling, and functionality exactly the same. This is a rendering upgrade, not a redesign.
+Apply the same image optimization as RIS: loading="lazy" (or eager for hero/above-fold images), decoding="async", and explicit width/height attributes on all <img> tags site-wide for Core Web Vitals (CLS prevention).
+Part 2 — Backlinks to RIS in Footer
+
+In the site footer, add a "Sister School" or "Our Network" section that links to Rainbow International School. Include:
+
+A text link: "Rainbow International School" pointing to https://rainbowinternationalschool.in
+A brief one-line description: "CBSE-affiliated K–12 school in Thane West — Nursery to Class 12"
+Use rel="noopener" on the link (not nofollow — we want the SEO link juice to flow)
+Style it consistently with the existing footer design
+Part 3 — Backlinks to RIS in Blog Posts
+
+Within blog post content, add contextual backlinks to Rainbow International School pages where relevant:
+
+Each blog post should contain 2–3 natural internal links pointing to relevant RIS pages (e.g., linking "CBSE curriculum" to https://rainbowinternationalschool.in/curriculum/, linking "primary school" to https://rainbowinternationalschool.in/primary-section/, linking "school admissions" to https://rainbowinternationalschool.in/contact-us/)
+Add these as in-content anchor text links within the blog body — not as a separate "Related Links" block
+Use descriptive anchor text (not "click here") for SEO value
+Links should open in a new tab (target="_blank" rel="noopener")
+Add a small "Also explore" or "Part of Rainbow Group" sidebar or end-of-post block linking to RIS home page
+RIS Pages to link to (use these URLs for backlinks):
+
+Home: https://rainbowinternationalschool.in
+About: https://rainbowinternationalschool.in/about-rainbow-international-school
+Pre-Primary: https://rainbowinternationalschool.in/pre-primary-school-thane
+Primary: https://rainbowinternationalschool.in/primary-section
+Middle School: https://rainbowinternationalschool.in/middle-school-section
+Secondary: https://rainbowinternationalschool.in/secondary-section
+Senior Secondary: https://rainbowinternationalschool.in/senior-secondary-section
+Admissions/Contact: https://rainbowinternationalschool.in/contact-us
+Curriculum: https://rainbowinternationalschool.in/curriculum
+Blogs: https://rainbowinternationalschool.in/blogs
+Amenities: https://rainbowinternationalschool.in/amenities
+Awards: https://rainbowinternationalschool.in/awards-achievements

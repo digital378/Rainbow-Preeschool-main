@@ -39,6 +39,15 @@ The backend provides:
 - Contacts listing for admin (`GET /api/contacts`)
 - Static file serving for production builds
 - Vite dev server integration for development
+- Bot SSR middleware for search engine crawlers
+
+### Bot SSR System
+- **Files**: `server/bot-ssr.ts` (middleware + HTML renderer), `server/ssr-pages.ts` (SEO page map)
+- **Purpose**: Serves pre-rendered HTML with full meta tags, structured data, and semantic content to search engine bots (Googlebot, Bingbot, etc.)
+- **Detection**: 20+ bot user-agents detected via case-insensitive string matching
+- **Coverage**: All main pages (home, about, programmes, gallery, contact, blog), all local SEO pages (preschool-in-*, playgroup-in-*), blog posts, and ad landing pages (noIndex)
+- **Features**: Complete JSON-LD structured data (Organization, WebSite, LocalBusiness, BlogPosting), breadcrumbs, internal links, RIS backlinks, OG/Twitter meta tags
+- **Middleware order**: Runs before Vite/static serving — bots get SSR HTML, regular users get the React SPA
 
 ### Data Layer
 - **Schema Definition**: Shared TypeScript schemas in `shared/schema.ts`

@@ -3,6 +3,7 @@ import compression from "compression";
 import { registerRoutes } from "./routes";
 import { serveStatic } from "./static";
 import { setupRedirects } from "./redirects";
+import { setupBotSSR } from "./bot-ssr";
 import { createServer } from "http";
 import path from "path";
 import fs from "fs";
@@ -90,6 +91,7 @@ app.use(express.static(path.join(process.cwd(), "public"), {
 }));
 
 setupRedirects(app);
+setupBotSSR(app);
 
 export function log(message: string, source = "express") {
   const formattedTime = new Date().toLocaleTimeString("en-US", {
