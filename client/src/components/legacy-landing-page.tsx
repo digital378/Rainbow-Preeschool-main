@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from "react";
 import { Link } from "wouter";
-import { ChevronRight, Phone, MessageCircle, BookOpen, GraduationCap, MapPin, ArrowLeft } from "lucide-react";
+import { ChevronRight, Phone, MessageCircle, BookOpen, GraduationCap, MapPin, ArrowLeft, Star, ArrowRight } from "lucide-react";
 import { shouldNoIndex } from "@shared/seo-config";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -315,6 +315,50 @@ export function LegacyLandingPage({ data }: LegacyLandingPageProps) {
                     ))}
                   </ul>
                 </div>
+
+                <section className="my-10 p-6 md:p-8 bg-gradient-to-r from-primary/10 via-accent/5 to-secondary/10 rounded-2xl border border-primary/15">
+                  <div className="flex items-start gap-3 mb-4">
+                    <Star className="w-6 h-6 text-primary flex-shrink-0 mt-0.5" />
+                    <div>
+                      <h3 className="text-lg md:text-xl font-bold text-foreground font-display">
+                        Looking for the Best Preschool in Thane?
+                      </h3>
+                      <p className="text-muted-foreground text-sm mt-1">
+                        Rainbow Preschool International has been nurturing young minds since 2007 across 6 centres in Thane. Discover why thousands of parents trust us with their child's early education.
+                      </p>
+                    </div>
+                  </div>
+                  <div className="grid sm:grid-cols-2 gap-3 mt-5">
+                    <Link href="/best-preschool-in-thane" className="group flex items-center justify-between p-3 bg-white rounded-lg border border-primary/20 hover:border-primary/40 hover:shadow-sm transition-all" data-testid="link-cta-best-preschool">
+                      <div>
+                        <span className="font-semibold text-foreground group-hover:text-primary transition-colors text-sm">Best Preschool in Thane</span>
+                        <span className="block text-xs text-muted-foreground">Why parents choose Rainbow</span>
+                      </div>
+                      <ArrowRight className="w-4 h-4 text-primary opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </Link>
+                    <Link href="/preschool-near-me" className="group flex items-center justify-between p-3 bg-white rounded-lg border border-primary/20 hover:border-primary/40 hover:shadow-sm transition-all" data-testid="link-cta-preschool-near-me">
+                      <div>
+                        <span className="font-semibold text-foreground group-hover:text-primary transition-colors text-sm">Find a Centre Near You</span>
+                        <span className="block text-xs text-muted-foreground">6 locations across Thane</span>
+                      </div>
+                      <ArrowRight className="w-4 h-4 text-primary opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </Link>
+                    <Link href="/preschool-admissions" className="group flex items-center justify-between p-3 bg-white rounded-lg border border-primary/20 hover:border-primary/40 hover:shadow-sm transition-all" data-testid="link-cta-admissions">
+                      <div>
+                        <span className="font-semibold text-foreground group-hover:text-primary transition-colors text-sm">Admissions Open 2025-26</span>
+                        <span className="block text-xs text-muted-foreground">Enrol your child today</span>
+                      </div>
+                      <ArrowRight className="w-4 h-4 text-primary opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </Link>
+                    <Link href="/programmes" className="group flex items-center justify-between p-3 bg-white rounded-lg border border-primary/20 hover:border-primary/40 hover:shadow-sm transition-all" data-testid="link-cta-programmes">
+                      <div>
+                        <span className="font-semibold text-foreground group-hover:text-primary transition-colors text-sm">Our Programmes</span>
+                        <span className="block text-xs text-muted-foreground">Playgroup, Nursery & Kindergarten</span>
+                      </div>
+                      <ArrowRight className="w-4 h-4 text-primary opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </Link>
+                  </div>
+                </section>
 
                 <section className="mt-12">
                   <h2 className="text-2xl md:text-3xl font-semibold text-foreground mb-6 font-display">
