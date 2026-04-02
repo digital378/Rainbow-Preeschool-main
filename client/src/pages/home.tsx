@@ -487,7 +487,7 @@ export default function Home() {
         <div className="absolute inset-0 bg-gradient-to-br from-amber-50/80 via-background to-primary/5 dark:from-amber-950/20 dark:via-background dark:to-primary/10" />
         <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-amber-300/50 to-transparent" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-12" data-reveal="float">
+          <div className="text-center max-w-3xl mx-auto mb-12">
             <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">Testimonials</p>
             <h2 className="text-3xl md:text-4xl font-bold mb-2" data-sparkle>Parents from Thane Say...</h2>
             <div className="flex items-center justify-center gap-2 mt-4 bg-white/60 dark:bg-background/60 backdrop-blur-sm rounded-full px-5 py-2 inline-flex mx-auto border border-amber-200/60 dark:border-amber-700/30 w-fit">
@@ -496,7 +496,7 @@ export default function Home() {
               <div className="flex items-center gap-0.5">
                 {[1,2,3,4,5].map(i => <Star key={i} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />)}
               </div>
-              <span className="text-muted-foreground text-sm">· 397 Google reviews</span>
+              <span className="text-muted-foreground text-sm">· 3,997 Google reviews</span>
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -585,7 +585,7 @@ export default function Home() {
       {/* Centres Section - Local SEO Gold */}
       <section id="centres" className="py-16 md:py-20 lg:py-24 cv-auto">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-12" data-reveal="float">
+          <div className="text-center max-w-3xl mx-auto mb-12">
             <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">Our Locations</p>
             <h2 className="text-3xl md:text-4xl font-bold mb-4" data-sparkle>Our Preschool Centres Across Thane</h2>
             <p className="text-muted-foreground text-lg">
