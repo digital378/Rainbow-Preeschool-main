@@ -3,6 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { SEO } from "@/components/seo";
 import { CountUp } from "@/components/count-up";
+import { CTASection } from "@/components/cta-section";
 import { 
   Phone, 
   Star, 
@@ -398,69 +399,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* SECTION G - CTA Strip */}
-      <section className="py-16 md:py-20 relative overflow-hidden">
-        <div className="absolute inset-0 rainbow-gradient opacity-90" />
-        <div className="absolute inset-0 bg-black/40" />
-        <div 
-          className="absolute inset-0 opacity-10"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-          }}
-        />
-
-        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
-            Ready to begin your child's learning journey in Thane?
-          </h2>
-          <p className="text-lg md:text-xl text-white/90 mb-8 max-w-2xl mx-auto">
-            Speak with our admissions team today.
-          </p>
-          
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link href="/contact">
-              <Button 
-                size="lg" 
-                className="bg-white text-primary hover:bg-white/90 text-base px-8"
-                onClick={() => trackCTAClick("request_callback", "about_cta")}
-                data-testid="button-about-cta-callback"
-              >
-                Request a Callback
-              </Button>
-            </Link>
-            <a 
-              href={WHATSAPP_LINK}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => trackWhatsAppClick({ source_page: "about" })}
-            >
-              <Button 
-                variant="outline" 
-                size="lg" 
-                className="border-white text-white hover:bg-white/10 text-base px-8"
-                data-testid="button-about-cta-whatsapp"
-              >
-                <SiWhatsapp className="mr-2 h-5 w-5" />
-                WhatsApp Us
-              </Button>
-            </a>
-            <a 
-              href={`tel:${PHONE_NUMBER}`}
-              onClick={() => trackCallClick({ source_page: "about" })}
-            >
-              <Button 
-                variant="outline" 
-                size="lg" 
-                className="border-white text-white hover:bg-white/10 text-base px-8"
-                data-testid="button-about-cta-call"
-              >
-                <Phone className="mr-2 h-5 w-5" />
-                Call Now
-              </Button>
-            </a>
-          </div>
-        </div>
-      </section>
+      <CTASection />
     </div>
   );
 }
