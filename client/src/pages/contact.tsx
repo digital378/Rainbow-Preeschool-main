@@ -8,121 +8,208 @@ import { branches } from "@shared/schema";
 import { Phone, Mail, Clock, MapPin, Award, ClipboardList, Images, Navigation as NavigationIcon } from "lucide-react";
 
 const centreMapPins = [
-  { id: "kasarvadavali", label: "Kasarvadavali", mapUrl: "https://maps.app.goo.gl/9Bs1YpUM1cpBgiYA6", x: 27, y: 18 },
-  { id: "anand-nagar", label: "Anand Nagar", mapUrl: "https://maps.app.goo.gl/XWTsinHiPU5EjH3HA", x: 52, y: 15 },
-  { id: "aggarwal", label: "Manpada", mapUrl: "https://maps.app.goo.gl/4sVVZ3K3x1MYsWFc7", x: 38, y: 42 },
-  { id: "dhokali", label: "Dhokali", mapUrl: "https://maps.app.goo.gl/VFhUJXqVZRxKaeCWA", x: 56, y: 45 },
-  { id: "hariniwas", label: "Hariniwas", mapUrl: "https://maps.app.goo.gl/NyiqKpYEiVsWoZdx5", x: 22, y: 72 },
-  { id: "kalwa", label: "Kalwa", mapUrl: "https://maps.app.goo.gl/riB8TNUQdJa9yiSY7", x: 72, y: 68 },
+  { id: "kasarvadavali", label: "Kasarvadavali", mapUrl: "https://maps.app.goo.gl/9Bs1YpUM1cpBgiYA6", x: 18, y: 16, labelSide: "right" as const },
+  { id: "anand-nagar", label: "Anand Nagar", mapUrl: "https://maps.app.goo.gl/XWTsinHiPU5EjH3HA", x: 75, y: 14, labelSide: "left" as const },
+  { id: "aggarwal", label: "Manpada", mapUrl: "https://maps.app.goo.gl/4sVVZ3K3x1MYsWFc7", x: 30, y: 46, labelSide: "right" as const },
+  { id: "dhokali", label: "Dhokali", mapUrl: "https://maps.app.goo.gl/VFhUJXqVZRxKaeCWA", x: 62, y: 42, labelSide: "left" as const },
+  { id: "hariniwas", label: "Hariniwas", mapUrl: "https://maps.app.goo.gl/NyiqKpYEiVsWoZdx5", x: 20, y: 76, labelSide: "right" as const },
+  { id: "kalwa", label: "Kalwa", mapUrl: "https://maps.app.goo.gl/riB8TNUQdJa9yiSY7", x: 78, y: 74, labelSide: "left" as const },
 ];
+
+function MapTree({ x, y, size = 1 }: { x: number; y: number; size?: number }) {
+  return (
+    <g transform={`translate(${x}, ${y}) scale(${size})`}>
+      <rect x="-1.5" y="0" width="3" height="8" rx="1" fill="#8B6914" />
+      <circle cx="0" cy="-4" r="7" fill="#4CAF50" opacity="0.85" />
+      <circle cx="-4" cy="-1" r="5" fill="#66BB6A" opacity="0.7" />
+      <circle cx="4" cy="-2" r="5.5" fill="#43A047" opacity="0.75" />
+      <circle cx="0" cy="-7" r="4" fill="#81C784" opacity="0.6" />
+    </g>
+  );
+}
+
+function MapHouse({ x, y, variant = 0 }: { x: number; y: number; variant?: number }) {
+  const colors = [
+    { wall: "#FFF3E0", roof: "#E53935", door: "#795548", window: "#BBDEFB" },
+    { wall: "#E3F2FD", roof: "#E53935", door: "#5D4037", window: "#FFF9C4" },
+    { wall: "#FFF9C4", roof: "#E53935", door: "#6D4C41", window: "#B3E5FC" },
+  ];
+  const c = colors[variant % 3];
+  return (
+    <g transform={`translate(${x}, ${y})`}>
+      <rect x="-14" y="0" width="28" height="20" rx="1.5" fill={c.wall} stroke="#BDBDBD" strokeWidth="0.5" />
+      <polygon points="0,-12 -16,0 16,0" fill={c.roof} stroke="#C62828" strokeWidth="0.5" />
+      <rect x="-4" y="8" width="8" height="12" rx="1" fill={c.door} />
+      <circle cx="2" cy="15" r="0.8" fill="#FFC107" />
+      <rect x="-11" y="4" width="5" height="5" rx="0.5" fill={c.window} stroke="#90CAF9" strokeWidth="0.4" />
+      <line x1="-8.5" y1="4" x2="-8.5" y2="9" stroke="#90CAF9" strokeWidth="0.3" />
+      <rect x="6" y="4" width="5" height="5" rx="0.5" fill={c.window} stroke="#90CAF9" strokeWidth="0.4" />
+      <line x1="8.5" y1="4" x2="8.5" y2="9" stroke="#90CAF9" strokeWidth="0.3" />
+    </g>
+  );
+}
 
 function Interactive3DMap() {
   const [hoveredCentre, setHoveredCentre] = useState<string | null>(null);
 
   return (
     <div className="mb-12" data-testid="map-3d-centres">
-      <div className="relative w-full rounded-2xl overflow-hidden shadow-xl border border-gray-200 dark:border-gray-700">
-        <img
-          src="/images/3d-map-bg.png"
-          alt="3D isometric map of Rainbow Preschool centres across Thane"
-          className="w-full h-auto block"
-          width="1024"
-          height="683"
-          loading="lazy"
-          decoding="async"
-        />
+      <div className="relative w-full rounded-2xl overflow-hidden shadow-2xl border border-gray-200 dark:border-gray-700">
+        <svg viewBox="0 0 800 500" className="w-full h-auto block" preserveAspectRatio="xMidYMid meet">
+          <defs>
+            <linearGradient id="map-bg" x1="0" y1="0" x2="0.3" y2="1">
+              <stop offset="0%" stopColor="#E8F5E9" />
+              <stop offset="40%" stopColor="#C8E6C9" />
+              <stop offset="100%" stopColor="#A5D6A7" />
+            </linearGradient>
+            <linearGradient id="road-fill" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stopColor="#9E9E9E" />
+              <stop offset="50%" stopColor="#BDBDBD" />
+              <stop offset="100%" stopColor="#9E9E9E" />
+            </linearGradient>
+            <filter id="map-shadow">
+              <feDropShadow dx="0" dy="2" stdDeviation="3" floodOpacity="0.15" />
+            </filter>
+          </defs>
+
+          <rect width="800" height="500" fill="url(#map-bg)" rx="16" />
+
+          <g opacity="0.08">
+            {Array.from({ length: 20 }).map((_, i) => (
+              <circle key={`grass-${i}`} cx={40 + (i * 41) % 780} cy={30 + (i * 67) % 470} r={3 + (i % 3)} fill="#2E7D32" />
+            ))}
+          </g>
+
+          <g opacity="0.5">
+            <path d="M0,220 Q120,200 200,250 Q300,310 400,280 Q500,250 600,270 Q700,290 800,260" fill="none" stroke="#9E9E9E" strokeWidth="12" strokeLinecap="round" />
+            <path d="M0,220 Q120,200 200,250 Q300,310 400,280 Q500,250 600,270 Q700,290 800,260" fill="none" stroke="#E0E0E0" strokeWidth="1" strokeDasharray="8 12" />
+
+            <path d="M300,0 Q280,80 310,160 Q340,250 320,340 Q300,420 330,500" fill="none" stroke="#9E9E9E" strokeWidth="10" strokeLinecap="round" />
+            <path d="M300,0 Q280,80 310,160 Q340,250 320,340 Q300,420 330,500" fill="none" stroke="#E0E0E0" strokeWidth="1" strokeDasharray="8 12" />
+
+            <path d="M550,0 Q570,100 540,180 Q510,260 550,350 Q580,430 560,500" fill="none" stroke="#9E9E9E" strokeWidth="8" strokeLinecap="round" />
+            <path d="M550,0 Q570,100 540,180 Q510,260 550,350 Q580,430 560,500" fill="none" stroke="#E0E0E0" strokeWidth="0.8" strokeDasharray="6 10" />
+          </g>
+
+          <MapTree x={60} y={80} size={0.9} />
+          <MapTree x={720} y={60} size={1.1} />
+          <MapTree x={130} y={310} size={0.8} />
+          <MapTree x={680} y={180} size={1} />
+          <MapTree x={450} y={120} size={0.7} />
+          <MapTree x={100} y={440} size={0.9} />
+          <MapTree x={400} y={430} size={0.85} />
+          <MapTree x={700} y={400} size={1} />
+          <MapTree x={500} y={340} size={0.75} />
+          <MapTree x={200} y={170} size={0.65} />
+          <MapTree x={370} y={170} size={0.7} />
+          <MapTree x={640} y={330} size={0.8} />
+          <MapTree x={50} y={200} size={0.6} />
+          <MapTree x={750} y={280} size={0.7} />
+
+          <MapHouse x={144} y={68} variant={0} />
+          <MapHouse x={600} y={58} variant={1} />
+          <MapHouse x={240} y={218} variant={2} />
+          <MapHouse x={496} y={198} variant={0} />
+          <MapHouse x={160} y={368} variant={1} />
+          <MapHouse x={624} y={358} variant={2} />
+        </svg>
 
         <div className="absolute inset-0">
-          <div className="absolute top-3 left-3 md:top-4 md:left-4 z-20 bg-white/90 backdrop-blur-sm rounded-lg px-3 py-2 shadow-lg border border-gray-200">
-            <p className="text-[10px] md:text-xs font-bold text-primary uppercase tracking-wider">Rainbow Preschool</p>
-            <p className="text-[9px] md:text-[11px] text-muted-foreground">6 Centres Across Thane</p>
+          <div className="absolute top-3 left-3 md:top-5 md:left-5 z-20">
+            <div className="bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm rounded-xl px-4 py-2.5 shadow-lg border border-gray-100 dark:border-gray-700">
+              <p className="text-xs md:text-sm font-bold text-primary uppercase tracking-wider">Rainbow Preschool</p>
+              <p className="text-[10px] md:text-xs text-muted-foreground">6 Centres Across Thane</p>
+            </div>
           </div>
 
-          <div className="absolute top-3 right-3 md:top-4 md:right-4 z-20 bg-white/90 backdrop-blur-sm rounded-lg px-3 py-1.5 shadow-lg border border-gray-200 flex items-center gap-2">
-            <div className="w-2.5 h-2.5 rounded-full bg-primary animate-pulse" />
-            <span className="text-[9px] md:text-[11px] font-medium text-gray-700">Click a school to open Google Maps</span>
+          <div className="absolute top-3 right-3 md:top-5 md:right-5 z-20">
+            <div className="bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm rounded-xl px-3 py-2 shadow-lg border border-gray-100 dark:border-gray-700 flex items-center gap-2">
+              <div className="w-3 h-3 rounded-full bg-primary flex items-center justify-center">
+                <div className="w-1.5 h-1.5 rounded-full bg-white animate-ping" />
+              </div>
+              <span className="text-[10px] md:text-xs font-medium text-foreground">Click a pin to open Google Maps</span>
+            </div>
           </div>
 
           {centreMapPins.map((centre) => {
             const isHovered = hoveredCentre === centre.id;
+            const isLeft = centre.labelSide === "left";
             return (
               <a
                 key={centre.id}
                 href={centre.mapUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="absolute group cursor-pointer"
+                className="absolute cursor-pointer group"
                 style={{
                   left: `${centre.x}%`,
                   top: `${centre.y}%`,
-                  transform: "translate(-50%, -100%)",
                   zIndex: isHovered ? 30 : 10,
                 }}
                 onMouseEnter={() => setHoveredCentre(centre.id)}
                 onMouseLeave={() => setHoveredCentre(null)}
                 data-testid={`map-pin-${centre.id}`}
               >
-                <div
-                  className="flex flex-col items-center transition-transform duration-300"
-                  style={{
-                    transform: isHovered ? "translateY(-6px) scale(1.1)" : "translateY(0) scale(1)",
-                  }}
-                >
-                  <div className={`
-                    relative px-2 py-1 md:px-3 md:py-1.5 rounded-lg shadow-lg mb-1
-                    transition-all duration-300
-                    ${isHovered
-                      ? "bg-primary text-white shadow-primary/30 shadow-xl"
-                      : "bg-white/95 text-gray-800 shadow-md border border-gray-200"
-                    }
-                  `}>
-                    <span className="text-[9px] md:text-xs font-bold whitespace-nowrap block">{centre.label}</span>
-                    <div className={`
-                      flex items-center justify-center gap-0.5 transition-all duration-300 overflow-hidden
-                      ${isHovered ? "opacity-100 max-h-5 mt-0.5" : "opacity-0 max-h-0"}
-                    `}>
-                      <NavigationIcon className="w-2.5 h-2.5 md:w-3 md:h-3" />
-                      <span className="text-[8px] md:text-[10px]">Get Directions</span>
-                    </div>
-                    <div className={`
-                      absolute left-1/2 -bottom-1 w-2.5 h-2.5 rotate-45 -translate-x-1/2 transition-colors duration-300
-                      ${isHovered ? "bg-primary" : "bg-white/95 border-r border-b border-gray-200"}
-                    `} />
+                <div className="relative flex items-end gap-1" style={{ transform: "translate(-12px, -36px)" }}>
+                  <div className={`order-${isLeft ? "1" : "2"} flex flex-col items-center transition-transform duration-300`}
+                    style={{ transform: isHovered ? "translateY(-4px)" : "translateY(0)" }}
+                  >
+                    <svg width="24" height="36" viewBox="0 0 24 36" className="drop-shadow-lg">
+                      <defs>
+                        <linearGradient id={`pg-${centre.id}`} x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="0%" stopColor="#E53935" />
+                          <stop offset="100%" stopColor="#C62828" />
+                        </linearGradient>
+                      </defs>
+                      <path d="M12 0C5.4 0 0 5.4 0 12c0 9 12 24 12 24s12-15 12-24C24 5.4 18.6 0 12 0z" fill={`url(#pg-${centre.id})`} />
+                      <circle cx="12" cy="11" r="5" fill="white" opacity="0.95" />
+                      <circle cx="12" cy="11" r="2.5" fill="#E53935" />
+                    </svg>
+                    <div className="w-2 h-1 rounded-full bg-black/20 mt-[-2px]" />
                   </div>
 
-                  <svg width="22" height="32" viewBox="0 0 24 36" className="md:w-[28px] md:h-[40px] drop-shadow-lg">
-                    <defs>
-                      <linearGradient id={`pin-grad-${centre.id}`} x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="hsl(var(--primary))" />
-                        <stop offset="100%" stopColor="hsl(var(--primary) / 0.7)" />
-                      </linearGradient>
-                    </defs>
-                    <path
-                      d="M12 0C5.4 0 0 5.4 0 12c0 9 12 24 12 24s12-15 12-24C24 5.4 18.6 0 12 0z"
-                      fill={`url(#pin-grad-${centre.id})`}
-                      style={{ filter: isHovered ? "brightness(1.2)" : "brightness(1)" }}
-                    />
-                    <circle cx="12" cy="11" r="4.5" fill="white" opacity="0.9" />
-                    <circle cx="12" cy="11" r="2" fill="hsl(var(--primary))" />
-                  </svg>
-
                   <div
-                    className="absolute -bottom-1 left-1/2 rounded-full bg-black/25 blur-sm transition-all duration-300"
+                    className={`order-${isLeft ? "0" : "3"} transition-all duration-300 ${isLeft ? "mr-1" : "ml-1"}`}
                     style={{
-                      width: isHovered ? "16px" : "10px",
-                      height: isHovered ? "5px" : "3px",
-                      transform: "translateX(-50%)",
+                      transform: isHovered ? "translateY(-4px)" : "translateY(0)",
+                      marginBottom: "10px",
                     }}
-                  />
+                  >
+                    <div className={`
+                      relative px-2.5 py-1.5 md:px-3 md:py-2 rounded-lg transition-all duration-300
+                      ${isHovered
+                        ? "bg-primary text-white shadow-lg shadow-primary/25 scale-105"
+                        : "bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 shadow-md border border-gray-200 dark:border-gray-600"
+                      }
+                    `}>
+                      <span className="text-[10px] md:text-xs font-bold whitespace-nowrap block leading-tight">{centre.label}</span>
+                      <div className={`
+                        flex items-center justify-center gap-1 transition-all duration-300 overflow-hidden
+                        ${isHovered ? "opacity-100 max-h-5 mt-1" : "opacity-0 max-h-0 mt-0"}
+                      `}>
+                        <NavigationIcon className="w-2.5 h-2.5" />
+                        <span className="text-[8px] md:text-[10px] whitespace-nowrap">Directions</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </a>
             );
           })}
+
+          <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <path d="M18,16 L30,46" fill="none" stroke="hsl(var(--primary) / 0.15)" strokeWidth="0.2" strokeDasharray="1 1" />
+            <path d="M75,14 L62,42" fill="none" stroke="hsl(var(--primary) / 0.15)" strokeWidth="0.2" strokeDasharray="1 1" />
+            <path d="M30,46 L62,42" fill="none" stroke="hsl(var(--primary) / 0.15)" strokeWidth="0.2" strokeDasharray="1 1" />
+            <path d="M30,46 L20,76" fill="none" stroke="hsl(var(--primary) / 0.15)" strokeWidth="0.2" strokeDasharray="1 1" />
+            <path d="M62,42 L78,74" fill="none" stroke="hsl(var(--primary) / 0.15)" strokeWidth="0.2" strokeDasharray="1 1" />
+            <path d="M20,76 L78,74" fill="none" stroke="hsl(var(--primary) / 0.15)" strokeWidth="0.2" strokeDasharray="1 1" />
+          </svg>
         </div>
       </div>
 
-      <p className="text-center text-sm text-muted-foreground mt-4 mb-8">
-        Click on any school to open directions in Google Maps.
+      <p className="text-center text-sm text-muted-foreground mt-4 mb-8" data-testid="text-map-cta">
+        Click on any pin to open directions in Google Maps
       </p>
     </div>
   );
