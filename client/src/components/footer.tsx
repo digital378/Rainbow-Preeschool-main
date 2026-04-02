@@ -146,7 +146,7 @@ export function Footer() {
 
           {/* Preschool Centres in Thane */}
           <div>
-            <h2 className="font-semibold text-base mb-4">Preschool in Thane</h2>
+            <h2 className="font-semibold text-base mb-4">Our Centres</h2>
             <ul className="space-y-2">
               {preschoolLandingPages.map((location) => (
                 <li key={location.slug}>
@@ -155,7 +155,7 @@ export function Footer() {
                     className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                     data-testid={`link-footer-preschool-${location.slug}`}
                   >
-                    Preschool in {location.name}
+                    {location.name}
                   </Link>
                 </li>
               ))}
@@ -181,13 +181,6 @@ export function Footer() {
                     data-testid="link-footer-phone-1"
                   >
                     82915 68972
-                  </a>
-                  <a
-                    href="tel:02261147114"
-                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                    data-testid="link-footer-phone-2"
-                  >
-                    022 6114 7114
                   </a>
                 </div>
               </li>
