@@ -1,3 +1,12 @@
+import { useEffect, useState } from "react";
+import { Link } from "wouter";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { ContactForm } from "@/components/contact-form";
+import { BranchCard } from "@/components/branch-card";
+import { SEO } from "@/components/seo";
+import { branches } from "@shared/schema";
+import { Phone, Mail, Clock, MapPin, Award, ClipboardList, Images, Navigation as NavigationIcon } from "lucide-react";
+
 const centreMapPins = [
   { id: "kasarvadavali", label: "Kasarvadavali", mapUrl: "https://maps.app.goo.gl/9Bs1YpUM1cpBgiYA6", x: 15, y: 18, color: "#FFF3E0", roof: "#E53935", accent: "#FFC107" },
   { id: "anand-nagar", label: "Anand Nagar", mapUrl: "https://maps.app.goo.gl/XWTsinHiPU5EjH3HA", x: 72, y: 12, color: "#E3F2FD", roof: "#1E88E5", accent: "#42A5F5" },
