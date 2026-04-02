@@ -7,279 +7,118 @@ import { SEO } from "@/components/seo";
 import { branches } from "@shared/schema";
 import { Phone, Mail, Clock, MapPin, Award, ClipboardList, Images, Navigation as NavigationIcon } from "lucide-react";
 
-const centreMapLinks = [
-  { id: "aggarwal", label: "Manpada", mapUrl: "https://maps.app.goo.gl/4sVVZ3K3x1MYsWFc7", lat: 19.2327, lng: 72.9711 },
-  { id: "anand-nagar", label: "Anand Nagar", mapUrl: "https://maps.app.goo.gl/XWTsinHiPU5EjH3HA", lat: 19.2649, lng: 72.9707 },
-  { id: "dhokali", label: "Dhokali", mapUrl: "https://maps.app.goo.gl/VFhUJXqVZRxKaeCWA", lat: 19.2290, lng: 72.9803 },
-  { id: "hariniwas", label: "Hariniwas", mapUrl: "https://maps.app.goo.gl/NyiqKpYEiVsWoZdx5", lat: 19.1917, lng: 72.9665 },
-  { id: "kalwa", label: "Kalwa", mapUrl: "https://maps.app.goo.gl/riB8TNUQdJa9yiSY7", lat: 19.1991, lng: 72.9914 },
-  { id: "kasarvadavali", label: "Kasarvadavali", mapUrl: "https://maps.app.goo.gl/9Bs1YpUM1cpBgiYA6", lat: 19.2669, lng: 72.9634 },
+const centreMapPins = [
+  { id: "kasarvadavali", label: "Kasarvadavali", mapUrl: "https://maps.app.goo.gl/9Bs1YpUM1cpBgiYA6", x: 27, y: 18 },
+  { id: "anand-nagar", label: "Anand Nagar", mapUrl: "https://maps.app.goo.gl/XWTsinHiPU5EjH3HA", x: 52, y: 15 },
+  { id: "aggarwal", label: "Manpada", mapUrl: "https://maps.app.goo.gl/4sVVZ3K3x1MYsWFc7", x: 38, y: 42 },
+  { id: "dhokali", label: "Dhokali", mapUrl: "https://maps.app.goo.gl/VFhUJXqVZRxKaeCWA", x: 56, y: 45 },
+  { id: "hariniwas", label: "Hariniwas", mapUrl: "https://maps.app.goo.gl/NyiqKpYEiVsWoZdx5", x: 22, y: 72 },
+  { id: "kalwa", label: "Kalwa", mapUrl: "https://maps.app.goo.gl/riB8TNUQdJa9yiSY7", x: 72, y: 68 },
 ];
-
-const mapBounds = { minLat: 19.175, maxLat: 19.285, minLng: 72.945, maxLng: 73.005 };
-
-function latLngToPosition(lat: number, lng: number) {
-  const x = ((lng - mapBounds.minLng) / (mapBounds.maxLng - mapBounds.minLng)) * 100;
-  const y = ((mapBounds.maxLat - lat) / (mapBounds.maxLat - mapBounds.minLat)) * 100;
-  return { x: Math.max(5, Math.min(95, x)), y: Math.max(5, Math.min(95, y)) };
-}
-
-function SchoolBuilding({ variant, isHovered }: { variant: number; isHovered: boolean }) {
-  const buildings = [
-    <svg width="60" height="50" viewBox="0 0 60 50" className="drop-shadow-md transition-transform duration-300" style={{ transform: isHovered ? "scale(1.08)" : "scale(1)" }}>
-      <rect x="5" y="18" width="50" height="32" rx="2" fill="#FEF3C7" stroke="#F59E0B" strokeWidth="1" />
-      <rect x="10" y="8" width="40" height="12" rx="1" fill="#FDE68A" stroke="#F59E0B" strokeWidth="1" />
-      <polygon points="30,0 8,10 52,10" fill="#EF4444" stroke="#DC2626" strokeWidth="0.8" />
-      <rect x="24" y="32" width="12" height="18" rx="1" fill="#92400E" />
-      <circle cx="33" cy="42" r="1.2" fill="#F59E0B" />
-      <rect x="11" y="22" width="8" height="8" rx="1" fill="#BFDBFE" stroke="#60A5FA" strokeWidth="0.6" />
-      <line x1="15" y1="22" x2="15" y2="30" stroke="#60A5FA" strokeWidth="0.4" />
-      <line x1="11" y1="26" x2="19" y2="26" stroke="#60A5FA" strokeWidth="0.4" />
-      <rect x="41" y="22" width="8" height="8" rx="1" fill="#BFDBFE" stroke="#60A5FA" strokeWidth="0.6" />
-      <line x1="45" y1="22" x2="45" y2="30" stroke="#60A5FA" strokeWidth="0.4" />
-      <line x1="41" y1="26" x2="49" y2="26" stroke="#60A5FA" strokeWidth="0.4" />
-      <rect x="20" y="2" width="4" height="6" fill="#EF4444" />
-      <rect x="21" y="0" width="2" height="3" fill="#F59E0B" />
-      <circle cx="15" cy="14" r="2" fill="#34D399" />
-      <circle cx="45" cy="14" r="2" fill="#34D399" />
-      <circle cx="30" cy="14" r="2.5" fill="#34D399" />
-    </svg>,
-
-    <svg width="56" height="48" viewBox="0 0 56 48" className="drop-shadow-md transition-transform duration-300" style={{ transform: isHovered ? "scale(1.08)" : "scale(1)" }}>
-      <rect x="3" y="16" width="50" height="32" rx="2" fill="#DBEAFE" stroke="#3B82F6" strokeWidth="1" />
-      <rect x="8" y="20" width="7" height="7" rx="1" fill="#BFDBFE" stroke="#60A5FA" strokeWidth="0.5" />
-      <line x1="11.5" y1="20" x2="11.5" y2="27" stroke="#60A5FA" strokeWidth="0.4" />
-      <rect x="18" y="20" width="7" height="7" rx="1" fill="#BFDBFE" stroke="#60A5FA" strokeWidth="0.5" />
-      <line x1="21.5" y1="20" x2="21.5" y2="27" stroke="#60A5FA" strokeWidth="0.4" />
-      <rect x="31" y="20" width="7" height="7" rx="1" fill="#BFDBFE" stroke="#60A5FA" strokeWidth="0.5" />
-      <line x1="34.5" y1="20" x2="34.5" y2="27" stroke="#60A5FA" strokeWidth="0.4" />
-      <rect x="41" y="20" width="7" height="7" rx="1" fill="#BFDBFE" stroke="#60A5FA" strokeWidth="0.5" />
-      <line x1="44.5" y1="20" x2="44.5" y2="27" stroke="#60A5FA" strokeWidth="0.4" />
-      <polygon points="28,4 1,18 55,18" fill="#EF4444" stroke="#DC2626" strokeWidth="0.8" />
-      <rect x="22" y="33" width="12" height="15" rx="1.5" fill="#92400E" />
-      <rect x="25" y="35" width="6" height="5" rx="0.5" fill="#FDE68A" />
-      <circle cx="31" cy="42" r="1" fill="#F59E0B" />
-      <circle cx="28" cy="10" r="3" fill="#FDE68A" stroke="#F59E0B" strokeWidth="0.6" />
-      <text x="28" y="12.5" textAnchor="middle" fontSize="5" fill="#92400E" fontWeight="bold">R</text>
-      <rect x="0" y="46" width="4" height="2" rx="0.5" fill="#34D399" />
-      <circle cx="2" cy="44" r="3" fill="#34D399" opacity="0.7" />
-      <rect x="52" y="46" width="4" height="2" rx="0.5" fill="#34D399" />
-      <circle cx="54" cy="44" r="3" fill="#34D399" opacity="0.7" />
-    </svg>,
-
-    <svg width="64" height="46" viewBox="0 0 64 46" className="drop-shadow-md transition-transform duration-300" style={{ transform: isHovered ? "scale(1.08)" : "scale(1)" }}>
-      <rect x="2" y="18" width="26" height="28" rx="1.5" fill="#FCE7F3" stroke="#EC4899" strokeWidth="0.8" />
-      <rect x="36" y="18" width="26" height="28" rx="1.5" fill="#FEF3C7" stroke="#F59E0B" strokeWidth="0.8" />
-      <rect x="26" y="10" width="12" height="36" rx="1" fill="#FEE2E2" stroke="#EF4444" strokeWidth="1" />
-      <polygon points="32,2 24,12 40,12" fill="#EF4444" stroke="#DC2626" strokeWidth="0.6" />
-      <rect x="29" y="30" width="6" height="16" rx="1" fill="#92400E" />
-      <circle cx="33.5" cy="39" r="0.8" fill="#F59E0B" />
-      <rect x="5" y="22" width="6" height="6" rx="0.5" fill="#BFDBFE" stroke="#60A5FA" strokeWidth="0.4" />
-      <rect x="14" y="22" width="6" height="6" rx="0.5" fill="#BFDBFE" stroke="#60A5FA" strokeWidth="0.4" />
-      <rect x="39" y="22" width="6" height="6" rx="0.5" fill="#BFDBFE" stroke="#60A5FA" strokeWidth="0.4" />
-      <rect x="48" y="22" width="6" height="6" rx="0.5" fill="#BFDBFE" stroke="#60A5FA" strokeWidth="0.4" />
-      <rect x="5" y="33" width="6" height="6" rx="0.5" fill="#BFDBFE" stroke="#60A5FA" strokeWidth="0.4" />
-      <rect x="14" y="33" width="6" height="6" rx="0.5" fill="#BFDBFE" stroke="#60A5FA" strokeWidth="0.4" />
-      <rect x="39" y="33" width="6" height="6" rx="0.5" fill="#BFDBFE" stroke="#60A5FA" strokeWidth="0.4" />
-      <rect x="48" y="33" width="6" height="6" rx="0.5" fill="#BFDBFE" stroke="#60A5FA" strokeWidth="0.4" />
-      <circle cx="32" cy="6" r="2" fill="#FDE68A" stroke="#F59E0B" strokeWidth="0.5" />
-      <circle cx="8" cy="14" r="4" fill="#34D399" opacity="0.5" />
-      <circle cx="56" cy="14" r="4" fill="#34D399" opacity="0.5" />
-    </svg>,
-  ];
-
-  return buildings[variant % buildings.length];
-}
 
 function Interactive3DMap() {
   const [hoveredCentre, setHoveredCentre] = useState<string | null>(null);
 
   return (
     <div className="mb-12" data-testid="map-3d-centres">
-      <div
-        className="relative w-full rounded-2xl overflow-visible shadow-xl border border-gray-200 dark:border-gray-700"
-      >
-        <div className="relative w-full">
-          <div className="relative w-full aspect-[16/10] md:aspect-[2/1] bg-gradient-to-br from-green-50 via-blue-50 to-emerald-50 dark:from-green-950/40 dark:via-blue-950/40 dark:to-emerald-950/40 rounded-2xl overflow-visible">
-            <div className="absolute inset-0 opacity-20">
-              <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                  <pattern id="road-grid" width="80" height="80" patternUnits="userSpaceOnUse">
-                    <path d="M 80 0 L 0 0 0 80" fill="none" stroke="currentColor" strokeWidth="0.5" className="text-gray-300 dark:text-gray-600" />
-                  </pattern>
-                  <pattern id="grass-dots" width="20" height="20" patternUnits="userSpaceOnUse">
-                    <circle cx="5" cy="5" r="1" fill="#86EFAC" opacity="0.4" />
-                    <circle cx="15" cy="15" r="0.8" fill="#86EFAC" opacity="0.3" />
-                  </pattern>
-                </defs>
-                <rect width="100%" height="100%" fill="url(#road-grid)" />
-                <rect width="100%" height="100%" fill="url(#grass-dots)" />
-              </svg>
-            </div>
+      <div className="relative w-full rounded-2xl overflow-hidden shadow-xl border border-gray-200 dark:border-gray-700">
+        <img
+          src="/images/3d-map-bg.png"
+          alt="3D isometric map of Rainbow Preschool centres across Thane"
+          className="w-full h-auto block"
+          width="1024"
+          height="683"
+          loading="lazy"
+          decoding="async"
+        />
 
-            <svg className="absolute inset-0 w-full h-full pointer-events-none z-[2] opacity-20" viewBox="0 0 400 200" preserveAspectRatio="none">
-              <path d="M0,120 Q100,100 160,90 T300,110 T400,80" fill="none" stroke="#9CA3AF" strokeWidth="3" strokeDasharray="8 4" />
-              <path d="M50,0 Q80,60 100,100 T140,200" fill="none" stroke="#9CA3AF" strokeWidth="2.5" strokeDasharray="6 4" />
-              <path d="M350,0 Q330,70 310,120 T280,200" fill="none" stroke="#9CA3AF" strokeWidth="2" strokeDasharray="6 4" />
-              <path d="M0,60 Q80,50 180,70 T400,40" fill="none" stroke="#9CA3AF" strokeWidth="1.5" strokeDasharray="4 3" />
-            </svg>
-
-            <svg className="absolute inset-0 w-full h-full pointer-events-none z-[1] opacity-30" viewBox="0 0 400 200" preserveAspectRatio="none">
-              <circle cx="60" cy="40" r="12" fill="#86EFAC" />
-              <circle cx="70" cy="35" r="10" fill="#4ADE80" />
-              <circle cx="55" cy="38" r="8" fill="#22C55E" />
-              <circle cx="340" cy="150" r="14" fill="#86EFAC" />
-              <circle cx="350" cy="145" r="11" fill="#4ADE80" />
-              <circle cx="330" cy="148" r="9" fill="#22C55E" />
-              <circle cx="180" cy="170" r="10" fill="#86EFAC" />
-              <circle cx="190" cy="168" r="8" fill="#4ADE80" />
-              <circle cx="20" cy="160" r="8" fill="#86EFAC" />
-              <circle cx="380" cy="60" r="9" fill="#86EFAC" />
-              <circle cx="390" cy="55" r="7" fill="#4ADE80" />
-            </svg>
-
-            <div className="absolute top-3 left-3 md:top-5 md:left-5 z-20 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-lg px-3 py-2 shadow-lg border border-gray-200 dark:border-gray-700">
-              <p className="text-[10px] md:text-xs font-bold text-primary uppercase tracking-wider">Rainbow Preschool</p>
-              <p className="text-[9px] md:text-[11px] text-muted-foreground">6 Centres Across Thane</p>
-            </div>
-
-            <div className="absolute top-3 right-3 md:top-5 md:right-5 z-20 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-lg px-3 py-2 shadow-lg border border-gray-200 dark:border-gray-700 flex items-center gap-2">
-              <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-primary animate-pulse" />
-              <span className="text-[9px] md:text-[11px] font-medium text-foreground">Click a school to open Google Maps</span>
-            </div>
-
-            {centreMapLinks.map((centre, index) => {
-              const pos = latLngToPosition(centre.lat, centre.lng);
-              const isHovered = hoveredCentre === centre.id;
-              const buildingOffsetX = index % 2 === 0 ? -55 : 25;
-              const buildingOffsetY = -10;
-              return (
-                <div key={`building-${centre.id}`} className="absolute pointer-events-none z-[3]" style={{
-                  left: `${pos.x}%`,
-                  top: `${pos.y}%`,
-                  transform: "translate(-50%, -50%)",
-                }}>
-                  <div
-                    className="transition-all duration-300"
-                    style={{
-                      transform: `translate(${buildingOffsetX}px, ${buildingOffsetY}px) scale(${isHovered ? 1.1 : 0.85})`,
-                      opacity: isHovered ? 1 : 0.65,
-                      filter: isHovered ? "drop-shadow(0 4px 8px rgba(0,0,0,0.15))" : "none",
-                    }}
-                  >
-                    <SchoolBuilding variant={index} isHovered={isHovered} />
-                  </div>
-                </div>
-              );
-            })}
-
-            {centreMapLinks.map((centre) => {
-              const pos = latLngToPosition(centre.lat, centre.lng);
-              const isHovered = hoveredCentre === centre.id;
-              return (
-                <a
-                  key={centre.id}
-                  href={centre.mapUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="absolute group cursor-pointer"
-                  style={{
-                    left: `${pos.x}%`,
-                    top: `${pos.y}%`,
-                    transform: "translate(-50%, -100%)",
-                    zIndex: isHovered ? 30 : 10,
-                  }}
-                  onMouseEnter={() => setHoveredCentre(centre.id)}
-                  onMouseLeave={() => setHoveredCentre(null)}
-                  data-testid={`map-pin-${centre.id}`}
-                >
-                  <div className="relative">
-                    <div
-                      className="flex flex-col items-center transition-transform duration-300"
-                      style={{
-                        transform: isHovered ? "translateY(-12px) scale(1.12)" : "translateY(0) scale(1)",
-                      }}
-                    >
-                      <div className={`
-                        relative px-2 py-1 md:px-3 md:py-1.5 rounded-lg shadow-lg mb-1
-                        transition-all duration-300
-                        ${isHovered
-                          ? "bg-primary text-white shadow-primary/40 shadow-xl"
-                          : "bg-white dark:bg-gray-800 text-foreground shadow-md border border-gray-200 dark:border-gray-600"
-                        }
-                      `}
-                        style={{ position: "relative" }}
-                      >
-                        <span className="text-[9px] md:text-xs font-bold whitespace-nowrap block">{centre.label}</span>
-                        <div className={`
-                          flex items-center gap-0.5 mt-0.5 transition-all duration-300 overflow-hidden
-                          ${isHovered ? "opacity-100 max-h-6" : "opacity-0 max-h-0"}
-                        `}>
-                          <NavigationIcon className="w-2.5 h-2.5 md:w-3 md:h-3" />
-                          <span className="text-[8px] md:text-[10px]">Get Directions</span>
-                        </div>
-                        <div className={`
-                          absolute left-1/2 -bottom-1.5 w-3 h-3 rotate-45 -translate-x-1/2 transition-colors duration-300
-                          ${isHovered
-                            ? "bg-primary"
-                            : "bg-white dark:bg-gray-800 border-r border-b border-gray-200 dark:border-gray-600"
-                          }
-                        `} />
-                      </div>
-
-                      <div className="relative flex flex-col items-center">
-                        <svg width="20" height="30" viewBox="0 0 24 36" className="md:w-[26px] md:h-[38px] drop-shadow-lg">
-                          <defs>
-                            <linearGradient id={`pin-grad-${centre.id}`} x1="0" y1="0" x2="0" y2="1">
-                              <stop offset="0%" stopColor="hsl(var(--primary))" />
-                              <stop offset="100%" stopColor="hsl(var(--primary) / 0.7)" />
-                            </linearGradient>
-                          </defs>
-                          <path
-                            d="M12 0C5.4 0 0 5.4 0 12c0 9 12 24 12 24s12-15 12-24C24 5.4 18.6 0 12 0z"
-                            fill={`url(#pin-grad-${centre.id})`}
-                            className="transition-all duration-300"
-                            style={{ filter: isHovered ? "brightness(1.2)" : "brightness(1)" }}
-                          />
-                          <circle cx="12" cy="11" r="4.5" fill="white" opacity="0.9" />
-                          <circle cx="12" cy="11" r="2" fill="hsl(var(--primary))" />
-                        </svg>
-                      </div>
-
-                      <div
-                        className="absolute -bottom-1 left-1/2 rounded-full bg-black/20 dark:bg-black/40 blur-sm transition-all duration-300"
-                        style={{
-                          width: isHovered ? "18px" : "12px",
-                          height: isHovered ? "5px" : "3px",
-                          transform: "translateX(-50%)",
-                        }}
-                      />
-                    </div>
-                  </div>
-                </a>
-              );
-            })}
-
-            <svg className="absolute inset-0 w-full h-full pointer-events-none z-[5]" viewBox="0 0 100 100" preserveAspectRatio="none">
-              {(() => {
-                const points = centreMapLinks.map(c => latLngToPosition(c.lat, c.lng));
-                const sorted = [...points].sort((a, b) => a.y - b.y);
-                const pathData = sorted.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x} ${p.y}`).join(' ');
-                return (
-                  <path
-                    d={pathData}
-                    fill="none"
-                    stroke="hsl(var(--primary) / 0.12)"
-                    strokeWidth="0.25"
-                    strokeDasharray="1 0.8"
-                  />
-                );
-              })()}
-            </svg>
+        <div className="absolute inset-0">
+          <div className="absolute top-3 left-3 md:top-4 md:left-4 z-20 bg-white/90 backdrop-blur-sm rounded-lg px-3 py-2 shadow-lg border border-gray-200">
+            <p className="text-[10px] md:text-xs font-bold text-primary uppercase tracking-wider">Rainbow Preschool</p>
+            <p className="text-[9px] md:text-[11px] text-muted-foreground">6 Centres Across Thane</p>
           </div>
-        </div>
 
-        
+          <div className="absolute top-3 right-3 md:top-4 md:right-4 z-20 bg-white/90 backdrop-blur-sm rounded-lg px-3 py-1.5 shadow-lg border border-gray-200 flex items-center gap-2">
+            <div className="w-2.5 h-2.5 rounded-full bg-primary animate-pulse" />
+            <span className="text-[9px] md:text-[11px] font-medium text-gray-700">Click a school to open Google Maps</span>
+          </div>
+
+          {centreMapPins.map((centre) => {
+            const isHovered = hoveredCentre === centre.id;
+            return (
+              <a
+                key={centre.id}
+                href={centre.mapUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="absolute group cursor-pointer"
+                style={{
+                  left: `${centre.x}%`,
+                  top: `${centre.y}%`,
+                  transform: "translate(-50%, -100%)",
+                  zIndex: isHovered ? 30 : 10,
+                }}
+                onMouseEnter={() => setHoveredCentre(centre.id)}
+                onMouseLeave={() => setHoveredCentre(null)}
+                data-testid={`map-pin-${centre.id}`}
+              >
+                <div
+                  className="flex flex-col items-center transition-transform duration-300"
+                  style={{
+                    transform: isHovered ? "translateY(-6px) scale(1.1)" : "translateY(0) scale(1)",
+                  }}
+                >
+                  <div className={`
+                    relative px-2 py-1 md:px-3 md:py-1.5 rounded-lg shadow-lg mb-1
+                    transition-all duration-300
+                    ${isHovered
+                      ? "bg-primary text-white shadow-primary/30 shadow-xl"
+                      : "bg-white/95 text-gray-800 shadow-md border border-gray-200"
+                    }
+                  `}>
+                    <span className="text-[9px] md:text-xs font-bold whitespace-nowrap block">{centre.label}</span>
+                    <div className={`
+                      flex items-center justify-center gap-0.5 transition-all duration-300 overflow-hidden
+                      ${isHovered ? "opacity-100 max-h-5 mt-0.5" : "opacity-0 max-h-0"}
+                    `}>
+                      <NavigationIcon className="w-2.5 h-2.5 md:w-3 md:h-3" />
+                      <span className="text-[8px] md:text-[10px]">Get Directions</span>
+                    </div>
+                    <div className={`
+                      absolute left-1/2 -bottom-1 w-2.5 h-2.5 rotate-45 -translate-x-1/2 transition-colors duration-300
+                      ${isHovered ? "bg-primary" : "bg-white/95 border-r border-b border-gray-200"}
+                    `} />
+                  </div>
+
+                  <svg width="22" height="32" viewBox="0 0 24 36" className="md:w-[28px] md:h-[40px] drop-shadow-lg">
+                    <defs>
+                      <linearGradient id={`pin-grad-${centre.id}`} x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor="hsl(var(--primary))" />
+                        <stop offset="100%" stopColor="hsl(var(--primary) / 0.7)" />
+                      </linearGradient>
+                    </defs>
+                    <path
+                      d="M12 0C5.4 0 0 5.4 0 12c0 9 12 24 12 24s12-15 12-24C24 5.4 18.6 0 12 0z"
+                      fill={`url(#pin-grad-${centre.id})`}
+                      style={{ filter: isHovered ? "brightness(1.2)" : "brightness(1)" }}
+                    />
+                    <circle cx="12" cy="11" r="4.5" fill="white" opacity="0.9" />
+                    <circle cx="12" cy="11" r="2" fill="hsl(var(--primary))" />
+                  </svg>
+
+                  <div
+                    className="absolute -bottom-1 left-1/2 rounded-full bg-black/25 blur-sm transition-all duration-300"
+                    style={{
+                      width: isHovered ? "16px" : "10px",
+                      height: isHovered ? "5px" : "3px",
+                      transform: "translateX(-50%)",
+                    }}
+                  />
+                </div>
+              </a>
+            );
+          })}
+        </div>
       </div>
 
       <p className="text-center text-sm text-muted-foreground mt-4 mb-8">
