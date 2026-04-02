@@ -16,7 +16,7 @@ const centreMapLinks = [
   { id: "kasarvadavali", label: "Kasarvadavali", mapUrl: "https://maps.app.goo.gl/9Bs1YpUM1cpBgiYA6", lat: 19.2669, lng: 72.9634 },
 ];
 
-const mapBounds = { minLat: 19.185, maxLat: 19.275, minLng: 72.950, maxLng: 73.000 };
+const mapBounds = { minLat: 19.175, maxLat: 19.285, minLng: 72.945, maxLng: 73.005 };
 
 function latLngToPosition(lat: number, lng: number) {
   const x = ((lng - mapBounds.minLng) / (mapBounds.maxLng - mapBounds.minLng)) * 100;
@@ -110,7 +110,7 @@ function Interactive3DMap() {
             transformStyle: "preserve-3d",
           }}
         >
-          <div className="relative w-full aspect-[16/9] md:aspect-[2/1] bg-gradient-to-br from-green-50 via-blue-50 to-emerald-50 dark:from-green-950/40 dark:via-blue-950/40 dark:to-emerald-950/40 overflow-hidden">
+          <div className="relative w-full aspect-[16/10] md:aspect-[2/1] bg-gradient-to-br from-green-50 via-blue-50 to-emerald-50 dark:from-green-950/40 dark:via-blue-950/40 dark:to-emerald-950/40 overflow-visible">
             <div className="absolute inset-0 opacity-20">
               <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
                 <defs>
@@ -153,7 +153,7 @@ function Interactive3DMap() {
               <p className="text-[9px] md:text-[11px] text-muted-foreground">6 Centres Across Thane</p>
             </div>
 
-            <div className="absolute bottom-3 right-3 md:bottom-5 md:right-5 z-20 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-lg px-3 py-2 shadow-lg border border-gray-200 dark:border-gray-700 flex items-center gap-2">
+            <div className="absolute top-3 right-3 md:top-5 md:right-5 z-20 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-lg px-3 py-2 shadow-lg border border-gray-200 dark:border-gray-700 flex items-center gap-2">
               <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-primary animate-pulse" />
               <span className="text-[9px] md:text-[11px] font-medium text-foreground">Click a school to open Google Maps</span>
             </div>
