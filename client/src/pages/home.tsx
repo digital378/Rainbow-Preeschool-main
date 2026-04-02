@@ -532,42 +532,41 @@ export default function Home() {
         </div>
       </section>
 
-      <LazySection minHeight={600}>
-        <section className="py-16 md:py-20 lg:py-24 bg-card cv-auto">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
-              <div data-reveal="slide" data-direction="left">
-                <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">Get In Touch</p>
-                <h2 className="text-3xl md:text-4xl font-bold mb-4" data-sparkle>Request A Callback</h2>
-                <p className="text-muted-foreground text-lg mb-8">
-                  Submit your details and queries here. We'd be glad to help you out!
-                </p>
-                <div className="rounded-xl overflow-hidden shadow-md" data-testid="callback-video">
-                  <video
-                    src="/assets/RPS_Walkthrough_Video_-_Website_1_1766126796450.mp4"
-                    poster="/assets/walkthrough-poster.webp"
-                    controls
-                    preload="none"
-                    playsInline
-                    className="w-full h-auto"
-                    width={800}
-                    height={450}
-                  >
-                    Your browser does not support the video tag.
-                  </video>
-                </div>
+      <section className="py-16 md:py-20 lg:py-24 bg-card cv-auto">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+            <div data-reveal="slide" data-direction="left">
+              <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">Get In Touch</p>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4" data-sparkle>Request A Callback</h2>
+              <p className="text-muted-foreground text-lg mb-8">
+                Submit your details and queries here. We'd be glad to help you out!
+              </p>
+              <div className="rounded-xl overflow-hidden shadow-md" data-testid="callback-video">
+                <video
+                  src="/assets/RPS_Walkthrough_Video_-_Website_1_1766126796450.mp4"
+                  poster="/assets/walkthrough-poster.webp"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="w-full h-auto"
+                  width={800}
+                  height={450}
+                >
+                  Your browser does not support the video tag.
+                </video>
               </div>
-              <Card data-reveal="slide" data-direction="right">
-                <CardContent className="pt-6">
-                  <Suspense fallback={null}>
-                    <ContactForm />
-                  </Suspense>
-                </CardContent>
-              </Card>
             </div>
+            <Card data-reveal="slide" data-direction="right">
+              <CardContent className="pt-6">
+                <Suspense fallback={null}>
+                  <ContactForm />
+                </Suspense>
+              </CardContent>
+            </Card>
           </div>
-        </section>
-      </LazySection>
+        </div>
+      </section>
 
       {/* Find Preschool Near You - Local SEO Links */}
       <section className="py-12 md:py-16 bg-primary/5">
