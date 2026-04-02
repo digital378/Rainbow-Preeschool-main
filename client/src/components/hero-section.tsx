@@ -11,15 +11,6 @@ const banners = [
   "/images/optimized/hero-banner-4.webp",
 ];
 
-function preloadImage(src: string): Promise<void> {
-  return new Promise((resolve) => {
-    const img = new Image();
-    img.onload = () => resolve();
-    img.onerror = () => resolve();
-    img.src = src;
-  });
-}
-
 const trustBadges = [
   { icon: Users, label: "1,00,000+ Happy Students" },
   { icon: Star, label: "18+ Years of Excellence" },
@@ -31,37 +22,53 @@ export function HeroSection() {
   const [currentBanner, setCurrentBanner] = useState(0);
   const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set([0]));
   const preloadedRef = useRef<Set<number>>(new Set([0]));
+  const carouselStarted = useRef(false);
 
   const preloadNext = useCallback((current: number) => {
     const next = (current + 1) % banners.length;
     if (!preloadedRef.current.has(next)) {
       preloadedRef.current.add(next);
-      preloadImage(banners[next]).then(() => {
+      const img = new Image();
+      img.onload = () => {
         setLoadedImages(prev => {
           const newSet = new Set(Array.from(prev));
           newSet.add(next);
           return newSet;
         });
-      });
+      };
+      img.src = banners[next];
     }
   }, []);
 
   useEffect(() => {
-    preloadNext(0);
-    
-    const interval = setInterval(() => {
-      setCurrentBanner((prev) => {
-        const next = (prev + 1) % banners.length;
-        preloadNext(next);
-        return next;
-      });
-    }, 5000);
-    return () => clearInterval(interval);
+    const startCarousel = () => {
+      if (carouselStarted.current) return;
+      carouselStarted.current = true;
+      preloadNext(0);
+
+      const interval = setInterval(() => {
+        setCurrentBanner((prev) => {
+          const next = (prev + 1) % banners.length;
+          preloadNext(next);
+          return next;
+        });
+      }, 5000);
+      return interval;
+    };
+
+    let intervalId: ReturnType<typeof setInterval> | undefined;
+    const timerId = setTimeout(() => {
+      intervalId = startCarousel();
+    }, 3000);
+
+    return () => {
+      clearTimeout(timerId);
+      if (intervalId) clearInterval(intervalId);
+    };
   }, [preloadNext]);
 
   return (
     <section className="relative min-h-[80vh] flex items-center overflow-hidden">
-      {/* Animated Background Banners */}
       <div className="absolute inset-0">
         {banners.map((banner, index) => {
           const isLoaded = loadedImages.has(index);
@@ -73,30 +80,37 @@ export function HeroSection() {
               className="absolute inset-0 transition-opacity duration-1000 ease-in-out"
               style={{ opacity: isActive ? 1 : 0 }}
             >
-              <img
-                src={banner}
-                alt={`Preschool classroom in Thane - Rainbow Preschool ${index + 1}`}
-                className="w-full h-full object-cover"
-                width={1920}
-                height={1080}
-                loading={index === 0 ? "eager" : "lazy"}
-                decoding={index === 0 ? "sync" : "async"}
-              />
+              {index === 0 ? (
+                <img
+                  src={banner}
+                  alt="Preschool classroom in Thane - Rainbow Preschool 1"
+                  className="w-full h-full object-cover"
+                  width={1200}
+                  height={675}
+                  decoding="sync"
+                />
+              ) : (
+                <img
+                  src={banner}
+                  alt={`Preschool classroom in Thane - Rainbow Preschool ${index + 1}`}
+                  className="w-full h-full object-cover"
+                  width={1200}
+                  height={675}
+                  loading="lazy"
+                  decoding="async"
+                />
+              )}
             </div>
           );
         })}
-        {/* Premium dual-layer gradient for depth */}
         <div className="absolute inset-0 bg-gradient-to-r from-black/65 via-black/35 to-black/10 dark:from-black/75 dark:via-black/45 dark:to-black/20" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-        {/* Subtle vignette top */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-transparent" />
       </div>
 
-      {/* Content - Left Aligned with staggered entrance */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32 w-full">
         <div className="max-w-2xl">
 
-          {/* Welcome badge */}
           <Link href="/contact" data-testid="link-admissions-badge">
             <div
               className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/12 backdrop-blur-md border border-white/25 mb-7 cursor-pointer hover:bg-white/22 transition-all duration-300 hover:scale-105 animate-in fade-in slide-in-from-bottom-3 duration-700"
@@ -107,7 +121,6 @@ export function HeroSection() {
             </div>
           </Link>
 
-          {/* Hero H1 */}
           <h1
             className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-5 text-white leading-[1.08] animate-in fade-in slide-in-from-bottom-4 duration-700"
             style={{ animationFillMode: "both", animationDelay: "150ms" }}
@@ -119,7 +132,6 @@ export function HeroSection() {
             <br className="hidden sm:block" /> International
           </h1>
 
-          {/* Subheading */}
           <p
             className="text-lg md:text-xl text-white/85 max-w-xl mb-9 leading-relaxed animate-in fade-in slide-in-from-bottom-4 duration-700"
             style={{ animationFillMode: "both", animationDelay: "300ms" }}
@@ -127,7 +139,6 @@ export function HeroSection() {
             Thane's trusted preschool since 2007 — where every child's first steps into learning are joyful, safe, and full of wonder.
           </p>
 
-          {/* Trust Badges */}
           <div
             className="flex flex-wrap items-center gap-2.5 mb-9 animate-in fade-in slide-in-from-bottom-4 duration-700"
             style={{ animationFillMode: "both", animationDelay: "450ms" }}
@@ -143,7 +154,6 @@ export function HeroSection() {
             ))}
           </div>
 
-          {/* CTA Buttons */}
           <div
             className="flex flex-col sm:flex-row items-start gap-3 animate-in fade-in slide-in-from-bottom-4 duration-700"
             style={{ animationFillMode: "both", animationDelay: "600ms" }}
@@ -178,7 +188,6 @@ export function HeroSection() {
       </div>
 
 
-      {/* Progress bar indicators */}
       <div className="absolute bottom-7 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1.5">
         {banners.map((_, index) => (
           <button
@@ -195,7 +204,6 @@ export function HeroSection() {
         ))}
       </div>
 
-      {/* Bottom wave */}
       <div className="absolute -bottom-1 left-0 right-0">
         <svg viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto block" preserveAspectRatio="none">
           <path d="M0 80L60 72C120 64 240 48 360 44C480 40 600 48 720 52C840 56 960 56 1080 54C1200 52 1320 44 1380 40L1440 36V80H1380C1320 80 1200 80 1080 80C960 80 840 80 720 80C600 80 480 80 360 80C240 80 120 80 60 80H0Z" className="fill-background" />

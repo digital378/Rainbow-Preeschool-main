@@ -22,13 +22,29 @@ import { preschoolLandingPages } from "@shared/centre-data";
 import { pushToDataLayer } from "@/lib/analytics";
 import { ArrowRight, Star, Users, MapPin, Shield, Lock, Phone, Award, FileText, Palette, BookOpen, GraduationCap } from "lucide-react";
 import { SiGoogle } from "react-icons/si";
-import { useState, useEffect, lazy, Suspense } from "react";
+import { useState, useEffect, lazy, Suspense, useRef } from "react";
 
 const WhyChooseUs = lazy(() => import("@/components/why-choose-us").then(m => ({ default: m.WhyChooseUs })));
 const MethodologySection = lazy(() => import("@/components/methodology-section").then(m => ({ default: m.MethodologySection })));
 const ClassroomGallery = lazy(() => import("@/components/classroom-gallery").then(m => ({ default: m.ClassroomGallery })));
 const CTASection = lazy(() => import("@/components/cta-section").then(m => ({ default: m.CTASection })));
 const ContactForm = lazy(() => import("@/components/contact-form").then(m => ({ default: m.ContactForm })));
+
+function LazySection({ children, rootMargin = "200px", minHeight = 400 }: { children: React.ReactNode; rootMargin?: string; minHeight?: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setVisible(true); obs.disconnect(); } },
+      { rootMargin }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [rootMargin]);
+  return <div ref={ref}>{visible ? children : <div style={{ minHeight }} />}</div>;
+}
 import { useToast } from "@/hooks/use-toast";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
@@ -471,15 +487,21 @@ export default function Home() {
         </div>
       </section>
 
-      <Suspense fallback={null}>
-        <WhyChooseUs />
-      </Suspense>
-      <Suspense fallback={null}>
-        <MethodologySection />
-      </Suspense>
-      <Suspense fallback={null}>
-        <ClassroomGallery />
-      </Suspense>
+      <LazySection minHeight={500}>
+        <Suspense fallback={null}>
+          <WhyChooseUs />
+        </Suspense>
+      </LazySection>
+      <LazySection minHeight={500}>
+        <Suspense fallback={null}>
+          <MethodologySection />
+        </Suspense>
+      </LazySection>
+      <LazySection minHeight={400}>
+        <Suspense fallback={null}>
+          <ClassroomGallery />
+        </Suspense>
+      </LazySection>
 
       {/* Testimonials Section - Local SEO Enhanced */}
       <section id="testimonials" className="py-16 md:py-20 lg:py-24 relative overflow-hidden cv-auto">
@@ -507,41 +529,41 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Contact Form Section - Get In Touch */}
-      <section className="py-16 md:py-20 lg:py-24 bg-card cv-auto">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
-            <div data-reveal="slide" data-direction="left">
-              <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">Get In Touch</p>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4" data-sparkle>Request A Callback</h2>
-              <p className="text-muted-foreground text-lg mb-8">
-                Submit your details and queries here. We'd be glad to help you out!
-              </p>
-              <div className="rounded-xl overflow-hidden shadow-md">
-                <video 
-                  autoPlay 
-                  loop 
-                  muted 
-                  playsInline
-                  preload="none"
-                  className="w-full h-auto"
-                  data-testid="video-walkthrough"
-                >
-                  <source src="/assets/RPS_Walkthrough_Video_-_Website_1_1766126796450.mp4" type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
+      <LazySection minHeight={600}>
+        <section className="py-16 md:py-20 lg:py-24 bg-card cv-auto">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+              <div data-reveal="slide" data-direction="left">
+                <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">Get In Touch</p>
+                <h2 className="text-3xl md:text-4xl font-bold mb-4" data-sparkle>Request A Callback</h2>
+                <p className="text-muted-foreground text-lg mb-8">
+                  Submit your details and queries here. We'd be glad to help you out!
+                </p>
+                <div className="rounded-xl overflow-hidden shadow-md">
+                  <video 
+                    loop 
+                    muted 
+                    playsInline
+                    preload="none"
+                    className="w-full h-auto"
+                    data-testid="video-walkthrough"
+                  >
+                    <source src="/assets/RPS_Walkthrough_Video_-_Website_1_1766126796450.mp4" type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
               </div>
+              <Card data-reveal="slide" data-direction="right">
+                <CardContent className="pt-6">
+                  <Suspense fallback={null}>
+                    <ContactForm />
+                  </Suspense>
+                </CardContent>
+              </Card>
             </div>
-            <Card data-reveal="slide" data-direction="right">
-              <CardContent className="pt-6">
-                <Suspense fallback={null}>
-                  <ContactForm />
-                </Suspense>
-              </CardContent>
-            </Card>
           </div>
-        </div>
-      </section>
+        </section>
+      </LazySection>
 
       {/* Find Preschool Near You - Local SEO Links */}
       <section className="py-12 md:py-16 bg-primary/5">
@@ -633,9 +655,11 @@ export default function Home() {
         </div>
       </section>
 
-      <Suspense fallback={null}>
-        <CTASection />
-      </Suspense>
+      <LazySection minHeight={300}>
+        <Suspense fallback={null}>
+          <CTASection />
+        </Suspense>
+      </LazySection>
 
     </div>
   );

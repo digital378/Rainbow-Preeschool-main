@@ -1,18 +1,19 @@
 import { Switch, Route, useLocation } from "wouter";
-import { useEffect, lazy, Suspense } from "react";
+import { useEffect, useState, lazy, Suspense } from "react";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Navigation } from "@/components/navigation";
-import { Footer } from "@/components/footer";
-import { ChatWidget } from "@/components/chat-widget";
 import { initGA, initGlobalFormTracking } from "./lib/analytics";
 import { useAnalytics } from "./hooks/use-analytics";
 import { useScrollRevealOnRoute } from "./hooks/use-scroll-reveal";
 import { setupLinkPrefetching } from "./lib/prefetch";
 import "@/styles/scroll-reveal.css";
+
+const Footer = lazy(() => import("@/components/footer").then(m => ({ default: m.Footer })));
+const ChatWidget = lazy(() => import("@/components/chat-widget").then(m => ({ default: m.ChatWidget })));
 
 const Home = lazy(() => import("@/pages/home"));
 
@@ -526,6 +527,20 @@ function Router() {
   );
 }
 
+function DeferredChatWidget() {
+  const [show, setShow] = useState(false);
+  useEffect(() => {
+    const id = setTimeout(() => setShow(true), 4000);
+    return () => clearTimeout(id);
+  }, []);
+  if (!show) return null;
+  return (
+    <Suspense fallback={null}>
+      <ChatWidget />
+    </Suspense>
+  );
+}
+
 function AppContent() {
   const [location] = useLocation();
   const pathWithoutQuery = location.split("?")[0];
@@ -548,9 +563,25 @@ function AppContent() {
         <ScrollToTop />
         <Router />
       </main>
-      <Footer />
-      <ChatWidget />
+      <Suspense fallback={null}>
+        <Footer />
+      </Suspense>
+      <DeferredChatWidget />
     </div>
+  );
+}
+
+function DeferredSparkleTrail() {
+  const [show, setShow] = useState(false);
+  useEffect(() => {
+    const id = setTimeout(() => setShow(true), 5000);
+    return () => clearTimeout(id);
+  }, []);
+  if (!show) return null;
+  return (
+    <Suspense fallback={null}>
+      <RainbowSparkleTrail enabled={true} intensity={1} />
+    </Suspense>
   );
 }
 
@@ -569,9 +600,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider defaultTheme="light" storageKey="rainbow-preschool-theme">
         <TooltipProvider>
-          <Suspense fallback={null}>
-            <RainbowSparkleTrail enabled={true} intensity={1} />
-          </Suspense>
+          <DeferredSparkleTrail />
           <AppContent />
           <Toaster />
         </TooltipProvider>
