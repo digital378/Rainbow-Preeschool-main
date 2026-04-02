@@ -69,6 +69,7 @@ export interface LegacyPageData {
   slug: string;
   title: string;
   metaDescription: string;
+  metaKeywords?: string;
   h1: string;
   intro: string;
   sections: {
@@ -483,10 +484,17 @@ export function AuthorArchivePage() {
 
     const description = "Explore parenting tips, early childhood education resources, and activity ideas for preschoolers from Rainbow Preschool International in Thane.";
     updateMeta('description', description);
+    updateMeta('keywords', 'preschool blog, parenting tips, early childhood education, child development, preschool activities, rainbow preschool thane');
     updateMeta('og:title', "Resources & Articles | Rainbow Preschool", true);
     updateMeta('og:description', description, true);
     updateMeta('og:type', 'website', true);
     updateMeta('og:url', canonicalUrl, true);
+    updateMeta('og:image', 'https://www.rainbowpreschools.com/og-image.jpg', true);
+    updateMeta('twitter:card', 'summary_large_image');
+    updateMeta('twitter:title', 'Resources & Articles | Rainbow Preschool');
+    updateMeta('twitter:description', description);
+    updateMeta('twitter:image', 'https://www.rainbowpreschools.com/og-image.jpg');
+    updateMeta('robots', 'noindex, follow');
 
     let canonical = document.querySelector('link[rel="canonical"]');
     if (!canonical) {
