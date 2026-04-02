@@ -4,6 +4,7 @@ import { ContactForm } from "@/components/contact-form";
 import { centres } from "@shared/centre-data";
 import { Car, Users, Zap, MessageCircle, Phone, Shield, MapPin, ChevronDown, BookOpen, Heart, Star } from "lucide-react";
 import { trackWhatsAppClick, trackCallClick } from "@/lib/analytics";
+import { Interactive3DMap } from "@/components/interactive-3d-map";
 import { useState, useEffect } from "react";
 
 // ── Page data ─────────────────────────────────────────────────────────────────
@@ -354,6 +355,8 @@ export default function PreschoolNearMe() {
                 ))}
               </div>
             )}
+
+            <Interactive3DMap />
 
             {/* ── ENQUIRY FORM ──────────────────────────────────────────────── */}
             <div className="max-w-xl mx-auto bg-white p-4 md:p-6 rounded-xl shadow-lg border text-gray-900 min-h-[480px]">
