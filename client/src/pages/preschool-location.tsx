@@ -589,8 +589,9 @@ function PreschoolLocationTemplate({ localitySlug }: PreschoolLocationPageProps)
         </div>
       </section>
 
-      <section className="py-16 md:py-20 bg-primary text-primary-foreground">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <section className="relative overflow-hidden py-16 md:py-20 bg-gradient-to-r from-primary via-accent to-secondary text-white">
+        <div className="absolute inset-0 bg-black/40" />
+        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-2xl md:text-3xl font-bold mb-4">
             Ready to Give Your Child the Best Start?
           </h2>

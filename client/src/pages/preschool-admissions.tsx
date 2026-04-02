@@ -545,8 +545,9 @@ export default function PreschoolAdmissions() {
             </section>
 
             {/* ── FINAL CTA ─────────────────────────────────────────────────── */}
-            <section className="py-8 md:py-12 px-4 bg-primary text-white">
-              <div className="max-w-4xl mx-auto text-center">
+            <section className="relative overflow-hidden py-8 md:py-12 px-4 bg-gradient-to-r from-primary via-accent to-secondary text-white">
+              <div className="absolute inset-0 bg-black/40" />
+              <div className="relative z-10 max-w-4xl mx-auto text-center">
                 <h2 className="text-xl md:text-2xl font-bold mb-3 md:mb-4">Ready to Start Your Child's Admission?</h2>
                 <p className="mb-4 md:mb-6 text-sm md:text-base opacity-90">Call us, WhatsApp, or fill the form above — our admissions team responds within 24 hours.</p>
                 <div className="flex flex-wrap justify-center gap-3 md:gap-4">
@@ -557,6 +558,7 @@ export default function PreschoolAdmissions() {
                     WhatsApp Us
                   </a>
                 </div>
+              </div>
               </div>
             </section>
           </>

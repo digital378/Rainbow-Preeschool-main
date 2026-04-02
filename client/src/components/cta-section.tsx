@@ -14,8 +14,8 @@ export function CTASection({
   description = "Join 1,00,000+ families who trust Rainbow Preschool International. Schedule a visit to our nearest centre today.",
 }: CTASectionProps) {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-red-600 via-red-500 to-red-700">
-      <div className="absolute inset-0 opacity-[0.07]" style={{ backgroundImage: 'radial-gradient(circle at 20% 50%, white 1px, transparent 1px), radial-gradient(circle at 80% 50%, white 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
+    <section className="relative overflow-hidden bg-gradient-to-r from-primary via-accent to-secondary">
+      <div className="absolute inset-0 bg-black/40" />
       <div className="relative z-10 py-14 md:py-20 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 md:mb-4 tracking-tight">
           {title}
@@ -28,7 +28,7 @@ export function CTASection({
           <Link href="/contact">
             <Button
               size="lg"
-              className="bg-white text-red-600 hover:bg-white/90 font-semibold text-sm sm:text-base px-6 sm:px-8 h-12 shadow-lg shadow-black/10 rounded-full min-w-[180px]"
+              className="bg-white text-primary hover:bg-white/90 font-semibold text-sm sm:text-base px-6 sm:px-8 h-12 shadow-lg shadow-black/10 rounded-full min-w-[180px]"
               onClick={() => trackCTAClick("request_callback", "cta_section")}
               data-testid="button-cta-callback"
             >

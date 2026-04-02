@@ -624,8 +624,9 @@ export default function BestPreschoolInThane() {
             </section>
 
             {/* ── FINAL CTA ────────────────────────────────────────────────── */}
-            <section className="py-8 md:py-12 px-4 bg-primary text-white">
-              <div className="max-w-4xl mx-auto text-center">
+            <section className="relative overflow-hidden py-8 md:py-12 px-4 bg-gradient-to-r from-primary via-accent to-secondary text-white">
+              <div className="absolute inset-0 bg-black/40" />
+              <div className="relative z-10 max-w-4xl mx-auto text-center">
                 <h2 className="text-xl md:text-2xl font-bold mb-3 md:mb-4">Experience the Rainbow Difference</h2>
                 <p className="mb-4 md:mb-6 text-sm md:text-base opacity-90">
                   Join the family of 1,00,000+ happy parents who chose Rainbow Preschool — the best preschool in Thane for over 18 years.
@@ -638,6 +639,7 @@ export default function BestPreschoolInThane() {
                     Call Now
                   </a>
                 </div>
+              </div>
               </div>
             </section>
           </>

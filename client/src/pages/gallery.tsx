@@ -425,8 +425,9 @@ export default function Gallery() {
       </section>
 
       {/* ── CTA ──────────────────────────────────────────────────── */}
-      <section className="bg-gradient-to-br from-primary to-primary/80 py-14 md:py-20">
-        <div className="max-w-3xl mx-auto px-4 text-center">
+      <section className="relative overflow-hidden bg-gradient-to-r from-primary via-accent to-secondary py-14 md:py-20">
+        <div className="absolute inset-0 bg-black/40" />
+        <div className="relative z-10 max-w-3xl mx-auto px-4 text-center">
           <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">
             {GALLERY_CTA.heading}
           </h2>
