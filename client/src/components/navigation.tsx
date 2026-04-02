@@ -19,7 +19,7 @@ const navLinks = [
   { href: "/about", label: "About Us" },
   { href: "/programmes", label: "Programmes" },
   { href: "/gallery", label: "Gallery" },
-  { href: "/blog", label: "News & Blog" },
+  { href: "/blog", label: "Blogs" },
   { href: "/contact", label: "Contact" },
 ];
 
@@ -128,7 +128,7 @@ export function Navigation() {
               </Button>
             </Link>
 
-            {/* News & Blog link */}
+            {/* Blogs link */}
             <Link href="/blog">
               <Button
                 variant="ghost"
@@ -136,9 +136,9 @@ export function Navigation() {
                   "text-sm font-medium rounded-none text-white hover:bg-white/20 hover:text-white",
                   location === "/blog" && "bg-white/20"
                 )}
-                data-testid="link-nav-news-blog"
+                data-testid="link-nav-blogs"
               >
-                News & Blog
+                Blogs
               </Button>
             </Link>
             

@@ -256,7 +256,7 @@ Gallery config: `client/src/lib/gallery-config.ts` (GALLERY_CATEGORIES, GALLERY_
 - **About** (`about.tsx`): 4-image grid with DSC images
 - **Programmes** (`programmes.tsx`): Programme-specific DSC images
 - **Playgroup/Nursery/Kindergarten Landing**: 5-image galleries with DSC images
-- **Blog** (`blog.tsx`): DSC images for blog post thumbnails
+- **Blog** (`blog.tsx`): Unified blog listing (no images) showing all rich blog posts + legacy posts with search, category filters, and colored category badges
 - **CTA Section** (`cta-section.tsx`): hero-banner-4.webp as background
 
 ### Key Component

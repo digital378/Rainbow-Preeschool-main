@@ -427,7 +427,7 @@ export default function RepublicDay2026() {
                 </Link>
                 <Link href="/blog" data-testid="link-related-blog">
                   <div className="p-4 bg-muted/50 rounded-lg hover:bg-muted transition-colors cursor-pointer group">
-                    <h4 className="font-semibold text-foreground group-hover:text-primary transition-colors">News & Blog</h4>
+                    <h4 className="font-semibold text-foreground group-hover:text-primary transition-colors">Blogs</h4>
                     <p className="text-sm text-muted-foreground mt-1">Latest updates and parenting insights</p>
                   </div>
                 </Link>
