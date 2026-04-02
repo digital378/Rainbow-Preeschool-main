@@ -47,61 +47,7 @@ function LazySection({ children, rootMargin = "200px", minHeight = 400 }: { chil
   return <div ref={ref}>{visible ? children : <div style={{ minHeight }} />}</div>;
 }
 
-function LazyVideo({ src, poster, className }: { src: string; poster: string; className?: string }) {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [playing, setPlaying] = useState(false);
 
-  const handlePlay = () => {
-    setPlaying(true);
-  };
-
-  useEffect(() => {
-    if (playing && videoRef.current) {
-      videoRef.current.play().catch(() => {});
-    }
-  }, [playing]);
-
-  return (
-    <div className={className} data-testid="video-walkthrough">
-      {playing ? (
-        <video
-          ref={videoRef}
-          loop
-          muted
-          playsInline
-          preload="auto"
-          className="w-full h-auto"
-        >
-          <source src={src} type="video/mp4" />
-        </video>
-      ) : (
-        <button
-          onClick={handlePlay}
-          className="relative w-full cursor-pointer border-0 p-0 bg-transparent block"
-          aria-label="Play walkthrough video"
-          data-testid="button-play-video"
-        >
-          <img
-            src={poster}
-            alt="Rainbow Preschool walkthrough"
-            className="w-full h-auto"
-            width={800}
-            height={450}
-            loading="lazy"
-            decoding="async"
-          />
-          <div className="absolute inset-0 flex items-center justify-center bg-black/20 hover:bg-black/30 transition-colors">
-            <div className="w-16 h-16 rounded-full bg-white/90 flex items-center justify-center shadow-lg">
-              <svg viewBox="0 0 24 24" fill="none" className="w-8 h-8 ml-1">
-                <path d="M8 5v14l11-7z" fill="#E53935" />
-              </svg>
-            </div>
-          </div>
-        </button>
-      )}
-    </div>
-  );
-}
 import { useToast } from "@/hooks/use-toast";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
@@ -596,11 +542,24 @@ export default function Home() {
                 <p className="text-muted-foreground text-lg mb-8">
                   Submit your details and queries here. We'd be glad to help you out!
                 </p>
-                <LazyVideo
-                  src="/assets/RPS_Walkthrough_Video_-_Website_1_1766126796450.mp4"
-                  poster="/assets/walkthrough-poster.webp"
-                  className="rounded-xl overflow-hidden shadow-md"
-                />
+                <Link href="/gallery" className="block rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow group" data-testid="link-callback-gallery">
+                  <div className="relative">
+                    <img
+                      src="/assets/walkthrough-poster.webp"
+                      alt="Rainbow Preschool classroom walkthrough"
+                      className="w-full h-auto group-hover:scale-105 transition-transform duration-500"
+                      width={800}
+                      height={450}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent flex items-end p-4">
+                      <span className="text-white text-sm font-medium flex items-center gap-1.5">
+                        View Our Gallery <ArrowRight className="w-4 h-4" />
+                      </span>
+                    </div>
+                  </div>
+                </Link>
               </div>
               <Card data-reveal="slide" data-direction="right">
                 <CardContent className="pt-6">
