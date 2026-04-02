@@ -640,7 +640,6 @@ export default function BestPreschoolInThane() {
                   </a>
                 </div>
               </div>
-              </div>
             </section>
           </>
         )}

@@ -559,7 +559,6 @@ export default function PreschoolAdmissions() {
                   </a>
                 </div>
               </div>
-              </div>
             </section>
           </>
         )}
