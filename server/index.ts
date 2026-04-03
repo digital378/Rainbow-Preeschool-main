@@ -44,6 +44,17 @@ app.get("/sitemap.xml", (req, res) => {
   }
 });
 
+// Serve llms.txt for AI search engines (must be before redirects)
+app.get("/llms.txt", (req, res) => {
+  const llmsPath = path.join(process.cwd(), "client", "public", "llms.txt");
+  if (fs.existsSync(llmsPath)) {
+    res.setHeader("Content-Type", "text/plain; charset=utf-8");
+    res.sendFile(llmsPath);
+  } else {
+    res.status(404).send("LLMs.txt not found");
+  }
+});
+
 // Serve robots.txt with correct content type (must be before redirects)
 app.get("/robots.txt", (req, res) => {
   const robotsPath = path.join(process.cwd(), "client", "public", "robots.txt");

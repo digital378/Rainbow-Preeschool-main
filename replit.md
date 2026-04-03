@@ -66,3 +66,11 @@ Preferred communication style: Simple, everyday language.
 ### Build & Development
 - **Bundler**: Vite (frontend), esbuild (backend).
 - **TypeScript**: Strict mode with path aliases.
+
+### SEO & AI Search Visibility
+- **Bot SSR**: Serves pre-rendered HTML with structured data to 28+ bot user-agents including Google, Bing, ChatGPT, Perplexity, Claude, and social crawlers.
+- **Structured Data**: Organization, LocalBusiness, FAQPage, BreadcrumbList JSON-LD on all bot SSR pages.
+- **LLMs.txt**: AI-readable site summary at `/llms.txt` covering key facts, programmes, centres, FAQs.
+- **Sitemap**: Comprehensive XML sitemap at `/sitemap.xml` (154 URLs).
+- **Robots.txt**: Comprehensive with ad page blocks, WordPress legacy blocks, and canonical www sitemap URL.
+- **Semantic HTML**: Pages use `<article>`, `<section>`, `<nav aria-label>` properly; footer link groups are labeled `<nav>` elements.

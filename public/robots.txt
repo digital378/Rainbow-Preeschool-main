@@ -1,7 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://rainbowpreschools.com/sitemap.xml
-
-# Disallow admin/api paths
-Disallow: /api/

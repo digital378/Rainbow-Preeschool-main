@@ -25,6 +25,13 @@ const BOT_USER_AGENTS = [
   "dotbot",
   "petalbot",
   "bytespider",
+  "chatgpt-user",
+  "gptbot",
+  "perplexitybot",
+  "claudebot",
+  "anthropic-ai",
+  "cohere-ai",
+  "meta-externalagent",
 ];
 
 function isBot(userAgent: string): boolean {
@@ -49,7 +56,22 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
   const ogImage = seo.ogImage || `${BASE_URL}/og-image.jpg`;
   const robots = seo.noIndex ? "noindex, nofollow" : "index, follow";
 
-  const structuredDataScripts = (seo.structuredData || [])
+  const allStructuredData = [...(seo.structuredData || [])];
+
+  if (seo.breadcrumbs && seo.breadcrumbs.length > 0) {
+    allStructuredData.push({
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": seo.breadcrumbs.map((b, i) => ({
+        "@type": "ListItem",
+        "position": i + 1,
+        "name": b.name,
+        "item": `${BASE_URL}${b.url}`
+      }))
+    });
+  }
+
+  const structuredDataScripts = allStructuredData
     .map((data) => `<script type="application/ld+json">${JSON.stringify(data)}</script>`)
     .join("\n    ");
 
