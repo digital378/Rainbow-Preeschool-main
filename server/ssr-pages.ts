@@ -137,7 +137,7 @@ const staticPages: Record<string, PageSEOData> = {
     internalLinks: commonInternalLinks,
   },
   "/about": {
-    title: "About Rainbow Preschool International | Trusted Since 2007 | Thane",
+    title: "About Rainbow Preschool Thane | Since 2007",
     description: "Learn about Rainbow Preschool International — Thane's trusted preschool since 2007. 6 centres, 1,00,000+ alumni, award-winning early childhood education.",
     keywords: "about rainbow preschool, preschool thane history, early childhood education thane",
     canonical: `${BASE_URL}/about`,
@@ -153,7 +153,7 @@ const staticPages: Record<string, PageSEOData> = {
     internalLinks: commonInternalLinks,
   },
   "/programmes": {
-    title: "Preschool Programmes | Playgroup, Nursery, Kindergarten | Rainbow Preschool Thane",
+    title: "Preschool Programmes in Thane | Rainbow Preschool",
     description: "Explore our age-appropriate programmes: Playgroup (1.5-2.5 years), Nursery (2.5-4 years), and Kindergarten (4-6 years). Play-based curriculum at Rainbow Preschool Thane.",
     keywords: "preschool programmes thane, playgroup programme, nursery programme, kindergarten programme, early childhood curriculum",
     canonical: `${BASE_URL}/programmes`,
@@ -215,7 +215,7 @@ const staticPages: Record<string, PageSEOData> = {
     internalLinks: commonInternalLinks,
   },
   "/contact": {
-    title: "Contact Rainbow Preschool International | Enquire Now | Thane",
+    title: "Contact Rainbow Preschool Thane | Enquire Now",
     description: "Contact Rainbow Preschool International for admissions enquiries. Call 82915 68972 or visit our centres in Manpada, Hariniwas, Anand Nagar, Dhokali, Kalwa, Kasarvadavali.",
     keywords: "contact rainbow preschool, preschool admission enquiry thane, preschool phone number thane",
     canonical: `${BASE_URL}/contact`,
@@ -228,7 +228,7 @@ const staticPages: Record<string, PageSEOData> = {
     internalLinks: commonInternalLinks,
   },
   "/blog": {
-    title: "Blogs | Parenting Tips & Early Education Articles | Rainbow Preschool",
+    title: "Parenting Tips & Education Articles | Rainbow Preschool",
     description: "Read the latest parenting tips, early education articles, and child development insights from Rainbow Preschool Thane. Expert advice for parents.",
     keywords: "preschool blog, parenting tips, early childhood education articles, child development tips",
     canonical: `${BASE_URL}/blog`,
@@ -247,7 +247,7 @@ const staticPages: Record<string, PageSEOData> = {
     internalLinks: commonInternalLinks,
   },
   "/preschool-admissions": {
-    title: "Preschool Admissions 2025-26 | Rainbow Preschool International Thane",
+    title: "Preschool Admissions in Thane | Rainbow Preschool",
     description: "Apply for preschool admissions at Rainbow Preschool International Thane. Playgroup, Nursery, and Kindergarten admissions open. Age eligibility, fees, and process.",
     keywords: "preschool admissions thane, preschool admission process, nursery admission thane, kindergarten admission thane",
     canonical: `${BASE_URL}/preschool-admissions`,
@@ -279,7 +279,7 @@ const staticPages: Record<string, PageSEOData> = {
     internalLinks: commonInternalLinks,
   },
   "/best-preschool-near-me-in-thane": {
-    title: "Best Preschool in Thane 2026 | Top-Rated Rainbow Preschool International",
+    title: "Best Preschool in Thane | Rainbow Preschool",
     description: "Looking for the best preschool in Thane? Rainbow Preschool International — 17+ years, 6 centres, 4.7★ Google rating, award-winning early childhood education.",
     keywords: "best preschool in thane, top preschool thane, best playgroup thane, best nursery school thane",
     canonical: `${BASE_URL}/best-preschool-near-me-in-thane`,
@@ -300,7 +300,7 @@ const staticPages: Record<string, PageSEOData> = {
     internalLinks: commonInternalLinks,
   },
   "/play-school-near-me": {
-    title: "Play School Near Me in Thane | Top Play Schools | Rainbow Preschool",
+    title: "Play School Near Me in Thane | Rainbow Preschool",
     description: "Find the best play school near you in Thane. Rainbow Preschool offers play-based learning for children aged 1.5-6 years across 6 centres.",
     keywords: "play school near me, playschool near me in thane, top playschool thane, best play school thane",
     canonical: `${BASE_URL}/play-school-near-me`,
@@ -312,7 +312,7 @@ const staticPages: Record<string, PageSEOData> = {
     internalLinks: commonInternalLinks,
   },
   "/happy-times": {
-    title: "Happy Times Activities | After-School Programme | Rainbow Preschool Thane",
+    title: "Happy Times | After-School Care | Rainbow Preschool",
     description: "Enroll in Happy Times — our after-school enrichment programme featuring art, music, dance, sports, and creative activities for children in Thane.",
     canonical: `${BASE_URL}/happy-times`,
     h1: "Happy Times — After-School Enrichment Programme",
@@ -352,7 +352,7 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
   if (preschoolCentres[cleanPath]) {
     const centre = preschoolCentres[cleanPath];
     return {
-      title: `Preschool in ${centre.locality}, Thane | Rainbow Preschool International`,
+      title: `Preschool in ${centre.locality}, Thane | Rainbow Preschool`,
       description: `Best preschool in ${centre.locality}, Thane. Rainbow Preschool offers Playgroup, Nursery, and Kindergarten for children aged 1.5-6 years. Visit our ${centre.locality} centre today.`,
       keywords: `preschool in ${centre.locality.toLowerCase()}, preschool in ${centre.locality.toLowerCase()} thane, best preschool ${centre.locality.toLowerCase()}, nursery school ${centre.locality.toLowerCase()}`,
       canonical: `${BASE_URL}${cleanPath}`,
@@ -371,7 +371,7 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
   if (playgroundPages[cleanPath]) {
     const pg = playgroundPages[cleanPath];
     return {
-      title: `Playgroup in ${pg.locality} | Rainbow Preschool International`,
+      title: `Playgroup in ${pg.locality} | Rainbow Preschool`,
       description: `Best playgroup in ${pg.locality}, Thane. Age 1.5-2.5 years. Play-based learning, sensory activities, and gentle socialisation at Rainbow Preschool.`,
       keywords: `playgroup in ${pg.locality.toLowerCase()}, playgroup near ${pg.locality.toLowerCase()}, toddler playgroup ${pg.locality.toLowerCase()}`,
       canonical: `${BASE_URL}${cleanPath}`,
@@ -388,17 +388,17 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
     const slug = cleanPath.replace("/blog/", "");
     const blogPosts: Record<string, { title: string; description: string; keywords: string }> = {
       "what-to-ask-during-a-tour-of-a-preschool-in-thane": {
-        title: "What To Ask During A Preschool Tour in Thane 2025 | Complete Checklist",
+        title: "Preschool Tour Questions in Thane | Checklist",
         description: "Essential 25+ questions to ask when visiting a preschool in Thane. Expert checklist covering safety, curriculum, teacher ratios & more.",
         keywords: "preschool tour questions thane, what to ask preschool visit, preschool visit checklist india",
       },
       "understanding-the-importance-of-preschool-in-early-childhood-development": {
-        title: "Importance of Preschool in Early Childhood Development | Rainbow Preschool",
+        title: "Importance of Preschool in Child Development",
         description: "Discover science-backed insights on why quality preschool education matters for your child's cognitive, social, and emotional development.",
         keywords: "importance of preschool, early childhood development, preschool benefits, child development preschool",
       },
       "how-play-based-learning-shapes-young-minds": {
-        title: "How Play-Based Learning Shapes Young Minds | Rainbow Preschool Thane",
+        title: "Play-Based Learning | Benefits & Activities",
         description: "Learn how play-based learning nurtures cognitive, social, and emotional development in young children. Science-backed insights and practical activities.",
         keywords: "play based learning, play based curriculum preschool, learning through play",
       },
@@ -418,7 +418,7 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
         keywords: "safe preschool environment, nurturing learning environment, child safety preschool",
       },
       "republic-day-2026": {
-        title: "Republic Day 2026 | History, Parade, Quotes, DP Images & Wishes",
+        title: "Republic Day 2026 | History, Parade & Quotes",
         description: "Celebrate India's 77th Republic Day 2026 with complete information on history, significance, parade highlights, speeches, and wishes.",
         keywords: "republic day 2026, republic day india, 26 january 2026",
       },

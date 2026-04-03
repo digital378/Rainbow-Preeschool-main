@@ -176,7 +176,7 @@ const programmeDetails: Record<string, {
       "Builds confidence and creativity",
       "Flexible timings for working parents"
     ],
-    seoTitle: "Kids Activity Club in Thane | After School Activities | Rainbow Preschool",
+    seoTitle: "Kids Activity Club Thane | After School | Rainbow",
     seoDescription: "Join Rainbow Preschool's Kids Activity Club for children 2-10 years. 20+ activities including brain gym, aerobics, drama, art & craft. Best after-school program in Thane.",
     seoKeywords: "kids activity club thane, after school activities thane, kids activities near me, children activities thane, art classes for kids thane, drama classes thane, hobby classes for kids, extracurricular activities thane"
   },
@@ -198,7 +198,7 @@ const programmeDetails: Record<string, {
       "Develops social skills",
       "Creates lasting memories"
     ],
-    seoTitle: "Summer Camp for Kids in Thane 2025 | Rainbow Preschool International",
+    seoTitle: "Summer Camp for Kids in Thane | Rainbow Preschool",
     seoDescription: "Enroll your child in Rainbow Preschool's Summer Camp in Thane. Fun activities, arts & crafts, sports, music for kids 2-10 years. Best summer camp near Thane West.",
     seoKeywords: "summer camp thane, summer camp for kids, summer camp near me, kids summer camp 2025, summer activities for children, summer vacation camp thane, holiday camp for kids, best summer camp thane"
   },
@@ -220,7 +220,7 @@ const programmeDetails: Record<string, {
       "Engaging and productive time",
       "Flexible timing options"
     ],
-    seoTitle: "Daycare in Thane | Happy Times | Rainbow Preschool International",
+    seoTitle: "Daycare in Thane | Happy Times | Rainbow Preschool",
     seoDescription: "Rainbow Preschool's Happy Times daycare in Thane for children 2-10 years. 100% female staff, CCTV monitoring, nutritious meals. Best daycare facility near Thane West.",
     seoKeywords: "daycare thane, daycare near me, best daycare thane, childcare thane, creche thane, baby daycare, toddler daycare, working parents daycare, extended daycare thane, child care center thane"
   },

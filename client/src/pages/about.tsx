@@ -76,7 +76,7 @@ export default function About() {
   return (
     <article className="pt-20 md:pt-24">
       <SEO
-        title="About Rainbow Preschool International Thane | 18+ Years of Excellence"
+        title="About Rainbow Preschool Thane | 18+ Years"
         description="Learn about Rainbow Preschool International — trusted by over 1 lakh families in Thane since 2007. Our story, play-based curriculum, certified teachers, and 6 centres across Thane."
         keywords="rainbow preschool thane, about rainbow preschool, rainbow preschool international, rainbow school thane, preschool thane history, trusted preschool thane, early childhood education thane"
         canonical="/about"

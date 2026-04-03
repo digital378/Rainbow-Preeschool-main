@@ -158,7 +158,7 @@ export default function Blog() {
   return (
     <article className="pt-20 md:pt-24">
       <SEO
-        title="Blogs | Parenting Tips & Early Education Articles | Rainbow Preschool"
+        title="Parenting Tips & Education Articles | Rainbow Preschool"
         description="Read the latest parenting tips, early education articles, and child development insights from Rainbow Preschool Thane. Expert advice for parents."
         keywords="preschool blog, parenting tips, early childhood education articles, child development tips, preschool preparation, rainbow preschool news"
         canonical="https://www.rainbowpreschools.com/blog"

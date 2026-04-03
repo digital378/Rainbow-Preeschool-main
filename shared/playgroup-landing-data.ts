@@ -32,7 +32,7 @@ export const playgroundLandingPages: PlaygroupLandingData[] = [
     url: "/playgroup-in-thane",
     centreId: "hariniwas",
     seo: {
-      title: "Playgroup in Thane (1.5-2.5 Years) | Rainbow Preschool International",
+      title: "Playgroup in Thane | Ages 1.5–2.5 | Rainbow Preschool",
       description: "Looking for a playgroup in Thane? Safe, play-based early learning for toddlers aged 1.5-2.5 years. 6 centres across Thane West. Request a callback today.",
       h1: "Playgroup in Thane (1.5-2.5 Years)",
       canonical: "https://www.rainbowpreschools.com/playgroup-in-thane",
@@ -128,7 +128,7 @@ export const playgroundLandingPages: PlaygroupLandingData[] = [
     url: "/playgroup-near-ghodbunder-road",
     centreId: "kasarvadavali",
     seo: {
-      title: "Playgroup near Ghodbunder Road, Thane (1.5-2.5 Years) | Rainbow Preschool",
+      title: "Playgroup near Ghodbunder Road Thane | Rainbow Preschool",
       description: "Best playgroup near Ghodbunder Road in Kasarvadavali. Rainbow Preschool offers play-based learning for children aged 1.5-2.5 years. Near Hypercity Mall. Book a visit!",
       h1: "Playgroup near Ghodbunder Road, Thane (1.5-2.5 Years)",
       canonical: "https://www.rainbowpreschools.com/playgroup-near-ghodbunder-road",
@@ -160,7 +160,7 @@ export const playgroundLandingPages: PlaygroupLandingData[] = [
     url: "/playgroup-in-anand-nagar",
     centreId: "anand-nagar",
     seo: {
-      title: "Playgroup in Anand Nagar, Thane (1.5-2.5 Years) | Rainbow Preschool",
+      title: "Playgroup in Anand Nagar Thane | Rainbow Preschool",
       description: "Best playgroup in Anand Nagar, Thane near Tropical Lagoon. Rainbow Preschool offers safe, play-based learning for toddlers aged 1.5-2.5 years. Book a visit today!",
       h1: "Playgroup in Anand Nagar, Thane (1.5-2.5 Years)",
       canonical: "https://www.rainbowpreschools.com/playgroup-in-anand-nagar",
@@ -192,7 +192,7 @@ export const playgroundLandingPages: PlaygroupLandingData[] = [
     url: "/playgroup-in-kasarvadavali",
     centreId: "kasarvadavali",
     seo: {
-      title: "Playgroup in Kasarvadavali, Thane (1.5-2.5 Years) | Rainbow Preschool",
+      title: "Playgroup in Kasarvadavali Thane | Rainbow Preschool",
       description: "Looking for playgroup in Kasarvadavali? Rainbow Preschool near Hypercity Mall offers play-based early learning for toddlers aged 1.5-2.5 years. Book a free visit!",
       h1: "Playgroup in Kasarvadavali, Thane (1.5-2.5 Years)",
       canonical: "https://www.rainbowpreschools.com/playgroup-in-kasarvadavali",

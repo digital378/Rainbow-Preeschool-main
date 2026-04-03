@@ -13,7 +13,7 @@ import { useState, useEffect } from "react";
 // ── Editable page data ────────────────────────────────────────────────────────
 
 const meta = {
-  title: "Preschool Admissions in Thane | Playgroup, Nursery & Kindergarten | Rainbow Preschool",
+  title: "Preschool Admissions in Thane | Rainbow Preschool",
   description: "Apply for preschool admission at Rainbow Preschool International in Thane. Explore playgroup, nursery and kindergarten admissions, age criteria, admission process, required documents, and centre options across Thane.",
   keywords: "preschool admissions in thane, preschool admission near me, nursery admission thane, kindergarten admission thane, playgroup admission thane, preschool admission process, preschool admission form, preschool admission enquiry",
 };
