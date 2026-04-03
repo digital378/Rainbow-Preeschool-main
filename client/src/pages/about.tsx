@@ -74,7 +74,7 @@ export default function About() {
   const [isChairpersonExpanded, setIsChairpersonExpanded] = useState(false);
 
   return (
-    <div className="pt-20 md:pt-24">
+    <article className="pt-20 md:pt-24">
       <SEO
         title="About Rainbow Preschool International Thane | 18+ Years of Excellence"
         description="Learn about Rainbow Preschool International — trusted by over 1 lakh families in Thane since 2007. Our story, play-based curriculum, certified teachers, and 6 centres across Thane."
@@ -400,6 +400,6 @@ export default function About() {
       </section>
 
       <CTASection />
-    </div>
+    </article>
   );
 }

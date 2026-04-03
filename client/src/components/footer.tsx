@@ -64,7 +64,7 @@ export function Footer() {
           </div>
 
           {/* Quick Links */}
-          <div>
+          <nav aria-label="Quick links">
             <h2 className="font-semibold text-base mb-4">Quick Links</h2>
             <ul className="space-y-2">
               <li>
@@ -108,10 +108,10 @@ export function Footer() {
                 </Link>
               </li>
             </ul>
-          </div>
+          </nav>
 
           {/* Programmes */}
-          <div>
+          <nav aria-label="Programmes">
             <h2 className="font-semibold text-base mb-4">Our Programmes</h2>
             <ul className="space-y-2">
               <li>
@@ -142,10 +142,10 @@ export function Footer() {
                 </Link>
               </li>
             </ul>
-          </div>
+          </nav>
 
           {/* Preschool Centres in Thane */}
-          <div>
+          <nav aria-label="Our centres">
             <h2 className="font-semibold text-base mb-4">Our Centres</h2>
             <ul className="space-y-2">
               {preschoolLandingPages.map((location) => (
@@ -160,7 +160,7 @@ export function Footer() {
                 </li>
               ))}
             </ul>
-          </div>
+          </nav>
 
           {/* Contact Info */}
           <div>

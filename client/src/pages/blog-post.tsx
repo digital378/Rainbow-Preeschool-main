@@ -540,7 +540,7 @@ export default function BlogPost() {
   const formattedDate = format(new Date(post.publishedAt), "MMMM dd, yyyy");
 
   return (
-    <div className="pt-20 md:pt-24 md:pt-24">
+    <div className="pt-20 md:pt-24">
       <SEO
         title={post.seoTitle}
         description={post.seoDescription}

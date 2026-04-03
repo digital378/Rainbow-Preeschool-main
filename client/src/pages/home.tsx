@@ -354,7 +354,7 @@ export default function Home() {
       <HeroSection />
       
       {/* Quick Navigation Links for SEO - Crawlable anchor tags */}
-      <section className="py-5 sm:py-6 bg-gradient-to-br from-red-50 via-yellow-50 to-pink-50 dark:from-red-950/20 dark:to-yellow-950/20 border-y border-red-100 dark:border-red-900/30">
+      <nav aria-label="Quick links" className="py-5 sm:py-6 bg-gradient-to-br from-red-50 via-yellow-50 to-pink-50 dark:from-red-950/20 dark:to-yellow-950/20 border-y border-red-100 dark:border-red-900/30">
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-6 gap-2 sm:gap-3">
             {[
@@ -393,7 +393,7 @@ export default function Home() {
             ))}
           </div>
         </div>
-      </section>
+      </nav>
       <QuickCallbackStrip />
       <AwardedBySection />
 
@@ -581,7 +581,7 @@ export default function Home() {
       </section>
 
       {/* Find Preschool Near You - Local SEO Links */}
-      <section className="py-12 md:py-16 bg-primary/5">
+      <nav aria-label="Preschool centre locations" className="py-12 md:py-16 bg-primary/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8" data-reveal="float">
             <h2 className="text-2xl md:text-3xl font-bold mb-2" data-sparkle>Find a Centre Near You</h2>
@@ -617,7 +617,7 @@ export default function Home() {
             ))}
           </div>
         </div>
-      </section>
+      </nav>
 
       {/* Centres Section - Local SEO Gold */}
       <section id="centres" className="py-16 md:py-20 lg:py-24 cv-auto">

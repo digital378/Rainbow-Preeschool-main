@@ -25,7 +25,7 @@ export default function Contact() {
   }, []);
 
   return (
-    <div className="pt-20 md:pt-24">
+    <article className="pt-20 md:pt-24">
       <SEO
         title="Contact Rainbow Preschool Thane | Admissions Enquiry"
         description="Contact Rainbow Preschool International for admissions, school tours & enquiries. 6 centres across Thane West. Call 82915 68972 or visit our nearest centre today."
@@ -167,6 +167,6 @@ export default function Contact() {
 
       {/* ExtraEdge Form Tracking */}
       <div id="ee-form-5" style={{ display: "none" }} />
-    </div>
+    </article>
   );
 }

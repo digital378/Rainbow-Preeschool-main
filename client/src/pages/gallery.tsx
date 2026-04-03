@@ -196,7 +196,7 @@ export default function Gallery() {
   }, [activeCategory]);
 
   return (
-    <div className="min-h-screen bg-white dark:bg-background">
+    <article className="min-h-screen bg-white dark:bg-background">
       <SEO
         title="School Gallery | Rainbow Preschool International Thane"
         description="Explore classrooms, activities, events, and facilities across Rainbow Preschool's 6 centres in Thane. 18+ years of joyful early childhood education trusted by 1,00,000+ families."
@@ -477,6 +477,6 @@ export default function Gallery() {
           onNext={nextImage}
         />
       )}
-    </div>
+    </article>
   );
 }

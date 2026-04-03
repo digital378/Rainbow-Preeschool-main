@@ -156,7 +156,7 @@ export default function Blog() {
   }, [allPosts, searchQuery, selectedCategory]);
 
   return (
-    <div className="pt-20 md:pt-24">
+    <article className="pt-20 md:pt-24">
       <SEO
         title="Blogs | Parenting Tips & Early Education Articles | Rainbow Preschool"
         description="Read the latest parenting tips, early education articles, and child development insights from Rainbow Preschool Thane. Expert advice for parents."
@@ -241,6 +241,6 @@ export default function Blog() {
         title="Want to Learn More?"
         description="Subscribe to our newsletter for the latest updates and parenting tips."
       />
-    </div>
+    </article>
   );
 }
