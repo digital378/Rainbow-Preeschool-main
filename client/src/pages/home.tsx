@@ -63,34 +63,44 @@ import {
 // Links in answers point to dedicated pages for specific intents
 const faqs: Array<{question: string; answer: React.ReactNode; answerText: string}> = [
   {
-    question: "What makes Rainbow Preschool International trusted by parents?",
-    answer: <>Rainbow Preschool International focuses on safe, joyful early learning with experienced educators and a child-first approach. <a href="/programmes" className="text-primary hover:underline">Explore our programmes</a> to see how we support every stage of development.</>,
-    answerText: "Rainbow Preschool International focuses on safe, joyful early learning with experienced educators and a child-first approach. Explore our programmes to see how we support every stage of development."
+    question: "What programmes does Rainbow Preschool offer and for which ages?",
+    answer: <>We offer three main programmes: <a href="/playgroup" className="text-primary hover:underline">Playgroup</a> for children aged 1.5–2.5 years, <a href="/nursery" className="text-primary hover:underline">Nursery</a> for ages 2.5–3.5 years, and <a href="/kindergarten" className="text-primary hover:underline">Kindergarten</a> for ages 3.5–5 years. Each programme follows a play-based curriculum that covers language, numbers, art, and social skills.</>,
+    answerText: "We offer three main programmes: Playgroup for children aged 1.5–2.5 years, Nursery for ages 2.5–3.5 years, and Kindergarten for ages 3.5–5 years. Each programme follows a play-based curriculum that covers language, numbers, art, and social skills."
   },
   {
-    question: "What programmes does Rainbow Preschool International offer?",
-    answer: <>We offer age-appropriate programmes including <a href="/playgroup" className="text-primary hover:underline">Playgroup</a>, <a href="/nursery" className="text-primary hover:underline">Nursery</a>, and <a href="/kindergarten" className="text-primary hover:underline">Kindergarten</a>, designed to build confidence, curiosity, and school readiness.</>,
-    answerText: "We offer age-appropriate programmes including Playgroup, Nursery, and Kindergarten, designed to build confidence, curiosity, and school readiness."
+    question: "What are the school timings and working days?",
+    answer: <>Our centres are open Monday to Saturday, 8:00 AM to 6:00 PM. We offer both half-day and full-day options to suit your schedule. Extended care through our <a href="/happy-times" className="text-primary hover:underline">Happy Times</a> programme is also available for working parents.</>,
+    answerText: "Our centres are open Monday to Saturday, 8:00 AM to 6:00 PM. We offer both half-day and full-day options to suit your schedule. Extended care through our Happy Times programme is also available for working parents."
   },
   {
-    question: "What age can a child start Playgroup?",
-    answer: <>Most children can start Playgroup from around 1.5 years, depending on readiness. Our team can guide you based on your child's age and needs. <a href="/playgroup" className="text-primary hover:underline">Learn about Playgroup</a>.</>,
-    answerText: "Most children can start Playgroup from around 1.5 years, depending on readiness. Our team can guide you based on your child's age and needs."
+    question: "What safety measures does Rainbow Preschool follow?",
+    answer: <>Every centre has 24/7 CCTV monitoring, 100% female teaching staff, a verified pickup system for child security, and daily hygiene routines including sanitised classrooms and clean drinking water. Fire safety equipment and first-aid kits are maintained at all locations. <a href="/about" className="text-primary hover:underline">Read more about our safety practices</a>.</>,
+    answerText: "Every centre has 24/7 CCTV monitoring, 100% female teaching staff, a verified pickup system for child security, and daily hygiene routines including sanitised classrooms and clean drinking water. Fire safety equipment and first-aid kits are maintained at all locations."
   },
   {
-    question: "Is Rainbow Preschool safe for toddlers?",
-    answer: <>Yes. We follow child-safety practices, hygiene protocols, and supervised classroom routines to create a secure learning environment for young children. <a href="/contact" className="text-primary hover:underline">Contact us</a> to learn more.</>,
-    answerText: "Yes. We follow child-safety practices, hygiene protocols, and supervised classroom routines to create a secure learning environment for young children."
+    question: "What qualifications do the teachers have?",
+    answer: <>Our teachers hold degrees or diplomas in Early Childhood Education (ECE), Montessori training, or equivalent qualifications. All staff undergo background checks and regular training in child development, classroom management, and first aid.</>,
+    answerText: "Our teachers hold degrees or diplomas in Early Childhood Education (ECE), Montessori training, or equivalent qualifications. All staff undergo background checks and regular training in child development, classroom management, and first aid."
   },
   {
-    question: "What is the preschool admission process at Rainbow?",
-    answer: <>Admissions typically involve choosing a programme, selecting a preferred centre, and scheduling a callback or visit. You can start by sharing your details and our admissions team will assist you. <a href="/preschool-admissions" className="text-primary hover:underline">View admissions details</a>.</>,
-    answerText: "Admissions typically involve choosing a programme, selecting a preferred centre, and scheduling a callback or visit. You can start by sharing your details and our admissions team will assist you."
+    question: "What is the admission process and fee structure?",
+    answer: <>Admissions involve selecting a programme, choosing a centre, and scheduling a campus visit. Our team will guide you through the paperwork. Fees depend on the programme and centre — <a href="/contact" className="text-primary hover:underline">contact us</a> or call 82915 68972 for the latest fee details. <a href="/preschool-admissions" className="text-primary hover:underline">View full admissions information</a>.</>,
+    answerText: "Admissions involve selecting a programme, choosing a centre, and scheduling a campus visit. Our team will guide you through the paperwork. Fees depend on the programme and centre — contact us or call 82915 68972 for the latest fee details."
   },
   {
-    question: "How can I find the nearest Rainbow Preschool centre in Thane?",
-    answer: <>Rainbow Preschools have multiple centres across Thane. You can browse locations and choose the centre closest to your area. <a href="/preschool-near-me" className="text-primary hover:underline">Find a centre near you</a>.</>,
-    answerText: "Rainbow Preschools have multiple centres across Thane. You can browse locations and choose the centre closest to your area."
+    question: "Where are Rainbow Preschool centres located in Thane?",
+    answer: <>We have six centres across Thane West: Manpada (near Ghodbunder Road), Hariniwas (Naupada), Anand Nagar (Majiwada), Dhokali (Kolshet Road), Kalwa, and Kasarvadavali (Ghodbunder Road). <a href="/preschool-near-me" className="text-primary hover:underline">Find the centre nearest to you</a>.</>,
+    answerText: "We have six centres across Thane West: Manpada (near Ghodbunder Road), Hariniwas (Naupada), Anand Nagar (Majiwada), Dhokali (Kolshet Road), Kalwa, and Kasarvadavali (Ghodbunder Road)."
+  },
+  {
+    question: "What curriculum does Rainbow Preschool follow?",
+    answer: <>We follow a play-based, activity-driven curriculum that includes language and literacy, early maths, science awareness, creative arts, music, yoga, and physical activities. Children also learn through themed weeks, field trips, and celebrations. <a href="/programmes" className="text-primary hover:underline">Explore our curriculum</a>.</>,
+    answerText: "We follow a play-based, activity-driven curriculum that includes language and literacy, early maths, science awareness, creative arts, music, yoga, and physical activities. Children also learn through themed weeks, field trips, and celebrations."
+  },
+  {
+    question: "Does Rainbow Preschool provide transport facilities?",
+    answer: <>Some centres offer CCTV-enabled transport with trained attendants. Availability and routes vary by centre. Please <a href="/contact" className="text-primary hover:underline">contact your preferred centre</a> for transport details and pickup routes.</>,
+    answerText: "Some centres offer CCTV-enabled transport with trained attendants. Availability and routes vary by centre. Please contact your preferred centre for transport details and pickup routes."
   },
 ];
 
@@ -336,9 +346,9 @@ export default function Home() {
   return (
     <div>
       <SEO
-        title="Rainbow Preschool International | Thane's Trusted Preschool Since 2007"
-        description="Rainbow Preschool International — Thane's award-winning early childhood education chain with 6 centres. Safe, joyful learning for children aged 1.5–5 years. Explore programmes and visit our campus."
-        keywords="rainbow preschool, rainbow preschool international, preschool in thane, playgroup in thane, nursery school thane, early childhood education thane"
+        title="Best Preschool in Thane | Rainbow Preschool International"
+        description="Rainbow Preschool International offers safe, play-based learning for children aged 1.5–5 years across 6 centres in Thane. 18+ years, 1 lakh+ alumni. Admissions open — enquire now."
+        keywords="best preschool in thane, preschool in thane, playgroup in thane, nursery school thane, early childhood education thane, rainbow preschool"
         canonical="https://www.rainbowpreschools.com/"
       />
       <HeroSection />
@@ -388,22 +398,24 @@ export default function Home() {
       <AwardedBySection />
 
       {/* About Section - SEO Enhanced */}
-      <section className="py-16 md:py-20 lg:py-24 relative overflow-hidden">
+      <article className="py-16 md:py-20 lg:py-24 relative overflow-hidden">
         <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: 'url(/images/centres/manpada.webp)', backgroundSize: 'cover', backgroundPosition: 'center', opacity: 0.06 }} />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <div data-reveal="float">
-              <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">About</p>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6" data-sparkle>Why Parents Trust Rainbow Preschools</h2>
-              <p className="text-sm text-muted-foreground mb-4">What sets our centres apart for early childhood education in Thane.</p>
+              <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">About Us</p>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6" data-sparkle>Why Parents Choose Rainbow Preschool in Thane</h2>
               <p className="text-muted-foreground text-lg leading-relaxed mb-6">
-                Rainbow Preschool International has nurtured over 1,00,000 young learners through joyful early childhood education since 2007. Our play-based philosophy creates a safe, secure, and happy learning environment where every child thrives.
+                Since 2007, Rainbow Preschool International has helped over 1,00,000 children learn, play, and grow across Thane. Our centres follow a play-based curriculum that builds reading, writing, and number skills through hands-on activities, stories, art, and outdoor play.
               </p>
               <p className="text-muted-foreground leading-relaxed mb-4">
-                Our age-appropriate curriculum helps children develop confidence, creativity, and early academic skills, preparing them smoothly for primary schooling while respecting every child's unique pace of growth.
+                Each child learns in small batches of 10–12, guided by trained female teachers. Our classrooms are CCTV-monitored, and every centre follows strict hygiene and safety routines. We are open Monday to Saturday, 8 AM to 6 PM, and offer half-day and full-day options for all age groups.
+              </p>
+              <p className="text-muted-foreground leading-relaxed mb-4">
+                Our curriculum covers language, maths, science awareness, creative arts, and social skills. Children also participate in yoga, dance, and special activities like field trips and celebrations. Fees vary by programme and centre — contact us for the latest fee structure.
               </p>
               <p className="text-muted-foreground leading-relaxed mb-8">
-                With six conveniently located centres and 18+ years of experience, we combine a proven play-based methodology with genuine care and attention. Our 100% female staff and CCTV-monitored premises ensure complete peace of mind for parents.
+                All six centres are in Thane West, close to residential areas and main roads. Whether you are in Manpada, Kalwa, Dhokali, or Kasarvadavali, there is a Rainbow Preschool near you.
               </p>
               <Link href="/about">
                 <Button variant="outline" data-testid="button-learn-more">
@@ -460,7 +472,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </article>
 
       {/* Programmes Section - SEO Cluster Hub */}
       <section className="py-16 md:py-20 lg:py-24 bg-card">

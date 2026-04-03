@@ -55,7 +55,7 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
 
   const contentHtml = (seo.contentSections || [])
     .map((section) => {
-      let html = "";
+      let html = `<section>`;
       if (section.heading) {
         html += `<h2>${escapeHtml(section.heading)}</h2>\n`;
       }
@@ -69,6 +69,7 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
         });
         html += "</ul>\n";
       }
+      html += `</section>`;
       return html;
     })
     .join("\n");
