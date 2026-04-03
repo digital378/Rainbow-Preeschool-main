@@ -5,6 +5,7 @@ import { centres } from "@shared/centre-data";
 import { Car, Users, Zap, MessageCircle, Phone, Shield, MapPin, ChevronDown, BookOpen, Heart, Star } from "lucide-react";
 import { trackWhatsAppClick, trackCallClick } from "@/lib/analytics";
 import { Interactive3DMap } from "@/components/interactive-3d-map";
+import { SEOCrossLinks } from "@/components/seo-crosslinks";
 import { useState, useEffect } from "react";
 
 // ── Page data ─────────────────────────────────────────────────────────────────
@@ -511,34 +512,7 @@ export default function PreschoolNearMe() {
               </div>
             </section>
 
-            {/* ── INTERNAL LINKS ────────────────────────────────────────────── */}
-            <section className="py-8 md:py-10 px-4 bg-gray-50 dark:bg-gray-800/50" style={{ contentVisibility: 'auto', containIntrinsicSize: '0 150px' }}>
-              <div className="max-w-6xl mx-auto">
-                <h2 className="text-base md:text-lg font-bold text-gray-900 dark:text-white mb-4 text-center">Explore Rainbow Preschool</h2>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                  <Link href="/playgroup" className="p-3 md:p-4 bg-white dark:bg-gray-800 rounded-lg border dark:border-gray-700 text-center hover:border-primary transition-colors">
-                    <Star className="w-4 h-4 text-primary mx-auto mb-1" />
-                    <span className="font-medium text-gray-900 dark:text-white text-sm block">Playgroup</span>
-                    <span className="text-xs text-gray-500 dark:text-gray-400">Ages 1.5–2.5</span>
-                  </Link>
-                  <Link href="/nursery" className="p-3 md:p-4 bg-white dark:bg-gray-800 rounded-lg border dark:border-gray-700 text-center hover:border-primary transition-colors">
-                    <BookOpen className="w-4 h-4 text-primary mx-auto mb-1" />
-                    <span className="font-medium text-gray-900 dark:text-white text-sm block">Nursery</span>
-                    <span className="text-xs text-gray-500 dark:text-gray-400">Ages 2.5–3.5</span>
-                  </Link>
-                  <Link href="/kindergarten" className="p-3 md:p-4 bg-white dark:bg-gray-800 rounded-lg border dark:border-gray-700 text-center hover:border-primary transition-colors">
-                    <Heart className="w-4 h-4 text-primary mx-auto mb-1" />
-                    <span className="font-medium text-gray-900 dark:text-white text-sm block">Kindergarten</span>
-                    <span className="text-xs text-gray-500 dark:text-gray-400">Ages 3.5–5.5</span>
-                  </Link>
-                  <Link href="/preschool-admissions" className="p-3 md:p-4 bg-white dark:bg-gray-800 rounded-lg border dark:border-gray-700 text-center hover:border-primary transition-colors">
-                    <MapPin className="w-4 h-4 text-primary mx-auto mb-1" />
-                    <span className="font-medium text-gray-900 dark:text-white text-sm block">Admissions</span>
-                    <span className="text-xs text-gray-500 dark:text-gray-400">Apply Now</span>
-                  </Link>
-                </div>
-              </div>
-            </section>
+            <SEOCrossLinks currentPath="/preschool-near-me" />
           </>
         )}
       </div>

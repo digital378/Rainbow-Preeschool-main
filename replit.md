@@ -37,7 +37,7 @@ Preferred communication style: Simple, everyday language.
 - **Tables**: Contact submissions, blog posts, users.
 
 ### SEO and Marketing
-- **Local SEO**: Hyperlocal landing pages targeting "preschool in [locality]" and "playgroup in [locality]" keywords. Centre data is centralized with locality-specific FAQs, intro copy, and SEO metadata.
+- **Local SEO**: Hyperlocal landing pages targeting "preschool in [locality]" and "playgroup in [locality]" keywords. Centre data is centralized with locality-specific FAQs, intro copy, and SEO metadata. Dedicated "near me" and "in Thane" pages for 6 primary keywords with cross-linking via `SEOCrossLinks` component.
 - **Schema Markup**: Dynamic JSON-LD (Organization, WebSite, LocalBusiness, FAQPage, BreadcrumbList) for enhanced search visibility.
 - **Ad Landing Pages**: Dedicated, optimized landing pages for Google Ads (`/RIS`, `/ad-google`) and Meta Ads (`/ad`) with specific tracking and lead capture mechanisms, including Firebase Phone Authentication for OTP verification on Google Ads pages. These pages are typically `noindex`.
 - **Analytics Tracking**: Google Analytics 4 (GA4) with clean, page-based form submission events, and tracking for calls, WhatsApp clicks, directions, and local page interactions.
@@ -71,6 +71,6 @@ Preferred communication style: Simple, everyday language.
 - **Bot SSR**: Serves pre-rendered HTML with structured data to 28+ bot user-agents including Google, Bing, ChatGPT, Perplexity, Claude, and social crawlers.
 - **Structured Data**: Organization, LocalBusiness, FAQPage, BreadcrumbList JSON-LD on all bot SSR pages.
 - **LLMs.txt**: AI-readable site summary at `/llms.txt` covering key facts, programmes, centres, FAQs.
-- **Sitemap**: Comprehensive XML sitemap at `/sitemap.xml` (154 URLs).
+- **Sitemap**: Comprehensive XML sitemap at `/sitemap.xml` (156 URLs).
 - **Robots.txt**: Comprehensive with ad page blocks, WordPress legacy blocks, and canonical www sitemap URL.
 - **Semantic HTML**: Pages use `<article>`, `<section>`, `<nav aria-label>` properly; footer link groups are labeled `<nav>` elements.

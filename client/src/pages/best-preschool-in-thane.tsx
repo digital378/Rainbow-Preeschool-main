@@ -7,6 +7,7 @@ import {
   Award, Phone, ChevronDown, Users, CheckCircle, Star, Heart, Clock
 } from "lucide-react";
 import { trackWhatsAppClick, trackCallClick } from "@/lib/analytics";
+import { SEOCrossLinks } from "@/components/seo-crosslinks";
 import { useState, useEffect } from "react";
 
 // ── Page data ─────────────────────────────────────────────────────────────────
@@ -624,6 +625,8 @@ export default function BestPreschoolInThane() {
                 </div>
               </div>
             </section>
+
+            <SEOCrossLinks currentPath="/best-preschool-near-me-in-thane" />
 
             {/* ── FINAL CTA ────────────────────────────────────────────────── */}
             <section className="relative overflow-hidden py-8 md:py-12 px-4 bg-gradient-to-r from-primary via-accent to-secondary text-white">

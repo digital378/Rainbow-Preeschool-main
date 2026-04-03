@@ -44,6 +44,7 @@ import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { trackFormSubmit } from "@/lib/analytics";
+import { SEOCrossLinks } from "@/components/seo-crosslinks";
 
 const callbackFormSchema = z.object({
   parentName: z.string().min(2, "Please enter your name"),
@@ -1083,6 +1084,8 @@ export default function PlaySchoolNearMe() {
           </div>
         </div>
       </section>
+
+      <SEOCrossLinks currentPath="/play-school-near-me" />
 
       {/* Sticky Mobile CTA */}
       <StickyMobileCTA />
