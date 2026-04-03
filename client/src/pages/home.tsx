@@ -21,7 +21,7 @@ import { SEO } from "@/components/seo";
 import { programmes, branches, testimonials } from "@shared/schema";
 import { preschoolLandingPages } from "@shared/centre-data";
 import { pushToDataLayer } from "@/lib/analytics";
-import { ArrowRight, Star, Users, MapPin, Shield, Lock, Phone, Award, FileText, Palette, BookOpen, GraduationCap } from "lucide-react";
+import { ArrowRight, Star, Users, MapPin, Shield, Lock, Phone, Award, FileText, Palette, BookOpen, GraduationCap, Search, Building, School } from "lucide-react";
 import { SiGoogle } from "react-icons/si";
 import { useState, useEffect, lazy, Suspense, useRef } from "react";
 
@@ -356,13 +356,16 @@ export default function Home() {
       {/* Quick Navigation Links for SEO - Crawlable anchor tags */}
       <nav aria-label="Quick links" className="py-5 sm:py-6 bg-gradient-to-br from-red-50 via-yellow-50 to-pink-50 dark:from-red-950/20 dark:to-yellow-950/20 border-y border-red-100 dark:border-red-900/30">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-6 gap-2 sm:gap-3">
+          <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-9 gap-2 sm:gap-3">
             {[
               { href: "/best-preschool-near-me-in-thane", label: "Award Winning", shortLabel: "Award Winning", Icon: Award, color: "#ef4444", testid: "link-best-preschool" },
               { href: "/preschool-near-me", label: "Near Me", shortLabel: "Near Me", Icon: MapPin, color: "#10b981", testid: "link-preschool-near-me" },
               { href: "/preschool-admissions", label: "Admissions", shortLabel: "Admissions", Icon: FileText, color: "#3b82f6", testid: "link-preschool-admissions" },
+              { href: "/play-school-near-me", label: "Play School", shortLabel: "Play School", Icon: Search, color: "#0891b2", testid: "link-play-school-near-me" },
+              { href: "/nursery-school-near-me", label: "Nursery School", shortLabel: "Nursery", Icon: School, color: "#8b5cf6", testid: "link-nursery-school-near-me" },
+              { href: "/play-school-in-thane", label: "Play School Thane", shortLabel: "PS Thane", Icon: Building, color: "#d97706", testid: "link-play-school-in-thane" },
               { href: "/playgroup", label: "Playgroup", shortLabel: "Playgroup", Icon: Palette, color: "#f97316", testid: "link-playgroup" },
-              { href: "/nursery", label: "Nursery", shortLabel: "Nursery", Icon: BookOpen, color: "#8b5cf6", testid: "link-nursery" },
+              { href: "/nursery", label: "Nursery", shortLabel: "Nursery", Icon: BookOpen, color: "#7c3aed", testid: "link-nursery" },
               { href: "/kindergarten", label: "Kindergarten", shortLabel: "KG", Icon: GraduationCap, color: "#ec4899", testid: "link-kindergarten" },
             ].map(({ href, label, shortLabel, Icon, color, testid }) => (
               <a

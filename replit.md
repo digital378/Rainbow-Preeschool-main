@@ -37,7 +37,7 @@ Preferred communication style: Simple, everyday language.
 - **Tables**: Contact submissions, blog posts, users.
 
 ### SEO and Marketing
-- **Local SEO**: Hyperlocal landing pages targeting "preschool in [locality]" and "playgroup in [locality]" keywords. Centre data is centralized with locality-specific FAQs, intro copy, and SEO metadata. Dedicated "near me" and "in Thane" pages for 6 primary keywords with cross-linking via `SEOCrossLinks` component.
+- **Local SEO**: Hyperlocal landing pages targeting "preschool in [locality]" and "playgroup in [locality]" keywords. Centre data is centralized with locality-specific FAQs, intro copy, and SEO metadata. Dedicated "near me" and "in Thane" pages for 6 primary keywords with cross-linking via `SEOCrossLinks` component. All 5 keyword pages are internally linked from the homepage quick nav, footer, blog internal links component, and legacy page common links for maximum link equity distribution.
 - **Schema Markup**: Dynamic JSON-LD (Organization, WebSite, LocalBusiness, FAQPage, BreadcrumbList) for enhanced search visibility.
 - **Ad Landing Pages**: Dedicated, optimized landing pages for Google Ads (`/RIS`, `/ad-google`) and Meta Ads (`/ad`) with specific tracking and lead capture mechanisms, including Firebase Phone Authentication for OTP verification on Google Ads pages. These pages are typically `noindex`.
 - **Analytics Tracking**: Google Analytics 4 (GA4) with clean, page-based form submission events, and tracking for calls, WhatsApp clicks, directions, and local page interactions.
