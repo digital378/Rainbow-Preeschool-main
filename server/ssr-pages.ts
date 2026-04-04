@@ -107,7 +107,7 @@ function localBusinessSchema(locality: string, address: string, phone: string, u
 
 const staticPages: Record<string, PageSEOData> = {
   "/": {
-    title: "Best Preschool in Thane | Rainbow Preschool International",
+    title: "Best Preschool in Thane near me | Rainbow International",
     description: "Rainbow Preschool International offers safe, play-based learning for children aged 1.5–5 years across 6 centres in Thane. 18+ years, 1 lakh+ alumni. Admissions open — enquire now.",
     keywords: "best preschool in thane, preschool in thane, playgroup in thane, nursery school thane, early childhood education thane, rainbow preschool",
     canonical: `${BASE_URL}/`,
