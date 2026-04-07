@@ -312,6 +312,14 @@ const staticPages: Record<string, PageSEOData> = {
     breadcrumbs: [{ name: "Home", url: "/" }, { name: "Blog", url: "/blog" }],
     contentSections: [
       { heading: "Latest Articles", items: [
+        "50 Fun Learning Activities for Preschoolers at Home",
+        "Best Children's Books for Indian Preschoolers — Age-Wise Reading List",
+        "10 Signs of a Good Preschool — What Thane Parents Should Look For",
+        "Preschool vs Daycare: What's the Difference and What's Right for Your Child?",
+        "What Age Should a Child Start Play School? Expert Guide for Indian Parents",
+        "Benefits of Play School for 2 Year Olds — Is Your Toddler Ready?",
+        "Nursery School Admission Process in Thane — Step-by-Step Guide 2026-27",
+        "What Children Learn in Nursery School — Month-by-Month Development Guide",
         "What To Ask During A Tour Of A Preschool In Thane: Complete Parent's Guide",
         "Understanding the Importance of Preschool in Early Childhood Development",
         "How Play-Based Learning Shapes Young Minds",
@@ -617,6 +625,46 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
         title: "Republic Day 2026 | History, Parade & Quotes",
         description: "Celebrate India's 77th Republic Day 2026 with complete information on history, significance, parade highlights, speeches, and wishes.",
         keywords: "republic day 2026, republic day india, 26 january 2026",
+      },
+      "signs-of-good-preschool-thane": {
+        title: "10 Signs of a Good Preschool | Guide for Thane Parents",
+        description: "How to identify a great preschool in Thane. 10 research-backed signs every parent should look for — from teacher quality to safety, curriculum, and more.",
+        keywords: "signs of good preschool, how to choose preschool thane, best preschool thane, preschool checklist, quality preschool signs",
+      },
+      "preschool-vs-daycare-difference": {
+        title: "Preschool vs Daycare: Key Differences | Guide for Parents",
+        description: "Preschool vs daycare — what's the difference? Compare curriculum, timing, cost, goals, and outcomes to find the right option for your child.",
+        keywords: "preschool vs daycare, difference between preschool and daycare, preschool or daycare, daycare vs preschool india",
+      },
+      "what-age-start-play-school": {
+        title: "What Age to Start Play School in India | Expert Guide",
+        description: "When should a child start play school? Expert guide on ideal age, readiness signs, benefits of early vs late start, and tips for Indian parents.",
+        keywords: "what age play school, when to start play school, play school age india, right age for playgroup, play school near me",
+      },
+      "benefits-play-school-2-year-olds": {
+        title: "Benefits of Play School for 2 Year Olds | Is Your Toddler Ready?",
+        description: "Discover 12 research-backed benefits of play school for 2 year olds. Learn what toddlers gain from early education and how to know if your child is ready.",
+        keywords: "play school for 2 year olds, benefits of play school, toddler play school benefits, play school near me",
+      },
+      "nursery-school-admission-thane-2026": {
+        title: "Nursery School Admission in Thane 2026-27 | Complete Guide",
+        description: "Step-by-step guide to nursery school admission in Thane for 2026-27. Age criteria, documents, timelines, fees, and tips to secure admission.",
+        keywords: "nursery school admission thane, nursery admission 2026, preschool admission thane, nursery school near me",
+      },
+      "what-children-learn-nursery-school": {
+        title: "What Children Learn in Nursery School | Monthly Guide",
+        description: "Month-by-month guide to what children learn in nursery school. From language and maths to social skills and creativity — see the full developmental journey.",
+        keywords: "what children learn in nursery, nursery school curriculum, nursery school syllabus, nursery school near me",
+      },
+      "50-fun-learning-activities-preschoolers": {
+        title: "50 Fun Learning Activities for Preschoolers at Home",
+        description: "50 easy, fun learning activities for preschoolers at home using household items. Covers language, maths, science, art, and motor skills. Ages 2-6.",
+        keywords: "learning activities for preschoolers, preschool activities at home, fun activities for toddlers, home learning activities kids",
+      },
+      "best-childrens-books-indian-preschoolers": {
+        title: "Best Children's Books for Indian Preschoolers | Age-Wise List",
+        description: "Curated list of best children's books for Indian preschoolers aged 1.5-6. Age-wise recommendations, reading tips, and Indian authors.",
+        keywords: "best books for preschoolers, children's books india, kids books 2 year old, toddler books indian, picture books for preschool",
       },
     };
 

@@ -83,6 +83,54 @@ const richBlogPosts: BlogEntry[] = [
     url: "/blog/creating-safe-nurturing-learning-environment",
     category: "Education",
   },
+  {
+    title: "50 Fun Learning Activities for Preschoolers at Home",
+    excerpt: "Bored at home? Here are 50 easy, fun learning activities for preschoolers using everyday household items. Perfect for weekends, holidays, and rainy days.",
+    url: "/blog/50-fun-learning-activities-preschoolers",
+    category: "Learning Activities",
+  },
+  {
+    title: "Best Children's Books for Indian Preschoolers — Age-Wise Reading List",
+    excerpt: "Looking for the best books for your preschooler? Here's an age-wise curated reading list of Indian and international children's books, plus reading tips.",
+    url: "/blog/best-childrens-books-indian-preschoolers",
+    category: "Learning Activities",
+  },
+  {
+    title: "10 Signs of a Good Preschool — What Thane Parents Should Look For",
+    excerpt: "Not sure how to spot a great preschool? Here are 10 evidence-based signs that separate outstanding preschools from average ones — a must-read for Thane parents.",
+    url: "/blog/signs-of-good-preschool-thane",
+    category: "Education",
+  },
+  {
+    title: "Preschool vs Daycare: What's the Difference and What's Right for Your Child?",
+    excerpt: "Many parents confuse preschool with daycare. Understanding the key differences will help you make the best choice for your child's early years.",
+    url: "/blog/preschool-vs-daycare-difference",
+    category: "Education",
+  },
+  {
+    title: "What Age Should a Child Start Play School? Expert Guide for Indian Parents",
+    excerpt: "Is your toddler ready for play school? Learn the ideal age, readiness signs, and what experts recommend for starting early education in India.",
+    url: "/blog/what-age-start-play-school",
+    category: "Child Development",
+  },
+  {
+    title: "Benefits of Play School for 2 Year Olds — Is Your Toddler Ready?",
+    excerpt: "Should your 2-year-old attend play school? Discover the science-backed benefits and how structured play transforms toddler development.",
+    url: "/blog/benefits-play-school-2-year-olds",
+    category: "Child Development",
+  },
+  {
+    title: "Nursery School Admission Process in Thane — Step-by-Step Guide 2026-27",
+    excerpt: "Everything Thane parents need to know about nursery school admissions for 2026-27 — timelines, documents, age criteria, tips, and what to expect.",
+    url: "/blog/nursery-school-admission-thane-2026",
+    category: "Admissions",
+  },
+  {
+    title: "What Children Learn in Nursery School — Month-by-Month Development Guide",
+    excerpt: "Curious what your child actually learns in nursery school? Here's a detailed month-by-month breakdown of skills, milestones, and development areas.",
+    url: "/blog/what-children-learn-nursery-school",
+    category: "Child Development",
+  },
 ];
 
 function getAllBlogPosts(): BlogEntry[] {
