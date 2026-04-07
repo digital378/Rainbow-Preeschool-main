@@ -1218,6 +1218,16 @@ export default function BlogPost() {
                           </li>
                         );
                       }
+                      if (content.includes("*")) {
+                        const parts = content.split(/(?<!\*)\*(?!\*)/);
+                        return (
+                          <li key={i} className="text-muted-foreground">
+                            {parts.map((part, j) => 
+                              j % 2 === 1 ? <em key={j} className="text-foreground font-medium">{part}</em> : part
+                            )}
+                          </li>
+                        );
+                      }
                       return (
                         <li key={i} className="text-muted-foreground">{content}</li>
                       );
