@@ -1308,12 +1308,16 @@ export default function BlogPost() {
                 return (
                   <ol key={index} className="space-y-3 mb-6">
                     {items.map((item, i) => {
-                      // Remove the number prefix for cleaner display
                       const cleanItem = item.replace(/^\d+\.\s*/, '');
+                      const rendered = cleanItem.includes("**")
+                        ? cleanItem.split(/\*\*/).map((part, j) =>
+                            j % 2 === 1 ? <strong key={j} className="text-foreground">{part}</strong> : part
+                          )
+                        : cleanItem;
                       return (
                         <li key={i} className="flex gap-3 text-muted-foreground leading-relaxed">
                           <span className="text-primary font-semibold min-w-[1.5rem]">{i + 1}.</span>
-                          <span>{cleanItem}</span>
+                          <span>{rendered}</span>
                         </li>
                       );
                     })}
