@@ -22,16 +22,32 @@ export interface PageSEOData {
 
 const organizationSchema = {
   "@context": "https://schema.org",
-  "@type": "Organization",
+  "@type": "EducationalOrganization",
+  "@id": `${BASE_URL}/#organization`,
   name: "Rainbow Preschool International",
+  alternateName: "Rainbow Preschool",
   url: BASE_URL,
-  logo: `${BASE_URL}/images/logo.webp`,
-  description: "Rainbow Preschool International is a trusted preschool and playgroup in Thane, offering quality early childhood education for children aged 1.5 to 10 years.",
+  logo: {
+    "@type": "ImageObject",
+    url: `${BASE_URL}/images/logo.webp`,
+    width: 512,
+    height: 512,
+  },
+  image: `${BASE_URL}/og-image.jpg`,
+  description: "Rainbow Preschool International is a trusted preschool and playgroup in Thane, offering quality early childhood education for children aged 1.5 to 6 years since 2007.",
   foundingDate: "2007",
+  numberOfEmployees: { "@type": "QuantitativeValue", minValue: 50 },
+  areaServed: {
+    "@type": "City",
+    name: "Thane",
+    containedInPlace: { "@type": "State", name: "Maharashtra" },
+  },
   address: {
     "@type": "PostalAddress",
+    streetAddress: "2nd Floor, Chestnut Plaza, Opp. Edenwoods, Khewra Cir Marg",
     addressLocality: "Thane",
     addressRegion: "Maharashtra",
+    postalCode: "400610",
     addressCountry: "IN",
   },
   contactPoint: {
@@ -40,9 +56,29 @@ const organizationSchema = {
     contactType: "admissions",
     availableLanguage: ["English", "Hindi", "Marathi"],
   },
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: "4.7",
+    bestRating: "5",
+    ratingCount: "3997",
+    reviewCount: "3997",
+  },
   sameAs: [
     "https://www.facebook.com/rainbowpreschoolthane",
     "https://www.instagram.com/rainbowpreschoolthane",
+    "https://www.youtube.com/@RainbowPreschoolInternational",
+  ],
+  award: [
+    "India Today Best Preschool Award",
+    "ScooNews Education Award",
+    "Economic Times Best Brand Award",
+  ],
+  knowsAbout: [
+    "Early Childhood Education",
+    "Preschool Education",
+    "Play-Based Learning",
+    "Montessori Education",
+    "Child Development",
   ],
 };
 
@@ -82,7 +118,7 @@ function localBusinessSchema(locality: string, address: string, phone: string, u
     "@type": "Preschool",
     "@id": `${BASE_URL}${url}`,
     name: `Rainbow Preschool International - ${locality}`,
-    description: `Quality preschool and playgroup in ${locality}, Thane offering Playgroup, Nursery, and Kindergarten programmes for children aged 1.5-10 years.`,
+    description: `Quality preschool and playgroup in ${locality}, Thane offering Playgroup, Nursery, and Kindergarten programmes for children aged 1.5-6 years.`,
     url: `${BASE_URL}${url}`,
     telephone: phone,
     address: {
@@ -114,6 +150,43 @@ const staticPages: Record<string, PageSEOData> = {
     h1: "Best Preschool in Thane — Rainbow Preschool International",
     introText: "Rainbow Preschool International has been nurturing young minds since 2007. With 6 centres across Thane West and over 1,00,000 alumni, we offer Playgroup, Nursery, and Kindergarten programmes for children aged 1.5 to 5 years. Our play-based curriculum helps children build reading, writing, number skills, creativity, and social confidence in a safe, joyful environment.",
     structuredData: [organizationSchema, websiteSchema, {
+      "@context": "https://schema.org",
+      "@type": "Preschool",
+      "@id": `${BASE_URL}/#localbusiness`,
+      name: "Rainbow Preschool International",
+      image: `${BASE_URL}/og-image.jpg`,
+      url: BASE_URL,
+      telephone: "+91-8291568972",
+      email: "admin@rainbowpreschools.com",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "2nd Floor, Chestnut Plaza, Opp. Edenwoods, Khewra Cir Marg",
+        addressLocality: "Thane",
+        addressRegion: "Maharashtra",
+        postalCode: "400610",
+        addressCountry: "IN",
+      },
+      geo: {
+        "@type": "GeoCoordinates",
+        latitude: "19.2183",
+        longitude: "72.9781",
+      },
+      openingHoursSpecification: [{
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+        opens: "08:00",
+        closes: "18:00",
+      }],
+      priceRange: "$$",
+      aggregateRating: {
+        "@type": "AggregateRating",
+        ratingValue: "4.7",
+        bestRating: "5",
+        ratingCount: "3997",
+        reviewCount: "3997",
+      },
+      parentOrganization: { "@id": `${BASE_URL}/#organization` },
+    }, {
       "@context": "https://schema.org",
       "@type": "FAQPage",
       mainEntity: [
@@ -297,7 +370,16 @@ const staticPages: Record<string, PageSEOData> = {
     canonical: `${BASE_URL}/best-preschool-near-me-in-thane`,
     h1: "Best Preschool in Thane — Rainbow Preschool International",
     breadcrumbs: [{ name: "Home", url: "/" }, { name: "Best Preschool in Thane", url: "/best-preschool-near-me-in-thane" }],
-    structuredData: [organizationSchema],
+    structuredData: [organizationSchema, websiteSchema, {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: [
+        { "@type": "Question", name: "What makes Rainbow the best preschool in Thane?", acceptedAnswer: { "@type": "Answer", text: "Rainbow Preschool has 18+ years of experience since 2007, a 4.7★ Google rating with 3,997+ reviews, 6 conveniently located centres, 1,00,000+ alumni, and multiple awards from India Today, ScooNews, and Economic Times." } },
+        { "@type": "Question", name: "What age group does Rainbow Preschool accept?", acceptedAnswer: { "@type": "Answer", text: "Rainbow Preschool accepts children aged 1.5 to 6 years across three programmes: Playgroup (1.5–2.5 years), Nursery (2.5–4 years), and Kindergarten (4–6 years)." } },
+        { "@type": "Question", name: "How many centres does Rainbow Preschool have in Thane?", acceptedAnswer: { "@type": "Answer", text: "Rainbow Preschool has 6 centres across Thane West — Manpada, Hariniwas (Naupada), Anand Nagar (Majiwada), Dhokali (Kolshet Road), Kalwa, and Kasarvadavali (Ghodbunder Road)." } },
+        { "@type": "Question", name: "What is the fee structure for Rainbow Preschool in Thane?", acceptedAnswer: { "@type": "Answer", text: "Fees vary by programme and centre location. Please call +91-8291568972 or visit our contact page for a detailed fee breakdown and current admission offers." } },
+      ],
+    }],
     contentSections: [
       { heading: "Why Rainbow is Thane's Best Preschool", items: [
         "17+ years of excellence since 2007",
