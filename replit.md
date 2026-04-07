@@ -40,6 +40,7 @@ Preferred communication style: Simple, everyday language.
 - **Local SEO**: Hyperlocal landing pages targeting "preschool in [locality]" and "playgroup in [locality]" keywords. Centre data is centralized with locality-specific FAQs, intro copy, and SEO metadata. Dedicated "near me" and "in Thane" pages for 6 primary keywords with cross-linking via `SEOCrossLinks` component. All 5 keyword pages are internally linked from the homepage quick nav, footer, blog internal links component, and legacy page common links for maximum link equity distribution.
 - **Schema Markup**: Dynamic JSON-LD (EducationalOrganization with AggregateRating, Preschool/LocalBusiness with geo+ratings, WebSite, FAQPage on all keyword pages, BreadcrumbList) for enhanced search visibility including review stars in SERPs.
 - **Ad Landing Pages**: Dedicated, optimized landing pages for Google Ads (`/RIS`, `/ad-google`) and Meta Ads (`/ad`) with specific tracking and lead capture mechanisms, including Firebase Phone Authentication for OTP verification on Google Ads pages. These pages are typically `noindex`.
+- **Interactive Tools**: Preschool readiness quiz (`/preschool-readiness-quiz`), top 10 preschools comparison (`/top-preschools-in-thane`), parent testimonials with Review schema (`/testimonials`), comprehensive FAQ hub with FAQPage schema (`/faqs`).
 - **Analytics Tracking**: Google Analytics 4 (GA4) with clean, page-based form submission events, and tracking for calls, WhatsApp clicks, directions, and local page interactions.
 
 ### Performance Optimizations
@@ -71,6 +72,6 @@ Preferred communication style: Simple, everyday language.
 - **Bot SSR**: Serves pre-rendered HTML with structured data to 28+ bot user-agents including Google, Bing, ChatGPT, Perplexity, Claude, and social crawlers.
 - **Structured Data**: Organization, LocalBusiness, FAQPage, BreadcrumbList JSON-LD on all bot SSR pages.
 - **LLMs.txt**: AI-readable site summary at `/llms.txt` covering key facts, programmes, centres, FAQs.
-- **Sitemap**: Comprehensive XML sitemap at `/sitemap.xml` (164 URLs).
+- **Sitemap**: Comprehensive XML sitemap at `/sitemap.xml` (168 URLs).
 - **Robots.txt**: Comprehensive with ad page blocks, WordPress legacy blocks, and canonical www sitemap URL.
 - **Semantic HTML**: Pages use `<article>`, `<section>`, `<nav aria-label>` properly; footer link groups are labeled `<nav>` elements.

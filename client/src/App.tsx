@@ -33,6 +33,12 @@ const FlyerLanding = lazy(() => import("@/pages/flyer-landing"));
 const RISLanding = lazy(() => import("@/pages/ris-landing"));
 const RIS11thLanding = lazy(() => import("@/pages/ris-11th-landing"));
 
+// Interactive tools & content pages
+const ReadinessQuiz = lazy(() => import("@/pages/readiness-quiz"));
+const TopPreschoolsThane = lazy(() => import("@/pages/top-preschools-thane"));
+const TestimonialsPage = lazy(() => import("@/pages/testimonials"));
+const FAQsPage = lazy(() => import("@/pages/faqs"));
+
 // High-intent SEO landing pages
 const PreschoolAdmissions = lazy(() => import("@/pages/preschool-admissions"));
 const Gallery = lazy(() => import("@/pages/gallery"));
@@ -299,6 +305,12 @@ function Router() {
         <Route path="/blog" component={Blog} />
         <Route path="/blog/:slug" component={BlogPost} />
         
+        {/* Interactive tools & content pages */}
+        <Route path="/preschool-readiness-quiz" component={ReadinessQuiz} />
+        <Route path="/top-preschools-in-thane" component={TopPreschoolsThane} />
+        <Route path="/testimonials" component={TestimonialsPage} />
+        <Route path="/faqs" component={FAQsPage} />
+        
         {/* High-intent SEO landing pages */}
         <Route path="/preschool-admissions" component={PreschoolAdmissions} />
         <Route path="/preschool-near-me" component={PreschoolNearMe} />
@@ -381,7 +393,6 @@ function Router() {
         <Route path="/play-these-9-games-to-make-kids-smarter" component={LazyGamesMakeKidsSmarter} />
         <Route path="/45-signs-of-healthy-physical-development-ages-3-6" component={LazyPhysicalDevelopmentSigns} />
         <Route path="/questions-ask-school-visit-mid-term-playgroup-admissions" component={LazyMidTermVisitQuestions} />
-        <Route path="/faqs" component={LazyFAQsPage} />
         <Route path="/understanding-the-importance-of-preschool-in-early-childhood-development" component={LazyUnderstandingPreschoolImportance} />
         
         <Route path="/best-preschool-curriculum-thane" component={LazyBestPreschoolCurriculumThane} />

@@ -92,7 +92,6 @@ const redirectMap: Record<string, string> = {
   "/image-gallery": "/about",
 
   // ── Misc WordPress leftovers ───────────────────────────────────────────────
-  "/testimonials": "/",
   "/reviews": "/",
   "/parent-reviews": "/",
   "/methodology": "/about",
