@@ -589,7 +589,9 @@ function AppContent() {
 function DeferredSparkleTrail() {
   const [show, setShow] = useState(false);
   useEffect(() => {
-    const id = setTimeout(() => setShow(true), 5000);
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+    if (isMobile) return;
+    const id = setTimeout(() => setShow(true), 6000);
     return () => clearTimeout(id);
   }, []);
   if (!show) return null;

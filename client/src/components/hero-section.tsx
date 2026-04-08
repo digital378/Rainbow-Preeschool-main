@@ -88,6 +88,8 @@ export function HeroSection() {
                   width={1200}
                   height={675}
                   decoding="sync"
+                  // @ts-ignore - fetchpriority is valid HTML but React types lag behind
+                  fetchpriority="high"
                 />
               ) : (
                 <img
@@ -105,7 +107,7 @@ export function HeroSection() {
         })}
         <div className="absolute inset-0 bg-gradient-to-r from-black/65 via-black/35 to-black/10 dark:from-black/75 dark:via-black/45 dark:to-black/20" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-transparent hidden md:block" />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32 w-full">

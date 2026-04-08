@@ -249,10 +249,12 @@
    UTILITIES
    ============================================ */
 
-/* Prevent layout shift - content always in DOM */
-[data-reveal],
-[data-sparkle] {
-  will-change: opacity, transform;
+/* Prevent layout shift - content always in DOM (desktop only, mobile uses auto) */
+@media (min-width: 768px) {
+  [data-reveal],
+  [data-sparkle] {
+    will-change: opacity, transform;
+  }
 }
 
 /* Clean state after animation completes */

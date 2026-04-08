@@ -88,7 +88,7 @@ app.use(express.static(path.join(process.cwd(), "public"), {
   etag: true,
   setHeaders: (res, filePath) => {
     // Long cache for immutable assets (images, fonts)
-    if (filePath.endsWith('.webp') || filePath.endsWith('.jpg') || filePath.endsWith('.png') || filePath.endsWith('.woff2')) {
+    if (filePath.endsWith('.webp') || filePath.endsWith('.jpg') || filePath.endsWith('.png') || filePath.endsWith('.woff2') || filePath.endsWith('.mp4')) {
       res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
     } else if (filePath.endsWith('.js') || filePath.endsWith('.css')) {
       // Long cache for JS/CSS (versioned by bundler)

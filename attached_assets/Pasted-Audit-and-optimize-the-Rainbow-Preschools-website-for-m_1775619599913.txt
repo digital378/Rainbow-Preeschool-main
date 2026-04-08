@@ -1,0 +1,125 @@
+Audit and optimize the Rainbow Preschools website for mobile Core Web Vitals so the site passes Google PageSpeed Insights field data thresholds, especially on the homepage and other important landing pages.
+
+PRIMARY GOAL
+Improve mobile Core Web Vitals and overall performance, with strongest focus on:
+- LCP (Largest Contentful Paint)
+- INP (Interaction to Next Paint)
+- TBT (Total Blocking Time)
+- FCP (First Contentful Paint)
+
+CURRENT ISSUE
+The site is failing mobile Core Web Vitals mainly because:
+- LCP is too high
+- INP is too high
+- mobile rendering is too heavy
+- above-the-fold content is loading too slowly
+- JavaScript and UI elements are likely blocking or delaying meaningful paint
+
+IMPORTANT
+Do not break the current design language, SEO structure, forms, lead flow, analytics, or ad landing pages.
+Keep visual quality high, but make the site lighter and faster.
+
+PERFORMANCE TASKS
+
+1. ABOVE-THE-FOLD OPTIMIZATION
+- Identify the actual LCP element on the homepage and key pages
+- Optimize hero images, banners, sliders, headline blocks, and any large media
+- Make sure the main visible hero asset loads first
+- Preload the actual LCP image if needed
+- Serve correct image dimensions
+- Convert oversized assets to properly compressed modern formats where appropriate
+- Avoid lazy loading the true above-the-fold hero/LCP image
+
+2. IMAGE OPTIMIZATION
+- Audit all homepage and key page images
+- Resize images to actual display size
+- Compress aggressively without visible quality loss
+- Use next-gen formats where supported
+- Add width and height attributes to prevent layout calculations and rendering delays
+- Ensure below-the-fold images are lazy loaded properly
+
+3. JAVASCRIPT REDUCTION
+- Audit all non-critical scripts on homepage and key pages
+- Defer, delay, or lazy-init non-essential scripts
+- Reduce heavy animation libraries and unnecessary DOM work
+- Delay third-party widgets until user interaction or idle time where possible
+- Reduce JS executed during initial page load
+
+4. THIRD-PARTY SCRIPT CLEANUP
+Audit and optimize all third-party elements that may be slowing mobile performance, including if present:
+- chat widgets
+- WhatsApp floating buttons
+- popups
+- tracking scripts
+- sliders/carousels
+- social embeds
+- extra analytics or heatmaps
+
+Only keep what is necessary for business goals.
+Load non-critical third-party tools after main content.
+
+5. CSS OPTIMIZATION
+- Inline critical CSS for above-the-fold content if beneficial
+- Remove or reduce unused CSS
+- Avoid render-blocking styles where possible
+- Split non-critical CSS if feasible
+- Simplify heavy visual effects that impact paint time
+
+6. FONT OPTIMIZATION
+- Audit webfont usage
+- Reduce font variants and weights if excessive
+- Preload important fonts if needed
+- Use font-display swap
+- Prevent headline rendering delays caused by fonts
+
+7. SECTION RENDERING OPTIMIZATION
+- Review heavy homepage sections below the fold
+- Lazy render or defer non-critical sections where appropriate
+- Simplify unnecessarily complex DOM structures
+- Reduce deep nested wrappers and heavy card systems if they affect mobile rendering
+
+8. INTERACTION / INP OPTIMIZATION
+- Reduce main-thread blocking tasks
+- Optimize click handlers, menu interactions, sliders, accordions, and forms
+- Improve responsiveness of buttons, nav, and floating UI
+- Avoid long JS tasks during scroll or tap events
+- Throttle/debounce expensive handlers
+
+9. LANDING PAGE / CORE PAGE PRIORITIZATION
+Prioritize performance improvement for:
+- homepage
+- main programme pages
+- important SEO landing pages
+- high-traffic commercial pages
+- any page used for lead generation
+
+10. DO NOT HARM SEO
+While optimizing performance:
+- preserve metadata
+- preserve structured data
+- preserve canonical tags
+- preserve internal links
+- preserve heading structure
+- preserve crawlability
+- preserve analytics tracking that is essential
+
+11. UI/UX PRESERVATION
+Keep the site visually polished and modern.
+Do not remove important conversion elements unless they are replaced with a lighter equivalent.
+Any floating widgets or sticky components should be made lighter, not simply removed without reason.
+
+12. TESTING AND OUTPUT
+After optimization:
+- re-check homepage and major pages for mobile performance improvements
+- confirm what likely caused high LCP and INP
+- summarize what was changed
+- summarize which scripts/assets were delayed, compressed, or optimized
+- mention any business-critical third-party tools that were retained but loaded more efficiently
+
+SUCCESS TARGET
+Aim to improve the site so mobile performance and field experience move toward passing Core Web Vitals, especially by reducing:
+- LCP
+- INP
+- TBT
+
+Use best engineering judgment and all available Replit capabilities to optimize performance safely and intelligently across the site.

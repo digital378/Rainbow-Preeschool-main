@@ -14,7 +14,6 @@ import { HeroSection } from "@/components/hero-section";
 import { AwardedBySection } from "@/components/awarded-by-section";
 import { ProgrammeCard } from "@/components/programme-card";
 import { BranchCard } from "@/components/branch-card";
-import { Interactive3DMap } from "@/components/interactive-3d-map";
 import { TestimonialCard } from "@/components/testimonial-card";
 import { CountUp } from "@/components/count-up";
 import { SEO } from "@/components/seo";
@@ -25,6 +24,7 @@ import { ArrowRight, Star, Users, MapPin, Shield, Lock, Phone, Award, FileText, 
 import { SiGoogle } from "react-icons/si";
 import { useState, useEffect, lazy, Suspense, useRef } from "react";
 
+const Interactive3DMap = lazy(() => import("@/components/interactive-3d-map").then(m => ({ default: m.Interactive3DMap })));
 const WhyChooseUs = lazy(() => import("@/components/why-choose-us").then(m => ({ default: m.WhyChooseUs })));
 const MethodologySection = lazy(() => import("@/components/methodology-section").then(m => ({ default: m.MethodologySection })));
 const ClassroomGallery = lazy(() => import("@/components/classroom-gallery").then(m => ({ default: m.ClassroomGallery })));
@@ -398,8 +398,8 @@ export default function Home() {
       <AwardedBySection />
 
       {/* About Section - SEO Enhanced */}
-      <article className="py-16 md:py-20 lg:py-24 relative overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: 'url(/images/centres/manpada.webp)', backgroundSize: 'cover', backgroundPosition: 'center', opacity: 0.06 }} />
+      <article className="py-16 md:py-20 lg:py-24 relative overflow-hidden cv-auto">
+        <div className="absolute inset-0 pointer-events-none hidden md:block" style={{ backgroundImage: 'url(/images/centres/manpada.webp)', backgroundSize: 'cover', backgroundPosition: 'center', opacity: 0.06 }} />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <div data-reveal="float">
@@ -475,7 +475,7 @@ export default function Home() {
       </article>
 
       {/* Programmes Section - SEO Cluster Hub */}
-      <section className="py-16 md:py-20 lg:py-24 bg-card">
+      <section className="py-16 md:py-20 lg:py-24 bg-card cv-auto">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-12" data-reveal="float">
             <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">Our Programmes</p>
@@ -544,7 +544,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="py-16 md:py-20 lg:py-24 bg-card cv-auto">
+      <section className="py-16 md:py-20 lg:py-24 bg-card" style={{ contentVisibility: 'auto', containIntrinsicSize: 'auto 800px' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
             <div data-reveal="slide" data-direction="left">
@@ -561,6 +561,7 @@ export default function Home() {
                   loop
                   muted
                   playsInline
+                  preload="none"
                   className="w-full h-auto"
                   width={800}
                   height={450}
@@ -638,7 +639,9 @@ export default function Home() {
             </p>
           </div>
 
-          <Interactive3DMap />
+          <Suspense fallback={null}>
+            <Interactive3DMap />
+          </Suspense>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {branches.map((branch) => (
@@ -649,7 +652,7 @@ export default function Home() {
       </section>
 
       {/* FAQs Section - Homepage SEO with Schema */}
-      <section className="py-16 md:py-20 lg:py-24 bg-card">
+      <section className="py-16 md:py-20 lg:py-24 bg-card cv-auto">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12" data-reveal="float">
             <h2 className="text-3xl md:text-4xl font-bold" data-sparkle>Frequently Asked Questions</h2>

@@ -74,11 +74,28 @@
         return false;
       }
       
-      // Load analytics after page is interactive
-      if (document.readyState === 'complete') {
+      // Load analytics after page is idle — with interaction fallback to avoid losing fast-bounce tracking
+      var analyticsLoaded = false;
+      function scheduleAnalytics() {
+        if (analyticsLoaded) return;
+        analyticsLoaded = true;
         loadAnalytics();
+      }
+      function setupAnalyticsSchedule() {
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(scheduleAnalytics, { timeout: 3500 });
+        } else {
+          setTimeout(scheduleAnalytics, 1500);
+        }
+        // Also load on first user interaction to avoid missing fast-bounce events
+        ['pointerdown','keydown','touchstart','scroll'].forEach(function(evt) {
+          document.addEventListener(evt, scheduleAnalytics, { once: true, passive: true, capture: true });
+        });
+      }
+      if (document.readyState === 'complete') {
+        setupAnalyticsSchedule();
       } else {
-        window.addEventListener('load', loadAnalytics);
+        window.addEventListener('load', setupAnalyticsSchedule);
       }
       
       function loadAnalytics() {

@@ -44,8 +44,10 @@ Preferred communication style: Simple, everyday language.
 - **Analytics Tracking**: Google Analytics 4 (GA4) with clean, page-based form submission events, and tracking for calls, WhatsApp clicks, directions, and local page interactions.
 
 ### Performance Optimizations
-- Non-render-blocking Google Fonts, lazy-loaded components (Footer, ChatWidget), below-fold sections rendered on viewport entry, and strategic image preloading and lazy loading.
-- Optimized images (WebP format, compressed) with 1-year immutable cache headers.
+- Non-render-blocking Google Fonts, lazy-loaded components (Footer, ChatWidget, Interactive3DMap), below-fold sections rendered on viewport entry via `LazySection` + `IntersectionObserver`, and strategic image preloading and lazy loading.
+- Optimized images (WebP format, compressed) with 1-year immutable cache headers (including `.mp4` video).
+- **Mobile CWV optimizations**: RainbowSparkleTrail disabled on mobile (canvas particle system); analytics deferred with `requestIdleCallback` + first-interaction fallback; `content-visibility: auto` on below-fold homepage sections; video `preload="none"`; navigation scroll handler throttled with `requestAnimationFrame`; `will-change` restricted to desktop only in scroll-reveal CSS; decorative hero gradient reduced on mobile; about section background image hidden on mobile.
+- **LCP**: Hero image preloaded with `fetchpriority="high"` in both `<link>` and `<img>` tags.
 
 ## External Dependencies
 
