@@ -668,9 +668,9 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
     const slug = cleanPath.replace("/blog/", "");
     const blogPosts: Record<string, { title: string; description: string; keywords: string }> = {
       "what-to-ask-during-a-tour-of-a-preschool-in-thane": {
-        title: "Preschool Tour Questions in Thane | Checklist",
-        description: "Essential 25+ questions to ask when visiting a preschool in Thane. Expert checklist covering safety, curriculum, teacher ratios & more.",
-        keywords: "preschool tour questions thane, what to ask preschool visit, preschool visit checklist india",
+        title: "Questions to Ask When Visiting a Preschool | Checklist",
+        description: "Essential 25+ questions to ask when visiting a preschool. Expert checklist covering safety, curriculum, teacher ratios & more for parents.",
+        keywords: "questions to ask preschool, what to ask preschool visit, preschool visit checklist, preschool tour guide",
       },
       "understanding-the-importance-of-preschool-in-early-childhood-development": {
         title: "Importance of Preschool in Child Development",
@@ -693,8 +693,8 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
         keywords: "parents role in education, early education at home, parent involvement preschool",
       },
       "creating-safe-nurturing-learning-environment": {
-        title: "Safe Learning Environment for Children | Rainbow Preschool Thane",
-        description: "Learn how a safe and nurturing environment supports child development. Discover how Rainbow Preschool creates secure, stimulating spaces.",
+        title: "Safe Learning Environment for Children | Rainbow Preschool",
+        description: "Learn how a safe and nurturing environment supports child development. Discover how Rainbow Preschool creates secure, stimulating learning spaces.",
         keywords: "safe preschool environment, nurturing learning environment, child safety preschool",
       },
       "republic-day-2026": {
@@ -703,9 +703,9 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
         keywords: "republic day 2026, republic day india, 26 january 2026",
       },
       "signs-of-good-preschool-thane": {
-        title: "10 Signs of a Good Preschool | Guide for Thane Parents",
-        description: "How to identify a great preschool in Thane. 10 research-backed signs every parent should look for — from teacher quality to safety, curriculum, and more.",
-        keywords: "signs of good preschool, how to choose preschool thane, best preschool thane, preschool checklist, quality preschool signs",
+        title: "10 Signs of a Good Preschool | Every Parent's Checklist",
+        description: "How to identify a great preschool. 10 research-backed signs every parent should look for — from teacher quality to safety, curriculum, and environment.",
+        keywords: "signs of good preschool, how to choose a preschool, preschool checklist, quality preschool signs, what makes a good preschool",
       },
       "preschool-vs-daycare-difference": {
         title: "Preschool vs Daycare: Key Differences | Guide for Parents",
