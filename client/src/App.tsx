@@ -235,7 +235,6 @@ const LazyAuthorArchivePage = lazy(() => import("@/pages/legacy-pages").then(m =
 const LazyTermsPage = lazy(() => import("@/pages/legal").then(m => ({ default: m.TermsPage })));
 const LazyPrivacyPage = lazy(() => import("@/pages/legal").then(m => ({ default: m.PrivacyPage })));
 const RepublicDay2026 = lazy(() => import("@/pages/republic-day-2026"));
-const LazyAuthorDrMeghnaRai = lazy(() => import("@/pages/author-page"));
 
 import { legacySlugs } from "@shared/legacy-slugs";
 
@@ -324,7 +323,6 @@ function Router() {
         <Route path="/ris" component={RISLanding} />
         <Route path="/ris-11th" component={RIS11thLanding} />
         <Route path="/republic-day-2026" component={RepublicDay2026} />
-        <Route path="/about/dr-meghna-rai" component={LazyAuthorDrMeghnaRai} />
         
         <Route path="/playgroup-in-thane" component={LazyPlaygroupInThane} />
         <Route path="/playgroup-in-manpada" component={LazyPlaygroupInManpada} />
