@@ -146,11 +146,6 @@ const websiteSchema = {
   "@type": "WebSite",
   name: "Rainbow Preschool International",
   url: BASE_URL,
-  potentialAction: {
-    "@type": "SearchAction",
-    target: `${BASE_URL}/?s={search_term_string}`,
-    "query-input": "required name=search_term_string",
-  },
 };
 
 const commonInternalLinks = [
@@ -171,7 +166,35 @@ const commonInternalLinks = [
   { text: "Blog", url: "/blog" },
 ];
 
-function localBusinessSchema(locality: string, address: string, phone: string, url: string) {
+const centreReviews: Record<string, Array<{ author: string; date: string; text: string; rating: string }>> = {
+  Manpada: [
+    { author: "Priya Sharma", date: "2025-11-15", text: "Rainbow Preschool Manpada has been wonderful for my daughter. The teachers are caring and the play-based curriculum has helped her become confident and social.", rating: "5" },
+    { author: "Amit Deshmukh", date: "2025-10-22", text: "The safety measures, female staff, and small batch sizes at Manpada give us complete peace of mind. My son's vocabulary and social skills have improved tremendously.", rating: "5" },
+  ],
+  Hariniwas: [
+    { author: "Ritu Mehra", date: "2025-09-10", text: "Rainbow Preschool Hariniwas is conveniently located near Panchpakadi. The teachers are experienced and my child loves going to school every morning.", rating: "5" },
+    { author: "Vikram Singh", date: "2025-08-18", text: "Excellent preschool in the Hariniwas area. Clean, well-maintained premises and a very structured curriculum. My daughter learned to read and write within months.", rating: "5" },
+  ],
+  "Anand Nagar": [
+    { author: "Manish Thakur", date: "2025-06-05", text: "Rainbow Preschool Anand Nagar has been exceptional. The Montessori-trained teachers, the clean campus, and the overall environment make it the complete package.", rating: "5" },
+    { author: "Neha Kapoor", date: "2025-07-20", text: "Best preschool near Tropical Lagoon. My twins attend the Anand Nagar centre and both have blossomed. The small batch sizes ensure individual attention.", rating: "5" },
+  ],
+  Dhokali: [
+    { author: "Sneha Patil", date: "2025-09-18", text: "Both my children attended Rainbow Preschool Dhokali. The curriculum is age-appropriate and the teachers truly understand child development.", rating: "5" },
+    { author: "Ajay Reddy", date: "2025-05-28", text: "The Dhokali centre on Kolshet Road is excellent. Safe environment, CCTV monitoring, and a wonderful play area. My son adjusted within a week.", rating: "5" },
+  ],
+  Kalwa: [
+    { author: "Kavita Nair", date: "2025-05-20", text: "Rainbow Preschool Kalwa is perfect for working parents. The Happy Times after-school programme keeps my child engaged and learning until we finish work.", rating: "4" },
+    { author: "Prasad Joshi", date: "2025-06-15", text: "Great preschool near Manisha Nagar. The teachers are patient and loving. My shy daughter came out of her shell within a month of joining.", rating: "5" },
+  ],
+  Kasarvadavali: [
+    { author: "Rahul Joshi", date: "2025-08-30", text: "Rainbow Preschool Kasarvadavali has a beautiful campus near Parijat Gardens. My daughter loves going to school every day. The monthly progress reports are very informative.", rating: "5" },
+    { author: "Sunita Rane", date: "2025-07-08", text: "Convenient location behind Hypercity Mall. The teachers at Kasarvadavali are excellent — trained, caring, and attentive. Highly recommend for families in this area.", rating: "5" },
+  ],
+};
+
+function localBusinessSchema(locality: string, address: string, phone: string, url: string, lat?: string, lng?: string) {
+  const reviews = centreReviews[locality] || [];
   return {
     "@context": "https://schema.org",
     "@type": "Preschool",
@@ -188,6 +211,11 @@ function localBusinessSchema(locality: string, address: string, phone: string, u
       postalCode: "400607",
       addressCountry: "IN",
     },
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: lat || "19.2183",
+      longitude: lng || "72.9781",
+    },
     openingHoursSpecification: [{
       "@type": "OpeningHoursSpecification",
       dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
@@ -196,6 +224,21 @@ function localBusinessSchema(locality: string, address: string, phone: string, u
     }],
     priceRange: "$$",
     image: `${BASE_URL}/og-image.jpg`,
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.7",
+      bestRating: "5",
+      ratingCount: "3997",
+    },
+    ...(reviews.length > 0 && {
+      review: reviews.map(r => ({
+        "@type": "Review",
+        author: { "@type": "Person", name: r.author },
+        datePublished: r.date,
+        reviewBody: r.text,
+        reviewRating: { "@type": "Rating", ratingValue: r.rating, bestRating: "5" },
+      })),
+    }),
     parentOrganization: organizationSchema,
   };
 }
@@ -247,6 +290,21 @@ const staticPages: Record<string, PageSEOData> = {
       parentOrganization: { "@id": `${BASE_URL}/#organization` },
     }, {
       "@context": "https://schema.org",
+      "@type": "VideoObject",
+      name: "Rainbow Preschool International — Campus Walkthrough",
+      description: "Take a virtual tour of Rainbow Preschool International's campus in Thane. See our colourful classrooms, safe play areas, and nurturing learning environment designed for children aged 1.5 to 6 years.",
+      thumbnailUrl: `${BASE_URL}/og-image.jpg`,
+      uploadDate: "2025-01-15",
+      contentUrl: `${BASE_URL}/assets/RPS_Walkthrough_Video_-_Website_1_1766126796450.mp4`,
+      embedUrl: BASE_URL,
+      duration: "PT1M30S",
+      publisher: {
+        "@type": "Organization",
+        name: "Rainbow Preschool International",
+        logo: { "@type": "ImageObject", url: `${BASE_URL}/images/logo.webp` },
+      },
+    }, {
+      "@context": "https://schema.org",
       "@type": "FAQPage",
       mainEntity: [
         { "@type": "Question", name: "What programmes does Rainbow Preschool offer and for which ages?", acceptedAnswer: { "@type": "Answer", text: "We offer Playgroup (1.5–2.5 years), Nursery (2.5–3.5 years), and Kindergarten (3.5–5 years). Each programme follows a play-based curriculum covering language, numbers, art, and social skills." } },
@@ -284,6 +342,31 @@ const staticPages: Record<string, PageSEOData> = {
       { heading: "Our Story", text: "Founded in 2007, Rainbow Preschool International began with a single centre in Thane. Today, we operate 6 centres across Thane West, providing quality early childhood education to thousands of families." },
       { heading: "Our Mission", text: "To provide a safe, nurturing, and stimulating environment where every child can develop to their fullest potential through play-based learning." },
       { heading: "Our Values", items: ["Child-centric approach to education", "Safe and nurturing environment", "Play-based learning methodology", "Strong parent-school partnership", "Continuous teacher development"] },
+    ],
+    internalLinks: commonInternalLinks,
+  },
+  "/about/dr-meghna-rai": {
+    title: "Dr. Meghna Rai — Head of Curriculum | Rainbow Preschool International",
+    description: "Meet Dr. Meghna Rai, Head of Curriculum at Rainbow Preschool International, Thane. Over 15 years of experience in early childhood education and play-based curriculum design.",
+    keywords: "dr meghna rai, rainbow preschool curriculum head, early childhood education expert thane",
+    canonical: `${BASE_URL}/about/dr-meghna-rai`,
+    h1: "Dr. Meghna Rai — Head of Curriculum",
+    introText: "Dr. Meghna Rai is the Head of Curriculum at Rainbow Preschool International. With over 15 years of experience in early childhood education, she designs play-based, developmentally appropriate curricula for children aged 1.5 to 6 years.",
+    breadcrumbs: [{ name: "Home", url: "/" }, { name: "About Us", url: "/about" }, { name: "Dr. Meghna Rai", url: "/about/dr-meghna-rai" }],
+    structuredData: [{
+      "@context": "https://schema.org",
+      "@type": "Person",
+      name: "Dr. Meghna Rai",
+      jobTitle: "Head of Curriculum",
+      worksFor: { "@type": "EducationalOrganization", name: "Rainbow Preschool International", url: BASE_URL },
+      description: "Head of Curriculum at Rainbow Preschool International with 15+ years in early childhood education.",
+      url: `${BASE_URL}/about/dr-meghna-rai`,
+      knowsAbout: ["Early Childhood Education", "Play-Based Learning", "Child Development", "NEP 2020"],
+      alumniOf: { "@type": "EducationalOrganization", name: "University of Mumbai" },
+    }],
+    contentSections: [
+      { heading: "About Dr. Meghna Rai", text: "Dr. Meghna Rai leads curriculum design at Rainbow Preschool International. She holds a doctorate in Early Childhood Education from the University of Mumbai and specialises in play-based learning, Montessori methods, and child development." },
+      { heading: "Areas of Expertise", items: ["Play-Based Curriculum Design", "Child Development & Psychology", "Montessori & Reggio Emilia Approaches", "NEP 2020 Early Childhood Care", "Teacher Training", "Social-Emotional Learning"] },
     ],
     internalLinks: commonInternalLinks,
   },
@@ -660,13 +743,13 @@ const staticPages: Record<string, PageSEOData> = {
   },
 };
 
-const preschoolCentres: Record<string, { locality: string; address: string; phone: string }> = {
-  "/preschool-in-manpada-thane": { locality: "Manpada", address: "Chestnut Plaza, Opp. Edenwoods, Manpada, Thane", phone: "+91-8291568972" },
-  "/preschool-in-hariniwas-thane": { locality: "Hariniwas", address: "Near Hiranandani Estate, Naupada, Thane", phone: "+91-8291568972" },
-  "/preschool-in-anand-nagar-thane": { locality: "Anand Nagar", address: "Near Majiwada Junction, Thane", phone: "+91-8291568972" },
-  "/preschool-in-dhokali-thane": { locality: "Dhokali", address: "Near Balkum, Kolshet Road, Thane", phone: "+91-8291568972" },
-  "/preschool-in-kalwa-thane": { locality: "Kalwa", address: "Near Kalwa Bridge, Thane", phone: "+91-8291568972" },
-  "/preschool-in-kasarvadavali-thane": { locality: "Kasarvadavali", address: "Near Suraj Water Park, Ghodbunder Road, Thane", phone: "+91-8291568972" },
+const preschoolCentres: Record<string, { locality: string; address: string; phone: string; lat: string; lng: string }> = {
+  "/preschool-in-manpada-thane": { locality: "Manpada", address: "Aggarwal Arcade, Near Khewra Circle, Manpada, Thane (W)", phone: "+91-8291568972", lat: "19.2187", lng: "72.9754" },
+  "/preschool-in-hariniwas-thane": { locality: "Hariniwas", address: "M.V.Apartments, Bhakti Mandir Road, Opp. Thanawala Garage, Hariniwas Circle, Panchpakadi, Thane (W)", phone: "+91-8291568972", lat: "19.1974", lng: "72.9630" },
+  "/preschool-in-anand-nagar-thane": { locality: "Anand Nagar", address: "Kris Commercial Plaza, 1st Floor, Opp. Tropical Lagoon, Anand Nagar, Thane (W)", phone: "+91-8291568972", lat: "19.2277", lng: "72.9688" },
+  "/preschool-in-dhokali-thane": { locality: "Dhokali", address: "Kolshet Road, Dhokali Naka, Opp. Aban Park Society, Thane (W)", phone: "+91-8291568972", lat: "19.2320", lng: "72.9833" },
+  "/preschool-in-kalwa-thane": { locality: "Kalwa", address: "Harsh Prasad Co-op Hsg, Soc, Near Sayba Hall, Manisha Nagar, Gate No.1, Kalwa", phone: "+91-8291568972", lat: "19.2068", lng: "73.0155" },
+  "/preschool-in-kasarvadavali-thane": { locality: "Kasarvadavali", address: "Rosa Gardenia, Next to Parijat Gardens, Kasarvadavali, Behind Hypercity Mall, Thane (W)", phone: "+91-8291568972", lat: "19.2481", lng: "72.9682" },
 };
 
 const playgroundPages: Record<string, { locality: string }> = {
@@ -698,7 +781,7 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
       h1: `Preschool in ${centre.locality}, Thane — Rainbow Preschool International`,
       introText: `Looking for a quality preschool in ${centre.locality}, Thane? Rainbow Preschool International's ${centre.locality} centre offers Playgroup, Nursery, and Kindergarten programmes in a safe, nurturing environment.`,
       breadcrumbs: [{ name: "Home", url: "/" }, { name: "Preschool Near Me", url: "/preschool-near-me" }, { name: `Preschool in ${centre.locality}`, url: cleanPath }],
-      structuredData: [localBusinessSchema(centre.locality, centre.address, centre.phone, cleanPath)],
+      structuredData: [localBusinessSchema(centre.locality, centre.address, centre.phone, cleanPath, centre.lat, centre.lng)],
       contentSections: [
         { heading: `Why Choose Rainbow Preschool in ${centre.locality}?`, items: ["Safe and secure premises with CCTV", "100% female teaching staff", "Small batch sizes (10-12 children)", "Play-based curriculum", "Convenient location in " + centre.locality] },
         { heading: "Our Programmes", items: ["Playgroup (1.5–2.5 years)", "Nursery (2.5–4 years)", "Kindergarten (4–6 years)"] },

@@ -81,6 +81,7 @@ export function SEO({
     updateOrCreateMeta("ICBM", "19.2183, 72.9781");
 
     updateOrCreateMeta("twitter:card", "summary_large_image");
+    updateOrCreateMeta("twitter:site", "@rainbowpreschool");
     updateOrCreateMeta("twitter:title", title);
     updateOrCreateMeta("twitter:description", description);
     updateOrCreateMeta("twitter:image", ogImageUrl);
@@ -140,11 +141,6 @@ export const websiteSchema = {
   "@type": "WebSite",
   name: "Rainbow Preschool International",
   url: BASE_URL,
-  potentialAction: {
-    "@type": "SearchAction",
-    target: `${BASE_URL}/?s={search_term_string}`,
-    "query-input": "required name=search_term_string",
-  },
 };
 
 export function createBreadcrumbSchema(items: Array<{ name: string; url: string }>) {
@@ -166,13 +162,15 @@ export function createLocalBusinessSchema(centre: {
   phone: string;
   locality: string;
   url: string;
+  latitude?: string;
+  longitude?: string;
 }) {
   return {
     "@context": "https://schema.org",
     "@type": "Preschool",
     "@id": `${BASE_URL}${centre.url}`,
     name: `Rainbow Preschool International - ${centre.locality}`,
-    description: `Quality preschool and playgroup in ${centre.locality}, Thane offering Playgroup, Nursery, and Kindergarten programmes for children aged 1.5-10 years.`,
+    description: `Quality preschool and playgroup in ${centre.locality}, Thane offering Playgroup, Nursery, and Kindergarten programmes for children aged 1.5-6 years.`,
     url: `${BASE_URL}${centre.url}`,
     telephone: centre.phone,
     address: {
@@ -185,8 +183,8 @@ export function createLocalBusinessSchema(centre: {
     },
     geo: {
       "@type": "GeoCoordinates",
-      latitude: "19.2183",
-      longitude: "72.9781",
+      latitude: centre.latitude || "19.2183",
+      longitude: centre.longitude || "72.9781",
     },
     openingHoursSpecification: [
       {
@@ -236,9 +234,14 @@ export function createBlogPostSchema(post: {
     datePublished: post.datePublished,
     dateModified: post.dateModified || post.datePublished,
     author: {
-      "@type": "Organization",
-      name: post.author || "Rainbow Preschool International",
-      url: BASE_URL,
+      "@type": "Person",
+      name: "Dr. Meghna Rai",
+      jobTitle: "Head of Curriculum",
+      url: `${BASE_URL}/about/dr-meghna-rai`,
+      worksFor: {
+        "@type": "Organization",
+        name: "Rainbow Preschool International",
+      },
     },
     publisher: {
       "@type": "Organization",

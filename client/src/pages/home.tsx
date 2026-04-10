@@ -334,9 +334,33 @@ export default function Home() {
     const existingFaqScript = document.getElementById('faq-schema');
     if (existingFaqScript) existingFaqScript.remove();
     document.head.appendChild(faqScript);
+
+    const videoSchema = {
+      "@context": "https://schema.org",
+      "@type": "VideoObject",
+      "name": "Rainbow Preschool International — Campus Walkthrough",
+      "description": "Take a virtual tour of Rainbow Preschool International's campus in Thane. See our colourful classrooms, safe play areas, and nurturing learning environment designed for children aged 1.5 to 6 years.",
+      "thumbnailUrl": "https://www.rainbowpreschools.com/og-image.jpg",
+      "uploadDate": "2025-01-15",
+      "contentUrl": "https://www.rainbowpreschools.com/assets/RPS_Walkthrough_Video_-_Website_1_1766126796450.mp4",
+      "embedUrl": "https://www.rainbowpreschools.com/",
+      "duration": "PT1M30S",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Rainbow Preschool International",
+        "logo": { "@type": "ImageObject", "url": "https://www.rainbowpreschools.com/images/logo.webp" }
+      }
+    };
+    const videoScript = document.createElement('script');
+    videoScript.type = 'application/ld+json';
+    videoScript.id = 'video-schema';
+    videoScript.textContent = JSON.stringify(videoSchema);
+    const existingVideoScript = document.getElementById('video-schema');
+    if (existingVideoScript) existingVideoScript.remove();
+    document.head.appendChild(videoScript);
     
     return () => {
-      ['organization-schema', 'website-schema', 'faq-schema'].forEach(id => {
+      ['organization-schema', 'website-schema', 'faq-schema', 'video-schema'].forEach(id => {
         const s = document.getElementById(id);
         if (s) s.remove();
       });

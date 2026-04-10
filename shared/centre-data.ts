@@ -6,23 +6,21 @@ export interface CentreData {
   name: string;
   localityName: string;
   localitySlug: string;
-  // Landing page URLs
   playgroundLandingUrl: string;
   preschoolLandingUrl: string;
-  // Contact info
   address: string;
   phoneNumbers: string[];
   whatsappNumber: string;
   googleMapsDirectionsUrl: string;
   googleMapsEmbedUrl?: string;
   landmarks?: string[];
-  // Programme links
+  latitude: string;
+  longitude: string;
   programmeLinks?: {
     playgroup: string;
     nursery: string;
     kindergarten: string;
   };
-  // Gallery images for centre page
   galleryImages?: string[];
 }
 
@@ -50,6 +48,8 @@ export const centres: CentreData[] = [
     googleMapsDirectionsUrl: "https://maps.app.goo.gl/jenJNhoqsExdWH5DA",
     googleMapsEmbedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3767.1234!2d72.9754!3d19.2187!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTnCsDEzJzA3LjMiTiA3MsKwNTgnMzEuNCJF!5e0!3m2!1sen!2sin!4v1234567890",
     landmarks: ["Khewra Circle", "Edenwoods", "Manpada"],
+    latitude: "19.2187",
+    longitude: "72.9754",
     programmeLinks: {
       playgroup: "/playgroup",
       nursery: "/nursery",
@@ -68,6 +68,8 @@ export const centres: CentreData[] = [
     whatsappNumber: "9136578589",
     googleMapsDirectionsUrl: "https://maps.app.goo.gl/KrcVoEu8xSHEzEPd9",
     landmarks: ["Hariniwas Circle", "Bhakti Mandir Road", "Panchpakadi"],
+    latitude: "19.1974",
+    longitude: "72.9630",
     programmeLinks: {
       playgroup: "/playgroup",
       nursery: "/nursery",
@@ -86,6 +88,8 @@ export const centres: CentreData[] = [
     whatsappNumber: "9833781550",
     googleMapsDirectionsUrl: "https://maps.app.goo.gl/oFnzPGooMos4qACV9",
     landmarks: ["Tropical Lagoon", "Kris Commercial Plaza"],
+    latitude: "19.2277",
+    longitude: "72.9688",
     programmeLinks: {
       playgroup: "/playgroup",
       nursery: "/nursery",
@@ -104,6 +108,8 @@ export const centres: CentreData[] = [
     whatsappNumber: "9167399247",
     googleMapsDirectionsUrl: "https://maps.app.goo.gl/WAp5VMqUs6UhUK4c8",
     landmarks: ["Dhokali Naka", "Kolshet Road", "Aban Park Society"],
+    latitude: "19.2320",
+    longitude: "72.9833",
     programmeLinks: {
       playgroup: "/playgroup",
       nursery: "/nursery",
@@ -122,6 +128,8 @@ export const centres: CentreData[] = [
     whatsappNumber: "7400327905",
     googleMapsDirectionsUrl: "https://maps.app.goo.gl/HoW2W9r1v6Jzi397A",
     landmarks: ["Sayba Hall", "Manisha Nagar"],
+    latitude: "19.2068",
+    longitude: "73.0155",
     programmeLinks: {
       playgroup: "/playgroup",
       nursery: "/nursery",
@@ -140,6 +148,8 @@ export const centres: CentreData[] = [
     whatsappNumber: "8779800068",
     googleMapsDirectionsUrl: "https://maps.app.goo.gl/kE2EyU3YUuf9ZDuNA",
     landmarks: ["Hypercity Mall", "Parijat Gardens"],
+    latitude: "19.2481",
+    longitude: "72.9682",
     programmeLinks: {
       playgroup: "/playgroup",
       nursery: "/nursery",
