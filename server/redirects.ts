@@ -239,6 +239,7 @@ export function setupRedirects(app: Express) {
   app.use((req: Request, res: Response, next: NextFunction) => {
     if (process.env.NODE_ENV !== "production") return next();
     const host = req.get("host") || "";
+    if (host.includes("replit") || host.includes("repl.co") || host.includes("repl.dev") || host.includes("localhost")) return next();
     const proto = req.get("x-forwarded-proto") || req.protocol || "https";
     const isNonWww = host === "rainbowpreschools.com";
     const isHttp = proto === "http";
