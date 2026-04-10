@@ -384,8 +384,6 @@ export default function PreschoolNearMe() {
               </div>
             )}
 
-            <Interactive3DMap highlightedCentre={mapHighlight} />
-
             {/* ── ENQUIRY FORM ──────────────────────────────────────────────── */}
             <div className="max-w-xl mx-auto bg-white p-4 md:p-6 rounded-xl shadow-lg border text-gray-900 min-h-[480px]">
               <h2 className="text-lg md:text-xl font-bold text-gray-900 mb-1 text-center">Find a Rainbow Preschool Centre Near You</h2>
@@ -540,6 +538,9 @@ export default function PreschoolNearMe() {
             </section>
 
             <SEOCrossLinks currentPath="/preschool-near-me" />
+
+            {/* ── 3D MAP ───────────────────────────────────────────────────── */}
+            <Interactive3DMap highlightedCentre={mapHighlight} />
           </>
         )}
       </div>
