@@ -143,11 +143,11 @@ function localBusinessSchema(locality: string, address: string, phone: string, u
 
 const staticPages: Record<string, PageSEOData> = {
   "/": {
-    title: "Best Preschool in Thane near me | Rainbow International",
-    description: "Rainbow Preschool International offers safe, play-based learning for children aged 1.5–5 years across 6 centres in Thane. 18+ years, 1 lakh+ alumni. Admissions open — enquire now.",
-    keywords: "best preschool in thane, preschool in thane, playgroup in thane, nursery school thane, early childhood education thane, rainbow preschool",
+    title: "Rainbow Preschool International | Preschool in Thane",
+    description: "Rainbow Preschool International — Thane's trusted preschool since 2007. Play-based early learning for ages 1.5–6 across 6 centres. 1 lakh+ alumni. Admissions open.",
+    keywords: "rainbow preschool, preschool in thane, playgroup in thane, nursery school thane, early childhood education thane, rainbow preschool international",
     canonical: `${BASE_URL}/`,
-    h1: "Best Preschool in Thane — Rainbow Preschool International",
+    h1: "Rainbow Preschool International — Nurturing Young Minds Since 2007",
     introText: "Rainbow Preschool International has been nurturing young minds since 2007. With 6 centres across Thane West and over 1,00,000 alumni, we offer Playgroup, Nursery, and Kindergarten programmes for children aged 1.5 to 5 years. Our play-based curriculum helps children build reading, writing, number skills, creativity, and social confidence in a safe, joyful environment.",
     structuredData: [organizationSchema, websiteSchema, {
       "@context": "https://schema.org",
@@ -372,11 +372,11 @@ const staticPages: Record<string, PageSEOData> = {
     internalLinks: commonInternalLinks,
   },
   "/best-preschool-near-me-in-thane": {
-    title: "Best Preschool in Thane | Rainbow Preschool",
-    description: "Looking for the best preschool in Thane? Rainbow Preschool International — 17+ years, 6 centres, 4.7★ Google rating, award-winning early childhood education.",
-    keywords: "best preschool in thane, top preschool thane, best playgroup thane, best nursery school thane",
+    title: "Best Preschool in Thane 2026 | Rainbow Preschool",
+    description: "Looking for the best preschool in Thane? Rainbow Preschool International — 18+ years, 6 centres, 4.7★ rating, 1 lakh+ alumni. Award-winning early education.",
+    keywords: "best preschool in thane, best preschool near me, top preschool thane, best playgroup thane, best nursery school thane",
     canonical: `${BASE_URL}/best-preschool-near-me-in-thane`,
-    h1: "Best Preschool in Thane — Rainbow Preschool International",
+    h1: "Best Preschool in Thane — Why Parents Choose Rainbow",
     breadcrumbs: [{ name: "Home", url: "/" }, { name: "Best Preschool in Thane", url: "/best-preschool-near-me-in-thane" }],
     structuredData: [organizationSchema, websiteSchema, {
       "@context": "https://schema.org",
@@ -524,7 +524,7 @@ const staticPages: Record<string, PageSEOData> = {
     internalLinks: commonInternalLinks,
   },
   "/preschool-readiness-quiz": {
-    title: "Is My Child Ready for Preschool? Free Readiness Quiz | Rainbow Preschool",
+    title: "Preschool Readiness Quiz — Free Assessment | Rainbow",
     description: "Take this free 2-minute quiz to find out if your child is ready for preschool. 10 research-backed questions covering physical, social, and cognitive readiness.",
     keywords: "preschool readiness quiz, is my child ready for preschool, preschool readiness checklist, child development assessment, preschool readiness test",
     canonical: `${BASE_URL}/preschool-readiness-quiz`,
@@ -538,7 +538,7 @@ const staticPages: Record<string, PageSEOData> = {
     internalLinks: commonInternalLinks,
   },
   "/top-preschools-in-thane": {
-    title: "Top 10 Preschools in Thane 2026 — Honest Comparison Guide",
+    title: "Top 10 Preschools in Thane 2026 | Comparison Guide",
     description: "Compare the top 10 preschools in Thane for 2026. Detailed comparison of fees, curriculum, safety, teacher ratios, and parent reviews. Find the best fit for your child.",
     keywords: "top preschools in thane, best preschools thane, preschool comparison thane, preschool rankings thane, best play school thane, top 10 preschools thane",
     canonical: `${BASE_URL}/top-preschools-in-thane`,
@@ -575,7 +575,7 @@ const staticPages: Record<string, PageSEOData> = {
     internalLinks: commonInternalLinks,
   },
   "/faqs": {
-    title: "Frequently Asked Questions | Rainbow Preschool International Thane",
+    title: "FAQs | Rainbow Preschool International Thane",
     description: "Get answers to all your questions about Rainbow Preschool — admissions, fees, safety, curriculum, timings, transport, and more. Complete FAQ for Thane parents.",
     keywords: "rainbow preschool faq, preschool questions thane, preschool admission faq, preschool fees thane, preschool safety questions, preschool curriculum questions",
     canonical: `${BASE_URL}/faqs`,

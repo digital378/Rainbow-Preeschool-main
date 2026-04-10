@@ -7,7 +7,9 @@ const seoPages = [
   { href: "/play-school-near-me", label: "Play School Near Me", icon: Baby, desc: "Ages 1.5–2.5 years" },
   { href: "/play-school-in-thane", label: "Play School in Thane", icon: School, desc: "6 centres in Thane" },
   { href: "/nursery-school-near-me", label: "Nursery School Near Me", icon: BookOpen, desc: "Ages 2.5–4 years" },
-  { href: "/preschool-admissions", label: "Admissions", icon: GraduationCap, desc: "Enquire for 2025-26" },
+  { href: "/preschool-admissions", label: "Admissions 2026-27", icon: GraduationCap, desc: "Enquire now" },
+  { href: "/top-preschools-in-thane", label: "Top Preschools in Thane", icon: Search, desc: "Compare top 10" },
+  { href: "/preschool-readiness-quiz", label: "Readiness Quiz", icon: Heart, desc: "Is your child ready?" },
 ];
 
 interface SEOCrossLinksProps {

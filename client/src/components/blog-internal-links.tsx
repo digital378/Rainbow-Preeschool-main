@@ -1,6 +1,6 @@
 import { Link } from "wouter";
 import { LOCATION_LINK_MAP } from "@shared/seo-config";
-import { FileText, MapPin, Award, Palette, BookOpen, GraduationCap, ChevronRight, Search, Building, School } from "lucide-react";
+import { FileText, MapPin, Award, Palette, BookOpen, GraduationCap, ChevronRight, Search, Building, School, ClipboardCheck, BarChart3 } from "lucide-react";
 
 interface BlogInternalLinksProps {
   currentSlug?: string;
@@ -104,6 +104,24 @@ export function BlogInternalLinks({ currentSlug = "" }: BlogInternalLinksProps) 
         >
           <GraduationCap className="w-4 h-4 text-green-500 flex-shrink-0" />
           Kindergarten Programme
+        </Link>
+        
+        <Link 
+          href="/top-preschools-in-thane"
+          className="flex items-center gap-2 px-4 py-3 bg-white rounded-lg border border-gray-200 hover:border-orange-300 hover:shadow-sm transition-all text-sm font-medium text-gray-700"
+          data-testid="link-blog-top-preschools"
+        >
+          <BarChart3 className="w-4 h-4 text-orange-500 flex-shrink-0" />
+          Top 10 Preschools in Thane
+        </Link>
+        
+        <Link 
+          href="/preschool-readiness-quiz"
+          className="flex items-center gap-2 px-4 py-3 bg-white rounded-lg border border-gray-200 hover:border-emerald-300 hover:shadow-sm transition-all text-sm font-medium text-gray-700"
+          data-testid="link-blog-readiness-quiz"
+        >
+          <ClipboardCheck className="w-4 h-4 text-emerald-500 flex-shrink-0" />
+          Readiness Quiz
         </Link>
       </div>
       

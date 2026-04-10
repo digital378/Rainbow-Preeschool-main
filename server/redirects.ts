@@ -157,6 +157,22 @@ const redirectMap: Record<string, string> = {
   // ── Best preschool slug change ─────────────────────────────────────────────
   "/best-preschool-in-thane": "/best-preschool-near-me-in-thane",
 
+  // ── Top preschools duplicate ──────────────────────────────────────────────
+  "/top-10-preschools-thane-comparison-guide": "/top-preschools-in-thane",
+  "/top-10-preschools-thane-comparison-guide/": "/top-preschools-in-thane",
+
+  // ── Blog/root duplicate consolidation ─────────────────────────────────────
+  "/blog/preschool-vs-daycare-difference": "/preschool-vs-daycare-difference",
+  "/blog/preschool-vs-daycare-difference/": "/preschool-vs-daycare-difference",
+  "/blog/understanding-the-importance-of-preschool-in-early-childhood-development": "/understanding-the-importance-of-preschool-in-early-childhood-development",
+  "/blog/understanding-the-importance-of-preschool-in-early-childhood-development/": "/understanding-the-importance-of-preschool-in-early-childhood-development",
+  "/blog/what-to-ask-during-a-tour-of-a-preschool-in-thane": "/what-to-ask-during-a-tour-of-a-preschool-in-thane",
+  "/blog/what-to-ask-during-a-tour-of-a-preschool-in-thane/": "/what-to-ask-during-a-tour-of-a-preschool-in-thane",
+
+  // ── Early childhood education duplicate ───────────────────────────────────
+  "/early-childhood-education-importance": "/early-childhood-education-importance-india",
+  "/early-childhood-education-importance/": "/early-childhood-education-importance-india",
+
   // ── Nursery importance redirect ────────────────────────────────────────────
   "/nursery-importance": "/why-nursery-school-is-important-for-early-childhood-development",
 

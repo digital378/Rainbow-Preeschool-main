@@ -294,7 +294,7 @@ export default function FAQs() {
   return (
     <article className="min-h-screen bg-gradient-to-b from-white to-gray-50">
       <SEO
-        title="Frequently Asked Questions | Rainbow Preschool International Thane"
+        title="FAQs | Rainbow Preschool International Thane"
         description="Get answers to all your questions about Rainbow Preschool — admissions, fees, safety, curriculum, timings, transport, and more. Complete FAQ for Thane parents."
         keywords="rainbow preschool faq, preschool questions thane, preschool admission faq, preschool fees thane, preschool safety questions, preschool curriculum questions"
         canonical="https://www.rainbowpreschools.com/faqs"

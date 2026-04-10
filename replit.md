@@ -74,6 +74,7 @@ Preferred communication style: Simple, everyday language.
 - **Bot SSR**: Serves pre-rendered HTML with structured data to 28+ bot user-agents including Google, Bing, ChatGPT, Perplexity, Claude, and social crawlers.
 - **Structured Data**: Organization, LocalBusiness, FAQPage, BreadcrumbList JSON-LD on all bot SSR pages.
 - **LLMs.txt**: AI-readable site summary at `/llms.txt` covering key facts, programmes, centres, FAQs.
-- **Sitemap**: Comprehensive XML sitemap at `/sitemap.xml` (168 URLs).
+- **Sitemap**: Comprehensive XML sitemap at `/sitemap.xml` (182 URLs, deduplicated).
 - **Robots.txt**: Comprehensive with ad page blocks, WordPress legacy blocks, and canonical www sitemap URL.
 - **Semantic HTML**: Pages use `<article>`, `<section>`, `<nav aria-label>` properly; footer link groups are labeled `<nav>` elements.
+- **Cannibalization Audit**: Homepage targets brand + "preschool in thane"; `/best-preschool-near-me-in-thane` targets "best preschool in thane"; each keyword family has one primary page. 160+ 301 redirects for legacy WordPress URLs and duplicates. Audit summary at `.local/seo-audit-summary.md`.
