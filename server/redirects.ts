@@ -153,6 +153,12 @@ const redirectMap: Record<string, string> = {
   "/mid-term-playgroup-admission": "/mid-term-playgroup-admissions-benefits",
   "/mid-term-admission-open-for-playgroup-enhances-development": "/mid-term-playgroup-admissions-benefits",
   "/mid-term-admission-open-for-playgroup-enhances-development/": "/mid-term-playgroup-admissions-benefits",
+  "/parents-guide-mid-term-playgroup-admission": "/mid-term-playgroup-admissions-benefits",
+  "/parents-guide-mid-term-playgroup-admission/": "/mid-term-playgroup-admissions-benefits",
+  "/how-mid-term-admission-open-for-playgroup-supports-social-and-emotional-development": "/mid-term-playgroup-admissions-benefits",
+  "/how-mid-term-admission-open-for-playgroup-supports-social-and-emotional-development/": "/mid-term-playgroup-admissions-benefits",
+  "/questions-ask-school-visit-mid-term-playgroup-admissions": "/mid-term-playgroup-admissions-benefits",
+  "/questions-ask-school-visit-mid-term-playgroup-admissions/": "/mid-term-playgroup-admissions-benefits",
 
   // ── Best preschool slug change ─────────────────────────────────────────────
   "/best-preschool-in-thane": "/best-preschool-near-me-in-thane",

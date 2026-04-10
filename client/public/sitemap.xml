@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
   <url>
     <loc>https://www.rainbowpreschools.com/</loc>
     <lastmod>2026-04-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.00</priority>
+    <video:video>
+      <video:thumbnail_loc>https://www.rainbowpreschools.com/og-image.jpg</video:thumbnail_loc>
+      <video:title>Rainbow Preschool International — Campus Walkthrough</video:title>
+      <video:description>Take a virtual tour of Rainbow Preschool International's campus in Thane. See our colourful classrooms, safe play areas, and nurturing learning environment designed for children aged 1.5 to 6 years.</video:description>
+      <video:content_loc>https://www.rainbowpreschools.com/assets/RPS_Walkthrough_Video_-_Website_1_1766126796450.mp4</video:content_loc>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
   </url>
   <url>
     <loc>https://www.rainbowpreschools.com/about</loc>
@@ -263,24 +270,6 @@
     <lastmod>2026-04-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.65</priority>
-  </url>
-  <url>
-    <loc>https://www.rainbowpreschools.com/parents-guide-mid-term-playgroup-admission</loc>
-    <lastmod>2026-04-03</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.60</priority>
-  </url>
-  <url>
-    <loc>https://www.rainbowpreschools.com/how-mid-term-admission-open-for-playgroup-supports-social-and-emotional-development</loc>
-    <lastmod>2026-04-03</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.55</priority>
-  </url>
-  <url>
-    <loc>https://www.rainbowpreschools.com/questions-ask-school-visit-mid-term-playgroup-admissions</loc>
-    <lastmod>2026-04-03</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.55</priority>
   </url>
   <url>
     <loc>https://www.rainbowpreschools.com/preschool-admission-process-guide</loc>

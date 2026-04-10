@@ -92,7 +92,6 @@ const LazyForgetManners = lazy(() => import("@/pages/legacy-pages").then(m => ({
 const LazyTrendsEarlyChildhood = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.TrendsEarlyChildhood })));
 const LazyHealthyPreschoolMeals = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.HealthyPreschoolMeals })));
 const LazyEducationalToys = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.EducationalToys })));
-const LazyMidTermSocialDevelopment = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.MidTermSocialDevelopment })));
 const LazyAdmissions2425 = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.Admissions2425 })));
 const LazyInnovativeLearning = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.InnovativeLearning })));
 const LazyMidTermPlaygroup = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.MidTermPlaygroup })));
@@ -100,7 +99,6 @@ const LazyBrainGymActivities = lazy(() => import("@/pages/legacy-pages").then(m 
 const LazyImmunityBoostingFoods = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.ImmunityBoostingFoods })));
 const LazyColorsAndShapes = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.ColorsAndShapes })));
 const LazyCookingForKids = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.CookingForKids })));
-const LazyParentsGuideMidTerm = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.ParentsGuideMidTerm })));
 const LazyLearnWritingTips = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.LearnWritingTips })));
 const LazyEvenOddNumbers = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.EvenOddNumbers })));
 const LazyPreschoolTourQuestions = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.PreschoolTourQuestions })));
@@ -115,7 +113,6 @@ const LazyPromisingPreschoolAward = lazy(() => import("@/pages/legacy-pages").th
 const LazyLifeLessonsConfidence = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.LifeLessonsConfidence })));
 const LazyGamesMakeKidsSmarter = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.GamesMakeKidsSmarter })));
 const LazyPhysicalDevelopmentSigns = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.PhysicalDevelopmentSigns })));
-const LazyMidTermVisitQuestions = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.MidTermVisitQuestions })));
 const LazyFAQsPage = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.FAQsPage })));
 const LazyUnderstandingPreschoolImportance = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.UnderstandingPreschoolImportance })));
 const LazyBestPreschoolCurriculumThane = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.BestPreschoolCurriculumThane })));
@@ -369,7 +366,6 @@ function Router() {
         <Route path="/trends-in-early-childhood-education" component={LazyTrendsEarlyChildhood} />
         <Route path="/healthy-preschool-meals-for-bright-minds-and-bodies" component={LazyHealthyPreschoolMeals} />
         <Route path="/boost-early-childhood-development-with-educational-toys" component={LazyEducationalToys} />
-        <Route path="/how-mid-term-admission-open-for-playgroup-supports-social-and-emotional-development" component={LazyMidTermSocialDevelopment} />
         <Route path="/admissions-24-25" component={LazyAdmissions2425} />
         <Route path="/innovative-learning-activities-for-preschoolers" component={LazyInnovativeLearning} />
         <Route path="/mid-term-playgroup" component={LazyMidTermPlaygroup} />
@@ -377,7 +373,6 @@ function Router() {
         <Route path="/immunity-boosting-foods-for-kids" component={LazyImmunityBoostingFoods} />
         <Route path="/10-easy-ways-to-help-kids-learn-colours-and-shapes-better" component={LazyColorsAndShapes} />
         <Route path="/8-amazing-reasons-why-cooking-is-important-for-kids" component={LazyCookingForKids} />
-        <Route path="/parents-guide-mid-term-playgroup-admission" component={LazyParentsGuideMidTerm} />
         <Route path="/6-quick-tips-to-help-children-learn-writing" component={LazyLearnWritingTips} />
         <Route path="/fun-games-teach-even-odd-numbers" component={LazyEvenOddNumbers} />
         <Route path="/what-to-ask-during-a-tour-of-a-preschool-in-thane" component={LazyPreschoolTourQuestions} />
@@ -392,7 +387,6 @@ function Router() {
         <Route path="/51-inspiring-life-lessons-that-make-children-confident" component={LazyLifeLessonsConfidence} />
         <Route path="/play-these-9-games-to-make-kids-smarter" component={LazyGamesMakeKidsSmarter} />
         <Route path="/45-signs-of-healthy-physical-development-ages-3-6" component={LazyPhysicalDevelopmentSigns} />
-        <Route path="/questions-ask-school-visit-mid-term-playgroup-admissions" component={LazyMidTermVisitQuestions} />
         <Route path="/understanding-the-importance-of-preschool-in-early-childhood-development" component={LazyUnderstandingPreschoolImportance} />
         
         <Route path="/best-preschool-curriculum-thane" component={LazyBestPreschoolCurriculumThane} />

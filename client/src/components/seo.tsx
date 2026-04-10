@@ -75,6 +75,11 @@ export function SEO({
     updateOrCreateMeta("og:site_name", "Rainbow Preschool International", "property");
     updateOrCreateMeta("og:locale", "en_IN", "property");
 
+    updateOrCreateMeta("geo.region", "IN-MH");
+    updateOrCreateMeta("geo.placename", "Thane");
+    updateOrCreateMeta("geo.position", "19.2183;72.9781");
+    updateOrCreateMeta("ICBM", "19.2183, 72.9781");
+
     updateOrCreateMeta("twitter:card", "summary_large_image");
     updateOrCreateMeta("twitter:title", title);
     updateOrCreateMeta("twitter:description", description);

@@ -325,7 +325,16 @@ function MobileMap({ hoveredCentre, setHoveredCentre }: { hoveredCentre: string 
   );
 }
 
-export function Interactive3DMap() {
+export const centreIdToMapId: Record<string, string> = {
+  "manpada": "aggarwal",
+  "hariniwas": "hariniwas",
+  "anand-nagar": "anand-nagar",
+  "dhokali": "dhokali",
+  "kalwa": "kalwa",
+  "kasarvadavali": "kasarvadavali",
+};
+
+export function Interactive3DMap({ highlightedCentre }: { highlightedCentre?: string | null }) {
   const [hoveredCentre, setHoveredCentre] = useState<string | null>(null);
   const [loaded, setLoaded] = useState(false);
 
@@ -334,8 +343,16 @@ export function Interactive3DMap() {
     return () => clearTimeout(t);
   }, []);
 
+  useEffect(() => {
+    if (highlightedCentre) {
+      setHoveredCentre(highlightedCentre);
+      const timer = setTimeout(() => setHoveredCentre(null), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [highlightedCentre]);
+
   return (
-    <div className="mb-12" data-testid="map-3d-centres">
+    <div className="mb-12" id="centres-map" data-testid="map-3d-centres">
       <style>{`
         @keyframes float-pin {
           0%, 100% { transform: translateY(0px); }

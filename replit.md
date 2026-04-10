@@ -41,6 +41,8 @@ Preferred communication style: Simple, everyday language.
 - **Schema Markup**: Dynamic JSON-LD (EducationalOrganization with AggregateRating, Preschool/LocalBusiness with geo+ratings, WebSite, FAQPage on all keyword pages, BreadcrumbList) for enhanced search visibility including review stars in SERPs.
 - **Ad Landing Pages**: Dedicated, optimized landing pages for Google Ads (`/RIS`, `/ad-google`) and Meta Ads (`/ad`) with specific tracking and lead capture mechanisms, including Firebase Phone Authentication for OTP verification on Google Ads pages. These pages are typically `noindex`.
 - **Interactive Tools**: Preschool readiness quiz (`/preschool-readiness-quiz`), top 10 preschools comparison (`/top-preschools-in-thane`), parent testimonials with Review schema (`/testimonials`), comprehensive FAQ hub with FAQPage schema (`/faqs`).
+- **Blog Contextual Links**: `EXPLORE_MORE:` content blocks in 9 blog posts render styled callout boxes with chip-style internal links to commercial pages (programmes, admissions, centres). Renderer in `blog-post.tsx` parses `[text](/url)|[text](/url)` pipe-separated markdown links.
+- **Video Sitemap**: Homepage `<url>` entry includes `<video:video>` with campus walkthrough MP4 content URL, thumbnail, title, and description for Google Video indexing.
 - **Analytics Tracking**: Google Analytics 4 (GA4) with clean, page-based form submission events, and tracking for calls, WhatsApp clicks, directions, and local page interactions.
 
 ### Performance Optimizations

@@ -134,9 +134,6 @@ const entries: SitemapEntry[] = [
 
   // ── LEGACY PAGES – ADMISSION & PLAYGROUP ────────────────
   { url: '/mid-term-playgroup-admissions-benefits', priority: 0.65, changefreq: 'monthly' },
-  { url: '/parents-guide-mid-term-playgroup-admission', priority: 0.6, changefreq: 'monthly' },
-  { url: '/how-mid-term-admission-open-for-playgroup-supports-social-and-emotional-development', priority: 0.55, changefreq: 'monthly' },
-  { url: '/questions-ask-school-visit-mid-term-playgroup-admissions', priority: 0.55, changefreq: 'monthly' },
   { url: '/preschool-admission-process-guide', priority: 0.65, changefreq: 'monthly' },
   { url: '/preschool-admission-documents-checklist', priority: 0.65, changefreq: 'monthly' },
   { url: '/when-apply-preschool-admission-timeline', priority: 0.65, changefreq: 'monthly' },

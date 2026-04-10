@@ -63,10 +63,69 @@ const organizationSchema = {
     ratingCount: "3997",
     reviewCount: "3997",
   },
+  review: [
+    {
+      "@type": "Review",
+      author: { "@type": "Person", name: "Priya Sharma" },
+      datePublished: "2025-11-15",
+      reviewBody: "Rainbow Preschool has been wonderful for my daughter. The teachers are caring and the play-based curriculum has helped her become confident and social. Highly recommend for any parent in Thane.",
+      reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
+    },
+    {
+      "@type": "Review",
+      author: { "@type": "Person", name: "Amit Deshmukh" },
+      datePublished: "2025-10-22",
+      reviewBody: "We chose Rainbow Preschool Manpada for our son and it was the best decision. The safety measures, female staff, and small batch sizes give us complete peace of mind. His vocabulary and social skills have improved tremendously.",
+      reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
+    },
+    {
+      "@type": "Review",
+      author: { "@type": "Person", name: "Sneha Patil" },
+      datePublished: "2025-09-18",
+      reviewBody: "Both my children attended Rainbow Preschool Dhokali. The curriculum is age-appropriate and the teachers truly understand child development. The CCTV monitoring and verified pickup system are excellent safety features.",
+      reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
+    },
+    {
+      "@type": "Review",
+      author: { "@type": "Person", name: "Rahul Joshi" },
+      datePublished: "2025-08-30",
+      reviewBody: "Rainbow Preschool Kasarvadavali has a beautiful campus with well-equipped classrooms. My daughter loves going to school every day. The monthly progress reports keep us informed about her development.",
+      reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
+    },
+    {
+      "@type": "Review",
+      author: { "@type": "Person", name: "Deepali Kulkarni" },
+      datePublished: "2025-07-12",
+      reviewBody: "We moved from another preschool to Rainbow and the difference is night and day. The attention each child gets in small batches of 10-12 is remarkable. My son's reading and writing improved within months.",
+      reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
+    },
+    {
+      "@type": "Review",
+      author: { "@type": "Person", name: "Manish Thakur" },
+      datePublished: "2025-06-05",
+      reviewBody: "Best preschool in Thane without a doubt. Rainbow Preschool Anand Nagar has been exceptional. The Montessori-trained teachers, the clean campus, and the transport facility make it the complete package.",
+      reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
+    },
+    {
+      "@type": "Review",
+      author: { "@type": "Person", name: "Kavita Nair" },
+      datePublished: "2025-05-20",
+      reviewBody: "We chose Rainbow for the Kalwa centre and we're very happy. The Happy Times after-school programme is a lifesaver for working parents. My child is engaged, learning, and safe until we finish work.",
+      reviewRating: { "@type": "Rating", ratingValue: "4", bestRating: "5" },
+    },
+    {
+      "@type": "Review",
+      author: { "@type": "Person", name: "Sanjay Gupta" },
+      datePublished: "2025-04-10",
+      reviewBody: "Rainbow Preschool has earned its reputation in Thane. Three families from our society send their children here. The consistency across centres, the trained staff, and the focus on holistic development set it apart from others.",
+      reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
+    },
+  ],
   sameAs: [
     "https://www.facebook.com/rainbowpreschoolthane",
     "https://www.instagram.com/rainbowpreschoolthane",
     "https://www.youtube.com/@RainbowPreschoolInternational",
+    "https://www.justdial.com/Thane/Rainbow-Preschool-International",
   ],
   award: [
     "India Today Best Preschool Award",
@@ -746,6 +805,94 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
 
     const post = blogPosts[slug];
     if (post) {
+      const blogAuthor = {
+        "@type": "Person",
+        name: "Dr. Meghna Rai",
+        jobTitle: "Head of Curriculum & Early Childhood Education",
+        worksFor: { "@type": "Organization", name: "Rainbow Preschool International", url: BASE_URL },
+        description: "Dr. Meghna Rai leads curriculum development at Rainbow Preschool International with over 15 years of experience in early childhood education, an M.Ed in Early Childhood Studies, and Montessori certification.",
+      };
+
+      const blogFAQs: Record<string, { q: string; a: string }[]> = {
+        "signs-of-good-preschool-thane": [
+          { q: "What are the most important signs of a good preschool?", a: "Key signs include qualified ECE/Montessori-certified teachers, small class sizes (10-12 children), clean and safe facilities with CCTV, a structured play-based curriculum, and positive parent reviews. Rainbow Preschool maintains all these standards across its 6 centres in Thane." },
+          { q: "How do I evaluate a preschool before enrolling my child?", a: "Visit the campus, observe a class in session, check teacher qualifications, inspect safety measures (CCTV, secure entry), ask about the curriculum approach, and read parent reviews. Rainbow Preschool encourages campus visits and free trial classes." },
+        ],
+        "what-age-start-play-school": [
+          { q: "What is the ideal age to start play school in India?", a: "Most child development experts recommend starting play school between 1.5 to 2.5 years. At this age, children benefit from social interaction, sensory play, and structured activities. Rainbow Preschool's Playgroup programme is designed for children aged 1.5-2.5 years." },
+          { q: "Is 2 years too early for play school?", a: "No, 2 years is an excellent age to start play school. At this age, children are naturally curious and ready for social interaction. A quality play school like Rainbow Preschool provides age-appropriate activities that support cognitive, social, and motor development." },
+        ],
+        "benefits-play-school-2-year-olds": [
+          { q: "What are the benefits of play school for 2 year olds?", a: "Play school for 2 year olds builds social skills, improves language development, enhances motor skills through structured play, develops emotional independence, and prepares children for formal education. Rainbow Preschool's Playgroup programme is specifically designed for this age group." },
+          { q: "How does play school help toddler development?", a: "Play school accelerates toddler development across 5 domains: cognitive (problem-solving, curiosity), social (sharing, cooperation), emotional (self-regulation, confidence), physical (fine and gross motor skills), and language (vocabulary, communication)." },
+        ],
+        "nursery-school-admission-thane-2026": [
+          { q: "When do nursery admissions start in Thane for 2026-27?", a: "Most preschools in Thane begin nursery admissions from October-November for the next academic year. However, Rainbow Preschool offers year-round admissions, so you can enroll your child at any time. Contact 82915 68972 for current availability." },
+          { q: "What documents are needed for nursery admission in Thane?", a: "Required documents typically include: child's birth certificate, passport-size photographs, parent's Aadhaar card, address proof, and immunisation records. Some preschools may require additional documents." },
+        ],
+        "how-play-based-learning-shapes-young-minds": [
+          { q: "What is play-based learning in preschool?", a: "Play-based learning is an educational approach where children learn through structured and free play activities rather than rote memorisation. It develops cognitive, social, emotional, and physical skills naturally. Rainbow Preschool follows a play-based, activity-driven curriculum." },
+          { q: "Is play-based learning better than traditional teaching for preschoolers?", a: "Research consistently shows that play-based learning is more effective for preschool-age children. It leads to better retention, higher creativity, stronger social skills, and more positive attitudes toward learning compared to traditional rote methods." },
+        ],
+        "preparing-your-child-for-first-day-preschool": [
+          { q: "How do I prepare my toddler for their first day at preschool?", a: "Start by talking positively about school weeks in advance, visit the campus together, establish a consistent morning routine, practice brief separations, read books about starting school, and let your child choose their school bag. Rainbow Preschool also offers free trial classes to ease the transition." },
+          { q: "How long does it take a child to adjust to preschool?", a: "Most children take 2-4 weeks to fully adjust to preschool. Some may adapt within days, while others may take up to 6 weeks. Consistency, positive reinforcement, and partnership with teachers are key. Rainbow Preschool's small batch sizes help children settle faster." },
+        ],
+        "preschool-vs-daycare-difference": [
+          { q: "What is the difference between preschool and daycare?", a: "Preschool focuses on structured early childhood education with a curriculum covering literacy, numeracy, social skills, and school readiness. Daycare primarily provides childcare and supervision. Rainbow Preschool offers education-focused programmes with optional extended care through Happy Times." },
+          { q: "Should I choose preschool or daycare for my 2 year old?", a: "If your priority is your child's educational development, choose a preschool with a structured curriculum. If you primarily need childcare coverage, a daycare may suffice. Rainbow Preschool combines both — quality education with optional extended care for working parents." },
+        ],
+        "role-of-parents-early-education": [
+          { q: "How can parents support early childhood education at home?", a: "Parents can support learning by reading daily with their child, playing educational games, reinforcing school concepts through everyday activities, maintaining a consistent routine, and communicating regularly with teachers. Rainbow Preschool provides monthly progress reports to help parents stay involved." },
+          { q: "Why is parent involvement important in preschool education?", a: "Research shows that children whose parents are actively involved in their education perform better academically, have stronger social skills, and show greater self-confidence. Parent-teacher collaboration creates consistency between home and school learning." },
+        ],
+        "50-fun-learning-activities-preschoolers": [
+          { q: "What are good learning activities for preschoolers at home?", a: "Great home activities include sensory bins, sorting games, letter and number hunts, simple cooking together, nature walks, painting, playdough, building blocks, singing rhymes, and storytelling. These activities develop cognitive, motor, and language skills." },
+          { q: "How can I teach my preschooler at home?", a: "Focus on play-based learning: use everyday moments as teaching opportunities (counting while cooking, identifying colours during walks), read together daily, encourage creative play, and limit screen time. Complement home learning with a quality preschool programme." },
+        ],
+        "creating-safe-nurturing-learning-environment": [
+          { q: "What makes a preschool environment safe for children?", a: "A safe preschool has CCTV surveillance, secure entry systems, child-proof furniture, fire safety equipment, first-aid provisions, background-checked staff, daily sanitisation routines, and small teacher-to-child ratios. Rainbow Preschool maintains all these standards at every centre." },
+          { q: "How does the learning environment affect child development?", a: "A nurturing, well-designed learning environment directly impacts a child's cognitive development, emotional security, and social growth. Children learn best when they feel safe, stimulated, and supported by caring adults in a clean, organised space." },
+        ],
+        "what-children-learn-nursery-school": [
+          { q: "What does a child learn in nursery school?", a: "In nursery school, children learn pre-reading and phonics, early maths (counting, shapes, patterns), social skills (sharing, teamwork), creative arts, music and movement, basic science awareness, and self-help skills like dressing and eating independently." },
+          { q: "At what age should a child start nursery school?", a: "Children typically start nursery school between 2.5 and 4 years of age. At this stage, they are ready for structured learning activities, group interaction, and building foundational literacy and numeracy skills." },
+        ],
+        "best-childrens-books-indian-preschoolers": [
+          { q: "What are the best books for Indian preschoolers?", a: "Popular choices include Tulika Publishers' picture books, Karadi Tales, Amar Chitra Katha for older preschoolers, Pratham Books' StoryWeaver series, and classic titles like 'Gajapati Kulapati' and 'Amma, Tell Me' series. Choose age-appropriate books with colourful illustrations." },
+          { q: "How much should a preschooler read daily?", a: "Aim for 15-20 minutes of shared reading daily. This can include picture books, rhyme books, and interactive stories. Reading together builds vocabulary, listening skills, imagination, and a lifelong love of learning." },
+        ],
+      };
+
+      const postFaqs = blogFAQs[slug];
+      const faqSchema = postFaqs ? {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: postFaqs.map(faq => ({
+          "@type": "Question",
+          name: faq.q,
+          acceptedAnswer: { "@type": "Answer", text: faq.a },
+        })),
+      } : null;
+
+      const schemas: object[] = [{
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        headline: post.title,
+        description: post.description,
+        url: `${BASE_URL}/blog/${slug}`,
+        datePublished: "2025-01-15",
+        dateModified: "2026-03-20",
+        author: blogAuthor,
+        publisher: { "@type": "Organization", name: "Rainbow Preschool International", logo: { "@type": "ImageObject", url: `${BASE_URL}/images/logo.webp` } },
+        mainEntityOfPage: { "@type": "WebPage", "@id": `${BASE_URL}/blog/${slug}` },
+        articleSection: "Early Childhood Education",
+        keywords: post.keywords,
+        image: `${BASE_URL}/og-image.jpg`,
+        inLanguage: "en-IN",
+      }];
+      if (faqSchema) schemas.push(faqSchema);
+
       return {
         title: post.title,
         description: post.description,
@@ -754,19 +901,7 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
         ogType: "article",
         h1: post.title,
         breadcrumbs: [{ name: "Home", url: "/" }, { name: "Blog", url: "/blog" }, { name: post.title.split("|")[0].trim(), url: `/blog/${slug}` }],
-        structuredData: [{
-          "@context": "https://schema.org",
-          "@type": "BlogPosting",
-          headline: post.title,
-          description: post.description,
-          url: `${BASE_URL}/blog/${slug}`,
-          author: { "@type": "Organization", name: "Rainbow Preschool International", url: BASE_URL },
-          publisher: { "@type": "Organization", name: "Rainbow Preschool International", logo: { "@type": "ImageObject", url: `${BASE_URL}/images/logo.webp` } },
-          mainEntityOfPage: { "@type": "WebPage", "@id": `${BASE_URL}/blog/${slug}` },
-          articleSection: "Early Childhood Education",
-          keywords: post.keywords,
-          image: `${BASE_URL}/og-image.jpg`,
-        }],
+        structuredData: schemas,
         internalLinks: commonInternalLinks,
       };
     }

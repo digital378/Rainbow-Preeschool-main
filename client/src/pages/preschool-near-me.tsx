@@ -4,9 +4,10 @@ import { ContactForm } from "@/components/contact-form";
 import { centres } from "@shared/centre-data";
 import { Car, Users, Zap, MessageCircle, Phone, Shield, MapPin, ChevronDown, BookOpen, Heart, Star } from "lucide-react";
 import { trackWhatsAppClick, trackCallClick } from "@/lib/analytics";
-import { Interactive3DMap } from "@/components/interactive-3d-map";
+import { Interactive3DMap, centreIdToMapId } from "@/components/interactive-3d-map";
 import { SEOCrossLinks } from "@/components/seo-crosslinks";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
+import { Navigation } from "lucide-react";
 
 // ── Page data ─────────────────────────────────────────────────────────────────
 
@@ -205,10 +206,20 @@ const faqs = [
 export default function PreschoolNearMe() {
   const [showBelowFold, setShowBelowFold] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [mapHighlight, setMapHighlight] = useState<string | null>(null);
 
   useEffect(() => {
     const timer = setTimeout(() => setShowBelowFold(true), 100);
     return () => clearTimeout(timer);
+  }, []);
+
+  const handleGetDirections = useCallback((centreId: string) => {
+    const mapId = centreIdToMapId[centreId] || centreId;
+    setMapHighlight(mapId);
+    const mapEl = document.getElementById("centres-map");
+    if (mapEl) {
+      mapEl.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
   }, []);
 
   const breadcrumbs = [
@@ -301,6 +312,14 @@ export default function PreschoolNearMe() {
                         </Link>
                       )}
                     </div>
+                    <button
+                      onClick={() => handleGetDirections(centre.id)}
+                      className="mt-2 w-full flex items-center justify-center gap-1.5 px-3 py-2 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800 rounded-lg text-sm font-medium hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-colors"
+                      data-testid={`button-directions-${centre.id}`}
+                    >
+                      <Navigation className="w-3.5 h-3.5" />
+                      Get Directions
+                    </button>
                   </div>
                 </div>
               ))}
@@ -351,13 +370,21 @@ export default function PreschoolNearMe() {
                           </Link>
                         )}
                       </div>
+                      <button
+                        onClick={() => handleGetDirections(centre.id)}
+                        className="mt-2 w-full flex items-center justify-center gap-1.5 px-3 py-2 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800 rounded-lg text-sm font-medium hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-colors"
+                        data-testid={`button-directions-${centre.id}`}
+                      >
+                        <Navigation className="w-3.5 h-3.5" />
+                        Get Directions
+                      </button>
                     </div>
                   </div>
                 ))}
               </div>
             )}
 
-            <Interactive3DMap />
+            <Interactive3DMap highlightedCentre={mapHighlight} />
 
             {/* ── ENQUIRY FORM ──────────────────────────────────────────────── */}
             <div className="max-w-xl mx-auto bg-white p-4 md:p-6 rounded-xl shadow-lg border text-gray-900 min-h-[480px]">

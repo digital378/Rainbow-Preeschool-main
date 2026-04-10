@@ -253,6 +253,7 @@ const blogPostsData: Record<string, BlogPostData> = {
       "**What it looks like:** Dress-up, role-playing, creating imaginary scenarios, talking to stuffed animals or dolls as if they're real",
       "**Skills developed:**\n- Language and vocabulary (children use more complex language in pretend play)\n- Emotional understanding (exploring different perspectives and feelings)\n- Creativity and imagination\n- Social negotiation (when playing with others)\n- Abstract thinking (using one object to represent another)\n- Self-regulation (staying 'in character' requires impulse control)",
       "**At Rainbow Preschool:** Our dramatic play centres include home corners, markets, doctor's offices, and other themed areas that invite imaginative exploration.",
+      "EXPLORE_MORE:[Our Play-Based Programmes](/programmes)|[Playgroup for Toddlers](/playgroup)|[Find a Centre Near You](/preschool-near-me)|[Parent Testimonials](/testimonials)",
       "### 2. Constructive Play (Building and Creating)",
       "Constructive play involves manipulating materials to create something - whether it's a block tower, a painting, or a sand castle.",
       "**What it looks like:** Building with blocks, Legos, or magnetic tiles; creating art projects; constructing with recycled materials; making models with clay or playdough",
@@ -359,6 +360,7 @@ const blogPostsData: Record<string, BlogPostData> = {
       "**Stay Calm:** Children pick up on our emotions. If you're anxious, they will be too. Project confidence and positivity, even if you're feeling nervous inside.",
       "**Keep Goodbye Brief:** A long, drawn-out goodbye can actually increase anxiety. Give a hug, say 'I love you,' and remind them when you'll be back. Then go.",
       "**Trust the Teachers:** Trained preschool teachers are experts at helping children settle in. Most children stop crying within minutes of parents leaving.",
+      "EXPLORE_MORE:[Our Programmes](/programmes)|[Find a Centre Near You](/preschool-near-me)|[Preschool Admissions 2026-27](/preschool-admissions)|[Read: Signs of a Good Preschool](/blog/signs-of-good-preschool-thane)",
       "## The First Week: What to Expect",
       "**Some Resistance is Normal:** Don't be surprised if your child doesn't want to go on day two or three. This is completely normal and usually passes.",
       "**Stay Consistent:** As tempting as it might be to give your child a day off, consistency helps children adjust faster.",
@@ -396,6 +398,7 @@ const blogPostsData: Record<string, BlogPostData> = {
       "**Establish Routines:** Consistent routines for meals, bedtime, and daily activities give children security and help them develop self-regulation.",
       "## The Power of Play at Home",
       "Play isn't just for school. At home, provide opportunities for:\n- Creative play with art supplies\n- Constructive play with blocks or Legos\n- Imaginative play with dolls, action figures, or dress-up\n- Physical play in parks and open spaces\n- Helping with age-appropriate household tasks",
+      "EXPLORE_MORE:[Our Programmes](/programmes)|[Playgroup for Ages 1.5-2.5](/playgroup)|[Parent Testimonials](/testimonials)|[FAQs for Parents](/faqs)",
       "## Partnering with Your Child's Preschool",
       "The most successful early education happens when parents and schools work together. Here's how:",
       "**Communicate:** Share relevant information about your child - their interests, any challenges, or changes at home that might affect them.",
@@ -447,6 +450,7 @@ const blogPostsData: Record<string, BlogPostData> = {
       "**Stimulating but Not Overwhelming:** Classrooms are interesting and inviting without being chaotic or overstimulating.",
       "**Natural Light and Ventilation:** Comfortable physical conditions support focus and wellbeing.",
       "**Outdoor Areas:** Safe outdoor spaces allow for physical activity and connection with nature.",
+      "EXPLORE_MORE:[Visit Our Centres](/preschool-near-me)|[Our Programmes](/programmes)|[10 Signs of a Good Preschool](/blog/signs-of-good-preschool-thane)|[Preschool Admissions](/preschool-admissions)",
       "## The Role of Relationships",
       "The most important aspect of any learning environment is the people in it. At Rainbow Preschool:",
       "**Trained Teachers:** Our educators understand child development and know how to create nurturing relationships.",
@@ -501,6 +505,7 @@ const blogPostsData: Record<string, BlogPostData> = {
       "- **Security:** CCTV surveillance, controlled entry/exit, verified pickup systems\n- **Child-proofing:** Covered electrical outlets, rounded furniture edges, secured heavy items\n- **Hygiene:** Clean washrooms, sanitised surfaces, hand-washing stations\n- **Outdoor area:** Safe play equipment, fenced area, weather protection\n- **Emergency readiness:** Fire extinguishers, first-aid kits, evacuation plans",
       "**Why it matters:** Children cannot learn effectively if they're not physically safe. A well-maintained facility also reflects the school's overall attention to detail and commitment to quality.",
       "Rainbow Preschool maintains 24/7 CCTV monitoring, daily hygiene routines, fire safety equipment, and first-aid-trained staff across all centres.",
+      "EXPLORE_MORE:[Find a Centre Near You](/preschool-near-me)|[Our Programmes](/programmes)|[Preschool Admissions 2026-27](/preschool-admissions)|[Is Your Child Ready? Take the Quiz](/preschool-readiness-quiz)",
       "## Sign 6: Strong Communication with Parents",
       "A quality preschool keeps parents informed and involved:",
       "- Regular updates on your child's activities and progress\n- Parent-teacher meetings (at least quarterly)\n- Open-door policy for parent visits\n- Responsive to parent concerns and questions\n- Digital communication for daily updates",
@@ -575,6 +580,7 @@ const blogPostsData: Record<string, BlogPostData> = {
       "**Preschool:**\n- Fees reflect educational programme quality\n- Typically charges per term or annually\n- May include materials, activities, and events in the fee",
       "**Daycare:**\n- Charges are usually based on hours or days\n- May cost more monthly due to full-day care\n- Additional charges for meals and activities are common",
       "The investment in preschool education yields measurable returns — Nobel Prize-winning economist James Heckman's research shows a 13% annual return on investment in quality early childhood education through better academic outcomes and higher adult earnings.",
+      "EXPLORE_MORE:[Explore Rainbow's Programmes](/programmes)|[Preschool Admissions](/preschool-admissions)|[Preschool Near Me](/preschool-near-me)|[Happy Times After-School Programme](/happy-times)",
       "## 7. Social Development",
       "**Preschool:**\n- Intentionally structured group activities develop social skills\n- Children learn sharing, turn-taking, cooperation, and conflict resolution\n- Teachers guide social interactions with specific strategies\n- Children learn classroom routines that prepare them for school",
       "**Daycare:**\n- Social interactions happen naturally but may not be guided\n- Mixed-age groups can be beneficial but also challenging\n- Less structured approach to social skill development",
@@ -640,6 +646,7 @@ const blogPostsData: Record<string, BlogPostData> = {
       "### \"My child is too young — won't they just cry all day?\"",
       "Some crying during the first week is completely normal and expected. At Rainbow Preschool, our teachers are specially trained in helping toddlers settle in. Most children stop crying within 15-20 minutes of drop-off, and within 1-2 weeks, they begin looking forward to school.",
       "We also offer a gradual settling-in process where parents can stay for short periods initially and gradually increase separation time.",
+      "EXPLORE_MORE:[Explore Our Playgroup Programme](/playgroup)|[Preschool Admissions 2026-27](/preschool-admissions)|[Is Your Child Ready? Take the Quiz](/preschool-readiness-quiz)|[Visit a Centre Near You](/preschool-near-me)",
       "### \"My child isn't talking yet. Can they still join?\"",
       "Absolutely. Many 1.5-year-olds communicate primarily through gestures, sounds, and a few words. Play school actually accelerates language development because children hear more words, engage in songs and rhymes, and are motivated to communicate with peers and teachers.",
       "### \"What about toilet training?\"",
@@ -701,6 +708,7 @@ const blogPostsData: Record<string, BlogPostData> = {
       "While flexibility is important for toddlers, some structure is beneficial. A consistent daily routine at play school helps children understand sequencing, develop a sense of time and order, feel secure and in control, and transition smoothly between activities.",
       "### 8. Creativity and Imagination",
       "Through art activities, pretend play, music, and open-ended exploration, play school nurtures the creative thinking that is foundational to problem-solving and innovation throughout life.",
+      "EXPLORE_MORE:[Rainbow Playgroup Programme](/playgroup)|[Find the Nearest Centre](/preschool-near-me)|[Admissions Open 2026-27](/preschool-admissions)|[Compare Top Preschools in Thane](/top-preschools-in-thane)",
       "### 9. Cognitive Stimulation",
       "Age-appropriate activities introduce early concepts of colours, shapes, and sorting, cause and effect, simple problem-solving, memory through songs and games, and matching, patterns, and sequencing.",
       "### 10. Preparation for Formal Schooling",
@@ -767,6 +775,7 @@ const blogPostsData: Record<string, BlogPostData> = {
       "Once offered admission, confirm your seat by paying the admission fees within the stated deadline. Complete any remaining paperwork. Attend the orientation session for parents.",
       "### Step 6: Prepare for Day One",
       "Before the first day, label all belongings with your child's name, attend any welcome/orientation events, establish a morning routine, and talk to your child about school in a positive way.",
+      "EXPLORE_MORE:[Rainbow Nursery Programme](/nursery)|[Find Your Nearest Centre](/preschool-near-me)|[Compare Top 10 Preschools in Thane](/top-preschools-in-thane)|[Schedule a Campus Visit](/contact)",
       "## Understanding Nursery School Fees in Thane",
       "Nursery school fees in Thane vary widely based on the school's reputation, location, infrastructure, and programme offering:",
       "**Budget-friendly options:** ₹15,000-30,000 per year\n**Mid-range preschools:** ₹30,000-60,000 per year\n**Premium preschools:** ₹60,000-1,20,000+ per year",
@@ -1162,6 +1171,26 @@ export default function BlogPost() {
 
           <div className="prose prose-lg max-w-none dark:prose-invert">
             {post.content.map((paragraph, index) => {
+              if (paragraph.startsWith("EXPLORE_MORE:")) {
+                const linksRaw = paragraph.replace("EXPLORE_MORE:", "").trim();
+                const linkItems = linksRaw.split("|").map(l => {
+                  const match = l.trim().match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+                  return match ? { text: match[1], url: match[2] } : null;
+                }).filter(Boolean) as { text: string; url: string }[];
+                return (
+                  <div key={index} className="my-8 p-5 bg-red-50/60 dark:bg-red-950/30 border border-red-200/50 dark:border-red-800/40 rounded-xl">
+                    <p className="text-xs font-semibold text-primary uppercase tracking-wide mb-3">Explore More from Rainbow Preschool</p>
+                    <div className="flex flex-wrap gap-2">
+                      {linkItems.map((link, i) => (
+                        <Link key={i} href={link.url} className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white dark:bg-gray-800 border border-red-200/60 dark:border-red-800/40 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-200 hover:border-primary hover:text-primary transition-colors" data-testid={`link-explore-${i}`}>
+                          <CheckCircle className="w-3.5 h-3.5 text-primary" />
+                          {link.text}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                );
+              }
               if (paragraph.startsWith("RIS_BACKLINK:")) {
                 const text = paragraph.replace("RIS_BACKLINK:", "");
                 const parts = text.split(/(\[[^\]]+\]\([^)]+\))/g);
