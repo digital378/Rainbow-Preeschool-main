@@ -1076,7 +1076,7 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
 
       const schemas: object[] = [{
         "@context": "https://schema.org",
-        "@type": "BlogPosting",
+        "@type": ["BlogPosting", "Article"],
         headline: post.title,
         description: post.description,
         url: `${BASE_URL}/blog/${slug}`,
