@@ -27,11 +27,15 @@ const BOT_USER_AGENTS = [
   "bytespider",
   "chatgpt-user",
   "gptbot",
+  "oai-searchbot",
   "perplexitybot",
   "claudebot",
   "anthropic-ai",
   "cohere-ai",
   "meta-externalagent",
+  "amazonbot",
+  "duckassist",
+  "youbot",
 ];
 
 function isBot(userAgent: string): boolean {

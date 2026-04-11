@@ -122,6 +122,7 @@ const organizationSchema = {
     },
   ],
   sameAs: [
+    "https://www.google.com/maps/place/?q=place_id:ChIJs8uL-1-5vjcRPWjKJYOMaA0",
     "https://www.facebook.com/rainbowpreschoolthane",
     "https://www.instagram.com/rainbowpreschoolthane",
     "https://www.youtube.com/@RainbowPreschoolInternational",
