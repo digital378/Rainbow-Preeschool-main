@@ -71,7 +71,7 @@ const expertiseAreas = [
 
 export default function AkheelaBalbale() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background pt-20 md:pt-24">
       <SEO
         title="Akheela Balbale | Head of Curriculum | Rainbow Preschool International"
         description="Meet Akheela Balbale, Head of Curriculum at Rainbow Preschool International. Over 15 years of early childhood education expertise, M.Ed in ECE, Montessori certified."
