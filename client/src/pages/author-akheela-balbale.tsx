@@ -10,11 +10,11 @@ const BASE_URL = "https://www.rainbowpreschools.com";
 const personSchema = {
   "@context": "https://schema.org",
   "@type": "Person",
-  "@id": `${BASE_URL}/about/dr-meghna-rai`,
-  name: "Dr. Meghna Rai",
+  "@id": `${BASE_URL}/about/akheela-balbale`,
+  name: "Akheela Balbale",
   jobTitle: "Head of Curriculum & Early Childhood Education Specialist",
-  description: "Dr. Meghna Rai leads curriculum development at Rainbow Preschool International with 15+ years of experience in early childhood education, an M.Ed in Early Childhood Studies, and Montessori certification.",
-  url: `${BASE_URL}/about/dr-meghna-rai`,
+  description: "Akheela Balbale leads curriculum development at Rainbow Preschool International with 15+ years of experience in early childhood education, an M.Ed in Early Childhood Studies, and Montessori certification.",
+  url: `${BASE_URL}/about/akheela-balbale`,
   image: `${BASE_URL}/og-image.jpg`,
   worksFor: {
     "@type": "EducationalOrganization",
@@ -29,7 +29,7 @@ const personSchema = {
     { "@type": "EducationalOccupationalCredential", name: "M.Ed in Early Childhood Studies", credentialCategory: "Degree" },
   ],
   knowsAbout: ["Early Childhood Education", "Play-Based Learning", "Montessori Method", "Preschool Curriculum Development", "Child Development", "Early Literacy", "Social-Emotional Learning"],
-  sameAs: [`${BASE_URL}/about/dr-meghna-rai`],
+  sameAs: [`${BASE_URL}/about/akheela-balbale`],
 };
 
 const breadcrumbSchema = {
@@ -38,7 +38,7 @@ const breadcrumbSchema = {
   itemListElement: [
     { "@type": "ListItem", position: 1, name: "Home", item: BASE_URL },
     { "@type": "ListItem", position: 2, name: "About", item: `${BASE_URL}/about` },
-    { "@type": "ListItem", position: 3, name: "Dr. Meghna Rai", item: `${BASE_URL}/about/dr-meghna-rai` },
+    { "@type": "ListItem", position: 3, name: "Akheela Balbale", item: `${BASE_URL}/about/akheela-balbale` },
   ],
 };
 
@@ -69,14 +69,14 @@ const expertiseAreas = [
   "NEP 2020 alignment for early childhood education",
 ];
 
-export default function DrMeghnaRaiPage() {
+export default function AkheelaBalbale() {
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="Dr. Meghna Rai | Head of Curriculum | Rainbow Preschool International"
-        description="Meet Dr. Meghna Rai, Head of Curriculum at Rainbow Preschool International. Over 15 years of early childhood education expertise, M.Ed in ECE, Montessori certified."
-        keywords="Dr Meghna Rai, rainbow preschool curriculum, early childhood education expert, preschool educator thane, ECE specialist"
-        canonical="/about/dr-meghna-rai"
+        title="Akheela Balbale | Head of Curriculum | Rainbow Preschool International"
+        description="Meet Akheela Balbale, Head of Curriculum at Rainbow Preschool International. Over 15 years of early childhood education expertise, M.Ed in ECE, Montessori certified."
+        keywords="Akheela Balbale, rainbow preschool curriculum, early childhood education expert, preschool educator thane, ECE specialist"
+        canonical="/about/akheela-balbale"
         structuredData={[personSchema, breadcrumbSchema]}
       />
 
@@ -87,7 +87,7 @@ export default function DrMeghnaRaiPage() {
           <span className="mx-2">›</span>
           <Link href="/about" className="hover:text-primary">About</Link>
           <span className="mx-2">›</span>
-          <span className="text-foreground">Dr. Meghna Rai</span>
+          <span className="text-foreground">Akheela Balbale</span>
         </nav>
 
         {/* Hero Section */}
@@ -95,9 +95,9 @@ export default function DrMeghnaRaiPage() {
           <div className="flex-shrink-0">
             <div
               className="w-32 h-32 md:w-40 md:h-40 rounded-full bg-primary flex items-center justify-center text-white text-5xl md:text-6xl font-bold shadow-lg"
-              aria-label="Dr. Meghna Rai profile avatar"
+              aria-label="Akheela Balbale profile avatar"
             >
-              M
+              A
             </div>
           </div>
           <div className="flex-1">
@@ -107,13 +107,13 @@ export default function DrMeghnaRaiPage() {
               <Badge variant="secondary" className="text-xs">Curriculum Designer</Badge>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-2">
-              Dr. Meghna Rai
+              Akheela Balbale
             </h1>
             <p className="text-primary font-semibold text-lg mb-3">
               Head of Curriculum &amp; Early Childhood Education Specialist
             </p>
             <p className="text-muted-foreground leading-relaxed">
-              Dr. Meghna Rai is the Head of Curriculum at Rainbow Preschool International, Thane. With over 15 years of dedicated experience in early childhood education, she designs and oversees the play-based curriculum delivered across all 6 Rainbow Preschool centres — nurturing over 1,00,000 young learners since 2007.
+              Akheela Balbale is the Head of Curriculum at Rainbow Preschool International, Thane. With over 15 years of dedicated experience in early childhood education, she designs and oversees the play-based curriculum delivered across all 6 Rainbow Preschool centres — nurturing over 1,00,000 young learners since 2007.
             </p>
             <div className="mt-4 flex items-center gap-2 text-sm text-muted-foreground">
               <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
@@ -126,13 +126,13 @@ export default function DrMeghnaRaiPage() {
           <div className="md:col-span-2 space-y-8">
             {/* About */}
             <section aria-labelledby="about-heading">
-              <h2 id="about-heading" className="text-xl font-bold text-foreground mb-4 border-b pb-2">About Dr. Meghna Rai</h2>
+              <h2 id="about-heading" className="text-xl font-bold text-foreground mb-4 border-b pb-2">About Akheela Balbale</h2>
               <div className="space-y-4 text-muted-foreground leading-relaxed">
                 <p>
-                  Dr. Meghna Rai joined Rainbow Preschool International in its early years and has been instrumental in building the curriculum framework that defines the Rainbow learning experience. Her approach combines the best of Montessori principles, play-based learning theory, and activity-based pedagogy into a cohesive, age-appropriate programme for children aged 1.5 to 6 years.
+                  Akheela Balbale joined Rainbow Preschool International in its early years and has been instrumental in building the curriculum framework that defines the Rainbow learning experience. Her approach combines the best of Montessori principles, play-based learning theory, and activity-based pedagogy into a cohesive, age-appropriate programme for children aged 1.5 to 6 years.
                 </p>
                 <p>
-                  She holds a Master of Education (M.Ed) in Early Childhood Studies from the University of Mumbai and holds an internationally recognised Montessori certification. Her training and expertise span child development, early literacy, social-emotional learning, and teacher professional development.
+                  She holds a Master of Education (M.Ed) in Early Childhood Studies from the University of Mumbai and an internationally recognised Montessori certification. Her training and expertise span child development, early literacy, social-emotional learning, and teacher professional development.
                 </p>
                 <p>
                   Under her leadership, Rainbow Preschool has received recognition from India Today, ScooNews, and the Economic Times for curriculum excellence. She regularly conducts workshops for parents and teachers on child development milestones, learning readiness, and supportive home environments.
@@ -157,7 +157,7 @@ export default function DrMeghnaRaiPage() {
             <section aria-labelledby="role-heading">
               <h2 id="role-heading" className="text-xl font-bold text-foreground mb-4 border-b pb-2">Role at Rainbow Preschool</h2>
               <div className="space-y-3 text-muted-foreground leading-relaxed">
-                <p>As Head of Curriculum, Dr. Meghna Rai is responsible for:</p>
+                <p>As Head of Curriculum, Akheela Balbale is responsible for:</p>
                 <ul className="space-y-2 ml-4">
                   {[
                     "Designing and updating Playgroup, Nursery, and Kindergarten curriculum frameworks",
@@ -180,7 +180,7 @@ export default function DrMeghnaRaiPage() {
             <section aria-labelledby="articles-heading">
               <h2 id="articles-heading" className="text-xl font-bold text-foreground mb-4 border-b pb-2">Published Articles</h2>
               <p className="text-muted-foreground mb-4">
-                Dr. Meghna Rai regularly contributes educational articles to the Rainbow Preschool blog on topics including preschool readiness, play-based learning, child development, and parenting in the early years.
+                Akheela Balbale regularly contributes educational articles to the Rainbow Preschool blog on topics including preschool readiness, play-based learning, child development, and parenting in the early years.
               </p>
               <div className="space-y-3">
                 {recentPosts.map((post) => (

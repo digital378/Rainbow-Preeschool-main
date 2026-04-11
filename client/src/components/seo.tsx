@@ -235,12 +235,12 @@ export function createBlogPostSchema(post: {
     dateModified: post.dateModified || post.datePublished,
     author: {
       "@type": "Person",
-      name: "Dr. Meghna Rai",
+      name: "Akheela Balbale",
       jobTitle: "Head of Curriculum & Early Childhood Education Specialist",
-      url: `${BASE_URL}/about/dr-meghna-rai`,
-      description: "Dr. Meghna Rai leads curriculum development at Rainbow Preschool International with 15+ years in early childhood education, an M.Ed in Early Childhood Studies, and Montessori certification.",
+      url: `${BASE_URL}/about/akheela-balbale`,
+      description: "Akheela Balbale leads curriculum development at Rainbow Preschool International with 15+ years in early childhood education, an M.Ed in Early Childhood Studies, and Montessori certification.",
       sameAs: [
-        `${BASE_URL}/about/dr-meghna-rai`,
+        `${BASE_URL}/about/akheela-balbale`,
       ],
       worksFor: {
         "@type": "Organization",

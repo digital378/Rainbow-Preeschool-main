@@ -230,7 +230,7 @@ const LazySeparationAnxietyTips = lazy(() => import("@/pages/legacy-pages").then
 const LazySocialisationBenefitsToddlers = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.SocialisationBenefitsToddlers })));
 
 const LazyAuthorArchivePage = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.AuthorArchivePage })));
-const DrMeghnaRaiPage = lazy(() => import("@/pages/author-dr-meghna-rai"));
+const AkheelaBalbale = lazy(() => import("@/pages/author-akheela-balbale"));
 
 const LazyTermsPage = lazy(() => import("@/pages/legal").then(m => ({ default: m.TermsPage })));
 const LazyPrivacyPage = lazy(() => import("@/pages/legal").then(m => ({ default: m.PrivacyPage })));
@@ -524,7 +524,7 @@ function Router() {
         <Route path="/separation-anxiety-tips-playgroup-parents" component={LazySeparationAnxietyTips} />
         <Route path="/socialisation-benefits-toddlers-playgroup" component={LazySocialisationBenefitsToddlers} />
         
-        <Route path="/about/dr-meghna-rai" component={DrMeghnaRaiPage} />
+        <Route path="/about/akheela-balbale" component={AkheelaBalbale} />
         <Route path="/author/rainbowpreschools" component={LazyAuthorArchivePage} />
         <Route path="/author/rainbow-preschools" component={LazyAuthorArchivePage} />
         

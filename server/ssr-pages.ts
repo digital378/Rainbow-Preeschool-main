@@ -761,22 +761,22 @@ const staticPages: Record<string, PageSEOData> = {
     }],
     internalLinks: commonInternalLinks,
   },
-  "/about/dr-meghna-rai": {
-    title: "Dr. Meghna Rai | Head of Curriculum | Rainbow Preschool International",
-    description: "Meet Dr. Meghna Rai, Head of Curriculum at Rainbow Preschool International. Over 15 years of early childhood education expertise, M.Ed in ECE, Montessori certified. Author of educational content on preschool development.",
-    keywords: "Dr Meghna Rai, rainbow preschool curriculum, early childhood education expert, preschool educator thane, ECE specialist",
-    canonical: `${BASE_URL}/about/dr-meghna-rai`,
-    h1: "Dr. Meghna Rai — Head of Curriculum & Early Childhood Education Specialist",
-    introText: "Dr. Meghna Rai is the Head of Curriculum at Rainbow Preschool International, Thane. With over 15 years of experience in early childhood education, she designs and oversees the play-based curriculum delivered across all 6 Rainbow Preschool centres.",
-    breadcrumbs: [{ name: "Home", url: "/" }, { name: "About", url: "/about" }, { name: "Dr. Meghna Rai", url: "/about/dr-meghna-rai" }],
+  "/about/akheela-balbale": {
+    title: "Akheela Balbale | Head of Curriculum | Rainbow Preschool International",
+    description: "Meet Akheela Balbale, Head of Curriculum at Rainbow Preschool International. Over 15 years of early childhood education expertise, M.Ed in ECE, Montessori certified. Author of educational content on preschool development.",
+    keywords: "Akheela Balbale, rainbow preschool curriculum, early childhood education expert, preschool educator thane, ECE specialist",
+    canonical: `${BASE_URL}/about/akheela-balbale`,
+    h1: "Akheela Balbale — Head of Curriculum & Early Childhood Education Specialist",
+    introText: "Akheela Balbale is the Head of Curriculum at Rainbow Preschool International, Thane. With over 15 years of experience in early childhood education, she designs and oversees the play-based curriculum delivered across all 6 Rainbow Preschool centres.",
+    breadcrumbs: [{ name: "Home", url: "/" }, { name: "About", url: "/about" }, { name: "Akheela Balbale", url: "/about/akheela-balbale" }],
     structuredData: [{
       "@context": "https://schema.org",
       "@type": "Person",
-      "@id": `${BASE_URL}/about/dr-meghna-rai`,
-      name: "Dr. Meghna Rai",
+      "@id": `${BASE_URL}/about/akheela-balbale`,
+      name: "Akheela Balbale",
       jobTitle: "Head of Curriculum & Early Childhood Education Specialist",
-      description: "Dr. Meghna Rai leads curriculum development at Rainbow Preschool International with 15+ years of experience in early childhood education, an M.Ed in Early Childhood Studies, and Montessori certification.",
-      url: `${BASE_URL}/about/dr-meghna-rai`,
+      description: "Akheela Balbale leads curriculum development at Rainbow Preschool International with 15+ years of experience in early childhood education, an M.Ed in Early Childhood Studies, and Montessori certification.",
+      url: `${BASE_URL}/about/akheela-balbale`,
       image: `${BASE_URL}/og-image.jpg`,
       worksFor: {
         "@type": "EducationalOrganization",
@@ -791,13 +791,13 @@ const staticPages: Record<string, PageSEOData> = {
         { "@type": "EducationalOccupationalCredential", name: "M.Ed in Early Childhood Studies", credentialCategory: "Degree" },
       ],
       knowsAbout: ["Early Childhood Education", "Play-Based Learning", "Montessori Method", "Preschool Curriculum Development", "Child Development", "Early Literacy", "Social-Emotional Learning"],
-      sameAs: [`${BASE_URL}/about/dr-meghna-rai`],
+      sameAs: [`${BASE_URL}/about/akheela-balbale`],
     }],
     contentSections: [
       { heading: "Qualifications & Expertise", items: ["M.Ed in Early Childhood Studies", "Montessori Certification", "15+ years of experience in preschool education", "Specialist in play-based curriculum design", "Expert in child development and school readiness"] },
-      { heading: "Role at Rainbow Preschool", text: "As Head of Curriculum, Dr. Meghna Rai is responsible for designing and updating the play-based learning programmes delivered at all 6 Rainbow Preschool International centres in Thane. She trains and mentors teachers, tracks child development outcomes, and ensures curriculum alignment with NEP 2020 early childhood education guidelines." },
+      { heading: "Role at Rainbow Preschool", text: "As Head of Curriculum, Akheela Balbale is responsible for designing and updating the play-based learning programmes delivered at all 6 Rainbow Preschool International centres in Thane. She trains and mentors teachers, tracks child development outcomes, and ensures curriculum alignment with NEP 2020 early childhood education guidelines." },
       { heading: "Areas of Expertise", items: ["Play-based learning curriculum design", "Early literacy and numeracy development", "Social-emotional learning for toddlers", "Teacher training and professional development", "Child development assessment", "Parent education and engagement"] },
-      { heading: "Published Articles", text: "Dr. Meghna Rai regularly contributes educational articles to the Rainbow Preschool blog, covering topics such as preschool readiness, play-based learning, child development milestones, and parenting tips for early childhood." },
+      { heading: "Published Articles", text: "Akheela Balbale regularly contributes educational articles to the Rainbow Preschool blog, covering topics such as preschool readiness, play-based learning, child development milestones, and parenting tips for early childhood." },
     ],
     internalLinks: [...commonInternalLinks, { text: "Our Blog", url: "/blog" }, { text: "Programmes", url: "/programmes" }],
   },
@@ -998,10 +998,10 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
     if (post) {
       const blogAuthor = {
         "@type": "Person",
-        name: "Dr. Meghna Rai",
+        name: "Akheela Balbale",
         jobTitle: "Head of Curriculum & Early Childhood Education",
         worksFor: { "@type": "Organization", name: "Rainbow Preschool International", url: BASE_URL },
-        description: "Dr. Meghna Rai leads curriculum development at Rainbow Preschool International with over 15 years of experience in early childhood education, an M.Ed in Early Childhood Studies, and Montessori certification.",
+        description: "Akheela Balbale leads curriculum development at Rainbow Preschool International with over 15 years of experience in early childhood education, an M.Ed in Early Childhood Studies, and Montessori certification.",
       };
 
       const blogFAQs: Record<string, { q: string; a: string }[]> = {
@@ -1095,11 +1095,11 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
       schemas.push({
         "@context": "https://schema.org",
         "@type": "Person",
-        "@id": `${BASE_URL}/about/dr-meghna-rai`,
-        name: "Dr. Meghna Rai",
+        "@id": `${BASE_URL}/about/akheela-balbale`,
+        name: "Akheela Balbale",
         jobTitle: "Head of Curriculum & Early Childhood Education Specialist",
-        description: "Dr. Meghna Rai leads curriculum development at Rainbow Preschool International with 15+ years of experience in early childhood education, an M.Ed in Early Childhood Studies, and Montessori certification.",
-        url: `${BASE_URL}/about/dr-meghna-rai`,
+        description: "Akheela Balbale leads curriculum development at Rainbow Preschool International with 15+ years of experience in early childhood education, an M.Ed in Early Childhood Studies, and Montessori certification.",
+        url: `${BASE_URL}/about/akheela-balbale`,
         image: `${BASE_URL}/og-image.jpg`,
         worksFor: { "@type": "EducationalOrganization", name: "Rainbow Preschool International", url: BASE_URL },
         hasCredential: [
@@ -1107,7 +1107,7 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
           { "@type": "EducationalOccupationalCredential", name: "M.Ed in Early Childhood Studies", credentialCategory: "Degree" },
         ],
         knowsAbout: ["Early Childhood Education", "Play-Based Learning", "Montessori Method", "Preschool Curriculum Development", "Child Development"],
-        sameAs: [`${BASE_URL}/about/dr-meghna-rai`],
+        sameAs: [`${BASE_URL}/about/akheela-balbale`],
       });
 
       return {
