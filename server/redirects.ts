@@ -211,6 +211,14 @@ const redirectMap: Record<string, string> = {
   "/understanding-the-importance-of-preschool-in-early-childhood-development/feed": "/blog",
   "/9-things-fairy-tales-teach-children": "/blog",
   "/9-things-fairy-tales-teach-children/": "/blog",
+  "/dandiya-night-2018": "/blog",
+  "/dandiya-night-2018/": "/blog",
+  "/8-security-facilities-that-make-preschools-safe": "/blog/signs-of-good-preschool-thane",
+  "/8-security-facilities-that-make-preschools-safe/": "/blog/signs-of-good-preschool-thane",
+  "/8-ways-to-prevent-smartphone-addiction-in-kids": "/blog",
+  "/8-ways-to-prevent-smartphone-addiction-in-kids/": "/blog",
+  "/your-simple-guide-to-phonics-for-children": "/blog",
+  "/your-simple-guide-to-phonics-for-children/": "/blog",
   "/how-preschool-activities-enhance-fine-and-gross-motor-skills": "/blog",
   "/how-preschool-activities-enhance-fine-and-gross-motor-skills/": "/blog",
   "/6-important-hygiene-tips-that-you-can-teach-your-child": "/blog",
@@ -590,6 +598,11 @@ export function setupRedirects(app: Express) {
     // ── Strip junk numeric paths (/1/, /5/, /9/, /10/) ────────────────────
     if (/^\/\d{1,3}\/?$/.test(lowerPath)) {
       return res.redirect(301, "/" + qs);
+    }
+
+    // ── Dot-file / garbage paths (/.You, /.env, etc.) ────────────────────
+    if (/^\/\./.test(rawPath)) {
+      return res.redirect(301, "/");
     }
 
     // ── WordPress feed URLs (/slug/feed or /slug/feed/) ───────────────────
