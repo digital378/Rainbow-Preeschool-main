@@ -2481,7 +2481,7 @@ Object.assign(legacyPagesData, {
     faqs: [
       { question: "Why is Rainbow Preschool considered the best in Thane?", answer: "Rainbow Preschool's 18+ years of experience, 1,00,000+ alumni, research-backed curriculum, exceptional safety standards, qualified teachers, and 6 convenient locations make it Thane's most trusted preschool. Our consistent quality and parent satisfaction set us apart." },
       { question: "What age groups does Rainbow Preschool accept?", answer: "We accept children from 1.5 to 5.5 years across our three programmes: <a href=\"/playgroup\">Playgroup</a> (1.5-2.5 years), <a href=\"/nursery\">Nursery</a> (2.5-3.5 years), and <a href=\"/kindergarten\">Kindergarten</a> (3.5-5.5 years)." },
-      { question: "How can I enroll my child at Rainbow Preschool?", answer: "Visit our <a href=\"/admissions\">Admissions page</a> for enrollment information or <a href=\"/contact\">contact us</a> to schedule a campus visit. We offer admissions throughout the year subject to availability." },
+      { question: "How can I enroll my child at Rainbow Preschool?", answer: "Visit our <a href=\"/preschool-admissions\">Admissions page</a> for enrollment information or <a href=\"/contact\">contact us</a> to schedule a campus visit. We offer admissions throughout the year subject to availability." },
       { question: "What makes Rainbow Preschool's curriculum different?", answer: "Our play-based, NEP 2020 aligned curriculum focuses on holistic child development rather than rote learning. We nurture cognitive, social, emotional, physical, and creative skills through engaging, age-appropriate activities." }
     ],
     relatedLinks: [
@@ -2780,7 +2780,7 @@ Object.assign(legacyPagesData, {
       },
       {
         heading: "Why Choose Rainbow Preschool?",
-        content: "Rainbow Preschool International offers the educational benefits parents seek:\n\n- Expert-designed <a href=\"/programmes\">curriculum</a> for ages 1.5-5.5 years\n- Qualified teachers trained in early childhood education\n- 6 convenient locations: <a href=\"/preschool-in-manpada-thane\">Manpada</a>, <a href=\"/preschool-in-hariniwas-thane\">Hariniwas</a>, <a href=\"/preschool-in-anand-nagar-thane\">Anand Nagar</a>, <a href=\"/preschool-in-dhokali-thane\">Dhokali</a>, <a href=\"/preschool-in-kalwa-thane\">Kalwa</a>, <a href=\"/preschool-in-kasarvadavali-thane\">Kasarvadavali</a>\n- 18+ years of excellence in early education\n- Proven track record with 1,00,000+ alumni\n\nVisit our <a href=\"/admissions\">Admissions page</a> to enroll your child in Thane's leading preschool.",
+        content: "Rainbow Preschool International offers the educational benefits parents seek:\n\n- Expert-designed <a href=\"/programmes\">curriculum</a> for ages 1.5-5.5 years\n- Qualified teachers trained in early childhood education\n- 6 convenient locations: <a href=\"/preschool-in-manpada-thane\">Manpada</a>, <a href=\"/preschool-in-hariniwas-thane\">Hariniwas</a>, <a href=\"/preschool-in-anand-nagar-thane\">Anand Nagar</a>, <a href=\"/preschool-in-dhokali-thane\">Dhokali</a>, <a href=\"/preschool-in-kalwa-thane\">Kalwa</a>, <a href=\"/preschool-in-kasarvadavali-thane\">Kasarvadavali</a>\n- 18+ years of excellence in early education\n- Proven track record with 1,00,000+ alumni\n\nVisit our <a href=\"/preschool-admissions\">Admissions page</a> to enroll your child in Thane's leading preschool.",
         bulletPoints: []
       }
     ],
@@ -4484,7 +4484,7 @@ Object.assign(legacyPagesData, {
       },
       {
         heading: "Apply at Rainbow Preschool",
-        content: "Ready to apply for nursery admission? Rainbow Preschool offers nursery at all 6 centres: <a href=\"/preschool-in-manpada-thane\">Manpada</a>, <a href=\"/preschool-in-hariniwas-thane\">Hariniwas</a>, <a href=\"/preschool-in-anand-nagar-thane\">Anand Nagar</a>, <a href=\"/preschool-in-dhokali-thane\">Dhokali</a>, <a href=\"/preschool-in-kalwa-thane\">Kalwa</a>, and <a href=\"/preschool-in-kasarvadavali-thane\">Kasarvadavali</a>.\n\nVisit our <a href=\"/admissions\">Admissions page</a> or <a href=\"/contact\">contact us</a> for enrollment information.",
+        content: "Ready to apply for nursery admission? Rainbow Preschool offers nursery at all 6 centres: <a href=\"/preschool-in-manpada-thane\">Manpada</a>, <a href=\"/preschool-in-hariniwas-thane\">Hariniwas</a>, <a href=\"/preschool-in-anand-nagar-thane\">Anand Nagar</a>, <a href=\"/preschool-in-dhokali-thane\">Dhokali</a>, <a href=\"/preschool-in-kalwa-thane\">Kalwa</a>, and <a href=\"/preschool-in-kasarvadavali-thane\">Kasarvadavali</a>.\n\nVisit our <a href=\"/preschool-admissions\">Admissions page</a> or <a href=\"/contact\">contact us</a> for enrollment information.",
         bulletPoints: []
       }
     ],
@@ -4590,7 +4590,7 @@ Object.assign(legacyPagesData, {
       },
       {
         heading: "Rainbow Preschool Kindergarten",
-        content: "Our <a href=\"/kindergarten\">Kindergarten programme</a> is available at all centres: <a href=\"/preschool-in-manpada-thane\">Manpada</a>, <a href=\"/preschool-in-hariniwas-thane\">Hariniwas</a>, <a href=\"/preschool-in-anand-nagar-thane\">Anand Nagar</a>, <a href=\"/preschool-in-dhokali-thane\">Dhokali</a>, <a href=\"/preschool-in-kalwa-thane\">Kalwa</a>, and <a href=\"/preschool-in-kasarvadavali-thane\">Kasarvadavali</a>.\n\n<a href=\"/admissions\">Start the admission process</a> today.",
+        content: "Our <a href=\"/kindergarten\">Kindergarten programme</a> is available at all centres: <a href=\"/preschool-in-manpada-thane\">Manpada</a>, <a href=\"/preschool-in-hariniwas-thane\">Hariniwas</a>, <a href=\"/preschool-in-anand-nagar-thane\">Anand Nagar</a>, <a href=\"/preschool-in-dhokali-thane\">Dhokali</a>, <a href=\"/preschool-in-kalwa-thane\">Kalwa</a>, and <a href=\"/preschool-in-kasarvadavali-thane\">Kasarvadavali</a>.\n\n<a href=\"/preschool-admissions\">Start the admission process</a> today.",
         bulletPoints: []
       }
     ],
@@ -4914,7 +4914,7 @@ Object.assign(legacyPagesData, {
       },
       {
         heading: "Start Your Admission Today",
-        content: "Don't wait until seats are filled. Visit our <a href=\"/admissions\">Admissions page</a> or <a href=\"/contact\">contact us</a> to begin the enrollment process for your child's kindergarten education at Rainbow Preschool.",
+        content: "Don't wait until seats are filled. Visit our <a href=\"/preschool-admissions\">Admissions page</a> or <a href=\"/contact\">contact us</a> to begin the enrollment process for your child's kindergarten education at Rainbow Preschool.",
         bulletPoints: []
       }
     ],
@@ -4942,7 +4942,7 @@ Object.assign(legacyPagesData, {
     title: "Preschool Admission Process Explained | Step-by-Step Guide",
     metaDescription: "Understand the complete preschool admission process. From research to enrollment, learn each step to secure admission for your child at the best preschool.",
     h1: "Preschool Admission Process: A Complete Guide",
-    intro: "Navigating preschool <a href=\"/admissions\">admissions</a> can feel overwhelming, especially for first-time parents. At <a href=\"/about\">Rainbow Preschool International</a>, we've simplified the process. Here's a step-by-step guide to preschool admission.",
+    intro: "Navigating preschool <a href=\"/preschool-admissions\">admissions</a> can feel overwhelming, especially for first-time parents. At <a href=\"/about\">Rainbow Preschool International</a>, we've simplified the process. Here's a step-by-step guide to preschool admission.",
     sections: [
       {
         heading: "Step 1: Research and Shortlist",
@@ -5000,7 +5000,7 @@ Object.assign(legacyPagesData, {
       },
       {
         heading: "Rainbow Preschool Admission",
-        content: "At Rainbow Preschool, our admission process is parent-friendly:\n\n1. <a href=\"/contact\">Contact us</a> or visit our website\n2. Schedule a visit at any centre: <a href=\"/preschool-in-manpada-thane\">Manpada</a>, <a href=\"/preschool-in-hariniwas-thane\">Hariniwas</a>, <a href=\"/preschool-in-anand-nagar-thane\">Anand Nagar</a>, <a href=\"/preschool-in-dhokali-thane\">Dhokali</a>, <a href=\"/preschool-in-kalwa-thane\">Kalwa</a>, <a href=\"/preschool-in-kasarvadavali-thane\">Kasarvadavali</a>\n3. Complete registration\n4. Finalize enrollment\n\nVisit our <a href=\"/admissions\">Admissions page</a> to start the process.",
+        content: "At Rainbow Preschool, our admission process is parent-friendly:\n\n1. <a href=\"/contact\">Contact us</a> or visit our website\n2. Schedule a visit at any centre: <a href=\"/preschool-in-manpada-thane\">Manpada</a>, <a href=\"/preschool-in-hariniwas-thane\">Hariniwas</a>, <a href=\"/preschool-in-anand-nagar-thane\">Anand Nagar</a>, <a href=\"/preschool-in-dhokali-thane\">Dhokali</a>, <a href=\"/preschool-in-kalwa-thane\">Kalwa</a>, <a href=\"/preschool-in-kasarvadavali-thane\">Kasarvadavali</a>\n3. Complete registration\n4. Finalize enrollment\n\nVisit our <a href=\"/preschool-admissions\">Admissions page</a> to start the process.",
         bulletPoints: []
       }
     ],
@@ -5023,7 +5023,7 @@ Object.assign(legacyPagesData, {
     title: "Preschool Admission Documents Checklist | Everything You Need",
     metaDescription: "Complete checklist of documents required for preschool admission in India. Ensure you have everything ready for a smooth enrollment process.",
     h1: "Preschool Admission Documents Checklist",
-    intro: "Having all documents ready makes the <a href=\"/admissions\">admission</a> process smooth and hassle-free. Here's a comprehensive checklist of documents required for preschool admission at <a href=\"/about\">Rainbow Preschool International</a> and most schools in India.",
+    intro: "Having all documents ready makes the <a href=\"/preschool-admissions\">admission</a> process smooth and hassle-free. Here's a comprehensive checklist of documents required for preschool admission at <a href=\"/about\">Rainbow Preschool International</a> and most schools in India.",
     sections: [
       {
         heading: "Essential Documents",
@@ -5084,7 +5084,7 @@ Object.assign(legacyPagesData, {
     title: "When to Apply for Preschool Admission | Ideal Timeline & Tips",
     metaDescription: "Learn when to start applying for preschool admission. Month-by-month timeline, key dates, and tips to secure admission at the best preschools in Thane.",
     h1: "When to Apply for Preschool Admission: Ideal Timeline",
-    intro: "Timing is crucial for preschool <a href=\"/admissions\">admission</a>. Apply too late and you might miss out on your preferred school. Here's an ideal timeline for preschool admission to help you plan ahead.",
+    intro: "Timing is crucial for preschool <a href=\"/preschool-admissions\">admission</a>. Apply too late and you might miss out on your preferred school. Here's an ideal timeline for preschool admission to help you plan ahead.",
     sections: [
       {
         heading: "12 Months Before Start: Research Phase",
@@ -5161,7 +5161,7 @@ Object.assign(legacyPagesData, {
     title: "Questions to Ask During Preschool Admission Visit | Parent's Guide",
     metaDescription: "Essential questions to ask when visiting preschools for admission. From curriculum to safety, know what to ask to choose the best school for your child.",
     h1: "Questions to Ask During Preschool Admission Visit",
-    intro: "Visiting schools is crucial for choosing the right preschool. But what should you ask? Here's a comprehensive list of questions to ask during your <a href=\"/admissions\">admission</a> visits. At <a href=\"/about\">Rainbow Preschool International</a>, we welcome all questions from parents.",
+    intro: "Visiting schools is crucial for choosing the right preschool. But what should you ask? Here's a comprehensive list of questions to ask during your <a href=\"/preschool-admissions\">admission</a> visits. At <a href=\"/about\">Rainbow Preschool International</a>, we welcome all questions from parents.",
     sections: [
       {
         heading: "About Curriculum and Learning",
@@ -5943,7 +5943,7 @@ Object.assign(legacyPagesData, {
     title: "Nursery Admissions in Anand Nagar Thane | Rainbow Preschool Enrollment",
     metaDescription: "Apply for nursery admissions at Rainbow Preschool Anand Nagar in Majiwada, Thane. Quality education for ages 2.5-3.5 years. Simple admission process.",
     h1: "Nursery Admissions at Rainbow Preschool Anand Nagar",
-    intro: "Looking for <a href=\"/nursery\">Nursery</a> admissions near Anand Nagar and Majiwada? <a href=\"/preschool-in-anand-nagar-thane\">Rainbow Preschool Anand Nagar</a> offers a straightforward <a href=\"/admissions\">admission process</a> for quality nursery education. Here's everything you need to know.",
+    intro: "Looking for <a href=\"/nursery\">Nursery</a> admissions near Anand Nagar and Majiwada? <a href=\"/preschool-in-anand-nagar-thane\">Rainbow Preschool Anand Nagar</a> offers a straightforward <a href=\"/preschool-admissions\">admission process</a> for quality nursery education. Here's everything you need to know.",
     sections: [
       {
         heading: "Nursery Age Requirements",
