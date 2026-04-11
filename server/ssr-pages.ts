@@ -193,6 +193,65 @@ const centreReviews: Record<string, Array<{ author: string; date: string; text: 
   ],
 };
 
+function centreFAQSchema(locality: string, phone: string) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      { "@type": "Question", name: `What age groups does Rainbow Preschool ${locality} accept?`, acceptedAnswer: { "@type": "Answer", text: `Our ${locality} centre accepts children from 1.5 years (18 months) for Playgroup, 2.5 years for Nursery, and 3.5 years for Kindergarten. Each programme is age-appropriate and designed for optimal development.` } },
+      { "@type": "Question", name: `How do I enroll my child at Rainbow Preschool ${locality}?`, acceptedAnswer: { "@type": "Answer", text: `Call us at ${phone} or fill out the enquiry form on our website. Our team will schedule a free campus visit and guide you through the simple enrollment process step by step.` } },
+      { "@type": "Question", name: `Is Rainbow Preschool ${locality} safe for my child?`, acceptedAnswer: { "@type": "Answer", text: `Yes. Our ${locality} centre has 24/7 CCTV monitoring, 100% female teaching staff, a secure entry/exit system, verified pickup protocol, and strict daily hygiene routines.` } },
+      { "@type": "Question", name: `What programmes are available at Rainbow Preschool ${locality}?`, acceptedAnswer: { "@type": "Answer", text: `We offer Playgroup (1.5–2.5 years), Nursery (2.5–4 years), Kindergarten (4–6 years), and Happy Times extended after-school care at our ${locality} centre.` } },
+      { "@type": "Question", name: `Can I visit Rainbow Preschool ${locality} before enrolling?`, acceptedAnswer: { "@type": "Answer", text: `Absolutely. We strongly encourage a campus tour before enrollment. Contact us to schedule a free visit — your child is also welcome to join a trial class to experience our environment.` } },
+    ],
+  };
+}
+
+function playgroupFAQSchema(locality: string) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      { "@type": "Question", name: `What is the best age to start playgroup in ${locality}?`, acceptedAnswer: { "@type": "Answer", text: `Children can start Rainbow Preschool's Playgroup from 1.5 years (18 months). Our playgroup in ${locality} is tailored for toddlers aged 1.5 to 2.5 years, developing social skills and early learning through structured and free play.` } },
+      { "@type": "Question", name: `Is the playgroup in ${locality} safe for toddlers?`, acceptedAnswer: { "@type": "Answer", text: `Yes. Rainbow Preschool's centre has 24/7 CCTV monitoring, 100% female teaching staff, a secure entry/exit system, and child-safe furniture. Safety is our highest priority.` } },
+      { "@type": "Question", name: `What activities does the playgroup programme include?`, acceptedAnswer: { "@type": "Answer", text: `Our playgroup curriculum includes sensory play, music and movement, art activities, storytelling, puppet shows, outdoor play, and circle time — all designed for age-appropriate development.` } },
+      { "@type": "Question", name: `How is playgroup different from nursery?`, acceptedAnswer: { "@type": "Answer", text: `Playgroup (1.5–2.5 years) focuses on sensory exploration, social skills, and motor development through play. Nursery (2.5–4 years) introduces more structured learning including phonics, number concepts, and pre-writing skills.` } },
+      { "@type": "Question", name: `What are the playgroup timings?`, acceptedAnswer: { "@type": "Answer", text: `Rainbow Preschool offers morning batch (8:30 AM–11:30 AM) and afternoon batch (12:30 PM–3:30 PM). Contact your nearest centre to confirm availability and batch timings.` } },
+    ],
+  };
+}
+
+function playgroupSchema(locality: string, url: string) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Preschool",
+    "@id": `${BASE_URL}${url}`,
+    name: `Rainbow Preschool International — Playgroup in ${locality}`,
+    description: `Quality playgroup programme in ${locality}, Thane for toddlers aged 1.5 to 2.5 years. Play-based early learning with certified female teachers.`,
+    url: `${BASE_URL}${url}`,
+    telephone: "+91-8291568972",
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: locality === "Thane" ? "Thane" : `${locality}, Thane`,
+      addressRegion: "Maharashtra",
+      addressCountry: "IN",
+    },
+    openingHoursSpecification: [{
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      opens: "08:00",
+      closes: "18:00",
+    }],
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.7",
+      bestRating: "5",
+      ratingCount: "3997",
+    },
+    parentOrganization: { "@id": `${BASE_URL}/#organization` },
+  };
+}
+
 function localBusinessSchema(locality: string, address: string, phone: string, url: string, lat?: string, lng?: string) {
   const reviews = centreReviews[locality] || [];
   return {
@@ -367,10 +426,13 @@ const staticPages: Record<string, PageSEOData> = {
     h1: "Playgroup Programme — Ages 1.5 to 2.5 Years",
     breadcrumbs: [{ name: "Home", url: "/" }, { name: "Programmes", url: "/programmes" }, { name: "Playgroup", url: "/playgroup" }],
     contentSections: [
-      { heading: "About Our Playgroup", text: "Our Playgroup programme provides a safe and stimulating environment for toddlers aged 1.5 to 2.5 years to explore, learn, and grow through play." },
-      { heading: "What Your Child Will Learn", items: ["Social skills and confidence building", "Fine and gross motor development", "Language and communication skills", "Sensory exploration and creativity", "Basic concepts through play"] },
+      { heading: "About Our Playgroup Programme", text: "Rainbow Preschool International's Playgroup programme is designed for toddlers aged 1.5 to 2.5 years — the most formative period of early brain development. Our play-based curriculum provides a warm, safe, and nurturing environment where your child takes their very first steps into a world of exploration, creativity, and learning. With small class sizes of 10–12 children and trained Early Childhood Educators, every toddler receives the individual attention they deserve." },
+      { heading: "What Your Child Will Learn", items: ["Socialisation — learning to play alongside and with other children in a warm group setting", "Fine motor skills — threading, block building, clay work, and finger painting to develop hand strength", "Gross motor development — running, jumping, balancing, and movement play in our safe outdoor area", "Language development — songs, rhymes, stories, and picture books to build vocabulary and listening", "Sensory exploration — sand, water, textures, sounds, and scents to stimulate the five senses", "Emotional regulation — learning to express feelings, take turns, and build confidence", "Basic concepts — colours, shapes, sizes, and early sorting through hands-on play activities"] },
+      { heading: "A Typical Day in Playgroup", text: "Every Playgroup day at Rainbow Preschool follows a gentle, predictable routine that toddlers find comforting. The day begins with a warm welcome circle — songs, greetings, and weather talk. This is followed by free play at activity stations (art corner, block area, sensory tray), a structured group activity, outdoor play, a story session, snack time, and a goodbye circle. The routine is designed to build a sense of security while introducing structured learning in age-appropriate doses." },
+      { heading: "Why Playgroup at Rainbow?", items: ["Experienced, ECE-qualified teachers trained in toddler development", "Small classes — maximum 10–12 children per group for individual attention", "CCTV-monitored, child-safe premises across all 6 Thane centres", "Activity-based curriculum aligned with early childhood development milestones", "Regular parent-teacher communication and monthly progress updates", "Available at 6 convenient locations across Thane West", "Flexible timings to suit working parents"] },
+      { heading: "Admission & Timings", text: "Playgroup admissions at Rainbow Preschool International are open for children aged 1.5 to 2.5 years. Our Playgroup operates Monday through Friday with sessions of approximately 2.5 to 3 hours. Half-day and full-day options are available at select centres. To schedule a free campus visit or enroll your child, contact us at +91 82915 68972 or visit any of our 6 centres in Thane West." },
     ],
-    internalLinks: commonInternalLinks,
+    internalLinks: [...commonInternalLinks, { text: "Playgroup in Thane", url: "/playgroup-in-thane" }, { text: "Nursery Programme", url: "/nursery" }],
   },
   "/nursery": {
     title: "Nursery Programme (2.5-4 years) | Rainbow Preschool Thane",
@@ -380,9 +442,13 @@ const staticPages: Record<string, PageSEOData> = {
     h1: "Nursery Programme — Ages 2.5 to 4 Years",
     breadcrumbs: [{ name: "Home", url: "/" }, { name: "Programmes", url: "/programmes" }, { name: "Nursery", url: "/nursery" }],
     contentSections: [
-      { heading: "About Our Nursery Programme", text: "Our Nursery programme builds on the Playgroup foundation, introducing structured learning activities while maintaining a play-based approach." },
+      { heading: "About Our Nursery Programme", text: "Rainbow Preschool International's Nursery programme is designed for children aged 2.5 to 4 years. Building on the foundation laid in Playgroup, the Nursery year introduces more structured learning while keeping play at its heart. Children explore early literacy, pre-numeracy concepts, science, art, and social studies through engaging, theme-based activities. Class sizes are kept small — 12 to 15 children — so teachers can give every child meaningful individual attention." },
+      { heading: "What Children Learn in Nursery", items: ["Early literacy — letter recognition, phonics, pre-reading, and storytelling", "Pre-numeracy — counting, number recognition, patterns, and basic sorting", "Environmental awareness — plants, animals, seasons, and community helpers", "Creative arts — painting, collage, clay, music, and dance", "Social skills — cooperating, sharing, conflict resolution, and classroom etiquette", "Life skills — self-help skills, hygiene habits, and independence", "Language — Hindi and English vocabulary development, circle time discussions"] },
+      { heading: "Curriculum Approach", text: "The Rainbow Nursery curriculum follows a thematic, activity-based learning approach aligned with the National Curriculum Framework for Early Childhood Care and Education (NCF-ECCE) and NEP 2020 guidelines. Each month focuses on a central theme (e.g., 'My Family', 'Insects', 'Festivals of India') woven through all subject areas. Learning happens through stories, crafts, experiments, songs, role play, and field experiences — never through rote learning or writing drills." },
+      { heading: "A Typical Nursery Day", text: "A Nursery day at Rainbow begins with a morning circle (calendar, weather, news sharing), followed by theme-based group activities, free choice play, outdoor time, a structured art or science activity, story time, snack, and a closing circle. Homework is minimal and always activity-based — drawing, collecting items, or simple observations — never written worksheets." },
+      { heading: "Admission & Timings", text: "Nursery admissions are open for children aged 2.5 to 4 years. Our Nursery runs Monday to Friday, with school hours of 8:30 AM to 12:30 PM (extended day available at select centres). Rainbow Preschool has 6 Nursery centres across Thane West — Manpada, Hariniwas Circle, Anand Nagar, Dhokali, Kalwa, and Kasarvadavali. Contact us at +91 82915 68972 to schedule a free school visit." },
     ],
-    internalLinks: commonInternalLinks,
+    internalLinks: [...commonInternalLinks, { text: "Nursery Admission Thane", url: "/nursery-school-admission-thane" }, { text: "Playgroup Programme", url: "/playgroup" }, { text: "Kindergarten Programme", url: "/kindergarten" }],
   },
   "/kindergarten": {
     title: "Kindergarten Programme (4-6 years) | Rainbow Preschool Thane",
@@ -392,9 +458,13 @@ const staticPages: Record<string, PageSEOData> = {
     h1: "Kindergarten Programme — Ages 4 to 6 Years",
     breadcrumbs: [{ name: "Home", url: "/" }, { name: "Programmes", url: "/programmes" }, { name: "Kindergarten", url: "/kindergarten" }],
     contentSections: [
-      { heading: "About Our Kindergarten Programme", text: "Our Kindergarten programme provides comprehensive school readiness preparation, covering reading, writing, mathematics, science, and essential life skills." },
+      { heading: "About Our Kindergarten Programme", text: "Rainbow Preschool International's Kindergarten programme is designed for children aged 4 to 6 years, preparing them thoroughly for the academic and social demands of primary school. The programme covers reading readiness, writing, mathematics, science, social studies, arts, and physical education — all delivered through hands-on, activity-based learning that keeps children engaged and confident. Kindergarten at Rainbow focuses equally on academic skills and character development, ensuring children leave with the knowledge, habits, and mindset to thrive in Class 1 and beyond." },
+      { heading: "What Children Learn in Kindergarten", items: ["Reading & writing — phonics, sight words, handwriting, sentence formation, and creative expression", "Mathematics — number operations (up to 100), measurement, time, geometry, and problem-solving", "Environmental Science — living and non-living things, human body, weather, plants, animals", "Social Studies — community helpers, maps, transport, and festivals", "Computer basics — mouse skills, keyboard introduction at select centres", "Arts & Craft — advanced art techniques, model-making, drama, and creative projects", "Physical Education — structured games, yoga, and coordination activities"] },
+      { heading: "School Readiness Focus", text: "Rainbow's Kindergarten curriculum is benchmarked against the entry requirements of leading CBSE, ICSE, and IB primary schools in Thane and Mumbai. Children are systematically prepared across all key readiness domains: academic skills (reading, writing, numeracy), cognitive skills (attention, memory, logical thinking), social-emotional skills (managing emotions, following instructions, cooperating), and self-help skills (time management, organisation, independence). Our teachers assess each child's readiness profile and provide targeted support for any areas needing extra attention." },
+      { heading: "Assessment & Progress Tracking", text: "Progress in Kindergarten is tracked through portfolio-based assessment, observation records, and term-end assessments. Parents receive detailed written reports twice a year plus informal monthly updates. No child is ranked or compared with peers — each child's progress is measured against their own previous performance, celebrating individual growth and milestones." },
+      { heading: "Admission & Timings", text: "Kindergarten (Junior KG and Senior KG) admissions are open for children aged 4 to 6 years. School hours are 8:30 AM to 1:00 PM, Monday to Friday. Extended day care is available at select centres. Rainbow Preschool operates 6 Kindergarten centres across Thane West — Manpada, Hariniwas Circle, Anand Nagar, Dhokali, Kalwa, and Kasarvadavali. Contact us at +91 82915 68972 or visit any centre for a free demo class." },
     ],
-    internalLinks: commonInternalLinks,
+    internalLinks: [...commonInternalLinks, { text: "Nursery Programme", url: "/nursery" }, { text: "Preschool Admissions", url: "/preschool-admissions" }],
   },
   "/gallery": {
     title: "Photo Gallery | Rainbow Preschool International Thane",
@@ -691,6 +761,46 @@ const staticPages: Record<string, PageSEOData> = {
     }],
     internalLinks: commonInternalLinks,
   },
+  "/about/dr-meghna-rai": {
+    title: "Dr. Meghna Rai | Head of Curriculum | Rainbow Preschool International",
+    description: "Meet Dr. Meghna Rai, Head of Curriculum at Rainbow Preschool International. Over 15 years of early childhood education expertise, M.Ed in ECE, Montessori certified. Author of educational content on preschool development.",
+    keywords: "Dr Meghna Rai, rainbow preschool curriculum, early childhood education expert, preschool educator thane, ECE specialist",
+    canonical: `${BASE_URL}/about/dr-meghna-rai`,
+    h1: "Dr. Meghna Rai — Head of Curriculum & Early Childhood Education Specialist",
+    introText: "Dr. Meghna Rai is the Head of Curriculum at Rainbow Preschool International, Thane. With over 15 years of experience in early childhood education, she designs and oversees the play-based curriculum delivered across all 6 Rainbow Preschool centres.",
+    breadcrumbs: [{ name: "Home", url: "/" }, { name: "About", url: "/about" }, { name: "Dr. Meghna Rai", url: "/about/dr-meghna-rai" }],
+    structuredData: [{
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "@id": `${BASE_URL}/about/dr-meghna-rai`,
+      name: "Dr. Meghna Rai",
+      jobTitle: "Head of Curriculum & Early Childhood Education Specialist",
+      description: "Dr. Meghna Rai leads curriculum development at Rainbow Preschool International with 15+ years of experience in early childhood education, an M.Ed in Early Childhood Studies, and Montessori certification.",
+      url: `${BASE_URL}/about/dr-meghna-rai`,
+      image: `${BASE_URL}/og-image.jpg`,
+      worksFor: {
+        "@type": "EducationalOrganization",
+        name: "Rainbow Preschool International",
+        url: BASE_URL,
+      },
+      alumniOf: [
+        { "@type": "EducationalOrganization", name: "University of Mumbai", description: "M.Ed in Early Childhood Studies" },
+      ],
+      hasCredential: [
+        { "@type": "EducationalOccupationalCredential", name: "Montessori Certification", credentialCategory: "Professional Certification" },
+        { "@type": "EducationalOccupationalCredential", name: "M.Ed in Early Childhood Studies", credentialCategory: "Degree" },
+      ],
+      knowsAbout: ["Early Childhood Education", "Play-Based Learning", "Montessori Method", "Preschool Curriculum Development", "Child Development", "Early Literacy", "Social-Emotional Learning"],
+      sameAs: [`${BASE_URL}/about/dr-meghna-rai`],
+    }],
+    contentSections: [
+      { heading: "Qualifications & Expertise", items: ["M.Ed in Early Childhood Studies", "Montessori Certification", "15+ years of experience in preschool education", "Specialist in play-based curriculum design", "Expert in child development and school readiness"] },
+      { heading: "Role at Rainbow Preschool", text: "As Head of Curriculum, Dr. Meghna Rai is responsible for designing and updating the play-based learning programmes delivered at all 6 Rainbow Preschool International centres in Thane. She trains and mentors teachers, tracks child development outcomes, and ensures curriculum alignment with NEP 2020 early childhood education guidelines." },
+      { heading: "Areas of Expertise", items: ["Play-based learning curriculum design", "Early literacy and numeracy development", "Social-emotional learning for toddlers", "Teacher training and professional development", "Child development assessment", "Parent education and engagement"] },
+      { heading: "Published Articles", text: "Dr. Meghna Rai regularly contributes educational articles to the Rainbow Preschool blog, covering topics such as preschool readiness, play-based learning, child development milestones, and parenting tips for early childhood." },
+    ],
+    internalLinks: [...commonInternalLinks, { text: "Our Blog", url: "/blog" }, { text: "Programmes", url: "/programmes" }],
+  },
   "/faqs": {
     title: "FAQs | Rainbow Preschool International Thane",
     description: "Get answers to all your questions about Rainbow Preschool — admissions, fees, safety, curriculum, timings, transport, and more. Complete FAQ for Thane parents.",
@@ -719,12 +829,12 @@ const staticPages: Record<string, PageSEOData> = {
 };
 
 const preschoolCentres: Record<string, { locality: string; address: string; phone: string; lat: string; lng: string }> = {
-  "/preschool-in-manpada-thane": { locality: "Manpada", address: "Aggarwal Arcade, Near Khewra Circle, Manpada, Thane (W)", phone: "+91-8291568972", lat: "19.2187", lng: "72.9754" },
-  "/preschool-in-hariniwas-thane": { locality: "Hariniwas", address: "M.V.Apartments, Bhakti Mandir Road, Opp. Thanawala Garage, Hariniwas Circle, Panchpakadi, Thane (W)", phone: "+91-8291568972", lat: "19.1974", lng: "72.9630" },
-  "/preschool-in-anand-nagar-thane": { locality: "Anand Nagar", address: "Kris Commercial Plaza, 1st Floor, Opp. Tropical Lagoon, Anand Nagar, Thane (W)", phone: "+91-8291568972", lat: "19.2277", lng: "72.9688" },
-  "/preschool-in-dhokali-thane": { locality: "Dhokali", address: "Kolshet Road, Dhokali Naka, Opp. Aban Park Society, Thane (W)", phone: "+91-8291568972", lat: "19.2320", lng: "72.9833" },
-  "/preschool-in-kalwa-thane": { locality: "Kalwa", address: "Harsh Prasad Co-op Hsg, Soc, Near Sayba Hall, Manisha Nagar, Gate No.1, Kalwa", phone: "+91-8291568972", lat: "19.2068", lng: "73.0155" },
-  "/preschool-in-kasarvadavali-thane": { locality: "Kasarvadavali", address: "Rosa Gardenia, Next to Parijat Gardens, Kasarvadavali, Behind Hypercity Mall, Thane (W)", phone: "+91-8291568972", lat: "19.2481", lng: "72.9682" },
+  "/preschool-in-manpada-thane": { locality: "Manpada", address: "Aggarwal Arcade, Near Khewra Circle, Manpada, Thane (W)", phone: "+91-8291568972", lat: "19.2168", lng: "72.9815" },
+  "/preschool-in-hariniwas-thane": { locality: "Hariniwas", address: "M.V.Apartments, Bhakti Mandir Road, Opp. Thanawala Garage, Hariniwas Circle, Panchpakadi, Thane (W)", phone: "+91-8291568972", lat: "19.1958", lng: "72.9698" },
+  "/preschool-in-anand-nagar-thane": { locality: "Anand Nagar", address: "Kris Commercial Plaza, 1st Floor, Opp. Tropical Lagoon, Anand Nagar, Thane (W)", phone: "+91-8291568972", lat: "19.2239", lng: "72.9805" },
+  "/preschool-in-dhokali-thane": { locality: "Dhokali", address: "Kolshet Road, Dhokali Naka, Opp. Aban Park Society, Thane (W)", phone: "+91-8291568972", lat: "19.2305", lng: "72.9889" },
+  "/preschool-in-kalwa-thane": { locality: "Kalwa", address: "Harsh Prasad Co-op Hsg, Soc, Near Sayba Hall, Manisha Nagar, Gate No.1, Kalwa", phone: "+91-8291568972", lat: "19.2019", lng: "73.0229" },
+  "/preschool-in-kasarvadavali-thane": { locality: "Kasarvadavali", address: "Rosa Gardenia, Next to Parijat Gardens, Kasarvadavali, Behind Hypercity Mall, Thane (W)", phone: "+91-8291568972", lat: "19.2499", lng: "72.9721" },
 };
 
 const playgroundPages: Record<string, { locality: string }> = {
@@ -756,7 +866,7 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
       h1: `Preschool in ${centre.locality}, Thane — Rainbow Preschool International`,
       introText: `Looking for a quality preschool in ${centre.locality}, Thane? Rainbow Preschool International's ${centre.locality} centre offers Playgroup, Nursery, and Kindergarten programmes in a safe, nurturing environment.`,
       breadcrumbs: [{ name: "Home", url: "/" }, { name: "Preschool Near Me", url: "/preschool-near-me" }, { name: `Preschool in ${centre.locality}`, url: cleanPath }],
-      structuredData: [localBusinessSchema(centre.locality, centre.address, centre.phone, cleanPath, centre.lat, centre.lng)],
+      structuredData: [localBusinessSchema(centre.locality, centre.address, centre.phone, cleanPath, centre.lat, centre.lng), centreFAQSchema(centre.locality, centre.phone)],
       contentSections: [
         { heading: `Why Choose Rainbow Preschool in ${centre.locality}?`, items: ["Safe and secure premises with CCTV", "100% female teaching staff", "Small batch sizes (10-12 children)", "Play-based curriculum", "Convenient location in " + centre.locality] },
         { heading: "Our Programmes", items: ["Playgroup (1.5–2.5 years)", "Nursery (2.5–4 years)", "Kindergarten (4–6 years)"] },
@@ -774,8 +884,12 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
       canonical: `${BASE_URL}${cleanPath}`,
       h1: `Playgroup in ${pg.locality} — Rainbow Preschool International`,
       breadcrumbs: [{ name: "Home", url: "/" }, { name: "Playgroup", url: "/playgroup" }, { name: `Playgroup in ${pg.locality}`, url: cleanPath }],
+      structuredData: [playgroupSchema(pg.locality, cleanPath), playgroupFAQSchema(pg.locality)],
       contentSections: [
-        { heading: `Playgroup Programme in ${pg.locality}`, text: `Our ${pg.locality} centre offers a nurturing Playgroup programme for toddlers aged 1.5 to 2.5 years, focusing on play-based learning and social development.` },
+        { heading: `Playgroup Programme in ${pg.locality}`, text: `Rainbow Preschool International offers a nurturing playgroup in ${pg.locality} for toddlers aged 1.5 to 2.5 years. Our programme focuses on sensory play, social development, early language skills, and creative expression in a safe, child-friendly environment.` },
+        { heading: "Why Rainbow Playgroup?", items: ["Expert ECE-certified female teachers", "Small batches of 10–12 children for individual attention", "24/7 CCTV and secure entry/exit", "Play-based curriculum with music, art, stories, and outdoor play", "Flexible AM and PM batch timings", "18+ years of trust since 2007"] },
+        { heading: "Playgroup Activities", items: ["Sensory exploration and messy play", "Music, rhymes, and movement", "Circle time and storytime", "Art projects — finger painting, clay, collage", "Outdoor play and motor skills", "Early socialisation and turn-taking games"] },
+        { heading: "Admission & Timings", text: `Playgroup batches run Monday to Saturday. Morning batch: 8:30 AM–11:30 AM. Afternoon batch: 12:30 PM–3:30 PM. To schedule a free campus tour at our ${pg.locality} centre, call +91-8291568972.` },
       ],
       internalLinks: commonInternalLinks,
     };
@@ -872,6 +986,14 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
       };
 
       const blogFAQs: Record<string, { q: string; a: string }[]> = {
+        "what-to-ask-during-a-tour-of-a-preschool-in-thane": [
+          { q: "What questions should I ask when visiting a preschool?", a: "Key questions include: What is the teacher-to-child ratio? What safety measures are in place? How is the curriculum structured? What are the qualifications of the teachers? How do you communicate progress to parents? Rainbow Preschool welcomes these questions during campus tours." },
+          { q: "What should I look for during a preschool tour?", a: "Observe cleanliness, classroom setup, teacher interactions with children, safety measures (CCTV, secure entry), play areas, and overall atmosphere. A good preschool like Rainbow will welcome your observations and answer all questions openly." },
+        ],
+        "understanding-the-importance-of-preschool-in-early-childhood-development": [
+          { q: "Why is preschool important for early childhood development?", a: "Research shows that preschool education significantly impacts cognitive development, social skills, emotional regulation, and language acquisition. Children who attend quality preschools like Rainbow Preschool International show stronger school readiness and academic performance." },
+          { q: "At what age should a child start preschool?", a: "Most child development experts recommend starting preschool between 1.5 to 3 years. Rainbow Preschool offers Playgroup for ages 1.5–2.5, Nursery for 2.5–4, and Kindergarten for 4–6 years — each tailored to the developmental stage of the child." },
+        ],
         "signs-of-good-preschool-thane": [
           { q: "What are the most important signs of a good preschool?", a: "Key signs include qualified ECE/Montessori-certified teachers, small class sizes (10-12 children), clean and safe facilities with CCTV, a structured play-based curriculum, and positive parent reviews. Rainbow Preschool maintains all these standards across its 6 centres in Thane." },
           { q: "How do I evaluate a preschool before enrolling my child?", a: "Visit the campus, observe a class in session, check teacher qualifications, inspect safety measures (CCTV, secure entry), ask about the curriculum approach, and read parent reviews. Rainbow Preschool encourages campus visits and free trial classes." },

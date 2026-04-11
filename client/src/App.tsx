@@ -113,7 +113,6 @@ const LazyPromisingPreschoolAward = lazy(() => import("@/pages/legacy-pages").th
 const LazyLifeLessonsConfidence = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.LifeLessonsConfidence })));
 const LazyGamesMakeKidsSmarter = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.GamesMakeKidsSmarter })));
 const LazyPhysicalDevelopmentSigns = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.PhysicalDevelopmentSigns })));
-const LazyFAQsPage = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.FAQsPage })));
 const LazyUnderstandingPreschoolImportance = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.UnderstandingPreschoolImportance })));
 const LazyBestPreschoolCurriculumThane = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.BestPreschoolCurriculumThane })));
 const LazyHowToChooseBestPreschool = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.HowToChooseBestPreschool })));
@@ -231,6 +230,7 @@ const LazySeparationAnxietyTips = lazy(() => import("@/pages/legacy-pages").then
 const LazySocialisationBenefitsToddlers = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.SocialisationBenefitsToddlers })));
 
 const LazyAuthorArchivePage = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.AuthorArchivePage })));
+const DrMeghnaRaiPage = lazy(() => import("@/pages/author-dr-meghna-rai"));
 
 const LazyTermsPage = lazy(() => import("@/pages/legal").then(m => ({ default: m.TermsPage })));
 const LazyPrivacyPage = lazy(() => import("@/pages/legal").then(m => ({ default: m.PrivacyPage })));
@@ -524,6 +524,7 @@ function Router() {
         <Route path="/separation-anxiety-tips-playgroup-parents" component={LazySeparationAnxietyTips} />
         <Route path="/socialisation-benefits-toddlers-playgroup" component={LazySocialisationBenefitsToddlers} />
         
+        <Route path="/about/dr-meghna-rai" component={DrMeghnaRaiPage} />
         <Route path="/author/rainbowpreschools" component={LazyAuthorArchivePage} />
         <Route path="/author/rainbow-preschools" component={LazyAuthorArchivePage} />
         
