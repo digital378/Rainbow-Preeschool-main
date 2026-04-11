@@ -372,6 +372,46 @@ export default function About() {
         </div>
       </section>
 
+      {/* SECTION G - Academic Coordinators */}
+      <section className="py-16 md:py-20 bg-card">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-2xl mx-auto mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Academic Coordinators</h2>
+            <p className="text-muted-foreground text-lg">
+              The dedicated educators who guide our curriculum and ensure every child's learning journey is exceptional.
+            </p>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">
+            {[
+              { name: "Harsha Sutra", img: "/images/coordinators/harsha-sutra.png" },
+              { name: "Gauri Randhir", img: "/images/coordinators/gauri-randhir.png" },
+              { name: "Swapnali Pandit", img: "/images/coordinators/swapnali-pandit.png" },
+              { name: "Shweta Chheda", img: "/images/coordinators/shweta-chheda.png" },
+              { name: "Nilsy Jain", img: "/images/coordinators/nilsy-jain.png" },
+              { name: "Mittal Shah", img: "/images/coordinators/mittal-shah.png" },
+            ].map((person, i) => (
+              <div key={i} className="flex flex-col items-center text-center gap-3" data-testid={`card-coordinator-${i}`}>
+                <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-full overflow-hidden border-4 border-primary/20 shadow-md">
+                  <img
+                    src={person.img}
+                    alt={`${person.name} - Academic Coordinator, Rainbow Preschool International`}
+                    className="w-full h-full object-cover object-top"
+                    loading="lazy"
+                    decoding="async"
+                    width="128"
+                    height="128"
+                  />
+                </div>
+                <div>
+                  <p className="font-semibold text-sm leading-tight">{person.name}</p>
+                  <p className="text-xs text-muted-foreground mt-0.5">Academic Coordinator</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Internal Links Section */}
       <section className="py-10 md:py-12 bg-gray-50 dark:bg-gray-800/50">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
