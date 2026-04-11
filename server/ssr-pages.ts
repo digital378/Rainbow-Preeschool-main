@@ -354,7 +354,7 @@ const staticPages: Record<string, PageSEOData> = {
       name: "Rainbow Preschool International — Campus Walkthrough",
       description: "Take a virtual tour of Rainbow Preschool International's campus in Thane. See our colourful classrooms, safe play areas, and nurturing learning environment designed for children aged 1.5 to 6 years.",
       thumbnailUrl: `${BASE_URL}/og-image.jpg`,
-      uploadDate: "2025-01-15",
+      uploadDate: "2025-01-15T00:00:00+05:30",
       contentUrl: `${BASE_URL}/assets/RPS_Walkthrough_Video_-_Website_1_1766126796450.mp4`,
       embedUrl: BASE_URL,
       duration: "PT1M30S",
