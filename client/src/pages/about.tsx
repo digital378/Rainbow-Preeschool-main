@@ -383,12 +383,12 @@ export default function About() {
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">
             {[
-              { name: "Harsha Sutra", img: "/images/coordinators/harsha-sutra.png" },
-              { name: "Gauri Randhir", img: "/images/coordinators/gauri-randhir.png" },
-              { name: "Swapnali Pandit", img: "/images/coordinators/swapnali-pandit.png" },
-              { name: "Shweta Chheda", img: "/images/coordinators/shweta-chheda.png" },
-              { name: "Nilsy Jain", img: "/images/coordinators/nilsy-jain.png" },
-              { name: "Mittal Shah", img: "/images/coordinators/mittal-shah.png" },
+              { name: "Harsha Sutar", centre: "Dhokali Centre", img: "/images/coordinators/harsha-sutra.png" },
+              { name: "Gauri Randhir", centre: "Anand Nagar Centre", img: "/images/coordinators/gauri-randhir.png" },
+              { name: "Swapnali Pandit", centre: "Aggarwal Centre", img: "/images/coordinators/swapnali-pandit.png" },
+              { name: "Shweta Chheda", centre: "Hariniwas Centre", img: "/images/coordinators/shweta-chheda.png" },
+              { name: "Nilsy Jain", centre: "Kasarvadavali Centre", img: "/images/coordinators/nilsy-jain.png" },
+              { name: "Mittal Shah", centre: "Kalwa Centre", img: "/images/coordinators/mittal-shah.png" },
             ].map((person, i) => (
               <div key={i} className="flex flex-col items-center text-center gap-3" data-testid={`card-coordinator-${i}`}>
                 <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-full overflow-hidden border-4 border-primary/20 shadow-md">
@@ -405,6 +405,7 @@ export default function About() {
                 <div>
                   <p className="font-semibold text-sm leading-tight">{person.name}</p>
                   <p className="text-xs text-muted-foreground mt-0.5">Academic Coordinator</p>
+                  <p className="text-xs text-primary font-medium mt-0.5">{person.centre}</p>
                 </div>
               </div>
             ))}
