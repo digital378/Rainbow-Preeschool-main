@@ -55,6 +55,17 @@ app.get("/llms.txt", (req, res) => {
   }
 });
 
+// Serve llms-full.txt — extended AI reference document
+app.get("/llms-full.txt", (req, res) => {
+  const llmsFullPath = path.join(process.cwd(), "client", "public", "llms-full.txt");
+  if (fs.existsSync(llmsFullPath)) {
+    res.setHeader("Content-Type", "text/plain; charset=utf-8");
+    res.sendFile(llmsFullPath);
+  } else {
+    res.status(404).send("LLMs-full.txt not found");
+  }
+});
+
 // Serve robots.txt with correct content type (must be before redirects)
 app.get("/robots.txt", (req, res) => {
   const robotsPath = path.join(process.cwd(), "client", "public", "robots.txt");
