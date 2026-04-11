@@ -239,6 +239,10 @@ export function setupRedirects(app: Express) {
   app.use((req: Request, res: Response, next: NextFunction) => {
     if (process.env.NODE_ENV !== "production") return next();
     const host = (req.get("host") || "").toLowerCase();
+    // Redirect replit.app and replit.dev preview domains to canonical www
+    if (host.includes("replit.app") || host.includes("replit.dev")) {
+      return res.redirect(301, `https://www.rainbowpreschools.com${req.originalUrl}`);
+    }
     if (!host.includes("rainbowpreschools.com")) return next();
     const proto = req.get("x-forwarded-proto") || req.protocol || "https";
     const isNonWww = host === "rainbowpreschools.com";
