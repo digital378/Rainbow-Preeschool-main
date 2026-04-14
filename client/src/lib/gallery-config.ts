@@ -44,13 +44,6 @@ export const GALLERY_IMAGES: GalleryImage[] = [
     category: "classrooms",
   },
   {
-    id: "cls-02",
-    src: "/images/gallery/rainbow-preschool-classroom-learning-02.webp",
-    alt: "Bright and welcoming classroom at Rainbow Preschool International Thane",
-    caption: "Our bright, child-friendly classrooms",
-    category: "classrooms",
-  },
-  {
     id: "cls-03",
     src: "/images/gallery/rainbow-preschool-classroom-learning-03.webp",
     alt: "Children engaged in structured classroom activity at Rainbow Preschool Thane",
@@ -62,13 +55,6 @@ export const GALLERY_IMAGES: GalleryImage[] = [
     src: "/images/gallery/rainbow-preschool-classroom-activity-01.webp",
     alt: "Creative classroom activity at Rainbow Preschool International Thane",
     caption: "Creative hands-on activities",
-    category: "classrooms",
-  },
-  {
-    id: "cls-07",
-    src: "/images/gallery/rainbow-preschool-classroom-activity-03.webp",
-    alt: "Teacher guiding young children in classroom at Rainbow Preschool Thane",
-    caption: "Expert teachers, personal attention",
     category: "classrooms",
   },
   {
@@ -362,13 +348,6 @@ export const GALLERY_IMAGES: GalleryImage[] = [
     category: "learning-through-play",
   },
   {
-    id: "ltp-02",
-    src: "/images/gallery/rainbow-preschool-learning-through-play-02.webp",
-    alt: "Play-based learning session at Rainbow Preschool Thane",
-    caption: "Play-based learning for holistic growth",
-    category: "learning-through-play",
-  },
-  {
     id: "ltp-03",
     src: "/images/gallery/rainbow-preschool-learning-through-play-03.webp",
     alt: "Hands-on learning through play activity at Rainbow Preschool Thane",
@@ -380,20 +359,6 @@ export const GALLERY_IMAGES: GalleryImage[] = [
     src: "/images/gallery/rainbow-preschool-learning-through-play-04.webp",
     alt: "Creative play-based activity at Rainbow Preschool International Thane",
     caption: "Creativity sparked through play",
-    category: "learning-through-play",
-  },
-  {
-    id: "ltp-05",
-    src: "/images/gallery/rainbow-preschool-learning-through-play-05.webp",
-    alt: "Children exploring through guided play at Rainbow Preschool Thane",
-    caption: "Exploration drives early learning",
-    category: "learning-through-play",
-  },
-  {
-    id: "ltp-06",
-    src: "/images/gallery/rainbow-preschool-learning-through-play-06.webp",
-    alt: "Structured play learning activity at Rainbow Preschool International Thane",
-    caption: "Structured play for early development",
     category: "learning-through-play",
   },
   {
