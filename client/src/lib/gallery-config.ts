@@ -58,24 +58,10 @@ export const GALLERY_IMAGES: GalleryImage[] = [
     category: "classrooms",
   },
   {
-    id: "cls-04",
-    src: "/images/gallery/rainbow-preschool-classroom-learning-04.webp",
-    alt: "Kindergarten children in a structured learning session at Rainbow Preschool Thane",
-    caption: "Kindergarten learning environment",
-    category: "classrooms",
-  },
-  {
     id: "cls-05",
     src: "/images/gallery/rainbow-preschool-classroom-activity-01.webp",
     alt: "Creative classroom activity at Rainbow Preschool International Thane",
     caption: "Creative hands-on activities",
-    category: "classrooms",
-  },
-  {
-    id: "cls-06",
-    src: "/images/gallery/rainbow-preschool-classroom-activity-02.webp",
-    alt: "Children learning through activities at Rainbow Preschool Thane",
-    caption: "Learning through doing",
     category: "classrooms",
   },
   {
