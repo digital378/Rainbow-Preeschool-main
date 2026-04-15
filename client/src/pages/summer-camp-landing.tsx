@@ -725,7 +725,7 @@ export default function SummerCampLanding() {
               >
                 <SiWhatsapp className="mr-2 h-5 w-5" /> WhatsApp Us
               </Button>
-              <Link href="/preschool-near-me">
+              <Link href="/play-school-near-me">
                 <Button 
                   size="lg" 
                   variant="outline"

@@ -347,7 +347,7 @@ export default function BestPreschoolInThane() {
                   <Link href="/preschool-admissions" className="px-4 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:bg-red-700 transition-colors">
                     Book a Campus Visit
                   </Link>
-                  <Link href="/preschool-near-me" className="hidden md:inline-block px-4 py-2 border border-primary text-primary rounded-lg text-sm font-medium hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors">
+                  <Link href="/play-school-near-me" className="hidden md:inline-block px-4 py-2 border border-primary text-primary rounded-lg text-sm font-medium hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors">
                     Find Centre Near You
                   </Link>
                   <Link href="/programmes" className="hidden md:inline-block px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 rounded-lg text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
@@ -553,7 +553,7 @@ export default function BestPreschoolInThane() {
                   })}
                 </div>
                 <div className="mt-6 text-center">
-                  <Link href="/preschool-near-me" className="inline-block px-6 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:bg-red-700 transition-colors">
+                  <Link href="/play-school-near-me" className="inline-block px-6 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:bg-red-700 transition-colors">
                     Find Centre Near You →
                   </Link>
                 </div>

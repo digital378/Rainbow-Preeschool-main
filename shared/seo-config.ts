@@ -103,8 +103,7 @@ export const PROGRAMME_PAGES = [
 export const HIGH_INTENT_PAGES = [
   { url: "/best-preschool-near-me-in-thane", priority: 0.98, changefreq: "weekly" }, // Primary "best preschool in thane" target
   { url: "/preschool-admissions", priority: 0.95, changefreq: "weekly" },            // Admissions intent
-  { url: "/preschool-near-me", priority: 0.92, changefreq: "weekly" },               // Nearby-centre discovery
-  { url: "/play-school-near-me", priority: 0.90, changefreq: "weekly" },             // Play school / playgroup near me
+  { url: "/play-school-near-me", priority: 0.92, changefreq: "weekly" },             // Play school / playgroup near me
 ];
 
 // Local SEO pages (priority 0.9)

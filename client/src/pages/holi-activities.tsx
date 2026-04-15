@@ -609,7 +609,7 @@ export default function HoliActivitiesPage() {
                       { text: "Explore Our Playgroup Programme", url: "/playgroup" },
                       { text: "Nursery Programme Details", url: "/nursery" },
                       { text: "Kindergarten Programme", url: "/kindergarten" },
-                      { text: "Our Centres in Thane", url: "/preschool-near-me" },
+                      { text: "Our Centres in Thane", url: "/play-school-near-me" },
                       { text: "Admissions Information", url: "/preschool-admissions" },
                       { text: "Diwali Activities for Kindergarten", url: "/diwali-activity-for-kindergarten" },
                       { text: "Sports Day Activities for Kindergarten", url: "/sports-day-activities-for-kindergarten" },
@@ -744,7 +744,7 @@ export default function HoliActivitiesPage() {
                 <Award className="w-5 h-5 text-primary" />
                 <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">Award-Winning Preschool</span>
               </Link>
-              <Link href="/preschool-near-me" className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center" data-testid="link-holi-near-me">
+              <Link href="/play-school-near-me" className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center" data-testid="link-holi-near-me">
                 <MapPin className="w-5 h-5 text-primary" />
                 <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">Find Nearest Centre</span>
               </Link>

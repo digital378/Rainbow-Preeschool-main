@@ -336,7 +336,7 @@ export function LegacyLandingPage({ data }: LegacyLandingPageProps) {
                       </div>
                       <ArrowRight className="w-4 h-4 text-primary opacity-0 group-hover:opacity-100 transition-opacity" />
                     </Link>
-                    <Link href="/preschool-near-me" className="group flex items-center justify-between p-3 bg-white rounded-lg border border-primary/20 hover:border-primary/40 hover:shadow-sm transition-all" data-testid="link-cta-preschool-near-me">
+                    <Link href="/play-school-near-me" className="group flex items-center justify-between p-3 bg-white rounded-lg border border-primary/20 hover:border-primary/40 hover:shadow-sm transition-all" data-testid="link-cta-preschool-near-me">
                       <div>
                         <span className="font-semibold text-foreground group-hover:text-primary transition-colors text-sm">Find a Centre Near You</span>
                         <span className="block text-xs text-muted-foreground">6 locations across Thane</span>
@@ -450,7 +450,7 @@ export function LegacyLandingPage({ data }: LegacyLandingPageProps) {
                         Visit any of our 6 centres across Thane
                       </p>
                       <Button asChild variant="secondary" className="w-full" data-testid="button-centres-sidebar">
-                        <Link href="/preschool-near-me">
+                        <Link href="/play-school-near-me">
                           View All Centres
                         </Link>
                       </Button>

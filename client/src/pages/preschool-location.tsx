@@ -123,7 +123,7 @@ function PreschoolLocationTemplate({ localitySlug }: PreschoolLocationPageProps)
           "@type": "ListItem",
           "position": 2,
           "name": "Centres",
-          "item": "https://www.rainbowpreschools.com/preschool-near-me"
+          "item": "https://www.rainbowpreschools.com/best-preschool-near-me-in-thane"
         },
         {
           "@type": "ListItem",
@@ -220,7 +220,7 @@ function PreschoolLocationTemplate({ localitySlug }: PreschoolLocationPageProps)
             </li>
             <ChevronRight className="h-4 w-4" />
             <li>
-              <Link href="/preschool-near-me" className="hover:text-primary" data-testid="breadcrumb-centres">
+              <Link href="/best-preschool-near-me-in-thane" className="hover:text-primary" data-testid="breadcrumb-centres">
                 Centres
               </Link>
             </li>
@@ -565,7 +565,7 @@ function PreschoolLocationTemplate({ localitySlug }: PreschoolLocationPageProps)
               <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">Award-Winning Preschool</span>
             </Link>
             <Link
-              href="/preschool-near-me"
+              href="/best-preschool-near-me-in-thane"
               className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center"
               data-testid="link-centre-near-me"
             >

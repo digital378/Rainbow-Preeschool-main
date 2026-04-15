@@ -10,7 +10,7 @@ const routeImports: Record<string, () => Promise<unknown>> = {
   '/contact': () => import('@/pages/contact'),
   '/blog': () => import('@/pages/blog'),
   '/best-preschool-near-me-in-thane': () => import('@/pages/best-preschool-in-thane'),
-  '/preschool-near-me': () => import('@/pages/preschool-near-me'),
+
   '/preschool-admissions': () => import('@/pages/preschool-admissions'),
 };
 

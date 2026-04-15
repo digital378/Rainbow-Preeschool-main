@@ -88,8 +88,8 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/preschool-near-me" className="text-sm text-muted-foreground hover:text-foreground transition-colors" data-testid="link-footer-preschool-near-me">
-                  Preschool Near Me
+                <Link href="/play-school-near-me" className="text-sm text-muted-foreground hover:text-foreground transition-colors" data-testid="link-footer-play-school-near-me">
+                  Play School Near Me
                 </Link>
               </li>
               <li>
@@ -98,18 +98,8 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/play-school-near-me" className="text-sm text-muted-foreground hover:text-foreground transition-colors" data-testid="link-footer-play-school-near-me">
-                  Play School Near Me
-                </Link>
-              </li>
-              <li>
-                <Link href="/nursery-school-near-me" className="text-sm text-muted-foreground hover:text-foreground transition-colors" data-testid="link-footer-nursery-school-near-me">
-                  Nursery School Near Me
-                </Link>
-              </li>
-              <li>
-                <Link href="/play-school-in-thane" className="text-sm text-muted-foreground hover:text-foreground transition-colors" data-testid="link-footer-play-school-in-thane">
-                  Play School in Thane
+                <Link href="/nursery" className="text-sm text-muted-foreground hover:text-foreground transition-colors" data-testid="link-footer-nursery">
+                  Nursery Programme
                 </Link>
               </li>
               <li>

@@ -821,7 +821,7 @@ export default function PlaySchoolNearMe() {
                   <Link href="/kindergarten">
                     <Button variant="outline" size="sm" data-testid="link-ps-kindergarten">Kindergarten Programme</Button>
                   </Link>
-                  <Link href="/preschool-near-me">
+                  <Link href="/best-preschool-near-me-in-thane">
                     <Button variant="outline" size="sm" data-testid="link-ps-preschool-near-me">Find Nearest Centre</Button>
                   </Link>
                   <Link href="/best-preschool-near-me-in-thane">
@@ -1070,7 +1070,7 @@ export default function PlaySchoolNearMe() {
               >
                 <SiWhatsapp className="mr-2 h-5 w-5" /> WhatsApp Us
               </Button>
-              <Link href="/preschool-near-me">
+              <Link href="/best-preschool-near-me-in-thane">
                 <Button
                   size="lg"
                   variant="outline"

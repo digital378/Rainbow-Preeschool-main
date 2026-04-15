@@ -192,7 +192,7 @@ const faqCategories: FAQCategory[] = [
       {
         question: "How many centres does Rainbow Preschool have in Thane?",
         answer: "We operate 6 centres across Thane: Manpada (Ghodbunder Road), Hariniwas (Naupada), Anand Nagar (Majiwada), Dhokali (Kolshet Road), Kalwa, and Kasarvadavali (Ghodbunder Road). All centres maintain the same high standards of quality.",
-        relatedLink: { text: "Find a Centre Near You", url: "/preschool-near-me" },
+        relatedLink: { text: "Find a Centre Near You", url: "/play-school-near-me" },
       },
       {
         question: "Are all centres the same quality?",

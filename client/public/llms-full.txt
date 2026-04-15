@@ -551,7 +551,7 @@ A: Rainbow uses a play-based learning approach inspired by Montessori principles
 Rainbow Preschool International has dedicated landing pages for the following local search queries:
 
 - "best preschool near me in Thane" → https://www.rainbowpreschools.com/best-preschool-near-me-in-thane
-- "preschool near me" → https://www.rainbowpreschools.com/preschool-near-me
+- "preschool near me" → https://www.rainbowpreschools.com/best-preschool-near-me-in-thane
 - "playgroup in Thane" → https://www.rainbowpreschools.com/playgroup-in-thane
 - "preschool in Manpada Thane" → https://www.rainbowpreschools.com/preschool-in-manpada-thane
 - "preschool in Hariniwas Thane" → https://www.rainbowpreschools.com/preschool-in-hariniwas-thane

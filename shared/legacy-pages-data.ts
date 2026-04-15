@@ -9197,7 +9197,7 @@ Object.assign(legacyPagesData, {
     sections: [
       {
         heading: "Why April Fool's Day Activities Are Good for Preschoolers",
-        content: "A well-planned April Fool's Day celebration can do much more than create laughter. It can also support important areas of development in early childhood.\n\nFor young children, playful celebrations work best when they are kind, simple and predictable enough to feel safe. These theme-based days align naturally with the play-based learning approach we use across our <a href=\"/programmes\">Playgroup, Nursery and Kindergarten programmes</a>. Families in Thane looking for a <a href=\"/preschool-near-me\">preschool near them</a> can explore our six centre locations and see this kind of joyful, activity-based learning in action.",
+        content: "A well-planned April Fool's Day celebration can do much more than create laughter. It can also support important areas of development in early childhood.\n\nFor young children, playful celebrations work best when they are kind, simple and predictable enough to feel safe. These theme-based days align naturally with the play-based learning approach we use across our <a href=\"/programmes\">Playgroup, Nursery and Kindergarten programmes</a>. Families in Thane looking for a <a href=\"/play-school-near-me\">preschool near them</a> can explore our six centre locations and see this kind of joyful, activity-based learning in action.",
         bulletPoints: [
           "Build confidence through active participation",
           "Improve listening and language skills",
@@ -9346,7 +9346,7 @@ Object.assign(legacyPagesData, {
     relatedLinks: [
       { title: "Best Preschool in Thane", url: "/best-preschool-near-me-in-thane", description: "Why Rainbow stands out in Thane" },
       { title: "Preschool Admissions Guide", url: "/preschool-admissions", description: "Age criteria, process and documents" },
-      { title: "Find a Preschool Near You", url: "/preschool-near-me", description: "All 6 Rainbow centre locations" },
+      { title: "Play School Near Me", url: "/play-school-near-me", description: "All 6 Rainbow centre locations" },
       { title: "Playgroup Programme (Ages 1.5–2.5)", url: "/playgroup", description: "Early play-based learning" },
       { title: "Nursery Programme (Ages 2.5–3.5)", url: "/nursery", description: "Building foundations through fun" },
       { title: "Kindergarten Programme (Ages 3.5–5.5)", url: "/kindergarten", description: "School readiness through activity" },

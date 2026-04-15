@@ -1,6 +1,6 @@
 import { Link } from "wouter";
 import { LOCATION_LINK_MAP } from "@shared/seo-config";
-import { FileText, MapPin, Award, Palette, BookOpen, GraduationCap, ChevronRight, Search, Building, School, ClipboardCheck, BarChart3 } from "lucide-react";
+import { FileText, MapPin, Award, Palette, BookOpen, GraduationCap, ChevronRight, Search, ClipboardCheck, BarChart3 } from "lucide-react";
 
 interface BlogInternalLinksProps {
   currentSlug?: string;
@@ -35,7 +35,7 @@ export function BlogInternalLinks({ currentSlug = "" }: BlogInternalLinksProps) 
         </Link>
         
         <Link 
-          href="/preschool-near-me"
+          href="/play-school-near-me"
           className="flex items-center gap-2 px-4 py-3 bg-white rounded-lg border border-gray-200 hover:border-red-300 hover:shadow-sm transition-all text-sm font-medium text-gray-700"
           data-testid="link-blog-near-me"
         >
@@ -59,24 +59,6 @@ export function BlogInternalLinks({ currentSlug = "" }: BlogInternalLinksProps) 
         >
           <Search className="w-4 h-4 text-cyan-600 flex-shrink-0" />
           Play School Near Me
-        </Link>
-        
-        <Link 
-          href="/nursery-school-near-me"
-          className="flex items-center gap-2 px-4 py-3 bg-white rounded-lg border border-gray-200 hover:border-violet-300 hover:shadow-sm transition-all text-sm font-medium text-gray-700"
-          data-testid="link-blog-nursery-school-near-me"
-        >
-          <School className="w-4 h-4 text-violet-500 flex-shrink-0" />
-          Nursery School Near Me
-        </Link>
-        
-        <Link 
-          href="/play-school-in-thane"
-          className="flex items-center gap-2 px-4 py-3 bg-white rounded-lg border border-gray-200 hover:border-amber-300 hover:shadow-sm transition-all text-sm font-medium text-gray-700"
-          data-testid="link-blog-play-school-in-thane"
-        >
-          <Building className="w-4 h-4 text-amber-600 flex-shrink-0" />
-          Play School in Thane
         </Link>
         
         <Link 
