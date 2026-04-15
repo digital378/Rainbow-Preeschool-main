@@ -228,7 +228,6 @@ const LazySocialisationBenefitsToddlers = lazy(() => import("@/pages/legacy-page
 
 const LazyAuthorArchivePage = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.AuthorArchivePage })));
 const AkheelaBalbale = lazy(() => import("@/pages/author-akheela-balbale"));
-const DrMeghnaRai = lazy(() => import("@/pages/author-dr-meghna-rai"));
 
 const LazyTermsPage = lazy(() => import("@/pages/legal").then(m => ({ default: m.TermsPage })));
 const LazyPrivacyPage = lazy(() => import("@/pages/legal").then(m => ({ default: m.PrivacyPage })));
@@ -520,7 +519,6 @@ function Router() {
         <Route path="/socialisation-benefits-toddlers-playgroup" component={LazySocialisationBenefitsToddlers} />
         
         <Route path="/about/akheela-balbale" component={AkheelaBalbale} />
-        <Route path="/about/dr-meghna-rai" component={DrMeghnaRai} />
         <Route path="/author/rainbowpreschools" component={LazyAuthorArchivePage} />
         <Route path="/author/rainbow-preschools" component={LazyAuthorArchivePage} />
         

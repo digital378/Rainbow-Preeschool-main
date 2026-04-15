@@ -86,7 +86,6 @@ const entries: SitemapEntry[] = [
   { url: '/', priority: 1.0, changefreq: 'weekly' },
   { url: '/about', priority: 0.8, changefreq: 'monthly' },
   { url: '/about/akheela-balbale', priority: 0.7, changefreq: 'monthly' },
-  { url: '/about/dr-meghna-rai', priority: 0.7, changefreq: 'monthly' },
   { url: '/programmes', priority: 0.9, changefreq: 'monthly' },
   { url: '/gallery', priority: 0.8, changefreq: 'monthly' },
   { url: '/contact', priority: 0.9, changefreq: 'monthly' },

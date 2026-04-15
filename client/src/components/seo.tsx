@@ -248,21 +248,6 @@ export function createBlogPostSchema(post: {
         url: BASE_URL,
       },
     },
-    editor: {
-      "@type": "Person",
-      name: "Dr. Meghna Rai",
-      jobTitle: "Founder & Director",
-      url: `${BASE_URL}/about/dr-meghna-rai`,
-      description: "Dr. Meghna Rai is the Founder and Director of Rainbow Preschool International, with a PhD in Early Childhood Education and 18+ years building Thane's leading preschool network.",
-      sameAs: [
-        `${BASE_URL}/about/dr-meghna-rai`,
-      ],
-      worksFor: {
-        "@type": "Organization",
-        name: "Rainbow Preschool International",
-        url: BASE_URL,
-      },
-    },
     publisher: {
       "@type": "Organization",
       name: "Rainbow Preschool International",
