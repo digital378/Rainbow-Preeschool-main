@@ -646,7 +646,7 @@ const blogPostsData: Record<string, BlogPostData> = {
       "### \"My child is too young — won't they just cry all day?\"",
       "Some crying during the first week is completely normal and expected. At Rainbow Preschool, our teachers are specially trained in helping toddlers settle in. Most children stop crying within 15-20 minutes of drop-off, and within 1-2 weeks, they begin looking forward to school.",
       "We also offer a gradual settling-in process where parents can stay for short periods initially and gradually increase separation time.",
-      "EXPLORE_MORE:[Explore Our Playgroup Programme](/playgroup)|[Kindergarten Programme](/kindergarten)|[Preschool Admissions 2026-27](/preschool-admissions)|[Best Preschool Near You in Thane](/best-preschool-near-me-in-thane)",
+      "EXPLORE_MORE:[Explore Our Playgroup Programme](/playgroup)|[Nursery Programme](/nursery)|[Kindergarten Programme](/kindergarten)|[Best Preschool Near You in Thane](/best-preschool-near-me-in-thane)",
       "### \"My child isn't talking yet. Can they still join?\"",
       "Absolutely. Many 1.5-year-olds communicate primarily through gestures, sounds, and a few words. Play school actually accelerates language development because children hear more words, engage in songs and rhymes, and are motivated to communicate with peers and teachers.",
       "### \"What about toilet training?\"",
