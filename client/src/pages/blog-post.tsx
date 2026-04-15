@@ -253,7 +253,7 @@ const blogPostsData: Record<string, BlogPostData> = {
       "**What it looks like:** Dress-up, role-playing, creating imaginary scenarios, talking to stuffed animals or dolls as if they're real",
       "**Skills developed:**\n- Language and vocabulary (children use more complex language in pretend play)\n- Emotional understanding (exploring different perspectives and feelings)\n- Creativity and imagination\n- Social negotiation (when playing with others)\n- Abstract thinking (using one object to represent another)\n- Self-regulation (staying 'in character' requires impulse control)",
       "**At Rainbow Preschool:** Our dramatic play centres include home corners, markets, doctor's offices, and other themed areas that invite imaginative exploration.",
-      "EXPLORE_MORE:[Our Play-Based Programmes](/programmes)|[Playgroup for Toddlers](/playgroup)|[Best Preschool Near You in Thane](/best-preschool-near-me-in-thane)|[Parent Testimonials](/testimonials)",
+      "EXPLORE_MORE:[Our Play-Based Programmes](/programmes)|[Playgroup for Toddlers](/playgroup)|[Best Preschool in Thane](/best-preschool-near-me-in-thane)|[Parent Testimonials](/testimonials)",
       "### 2. Constructive Play (Building and Creating)",
       "Constructive play involves manipulating materials to create something - whether it's a block tower, a painting, or a sand castle.",
       "**What it looks like:** Building with blocks, Legos, or magnetic tiles; creating art projects; constructing with recycled materials; making models with clay or playdough",
@@ -360,7 +360,7 @@ const blogPostsData: Record<string, BlogPostData> = {
       "**Stay Calm:** Children pick up on our emotions. If you're anxious, they will be too. Project confidence and positivity, even if you're feeling nervous inside.",
       "**Keep Goodbye Brief:** A long, drawn-out goodbye can actually increase anxiety. Give a hug, say 'I love you,' and remind them when you'll be back. Then go.",
       "**Trust the Teachers:** Trained preschool teachers are experts at helping children settle in. Most children stop crying within minutes of parents leaving.",
-      "EXPLORE_MORE:[Our Programmes](/programmes)|[Nursery Programme](/nursery)|[Best Preschool Near You in Thane](/best-preschool-near-me-in-thane)|[Preschool Admissions 2026-27](/preschool-admissions)",
+      "EXPLORE_MORE:[Our Programmes](/programmes)|[Nursery Programme](/nursery)|[Top Preschool Near You in Thane](/best-preschool-near-me-in-thane)|[Preschool Admissions 2026-27](/preschool-admissions)",
       "## The First Week: What to Expect",
       "**Some Resistance is Normal:** Don't be surprised if your child doesn't want to go on day two or three. This is completely normal and usually passes.",
       "**Stay Consistent:** As tempting as it might be to give your child a day off, consistency helps children adjust faster.",
@@ -450,7 +450,7 @@ const blogPostsData: Record<string, BlogPostData> = {
       "**Stimulating but Not Overwhelming:** Classrooms are interesting and inviting without being chaotic or overstimulating.",
       "**Natural Light and Ventilation:** Comfortable physical conditions support focus and wellbeing.",
       "**Outdoor Areas:** Safe outdoor spaces allow for physical activity and connection with nature.",
-      "EXPLORE_MORE:[Best Preschool Near You in Thane](/best-preschool-near-me-in-thane)|[Our Programmes](/programmes)|[10 Signs of a Good Preschool](/blog/signs-of-good-preschool-thane)|[Preschool Admissions](/preschool-admissions)",
+      "EXPLORE_MORE:[Preschool Near You in Thane](/best-preschool-near-me-in-thane)|[Our Programmes](/programmes)|[10 Signs of a Good Preschool](/blog/signs-of-good-preschool-thane)|[Preschool Admissions](/preschool-admissions)",
       "## The Role of Relationships",
       "The most important aspect of any learning environment is the people in it. At Rainbow Preschool:",
       "**Trained Teachers:** Our educators understand child development and know how to create nurturing relationships.",
@@ -495,7 +495,7 @@ const blogPostsData: Record<string, BlogPostData> = {
       "Ask about class sizes and ratios. For quality early education, look for:",
       "- **Playgroup (1.5-2.5 years):** 1 teacher for every 4-6 children\n- **Nursery (2.5-4 years):** 1 teacher for every 6-8 children\n- **Kindergarten (4-6 years):** 1 teacher for every 8-10 children",
       "**Why it matters:** Smaller groups allow teachers to provide individualised attention, respond to each child's needs, and create meaningful relationships. Research consistently links lower ratios to better developmental outcomes across all domains.",
-      "Rainbow Preschool maintains small batch sizes of 10-12 children per teacher at all six centres, ensuring every child gets the attention they deserve.",
+      "Rainbow Preschool maintains small batch sizes of 10-12 children per teacher across our [Playgroup](/playgroup), [Nursery](/nursery), and [Kindergarten](/kindergarten) programmes at all six centres, ensuring every child gets the attention they deserve.",
       "## Sign 4: A Play-Based Curriculum with Clear Goals",
       "Look for a balance between structured learning and free play:",
       "- Is there a documented curriculum with age-appropriate learning goals?\n- Does the programme include both teacher-led activities and child-initiated play?\n- Are there learning stations or centres where children can explore?\n- Is the curriculum adapted for different developmental levels?\n- Can the school explain what children will learn and how?",
@@ -505,7 +505,7 @@ const blogPostsData: Record<string, BlogPostData> = {
       "- **Security:** CCTV surveillance, controlled entry/exit, verified pickup systems\n- **Child-proofing:** Covered electrical outlets, rounded furniture edges, secured heavy items\n- **Hygiene:** Clean washrooms, sanitised surfaces, hand-washing stations\n- **Outdoor area:** Safe play equipment, fenced area, weather protection\n- **Emergency readiness:** Fire extinguishers, first-aid kits, evacuation plans",
       "**Why it matters:** Children cannot learn effectively if they're not physically safe. A well-maintained facility also reflects the school's overall attention to detail and commitment to quality.",
       "Rainbow Preschool maintains 24/7 CCTV monitoring, daily hygiene routines, fire safety equipment, and first-aid-trained staff across all centres.",
-      "EXPLORE_MORE:[Best Preschool Near You in Thane](/best-preschool-near-me-in-thane)|[Our Programmes](/programmes)|[Preschool Admissions 2026-27](/preschool-admissions)|[Is Your Child Ready? Take the Quiz](/preschool-readiness-quiz)",
+      "EXPLORE_MORE:[Find a Preschool in Thane](/best-preschool-near-me-in-thane)|[Our Programmes](/programmes)|[Preschool Admissions 2026-27](/preschool-admissions)|[Is Your Child Ready? Take the Quiz](/preschool-readiness-quiz)",
       "## Sign 6: Strong Communication with Parents",
       "A quality preschool keeps parents informed and involved:",
       "- Regular updates on your child's activities and progress\n- Parent-teacher meetings (at least quarterly)\n- Open-door policy for parent visits\n- Responsive to parent concerns and questions\n- Digital communication for daily updates",
@@ -623,7 +623,7 @@ const blogPostsData: Record<string, BlogPostData> = {
       "Most children are ready for a structured play school or playgroup programme between **1.5 to 2.5 years of age**. However, readiness varies from child to child — age is just one factor.",
       "Here's a general guideline used by leading early childhood educators in India:",
       "- **Playgroup:** 1.5 to 2.5 years\n- **Nursery:** 2.5 to 4 years\n- **Kindergarten (Jr. KG / Sr. KG):** 4 to 6 years",
-      "At Rainbow Preschool, our youngest learners join the Playgroup programme at 1.5 years, where the focus is on gentle socialisation, sensory exploration, and building comfort with a structured environment.",
+      "At Rainbow Preschool, our youngest learners join the [Playgroup programme](/playgroup) at 1.5 years, where the focus is on gentle socialisation, sensory exploration, and building comfort with a structured environment.",
       "## Readiness Signs: Is Your Child Ready?",
       "Age alone doesn't determine readiness. Look for these developmental signs:",
       "### Physical Readiness",
@@ -646,7 +646,7 @@ const blogPostsData: Record<string, BlogPostData> = {
       "### \"My child is too young — won't they just cry all day?\"",
       "Some crying during the first week is completely normal and expected. At Rainbow Preschool, our teachers are specially trained in helping toddlers settle in. Most children stop crying within 15-20 minutes of drop-off, and within 1-2 weeks, they begin looking forward to school.",
       "We also offer a gradual settling-in process where parents can stay for short periods initially and gradually increase separation time.",
-      "EXPLORE_MORE:[Explore Our Playgroup Programme](/playgroup)|[Nursery Programme](/nursery)|[Kindergarten Programme](/kindergarten)|[Best Preschool Near You in Thane](/best-preschool-near-me-in-thane)",
+      "EXPLORE_MORE:[Explore Our Playgroup Programme](/playgroup)|[Nursery Programme](/nursery)|[Kindergarten Programme](/kindergarten)|[Top Preschool in Thane](/best-preschool-near-me-in-thane)",
       "### \"My child isn't talking yet. Can they still join?\"",
       "Absolutely. Many 1.5-year-olds communicate primarily through gestures, sounds, and a few words. Play school actually accelerates language development because children hear more words, engage in songs and rhymes, and are motivated to communicate with peers and teachers.",
       "### \"What about toilet training?\"",
@@ -708,11 +708,11 @@ const blogPostsData: Record<string, BlogPostData> = {
       "While flexibility is important for toddlers, some structure is beneficial. A consistent daily routine at play school helps children understand sequencing, develop a sense of time and order, feel secure and in control, and transition smoothly between activities.",
       "### 8. Creativity and Imagination",
       "Through art activities, pretend play, music, and open-ended exploration, play school nurtures the creative thinking that is foundational to problem-solving and innovation throughout life.",
-      "EXPLORE_MORE:[Rainbow Playgroup Programme](/playgroup)|[Best Preschool Near You in Thane](/best-preschool-near-me-in-thane)|[Admissions Open 2026-27](/preschool-admissions)|[Compare Top Preschools in Thane](/top-preschools-in-thane)",
+      "EXPLORE_MORE:[Rainbow Playgroup Programme](/playgroup)|[Find a Preschool Near You in Thane](/best-preschool-near-me-in-thane)|[Admissions Open 2026-27](/preschool-admissions)|[Compare Top Preschools in Thane](/top-preschools-in-thane)",
       "### 9. Cognitive Stimulation",
       "Age-appropriate activities introduce early concepts of colours, shapes, and sorting, cause and effect, simple problem-solving, memory through songs and games, and matching, patterns, and sequencing.",
       "### 10. Preparation for Formal Schooling",
-      "Children who attend play school from age 2 adjust more easily when they move to nursery and kindergarten. They're already familiar with classroom routines, group activities, and the concept of learning with a teacher.",
+      "Children who attend play school from age 2 adjust more easily when they move to [nursery](/nursery) and [kindergarten](/kindergarten). They're already familiar with classroom routines, group activities, and the concept of learning with a teacher.",
       "### 11. Exposure to Diversity",
       "Play school exposes children to peers from different backgrounds, which builds cultural awareness, acceptance, and communication skills with diverse people — important qualities in our increasingly connected world.",
       "### 12. Parent Support and Guidance",
@@ -753,7 +753,7 @@ const blogPostsData: Record<string, BlogPostData> = {
       "## Age Criteria for Nursery Admission in Thane",
       "Most preschools in Thane follow these age guidelines:",
       "- **Playgroup:** 1.5 to 2.5 years (as of June 1st of the academic year)\n- **Nursery:** 2.5 to 4 years\n- **Junior KG:** 3.5 to 4.5 years\n- **Senior KG:** 4.5 to 5.5 years",
-      "At Rainbow Preschool International, we accept children from 1.5 years for our Playgroup programme. Our Nursery programme is designed for children aged 2.5 to 4 years, and Kindergarten for ages 4 to 6.",
+      "At Rainbow Preschool International, we accept children from 1.5 years for our [Playgroup programme](/playgroup). Our [Nursery programme](/nursery) is designed for children aged 2.5 to 4 years, and [Kindergarten](/kindergarten) for ages 4 to 6.",
       "**Note:** Unlike many formal schools, preschools in Thane generally have flexible age criteria. If your child is a few months younger or older than the stated range, it's worth discussing with the school — readiness matters more than exact age.",
       "## Documents Required for Nursery Admission",
       "Keep these documents ready before you begin the admission process:",
@@ -1128,6 +1128,32 @@ export default function BlogPost() {
 
   const formattedDate = format(new Date(post.publishedAt), "MMMM dd, yyyy");
 
+  const renderInline = (text: string): React.ReactNode => {
+    const tokens: React.ReactNode[] = [];
+    const regex = /\*\*([^*]+)\*\*|\*([^*]+)\*|\[([^\]]+)\]\(([^)]+)\)/g;
+    let last = 0;
+    let m: RegExpExecArray | null;
+    while ((m = regex.exec(text)) !== null) {
+      if (m.index > last) tokens.push(text.slice(last, m.index));
+      if (m[0].startsWith("**")) {
+        tokens.push(<strong key={m.index} className="text-foreground">{m[1]}</strong>);
+      } else if (m[0].startsWith("*")) {
+        tokens.push(<em key={m.index} className="text-foreground font-medium">{m[2]}</em>);
+      } else {
+        const linkText = m[3];
+        const url = m[4];
+        if (url.startsWith("/")) {
+          tokens.push(<Link key={m.index} href={url} className="text-primary font-medium hover:underline">{linkText}</Link>);
+        } else {
+          tokens.push(<a key={m.index} href={url} target="_blank" rel="noopener noreferrer" className="text-primary font-medium hover:underline">{linkText}</a>);
+        }
+      }
+      last = m.index + m[0].length;
+    }
+    if (last < text.length) tokens.push(text.slice(last));
+    return tokens.length === 0 ? text : tokens;
+  };
+
   return (
     <div className="pt-20 md:pt-24">
       <SEO
@@ -1363,13 +1389,10 @@ export default function BlogPost() {
                   </ol>
                 );
               }
-              if (paragraph.includes("**")) {
-                const parts = paragraph.split(/\*\*/);
+              if (paragraph.includes("**") || paragraph.includes("[")) {
                 return (
                   <p key={index} className="text-muted-foreground leading-relaxed mb-4">
-                    {parts.map((part, i) => 
-                      i % 2 === 1 ? <strong key={i} className="text-foreground">{part}</strong> : part
-                    )}
+                    {renderInline(paragraph)}
                   </p>
                 );
               }
