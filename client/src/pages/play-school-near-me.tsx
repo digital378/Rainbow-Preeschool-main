@@ -526,8 +526,8 @@ export default function PlaySchoolNearMe() {
                 Rainbow Preschool International offers a safe, joyful, and developmentally rich play school experience across 6 centres in Thane. Trusted by 1,00,000+ families since 2007.
               </p>
               <div className="flex flex-wrap gap-4">
-                <Button size="lg" onClick={() => document.getElementById('ps-enquiry-form')?.scrollIntoView({ behavior: 'smooth' })} data-testid="button-ps-hero-enquire">
-                  Enquire Now <ArrowRight className="ml-2 h-5 w-5" />
+                <Button size="lg" onClick={() => document.getElementById('ps-centres')?.scrollIntoView({ behavior: 'smooth' })} data-testid="button-ps-hero-enquire">
+                  View Our Centres <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
                 <Button
                   variant="outline"
@@ -988,7 +988,7 @@ export default function PlaySchoolNearMe() {
       <ActivitiesSection activities={activities} />
 
       {/* Centre Locations */}
-      <section className="py-16 md:py-20 lg:py-24 bg-muted/30">
+      <section id="ps-centres" className="py-16 md:py-20 lg:py-24 bg-muted/30 scroll-mt-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">Our Locations</p>
