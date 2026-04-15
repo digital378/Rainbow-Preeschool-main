@@ -184,7 +184,7 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
         <a href="${BASE_URL}/kindergarten">Kindergarten</a>
         <a href="${BASE_URL}/preschool-admissions">Admissions</a>
         <a href="${BASE_URL}/best-preschool-near-me-in-thane">Best Preschool in Thane</a>
-        <a href="${BASE_URL}/preschool-near-me">Preschool Near Me</a>
+        <a href="${BASE_URL}/play-school-near-me">Play School Near Me</a>
       </div>
       <p><a href="https://rainbowinternationalschool.in" rel="noopener">Rainbow International School</a> — CBSE K–12, Nursery to Class 12</p>
       <p><a href="${BASE_URL}/privacy">Privacy Policy</a> | <a href="${BASE_URL}/terms">Terms of Service</a></p>

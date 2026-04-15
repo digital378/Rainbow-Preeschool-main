@@ -383,14 +383,14 @@ export default function Home() {
           <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-6 gap-2 sm:gap-3">
             {[
               { href: "/best-preschool-near-me-in-thane", label: "Award Winning", shortLabel: "Award Winning", Icon: Award, color: "#ef4444", testid: "link-best-preschool" },
-              { href: "/preschool-near-me", label: "Near Me", shortLabel: "Near Me", Icon: MapPin, color: "#10b981", testid: "link-preschool-near-me" },
+              { href: "/play-school-near-me", label: "Near Me", shortLabel: "Near Me", Icon: MapPin, color: "#10b981", testid: "link-preschool-near-me" },
               { href: "/preschool-admissions", label: "Admissions", shortLabel: "Admissions", Icon: FileText, color: "#3b82f6", testid: "link-preschool-admissions" },
               { href: "/playgroup", label: "Playgroup", shortLabel: "Playgroup", Icon: Palette, color: "#f97316", testid: "link-playgroup" },
               { href: "/nursery", label: "Nursery", shortLabel: "Nursery", Icon: BookOpen, color: "#8b5cf6", testid: "link-nursery" },
               { href: "/kindergarten", label: "Kindergarten", shortLabel: "KG", Icon: GraduationCap, color: "#ec4899", testid: "link-kindergarten" },
             ].map(({ href, label, shortLabel, Icon, color, testid }) => (
               <a
-                key={href}
+                key={testid}
                 href={href}
                 data-testid={testid}
                 className="group flex flex-col items-center gap-1.5 sm:gap-2 p-2.5 sm:p-3 rounded-2xl text-center transition-all duration-200 hover:-translate-y-1 min-h-[72px] justify-center"
@@ -647,7 +647,7 @@ export default function Home() {
       <div className="py-6 bg-primary/5">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <p className="text-sm text-muted-foreground text-center leading-relaxed" data-testid="text-seo-interlinks">
-            Parents across Thane trust Rainbow Preschool for early childhood education. Whether you're searching for a <a href="/play-school-near-me" className="text-primary hover:underline font-medium" data-testid="link-inline-play-school-near-me">play school near you</a>, exploring the <a href="/nursery-school-near-me" className="text-primary hover:underline font-medium" data-testid="link-inline-nursery-school-near-me">best nursery schools nearby</a>, or looking for a trusted <a href="/play-school-in-thane" className="text-primary hover:underline font-medium" data-testid="link-inline-play-school-in-thane">play school in Thane</a> — we're here to help your child thrive.
+            Parents across Thane trust Rainbow Preschool for early childhood education. Whether you're searching for the <a href="/best-preschool-near-me-in-thane" className="text-primary hover:underline font-medium" data-testid="link-inline-best-preschool">best preschool in Thane</a>, exploring our <a href="/nursery" className="text-primary hover:underline font-medium" data-testid="link-inline-nursery">Nursery programme</a>, or looking for a trusted <a href="/play-school-near-me" className="text-primary hover:underline font-medium" data-testid="link-inline-play-school-near-me">play school near you</a> — we're here to help your child thrive.
           </p>
         </div>
       </div>

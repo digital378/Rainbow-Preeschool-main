@@ -42,11 +42,8 @@ const FAQsPage = lazy(() => import("@/pages/faqs"));
 // High-intent SEO landing pages
 const PreschoolAdmissions = lazy(() => import("@/pages/preschool-admissions"));
 const Gallery = lazy(() => import("@/pages/gallery"));
-const PreschoolNearMe = lazy(() => import("@/pages/preschool-near-me"));
 const BestPreschoolInThane = lazy(() => import("@/pages/best-preschool-in-thane"));
 const PlaySchoolNearMe = lazy(() => import("@/pages/play-school-near-me"));
-const NurserySchoolNearMe = lazy(() => import("@/pages/nursery-school-near-me"));
-const PlaySchoolInThane = lazy(() => import("@/pages/play-school-in-thane"));
 
 const RainbowSparkleTrail = lazy(() => import("@/components/rainbow-sparkle-trail").then(m => ({ default: m.RainbowSparkleTrail })));
 
@@ -231,6 +228,7 @@ const LazySocialisationBenefitsToddlers = lazy(() => import("@/pages/legacy-page
 
 const LazyAuthorArchivePage = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.AuthorArchivePage })));
 const AkheelaBalbale = lazy(() => import("@/pages/author-akheela-balbale"));
+const DrMeghnaRai = lazy(() => import("@/pages/author-dr-meghna-rai"));
 
 const LazyTermsPage = lazy(() => import("@/pages/legal").then(m => ({ default: m.TermsPage })));
 const LazyPrivacyPage = lazy(() => import("@/pages/legal").then(m => ({ default: m.PrivacyPage })));
@@ -310,11 +308,8 @@ function Router() {
         
         {/* High-intent SEO landing pages */}
         <Route path="/preschool-admissions" component={PreschoolAdmissions} />
-        <Route path="/preschool-near-me" component={PreschoolNearMe} />
         <Route path="/best-preschool-near-me-in-thane" component={BestPreschoolInThane} />
         <Route path="/play-school-near-me" component={PlaySchoolNearMe} />
-        <Route path="/nursery-school-near-me" component={NurserySchoolNearMe} />
-        <Route path="/play-school-in-thane" component={PlaySchoolInThane} />
         
         <Route path="/ad" component={AdLanding} />
         <Route path="/ad-google" component={AdGoogleLanding} />
@@ -525,6 +520,7 @@ function Router() {
         <Route path="/socialisation-benefits-toddlers-playgroup" component={LazySocialisationBenefitsToddlers} />
         
         <Route path="/about/akheela-balbale" component={AkheelaBalbale} />
+        <Route path="/about/dr-meghna-rai" component={DrMeghnaRai} />
         <Route path="/author/rainbowpreschools" component={LazyAuthorArchivePage} />
         <Route path="/author/rainbow-preschools" component={LazyAuthorArchivePage} />
         

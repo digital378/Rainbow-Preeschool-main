@@ -12,10 +12,7 @@ const commonInternalLinks = [
   { text: "Kindergarten Programme Details", url: "/kindergarten" },
   { text: "About Rainbow Preschools", url: "/about" },
   { text: "Play School Near Me in Thane", url: "/play-school-near-me" },
-  { text: "Nursery School Near Me in Thane", url: "/nursery-school-near-me" },
-  { text: "Play School in Thane", url: "/play-school-in-thane" },
   { text: "Best Preschool in Thane", url: "/best-preschool-near-me-in-thane" },
-  { text: "Find a Preschool Near You", url: "/preschool-near-me" },
 ];
 
 // Common related links
@@ -25,10 +22,7 @@ const commonRelatedLinks = [
   { title: "Kindergarten (4-6 years)", url: "/kindergarten", description: "School readiness programme" },
   { title: "Contact & Admissions", url: "/contact", description: "Get in touch with us" },
   { title: "Play School Near Me", url: "/play-school-near-me", description: "Find a play school near you in Thane" },
-  { title: "Nursery School Near Me", url: "/nursery-school-near-me", description: "Find a nursery school near you in Thane" },
-  { title: "Play School in Thane", url: "/play-school-in-thane", description: "Top-rated play school in Thane" },
   { title: "Best Preschool in Thane", url: "/best-preschool-near-me-in-thane", description: "Award-winning preschool in Thane" },
-  { title: "Preschool Near Me", url: "/preschool-near-me", description: "Find a preschool near you in Thane" },
 ];
 
 export const legacyPagesData: Record<string, LegacyPageData> = {

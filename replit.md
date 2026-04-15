@@ -80,3 +80,4 @@ Preferred communication style: Simple, everyday language.
 - **Robots.txt**: Comprehensive with ad page blocks, WordPress legacy blocks, and canonical www sitemap URL.
 - **Semantic HTML**: Pages use `<article>`, `<section>`, `<nav aria-label>` properly; footer link groups are labeled `<nav>` elements.
 - **Cannibalization Audit**: Homepage targets brand + "preschool in thane"; `/best-preschool-near-me-in-thane` targets "best preschool in thane"; each keyword family has one primary page. 160+ 301 redirects for legacy WordPress URLs and duplicates. Audit summary at `.local/seo-audit-summary.md`.
+- **Author Pages**: `/about/akheela-balbale` (Head of Curriculum, blog post author) and `/about/dr-meghna-rai` (Founder & Director). Both have Person schema, bot SSR entries, sitemap entries, and dedicated page components. Both are for E-E-A-T signals.

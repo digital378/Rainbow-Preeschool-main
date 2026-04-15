@@ -160,6 +160,11 @@ const redirectMap: Record<string, string> = {
   "/questions-ask-school-visit-mid-term-playgroup-admissions": "/blog/what-to-ask-during-a-tour-of-a-preschool-in-thane",
   "/questions-ask-school-visit-mid-term-playgroup-admissions/": "/blog/what-to-ask-during-a-tour-of-a-preschool-in-thane",
 
+  // ── Near-me page consolidation (Phase 1 SEO) ─────────────────────────────
+  "/preschool-near-me": "/best-preschool-near-me-in-thane",
+  "/play-school-in-thane": "/play-school-near-me",
+  "/nursery-school-near-me": "/nursery",
+
   // ── Best preschool slug change ─────────────────────────────────────────────
   "/best-preschool-in-thane": "/best-preschool-near-me-in-thane",
 
