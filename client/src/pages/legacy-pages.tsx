@@ -60,7 +60,6 @@ export const PromisingPreschoolAward = createLegacyPage("/the-most-promising-pre
 export const LifeLessonsConfidence = createLegacyPage("/51-inspiring-life-lessons-that-make-children-confident/");
 export const GamesMakeKidsSmarter = createLegacyPage("/play-these-9-games-to-make-kids-smarter/");
 export const PhysicalDevelopmentSigns = createLegacyPage("/45-signs-of-healthy-physical-development-ages-3-6/");
-export const MidTermVisitQuestions = createLegacyPage("/questions-ask-school-visit-mid-term-playgroup-admissions/");
 export const FAQsPage = createLegacyPage("/faqs/");
 export const UnderstandingPreschoolImportance = createLegacyPage("/understanding-the-importance-of-preschool-in-early-childhood-development/");
 export const AprilFoolsActivities = createLegacyPage("/april-fools-day-activities-for-kids/");
