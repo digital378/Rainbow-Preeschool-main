@@ -80,4 +80,68 @@ Preferred communication style: Simple, everyday language.
 - **Robots.txt**: Comprehensive with ad page blocks, WordPress legacy blocks, and canonical www sitemap URL.
 - **Semantic HTML**: Pages use `<article>`, `<section>`, `<nav aria-label>` properly; footer link groups are labeled `<nav>` elements.
 - **Cannibalization Audit**: Homepage targets brand + "preschool in thane"; `/best-preschool-near-me-in-thane` targets "best preschool in thane"; each keyword family has one primary page. 160+ 301 redirects for legacy WordPress URLs and duplicates. Audit summary at `.local/seo-audit-summary.md`.
-- **Author Pages**: `/about/akheela-balbale` (Head of Curriculum, blog post author) and `/about/dr-meghna-rai` (Founder & Director). Both have Person schema, bot SSR entries, sitemap entries, and dedicated page components. Both are for E-E-A-T signals.
+- **Author Pages**: `/about/akheela-balbale` (Head of Curriculum, blog post author). Has Person schema, bot SSR entry, sitemap entry, and dedicated page component. For E-E-A-T signals.
+
+## GSC Performance Baselines
+
+Use these snapshots to measure SEO progress over time. All data from Google Search Console for rainbowpreschools.com.
+
+### Snapshot 1 — Last 24 Hours (recorded April 17, 2026)
+Data period: April 16, 2026 (hourly, UTC+05:30)
+
+| Metric | Value |
+|---|---|
+| Total Clicks | 11 |
+| Total Impressions | 989 |
+| Average CTR | 1.1% |
+| Average Position | 9.8 |
+
+**Top pages by impressions:** Homepage (www) — 426 imp, 8 clicks, pos 7.44 · `/pre-kg-age-guide` — 112 imp, 1 click, pos 2.54 · Homepage (non-www) — 120 imp, 0 clicks · Homepage (GMB UTM) — 80 imp, 0 clicks
+
+**Top queries with clicks:** "pre kg age" pos 1.03 · "best preschool in thane" pos 16.17 · "pre school thane" pos 3.6 · "rainbow preschool kasarvadavali" pos 1.25
+
+**Devices:** Mobile — 6 clicks, 708 imp, pos 6.07 · Desktop — 5 clicks, 267 imp, pos 19.79 · Tablet — 0 clicks, 14 imp
+
+**Country:** India — 11 clicks, 889 imp, pos 8.01 (99% of traffic)
+
+---
+
+### Snapshot 2 — Last 3 Months (recorded April 17, 2026)
+Data period: February 3, 2026 – April 14, 2026
+
+| Metric | Value |
+|---|---|
+| Total Clicks | 2,310 |
+| Total Impressions | 381,000 |
+| Average CTR | 0.6% |
+| Average Position | 5.4 |
+
+**Monthly trend:**
+- February 2026: Strong — avg ~40 clicks/day, ~8,000 impressions/day. Peak: Feb 4 (61 clicks, 10,004 impressions)
+- Early March 2026: Holding — avg ~40 clicks/day, ~7,000 impressions/day
+- Mid-March 2026 (from ~Mar 14): Sharp drop — impressions fell from ~9,000 to ~2,500–3,500/day; CTR improved as impressions declined
+- April 2026: Further decline — impressions ~1,000–2,000/day, clicks ~10–38/day
+
+**Devices (3 months):**
+- Mobile: 1,751 clicks, 299,707 imp, 0.58% CTR, pos 3.84
+- Desktop: 546 clicks, 71,374 imp, 0.76% CTR, pos 11.3
+- Tablet: 15 clicks, 9,965 imp, 0.15% CTR, pos 8.61
+
+**Country — India:** 2,078 clicks, 323,428 imp, 0.64% CTR, pos 4.37
+
+**Key commercial keyword positions (3-month avg):**
+- "rainbow preschool" — 65 clicks, pos 5.48
+- "best preschool in thane" — 13 clicks, pos 13.64 (target: page 1)
+- "preschool near me" — 8 clicks, pos 21.08 (target: page 1)
+- "pre kg age" — 19 clicks, pos 2.69 (ranking well)
+- "rainbow preschool thane" — 48 clicks, pos 4.44
+
+**Top pages (3 months):**
+- Homepage (www): 462 clicks, 31,770 imp, 1.45% CTR, pos 8.31
+- `/holi-activities-for-kids`: 184 clicks, 56,013 imp (high-volume informational)
+- `/national-symbols-of-india-for-kids`: 104 clicks, 95,118 imp (very high imp, low CTR — informational)
+- `/sports-day-activities-for-kindergarten`: 101 clicks, 16,317 imp
+- `/36-motivational-thoughts-of-the-day-for-kids`: 230 clicks, 27,864 imp
+- `/pre-kg-age-guide`: 62 clicks, 13,723 imp, pos 3.14
+
+**Notable observation:** Mid-March impressions drop (~70% reduction) coincides with likely Google algorithm update or seasonal pattern. Monitor recovery.
