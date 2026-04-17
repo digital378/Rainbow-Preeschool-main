@@ -5,6 +5,7 @@ import { insertContactSchema } from "@shared/schema";
 import { z } from "zod";
 import { sendLeadNotificationEmail } from "./gmail";
 import { sendLeadToMCB, getBranchID } from "./mcb";
+import { syncGscData, isGscConfigured } from "./gsc-sync";
 import path from "path";
 import fs from "fs";
 
@@ -376,6 +377,38 @@ export async function registerRoutes(
     } catch (error) {
       console.error("Delete GSC snapshot error:", error);
       res.status(500).json({ error: "Failed to delete snapshot" });
+    }
+  });
+
+  // ── GSC Auto-Sync API ─────────────────────────────────────────────────────────
+
+  app.get("/api/gsc/sync/status", (_req, res) => {
+    res.json({
+      configured: isGscConfigured(),
+      message: isGscConfigured()
+        ? "GSC service account key is configured. POST /api/gsc/sync to fetch latest data."
+        : "GSC_SERVICE_ACCOUNT_KEY is not set. Add it as a secret to enable auto-sync.",
+    });
+  });
+
+  app.post("/api/gsc/sync", async (_req, res) => {
+    if (!isGscConfigured()) {
+      res.status(400).json({
+        success: false,
+        error: "GSC_SERVICE_ACCOUNT_KEY secret is not configured. Please add it in the Replit Secrets panel.",
+      });
+      return;
+    }
+    try {
+      const result = await syncGscData(3);
+      if (!result.success) {
+        res.status(502).json(result);
+        return;
+      }
+      res.json(result);
+    } catch (err: any) {
+      console.error("GSC sync error:", err);
+      res.status(500).json({ success: false, error: err?.message || "Sync failed" });
     }
   });
 

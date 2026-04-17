@@ -866,6 +866,21 @@ export default function GscDashboard() {
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["/api/gsc/snapshots"] }),
   });
 
+  const [syncResult, setSyncResult] = useState<{ synced: number; skipped: number; date: string; error?: string } | null>(null);
+  const syncMutation = useMutation({
+    mutationFn: () => apiRequest("POST", "/api/gsc/sync"),
+    onSuccess: async (res) => {
+      const data = await res.json();
+      queryClient.invalidateQueries({ queryKey: ["/api/gsc/snapshots"] });
+      setSyncResult(data);
+    },
+    onError: async (err: any) => {
+      let msg = "Sync failed";
+      try { const d = await err.json(); msg = d.error || msg; } catch {}
+      setSyncResult({ synced: 0, skipped: 0, date: "", error: msg });
+    },
+  });
+
   function exportCsv() {
     const headers = "id,date,keyword,clicks,impressions,ctr,position,page,notes";
     const rows = snapshots.map(s =>
@@ -901,10 +916,19 @@ export default function GscDashboard() {
               Rainbow Preschools · rainbowpreschools.com · Last snapshot: {latestDate ? format(parseISO(latestDate), "dd MMM yyyy") : "—"}
             </p>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-wrap">
+            <Button
+              size="sm"
+              className="bg-green-600 hover:bg-green-700 text-white"
+              onClick={() => { setSyncResult(null); syncMutation.mutate(); }}
+              disabled={syncMutation.isPending}
+            >
+              <RefreshCw className={`h-4 w-4 mr-1 ${syncMutation.isPending ? "animate-spin" : ""}`} />
+              {syncMutation.isPending ? "Syncing…" : "Sync from GSC"}
+            </Button>
             <Button variant="outline" size="sm" onClick={() => setShowApiGuide(v => !v)}>
               <Zap className="h-4 w-4 mr-1" />
-              Automate
+              Setup
             </Button>
             <Button variant="outline" size="sm" onClick={exportCsv}>
               <Download className="h-4 w-4 mr-1" />
@@ -937,6 +961,23 @@ export default function GscDashboard() {
             </button>
           ))}
         </div>
+
+        {/* Sync Result Banner */}
+        {syncResult && (
+          <div className={`rounded-lg border p-3 flex items-start gap-3 ${syncResult.error ? "bg-red-50 border-red-200" : "bg-green-50 border-green-200"}`}>
+            {syncResult.error
+              ? <AlertCircle className="h-4 w-4 text-red-600 shrink-0 mt-0.5" />
+              : <CheckCircle2 className="h-4 w-4 text-green-600 shrink-0 mt-0.5" />
+            }
+            <div className="text-sm">
+              {syncResult.error
+                ? <><strong className="text-red-700">Sync failed:</strong> <span className="text-red-600">{syncResult.error}</span></>
+                : <><strong className="text-green-700">Sync complete!</strong> <span className="text-green-700">{syncResult.synced} keywords updated, {syncResult.skipped} not found in GSC data for the last 3 days.</span></>
+              }
+            </div>
+            <button onClick={() => setSyncResult(null)} className="ml-auto text-gray-400 hover:text-gray-600 shrink-0">✕</button>
+          </div>
+        )}
 
         {/* GSC API Guide */}
         {showApiGuide && (
