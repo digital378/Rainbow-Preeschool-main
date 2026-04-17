@@ -2,7 +2,7 @@ import { google } from "googleapis";
 import { storage } from "./storage";
 import { format, subDays } from "date-fns";
 
-const SITE_URL = "https://www.rainbowpreschools.com/";
+const SITE_URL = "sc-domain:rainbowpreschools.com";
 
 const TARGET_KEYWORDS = [
   "playschool near me",
