@@ -1114,8 +1114,27 @@ export default function GscDashboard() {
       const sorted = rows.slice().sort((a, b) => a.snapshotDate.localeCompare(b.snapshotDate));
       const latest = sorted[sorted.length - 1];
       const prev = sorted.length >= 2 ? sorted[sorted.length - 2] : null;
+
+      // Smoothed position delta: average of the last up-to-7 day-over-day
+      // changes. Single-day deltas on low-impression keywords are wildly
+      // noisy in GSC (a one-impression query in pos 5 vs pos 50 swings the
+      // average by ~45), so we always smooth before projecting.
+      let smoothedPos: number | null = null;
+      const window = sorted.slice(-8); // need 8 rows to get 7 deltas
+      if (window.length >= 2) {
+        const dailyDeltas: number[] = [];
+        for (let i = 1; i < window.length; i++) {
+          dailyDeltas.push(window[i].position - window[i - 1].position);
+        }
+        smoothedPos = dailyDeltas.reduce((a, b) => a + b, 0) / dailyDeltas.length;
+        // Cap projected change at ±3 positions/day so noise can't produce
+        // implausible projections like "+16.9 → #38".
+        smoothedPos = Math.max(-3, Math.min(3, smoothedPos));
+        smoothedPos = +smoothedPos.toFixed(1);
+      }
+
       out[kw] = {
-        posDelta: prev ? +(latest.position - prev.position).toFixed(1) : null,
+        posDelta: smoothedPos,
         imprDelta: prev ? latest.impressions - prev.impressions : null,
         latestDate: latest?.snapshotDate ?? null,
       };
@@ -1696,7 +1715,7 @@ export default function GscDashboard() {
                 <CardHeader className="pb-2">
                   <div className="flex items-start justify-between gap-3 flex-wrap">
                     <div>
-                      <CardTitle className="text-base">Clicks &amp; Impressions — Last {chartDays} Days (Daily)</CardTitle>
+                      <CardTitle className="text-base">Clicks &amp; Impressions <span className="text-xs font-normal text-gray-500">({chartDays} days, daily)</span></CardTitle>
                       <CardDescription className="text-xs">
                         Site-wide totals from Google Search Console, one bar per day. Total: {trafficChartTotals.clicks.toLocaleString()} clicks · {trafficChartTotals.impressions.toLocaleString()} impressions over {trafficChartTotals.daysWithData} days with data.
                       </CardDescription>
