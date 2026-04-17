@@ -1245,7 +1245,7 @@ export default function GscDashboard() {
     return { first: dates[0] || null, last: dates[dates.length - 1] || null };
   }, [allSnapshots]);
   const allTimeLabel = allDataDates.first && allDataDates.last
-    ? `All time · ${format(parseISO(allDataDates.first), "d MMM yyyy")} – ${format(parseISO(allDataDates.last), "d MMM yyyy")}`
+    ? `${format(parseISO(allDataDates.first), "d MMM yyyy")} – ${format(parseISO(allDataDates.last), "d MMM yyyy")}`
     : "All time";
   const periodLabel: Record<typeof perfPeriod, string> = {
     latest: "Last 24h",
