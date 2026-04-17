@@ -1235,6 +1235,47 @@ export default function GscDashboard() {
   const perfSnapshots = useMemo(() => filterByPeriod(snapshots), [snapshots, perfPeriod]);
   const perfSiteTotals = useMemo(() => filterByPeriod(siteTotals), [siteTotals, perfPeriod]);
 
+  // Per-keyword totals for the selected period (sums clicks/impressions across
+  // the daily snapshots in the window so the Keyword Performance table
+  // respects the period selector instead of always showing the 90-day total).
+  const periodLabel: Record<typeof perfPeriod, string> = {
+    latest: "Last 24h",
+    "7d": "Last 7 days",
+    "28d": "Last 28 days",
+    "3mo": "Last 3 months",
+    all: "All time",
+  };
+  const perKeywordPeriodTotals = useMemo(() => {
+    const out: Record<string, { clicks: number; impressions: number; ctr: number; position: number }> = {};
+    const byKw: Record<string, GscSnapshot[]> = {};
+    dailyKeywordSnaps.forEach(s => {
+      const kw = s.keyword.replace(/^__daily__:/, "").toLowerCase();
+      (byKw[kw] ||= []).push(s);
+    });
+    Object.entries(byKw).forEach(([kw, rows]) => {
+      const sorted = [...rows].sort((a, b) => a.snapshotDate.localeCompare(b.snapshotDate));
+      let windowRows: GscSnapshot[] = [];
+      if (perfPeriod === "latest") {
+        windowRows = sorted.slice(-1);
+      } else {
+        const days = perfPeriod === "7d" ? 7 : perfPeriod === "28d" ? 28 : perfPeriod === "3mo" ? 90 : null;
+        if (days) {
+          const cutoff = format(new Date(Date.now() - days * 86400000), "yyyy-MM-dd");
+          windowRows = sorted.filter(s => s.snapshotDate >= cutoff);
+        } else {
+          windowRows = sorted;
+        }
+      }
+      if (windowRows.length === 0) return;
+      const clicks = windowRows.reduce((a, r) => a + r.clicks, 0);
+      const impressions = windowRows.reduce((a, r) => a + r.impressions, 0);
+      const ctr = impressions > 0 ? clicks / impressions : 0;
+      const position = windowRows.reduce((a, r) => a + r.position, 0) / windowRows.length;
+      out[kw] = { clicks, impressions, ctr, position };
+    });
+    return out;
+  }, [dailyKeywordSnaps, perfPeriod]);
+
   // Chart: use ONLY per-day site totals (true site-wide numbers from GSC).
   // Keyword data is excluded — it covers only ~20 tracked queries, not all queries,
   // so mixing it in would distort the chart with wrong-magnitude points.
@@ -1573,8 +1614,8 @@ export default function GscDashboard() {
             {/* Keyword Performance Table */}
             <Card>
               <CardHeader className="pb-3">
-                <CardTitle className="text-base">Keyword Performance</CardTitle>
-                <CardDescription>24-hour deltas vs previous day, plus 30/90-day forecast. Lower position = better ranking.</CardDescription>
+                <CardTitle className="text-base">Keyword Performance <span className="text-xs font-normal text-gray-500">({periodLabel[perfPeriod]})</span></CardTitle>
+                <CardDescription>Clicks, impressions and CTR are summed across the selected period above. 24h projection and 30/90-day forecasts use the latest day-over-day trend (smoothed). Lower position = better ranking.</CardDescription>
               </CardHeader>
               <CardContent className="overflow-x-auto">
                 {isLoading ? (
@@ -1599,11 +1640,17 @@ export default function GscDashboard() {
                         const d24 = deltas24h[keyword.toLowerCase()];
                         const pos24 = d24?.posDelta ?? null;
                         const impr24 = d24?.imprDelta ?? null;
+                        // Period-aware metrics: sum over selected window when daily data exists.
+                        const period = perKeywordPeriodTotals[keyword.toLowerCase()];
+                        const dispClicks = period ? period.clicks : latest.clicks;
+                        const dispImpr = period ? period.impressions : latest.impressions;
+                        const dispCtr = period ? period.ctr : latest.ctr;
+                        const dispPosition = period ? period.position : latest.position;
                         // Long-horizon forecast uses the smoothed per-day rate
                         // (capped ±0.3/day) and is clamped to a sensible 1-100 range.
                         const rate = d24?.perDayRate ?? null;
-                        const forecast30 = rate === null ? null : +Math.max(1, Math.min(100, latest.position + rate * 30)).toFixed(1);
-                        const forecast90 = rate === null ? null : +Math.max(1, Math.min(100, latest.position + rate * 90)).toFixed(1);
+                        const forecast30 = rate === null ? null : +Math.max(1, Math.min(100, dispPosition + rate * 30)).toFixed(1);
+                        const forecast90 = rate === null ? null : +Math.max(1, Math.min(100, dispPosition + rate * 90)).toFixed(1);
                         return (
                         <tr key={keyword} className="hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors">
                           <td className="py-3 pr-4">
@@ -1613,15 +1660,15 @@ export default function GscDashboard() {
                             )}
                           </td>
                           <td className="py-3 px-3 text-center">
-                            <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold border ${positionColor(latest.position)}`}>
-                              #{latest.position.toFixed(1)} <span className="opacity-60 font-normal">{positionLabel(latest.position)}</span>
+                            <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold border ${positionColor(dispPosition)}`}>
+                              #{dispPosition.toFixed(1)} <span className="opacity-60 font-normal">{positionLabel(dispPosition)}</span>
                             </span>
                           </td>
                           <td className="py-3 px-3 text-center">
                             {pos24 === null ? (
                               <span className="text-xs text-gray-300">—</span>
                             ) : (() => {
-                              const projected = Math.max(1, latest.position + pos24);
+                              const projected = Math.max(1, dispPosition + pos24);
                               const improving = pos24 < -0.1;
                               const worsening = pos24 > 0.1;
                               const cls = improving
@@ -1636,8 +1683,8 @@ export default function GscDashboard() {
                               );
                             })()}
                           </td>
-                          <td className="py-3 px-3 text-right font-mono text-gray-700 dark:text-gray-300">{latest.clicks}</td>
-                          <td className="py-3 px-3 text-right font-mono text-gray-700 dark:text-gray-300">{latest.impressions.toLocaleString()}</td>
+                          <td className="py-3 px-3 text-right font-mono text-gray-700 dark:text-gray-300">{dispClicks.toLocaleString()}</td>
+                          <td className="py-3 px-3 text-right font-mono text-gray-700 dark:text-gray-300">{dispImpr.toLocaleString()}</td>
                           <td className="py-3 px-3 text-center">
                             {impr24 === null ? (
                               <span className="text-xs text-gray-300">—</span>
@@ -1647,17 +1694,17 @@ export default function GscDashboard() {
                               </span>
                             )}
                           </td>
-                          <td className="py-3 px-3 text-right font-mono text-gray-700 dark:text-gray-300">{(latest.ctr * 100).toFixed(1)}%</td>
+                          <td className="py-3 px-3 text-right font-mono text-gray-700 dark:text-gray-300">{(dispCtr * 100).toFixed(1)}%</td>
                           <td className="py-3 px-3 text-center">
                             {forecast30 !== null ? (
-                              <span className={`text-xs font-semibold ${forecast30 < latest.position ? "text-green-600" : "text-red-500"}`}>
+                              <span className={`text-xs font-semibold ${forecast30 < dispPosition ? "text-green-600" : "text-red-500"}`}>
                                 #{forecast30.toFixed(1)}
                               </span>
                             ) : <span className="text-xs text-gray-300">—</span>}
                           </td>
                           <td className="py-3 pl-3 text-center">
                             {forecast90 !== null ? (
-                              <span className={`text-xs font-semibold ${forecast90 < latest.position ? "text-green-600" : "text-red-500"}`}>
+                              <span className={`text-xs font-semibold ${forecast90 < dispPosition ? "text-green-600" : "text-red-500"}`}>
                                 #{forecast90.toFixed(1)}
                               </span>
                             ) : <span className="text-xs text-gray-300">—</span>}
