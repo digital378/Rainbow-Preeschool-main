@@ -502,76 +502,96 @@ function buildPositionChartData(snapshots: GscSnapshot[], keywords: string[]) {
     .map(([date, vals]) => ({ date: format(parseISO(date), "dd MMM"), ...vals }));
 }
 
-function buildTrafficChartData(snapshots: GscSnapshot[]) {
-  const dateMap: Record<string, { clicks: number; impressions: number; date: string }> = {};
-  snapshots.forEach(s => {
-    if (!dateMap[s.snapshotDate]) {
-      dateMap[s.snapshotDate] = { clicks: 0, impressions: 0, date: s.snapshotDate };
-    }
-    dateMap[s.snapshotDate].clicks += s.clicks;
-    dateMap[s.snapshotDate].impressions += s.impressions;
+function buildTrafficChartData(siteTotals: GscSnapshot[], days = 28) {
+  // Use only the daily site-wide GSC totals (auto-synced) so the chart is
+  // continuous day-by-day, not just whichever dates a manual snapshot exists.
+  const dateMap: Record<string, { clicks: number; impressions: number }> = {};
+  siteTotals.forEach(s => {
+    dateMap[s.snapshotDate] = {
+      clicks: (dateMap[s.snapshotDate]?.clicks || 0) + s.clicks,
+      impressions: (dateMap[s.snapshotDate]?.impressions || 0) + s.impressions,
+    };
   });
-  return Object.values(dateMap)
-    .sort((a, b) => a.date.localeCompare(b.date))
-    .map(d => ({ ...d, date: format(parseISO(d.date), "dd MMM") }));
+
+  const today = new Date();
+  const out: { date: string; clicks: number; impressions: number; iso: string }[] = [];
+  for (let i = days - 1; i >= 0; i--) {
+    const d = new Date(today.getTime() - i * 86400000);
+    const iso = format(d, "yyyy-MM-dd");
+    const entry = dateMap[iso] || { clicks: 0, impressions: 0 };
+    out.push({ iso, date: format(d, "dd MMM"), clicks: entry.clicks, impressions: entry.impressions });
+  }
+  return out;
 }
 
-const SEO_ACTIONS = [
+const SEO_ACTIONS: { id: string; status: "done" | "pending" | "opportunity"; priority: string; category: string; title: string; detail: string; impact: string; trackedKeyword?: string }[] = [
   {
+    id: "fix-redirect-loop",
     status: "done", priority: "critical", category: "Technical",
     title: "Fixed 24 live pages incorrectly redirecting to /blog",
     detail: "Server redirect map was overriding active routes. Google's bot was receiving 301s for all high-traffic content pages — directly causing the March impressions cliff (~85% drop). Removed from redirects.ts on Apr 17.",
     impact: "Expect impressions recovery to ~4,000–8,000/day within 2–4 weeks as Google re-crawls.",
   },
   {
+    id: "utm-stripping",
     status: "done", priority: "high", category: "Technical",
     title: "UTM parameter stripping — canonical URL consolidation",
     detail: "All URLs with UTM parameters now 301-redirect to clean canonical path. Prevents duplicate content from UTM-tagged GBP/social links accumulating separate indexing.",
     impact: "Consolidates link equity to single canonical URL.",
   },
   {
+    id: "remove-discontinued-links",
     status: "done", priority: "high", category: "Technical",
     title: "Removed internal links to discontinued programmes",
     detail: "Kids Activity Club and Summer Camp had 8 live internal links across blog content. Server 301 redirects to /programmes already existed. Links replaced with /happy-times and /programmes.",
     impact: "Google will stop re-crawling discontinued URLs and consolidate signals to /programmes.",
   },
   {
+    id: "bot-ssr-schema",
     status: "done", priority: "medium", category: "Technical",
     title: "Bot SSR — structured data for all major pages",
     detail: "LocalBusiness schema with per-centre geo coordinates, Review schema, VideoObject JSON-LD, FAQPage schema, BreadcrumbList, Person schema (E-E-A-T).",
     impact: "Enables rich results (stars, FAQ snippets) in SERPs.",
   },
   {
+    id: "request-reindexing",
     status: "pending", priority: "critical", category: "Technical",
     title: "Request re-indexing of 24 recovered content pages via GSC",
     detail: "Go to GSC → URL Inspection → paste each URL → Request Indexing. Priority order: /national-symbols-of-india-for-kids, /holi-activities-for-kids, /36-motivational-thoughts-of-the-day-for-kids, /sports-day-activities-for-kindergarten, /pre-kg-age-guide. GSC allows ~10 requests/day.",
     impact: "Speeds up impressions recovery by 1–2 weeks vs. waiting for natural re-crawl.",
   },
   {
+    id: "gbp-website-url",
     status: "pending", priority: "high", category: "Local SEO",
     title: "Update Google Business Profile website URL",
     detail: "GBP profile should link to https://www.rainbowpreschools.com/ (clean canonical, no UTM). Currently may include UTM parameters that trigger redirect before visitors reach the site. Do this in GBP manager for all 6 centre listings.",
     impact: "Removes redirect hop for GBP visitors; consolidates link equity.",
   },
   {
+    id: "kw-best-preschool-thane",
+    trackedKeyword: "best preschool in thane",
     status: "opportunity", priority: "high", category: "Content",
     title: "\"best preschool in thane\" — sitting at position 16",
     detail: "Primary commercial keyword. Target page: /best-preschool-near-me-in-thane. Page needs more in-depth content — parent FAQ section, comparison tables, additional genuine reviews, and more local schema signals. Also needs more backlinks from local education/parenting sites.",
     impact: "Moving from pos 16 → pos 5 = ~8× more clicks. Primary lead generation lever.",
   },
   {
+    id: "kw-preschool-near-me",
+    trackedKeyword: "preschool near me",
     status: "opportunity", priority: "high", category: "Content",
     title: "\"preschool near me\" — sitting at position 23",
     detail: "Near-me searches have strong local intent. Target page: /best-preschool-near-me-in-thane. Page needs proximity signals: LocalBusiness schema for all 6 centres with precise geo, NAP citations in Justdial/Sulekha/Indiamart, consistent address formatting across web.",
     impact: "Near-me ranks are heavily GBP-influenced. Focus on GBP completeness + reviews.",
   },
   {
+    id: "informational-recovery",
     status: "opportunity", priority: "medium", category: "Content",
     title: "Informational pages — long-tail traffic recovery",
     detail: "Pages like /national-symbols-of-india-for-kids (95K impressions), /holi-activities-for-kids (56K), and /36-motivational-thoughts had massive traffic before the March redirect issue. Now they should recover, but adding new content sections (printables, activity sheets) can accelerate it.",
     impact: "Restoring informational traffic brings brand awareness and top-of-funnel leads.",
   },
   {
+    id: "mobile-ctr",
     status: "opportunity", priority: "low", category: "Technical",
     title: "Mobile CTR (0.58%) vs Desktop CTR (0.76%)",
     detail: "Mobile drives 75% of traffic but has lower CTR. Consider updating meta descriptions to be more compelling on mobile SERPs. Rich snippet eligibility (stars, FAQ) can boost mobile CTR without changing position.",
@@ -582,6 +602,15 @@ const SEO_ACTIONS = [
 // ─── Checklist storage (localStorage) ────────────────────────────────────────
 
 const STORAGE_KEY = "rpi_page_audits_v1";
+const ACTION_OVERRIDES_KEY = "rpi_action_overrides_v1";
+
+function loadActionOverrides(): Record<string, "done" | null> {
+  try { return JSON.parse(localStorage.getItem(ACTION_OVERRIDES_KEY) || "{}"); }
+  catch { return {}; }
+}
+function saveActionOverrides(data: Record<string, "done" | null>) {
+  localStorage.setItem(ACTION_OVERRIDES_KEY, JSON.stringify(data));
+}
 
 function loadChecks(): Record<string, Record<string, boolean>> {
   try {
@@ -1105,7 +1134,60 @@ export default function GscDashboard() {
 
   const summary = useMemo(() => computeKeywordSummary(snapshots), [snapshots]);
   const positionChartData = useMemo(() => buildPositionChartData(snapshots, selectedKeywords), [snapshots, selectedKeywords]);
-  const trafficChartData = useMemo(() => buildTrafficChartData(snapshots), [snapshots]);
+  const [chartDays, setChartDays] = useState<7 | 28 | 90>(28);
+  const trafficChartData = useMemo(() => buildTrafficChartData(siteTotals, chartDays), [siteTotals, chartDays]);
+  const trafficChartTotals = useMemo(() => {
+    const sum = trafficChartData.reduce((a, d) => ({ clicks: a.clicks + d.clicks, impressions: a.impressions + d.impressions }), { clicks: 0, impressions: 0 });
+    return { ...sum, daysWithData: trafficChartData.filter(d => d.impressions > 0).length };
+  }, [trafficChartData]);
+
+  // ─── Dynamic SEO actions ─────────────────────────────────────────────────
+  const [actionOverrides, setActionOverrides] = useState<Record<string, "done" | null>>(() => loadActionOverrides());
+  const toggleActionDone = (id: string) => {
+    setActionOverrides(prev => {
+      const next = { ...prev };
+      if (next[id] === "done") delete next[id];
+      else next[id] = "done";
+      saveActionOverrides(next);
+      return next;
+    });
+  };
+
+  // Latest tracked-keyword averages so opportunity titles auto-update from real data.
+  const latestKeywordPositions = useMemo(() => {
+    const out: Record<string, { position: number; clicks: number; impressions: number }> = {};
+    const trackedSnaps = snapshots.filter(s => !s.keyword.startsWith("__"));
+    const byKw: Record<string, GscSnapshot[]> = {};
+    trackedSnaps.forEach(s => { (byKw[s.keyword] ||= []).push(s); });
+    Object.entries(byKw).forEach(([kw, rows]) => {
+      const sorted = [...rows].sort((a, b) => b.snapshotDate.localeCompare(a.snapshotDate));
+      const latest = sorted[0];
+      if (latest) out[kw] = { position: latest.position, clicks: latest.clicks, impressions: latest.impressions };
+    });
+    return out;
+  }, [snapshots]);
+
+  const dynamicActions = useMemo(() => {
+    return SEO_ACTIONS.map(a => {
+      let status = a.status;
+      let title = a.title;
+      let detail = a.detail;
+      // Auto-update keyword opportunities from live data.
+      if (a.trackedKeyword && latestKeywordPositions[a.trackedKeyword]) {
+        const { position } = latestKeywordPositions[a.trackedKeyword];
+        const posStr = position.toFixed(1);
+        title = `"${a.trackedKeyword}" — sitting at position ${posStr}`;
+        // Auto-promote to done if it's broken into the top 10.
+        if (position > 0 && position <= 10) {
+          status = "done";
+          detail = `Auto-promoted to Completed — latest GSC position is ${posStr} (top 10). ${a.detail}`;
+        }
+      }
+      // Manual override always wins.
+      if (actionOverrides[a.id] === "done") status = "done";
+      return { ...a, status, title, detail };
+    });
+  }, [latestKeywordPositions, actionOverrides]);
 
   const latestDate = snapshots.length ? snapshots[snapshots.length - 1].snapshotDate : null;
   const latestSnapshots = latestDate ? snapshots.filter(s => s.snapshotDate === latestDate) : [];
@@ -1605,14 +1687,32 @@ export default function GscDashboard() {
 
               <Card>
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-base">Clicks &amp; Impressions Over Time</CardTitle>
-                  <CardDescription className="text-xs">Aggregate across all tracked keywords per snapshot date.</CardDescription>
+                  <div className="flex items-start justify-between gap-3 flex-wrap">
+                    <div>
+                      <CardTitle className="text-base">Clicks &amp; Impressions — Last {chartDays} Days (Daily)</CardTitle>
+                      <CardDescription className="text-xs">
+                        Site-wide totals from Google Search Console, one bar per day. Total: {trafficChartTotals.clicks.toLocaleString()} clicks · {trafficChartTotals.impressions.toLocaleString()} impressions over {trafficChartTotals.daysWithData} days with data.
+                      </CardDescription>
+                    </div>
+                    <div className="flex gap-1">
+                      {([7, 28, 90] as const).map(d => (
+                        <button
+                          key={d}
+                          onClick={() => setChartDays(d)}
+                          className={`text-xs px-2.5 py-1 rounded-full border ${chartDays === d ? "bg-red-600 text-white border-red-600" : "bg-white dark:bg-gray-800 text-gray-600 border-gray-200 dark:border-gray-700"}`}
+                          data-testid={`button-chart-${d}d`}
+                        >
+                          {d}d
+                        </button>
+                      ))}
+                    </div>
+                  </div>
                 </CardHeader>
                 <CardContent>
                   <ResponsiveContainer width="100%" height={280}>
                     <BarChart data={trafficChartData} margin={{ top: 5, right: 10, bottom: 5, left: 0 }}>
                       <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-                      <XAxis dataKey="date" tick={{ fontSize: 11 }} />
+                      <XAxis dataKey="date" tick={{ fontSize: 10 }} interval={chartDays > 28 ? 6 : chartDays > 7 ? 2 : 0} />
                       <YAxis yAxisId="left" tick={{ fontSize: 11 }} />
                       <YAxis yAxisId="right" orientation="right" tick={{ fontSize: 11 }} />
                       <Tooltip />
@@ -1621,6 +1721,11 @@ export default function GscDashboard() {
                       <Bar yAxisId="right" dataKey="impressions" name="Impressions" fill="#fca5a5" radius={[3, 3, 0, 0]} />
                     </BarChart>
                   </ResponsiveContainer>
+                  {trafficChartTotals.daysWithData === 0 && (
+                    <p className="text-xs text-gray-500 text-center mt-3">
+                      No daily site totals synced yet. Click <strong>Sync from GSC</strong> at the top to pull the last 28 days from Google Search Console.
+                    </p>
+                  )}
                 </CardContent>
               </Card>
             </div>
@@ -1644,8 +1749,9 @@ export default function GscDashboard() {
                 SEO Action Items &amp; Suggestions
               </h2>
               <div className="space-y-3">
-                {(["done", "pending", "opportunity"] as const).map(statusGroup => {
-                  const items = SEO_ACTIONS.filter(a => a.status === statusGroup);
+                {(["pending", "opportunity", "done"] as const).map(statusGroup => {
+                  const items = dynamicActions.filter(a => a.status === statusGroup);
+                  if (items.length === 0) return null;
                   const label = statusGroup === "done" ? "Completed" : statusGroup === "pending" ? "Pending Action (Manual)" : "Opportunities";
                   return (
                     <div key={statusGroup}>
@@ -1655,8 +1761,13 @@ export default function GscDashboard() {
                         <Badge variant="outline" className="text-xs">{items.length}</Badge>
                       </div>
                       <div className="space-y-2 ml-7">
-                        {items.map((action, i) => (
-                          <SuggestionCard key={i} action={action} />
+                        {items.map(action => (
+                          <SuggestionCard
+                            key={action.id}
+                            action={action}
+                            isOverridden={actionOverrides[action.id] === "done"}
+                            onToggleDone={() => toggleActionDone(action.id)}
+                          />
                         ))}
                       </div>
                     </div>
@@ -1696,10 +1807,10 @@ export default function GscDashboard() {
   );
 }
 
-function SuggestionCard({ action }: { action: typeof SEO_ACTIONS[number] }) {
+function SuggestionCard({ action, isOverridden, onToggleDone }: { action: typeof SEO_ACTIONS[number]; isOverridden?: boolean; onToggleDone?: () => void }) {
   const [open, setOpen] = useState(false);
   return (
-    <div className={`rounded-lg border p-3 bg-white dark:bg-gray-900 ${action.status === "done" ? "opacity-75" : ""}`}>
+    <div className={`rounded-lg border p-3 bg-white dark:bg-gray-900 ${action.status === "done" ? "opacity-75" : ""}`} data-testid={`card-action-${action.id}`}>
       <div className="flex items-start gap-3">
         <div className="flex-1 min-w-0">
           <div className="flex flex-wrap items-center gap-2 mb-1">
@@ -1714,12 +1825,22 @@ function SuggestionCard({ action }: { action: typeof SEO_ACTIONS[number] }) {
                 <TrendingUp className="h-3.5 w-3.5 shrink-0 mt-0.5" />
                 <span><strong>Expected impact:</strong> {action.impact}</span>
               </div>
+              {onToggleDone && (
+                <button
+                  onClick={onToggleDone}
+                  className={`text-xs px-2.5 py-1 rounded border font-medium ${isOverridden ? "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600" : "bg-green-600 text-white border-green-600 hover:bg-green-700"}`}
+                  data-testid={`button-toggle-done-${action.id}`}
+                >
+                  {isOverridden ? "↩ Move back to active" : "✓ Mark complete"}
+                </button>
+              )}
             </div>
           )}
         </div>
         <button
           onClick={() => setOpen(v => !v)}
           className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 shrink-0 mt-0.5"
+          data-testid={`button-expand-${action.id}`}
         >
           {open ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
         </button>
