@@ -29,7 +29,7 @@ export const legacyPagesData: Record<string, LegacyPageData> = {
   "/36-motivational-thoughts-of-the-day-for-kids/": {
     slug: "/36-motivational-thoughts-of-the-day-for-kids/",
     title: "36 Motivational Thoughts of the Day for Kids | Rainbow Preschool",
-    metaDescription: "Discover 36 uplifting motivational thoughts for children. Help your preschooler build confidence, resilience, and a positive mindset with these daily affirmations.",
+    metaDescription: "36 short motivational thoughts for kids — one for every school day. Build confidence, courage & a positive mindset in just 30 seconds each morning.",
     h1: "36 Motivational Thoughts of the Day for Kids",
     intro: "Starting each day with positive thoughts helps children develop confidence, emotional resilience, and a growth mindset. Here are 36 motivational thoughts perfect for preschoolers and young children in Thane. At <a href=\"/about\">Rainbow Preschool International</a>, we believe in nurturing the whole child through positive reinforcement.",
     sections: [
@@ -190,7 +190,7 @@ export const legacyPagesData: Record<string, LegacyPageData> = {
   "/national-symbols-of-india-for-kids/": {
     slug: "/national-symbols-of-india-for-kids/",
     title: "National Symbols of India for Kids | Rainbow Preschool Thane",
-    metaDescription: "Teach your preschooler about India's national symbols - flag, emblem, anthem, animal, bird, flower, and more. Fun learning activities for children in Thane.",
+    metaDescription: "All 17 national symbols of India explained simply for kids — flag, emblem, anthem, tiger, peacock, lotus & more. Fun stories + activities for ages 3–8.",
     h1: "National Symbols of India for Kids",
     intro: "Teaching children about national symbols instills pride in their heritage and helps them understand their country's identity. Here's a child-friendly guide to India's national symbols, perfect for preschoolers in Thane. At <a href=\"/about\">Rainbow Preschool International</a>, we make learning about our nation fun and memorable.",
     sections: [
@@ -309,7 +309,7 @@ export const legacyPagesData: Record<string, LegacyPageData> = {
   "/pre-kg-age-guide/": {
     slug: "/pre-kg-age-guide/",
     title: "Pre-KG Age Guide: When Should Your Child Start? | Rainbow Preschool",
-    metaDescription: "Complete guide to Pre-KG age requirements, readiness signs, and what to expect. Help your child in Thane prepare for Pre-Kindergarten at Rainbow Preschool.",
+    metaDescription: "Pre-KG age in India: most kids start at 3 years. 5 readiness signs, what to expect on day 1, and a simple checklist parents can use this week.",
     h1: "Pre-KG Age Guide: Is Your Child Ready?",
     intro: "Deciding when to start Pre-KG is an important decision for parents. This guide helps you understand the appropriate age, readiness signs, and what Pre-Kindergarten education involves at <a href=\"/about\">Rainbow Preschool International</a> in Thane.",
     sections: [
@@ -712,7 +712,7 @@ Object.assign(legacyPagesData, {
   "/sports-day-activities-for-kindergarten/": {
     slug: "/sports-day-activities-for-kindergarten/",
     title: "Sports Day Activities for Kindergarten | Rainbow Preschool Thane",
-    metaDescription: "Fun sports day activities for kindergarten children. Ideas for races, games, and events that promote physical development and teamwork.",
+    metaDescription: "25+ sports day activities kindergarteners actually love — easy races, fun group games & event ideas any school can run with minimal equipment.",
     h1: "Sports Day Activities for Kindergarten Children",
     intro: "Sports Day is one of the most exciting events in the preschool calendar! These activities are perfect for <a href=\"/kindergarten\">kindergarten</a>-age children, promoting physical development, teamwork, and lots of fun. At <a href=\"/about\">Rainbow Preschool International</a>, our Sports Day is a highlight event.",
     sections: [
@@ -1107,7 +1107,7 @@ Object.assign(legacyPagesData, {
   "/holi-activities-for-kids/": {
     slug: "/holi-activities-for-kids/",
     title: "Holi Activities for Kids | Rainbow Preschool Thane",
-    metaDescription: "Safe and fun Holi activities for preschoolers. Color-themed crafts, games, and celebration ideas for children in Thane.",
+    metaDescription: "20+ safe & mess-free Holi activities for kids — color crafts, sensory games & celebration ideas tested with 3–6 year olds. No staining, no skin worries.",
     h1: "Holi Activities for Kids",
     intro: "Holi, the festival of colors, offers wonderful opportunities for sensory play and cultural learning. Here are safe, age-appropriate Holi activities from <a href=\"/about\">Rainbow Preschool International</a> for preschoolers that bring the joy of the festival without the mess or safety concerns.",
     sections: [

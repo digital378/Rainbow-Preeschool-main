@@ -303,7 +303,7 @@ function localBusinessSchema(locality: string, address: string, phone: string, u
 const staticPages: Record<string, PageSEOData> = {
   "/": {
     title: "Rainbow Preschool International | Preschool in Thane",
-    description: "Rainbow Preschool International — Thane's trusted preschool since 2007. Play-based early learning for ages 1.5–6 across 6 centres. 1 lakh+ alumni. Admissions open.",
+    description: "Thane's most-loved preschool since 2007 ★ 4.7/5 from 3,997 parents. Play-based learning for ages 1.5–6 across 6 centres. Admissions open — book a free visit.",
     keywords: "rainbow preschool, preschool in thane, playgroup in thane, nursery school thane, early childhood education thane, rainbow preschool international",
     canonical: `${BASE_URL}/`,
     h1: "Rainbow Preschool International — Nurturing Young Minds Since 2007",
@@ -530,7 +530,7 @@ const staticPages: Record<string, PageSEOData> = {
   },
   "/best-preschool-near-me-in-thane": {
     title: "Best Preschool in Thane 2026 | Rainbow Preschool",
-    description: "Looking for the best preschool in Thane? Rainbow Preschool International — 18+ years, 6 centres, 4.7★ rating, 1 lakh+ alumni. Award-winning early education.",
+    description: "Best preschool in Thane? See why 1 lakh+ parents chose Rainbow ★ 4.7/5, 6 centres, 18+ years, award-winning. Compare programmes & book a free visit today.",
     keywords: "best preschool in thane, best preschool near me, top preschool thane, best playgroup thane, best nursery school thane",
     canonical: `${BASE_URL}/best-preschool-near-me-in-thane`,
     h1: "Best Preschool in Thane — Why Parents Choose Rainbow",
