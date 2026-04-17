@@ -1560,7 +1560,7 @@ export default function GscDashboard() {
                       <tr className="border-b text-left text-xs text-gray-500 uppercase tracking-wide">
                         <th className="pb-2 pr-4 font-medium">Keyword</th>
                         <th className="pb-2 px-3 font-medium text-center">Position</th>
-                        <th className="pb-2 px-3 font-medium text-center" title="24h position change vs previous day">Pos Δ 24h</th>
+                        <th className="pb-2 px-3 font-medium text-center" title="Projected position in the next 24 hours based on the latest day-over-day trend. Green = improving (moving up), Red = slipping.">Pos in 24h</th>
                         <th className="pb-2 px-3 font-medium text-right">Clicks</th>
                         <th className="pb-2 px-3 font-medium text-right">Impr.</th>
                         <th className="pb-2 px-3 font-medium text-center" title="24h impressions change vs previous day">Impr Δ 24h</th>
@@ -1590,14 +1590,21 @@ export default function GscDashboard() {
                           <td className="py-3 px-3 text-center">
                             {pos24 === null ? (
                               <span className="text-xs text-gray-300">—</span>
-                            ) : (
-                              <div className="flex items-center justify-center gap-1">
-                                <TrendIcon change={pos24} />
-                                <span className={`text-xs font-medium ${pos24 < -0.5 ? "text-green-600" : pos24 > 0.5 ? "text-red-500" : "text-gray-400"}`}>
-                                  {pos24 === 0 ? "0.0" : (pos24 > 0 ? "+" : "") + pos24.toFixed(1)}
+                            ) : (() => {
+                              const projected = Math.max(1, latest.position + pos24);
+                              const improving = pos24 < -0.1;
+                              const worsening = pos24 > 0.1;
+                              const cls = improving
+                                ? "text-green-700 bg-green-50 border-green-200 dark:bg-green-950 dark:text-green-300 dark:border-green-800"
+                                : worsening
+                                ? "text-red-700 bg-red-50 border-red-200 dark:bg-red-950 dark:text-red-300 dark:border-red-800"
+                                : "text-gray-600 bg-gray-50 border-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700";
+                              return (
+                                <span className={`inline-flex items-center justify-center px-2 py-0.5 rounded-full text-xs font-semibold border ${cls}`} title={improving ? "Improving" : worsening ? "Slipping" : "Holding"}>
+                                  #{projected.toFixed(1)}
                                 </span>
-                              </div>
-                            )}
+                              );
+                            })()}
                           </td>
                           <td className="py-3 px-3 text-right font-mono text-gray-700 dark:text-gray-300">{latest.clicks}</td>
                           <td className="py-3 px-3 text-right font-mono text-gray-700 dark:text-gray-300">{latest.impressions.toLocaleString()}</td>
