@@ -570,16 +570,19 @@ export function setupRedirects(app: Express) {
       ? req.originalUrl.substring(req.originalUrl.indexOf("?"))
       : "";
 
-    // ── Strip junk query params (amp, noamp, replytocom) and all UTM params ──
+    // ── Strip UTM params (full query drop) and junk params ───────────────────
     if (qs) {
       const params = new URLSearchParams(qs.slice(1));
-      const junkParams = ["amp", "noamp", "replytocom"];
       const utmParams = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"];
-      const hasJunk = junkParams.some(p => params.has(p));
       const hasUtm = utmParams.some(p => params.has(p));
-      if (hasJunk || hasUtm) {
+      if (hasUtm) {
+        // UTM params present — redirect to clean path with no query string at all
+        return res.redirect(301, rawPath);
+      }
+      const junkParams = ["amp", "noamp", "replytocom"];
+      const hasJunk = junkParams.some(p => params.has(p));
+      if (hasJunk) {
         junkParams.forEach(p => params.delete(p));
-        utmParams.forEach(p => params.delete(p));
         const cleanQs = params.toString() ? `?${params.toString()}` : "";
         return res.redirect(301, rawPath + cleanQs);
       }
