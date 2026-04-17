@@ -230,9 +230,9 @@ const PAGE_AUDITS: PageAudit[] = [
       { id: "breadcrumb", label: "BreadcrumbList schema present", done: true },
     ],
     improvements: [
-      { priority: "Critical", text: "Add 10+ genuine parent reviews with star ratings visible on page — critical for E-E-A-T and review schema eligibility." },
-      { priority: "High", text: "Add 'Why Rainbow over others?' comparison section (safety record, teacher ratio, curriculum, awards) — targets informational queries from undecided parents." },
-      { priority: "High", text: "Build local citations: submit NAP consistently to Justdial, Sulekha, Indiamart, and UrbanPro. Each citation = a local ranking signal." },
+      { priority: "Critical", text: "MANUAL: Add 10+ genuine parent reviews with star ratings visible on page — critical for E-E-A-T and review schema eligibility. (Collect from Google Business, ask current parents.)" },
+      { priority: "High", text: "MANUAL: Build local citations — submit consistent NAP to Justdial, Sulekha, Indiamart, UrbanPro. Each citation = a local ranking signal." },
+      { priority: "Medium", text: "Next on-page win: add a Google review widget that pulls live 4.7★ rating from your GBP — boosts trust without extra writing." },
       { priority: "Medium", text: "Add a 'What parents say about admissions' sub-section targeting long-tail admission-related queries." },
     ],
   },
@@ -258,9 +258,9 @@ const PAGE_AUDITS: PageAudit[] = [
       { id: "breadcrumb", label: "BreadcrumbList schema present", done: true },
     ],
     improvements: [
-      { priority: "Critical", text: "Ensure both spellings 'playschool' and 'play school' appear naturally in the body content — Google treats them as slightly different queries." },
-      { priority: "High", text: "Add a centre list/map section so near-me searchers can instantly see locations. Proximity is the #1 factor for 'near me' rankings." },
-      { priority: "High", text: "Update all 6 GBP profiles to include 'Play School' as a primary or secondary business category." },
+      { priority: "Critical", text: "MANUAL: Update all 6 Google Business Profiles to include 'Play School' as a primary or secondary category — direct ranking lift for 'play school near me'." },
+      { priority: "High", text: "MANUAL: Add 5–6 parent quotes specific to play-school experience (separation, first day, social development) — different from generic preschool reviews." },
+      { priority: "Medium", text: "Next on-page win: add a 'First-day-of-play-school checklist' downloadable PDF — strong link-bait for parenting blogs." },
       { priority: "Medium", text: "Add parent testimonials specific to playgroup/play school experience — not generic preschool reviews." },
     ],
   },
@@ -286,8 +286,9 @@ const PAGE_AUDITS: PageAudit[] = [
       { id: "curriculum", label: "Curriculum/programme details visible", done: true },
     ],
     improvements: [
-      { priority: "High", text: "Add a dedicated 'Playgroup Near Me in Thane' H2 section with all 6 centre addresses — this signals relevance for 'playgroup near me' to Google." },
-      { priority: "High", text: "Add FAQ schema targeting 'playgroup near me' queries specifically — e.g. 'Where can I find a playgroup near me in Thane?'" },
+      { priority: "High", text: "MANUAL: Add 4–6 photos of children in actual playgroup activities (sensory play, art, circle time) with descriptive alt text." },
+      { priority: "High", text: "MANUAL: Collect 6–8 video testimonials from playgroup parents (30 sec each) and embed on page — huge dwell-time + trust lift." },
+      { priority: "Medium", text: "Next on-page win: add an interactive 'Is my toddler ready for playgroup?' 5-question quiz — proven to lower bounce rate." },
       { priority: "Medium", text: "Add a sample day schedule for playgroup — high-value content that parents search for when comparing options." },
       { priority: "Medium", text: "Add parent testimonials from playgroup parents specifically (not generic preschool testimonials)." },
     ],
@@ -314,8 +315,9 @@ const PAGE_AUDITS: PageAudit[] = [
       { id: "admissions", label: "Admission process/dates section", done: true },
     ],
     improvements: [
-      { priority: "High", text: "Update page title to include 'nursery near me in Thane' — this directly affects what queries the page ranks for." },
-      { priority: "High", text: "Add FAQ schema targeting 'nursery near me' and 'nursery school in Thane' queries." },
+      { priority: "High", text: "MANUAL: Replace stock illustrations with original nursery classroom photos (kids reading, phonics activity, art table) — big credibility signal." },
+      { priority: "High", text: "MANUAL: Add 5+ nursery-specific parent reviews mentioning phonics/numeracy progress — feeds into AggregateRating eligibility." },
+      { priority: "Medium", text: "Next on-page win: add a 'Nursery curriculum month-by-month' expandable timeline — increases time-on-page and demonstrates depth." },
       { priority: "Medium", text: "Add admission dates and process section — 'nursery school admission' is a high-volume query in March-May and August-September." },
       { priority: "Medium", text: "Add nursery-specific parent reviews for E-E-A-T and review schema stars." },
     ],
@@ -342,8 +344,9 @@ const PAGE_AUDITS: PageAudit[] = [
       { id: "canonical", label: "Canonical tag points to www version", done: true },
     ],
     improvements: [
-      { priority: "Critical", text: "Update all 6 GBP profiles to link to https://www.rainbowpreschools.com/ (no UTM parameters) — prevents redirect hop for GBP visitors and consolidates link equity." },
-      { priority: "High", text: "Increase total review count across all GBP centres — more reviews = stronger local pack signals for all 'near me' queries." },
+      { priority: "Critical", text: "MANUAL: Update all 6 GBP profiles to link to https://www.rainbowpreschools.com/ (no UTM parameters) — prevents redirect hop and consolidates link equity." },
+      { priority: "High", text: "MANUAL: Run a review drive — request reviews from current parents at all 6 centres. More reviews = stronger local pack signals for all 'near me' queries." },
+      { priority: "Medium", text: "Next on-page win: build a dedicated /awards page that consolidates all media mentions (India Today, ScooNews, Economic Times) with publication logos and links." },
       { priority: "Medium", text: "Add a 'Featured in' or 'Recognised by' section if any press/awards exist — boosts E-E-A-T signals for the whole domain." },
     ],
   },
@@ -369,8 +372,8 @@ const PAGE_AUDITS: PageAudit[] = [
       { id: "updated", label: "Content reviewed and date-stamped for current year", done: true },
     ],
     improvements: [
-      { priority: "High", text: "Add a printable/downloadable age guide or infographic — increases time-on-page and generates natural shares/links from parenting blogs." },
-      { priority: "High", text: "Add a structured comparison table: Playgroup (1.5-2.5y) / Nursery (2.5-3.5y) / Pre-KG (3.5-4.5y) / KG (4.5-5.5y) — high snippet potential." },
+      { priority: "Medium", text: "Next on-page win: design a polished PDF infographic version of the age comparison table — share it on Pinterest/parenting groups for natural backlinks." },
+      { priority: "Medium", text: "Add a small 'developmental milestones at age 3' checklist (gross motor, language, social) — captures additional long-tail queries." },
       { priority: "Medium", text: "Link to related programme pages (/playgroup-in-thane, /nursery) to distribute link equity and reduce pogo-sticking." },
       { priority: "Medium", text: "Mark content with a 'Last reviewed: [month year]' timestamp — freshness signals help maintain position on advice/guide queries." },
     ],
@@ -1092,7 +1095,6 @@ export default function GscDashboard() {
   }, [dailyKeywordSnaps]);
   const [activeTab, setActiveTab] = useState<"overview" | "keywords">("overview");
   const [showForm, setShowForm] = useState(false);
-  const [showApiGuide, setShowApiGuide] = useState(false);
   const [showRawData, setShowRawData] = useState(false);
   const [selectedKeywords, setSelectedKeywords] = useState<string[]>(PRIMARY_KEYWORDS.slice(0, 4));
   const [perfPeriod, setPerfPeriod] = useState<"latest" | "7d" | "28d" | "3mo" | "all">("all");
@@ -1260,10 +1262,6 @@ export default function GscDashboard() {
               <RefreshCw className={`h-4 w-4 mr-1 ${syncMutation.isPending ? "animate-spin" : ""}`} />
               {syncMutation.isPending ? "Syncing…" : "Sync from GSC"}
             </Button>
-            <Button variant="outline" size="sm" onClick={() => setShowApiGuide(v => !v)}>
-              <Zap className="h-4 w-4 mr-1" />
-              Setup
-            </Button>
             <Button variant="outline" size="sm" onClick={exportCsv}>
               <Download className="h-4 w-4 mr-1" />
               Export CSV
@@ -1311,29 +1309,6 @@ export default function GscDashboard() {
             </div>
             <button onClick={() => setSyncResult(null)} className="ml-auto text-gray-400 hover:text-gray-600 shrink-0">✕</button>
           </div>
-        )}
-
-        {/* GSC API Guide */}
-        {showApiGuide && (
-          <Card className="border-blue-200 bg-blue-50 dark:bg-blue-950 dark:border-blue-800">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-base flex items-center gap-2 text-blue-800 dark:text-blue-200">
-                <Zap className="h-4 w-4" />
-                Automate data fetching — Google Search Console API (Free)
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-sm text-blue-900 dark:text-blue-100 space-y-3">
-              <p>The GSC API is completely free. Setup takes about 15 minutes:</p>
-              <ol className="space-y-2 list-decimal list-inside">
-                <li><strong>Go to</strong> <a href="https://console.cloud.google.com" target="_blank" rel="noopener noreferrer" className="underline">console.cloud.google.com</a> → Create a new project (free)</li>
-                <li><strong>Enable API:</strong> APIs &amp; Services → Enable APIs → search "Search Console API" → Enable</li>
-                <li><strong>Create credentials:</strong> APIs &amp; Services → Credentials → Create Service Account → download the JSON key file</li>
-                <li><strong>Grant access in GSC:</strong> Go to <a href="https://search.google.com/search-console" target="_blank" rel="noopener noreferrer" className="underline">GSC</a> → Settings → Users &amp; permissions → Add user → paste the service account email → set permission to "Full"</li>
-                <li><strong>Share the JSON key</strong> with your developer — they will store it as a secret and wire up a daily auto-sync route</li>
-              </ol>
-              <p className="text-xs opacity-70 pt-1">Cost: ₹0. The Search Console API has no usage fees and allows 25,000 queries/day.</p>
-            </CardContent>
-          </Card>
         )}
 
         {/* Add Snapshot Form */}

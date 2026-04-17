@@ -315,6 +315,7 @@ function Router() {
         <Route path="/ad-google" component={AdGoogleLanding} />
         <Route path="/flyer" component={FlyerLanding} />
         <Route path="/GSC" component={GscDashboard} />
+        <Route path="/gsc" component={GscDashboard} />
         <Route path="/RIS" component={RISLanding} />
         <Route path="/ris" component={RISLanding} />
         <Route path="/ris-11th" component={RIS11thLanding} />
