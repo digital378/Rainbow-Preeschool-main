@@ -241,7 +241,7 @@ export const legacyPagesData: Record<string, LegacyPageData> = {
     relatedLinks: [
       { title: "Kindergarten Programme", url: "/kindergarten", description: "School readiness curriculum" },
       { title: "About Us", url: "/about", description: "Our values and approach" },
-      { title: "Summer Camp", url: "/summer-camp", description: "Holiday learning activities" }
+      { title: "Our Programmes", url: "/programmes", description: "All early childhood programmes" }
     ],
     internalLinks: commonInternalLinks,
     category: "Learning Activities"
@@ -300,7 +300,6 @@ export const legacyPagesData: Record<string, LegacyPageData> = {
     ],
     relatedLinks: [
       { title: "Playgroup Programme", url: "/playgroup", description: "Play-based learning for toddlers" },
-      { title: "Kids Activity Club", url: "/kids-activity-club", description: "After-school activities" },
       { title: "About Our Approach", url: "/about", description: "Play-based curriculum" }
     ],
     internalLinks: commonInternalLinks,
@@ -433,9 +432,8 @@ export const legacyPagesData: Record<string, LegacyPageData> = {
       { question: "Does Rainbow Preschool have gardening activities?", answer: "Yes! Our curriculum includes nature-based learning with gardening activities, composting projects, and nature walks to connect children with the environment. These activities are part of our <a href=\"/programmes\">programmes</a> at all six centres. <a href=\"/contact\">Contact us</a> to learn more." }
     ],
     relatedLinks: [
-      { title: "Summer Camp", url: "/summer-camp", description: "Nature activities during holidays" },
       { title: "About Our Curriculum", url: "/about", description: "Nature-based learning approach" },
-      { title: "Kids Activity Club", url: "/kids-activity-club", description: "After-school enrichment" }
+      { title: "Our Programmes", url: "/programmes", description: "All early childhood programmes" }
     ],
     internalLinks: commonInternalLinks,
     category: "Learning Activities"
@@ -1553,9 +1551,7 @@ Object.assign(legacyPagesData, {
           "<a href=\"/playgroup\">Playgroup</a>: Ages 1.5-2.5 years",
           "<a href=\"/nursery\">Nursery</a>: Ages 2.5-4 years",
           "<a href=\"/kindergarten\">Kindergarten</a>: Ages 4-6 years",
-          "<a href=\"/happy-times\">Happy Times</a>: After-school care",
-          "<a href=\"/kids-activity-club\">Kids Activity Club</a>: Enrichment programmes",
-          "<a href=\"/summer-camp\">Summer Camp</a>: Holiday programmes"
+          "<a href=\"/happy-times\">Happy Times</a>: Extended after-school care"
         ]
       },
       {
@@ -1919,13 +1915,11 @@ Object.assign(legacyPagesData, {
     faqs: [
       { question: "How much structured activity do kids need in summer?", answer: "Balance is key. Some structure prevents boredom, but children also need free play time. 2-3 hours of planned activities daily is reasonable." },
       { question: "What about screen time during summer?", answer: "Limits remain important. Use screens purposefully and balance with active play and social interaction." },
-      { question: "Should my child attend summer camp?", answer: "Summer camps provide structured activities and social interaction. Rainbow Preschool offers summer programmes designed for young children." },
-      { question: "What does Rainbow Preschool's summer camp offer?", answer: "Our <a href=\"/summer-camp\">summer programme</a> includes themed weeks with arts, sports, science, and outdoor activities designed for preschool-age children. <a href=\"/contact\">Contact us</a> to enroll." }
+      { question: "Should my child attend structured activities during summer?", answer: "Structured activities provide routine and social interaction during holidays. Rainbow Preschool's year-round <a href=\"/happy-times\">Happy Times</a> programme keeps children engaged and learning after school and during breaks." }
     ],
     relatedLinks: [
-      { title: "Summer Camp", url: "/summer-camp", description: "Our summer programme" },
-      { title: "Kids Activity Club", url: "/kids-activity-club", description: "Enrichment activities" },
-      { title: "Contact Us", url: "/contact", description: "Enquire about summer" }
+      { title: "Happy Times", url: "/happy-times", description: "Extended after-school care programme" },
+      { title: "Contact Us", url: "/contact", description: "Enquire about our programmes" }
     ],
     internalLinks: commonInternalLinks,
     category: "Learning Activities"
