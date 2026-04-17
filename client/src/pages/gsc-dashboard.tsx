@@ -824,6 +824,8 @@ export default function GscDashboard() {
   const [showForm, setShowForm] = useState(false);
   const [showApiGuide, setShowApiGuide] = useState(false);
   const [showRawData, setShowRawData] = useState(false);
+  const [rawKwFilter, setRawKwFilter] = useState("");
+  const [rawDateFilter, setRawDateFilter] = useState("all");
   const [selectedKeywords, setSelectedKeywords] = useState<string[]>(PRIMARY_KEYWORDS.slice(0, 4));
 
   const summary = useMemo(() => computeKeywordSummary(snapshots), [snapshots]);
@@ -1275,44 +1277,90 @@ export default function GscDashboard() {
                 {showRawData ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
                 Raw Snapshot Data ({snapshots.length} entries)
               </button>
-              {showRawData && (
-                <Card className="mt-3">
-                  <CardContent className="overflow-x-auto pt-4">
-                    <table className="w-full text-xs">
-                      <thead>
-                        <tr className="border-b text-left text-gray-500 uppercase tracking-wide">
-                          {["Date", "Keyword", "Pos", "Clicks", "Impr.", "CTR", "Page", "Notes", ""].map(h => (
-                            <th key={h} className="pb-2 pr-3 font-medium">{h}</th>
+              {showRawData && (() => {
+                const allDates = Array.from(new Set(snapshots.map(s => s.snapshotDate))).sort((a, b) => b.localeCompare(a));
+                const filtered = [...snapshots]
+                  .reverse()
+                  .filter(s =>
+                    (rawDateFilter === "all" || s.snapshotDate === rawDateFilter) &&
+                    (rawKwFilter === "" || s.keyword.toLowerCase().includes(rawKwFilter.toLowerCase()))
+                  );
+                return (
+                  <Card className="mt-3">
+                    <CardContent className="pt-4 space-y-3">
+                      {/* Filter bar */}
+                      <div className="flex flex-wrap gap-2 pb-2 border-b">
+                        <div className="relative flex-1 min-w-[160px]">
+                          <Search className="absolute left-2 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-gray-400 pointer-events-none" />
+                          <input
+                            type="text"
+                            placeholder="Filter by keyword…"
+                            value={rawKwFilter}
+                            onChange={e => setRawKwFilter(e.target.value)}
+                            className="w-full pl-7 pr-3 py-1.5 text-xs border rounded-md bg-white dark:bg-gray-900 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-red-400"
+                          />
+                        </div>
+                        <select
+                          value={rawDateFilter}
+                          onChange={e => setRawDateFilter(e.target.value)}
+                          className="px-2 py-1.5 text-xs border rounded-md bg-white dark:bg-gray-900 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-red-400"
+                        >
+                          <option value="all">All dates</option>
+                          {allDates.map(d => (
+                            <option key={d} value={d}>{d}</option>
                           ))}
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-gray-50 dark:divide-gray-800">
-                        {[...snapshots].reverse().map(s => (
-                          <tr key={s.id} className="hover:bg-gray-50 dark:hover:bg-gray-900">
-                            <td className="py-1.5 pr-3 font-mono text-gray-600 dark:text-gray-400 whitespace-nowrap">{s.snapshotDate}</td>
-                            <td className="py-1.5 pr-3 max-w-[160px] truncate">{s.keyword}</td>
-                            <td className="py-1.5 pr-3 font-mono">{s.position.toFixed(1)}</td>
-                            <td className="py-1.5 pr-3 font-mono">{s.clicks}</td>
-                            <td className="py-1.5 pr-3 font-mono">{s.impressions.toLocaleString()}</td>
-                            <td className="py-1.5 pr-3 font-mono">{(s.ctr * 100).toFixed(2)}%</td>
-                            <td className="py-1.5 pr-3 max-w-[120px] truncate text-gray-400">{s.page ?? "—"}</td>
-                            <td className="py-1.5 pr-3 max-w-[160px] truncate text-gray-400">{s.notes ?? ""}</td>
-                            <td className="py-1.5">
-                              <button
-                                onClick={() => deleteMutation.mutate(s.id)}
-                                className="text-gray-300 hover:text-red-500 transition-colors"
-                                title="Delete"
-                              >
-                                <Trash2 className="h-3.5 w-3.5" />
-                              </button>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </CardContent>
-                </Card>
-              )}
+                        </select>
+                        {(rawKwFilter || rawDateFilter !== "all") && (
+                          <button
+                            onClick={() => { setRawKwFilter(""); setRawDateFilter("all"); }}
+                            className="px-2 py-1.5 text-xs border rounded-md text-gray-500 hover:text-red-600 hover:border-red-300 transition-colors"
+                          >
+                            Clear
+                          </button>
+                        )}
+                        <span className="text-xs text-gray-400 self-center ml-auto">{filtered.length} of {snapshots.length} rows</span>
+                      </div>
+
+                      <div className="overflow-x-auto">
+                        <table className="w-full text-xs">
+                          <thead>
+                            <tr className="border-b text-left text-gray-500 uppercase tracking-wide">
+                              {["Date", "Keyword", "Pos", "Clicks", "Impr.", "CTR", "Page", "Notes", ""].map(h => (
+                                <th key={h} className="pb-2 pr-3 font-medium">{h}</th>
+                              ))}
+                            </tr>
+                          </thead>
+                          <tbody className="divide-y divide-gray-50 dark:divide-gray-800">
+                            {filtered.length === 0 ? (
+                              <tr><td colSpan={9} className="py-6 text-center text-gray-400">No entries match your filter.</td></tr>
+                            ) : filtered.map(s => (
+                              <tr key={s.id} className="hover:bg-gray-50 dark:hover:bg-gray-900">
+                                <td className="py-1.5 pr-3 font-mono text-gray-600 dark:text-gray-400 whitespace-nowrap">{s.snapshotDate}</td>
+                                <td className="py-1.5 pr-3 max-w-[160px] truncate">{s.keyword}</td>
+                                <td className="py-1.5 pr-3 font-mono">{s.position.toFixed(1)}</td>
+                                <td className="py-1.5 pr-3 font-mono">{s.clicks}</td>
+                                <td className="py-1.5 pr-3 font-mono">{s.impressions.toLocaleString()}</td>
+                                <td className="py-1.5 pr-3 font-mono">{(s.ctr * 100).toFixed(2)}%</td>
+                                <td className="py-1.5 pr-3 max-w-[120px] truncate text-gray-400">{s.page ?? "—"}</td>
+                                <td className="py-1.5 pr-3 max-w-[160px] truncate text-gray-400">{s.notes ?? ""}</td>
+                                <td className="py-1.5">
+                                  <button
+                                    onClick={() => deleteMutation.mutate(s.id)}
+                                    className="text-gray-300 hover:text-red-500 transition-colors"
+                                    title="Delete"
+                                  >
+                                    <Trash2 className="h-3.5 w-3.5" />
+                                  </button>
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </CardContent>
+                  </Card>
+                );
+              })()}
             </div>
           </div>
         )}
