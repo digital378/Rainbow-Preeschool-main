@@ -17,7 +17,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import {
   TrendingUp, TrendingDown, Minus, CheckCircle2, Clock, AlertCircle,
-  Lightbulb, ExternalLink, Plus, Trash2, Download, ChevronDown, ChevronUp,
+  Lightbulb, ExternalLink, Plus, Download, ChevronDown, ChevronUp,
   BarChart2, Search, Zap, RefreshCw, Info, Shield, Target, FileText,
   MapPin, Star, ArrowRight, Circle, CheckSquare, Square, GitCompare,
 } from "lucide-react";
@@ -818,7 +818,7 @@ function KeywordsTab({ snapshots }: { snapshots: GscSnapshot[] }) {
 
 // ─── Data Explorer ────────────────────────────────────────────────────────────
 
-function DataExplorer({ snapshots, onDelete }: { snapshots: GscSnapshot[]; onDelete: (id: number) => void }) {
+function DataExplorer({ snapshots }: { snapshots: GscSnapshot[] }) {
   const today = new Date().toISOString().split("T")[0];
   const [mode, setMode] = useState<"browse" | "compare">("browse");
   const [fromDate, setFromDate] = useState("");
@@ -833,8 +833,11 @@ function DataExplorer({ snapshots, onDelete }: { snapshots: GscSnapshot[]; onDel
   );
 
   useEffect(() => {
-    if (allDates.length >= 1 && !compareA) setCompareA(allDates[0]);
-    if (allDates.length >= 2 && !compareB) setCompareB(allDates[1]);
+    if (allDates.length >= 1) {
+      if (!compareA) setCompareA(allDates[0]);
+      if (!compareB && allDates.length >= 2) setCompareB(allDates[1]);
+      if (!fromDate && !toDate) { setFromDate(allDates[0]); setToDate(allDates[0]); }
+    }
   }, [allDates.length]);
 
   const subDays = (n: number) => {
@@ -923,14 +926,14 @@ function DataExplorer({ snapshots, onDelete }: { snapshots: GscSnapshot[]; onDel
               <table className="w-full text-xs">
                 <thead>
                   <tr className="border-b text-left text-gray-500 uppercase tracking-wide">
-                    {["Date", "Keyword", "Pos", "Clicks", "Impr.", "CTR", "Page", "Notes", ""].map(h => (
+                    {["Date", "Keyword", "Pos", "Clicks", "Impr.", "CTR", "Page", "Notes"].map(h => (
                       <th key={h} className="pb-2 pr-3 font-medium">{h}</th>
                     ))}
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-50 dark:divide-gray-800">
                   {browsed.length === 0 ? (
-                    <tr><td colSpan={9} className="py-6 text-center text-gray-400">No entries match your filter.</td></tr>
+                    <tr><td colSpan={8} className="py-6 text-center text-gray-400">No entries match your filter.</td></tr>
                   ) : browsed.map(s => (
                     <tr key={s.id} className="hover:bg-gray-50 dark:hover:bg-gray-900">
                       <td className="py-1.5 pr-3 font-mono text-gray-600 dark:text-gray-400 whitespace-nowrap">{s.snapshotDate}</td>
@@ -940,12 +943,7 @@ function DataExplorer({ snapshots, onDelete }: { snapshots: GscSnapshot[]; onDel
                       <td className="py-1.5 pr-3 font-mono">{s.impressions.toLocaleString()}</td>
                       <td className="py-1.5 pr-3 font-mono">{(s.ctr * 100).toFixed(2)}%</td>
                       <td className="py-1.5 pr-3 max-w-[120px] truncate text-gray-400">{s.page ?? "—"}</td>
-                      <td className="py-1.5 pr-3 max-w-[160px] truncate text-gray-400">{s.notes ?? ""}</td>
-                      <td className="py-1.5">
-                        <button onClick={() => onDelete(s.id)} className="text-gray-300 hover:text-red-500 transition-colors" title="Delete">
-                          <Trash2 className="h-3.5 w-3.5" />
-                        </button>
-                      </td>
+                      <td className="py-1.5 pr-3 max-w-[200px] truncate text-gray-400">{s.notes ?? ""}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -1509,7 +1507,7 @@ export default function GscDashboard() {
                 Data Explorer ({snapshots.length} entries)
               </button>
               {showRawData && (
-                <DataExplorer snapshots={snapshots} onDelete={(id) => deleteMutation.mutate(id)} />
+                <DataExplorer snapshots={snapshots} />
               )}
             </div>
           </div>
