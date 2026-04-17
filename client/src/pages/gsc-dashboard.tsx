@@ -1133,19 +1133,19 @@ export default function GscDashboard() {
     return [...sitePts, ...kwPts].sort((a, b) => a.date.localeCompare(b.date));
   }, [perfSnapshots, perfSiteTotals]);
 
-  // Metric cards: prefer site-total for clicks/impressions/CTR; keyword data for position
+  // Metric cards: sum site-totals (per-day, non-overlapping) for clicks/impressions;
+  // derive CTR from totals; use keyword data for average position
   const perfSummary = useMemo(() => {
     if (perfSiteTotals.length > 0) {
-      const latest = perfSiteTotals.sort((a, b) => b.snapshotDate.localeCompare(a.snapshotDate))[0];
+      const totalClicks = perfSiteTotals.reduce((a, s) => a + s.clicks, 0);
+      const totalImpr = perfSiteTotals.reduce((a, s) => a + s.impressions, 0);
+      const ctr = totalImpr > 0 ? +((totalClicks / totalImpr) * 100).toFixed(2) : 0;
       const avgPos = perfSnapshots.length
         ? +(perfSnapshots.reduce((a, s) => a + s.position, 0) / perfSnapshots.length).toFixed(1)
-        : 0;
-      return {
-        clicks: latest.clicks,
-        impressions: latest.impressions,
-        ctr: +(latest.ctr * 100).toFixed(2),
-        position: avgPos,
-      };
+        : (perfSiteTotals.length
+            ? +(perfSiteTotals.reduce((a, s) => a + s.position, 0) / perfSiteTotals.length).toFixed(1)
+            : 0);
+      return { clicks: totalClicks, impressions: totalImpr, ctr, position: avgPos };
     }
     return {
       clicks: perfSnapshots.reduce((a, s) => a + s.clicks, 0),
@@ -1393,7 +1393,7 @@ export default function GscDashboard() {
               <CardContent className="pt-5 pb-5">
                 {/* Period buttons */}
                 <div className="flex flex-wrap gap-1.5 mb-5">
-                  {([["Latest", "latest"], ["7 days", "7d"], ["28 days", "28d"], ["3 months", "3mo"], ["All time", "all"]] as [string, string][]).map(([label, val]) => (
+                  {([["24 hours", "latest"], ["7 days", "7d"], ["28 days", "28d"], ["3 months", "3mo"], ["All time", "all"]] as [string, string][]).map(([label, val]) => (
                     <button key={val} onClick={() => setPerfPeriod(val as typeof perfPeriod)}
                       className={`px-3.5 py-1.5 text-xs rounded-full font-medium border transition-colors ${
                         perfPeriod === val

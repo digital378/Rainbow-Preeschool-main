@@ -57,7 +57,7 @@ function getGscClient() {
   return google.searchconsole({ version: "v1", auth });
 }
 
-export async function syncGscData(daysBack = 3): Promise<SyncResult> {
+export async function syncGscData(daysBack = 90): Promise<SyncResult> {
   const endDate = format(subDays(new Date(), 1), "yyyy-MM-dd");
   const startDate = format(subDays(new Date(), daysBack), "yyyy-MM-dd");
   const snapshotDate = format(new Date(), "yyyy-MM-dd");
@@ -102,26 +102,40 @@ export async function syncGscData(daysBack = 3): Promise<SyncResult> {
     }
   }
 
-  // Also fetch site-level totals (all queries) for accurate headline numbers
-  let siteTotal: { clicks: number; impressions: number; ctr: number; position: number } | null = null;
+  // Also fetch site-level totals broken down by date (one row per actual day,
+  // across all queries). This lets the dashboard sum any time window accurately.
   try {
     const totalRes = await sc.searchanalytics.query({
       siteUrl: SITE_URL,
       requestBody: {
         startDate,
         endDate,
-        rowLimit: 1,
+        dimensions: ["date"],
+        rowLimit: 500,
         dataState: "all",
       },
     });
-    const row = totalRes.data.rows?.[0];
-    if (row) {
-      siteTotal = {
-        clicks: row.clicks ?? 0,
-        impressions: row.impressions ?? 0,
+    const dayRows = totalRes.data.rows || [];
+
+    // Wipe existing site-total entries in this date range so re-syncs are clean
+    const existing = (await storage.getGscSnapshots()).filter(
+      s => s.keyword === "__site_total__" && s.snapshotDate >= startDate && s.snapshotDate <= endDate
+    );
+    for (const e of existing) await storage.deleteGscSnapshot(e.id);
+
+    for (const row of dayRows) {
+      const date = row.keys?.[0];
+      if (!date) continue;
+      await storage.addGscSnapshot({
+        snapshotDate: date,
+        keyword: "__site_total__",
+        position: Math.round((row.position ?? 0) * 10) / 10,
+        clicks: Math.round(row.clicks ?? 0),
+        impressions: Math.round(row.impressions ?? 0),
         ctr: row.ctr ?? 0,
-        position: row.position ?? 0,
-      };
+        page: null,
+        notes: `Site total per-day (all queries)`,
+      });
     }
   } catch {
     // non-fatal — keyword data still synced
@@ -130,25 +144,6 @@ export async function syncGscData(daysBack = 3): Promise<SyncResult> {
   const matched: SyncResult["rows"] = [];
   let synced = 0;
   let skipped = 0;
-
-  // Store site-level aggregate as a special entry (overwrites any existing for today)
-  if (siteTotal) {
-    const existing = (await storage.getGscSnapshots()).filter(
-      s => s.snapshotDate === snapshotDate && s.keyword === "__site_total__"
-    );
-    for (const e of existing) await storage.deleteGscSnapshot(e.id);
-
-    await storage.addGscSnapshot({
-      snapshotDate,
-      keyword: "__site_total__",
-      position: Math.round(siteTotal.position * 10) / 10,
-      clicks: Math.round(siteTotal.clicks),
-      impressions: Math.round(siteTotal.impressions),
-      ctr: siteTotal.ctr,
-      page: null,
-      notes: `Site total (all queries) ${startDate} to ${endDate}`,
-    });
-  }
 
   for (const keyword of TARGET_KEYWORDS) {
     const data = kwMap[keyword.toLowerCase()];

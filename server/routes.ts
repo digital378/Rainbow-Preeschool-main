@@ -390,7 +390,7 @@ export async function registerRoutes(
     if (!isGscConfigured()) return;
     try {
       console.log("[GSC] Auto-sync starting…");
-      const result = await syncGscData(3);
+      const result = await syncGscData(90);
       if (result.success) {
         lastAutoSync = new Date();
         autoSyncError = null;
@@ -429,7 +429,7 @@ export async function registerRoutes(
       return;
     }
     try {
-      const result = await syncGscData(3);
+      const result = await syncGscData(90);
       if (!result.success) {
         res.status(502).json(result);
         return;
