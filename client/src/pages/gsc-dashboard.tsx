@@ -1056,6 +1056,11 @@ export default function GscDashboard() {
   const [showApiGuide, setShowApiGuide] = useState(false);
   const [showRawData, setShowRawData] = useState(false);
   const [selectedKeywords, setSelectedKeywords] = useState<string[]>(PRIMARY_KEYWORDS.slice(0, 4));
+  const [perfPeriod, setPerfPeriod] = useState<"latest" | "7d" | "28d" | "3mo" | "all">("all");
+  const [activeMetrics, setActiveMetrics] = useState<Set<string>>(new Set(["clicks", "impressions"]));
+
+  const toggleMetric = (key: string) =>
+    setActiveMetrics(prev => { const n = new Set(prev); n.has(key) ? n.delete(key) : n.add(key); return n; });
 
   const summary = useMemo(() => computeKeywordSummary(snapshots), [snapshots]);
   const positionChartData = useMemo(() => buildPositionChartData(snapshots, selectedKeywords), [snapshots, selectedKeywords]);
@@ -1067,6 +1072,43 @@ export default function GscDashboard() {
   const totalImpressions = latestSnapshots.reduce((a, s) => a + s.impressions, 0);
   const avgCtr = latestSnapshots.length ? latestSnapshots.reduce((a, s) => a + s.ctr, 0) / latestSnapshots.length : 0;
   const avgPos = latestSnapshots.length ? latestSnapshots.reduce((a, s) => a + s.position, 0) / latestSnapshots.length : 0;
+
+  const perfSnapshots = useMemo(() => {
+    const allDates = [...new Set(snapshots.map(s => s.snapshotDate))].sort((a, b) => b.localeCompare(a));
+    if (perfPeriod === "latest") return snapshots.filter(s => s.snapshotDate === allDates[0]);
+    const days = perfPeriod === "7d" ? 7 : perfPeriod === "28d" ? 28 : perfPeriod === "3mo" ? 90 : null;
+    if (days) {
+      const cutoff = format(new Date(Date.now() - days * 86400000), "yyyy-MM-dd");
+      return snapshots.filter(s => s.snapshotDate >= cutoff);
+    }
+    return snapshots;
+  }, [snapshots, perfPeriod]);
+
+  const perfChartData = useMemo(() => {
+    const dm: Record<string, { date: string; clicks: number; impressions: number; ctr: number; position: number; n: number }> = {};
+    perfSnapshots.forEach(s => {
+      if (!dm[s.snapshotDate]) dm[s.snapshotDate] = { date: s.snapshotDate, clicks: 0, impressions: 0, ctr: 0, position: 0, n: 0 };
+      dm[s.snapshotDate].clicks += s.clicks;
+      dm[s.snapshotDate].impressions += s.impressions;
+      dm[s.snapshotDate].ctr += s.ctr * 100;
+      dm[s.snapshotDate].position += s.position;
+      dm[s.snapshotDate].n++;
+    });
+    return Object.values(dm).sort((a, b) => a.date.localeCompare(b.date)).map(d => ({
+      date: format(parseISO(d.date), "dd MMM"),
+      clicks: d.clicks,
+      impressions: d.impressions,
+      ctr: +(d.ctr / d.n).toFixed(2),
+      position: +(d.position / d.n).toFixed(1),
+    }));
+  }, [perfSnapshots]);
+
+  const perfSummary = useMemo(() => ({
+    clicks: perfSnapshots.reduce((a, s) => a + s.clicks, 0),
+    impressions: perfSnapshots.reduce((a, s) => a + s.impressions, 0),
+    ctr: perfSnapshots.length ? +(perfSnapshots.reduce((a, s) => a + s.ctr * 100, 0) / perfSnapshots.length).toFixed(2) : 0,
+    position: perfSnapshots.length ? +(perfSnapshots.reduce((a, s) => a + s.position, 0) / perfSnapshots.length).toFixed(1) : 0,
+  }), [perfSnapshots]);
 
   const form = useForm<AddSnapshotForm>({
     resolver: zodResolver(addSnapshotSchema),
@@ -1293,26 +1335,92 @@ export default function GscDashboard() {
         {/* ── OVERVIEW TAB ── */}
         {activeTab === "overview" && (
           <div className="space-y-6">
-            {/* Overview Cards */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-              {[
-                { label: "Total Clicks", value: totalClicks.toLocaleString(), sub: "latest snapshot", icon: <Search className="h-4 w-4" /> },
-                { label: "Total Impressions", value: totalImpressions.toLocaleString(), sub: "latest snapshot", icon: <BarChart2 className="h-4 w-4" /> },
-                { label: "Avg CTR", value: `${(avgCtr * 100).toFixed(2)}%`, sub: "across tracked keywords", icon: <TrendingUp className="h-4 w-4" /> },
-                { label: "Avg Position", value: avgPos.toFixed(1), sub: `${latestSnapshots.length} keywords tracked`, icon: <Minus className="h-4 w-4" /> },
-              ].map(card => (
-                <Card key={card.label}>
-                  <CardContent className="pt-5">
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="text-xs text-gray-500">{card.label}</span>
-                      <span className="text-gray-400">{card.icon}</span>
-                    </div>
-                    <div className="text-2xl font-bold text-gray-900 dark:text-white">{card.value}</div>
-                    <div className="text-xs text-gray-400 mt-0.5">{card.sub}</div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+            {/* ── Performance Overview ── */}
+            <Card>
+              <CardContent className="pt-5 pb-5">
+                {/* Period buttons */}
+                <div className="flex flex-wrap gap-1.5 mb-5">
+                  {([["Latest", "latest"], ["7 days", "7d"], ["28 days", "28d"], ["3 months", "3mo"], ["All time", "all"]] as [string, string][]).map(([label, val]) => (
+                    <button key={val} onClick={() => setPerfPeriod(val as typeof perfPeriod)}
+                      className={`px-3.5 py-1.5 text-xs rounded-full font-medium border transition-colors ${
+                        perfPeriod === val
+                          ? "bg-blue-600 text-white border-blue-600"
+                          : "text-gray-600 dark:text-gray-400 border-gray-200 dark:border-gray-700 hover:border-blue-300"
+                      }`}>
+                      {label}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Metric cards */}
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5">
+                  {([
+                    { key: "clicks",      label: "Total clicks",      color: "#1a73e8", fmt: (v: number) => v.toLocaleString() },
+                    { key: "impressions", label: "Total impressions",  color: "#9333ea", fmt: (v: number) => v >= 1000 ? `${(v/1000).toFixed(1)}K` : v.toString() },
+                    { key: "ctr",         label: "Average CTR",       color: "#059669", fmt: (v: number) => `${v}%` },
+                    { key: "position",    label: "Average position",   color: "#dc2626", fmt: (v: number) => v.toString() },
+                  ] as const).map(metric => {
+                    const active = activeMetrics.has(metric.key);
+                    const val = perfSummary[metric.key];
+                    return (
+                      <button key={metric.key} onClick={() => toggleMetric(metric.key)}
+                        className={`text-left p-3.5 rounded-lg border-2 transition-all ${
+                          active ? "" : "border-gray-100 dark:border-gray-800 opacity-55 hover:opacity-80"
+                        }`}
+                        style={active ? { borderColor: metric.color } : {}}>
+                        <div className="flex items-center gap-2 mb-2">
+                          <div className="w-3.5 h-3.5 rounded border-2 flex items-center justify-center shrink-0"
+                            style={{ borderColor: metric.color, backgroundColor: active ? metric.color : "transparent" }}>
+                            {active && <svg className="w-2 h-2 text-white" viewBox="0 0 8 8"><path d="M1 4l2 2 4-4" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round"/></svg>}
+                          </div>
+                          <span className="text-xs text-gray-500 dark:text-gray-400 leading-tight">{metric.label}</span>
+                        </div>
+                        <div className="text-2xl font-bold text-gray-900 dark:text-white" style={active ? { color: metric.color } : {}}>
+                          {metric.fmt(val)}
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Performance line chart */}
+                {perfChartData.length > 1 ? (
+                  <ResponsiveContainer width="100%" height={220}>
+                    <LineChart data={perfChartData} margin={{ top: 5, right: 40, bottom: 5, left: 0 }}>
+                      <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                      <XAxis dataKey="date" tick={{ fontSize: 11 }} />
+                      <YAxis yAxisId="left" tick={{ fontSize: 11 }} width={40} />
+                      <YAxis yAxisId="right" orientation="right" tick={{ fontSize: 11 }} width={50} />
+                      <Tooltip
+                        contentStyle={{ fontSize: 12 }}
+                        formatter={(v: number, name: string) =>
+                          name === "Impressions" ? [v.toLocaleString(), name] :
+                          name === "CTR %" ? [`${v}%`, name] :
+                          name === "Avg Position" ? [`#${v}`, name] :
+                          [v, name]
+                        }
+                      />
+                      {activeMetrics.has("clicks") && (
+                        <Line yAxisId="left" type="monotone" dataKey="clicks" stroke="#1a73e8" strokeWidth={2} dot={{ r: 4, fill: "#1a73e8" }} activeDot={{ r: 5 }} name="Clicks" />
+                      )}
+                      {activeMetrics.has("impressions") && (
+                        <Line yAxisId="right" type="monotone" dataKey="impressions" stroke="#9333ea" strokeWidth={2} dot={{ r: 4, fill: "#9333ea" }} activeDot={{ r: 5 }} name="Impressions" />
+                      )}
+                      {activeMetrics.has("ctr") && (
+                        <Line yAxisId="left" type="monotone" dataKey="ctr" stroke="#059669" strokeWidth={2} strokeDasharray="5 3" dot={{ r: 4, fill: "#059669" }} activeDot={{ r: 5 }} name="CTR %" />
+                      )}
+                      {activeMetrics.has("position") && (
+                        <Line yAxisId="right" type="monotone" dataKey="position" stroke="#dc2626" strokeWidth={2} strokeDasharray="5 3" dot={{ r: 4, fill: "#dc2626" }} activeDot={{ r: 5 }} name="Avg Position" />
+                      )}
+                    </LineChart>
+                  </ResponsiveContainer>
+                ) : (
+                  <div className="h-[220px] flex items-center justify-center text-sm text-gray-400">
+                    {perfChartData.length === 0 ? "No data for selected period." : "Only one snapshot in this period — select a wider range to see trends."}
+                  </div>
+                )}
+              </CardContent>
+            </Card>
 
             {/* Keyword Performance Table */}
             <Card>
