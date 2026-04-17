@@ -1624,7 +1624,7 @@ export default function GscDashboard() {
             <Card>
               <CardHeader className="pb-3">
                 <CardTitle className="text-base">Keyword Performance <span className="text-xs font-normal text-gray-500">({periodLabel[perfPeriod]})</span></CardTitle>
-                <CardDescription>Clicks, impressions and CTR are summed across the selected period above. 24h projection and 30/90-day forecasts use the latest day-over-day trend (smoothed). Lower position = better ranking.</CardDescription>
+                <CardDescription>Clicks, impressions and CTR are summed across the selected period above. 24h projection and 30/90-day forecasts use the latest day-over-day trend (smoothed). Lower position = better ranking. <span className="text-amber-600 dark:text-amber-400">Note: Google Search Console caps per-keyword daily data to the top ~1,000 queries/day, so per-keyword totals here will undercount low-volume queries vs the un-dimensioned site total above.</span></CardDescription>
               </CardHeader>
               <CardContent className="overflow-x-auto">
                 {isLoading ? (
