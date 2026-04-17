@@ -1102,49 +1102,33 @@ export default function GscDashboard() {
   const perfSnapshots = useMemo(() => filterByPeriod(snapshots), [snapshots, perfPeriod]);
   const perfSiteTotals = useMemo(() => filterByPeriod(siteTotals), [siteTotals, perfPeriod]);
 
-  // Chart: use site-total entries per date if available, else fall back to keyword sum
+  // Chart: use ONLY per-day site totals (true site-wide numbers from GSC).
+  // Keyword data is excluded — it covers only ~20 tracked queries, not all queries,
+  // so mixing it in would distort the chart with wrong-magnitude points.
   const perfChartData = useMemo(() => {
-    const siteDates = new Set(perfSiteTotals.map(s => s.snapshotDate));
-    const kwDm: Record<string, { clicks: number; impressions: number; ctr: number; position: number; n: number }> = {};
-    perfSnapshots.forEach(s => {
-      if (siteDates.has(s.snapshotDate)) return; // skip dates covered by site total
-      if (!kwDm[s.snapshotDate]) kwDm[s.snapshotDate] = { clicks: 0, impressions: 0, ctr: 0, position: 0, n: 0 };
-      kwDm[s.snapshotDate].clicks += s.clicks;
-      kwDm[s.snapshotDate].impressions += s.impressions;
-      kwDm[s.snapshotDate].ctr += s.ctr * 100;
-      kwDm[s.snapshotDate].position += s.position;
-      kwDm[s.snapshotDate].n++;
-    });
+    return perfSiteTotals
+      .slice()
+      .sort((a, b) => a.snapshotDate.localeCompare(b.snapshotDate))
+      .map(s => ({
+        date: format(parseISO(s.snapshotDate), "dd MMM"),
+        clicks: s.clicks,
+        impressions: s.impressions,
+        ctr: +(s.ctr * 100).toFixed(2),
+        position: s.position,
+      }));
+  }, [perfSiteTotals]);
 
-    const sitePts = perfSiteTotals.map(s => ({
-      date: format(parseISO(s.snapshotDate), "dd MMM"),
-      clicks: s.clicks,
-      impressions: s.impressions,
-      ctr: +(s.ctr * 100).toFixed(2),
-      position: s.position,
-    }));
-    const kwPts = Object.entries(kwDm).map(([date, d]) => ({
-      date: format(parseISO(date), "dd MMM"),
-      clicks: d.clicks,
-      impressions: d.impressions,
-      ctr: +(d.ctr / d.n).toFixed(2),
-      position: +(d.position / d.n).toFixed(1),
-    }));
-    return [...sitePts, ...kwPts].sort((a, b) => a.date.localeCompare(b.date));
-  }, [perfSnapshots, perfSiteTotals]);
-
-  // Metric cards: sum site-totals (per-day, non-overlapping) for clicks/impressions;
-  // derive CTR from totals; use keyword data for average position
+  // Metric cards: use site-totals only (true site-wide GSC numbers).
+  // Sum per-day clicks/impressions; derive CTR from totals; impression-weight position.
   const perfSummary = useMemo(() => {
     if (perfSiteTotals.length > 0) {
       const totalClicks = perfSiteTotals.reduce((a, s) => a + s.clicks, 0);
       const totalImpr = perfSiteTotals.reduce((a, s) => a + s.impressions, 0);
       const ctr = totalImpr > 0 ? +((totalClicks / totalImpr) * 100).toFixed(2) : 0;
-      const avgPos = perfSnapshots.length
-        ? +(perfSnapshots.reduce((a, s) => a + s.position, 0) / perfSnapshots.length).toFixed(1)
-        : (perfSiteTotals.length
-            ? +(perfSiteTotals.reduce((a, s) => a + s.position, 0) / perfSiteTotals.length).toFixed(1)
-            : 0);
+      const weightedPosSum = perfSiteTotals.reduce((a, s) => a + s.position * s.impressions, 0);
+      const avgPos = totalImpr > 0
+        ? +(weightedPosSum / totalImpr).toFixed(1)
+        : +(perfSiteTotals.reduce((a, s) => a + s.position, 0) / perfSiteTotals.length).toFixed(1);
       return { clicks: totalClicks, impressions: totalImpr, ctr, position: avgPos };
     }
     return {
