@@ -1539,10 +1539,10 @@ export default function GscDashboard() {
                 {/* Metric cards */}
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5">
                   {([
-                    { key: "clicks",      label: "Total clicks",      color: "#1a73e8", fmt: (v: number) => v.toLocaleString() },
-                    { key: "impressions", label: "Total impressions",  color: "#9333ea", fmt: (v: number) => v >= 1000 ? `${(v/1000).toFixed(1)}K` : v.toString() },
-                    { key: "ctr",         label: "Average CTR",       color: "#059669", fmt: (v: number) => `${v}%` },
-                    { key: "position",    label: "Average position",   color: "#dc2626", fmt: (v: number) => v.toString() },
+                    { key: "clicks",      label: `Total clicks (${periodLabel[perfPeriod]})`,      color: "#1a73e8", fmt: (v: number) => v.toLocaleString() },
+                    { key: "impressions", label: `Total impressions (${periodLabel[perfPeriod]})`, color: "#9333ea", fmt: (v: number) => v >= 1000 ? `${(v/1000).toFixed(1)}K` : v.toString() },
+                    { key: "ctr",         label: `Average CTR (${periodLabel[perfPeriod]})`,       color: "#059669", fmt: (v: number) => `${v}%` },
+                    { key: "position",    label: `Average position (${periodLabel[perfPeriod]})`,  color: "#dc2626", fmt: (v: number) => v.toString() },
                   ] as const).map(metric => {
                     const active = activeMetrics.has(metric.key);
                     const val = perfSummary[metric.key];
