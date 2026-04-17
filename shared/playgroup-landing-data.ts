@@ -48,6 +48,7 @@ export const playgroundLandingPages: PlaygroupLandingData[] = [
       landmarks: ["Hariniwas Circle", "Bhakti Mandir Road", "Panchpakadi"],
     },
     faqs: [
+      { question: "Where can I find a playgroup near me in Thane?", answer: "Rainbow Preschool has 6 playgroup centres across Thane West — in Manpada, Hariniwas (Panchpakadi), Anand Nagar, Dhokali, Kalwa, and Kasarvadavali. Most homes in Thane West are within a 10-minute drive of a Rainbow centre. Call 82915 68972 to find the playgroup nearest you." },
       { question: "What is the best age to start playgroup in Thane?", answer: "Children can start playgroup at Rainbow Preschool from 1.5 years (18 months). Our playgroup programme is designed for toddlers aged 1.5 to 2.5 years, introducing learning through fun activities, play, and social interaction." },
       { question: "How many Rainbow Preschool centres are there in Thane?", answer: "We have 6 centres across Thane West: Manpada, Hariniwas, Anand Nagar, Dhokali, Kalwa, and Kasarvadavali. Each centre offers the same quality curriculum and safety standards." },
       { question: "Is Rainbow Preschool safe for toddlers?", answer: "Absolutely! All Rainbow Preschool centres have CCTV monitoring, 100% female teaching staff, secure entry/exit procedures, and follow strict health and hygiene protocols. We maintain a 15:1 student-teacher ratio in playgroup." },

@@ -560,6 +560,57 @@ export default function BestPreschoolInThane() {
               </div>
             </section>
 
+            {/* ── WHY RAINBOW (COMPARISON) ─────────────────────────────────── */}
+            <section className="py-8 md:py-12 px-4 bg-white dark:bg-gray-800" style={{ contentVisibility: 'auto', containIntrinsicSize: '0 600px' }}>
+              <div className="max-w-5xl mx-auto">
+                <h2 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-2 text-center">
+                  Why Rainbow Over Other Preschools in Thane?
+                </h2>
+                <p className="text-sm text-gray-600 dark:text-gray-300 text-center mb-6 max-w-2xl mx-auto">
+                  An honest, side-by-side comparison of what matters most when parents pick the best preschool in Thane.
+                </p>
+                <div className="overflow-x-auto rounded-xl border border-gray-200 dark:border-gray-700">
+                  <table className="w-full text-xs md:text-sm">
+                    <thead className="bg-gray-50 dark:bg-gray-900">
+                      <tr>
+                        <th className="text-left p-3 md:p-4 font-semibold text-gray-900 dark:text-white">What parents check</th>
+                        <th className="text-left p-3 md:p-4 font-semibold text-primary">Rainbow Preschool</th>
+                        <th className="text-left p-3 md:p-4 font-semibold text-gray-700 dark:text-gray-300">Typical Thane preschool</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+                      {[
+                        ["Years of experience", "18+ years (since 2007)", "2–8 years on average"],
+                        ["Centres in Thane", "6 across Thane West", "Usually 1 standalone centre"],
+                        ["Alumni / track record", "1,00,000+ alumni", "Limited or undisclosed"],
+                        ["Google rating", "★ 4.7/5 from 3,997+ parent reviews", "Mixed, often <50 reviews"],
+                        ["Curriculum", "Award-winning Rainbow Curriculum, NEP 2020 aligned", "Generic play-based or franchise kit"],
+                        ["Teacher : student ratio", "1 : 15 (with helper in playgroup)", "1 : 20–25 commonly"],
+                        ["Safety", "100% female staff, CCTV in every classroom, secure entry", "Varies; CCTV often only at entry"],
+                        ["Awards", "India Today, ScooNews, Economic Times, World Education Summit", "Rarely recognised"],
+                        ["Programme range", "Playgroup → Nursery → Jr. KG → Sr. KG (1.5–6 yrs)", "Often only 1–2 levels"],
+                        ["Parent communication", "Daily updates, PTM, parent app", "Monthly/term-end only"],
+                      ].map(([label, rainbow, others], i) => (
+                        <tr key={i} className="bg-white dark:bg-gray-800">
+                          <td className="p-3 md:p-4 font-medium text-gray-900 dark:text-white align-top">{label}</td>
+                          <td className="p-3 md:p-4 text-gray-700 dark:text-gray-200 align-top">
+                            <span className="inline-flex items-center gap-1.5">
+                              <CheckCircle className="w-4 h-4 text-green-600 flex-shrink-0" />
+                              <span>{rainbow}</span>
+                            </span>
+                          </td>
+                          <td className="p-3 md:p-4 text-gray-500 dark:text-gray-400 align-top">{others}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-3 text-center">
+                  Comparison based on publicly-listed information from preschools in Thane West (April 2026).
+                </p>
+              </div>
+            </section>
+
             {/* ── SEO CONTENT BLOCK ─────────────────────────────────────────── */}
             <section className="py-8 md:py-10 px-4" style={{ contentVisibility: 'auto', containIntrinsicSize: '0 300px' }}>
               <div className="max-w-4xl mx-auto">

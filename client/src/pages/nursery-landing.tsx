@@ -385,25 +385,40 @@ export default function NurseryLanding() {
         }
       }))
     };
+    const breadcrumbSchema = {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.rainbowpreschools.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Programmes", "item": "https://www.rainbowpreschools.com/programmes" },
+        { "@type": "ListItem", "position": 3, "name": "Nursery in Thane", "item": "https://www.rainbowpreschools.com/nursery" },
+      ],
+    };
+    const ids = ['nursery-faq-schema', 'nursery-breadcrumb-schema'];
+    ids.forEach(id => { const e = document.getElementById(id); if (e) e.remove(); });
+
     const faqScript = document.createElement('script');
     faqScript.type = 'application/ld+json';
     faqScript.id = 'nursery-faq-schema';
     faqScript.textContent = JSON.stringify(faqSchema);
-    const existing = document.getElementById('nursery-faq-schema');
-    if (existing) existing.remove();
     document.head.appendChild(faqScript);
 
+    const breadcrumbScript = document.createElement('script');
+    breadcrumbScript.type = 'application/ld+json';
+    breadcrumbScript.id = 'nursery-breadcrumb-schema';
+    breadcrumbScript.textContent = JSON.stringify(breadcrumbSchema);
+    document.head.appendChild(breadcrumbScript);
+
     return () => {
-      const el = document.getElementById('nursery-faq-schema');
-      if (el) el.remove();
+      ids.forEach(id => { const el = document.getElementById(id); if (el) el.remove(); });
     };
   }, []);
 
   return (
     <div className="pt-20 md:pt-24">
       <SEO
-        title="Nursery in Thane | Ages 2.5–3.5 | Rainbow Preschool"
-        description="Nursery programme in Thane for children aged 2.5-3.5 years — building phonics, numeracy, and social skills through play-based learning. 6 Thane centres, experienced educators. Enquire for 2025-26 admissions."
+        title="Nursery Near Me in Thane | Ages 2.5–3.5 | Rainbow Preschool"
+        description="Looking for a nursery near me in Thane? Rainbow Preschool's nursery programme (ages 2.5–3.5) builds phonics, numeracy & social skills across 6 centres. Enquire for 2026–27 admissions."
         keywords="nursery school in thane, nursery school near me, best nursery school, nursery school admission near me, nursery school admission enquiry, nursery class for kids, play based nursery school, nursery education program, top nursery school in thane"
         canonical="https://www.rainbowpreschools.com/nursery"
       />
@@ -737,6 +752,67 @@ export default function NurseryLanding() {
             {branches.map((branch) => (
               <BranchCard key={branch.id} branch={branch} />
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Nursery Near Me in Thane */}
+      <section className="py-12 md:py-16 bg-white dark:bg-gray-900">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-3">Nursery Near Me in Thane — All 6 Centres</h2>
+          <p className="text-sm md:text-base text-muted-foreground text-center mb-8 max-w-2xl mx-auto">
+            Rainbow runs nursery classes (ages 2.5–3.5) at all 6 of our Thane West centres, so families anywhere in Thane have a trusted nursery school within minutes of home.
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {[
+              { name: "Manpada", url: "/preschool-in-manpada-thane", landmark: "Aggarwal Arcade, near Khewra Circle" },
+              { name: "Hariniwas (Panchpakadi)", url: "/preschool-near-panch-pakhadi-thane-west", landmark: "M.V. Apartments, Bhakti Mandir Road" },
+              { name: "Anand Nagar", url: "/preschool-in-anand-nagar-thane", landmark: "Near LBS Marg, Anand Nagar" },
+              { name: "Dhokali", url: "/preschool-in-dhokali-thane", landmark: "Off Ghodbunder Road, Dhokali" },
+              { name: "Kalwa", url: "/preschool-in-kalwa-thane", landmark: "Near Kalwa Bridge, Kalwa" },
+              { name: "Kasarvadavali", url: "/preschool-in-kasarvadavali-thane", landmark: "Ghodbunder Road, Kasarvadavali" },
+            ].map((c) => (
+              <a key={c.name} href={c.url} className="block p-4 md:p-5 rounded-xl border hover:border-primary hover:shadow-md transition-all bg-white dark:bg-gray-800" data-testid={`link-nursery-near-${c.name.toLowerCase().split(" ")[0]}`}>
+                <h3 className="font-semibold mb-1">Nursery in {c.name}</h3>
+                <p className="text-xs md:text-sm text-muted-foreground mb-2">{c.landmark}</p>
+                <span className="text-primary text-sm font-medium">View centre →</span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Admission Process & Dates */}
+      <section className="py-12 md:py-16 bg-gray-50 dark:bg-gray-800/50">
+        <div className="max-w-4xl mx-auto px-4">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-3">Nursery Admission Process & Important Dates</h2>
+          <p className="text-sm md:text-base text-muted-foreground text-center mb-8">
+            Nursery admissions for 2026–27 are open at all 6 Rainbow centres. Here's exactly what to expect.
+          </p>
+
+          <ol className="space-y-4 mb-8">
+            {[
+              ["1. Enquire", "Submit the form on this page or call 82915 68972. Our admissions team will reach out within 24 hours."],
+              ["2. Free campus visit", "Tour the nearest centre, meet the nursery teachers, see classrooms in action, and ask any safety/curriculum questions."],
+              ["3. Parent–child interaction", "A relaxed, 20-minute meeting where the teacher observes your child and answers parent questions. There is no entrance test."],
+              ["4. Confirm admission", "Submit basic documents (birth certificate, immunisation record, photos), pay the admission fee, and your child's start date is locked in."],
+              ["5. Orientation week", "Before the term starts, your child attends 2–3 short orientation sessions to settle in comfortably."],
+            ].map(([step, desc]) => (
+              <li key={step} className="flex gap-4 p-4 bg-white dark:bg-gray-900 rounded-xl border">
+                <div className="font-bold text-primary text-base md:text-lg whitespace-nowrap">{step}</div>
+                <div className="text-sm md:text-base text-muted-foreground">{desc}</div>
+              </li>
+            ))}
+          </ol>
+
+          <div className="bg-white dark:bg-gray-900 rounded-xl border p-5 md:p-6">
+            <h3 className="font-semibold text-base md:text-lg mb-3">Key admission dates</h3>
+            <ul className="space-y-2 text-sm md:text-base text-muted-foreground">
+              <li><strong>Main intake:</strong> Enquiries open October • Admissions confirmed January–March • Term begins June 2026</li>
+              <li><strong>Mid-term intake:</strong> Limited seats open August–September for the 2026–27 academic year</li>
+              <li><strong>Eligibility:</strong> Child should be 2.5–3.5 years old as on 1 June 2026</li>
+              <li><strong>Required documents:</strong> Birth certificate, immunisation card, 4 passport photos, parent ID & address proof</li>
+            </ul>
           </div>
         </div>
       </section>

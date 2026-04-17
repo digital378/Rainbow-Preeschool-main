@@ -179,6 +179,70 @@ export function PlaygroupLandingTemplate({ data }: PlaygroupLandingTemplateProps
         />
       )}
 
+      {data.slug === "thane" && (
+        <section className="py-10 md:py-14 bg-white dark:bg-gray-900">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white text-center mb-3">
+              Playgroup Near Me in Thane — All 6 Centres
+            </h2>
+            <p className="text-sm md:text-base text-gray-600 dark:text-gray-300 text-center mb-8 max-w-2xl mx-auto">
+              Wherever you live in Thane West, there's a Rainbow playgroup within a 10-minute drive. Pick the centre nearest to your home and book a free campus visit.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {[
+                { name: "Manpada", url: "/playgroup-in-manpada", landmark: "Aggarwal Arcade, near Khewra Circle, Thane (W)" },
+                { name: "Hariniwas (Panchpakadi)", url: "/playgroup-in-thane", landmark: "M.V. Apartments, Bhakti Mandir Road, Thane (W)" },
+                { name: "Anand Nagar", url: "/playgroup-in-anand-nagar", landmark: "Near LBS Marg, Anand Nagar, Thane (W)" },
+                { name: "Dhokali", url: "/playgroup-in-dhokali", landmark: "Off Ghodbunder Road, Dhokali, Thane (W)" },
+                { name: "Kalwa", url: "/playgroup-in-kalwa", landmark: "Near Kalwa Bridge, Kalwa, Thane" },
+                { name: "Kasarvadavali", url: "/playgroup-in-kasarvadavali", landmark: "Ghodbunder Road, Kasarvadavali, Thane (W)" },
+              ].map((c) => (
+                <Link key={c.name} href={c.url} className="block p-4 md:p-5 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all bg-white dark:bg-gray-800" data-testid={`link-playgroup-near-${c.name.toLowerCase().split(" ")[0]}`}>
+                  <h3 className="font-semibold text-gray-900 dark:text-white mb-1">Playgroup in {c.name}</h3>
+                  <p className="text-xs md:text-sm text-gray-600 dark:text-gray-300 mb-2">{c.landmark}</p>
+                  <span className="text-primary text-sm font-medium">View centre →</span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {data.slug === "thane" && (
+        <section className="py-10 md:py-12 bg-gray-50 dark:bg-gray-800/50">
+          <div className="max-w-4xl mx-auto px-4">
+            <h2 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white text-center mb-3">
+              A Sample Playgroup Day at Rainbow
+            </h2>
+            <p className="text-sm text-gray-600 dark:text-gray-300 text-center mb-6">
+              Every playgroup day follows a predictable, comforting rhythm — designed by early childhood experts for 1.5–2.5 year olds.
+            </p>
+            <div className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700 divide-y divide-gray-200 dark:divide-gray-700">
+              {[
+                ["8:30 – 8:45 AM", "Welcome & free play", "Children settle in with familiar toys while parents say goodbye"],
+                ["8:45 – 9:00 AM", "Circle time & rhymes", "Greeting song, calendar, weather, action rhymes"],
+                ["9:00 – 9:30 AM", "Sensory & messy play", "Dough, water, sand, finger paint — different theme each day"],
+                ["9:30 – 9:50 AM", "Snack & potty break", "Mid-morning snack with washing, sharing & self-help routines"],
+                ["9:50 – 10:30 AM", "Theme activity", "Art, craft, story, role-play or puppet show tied to weekly theme"],
+                ["10:30 – 11:00 AM", "Outdoor / indoor gross motor", "Slides, climbing, balls, bubbles or music & movement"],
+                ["11:00 – 11:30 AM", "Story time, song & dispersal", "Quiet wind-down, goodbye song, hand-over to parents"],
+              ].map(([time, title, desc], i) => (
+                <div key={i} className="grid grid-cols-12 gap-3 p-3 md:p-4">
+                  <div className="col-span-12 md:col-span-3 text-xs md:text-sm font-semibold text-primary">{time}</div>
+                  <div className="col-span-12 md:col-span-9">
+                    <div className="text-sm md:text-base font-semibold text-gray-900 dark:text-white">{title}</div>
+                    <div className="text-xs md:text-sm text-gray-600 dark:text-gray-300">{desc}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-3 text-center">
+              Afternoon batch (12:30–3:30 PM) follows the same structure with adjusted timings.
+            </p>
+          </div>
+        </section>
+      )}
+
       <FAQAccordion faqs={data.faqs} locality={data.localityName} />
 
       <section className="py-10 md:py-12 bg-gray-50 dark:bg-gray-800/50">
