@@ -445,7 +445,17 @@ const addSnapshotSchema = z.object({
 type AddSnapshotForm = z.infer<typeof addSnapshotSchema>;
 
 function useGscData() {
-  return useQuery<GscSnapshot[]>({ queryKey: ["/api/gsc/snapshots"] });
+  return useQuery<GscSnapshot[]>({
+    queryKey: ["/api/gsc/snapshots"],
+    refetchInterval: 5 * 60 * 1000,
+  });
+}
+
+function useGscSyncStatus() {
+  return useQuery<{ configured: boolean; lastAutoSync: string | null; autoSyncError: string | null }>({
+    queryKey: ["/api/gsc/sync/status"],
+    refetchInterval: 60 * 1000,
+  });
 }
 
 function computeKeywordSummary(snapshots: GscSnapshot[]) {
@@ -1050,7 +1060,12 @@ export default function GscDashboard() {
     return () => { tag!.content = prev; };
   }, []);
 
-  const { data: snapshots = [], isLoading } = useGscData();
+  const { data: allSnapshots = [], isLoading } = useGscData();
+  const { data: syncStatus } = useGscSyncStatus();
+
+  // Separate site-total rows from per-keyword rows
+  const siteTotals = allSnapshots.filter(s => s.keyword === "__site_total__");
+  const snapshots = allSnapshots.filter(s => s.keyword !== "__site_total__");
   const [activeTab, setActiveTab] = useState<"overview" | "keywords">("overview");
   const [showForm, setShowForm] = useState(false);
   const [showApiGuide, setShowApiGuide] = useState(false);
@@ -1073,42 +1088,72 @@ export default function GscDashboard() {
   const avgCtr = latestSnapshots.length ? latestSnapshots.reduce((a, s) => a + s.ctr, 0) / latestSnapshots.length : 0;
   const avgPos = latestSnapshots.length ? latestSnapshots.reduce((a, s) => a + s.position, 0) / latestSnapshots.length : 0;
 
-  const perfSnapshots = useMemo(() => {
-    const allDates = [...new Set(snapshots.map(s => s.snapshotDate))].sort((a, b) => b.localeCompare(a));
-    if (perfPeriod === "latest") return snapshots.filter(s => s.snapshotDate === allDates[0]);
+  const filterByPeriod = <T extends { snapshotDate: string }>(rows: T[]) => {
+    const allDates = [...new Set(rows.map(s => s.snapshotDate))].sort((a, b) => b.localeCompare(a));
+    if (perfPeriod === "latest") return rows.filter(s => s.snapshotDate === allDates[0]);
     const days = perfPeriod === "7d" ? 7 : perfPeriod === "28d" ? 28 : perfPeriod === "3mo" ? 90 : null;
     if (days) {
       const cutoff = format(new Date(Date.now() - days * 86400000), "yyyy-MM-dd");
-      return snapshots.filter(s => s.snapshotDate >= cutoff);
+      return rows.filter(s => s.snapshotDate >= cutoff);
     }
-    return snapshots;
-  }, [snapshots, perfPeriod]);
+    return rows;
+  };
 
+  const perfSnapshots = useMemo(() => filterByPeriod(snapshots), [snapshots, perfPeriod]);
+  const perfSiteTotals = useMemo(() => filterByPeriod(siteTotals), [siteTotals, perfPeriod]);
+
+  // Chart: use site-total entries per date if available, else fall back to keyword sum
   const perfChartData = useMemo(() => {
-    const dm: Record<string, { date: string; clicks: number; impressions: number; ctr: number; position: number; n: number }> = {};
+    const siteDates = new Set(perfSiteTotals.map(s => s.snapshotDate));
+    const kwDm: Record<string, { clicks: number; impressions: number; ctr: number; position: number; n: number }> = {};
     perfSnapshots.forEach(s => {
-      if (!dm[s.snapshotDate]) dm[s.snapshotDate] = { date: s.snapshotDate, clicks: 0, impressions: 0, ctr: 0, position: 0, n: 0 };
-      dm[s.snapshotDate].clicks += s.clicks;
-      dm[s.snapshotDate].impressions += s.impressions;
-      dm[s.snapshotDate].ctr += s.ctr * 100;
-      dm[s.snapshotDate].position += s.position;
-      dm[s.snapshotDate].n++;
+      if (siteDates.has(s.snapshotDate)) return; // skip dates covered by site total
+      if (!kwDm[s.snapshotDate]) kwDm[s.snapshotDate] = { clicks: 0, impressions: 0, ctr: 0, position: 0, n: 0 };
+      kwDm[s.snapshotDate].clicks += s.clicks;
+      kwDm[s.snapshotDate].impressions += s.impressions;
+      kwDm[s.snapshotDate].ctr += s.ctr * 100;
+      kwDm[s.snapshotDate].position += s.position;
+      kwDm[s.snapshotDate].n++;
     });
-    return Object.values(dm).sort((a, b) => a.date.localeCompare(b.date)).map(d => ({
-      date: format(parseISO(d.date), "dd MMM"),
+
+    const sitePts = perfSiteTotals.map(s => ({
+      date: format(parseISO(s.snapshotDate), "dd MMM"),
+      clicks: s.clicks,
+      impressions: s.impressions,
+      ctr: +(s.ctr * 100).toFixed(2),
+      position: s.position,
+    }));
+    const kwPts = Object.entries(kwDm).map(([date, d]) => ({
+      date: format(parseISO(date), "dd MMM"),
       clicks: d.clicks,
       impressions: d.impressions,
       ctr: +(d.ctr / d.n).toFixed(2),
       position: +(d.position / d.n).toFixed(1),
     }));
-  }, [perfSnapshots]);
+    return [...sitePts, ...kwPts].sort((a, b) => a.date.localeCompare(b.date));
+  }, [perfSnapshots, perfSiteTotals]);
 
-  const perfSummary = useMemo(() => ({
-    clicks: perfSnapshots.reduce((a, s) => a + s.clicks, 0),
-    impressions: perfSnapshots.reduce((a, s) => a + s.impressions, 0),
-    ctr: perfSnapshots.length ? +(perfSnapshots.reduce((a, s) => a + s.ctr * 100, 0) / perfSnapshots.length).toFixed(2) : 0,
-    position: perfSnapshots.length ? +(perfSnapshots.reduce((a, s) => a + s.position, 0) / perfSnapshots.length).toFixed(1) : 0,
-  }), [perfSnapshots]);
+  // Metric cards: prefer site-total for clicks/impressions/CTR; keyword data for position
+  const perfSummary = useMemo(() => {
+    if (perfSiteTotals.length > 0) {
+      const latest = perfSiteTotals.sort((a, b) => b.snapshotDate.localeCompare(a.snapshotDate))[0];
+      const avgPos = perfSnapshots.length
+        ? +(perfSnapshots.reduce((a, s) => a + s.position, 0) / perfSnapshots.length).toFixed(1)
+        : 0;
+      return {
+        clicks: latest.clicks,
+        impressions: latest.impressions,
+        ctr: +(latest.ctr * 100).toFixed(2),
+        position: avgPos,
+      };
+    }
+    return {
+      clicks: perfSnapshots.reduce((a, s) => a + s.clicks, 0),
+      impressions: perfSnapshots.reduce((a, s) => a + s.impressions, 0),
+      ctr: perfSnapshots.length ? +(perfSnapshots.reduce((a, s) => a + s.ctr * 100, 0) / perfSnapshots.length).toFixed(2) : 0,
+      position: perfSnapshots.length ? +(perfSnapshots.reduce((a, s) => a + s.position, 0) / perfSnapshots.length).toFixed(1) : 0,
+    };
+  }, [perfSnapshots, perfSiteTotals]);
 
   const form = useForm<AddSnapshotForm>({
     resolver: zodResolver(addSnapshotSchema),
@@ -1190,6 +1235,14 @@ export default function GscDashboard() {
             </p>
           </div>
           <div className="flex items-center gap-2 flex-wrap">
+            {syncStatus?.lastAutoSync && (
+              <span className="text-xs text-gray-400 hidden sm:inline">
+                Last update: {(() => {
+                  const diff = Math.round((Date.now() - new Date(syncStatus.lastAutoSync).getTime()) / 60000);
+                  return diff < 2 ? "just now" : diff < 60 ? `${diff} min ago` : `${Math.round(diff / 60)} hr ago`;
+                })()}
+              </span>
+            )}
             <Button
               size="sm"
               className="bg-green-600 hover:bg-green-700 text-white"

@@ -382,11 +382,40 @@ export async function registerRoutes(
 
   // ── GSC Auto-Sync API ─────────────────────────────────────────────────────────
 
+  // Track the last successful auto-sync time
+  let lastAutoSync: Date | null = null;
+  let autoSyncError: string | null = null;
+
+  async function runAutoSync() {
+    if (!isGscConfigured()) return;
+    try {
+      console.log("[GSC] Auto-sync starting…");
+      const result = await syncGscData(3);
+      if (result.success) {
+        lastAutoSync = new Date();
+        autoSyncError = null;
+        console.log(`[GSC] Auto-sync complete: ${result.synced} keywords synced`);
+      } else {
+        autoSyncError = result.error || "Unknown error";
+        console.error("[GSC] Auto-sync failed:", autoSyncError);
+      }
+    } catch (err: any) {
+      autoSyncError = err?.message || "Unknown error";
+      console.error("[GSC] Auto-sync exception:", autoSyncError);
+    }
+  }
+
+  // Auto-sync on startup (after 3 s to let the server settle), then every 6 hours
+  setTimeout(runAutoSync, 3000);
+  setInterval(runAutoSync, 6 * 60 * 60 * 1000);
+
   app.get("/api/gsc/sync/status", (_req, res) => {
     res.json({
       configured: isGscConfigured(),
+      lastAutoSync: lastAutoSync ? lastAutoSync.toISOString() : null,
+      autoSyncError,
       message: isGscConfigured()
-        ? "GSC service account key is configured. POST /api/gsc/sync to fetch latest data."
+        ? "GSC service account key is configured. Auto-sync runs on startup and every 6 hours."
         : "GSC_SERVICE_ACCOUNT_KEY is not set. Add it as a secret to enable auto-sync.",
     });
   });
@@ -405,6 +434,8 @@ export async function registerRoutes(
         res.status(502).json(result);
         return;
       }
+      lastAutoSync = new Date();
+      autoSyncError = null;
       res.json(result);
     } catch (err: any) {
       console.error("GSC sync error:", err);

@@ -102,9 +102,53 @@ export async function syncGscData(daysBack = 3): Promise<SyncResult> {
     }
   }
 
+  // Also fetch site-level totals (all queries) for accurate headline numbers
+  let siteTotal: { clicks: number; impressions: number; ctr: number; position: number } | null = null;
+  try {
+    const totalRes = await sc.searchanalytics.query({
+      siteUrl: SITE_URL,
+      requestBody: {
+        startDate,
+        endDate,
+        rowLimit: 1,
+        dataState: "all",
+      },
+    });
+    const row = totalRes.data.rows?.[0];
+    if (row) {
+      siteTotal = {
+        clicks: row.clicks ?? 0,
+        impressions: row.impressions ?? 0,
+        ctr: row.ctr ?? 0,
+        position: row.position ?? 0,
+      };
+    }
+  } catch {
+    // non-fatal — keyword data still synced
+  }
+
   const matched: SyncResult["rows"] = [];
   let synced = 0;
   let skipped = 0;
+
+  // Store site-level aggregate as a special entry (overwrites any existing for today)
+  if (siteTotal) {
+    const existing = (await storage.getGscSnapshots()).filter(
+      s => s.snapshotDate === snapshotDate && s.keyword === "__site_total__"
+    );
+    for (const e of existing) await storage.deleteGscSnapshot(e.id);
+
+    await storage.addGscSnapshot({
+      snapshotDate,
+      keyword: "__site_total__",
+      position: Math.round(siteTotal.position * 10) / 10,
+      clicks: Math.round(siteTotal.clicks),
+      impressions: Math.round(siteTotal.impressions),
+      ctr: siteTotal.ctr,
+      page: null,
+      notes: `Site total (all queries) ${startDate} to ${endDate}`,
+    });
+  }
 
   for (const keyword of TARGET_KEYWORDS) {
     const data = kwMap[keyword.toLowerCase()];
