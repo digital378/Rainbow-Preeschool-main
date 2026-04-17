@@ -1238,12 +1238,21 @@ export default function GscDashboard() {
   // Per-keyword totals for the selected period (sums clicks/impressions across
   // the daily snapshots in the window so the Keyword Performance table
   // respects the period selector instead of always showing the 90-day total).
+  // Earliest / latest dates we actually have data for, used to show a real
+  // date range in the "All time" label instead of the vague phrase.
+  const allDataDates = useMemo(() => {
+    const dates = allSnapshots.map(s => s.snapshotDate).filter(Boolean).sort();
+    return { first: dates[0] || null, last: dates[dates.length - 1] || null };
+  }, [allSnapshots]);
+  const allTimeLabel = allDataDates.first && allDataDates.last
+    ? `All time · ${format(parseISO(allDataDates.first), "d MMM yyyy")} – ${format(parseISO(allDataDates.last), "d MMM yyyy")}`
+    : "All time";
   const periodLabel: Record<typeof perfPeriod, string> = {
     latest: "Last 24h",
     "7d": "Last 7 days",
     "28d": "Last 28 days",
     "3mo": "Last 3 months",
-    all: "All time",
+    all: allTimeLabel,
   };
   const perKeywordPeriodTotals = useMemo(() => {
     const out: Record<string, { clicks: number; impressions: number; ctr: number; position: number }> = {};
