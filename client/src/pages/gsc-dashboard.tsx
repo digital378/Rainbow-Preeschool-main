@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { queryClient, apiRequest } from "@/lib/queryClient";
 import { useForm } from "react-hook-form";
@@ -19,7 +19,7 @@ import {
   TrendingUp, TrendingDown, Minus, CheckCircle2, Clock, AlertCircle,
   Lightbulb, ExternalLink, Plus, Trash2, Download, ChevronDown, ChevronUp,
   BarChart2, Search, Zap, RefreshCw, Info, Shield, Target, FileText,
-  MapPin, Star, ArrowRight, Circle, CheckSquare, Square,
+  MapPin, Star, ArrowRight, Circle, CheckSquare, Square, GitCompare,
 } from "lucide-react";
 import type { GscSnapshot } from "@shared/schema";
 
@@ -816,6 +816,227 @@ function KeywordsTab({ snapshots }: { snapshots: GscSnapshot[] }) {
   );
 }
 
+// ─── Data Explorer ────────────────────────────────────────────────────────────
+
+function DataExplorer({ snapshots, onDelete }: { snapshots: GscSnapshot[]; onDelete: (id: number) => void }) {
+  const today = new Date().toISOString().split("T")[0];
+  const [mode, setMode] = useState<"browse" | "compare">("browse");
+  const [fromDate, setFromDate] = useState("");
+  const [toDate, setToDate] = useState("");
+  const [kwFilter, setKwFilter] = useState("");
+  const [compareA, setCompareA] = useState("");
+  const [compareB, setCompareB] = useState("");
+
+  const allDates = useMemo(() =>
+    Array.from(new Set(snapshots.map(s => s.snapshotDate))).sort((a, b) => b.localeCompare(a)),
+    [snapshots]
+  );
+
+  useEffect(() => {
+    if (allDates.length >= 1 && !compareA) setCompareA(allDates[0]);
+    if (allDates.length >= 2 && !compareB) setCompareB(allDates[1]);
+  }, [allDates.length]);
+
+  const subDays = (n: number) => {
+    const d = new Date();
+    d.setDate(d.getDate() - n);
+    return d.toISOString().split("T")[0];
+  };
+
+  const setPreset = (preset: string) => {
+    if (preset === "today") { setFromDate(today); setToDate(today); }
+    else if (preset === "7d") { setFromDate(subDays(7)); setToDate(today); }
+    else if (preset === "30d") { setFromDate(subDays(30)); setToDate(today); }
+    else if (preset === "90d") { setFromDate(subDays(90)); setToDate(today); }
+    else { setFromDate(""); setToDate(""); }
+  };
+
+  const browsed = useMemo(() =>
+    [...snapshots].reverse().filter(s => {
+      const dateOk = (!fromDate || s.snapshotDate >= fromDate) && (!toDate || s.snapshotDate <= toDate);
+      const kwOk = !kwFilter || s.keyword.toLowerCase().includes(kwFilter.toLowerCase());
+      return dateOk && kwOk;
+    }),
+    [snapshots, fromDate, toDate, kwFilter]
+  );
+
+  const { mapA, mapB, compareKeywords } = useMemo(() => {
+    const mapA = new Map(snapshots.filter(s => s.snapshotDate === compareA).map(s => [s.keyword, s]));
+    const mapB = new Map(snapshots.filter(s => s.snapshotDate === compareB).map(s => [s.keyword, s]));
+    const compareKeywords = Array.from(new Set([...mapA.keys(), ...mapB.keys()])).sort();
+    return { mapA, mapB, compareKeywords };
+  }, [snapshots, compareA, compareB]);
+
+  const inputCls = "px-2 py-1.5 text-xs border rounded-md bg-white dark:bg-gray-900 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-red-400";
+  const modeBtnCls = (active: boolean) => `px-3 py-1.5 text-xs rounded-md border font-medium transition-colors flex items-center gap-1.5 ${
+    active ? "bg-red-600 text-white border-red-600" : "text-gray-600 dark:text-gray-400 border-gray-200 dark:border-gray-700 hover:border-red-300"
+  }`;
+
+  return (
+    <Card className="mt-3">
+      <CardContent className="pt-4 space-y-4">
+        {/* Mode toggle */}
+        <div className="flex items-center gap-2 pb-3 border-b">
+          <span className="text-xs font-medium text-gray-500 uppercase tracking-wide mr-1">View</span>
+          <button onClick={() => setMode("browse")} className={modeBtnCls(mode === "browse")}>
+            <Search className="h-3.5 w-3.5" /> Browse
+          </button>
+          <button onClick={() => setMode("compare")} className={modeBtnCls(mode === "compare")}>
+            <GitCompare className="h-3.5 w-3.5" /> Compare
+          </button>
+        </div>
+
+        {/* ── BROWSE MODE ── */}
+        {mode === "browse" && (
+          <div className="space-y-3">
+            <div className="flex flex-wrap gap-2 items-center">
+              <span className="text-xs text-gray-500">From</span>
+              <input type="date" value={fromDate} onChange={e => setFromDate(e.target.value)} className={inputCls} max={today} />
+              <span className="text-xs text-gray-500">to</span>
+              <input type="date" value={toDate} onChange={e => setToDate(e.target.value)} className={inputCls} max={today} />
+              <div className="flex gap-1 ml-1 flex-wrap">
+                {([["Today", "today"], ["7d", "7d"], ["30d", "30d"], ["90d", "90d"], ["All", "all"]] as [string, string][]).map(([label, preset]) => (
+                  <button key={preset} onClick={() => setPreset(preset)}
+                    className="px-2 py-1 text-xs border rounded text-gray-500 dark:text-gray-400 hover:text-red-600 hover:border-red-300 transition-colors">
+                    {label}
+                  </button>
+                ))}
+              </div>
+              {(fromDate || toDate) && (
+                <button onClick={() => { setFromDate(""); setToDate(""); }}
+                  className="text-xs text-gray-400 hover:text-red-500 transition-colors">✕ Clear dates</button>
+              )}
+            </div>
+            <div className="flex gap-2 items-center">
+              <div className="relative flex-1 max-w-xs">
+                <Search className="absolute left-2 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-gray-400 pointer-events-none" />
+                <input type="text" placeholder="Filter by keyword…" value={kwFilter}
+                  onChange={e => setKwFilter(e.target.value)}
+                  className="w-full pl-7 pr-3 py-1.5 text-xs border rounded-md bg-white dark:bg-gray-900 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-red-400" />
+              </div>
+              {kwFilter && (
+                <button onClick={() => setKwFilter("")} className="text-xs text-gray-400 hover:text-red-500 transition-colors">✕ Clear</button>
+              )}
+              <span className="text-xs text-gray-400 ml-auto">{browsed.length} of {snapshots.length} rows</span>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full text-xs">
+                <thead>
+                  <tr className="border-b text-left text-gray-500 uppercase tracking-wide">
+                    {["Date", "Keyword", "Pos", "Clicks", "Impr.", "CTR", "Page", "Notes", ""].map(h => (
+                      <th key={h} className="pb-2 pr-3 font-medium">{h}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-50 dark:divide-gray-800">
+                  {browsed.length === 0 ? (
+                    <tr><td colSpan={9} className="py-6 text-center text-gray-400">No entries match your filter.</td></tr>
+                  ) : browsed.map(s => (
+                    <tr key={s.id} className="hover:bg-gray-50 dark:hover:bg-gray-900">
+                      <td className="py-1.5 pr-3 font-mono text-gray-600 dark:text-gray-400 whitespace-nowrap">{s.snapshotDate}</td>
+                      <td className="py-1.5 pr-3 max-w-[160px] truncate">{s.keyword}</td>
+                      <td className="py-1.5 pr-3 font-mono">{s.position.toFixed(1)}</td>
+                      <td className="py-1.5 pr-3 font-mono">{s.clicks}</td>
+                      <td className="py-1.5 pr-3 font-mono">{s.impressions.toLocaleString()}</td>
+                      <td className="py-1.5 pr-3 font-mono">{(s.ctr * 100).toFixed(2)}%</td>
+                      <td className="py-1.5 pr-3 max-w-[120px] truncate text-gray-400">{s.page ?? "—"}</td>
+                      <td className="py-1.5 pr-3 max-w-[160px] truncate text-gray-400">{s.notes ?? ""}</td>
+                      <td className="py-1.5">
+                        <button onClick={() => onDelete(s.id)} className="text-gray-300 hover:text-red-500 transition-colors" title="Delete">
+                          <Trash2 className="h-3.5 w-3.5" />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+
+        {/* ── COMPARE MODE ── */}
+        {mode === "compare" && (
+          <div className="space-y-3">
+            <div className="flex flex-wrap gap-4 pb-3 border-b items-center">
+              <div className="flex items-center gap-2">
+                <span className="inline-flex items-center px-2 py-0.5 text-xs font-semibold rounded bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300">Period A</span>
+                <select value={compareA} onChange={e => setCompareA(e.target.value)}
+                  className="px-2 py-1.5 text-xs border rounded-md bg-white dark:bg-gray-900 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-400">
+                  {allDates.map(d => <option key={d} value={d}>{d}</option>)}
+                </select>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="inline-flex items-center px-2 py-0.5 text-xs font-semibold rounded bg-orange-100 text-orange-700 dark:bg-orange-900 dark:text-orange-300">Period B</span>
+                <select value={compareB} onChange={e => setCompareB(e.target.value)}
+                  className="px-2 py-1.5 text-xs border rounded-md bg-white dark:bg-gray-900 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-orange-400">
+                  {allDates.map(d => <option key={d} value={d}>{d}</option>)}
+                </select>
+              </div>
+              {compareA !== compareB && (
+                <span className="text-xs text-gray-400 ml-auto">{compareKeywords.length} keywords</span>
+              )}
+            </div>
+            {!compareA || !compareB || compareA === compareB ? (
+              <p className="text-xs text-gray-400 text-center py-6">Select two different snapshot dates to compare.</p>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full text-xs">
+                  <thead>
+                    <tr className="border-b text-left text-gray-500 uppercase tracking-wide">
+                      <th className="pb-2 pr-3 font-medium">Keyword</th>
+                      <th className="pb-2 pr-3 font-medium text-blue-600">Pos A</th>
+                      <th className="pb-2 pr-3 font-medium text-orange-500">Pos B</th>
+                      <th className="pb-2 pr-3 font-medium">Δ Pos</th>
+                      <th className="pb-2 pr-3 font-medium text-blue-600">Clicks A</th>
+                      <th className="pb-2 pr-3 font-medium text-orange-500">Clicks B</th>
+                      <th className="pb-2 pr-3 font-medium">Δ Clicks</th>
+                      <th className="pb-2 pr-3 font-medium text-blue-600">Impr. A</th>
+                      <th className="pb-2 pr-3 font-medium text-orange-500">Impr. B</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-50 dark:divide-gray-800">
+                    {compareKeywords.map(kw => {
+                      const a = mapA.get(kw);
+                      const b = mapB.get(kw);
+                      const dPos = a && b ? +(a.position - b.position).toFixed(1) : null;
+                      const dClk = a && b ? a.clicks - b.clicks : null;
+                      return (
+                        <tr key={kw} className="hover:bg-gray-50 dark:hover:bg-gray-900">
+                          <td className="py-1.5 pr-3 max-w-[180px] truncate font-medium">{kw}</td>
+                          <td className="py-1.5 pr-3 font-mono text-blue-600">{a ? a.position.toFixed(1) : <span className="text-gray-300">—</span>}</td>
+                          <td className="py-1.5 pr-3 font-mono text-orange-500">{b ? b.position.toFixed(1) : <span className="text-gray-300">—</span>}</td>
+                          <td className="py-1.5 pr-3 font-mono font-semibold">
+                            {dPos !== null
+                              ? <span className={dPos < 0 ? "text-green-600" : dPos > 0 ? "text-red-500" : "text-gray-400"}>
+                                  {dPos < 0 ? "▲" : dPos > 0 ? "▼" : "—"} {Math.abs(dPos)}
+                                </span>
+                              : <span className="text-gray-300">—</span>}
+                          </td>
+                          <td className="py-1.5 pr-3 font-mono text-blue-600">{a ? a.clicks : <span className="text-gray-300">—</span>}</td>
+                          <td className="py-1.5 pr-3 font-mono text-orange-500">{b ? b.clicks : <span className="text-gray-300">—</span>}</td>
+                          <td className="py-1.5 pr-3 font-mono font-semibold">
+                            {dClk !== null
+                              ? <span className={dClk > 0 ? "text-green-600" : dClk < 0 ? "text-red-500" : "text-gray-400"}>
+                                  {dClk > 0 ? "+" : ""}{dClk}
+                                </span>
+                              : <span className="text-gray-300">—</span>}
+                          </td>
+                          <td className="py-1.5 pr-3 font-mono text-blue-600">{a ? a.impressions.toLocaleString() : <span className="text-gray-300">—</span>}</td>
+                          <td className="py-1.5 pr-3 font-mono text-orange-500">{b ? b.impressions.toLocaleString() : <span className="text-gray-300">—</span>}</td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        )}
+      </CardContent>
+    </Card>
+  );
+}
+
 // ─── Main Dashboard ───────────────────────────────────────────────────────────
 
 export default function GscDashboard() {
@@ -824,8 +1045,6 @@ export default function GscDashboard() {
   const [showForm, setShowForm] = useState(false);
   const [showApiGuide, setShowApiGuide] = useState(false);
   const [showRawData, setShowRawData] = useState(false);
-  const [rawKwFilter, setRawKwFilter] = useState("");
-  const [rawDateFilter, setRawDateFilter] = useState("all");
   const [selectedKeywords, setSelectedKeywords] = useState<string[]>(PRIMARY_KEYWORDS.slice(0, 4));
 
   const summary = useMemo(() => computeKeywordSummary(snapshots), [snapshots]);
@@ -1268,99 +1487,18 @@ export default function GscDashboard() {
               </div>
             </div>
 
-            {/* Raw Data Table */}
+            {/* Raw Data / Data Explorer */}
             <div>
               <button
                 onClick={() => setShowRawData(v => !v)}
                 className="flex items-center gap-2 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
               >
                 {showRawData ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
-                Raw Snapshot Data ({snapshots.length} entries)
+                Data Explorer ({snapshots.length} entries)
               </button>
-              {showRawData && (() => {
-                const allDates = Array.from(new Set(snapshots.map(s => s.snapshotDate))).sort((a, b) => b.localeCompare(a));
-                const filtered = [...snapshots]
-                  .reverse()
-                  .filter(s =>
-                    (rawDateFilter === "all" || s.snapshotDate === rawDateFilter) &&
-                    (rawKwFilter === "" || s.keyword.toLowerCase().includes(rawKwFilter.toLowerCase()))
-                  );
-                return (
-                  <Card className="mt-3">
-                    <CardContent className="pt-4 space-y-3">
-                      {/* Filter bar */}
-                      <div className="flex flex-wrap gap-2 pb-2 border-b">
-                        <div className="relative flex-1 min-w-[160px]">
-                          <Search className="absolute left-2 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-gray-400 pointer-events-none" />
-                          <input
-                            type="text"
-                            placeholder="Filter by keyword…"
-                            value={rawKwFilter}
-                            onChange={e => setRawKwFilter(e.target.value)}
-                            className="w-full pl-7 pr-3 py-1.5 text-xs border rounded-md bg-white dark:bg-gray-900 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-red-400"
-                          />
-                        </div>
-                        <select
-                          value={rawDateFilter}
-                          onChange={e => setRawDateFilter(e.target.value)}
-                          className="px-2 py-1.5 text-xs border rounded-md bg-white dark:bg-gray-900 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-red-400"
-                        >
-                          <option value="all">All dates</option>
-                          {allDates.map(d => (
-                            <option key={d} value={d}>{d}</option>
-                          ))}
-                        </select>
-                        {(rawKwFilter || rawDateFilter !== "all") && (
-                          <button
-                            onClick={() => { setRawKwFilter(""); setRawDateFilter("all"); }}
-                            className="px-2 py-1.5 text-xs border rounded-md text-gray-500 hover:text-red-600 hover:border-red-300 transition-colors"
-                          >
-                            Clear
-                          </button>
-                        )}
-                        <span className="text-xs text-gray-400 self-center ml-auto">{filtered.length} of {snapshots.length} rows</span>
-                      </div>
-
-                      <div className="overflow-x-auto">
-                        <table className="w-full text-xs">
-                          <thead>
-                            <tr className="border-b text-left text-gray-500 uppercase tracking-wide">
-                              {["Date", "Keyword", "Pos", "Clicks", "Impr.", "CTR", "Page", "Notes", ""].map(h => (
-                                <th key={h} className="pb-2 pr-3 font-medium">{h}</th>
-                              ))}
-                            </tr>
-                          </thead>
-                          <tbody className="divide-y divide-gray-50 dark:divide-gray-800">
-                            {filtered.length === 0 ? (
-                              <tr><td colSpan={9} className="py-6 text-center text-gray-400">No entries match your filter.</td></tr>
-                            ) : filtered.map(s => (
-                              <tr key={s.id} className="hover:bg-gray-50 dark:hover:bg-gray-900">
-                                <td className="py-1.5 pr-3 font-mono text-gray-600 dark:text-gray-400 whitespace-nowrap">{s.snapshotDate}</td>
-                                <td className="py-1.5 pr-3 max-w-[160px] truncate">{s.keyword}</td>
-                                <td className="py-1.5 pr-3 font-mono">{s.position.toFixed(1)}</td>
-                                <td className="py-1.5 pr-3 font-mono">{s.clicks}</td>
-                                <td className="py-1.5 pr-3 font-mono">{s.impressions.toLocaleString()}</td>
-                                <td className="py-1.5 pr-3 font-mono">{(s.ctr * 100).toFixed(2)}%</td>
-                                <td className="py-1.5 pr-3 max-w-[120px] truncate text-gray-400">{s.page ?? "—"}</td>
-                                <td className="py-1.5 pr-3 max-w-[160px] truncate text-gray-400">{s.notes ?? ""}</td>
-                                <td className="py-1.5">
-                                  <button
-                                    onClick={() => deleteMutation.mutate(s.id)}
-                                    className="text-gray-300 hover:text-red-500 transition-colors"
-                                    title="Delete"
-                                  >
-                                    <Trash2 className="h-3.5 w-3.5" />
-                                  </button>
-                                </td>
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                      </div>
-                    </CardContent>
-                  </Card>
-                );
-              })()}
+              {showRawData && (
+                <DataExplorer snapshots={snapshots} onDelete={(id) => deleteMutation.mutate(id)} />
+              )}
             </div>
           </div>
         )}
