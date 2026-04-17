@@ -570,19 +570,16 @@ export function setupRedirects(app: Express) {
       ? req.originalUrl.substring(req.originalUrl.indexOf("?"))
       : "";
 
-    // ── Strip junk query params (amp, noamp, replytocom, utm_source=rss) ─────
+    // ── Strip junk query params (amp, noamp, replytocom) and all UTM params ──
     if (qs) {
       const params = new URLSearchParams(qs.slice(1));
       const junkParams = ["amp", "noamp", "replytocom"];
-      const isRssUtm = params.get("utm_source") === "rss";
-      const hasJunk = junkParams.some(p => params.has(p)) || isRssUtm;
-      if (hasJunk) {
+      const utmParams = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"];
+      const hasJunk = junkParams.some(p => params.has(p));
+      const hasUtm = utmParams.some(p => params.has(p));
+      if (hasJunk || hasUtm) {
         junkParams.forEach(p => params.delete(p));
-        if (isRssUtm) {
-          params.delete("utm_source");
-          params.delete("utm_medium");
-          params.delete("utm_campaign");
-        }
+        utmParams.forEach(p => params.delete(p));
         const cleanQs = params.toString() ? `?${params.toString()}` : "";
         return res.redirect(301, rawPath + cleanQs);
       }
