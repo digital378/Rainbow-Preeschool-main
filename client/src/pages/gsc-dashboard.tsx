@@ -1627,8 +1627,8 @@ export default function GscDashboard() {
                         <th className="pb-2 pr-4 font-medium">Keyword</th>
                         <th className="pb-2 px-3 font-medium text-center">Position</th>
                         <th className="pb-2 px-3 font-medium text-center" title="Projected position in the next 24 hours based on the latest day-over-day trend. Green = improving (moving up), Red = slipping.">Pos in 24h</th>
-                        <th className="pb-2 px-3 font-medium text-right">Clicks</th>
-                        <th className="pb-2 px-3 font-medium text-right">Impr.</th>
+                        <th className="pb-2 px-3 font-medium text-right">Clicks <span className="text-gray-400 normal-case font-normal">({periodLabel[perfPeriod]})</span></th>
+                        <th className="pb-2 px-3 font-medium text-right">Impr. <span className="text-gray-400 normal-case font-normal">({periodLabel[perfPeriod]})</span></th>
                         <th className="pb-2 px-3 font-medium text-center" title="24h impressions change vs previous day">Impr Δ 24h</th>
                         <th className="pb-2 px-3 font-medium text-right">CTR</th>
                         <th className="pb-2 px-3 font-medium text-center">30d Forecast</th>
