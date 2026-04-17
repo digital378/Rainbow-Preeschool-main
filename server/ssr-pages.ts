@@ -731,7 +731,7 @@ const playgroundPages: Record<string, { locality: string }> = {
   "/playgroup-in-dhokali": { locality: "Dhokali" },
 };
 
-const noIndexPages = ["/ad", "/ad-google", "/flyer", "/RIS", "/ris", "/ris-11th"];
+const noIndexPages = ["/ad", "/ad-google", "/flyer", "/RIS", "/ris", "/ris-11th", "/gsc", "/GSC"];
 
 export function getPageSEO(urlPath: string): PageSEOData | null {
   const cleanPath = urlPath.replace(/\/$/, "") || "/";

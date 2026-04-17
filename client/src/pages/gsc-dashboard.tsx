@@ -1040,6 +1040,18 @@ function DataExplorer({ snapshots, onDelete }: { snapshots: GscSnapshot[]; onDel
 // ─── Main Dashboard ───────────────────────────────────────────────────────────
 
 export default function GscDashboard() {
+  useEffect(() => {
+    let tag = document.querySelector<HTMLMetaElement>('meta[name="robots"]');
+    if (!tag) {
+      tag = document.createElement("meta");
+      tag.name = "robots";
+      document.head.appendChild(tag);
+    }
+    const prev = tag.content;
+    tag.content = "noindex, nofollow";
+    return () => { tag!.content = prev; };
+  }, []);
+
   const { data: snapshots = [], isLoading } = useGscData();
   const [activeTab, setActiveTab] = useState<"overview" | "keywords">("overview");
   const [showForm, setShowForm] = useState(false);

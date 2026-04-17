@@ -12,6 +12,10 @@ Disallow: /ris
 Disallow: /ris-11th
 Disallow: /flyer
 
+# ── Internal tools (noindex, don't crawl) ─────────────────────────────────────
+Disallow: /gsc
+Disallow: /GSC
+
 # ── WordPress admin / system paths ───────────────────────────────────────────
 Disallow: /wp-admin
 Disallow: /wp-login.php
