@@ -1228,17 +1228,17 @@ export default function GscDashboard() {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
-      <div className="max-w-7xl mx-auto px-4 py-8 space-y-6">
+      <div className="max-w-7xl mx-auto px-4 py-6 sm:py-8 space-y-4 sm:space-y-6">
 
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <div>
-            <div className="flex items-center gap-2 mb-1">
-              <BarChart2 className="h-6 w-6 text-red-600" />
-              <h1 className="text-2xl font-bold text-gray-900 dark:text-white">SEO Performance Dashboard</h1>
-              <Badge variant="outline" className="text-xs bg-red-50 text-red-700 border-red-200">NOINDEX · Internal Only</Badge>
+          <div className="min-w-0">
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-1 mb-1">
+              <BarChart2 className="h-5 w-5 sm:h-6 sm:w-6 text-red-600 shrink-0" />
+              <h1 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">SEO Performance Dashboard</h1>
+              <Badge variant="outline" className="text-[10px] sm:text-xs bg-red-50 text-red-700 border-red-200">NOINDEX · Internal Only</Badge>
             </div>
-            <p className="text-sm text-gray-500 dark:text-gray-400">
+            <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
               Rainbow Preschools · rainbowpreschools.com · Last snapshot: {latestDate ? format(parseISO(latestDate), "dd MMM yyyy") : "—"}
             </p>
           </div>
@@ -1447,11 +1447,16 @@ export default function GscDashboard() {
                 {/* Performance line chart */}
                 {perfChartData.length > 1 ? (
                   <ResponsiveContainer width="100%" height={220}>
-                    <LineChart data={perfChartData} margin={{ top: 5, right: 40, bottom: 5, left: 0 }}>
+                    <LineChart data={perfChartData} margin={{ top: 5, right: 8, bottom: 5, left: 0 }}>
                       <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-                      <XAxis dataKey="date" tick={{ fontSize: 11 }} />
-                      <YAxis yAxisId="left" tick={{ fontSize: 11 }} width={40} />
-                      <YAxis yAxisId="right" orientation="right" tick={{ fontSize: 11 }} width={50} />
+                      <XAxis
+                        dataKey="date"
+                        tick={{ fontSize: 10 }}
+                        interval="preserveStartEnd"
+                        minTickGap={28}
+                      />
+                      <YAxis yAxisId="left" tick={{ fontSize: 10 }} width={32} />
+                      <YAxis yAxisId="right" orientation="right" tick={{ fontSize: 10 }} width={42} />
                       <Tooltip
                         contentStyle={{ fontSize: 12 }}
                         formatter={(v: number, name: string) =>
@@ -1462,16 +1467,16 @@ export default function GscDashboard() {
                         }
                       />
                       {activeMetrics.has("clicks") && (
-                        <Line yAxisId="left" type="monotone" dataKey="clicks" stroke="#1a73e8" strokeWidth={2} dot={{ r: 4, fill: "#1a73e8" }} activeDot={{ r: 5 }} name="Clicks" />
+                        <Line yAxisId="left" type="monotone" dataKey="clicks" stroke="#1a73e8" strokeWidth={2} dot={perfChartData.length > 30 ? false : { r: 3, fill: "#1a73e8" }} activeDot={{ r: 5 }} name="Clicks" />
                       )}
                       {activeMetrics.has("impressions") && (
-                        <Line yAxisId="right" type="monotone" dataKey="impressions" stroke="#9333ea" strokeWidth={2} dot={{ r: 4, fill: "#9333ea" }} activeDot={{ r: 5 }} name="Impressions" />
+                        <Line yAxisId="right" type="monotone" dataKey="impressions" stroke="#9333ea" strokeWidth={2} dot={perfChartData.length > 30 ? false : { r: 3, fill: "#9333ea" }} activeDot={{ r: 5 }} name="Impressions" />
                       )}
                       {activeMetrics.has("ctr") && (
-                        <Line yAxisId="left" type="monotone" dataKey="ctr" stroke="#059669" strokeWidth={2} strokeDasharray="5 3" dot={{ r: 4, fill: "#059669" }} activeDot={{ r: 5 }} name="CTR %" />
+                        <Line yAxisId="left" type="monotone" dataKey="ctr" stroke="#059669" strokeWidth={2} strokeDasharray="5 3" dot={perfChartData.length > 30 ? false : { r: 3, fill: "#059669" }} activeDot={{ r: 5 }} name="CTR %" />
                       )}
                       {activeMetrics.has("position") && (
-                        <Line yAxisId="right" type="monotone" dataKey="position" stroke="#dc2626" strokeWidth={2} strokeDasharray="5 3" dot={{ r: 4, fill: "#dc2626" }} activeDot={{ r: 5 }} name="Avg Position" />
+                        <Line yAxisId="right" type="monotone" dataKey="position" stroke="#dc2626" strokeWidth={2} strokeDasharray="5 3" dot={perfChartData.length > 30 ? false : { r: 3, fill: "#dc2626" }} activeDot={{ r: 5 }} name="Avg Position" />
                       )}
                     </LineChart>
                   </ResponsiveContainer>
