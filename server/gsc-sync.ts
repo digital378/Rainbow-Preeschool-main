@@ -141,6 +141,49 @@ export async function syncGscData(daysBack = 90): Promise<SyncResult> {
     // non-fatal — keyword data still synced
   }
 
+  // Per-keyword per-day data for the last 7 days. Stored under keyword key
+  // `__daily__:<original keyword>` so they don't pollute the main keyword list.
+  // Used by the dashboard to compute true 24-hour position & impression deltas.
+  try {
+    const dailyStart = format(subDays(new Date(), 8), "yyyy-MM-dd");
+    const dailyRes = await sc.searchanalytics.query({
+      siteUrl: SITE_URL,
+      requestBody: {
+        startDate: dailyStart,
+        endDate,
+        dimensions: ["query", "date"],
+        rowLimit: 5000,
+        dataState: "all",
+      },
+    });
+    const dailyRows = dailyRes.data.rows || [];
+
+    // Wipe existing daily keyword entries in this date range
+    const existingDaily = (await storage.getGscSnapshots()).filter(
+      s => s.keyword.startsWith("__daily__:") && s.snapshotDate >= dailyStart && s.snapshotDate <= endDate
+    );
+    for (const e of existingDaily) await storage.deleteGscSnapshot(e.id);
+
+    const targetSet = new Set(TARGET_KEYWORDS.map(k => k.toLowerCase()));
+    for (const row of dailyRows) {
+      const kw = (row.keys?.[0] || "").toLowerCase().trim();
+      const date = row.keys?.[1];
+      if (!kw || !date || !targetSet.has(kw)) continue;
+      await storage.addGscSnapshot({
+        snapshotDate: date,
+        keyword: `__daily__:${kw}`,
+        position: Math.round((row.position ?? 0) * 10) / 10,
+        clicks: Math.round(row.clicks ?? 0),
+        impressions: Math.round(row.impressions ?? 0),
+        ctr: row.ctr ?? 0,
+        page: null,
+        notes: `Per-keyword per-day from GSC`,
+      });
+    }
+  } catch {
+    // non-fatal — main keyword data still synced
+  }
+
   const matched: SyncResult["rows"] = [];
   let synced = 0;
   let skipped = 0;

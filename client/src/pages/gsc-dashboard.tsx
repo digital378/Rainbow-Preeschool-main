@@ -1065,7 +1065,31 @@ export default function GscDashboard() {
 
   // Separate site-total rows from per-keyword rows
   const siteTotals = allSnapshots.filter(s => s.keyword === "__site_total__");
-  const snapshots = allSnapshots.filter(s => s.keyword !== "__site_total__");
+  const dailyKeywordSnaps = allSnapshots.filter(s => s.keyword.startsWith("__daily__:"));
+  const snapshots = allSnapshots.filter(s => s.keyword !== "__site_total__" && !s.keyword.startsWith("__daily__:"));
+
+  // Compute true 24-hour deltas per keyword from daily snapshots:
+  // pos24h = latest day's position − previous day's position (lower = better)
+  // impr24h = latest day's impressions − previous day's impressions
+  const deltas24h = useMemo(() => {
+    const byKw: Record<string, typeof dailyKeywordSnaps> = {};
+    dailyKeywordSnaps.forEach(s => {
+      const kw = s.keyword.replace(/^__daily__:/, "");
+      (byKw[kw] ||= []).push(s);
+    });
+    const out: Record<string, { posDelta: number | null; imprDelta: number | null; latestDate: string | null }> = {};
+    Object.entries(byKw).forEach(([kw, rows]) => {
+      const sorted = rows.slice().sort((a, b) => a.snapshotDate.localeCompare(b.snapshotDate));
+      const latest = sorted[sorted.length - 1];
+      const prev = sorted.length >= 2 ? sorted[sorted.length - 2] : null;
+      out[kw] = {
+        posDelta: prev ? +(latest.position - prev.position).toFixed(1) : null,
+        imprDelta: prev ? latest.impressions - prev.impressions : null,
+        latestDate: latest?.snapshotDate ?? null,
+      };
+    });
+    return out;
+  }, [dailyKeywordSnaps]);
   const [activeTab, setActiveTab] = useState<"overview" | "keywords">("overview");
   const [showForm, setShowForm] = useState(false);
   const [showApiGuide, setShowApiGuide] = useState(false);
@@ -1463,7 +1487,7 @@ export default function GscDashboard() {
             <Card>
               <CardHeader className="pb-3">
                 <CardTitle className="text-base">Keyword Performance</CardTitle>
-                <CardDescription>Position trends and 30/90-day forecast based on observed rate of change. Lower position = better ranking.</CardDescription>
+                <CardDescription>24-hour deltas vs previous day, plus 30/90-day forecast. Lower position = better ranking.</CardDescription>
               </CardHeader>
               <CardContent className="overflow-x-auto">
                 {isLoading ? (
@@ -1474,16 +1498,21 @@ export default function GscDashboard() {
                       <tr className="border-b text-left text-xs text-gray-500 uppercase tracking-wide">
                         <th className="pb-2 pr-4 font-medium">Keyword</th>
                         <th className="pb-2 px-3 font-medium text-center">Position</th>
-                        <th className="pb-2 px-3 font-medium text-center">Change</th>
+                        <th className="pb-2 px-3 font-medium text-center" title="24h position change vs previous day">Pos Δ 24h</th>
                         <th className="pb-2 px-3 font-medium text-right">Clicks</th>
                         <th className="pb-2 px-3 font-medium text-right">Impr.</th>
+                        <th className="pb-2 px-3 font-medium text-center" title="24h impressions change vs previous day">Impr Δ 24h</th>
                         <th className="pb-2 px-3 font-medium text-right">CTR</th>
                         <th className="pb-2 px-3 font-medium text-center">30d Forecast</th>
                         <th className="pb-2 pl-3 font-medium text-center">90d Forecast</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
-                      {summary.map(({ keyword, latest, posChange, forecast30, forecast90 }) => (
+                      {summary.map(({ keyword, latest, posChange, forecast30, forecast90 }) => {
+                        const d24 = deltas24h[keyword.toLowerCase()];
+                        const pos24 = d24?.posDelta ?? null;
+                        const impr24 = d24?.imprDelta ?? null;
+                        return (
                         <tr key={keyword} className="hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors">
                           <td className="py-3 pr-4">
                             <div className="font-medium text-gray-900 dark:text-white truncate max-w-[200px]">{keyword}</div>
@@ -1497,15 +1526,28 @@ export default function GscDashboard() {
                             </span>
                           </td>
                           <td className="py-3 px-3 text-center">
-                            <div className="flex items-center justify-center gap-1">
-                              <TrendIcon change={posChange} />
-                              <span className={`text-xs font-medium ${posChange < -0.5 ? "text-green-600" : posChange > 0.5 ? "text-red-500" : "text-gray-400"}`}>
-                                {posChange !== 0 ? (posChange > 0 ? "+" : "") + posChange.toFixed(1) : "—"}
-                              </span>
-                            </div>
+                            {pos24 === null ? (
+                              <span className="text-xs text-gray-300">—</span>
+                            ) : (
+                              <div className="flex items-center justify-center gap-1">
+                                <TrendIcon change={pos24} />
+                                <span className={`text-xs font-medium ${pos24 < -0.5 ? "text-green-600" : pos24 > 0.5 ? "text-red-500" : "text-gray-400"}`}>
+                                  {pos24 === 0 ? "0.0" : (pos24 > 0 ? "+" : "") + pos24.toFixed(1)}
+                                </span>
+                              </div>
+                            )}
                           </td>
                           <td className="py-3 px-3 text-right font-mono text-gray-700 dark:text-gray-300">{latest.clicks}</td>
                           <td className="py-3 px-3 text-right font-mono text-gray-700 dark:text-gray-300">{latest.impressions.toLocaleString()}</td>
+                          <td className="py-3 px-3 text-center">
+                            {impr24 === null ? (
+                              <span className="text-xs text-gray-300">—</span>
+                            ) : (
+                              <span className={`text-xs font-medium ${impr24 > 0 ? "text-green-600" : impr24 < 0 ? "text-red-500" : "text-gray-400"}`}>
+                                {impr24 === 0 ? "0" : (impr24 > 0 ? "+" : "") + impr24.toLocaleString()}
+                              </span>
+                            )}
+                          </td>
                           <td className="py-3 px-3 text-right font-mono text-gray-700 dark:text-gray-300">{(latest.ctr * 100).toFixed(1)}%</td>
                           <td className="py-3 px-3 text-center">
                             {forecast30 !== null ? (
@@ -1522,7 +1564,8 @@ export default function GscDashboard() {
                             ) : <span className="text-xs text-gray-300">—</span>}
                           </td>
                         </tr>
-                      ))}
+                        );
+                      })}
                     </tbody>
                   </table>
                 )}
