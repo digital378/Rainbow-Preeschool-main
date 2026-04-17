@@ -1109,7 +1109,7 @@ export default function GscDashboard() {
       const kw = s.keyword.replace(/^__daily__:/, "");
       (byKw[kw] ||= []).push(s);
     });
-    const out: Record<string, { posDelta: number | null; imprDelta: number | null; latestDate: string | null }> = {};
+    const out: Record<string, { posDelta: number | null; perDayRate: number | null; imprDelta: number | null; latestDate: string | null }> = {};
     Object.entries(byKw).forEach(([kw, rows]) => {
       const sorted = rows.slice().sort((a, b) => a.snapshotDate.localeCompare(b.snapshotDate));
       const latest = sorted[sorted.length - 1];
@@ -1119,22 +1119,28 @@ export default function GscDashboard() {
       // changes. Single-day deltas on low-impression keywords are wildly
       // noisy in GSC (a one-impression query in pos 5 vs pos 50 swings the
       // average by ~45), so we always smooth before projecting.
-      let smoothedPos: number | null = null;
+      let rawAvg: number | null = null;
       const window = sorted.slice(-8); // need 8 rows to get 7 deltas
       if (window.length >= 2) {
         const dailyDeltas: number[] = [];
         for (let i = 1; i < window.length; i++) {
           dailyDeltas.push(window[i].position - window[i - 1].position);
         }
-        smoothedPos = dailyDeltas.reduce((a, b) => a + b, 0) / dailyDeltas.length;
-        // Cap projected change at ±3 positions/day so noise can't produce
-        // implausible projections like "+16.9 → #38".
-        smoothedPos = Math.max(-3, Math.min(3, smoothedPos));
-        smoothedPos = +smoothedPos.toFixed(1);
+        rawAvg = dailyDeltas.reduce((a, b) => a + b, 0) / dailyDeltas.length;
       }
 
+      // 24h projection: cap at ±3 positions/day so freak spikes can't
+      // produce silly numbers like "+16.9 → #38".
+      const posDelta = rawAvg === null ? null : +Math.max(-3, Math.min(3, rawAvg)).toFixed(1);
+
+      // Long-horizon (30d / 90d) per-day rate: cap much tighter at
+      // ±0.3 positions/day. Realistic SEO movement rarely exceeds
+      // ~10 positions/month even on actively-optimised keywords.
+      const perDayRate = rawAvg === null ? null : +Math.max(-0.3, Math.min(0.3, rawAvg)).toFixed(2);
+
       out[kw] = {
-        posDelta: smoothedPos,
+        posDelta,
+        perDayRate,
         imprDelta: prev ? latest.impressions - prev.impressions : null,
         latestDate: latest?.snapshotDate ?? null,
       };
@@ -1589,10 +1595,15 @@ export default function GscDashboard() {
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
-                      {summary.map(({ keyword, latest, posChange, forecast30, forecast90 }) => {
+                      {summary.map(({ keyword, latest, posChange }) => {
                         const d24 = deltas24h[keyword.toLowerCase()];
                         const pos24 = d24?.posDelta ?? null;
                         const impr24 = d24?.imprDelta ?? null;
+                        // Long-horizon forecast uses the smoothed per-day rate
+                        // (capped ±0.3/day) and is clamped to a sensible 1-100 range.
+                        const rate = d24?.perDayRate ?? null;
+                        const forecast30 = rate === null ? null : +Math.max(1, Math.min(100, latest.position + rate * 30)).toFixed(1);
+                        const forecast90 = rate === null ? null : +Math.max(1, Math.min(100, latest.position + rate * 90)).toFixed(1);
                         return (
                         <tr key={keyword} className="hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors">
                           <td className="py-3 pr-4">
