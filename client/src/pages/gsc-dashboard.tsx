@@ -556,8 +556,8 @@ const SEO_ACTIONS: { id: string; status: "done" | "pending" | "opportunity"; pri
   {
     id: "request-reindexing",
     status: "pending", priority: "critical", category: "Technical",
-    title: "Request re-indexing of 24 recovered content pages via GSC",
-    detail: "Go to GSC → URL Inspection → paste each URL → Request Indexing. Priority order: /national-symbols-of-india-for-kids, /holi-activities-for-kids, /36-motivational-thoughts-of-the-day-for-kids, /sports-day-activities-for-kindergarten, /pre-kg-age-guide. GSC allows ~10 requests/day.",
+    title: "Request re-indexing of recovered content pages via GSC",
+    detail: "Go to GSC → URL Inspection → paste each URL → Request Indexing. GSC allows ~10 requests/day. PRIORITY 1 (top traffic): /national-symbols-of-india-for-kids, /holi-activities-for-kids, /36-motivational-thoughts-of-the-day-for-kids, /sports-day-activities-for-kindergarten, /pre-kg-age-guide. PRIORITY 2 (commercial): /, /best-preschool-near-me-in-thane, /preschool-near-me, /best-preschool-in-thane, /preschool-in-thane, /playgroup-in-thane, /preschool-admissions, /nursery, /playgroup, /kindergarten. Skip /admissions, /centres, /playschool-near-me, /preschool-vs-daycare, /nursery-school-admission, /preparing-your-child-for-preschool — these now 301-redirect to canonical pages.",
     impact: "Speeds up impressions recovery by 1–2 weeks vs. waiting for natural re-crawl.",
   },
   {

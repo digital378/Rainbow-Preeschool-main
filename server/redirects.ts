@@ -50,6 +50,17 @@ const redirectMap: Record<string, string> = {
   "/admission-procedure": "/preschool-admissions",
   "/admission-procedure/": "/preschool-admissions",
 
+  "/centres": "/",
+  "/centres/": "/",
+  "/playschool-near-me": "/best-preschool-near-me-in-thane",
+  "/playschool-near-me/": "/best-preschool-near-me-in-thane",
+  "/preschool-vs-daycare": "/blog/preschool-vs-daycare-difference",
+  "/preschool-vs-daycare/": "/blog/preschool-vs-daycare-difference",
+  "/nursery-school-admission": "/nursery",
+  "/nursery-school-admission/": "/nursery",
+  "/preparing-your-child-for-preschool": "/preschool-admissions",
+  "/preparing-your-child-for-preschool/": "/preschool-admissions",
+
   "/news": "/blog",
   "/updates": "/blog",
   "/articles": "/blog",
