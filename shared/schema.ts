@@ -1,5 +1,5 @@
 import { sql } from "drizzle-orm";
-import { pgTable, text, varchar, integer, timestamp, boolean } from "drizzle-orm/pg-core";
+import { pgTable, text, varchar, integer, timestamp, boolean, serial, real } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -208,3 +208,20 @@ export const testimonials = [
 ] as const;
 
 export type Testimonial = typeof testimonials[number];
+
+// GSC keyword tracking snapshots
+export const gscSnapshots = pgTable("gsc_snapshots", {
+  id: serial("id").primaryKey(),
+  snapshotDate: text("snapshot_date").notNull(),
+  keyword: text("keyword").notNull(),
+  clicks: integer("clicks").notNull().default(0),
+  impressions: integer("impressions").notNull().default(0),
+  ctr: real("ctr").notNull().default(0),
+  position: real("position").notNull().default(0),
+  page: text("page"),
+  notes: text("notes"),
+});
+
+export const insertGscSnapshotSchema = createInsertSchema(gscSnapshots).omit({ id: true });
+export type InsertGscSnapshot = z.infer<typeof insertGscSnapshotSchema>;
+export type GscSnapshot = typeof gscSnapshots.$inferSelect;

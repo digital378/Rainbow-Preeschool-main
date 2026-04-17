@@ -337,6 +337,48 @@ export async function registerRoutes(
     }
   });
 
+  // ── GSC Dashboard API ────────────────────────────────────────────────────────
+  app.get("/api/gsc/snapshots", async (_req, res) => {
+    try {
+      const snapshots = await storage.getGscSnapshots();
+      res.json(snapshots);
+    } catch (error) {
+      console.error("GSC snapshots error:", error);
+      res.status(500).json({ error: "Failed to fetch snapshots" });
+    }
+  });
+
+  app.post("/api/gsc/snapshots", async (req, res) => {
+    try {
+      const { insertGscSnapshotSchema } = await import("@shared/schema");
+      const parsed = insertGscSnapshotSchema.safeParse(req.body);
+      if (!parsed.success) {
+        res.status(400).json({ error: "Invalid snapshot data", details: parsed.error.issues });
+        return;
+      }
+      const snapshot = await storage.addGscSnapshot(parsed.data);
+      res.status(201).json(snapshot);
+    } catch (error) {
+      console.error("Add GSC snapshot error:", error);
+      res.status(500).json({ error: "Failed to add snapshot" });
+    }
+  });
+
+  app.delete("/api/gsc/snapshots/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id, 10);
+      if (isNaN(id)) {
+        res.status(400).json({ error: "Invalid ID" });
+        return;
+      }
+      await storage.deleteGscSnapshot(id);
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Delete GSC snapshot error:", error);
+      res.status(500).json({ error: "Failed to delete snapshot" });
+    }
+  });
+
   // Test MCB CRM integration endpoint
   app.post("/api/test-mcb", async (req, res) => {
     try {

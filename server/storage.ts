@@ -1,4 +1,4 @@
-import { type User, type InsertUser, type Contact, type InsertContact, type BlogPost, type InsertBlogPost } from "@shared/schema";
+import { type User, type InsertUser, type Contact, type InsertContact, type BlogPost, type InsertBlogPost, type GscSnapshot, type InsertGscSnapshot } from "@shared/schema";
 import { randomUUID } from "crypto";
 
 export interface IStorage {
@@ -13,19 +13,28 @@ export interface IStorage {
   getBlogPosts(): Promise<BlogPost[]>;
   getBlogPostBySlug(slug: string): Promise<BlogPost | undefined>;
   createBlogPost(post: InsertBlogPost): Promise<BlogPost>;
+
+  getGscSnapshots(): Promise<GscSnapshot[]>;
+  addGscSnapshot(snapshot: InsertGscSnapshot): Promise<GscSnapshot>;
+  deleteGscSnapshot(id: number): Promise<void>;
 }
 
 export class MemStorage implements IStorage {
   private users: Map<string, User>;
   private contacts: Map<string, Contact>;
   private blogPosts: Map<string, BlogPost>;
+  private gscSnapshots: Map<number, GscSnapshot>;
+  private gscSnapshotCounter: number;
 
   constructor() {
     this.users = new Map();
     this.contacts = new Map();
     this.blogPosts = new Map();
+    this.gscSnapshots = new Map();
+    this.gscSnapshotCounter = 0;
     
     this.seedBlogPosts();
+    this.seedGscSnapshots();
   }
 
   private seedBlogPosts() {
@@ -137,6 +146,56 @@ export class MemStorage implements IStorage {
     };
     this.blogPosts.set(id, post);
     return post;
+  }
+
+  private seedGscSnapshots() {
+    const seed: Omit<GscSnapshot, "id">[] = [
+      // Feb 4, 2026 — peak traffic period
+      { snapshotDate: "2026-02-04", keyword: "rainbow preschool", clicks: 65, impressions: 4800, ctr: 0.0135, position: 5.48, page: "/", notes: "3-month aggregate Feb period" },
+      { snapshotDate: "2026-02-04", keyword: "rainbow preschool thane", clicks: 48, impressions: 3800, ctr: 0.0126, position: 4.44, page: "/", notes: null },
+      { snapshotDate: "2026-02-04", keyword: "best preschool in thane", clicks: 13, impressions: 1800, ctr: 0.0072, position: 13.64, page: "/best-preschool-near-me-in-thane", notes: null },
+      { snapshotDate: "2026-02-04", keyword: "preschool near me", clicks: 8, impressions: 2800, ctr: 0.0029, position: 21.08, page: "/best-preschool-near-me-in-thane", notes: null },
+      { snapshotDate: "2026-02-04", keyword: "pre kg age", clicks: 19, impressions: 1200, ctr: 0.0158, position: 2.69, page: "/pre-kg-age-guide", notes: null },
+      { snapshotDate: "2026-02-04", keyword: "holi activities for kids", clicks: 184, impressions: 56013, ctr: 0.0033, position: 4.2, page: "/holi-activities-for-kids", notes: "High-impression informational" },
+      { snapshotDate: "2026-02-04", keyword: "national symbols of india for kids", clicks: 104, impressions: 95118, ctr: 0.0011, position: 5.1, page: "/national-symbols-of-india-for-kids", notes: null },
+      // Mar 14, 2026 — impressions cliff begins (redirect issue active)
+      { snapshotDate: "2026-03-14", keyword: "rainbow preschool", clicks: 12, impressions: 2200, ctr: 0.0055, position: 6.0, page: "/", notes: "Impressions cliff — redirects sending bots to /blog" },
+      { snapshotDate: "2026-03-14", keyword: "rainbow preschool thane", clicks: 9, impressions: 1000, ctr: 0.009, position: 5.2, page: "/", notes: null },
+      { snapshotDate: "2026-03-14", keyword: "best preschool in thane", clicks: 5, impressions: 800, ctr: 0.006, position: 14.8, page: "/best-preschool-near-me-in-thane", notes: null },
+      { snapshotDate: "2026-03-14", keyword: "preschool near me", clicks: 3, impressions: 1100, ctr: 0.0027, position: 22.0, page: "/best-preschool-near-me-in-thane", notes: null },
+      { snapshotDate: "2026-03-14", keyword: "pre kg age", clicks: 6, impressions: 450, ctr: 0.0133, position: 3.0, page: "/pre-kg-age-guide", notes: null },
+      { snapshotDate: "2026-03-14", keyword: "holi activities for kids", clicks: 8, impressions: 1200, ctr: 0.0067, position: 4.5, page: "/holi-activities-for-kids", notes: "Deindexing — server was 301-ing to /blog" },
+      { snapshotDate: "2026-03-14", keyword: "national symbols of india for kids", clicks: 4, impressions: 600, ctr: 0.0067, position: 5.8, page: "/national-symbols-of-india-for-kids", notes: null },
+      // Apr 16, 2026 — current (24h snapshot data)
+      { snapshotDate: "2026-04-16", keyword: "rainbow preschool", clicks: 8, impressions: 426, ctr: 0.019, position: 7.44, page: "/", notes: "24h snapshot Apr 16" },
+      { snapshotDate: "2026-04-16", keyword: "rainbow preschool kasarvadavali", clicks: 1, impressions: 20, ctr: 0.05, position: 1.25, page: "/preschool-in-kasarvadavali-thane", notes: "24h" },
+      { snapshotDate: "2026-04-16", keyword: "best preschool in thane", clicks: 1, impressions: 40, ctr: 0.025, position: 16.17, page: "/best-preschool-near-me-in-thane", notes: "24h" },
+      { snapshotDate: "2026-04-16", keyword: "pre kg age", clicks: 1, impressions: 112, ctr: 0.009, position: 2.54, page: "/pre-kg-age-guide", notes: "24h — holding strong" },
+      { snapshotDate: "2026-04-16", keyword: "pre school thane", clicks: 1, impressions: 30, ctr: 0.033, position: 3.6, page: "/", notes: "24h" },
+      { snapshotDate: "2026-04-16", keyword: "preschool near me", clicks: 0, impressions: 100, ctr: 0, position: 23.0, page: "/best-preschool-near-me-in-thane", notes: "24h — redirect fix applied Apr 17" },
+    ];
+
+    seed.forEach(entry => {
+      const id = ++this.gscSnapshotCounter;
+      this.gscSnapshots.set(id, { ...entry, id });
+    });
+  }
+
+  async getGscSnapshots(): Promise<GscSnapshot[]> {
+    return Array.from(this.gscSnapshots.values()).sort((a, b) =>
+      a.snapshotDate.localeCompare(b.snapshotDate) || a.keyword.localeCompare(b.keyword)
+    );
+  }
+
+  async addGscSnapshot(snapshot: InsertGscSnapshot): Promise<GscSnapshot> {
+    const id = ++this.gscSnapshotCounter;
+    const entry: GscSnapshot = { ...snapshot, id, page: snapshot.page ?? null, notes: snapshot.notes ?? null };
+    this.gscSnapshots.set(id, entry);
+    return entry;
+  }
+
+  async deleteGscSnapshot(id: number): Promise<void> {
+    this.gscSnapshots.delete(id);
   }
 }
 

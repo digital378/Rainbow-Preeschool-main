@@ -32,6 +32,7 @@ const AdGoogleLanding = lazy(() => import("@/pages/ad-google-landing"));
 const FlyerLanding = lazy(() => import("@/pages/flyer-landing"));
 const RISLanding = lazy(() => import("@/pages/ris-landing"));
 const RIS11thLanding = lazy(() => import("@/pages/ris-11th-landing"));
+const GscDashboard = lazy(() => import("@/pages/gsc-dashboard"));
 
 // Interactive tools & content pages
 const ReadinessQuiz = lazy(() => import("@/pages/readiness-quiz"));
@@ -313,6 +314,7 @@ function Router() {
         <Route path="/ad" component={AdLanding} />
         <Route path="/ad-google" component={AdGoogleLanding} />
         <Route path="/flyer" component={FlyerLanding} />
+        <Route path="/GSC" component={GscDashboard} />
         <Route path="/RIS" component={RISLanding} />
         <Route path="/ris" component={RISLanding} />
         <Route path="/ris-11th" component={RIS11thLanding} />

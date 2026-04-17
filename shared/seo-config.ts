@@ -18,6 +18,9 @@ export const NOINDEX_SLUGS: string[] = [
   // Programme landing pages (not for organic indexing)
   "/kids-activity-club",
   "/summer-camp",
+
+  // Internal admin tools
+  "/GSC",
 ];
 
 // 301 Redirects for duplicate content consolidation
