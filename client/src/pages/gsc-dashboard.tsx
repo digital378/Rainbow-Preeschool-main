@@ -597,6 +597,63 @@ const SEO_ACTIONS: { id: string; status: "done" | "pending" | "opportunity"; pri
     detail: "Mobile drives 75% of traffic but has lower CTR. Consider updating meta descriptions to be more compelling on mobile SERPs. Rich snippet eligibility (stars, FAQ) can boost mobile CTR without changing position.",
     impact: "0.2% CTR improvement on 299K mobile impressions = ~600 extra clicks/quarter.",
   },
+  // ─── New tasks added 22 Apr 2026 ─────────────────────────────────────────────
+  {
+    id: "gbp-fresh-reviews",
+    status: "pending", priority: "critical", category: "Local SEO",
+    title: "Get 5 fresh Google reviews this week (one per centre)",
+    detail: "Single biggest lever for 'preschool near me' (#41) and 'playschool near me'. Pick 5 happy parents — one from each of the 5 most-visited centres — and WhatsApp them the direct review link for that centre's Google Business Profile. Goal: 5 new reviews in 7 days, then keep adding 3–5 per month. Review velocity (recent + steady, not bulk) is what Google weights highest.",
+    impact: "Each fresh review can move 'near me' position 1–3 spots. 5 reviews could lift 'preschool near me' from #41 to #25–30 within 4 weeks.",
+  },
+  {
+    id: "justdial-sulekha-listings",
+    status: "pending", priority: "high", category: "Local SEO",
+    title: "List all 6 centres on Justdial + Sulekha (12 free listings)",
+    detail: "Justdial.com → 'Add Free Listing' → create one listing per centre with that centre's exact NAP (name + locality suffix, exact address, exact phone). Repeat on Sulekha.com → 'List Your Business'. Use the EXACT same address format the centre uses on its website page and Google Business Profile — even 'Rd' vs 'Road' hurts. Total time: ~2 hours. Cost: free.",
+    impact: "Major NAP citation boost. Expect +5–10 spots on all 'near me' and locality keywords within 4–6 weeks of indexing.",
+  },
+  {
+    id: "gbp-photos-monthly",
+    status: "pending", priority: "high", category: "Local SEO",
+    title: "Add 3 fresh photos per centre to GBP every month",
+    detail: "Each centre's GBP needs new visual signals monthly. Mix: 1 classroom shot, 1 activity in progress, 1 exterior/signage. Avoid stock images — Google detects them and they don't help. Set a monthly recurring reminder. 6 centres × 3 photos = 18 photos/month total.",
+    impact: "Fresh photo signals correlate with map pack inclusion. Centres with monthly photo uploads see 30–50% more GBP impressions vs. dormant ones.",
+  },
+  {
+    id: "gbp-reply-reviews",
+    status: "pending", priority: "medium", category: "Local SEO",
+    title: "Reply to every existing Google review across all 6 centres",
+    detail: "Open each centre's GBP → Reviews tab → reply to ALL reviews (even old / 5-star ones). Personalised reply, mention centre + child by first name if mentioned, 2–3 sentences. For negative reviews: respond calmly, offer to discuss offline. One-time catch-up effort, then keep up with new reviews same week they arrive.",
+    impact: "Engagement signal to Google + improves conversion when prospects read reviews (replies show you care).",
+  },
+  {
+    id: "internal-links-best-thane",
+    status: "opportunity", priority: "high", category: "Content",
+    title: "Add 3 internal links to /best-preschool-in-thane from top blog posts",
+    detail: "/best-preschool-in-thane jumped from #15 to #7 (page 1) — defend and push it to top 3 with internal links. Add a contextual link from these 3 high-traffic blog posts: /national-symbols-of-india-for-kids, /36-motivational-thoughts-of-the-day-for-kids, /sports-day-activities-for-kindergarten. Use anchor text 'best preschool in Thane' (exact match), 'top preschool in Thane' (variation), and 'leading preschool in Thane' (synonym).",
+    impact: "Targeted internal links can push a #7 page to top 3 within 2–4 weeks. Top 3 = 3–5× more clicks than #7.",
+  },
+  {
+    id: "refresh-national-symbols",
+    status: "opportunity", priority: "medium", category: "Content",
+    title: "Refresh /national-symbols-of-india-for-kids before July 2026",
+    detail: "Page slipped from #7.7 → #15 (off page 1) post Republic Day. Independence Day is the next peak (15 Aug). Refresh by mid-July: add downloadable PDF colouring/activity sheet, embed a 30-second symbol overview video, update publish date, add an FAQ section ('Why is the lotus our national flower?', etc.), add 2026 to title. Submit to GSC after refresh.",
+    impact: "Defends a 95K-impression page. A successful refresh should restore page 1 ranking ahead of Aug 15 traffic peak.",
+  },
+  {
+    id: "holi-2027-calendar",
+    status: "opportunity", priority: "low", category: "Content",
+    title: "Calendar-mark Holi 2027 refresh for late February",
+    detail: "/holi-activities-for-kids dropped to #82 — entirely seasonal, normal post-Holi behaviour. Set a calendar reminder for 22 Feb 2027 (3 weeks before Holi 2027) to refresh: update year in title to 2027, add 2–3 new activity ideas, refresh the publish date, add fresh photos. Same pattern works for any festival page.",
+    impact: "Recovers a 56K-impression page automatically each year. Refresh 3 weeks before peak captures the rising-search wave.",
+  },
+  {
+    id: "nap-consistency-audit",
+    status: "pending", priority: "high", category: "Local SEO",
+    title: "Verify NAP consistency for all 6 centres across web",
+    detail: "For each centre, confirm Name + Address + Phone are written EXACTLY the same on: (1) the centre's page on rainbowpreschools.com, (2) its Google Business Profile, (3) Justdial listing, (4) Sulekha listing, (5) Facebook page, (6) Instagram bio. Pick one canonical format per centre and propagate. Common slip-ups: 'Rd' vs 'Road', 'Thane W' vs 'Thane West', different phone formatting (+91 vs 0).",
+    impact: "Google trusts a centre more when its details match across the web. Inconsistencies cap how high a centre can rank locally.",
+  },
 ];
 
 // ─── Checklist storage (localStorage) ────────────────────────────────────────
