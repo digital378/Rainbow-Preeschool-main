@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
-import { Menu, X, ChevronDown, MapPin } from "lucide-react";
+import { Menu, X, ChevronDown, MapPin, Phone } from "lucide-react";
+import { SiWhatsapp } from "react-icons/si";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
 import {
@@ -204,14 +205,35 @@ export function Navigation() {
 
           {/* Right side actions */}
           <div className="flex items-center gap-2">
-            <div className={cn(useTransparentHeader && "[&_button]:text-white [&_button]:hover:text-white [&_button]:hover:bg-white/20")}>
+            <div className={cn("hidden sm:block", useTransparentHeader && "[&_button]:text-white [&_button]:hover:text-white [&_button]:hover:bg-white/20")}>
               <ThemeToggle />
             </div>
-            <Link href="/contact" className="hidden md:block">
-              <Button data-testid="button-contact-cta">
-                Contact Us
-              </Button>
-            </Link>
+
+            {/* Book Visit — Call CTA */}
+            <a
+              href="tel:+918291568972"
+              onClick={() => pushToDataLayer({ event: 'header_book_visit_call', phone: '8291568972' })}
+              data-testid="button-header-book-visit"
+              aria-label="Book a visit — call 8291568972"
+              className="inline-flex items-center gap-1.5 rounded-full bg-amber-400 hover:bg-amber-500 text-slate-900 font-semibold text-xs sm:text-sm px-3 sm:px-4 py-2 shadow-md transition-colors whitespace-nowrap"
+            >
+              <Phone className="h-4 w-4" fill="currentColor" />
+              <span>Book Visit</span>
+            </a>
+
+            {/* Admissions — WhatsApp CTA */}
+            <a
+              href="https://wa.me/918291568972?text=Hi%2C%20I%27d%20like%20to%20enquire%20about%20admissions%20at%20Rainbow%20Preschool."
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => pushToDataLayer({ event: 'header_admissions_whatsapp', phone: '8291568972' })}
+              data-testid="button-header-admissions-whatsapp"
+              aria-label="Admissions enquiry on WhatsApp"
+              className="inline-flex items-center gap-1.5 rounded-full bg-green-500 hover:bg-green-600 text-white font-semibold text-xs sm:text-sm px-3 sm:px-4 py-2 shadow-md transition-colors whitespace-nowrap"
+            >
+              <SiWhatsapp className="h-4 w-4" />
+              <span>Admissions</span>
+            </a>
 
             {/* Mobile menu button */}
             <Button
