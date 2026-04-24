@@ -45,6 +45,34 @@ const KEYWORD_COLORS: Record<string, string> = {
   "national symbols of india for kids": "#db2777",
 };
 
+// ─── 15 Commercial Keywords (Task #26 — weekly top-3 tracker) ────────────────
+// Mapped to 5 destination pages. Order mirrors TARGET_KEYWORDS in
+// server/gsc-sync.ts — keep the two in sync.
+
+type CommercialKeyword = {
+  keyword: string;
+  page: string;
+  pageLabel: string;
+};
+
+const COMMERCIAL_15_KEYWORDS: CommercialKeyword[] = [
+  { keyword: "playschool near me",        page: "/play-school-near-me",             pageLabel: "Play School Near Me" },
+  { keyword: "play school near me",       page: "/play-school-near-me",             pageLabel: "Play School Near Me" },
+  { keyword: "best playschool in thane",  page: "/play-school-near-me",             pageLabel: "Play School Near Me" },
+  { keyword: "best playschool near me",   page: "/play-school-near-me",             pageLabel: "Play School Near Me" },
+  { keyword: "preschool near me",         page: "/best-preschool-near-me-in-thane", pageLabel: "Best Preschool in Thane" },
+  { keyword: "preschool in thane",        page: "/best-preschool-near-me-in-thane", pageLabel: "Best Preschool in Thane" },
+  { keyword: "preschool near me in thane",page: "/best-preschool-near-me-in-thane", pageLabel: "Best Preschool in Thane" },
+  { keyword: "best preschool in thane",   page: "/best-preschool-near-me-in-thane", pageLabel: "Best Preschool in Thane" },
+  { keyword: "best preschool near me",    page: "/best-preschool-near-me-in-thane", pageLabel: "Best Preschool in Thane" },
+  { keyword: "playgroup near me",         page: "/playgroup",                       pageLabel: "Playgroup Programme" },
+  { keyword: "playgroup in thane",        page: "/playgroup",                       pageLabel: "Playgroup Programme" },
+  { keyword: "nursery near me",           page: "/nursery",                         pageLabel: "Nursery Programme" },
+  { keyword: "nursery in thane",          page: "/nursery",                         pageLabel: "Nursery Programme" },
+  { keyword: "kindergarten near me",      page: "/kindergarten",                    pageLabel: "Kindergarten Programme" },
+  { keyword: "best kindergarten in thane",page: "/kindergarten",                    pageLabel: "Kindergarten Programme" },
+];
+
 // ─── Keyword-Page Matrix Data ─────────────────────────────────────────────────
 
 type KwEntry = {
@@ -1212,6 +1240,203 @@ function DataExplorer({ snapshots }: { snapshots: GscSnapshot[] }) {
   );
 }
 
+// ─── 15 Commercial Keywords Panel ─────────────────────────────────────────────
+// Per-keyword view of the 15 commercial terms with current position, 7-day
+// change and the destination URL each one should rank for. Source data is
+// the per-day per-keyword rows (`__daily__:<keyword>`) that the GSC sync
+// writes for the last 8 days; we fall back to the main keyword snapshots
+// when no daily data is available yet.
+
+type Commercial15Row = {
+  keyword: string;
+  page: string;
+  pageLabel: string;
+  position: number | null;
+  change7d: number | null;
+  imprLatest: number;
+  daysOfData: number;
+};
+
+function computeCommercial15Rows(
+  dailySnaps: GscSnapshot[],
+  fallbackPositions: Record<string, { position: number; clicks: number; impressions: number }>,
+): Commercial15Row[] {
+  const byKw: Record<string, GscSnapshot[]> = {};
+  dailySnaps.forEach(s => {
+    const kw = s.keyword.replace(/^__daily__:/, "").toLowerCase();
+    (byKw[kw] ||= []).push(s);
+  });
+
+  return COMMERCIAL_15_KEYWORDS.map(({ keyword, page, pageLabel }) => {
+    const rows = (byKw[keyword] || []).slice().sort((a, b) =>
+      a.snapshotDate.localeCompare(b.snapshotDate)
+    );
+    const latest = rows[rows.length - 1];
+    const oldest = rows[0];
+
+    let position: number | null = latest ? latest.position : null;
+    let change7d: number | null = null;
+    if (latest && oldest && latest !== oldest) {
+      // Lower position = better, so a NEGATIVE change means the keyword improved.
+      change7d = +(latest.position - oldest.position).toFixed(1);
+    }
+
+    // Fall back to the main keyword snapshot (90-day average) when the daily
+    // window has no data — this keeps the panel populated even on a fresh DB.
+    if (position === null) {
+      const fallback = fallbackPositions[keyword.toLowerCase()];
+      if (fallback) position = fallback.position;
+    }
+
+    return {
+      keyword,
+      page,
+      pageLabel,
+      position,
+      change7d,
+      imprLatest: latest?.impressions ?? 0,
+      daysOfData: rows.length,
+    };
+  });
+}
+
+function commercial15ChangeClasses(change: number | null) {
+  if (change === null) return "text-gray-400";
+  // Negative change = position got smaller = improved (good)
+  if (change < -0.5) return "text-green-600 dark:text-green-400";
+  if (change > 0.5) return "text-red-500 dark:text-red-400";
+  return "text-gray-500 dark:text-gray-400";
+}
+
+function Commercial15Panel({ rows }: { rows: Commercial15Row[] }) {
+  // Group by destination page to make the canonical → keyword cluster obvious.
+  const grouped = useMemo(() => {
+    const m = new Map<string, { pageLabel: string; items: Commercial15Row[] }>();
+    rows.forEach(r => {
+      if (!m.has(r.page)) m.set(r.page, { pageLabel: r.pageLabel, items: [] });
+      m.get(r.page)!.items.push(r);
+    });
+    return Array.from(m.entries());
+  }, [rows]);
+
+  const inTop3 = rows.filter(r => r.position !== null && r.position <= 3).length;
+  const onPage1 = rows.filter(r => r.position !== null && r.position > 3 && r.position <= 10).length;
+  const beyond  = rows.filter(r => r.position !== null && r.position > 10).length;
+  const noData  = rows.filter(r => r.position === null).length;
+
+  return (
+    <Card data-testid="card-commercial-15-keywords">
+      <CardHeader className="pb-3">
+        <div className="flex items-start justify-between gap-3 flex-wrap">
+          <div>
+            <CardTitle className="text-base flex items-center gap-2">
+              <Target className="h-4 w-4 text-red-600" />
+              15 Commercial Keywords
+              <Badge variant="outline" className="text-xs font-normal">Weekly tracker</Badge>
+            </CardTitle>
+            <CardDescription className="mt-1">
+              The 15 commercial keywords mapped to their 5 destination pages. Auto-synced every 6 hours from Google Search Console (well above the weekly cadence). 7-day change is the day-over-day delta from the oldest to newest day in the last 8 days of GSC data — green means the keyword improved (lower position = better).
+            </CardDescription>
+          </div>
+          <div className="flex flex-wrap gap-1.5 text-xs">
+            <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-green-50 dark:bg-green-950 text-green-700 dark:text-green-300 border border-green-200 dark:border-green-800" data-testid="stat-commercial15-top3">
+              <CheckCircle2 className="h-3 w-3" /> {inTop3} in top 3
+            </span>
+            <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-blue-50 dark:bg-blue-950 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800" data-testid="stat-commercial15-page1">
+              {onPage1} on page 1
+            </span>
+            <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-yellow-50 dark:bg-yellow-950 text-yellow-700 dark:text-yellow-300 border border-yellow-200 dark:border-yellow-800" data-testid="stat-commercial15-beyond">
+              {beyond} beyond #10
+            </span>
+            {noData > 0 && (
+              <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-gray-700" data-testid="stat-commercial15-nodata">
+                {noData} no data yet
+              </span>
+            )}
+          </div>
+        </div>
+      </CardHeader>
+      <CardContent className="space-y-5">
+        {grouped.map(([page, { pageLabel, items }]) => (
+          <div key={page} data-testid={`group-commercial15-${page}`}>
+            <div className="flex items-center gap-2 mb-2">
+              <h3 className="text-sm font-semibold text-gray-800 dark:text-gray-200">{pageLabel}</h3>
+              <Badge variant="outline" className="text-xs">{items.length} {items.length === 1 ? "keyword" : "keywords"}</Badge>
+              <a
+                href={page}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs text-gray-400 hover:text-red-600 inline-flex items-center gap-1"
+                data-testid={`link-commercial15-page-${page}`}
+              >
+                {page} <ExternalLink className="h-3 w-3" />
+              </a>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b text-left text-xs text-gray-500 uppercase tracking-wide">
+                    <th className="pb-2 pr-4 font-medium">Keyword</th>
+                    <th className="pb-2 px-3 font-medium text-center">Position</th>
+                    <th className="pb-2 px-3 font-medium text-center" title="Change in average position over the last 7 days. Negative (green) = improved.">7-day Δ</th>
+                    <th className="pb-2 px-3 font-medium text-right">Impr (latest day)</th>
+                    <th className="pb-2 pl-3 font-medium">Destination</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
+                  {items.map(row => {
+                    const kwId = row.keyword.replace(/\s+/g, "-");
+                    return (
+                      <tr key={row.keyword} className="hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors" data-testid={`row-commercial15-${kwId}`}>
+                        <td className="py-2.5 pr-4 font-medium text-gray-900 dark:text-white" data-testid={`text-commercial15-keyword-${kwId}`}>
+                          {row.keyword}
+                        </td>
+                        <td className="py-2.5 px-3 text-center" data-testid={`badge-commercial15-position-${kwId}`}>
+                          {row.position === null ? (
+                            <span className="text-xs text-gray-300">no data</span>
+                          ) : (
+                            <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold border ${positionColor(row.position)}`}>
+                              #{row.position.toFixed(1)} <span className="opacity-60 font-normal">{positionLabel(row.position)}</span>
+                            </span>
+                          )}
+                        </td>
+                        <td className="py-2.5 px-3 text-center" data-testid={`text-commercial15-change-${kwId}`}>
+                          {row.change7d === null ? (
+                            <span className="text-xs text-gray-300">—</span>
+                          ) : (
+                            <span className={`inline-flex items-center gap-1 text-xs font-semibold ${commercial15ChangeClasses(row.change7d)}`}>
+                              <TrendIcon change={row.change7d} />
+                              {row.change7d === 0 ? "0" : (row.change7d > 0 ? "+" : "") + row.change7d.toFixed(1)}
+                            </span>
+                          )}
+                        </td>
+                        <td className="py-2.5 px-3 text-right font-mono text-xs text-gray-600 dark:text-gray-400">
+                          {row.imprLatest > 0 ? row.imprLatest.toLocaleString() : "—"}
+                        </td>
+                        <td className="py-2.5 pl-3 text-xs">
+                          <a
+                            href={row.page}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-blue-600 dark:text-blue-400 hover:underline inline-flex items-center gap-1"
+                            data-testid={`link-commercial15-destination-${kwId}`}
+                          >
+                            {row.page} <ExternalLink className="h-3 w-3" />
+                          </a>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        ))}
+      </CardContent>
+    </Card>
+  );
+}
+
 // ─── Main Dashboard ───────────────────────────────────────────────────────────
 
 export default function GscDashboard() {
@@ -1327,8 +1552,63 @@ export default function GscDashboard() {
     return out;
   }, [snapshots]);
 
+  // ─── 15 commercial keywords data (Task #26) ──────────────────────────────
+  // The panel + the synthetic action items below both depend on this.
+  const commercial15Rows = useMemo(
+    () => computeCommercial15Rows(dailyKeywordSnaps, latestKeywordPositions),
+    [dailyKeywordSnaps, latestKeywordPositions]
+  );
+
+  // Synthetic action items for any of the 15 commercial keywords that drop out
+  // of the top-3 SERP. These are merged into the existing SEO_ACTIONS list so
+  // they show up in the dashboard's ACTION_ITEMS section without manual entry.
+  const commercial15Actions = useMemo<typeof SEO_ACTIONS>(() => {
+    return commercial15Rows
+      .filter(r => r.position === null || r.position > 3)
+      .map(r => {
+        const id = `commercial15-${r.keyword.replace(/\s+/g, "-")}`;
+        const isCritical = r.position !== null && r.position > 20;
+        const isHigh = r.position !== null && r.position > 10 && r.position <= 20;
+        const priority = r.position === null ? "medium" : isCritical ? "critical" : isHigh ? "high" : "medium";
+
+        if (r.position === null) {
+          return {
+            id,
+            trackedKeyword: r.keyword,
+            status: "opportunity" as const,
+            priority,
+            category: "Content",
+            title: `"${r.keyword}" — outside top 3 (no GSC data yet)`,
+            detail: `Target page: ${r.page} (${r.pageLabel}). The keyword has no impressions in the last 90 days, so we have nothing to track yet. Add an exact-match H2 + a parent-intent FAQ entry on ${r.page} using this exact phrase, then request indexing in GSC. Once Google starts showing the page for this query, the row above will populate and this action item will recompute.`,
+            impact: "Indexing the target phrase is the prerequisite to ranking for it.",
+          };
+        }
+
+        const posStr = r.position.toFixed(1);
+        const trend = r.change7d === null
+          ? ""
+          : r.change7d < -0.5
+            ? ` Improving (${r.change7d.toFixed(1)} over 7d) — keep pushing.`
+            : r.change7d > 0.5
+              ? ` Slipping (+${r.change7d.toFixed(1)} over 7d) — defend immediately.`
+              : ` Holding steady over 7d.`;
+
+        return {
+          id,
+          trackedKeyword: r.keyword,
+          status: "opportunity" as const,
+          priority,
+          category: "Content",
+          title: `"${r.keyword}" — outside top 3 (#${posStr})`,
+          detail: `Target page: ${r.page} (${r.pageLabel}). Currently ranking #${posStr}, outside the top-3 goal for the weekly tracker.${trend} Push it inside top-3 by: (1) confirming the exact phrase appears as an H2 + FAQ entry on ${r.page}, (2) adding 1 internal link from a top-traffic blog post using this phrase as anchor text, (3) bumping the EEATSignals lastUpdated on the target page after a real copy change.`,
+          impact: "Top-3 SERP placement captures ~75% of clicks for the keyword. Each spot recovered here directly grows admissions enquiries.",
+        };
+      });
+  }, [commercial15Rows]);
+
   const dynamicActions = useMemo(() => {
-    return SEO_ACTIONS.map(a => {
+    const merged = [...SEO_ACTIONS, ...commercial15Actions];
+    return merged.map(a => {
       let status = a.status;
       let title = a.title;
       let detail = a.detail;
@@ -1336,18 +1616,24 @@ export default function GscDashboard() {
       if (a.trackedKeyword && latestKeywordPositions[a.trackedKeyword]) {
         const { position } = latestKeywordPositions[a.trackedKeyword];
         const posStr = position.toFixed(1);
-        title = `"${a.trackedKeyword}" — sitting at position ${posStr}`;
-        // Auto-promote to done if it's broken into the top 10.
-        if (position > 0 && position <= 10) {
+        // commercial15-* actions track a stricter top-3 goal. Everything
+        // else uses the legacy top-10 promotion threshold.
+        const isCommercial15 = a.id.startsWith("commercial15-");
+        const threshold = isCommercial15 ? 3 : 10;
+        const tierLabel = isCommercial15 ? "top 3" : "top 10";
+        title = isCommercial15
+          ? a.title // keep "outside top 3 (#X)" framing for commercial15 items
+          : `"${a.trackedKeyword}" — sitting at position ${posStr}`;
+        if (position > 0 && position <= threshold) {
           status = "done";
-          detail = `Auto-promoted to Completed — latest GSC position is ${posStr} (top 10). ${a.detail}`;
+          detail = `Auto-promoted to Completed — latest GSC position is ${posStr} (${tierLabel}). ${a.detail}`;
         }
       }
       // Manual override always wins.
       if (actionOverrides[a.id] === "done") status = "done";
       return { ...a, status, title, detail };
     });
-  }, [latestKeywordPositions, actionOverrides]);
+  }, [latestKeywordPositions, actionOverrides, commercial15Actions]);
 
   const latestDate = snapshots.length ? snapshots[snapshots.length - 1].snapshotDate : null;
   const latestSnapshots = latestDate ? snapshots.filter(s => s.snapshotDate === latestDate) : [];
@@ -1663,6 +1949,10 @@ export default function GscDashboard() {
         {/* ── OVERVIEW TAB ── */}
         {activeTab === "overview" && (
           <div className="space-y-6">
+            {/* 15 Commercial Keywords (Task #26) — top of overview because
+                this is the team's weekly top-3 watch list. */}
+            <Commercial15Panel rows={commercial15Rows} />
+
             {/* ── Performance Overview ── */}
             <Card>
               <CardContent className="pt-5 pb-5">

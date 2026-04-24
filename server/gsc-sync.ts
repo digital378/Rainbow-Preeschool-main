@@ -5,17 +5,25 @@ import { format, subDays } from "date-fns";
 const SITE_URL = "sc-domain:rainbowpreschools.com";
 
 const TARGET_KEYWORDS = [
+  // ── 15 commercial keywords (Task #26 — weekly top-3 tracker) ───────────────
+  // Mapped to 5 destination pages. Order mirrors COMMERCIAL_15_KEYWORDS in
+  // client/src/pages/gsc-dashboard.tsx — keep the two in sync.
   "playschool near me",
   "play school near me",
-  "preschool near me",
-  "best preschool in thane",
   "best playschool in thane",
+  "best playschool near me",
+  "preschool near me",
+  "preschool in thane",
+  "preschool near me in thane",
+  "best preschool in thane",
+  "best preschool near me",
   "playgroup near me",
   "playgroup in thane",
   "nursery near me",
   "nursery in thane",
   "kindergarten near me",
-  "preschool in thane",
+  "best kindergarten in thane",
+  // ── Other tracked keywords (brand, informational, seasonal) ────────────────
   "pre school thane",
   "pre kg age",
   "rainbow preschool",
