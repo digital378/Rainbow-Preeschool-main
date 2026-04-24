@@ -169,6 +169,31 @@ export async function syncGscData(daysBack = 90): Promise<SyncResult> {
     });
     const dailyRows = dailyRes.data.rows || [];
 
+    // Preserve any human-authored notes on existing __daily__ rows before the
+    // range is wiped + reinserted. The dashboard's 90-day modal lets the team
+    // annotate a specific day (e.g. "redirect map removed today"), and those
+    // notes live on the same rows GSC also writes — without this preservation
+    // step the next 6-hour auto-sync would silently overwrite them with the
+    // default "Per-keyword per-day from GSC" string.
+    const SYNC_DEFAULT_NOTE = "Per-keyword per-day from GSC";
+    const existingNotes = new Map<string, string>();
+    try {
+      const existing = await storage.getGscSnapshots();
+      for (const s of existing) {
+        if (
+          s.keyword.startsWith("__daily__:") &&
+          s.snapshotDate >= dailyStart &&
+          s.snapshotDate <= endDate &&
+          s.notes &&
+          s.notes !== SYNC_DEFAULT_NOTE
+        ) {
+          existingNotes.set(`${s.snapshotDate}::${s.keyword}`, s.notes);
+        }
+      }
+    } catch {
+      // non-fatal — worst case we lose any user notes for this sync window
+    }
+
     // Build the full set of daily per-keyword rows, then atomically replace the
     // range in one bulk delete + bulk insert. Previously this loop fired ~1,300
     // individual delete + insert calls every 6 hours; now it's a single sweep.
@@ -178,15 +203,17 @@ export async function syncGscData(daysBack = 90): Promise<SyncResult> {
       const kw = (row.keys?.[0] || "").toLowerCase().trim();
       const date = row.keys?.[1];
       if (!kw || !date || !targetSet.has(kw)) continue;
+      const keywordKey = `__daily__:${kw}`;
+      const preservedNote = existingNotes.get(`${date}::${keywordKey}`);
       dailyKwRows.push({
         snapshotDate: date,
-        keyword: `__daily__:${kw}`,
+        keyword: keywordKey,
         position: Math.round((row.position ?? 0) * 10) / 10,
         clicks: Math.round(row.clicks ?? 0),
         impressions: Math.round(row.impressions ?? 0),
         ctr: row.ctr ?? 0,
         page: null,
-        notes: `Per-keyword per-day from GSC`,
+        notes: preservedNote ?? SYNC_DEFAULT_NOTE,
       });
     }
     await storage.replaceGscSnapshotsInRange("__daily__:", dailyStart, endDate, dailyKwRows);

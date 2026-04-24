@@ -1,6 +1,7 @@
 import { useState, useMemo, useEffect, useRef } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { queryClient, apiRequest } from "@/lib/queryClient";
+import { useToast } from "@/hooks/use-toast";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -23,6 +24,7 @@ import {
   Lightbulb, ExternalLink, Plus, Download, ChevronDown, ChevronUp,
   BarChart2, Search, Zap, RefreshCw, Info, Shield, Target, FileText,
   MapPin, Star, ArrowRight, Circle, CheckSquare, Square, GitCompare,
+  Pencil, X, Save, Loader2, MessageSquarePlus,
 } from "lucide-react";
 import type { GscSnapshot } from "@shared/schema";
 
@@ -1252,6 +1254,7 @@ function DataExplorer({ snapshots }: { snapshots: GscSnapshot[] }) {
 // sparkline rendered alongside the 7-day delta.
 
 type Commercial15HistoryPoint = {
+  id: number;
   date: string;
   position: number;
   impressions: number;
@@ -1314,6 +1317,7 @@ function computeCommercial15Rows(
     const history: Commercial15HistoryPoint[] = rows
       .filter(r => r.snapshotDate >= cutoff)
       .map(r => ({
+        id: r.id,
         date: r.snapshotDate,
         position: r.position,
         impressions: r.impressions,
@@ -1457,9 +1461,51 @@ function Commercial15ChartModal({
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }) {
+  // Inline note editor state. We track which day the user is editing by date
+  // (one editor at a time) and the current draft text. The editor is opened
+  // by clicking a day on the chart, the "Add note" button, or the pencil
+  // icon next to an existing note in the list. Reset whenever the active row
+  // or modal-open state changes so a stale draft never leaks across keywords.
+  const [editingDate, setEditingDate] = useState<string | null>(null);
+  const [draft, setDraft] = useState("");
+  const editorRef = useRef<HTMLTextAreaElement | null>(null);
+  const { toast } = useToast();
+
+  useEffect(() => {
+    setEditingDate(null);
+    setDraft("");
+  }, [row?.keyword, open]);
+
+  useEffect(() => {
+    if (editingDate && editorRef.current) {
+      editorRef.current.focus();
+    }
+  }, [editingDate]);
+
+  const noteMutation = useMutation({
+    mutationFn: async ({ id, notes }: { id: number; notes: string | null }) => {
+      const res = await apiRequest("PATCH", `/api/gsc/snapshots/${id}`, { notes });
+      return res.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/gsc/snapshots"] });
+      setEditingDate(null);
+      setDraft("");
+      toast({ title: "Note saved", description: "The annotation will appear on the chart." });
+    },
+    onError: (err: any) => {
+      toast({
+        title: "Couldn't save note",
+        description: err?.message || "Please try again.",
+        variant: "destructive",
+      });
+    },
+  });
+
   if (!row) return null;
   const kwId = row.keyword.replace(/\s+/g, "-");
   const data = row.history.map(h => ({
+    id: h.id,
     date: h.date,
     label: format(parseISO(h.date), "d MMM"),
     position: h.position,
@@ -1469,6 +1515,32 @@ function Commercial15ChartModal({
     note: h.note ?? null,
   }));
   const annotations = data.filter(d => d.note && d.note.trim().length > 0);
+
+  const editingPoint = editingDate ? data.find(d => d.date === editingDate) ?? null : null;
+
+  const openEditor = (date: string) => {
+    const point = data.find(d => d.date === date);
+    if (!point) return;
+    setEditingDate(date);
+    setDraft(point.note ?? "");
+  };
+
+  const handleChartClick = (e: any) => {
+    const label = e?.activeLabel;
+    if (typeof label === "string" && data.some(d => d.date === label)) {
+      openEditor(label);
+    }
+  };
+
+  const handleSave = () => {
+    if (!editingPoint) return;
+    noteMutation.mutate({ id: editingPoint.id, notes: draft });
+  };
+
+  const handleClear = () => {
+    if (!editingPoint) return;
+    noteMutation.mutate({ id: editingPoint.id, notes: null });
+  };
 
   // Reversed Y axis with a small pad so flat trends still read as intentional.
   const positions = data.map(d => d.position);
@@ -1519,11 +1591,23 @@ function Commercial15ChartModal({
           </div>
         ) : (
           <>
-            <div className="h-[360px] w-full" data-testid={`chart-modal-${kwId}`}>
+            <div
+              className="text-xs text-gray-500 dark:text-gray-400 -mt-1 flex items-center gap-1.5"
+              data-testid={`hint-modal-annotate-${kwId}`}
+            >
+              <MessageSquarePlus className="h-3.5 w-3.5 text-amber-500" />
+              <span>Click any day on the chart to add or edit a note for that date.</span>
+            </div>
+            <div
+              className="h-[360px] w-full cursor-pointer"
+              data-testid={`chart-modal-${kwId}`}
+              title="Click a day to add a note"
+            >
               <ResponsiveContainer width="100%" height="100%">
                 <ComposedChart
                   data={data}
                   margin={{ top: 12, right: 16, bottom: 8, left: 0 }}
+                  onClick={handleChartClick}
                 >
                   <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" className="dark:stroke-gray-800" />
                   <XAxis
@@ -1601,6 +1685,88 @@ function Commercial15ChartModal({
               </ResponsiveContainer>
             </div>
 
+            {editingPoint && (
+              <div
+                className="mt-2 border-t pt-3 space-y-2"
+                data-testid={`editor-modal-note-${kwId}`}
+              >
+                <div className="flex items-center justify-between gap-2">
+                  <div className="text-xs font-semibold text-gray-700 dark:text-gray-300 flex items-center gap-2">
+                    <MessageSquarePlus className="h-3.5 w-3.5 text-amber-500" />
+                    <span>
+                      {editingPoint.note ? "Edit note for" : "Add note for"}{" "}
+                      <span
+                        className="font-mono text-amber-600 dark:text-amber-400"
+                        data-testid={`text-editor-date-${kwId}`}
+                      >
+                        {format(parseISO(editingPoint.date), "EEE d MMM yyyy")}
+                      </span>
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => { setEditingDate(null); setDraft(""); }}
+                    className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 p-0.5 rounded"
+                    aria-label="Close note editor"
+                    data-testid={`button-cancel-note-${kwId}`}
+                  >
+                    <X className="h-3.5 w-3.5" />
+                  </button>
+                </div>
+                <Textarea
+                  ref={editorRef}
+                  value={draft}
+                  onChange={(e) => setDraft(e.target.value)}
+                  placeholder="e.g. redirect map removed today, blog migration shipped, GBP categories updated…"
+                  rows={2}
+                  maxLength={500}
+                  className="text-sm resize-none"
+                  data-testid={`textarea-note-${kwId}`}
+                  onKeyDown={(e) => {
+                    if ((e.metaKey || e.ctrlKey) && e.key === "Enter") {
+                      e.preventDefault();
+                      if (draft.trim().length > 0 && !noteMutation.isPending) handleSave();
+                    }
+                  }}
+                />
+                <div className="flex items-center justify-between gap-2">
+                  <span className="text-[11px] text-gray-400">
+                    {draft.length}/500 · ⌘/Ctrl+Enter to save
+                  </span>
+                  <div className="flex items-center gap-2">
+                    {editingPoint.note && (
+                      <Button
+                        type="button"
+                        size="sm"
+                        variant="outline"
+                        onClick={handleClear}
+                        disabled={noteMutation.isPending}
+                        className="h-7 text-xs"
+                        data-testid={`button-clear-note-${kwId}`}
+                      >
+                        Clear note
+                      </Button>
+                    )}
+                    <Button
+                      type="button"
+                      size="sm"
+                      onClick={handleSave}
+                      disabled={noteMutation.isPending || draft.trim().length === 0}
+                      className="h-7 text-xs"
+                      data-testid={`button-save-note-${kwId}`}
+                    >
+                      {noteMutation.isPending ? (
+                        <Loader2 className="h-3 w-3 mr-1 animate-spin" />
+                      ) : (
+                        <Save className="h-3 w-3 mr-1" />
+                      )}
+                      Save
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            )}
+
             {annotations.length > 0 && (
               <div
                 className="mt-2 border-t pt-3 space-y-1.5"
@@ -1611,11 +1777,20 @@ function Commercial15ChartModal({
                 </div>
                 <ul className="text-xs text-gray-600 dark:text-gray-400 space-y-1">
                   {annotations.map(a => (
-                    <li key={a.date} className="flex gap-2">
+                    <li key={a.date} className="flex gap-2 items-start group">
                       <span className="font-mono text-amber-600 dark:text-amber-400 shrink-0">
                         {format(parseISO(a.date), "d MMM")}
                       </span>
-                      <span>{a.note}</span>
+                      <span className="flex-1">{a.note}</span>
+                      <button
+                        type="button"
+                        onClick={() => openEditor(a.date)}
+                        className="text-gray-300 hover:text-amber-600 dark:hover:text-amber-400 opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity"
+                        aria-label={`Edit note for ${format(parseISO(a.date), "d MMM")}`}
+                        data-testid={`button-edit-note-${kwId}-${a.date}`}
+                      >
+                        <Pencil className="h-3 w-3" />
+                      </button>
                     </li>
                   ))}
                 </ul>

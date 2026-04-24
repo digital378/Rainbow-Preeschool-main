@@ -365,6 +365,40 @@ export async function registerRoutes(
     }
   });
 
+  // Update a single GSC snapshot's note. Used by the 90-day commercial chart
+  // modal so the team can annotate spikes/dips against the day they happened.
+  // Notes are limited to 500 chars to keep the modal list readable; pass an
+  // empty string (or null) to clear an existing note.
+  app.patch("/api/gsc/snapshots/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id, 10);
+      if (isNaN(id)) {
+        res.status(400).json({ error: "Invalid ID" });
+        return;
+      }
+      const schema = z.object({
+        notes: z.string().max(500).nullable(),
+      });
+      const parsed = schema.safeParse(req.body);
+      if (!parsed.success) {
+        res.status(400).json({ error: "Invalid note payload", details: parsed.error.issues });
+        return;
+      }
+      const cleaned = parsed.data.notes && parsed.data.notes.trim().length > 0
+        ? parsed.data.notes.trim()
+        : null;
+      const updated = await storage.updateGscSnapshotNotes(id, cleaned);
+      if (!updated) {
+        res.status(404).json({ error: "Snapshot not found" });
+        return;
+      }
+      res.json(updated);
+    } catch (error) {
+      console.error("Update GSC snapshot note error:", error);
+      res.status(500).json({ error: "Failed to update snapshot note" });
+    }
+  });
+
   app.delete("/api/gsc/snapshots/:id", async (req, res) => {
     try {
       const id = parseInt(req.params.id, 10);

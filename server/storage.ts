@@ -20,6 +20,7 @@ export interface IStorage {
   getGscSnapshots(): Promise<GscSnapshot[]>;
   addGscSnapshot(snapshot: InsertGscSnapshot): Promise<GscSnapshot>;
   deleteGscSnapshot(id: number): Promise<void>;
+  updateGscSnapshotNotes(id: number, notes: string | null): Promise<GscSnapshot | undefined>;
   replaceGscSnapshotsInRange(
     keywordPrefix: string,
     startDate: string,
@@ -248,6 +249,14 @@ export class MemStorage implements IStorage {
     this.gscSnapshots.delete(id);
   }
 
+  async updateGscSnapshotNotes(id: number, notes: string | null): Promise<GscSnapshot | undefined> {
+    const existing = this.gscSnapshots.get(id);
+    if (!existing) return undefined;
+    const updated: GscSnapshot = { ...existing, notes };
+    this.gscSnapshots.set(id, updated);
+    return updated;
+  }
+
   async replaceGscSnapshotsInRange(
     keywordPrefix: string,
     startDate: string,
@@ -384,6 +393,17 @@ export class DbBackedStorage extends MemStorage {
     await this.ensureSeeded();
     const db = getDb();
     await db.delete(gscSnapshots).where(eq(gscSnapshots.id, id));
+  }
+
+  async updateGscSnapshotNotes(id: number, notes: string | null): Promise<GscSnapshot | undefined> {
+    await this.ensureSeeded();
+    const db = getDb();
+    const [updated] = await db
+      .update(gscSnapshots)
+      .set({ notes })
+      .where(eq(gscSnapshots.id, id))
+      .returning();
+    return updated;
   }
 
   async replaceGscSnapshotsInRange(
