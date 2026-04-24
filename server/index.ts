@@ -7,7 +7,8 @@ import { setupBotSSR } from "./bot-ssr";
 import { createServer } from "http";
 import path from "path";
 import fs from "fs";
-import { buildSitemapXml } from "@shared/sitemap-entries";
+import { buildSitemapXml, blogPostSitemapEntry } from "@shared/sitemap-entries";
+import { storage } from "./storage";
 
 const app = express();
 
@@ -38,12 +39,26 @@ app.use(express.urlencoded({ extended: false }));
 // `LAST_UPDATED_ISO` in `shared/site-freshness.ts`. Bumping that one constant
 // during the monthly refresh updates the visible byline, the Article JSON-LD
 // dateModified AND the sitemap together — no static .xml edit required.
+//
+// Blog posts (/blog/:slug) are pulled live from `storage.getBlogPosts()` and
+// merged into the curated `SITEMAP_ENTRIES` array, so publishing a new post
+// makes it appear in /sitemap.xml on the next request without any code edit.
+//
 // (Must be registered before redirects + the static middleware so it always
 // wins.)
-app.get("/sitemap.xml", (_req, res) => {
+app.get("/sitemap.xml", async (_req, res) => {
   res.setHeader("Content-Type", "application/xml; charset=utf-8");
   res.setHeader("Cache-Control", "public, max-age=3600");
-  res.send(buildSitemapXml());
+  try {
+    const posts = await storage.getBlogPosts();
+    const blogEntries = posts.map((post) => blogPostSitemapEntry(post.slug));
+    res.send(buildSitemapXml({ extraEntries: blogEntries }));
+  } catch (err) {
+    // If the storage layer ever fails, still serve the curated sitemap so we
+    // never 5xx Google's crawler. The non-blog URLs remain discoverable.
+    console.error("Failed to load blog posts for /sitemap.xml:", err);
+    res.send(buildSitemapXml());
+  }
 });
 
 // Serve llms.txt for AI search engines (must be before redirects)

@@ -1,14 +1,20 @@
 // ─── Sitemap entries — single source of truth ────────────────────────────────
-// All indexable URLs that should appear in /sitemap.xml live here.
+// All indexable URLs that should appear in /sitemap.xml live here, EXCEPT for
+// `/blog/:slug` posts. Those are pulled live from `storage.getBlogPosts()` by
+// the dynamic route in `server/index.ts` so newly published posts appear in
+// /sitemap.xml automatically — no edit to this file required when the team
+// publishes a new blog post.
 //
 // The runtime `<lastmod>` is sourced from `LAST_UPDATED_ISO` in
 // `shared/site-freshness.ts`, so bumping the monthly freshness constant also
 // refreshes every entry in the generated sitemap automatically — no separate
 // edit to a static .xml file is required.
 //
-// The dynamic route in `server/index.ts` calls `buildSitemapXml()` to render
-// the XML on demand. The optional `scripts/generate-sitemap.ts` writer uses
-// the same builder so any historical "dump to disk" workflow stays in sync.
+// The dynamic route in `server/index.ts` calls `buildSitemapXml({ extraEntries })`
+// to render the XML on demand, passing in the live blog-post entries. The
+// optional `scripts/generate-sitemap.ts` writer uses the same builder so any
+// historical "dump to disk" workflow stays in sync (note: that script does not
+// have DB access, so the dump only contains the curated non-blog URLs).
 
 import { LAST_UPDATED_ISO } from "./site-freshness";
 import { PREFERRED_DOMAIN } from "./seo-config";
@@ -28,9 +34,12 @@ export interface SitemapEntry {
   changefreq: SitemapChangefreq;
 }
 
-// NOTE: when adding/removing URLs, keep this list — and ONLY this list — in
-// sync. The dynamic /sitemap.xml route reads from here, so any addition is
-// served immediately (no static-file edit needed).
+// NOTE: when adding/removing non-blog URLs, keep this list — and ONLY this
+// list — in sync. The dynamic /sitemap.xml route reads from here, so any
+// addition is served immediately (no static-file edit needed).
+//
+// Blog posts (/blog/:slug) are intentionally NOT listed here; they are merged
+// in at request time from `storage.getBlogPosts()` by the route handler.
 export const SITEMAP_ENTRIES: SitemapEntry[] = [
   // ── CORE PAGES ──────────────────────────────────────────
   { url: "/", priority: 1.0, changefreq: "weekly" },
@@ -69,23 +78,21 @@ export const SITEMAP_ENTRIES: SitemapEntry[] = [
   { url: "/playgroup-in-dhokali", priority: 0.85, changefreq: "monthly" },
 
   // ── BLOG POSTS (under /blog/:slug) ───────────────────────
-  { url: "/blog/what-to-ask-during-a-tour-of-a-preschool-in-thane", priority: 0.6, changefreq: "monthly" },
-  { url: "/blog/understanding-the-importance-of-preschool-in-early-childhood-development", priority: 0.6, changefreq: "monthly" },
-  { url: "/blog/how-play-based-learning-shapes-young-minds", priority: 0.6, changefreq: "monthly" },
+  // Blog URLs are pulled live from `storage.getBlogPosts()` by the
+  // /sitemap.xml route in `server/index.ts` and merged into the output, so
+  // publishing a new post via the admin/API automatically adds it to the
+  // next /sitemap.xml response — there is no need to add a row here for
+  // posts that live in the DB.
+  //
+  // The handful of entries below are FALLBACKS only: real, indexable blog
+  // posts that have SSR metadata in `server/ssr-pages.ts` and inbound 301s
+  // in `server/redirects.ts`, but are not (yet) seeded into storage. They
+  // stay listed here so removing them from `MemStorage` cannot silently
+  // drop them from /sitemap.xml. If/when they are added to the DB the
+  // dedup pass in `buildSitemapXml()` collapses the duplicate cleanly.
   { url: "/blog/preparing-your-child-for-first-day-preschool", priority: 0.6, changefreq: "monthly" },
   { url: "/blog/role-of-parents-early-education", priority: 0.6, changefreq: "monthly" },
   { url: "/blog/creating-safe-nurturing-learning-environment", priority: 0.6, changefreq: "monthly" },
-  // 10 evergreen recovery posts (April 2026)
-  { url: "/blog/screen-time-guidelines-preschoolers-india", priority: 0.7, changefreq: "monthly" },
-  { url: "/blog/healthy-tiffin-box-ideas-preschoolers", priority: 0.7, changefreq: "monthly" },
-  { url: "/blog/toilet-training-toddlers-indian-parents-guide", priority: 0.7, changefreq: "monthly" },
-  { url: "/blog/picky-eater-toddler-solutions", priority: 0.7, changefreq: "monthly" },
-  { url: "/blog/toddler-tantrum-management-emotional-regulation", priority: 0.7, changefreq: "monthly" },
-  { url: "/blog/first-day-preschool-packing-checklist", priority: 0.7, changefreq: "monthly" },
-  { url: "/blog/stem-activities-preschoolers-home", priority: 0.7, changefreq: "monthly" },
-  { url: "/blog/yoga-mindfulness-preschoolers-daily-routines", priority: 0.7, changefreq: "monthly" },
-  { url: "/blog/preparing-preschooler-new-sibling", priority: 0.7, changefreq: "monthly" },
-  { url: "/blog/toddler-speech-development-milestones-when-to-worry", priority: 0.7, changefreq: "monthly" },
 
   // ── SEASONAL / STANDALONE (high-traffic GSC content) ────
   { url: "/holi-activities-for-kids", priority: 0.7, changefreq: "yearly" },
@@ -126,13 +133,39 @@ export const SITEMAP_ENTRIES: SitemapEntry[] = [
 export interface BuildSitemapOptions {
   domain?: string;
   lastmod?: string;
+  /**
+   * Override the curated list entirely. Rarely needed — prefer `extraEntries`
+   * to merge dynamic rows (e.g. blog posts loaded from the DB) on top of
+   * `SITEMAP_ENTRIES`.
+   */
   entries?: SitemapEntry[];
+  /**
+   * Additional entries appended after the base list. The first occurrence of
+   * each `url` wins, so curated rows take precedence over dynamic ones.
+   */
+  extraEntries?: SitemapEntry[];
+}
+
+/**
+ * Convert a blog post's slug into the `SitemapEntry` shape used by the
+ * sitemap builder. Centralised here so the route handler and any future
+ * caller use the same priority/changefreq defaults.
+ */
+export function blogPostSitemapEntry(slug: string): SitemapEntry {
+  return {
+    url: `/blog/${slug}`,
+    priority: 0.6,
+    changefreq: "monthly",
+  };
 }
 
 export function buildSitemapXml(options: BuildSitemapOptions = {}): string {
   const domain = options.domain ?? PREFERRED_DOMAIN;
   const lastmod = options.lastmod ?? LAST_UPDATED_ISO;
-  const entries = options.entries ?? SITEMAP_ENTRIES;
+  const baseEntries = options.entries ?? SITEMAP_ENTRIES;
+  const entries = options.extraEntries
+    ? [...baseEntries, ...options.extraEntries]
+    : baseEntries;
 
   const seen = new Set<string>();
   const deduped = entries.filter((e) => {
