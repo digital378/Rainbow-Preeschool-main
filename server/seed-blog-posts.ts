@@ -1167,3 +1167,44 @@ Last updated: April 2026`,
     isPublished: true,
   },
 ];
+
+// Three older evergreen posts that ship with full SSR pages in
+// `server/ssr-pages.ts` and inbound 301s in `server/redirects.ts`. They are
+// seeded into MemStorage so `storage.getBlogPosts()` is the single source of
+// truth for /blog/:slug URLs in /sitemap.xml — without these, the sitemap had
+// to hand-list them as a fallback. The full article body is rendered by the
+// static map in `client/src/pages/blog-post.tsx`; the seed here only needs
+// enough metadata for /sitemap.xml and the blog index card (slug, title,
+// excerpt, imageUrl, publishedAt).
+export const legacyMigratedBlogPosts: BlogPost[] = [
+  {
+    id: randomUUID(),
+    title: "Preparing Your Child for Their First Day at Preschool",
+    slug: "preparing-your-child-for-first-day-preschool",
+    excerpt: "Starting preschool is a big milestone. Here are practical tips to help both parents and children navigate the transition smoothly.",
+    content: "Practical tips for parents to prepare their child for the first day at preschool — from building familiarity in the weeks before, to managing the goodbye, to what to expect during the first week. Includes guidance on when to be concerned and how Rainbow Preschool helps children settle in.",
+    imageUrl: "/images/optimized/children-learning-colorful-toys-preschool.webp",
+    publishedAt: new Date("2025-08-05"),
+    isPublished: true,
+  },
+  {
+    id: randomUUID(),
+    title: "The Role of Parents in Early Education",
+    slug: "role-of-parents-early-education",
+    excerpt: "Parents are a child's first teachers. Discover how your involvement at home complements what children learn at preschool.",
+    content: "An overview of how parents can support their child's early learning at home — through daily reading, rich conversation, reinforcing school concepts, and partnering with the preschool. Covers creating a learning environment at home, modelling a love of learning, and supporting without pressuring.",
+    imageUrl: "/images/optimized/kids-playing-ball-pit-rainbow-preschool.webp",
+    publishedAt: new Date("2025-07-22"),
+    isPublished: true,
+  },
+  {
+    id: randomUUID(),
+    title: "Creating a Safe and Nurturing Learning Environment",
+    slug: "creating-safe-nurturing-learning-environment",
+    excerpt: "A child's learning environment significantly impacts their development. See how Rainbow Preschool ensures safety and warmth in every classroom.",
+    content: "How Rainbow Preschool builds physically and emotionally safe classrooms — from CCTV, child-proofing and hygiene protocols to warm teacher-child relationships, small class sizes, and a stimulating but calm learning space. Explains how parents can partner with the school to keep that environment strong.",
+    imageUrl: "/images/optimized/DSC00011.webp",
+    publishedAt: new Date("2025-06-18"),
+    isPublished: true,
+  },
+];

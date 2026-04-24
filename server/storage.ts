@@ -1,6 +1,6 @@
 import { type User, type InsertUser, type Contact, type InsertContact, type BlogPost, type InsertBlogPost, type GscSnapshot, type InsertGscSnapshot, gscSnapshots } from "@shared/schema";
 import { randomUUID } from "crypto";
-import { seoRecoveryBlogPosts } from "./seed-blog-posts";
+import { seoRecoveryBlogPosts, legacyMigratedBlogPosts } from "./seed-blog-posts";
 import { and, asc, between, eq, like, sql } from "drizzle-orm";
 import { getDb, hasDatabase } from "./db";
 
@@ -106,8 +106,10 @@ export class MemStorage implements IStorage {
       },
     ];
 
-    // Append SEO-recovery evergreen posts (Apr–May 2026)
-    const allPosts = [...defaultPosts, ...seoRecoveryBlogPosts];
+    // Append SEO-recovery evergreen posts (Apr–May 2026) and the older
+    // legacy posts that have SSR pages + inbound 301s but used to be
+    // hand-listed in the sitemap fallback.
+    const allPosts = [...defaultPosts, ...seoRecoveryBlogPosts, ...legacyMigratedBlogPosts];
     allPosts.forEach(post => {
       this.blogPosts.set(post.id, post);
     });

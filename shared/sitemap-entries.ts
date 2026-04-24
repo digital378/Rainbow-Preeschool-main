@@ -82,17 +82,9 @@ export const SITEMAP_ENTRIES: SitemapEntry[] = [
   // /sitemap.xml route in `server/index.ts` and merged into the output, so
   // publishing a new post via the admin/API automatically adds it to the
   // next /sitemap.xml response — there is no need to add a row here for
-  // posts that live in the DB.
-  //
-  // The handful of entries below are FALLBACKS only: real, indexable blog
-  // posts that have SSR metadata in `server/ssr-pages.ts` and inbound 301s
-  // in `server/redirects.ts`, but are not (yet) seeded into storage. They
-  // stay listed here so removing them from `MemStorage` cannot silently
-  // drop them from /sitemap.xml. If/when they are added to the DB the
-  // dedup pass in `buildSitemapXml()` collapses the duplicate cleanly.
-  { url: "/blog/preparing-your-child-for-first-day-preschool", priority: 0.6, changefreq: "monthly" },
-  { url: "/blog/role-of-parents-early-education", priority: 0.6, changefreq: "monthly" },
-  { url: "/blog/creating-safe-nurturing-learning-environment", priority: 0.6, changefreq: "monthly" },
+  // posts that live in the DB. All /blog/:slug URLs are now seeded into
+  // MemStorage (see `server/seed-blog-posts.ts`), so storage is the single
+  // source of truth and no fallback rows are needed here.
 
   // ── SEASONAL / STANDALONE (high-traffic GSC content) ────
   { url: "/holi-activities-for-kids", priority: 0.7, changefreq: "yearly" },
