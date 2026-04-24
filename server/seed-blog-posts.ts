@@ -77,6 +77,7 @@ EXPLORE_MORE: [Explore Our Playgroup Program](/playgroup)|[Take the Preschool Re
 Reviewed by the Rainbow Preschool Curriculum Team
 Last updated: April 2026`,
     imageUrl: "/images/optimized/children-learning-colorful-toys-preschool.webp",
+    category: "Parenting Tips",
     publishedAt: new Date("2026-04-24"),
     isPublished: true,
   },
@@ -211,6 +212,7 @@ EXPLORE_MORE: [Learn About Our Playgroup](/playgroup)|[What Parents Say About Us
 Reviewed by the Rainbow Preschool Curriculum Team
 Last updated: April 2026`,
     imageUrl: "/images/optimized/kids-playing-ball-pit-rainbow-preschool.webp",
+    category: "Parenting Tips",
     publishedAt: new Date("2026-04-26"),
     isPublished: true,
   },
@@ -302,6 +304,7 @@ EXPLORE_MORE: [Admissions Information](/preschool-admissions)|[Find a Center Nea
 Reviewed by the Rainbow Preschool Curriculum Team
 Last updated: April 2026`,
     imageUrl: "/images/optimized/DSC00011.webp",
+    category: "Parenting Tips",
     publishedAt: new Date("2026-04-29"),
     isPublished: true,
   },
@@ -402,6 +405,7 @@ EXPLORE_MORE: [Our Testimonials](/testimonials)|[Playgroup Overview](/playgroup)
 Reviewed by the Rainbow Preschool Curriculum Team
 Last updated: April 2026`,
     imageUrl: "/images/optimized/children-learning-colorful-toys-preschool.webp",
+    category: "Parenting Tips",
     publishedAt: new Date("2026-05-01"),
     isPublished: true,
   },
@@ -505,6 +509,7 @@ EXPLORE_MORE: [View Our Testimonials](/testimonials)|[Our Playgroup Program](/pl
 Reviewed by the Rainbow Preschool Curriculum Team
 Last updated: April 2026`,
     imageUrl: "/images/optimized/kids-playing-ball-pit-rainbow-preschool.webp",
+    category: "Child Development",
     publishedAt: new Date("2026-05-03"),
     isPublished: true,
   },
@@ -609,6 +614,7 @@ EXPLORE_MORE: [Preschool Admissions](/preschool-admissions)|[Our Thane Branches]
 Reviewed by the Rainbow Preschool Curriculum Team
 Last updated: April 2026`,
     imageUrl: "/images/optimized/DSC00011.webp",
+    category: "Parenting Tips",
     publishedAt: new Date("2026-05-05"),
     isPublished: true,
   },
@@ -720,6 +726,7 @@ EXPLORE_MORE: [Our Kindergarten Program](/kindergarten)|[Nursery Details](/nurse
 Reviewed by the Rainbow Preschool Curriculum Team
 Last updated: April 2026`,
     imageUrl: "/images/optimized/children-learning-colorful-toys-preschool.webp",
+    category: "Learning Activities",
     publishedAt: new Date("2026-05-08"),
     isPublished: true,
   },
@@ -830,6 +837,7 @@ EXPLORE_MORE: [Explore Playgroup](/playgroup)|[Our Nursery Program](/nursery)|[O
 Reviewed by the Rainbow Preschool Curriculum Team
 Last updated: April 2026`,
     imageUrl: "/images/optimized/kids-playing-ball-pit-rainbow-preschool.webp",
+    category: "Learning Activities",
     publishedAt: new Date("2026-05-10"),
     isPublished: true,
   },
@@ -931,6 +939,7 @@ EXPLORE_MORE: [Our Playgroup Program](/playgroup)|[Preschool Readiness Quiz](/pr
 Reviewed by the Rainbow Preschool Curriculum Team
 Last updated: April 2026`,
     imageUrl: "/images/optimized/DSC00011.webp",
+    category: "Parenting Tips",
     publishedAt: new Date("2026-05-12"),
     isPublished: true,
   },
@@ -1030,6 +1039,7 @@ EXPLORE_MORE: [Playgroup Curriculum](/playgroup)|[Nursery Program](/nursery)|[Fr
 Reviewed by the Rainbow Preschool Curriculum Team
 Last updated: April 2026`,
     imageUrl: "/images/optimized/children-learning-colorful-toys-preschool.webp",
+    category: "Child Development",
     publishedAt: new Date("2026-05-14"),
     isPublished: true,
   },
@@ -1163,6 +1173,7 @@ EXPLORE_MORE: [Explore Our Playgroup Program](/playgroup)|[Visit Our Centres](/c
 Reviewed by the Rainbow Preschool Curriculum Team
 Last updated: April 2026`,
     imageUrl: "/images/optimized/children-learning-colorful-toys-preschool.webp",
+    category: "School Events",
     publishedAt: new Date("2026-01-20"),
     isPublished: true,
   },
@@ -1184,6 +1195,7 @@ export const legacyMigratedBlogPosts: BlogPost[] = [
     excerpt: "Starting preschool is a big milestone. Here are practical tips to help both parents and children navigate the transition smoothly.",
     content: "Practical tips for parents to prepare their child for the first day at preschool — from building familiarity in the weeks before, to managing the goodbye, to what to expect during the first week. Includes guidance on when to be concerned and how Rainbow Preschool helps children settle in.",
     imageUrl: "/images/optimized/children-learning-colorful-toys-preschool.webp",
+    category: "Parenting Tips",
     publishedAt: new Date("2025-08-05"),
     isPublished: true,
   },
@@ -1194,6 +1206,7 @@ export const legacyMigratedBlogPosts: BlogPost[] = [
     excerpt: "Parents are a child's first teachers. Discover how your involvement at home complements what children learn at preschool.",
     content: "An overview of how parents can support their child's early learning at home — through daily reading, rich conversation, reinforcing school concepts, and partnering with the preschool. Covers creating a learning environment at home, modelling a love of learning, and supporting without pressuring.",
     imageUrl: "/images/optimized/kids-playing-ball-pit-rainbow-preschool.webp",
+    category: "Parenting Tips",
     publishedAt: new Date("2025-07-22"),
     isPublished: true,
   },
@@ -1204,7 +1217,110 @@ export const legacyMigratedBlogPosts: BlogPost[] = [
     excerpt: "A child's learning environment significantly impacts their development. See how Rainbow Preschool ensures safety and warmth in every classroom.",
     content: "How Rainbow Preschool builds physically and emotionally safe classrooms — from CCTV, child-proofing and hygiene protocols to warm teacher-child relationships, small class sizes, and a stimulating but calm learning space. Explains how parents can partner with the school to keep that environment strong.",
     imageUrl: "/images/optimized/DSC00011.webp",
+    category: "Education",
     publishedAt: new Date("2025-06-18"),
+    isPublished: true,
+  },
+];
+
+// SSR-only blog posts: their full article body is rendered by the static
+// `blogPostsData` map in `client/src/pages/blog-post.tsx` and bot-side SSR
+// metadata lives in `server/ssr-pages.ts`. Until now they were the only
+// /blog/:slug URLs not present in storage, which meant /sitemap.xml could
+// only learn about them via a hand-listed fallback. Seeding them here makes
+// `storage.getBlogPosts()` the single source of truth so they appear on
+// /blog and in /sitemap.xml automatically.
+//
+// `excerpt` and `category` mirror the labels that the previous hand-curated
+// `richBlogPosts` array on /blog used so the blog index keeps the same
+// coloured pill on each card.
+export const ssrOnlyBlogPosts: BlogPost[] = [
+  {
+    id: randomUUID(),
+    title: "10 Signs of a Good Preschool — What Thane Parents Should Look For",
+    slug: "signs-of-good-preschool-thane",
+    excerpt: "Not sure how to spot a great preschool? Here are 10 evidence-based signs that separate outstanding preschools from average ones — a must-read for Thane parents.",
+    content: "10 evidence-based signs of a quality preschool — happy and engaged children, warm and qualified teachers, low teacher-to-child ratios, a play-based curriculum with clear learning goals, safe and well-maintained facilities, strong parent communication, experienced staff, a structured daily routine, positive reviews, and alignment with your family's values. Includes a 1–5 scoring checklist for parents touring preschools in Thane.",
+    imageUrl: "/images/optimized/children-learning-colorful-toys-preschool.webp",
+    category: "Education",
+    publishedAt: new Date("2026-03-20"),
+    isPublished: true,
+  },
+  {
+    id: randomUUID(),
+    title: "Preschool vs Daycare: What's the Difference and What's Right for Your Child?",
+    slug: "preschool-vs-daycare-difference",
+    excerpt: "Many parents confuse preschool with daycare. Understanding the key differences will help you make the best choice for your child's early years.",
+    content: "Compares preschool and daycare across primary purpose, curriculum, hours, age range, staff qualifications and cost so parents can pick the right option for their family. Explains why preschool is the better fit when school readiness is the goal and when daycare makes more sense for working parents needing extended hours.",
+    imageUrl: "/images/optimized/kids-playing-ball-pit-rainbow-preschool.webp",
+    category: "Education",
+    publishedAt: new Date("2026-03-10"),
+    isPublished: true,
+  },
+  {
+    id: randomUUID(),
+    title: "What Age Should a Child Start Play School? Expert Guide for Indian Parents",
+    slug: "what-age-start-play-school",
+    excerpt: "Is your toddler ready for play school? Learn the ideal age, readiness signs, and what experts recommend for starting early education in India.",
+    content: "Expert guidance for Indian parents on the ideal age to start play school — typically 1.5 to 2.5 years — and the readiness signs to look for. Explains the benefits of early vs late starts, how to evaluate your child's social, emotional and language development, and what a good first play school experience looks like.",
+    imageUrl: "/images/optimized/DSC00011.webp",
+    category: "Child Development",
+    publishedAt: new Date("2026-02-25"),
+    isPublished: true,
+  },
+  {
+    id: randomUUID(),
+    title: "Benefits of Play School for 2 Year Olds — Is Your Toddler Ready?",
+    slug: "benefits-play-school-2-year-olds",
+    excerpt: "Should your 2-year-old attend play school? Discover the science-backed benefits and how structured play transforms toddler development.",
+    content: "12 research-backed developmental benefits of play school for 2 year olds, covering language acquisition, social skills, emotional regulation, fine and gross motor development, independence, and school readiness. Includes a checklist to help parents decide if their toddler is ready and tips for the first month.",
+    imageUrl: "/images/optimized/children-learning-colorful-toys-preschool.webp",
+    category: "Child Development",
+    publishedAt: new Date("2026-02-10"),
+    isPublished: true,
+  },
+  {
+    id: randomUUID(),
+    title: "Nursery School Admission Process in Thane — Step-by-Step Guide 2026-27",
+    slug: "nursery-school-admission-thane-2026",
+    excerpt: "Everything Thane parents need to know about nursery school admissions for 2026-27 — timelines, documents, age criteria, tips, and what to expect.",
+    content: "A step-by-step guide to nursery school admissions in Thane for 2026-27 — when to start the search, age criteria, the documents you'll need, typical timelines, fee structures, and tips to maximise your chances at top preschools. Covers what to expect at the parent interaction round and how to prepare your child.",
+    imageUrl: "/images/optimized/kids-playing-ball-pit-rainbow-preschool.webp",
+    category: "Admissions",
+    publishedAt: new Date("2026-01-15"),
+    isPublished: true,
+  },
+  {
+    id: randomUUID(),
+    title: "What Children Learn in Nursery School — Month-by-Month Development Guide",
+    slug: "what-children-learn-nursery-school",
+    excerpt: "Curious what your child actually learns in nursery school? Here's a detailed month-by-month breakdown of skills, milestones, and development areas.",
+    content: "A detailed month-by-month breakdown of what children learn in nursery school across language, early maths, fine and gross motor skills, social-emotional development, creativity, and self-help routines. Helps parents understand the developmental journey and how to reinforce concepts at home.",
+    imageUrl: "/images/optimized/DSC00011.webp",
+    category: "Child Development",
+    publishedAt: new Date("2025-12-20"),
+    isPublished: true,
+  },
+  {
+    id: randomUUID(),
+    title: "50 Fun Learning Activities for Preschoolers at Home",
+    slug: "50-fun-learning-activities-preschoolers",
+    excerpt: "Bored at home? Here are 50 easy, fun learning activities for preschoolers using everyday household items. Perfect for weekends, holidays, and rainy days.",
+    content: "50 simple, screen-free learning activities for preschoolers aged 2–6, using everyday household items. Grouped by skill area — language and literacy, early maths, science and discovery, art and creativity, fine motor, and gross motor. Each activity includes the materials needed and the developmental benefit.",
+    imageUrl: "/images/optimized/children-learning-colorful-toys-preschool.webp",
+    category: "Learning Activities",
+    publishedAt: new Date("2026-04-01"),
+    isPublished: true,
+  },
+  {
+    id: randomUUID(),
+    title: "Best Children's Books for Indian Preschoolers — Age-Wise Reading List",
+    slug: "best-childrens-books-indian-preschoolers",
+    excerpt: "Looking for the best books for your preschooler? Here's an age-wise curated reading list of Indian and international children's books, plus reading tips.",
+    content: "An age-wise reading list of the best children's books for Indian preschoolers, covering toddlers (1.5–3 years), early preschool (3–4 years), and pre-K (4–6 years). Features Indian authors and culturally relevant stories alongside international classics, plus practical tips for building a love of reading at home.",
+    imageUrl: "/images/optimized/kids-playing-ball-pit-rainbow-preschool.webp",
+    category: "Learning Activities",
+    publishedAt: new Date("2026-03-28"),
     isPublished: true,
   },
 ];

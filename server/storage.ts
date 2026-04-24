@@ -1,6 +1,6 @@
 import { type User, type InsertUser, type Contact, type InsertContact, type BlogPost, type InsertBlogPost, type GscSnapshot, type InsertGscSnapshot, gscSnapshots } from "@shared/schema";
 import { randomUUID } from "crypto";
-import { seoRecoveryBlogPosts, legacyMigratedBlogPosts } from "./seed-blog-posts";
+import { seoRecoveryBlogPosts, legacyMigratedBlogPosts, ssrOnlyBlogPosts } from "./seed-blog-posts";
 import { and, asc, between, eq, like, lt, or, sql } from "drizzle-orm";
 import { getDb, hasDatabase } from "./db";
 
@@ -104,6 +104,7 @@ export class MemStorage implements IStorage {
         excerpt: "Visiting preschools honestly feels a bit like house-hunting. You step in, look around for a few seconds, and something inside you instantly says either 'hmm' or 'yes!'",
         content: "When visiting a preschool, it's important to ask the right questions. Look for signs of a nurturing environment, qualified teachers, and age-appropriate curriculum.",
         imageUrl: "/images/optimized/DSC00011.webp",
+        category: "Education",
         publishedAt: new Date("2025-11-15"),
         isPublished: true,
       },
@@ -114,6 +115,7 @@ export class MemStorage implements IStorage {
         excerpt: "The first few years of a child's life are filled with wonder moments, lots of Whys and Hows, and endless curiosity to discover new things.",
         content: "Early childhood education sets the foundation for lifelong learning. Quality preschool programs help children develop social, emotional, and cognitive skills.",
         imageUrl: "/images/optimized/children-learning-colorful-toys-preschool.webp",
+        category: "Education",
         publishedAt: new Date("2025-10-20"),
         isPublished: true,
       },
@@ -124,15 +126,23 @@ export class MemStorage implements IStorage {
         excerpt: "Play is not just fun for children—it's essential for their cognitive, social, and emotional development.",
         content: "At Rainbow Preschool, we believe in the power of play-based learning. Through carefully designed activities, children develop problem-solving skills and creativity.",
         imageUrl: "/images/optimized/kids-playing-ball-pit-rainbow-preschool.webp",
+        category: "Education",
         publishedAt: new Date("2025-09-10"),
         isPublished: true,
       },
     ];
 
-    // Append SEO-recovery evergreen posts (Apr–May 2026) and the older
-    // legacy posts that have SSR pages + inbound 301s but used to be
-    // hand-listed in the sitemap fallback.
-    const allPosts = [...defaultPosts, ...seoRecoveryBlogPosts, ...legacyMigratedBlogPosts];
+    // Append SEO-recovery evergreen posts (Apr–May 2026), the SSR-only
+    // legacy /blog/:slug posts (whose article body lives in
+    // `client/src/pages/blog-post.tsx` but which still need a row here so
+    // /blog and /sitemap.xml find them), and the older legacy posts that
+    // have SSR pages + inbound 301s.
+    const allPosts = [
+      ...defaultPosts,
+      ...seoRecoveryBlogPosts,
+      ...ssrOnlyBlogPosts,
+      ...legacyMigratedBlogPosts,
+    ];
     allPosts.forEach(post => {
       this.blogPosts.set(post.id, post);
     });
@@ -208,6 +218,7 @@ export class MemStorage implements IStorage {
     const post: BlogPost = {
       ...insertPost,
       imageUrl: insertPost.imageUrl ?? null,
+      category: insertPost.category ?? null,
       isPublished: insertPost.isPublished ?? true,
       id,
       publishedAt: new Date(),

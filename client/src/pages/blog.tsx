@@ -1,10 +1,12 @@
 import { useState, useMemo } from "react";
 import { Link } from "wouter";
+import { useQuery } from "@tanstack/react-query";
 import { CTASection } from "@/components/cta-section";
 import { SEO } from "@/components/seo";
 import { EEATSignals } from "@/components/eeat-signals";
 import { LAST_UPDATED_DISPLAY, LAST_UPDATED_ISO } from "@shared/site-freshness";
 import { legacyPagesData } from "@shared/legacy-pages-data";
+import type { BlogPost } from "@shared/schema";
 import { ArrowRight, Search, BookOpen } from "lucide-react";
 
 interface BlogEntry {
@@ -42,101 +44,21 @@ const ACCENT_BORDERS = [
   "border-l-teal-500",
 ];
 
-const richBlogPosts: BlogEntry[] = [
-  {
-    title: "Republic Day 2026 in India: History, Significance, Parade, Speeches, Essays, Quotes, Images & Wishes",
-    excerpt: "Celebrate India's 77th Republic Day 2026 with complete information on history, significance, parade highlights, speeches, essays, inspiring quotes, downloadable DP images, and heartfelt wishes.",
-    url: "/republic-day-2026",
-    category: "School Events",
-  },
-  {
-    title: "What To Ask During A Tour Of A Preschool In Thane: Complete Parent's Guide 2025",
-    excerpt: "Visiting preschools honestly feels a bit like house-hunting. You step in, look around for a few seconds, and something inside you instantly says either 'hmm' or 'yes!'",
-    url: "/blog/what-to-ask-during-a-tour-of-a-preschool-in-thane",
-    category: "Education",
-  },
-  {
-    title: "Understanding the Importance of Preschool in Early Childhood Development",
-    excerpt: "The first few years of a child's life are filled with wonder moments, lots of Whys and Hows, and endless curiosity to discover new things.",
-    url: "/blog/understanding-the-importance-of-preschool-in-early-childhood-development",
-    category: "Education",
-  },
-  {
-    title: "How Play-Based Learning Shapes Young Minds",
-    excerpt: "Play is not just fun for children—it's essential for their cognitive, social, and emotional development. Learn how play-based learning nurtures growth.",
-    url: "/blog/how-play-based-learning-shapes-young-minds",
-    category: "Education",
-  },
-  {
-    title: "Preparing Your Child for Their First Day at Preschool",
-    excerpt: "Starting preschool is a big milestone. Here are practical tips to help both parents and children navigate the transition smoothly.",
-    url: "/blog/preparing-your-child-for-first-day-preschool",
-    category: "Parenting Tips",
-  },
-  {
-    title: "The Role of Parents in Early Education",
-    excerpt: "Parents are a child's first teachers. Discover how your involvement at home complements what children learn at preschool.",
-    url: "/blog/role-of-parents-early-education",
-    category: "Parenting Tips",
-  },
-  {
-    title: "Creating a Safe and Nurturing Learning Environment",
-    excerpt: "A child's learning environment significantly impacts their development. See how Rainbow Preschool ensures safety and warmth in every classroom.",
-    url: "/blog/creating-safe-nurturing-learning-environment",
-    category: "Education",
-  },
-  {
-    title: "50 Fun Learning Activities for Preschoolers at Home",
-    excerpt: "Bored at home? Here are 50 easy, fun learning activities for preschoolers using everyday household items. Perfect for weekends, holidays, and rainy days.",
-    url: "/blog/50-fun-learning-activities-preschoolers",
-    category: "Learning Activities",
-  },
-  {
-    title: "Best Children's Books for Indian Preschoolers — Age-Wise Reading List",
-    excerpt: "Looking for the best books for your preschooler? Here's an age-wise curated reading list of Indian and international children's books, plus reading tips.",
-    url: "/blog/best-childrens-books-indian-preschoolers",
-    category: "Learning Activities",
-  },
-  {
-    title: "10 Signs of a Good Preschool — What Thane Parents Should Look For",
-    excerpt: "Not sure how to spot a great preschool? Here are 10 evidence-based signs that separate outstanding preschools from average ones — a must-read for Thane parents.",
-    url: "/blog/signs-of-good-preschool-thane",
-    category: "Education",
-  },
-  {
-    title: "Preschool vs Daycare: What's the Difference and What's Right for Your Child?",
-    excerpt: "Many parents confuse preschool with daycare. Understanding the key differences will help you make the best choice for your child's early years.",
-    url: "/blog/preschool-vs-daycare-difference",
-    category: "Education",
-  },
-  {
-    title: "What Age Should a Child Start Play School? Expert Guide for Indian Parents",
-    excerpt: "Is your toddler ready for play school? Learn the ideal age, readiness signs, and what experts recommend for starting early education in India.",
-    url: "/blog/what-age-start-play-school",
-    category: "Child Development",
-  },
-  {
-    title: "Benefits of Play School for 2 Year Olds — Is Your Toddler Ready?",
-    excerpt: "Should your 2-year-old attend play school? Discover the science-backed benefits and how structured play transforms toddler development.",
-    url: "/blog/benefits-play-school-2-year-olds",
-    category: "Child Development",
-  },
-  {
-    title: "Nursery School Admission Process in Thane — Step-by-Step Guide 2026-27",
-    excerpt: "Everything Thane parents need to know about nursery school admissions for 2026-27 — timelines, documents, age criteria, tips, and what to expect.",
-    url: "/blog/nursery-school-admission-thane-2026",
-    category: "Admissions",
-  },
-  {
-    title: "What Children Learn in Nursery School — Month-by-Month Development Guide",
-    excerpt: "Curious what your child actually learns in nursery school? Here's a detailed month-by-month breakdown of skills, milestones, and development areas.",
-    url: "/blog/what-children-learn-nursery-school",
-    category: "Child Development",
-  },
-];
+// Fallback shown for any DB-backed BlogPost that doesn't carry an explicit
+// `category` value yet, so the card still renders with a coloured pill.
+const DEFAULT_BLOG_CATEGORY = "Education";
 
-function getAllBlogPosts(): BlogEntry[] {
-  const legacyEntries: BlogEntry[] = Object.entries(legacyPagesData).map(([key, page]) => {
+function blogPostToEntry(post: BlogPost): BlogEntry {
+  return {
+    title: post.title,
+    excerpt: post.excerpt,
+    url: `/blog/${post.slug}`,
+    category: post.category || DEFAULT_BLOG_CATEGORY,
+  };
+}
+
+function legacyTopicEntries(): BlogEntry[] {
+  return Object.entries(legacyPagesData).map(([key, page]) => {
     const cleanSlug = key.replace(/\/$/, "").replace(/^\//, "");
     return {
       title: page.h1 || page.title.split("|")[0].trim(),
@@ -145,8 +67,6 @@ function getAllBlogPosts(): BlogEntry[] {
       category: CATEGORY_NORMALIZE[page.category || ""] || page.category || "Education",
     };
   });
-
-  return [...richBlogPosts, ...legacyEntries];
 }
 
 function BlogCard({ post, index }: { post: BlogEntry; index: number }) {
@@ -188,7 +108,18 @@ export default function Blog() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
 
-  const allPosts = useMemo(() => getAllBlogPosts(), []);
+  // The blog index is the same source of truth as /sitemap.xml — both pull
+  // from `storage.getBlogPosts()`. This means publishing a post via the
+  // seed file or the admin API makes it appear here automatically; no
+  // hand-edit of this page is required.
+  const { data: apiPosts, isLoading } = useQuery<BlogPost[]>({
+    queryKey: ["/api/blog"],
+  });
+
+  const allPosts = useMemo<BlogEntry[]>(() => {
+    const blogEntries = (apiPosts ?? []).map(blogPostToEntry);
+    return [...blogEntries, ...legacyTopicEntries()];
+  }, [apiPosts]);
 
   const categories = useMemo(() => {
     const cats = new Set(allPosts.map(p => p.category));
@@ -275,10 +206,21 @@ export default function Blog() {
           </div>
 
           <p className="text-sm text-gray-500 mb-6" data-testid="text-blog-count">
-            Showing {filteredPosts.length} article{filteredPosts.length !== 1 ? "s" : ""}
+            {isLoading
+              ? "Loading articles…"
+              : `Showing ${filteredPosts.length} article${filteredPosts.length !== 1 ? "s" : ""}`}
           </p>
 
-          {filteredPosts.length > 0 ? (
+          {isLoading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5" data-testid="blog-loading">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <div
+                  key={i}
+                  className="h-48 bg-white rounded-xl border border-gray-100 shadow-sm animate-pulse"
+                />
+              ))}
+            </div>
+          ) : filteredPosts.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
               {filteredPosts.map((post, i) => (
                 <BlogCard key={post.url} post={post} index={i} />

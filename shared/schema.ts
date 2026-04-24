@@ -37,6 +37,10 @@ export const blogPosts = pgTable("blog_posts", {
   excerpt: text("excerpt").notNull(),
   content: text("content").notNull(),
   imageUrl: text("image_url"),
+  // Editorial category surfaced as a coloured pill on the /blog index card.
+  // Nullable so legacy rows without an explicit category still load; the
+  // /blog page falls back to "Education" in that case.
+  category: text("category"),
   publishedAt: timestamp("published_at").defaultNow(),
   isPublished: boolean("is_published").default(true),
 });
