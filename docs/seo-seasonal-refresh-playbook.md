@@ -32,6 +32,8 @@ The mid-March 2026 GSC impression drop (~70% reduction) confirms we cannot rely 
 
    Both the bot SSR copies (`server/ssr-pages.ts` — staticPages including `/preschool-admissions` and `/preschool-near-me`, plus the preschoolCentres and playgroundPages branches) and the client-rendered `<EEATSignals>` props on the 6 commercial React pages (`/playgroup`, `/nursery`, `/kindergarten`, `/best-preschool-near-me-in-thane`, `/play-school-near-me`, `/preschool-admissions`), the playgroup-landing-template, and the per-locality preschool pages import from this file, so the visible byline AND the `Article.dateModified` JSON-LD update everywhere from one change.
 
+   **Sitemap also auto-refreshes (added April 2026):** `/sitemap.xml` is now served by a dynamic Express handler (`server/index.ts` → `buildSitemapXml()` in `shared/sitemap-entries.ts`) that reads `LAST_UPDATED_ISO`. Every `<lastmod>` in the served sitemap updates the moment you bump the constant — there is no longer a static `public/sitemap.xml` or `client/public/sitemap.xml` to edit (both files were removed). When you ADD or REMOVE a URL, edit the `SITEMAP_ENTRIES` array in `shared/sitemap-entries.ts` instead; the live sitemap reflects the change immediately on the next request.
+
    **After bumping, restart the dev server and run the smoke-test guard** to confirm every required URL still emits the visible byline + Article JSON-LD with the new date:
 
    ```bash

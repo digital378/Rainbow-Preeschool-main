@@ -7,6 +7,7 @@ import { setupBotSSR } from "./bot-ssr";
 import { createServer } from "http";
 import path from "path";
 import fs from "fs";
+import { buildSitemapXml } from "@shared/sitemap-entries";
 
 const app = express();
 
@@ -33,15 +34,16 @@ app.use(
 
 app.use(express.urlencoded({ extended: false }));
 
-// Serve sitemap.xml with correct content type (must be before redirects)
-app.get("/sitemap.xml", (req, res) => {
-  const sitemapPath = path.join(process.cwd(), "client", "public", "sitemap.xml");
-  if (fs.existsSync(sitemapPath)) {
-    res.setHeader("Content-Type", "application/xml");
-    res.sendFile(sitemapPath);
-  } else {
-    res.status(404).send("Sitemap not found");
-  }
+// Serve sitemap.xml dynamically so every <lastmod> is sourced from
+// `LAST_UPDATED_ISO` in `shared/site-freshness.ts`. Bumping that one constant
+// during the monthly refresh updates the visible byline, the Article JSON-LD
+// dateModified AND the sitemap together — no static .xml edit required.
+// (Must be registered before redirects + the static middleware so it always
+// wins.)
+app.get("/sitemap.xml", (_req, res) => {
+  res.setHeader("Content-Type", "application/xml; charset=utf-8");
+  res.setHeader("Cache-Control", "public, max-age=3600");
+  res.send(buildSitemapXml());
 });
 
 // Serve llms.txt for AI search engines (must be before redirects)

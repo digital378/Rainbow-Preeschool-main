@@ -101,7 +101,7 @@ Removed (now 301-redirect to programme pages — DO NOT recreate):
 - [ ] Confirmed the keyword is not already owned by an existing page (search this map).
 - [ ] Decided whether to **strengthen the existing canonical** or create a new page.
 - [ ] If new page: added a row to this map.
-- [ ] Added the URL to `client/public/sitemap.xml` AND `public/sitemap.xml`.
+- [ ] Added the URL to `SITEMAP_ENTRIES` in `shared/sitemap-entries.ts` (the dynamic /sitemap.xml route reads from this single source of truth — there is no longer a static `client/public/sitemap.xml` or `public/sitemap.xml` to maintain).
 - [ ] Added an entry to `server/ssr-pages.ts` for bot SSR.
 - [ ] Added at least 3 internal links from related pages.
 - [ ] If replacing an old page: added a 301 in `server/redirects.ts`.
