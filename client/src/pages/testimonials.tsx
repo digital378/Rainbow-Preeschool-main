@@ -9,6 +9,7 @@ import { Star, MapPin, Phone, Quote } from "lucide-react";
 
 interface Testimonial {
   id: number;
+  /** Must stay as "A Rainbow Parent" per the org-only attribution rule. */
   name: string;
   centre: string;
   programme: string;
@@ -20,7 +21,7 @@ interface Testimonial {
 const testimonials: Testimonial[] = [
   {
     id: 1,
-    name: "Priya Sharma",
+    name: "A Rainbow Parent",
     centre: "Manpada",
     programme: "Nursery",
     rating: 5,
@@ -29,7 +30,7 @@ const testimonials: Testimonial[] = [
   },
   {
     id: 2,
-    name: "Amit & Neha Desai",
+    name: "A Rainbow Parent",
     centre: "Hariniwas",
     programme: "Playgroup",
     rating: 5,
@@ -38,7 +39,7 @@ const testimonials: Testimonial[] = [
   },
   {
     id: 3,
-    name: "Sneha Patil",
+    name: "A Rainbow Parent",
     centre: "Dhokali",
     programme: "Kindergarten",
     rating: 5,
@@ -47,7 +48,7 @@ const testimonials: Testimonial[] = [
   },
   {
     id: 4,
-    name: "Rahul Joshi",
+    name: "A Rainbow Parent",
     centre: "Anand Nagar",
     programme: "Nursery",
     rating: 5,
@@ -56,7 +57,7 @@ const testimonials: Testimonial[] = [
   },
   {
     id: 5,
-    name: "Kavita Mehta",
+    name: "A Rainbow Parent",
     centre: "Kalwa",
     programme: "Playgroup",
     rating: 5,
@@ -65,7 +66,7 @@ const testimonials: Testimonial[] = [
   },
   {
     id: 6,
-    name: "Deepak & Anjali Rao",
+    name: "A Rainbow Parent",
     centre: "Kasarvadavali",
     programme: "Kindergarten",
     rating: 5,
@@ -74,7 +75,7 @@ const testimonials: Testimonial[] = [
   },
   {
     id: 7,
-    name: "Meera Kulkarni",
+    name: "A Rainbow Parent",
     centre: "Manpada",
     programme: "Nursery",
     rating: 4,
@@ -83,7 +84,7 @@ const testimonials: Testimonial[] = [
   },
   {
     id: 8,
-    name: "Sanjay Thakur",
+    name: "A Rainbow Parent",
     centre: "Dhokali",
     programme: "Playgroup",
     rating: 5,
@@ -92,7 +93,7 @@ const testimonials: Testimonial[] = [
   },
   {
     id: 9,
-    name: "Pooja & Vikram Singh",
+    name: "A Rainbow Parent",
     centre: "Hariniwas",
     programme: "Kindergarten",
     rating: 5,
@@ -101,7 +102,7 @@ const testimonials: Testimonial[] = [
   },
   {
     id: 10,
-    name: "Rekha Nair",
+    name: "A Rainbow Parent",
     centre: "Anand Nagar",
     programme: "Nursery",
     rating: 5,
@@ -110,7 +111,7 @@ const testimonials: Testimonial[] = [
   },
   {
     id: 11,
-    name: "Arjun Malhotra",
+    name: "A Rainbow Parent",
     centre: "Kasarvadavali",
     programme: "Playgroup",
     rating: 5,
@@ -119,7 +120,7 @@ const testimonials: Testimonial[] = [
   },
   {
     id: 12,
-    name: "Swati Ghosh",
+    name: "A Rainbow Parent",
     centre: "Kalwa",
     programme: "Nursery",
     rating: 5,
@@ -132,6 +133,7 @@ const avgRating = (testimonials.reduce((sum, t) => sum + t.rating, 0) / testimon
 
 function TestimonialsSchema() {
   useEffect(() => {
+    // AggregateRating only; no per-Review nodes.
     const reviewSchema = {
       "@context": "https://schema.org",
       "@type": "EducationalOrganization",
@@ -144,13 +146,6 @@ function TestimonialsSchema() {
         "bestRating": "5",
         "worstRating": "1"
       },
-      "review": testimonials.slice(0, 6).map(t => ({
-        "@type": "Review",
-        "author": { "@type": "Person", "name": t.name },
-        "reviewRating": { "@type": "Rating", "ratingValue": t.rating.toString(), "bestRating": "5" },
-        "reviewBody": t.text,
-        "datePublished": "2026-01-15",
-      })),
     };
 
     const script = document.createElement("script");

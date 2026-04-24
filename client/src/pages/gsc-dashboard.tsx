@@ -578,7 +578,7 @@ const SEO_ACTIONS: { id: string; status: "done" | "pending" | "opportunity"; pri
     id: "bot-ssr-schema",
     status: "done", priority: "medium", category: "Technical",
     title: "Bot SSR — structured data for all major pages",
-    detail: "LocalBusiness schema with per-centre geo coordinates, Review schema, VideoObject JSON-LD, FAQPage schema, BreadcrumbList, Person schema (E-E-A-T).",
+    detail: "LocalBusiness schema with per-centre geo coordinates, Curriculum-Team-authored Review schema (Organization authors only), VideoObject JSON-LD, FAQPage schema, BreadcrumbList.",
     impact: "Enables rich results (stars, FAQ snippets) in SERPs.",
   },
   {

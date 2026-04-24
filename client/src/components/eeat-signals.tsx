@@ -1,26 +1,19 @@
 import { useEffect } from "react";
 import { ShieldCheck, CalendarCheck2, Star } from "lucide-react";
 
-export interface EEATReview {
-  author: string;
-  rating: number;
-  reviewBody: string;
-  datePublished: string;
-}
-
 interface EEATSignalsProps {
   pageUrl: string;
   pageName: string;
-  /** Reviewer's full name. When provided it is rendered above the role, and emitted as a Person `reviewedBy` in the Article schema. */
+  /** Reviewer display name. Must be one of the approved org labels. Emitted as an Organization `reviewedBy` in the Article schema. */
   reviewedBy?: string;
   reviewerRole?: string;
-  /** Short comma-separated credentials list, e.g. "MBBS, MD Paediatrics". */
+  /** Short comma-separated credentials line. */
   reviewerCredentials?: string;
   /** Optional 1-2 sentence biography rendered under the reviewer block. */
   reviewerBio?: string;
   /** Optional public profile link for the reviewer. */
   reviewerProfileUrl?: string;
-  /** Optional named author surfaced into the Article schema as a Person. */
+  /** Optional named author surfaced into the Article schema as an Organization. Must be one of the approved org labels. */
   authorName?: string;
   authorRole?: string;
   authorCredentials?: string;
@@ -29,33 +22,8 @@ interface EEATSignalsProps {
   lastUpdatedIso?: string;
   ratingValue?: number;
   reviewCount?: number;
-  reviews?: EEATReview[];
   schemaId: string;
 }
-
-const DEFAULT_REVIEWS: EEATReview[] = [
-  {
-    author: "Priya Sharma",
-    rating: 5,
-    reviewBody:
-      "Our daughter started in Playgroup and is now in Kindergarten at Rainbow. Teachers genuinely know each child and the play-based curriculum has built real confidence. The Hariniwas centre feels like a second home.",
-    datePublished: "2026-02-14",
-  },
-  {
-    author: "Rohit Deshmukh",
-    rating: 5,
-    reviewBody:
-      "We compared four preschools in Thane before choosing Rainbow. The transparency, security, and warm staff stood out immediately. Our son looks forward to school every morning — that says everything.",
-    datePublished: "2026-01-22",
-  },
-  {
-    author: "Anita Iyer",
-    rating: 5,
-    reviewBody:
-      "The Manpada centre handled my daughter's separation anxiety with patience and a structured settling-in plan. By week three she was waving goodbye and running in. Highly recommend Rainbow Preschool.",
-    datePublished: "2025-11-30",
-  },
-];
 
 export function EEATSignals({
   pageUrl,
@@ -72,10 +40,10 @@ export function EEATSignals({
   lastUpdatedIso,
   ratingValue = 4.9,
   reviewCount = 487,
-  reviews = DEFAULT_REVIEWS,
   schemaId,
 }: EEATSignalsProps) {
   useEffect(() => {
+    // AggregateRating only; no per-Review nodes.
     const reviewSchema = {
       "@context": "https://schema.org",
       "@type": "Preschool",
@@ -88,25 +56,9 @@ export function EEATSignals({
         "bestRating": "5",
         "worstRating": "1",
       },
-      "review": reviews.map((r) => ({
-        "@type": "Review",
-        "author": { "@type": "Person", "name": r.author },
-        "reviewRating": {
-          "@type": "Rating",
-          "ratingValue": r.rating,
-          "bestRating": "5",
-        },
-        "reviewBody": r.reviewBody,
-        "datePublished": r.datePublished,
-        "itemReviewed": {
-          "@type": "Preschool",
-          "name": "Rainbow Preschool International",
-        },
-      })),
     };
 
-    // Editorial policy: only the school name is used as author / reviewer
-    // — never an individual person. Both nodes emit @type Organization.
+    // Author / reviewer always emitted as Organization, never Person.
     const articleAuthor = authorName
       ? {
           "@type": "Organization",
@@ -188,7 +140,7 @@ export function EEATSignals({
         if (el) el.remove();
       });
     };
-  }, [pageUrl, pageName, reviewedBy, reviewerRole, reviewerCredentials, reviewerProfileUrl, authorName, authorRole, authorCredentials, lastUpdated, lastUpdatedIso, ratingValue, reviewCount, reviews, schemaId]);
+  }, [pageUrl, pageName, reviewedBy, reviewerRole, reviewerCredentials, reviewerProfileUrl, authorName, authorRole, authorCredentials, lastUpdated, lastUpdatedIso, ratingValue, reviewCount, schemaId]);
 
   const reviewerEyebrow = reviewedBy ? "Reviewed by" : "Reviewed by Education Lead";
 
