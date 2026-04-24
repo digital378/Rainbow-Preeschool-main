@@ -238,3 +238,9 @@ export const gscSnapshots = pgTable(
 export const insertGscSnapshotSchema = createInsertSchema(gscSnapshots).omit({ id: true });
 export type InsertGscSnapshot = z.infer<typeof insertGscSnapshotSchema>;
 export type GscSnapshot = typeof gscSnapshots.$inferSelect;
+
+// Placeholder text the GSC sync writes onto every per-day per-keyword row when
+// no human-authored note is present. Centralized here so the server (which
+// writes/preserves it) and the client (which filters it out of the chart
+// annotations log + per-keyword annotation lists) cannot drift apart.
+export const GSC_SYNC_DEFAULT_NOTE = "Per-keyword per-day from GSC";

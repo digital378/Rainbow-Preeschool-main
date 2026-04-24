@@ -1,6 +1,7 @@
 import { google } from "googleapis";
 import { storage } from "./storage";
 import { format, subDays } from "date-fns";
+import { GSC_SYNC_DEFAULT_NOTE } from "@shared/schema";
 
 const SITE_URL = "sc-domain:rainbowpreschools.com";
 
@@ -175,7 +176,6 @@ export async function syncGscData(daysBack = 90): Promise<SyncResult> {
     // notes live on the same rows GSC also writes — without this preservation
     // step the next 6-hour auto-sync would silently overwrite them with the
     // default "Per-keyword per-day from GSC" string.
-    const SYNC_DEFAULT_NOTE = "Per-keyword per-day from GSC";
     const existingNotes = new Map<string, string>();
     try {
       const existing = await storage.getGscSnapshots();
@@ -185,7 +185,7 @@ export async function syncGscData(daysBack = 90): Promise<SyncResult> {
           s.snapshotDate >= dailyStart &&
           s.snapshotDate <= endDate &&
           s.notes &&
-          s.notes !== SYNC_DEFAULT_NOTE
+          s.notes !== GSC_SYNC_DEFAULT_NOTE
         ) {
           existingNotes.set(`${s.snapshotDate}::${s.keyword}`, s.notes);
         }
@@ -213,7 +213,7 @@ export async function syncGscData(daysBack = 90): Promise<SyncResult> {
         impressions: Math.round(row.impressions ?? 0),
         ctr: row.ctr ?? 0,
         page: null,
-        notes: preservedNote ?? SYNC_DEFAULT_NOTE,
+        notes: preservedNote ?? GSC_SYNC_DEFAULT_NOTE,
       });
     }
     await storage.replaceGscSnapshotsInRange("__daily__:", dailyStart, endDate, dailyKwRows);

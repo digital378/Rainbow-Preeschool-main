@@ -24,9 +24,9 @@ import {
   Lightbulb, ExternalLink, Plus, Download, ChevronDown, ChevronUp,
   BarChart2, Search, Zap, RefreshCw, Info, Shield, Target, FileText,
   MapPin, Star, ArrowRight, Circle, CheckSquare, Square, GitCompare,
-  Pencil, X, Save, Loader2, MessageSquarePlus,
+  Pencil, X, Save, Loader2, MessageSquarePlus, StickyNote,
 } from "lucide-react";
-import type { GscSnapshot } from "@shared/schema";
+import { type GscSnapshot, GSC_SYNC_DEFAULT_NOTE } from "@shared/schema";
 
 // ─── Constants ───────────────────────────────────────────────────────────────
 
@@ -1274,6 +1274,16 @@ type Commercial15Row = {
   history: Commercial15HistoryPoint[]; // up to last 90 days, oldest → newest
 };
 
+// The GSC auto-sync writes `GSC_SYNC_DEFAULT_NOTE` (defined in shared/schema)
+// onto every per-day per-keyword row, so a "real" annotation is any note text
+// that isn't that placeholder. Sharing the constant keeps the writer (server
+// sync) and the readers (this dashboard) from silently drifting apart.
+function isUserAnnotation(note: string | null | undefined): boolean {
+  if (!note) return false;
+  const trimmed = note.trim();
+  return trimmed.length > 0 && trimmed !== GSC_SYNC_DEFAULT_NOTE;
+}
+
 function computeCommercial15Rows(
   dailySnaps: GscSnapshot[],
   fallbackPositions: Record<string, { position: number; clicks: number; impressions: number }>,
@@ -1456,10 +1466,15 @@ function Commercial15ChartModal({
   row,
   open,
   onOpenChange,
+  focusDate = null,
 }: {
   row: Commercial15Row | null;
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  // When provided (e.g. opened from the dashboard's annotations log), the
+  // editor is auto-opened on this day so the user lands on the exact note
+  // they clicked. When null, the modal opens with no editor active.
+  focusDate?: string | null;
 }) {
   // Inline note editor state. We track which day the user is editing by date
   // (one editor at a time) and the current draft text. The editor is opened
@@ -1469,12 +1484,34 @@ function Commercial15ChartModal({
   const [editingDate, setEditingDate] = useState<string | null>(null);
   const [draft, setDraft] = useState("");
   const editorRef = useRef<HTMLTextAreaElement | null>(null);
+  const annotationItemRefs = useRef<Record<string, HTMLLIElement | null>>({});
   const { toast } = useToast();
 
   useEffect(() => {
+    if (open && focusDate && row) {
+      const point = row.history.find(h => h.date === focusDate);
+      if (point) {
+        setEditingDate(focusDate);
+        setDraft(point.note ?? "");
+        return;
+      }
+    }
     setEditingDate(null);
     setDraft("");
-  }, [row?.keyword, open]);
+  }, [row?.keyword, open, focusDate]);
+
+  // When the modal opens focused on a specific day, scroll the corresponding
+  // annotation list item into view so the user can immediately confirm they
+  // landed on the right note.
+  useEffect(() => {
+    if (!open || !focusDate) return;
+    const el = annotationItemRefs.current[focusDate];
+    if (el) {
+      requestAnimationFrame(() => {
+        el.scrollIntoView({ block: "nearest", behavior: "smooth" });
+      });
+    }
+  }, [open, focusDate, row?.keyword]);
 
   useEffect(() => {
     if (editingDate && editorRef.current) {
@@ -1514,7 +1551,10 @@ function Commercial15ChartModal({
     ctr: h.ctr,
     note: h.note ?? null,
   }));
-  const annotations = data.filter(d => d.note && d.note.trim().length > 0);
+  // Only surface human-authored annotations — the auto-sync writes a default
+  // placeholder onto every per-day row, and surfacing those would flood the
+  // chart with hundreds of meaningless dots and list entries.
+  const annotations = data.filter(d => isUserAnnotation(d.note));
 
   const editingPoint = editingDate ? data.find(d => d.date === editingDate) ?? null : null;
 
@@ -1777,7 +1817,16 @@ function Commercial15ChartModal({
                 </div>
                 <ul className="text-xs text-gray-600 dark:text-gray-400 space-y-1">
                   {annotations.map(a => (
-                    <li key={a.date} className="flex gap-2 items-start group">
+                    <li
+                      key={a.date}
+                      ref={(el) => { annotationItemRefs.current[a.date] = el; }}
+                      className={`flex gap-2 items-start group rounded-sm px-1 py-0.5 -mx-1 transition-colors ${
+                        focusDate === a.date
+                          ? "bg-amber-50 dark:bg-amber-950/40 ring-1 ring-amber-200 dark:ring-amber-900"
+                          : ""
+                      }`}
+                      data-testid={`item-modal-annotation-${kwId}-${a.date}`}
+                    >
                       <span className="font-mono text-amber-600 dark:text-amber-400 shrink-0">
                         {format(parseISO(a.date), "d MMM")}
                       </span>
@@ -1819,21 +1868,30 @@ function Commercial15Panel({ rows }: { rows: Commercial15Row[] }) {
   // doesn't know which element to restore focus to on close — so we capture the
   // sparkline button at click time and refocus it manually after the dialog
   // tears down. This keeps keyboard users on the same row they were inspecting.
+  // `focusDate` is set when the modal is opened from the cross-keyword
+  // Annotations log so the editor lands on the exact day clicked.
   const [activeKeyword, setActiveKeyword] = useState<string | null>(null);
+  const [focusDate, setFocusDate] = useState<string | null>(null);
   const triggerRef = useRef<HTMLElement | null>(null);
   const activeRow = useMemo(
     () => (activeKeyword ? rows.find(r => r.keyword === activeKeyword) ?? null : null),
     [activeKeyword, rows],
   );
 
-  const openChart = (keyword: string, trigger: HTMLElement | null) => {
+  const openChart = (
+    keyword: string,
+    trigger: HTMLElement | null,
+    date: string | null = null,
+  ) => {
     triggerRef.current = trigger;
+    setFocusDate(date);
     setActiveKeyword(keyword);
   };
 
   const handleOpenChange = (open: boolean) => {
     if (!open) {
       setActiveKeyword(null);
+      setFocusDate(null);
       // Defer to the next frame so Radix has finished unmounting and removed
       // its focus trap before we move focus back to the row.
       const target = triggerRef.current;
@@ -1848,7 +1906,27 @@ function Commercial15Panel({ rows }: { rows: Commercial15Row[] }) {
   const beyond  = rows.filter(r => r.position !== null && r.position > 10).length;
   const noData  = rows.filter(r => r.position === null).length;
 
+  // Cross-keyword annotations log: every per-day note across all 15 keywords,
+  // newest first. Lets the team scan the SEO timeline at a glance instead of
+  // opening each keyword's modal one by one.
+  const allAnnotations = useMemo(() => {
+    const list: { keyword: string; date: string; note: string }[] = [];
+    rows.forEach(r => {
+      r.history.forEach(h => {
+        if (isUserAnnotation(h.note)) {
+          list.push({ keyword: r.keyword, date: h.date, note: h.note as string });
+        }
+      });
+    });
+    // Newest first, with keyword as a stable tiebreaker so the order is
+    // deterministic when several keywords share the same annotated day.
+    return list.sort((a, b) =>
+      a.date === b.date ? a.keyword.localeCompare(b.keyword) : b.date.localeCompare(a.date),
+    );
+  }, [rows]);
+
   return (
+    <>
     <Card data-testid="card-commercial-15-keywords">
       <CardHeader className="pb-3">
         <div className="flex items-start justify-between gap-3 flex-wrap">
@@ -1967,12 +2045,90 @@ function Commercial15Panel({ rows }: { rows: Commercial15Row[] }) {
           </div>
         ))}
       </CardContent>
-      <Commercial15ChartModal
-        row={activeRow}
-        open={activeRow !== null}
-        onOpenChange={handleOpenChange}
-      />
     </Card>
+
+    <Card data-testid="card-commercial15-annotations">
+      <CardHeader className="pb-3">
+        <div className="flex items-start justify-between gap-3 flex-wrap">
+          <div>
+            <CardTitle className="text-base flex items-center gap-2">
+              <StickyNote className="h-4 w-4 text-amber-600" />
+              Annotations log
+              <Badge
+                variant="outline"
+                className="text-xs font-normal"
+                data-testid="badge-commercial15-annotations-count"
+              >
+                {allAnnotations.length} {allAnnotations.length === 1 ? "note" : "notes"}
+              </Badge>
+            </CardTitle>
+            <CardDescription className="mt-1">
+              Every per-day chart note across all 15 commercial keywords, newest first. Click an entry to open that keyword's 90-day chart focused on the annotated day.
+            </CardDescription>
+          </div>
+        </div>
+      </CardHeader>
+      <CardContent>
+        {allAnnotations.length === 0 ? (
+          <div
+            className="text-sm text-gray-500 dark:text-gray-400 text-center py-8"
+            data-testid="empty-commercial15-annotations"
+          >
+            No annotations yet. Open any keyword's 90-day chart and click a day to add the first note.
+          </div>
+        ) : (
+          <ul
+            className="divide-y divide-gray-100 dark:divide-gray-800"
+            data-testid="list-commercial15-annotations"
+          >
+            {allAnnotations.map(entry => {
+              const kwId = entry.keyword.replace(/\s+/g, "-");
+              return (
+                <li key={`${entry.keyword}-${entry.date}`}>
+                  <button
+                    type="button"
+                    onClick={(ev) => openChart(entry.keyword, ev.currentTarget, entry.date)}
+                    className="w-full text-left py-2.5 px-2 -mx-2 rounded-md hover:bg-gray-50 dark:hover:bg-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400 transition-colors flex flex-col sm:flex-row sm:items-baseline sm:gap-3"
+                    data-testid={`button-annotation-${kwId}-${entry.date}`}
+                    aria-label={`Open ${entry.keyword} chart focused on ${format(parseISO(entry.date), "EEE d MMM yyyy")}`}
+                  >
+                    <div className="shrink-0 sm:w-56 flex items-center gap-2">
+                      <span
+                        className="font-mono text-xs text-amber-600 dark:text-amber-400"
+                        data-testid={`text-annotation-date-${kwId}-${entry.date}`}
+                      >
+                        {format(parseISO(entry.date), "EEE d MMM yyyy")}
+                      </span>
+                      <Badge
+                        variant="outline"
+                        className="text-[10px] font-medium text-gray-700 dark:text-gray-300"
+                        data-testid={`badge-annotation-keyword-${kwId}-${entry.date}`}
+                      >
+                        {entry.keyword}
+                      </Badge>
+                    </div>
+                    <span
+                      className="text-sm text-gray-700 dark:text-gray-300 flex-1 mt-1 sm:mt-0"
+                      data-testid={`text-annotation-note-${kwId}-${entry.date}`}
+                    >
+                      {entry.note}
+                    </span>
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+        )}
+      </CardContent>
+    </Card>
+
+    <Commercial15ChartModal
+      row={activeRow}
+      open={activeRow !== null}
+      onOpenChange={handleOpenChange}
+      focusDate={focusDate}
+    />
+    </>
   );
 }
 
