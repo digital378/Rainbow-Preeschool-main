@@ -410,18 +410,6 @@ export default function HappyTimesLanding() {
         </div>
       </section>
 
-      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <EEATSignals
-          pageUrl="/happy-times"
-          pageName="Daycare in Thane | Happy Times After-School Care"
-          reviewedBy="Rainbow Preschool Curriculum Team"
-          reviewerRole="Curriculum Team, Rainbow Preschool International"
-          lastUpdated={LAST_UPDATED_DISPLAY}
-          lastUpdatedIso={LAST_UPDATED_ISO}
-          schemaId="happy-times-eeat"
-        />
-      </section>
-
       {/* Why After-School Care Matters - SEO Content */}
       <section className="py-16 md:py-20 lg:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -747,6 +735,18 @@ export default function HappyTimesLanding() {
       </section>
 
       {/* Final CTA Section */}
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
+        <EEATSignals
+          pageUrl="/happy-times"
+          pageName="Daycare in Thane | Happy Times After-School Care"
+          reviewedBy="Rainbow Preschool Curriculum Team"
+          reviewerRole="Curriculum Team, Rainbow Preschool International"
+          lastUpdated={LAST_UPDATED_DISPLAY}
+          lastUpdatedIso={LAST_UPDATED_ISO}
+          schemaId="happy-times-eeat"
+        />
+      </section>
+
       <section className="py-16 md:py-20 lg:py-24 bg-gradient-to-r from-primary via-accent to-secondary relative overflow-hidden">
         <div className="absolute inset-0 bg-black/40" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">

@@ -129,16 +129,6 @@ export default function ReadinessQuiz() {
           </p>
         </div>
 
-        <EEATSignals
-          pageUrl="/preschool-readiness-quiz"
-          pageName="Preschool Readiness Quiz"
-          reviewedBy="Rainbow Preschool Curriculum Team"
-          reviewerRole="Curriculum Team, Rainbow Preschool International"
-          lastUpdated={LAST_UPDATED_DISPLAY}
-          lastUpdatedIso={LAST_UPDATED_ISO}
-          schemaId="preschool-readiness-quiz-eeat"
-        />
-
         {!showResult ? (
           <Card className="border-2 shadow-lg" data-testid="quiz-card">
             <CardContent className="p-6 sm:p-8">
@@ -312,6 +302,18 @@ export default function ReadinessQuiz() {
         )}
 
         <BlogInternalLinks currentSlug="readiness-quiz" />
+      </section>
+
+      <section className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
+        <EEATSignals
+          pageUrl="/preschool-readiness-quiz"
+          pageName="Preschool Readiness Quiz"
+          reviewedBy="Rainbow Preschool Curriculum Team"
+          reviewerRole="Curriculum Team, Rainbow Preschool International"
+          lastUpdated={LAST_UPDATED_DISPLAY}
+          lastUpdatedIso={LAST_UPDATED_ISO}
+          schemaId="preschool-readiness-quiz-eeat"
+        />
       </section>
 
       <CTASection />

@@ -247,18 +247,6 @@ function PreschoolLocationTemplate({ localitySlug }: PreschoolLocationPageProps)
                 {seo.h1}
               </h1>
 
-              <EEATSignals
-                pageUrl={seo.canonicalPath}
-                pageName={seo.h1}
-                reviewedBy="Rainbow Preschool Curriculum Team"
-                reviewerRole="Curriculum Team, Rainbow Preschool International"
-                lastUpdated={LAST_UPDATED_DISPLAY}
-                lastUpdatedIso={LAST_UPDATED_ISO}
-                ratingValue={4.9}
-                reviewCount={487}
-                schemaId={`preschool-${localitySlug}`}
-              />
-
               <div className="space-y-4 text-muted-foreground mb-8">
                 <p data-testid="text-intro-1">{intros.paragraph1}</p>
                 <p data-testid="text-intro-2">{intros.paragraph2}</p>
@@ -605,6 +593,20 @@ function PreschoolLocationTemplate({ localitySlug }: PreschoolLocationPageProps)
             </Link>
           </div>
         </div>
+      </section>
+
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
+        <EEATSignals
+          pageUrl={seo.canonicalPath}
+          pageName={seo.h1}
+          reviewedBy="Rainbow Preschool Curriculum Team"
+          reviewerRole="Curriculum Team, Rainbow Preschool International"
+          lastUpdated={LAST_UPDATED_DISPLAY}
+          lastUpdatedIso={LAST_UPDATED_ISO}
+          ratingValue={4.9}
+          reviewCount={487}
+          schemaId={`preschool-${localitySlug}`}
+        />
       </section>
 
       <section className="relative overflow-hidden py-16 md:py-20 bg-gradient-to-r from-primary via-accent to-secondary text-white">

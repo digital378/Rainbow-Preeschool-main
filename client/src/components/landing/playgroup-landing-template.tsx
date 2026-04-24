@@ -156,17 +156,6 @@ export function PlaygroupLandingTemplate({ data }: PlaygroupLandingTemplateProps
         onWhatsAppClick={handleWhatsAppClick}
       />
 
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 -mt-2">
-        <EEATSignals
-          pageUrl={new URL(data.seo.canonical).pathname}
-          pageName={data.seo.h1}
-          lastUpdated={LAST_UPDATED_DISPLAY}
-          ratingValue={4.9}
-          reviewCount={487}
-          schemaId={`playgroup-${data.slug}`}
-        />
-      </div>
-
       {/* Callback Form Section */}
       <section className="py-12 md:py-16 bg-muted/20" ref={formRef}>
         <div className="max-w-md mx-auto px-4">
@@ -281,6 +270,17 @@ export function PlaygroupLandingTemplate({ data }: PlaygroupLandingTemplateProps
           </div>
         </div>
       </section>
+
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-6">
+        <EEATSignals
+          pageUrl={new URL(data.seo.canonical).pathname}
+          pageName={data.seo.h1}
+          lastUpdated={LAST_UPDATED_DISPLAY}
+          ratingValue={4.9}
+          reviewCount={487}
+          schemaId={`playgroup-${data.slug}`}
+        />
+      </div>
 
       <FinalCTA
         locality={data.localityName}

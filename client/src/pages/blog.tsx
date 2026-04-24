@@ -160,18 +160,6 @@ export default function Blog() {
         </div>
       </section>
 
-      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <EEATSignals
-          pageUrl="/blog"
-          pageName="Rainbow Preschool Blog"
-          reviewedBy="Rainbow Preschool Curriculum Team"
-          reviewerRole="Curriculum Team, Rainbow Preschool International"
-          lastUpdated={LAST_UPDATED_DISPLAY}
-          lastUpdatedIso={LAST_UPDATED_ISO}
-          schemaId="blog-eeat"
-        />
-      </section>
-
       <section className="py-8 md:py-12 lg:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 mb-8">
@@ -239,6 +227,18 @@ export default function Blog() {
             </div>
           )}
         </div>
+      </section>
+
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
+        <EEATSignals
+          pageUrl="/blog"
+          pageName="Rainbow Preschool Blog"
+          reviewedBy="Rainbow Preschool Curriculum Team"
+          reviewerRole="Curriculum Team, Rainbow Preschool International"
+          lastUpdated={LAST_UPDATED_DISPLAY}
+          lastUpdatedIso={LAST_UPDATED_ISO}
+          schemaId="blog-eeat"
+        />
       </section>
 
       <CTASection

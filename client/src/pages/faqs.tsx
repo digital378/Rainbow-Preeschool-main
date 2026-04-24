@@ -316,16 +316,6 @@ export default function FAQs() {
           </p>
         </div>
 
-        <EEATSignals
-          pageUrl="/faqs"
-          pageName="Frequently Asked Questions | Rainbow Preschool"
-          reviewedBy="Rainbow Preschool Curriculum Team"
-          reviewerRole="Curriculum Team, Rainbow Preschool International"
-          lastUpdated={LAST_UPDATED_DISPLAY}
-          lastUpdatedIso={LAST_UPDATED_ISO}
-          schemaId="faqs-eeat"
-        />
-
         <div className="relative mb-8">
           <label htmlFor="faq-search" className="sr-only">Search frequently asked questions</label>
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
@@ -417,6 +407,18 @@ export default function FAQs() {
         </div>
 
         <BlogInternalLinks currentSlug="faqs" />
+      </section>
+
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
+        <EEATSignals
+          pageUrl="/faqs"
+          pageName="Frequently Asked Questions | Rainbow Preschool"
+          reviewedBy="Rainbow Preschool Curriculum Team"
+          reviewerRole="Curriculum Team, Rainbow Preschool International"
+          lastUpdated={LAST_UPDATED_DISPLAY}
+          lastUpdatedIso={LAST_UPDATED_ISO}
+          schemaId="faqs-eeat"
+        />
       </section>
 
       <CTASection />

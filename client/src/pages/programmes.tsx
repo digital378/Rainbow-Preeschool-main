@@ -85,18 +85,6 @@ export default function Programmes() {
         </div>
       </section>
 
-      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <EEATSignals
-          pageUrl="/programmes"
-          pageName="Preschool Programmes in Thane"
-          reviewedBy="Rainbow Preschool Curriculum Team"
-          reviewerRole="Curriculum Team, Rainbow Preschool International"
-          lastUpdated={LAST_UPDATED_DISPLAY}
-          lastUpdatedIso={LAST_UPDATED_ISO}
-          schemaId="programmes-eeat"
-        />
-      </section>
-
       {/* Programmes List */}
       <section className="py-16 md:py-20 lg:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
@@ -220,6 +208,18 @@ export default function Programmes() {
             </Link>
           </div>
         </div>
+      </section>
+
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
+        <EEATSignals
+          pageUrl="/programmes"
+          pageName="Preschool Programmes in Thane"
+          reviewedBy="Rainbow Preschool Curriculum Team"
+          reviewerRole="Curriculum Team, Rainbow Preschool International"
+          lastUpdated={LAST_UPDATED_DISPLAY}
+          lastUpdatedIso={LAST_UPDATED_ISO}
+          schemaId="programmes-eeat"
+        />
       </section>
 
       <CTASection

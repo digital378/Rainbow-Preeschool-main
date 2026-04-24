@@ -169,16 +169,6 @@ export default function TopPreschoolsThane() {
           </p>
         </div>
 
-        <EEATSignals
-          pageUrl="/top-preschools-in-thane"
-          pageName="Top 10 Preschools in Thane — Comparison Guide"
-          reviewedBy="Rainbow Preschool Curriculum Team"
-          reviewerRole="Curriculum Team, Rainbow Preschool International"
-          lastUpdated={LAST_UPDATED_DISPLAY}
-          lastUpdatedIso={LAST_UPDATED_ISO}
-          schemaId="top-preschools-in-thane-eeat"
-        />
-
         <div className="bg-amber-50 border border-amber-200 rounded-xl p-5 mb-10">
           <h2 className="text-sm font-semibold text-amber-800 mb-2 flex items-center gap-2">
             <Award className="w-4 h-4" />
@@ -312,6 +302,16 @@ export default function TopPreschoolsThane() {
         </Card>
 
         <BlogInternalLinks currentSlug="top-preschools-thane" />
+
+        <EEATSignals
+          pageUrl="/top-preschools-in-thane"
+          pageName="Top 10 Preschools in Thane — Comparison Guide"
+          reviewedBy="Rainbow Preschool Curriculum Team"
+          reviewerRole="Curriculum Team, Rainbow Preschool International"
+          lastUpdated={LAST_UPDATED_DISPLAY}
+          lastUpdatedIso={LAST_UPDATED_ISO}
+          schemaId="top-preschools-in-thane-eeat"
+        />
       </section>
 
       <CTASection />

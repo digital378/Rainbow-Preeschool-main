@@ -197,16 +197,6 @@ export default function Testimonials() {
             Real stories from real families. Hear from parents across our 6 centres in Thane about their experience with Rainbow Preschool International.
           </p>
 
-          <EEATSignals
-            pageUrl="/testimonials"
-            pageName="Parent Testimonials | Rainbow Preschool International"
-            reviewedBy="Rainbow Preschool Curriculum Team"
-            reviewerRole="Curriculum Team, Rainbow Preschool International"
-            lastUpdated={LAST_UPDATED_DISPLAY}
-            lastUpdatedIso={LAST_UPDATED_ISO}
-            schemaId="testimonials-eeat"
-          />
-
           <div className="inline-flex items-center gap-4 bg-amber-50 border border-amber-200 rounded-xl px-6 py-3" data-testid="aggregate-rating">
             <div className="flex items-center gap-1">
               {[1, 2, 3, 4, 5].map(star => (
@@ -269,6 +259,18 @@ export default function Testimonials() {
         </div>
 
         <BlogInternalLinks currentSlug="testimonials" />
+      </section>
+
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
+        <EEATSignals
+          pageUrl="/testimonials"
+          pageName="Parent Testimonials | Rainbow Preschool International"
+          reviewedBy="Rainbow Preschool Curriculum Team"
+          reviewerRole="Curriculum Team, Rainbow Preschool International"
+          lastUpdated={LAST_UPDATED_DISPLAY}
+          lastUpdatedIso={LAST_UPDATED_ISO}
+          schemaId="testimonials-eeat"
+        />
       </section>
 
       <CTASection />

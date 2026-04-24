@@ -251,18 +251,6 @@ export default function Gallery() {
         </div>
       </section>
 
-      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <EEATSignals
-          pageUrl="/gallery"
-          pageName="Rainbow Preschool Gallery — Thane"
-          reviewedBy="Rainbow Preschool Curriculum Team"
-          reviewerRole="Curriculum Team, Rainbow Preschool International"
-          lastUpdated={LAST_UPDATED_DISPLAY}
-          lastUpdatedIso={LAST_UPDATED_ISO}
-          schemaId="gallery-eeat"
-        />
-      </section>
-
       {/* ── Stats Trust Bar ──────────────────────────────────────── */}
       <div className="bg-white dark:bg-background border-b border-gray-100 dark:border-gray-800">
         <div className="max-w-3xl mx-auto px-4 py-4 flex items-center justify-center gap-5 md:gap-10 flex-wrap">
@@ -447,6 +435,18 @@ export default function Gallery() {
       </section>
 
       {/* ── CTA ──────────────────────────────────────────────────── */}
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
+        <EEATSignals
+          pageUrl="/gallery"
+          pageName="Rainbow Preschool Gallery — Thane"
+          reviewedBy="Rainbow Preschool Curriculum Team"
+          reviewerRole="Curriculum Team, Rainbow Preschool International"
+          lastUpdated={LAST_UPDATED_DISPLAY}
+          lastUpdatedIso={LAST_UPDATED_ISO}
+          schemaId="gallery-eeat"
+        />
+      </section>
+
       <section className="relative overflow-hidden bg-gradient-to-r from-primary via-accent to-secondary py-14 md:py-20">
         <div className="absolute inset-0 bg-black/40" />
         <div className="relative z-10 max-w-3xl mx-auto px-4 text-center">

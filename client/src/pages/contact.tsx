@@ -47,18 +47,6 @@ export default function Contact() {
         </div>
       </section>
 
-      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <EEATSignals
-          pageUrl="/contact"
-          pageName="Contact Rainbow Preschool Thane"
-          reviewedBy="Rainbow Preschool Curriculum Team"
-          reviewerRole="Curriculum Team, Rainbow Preschool International"
-          lastUpdated={LAST_UPDATED_DISPLAY}
-          lastUpdatedIso={LAST_UPDATED_ISO}
-          schemaId="contact-eeat"
-        />
-      </section>
-
       {/* Contact Form and Info */}
       <section id="enquiry-form" className="py-16 md:py-20 lg:py-24 scroll-mt-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -180,6 +168,18 @@ export default function Contact() {
             </Link>
           </div>
         </div>
+      </section>
+
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
+        <EEATSignals
+          pageUrl="/contact"
+          pageName="Contact Rainbow Preschool Thane"
+          reviewedBy="Rainbow Preschool Curriculum Team"
+          reviewerRole="Curriculum Team, Rainbow Preschool International"
+          lastUpdated={LAST_UPDATED_DISPLAY}
+          lastUpdatedIso={LAST_UPDATED_ISO}
+          schemaId="contact-eeat"
+        />
       </section>
 
       {/* ExtraEdge Form Tracking */}

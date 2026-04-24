@@ -1291,23 +1291,6 @@ export default function BlogPost() {
                 {post.readTime}
               </span>
             </div>
-            <EEATSignals
-              pageUrl={`/blog/${post.slug}`}
-              pageName={post.title}
-              reviewedBy={authorship.reviewedBy.name}
-              reviewerRole={authorship.reviewedBy.role}
-              reviewerCredentials={authorship.reviewedBy.credentials}
-              reviewerBio={authorship.reviewedBy.bio}
-              reviewerProfileUrl={authorship.reviewedBy.url}
-              authorName={authorship.author.name}
-              authorRole={authorship.author.role}
-              authorCredentials={authorship.author.credentials}
-              lastUpdated={COMMERCIAL_PAGES_LAST_UPDATED_DISPLAY}
-              lastUpdatedIso={COMMERCIAL_PAGES_LAST_UPDATED}
-              ratingValue={4.9}
-              reviewCount={487}
-              schemaId={`blog-${post.slug}`}
-            />
           </header>
 
           <div className="prose prose-lg max-w-none dark:prose-invert">
@@ -1597,6 +1580,26 @@ export default function BlogPost() {
           </div>
         </div>
       </article>
+
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
+        <EEATSignals
+          pageUrl={`/blog/${post.slug}`}
+          pageName={post.title}
+          reviewedBy={authorship.reviewedBy.name}
+          reviewerRole={authorship.reviewedBy.role}
+          reviewerCredentials={authorship.reviewedBy.credentials}
+          reviewerBio={authorship.reviewedBy.bio}
+          reviewerProfileUrl={authorship.reviewedBy.url}
+          authorName={authorship.author.name}
+          authorRole={authorship.author.role}
+          authorCredentials={authorship.author.credentials}
+          lastUpdated={COMMERCIAL_PAGES_LAST_UPDATED_DISPLAY}
+          lastUpdatedIso={COMMERCIAL_PAGES_LAST_UPDATED}
+          ratingValue={4.9}
+          reviewCount={487}
+          schemaId={`blog-${post.slug}`}
+        />
+      </section>
 
       <CTASection
         title="Explore More Articles"
