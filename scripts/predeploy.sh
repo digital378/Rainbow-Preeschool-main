@@ -111,6 +111,8 @@ if [ "${FRESHNESS_EXIT}" -ne 0 ] || [ "${KEYWORD_EXIT}" -ne 0 ]; then
   if [ "${KEYWORD_EXIT}" -ne 0 ]; then
     log "FAIL — keyword-targets smoke-test exited ${KEYWORD_EXIT}. See offending assertions above."
   fi
+  log "tail of booted server log (last 80 lines of ${SERVER_LOG}):"
+  tail -n 80 "${SERVER_LOG}" >&2 || true
   log "blocking deploy."
   # Surface the keyword exit if it failed, otherwise the freshness exit.
   if [ "${KEYWORD_EXIT}" -ne 0 ]; then
