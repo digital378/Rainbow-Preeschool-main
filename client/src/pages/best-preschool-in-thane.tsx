@@ -9,7 +9,7 @@ import {
 import { trackWhatsAppClick, trackCallClick } from "@/lib/analytics";
 import { SEOCrossLinks } from "@/components/seo-crosslinks";
 import { EEATSignals } from "@/components/eeat-signals";
-import { LAST_UPDATED_DISPLAY } from "@shared/site-freshness";
+import { LAST_UPDATED_DISPLAY, LAST_UPDATED_ISO } from "@shared/site-freshness";
 import { useState, useEffect } from "react";
 
 // ── Page data ─────────────────────────────────────────────────────────────────
@@ -704,7 +704,10 @@ export default function BestPreschoolInThane() {
               <EEATSignals
                 pageUrl="/best-preschool-near-me-in-thane"
                 pageName="Best Preschool in Thane"
+                reviewedBy="Rainbow Preschool Curriculum Team"
+                reviewerRole="Curriculum Team, Rainbow Preschool International"
                 lastUpdated={LAST_UPDATED_DISPLAY}
+                lastUpdatedIso={LAST_UPDATED_ISO}
                 ratingValue={4.9}
                 reviewCount={487}
                 schemaId="best-preschool-in-thane"

@@ -45,7 +45,7 @@ import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { EEATSignals } from "@/components/eeat-signals";
-import { LAST_UPDATED_DISPLAY } from "@shared/site-freshness";
+import { LAST_UPDATED_DISPLAY, LAST_UPDATED_ISO } from "@shared/site-freshness";
 import { trackProgrammeView, trackFormSubmit } from "@/lib/analytics";
 
 const callbackFormSchema = z.object({
@@ -974,7 +974,10 @@ export default function NurseryLanding() {
         <EEATSignals
           pageUrl="/nursery"
           pageName="Nursery School in Thane"
+          reviewedBy="Rainbow Preschool Curriculum Team"
+          reviewerRole="Curriculum Team, Rainbow Preschool International"
           lastUpdated={LAST_UPDATED_DISPLAY}
+          lastUpdatedIso={LAST_UPDATED_ISO}
           ratingValue={4.9}
           reviewCount={487}
           schemaId="nursery-landing"

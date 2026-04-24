@@ -28,8 +28,8 @@ interface EEATSignalsProps {
 export function EEATSignals({
   pageUrl,
   pageName,
-  reviewedBy,
-  reviewerRole = "Head of Curriculum, Rainbow Preschool International",
+  reviewedBy = "Rainbow Preschool Curriculum Team",
+  reviewerRole = "Curriculum Team, Rainbow Preschool International",
   reviewerCredentials,
   reviewerBio,
   reviewerProfileUrl,
@@ -142,7 +142,7 @@ export function EEATSignals({
     };
   }, [pageUrl, pageName, reviewedBy, reviewerRole, reviewerCredentials, reviewerProfileUrl, authorName, authorRole, authorCredentials, lastUpdated, lastUpdatedIso, ratingValue, reviewCount, schemaId]);
 
-  const reviewerEyebrow = reviewedBy ? "Reviewed by" : "Reviewed by Education Lead";
+  const reviewerEyebrow = "Reviewed by";
 
   return (
     <div

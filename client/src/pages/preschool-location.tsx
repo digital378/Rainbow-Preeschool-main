@@ -13,7 +13,7 @@ import {
 import { LocalCallbackForm } from "@/components/local-callback-form";
 import { MinimalHeader } from "@/components/landing/minimal-header";
 import { EEATSignals } from "@/components/eeat-signals";
-import { LAST_UPDATED_DISPLAY } from "@shared/site-freshness";
+import { LAST_UPDATED_DISPLAY, LAST_UPDATED_ISO } from "@shared/site-freshness";
 import { 
   getCentreBySlug, 
   preschoolPageSEO, 
@@ -250,7 +250,10 @@ function PreschoolLocationTemplate({ localitySlug }: PreschoolLocationPageProps)
               <EEATSignals
                 pageUrl={seo.canonicalPath}
                 pageName={seo.h1}
+                reviewedBy="Rainbow Preschool Curriculum Team"
+                reviewerRole="Curriculum Team, Rainbow Preschool International"
                 lastUpdated={LAST_UPDATED_DISPLAY}
+                lastUpdatedIso={LAST_UPDATED_ISO}
                 ratingValue={4.9}
                 reviewCount={487}
                 schemaId={`preschool-${localitySlug}`}
