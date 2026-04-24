@@ -13,6 +13,7 @@ import {
 import { LocalCallbackForm } from "@/components/local-callback-form";
 import { MinimalHeader } from "@/components/landing/minimal-header";
 import { EEATSignals } from "@/components/eeat-signals";
+import { LAST_UPDATED_DISPLAY } from "@shared/site-freshness";
 import { 
   getCentreBySlug, 
   preschoolPageSEO, 
@@ -249,7 +250,7 @@ function PreschoolLocationTemplate({ localitySlug }: PreschoolLocationPageProps)
               <EEATSignals
                 pageUrl={seo.canonicalPath}
                 pageName={seo.h1}
-                lastUpdated={COMMERCIAL_PAGES_LAST_UPDATED_DISPLAY}
+                lastUpdated={LAST_UPDATED_DISPLAY}
                 ratingValue={4.9}
                 reviewCount={487}
                 schemaId={`preschool-${localitySlug}`}

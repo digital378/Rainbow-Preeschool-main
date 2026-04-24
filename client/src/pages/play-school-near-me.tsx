@@ -46,7 +46,7 @@ import { useToast } from "@/hooks/use-toast";
 import { trackFormSubmit } from "@/lib/analytics";
 import { SEOCrossLinks } from "@/components/seo-crosslinks";
 import { EEATSignals } from "@/components/eeat-signals";
-import { COMMERCIAL_PAGES_LAST_UPDATED_DISPLAY } from "@shared/seo-config";
+import { LAST_UPDATED_DISPLAY } from "@shared/site-freshness";
 
 const callbackFormSchema = z.object({
   parentName: z.string().min(2, "Please enter your name"),
@@ -1093,7 +1093,7 @@ export default function PlaySchoolNearMe() {
         <EEATSignals
           pageUrl="/play-school-near-me"
           pageName="Play School Near Me in Thane"
-          lastUpdated={COMMERCIAL_PAGES_LAST_UPDATED_DISPLAY}
+          lastUpdated={LAST_UPDATED_DISPLAY}
           ratingValue={4.9}
           reviewCount={487}
           schemaId="play-school-near-me"

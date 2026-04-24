@@ -1,7 +1,7 @@
 import {
-  COMMERCIAL_PAGES_LAST_UPDATED,
-  COMMERCIAL_PAGES_LAST_UPDATED_DISPLAY,
-} from "@shared/seo-config";
+  LAST_UPDATED_DISPLAY,
+  LAST_UPDATED_ISO,
+} from "@shared/site-freshness";
 
 const BASE_URL = "https://www.rainbowpreschools.com";
 
@@ -440,8 +440,8 @@ const staticPages: Record<string, PageSEOData> = {
       { heading: "Admission & Timings", text: "Playgroup admissions at Rainbow Preschool International are open for children aged 1.5 to 2.5 years. Our Playgroup operates Monday through Friday with morning batches (8:30 AM to 11:30 AM) and afternoon batches (12:30 PM to 3:30 PM) available at select centres, giving working parents maximum flexibility. Admissions are accepted on a rolling basis throughout the year, subject to seat availability. We strongly encourage parents to schedule a free campus tour before enrolling — you can observe the classroom, meet your child's prospective teacher, and ask all the questions you have in a relaxed, no-pressure setting. To book a tour or request an admission form, call us at +91 82915 68972 or walk into any of our 6 Rainbow Preschool centres in Thane West, Monday to Saturday, 9 AM to 6 PM." },
     ],
     internalLinks: [...commonInternalLinks, { text: "Best Preschool in Thane", url: "/best-preschool-near-me-in-thane" }, { text: "Nursery Programme", url: "/nursery" }],
-    lastModified: COMMERCIAL_PAGES_LAST_UPDATED,
-    lastModifiedDisplay: COMMERCIAL_PAGES_LAST_UPDATED_DISPLAY,
+    lastModified: LAST_UPDATED_ISO,
+    lastModifiedDisplay: LAST_UPDATED_DISPLAY,
   },
   "/nursery": {
     title: "Nursery Programme (2.5-4 years) | Rainbow Preschool Thane",
@@ -458,8 +458,8 @@ const staticPages: Record<string, PageSEOData> = {
       { heading: "Admission & Timings", text: "Nursery admissions are open for children aged 2.5 to 4 years. Our Nursery runs Monday to Friday, with school hours of 8:30 AM to 12:30 PM (extended day available at select centres). Rainbow Preschool has 6 Nursery centres across Thane West — Manpada, Hariniwas Circle, Anand Nagar, Dhokali, Kalwa, and Kasarvadavali. Contact us at +91 82915 68972 to schedule a free school visit." },
     ],
     internalLinks: [...commonInternalLinks, { text: "Nursery Admission Thane", url: "/nursery-school-admission-thane" }, { text: "Playgroup Programme", url: "/playgroup" }, { text: "Kindergarten Programme", url: "/kindergarten" }],
-    lastModified: COMMERCIAL_PAGES_LAST_UPDATED,
-    lastModifiedDisplay: COMMERCIAL_PAGES_LAST_UPDATED_DISPLAY,
+    lastModified: LAST_UPDATED_ISO,
+    lastModifiedDisplay: LAST_UPDATED_DISPLAY,
   },
   "/kindergarten": {
     title: "Kindergarten Programme (4-6 years) | Rainbow Preschool Thane",
@@ -476,8 +476,8 @@ const staticPages: Record<string, PageSEOData> = {
       { heading: "Admission & Timings", text: "Kindergarten (Junior KG and Senior KG) admissions are open for children aged 4 to 6 years. School hours are 8:30 AM to 1:00 PM, Monday to Friday. Extended day care is available at select centres. Rainbow Preschool operates 6 Kindergarten centres across Thane West — Manpada, Hariniwas Circle, Anand Nagar, Dhokali, Kalwa, and Kasarvadavali. Contact us at +91 82915 68972 or visit any centre for a free demo class." },
     ],
     internalLinks: [...commonInternalLinks, { text: "Nursery Programme", url: "/nursery" }, { text: "Preschool Admissions", url: "/preschool-admissions" }],
-    lastModified: COMMERCIAL_PAGES_LAST_UPDATED,
-    lastModifiedDisplay: COMMERCIAL_PAGES_LAST_UPDATED_DISPLAY,
+    lastModified: LAST_UPDATED_ISO,
+    lastModifiedDisplay: LAST_UPDATED_DISPLAY,
   },
   "/gallery": {
     title: "Photo Gallery | Rainbow Preschool International Thane",
@@ -537,8 +537,8 @@ const staticPages: Record<string, PageSEOData> = {
     canonical: `${BASE_URL}/preschool-admissions`,
     h1: "Preschool Admissions — Rainbow Preschool International",
     breadcrumbs: [{ name: "Home", url: "/" }, { name: "Admissions", url: "/preschool-admissions" }],
-    lastModified: COMMERCIAL_PAGES_LAST_UPDATED,
-    lastModifiedDisplay: COMMERCIAL_PAGES_LAST_UPDATED_DISPLAY,
+    lastModified: LAST_UPDATED_ISO,
+    lastModifiedDisplay: LAST_UPDATED_DISPLAY,
     contentSections: [
       { heading: "Admission Process", items: ["Step 1: Enquire online or call 82915 68972", "Step 2: Schedule a centre visit", "Step 3: Meet our educators", "Step 4: Complete registration", "Step 5: Welcome to Rainbow!"] },
       { heading: "Age Eligibility", items: ["Playgroup: 1.5 to 2.5 years", "Nursery: 2.5 to 4 years", "Kindergarten: 4 to 6 years"] },
@@ -574,8 +574,8 @@ const staticPages: Record<string, PageSEOData> = {
       { heading: "Our Programmes", items: ["Playgroup (1.5–2.5 years)", "Nursery (2.5–4 years)", "Kindergarten (4–6 years)"] },
     ],
     internalLinks: commonInternalLinks,
-    lastModified: COMMERCIAL_PAGES_LAST_UPDATED,
-    lastModifiedDisplay: COMMERCIAL_PAGES_LAST_UPDATED_DISPLAY,
+    lastModified: LAST_UPDATED_ISO,
+    lastModifiedDisplay: LAST_UPDATED_DISPLAY,
   },
   "/preschool-near-me": {
     title: "Preschool Near Me in Thane | Rainbow Preschool",
@@ -605,8 +605,8 @@ const staticPages: Record<string, PageSEOData> = {
       { heading: "Programmes Available at Every Centre", items: ["Playgroup (1.5–2.5 years)", "Nursery (2.5–4 years)", "Kindergarten (4–6 years)"] },
     ],
     internalLinks: commonInternalLinks,
-    lastModified: COMMERCIAL_PAGES_LAST_UPDATED,
-    lastModifiedDisplay: COMMERCIAL_PAGES_LAST_UPDATED_DISPLAY,
+    lastModified: LAST_UPDATED_ISO,
+    lastModifiedDisplay: LAST_UPDATED_DISPLAY,
   },
   "/play-school-near-me": {
     title: "Play School Near Me in Thane | Rainbow Preschool",
@@ -635,8 +635,8 @@ const staticPages: Record<string, PageSEOData> = {
       ]},
     ],
     internalLinks: commonInternalLinks,
-    lastModified: COMMERCIAL_PAGES_LAST_UPDATED,
-    lastModifiedDisplay: COMMERCIAL_PAGES_LAST_UPDATED_DISPLAY,
+    lastModified: LAST_UPDATED_ISO,
+    lastModifiedDisplay: LAST_UPDATED_DISPLAY,
   },
   "/happy-times": {
     title: "Happy Times | After-School Care | Rainbow Preschool",
@@ -767,8 +767,8 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
         { heading: "Our Programmes", items: ["Playgroup (1.5–2.5 years)", "Nursery (2.5–4 years)", "Kindergarten (4–6 years)"] },
       ],
       internalLinks: commonInternalLinks,
-      lastModified: COMMERCIAL_PAGES_LAST_UPDATED,
-      lastModifiedDisplay: COMMERCIAL_PAGES_LAST_UPDATED_DISPLAY,
+      lastModified: LAST_UPDATED_ISO,
+      lastModifiedDisplay: LAST_UPDATED_DISPLAY,
     };
   }
 
@@ -808,8 +808,8 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
         { heading: `Admission & Timings for Playgroup in ${isThanePage ? "Thane" : pg.locality}`, text: `Playgroup admissions are open for children aged 1.5 to 2.5 years. Our Playgroup operates Monday to Friday with both morning (8:30 AM–11:30 AM) and afternoon (12:30 PM–3:30 PM) batches at select centres. Enrolment is available on a rolling basis throughout the year, subject to availability. We encourage parents to visit the campus before enrolling — our free campus tour includes a classroom visit, meeting the teacher, and a Q&A session. To book a visit or enquire about admissions at our ${isThanePage ? "Thane West" : pg.locality} centres, call us at +91-8291568972 or walk into any Rainbow Preschool centre Monday to Saturday, 9 AM–6 PM.` },
       ],
       internalLinks: [...commonInternalLinks, { text: "Playgroup Programme", url: "/playgroup" }, { text: "Preschool in Thane", url: "/best-preschool-near-me-in-thane" }],
-      lastModified: COMMERCIAL_PAGES_LAST_UPDATED,
-      lastModifiedDisplay: COMMERCIAL_PAGES_LAST_UPDATED_DISPLAY,
+      lastModified: LAST_UPDATED_ISO,
+      lastModifiedDisplay: LAST_UPDATED_DISPLAY,
     };
   }
 

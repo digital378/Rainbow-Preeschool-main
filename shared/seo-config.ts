@@ -1,19 +1,19 @@
 // SEO Configuration for Rainbow Preschool International
 // Centralized config for noindex rules, redirects, and sitemap generation
 
+import { LAST_UPDATED_DISPLAY, LAST_UPDATED_ISO } from "./site-freshness";
+
 export const PREFERRED_DOMAIN = "https://www.rainbowpreschools.com";
 
 // ─── Commercial pages "Last Updated" freshness signal ────────────────────────
-// Bump this once a month (per docs/seo-seasonal-refresh-playbook.md). A single
-// edit here updates the visible byline AND the Article schema dateModified
-// across all 5 commercial pages — both the bot SSR copies in
-// `server/ssr-pages.ts` and the React `<EEATSignals>` props on the client.
+// These re-export the site-wide freshness constants from `shared/site-freshness.ts`
+// so the monthly refresh is a single edit in one file. See that module for details.
 //
 // Format:
 //   COMMERCIAL_PAGES_LAST_UPDATED          → ISO-8601 date used in JSON-LD
 //   COMMERCIAL_PAGES_LAST_UPDATED_DISPLAY  → Human-readable date shown to users
-export const COMMERCIAL_PAGES_LAST_UPDATED = "2026-04-24";
-export const COMMERCIAL_PAGES_LAST_UPDATED_DISPLAY = "April 24, 2026";
+export const COMMERCIAL_PAGES_LAST_UPDATED = LAST_UPDATED_ISO;
+export const COMMERCIAL_PAGES_LAST_UPDATED_DISPLAY = LAST_UPDATED_DISPLAY;
 
 // Pages that should be noindex, follow (low-intent content)
 export const NOINDEX_SLUGS: string[] = [

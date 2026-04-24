@@ -2,6 +2,7 @@ import { Link } from "wouter";
 import { SEO, organizationSchema, websiteSchema, createBreadcrumbSchema, createFAQSchema } from "@/components/seo";
 import { ContactForm } from "@/components/contact-form";
 import { EEATSignals } from "@/components/eeat-signals";
+import { LAST_UPDATED_DISPLAY } from "@shared/site-freshness";
 import { centres } from "@shared/centre-data";
 import { COMMERCIAL_PAGES_LAST_UPDATED_DISPLAY } from "@shared/seo-config";
 import {
@@ -571,7 +572,7 @@ export default function PreschoolAdmissions() {
                 <EEATSignals
                   pageUrl="/preschool-admissions"
                   pageName="Preschool Admissions 2026–27"
-                  lastUpdated={COMMERCIAL_PAGES_LAST_UPDATED_DISPLAY}
+                  lastUpdated={LAST_UPDATED_DISPLAY}
                   ratingValue={4.9}
                   reviewCount={487}
                   schemaId="preschool-admissions-eeat"

@@ -11,6 +11,7 @@ import { CentreCardWithMap } from "./centre-card-with-map";
 import { FAQAccordion } from "./faq-accordion";
 import { FinalCTA } from "./final-cta";
 import { EEATSignals } from "@/components/eeat-signals";
+import { LAST_UPDATED_DISPLAY } from "@shared/site-freshness";
 import { pushToDataLayer } from "@/lib/analytics";
 
 interface PlaygroupLandingTemplateProps {
@@ -159,7 +160,7 @@ export function PlaygroupLandingTemplate({ data }: PlaygroupLandingTemplateProps
         <EEATSignals
           pageUrl={new URL(data.seo.canonical).pathname}
           pageName={data.seo.h1}
-          lastUpdated="April 24, 2026"
+          lastUpdated={LAST_UPDATED_DISPLAY}
           ratingValue={4.9}
           reviewCount={487}
           schemaId={`playgroup-${data.slug}`}

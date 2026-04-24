@@ -45,7 +45,7 @@ import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { EEATSignals } from "@/components/eeat-signals";
-import { COMMERCIAL_PAGES_LAST_UPDATED_DISPLAY } from "@shared/seo-config";
+import { LAST_UPDATED_DISPLAY } from "@shared/site-freshness";
 import { trackProgrammeView, trackFormSubmit } from "@/lib/analytics";
 
 const callbackFormSchema = z.object({
@@ -898,7 +898,7 @@ export default function PlaygroupLanding() {
         <EEATSignals
           pageUrl="/playgroup"
           pageName="Playgroup in Thane"
-          lastUpdated={COMMERCIAL_PAGES_LAST_UPDATED_DISPLAY}
+          lastUpdated={LAST_UPDATED_DISPLAY}
           ratingValue={4.9}
           reviewCount={487}
           schemaId="playgroup-landing"
