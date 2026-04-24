@@ -421,17 +421,6 @@ export default function Home() {
         </div>
       </nav>
       <QuickCallbackStrip />
-      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <EEATSignals
-          pageUrl="/"
-          pageName="Rainbow Preschool International — Preschool in Thane"
-          reviewedBy="Rainbow Preschool Curriculum Team"
-          reviewerRole="Curriculum Team, Rainbow Preschool International"
-          lastUpdated={LAST_UPDATED_DISPLAY}
-          lastUpdatedIso={LAST_UPDATED_ISO}
-          schemaId="home-eeat"
-        />
-      </section>
       <AwardedBySection />
 
       {/* About Section - SEO Enhanced */}
@@ -718,6 +707,18 @@ export default function Home() {
             ))}
           </Accordion>
         </div>
+      </section>
+
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
+        <EEATSignals
+          pageUrl="/"
+          pageName="Rainbow Preschool International — Preschool in Thane"
+          reviewedBy="Rainbow Preschool Curriculum Team"
+          reviewerRole="Curriculum Team, Rainbow Preschool International"
+          lastUpdated={LAST_UPDATED_DISPLAY}
+          lastUpdatedIso={LAST_UPDATED_ISO}
+          schemaId="home-eeat"
+        />
       </section>
 
       <LazySection minHeight={300}>
