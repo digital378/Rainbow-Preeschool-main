@@ -9,6 +9,7 @@ import path from "path";
 import fs from "fs";
 import { buildSitemapXml, blogPostSitemapEntry } from "@shared/sitemap-entries";
 import { storage } from "./storage";
+import { getBlogPostLastModified } from "./ssr-pages";
 
 const app = express();
 
@@ -35,14 +36,16 @@ app.use(
 
 app.use(express.urlencoded({ extended: false }));
 
-// Serve sitemap.xml dynamically so every <lastmod> is sourced from
+// Serve sitemap.xml dynamically so every non-blog <lastmod> is sourced from
 // `LAST_UPDATED_ISO` in `shared/site-freshness.ts`. Bumping that one constant
 // during the monthly refresh updates the visible byline, the Article JSON-LD
 // dateModified AND the sitemap together — no static .xml edit required.
 //
 // Blog posts (/blog/:slug) are pulled live from `storage.getBlogPosts()` and
-// merged into the curated `SITEMAP_ENTRIES` array, so publishing a new post
-// makes it appear in /sitemap.xml on the next request without any code edit.
+// appended on top of the curated entries. Each blog row gets its own
+// per-post <lastmod> (curated value from `server/ssr-pages.ts`, else the
+// row's `publishedAt`), so publishing or editing the curated date for a post
+// is reflected on the next /sitemap.xml request without any static edit.
 //
 // (Must be registered before redirects + the static middleware so it always
 // wins.)
@@ -51,7 +54,22 @@ app.get("/sitemap.xml", async (_req, res) => {
   res.setHeader("Cache-Control", "public, max-age=3600");
   try {
     const posts = await storage.getBlogPosts();
-    const blogEntries = posts.map((post) => blogPostSitemapEntry(post.slug));
+    // Per-post `<lastmod>`: prefer the curated `lastModified` in
+    // `server/ssr-pages.ts` (matches the visible byline + Article JSON-LD
+    // dateModified), then fall back to the post's own `publishedAt`. If
+    // neither is available the entry inherits the site-wide
+    // `LAST_UPDATED_ISO` from `buildSitemapXml`'s default.
+    const blogEntries = posts.map((post) => {
+      const curated = getBlogPostLastModified(post.slug);
+      let publishedIso: string | undefined;
+      if (post.publishedAt) {
+        const parsed = new Date(post.publishedAt);
+        if (!Number.isNaN(parsed.getTime())) {
+          publishedIso = parsed.toISOString().slice(0, 10);
+        }
+      }
+      return blogPostSitemapEntry(post.slug, curated ?? publishedIso);
+    });
     res.send(buildSitemapXml({ extraEntries: blogEntries }));
   } catch (err) {
     // If the storage layer ever fails, still serve the curated sitemap so we

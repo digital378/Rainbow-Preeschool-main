@@ -32,6 +32,13 @@ export interface SitemapEntry {
   url: string;
   priority: number;
   changefreq: SitemapChangefreq;
+  /**
+   * Optional per-entry `<lastmod>` (ISO-8601 `YYYY-MM-DD`). When set it
+   * overrides the global `lastmod` passed to `buildSitemapXml`. Used by the
+   * /sitemap.xml route to emit per-blog-post update dates while non-blog
+   * URLs continue to inherit the site-wide `LAST_UPDATED_ISO`.
+   */
+  lastmod?: string;
 }
 
 // NOTE: when adding/removing non-blog URLs, keep this list — and ONLY this
@@ -143,11 +150,15 @@ export interface BuildSitemapOptions {
  * sitemap builder. Centralised here so the route handler and any future
  * caller use the same priority/changefreq defaults.
  */
-export function blogPostSitemapEntry(slug: string): SitemapEntry {
+export function blogPostSitemapEntry(
+  slug: string,
+  lastmod?: string,
+): SitemapEntry {
   return {
     url: `/blog/${slug}`,
     priority: 0.6,
     changefreq: "monthly",
+    ...(lastmod ? { lastmod } : {}),
   };
 }
 
@@ -159,18 +170,21 @@ export function buildSitemapXml(options: BuildSitemapOptions = {}): string {
     ? [...baseEntries, ...options.extraEntries]
     : baseEntries;
 
-  const seen = new Set<string>();
-  const deduped = entries.filter((e) => {
-    if (seen.has(e.url)) return false;
-    seen.add(e.url);
-    return true;
-  });
+  // Dedup by URL keeping the first occurrence so curated rows in
+  // `SITEMAP_ENTRIES` take precedence over any dynamically merged ones.
+  const byUrl = new Map<string, SitemapEntry>();
+  for (const entry of entries) {
+    if (!byUrl.has(entry.url)) {
+      byUrl.set(entry.url, entry);
+    }
+  }
+  const deduped = Array.from(byUrl.values());
 
   const urlBlocks = deduped
     .map(
       (entry) => `  <url>
     <loc>${domain}${entry.url}</loc>
-    <lastmod>${lastmod}</lastmod>
+    <lastmod>${entry.lastmod ?? lastmod}</lastmod>
     <changefreq>${entry.changefreq}</changefreq>
     <priority>${entry.priority.toFixed(2)}</priority>
   </url>`,

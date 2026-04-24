@@ -953,6 +953,236 @@ const playgroundPages: Record<string, { locality: string }> = {
 
 const noIndexPages = ["/ad", "/ad-google", "/flyer", "/RIS", "/ris", "/ris-11th", "/gsc", "/GSC"];
 
+/**
+ * Per-blog-post SEO metadata. Lifted to module scope so the /sitemap.xml
+ * route in `server/index.ts` can read each post's `lastModified` directly
+ * (via `getBlogPostLastModified`) without duplicating the dates.
+ *
+ * Keep one entry per slug listed in `BLOG_SLUGS` at the top of this file.
+ */
+interface BlogPostSEORecord {
+  title: string;
+  description: string;
+  keywords: string;
+  datePublished: string;
+  lastModified: string;
+  lastModifiedDisplay: string;
+}
+
+const BLOG_POST_SEO_DATA: Record<string, BlogPostSEORecord> = {
+  "what-to-ask-during-a-tour-of-a-preschool-in-thane": {
+    title: "Questions to Ask When Visiting a Preschool | Checklist",
+    description: "Essential 25+ questions to ask when visiting a preschool. Expert checklist covering safety, curriculum, teacher ratios & more for parents.",
+    keywords: "questions to ask preschool, what to ask preschool visit, preschool visit checklist, preschool tour guide",
+    datePublished: "2025-11-15",
+    lastModified: "2026-04-18",
+    lastModifiedDisplay: "April 18, 2026",
+  },
+  "understanding-the-importance-of-preschool-in-early-childhood-development": {
+    title: "Importance of Preschool in Child Development",
+    description: "Discover science-backed insights on why quality preschool education matters for your child's cognitive, social, and emotional development.",
+    keywords: "importance of preschool, early childhood development, preschool benefits, child development preschool",
+    datePublished: "2025-10-20",
+    lastModified: "2026-04-12",
+    lastModifiedDisplay: "April 12, 2026",
+  },
+  "how-play-based-learning-shapes-young-minds": {
+    title: "Play-Based Learning | Benefits & Activities",
+    description: "Learn how play-based learning nurtures cognitive, social, and emotional development in young children. Science-backed insights and practical activities.",
+    keywords: "play based learning, play based curriculum preschool, learning through play",
+    datePublished: "2025-09-10",
+    lastModified: "2026-04-22",
+    lastModifiedDisplay: "April 22, 2026",
+  },
+  "preparing-your-child-for-first-day-preschool": {
+    title: "Preparing Your Child for First Day at Preschool | Expert Tips",
+    description: "Practical tips to prepare your child for their first day at preschool. Managing separation anxiety and building excitement.",
+    keywords: "first day preschool, preparing child for school, preschool preparation tips",
+    datePublished: "2025-08-05",
+    lastModified: "2026-03-28",
+    lastModifiedDisplay: "March 28, 2026",
+  },
+  "role-of-parents-early-education": {
+    title: "Role of Parents in Early Childhood Education | Rainbow Preschool",
+    description: "Learn how parents play a crucial role in early education. Discover ways to support your child's learning at home.",
+    keywords: "parents role in education, early education at home, parent involvement preschool",
+    datePublished: "2025-07-22",
+    lastModified: "2026-04-08",
+    lastModifiedDisplay: "April 8, 2026",
+  },
+  "creating-safe-nurturing-learning-environment": {
+    title: "Safe Learning Environment for Children | Rainbow Preschool",
+    description: "Learn how a safe and nurturing environment supports child development. Discover how Rainbow Preschool creates secure, stimulating learning spaces.",
+    keywords: "safe preschool environment, nurturing learning environment, child safety preschool",
+    datePublished: "2025-06-18",
+    lastModified: "2026-04-15",
+    lastModifiedDisplay: "April 15, 2026",
+  },
+  "republic-day-2026": {
+    title: "Republic Day 2026 | History, Parade & Quotes",
+    description: "Celebrate India's 77th Republic Day 2026 with complete information on history, significance, parade highlights, speeches, and wishes.",
+    keywords: "republic day 2026, republic day india, 26 january 2026",
+    datePublished: "2026-01-20",
+    lastModified: "2026-01-26",
+    lastModifiedDisplay: "January 26, 2026",
+  },
+  "signs-of-good-preschool-thane": {
+    title: "10 Signs of a Good Preschool | Every Parent's Checklist",
+    description: "How to identify a great preschool. 10 research-backed signs every parent should look for — from teacher quality to safety, curriculum, and environment.",
+    keywords: "signs of good preschool, how to choose a preschool, preschool checklist, quality preschool signs, what makes a good preschool",
+    datePublished: "2026-03-20",
+    lastModified: "2026-04-10",
+    lastModifiedDisplay: "April 10, 2026",
+  },
+  "preschool-vs-daycare-difference": {
+    title: "Preschool vs Daycare: Key Differences | Guide for Parents",
+    description: "Preschool vs daycare — what's the difference? Compare curriculum, timing, cost, goals, and outcomes to find the right option for your child.",
+    keywords: "preschool vs daycare, difference between preschool and daycare, preschool or daycare, daycare vs preschool india",
+    datePublished: "2026-03-10",
+    lastModified: "2026-04-05",
+    lastModifiedDisplay: "April 5, 2026",
+  },
+  "what-age-start-play-school": {
+    title: "What Age to Start Play School in India | Expert Guide",
+    description: "When should a child start play school? Expert guide on ideal age, readiness signs, benefits of early vs late start, and tips for Indian parents.",
+    keywords: "what age play school, when to start play school, play school age india, right age for playgroup, play school near me",
+    datePublished: "2026-02-25",
+    lastModified: "2026-04-02",
+    lastModifiedDisplay: "April 2, 2026",
+  },
+  "benefits-play-school-2-year-olds": {
+    title: "Benefits of Play School for 2 Year Olds | Is Your Toddler Ready?",
+    description: "Discover 12 research-backed benefits of play school for 2 year olds. Learn what toddlers gain from early education and how to know if your child is ready.",
+    keywords: "play school for 2 year olds, benefits of play school, toddler play school benefits, play school near me",
+    datePublished: "2026-02-10",
+    lastModified: "2026-04-20",
+    lastModifiedDisplay: "April 20, 2026",
+  },
+  "nursery-school-admission-thane-2026": {
+    title: "Nursery School Admission in Thane 2026-27 | Complete Guide",
+    description: "Step-by-step guide to nursery school admission in Thane for 2026-27. Age criteria, documents, timelines, fees, and tips to secure admission.",
+    keywords: "nursery school admission thane, nursery admission 2026, preschool admission thane, nursery school near me",
+    datePublished: "2026-01-15",
+    lastModified: "2026-03-15",
+    lastModifiedDisplay: "March 15, 2026",
+  },
+  "what-children-learn-nursery-school": {
+    title: "What Children Learn in Nursery School | Monthly Guide",
+    description: "Month-by-month guide to what children learn in nursery school. From language and maths to social skills and creativity — see the full developmental journey.",
+    keywords: "what children learn in nursery, nursery school curriculum, nursery school syllabus, nursery school near me",
+    datePublished: "2025-12-20",
+    lastModified: "2026-03-22",
+    lastModifiedDisplay: "March 22, 2026",
+  },
+  "50-fun-learning-activities-preschoolers": {
+    title: "50 Fun Learning Activities for Preschoolers at Home",
+    description: "50 easy, fun learning activities for preschoolers at home using household items. Covers language, maths, science, art, and motor skills. Ages 2-6.",
+    keywords: "learning activities for preschoolers, preschool activities at home, fun activities for toddlers, home learning activities kids",
+    datePublished: "2026-04-01",
+    lastModified: "2026-04-01",
+    lastModifiedDisplay: "April 1, 2026",
+  },
+  "best-childrens-books-indian-preschoolers": {
+    title: "Best Children's Books for Indian Preschoolers | Age-Wise List",
+    description: "Curated list of best children's books for Indian preschoolers aged 1.5-6. Age-wise recommendations, reading tips, and Indian authors.",
+    keywords: "best books for preschoolers, children's books india, kids books 2 year old, toddler books indian, picture books for preschool",
+    datePublished: "2026-03-28",
+    lastModified: "2026-04-14",
+    lastModifiedDisplay: "April 14, 2026",
+  },
+  // ── SEO Recovery evergreen posts (Apr–May 2026) ────────────────────────
+  "screen-time-guidelines-preschoolers-india": {
+    title: "Screen Time Guidelines for Indian Preschoolers (2026 Parent Guide)",
+    description: "How much screen time is healthy for preschoolers in India? 2026 expert guide for Thane parents — AAP rules, practical strategies, family media plan.",
+    keywords: "screen time preschoolers india, screen time toddlers, screen time guidelines, screen time 2 year old, indian parents screen time",
+    datePublished: "2026-04-24",
+    lastModified: "2026-04-24",
+    lastModifiedDisplay: "April 24, 2026",
+  },
+  "healthy-tiffin-box-ideas-preschoolers": {
+    title: "50 Healthy Tiffin Box Ideas for Preschoolers Indian Parents Will Love",
+    description: "50 healthy, easy tiffin box ideas for preschoolers — perfect for Indian parents in Thane. Veg, balanced, kid-approved snacks for play school & nursery.",
+    keywords: "tiffin ideas for preschoolers, healthy tiffin box ideas, snack ideas for kids india, preschool tiffin recipes, kids tiffin india",
+    datePublished: "2026-04-26",
+    lastModified: "2026-04-26",
+    lastModifiedDisplay: "April 26, 2026",
+  },
+  "toilet-training-toddlers-indian-parents-guide": {
+    title: "Toilet Training Toddlers: A Calm, Practical Guide for Indian Parents",
+    description: "Toilet training your toddler in India? Calm, step-by-step guide for parents — when to start, signs of readiness, accidents, and joint family tips.",
+    keywords: "toilet training toddlers, potty training india, when to start potty training, toilet training 2 year old, toddler potty training tips",
+    datePublished: "2026-04-29",
+    lastModified: "2026-04-29",
+    lastModifiedDisplay: "April 29, 2026",
+  },
+  "picky-eater-toddler-solutions": {
+    title: "Picky Eater Toddler? 12 Gentle Solutions That Actually Work",
+    description: "Picky eater toddler driving you crazy? 12 gentle, paediatrician-aligned solutions for Indian parents — meal ideas, food rules, and what to avoid.",
+    keywords: "picky eater toddler, fussy eater child, how to feed picky eater, toddler not eating, picky eating solutions",
+    datePublished: "2026-05-01",
+    lastModified: "2026-05-01",
+    lastModifiedDisplay: "May 1, 2026",
+  },
+  "toddler-tantrum-management-emotional-regulation": {
+    title: "Toddler Tantrum Management: Helping Your Child Build Emotional Regulation",
+    description: "Toddler tantrums leaving you exhausted? Learn calm, research-backed ways to manage tantrums and help your child build lifelong emotional regulation.",
+    keywords: "toddler tantrums, how to handle tantrums, tantrum management, emotional regulation kids, terrible twos india",
+    datePublished: "2026-05-03",
+    lastModified: "2026-05-03",
+    lastModifiedDisplay: "May 3, 2026",
+  },
+  "first-day-preschool-packing-checklist": {
+    title: "First Day of Preschool Packing Checklist (Free Printable for Thane Parents)",
+    description: "Complete first-day-of-preschool packing checklist for Thane parents. Bag essentials, labels, lunch tips, and a free printable to download.",
+    keywords: "first day preschool checklist, preschool packing list, what to pack preschool, school bag essentials toddler, preschool first day tips",
+    datePublished: "2026-05-05",
+    lastModified: "2026-05-05",
+    lastModifiedDisplay: "May 5, 2026",
+  },
+  "stem-activities-preschoolers-home": {
+    title: "15 Easy STEM Activities for Preschoolers You Can Do at Home",
+    description: "15 simple, low-cost STEM activities for preschoolers using everyday Indian household items. Build science, math, and curiosity in 20 minutes a day.",
+    keywords: "stem activities preschoolers, science experiments for kids india, stem at home, preschool science activities, easy stem ideas",
+    datePublished: "2026-05-08",
+    lastModified: "2026-05-08",
+    lastModifiedDisplay: "May 8, 2026",
+  },
+  "yoga-mindfulness-preschoolers-daily-routines": {
+    title: "Yoga & Mindfulness for Preschoolers: Simple Routines for Calmer Mornings",
+    description: "Yoga and mindfulness routines for preschoolers — calmer mornings, better focus, and sleep. Simple poses and breathing for Indian families.",
+    keywords: "yoga for preschoolers, kids yoga india, mindfulness for toddlers, calm morning routine kids, breathing exercises children",
+    datePublished: "2026-05-10",
+    lastModified: "2026-05-10",
+    lastModifiedDisplay: "May 10, 2026",
+  },
+  "preparing-preschooler-new-sibling": {
+    title: "Preparing Your Preschooler for a New Sibling: A Gentle Roadmap",
+    description: "Welcoming a new baby? Gentle roadmap to prepare your preschooler for a new sibling — managing jealousy, bonding, and rebuilding routines.",
+    keywords: "preparing for new sibling, new baby older sibling, preschooler new sibling, sibling rivalry toddler, second child india",
+    datePublished: "2026-05-12",
+    lastModified: "2026-05-12",
+    lastModifiedDisplay: "May 12, 2026",
+  },
+  "toddler-speech-development-milestones-when-to-worry": {
+    title: "Toddler Speech Development Milestones: What's Normal and When to Worry",
+    description: "Toddler speech development guide — normal milestones month by month, late talker signs, when to consult a paediatrician. For Indian parents.",
+    keywords: "toddler speech milestones, late talker, when to worry speech delay, speech development 2 year old, child not talking",
+    datePublished: "2026-05-14",
+    lastModified: "2026-05-14",
+    lastModifiedDisplay: "May 14, 2026",
+  },
+};
+
+/**
+ * Returns the per-post `lastModified` ISO date for a blog slug, or undefined
+ * if the slug is not in `BLOG_POST_SEO_DATA`. Used by the /sitemap.xml route
+ * in `server/index.ts` to emit a per-post `<lastmod>` instead of the
+ * site-wide `LAST_UPDATED_ISO`.
+ */
+export function getBlogPostLastModified(slug: string): string | undefined {
+  return BLOG_POST_SEO_DATA[slug]?.lastModified;
+}
+
 export function getPageSEO(urlPath: string): PageSEOData | null {
   const cleanPath = urlPath.replace(/\/$/, "") || "/";
 
@@ -1024,211 +1254,8 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
 
   if (cleanPath.startsWith("/blog/")) {
     const slug = cleanPath.replace("/blog/", "");
-    const blogPosts: Record<string, { title: string; description: string; keywords: string; datePublished: string; lastModified: string; lastModifiedDisplay: string }> = {
-      "what-to-ask-during-a-tour-of-a-preschool-in-thane": {
-        title: "Questions to Ask When Visiting a Preschool | Checklist",
-        description: "Essential 25+ questions to ask when visiting a preschool. Expert checklist covering safety, curriculum, teacher ratios & more for parents.",
-        keywords: "questions to ask preschool, what to ask preschool visit, preschool visit checklist, preschool tour guide",
-        datePublished: "2025-11-15",
-        lastModified: "2026-04-18",
-        lastModifiedDisplay: "April 18, 2026",
-      },
-      "understanding-the-importance-of-preschool-in-early-childhood-development": {
-        title: "Importance of Preschool in Child Development",
-        description: "Discover science-backed insights on why quality preschool education matters for your child's cognitive, social, and emotional development.",
-        keywords: "importance of preschool, early childhood development, preschool benefits, child development preschool",
-        datePublished: "2025-10-20",
-        lastModified: "2026-04-12",
-        lastModifiedDisplay: "April 12, 2026",
-      },
-      "how-play-based-learning-shapes-young-minds": {
-        title: "Play-Based Learning | Benefits & Activities",
-        description: "Learn how play-based learning nurtures cognitive, social, and emotional development in young children. Science-backed insights and practical activities.",
-        keywords: "play based learning, play based curriculum preschool, learning through play",
-        datePublished: "2025-09-10",
-        lastModified: "2026-04-22",
-        lastModifiedDisplay: "April 22, 2026",
-      },
-      "preparing-your-child-for-first-day-preschool": {
-        title: "Preparing Your Child for First Day at Preschool | Expert Tips",
-        description: "Practical tips to prepare your child for their first day at preschool. Managing separation anxiety and building excitement.",
-        keywords: "first day preschool, preparing child for school, preschool preparation tips",
-        datePublished: "2025-08-05",
-        lastModified: "2026-03-28",
-        lastModifiedDisplay: "March 28, 2026",
-      },
-      "role-of-parents-early-education": {
-        title: "Role of Parents in Early Childhood Education | Rainbow Preschool",
-        description: "Learn how parents play a crucial role in early education. Discover ways to support your child's learning at home.",
-        keywords: "parents role in education, early education at home, parent involvement preschool",
-        datePublished: "2025-07-22",
-        lastModified: "2026-04-08",
-        lastModifiedDisplay: "April 8, 2026",
-      },
-      "creating-safe-nurturing-learning-environment": {
-        title: "Safe Learning Environment for Children | Rainbow Preschool",
-        description: "Learn how a safe and nurturing environment supports child development. Discover how Rainbow Preschool creates secure, stimulating learning spaces.",
-        keywords: "safe preschool environment, nurturing learning environment, child safety preschool",
-        datePublished: "2025-06-18",
-        lastModified: "2026-04-15",
-        lastModifiedDisplay: "April 15, 2026",
-      },
-      "republic-day-2026": {
-        title: "Republic Day 2026 | History, Parade & Quotes",
-        description: "Celebrate India's 77th Republic Day 2026 with complete information on history, significance, parade highlights, speeches, and wishes.",
-        keywords: "republic day 2026, republic day india, 26 january 2026",
-        datePublished: "2026-01-20",
-        lastModified: "2026-01-26",
-        lastModifiedDisplay: "January 26, 2026",
-      },
-      "signs-of-good-preschool-thane": {
-        title: "10 Signs of a Good Preschool | Every Parent's Checklist",
-        description: "How to identify a great preschool. 10 research-backed signs every parent should look for — from teacher quality to safety, curriculum, and environment.",
-        keywords: "signs of good preschool, how to choose a preschool, preschool checklist, quality preschool signs, what makes a good preschool",
-        datePublished: "2026-03-20",
-        lastModified: "2026-04-10",
-        lastModifiedDisplay: "April 10, 2026",
-      },
-      "preschool-vs-daycare-difference": {
-        title: "Preschool vs Daycare: Key Differences | Guide for Parents",
-        description: "Preschool vs daycare — what's the difference? Compare curriculum, timing, cost, goals, and outcomes to find the right option for your child.",
-        keywords: "preschool vs daycare, difference between preschool and daycare, preschool or daycare, daycare vs preschool india",
-        datePublished: "2026-03-10",
-        lastModified: "2026-04-05",
-        lastModifiedDisplay: "April 5, 2026",
-      },
-      "what-age-start-play-school": {
-        title: "What Age to Start Play School in India | Expert Guide",
-        description: "When should a child start play school? Expert guide on ideal age, readiness signs, benefits of early vs late start, and tips for Indian parents.",
-        keywords: "what age play school, when to start play school, play school age india, right age for playgroup, play school near me",
-        datePublished: "2026-02-25",
-        lastModified: "2026-04-02",
-        lastModifiedDisplay: "April 2, 2026",
-      },
-      "benefits-play-school-2-year-olds": {
-        title: "Benefits of Play School for 2 Year Olds | Is Your Toddler Ready?",
-        description: "Discover 12 research-backed benefits of play school for 2 year olds. Learn what toddlers gain from early education and how to know if your child is ready.",
-        keywords: "play school for 2 year olds, benefits of play school, toddler play school benefits, play school near me",
-        datePublished: "2026-02-10",
-        lastModified: "2026-04-20",
-        lastModifiedDisplay: "April 20, 2026",
-      },
-      "nursery-school-admission-thane-2026": {
-        title: "Nursery School Admission in Thane 2026-27 | Complete Guide",
-        description: "Step-by-step guide to nursery school admission in Thane for 2026-27. Age criteria, documents, timelines, fees, and tips to secure admission.",
-        keywords: "nursery school admission thane, nursery admission 2026, preschool admission thane, nursery school near me",
-        datePublished: "2026-01-15",
-        lastModified: "2026-03-15",
-        lastModifiedDisplay: "March 15, 2026",
-      },
-      "what-children-learn-nursery-school": {
-        title: "What Children Learn in Nursery School | Monthly Guide",
-        description: "Month-by-month guide to what children learn in nursery school. From language and maths to social skills and creativity — see the full developmental journey.",
-        keywords: "what children learn in nursery, nursery school curriculum, nursery school syllabus, nursery school near me",
-        datePublished: "2025-12-20",
-        lastModified: "2026-03-22",
-        lastModifiedDisplay: "March 22, 2026",
-      },
-      "50-fun-learning-activities-preschoolers": {
-        title: "50 Fun Learning Activities for Preschoolers at Home",
-        description: "50 easy, fun learning activities for preschoolers at home using household items. Covers language, maths, science, art, and motor skills. Ages 2-6.",
-        keywords: "learning activities for preschoolers, preschool activities at home, fun activities for toddlers, home learning activities kids",
-        datePublished: "2026-04-01",
-        lastModified: "2026-04-01",
-        lastModifiedDisplay: "April 1, 2026",
-      },
-      "best-childrens-books-indian-preschoolers": {
-        title: "Best Children's Books for Indian Preschoolers | Age-Wise List",
-        description: "Curated list of best children's books for Indian preschoolers aged 1.5-6. Age-wise recommendations, reading tips, and Indian authors.",
-        keywords: "best books for preschoolers, children's books india, kids books 2 year old, toddler books indian, picture books for preschool",
-        datePublished: "2026-03-28",
-        lastModified: "2026-04-14",
-        lastModifiedDisplay: "April 14, 2026",
-      },
-      // ── SEO Recovery evergreen posts (Apr–May 2026) ────────────────────────
-      "screen-time-guidelines-preschoolers-india": {
-        title: "Screen Time Guidelines for Indian Preschoolers (2026 Parent Guide)",
-        description: "How much screen time is healthy for preschoolers in India? 2026 expert guide for Thane parents — AAP rules, practical strategies, family media plan.",
-        keywords: "screen time preschoolers india, screen time toddlers, screen time guidelines, screen time 2 year old, indian parents screen time",
-        datePublished: "2026-04-24",
-        lastModified: "2026-04-24",
-        lastModifiedDisplay: "April 24, 2026",
-      },
-      "healthy-tiffin-box-ideas-preschoolers": {
-        title: "50 Healthy Tiffin Box Ideas for Preschoolers Indian Parents Will Love",
-        description: "50 healthy, easy tiffin box ideas for preschoolers — perfect for Indian parents in Thane. Veg, balanced, kid-approved snacks for play school & nursery.",
-        keywords: "tiffin ideas for preschoolers, healthy tiffin box ideas, snack ideas for kids india, preschool tiffin recipes, kids tiffin india",
-        datePublished: "2026-04-26",
-        lastModified: "2026-04-26",
-        lastModifiedDisplay: "April 26, 2026",
-      },
-      "toilet-training-toddlers-indian-parents-guide": {
-        title: "Toilet Training Toddlers: A Calm, Practical Guide for Indian Parents",
-        description: "Toilet training your toddler in India? Calm, step-by-step guide for parents — when to start, signs of readiness, accidents, and joint family tips.",
-        keywords: "toilet training toddlers, potty training india, when to start potty training, toilet training 2 year old, toddler potty training tips",
-        datePublished: "2026-04-29",
-        lastModified: "2026-04-29",
-        lastModifiedDisplay: "April 29, 2026",
-      },
-      "picky-eater-toddler-solutions": {
-        title: "Picky Eater Toddler? 12 Gentle Solutions That Actually Work",
-        description: "Picky eater toddler driving you crazy? 12 gentle, paediatrician-aligned solutions for Indian parents — meal ideas, food rules, and what to avoid.",
-        keywords: "picky eater toddler, fussy eater child, how to feed picky eater, toddler not eating, picky eating solutions",
-        datePublished: "2026-05-01",
-        lastModified: "2026-05-01",
-        lastModifiedDisplay: "May 1, 2026",
-      },
-      "toddler-tantrum-management-emotional-regulation": {
-        title: "Toddler Tantrum Management: Helping Your Child Build Emotional Regulation",
-        description: "Toddler tantrums leaving you exhausted? Learn calm, research-backed ways to manage tantrums and help your child build lifelong emotional regulation.",
-        keywords: "toddler tantrums, how to handle tantrums, tantrum management, emotional regulation kids, terrible twos india",
-        datePublished: "2026-05-03",
-        lastModified: "2026-05-03",
-        lastModifiedDisplay: "May 3, 2026",
-      },
-      "first-day-preschool-packing-checklist": {
-        title: "First Day of Preschool Packing Checklist (Free Printable for Thane Parents)",
-        description: "Complete first-day-of-preschool packing checklist for Thane parents. Bag essentials, labels, lunch tips, and a free printable to download.",
-        keywords: "first day preschool checklist, preschool packing list, what to pack preschool, school bag essentials toddler, preschool first day tips",
-        datePublished: "2026-05-05",
-        lastModified: "2026-05-05",
-        lastModifiedDisplay: "May 5, 2026",
-      },
-      "stem-activities-preschoolers-home": {
-        title: "15 Easy STEM Activities for Preschoolers You Can Do at Home",
-        description: "15 simple, low-cost STEM activities for preschoolers using everyday Indian household items. Build science, math, and curiosity in 20 minutes a day.",
-        keywords: "stem activities preschoolers, science experiments for kids india, stem at home, preschool science activities, easy stem ideas",
-        datePublished: "2026-05-08",
-        lastModified: "2026-05-08",
-        lastModifiedDisplay: "May 8, 2026",
-      },
-      "yoga-mindfulness-preschoolers-daily-routines": {
-        title: "Yoga & Mindfulness for Preschoolers: Simple Routines for Calmer Mornings",
-        description: "Yoga and mindfulness routines for preschoolers — calmer mornings, better focus, and sleep. Simple poses and breathing for Indian families.",
-        keywords: "yoga for preschoolers, kids yoga india, mindfulness for toddlers, calm morning routine kids, breathing exercises children",
-        datePublished: "2026-05-10",
-        lastModified: "2026-05-10",
-        lastModifiedDisplay: "May 10, 2026",
-      },
-      "preparing-preschooler-new-sibling": {
-        title: "Preparing Your Preschooler for a New Sibling: A Gentle Roadmap",
-        description: "Welcoming a new baby? Gentle roadmap to prepare your preschooler for a new sibling — managing jealousy, bonding, and rebuilding routines.",
-        keywords: "preparing for new sibling, new baby older sibling, preschooler new sibling, sibling rivalry toddler, second child india",
-        datePublished: "2026-05-12",
-        lastModified: "2026-05-12",
-        lastModifiedDisplay: "May 12, 2026",
-      },
-      "toddler-speech-development-milestones-when-to-worry": {
-        title: "Toddler Speech Development Milestones: What's Normal and When to Worry",
-        description: "Toddler speech development guide — normal milestones month by month, late talker signs, when to consult a paediatrician. For Indian parents.",
-        keywords: "toddler speech milestones, late talker, when to worry speech delay, speech development 2 year old, child not talking",
-        datePublished: "2026-05-14",
-        lastModified: "2026-05-14",
-        lastModifiedDisplay: "May 14, 2026",
-      },
-    };
 
-    const post = blogPosts[slug];
+    const post = BLOG_POST_SEO_DATA[slug];
     if (post) {
       const authorship = getBlogAuthorship(slug);
       const blogAuthor = blogPersonToSchema(authorship.author);
