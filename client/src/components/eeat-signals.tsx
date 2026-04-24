@@ -17,6 +17,8 @@ interface EEATSignalsProps {
   /** Deprecated — profile link is no longer rendered. Kept for backward compatibility. */
   reviewerProfileUrl?: string;
   lastUpdated: string;
+  /** ISO-8601 date string used for the Article JSON-LD `dateModified`. Falls back to `lastUpdated` for backwards compatibility, but callers should pass an ISO date when possible. */
+  lastUpdatedIso?: string;
   ratingValue?: number;
   reviewCount?: number;
   reviews?: EEATReview[];
@@ -52,6 +54,7 @@ export function EEATSignals({
   pageName,
   reviewerRole = "Head of Curriculum, Rainbow Preschool International",
   lastUpdated,
+  lastUpdatedIso,
   ratingValue = 4.9,
   reviewCount = 487,
   reviews = DEFAULT_REVIEWS,
@@ -92,7 +95,7 @@ export function EEATSignals({
       "@type": "Article",
       "headline": pageName,
       "datePublished": "2024-06-01",
-      "dateModified": lastUpdated,
+      "dateModified": lastUpdatedIso ?? lastUpdated,
       "author": {
         "@type": "Organization",
         "name": "Rainbow Preschool International",
@@ -136,7 +139,7 @@ export function EEATSignals({
         if (el) el.remove();
       });
     };
-  }, [pageUrl, pageName, reviewerRole, lastUpdated, ratingValue, reviewCount, reviews, schemaId]);
+  }, [pageUrl, pageName, reviewerRole, lastUpdated, lastUpdatedIso, ratingValue, reviewCount, reviews, schemaId]);
 
   return (
     <div

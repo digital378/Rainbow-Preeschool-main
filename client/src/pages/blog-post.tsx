@@ -7,6 +7,11 @@ import { Button } from "@/components/ui/button";
 import { CTASection } from "@/components/cta-section";
 import { SEO } from "@/components/seo";
 import { BlogInternalLinks } from "@/components/blog-internal-links";
+import { EEATSignals } from "@/components/eeat-signals";
+import {
+  COMMERCIAL_PAGES_LAST_UPDATED,
+  COMMERCIAL_PAGES_LAST_UPDATED_DISPLAY,
+} from "@shared/seo-config";
 import { Calendar, ArrowLeft, User, Clock, CheckCircle, MapPin, Phone, Download } from "lucide-react";
 import { format } from "date-fns";
 import type { BlogPost as ApiBlogPost } from "@shared/schema";
@@ -1124,7 +1129,7 @@ function BlogPostSchema({ post }: { post: BlogPostData }) {
         }
       },
       "datePublished": post.publishedAt.toISOString(),
-      "dateModified": post.publishedAt.toISOString(),
+      "dateModified": COMMERCIAL_PAGES_LAST_UPDATED,
       "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": `https://www.rainbowpreschools.com/blog/${post.slug}`
@@ -1264,6 +1269,15 @@ export default function BlogPost() {
                 {post.readTime}
               </span>
             </div>
+            <EEATSignals
+              pageUrl={`/blog/${post.slug}`}
+              pageName={post.title}
+              lastUpdated={COMMERCIAL_PAGES_LAST_UPDATED_DISPLAY}
+              lastUpdatedIso={COMMERCIAL_PAGES_LAST_UPDATED}
+              ratingValue={4.9}
+              reviewCount={487}
+              schemaId={`blog-${post.slug}`}
+            />
           </header>
 
           <div className="prose prose-lg max-w-none dark:prose-invert">
