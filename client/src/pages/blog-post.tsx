@@ -1485,16 +1485,9 @@ export default function BlogPost() {
                   </ol>
                 );
               }
-              if (paragraph.includes("**") || paragraph.includes("[")) {
-                return (
-                  <p key={index} className="text-muted-foreground leading-relaxed mb-4">
-                    {renderInline(paragraph)}
-                  </p>
-                );
-              }
               return (
                 <p key={index} className="text-muted-foreground leading-relaxed mb-4">
-                  {paragraph}
+                  {renderInline(paragraph)}
                 </p>
               );
             })}
