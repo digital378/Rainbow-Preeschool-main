@@ -75,28 +75,15 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
     });
   }
 
-  if (seo.lastModified) {
-    allStructuredData.push({
-      "@context": "https://schema.org",
-      "@type": "Article",
-      "headline": seo.h1 || seo.title,
-      "description": seo.description,
-      "url": canonical,
-      "image": ogImage,
-      "datePublished": "2024-01-01",
-      "dateModified": seo.lastModified,
-      "author": {
-        "@type": "Organization",
-        "name": "Rainbow Preschool International",
-        "department": "Curriculum Team",
-      },
-      "publisher": {
-        "@type": "Organization",
-        "name": "Rainbow Preschool International",
-        "logo": { "@type": "ImageObject", "url": `${BASE_URL}/images/logo.webp` },
-      },
-    });
-  }
+  // NOTE: We intentionally do NOT inject a generic Article schema here even when
+  // `seo.lastModified` is set. Blog posts already provide their own
+  // BlogPosting/Article JSON-LD (with correct datePublished + dateModified) via
+  // `seo.structuredData`, and non-article pages (programme landers, locality
+  // pages, etc.) should not be marked up as Articles at all. Duplicating a
+  // generic Article block here previously caused two JSON-LD blocks per blog
+  // post URL with conflicting publish dates — Google may treat that as a
+  // freshness signal conflict. Freshness for non-article pages is conveyed by
+  // the visible "Last updated" byline + <time> element rendered below.
 
   const structuredDataScripts = allStructuredData
     .map((data) => `<script type="application/ld+json">${JSON.stringify(data)}</script>`)
