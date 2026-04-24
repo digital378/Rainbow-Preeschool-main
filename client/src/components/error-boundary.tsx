@@ -27,15 +27,21 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
       console.error(`[ErrorBoundary:${boundaryName}]`, error, errorInfo);
     }
 
-    if (typeof window !== "undefined" && typeof window.gtag === "function") {
+    if (typeof window !== "undefined") {
+      const payload = {
+        event_category: "error_boundary",
+        event_label: boundaryName,
+        description: `${error.name}: ${error.message}`.slice(0, 150),
+        page_path: path,
+        fatal: !this.props.silent,
+      };
       try {
-        window.gtag("event", "app_error", {
-          event_category: "error_boundary",
-          event_label: boundaryName,
-          description: `${error.name}: ${error.message}`.slice(0, 150),
-          page_path: path,
-          fatal: !this.props.silent,
-        });
+        if (typeof window.gtag === "function") {
+          window.gtag("event", "app_error", payload);
+        } else {
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({ event: "app_error", ...payload });
+        }
       } catch {
         // never let analytics dispatch crash the boundary itself
       }
