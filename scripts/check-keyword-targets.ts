@@ -151,6 +151,23 @@ function hasOrgJsonLd(html: string): boolean {
   return /"@type"\s*:\s*"(Educational)?Organization"/.test(html);
 }
 
+function hasReviewJsonLd(html: string): boolean {
+  return /"@type"\s*:\s*"Review"/.test(html);
+}
+
+function hasNoPersonAuthor(html: string): boolean {
+  // Per editorial rule, no Person nodes may appear as author/reviewer/contributor
+  // in newly added schema. Locate JSON-LD blocks and ensure none of them declare
+  // an author with @type Person. This catches accidental regressions even if a
+  // Person node is unrelated to a review (e.g. blog author).
+  const blocks = html.match(/<script[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/gi) || [];
+  for (const block of blocks) {
+    if (/"author"\s*:\s*\{[^}]*"@type"\s*:\s*"Person"/.test(block)) return false;
+    if (/"reviewer"\s*:\s*\{[^}]*"@type"\s*:\s*"Person"/.test(block)) return false;
+  }
+  return true;
+}
+
 function hasSelfCanonical(html: string, path: string): boolean {
   const expected = `${SITE_BASE_URL}${path}`;
   const re = /<link[^>]+rel="canonical"[^>]+href="([^"]+)"/i;
@@ -190,6 +207,15 @@ async function main(): Promise<void> {
       }
       if (PROGRAMME_PAGES.includes(path) && !hasOrgJsonLd(html)) {
         failures.push({ url: path, reason: "missing Organization JSON-LD" });
+      }
+      if (PROGRAMME_PAGES.includes(path) && !hasReviewJsonLd(html)) {
+        failures.push({ url: path, reason: "missing Review JSON-LD (3 org-authored reviews expected)" });
+      }
+      if (PROGRAMME_PAGES.includes(path) && !hasNoPersonAuthor(html)) {
+        failures.push({
+          url: path,
+          reason: "found a Person author/reviewer in JSON-LD (editorial rule: org-only)",
+        });
       }
       if (!hasSelfCanonical(html, path)) {
         failures.push({
