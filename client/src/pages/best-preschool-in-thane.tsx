@@ -9,6 +9,7 @@ import {
 import { trackWhatsAppClick, trackCallClick } from "@/lib/analytics";
 import { SEOCrossLinks } from "@/components/seo-crosslinks";
 import { EEATSignals } from "@/components/eeat-signals";
+import { COMMERCIAL_PAGES_LAST_UPDATED_DISPLAY } from "@shared/seo-config";
 import { useState, useEffect } from "react";
 
 // ── Page data ─────────────────────────────────────────────────────────────────
@@ -703,7 +704,7 @@ export default function BestPreschoolInThane() {
               <EEATSignals
                 pageUrl="/best-preschool-near-me-in-thane"
                 pageName="Best Preschool in Thane"
-                lastUpdated="April 24, 2026"
+                lastUpdated={COMMERCIAL_PAGES_LAST_UPDATED_DISPLAY}
                 ratingValue={4.9}
                 reviewCount={487}
                 schemaId="best-preschool-in-thane"
