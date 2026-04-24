@@ -1,0 +1,42 @@
+#!/bin/sh
+#
+# Pre-commit hook: runs the local code checks (`npm run check`).
+#
+# This guards against:
+#   - JSON-LD `Person` author/reviewer/contributor entries sneaking back in
+#     (scripts/check-no-person-author.ts)
+#   - TypeScript regressions (`tsc`)
+#
+# Enable this hook once with:
+#     bash scripts/install-hooks.sh
+# (or manually:  git config core.hooksPath .githooks)
+#
+# Skip a single commit (e.g. emergency fix) with:
+#     git commit --no-verify
+
+set -e
+
+# Allow opting out via env var, e.g. SKIP_PRECOMMIT=1 git commit ...
+if [ "${SKIP_PRECOMMIT:-0}" = "1" ]; then
+  echo "[pre-commit] SKIP_PRECOMMIT=1 set — skipping npm run check."
+  exit 0
+fi
+
+# Fail closed if npm isn't available — we can't verify the tree without it.
+if ! command -v npm >/dev/null 2>&1; then
+  echo "[pre-commit] 'npm' not found on PATH — cannot run 'npm run check'." >&2
+  echo "[pre-commit] Install Node.js / npm, or bypass once with --no-verify" >&2
+  echo "[pre-commit] (or SKIP_PRECOMMIT=1) if you know the change is safe." >&2
+  exit 1
+fi
+
+echo "[pre-commit] Running 'npm run check' ..."
+if ! npm run --silent check; then
+  echo "" >&2
+  echo "[pre-commit] 'npm run check' failed. Commit aborted." >&2
+  echo "[pre-commit] Fix the issues above, or re-run with --no-verify to bypass." >&2
+  exit 1
+fi
+
+echo "[pre-commit] Checks passed."
+exit 0

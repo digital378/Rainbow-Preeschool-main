@@ -67,3 +67,8 @@ Preferred communication style: Simple, everyday language.
 ### Build & Development
 - **Bundler**: Vite (frontend), esbuild (backend).
 - **TypeScript**: Strict mode with path aliases.
+
+### Local Code Checks (Pre-Commit Hook)
+-   `npm run check` runs the byline guard (`scripts/check-no-person-author.ts`) and `tsc`. To make it self-enforcing, the repo ships a tracked hook at `.githooks/pre-commit` that invokes this command before every commit and aborts the commit on failure.
+-   **One-time setup per clone** (each contributor runs this once after cloning): `bash scripts/install-hooks.sh`. The script points `git config core.hooksPath` at `.githooks` and is safe to re-run.
+-   **Bypass options** (use sparingly): `git commit --no-verify`, or prefix the commit with `SKIP_PRECOMMIT=1`.
