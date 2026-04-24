@@ -125,16 +125,13 @@ export async function syncGscData(daysBack = 90): Promise<SyncResult> {
     });
     const dayRows = totalRes.data.rows || [];
 
-    // Wipe existing site-total entries in this date range so re-syncs are clean
-    const existing = (await storage.getGscSnapshots()).filter(
-      s => s.keyword === "__site_total__" && s.snapshotDate >= startDate && s.snapshotDate <= endDate
-    );
-    for (const e of existing) await storage.deleteGscSnapshot(e.id);
-
+    // Build the full set of site-total rows, then atomically replace the range
+    // in a single bulk delete + bulk insert (instead of N individual calls).
+    const siteTotalRows = [];
     for (const row of dayRows) {
       const date = row.keys?.[0];
       if (!date) continue;
-      await storage.addGscSnapshot({
+      siteTotalRows.push({
         snapshotDate: date,
         keyword: "__site_total__",
         position: Math.round((row.position ?? 0) * 10) / 10,
@@ -145,6 +142,7 @@ export async function syncGscData(daysBack = 90): Promise<SyncResult> {
         notes: `Site total per-day (all queries)`,
       });
     }
+    await storage.replaceGscSnapshotsInRange("__site_total__", startDate, endDate, siteTotalRows);
   } catch {
     // non-fatal — keyword data still synced
   }
@@ -171,18 +169,16 @@ export async function syncGscData(daysBack = 90): Promise<SyncResult> {
     });
     const dailyRows = dailyRes.data.rows || [];
 
-    // Wipe existing daily keyword entries in this date range
-    const existingDaily = (await storage.getGscSnapshots()).filter(
-      s => s.keyword.startsWith("__daily__:") && s.snapshotDate >= dailyStart && s.snapshotDate <= endDate
-    );
-    for (const e of existingDaily) await storage.deleteGscSnapshot(e.id);
-
+    // Build the full set of daily per-keyword rows, then atomically replace the
+    // range in one bulk delete + bulk insert. Previously this loop fired ~1,300
+    // individual delete + insert calls every 6 hours; now it's a single sweep.
     const targetSet = new Set(TARGET_KEYWORDS.map(k => k.toLowerCase()));
+    const dailyKwRows = [];
     for (const row of dailyRows) {
       const kw = (row.keys?.[0] || "").toLowerCase().trim();
       const date = row.keys?.[1];
       if (!kw || !date || !targetSet.has(kw)) continue;
-      await storage.addGscSnapshot({
+      dailyKwRows.push({
         snapshotDate: date,
         keyword: `__daily__:${kw}`,
         position: Math.round((row.position ?? 0) * 10) / 10,
@@ -193,6 +189,7 @@ export async function syncGscData(daysBack = 90): Promise<SyncResult> {
         notes: `Per-keyword per-day from GSC`,
       });
     }
+    await storage.replaceGscSnapshotsInRange("__daily__:", dailyStart, endDate, dailyKwRows);
   } catch {
     // non-fatal — main keyword data still synced
   }

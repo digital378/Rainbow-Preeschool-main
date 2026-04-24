@@ -18,6 +18,12 @@ export interface IStorage {
   getGscSnapshots(): Promise<GscSnapshot[]>;
   addGscSnapshot(snapshot: InsertGscSnapshot): Promise<GscSnapshot>;
   deleteGscSnapshot(id: number): Promise<void>;
+  replaceGscSnapshotsInRange(
+    keywordPrefix: string,
+    startDate: string,
+    endDate: string,
+    rows: InsertGscSnapshot[],
+  ): Promise<{ deleted: number; inserted: number }>;
 }
 
 export class MemStorage implements IStorage {
@@ -199,6 +205,38 @@ export class MemStorage implements IStorage {
 
   async deleteGscSnapshot(id: number): Promise<void> {
     this.gscSnapshots.delete(id);
+  }
+
+  async replaceGscSnapshotsInRange(
+    keywordPrefix: string,
+    startDate: string,
+    endDate: string,
+    rows: InsertGscSnapshot[],
+  ): Promise<{ deleted: number; inserted: number }> {
+    let deleted = 0;
+    const entries = Array.from(this.gscSnapshots.entries());
+    for (const [id, snap] of entries) {
+      if (
+        snap.keyword.startsWith(keywordPrefix) &&
+        snap.snapshotDate >= startDate &&
+        snap.snapshotDate <= endDate
+      ) {
+        this.gscSnapshots.delete(id);
+        deleted++;
+      }
+    }
+    let inserted = 0;
+    for (const row of rows) {
+      const id = ++this.gscSnapshotCounter;
+      this.gscSnapshots.set(id, {
+        ...row,
+        id,
+        page: row.page ?? null,
+        notes: row.notes ?? null,
+      });
+      inserted++;
+    }
+    return { deleted, inserted };
   }
 }
 
