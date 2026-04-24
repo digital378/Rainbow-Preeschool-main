@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { ErrorBoundary } from "@/components/error-boundary";
 
 // Google Ads landing page with OTP verification
 const areas = ["Manpada", "Hariniwas", "Anand Nagar", "Dhokali", "Kalwa", "Kasarvadavali"];
@@ -319,6 +320,23 @@ export default function AdGoogleLanding() {
           </div>
 
           {/* Form */}
+          <ErrorBoundary
+            name="ad-google-otp-form"
+            fallback={
+              <div className="bg-white rounded-xl shadow-xl border border-gray-200 p-6 text-center space-y-3" data-testid="error-otp-form-fallback">
+                <h3 className="text-lg font-bold text-red-600">We couldn't load the enquiry form</h3>
+                <p className="text-sm text-gray-700">Please call us directly and we'll book your visit right away.</p>
+                <a
+                  href="tel:+918291568972"
+                  style={{ backgroundColor: "#dc2626" }}
+                  className="inline-flex items-center justify-center rounded-md px-5 py-2.5 text-sm font-semibold text-white hover:opacity-90"
+                  data-testid="link-otp-fallback-call"
+                >
+                  Call +91 82915 68972
+                </a>
+              </div>
+            }
+          >
           <div className="bg-white rounded-xl shadow-xl border border-gray-200 p-5" id="enquiry-form">
             <div id="recaptcha-container" ref={recaptchaRef}></div>
             
@@ -477,6 +495,7 @@ export default function AdGoogleLanding() {
               </>
             )}
           </div>
+          </ErrorBoundary>
         </div>
 
         {/* Programmes */}

@@ -6,6 +6,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Navigation } from "@/components/navigation";
+import { ErrorBoundary } from "@/components/error-boundary";
 import { initGA, initGlobalFormTracking } from "./lib/analytics";
 import { useAnalytics } from "./hooks/use-analytics";
 import { useScrollRevealOnRoute } from "./hooks/use-scroll-reveal";
@@ -170,7 +171,8 @@ function Router() {
   
   return (
     <Suspense fallback={<PageLoader />}>
-      <Switch>
+      <ErrorBoundary name="router" key={location}>
+        <Switch>
         <Route path="/" component={Home} />
         <Route path="/about" component={About} />
         <Route path="/programmes" component={Programmes} />
@@ -285,7 +287,8 @@ function Router() {
         <Route path="/privacy" component={LazyPrivacyPage} />
         
         <Route component={NotFound} />
-      </Switch>
+        </Switch>
+      </ErrorBoundary>
     </Suspense>
   );
 }
@@ -298,9 +301,11 @@ function DeferredChatWidget() {
   }, []);
   if (!show) return null;
   return (
-    <Suspense fallback={null}>
-      <ChatWidget />
-    </Suspense>
+    <ErrorBoundary name="chat-widget" silent>
+      <Suspense fallback={null}>
+        <ChatWidget />
+      </Suspense>
+    </ErrorBoundary>
   );
 }
 
@@ -344,9 +349,11 @@ function DeferredSparkleTrail() {
   }, []);
   if (!show) return null;
   return (
-    <Suspense fallback={null}>
-      <RainbowSparkleTrail enabled={true} intensity={1} />
-    </Suspense>
+    <ErrorBoundary name="sparkle-trail" silent>
+      <Suspense fallback={null}>
+        <RainbowSparkleTrail enabled={true} intensity={1} />
+      </Suspense>
+    </ErrorBoundary>
   );
 }
 
@@ -365,9 +372,11 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider defaultTheme="light" storageKey="rainbow-preschool-theme">
         <TooltipProvider>
-          <DeferredSparkleTrail />
-          <AppContent />
-          <Toaster />
+          <ErrorBoundary name="app-shell">
+            <DeferredSparkleTrail />
+            <AppContent />
+            <Toaster />
+          </ErrorBoundary>
         </TooltipProvider>
       </ThemeProvider>
     </QueryClientProvider>

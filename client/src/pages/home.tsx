@@ -11,6 +11,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { HeroSection } from "@/components/hero-section";
+import { ErrorBoundary } from "@/components/error-boundary";
 import { AwardedBySection } from "@/components/awarded-by-section";
 import { EEATSignals } from "@/components/eeat-signals";
 import { LAST_UPDATED_DISPLAY, LAST_UPDATED_ISO } from "@shared/site-freshness";
@@ -665,9 +666,11 @@ export default function Home() {
             </p>
           </div>
 
-          <Suspense fallback={null}>
-            <Interactive3DMap />
-          </Suspense>
+          <ErrorBoundary name="home-3d-map" silent>
+            <Suspense fallback={null}>
+              <Interactive3DMap />
+            </Suspense>
+          </ErrorBoundary>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {branches.map((branch) => (

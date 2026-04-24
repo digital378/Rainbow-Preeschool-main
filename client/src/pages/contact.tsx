@@ -9,6 +9,7 @@ import { LAST_UPDATED_DISPLAY, LAST_UPDATED_ISO } from "@shared/site-freshness";
 import { branches } from "@shared/schema";
 import { Phone, Mail, Clock, MapPin, Award, ClipboardList, Images, Navigation as NavigationIcon } from "lucide-react";
 import { Interactive3DMap } from "@/components/interactive-3d-map";
+import { ErrorBoundary } from "@/components/error-boundary";
 
 export default function Contact() {
   useEffect(() => {
@@ -144,7 +145,9 @@ export default function Contact() {
             <p className="text-muted-foreground text-lg">Locate your nearest Rainbow Preschools Centre in Thane.</p>
           </div>
           
-          <Interactive3DMap />
+          <ErrorBoundary name="contact-3d-map" silent>
+            <Interactive3DMap />
+          </ErrorBoundary>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {branches.map((branch) => (
