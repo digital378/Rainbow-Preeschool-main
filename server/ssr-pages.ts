@@ -79,6 +79,60 @@ export interface PageSEOData {
   lastModifiedDisplay?: string;
 }
 
+/**
+ * Slim EducationalOrganization schema for programme + commercial pages.
+ *
+ * Contains org identity + AggregateRating only — no Person review authors,
+ * to comply with the editorial rule that only "Rainbow Preschool International"
+ * / "Rainbow Preschool Curriculum Team" may appear as a byline, reviewer or
+ * author anywhere on the site. Per-review Person nodes live only in the full
+ * `organizationSchema` below (used historically on the homepage and pending
+ * audit in follow-up task #25).
+ */
+const programmeOrgSchema = {
+  "@context": "https://schema.org",
+  "@type": "EducationalOrganization",
+  "@id": `${BASE_URL}/#organization`,
+  name: "Rainbow Preschool International",
+  alternateName: "Rainbow Preschool",
+  url: BASE_URL,
+  logo: {
+    "@type": "ImageObject",
+    url: `${BASE_URL}/images/logo.webp`,
+    width: 512,
+    height: 512,
+  },
+  image: `${BASE_URL}/og-image.jpg`,
+  description: "Rainbow Preschool International is a trusted preschool and playgroup in Thane, offering quality early childhood education for children aged 1.5 to 6 years since 2007.",
+  foundingDate: "2007",
+  areaServed: {
+    "@type": "City",
+    name: "Thane",
+    containedInPlace: { "@type": "State", name: "Maharashtra" },
+  },
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "2nd Floor, Chestnut Plaza, Opp. Edenwoods, Khewra Cir Marg",
+    addressLocality: "Thane",
+    addressRegion: "Maharashtra",
+    postalCode: "400610",
+    addressCountry: "IN",
+  },
+  contactPoint: {
+    "@type": "ContactPoint",
+    telephone: "+91-8291568972",
+    contactType: "admissions",
+    availableLanguage: ["English", "Hindi", "Marathi"],
+  },
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: "4.7",
+    bestRating: "5",
+    ratingCount: "3997",
+    reviewCount: "3997",
+  },
+};
+
 const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "EducationalOrganization",
@@ -489,7 +543,7 @@ const staticPages: Record<string, PageSEOData> = {
     canonical: `${BASE_URL}/playgroup`,
     h1: "Playgroup Programme — Ages 1.5 to 2.5 Years",
     breadcrumbs: [{ name: "Home", url: "/" }, { name: "Programmes", url: "/programmes" }, { name: "Playgroup", url: "/playgroup" }],
-    structuredData: [organizationSchema, websiteSchema, {
+    structuredData: [programmeOrgSchema, websiteSchema, {
       "@context": "https://schema.org",
       "@type": "FAQPage",
       mainEntity: [
@@ -520,7 +574,7 @@ const staticPages: Record<string, PageSEOData> = {
     canonical: `${BASE_URL}/nursery`,
     h1: "Nursery Programme — Ages 2.5 to 4 Years",
     breadcrumbs: [{ name: "Home", url: "/" }, { name: "Programmes", url: "/programmes" }, { name: "Nursery", url: "/nursery" }],
-    structuredData: [organizationSchema, websiteSchema, {
+    structuredData: [programmeOrgSchema, websiteSchema, {
       "@context": "https://schema.org",
       "@type": "FAQPage",
       mainEntity: [
@@ -552,7 +606,7 @@ const staticPages: Record<string, PageSEOData> = {
     canonical: `${BASE_URL}/kindergarten`,
     h1: "Kindergarten Programme — Ages 4 to 6 Years",
     breadcrumbs: [{ name: "Home", url: "/" }, { name: "Programmes", url: "/programmes" }, { name: "Kindergarten", url: "/kindergarten" }],
-    structuredData: [organizationSchema, websiteSchema, {
+    structuredData: [programmeOrgSchema, websiteSchema, {
       "@context": "https://schema.org",
       "@type": "FAQPage",
       mainEntity: [

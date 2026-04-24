@@ -11,17 +11,23 @@
  *
  * Asserts (as Googlebot):
  *   1. Each of the 5 commercial pages emits FAQPage JSON-LD.
- *   2. Each programme page (/playgroup, /nursery, /kindergarten) emits the
- *      Organization schema (so Google has Organization + FAQPage parity with
- *      the locality pages).
+ *   2. Each programme page (/playgroup, /nursery, /kindergarten) emits an
+ *      EducationalOrganization / Organization schema (parity with the locality
+ *      pages).
  *   3. /play-school-near-me and /best-preschool-near-me-in-thane each have a
  *      visible body with at least 1,200 words of meaningful prose (length
  *      proxy for content depth).
  *   4. The homepage emits anchor tags to all 5 commercial URLs in the body.
- *   5. Every ghost slug (and trailing-slash variant) returns 301 to its
+ *   5. Each commercial page emits a self-referential <link rel="canonical">
+ *      pointing at its own URL (protects against the historical bug where
+ *      /preschool-near-me declared a canonical to /best-preschool-near-me-in-thane).
+ *   6. Each commercial page emits the visible "Reviewed by Rainbow Preschool
+ *      Curriculum Team" byline (E-E-A-T trust signal; per the editorial rule
+ *      no individual person name may appear).
+ *   7. Every ghost slug (and trailing-slash variant) returns 301 to its
  *      canonical destination.
- *   6. /preschool-near-me 301s to /best-preschool-near-me-in-thane.
- *   7. /playschool-near-me 301s to /play-school-near-me (NOT to
+ *   8. /preschool-near-me 301s to /best-preschool-near-me-in-thane.
+ *   9. /playschool-near-me 301s to /play-school-near-me (NOT to
  *      /best-preschool-near-me-in-thane — historical bug).
  *
  * Usage:
@@ -38,6 +44,8 @@ const BASE = (process.argv[2] || "http://localhost:5000").replace(/\/$/, "");
 const UA = "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)";
 const FETCH_TIMEOUT_MS = 15_000;
 
+const SITE_BASE_URL = "https://www.rainbowpreschools.com";
+
 const COMMERCIAL_PAGES = [
   "/playgroup",
   "/nursery",
@@ -47,6 +55,8 @@ const COMMERCIAL_PAGES = [
 ];
 
 const PROGRAMME_PAGES = ["/playgroup", "/nursery", "/kindergarten"];
+
+const BYLINE = "Reviewed by Rainbow Preschool Curriculum Team";
 
 const DEEP_CONTENT_PAGES = [
   "/play-school-near-me",
@@ -141,6 +151,18 @@ function hasOrgJsonLd(html: string): boolean {
   return /"@type"\s*:\s*"(Educational)?Organization"/.test(html);
 }
 
+function hasSelfCanonical(html: string, path: string): boolean {
+  const expected = `${SITE_BASE_URL}${path}`;
+  const re = /<link[^>]+rel="canonical"[^>]+href="([^"]+)"/i;
+  const m = html.match(re);
+  if (!m) return false;
+  return m[1] === expected || m[1] === `${expected}/`;
+}
+
+function hasOrgByline(html: string): boolean {
+  return html.includes(BYLINE);
+}
+
 function hasAnchorTo(html: string, path: string): boolean {
   // Match anchors with absolute or relative href ending with the path
   const escaped = path.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -168,6 +190,18 @@ async function main(): Promise<void> {
       }
       if (PROGRAMME_PAGES.includes(path) && !hasOrgJsonLd(html)) {
         failures.push({ url: path, reason: "missing Organization JSON-LD" });
+      }
+      if (!hasSelfCanonical(html, path)) {
+        failures.push({
+          url: path,
+          reason: `canonical link is missing or does not point to ${SITE_BASE_URL}${path}`,
+        });
+      }
+      if (!hasOrgByline(html)) {
+        failures.push({
+          url: path,
+          reason: `missing visible "${BYLINE}" byline`,
+        });
       }
     } catch (err) {
       failures.push({
@@ -264,7 +298,7 @@ async function main(): Promise<void> {
   }
 
   console.log(
-    `\n[check-keyword-targets] PASSED — ${COMMERCIAL_PAGES.length} commercial pages have full schema, ${DEEP_CONTENT_PAGES.length} deep-content pages meet word target, homepage links to all 5, ${REDIRECTS.length} ghost slugs 301 correctly.`
+    `\n[check-keyword-targets] PASSED — ${COMMERCIAL_PAGES.length} commercial pages have full schema + self-canonical + curriculum-team byline, ${DEEP_CONTENT_PAGES.length} deep-content pages meet word target, homepage links to all 5, ${REDIRECTS.length} ghost slugs 301 correctly.`
   );
   process.exit(0);
 }

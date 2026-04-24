@@ -108,19 +108,14 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
       if (section.links && section.links.length > 0) {
         html += "<ul>\n";
         section.links.forEach((link) => {
-          // Defensive URL normalisation: only allow absolute http(s) URLs or
-          // site-relative paths starting with "/". Anything else is silently
-          // dropped to remove an XSS sink (e.g. javascript: URLs) even though
-          // current callers pass only static, trusted strings.
           const raw = link.url || "";
-          let normalised: string | null = null;
-          if (/^https?:\/\//i.test(raw)) {
-            normalised = raw;
-          } else if (raw.startsWith("/")) {
-            normalised = `${BASE_URL}${raw}`;
-          }
-          if (!normalised) return;
-          html += `<li><a href="${escapeHtml(normalised)}">${escapeHtml(link.text)}</a></li>\n`;
+          const href = /^https?:\/\//i.test(raw)
+            ? raw
+            : raw.startsWith("/")
+              ? `${BASE_URL}${raw}`
+              : null;
+          if (!href) return;
+          html += `<li><a href="${escapeHtml(href)}">${escapeHtml(link.text)}</a></li>\n`;
         });
         html += "</ul>\n";
       }
