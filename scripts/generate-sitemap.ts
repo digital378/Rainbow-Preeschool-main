@@ -126,6 +126,17 @@ const entries: SitemapEntry[] = [
   { url: '/blog/preparing-your-child-for-first-day-preschool', priority: 0.6, changefreq: 'monthly' },
   { url: '/blog/role-of-parents-early-education', priority: 0.6, changefreq: 'monthly' },
   { url: '/blog/creating-safe-nurturing-learning-environment', priority: 0.6, changefreq: 'monthly' },
+  // 10 new evergreen recovery posts (April 2026)
+  { url: '/blog/screen-time-guidelines-preschoolers-india', priority: 0.7, changefreq: 'monthly' },
+  { url: '/blog/healthy-tiffin-box-ideas-preschoolers', priority: 0.7, changefreq: 'monthly' },
+  { url: '/blog/toilet-training-toddlers-indian-parents-guide', priority: 0.7, changefreq: 'monthly' },
+  { url: '/blog/picky-eater-toddler-solutions', priority: 0.7, changefreq: 'monthly' },
+  { url: '/blog/toddler-tantrum-management-emotional-regulation', priority: 0.7, changefreq: 'monthly' },
+  { url: '/blog/first-day-preschool-packing-checklist', priority: 0.7, changefreq: 'monthly' },
+  { url: '/blog/stem-activities-preschoolers-home', priority: 0.7, changefreq: 'monthly' },
+  { url: '/blog/yoga-mindfulness-preschoolers-daily-routines', priority: 0.7, changefreq: 'monthly' },
+  { url: '/blog/preparing-preschooler-new-sibling', priority: 0.7, changefreq: 'monthly' },
+  { url: '/blog/toddler-speech-development-milestones-when-to-worry', priority: 0.7, changefreq: 'monthly' },
 
   // ── SEASONAL / STANDALONE ────────────────────────────────
   { url: '/holi-activities-for-kids', priority: 0.6, changefreq: 'yearly' },
