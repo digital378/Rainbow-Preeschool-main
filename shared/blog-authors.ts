@@ -1,30 +1,37 @@
 /**
- * Per-blog-post author and reviewer registry.
+ * Blog post author and reviewer registry.
  *
- * Used by both the SSR/bot pipeline (`server/ssr-pages.ts`) and the React
- * blog post page (`client/src/pages/blog-post.tsx`) so the BlogPosting
- * JSON-LD schema and the on-page E-E-A-T strip stay in sync.
+ * Editorial policy: Rainbow Preschool International does not use any
+ * individual person's name as a public byline, reviewer or contributor
+ * anywhere on the site. All blog posts are attributed at the
+ * organisation level to the Rainbow Preschool Curriculum Team.
  *
- * E-E-A-T rationale: Google rewards content authored or reviewed by a
- * named human expert with verifiable credentials, especially in
- * YMYL-adjacent topics like child development, paediatric health and
- * parenting. Each post here lists a Rainbow Preschool curriculum author
- * plus a topic-relevant reviewer (paediatrician, child psychologist or
- * senior Montessori educator).
+ * The per-slug map below is preserved (rather than collapsed to a
+ * single default) so that `assertAllBlogSlugsCovered()` continues to
+ * loudly warn when a new blog post is added without an explicit
+ * authorship entry — that gives editors a clear hook if they ever want
+ * to vary attribution per topic in the future.
  */
 
 const BASE_URL = "https://www.rainbowpreschools.com";
 
+/**
+ * Org-level "person" record used by both the visible byline / EEAT
+ * strip and the BlogPosting JSON-LD. The shape is preserved (name,
+ * role, credentials, bio, url) so existing call sites don't need to
+ * change, but every field describes an organisation, never a real
+ * individual.
+ */
 export interface BlogPerson {
-  /** Full display name. */
+  /** Display name shown in the byline / EEAT block. Always an org name. */
   name: string;
-  /** Job title plus organisation. */
+  /** Secondary line shown beneath the name. Always an org line. */
   role: string;
-  /** Short comma-separated credentials list (e.g. "MBBS, MD Paediatrics"). */
+  /** Optional credentials line. Empty for org-level attribution. */
   credentials: string;
-  /** 1-2 sentence biography surfaced in the EEAT strip. */
+  /** Optional short bio. Empty for org-level attribution. */
   bio: string;
-  /** Optional public profile / about page URL. */
+  /** Optional link to a public org page (e.g. /about). */
   url?: string;
 }
 
@@ -33,156 +40,52 @@ export interface BlogAuthorship {
   reviewedBy: BlogPerson;
 }
 
-// ── People ───────────────────────────────────────────────────────────────
+// ── Single canonical org-level attribution ───────────────────────────────
 
-const aditiMenon: BlogPerson = {
-  name: "Aditi Menon",
-  role: "Lead Early Childhood Educator, Rainbow Preschool International",
-  credentials: "M.A. Child Development",
-  bio: "Aditi leads classroom curriculum across Rainbow Preschool's Thane centres and has spent the last decade designing play-based learning programmes for children aged 1.5 to 6.",
+const RAINBOW_CURRICULUM_TEAM: BlogPerson = {
+  name: "Rainbow Preschool Curriculum Team",
+  role: "Rainbow Preschool International",
+  credentials: "",
+  bio: "",
   url: `${BASE_URL}/about`,
 };
-
-const priyaNair: BlogPerson = {
-  name: "Priya Nair",
-  role: "Senior Curriculum Designer, Rainbow Preschool International",
-  credentials: "B.Ed (Pre-primary), Montessori-certified",
-  bio: "Priya designs Rainbow Preschool's nursery and kindergarten curriculum and has trained early-years teachers across Maharashtra for over twelve years.",
-  url: `${BASE_URL}/about`,
-};
-
-const meenakshiRao: BlogPerson = {
-  name: "Meenakshi Rao",
-  role: "Head of Curriculum, Rainbow Preschool International",
-  credentials: "M.Ed, AMI Montessori Diploma (3-6)",
-  bio: "Meenakshi heads curriculum and pedagogy at Rainbow Preschool International, overseeing teacher training and classroom standards across all six Thane centres.",
-  url: `${BASE_URL}/about`,
-};
-
-const drAnjaliKulkarni: BlogPerson = {
-  name: "Dr. Anjali Kulkarni",
-  role: "Consulting Paediatrician, Rainbow Preschool International",
-  credentials: "MBBS, MD (Paediatrics)",
-  bio: "Dr. Kulkarni is Rainbow Preschool's consulting paediatrician and reviews health, nutrition, sleep and developmental milestone content for parent-facing guides.",
-};
-
-const drNehaBhide: BlogPerson = {
-  name: "Dr. Neha Bhide",
-  role: "Consulting Child Psychologist, Rainbow Preschool International",
-  credentials: "M.Phil (Clinical Psychology), RCI-registered",
-  bio: "Dr. Bhide is Rainbow Preschool's consulting child psychologist and reviews emotional regulation, behaviour and family transition content for parents.",
-};
-
-// ── Defaults ─────────────────────────────────────────────────────────────
 
 export const DEFAULT_BLOG_AUTHORSHIP: BlogAuthorship = {
-  author: priyaNair,
-  reviewedBy: meenakshiRao,
+  author: RAINBOW_CURRICULUM_TEAM,
+  reviewedBy: RAINBOW_CURRICULUM_TEAM,
 };
 
 // ── Per-slug registry ────────────────────────────────────────────────────
+// Every slug is listed explicitly (even though they all currently resolve
+// to the same org-level attribution) so that assertAllBlogSlugsCovered()
+// catches any future blog post added without an authorship decision.
 
 export const BLOG_AUTHORSHIP: Record<string, BlogAuthorship> = {
-  "what-to-ask-during-a-tour-of-a-preschool-in-thane": {
-    author: aditiMenon,
-    reviewedBy: meenakshiRao,
-  },
-  "understanding-the-importance-of-preschool-in-early-childhood-development": {
-    author: priyaNair,
-    reviewedBy: meenakshiRao,
-  },
-  "how-play-based-learning-shapes-young-minds": {
-    author: priyaNair,
-    reviewedBy: meenakshiRao,
-  },
-  "preparing-your-child-for-first-day-preschool": {
-    author: aditiMenon,
-    reviewedBy: drNehaBhide,
-  },
-  "role-of-parents-early-education": {
-    author: aditiMenon,
-    reviewedBy: meenakshiRao,
-  },
-  "creating-safe-nurturing-learning-environment": {
-    author: priyaNair,
-    reviewedBy: meenakshiRao,
-  },
-  "republic-day-2026": {
-    author: priyaNair,
-    reviewedBy: meenakshiRao,
-  },
-  "signs-of-good-preschool-thane": {
-    author: aditiMenon,
-    reviewedBy: meenakshiRao,
-  },
-  "preschool-vs-daycare-difference": {
-    author: aditiMenon,
-    reviewedBy: meenakshiRao,
-  },
-  "what-age-start-play-school": {
-    author: aditiMenon,
-    reviewedBy: drAnjaliKulkarni,
-  },
-  "benefits-play-school-2-year-olds": {
-    author: priyaNair,
-    reviewedBy: meenakshiRao,
-  },
-  "nursery-school-admission-thane-2026": {
-    author: aditiMenon,
-    reviewedBy: meenakshiRao,
-  },
-  "what-children-learn-nursery-school": {
-    author: priyaNair,
-    reviewedBy: meenakshiRao,
-  },
-  "50-fun-learning-activities-preschoolers": {
-    author: priyaNair,
-    reviewedBy: meenakshiRao,
-  },
-  "best-childrens-books-indian-preschoolers": {
-    author: priyaNair,
-    reviewedBy: meenakshiRao,
-  },
-  "screen-time-guidelines-preschoolers-india": {
-    author: aditiMenon,
-    reviewedBy: drAnjaliKulkarni,
-  },
-  "healthy-tiffin-box-ideas-preschoolers": {
-    author: aditiMenon,
-    reviewedBy: drAnjaliKulkarni,
-  },
-  "toilet-training-toddlers-indian-parents-guide": {
-    author: aditiMenon,
-    reviewedBy: drAnjaliKulkarni,
-  },
-  "picky-eater-toddler-solutions": {
-    author: priyaNair,
-    reviewedBy: drAnjaliKulkarni,
-  },
-  "toddler-tantrum-management-emotional-regulation": {
-    author: aditiMenon,
-    reviewedBy: drNehaBhide,
-  },
-  "first-day-preschool-packing-checklist": {
-    author: priyaNair,
-    reviewedBy: meenakshiRao,
-  },
-  "stem-activities-preschoolers-home": {
-    author: priyaNair,
-    reviewedBy: meenakshiRao,
-  },
-  "yoga-mindfulness-preschoolers-daily-routines": {
-    author: priyaNair,
-    reviewedBy: drNehaBhide,
-  },
-  "preparing-preschooler-new-sibling": {
-    author: aditiMenon,
-    reviewedBy: drNehaBhide,
-  },
-  "toddler-speech-development-milestones-when-to-worry": {
-    author: aditiMenon,
-    reviewedBy: drAnjaliKulkarni,
-  },
+  "what-to-ask-during-a-tour-of-a-preschool-in-thane": DEFAULT_BLOG_AUTHORSHIP,
+  "understanding-the-importance-of-preschool-in-early-childhood-development": DEFAULT_BLOG_AUTHORSHIP,
+  "how-play-based-learning-shapes-young-minds": DEFAULT_BLOG_AUTHORSHIP,
+  "preparing-your-child-for-first-day-preschool": DEFAULT_BLOG_AUTHORSHIP,
+  "role-of-parents-early-education": DEFAULT_BLOG_AUTHORSHIP,
+  "creating-safe-nurturing-learning-environment": DEFAULT_BLOG_AUTHORSHIP,
+  "republic-day-2026": DEFAULT_BLOG_AUTHORSHIP,
+  "signs-of-good-preschool-thane": DEFAULT_BLOG_AUTHORSHIP,
+  "preschool-vs-daycare-difference": DEFAULT_BLOG_AUTHORSHIP,
+  "what-age-start-play-school": DEFAULT_BLOG_AUTHORSHIP,
+  "benefits-play-school-2-year-olds": DEFAULT_BLOG_AUTHORSHIP,
+  "nursery-school-admission-thane-2026": DEFAULT_BLOG_AUTHORSHIP,
+  "what-children-learn-nursery-school": DEFAULT_BLOG_AUTHORSHIP,
+  "50-fun-learning-activities-preschoolers": DEFAULT_BLOG_AUTHORSHIP,
+  "best-childrens-books-indian-preschoolers": DEFAULT_BLOG_AUTHORSHIP,
+  "screen-time-guidelines-preschoolers-india": DEFAULT_BLOG_AUTHORSHIP,
+  "healthy-tiffin-box-ideas-preschoolers": DEFAULT_BLOG_AUTHORSHIP,
+  "toilet-training-toddlers-indian-parents-guide": DEFAULT_BLOG_AUTHORSHIP,
+  "picky-eater-toddler-solutions": DEFAULT_BLOG_AUTHORSHIP,
+  "toddler-tantrum-management-emotional-regulation": DEFAULT_BLOG_AUTHORSHIP,
+  "first-day-preschool-packing-checklist": DEFAULT_BLOG_AUTHORSHIP,
+  "stem-activities-preschoolers-home": DEFAULT_BLOG_AUTHORSHIP,
+  "yoga-mindfulness-preschoolers-daily-routines": DEFAULT_BLOG_AUTHORSHIP,
+  "preparing-preschooler-new-sibling": DEFAULT_BLOG_AUTHORSHIP,
+  "toddler-speech-development-milestones-when-to-worry": DEFAULT_BLOG_AUTHORSHIP,
 };
 
 export function getBlogAuthorship(slug: string | undefined | null): BlogAuthorship {
@@ -191,9 +94,8 @@ export function getBlogAuthorship(slug: string | undefined | null): BlogAuthorsh
   if (!entry) {
     if (typeof console !== "undefined") {
       console.warn(
-        `[blog-authors] No per-post author/reviewer entry for slug "${slug}". ` +
-          `Falling back to DEFAULT_BLOG_AUTHORSHIP. Add an entry in shared/blog-authors.ts ` +
-          `to give this post a real named expert in the BlogPosting JSON-LD and EEAT strip.`,
+        `[blog-authors] No per-post authorship entry for slug "${slug}". ` +
+          `Falling back to DEFAULT_BLOG_AUTHORSHIP. Add an entry in shared/blog-authors.ts.`,
       );
     }
     return DEFAULT_BLOG_AUTHORSHIP;
@@ -203,39 +105,39 @@ export function getBlogAuthorship(slug: string | undefined | null): BlogAuthorsh
 
 /**
  * Assert at startup that every known blog slug has an explicit
- * authorship entry. Call this from `server/ssr-pages.ts` after the
- * blog slug map is constructed so a regression (a new post added
- * without an author/reviewer) is surfaced loudly in dev/CI instead
- * of silently falling back to the default authorship.
+ * authorship entry. Surfaces a console warning when a new post is added
+ * without one instead of silently falling back.
  */
 export function assertAllBlogSlugsCovered(slugs: readonly string[]): void {
   const missing = slugs.filter((s) => !(s in BLOG_AUTHORSHIP));
   if (missing.length > 0 && typeof console !== "undefined") {
     console.warn(
       `[blog-authors] ${missing.length} blog slug(s) are missing per-post ` +
-        `author/reviewer entries: ${missing.join(", ")}. Add them in shared/blog-authors.ts.`,
+        `authorship entries: ${missing.join(", ")}. Add them in shared/blog-authors.ts.`,
     );
   }
 }
 
 /**
- * Build a schema.org `Person` node for a `BlogPerson`. Used inside
- * BlogPosting / Article JSON-LD to give Google a real named author or
- * reviewer with credentials instead of a generic Organization.
+ * Build a schema.org Organization node for a `BlogPerson`. Used inside
+ * BlogPosting / Article JSON-LD so Google sees Rainbow Preschool
+ * International as the editorial entity instead of a fabricated
+ * individual.
  */
 export function blogPersonToSchema(person: BlogPerson): Record<string, unknown> {
   const node: Record<string, unknown> = {
-    "@type": "Person",
+    "@type": "Organization",
     name: person.name,
-    jobTitle: person.role,
-    description: person.bio,
-    knowsAbout: person.credentials,
-    worksFor: {
+    url: person.url ?? BASE_URL,
+  };
+  // Nest under the parent Rainbow Preschool International org when the
+  // attribution is to the Curriculum Team (or any other internal team).
+  if (person.name !== "Rainbow Preschool International") {
+    node.parentOrganization = {
       "@type": "Organization",
       name: "Rainbow Preschool International",
       url: BASE_URL,
-    },
-  };
-  if (person.url) node.url = person.url;
+    };
+  }
   return node;
 }

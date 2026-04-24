@@ -105,16 +105,20 @@ export function EEATSignals({
       })),
     };
 
+    // Editorial policy: only the school name is used as author / reviewer
+    // — never an individual person. Both nodes emit @type Organization.
     const articleAuthor = authorName
       ? {
-          "@type": "Person",
+          "@type": "Organization",
           "name": authorName,
-          ...(authorRole ? { "jobTitle": authorRole } : {}),
-          ...(authorCredentials ? { "knowsAbout": authorCredentials } : {}),
-          "worksFor": {
-            "@type": "Organization",
-            "name": "Rainbow Preschool International",
-          },
+          ...(authorName !== "Rainbow Preschool International"
+            ? {
+                "parentOrganization": {
+                  "@type": "Organization",
+                  "name": "Rainbow Preschool International",
+                },
+              }
+            : {}),
         }
       : {
           "@type": "Organization",
@@ -124,15 +128,17 @@ export function EEATSignals({
 
     const articleReviewer = reviewedBy
       ? {
-          "@type": "Person",
+          "@type": "Organization",
           "name": reviewedBy,
-          ...(reviewerRole ? { "jobTitle": reviewerRole } : {}),
-          ...(reviewerCredentials ? { "knowsAbout": reviewerCredentials } : {}),
           ...(reviewerProfileUrl ? { "url": reviewerProfileUrl } : {}),
-          "worksFor": {
-            "@type": "Organization",
-            "name": "Rainbow Preschool International",
-          },
+          ...(reviewedBy !== "Rainbow Preschool International"
+            ? {
+                "parentOrganization": {
+                  "@type": "Organization",
+                  "name": "Rainbow Preschool International",
+                },
+              }
+            : {}),
         }
       : null;
 
