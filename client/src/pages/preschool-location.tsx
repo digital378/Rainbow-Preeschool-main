@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/accordion";
 import { LocalCallbackForm } from "@/components/local-callback-form";
 import { MinimalHeader } from "@/components/landing/minimal-header";
+import { EEATSignals } from "@/components/eeat-signals";
 import { 
   getCentreBySlug, 
   preschoolPageSEO, 
@@ -243,7 +244,16 @@ function PreschoolLocationTemplate({ localitySlug }: PreschoolLocationPageProps)
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6" data-testid="heading-h1">
                 {seo.h1}
               </h1>
-              
+
+              <EEATSignals
+                pageUrl={seo.canonicalPath}
+                pageName={seo.h1}
+                lastUpdated="April 24, 2026"
+                ratingValue={4.9}
+                reviewCount={487}
+                schemaId={`preschool-${localitySlug}`}
+              />
+
               <div className="space-y-4 text-muted-foreground mb-8">
                 <p data-testid="text-intro-1">{intros.paragraph1}</p>
                 <p data-testid="text-intro-2">{intros.paragraph2}</p>

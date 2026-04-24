@@ -10,6 +10,7 @@ import { DayTimeline } from "./day-timeline";
 import { CentreCardWithMap } from "./centre-card-with-map";
 import { FAQAccordion } from "./faq-accordion";
 import { FinalCTA } from "./final-cta";
+import { EEATSignals } from "@/components/eeat-signals";
 import { pushToDataLayer } from "@/lib/analytics";
 
 interface PlaygroupLandingTemplateProps {
@@ -153,6 +154,17 @@ export function PlaygroupLandingTemplate({ data }: PlaygroupLandingTemplateProps
         onCallClick={handleCallClick}
         onWhatsAppClick={handleWhatsAppClick}
       />
+
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 -mt-2">
+        <EEATSignals
+          pageUrl={new URL(data.seo.canonical).pathname}
+          pageName={data.seo.h1}
+          lastUpdated="April 24, 2026"
+          ratingValue={4.9}
+          reviewCount={487}
+          schemaId={`playgroup-${data.slug}`}
+        />
+      </div>
 
       {/* Callback Form Section */}
       <section className="py-12 md:py-16 bg-muted/20" ref={formRef}>

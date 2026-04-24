@@ -767,6 +767,8 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
         { heading: "Our Programmes", items: ["Playgroup (1.5–2.5 years)", "Nursery (2.5–4 years)", "Kindergarten (4–6 years)"] },
       ],
       internalLinks: commonInternalLinks,
+      lastModified: "2026-04-24",
+      lastModifiedDisplay: "April 24, 2026",
     };
   }
 
@@ -806,6 +808,8 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
         { heading: `Admission & Timings for Playgroup in ${isThanePage ? "Thane" : pg.locality}`, text: `Playgroup admissions are open for children aged 1.5 to 2.5 years. Our Playgroup operates Monday to Friday with both morning (8:30 AM–11:30 AM) and afternoon (12:30 PM–3:30 PM) batches at select centres. Enrolment is available on a rolling basis throughout the year, subject to availability. We encourage parents to visit the campus before enrolling — our free campus tour includes a classroom visit, meeting the teacher, and a Q&A session. To book a visit or enquire about admissions at our ${isThanePage ? "Thane West" : pg.locality} centres, call us at +91-8291568972 or walk into any Rainbow Preschool centre Monday to Saturday, 9 AM–6 PM.` },
       ],
       internalLinks: [...commonInternalLinks, { text: "Playgroup Programme", url: "/playgroup" }, { text: "Preschool in Thane", url: "/best-preschool-near-me-in-thane" }],
+      lastModified: "2026-04-24",
+      lastModifiedDisplay: "April 24, 2026",
     };
   }
 
