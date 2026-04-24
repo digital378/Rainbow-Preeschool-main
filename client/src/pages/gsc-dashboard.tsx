@@ -1071,7 +1071,7 @@ function DataExplorer({ snapshots }: { snapshots: GscSnapshot[] }) {
   const { mapA, mapB, compareKeywords } = useMemo(() => {
     const mapA = new Map(snapshots.filter(s => s.snapshotDate === compareA).map(s => [s.keyword, s]));
     const mapB = new Map(snapshots.filter(s => s.snapshotDate === compareB).map(s => [s.keyword, s]));
-    const compareKeywords = Array.from(new Set([...mapA.keys(), ...mapB.keys()])).sort();
+    const compareKeywords = Array.from(new Set([...Array.from(mapA.keys()), ...Array.from(mapB.keys())])).sort();
     return { mapA, mapB, compareKeywords };
   }, [snapshots, compareA, compareB]);
 
@@ -1759,7 +1759,7 @@ export default function GscDashboard() {
   const avgPos = latestSnapshots.length ? latestSnapshots.reduce((a, s) => a + s.position, 0) / latestSnapshots.length : 0;
 
   const filterByPeriod = <T extends { snapshotDate: string }>(rows: T[]) => {
-    const allDates = [...new Set(rows.map(s => s.snapshotDate))].sort((a, b) => b.localeCompare(a));
+    const allDates = Array.from(new Set(rows.map(s => s.snapshotDate))).sort((a, b) => b.localeCompare(a));
     if (perfPeriod === "latest") return rows.filter(s => s.snapshotDate === allDates[0]);
     const days = perfPeriod === "7d" ? 7 : perfPeriod === "28d" ? 28 : perfPeriod === "3mo" ? 90 : null;
     if (days) {

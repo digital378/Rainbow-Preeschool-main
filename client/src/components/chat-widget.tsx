@@ -282,12 +282,12 @@ export function ChatWidget() {
   const handleQuickReply = (label: string, value: string) => {
     if (value === "main_menu") {
       const userMsg: Message = { id: `${Date.now()}-user`, sender: "user", text: label };
-      setMessages(prev => prev.map(m => ({ ...m, quickReplies: undefined })).concat(userMsg));
+      setMessages(prev => prev.map((m): Message => ({ ...m, quickReplies: undefined })).concat(userMsg));
       addBotMessage("main_menu");
       return;
     }
     const userMsg: Message = { id: `${Date.now()}-user`, sender: "user", text: label };
-    setMessages(prev => prev.map(m => ({ ...m, quickReplies: undefined })).concat(userMsg));
+    setMessages(prev => prev.map((m): Message => ({ ...m, quickReplies: undefined })).concat(userMsg));
     addBotMessage(value);
   };
 

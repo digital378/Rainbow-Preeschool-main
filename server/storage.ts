@@ -106,6 +106,10 @@ export class MemStorage implements IStorage {
     const id = randomUUID();
     const contact: Contact = {
       ...insertContact,
+      email: insertContact.email ?? null,
+      message: insertContact.message ?? null,
+      leadSource: insertContact.leadSource ?? null,
+      leadMedium: insertContact.leadMedium ?? null,
       id,
       createdAt: new Date(),
       isRead: false,
@@ -150,6 +154,8 @@ export class MemStorage implements IStorage {
     const id = randomUUID();
     const post: BlogPost = {
       ...insertPost,
+      imageUrl: insertPost.imageUrl ?? null,
+      isPublished: insertPost.isPublished ?? true,
       id,
       publishedAt: new Date(),
     };
@@ -198,7 +204,16 @@ export class MemStorage implements IStorage {
 
   async addGscSnapshot(snapshot: InsertGscSnapshot): Promise<GscSnapshot> {
     const id = ++this.gscSnapshotCounter;
-    const entry: GscSnapshot = { ...snapshot, id, page: snapshot.page ?? null, notes: snapshot.notes ?? null };
+    const entry: GscSnapshot = {
+      ...snapshot,
+      id,
+      clicks: snapshot.clicks ?? 0,
+      impressions: snapshot.impressions ?? 0,
+      ctr: snapshot.ctr ?? 0,
+      position: snapshot.position ?? 0,
+      page: snapshot.page ?? null,
+      notes: snapshot.notes ?? null,
+    };
     this.gscSnapshots.set(id, entry);
     return entry;
   }
@@ -231,6 +246,10 @@ export class MemStorage implements IStorage {
       this.gscSnapshots.set(id, {
         ...row,
         id,
+        clicks: row.clicks ?? 0,
+        impressions: row.impressions ?? 0,
+        ctr: row.ctr ?? 0,
+        position: row.position ?? 0,
         page: row.page ?? null,
         notes: row.notes ?? null,
       });
