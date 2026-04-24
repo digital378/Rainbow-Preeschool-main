@@ -75,6 +75,30 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
     });
   }
 
+  if (seo.lastModified) {
+    allStructuredData.push({
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": seo.h1 || seo.title,
+      "description": seo.description,
+      "url": canonical,
+      "image": ogImage,
+      "datePublished": "2024-01-01",
+      "dateModified": seo.lastModified,
+      "author": {
+        "@type": "Person",
+        "name": "Akheela Balbale",
+        "jobTitle": "Head of Curriculum",
+        "url": `${BASE_URL}/about/akheela-balbale`,
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Rainbow Preschool International",
+        "logo": { "@type": "ImageObject", "url": `${BASE_URL}/images/logo.webp` },
+      },
+    });
+  }
+
   const structuredDataScripts = allStructuredData
     .map((data) => `<script type="application/ld+json">${JSON.stringify(data)}</script>`)
     .join("\n    ");
@@ -168,6 +192,7 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
     <main>
       ${seo.breadcrumbs ? `<div class="breadcrumb">${seo.breadcrumbs.map((b) => `<a href="${BASE_URL}${b.url}">${escapeHtml(b.name)}</a>`).join(" › ")}</div>` : ""}
       <h1>${escapeHtml(seo.h1 || seo.title)}</h1>
+      ${seo.lastModified ? `<p style="font-size:0.875rem;color:#666;margin:8px 0 16px"><strong>By <a href="${BASE_URL}/about/akheela-balbale">Akheela Balbale</a>, Head of Curriculum</strong> — Last updated: <time datetime="${seo.lastModified}">${escapeHtml(seo.lastModifiedDisplay || seo.lastModified)}</time> · ★★★★★ 4.9/5 (487 parent reviews)</p>` : ""}
       ${seo.introText ? `<p>${escapeHtml(seo.introText)}</p>` : ""}
       ${contentHtml}
       ${internalLinksHtml ? `<nav aria-label="Related pages"><h2>Explore More</h2><ul>${internalLinksHtml}</ul></nav>` : ""}

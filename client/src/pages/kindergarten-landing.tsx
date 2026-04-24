@@ -43,6 +43,7 @@ import { z } from "zod";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
+import { EEATSignals } from "@/components/eeat-signals";
 import { trackProgrammeView, trackFormSubmit } from "@/lib/analytics";
 
 const callbackFormSchema = z.object({
@@ -391,6 +392,16 @@ export default function KindergartenLanding() {
 
   return (
     <div className="pt-20 md:pt-24">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
+        <EEATSignals
+          pageUrl="/kindergarten"
+          pageName="Kindergarten in Thane"
+          lastUpdated="April 24, 2026"
+          ratingValue={4.9}
+          reviewCount={487}
+          schemaId="kindergarten-landing"
+        />
+      </div>
       <SEO
         title="Kindergarten in Thane | Jr & Sr KG | Rainbow Preschool"
         description="Kindergarten programme in Thane (Jr. KG & Sr. KG) for children aged 3.5-5.5 years — comprehensive school-readiness covering literacy, numeracy, and life skills. 6 Thane centres. Enquire for 2025-26 admissions."
@@ -615,6 +626,52 @@ export default function KindergartenLanding() {
                 </div>
                 <div className="text-sm text-muted-foreground">Grade 1 Ready</div>
               </Card>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Kindergarten in Thane — city-broad keyword section (Apr 2026) */}
+      <section className="py-16 md:py-20 lg:py-24" data-testid="section-kindergarten-in-thane">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Kindergarten in Thane — School-Ready by Grade 1</h2>
+            <p className="text-muted-foreground text-lg max-w-3xl mx-auto">
+              Looking for the best <strong>kindergarten in Thane</strong>? Rainbow Preschool International prepares 4–6 year olds for the demands of Grade 1 with structured literacy, numeracy, and life-skills programmes — across 6 trusted Thane West centres since 2007.
+            </p>
+          </div>
+          <div className="grid md:grid-cols-2 gap-6 mb-10">
+            <Card className="p-6">
+              <h3 className="text-xl font-semibold mb-3">Jr. KG and Sr. KG across Thane West</h3>
+              <p className="text-muted-foreground mb-4">
+                Our kindergarten programme runs at all 6 Rainbow centres — <strong>Manpada, Hariniwas, Anand Nagar, Dhokali, Kalwa and Kasarvadavali</strong>. Children move seamlessly from Sr. KG into top Thane primary schools including DAV, Smt. Sulochanadevi, Singhania, Hiranandani Foundation and St. Lawrence.
+              </p>
+              <Link href="/branches" className="text-primary font-medium hover:underline" data-testid="link-find-nearest-kg">
+                Find your nearest centre →
+              </Link>
+            </Card>
+            <Card className="p-6">
+              <h3 className="text-xl font-semibold mb-3">School-readiness milestones we cover</h3>
+              <ul className="space-y-2 text-muted-foreground">
+                <li className="flex gap-2"><span className="text-primary">✓</span><span><strong>Reading</strong> simple sentences + sight words</span></li>
+                <li className="flex gap-2"><span className="text-primary">✓</span><span><strong>Writing</strong> A–Z + 1–100 confidently</span></li>
+                <li className="flex gap-2"><span className="text-primary">✓</span><span><strong>Math</strong> — addition, subtraction, shapes, patterns</span></li>
+                <li className="flex gap-2"><span className="text-primary">✓</span><span><strong>EVS / GK</strong> — community, environment, values</span></li>
+                <li className="flex gap-2"><span className="text-primary">✓</span><span><strong>Independence</strong> — sitting, listening, following 2-step instructions</span></li>
+              </ul>
+            </Card>
+          </div>
+          <div className="bg-muted/40 rounded-2xl p-6 md:p-8 text-center">
+            <p className="text-base md:text-lg mb-4">
+              <strong>Worried about Grade 1 transition?</strong> Read our <Link href="/blog/parents-prepare-child-school" className="text-primary hover:underline">guide to preparing your child for school</Link> or compare us with the <Link href="/top-preschools-in-thane" className="text-primary hover:underline">top 10 preschools in Thane</Link>.
+            </p>
+            <div className="flex flex-wrap gap-3 justify-center">
+              <Link href="/preschool-admissions" className="inline-flex items-center px-5 py-2.5 rounded-full bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors" data-testid="link-admissions-kg">
+                Apply for KG 2026–27
+              </Link>
+              <Link href="/testimonials" className="inline-flex items-center px-5 py-2.5 rounded-full border border-primary text-primary font-medium hover:bg-primary/5 transition-colors" data-testid="link-testimonials-kg">
+                Read parent reviews
+              </Link>
             </div>
           </div>
         </div>

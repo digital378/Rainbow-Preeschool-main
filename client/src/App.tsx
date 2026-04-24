@@ -48,7 +48,6 @@ const PlaySchoolNearMe = lazy(() => import("@/pages/play-school-near-me"));
 
 const RainbowSparkleTrail = lazy(() => import("@/components/rainbow-sparkle-trail").then(m => ({ default: m.RainbowSparkleTrail })));
 
-const LazyPlaygroupInThane = lazy(() => import("@/pages/local-playgroup").then(m => ({ default: m.PlaygroupInThane })));
 const LazyPlaygroupInManpada = lazy(() => import("@/pages/local-playgroup").then(m => ({ default: m.PlaygroupInManpada })));
 const LazyPlaygroupInKalwa = lazy(() => import("@/pages/local-playgroup").then(m => ({ default: m.PlaygroupInKalwa })));
 const LazyPlaygroupNearGhodbunderRoad = lazy(() => import("@/pages/local-playgroup").then(m => ({ default: m.PlaygroupNearGhodbunderRoad })));
@@ -237,7 +236,6 @@ const RepublicDay2026 = lazy(() => import("@/pages/republic-day-2026"));
 import { legacySlugs } from "@shared/legacy-slugs";
 
 const STANDALONE_LANDING_PATHS = [
-  "/playgroup-in-thane",
   "/playgroup-in-manpada",
   "/playgroup-in-kalwa",
   "/playgroup-near-ghodbunder-road",
@@ -321,7 +319,6 @@ function Router() {
         <Route path="/ris-11th" component={RIS11thLanding} />
         <Route path="/republic-day-2026" component={RepublicDay2026} />
         
-        <Route path="/playgroup-in-thane" component={LazyPlaygroupInThane} />
         <Route path="/playgroup-in-manpada" component={LazyPlaygroupInManpada} />
         <Route path="/playgroup-in-kalwa" component={LazyPlaygroupInKalwa} />
         <Route path="/playgroup-near-ghodbunder-road" component={LazyPlaygroupNearGhodbunderRoad} />

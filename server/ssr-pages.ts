@@ -18,6 +18,10 @@ export interface PageSEOData {
     items?: string[];
   }[];
   internalLinks?: { text: string; url: string }[];
+  /** ISO-8601 date string. When set, bot SSR emits a visible "Last Updated" line and an Article schema with dateModified for E-E-A-T freshness. */
+  lastModified?: string;
+  /** Display date (e.g. "April 24, 2026"). Optional. */
+  lastModifiedDisplay?: string;
 }
 
 const organizationSchema = {
@@ -430,7 +434,9 @@ const staticPages: Record<string, PageSEOData> = {
       { heading: "Why Playgroup at Rainbow?", items: ["Experienced ECE-qualified and Montessori-trained female teachers, deeply skilled in toddler development and early childhood best practices", "Small classes — maximum 10–12 children per group, ensuring meaningful individual attention for every toddler every day", "CCTV-monitored, child-safe premises with secure entry and exit across all 6 Thane centres", "Activity-based curriculum developed by our Head of Curriculum, updated annually to align with NEP 2020 and global ECE best practices", "Regular parent communication — daily verbal feedback, monthly written progress updates, and open-door access to your child's teacher", "18+ years of trust — Rainbow Preschool has been educating Thane children since 2007, with over 1,00,000 alumni across 6 generations of families", "6 convenient locations across Thane West — Manpada, Hariniwas, Anand Nagar, Dhokali, Kalwa, and Kasarvadavali"] },
       { heading: "Admission & Timings", text: "Playgroup admissions at Rainbow Preschool International are open for children aged 1.5 to 2.5 years. Our Playgroup operates Monday through Friday with morning batches (8:30 AM to 11:30 AM) and afternoon batches (12:30 PM to 3:30 PM) available at select centres, giving working parents maximum flexibility. Admissions are accepted on a rolling basis throughout the year, subject to seat availability. We strongly encourage parents to schedule a free campus tour before enrolling — you can observe the classroom, meet your child's prospective teacher, and ask all the questions you have in a relaxed, no-pressure setting. To book a tour or request an admission form, call us at +91 82915 68972 or walk into any of our 6 Rainbow Preschool centres in Thane West, Monday to Saturday, 9 AM to 6 PM." },
     ],
-    internalLinks: [...commonInternalLinks, { text: "Playgroup in Thane", url: "/playgroup-in-thane" }, { text: "Nursery Programme", url: "/nursery" }],
+    internalLinks: [...commonInternalLinks, { text: "Best Preschool in Thane", url: "/best-preschool-near-me-in-thane" }, { text: "Nursery Programme", url: "/nursery" }],
+    lastModified: "2026-04-24",
+    lastModifiedDisplay: "April 24, 2026",
   },
   "/nursery": {
     title: "Nursery Programme (2.5-4 years) | Rainbow Preschool Thane",
@@ -447,6 +453,8 @@ const staticPages: Record<string, PageSEOData> = {
       { heading: "Admission & Timings", text: "Nursery admissions are open for children aged 2.5 to 4 years. Our Nursery runs Monday to Friday, with school hours of 8:30 AM to 12:30 PM (extended day available at select centres). Rainbow Preschool has 6 Nursery centres across Thane West — Manpada, Hariniwas Circle, Anand Nagar, Dhokali, Kalwa, and Kasarvadavali. Contact us at +91 82915 68972 to schedule a free school visit." },
     ],
     internalLinks: [...commonInternalLinks, { text: "Nursery Admission Thane", url: "/nursery-school-admission-thane" }, { text: "Playgroup Programme", url: "/playgroup" }, { text: "Kindergarten Programme", url: "/kindergarten" }],
+    lastModified: "2026-04-24",
+    lastModifiedDisplay: "April 24, 2026",
   },
   "/kindergarten": {
     title: "Kindergarten Programme (4-6 years) | Rainbow Preschool Thane",
@@ -463,6 +471,8 @@ const staticPages: Record<string, PageSEOData> = {
       { heading: "Admission & Timings", text: "Kindergarten (Junior KG and Senior KG) admissions are open for children aged 4 to 6 years. School hours are 8:30 AM to 1:00 PM, Monday to Friday. Extended day care is available at select centres. Rainbow Preschool operates 6 Kindergarten centres across Thane West — Manpada, Hariniwas Circle, Anand Nagar, Dhokali, Kalwa, and Kasarvadavali. Contact us at +91 82915 68972 or visit any centre for a free demo class." },
     ],
     internalLinks: [...commonInternalLinks, { text: "Nursery Programme", url: "/nursery" }, { text: "Preschool Admissions", url: "/preschool-admissions" }],
+    lastModified: "2026-04-24",
+    lastModifiedDisplay: "April 24, 2026",
   },
   "/gallery": {
     title: "Photo Gallery | Rainbow Preschool International Thane",
@@ -557,6 +567,8 @@ const staticPages: Record<string, PageSEOData> = {
       { heading: "Our Programmes", items: ["Playgroup (1.5–2.5 years)", "Nursery (2.5–4 years)", "Kindergarten (4–6 years)"] },
     ],
     internalLinks: commonInternalLinks,
+    lastModified: "2026-04-24",
+    lastModifiedDisplay: "April 24, 2026",
   },
   "/play-school-near-me": {
     title: "Play School Near Me in Thane | Rainbow Preschool",
@@ -585,6 +597,8 @@ const staticPages: Record<string, PageSEOData> = {
       ]},
     ],
     internalLinks: commonInternalLinks,
+    lastModified: "2026-04-24",
+    lastModifiedDisplay: "April 24, 2026",
   },
   "/happy-times": {
     title: "Happy Times | After-School Care | Rainbow Preschool",
@@ -722,7 +736,6 @@ const preschoolCentres: Record<string, { locality: string; address: string; phon
 };
 
 const playgroundPages: Record<string, { locality: string }> = {
-  "/playgroup-in-thane": { locality: "Thane" },
   "/playgroup-in-manpada": { locality: "Manpada" },
   "/playgroup-in-kalwa": { locality: "Kalwa" },
   "/playgroup-near-ghodbunder-road": { locality: "Ghodbunder Road" },
@@ -875,6 +888,57 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
         title: "Best Children's Books for Indian Preschoolers | Age-Wise List",
         description: "Curated list of best children's books for Indian preschoolers aged 1.5-6. Age-wise recommendations, reading tips, and Indian authors.",
         keywords: "best books for preschoolers, children's books india, kids books 2 year old, toddler books indian, picture books for preschool",
+      },
+      // ── SEO Recovery evergreen posts (Apr–May 2026) ────────────────────────
+      "screen-time-guidelines-preschoolers-india": {
+        title: "Screen Time Guidelines for Indian Preschoolers (2026 Parent Guide)",
+        description: "How much screen time is healthy for preschoolers in India? 2026 expert guide for Thane parents — AAP rules, practical strategies, family media plan.",
+        keywords: "screen time preschoolers india, screen time toddlers, screen time guidelines, screen time 2 year old, indian parents screen time",
+      },
+      "healthy-tiffin-box-ideas-preschoolers": {
+        title: "20 Healthy Tiffin Box Ideas for Preschoolers Indian Parents Will Love",
+        description: "20 healthy, easy tiffin box ideas for preschoolers — perfect for Indian parents in Thane. Veg, balanced, kid-approved snacks for play school & nursery.",
+        keywords: "tiffin ideas for preschoolers, healthy tiffin box ideas, snack ideas for kids india, preschool tiffin recipes, kids tiffin india",
+      },
+      "toilet-training-toddlers-indian-parents-guide": {
+        title: "Toilet Training Toddlers: A Calm, Practical Guide for Indian Parents",
+        description: "Toilet training your toddler in India? Calm, step-by-step guide for parents — when to start, signs of readiness, accidents, and joint family tips.",
+        keywords: "toilet training toddlers, potty training india, when to start potty training, toilet training 2 year old, toddler potty training tips",
+      },
+      "picky-eater-toddler-solutions": {
+        title: "Picky Eater Toddler? 12 Gentle Solutions That Actually Work",
+        description: "Picky eater toddler driving you crazy? 12 gentle, paediatrician-aligned solutions for Indian parents — meal ideas, food rules, and what to avoid.",
+        keywords: "picky eater toddler, fussy eater child, how to feed picky eater, toddler not eating, picky eating solutions",
+      },
+      "toddler-tantrum-management-emotional-regulation": {
+        title: "Toddler Tantrum Management: Helping Your Child Build Emotional Regulation",
+        description: "Toddler tantrums leaving you exhausted? Learn calm, research-backed ways to manage tantrums and help your child build lifelong emotional regulation.",
+        keywords: "toddler tantrums, how to handle tantrums, tantrum management, emotional regulation kids, terrible twos india",
+      },
+      "first-day-preschool-packing-checklist": {
+        title: "First Day of Preschool Packing Checklist (Free Printable for Thane Parents)",
+        description: "Complete first-day-of-preschool packing checklist for Thane parents. Bag essentials, labels, lunch tips, and a free printable to download.",
+        keywords: "first day preschool checklist, preschool packing list, what to pack preschool, school bag essentials toddler, preschool first day tips",
+      },
+      "stem-activities-preschoolers-home": {
+        title: "15 Easy STEM Activities for Preschoolers You Can Do at Home",
+        description: "15 simple, low-cost STEM activities for preschoolers using everyday Indian household items. Build science, math, and curiosity in 20 minutes a day.",
+        keywords: "stem activities preschoolers, science experiments for kids india, stem at home, preschool science activities, easy stem ideas",
+      },
+      "yoga-mindfulness-preschoolers-daily-routines": {
+        title: "Yoga & Mindfulness for Preschoolers: Simple Routines for Calmer Mornings",
+        description: "Yoga and mindfulness routines for preschoolers — calmer mornings, better focus, and sleep. Simple poses and breathing for Indian families.",
+        keywords: "yoga for preschoolers, kids yoga india, mindfulness for toddlers, calm morning routine kids, breathing exercises children",
+      },
+      "preparing-preschooler-new-sibling": {
+        title: "Preparing Your Preschooler for a New Sibling: A Gentle Roadmap",
+        description: "Welcoming a new baby? Gentle roadmap to prepare your preschooler for a new sibling — managing jealousy, bonding, and rebuilding routines.",
+        keywords: "preparing for new sibling, new baby older sibling, preschooler new sibling, sibling rivalry toddler, second child india",
+      },
+      "toddler-speech-development-milestones-when-to-worry": {
+        title: "Toddler Speech Development Milestones: What's Normal and When to Worry",
+        description: "Toddler speech development guide — normal milestones month by month, late talker signs, when to consult a paediatrician. For Indian parents.",
+        keywords: "toddler speech milestones, late talker, when to worry speech delay, speech development 2 year old, child not talking",
       },
     };
 

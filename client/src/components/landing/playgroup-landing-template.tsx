@@ -191,7 +191,7 @@ export function PlaygroupLandingTemplate({ data }: PlaygroupLandingTemplateProps
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {[
                 { name: "Manpada", url: "/playgroup-in-manpada", landmark: "Aggarwal Arcade, near Khewra Circle, Thane (W)" },
-                { name: "Hariniwas (Panchpakadi)", url: "/playgroup-in-thane", landmark: "M.V. Apartments, Bhakti Mandir Road, Thane (W)" },
+                { name: "Hariniwas (Panchpakadi)", url: "/playgroup", landmark: "M.V. Apartments, Bhakti Mandir Road, Thane (W)" },
                 { name: "Anand Nagar", url: "/playgroup-in-anand-nagar", landmark: "Near LBS Marg, Anand Nagar, Thane (W)" },
                 { name: "Dhokali", url: "/playgroup-in-dhokali", landmark: "Off Ghodbunder Road, Dhokali, Thane (W)" },
                 { name: "Kalwa", url: "/playgroup-in-kalwa", landmark: "Near Kalwa Bridge, Kalwa, Thane" },

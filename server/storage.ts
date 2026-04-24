@@ -1,5 +1,6 @@
 import { type User, type InsertUser, type Contact, type InsertContact, type BlogPost, type InsertBlogPost, type GscSnapshot, type InsertGscSnapshot } from "@shared/schema";
 import { randomUUID } from "crypto";
+import { seoRecoveryBlogPosts } from "./seed-blog-posts";
 
 export interface IStorage {
   getUser(id: string): Promise<User | undefined>;
@@ -71,7 +72,9 @@ export class MemStorage implements IStorage {
       },
     ];
 
-    defaultPosts.forEach(post => {
+    // Append SEO-recovery evergreen posts (Apr–May 2026)
+    const allPosts = [...defaultPosts, ...seoRecoveryBlogPosts];
+    allPosts.forEach(post => {
       this.blogPosts.set(post.id, post);
     });
   }

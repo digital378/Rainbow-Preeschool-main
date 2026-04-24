@@ -134,12 +134,6 @@
     <priority>0.90</priority>
   </url>
   <url>
-    <loc>https://www.rainbowpreschools.com/playgroup-in-thane</loc>
-    <lastmod>2026-04-03</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
     <loc>https://www.rainbowpreschools.com/playgroup-in-manpada</loc>
     <lastmod>2026-04-03</lastmod>
     <changefreq>monthly</changefreq>
@@ -240,6 +234,67 @@
     <lastmod>2026-04-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.60</priority>
+  </url>
+  <!-- SEO Recovery evergreen posts (Apr–May 2026) -->
+  <url>
+    <loc>https://www.rainbowpreschools.com/blog/screen-time-guidelines-preschoolers-india</loc>
+    <lastmod>2026-04-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://www.rainbowpreschools.com/blog/healthy-tiffin-box-ideas-preschoolers</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://www.rainbowpreschools.com/blog/toilet-training-toddlers-indian-parents-guide</loc>
+    <lastmod>2026-04-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://www.rainbowpreschools.com/blog/picky-eater-toddler-solutions</loc>
+    <lastmod>2026-05-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://www.rainbowpreschools.com/blog/toddler-tantrum-management-emotional-regulation</loc>
+    <lastmod>2026-05-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://www.rainbowpreschools.com/blog/first-day-preschool-packing-checklist</loc>
+    <lastmod>2026-05-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://www.rainbowpreschools.com/blog/stem-activities-preschoolers-home</loc>
+    <lastmod>2026-05-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://www.rainbowpreschools.com/blog/yoga-mindfulness-preschoolers-daily-routines</loc>
+    <lastmod>2026-05-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://www.rainbowpreschools.com/blog/preparing-preschooler-new-sibling</loc>
+    <lastmod>2026-05-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://www.rainbowpreschools.com/blog/toddler-speech-development-milestones-when-to-worry</loc>
+    <lastmod>2026-05-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.65</priority>
   </url>
   <url>
     <loc>https://www.rainbowpreschools.com/preschool-readiness-quiz</loc>

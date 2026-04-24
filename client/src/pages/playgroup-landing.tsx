@@ -44,6 +44,7 @@ import { z } from "zod";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
+import { EEATSignals } from "@/components/eeat-signals";
 import { trackProgrammeView, trackFormSubmit } from "@/lib/analytics";
 
 const callbackFormSchema = z.object({
@@ -401,6 +402,16 @@ export default function PlaygroupLanding() {
 
   return (
     <div className="pt-20 md:pt-24">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
+        <EEATSignals
+          pageUrl="/playgroup"
+          pageName="Playgroup in Thane"
+          lastUpdated="April 24, 2026"
+          ratingValue={4.9}
+          reviewCount={487}
+          schemaId="playgroup-landing"
+        />
+      </div>
       <SEO
         title="Playgroup in Thane | Ages 1.5–2.5 | Rainbow Preschool"
         description="Playgroup programme in Thane for toddlers aged 1.5-2.5 years — play-based early learning in safe, nurturing classrooms. Experienced educators, 6 Thane centres. Enquire for 2025-26 admissions."
@@ -625,6 +636,52 @@ export default function PlaygroupLanding() {
                 </div>
                 <div className="text-sm text-muted-foreground">Female Staff</div>
               </Card>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Playgroup in Thane — city-broad keyword section (Apr 2026) */}
+      <section className="py-16 md:py-20 lg:py-24" data-testid="section-playgroup-in-thane">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Playgroup in Thane — Why 1,00,000+ Parents Choose Rainbow</h2>
+            <p className="text-muted-foreground text-lg max-w-3xl mx-auto">
+              Looking for a trusted <strong>playgroup in Thane</strong>? Rainbow Preschool International has been Thane's most-loved early-years home since 2007, with 6 centres across Thane West and a 18+ year track record of nurturing happy, confident toddlers.
+            </p>
+          </div>
+          <div className="grid md:grid-cols-2 gap-6 mb-10">
+            <Card className="p-6">
+              <h3 className="text-xl font-semibold mb-3">Closest playgroup near you in Thane</h3>
+              <p className="text-muted-foreground mb-4">
+                With centres in <strong>Manpada, Hariniwas (Panchpakadi), Anand Nagar, Dhokali, Kalwa and Kasarvadavali</strong>, most Thane West homes are within a 10-minute drive of a Rainbow playgroup. We're easy to reach from Ghodbunder Road, LBS Marg, Pokhran Road, and the Eastern Express Highway.
+              </p>
+              <Link href="/branches" className="text-primary font-medium hover:underline" data-testid="link-find-nearest-centre">
+                Find your nearest centre →
+              </Link>
+            </Card>
+            <Card className="p-6">
+              <h3 className="text-xl font-semibold mb-3">What makes our Thane playgroup different</h3>
+              <ul className="space-y-2 text-muted-foreground">
+                <li className="flex gap-2"><span className="text-primary">✓</span><span><strong>15:1 ratio</strong> — your child gets noticed every single day</span></li>
+                <li className="flex gap-2"><span className="text-primary">✓</span><span><strong>100% female teaching staff</strong> with ECCE training</span></li>
+                <li className="flex gap-2"><span className="text-primary">✓</span><span><strong>CCTV-monitored</strong> classrooms across all 6 centres</span></li>
+                <li className="flex gap-2"><span className="text-primary">✓</span><span><strong>Play-based curriculum</strong> aligned with NEP 2020</span></li>
+                <li className="flex gap-2"><span className="text-primary">✓</span><span><strong>Daily parent updates</strong> + monthly progress reports</span></li>
+              </ul>
+            </Card>
+          </div>
+          <div className="bg-muted/40 rounded-2xl p-6 md:p-8 text-center">
+            <p className="text-base md:text-lg mb-4">
+              <strong>New to playgroup?</strong> Take our 2-minute readiness quiz to check whether your toddler is ready to start, or read our <Link href="/blog/what-age-start-play-school" className="text-primary hover:underline">guide to starting play school</Link>.
+            </p>
+            <div className="flex flex-wrap gap-3 justify-center">
+              <Link href="/preschool-readiness-quiz" className="inline-flex items-center px-5 py-2.5 rounded-full bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors" data-testid="link-readiness-quiz">
+                Take the readiness quiz
+              </Link>
+              <Link href="/preschool-admissions" className="inline-flex items-center px-5 py-2.5 rounded-full border border-primary text-primary font-medium hover:bg-primary/5 transition-colors" data-testid="link-admissions-info">
+                Admission process
+              </Link>
             </div>
           </div>
         </div>

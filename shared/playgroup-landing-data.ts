@@ -26,39 +26,8 @@ export interface PlaygroupLandingData {
 }
 
 export const playgroundLandingPages: PlaygroupLandingData[] = [
-  {
-    slug: "thane",
-    localityName: "Thane",
-    url: "/playgroup-in-thane",
-    centreId: "hariniwas",
-    seo: {
-      title: "Playgroup in Thane | Ages 1.5–2.5 | Rainbow Preschool",
-      description: "Looking for a playgroup in Thane? Safe, play-based early learning for toddlers aged 1.5-2.5 years. 6 centres across Thane West. Request a callback today.",
-      h1: "Playgroup in Thane (1.5-2.5 Years)",
-      canonical: "https://www.rainbowpreschools.com/playgroup-in-thane",
-    },
-    introParagraph: "Rainbow Preschool International offers the best playgroup programme in Thane for toddlers aged 1.5 to 2.5 years. With 6 centres across Thane West and over 18 years of trusted experience, we provide a safe, nurturing environment where your child's first learning journey begins through joyful play-based activities.",
-    centre: {
-      name: "Hariniwas Centre",
-      address: "M.V.Apartments, Bhakti Mandir Road, Opp. Thanawala Garage, Hariniwas Circle, Panchpakadi, Thane (W)",
-      phones: ["91365 78589"],
-      whatsappNumber: "9136578589",
-      directionsUrl: "https://maps.app.goo.gl/KrcVoEu8xSHEzEPd9",
-      mapEmbedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3767.5!2d72.97!3d19.19!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTnCsDExJzI0LjAiTiA3MsKwNTgnMTIuMCJF!5e0!3m2!1sen!2sin!4v1234567890",
-      landmarks: ["Hariniwas Circle", "Bhakti Mandir Road", "Panchpakadi"],
-    },
-    faqs: [
-      { question: "Where can I find a playgroup near me in Thane?", answer: "Rainbow Preschool has 6 playgroup centres across Thane West — in Manpada, Hariniwas (Panchpakadi), Anand Nagar, Dhokali, Kalwa, and Kasarvadavali. Most homes in Thane West are within a 10-minute drive of a Rainbow centre. Call 82915 68972 to find the playgroup nearest you." },
-      { question: "What is the best age to start playgroup in Thane?", answer: "Children can start playgroup at Rainbow Preschool from 1.5 years (18 months). Our playgroup programme is designed for toddlers aged 1.5 to 2.5 years, introducing learning through fun activities, play, and social interaction." },
-      { question: "How many Rainbow Preschool centres are there in Thane?", answer: "We have 6 centres across Thane West: Manpada, Hariniwas, Anand Nagar, Dhokali, Kalwa, and Kasarvadavali. Each centre offers the same quality curriculum and safety standards." },
-      { question: "Is Rainbow Preschool safe for toddlers?", answer: "Absolutely! All Rainbow Preschool centres have CCTV monitoring, 100% female teaching staff, secure entry/exit procedures, and follow strict health and hygiene protocols. We maintain a 15:1 student-teacher ratio in playgroup." },
-      { question: "What activities are included in the playgroup programme?", answer: "Our playgroup curriculum includes sensory play, circle time, music and movement, art activities, puppet shows, outdoor play, and early literacy introduction. All activities are designed for age-appropriate development." },
-      { question: "What are the playgroup timings?", answer: "We offer flexible timing options: Morning batch (8:30 AM - 11:30 AM) and Afternoon batch (12:30 PM - 3:30 PM). Choose the batch that works best for your family." },
-      { question: "Can I visit before enrolling my child?", answer: "Yes! We encourage parents to visit our centre before admission. Call us to schedule a free campus tour where you can see our facilities, meet teachers, and learn about our curriculum." },
-      { question: "What is the fee structure for playgroup?", answer: "Playgroup fees vary by centre and include admission, tuition, and learning materials. Please contact us or visit our centre for the current fee structure and available payment plans." },
-      { question: "How is playgroup different from nursery?", answer: "Playgroup (1.5-2.5 years) focuses on sensory exploration, social skills, and basic motor development through play. Nursery (2.5-3.5 years) introduces more structured learning including phonics, numbers, and pre-writing skills." },
-    ],
-  },
+  // Note: "Thane" (city-broad) entry was removed Apr 2026 — /playgroup-in-thane
+  // now 301-redirects to /playgroup as part of canonical consolidation.
   {
     slug: "manpada",
     localityName: "Manpada",

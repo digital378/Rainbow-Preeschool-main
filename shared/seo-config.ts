@@ -120,7 +120,6 @@ export const LOCAL_PRESCHOOL_PAGES = [
 ];
 
 export const LOCAL_PLAYGROUP_PAGES = [
-  { url: "/playgroup-in-thane", priority: 0.85, changefreq: "monthly" },
   { url: "/playgroup-in-manpada", priority: 0.85, changefreq: "monthly" },
   { url: "/playgroup-in-kalwa", priority: 0.85, changefreq: "monthly" },
   { url: "/playgroup-near-ghodbunder-road", priority: 0.85, changefreq: "monthly" },

@@ -112,7 +112,6 @@ const entries: SitemapEntry[] = [
   { url: '/preschool-in-kasarvadavali-thane', priority: 0.9, changefreq: 'monthly' },
 
   // ── LOCAL SEO – PLAYGROUP PAGES ──────────────────────────
-  { url: '/playgroup-in-thane', priority: 0.85, changefreq: 'monthly' },
   { url: '/playgroup-in-manpada', priority: 0.85, changefreq: 'monthly' },
   { url: '/playgroup-in-kalwa', priority: 0.85, changefreq: 'monthly' },
   { url: '/playgroup-near-ghodbunder-road', priority: 0.85, changefreq: 'monthly' },

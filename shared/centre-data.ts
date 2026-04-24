@@ -61,7 +61,7 @@ export const centres: CentreData[] = [
     name: "Hariniwas Centre",
     localityName: "Hariniwas",
     localitySlug: "hariniwas",
-    playgroundLandingUrl: "/playgroup-in-thane",
+    playgroundLandingUrl: "/playgroup",
     preschoolLandingUrl: "/preschool-in-hariniwas-thane",
     address: "M.V.Apartments, Bhakti Mandir Road, Opp. Thanawala Garage, Hariniwas Circle, Panchpakadi, Thane (W)",
     phoneNumbers: ["91365 78589"],
@@ -179,8 +179,8 @@ export const preschoolLandingPages = [
 ];
 
 // Get all locality landing pages for internal linking (playgroup pages - legacy)
+// "Thane" (city-broad) was removed Apr 2026 — /playgroup-in-thane now 301s to /playgroup
 export const localityLandingPages = [
-  { name: "Thane", slug: "thane", url: "/playgroup-in-thane" },
   { name: "Manpada", slug: "manpada", url: "/playgroup-in-manpada" },
   { name: "Kalwa", slug: "kalwa", url: "/playgroup-in-kalwa" },
   { name: "Ghodbunder Road", slug: "ghodbunder-road", url: "/playgroup-near-ghodbunder-road" },

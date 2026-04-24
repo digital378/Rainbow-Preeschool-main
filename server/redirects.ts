@@ -176,6 +176,21 @@ const redirectMap: Record<string, string> = {
   "/play-school-in-thane": "/play-school-near-me",
   "/nursery-school-near-me": "/nursery",
 
+  // ── Programme-in-thane canonical consolidation (Apr 2026) ────────────────
+  // City-broad programme duplicates fold into the main programme page —
+  // hyperlocal /playgroup-in-{manpada,kalwa,...} and /preschool-in-{locality}-thane
+  // pages are NOT redirected; they target distinct locality keywords.
+  "/playgroup-in-thane": "/playgroup",
+  "/playgroup-in-thane/": "/playgroup",
+  "/nursery-in-thane": "/nursery",
+  "/nursery-in-thane/": "/nursery",
+  "/kindergarten-in-thane": "/kindergarten",
+  "/kindergarten-in-thane/": "/kindergarten",
+  "/playgroup-school-in-thane": "/playgroup",
+  "/playgroup-school-in-thane/": "/playgroup",
+  "/nursery-school-in-thane": "/nursery",
+  "/nursery-school-in-thane/": "/nursery",
+
   // ── Best preschool slug change ─────────────────────────────────────────────
   "/best-preschool-in-thane": "/best-preschool-near-me-in-thane",
 

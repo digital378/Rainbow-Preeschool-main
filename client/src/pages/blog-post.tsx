@@ -1,5 +1,6 @@
 import { useParams, Link } from "wouter";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -8,6 +9,55 @@ import { SEO } from "@/components/seo";
 import { BlogInternalLinks } from "@/components/blog-internal-links";
 import { Calendar, ArrowLeft, User, Clock, CheckCircle, MapPin, Phone, Download } from "lucide-react";
 import { format } from "date-fns";
+import type { BlogPost as ApiBlogPost } from "@shared/schema";
+
+// Convert a server-side BlogPost (markdown content string) into the
+// client-side BlogPostData shape (paragraphs array) used by the renderer.
+// Used for posts seeded directly into server storage that don't have a
+// dedicated rich-content entry in `blogPostsData` below.
+function adaptApiPost(api: ApiBlogPost): BlogPostData {
+  // Split content into paragraphs. Markdown blocks separated by blank lines,
+  // and heading lines (## / ###) are also promoted to their own paragraphs
+  // so the existing renderer can style them as section headings.
+  const blocks = api.content.split(/\n\s*\n/).map(b => b.trim()).filter(Boolean);
+  const paragraphs: string[] = [];
+  for (const block of blocks) {
+    const lines = block.split(/\n/);
+    let buffer: string[] = [];
+    const flush = () => {
+      if (buffer.length) {
+        paragraphs.push(buffer.join("\n").trim());
+        buffer = [];
+      }
+    };
+    for (const line of lines) {
+      const t = line.trim();
+      if (/^#{2,4}\s/.test(t) || t.startsWith("EXPLORE_MORE:")) {
+        flush();
+        paragraphs.push(t);
+      } else {
+        buffer.push(line);
+      }
+    }
+    flush();
+  }
+  const wordCount = api.content.split(/\s+/).filter(Boolean).length;
+  const readMin = Math.max(3, Math.round(wordCount / 220));
+  return {
+    id: api.id,
+    title: api.title,
+    slug: api.slug,
+    excerpt: api.excerpt,
+    content: paragraphs,
+    publishedAt: new Date(api.publishedAt as unknown as string),
+    author: "Akheela Balbale, Head of Curriculum",
+    readTime: `${readMin} min read`,
+    seoTitle: api.title,
+    seoDescription: api.excerpt,
+    seoKeywords: "",
+    wordCount,
+  };
+}
 
 interface BlogPostData {
   id: string;
@@ -1103,9 +1153,30 @@ function BlogPostSchema({ post }: { post: BlogPostData }) {
 
 export default function BlogPost() {
   const { slug } = useParams();
-  const post = slug ? blogPostsData[slug] : null;
+  const localPost = slug ? blogPostsData[slug] : null;
+
+  // Fallback: fetch from server storage when the slug isn't in the
+  // hard-coded `blogPostsData` map (covers SEO-recovery posts seeded
+  // server-side via seed-blog-posts.ts).
+  const { data: apiPost, isLoading: apiLoading } = useQuery<ApiBlogPost>({
+    queryKey: ["/api/blog", slug],
+    enabled: Boolean(slug && !localPost),
+  });
+
+  const post = useMemo<BlogPostData | null>(() => {
+    if (localPost) return localPost;
+    if (apiPost) return adaptApiPost(apiPost);
+    return null;
+  }, [localPost, apiPost]);
 
   if (!post) {
+    if (apiLoading) {
+      return (
+        <div className="pt-20 md:pt-24 min-h-screen flex items-center justify-center" data-testid="blog-post-loading">
+          <div className="animate-pulse text-muted-foreground">Loading post…</div>
+        </div>
+      );
+    }
     return (
       <div className="pt-20 md:pt-24 min-h-screen">
         <SEO
@@ -1442,6 +1513,28 @@ export default function BlogPost() {
               </div>
             </CardContent>
           </Card>
+
+          {/* Related Programmes — direct programme cross-links for SEO */}
+          <div className="mt-10 pt-8 border-t" data-testid="section-related-programmes">
+            <p className="text-xs font-semibold text-primary uppercase tracking-wide mb-3">Related Programmes at Rainbow Preschool</p>
+            <div className="grid sm:grid-cols-3 gap-3">
+              <Link href="/playgroup" className="block p-4 rounded-xl border border-red-200/60 bg-white dark:bg-gray-900 hover:border-primary hover:shadow-md transition-all" data-testid="link-related-programme-playgroup">
+                <h4 className="font-semibold text-gray-900 dark:text-white mb-1">Playgroup</h4>
+                <p className="text-xs text-muted-foreground mb-2">Ages 1.5–2.5 years · Play-based early learning</p>
+                <span className="text-xs text-primary font-medium inline-flex items-center gap-1">Explore Playgroup <CheckCircle className="w-3 h-3" /></span>
+              </Link>
+              <Link href="/nursery" className="block p-4 rounded-xl border border-red-200/60 bg-white dark:bg-gray-900 hover:border-primary hover:shadow-md transition-all" data-testid="link-related-programme-nursery">
+                <h4 className="font-semibold text-gray-900 dark:text-white mb-1">Nursery</h4>
+                <p className="text-xs text-muted-foreground mb-2">Ages 2.5–4 years · Building school foundations</p>
+                <span className="text-xs text-primary font-medium inline-flex items-center gap-1">Explore Nursery <CheckCircle className="w-3 h-3" /></span>
+              </Link>
+              <Link href="/kindergarten" className="block p-4 rounded-xl border border-red-200/60 bg-white dark:bg-gray-900 hover:border-primary hover:shadow-md transition-all" data-testid="link-related-programme-kindergarten">
+                <h4 className="font-semibold text-gray-900 dark:text-white mb-1">Kindergarten</h4>
+                <p className="text-xs text-muted-foreground mb-2">Ages 4–6 years · School-readiness programme</p>
+                <span className="text-xs text-primary font-medium inline-flex items-center gap-1">Explore Kindergarten <CheckCircle className="w-3 h-3" /></span>
+              </Link>
+            </div>
+          </div>
 
           {/* Internal Links Section */}
           <BlogInternalLinks currentSlug={post.slug} />
