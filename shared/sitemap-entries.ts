@@ -110,6 +110,12 @@ export const SITEMAP_ENTRIES: SitemapEntry[] = [
   { url: "/top-preschools-in-thane", priority: 0.7, changefreq: "monthly" },
   { url: "/testimonials", priority: 0.6, changefreq: "monthly" },
 
+  // ── LEGAL / TRUST PAGES ──────────────────────────────────
+  // Low-priority but indexable — included so they are discovered
+  // through the sitemap rather than only through the footer link.
+  { url: "/terms", priority: 0.3, changefreq: "yearly" },
+  { url: "/privacy", priority: 0.3, changefreq: "yearly" },
+
   // ── LEGACY PAGES – ADMISSION & PLAYGROUP ────────────────
   { url: "/preschool-admission-process-guide", priority: 0.65, changefreq: "monthly" },
 

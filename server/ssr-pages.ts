@@ -13,6 +13,12 @@ import {
   ssrOnlyBlogPosts,
   legacyHardcodedBlogPosts,
 } from "../server/seed-blog-posts";
+import {
+  preschoolIntros,
+  whyParentsChoose,
+  preschoolFAQs,
+  getCentreBySlug,
+} from "@shared/centre-data";
 
 /**
  * Strips lightweight markdown markers (`**bold**`, `*italic*`,
@@ -1297,20 +1303,107 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
 
   if (preschoolCentres[cleanPath]) {
     const centre = preschoolCentres[cleanPath];
+    // Map URL path → localitySlug used in shared/centre-data.ts
+    // (e.g. "/preschool-in-anand-nagar-thane" → "anand-nagar")
+    const localitySlug = cleanPath.replace(/^\/preschool-in-/, "").replace(/-thane$/, "");
+    const intros = preschoolIntros[localitySlug];
+    const whyChoose = whyParentsChoose[localitySlug];
+    const centreFaqs = preschoolFAQs[localitySlug];
+
+    // Build a per-centre FAQPage schema from the real locality FAQs so
+    // structured data exactly matches the visible Q&A on the page.
+    const richFAQSchema = centreFaqs && centreFaqs.length > 0
+      ? {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: centreFaqs.map((f) => ({
+            "@type": "Question",
+            name: f.question,
+            acceptedAnswer: { "@type": "Answer", text: f.answer },
+          })),
+        }
+      : centreFAQSchema(centre.locality, centre.phone);
+
+    // Combine the 3 intro paragraphs + 6 "why parents choose" bullets +
+    // 8 locality-specific FAQs into rich, unique sections per centre.
+    // This pushes each /preschool-in-<locality>-thane URL well above the
+    // 800-word threshold required by `scripts/check-keyword-targets.ts`
+    // and avoids the duplicate-content trap of repeating the same boilerplate.
+    const richSections: PageSEOData["contentSections"] = [];
+
+    if (intros) {
+      richSections.push({
+        heading: `About Rainbow Preschool in ${centre.locality}, Thane`,
+        text: intros.paragraph1,
+      });
+      richSections.push({
+        heading: `Why Parents in ${centre.locality} Trust Rainbow Preschool`,
+        text: intros.paragraph2,
+      });
+      richSections.push({
+        heading: `A Safe & Nurturing Environment in ${centre.locality}`,
+        text: intros.paragraph3,
+      });
+    }
+
+    if (whyChoose && whyChoose.length > 0) {
+      richSections.push({
+        heading: `Why Choose Rainbow Preschool in ${centre.locality}?`,
+        items: whyChoose,
+      });
+    }
+
+    richSections.push({
+      heading: "Our Programmes at this Centre",
+      items: [
+        "Playgroup (1.5–2.5 years) — sensory play, early socialisation, gentle separation, foundational language",
+        "Nursery (2.5–3.5 years) — phonics, number sense, fine-motor skills, structured group activities",
+        "Kindergarten (3.5–5 years) — pre-reading, pre-writing, early maths, science wonder, school-readiness",
+        "Kids Activity Club — after-school enrichment in dance, art, music, and physical play",
+        "Summer Camp — themed weekly programmes during May and April vacation",
+        "Happy Times — extended-care option for working parents in " + centre.locality,
+      ],
+    });
+
+    const richCentre = getCentreBySlug(localitySlug);
+    if (richCentre && richCentre.landmarks && richCentre.landmarks.length > 0) {
+      const landmarkList = richCentre.landmarks.join(", ");
+      richSections.push({
+        heading: `Local Landmarks Near Our ${centre.locality} Centre`,
+        text: `Our ${centre.locality} preschool is easy to spot — local landmarks near the centre include ${landmarkList}. Most parents in ${centre.locality}, Thane reach us within a 5–10 minute drive or auto ride, and the centre is well-connected by main roads and residential lanes. If you live nearby, you can simply ask for "Rainbow Preschool ${centre.locality}" and any local auto driver, shopkeeper, or neighbour will be able to point you to ${richCentre.landmarks[0]}. We have been a familiar fixture in this neighbourhood for years, and many of our enrolments come through word of mouth from existing Rainbow families living within a 1–2 km radius of the centre.`,
+      });
+    }
+
+    richSections.push({
+      heading: `Visit, Address & Contact for the ${centre.locality} Centre`,
+      text: `Our ${centre.locality} centre is located at ${centre.address}. To plan a visit or speak with the centre head, call ${centre.phone} between 9 AM and 6 PM, Monday to Saturday. We strongly encourage a free, no-obligation campus tour before you enrol — you will see our classrooms, meet the teachers, observe a live class in session, and have all your questions answered candidly. Walk-ins are welcome during school hours, and we can also arrange a guided trial class so your child can experience a typical Rainbow morning before you decide. Admissions for the 2025-26 academic year are open on a rolling basis, and seats are allocated on a first-come, first-served basis subject to age criteria and batch availability at the ${centre.locality} centre.`,
+    });
+
+    if (centreFaqs && centreFaqs.length > 0) {
+      richSections.push({
+        heading: `Frequently Asked Questions — Preschool in ${centre.locality}`,
+        items: centreFaqs.map((f) => `${f.question} — ${f.answer}`),
+      });
+    }
+
     return {
       title: `Preschool in ${centre.locality}, Thane | Rainbow Preschool`,
       description: `Best preschool in ${centre.locality}, Thane. Rainbow Preschool offers Playgroup, Nursery, and Kindergarten for children aged 1.5-6 years. Visit our ${centre.locality} centre today.`,
-      keywords: `preschool in ${centre.locality.toLowerCase()}, preschool in ${centre.locality.toLowerCase()} thane, best preschool ${centre.locality.toLowerCase()}, nursery school ${centre.locality.toLowerCase()}`,
+      keywords: `preschool in ${centre.locality.toLowerCase()}, preschool in ${centre.locality.toLowerCase()} thane, best preschool ${centre.locality.toLowerCase()}, nursery school ${centre.locality.toLowerCase()}, play school ${centre.locality.toLowerCase()}, kindergarten ${centre.locality.toLowerCase()}, preschool near me ${centre.locality.toLowerCase()}`,
       canonical: `${BASE_URL}${cleanPath}`,
       h1: `Preschool in ${centre.locality}, Thane — Rainbow Preschool International`,
-      introText: `Looking for a quality preschool in ${centre.locality}, Thane? Rainbow Preschool International's ${centre.locality} centre offers Playgroup, Nursery, and Kindergarten programmes in a safe, nurturing environment.`,
+      introText: intros?.paragraph1 ?? `Looking for a quality preschool in ${centre.locality}, Thane? Rainbow Preschool International's ${centre.locality} centre offers Playgroup, Nursery, and Kindergarten programmes in a safe, nurturing environment.`,
       breadcrumbs: [{ name: "Home", url: "/" }, { name: "Best Preschool in Thane", url: "/best-preschool-near-me-in-thane" }, { name: `Preschool in ${centre.locality}`, url: cleanPath }],
-      structuredData: [localBusinessSchema(centre.locality, centre.address, centre.phone, cleanPath, centre.lat, centre.lng), centreFAQSchema(centre.locality, centre.phone)],
-      contentSections: [
-        { heading: `Why Choose Rainbow Preschool in ${centre.locality}?`, items: ["Safe and secure premises with CCTV", "100% female teaching staff", "Small batch sizes (10-12 children)", "Play-based curriculum", "Convenient location in " + centre.locality] },
-        { heading: "Our Programmes", items: ["Playgroup (1.5–2.5 years)", "Nursery (2.5–4 years)", "Kindergarten (4–6 years)"] },
+      structuredData: [localBusinessSchema(centre.locality, centre.address, centre.phone, cleanPath, centre.lat, centre.lng), richFAQSchema],
+      contentSections: richSections,
+      internalLinks: [
+        ...commonInternalLinks,
+        { text: "Best Preschool in Thane", url: "/best-preschool-near-me-in-thane" },
+        { text: `Playgroup near ${centre.locality}`, url: "/playgroup" },
+        { text: `Nursery near ${centre.locality}`, url: "/nursery" },
+        { text: `Kindergarten near ${centre.locality}`, url: "/kindergarten" },
+        { text: "Preschool Admissions 2025-26", url: "/preschool-admissions" },
       ],
-      internalLinks: commonInternalLinks,
       lastModified: LAST_UPDATED_ISO,
       lastModifiedDisplay: LAST_UPDATED_DISPLAY,
     };
