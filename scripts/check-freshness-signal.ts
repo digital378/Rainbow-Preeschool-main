@@ -47,7 +47,26 @@ const LOCALITY_URLS = [
   "/playgroup-in-dhokali",
 ];
 
-const ALL_URLS = [...COMMERCIAL_URLS, ...LOCALITY_URLS];
+// Remaining indexable, evergreen landers (homepage + supporting pages).
+// Each one now also sets `lastModified` / `lastModifiedDisplay` in
+// `server/ssr-pages.ts`, so the bot SSR Article-injector emits the same
+// "Reviewed by Rainbow Preschool Curriculum Team — Last updated …" byline
+// + Article JSON-LD with `dateModified` here too.
+const EVERGREEN_LANDER_URLS = [
+  "/",
+  "/about",
+  "/programmes",
+  "/gallery",
+  "/contact",
+  "/blog",
+  "/happy-times",
+  "/preschool-readiness-quiz",
+  "/top-preschools-in-thane",
+  "/testimonials",
+  "/faqs",
+];
+
+const ALL_URLS = [...COMMERCIAL_URLS, ...LOCALITY_URLS, ...EVERGREEN_LANDER_URLS];
 
 type CheckResult = {
   url: string;
