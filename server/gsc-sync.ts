@@ -149,18 +149,23 @@ export async function syncGscData(daysBack = 90): Promise<SyncResult> {
     // non-fatal — keyword data still synced
   }
 
-  // Per-keyword per-day data for the last 7 days. Stored under keyword key
+  // Per-keyword per-day data for the last 90 days. Stored under keyword key
   // `__daily__:<original keyword>` so they don't pollute the main keyword list.
-  // Used by the dashboard to compute true 24-hour position & impression deltas.
+  // Used by the dashboard to compute true 24-hour position & impression deltas
+  // AND the 90-day sparkline trend on the 15-commercial-keywords panel.
   try {
-    const dailyStart = format(subDays(new Date(), 8), "yyyy-MM-dd");
+    const dailyStart = format(subDays(new Date(), 90), "yyyy-MM-dd");
     const dailyRes = await sc.searchanalytics.query({
       siteUrl: SITE_URL,
       requestBody: {
         startDate: dailyStart,
         endDate,
         dimensions: ["query", "date"],
-        rowLimit: 5000,
+        // 90 days × ~25 tracked queries can produce ~2,250 rows on its own,
+        // and GSC returns rows for every query (not just our targets) so we
+        // request a generous cap — anything we don't care about is dropped
+        // by the targetSet filter below.
+        rowLimit: 25000,
         dataState: "all",
       },
     });

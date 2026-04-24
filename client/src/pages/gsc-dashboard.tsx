@@ -1244,8 +1244,11 @@ function DataExplorer({ snapshots }: { snapshots: GscSnapshot[] }) {
 // Per-keyword view of the 15 commercial terms with current position, 7-day
 // change and the destination URL each one should rank for. Source data is
 // the per-day per-keyword rows (`__daily__:<keyword>`) that the GSC sync
-// writes for the last 8 days; we fall back to the main keyword snapshots
-// when no daily data is available yet.
+// writes for the last 90 days; we fall back to the main keyword snapshots
+// when no daily data is available yet. Each row also gets a 90-day position
+// sparkline rendered alongside the 7-day delta.
+
+type Commercial15HistoryPoint = { date: string; position: number };
 
 type Commercial15Row = {
   keyword: string;
@@ -1255,6 +1258,7 @@ type Commercial15Row = {
   change7d: number | null;
   imprLatest: number;
   daysOfData: number;
+  history: Commercial15HistoryPoint[]; // up to last 90 days, oldest → newest
 };
 
 function computeCommercial15Rows(
@@ -1267,26 +1271,39 @@ function computeCommercial15Rows(
     (byKw[kw] ||= []).push(s);
   });
 
+  // 90-day cutoff for the sparkline — keep the panel resilient to old rows
+  // that may still be lingering in storage from earlier sync windows.
+  const cutoff = format(new Date(Date.now() - 90 * 86400000), "yyyy-MM-dd");
+
   return COMMERCIAL_15_KEYWORDS.map(({ keyword, page, pageLabel }) => {
     const rows = (byKw[keyword] || []).slice().sort((a, b) =>
       a.snapshotDate.localeCompare(b.snapshotDate)
     );
     const latest = rows[rows.length - 1];
-    const oldest = rows[0];
 
-    let position: number | null = latest ? latest.position : null;
+    // 7-day delta uses ONLY the last ~8 daily rows so extending the daily
+    // window to 90 days for sparklines doesn't accidentally turn this into
+    // a 90-day delta. With <2 rows in that window, we leave it unset.
+    const last8 = rows.slice(-8);
     let change7d: number | null = null;
-    if (latest && oldest && latest !== oldest) {
-      // Lower position = better, so a NEGATIVE change means the keyword improved.
-      change7d = +(latest.position - oldest.position).toFixed(1);
+    if (last8.length >= 2) {
+      const oldest = last8[0];
+      const newest = last8[last8.length - 1];
+      // Lower position = better, so NEGATIVE change means the keyword improved.
+      change7d = +(newest.position - oldest.position).toFixed(1);
     }
 
+    let position: number | null = latest ? latest.position : null;
     // Fall back to the main keyword snapshot (90-day average) when the daily
     // window has no data — this keeps the panel populated even on a fresh DB.
     if (position === null) {
       const fallback = fallbackPositions[keyword.toLowerCase()];
       if (fallback) position = fallback.position;
     }
+
+    const history: Commercial15HistoryPoint[] = rows
+      .filter(r => r.snapshotDate >= cutoff)
+      .map(r => ({ date: r.snapshotDate, position: r.position }));
 
     return {
       keyword,
@@ -1296,6 +1313,7 @@ function computeCommercial15Rows(
       change7d,
       imprLatest: latest?.impressions ?? 0,
       daysOfData: rows.length,
+      history,
     };
   });
 }
@@ -1306,6 +1324,100 @@ function commercial15ChangeClasses(change: number | null) {
   if (change < -0.5) return "text-green-600 dark:text-green-400";
   if (change > 0.5) return "text-red-500 dark:text-red-400";
   return "text-gray-500 dark:text-gray-400";
+}
+
+// Inline 90-day position sparkline. Y axis is reversed (lower position = better
+// = up = good) and the tooltip shows the exact rank for the hovered day.
+// Degrades gracefully: with 0 points renders a "—", with 1 point renders a dot.
+function Commercial15Sparkline({
+  history,
+  keyword,
+}: {
+  history: Commercial15HistoryPoint[];
+  keyword: string;
+}) {
+  if (history.length === 0) {
+    return (
+      <span
+        className="text-xs text-gray-300"
+        data-testid={`sparkline-empty-${keyword.replace(/\s+/g, "-")}`}
+      >
+        —
+      </span>
+    );
+  }
+
+  const data = history.map(h => ({
+    date: h.date,
+    label: format(parseISO(h.date), "d MMM"),
+    position: h.position,
+  }));
+
+  // Pad the y-domain a touch so a flat line still looks intentional rather
+  // than running along the chart edge. Recharts' "reversed" inverts so the
+  // smaller (better) position renders at the top.
+  const positions = data.map(d => d.position);
+  const min = Math.min(...positions);
+  const max = Math.max(...positions);
+  const pad = Math.max(0.5, (max - min) * 0.15);
+  const domain: [number, number] = [Math.max(0, min - pad), max + pad];
+
+  // Trend coloring matches the 7-day delta: improved (newest < oldest) = green.
+  const first = positions[0];
+  const last = positions[positions.length - 1];
+  const stroke =
+    data.length < 2 || Math.abs(last - first) <= 0.5
+      ? "#6b7280" // gray
+      : last < first
+        ? "#16a34a" // green-600 (improved)
+        : "#ef4444"; // red-500 (slipped)
+
+  return (
+    <div
+      className="h-9 w-28 inline-block align-middle"
+      data-testid={`sparkline-${keyword.replace(/\s+/g, "-")}`}
+      title={`${data.length} day${data.length === 1 ? "" : "s"} of data`}
+    >
+      <ResponsiveContainer width="100%" height="100%">
+        <LineChart data={data} margin={{ top: 4, right: 4, bottom: 4, left: 4 }}>
+          <YAxis
+            hide
+            reversed
+            domain={domain}
+            allowDecimals
+          />
+          <XAxis dataKey="date" hide />
+          <Tooltip
+            cursor={{ stroke: "#9ca3af", strokeDasharray: "3 3" }}
+            wrapperStyle={{ outline: "none", zIndex: 50 }}
+            contentStyle={{
+              background: "rgba(17, 24, 39, 0.92)",
+              border: "none",
+              borderRadius: 6,
+              padding: "6px 8px",
+              fontSize: 11,
+              color: "#fff",
+            }}
+            labelStyle={{ color: "#9ca3af", fontSize: 10, marginBottom: 2 }}
+            formatter={(v: number) => [`#${v.toFixed(1)}`, "Position"]}
+            labelFormatter={(_label, payload: ReadonlyArray<{ payload?: { date?: string } }>) => {
+              const date = payload?.[0]?.payload?.date;
+              return date ? format(parseISO(date), "EEE d MMM") : "";
+            }}
+          />
+          <Line
+            type="monotone"
+            dataKey="position"
+            stroke={stroke}
+            strokeWidth={1.5}
+            dot={data.length === 1 ? { r: 2, fill: stroke } : false}
+            activeDot={{ r: 3 }}
+            isAnimationActive={false}
+          />
+        </LineChart>
+      </ResponsiveContainer>
+    </div>
+  );
 }
 
 function Commercial15Panel({ rows }: { rows: Commercial15Row[] }) {
@@ -1335,7 +1447,7 @@ function Commercial15Panel({ rows }: { rows: Commercial15Row[] }) {
               <Badge variant="outline" className="text-xs font-normal">Weekly tracker</Badge>
             </CardTitle>
             <CardDescription className="mt-1">
-              The 15 commercial keywords mapped to their 5 destination pages. Auto-synced every 6 hours from Google Search Console (well above the weekly cadence). 7-day change is the day-over-day delta from the oldest to newest day in the last 8 days of GSC data — green means the keyword improved (lower position = better).
+              The 15 commercial keywords mapped to their 5 destination pages. Auto-synced every 6 hours from Google Search Console (well above the weekly cadence). 7-day change is the day-over-day delta from the oldest to newest day in the last 8 days of GSC data — green means the keyword improved (lower position = better). The 90-day trend column plots daily position (Y-axis inverted, so up = better) — hover for the exact rank on each day.
             </CardDescription>
           </div>
           <div className="flex flex-wrap gap-1.5 text-xs">
@@ -1379,6 +1491,7 @@ function Commercial15Panel({ rows }: { rows: Commercial15Row[] }) {
                     <th className="pb-2 pr-4 font-medium">Keyword</th>
                     <th className="pb-2 px-3 font-medium text-center">Position</th>
                     <th className="pb-2 px-3 font-medium text-center" title="Change in average position over the last 7 days. Negative (green) = improved.">7-day Δ</th>
+                    <th className="pb-2 px-3 font-medium text-center" title="Daily position over the last 90 days. Inverted Y-axis: up = better. Hover for the exact rank on each day.">90-day trend</th>
                     <th className="pb-2 px-3 font-medium text-right">Impr (latest day)</th>
                     <th className="pb-2 pl-3 font-medium">Destination</th>
                   </tr>
@@ -1409,6 +1522,9 @@ function Commercial15Panel({ rows }: { rows: Commercial15Row[] }) {
                               {row.change7d === 0 ? "0" : (row.change7d > 0 ? "+" : "") + row.change7d.toFixed(1)}
                             </span>
                           )}
+                        </td>
+                        <td className="py-2.5 px-3 text-center" data-testid={`cell-commercial15-trend-${kwId}`}>
+                          <Commercial15Sparkline history={row.history} keyword={row.keyword} />
                         </td>
                         <td className="py-2.5 px-3 text-right font-mono text-xs text-gray-600 dark:text-gray-400">
                           {row.imprLatest > 0 ? row.imprLatest.toLocaleString() : "—"}
