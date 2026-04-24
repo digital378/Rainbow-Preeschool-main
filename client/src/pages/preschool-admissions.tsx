@@ -551,7 +551,7 @@ export default function PreschoolAdmissions() {
             <section className="py-6 md:py-10 px-4 bg-gray-50 dark:bg-gray-900/50">
               <div className="max-w-4xl mx-auto">
                 <EEATSignals
-                  pageUrl="https://www.rainbowpreschools.com/preschool-admissions"
+                  pageUrl="/preschool-admissions"
                   pageName="Preschool Admissions 2026–27"
                   reviewedBy="Akheela Balbale"
                   reviewerRole="Head of Curriculum"

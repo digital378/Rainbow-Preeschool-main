@@ -37,35 +37,79 @@ Last updated: April 2026`,
   },
   {
     id: randomUUID(),
-    title: "20 Healthy Tiffin Box Ideas for Preschoolers Indian Parents Will Love",
+    title: "50 Healthy Tiffin Box Ideas for Preschoolers Indian Parents Will Love",
     slug: "healthy-tiffin-box-ideas-preschoolers",
-    excerpt: "Struggling with school lunches? Discover 20 nutritious and kid-approved Indian tiffin ideas that will keep your preschooler energized throughout the day.",
+    excerpt: "Struggling with school lunches? Discover 50 nutritious and kid-approved Indian tiffin ideas — sorted by category — that will keep your preschooler energized through the day.",
     content: `The morning rush in a Thane household is legendary. Between the pressure cooker whistles and the school van's honk, preparing a healthy tiffin can feel like a marathon. At **Rainbow Preschool International**, we see a wide variety of tiffins every day, and we know that a balanced meal is the fuel for a child's curious mind.
 
 ## The Secret to a "Clean" Tiffin
 The goal is simple: food that is easy to eat, stays fresh for a few hours, and provides a mix of carbohydrates, proteins, and vitamins. Avoid "leaky" gravies that might soak into the school bag.
 
-## 20 Nutritious and Tasty Ideas
+## 50 Nutritious and Tasty Ideas
+
+### South Indian Classics (1–10)
 1.  **Mini Idlis:** Easy to pick up and mess-free.
-2.  **Vegetable Poha:** Loaded with carrots, peas, and peanuts.
-3.  **Stuffed Parathas:** Spinach (palak) or paneer parathas cut into fun shapes.
-4.  **Moong Dal Chilla:** High in protein and very soft for small teeth.
-5.  **Besan Dhokla:** A fermented, healthy snack.
-6.  **Vegetable Upma:** Use semolina (suji) and plenty of veggies.
-7.  **Cucumber & Cheese Sandwiches:** Refreshing for the Thane heat.
-8.  **Fruit Chaat:** A mix of seasonal fruits like mango, papaya, and banana.
-9.  **Roasted Makhana:** A crunchy, healthy alternative to chips.
-10. **Corn & Peas Salad:** Lightly seasoned with salt and lemon.
-11. **Veggie Pasta:** Use whole wheat pasta with a mild tomato sauce.
-12. **Paneer Cubes:** Sautéed with a hint of turmeric.
-13. **Carrot Sticks with Hummus:** A fun dip-and-eat snack.
-14. **Small Appams:** Made with fermented rice batter.
-15. **Sabudana Khichdi:** A filling and energy-boosting option.
-16. **Oats Mini Pancakes:** Sweetened naturally with mashed bananas.
-17. **Boiled Egg Wedges:** If your family includes eggs.
-18. **Dalia Upma:** Broken wheat is excellent for digestion.
-19. **Sweet Potato Fries:** Baked or lightly pan-fried.
-20. **Yogurt with Berries:** Keep it in a small insulated container.
+2.  **Rava Idli with Coconut Chutney:** Soft and protein-rich.
+3.  **Mini Uttapams:** Topped with finely chopped tomato and carrot.
+4.  **Sambar Vada (mini):** Soft lentil donuts with a side of warm sambar in a flask.
+5.  **Lemon Rice with Peanuts:** Light, tangy, and quick.
+6.  **Curd Rice with Pomegranate:** Cooling and gut-friendly.
+7.  **Vegetable Upma:** Use semolina (suji) and plenty of veggies.
+8.  **Small Appams:** Made with fermented rice batter.
+9.  **Pesarattu (green moong dosa):** High protein, naturally gluten-free.
+10. **Coconut Rice with Cashews:** Mildly flavoured and aromatic.
+
+### North Indian Favourites (11–20)
+11. **Stuffed Parathas:** Spinach (palak) or paneer parathas cut into fun shapes.
+12. **Aloo-Methi Paratha Rolls:** Easy to bite, no spilling.
+13. **Moong Dal Chilla:** High in protein and very soft for small teeth.
+14. **Besan Chilla with Grated Carrot:** Quick savoury pancakes.
+15. **Paneer Bhurji Roll:** Soft chapati wrapped around mild paneer bhurji.
+16. **Dal-Rice Mini Bowls:** Comfort food in a leak-proof container.
+17. **Kadhi-Rice (mild):** Carry warm in an insulated jar.
+18. **Vegetable Khichdi:** One-pot meal with moong dal and veggies.
+19. **Bedmi Puri (mini) with Aloo Sabzi:** A weekend treat tiffin.
+20. **Stuffed Kulcha (mini):** Onion or paneer kulchas, soft and filling.
+
+### West Indian / Maharashtrian (21–28)
+21. **Vegetable Poha:** Loaded with carrots, peas, and peanuts.
+22. **Sabudana Khichdi:** A filling and energy-boosting option.
+23. **Thalipeeth (mini):** Multigrain savoury pancake with curd.
+24. **Besan Dhokla:** A fermented, healthy snack.
+25. **Khaman Squares:** Soft, mildly sweet, and protein-rich.
+26. **Methi Thepla Roll-ups:** Soft theplas with a smear of curd inside.
+27. **Mumbai-style Vegetable Sandwich (no spice):** Cucumber, tomato, beetroot.
+28. **Misal Pav (mild, deconstructed):** Sprouts in a bowl, soft pav on the side.
+
+### Sandwiches, Wraps & Rolls (29–35)
+29. **Cucumber & Cheese Sandwiches:** Refreshing for the Thane heat.
+30. **Egg Mayo Sandwich:** If your family includes eggs.
+31. **Hummus & Veggie Pita Pockets:** Fibre and protein in one bite.
+32. **Whole Wheat Veg Wraps:** Mashed paneer, lettuce, and a thin tomato spread.
+33. **Cheese-Corn Toast Triangles:** Toasted, not fried.
+34. **Mini Pizzas on Whole-Wheat Base:** With paneer or veggies as toppings.
+35. **Banana-Peanut Butter Roll-ups:** Quick energy for active mornings.
+
+### Pasta, Noodles & One-Pot Meals (36–40)
+36. **Veggie Pasta:** Use whole wheat pasta with a mild tomato sauce.
+37. **Mac & Cheese (mild):** Whole-wheat macaroni with grated cheese.
+38. **Vegetable Hakka Noodles (mild):** Use millet or whole-wheat noodles.
+39. **Dalia Upma:** Broken wheat is excellent for digestion.
+40. **Quinoa Veg Pulao:** Light, protein-rich, and easy to chew.
+
+### Snacks, Salads & Sides (41–46)
+41. **Roasted Makhana:** A crunchy, healthy alternative to chips.
+42. **Corn & Peas Salad:** Lightly seasoned with salt and lemon.
+43. **Paneer Cubes:** Sautéed with a hint of turmeric.
+44. **Carrot Sticks with Hummus:** A fun dip-and-eat snack.
+45. **Sweet Potato Fries:** Baked or lightly pan-fried.
+46. **Boiled Egg Wedges:** Sprinkle with a tiny pinch of black pepper.
+
+### Sweet & Fruit-Based (47–50)
+47. **Fruit Chaat:** A mix of seasonal fruits like mango, papaya, and banana.
+48. **Yogurt with Berries:** Keep it in a small insulated container.
+49. **Oats Mini Pancakes:** Sweetened naturally with mashed bananas.
+50. **Date & Nut Energy Balls (no added sugar):** A guilt-free post-lunch treat.
 
 ## Involving Your Child in the Process
 When children help pick the vegetable at the local Thane West market or help pack the box, they are more likely to eat the contents. It builds a positive relationship with food.

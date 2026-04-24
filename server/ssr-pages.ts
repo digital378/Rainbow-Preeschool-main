@@ -898,8 +898,8 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
         keywords: "screen time preschoolers india, screen time toddlers, screen time guidelines, screen time 2 year old, indian parents screen time",
       },
       "healthy-tiffin-box-ideas-preschoolers": {
-        title: "20 Healthy Tiffin Box Ideas for Preschoolers Indian Parents Will Love",
-        description: "20 healthy, easy tiffin box ideas for preschoolers — perfect for Indian parents in Thane. Veg, balanced, kid-approved snacks for play school & nursery.",
+        title: "50 Healthy Tiffin Box Ideas for Preschoolers Indian Parents Will Love",
+        description: "50 healthy, easy tiffin box ideas for preschoolers — perfect for Indian parents in Thane. Veg, balanced, kid-approved snacks for play school & nursery.",
         keywords: "tiffin ideas for preschoolers, healthy tiffin box ideas, snack ideas for kids india, preschool tiffin recipes, kids tiffin india",
       },
       "toilet-training-toddlers-indian-parents-guide": {
@@ -1010,6 +1010,46 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
         "best-childrens-books-indian-preschoolers": [
           { q: "What are the best books for Indian preschoolers?", a: "Popular choices include Tulika Publishers' picture books, Karadi Tales, Amar Chitra Katha for older preschoolers, Pratham Books' StoryWeaver series, and classic titles like 'Gajapati Kulapati' and 'Amma, Tell Me' series. Choose age-appropriate books with colourful illustrations." },
           { q: "How much should a preschooler read daily?", a: "Aim for 15-20 minutes of shared reading daily. This can include picture books, rhyme books, and interactive stories. Reading together builds vocabulary, listening skills, imagination, and a lifelong love of learning." },
+        ],
+        "screen-time-guidelines-preschoolers-india": [
+          { q: "How much screen time is okay for preschoolers in India?", a: "The Indian Academy of Pediatrics recommends no screen time for children under 2, and a maximum of 1 hour per day of high-quality, supervised content for children aged 2-5. At Rainbow Preschool we encourage co-viewing and active discussion rather than passive watching." },
+          { q: "What are healthy alternatives to screen time for 3-5 year olds?", a: "Free play, outdoor activities, story-time, drawing, building blocks, role-play, simple cooking together, and nature walks are all excellent alternatives. Boredom itself sparks creativity, so don't rush to fill every quiet moment with a screen." },
+        ],
+        "healthy-tiffin-box-ideas-preschoolers": [
+          { q: "What is a healthy tiffin for an Indian preschooler?", a: "A healthy preschool tiffin balances complex carbs (whole-wheat roti, idli, paratha), protein (paneer, dal, egg, sprouts), a fruit or vegetable, and avoids deep-fried or sugary items. Portion size matters more than variety at this age." },
+          { q: "How do I get my picky preschooler to eat their tiffin?", a: "Involve your child in packing, use small leak-proof compartments, repeat foods they have eaten before, keep portions small, and avoid pressuring them. Most preschools (including Rainbow) gently encourage eating without forcing." },
+        ],
+        "toilet-training-toddlers-indian-parents-guide": [
+          { q: "What age should toilet training start in India?", a: "Most Indian children show readiness signs between 18 and 30 months. Look for cues like staying dry for 2 hours, telling you when they soil their nappy, and showing interest in the bathroom. Start gently, never punish accidents." },
+          { q: "How long does toilet training usually take?", a: "Daytime training typically takes 3 to 6 months. Night-time dryness can take much longer (up to age 5-6) and is largely biological. Be patient, celebrate small wins, and expect some regression during stressful periods." },
+        ],
+        "picky-eater-toddler-solutions": [
+          { q: "Is picky eating in toddlers normal?", a: "Yes. Food neuophobia (fear of new foods) peaks between 2 and 6 years and is a normal developmental stage. Most children outgrow it. Continue to offer rejected foods 10-15 times without pressure — exposure is the strongest predictor of acceptance." },
+          { q: "When should I worry about my toddler's picky eating?", a: "Consult your paediatrician if your child is losing weight, dropping below their growth curve, gagging or choking on textures, eats fewer than 20 foods total, or refuses entire food groups (e.g., all proteins). These can signal sensory or oral-motor issues." },
+        ],
+        "toddler-tantrum-management-emotional-regulation": [
+          { q: "Why do toddlers have tantrums?", a: "Tantrums are not bad behaviour — they are a sign of an underdeveloped prefrontal cortex. Toddlers feel huge emotions but lack the brain wiring and vocabulary to manage them. Hunger, tiredness, transitions, and frustration are common triggers." },
+          { q: "What should I do during a toddler tantrum?", a: "Stay calm, get to their eye level, name the feeling ('You're so angry the tower fell'), keep them safe, and wait it out. Avoid reasoning mid-tantrum — the thinking brain is offline. Reconnect and discuss only after they have calmed down." },
+        ],
+        "first-day-preschool-packing-checklist": [
+          { q: "What should I pack for the first day of preschool?", a: "Pack a labelled water bottle, a small healthy tiffin, two sets of spare clothes, a comfort item if allowed, sun hat, and any required medication with written instructions. Most Thane preschools provide a stationary list separately." },
+          { q: "How can I prepare my child emotionally for the first day?", a: "Visit the preschool together beforehand, read books about starting school, role-play preschool routines at home, talk positively about teachers, and keep your own goodbye short and confident — long goodbyes increase separation anxiety." },
+        ],
+        "stem-activities-preschoolers-home": [
+          { q: "What are easy STEM activities for 3-5 year olds at home?", a: "Try sink-or-float experiments, baking soda and vinegar volcanoes, building ramps for toy cars, sorting objects by colour and shape, planting seeds in clear cups, and counting steps on a walk. STEM at this age is about wonder, not worksheets." },
+          { q: "Do preschoolers really benefit from STEM learning?", a: "Yes. Early STEM exposure builds problem-solving, observation, and reasoning skills. The goal is not to teach formal science but to nurture curiosity and the habit of asking 'why?' and 'what if?'. This is core to Rainbow's play-based curriculum." },
+        ],
+        "yoga-mindfulness-preschoolers-daily-routines": [
+          { q: "Can preschoolers really do yoga and mindfulness?", a: "Absolutely — when adapted appropriately. Use animal poses (cat, cow, butterfly), breathing exercises with stuffed toys on the belly, and 1-3 minute mindfulness games. Sessions should be playful and never forced." },
+          { q: "How long should a yoga session for a 4-year-old be?", a: "Start with 5-10 minutes daily. Children this age have short attention spans, so frequency matters more than duration. Morning sessions help with focus; evening sessions help with sleep transitions." },
+        ],
+        "preparing-preschooler-new-sibling": [
+          { q: "How do I tell my preschooler about a new baby?", a: "Tell them around the start of the second trimester in age-appropriate language. Use picture books about siblings, show ultrasound photos, and involve them in small preparations. Avoid promising they will love being a big sibling — let the relationship develop naturally." },
+          { q: "How do I handle jealousy after the new baby arrives?", a: "Preserve one-on-one routines (story time, bedtime ritual), let your preschooler 'help' with safe baby tasks, validate big feelings ('It's hard to share Mama'), and avoid blaming the baby for changes. Regression is normal and temporary." },
+        ],
+        "toddler-speech-development-milestones-when-to-worry": [
+          { q: "How many words should a 2-year-old say?", a: "By age 2, most toddlers say 50+ words and combine 2 words ('more milk', 'Daddy go'). By age 3, vocabulary explodes to 200-1000 words and they form short sentences. Range varies, but a flat trajectory is more concerning than absolute count." },
+          { q: "When should I see a speech therapist for my toddler?", a: "Consult a paediatric speech-language pathologist if your child has fewer than 50 words at age 2, isn't combining 2 words by 2.5 years, is hard to understand by age 3, loses previously acquired words, or shows little interest in communicating. Early intervention has the strongest outcomes." },
         ],
       };
 
