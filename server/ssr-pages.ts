@@ -532,6 +532,8 @@ const staticPages: Record<string, PageSEOData> = {
     canonical: `${BASE_URL}/preschool-admissions`,
     h1: "Preschool Admissions — Rainbow Preschool International",
     breadcrumbs: [{ name: "Home", url: "/" }, { name: "Admissions", url: "/preschool-admissions" }],
+    lastModified: "2026-04-24",
+    lastModifiedDisplay: "April 24, 2026",
     contentSections: [
       { heading: "Admission Process", items: ["Step 1: Enquire online or call 82915 68972", "Step 2: Schedule a centre visit", "Step 3: Meet our educators", "Step 4: Complete registration", "Step 5: Welcome to Rainbow!"] },
       { heading: "Age Eligibility", items: ["Playgroup: 1.5 to 2.5 years", "Nursery: 2.5 to 4 years", "Kindergarten: 4 to 6 years"] },

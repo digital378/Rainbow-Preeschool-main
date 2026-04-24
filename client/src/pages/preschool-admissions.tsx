@@ -1,6 +1,7 @@
 import { Link } from "wouter";
 import { SEO, organizationSchema, websiteSchema, createBreadcrumbSchema, createFAQSchema } from "@/components/seo";
 import { ContactForm } from "@/components/contact-form";
+import { EEATSignals } from "@/components/eeat-signals";
 import { centres } from "@shared/centre-data";
 import {
   Check, MessageCircle, Phone, ChevronDown,
@@ -543,6 +544,23 @@ export default function PreschoolAdmissions() {
                     <span className="text-xs text-gray-500 dark:text-gray-400">Near You</span>
                   </Link>
                 </div>
+              </div>
+            </section>
+
+            {/* ── E-E-A-T SIGNALS ──────────────────────────────────────────── */}
+            <section className="py-6 md:py-10 px-4 bg-gray-50 dark:bg-gray-900/50">
+              <div className="max-w-4xl mx-auto">
+                <EEATSignals
+                  pageUrl="https://www.rainbowpreschools.com/preschool-admissions"
+                  pageName="Preschool Admissions 2026–27"
+                  reviewedBy="Akheela Balbale"
+                  reviewerRole="Head of Curriculum"
+                  reviewerProfileUrl="/about/akheela-balbale"
+                  lastUpdated="April 24, 2026"
+                  ratingValue={4.9}
+                  reviewCount={487}
+                  schemaId="preschool-admissions-eeat"
+                />
               </div>
             </section>
 
