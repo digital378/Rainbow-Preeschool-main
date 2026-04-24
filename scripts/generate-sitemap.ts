@@ -25,27 +25,16 @@ const EXCLUDED_SLUGS = new Set([
   '/author/rainbow-preschools',
   '/author/rainbowpreschools',
 
-  // Festival/seasonal content (noindex)
-  '/diwali-activity-for-kindergarten',
-  '/rainy-season-activities-for-kindergarten',
-  '/sports-day-activities-for-kindergarten',
+  // High-traffic seasonal/evergreen content kept in sitemap explicitly
+  // (Apr 2026 reviewer correction: these drive 200K+ impressions/quarter
+  // per GSC and must stay discoverable to support impression recovery.)
+  // Only republic-day-2026 + lessons-confident pages remain excluded as
+  // they are seasonal-noindex / unmaintained.
   '/republic-day-2026',
-
-  // GK/educational content (noindex)
-  '/national-symbols-of-india-for-kids',
-  '/explore-50-fruits-vegetables-english-hindi',
-  '/body-parts-names-in-english-for-preschoolers',
-
-  // Motivational/quotes content (noindex)
-  '/36-motivational-thoughts-of-the-day-for-kids',
   '/51-inspiring-life-lessons-that-make-children-confident',
-
-  // Games content (noindex)
-  '/best-indoor-games-for-kids-at-home',
   '/play-these-9-games-to-make-kids-smarter',
   '/fun-games-teach-even-odd-numbers',
   '/brain-gym-activities-for-preschoolers',
-  '/solitary-play-activities',
 
   // Redirect sources (canonical lives at another URL)
   '/preschool-vs-daycare-difference-explained',
@@ -139,8 +128,22 @@ const entries: SitemapEntry[] = [
   { url: '/blog/preparing-preschooler-new-sibling', priority: 0.7, changefreq: 'monthly' },
   { url: '/blog/toddler-speech-development-milestones-when-to-worry', priority: 0.7, changefreq: 'monthly' },
 
-  // ── SEASONAL / STANDALONE ────────────────────────────────
-  { url: '/holi-activities-for-kids', priority: 0.6, changefreq: 'yearly' },
+  // ── SEASONAL / STANDALONE (high-traffic GSC content) ────
+  { url: '/holi-activities-for-kids', priority: 0.7, changefreq: 'yearly' },
+  { url: '/national-symbols-of-india-for-kids', priority: 0.8, changefreq: 'yearly' },
+  { url: '/sports-day-activities-for-kindergarten', priority: 0.7, changefreq: 'yearly' },
+  { url: '/36-motivational-thoughts-of-the-day-for-kids', priority: 0.8, changefreq: 'yearly' },
+  { url: '/body-parts-names-in-english-for-preschoolers', priority: 0.6, changefreq: 'yearly' },
+  { url: '/rainy-season-activities-for-kindergarten', priority: 0.6, changefreq: 'yearly' },
+  { url: '/diwali-activity-for-kindergarten', priority: 0.6, changefreq: 'yearly' },
+  { url: '/best-indoor-games-for-kids-at-home', priority: 0.6, changefreq: 'yearly' },
+  { url: '/explore-50-fruits-vegetables-english-hindi', priority: 0.6, changefreq: 'yearly' },
+  { url: '/solitary-play-activities', priority: 0.5, changefreq: 'yearly' },
+
+  // ── INTERACTIVE TOOLS & SOCIAL PROOF ────────────────────
+  { url: '/preschool-readiness-quiz', priority: 0.7, changefreq: 'monthly' },
+  { url: '/top-preschools-in-thane', priority: 0.7, changefreq: 'monthly' },
+  { url: '/testimonials', priority: 0.6, changefreq: 'monthly' },
 
   // ── LEGACY PAGES – ADMISSION & PLAYGROUP ────────────────
   { url: '/preschool-admission-process-guide', priority: 0.65, changefreq: 'monthly' },
