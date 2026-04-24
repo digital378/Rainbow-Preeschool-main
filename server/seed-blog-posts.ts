@@ -74,7 +74,7 @@ Children learn best from real people, real objects, and real experiences. The cu
 
 EXPLORE_MORE: [Explore Our Playgroup Program](/playgroup)|[Take the Preschool Readiness Quiz](/preschool-readiness-quiz)|[Frequently Asked Questions](/faqs)
 
-By Akheela Balbale, Head of Curriculum, Rainbow Preschool International
+Reviewed by the Rainbow Preschool Curriculum Team
 Last updated: April 2026`,
     imageUrl: "/images/optimized/children-learning-colorful-toys-preschool.webp",
     publishedAt: new Date("2026-04-24"),
@@ -197,7 +197,7 @@ Along with the tiffin, ensure your child has a sturdy water bottle. In the humid
   Perfectly fine if refrigerated promptly and re-heated thoroughly in the morning. Avoid sending fish or seafood in tiffin — the smell intensifies and disturbs other children.
 
 
-  ## A Note from Akheela on Mindful Feeding
+  ## A Note from Our Curriculum Team on Mindful Feeding
   At our Thane centres we sit with the children during snack and lunch — not to monitor, but to model. We chat about flavours, talk about where the rice came from, ask "what colour is your sabzi today?" These small conversations turn eating from a transactional activity into a sensory, social ritual. Try the same at one meal a day at home for two weeks. Most parents tell us their child's relationship with food noticeably improves — and so does the family's bond.
 
   If your child is struggling with food acceptance, also read our companion post on **Picky Eater Toddler Solutions** — the two articles together cover both *what* to send and *how* to handle the eating itself.
@@ -208,7 +208,7 @@ Along with the tiffin, ensure your child has a sturdy water bottle. In the humid
 
 EXPLORE_MORE: [Learn About Our Playgroup](/playgroup)|[What Parents Say About Us](/testimonials)|[Our Nursery Curriculum](/nursery)
 
-By Akheela Balbale, Head of Curriculum, Rainbow Preschool International
+Reviewed by the Rainbow Preschool Curriculum Team
 Last updated: April 2026`,
     imageUrl: "/images/optimized/kids-playing-ball-pit-rainbow-preschool.webp",
     publishedAt: new Date("2026-04-26"),
@@ -288,7 +288,7 @@ While most children train without medical involvement, do consult your paediatri
   This works for some families with full-time caregiving. It is not "better" or "worse" than diaper-then-train; it is simply different. Don't feel pressured by online accounts of "diaper-free babies" — choose what works for your family's reality.
 
 
-  ## A Note from Akheela on Patience
+  ## A Note from Our Curriculum Team on Patience
   In all my years of working with families in Thane, the single biggest predictor of smooth toilet training has been **the parent's emotional state, not the child's age or readiness signs.** When you can stay genuinely calm during accidents, the child's nervous system mirrors yours — and learns faster. When you secretly feel stressed (even if you don't show it), children pick up on it and the process drags.
 
   Build in support for yourself: a partner who shares the load, a friend you can vent to, an honest WhatsApp group of fellow parents going through the same phase. You are not failing if it takes longer than expected. You are simply parenting a unique human being.
@@ -299,7 +299,7 @@ While most children train without medical involvement, do consult your paediatri
 
 EXPLORE_MORE: [Admissions Information](/preschool-admissions)|[Find a Center Near You](/best-preschool-near-me-in-thane)|[Playgroup Details](/playgroup)
 
-By Akheela Balbale, Head of Curriculum, Rainbow Preschool International
+Reviewed by the Rainbow Preschool Curriculum Team
 Last updated: April 2026`,
     imageUrl: "/images/optimized/DSC00011.webp",
     publishedAt: new Date("2026-04-29"),
@@ -388,7 +388,7 @@ Our snack and meal times follow the same calm, no-pressure principle. Children s
   Yes. It teaches the child to override their own fullness signals, which research links to weight gain and disordered eating in later life. Serve smaller portions and offer seconds — this trains a healthy relationship with hunger.
 
 
-  ## A Note from Akheela on the Long View
+  ## A Note from Our Curriculum Team on the Long View
   Most parents who fear they are "raising a picky eater for life" find, by the time the child is 7 or 8, that the variety on the plate has quietly grown to include 30, 40, even 50 foods. The phase passes. What lasts is the *relationship* the child has with food and with family meals.
 
   So when you feel discouraged after a refused dinner, zoom out: are mealtimes generally pleasant? Are you modelling enjoyment of food yourself? Are you offering variety without coercion? If yes, you are doing it right — even if today's dal-rice ended up half-eaten. Trust the process; trust your child.
@@ -399,7 +399,7 @@ Our snack and meal times follow the same calm, no-pressure principle. Children s
 
 EXPLORE_MORE: [Our Testimonials](/testimonials)|[Playgroup Overview](/playgroup)|[Nursery Program](/nursery)
 
-By Akheela Balbale, Head of Curriculum, Rainbow Preschool International
+Reviewed by the Rainbow Preschool Curriculum Team
 Last updated: April 2026`,
     imageUrl: "/images/optimized/children-learning-colorful-toys-preschool.webp",
     publishedAt: new Date("2026-05-01"),
@@ -495,14 +495,14 @@ Tantrums are normal up to age 5–6 and gradually reduce in frequency. Speak to 
   Most children show a marked decrease by age 4, when language and impulse control are better developed. By age 6, occasional meltdowns may still happen during overwhelm, but daily tantrums are usually behind you.
 
 
-  ## A Note from Akheela on the Parent's Own Emotions
+  ## A Note from Our Curriculum Team on the Parent's Own Emotions
   There is no shame in admitting that tantrums are *hard*. They press every button — the embarrassment in public, the exhaustion at the end of a long day, the worry that you are "doing it wrong." 
 
   Two practices help most parents I work with in Thane: (1) a 30-second pause before reacting (literally count "one Mississippi, two Mississippi…"), and (2) a 5-minute self-care moment after a difficult tantrum — splash water on your face, message a friend, sit with your tea. You cannot pour from an empty cup. Looking after your own regulation is the foundation for teaching your child theirs.
 
 EXPLORE_MORE: [View Our Testimonials](/testimonials)|[Our Playgroup Program](/playgroup)|[Nursery Details](/nursery)
 
-By Akheela Balbale, Head of Curriculum, Rainbow Preschool International
+Reviewed by the Rainbow Preschool Curriculum Team
 Last updated: April 2026`,
     imageUrl: "/images/optimized/kids-playing-ball-pit-rainbow-preschool.webp",
     publishedAt: new Date("2026-05-03"),
@@ -595,7 +595,7 @@ Take a photo at the school gate on day 1 (your school's policy permitting). One 
   Completely normal in the first month. Pack a fresh set of clothes daily (in a sealed bag), and accept that this is part of the transition. Praise the child for telling the teacher rather than scolding for the accident.
 
 
-  ## A Note from Akheela on the Bigger Picture
+  ## A Note from Our Curriculum Team on the Bigger Picture
   The first day of preschool is the beginning of your child's lifelong learning journey — but it is also the beginning of *yours* as a school parent. The relationships you build with the class teacher, the rhythm you establish with morning routines, the small celebrations of "she sang the rainbow song today!" — all of these set the tone for the next 15+ years of schooling.
 
   Be present, be curious, ask the teacher questions, attend the parent-teacher meetings, and most of all, talk to your child every day about their school day. Not "what did you study?" but "what made you laugh today?" These conversations are the foundation of a lifelong love for learning.
@@ -606,7 +606,7 @@ Take a photo at the school gate on day 1 (your school's policy permitting). One 
 
 EXPLORE_MORE: [Preschool Admissions](/preschool-admissions)|[Our Thane Branches](/branches)|[Find the Best Preschool Near Me](/best-preschool-near-me-in-thane)
 
-By Akheela Balbale, Head of Curriculum, Rainbow Preschool International
+Reviewed by the Rainbow Preschool Curriculum Team
 Last updated: April 2026`,
     imageUrl: "/images/optimized/DSC00011.webp",
     publishedAt: new Date("2026-05-05"),
@@ -706,7 +706,7 @@ Our weekly schedule across all Thane centres includes a "Wonder Wednesday" — a
   Share concrete outcomes: stronger problem-solving, better hand-eye coordination, vocabulary growth. Many *Aajis* and *Dadis* in Thane have been quietly delighted to see their grandchild's curiosity flourish — invite them to join the next experiment.
 
 
-  ## A Note from Akheela on Curiosity as a Skill
+  ## A Note from Our Curriculum Team on Curiosity as a Skill
   The best gift you can give your preschooler is not a particular activity or a particular toy — it is the lifelong habit of asking "I wonder why…?" and then having the courage to find out. 
 
   In a world where information is one tap away, the children who will thrive are the ones who *want* to ask questions, who tolerate not knowing the answer immediately, and who enjoy the process of discovery itself. Every magnetic experiment, every sink-or-float test, every time you say "let's find out together" — you are building exactly that.
@@ -717,7 +717,7 @@ Our weekly schedule across all Thane centres includes a "Wonder Wednesday" — a
 
 EXPLORE_MORE: [Our Kindergarten Program](/kindergarten)|[Nursery Details](/nursery)|[Best Preschool Near Me in Thane](/best-preschool-near-me-in-thane)
 
-By Akheela Balbale, Head of Curriculum, Rainbow Preschool International
+Reviewed by the Rainbow Preschool Curriculum Team
 Last updated: April 2026`,
     imageUrl: "/images/optimized/children-learning-colorful-toys-preschool.webp",
     publishedAt: new Date("2026-05-08"),
@@ -816,7 +816,7 @@ Each day at our Thane centres begins with a 5-minute "Calm Circle" — a song, a
   Yes, with consistency. Daily 7-minute morning sessions for 4–6 weeks typically reduce reactive impulsivity by a meaningful margin. Combine with reduced screen time and outdoor play for best results.
 
 
-  ## A Note from Akheela on Starting Small
+  ## A Note from Our Curriculum Team on Starting Small
   Many Thane parents come to us asking, "Where do I start? My child won't sit still!" Our advice: start with two minutes a day for one week. That's it. Two minutes of stretching together while *chai* brews. Two minutes of belly breathing before bed. Two minutes of "noticing five things in this room."
 
   After one week, the child will often *ask* for the routine. After three weeks, it becomes part of the family rhythm. Don't wait for the perfect moment, the perfect mat, or a yoga teacher. Begin today, however imperfectly. Consistency beats perfection every single time.
@@ -827,7 +827,7 @@ Each day at our Thane centres begins with a 5-minute "Calm Circle" — a song, a
 
 EXPLORE_MORE: [Explore Playgroup](/playgroup)|[Our Nursery Program](/nursery)|[Our Thane Branches](/branches)
 
-By Akheela Balbale, Head of Curriculum, Rainbow Preschool International
+Reviewed by the Rainbow Preschool Curriculum Team
 Last updated: April 2026`,
     imageUrl: "/images/optimized/kids-playing-ball-pit-rainbow-preschool.webp",
     publishedAt: new Date("2026-05-10"),
@@ -928,7 +928,7 @@ The arrival of a sibling is one of the biggest emotional events in a preschooler
 
 EXPLORE_MORE: [Our Playgroup Program](/playgroup)|[Preschool Readiness Quiz](/preschool-readiness-quiz)|[Parent Testimonials](/testimonials)
 
-By Akheela Balbale, Head of Curriculum, Rainbow Preschool International
+Reviewed by the Rainbow Preschool Curriculum Team
 Last updated: April 2026`,
     imageUrl: "/images/optimized/DSC00011.webp",
     publishedAt: new Date("2026-05-12"),
@@ -1027,7 +1027,7 @@ Speech and language development is one of the most miraculous parts of early chi
 
 EXPLORE_MORE: [Playgroup Curriculum](/playgroup)|[Nursery Program](/nursery)|[Frequently Asked Questions](/faqs)
 
-By Akheela Balbale, Head of Curriculum, Rainbow Preschool International
+Reviewed by the Rainbow Preschool Curriculum Team
 Last updated: April 2026`,
     imageUrl: "/images/optimized/children-learning-colorful-toys-preschool.webp",
     publishedAt: new Date("2026-05-14"),

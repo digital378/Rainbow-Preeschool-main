@@ -496,6 +496,8 @@ const redirectMap: Record<string, string> = {
   "/quality-preschool-indicators-parents-guide/": "/blog/signs-of-good-preschool-thane",
   "/teacher-training-quality-preschool": "/about",
   "/teacher-training-quality-preschool/": "/about",
+  "/about/akheela-balbale": "/about",
+  "/about/akheela-balbale/": "/about",
 };
 
 export function setupRedirects(app: Express) {

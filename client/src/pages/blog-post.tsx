@@ -50,7 +50,7 @@ function adaptApiPost(api: ApiBlogPost): BlogPostData {
     excerpt: api.excerpt,
     content: paragraphs,
     publishedAt: new Date(api.publishedAt as unknown as string),
-    author: "Akheela Balbale, Head of Curriculum",
+    author: "Head of Curriculum, Rainbow Preschool International",
     readTime: `${readMin} min read`,
     seoTitle: api.title,
     seoDescription: api.excerpt,

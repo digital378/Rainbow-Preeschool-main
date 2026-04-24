@@ -507,17 +507,6 @@ export default function PlaySchoolNearMe() {
         canonical="https://www.rainbowpreschools.com/play-school-near-me"
       />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
-        <EEATSignals
-          pageUrl="/play-school-near-me"
-          pageName="Play School Near Me in Thane"
-          lastUpdated="April 24, 2026"
-          ratingValue={4.9}
-          reviewCount={487}
-          schemaId="play-school-near-me"
-        />
-      </div>
-
       {/* Hero Section */}
       <section className="py-16 md:py-24 lg:py-32 bg-gradient-to-br from-primary/10 via-accent/5 to-secondary/10 relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
@@ -1098,6 +1087,17 @@ export default function PlaySchoolNearMe() {
       </section>
 
       <SEOCrossLinks currentPath="/play-school-near-me" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-4">
+        <EEATSignals
+          pageUrl="/play-school-near-me"
+          pageName="Play School Near Me in Thane"
+          lastUpdated="April 24, 2026"
+          ratingValue={4.9}
+          reviewCount={487}
+          schemaId="play-school-near-me"
+        />
+      </div>
 
       {/* Sticky Mobile CTA */}
       <StickyMobileCTA />

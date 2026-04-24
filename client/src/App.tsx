@@ -114,7 +114,6 @@ const LazyEducationalToys = lazy(() => import("@/pages/legacy-pages").then(m => 
 // NEW SEO BLOG POSTS - BATCH 2 ADDITIONAL
 
 const LazyAuthorArchivePage = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.AuthorArchivePage })));
-const AkheelaBalbale = lazy(() => import("@/pages/author-akheela-balbale"));
 
 const LazyTermsPage = lazy(() => import("@/pages/legal").then(m => ({ default: m.TermsPage })));
 const LazyPrivacyPage = lazy(() => import("@/pages/legal").then(m => ({ default: m.PrivacyPage })));
@@ -281,7 +280,6 @@ function Router() {
         
         {/* Playgroup page supporting */}
         
-        <Route path="/about/akheela-balbale" component={AkheelaBalbale} />
         <Route path="/author/rainbowpreschools" component={LazyAuthorArchivePage} />
         
         <Route path="/terms" component={LazyTermsPage} />

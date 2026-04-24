@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { Link } from "wouter";
 import { ShieldCheck, CalendarCheck2, Star } from "lucide-react";
 
 export interface EEATReview {
@@ -12,8 +11,10 @@ export interface EEATReview {
 interface EEATSignalsProps {
   pageUrl: string;
   pageName: string;
+  /** Deprecated — name is no longer displayed. Kept for backward compatibility with existing call sites. */
   reviewedBy?: string;
   reviewerRole?: string;
+  /** Deprecated — profile link is no longer rendered. Kept for backward compatibility. */
   reviewerProfileUrl?: string;
   lastUpdated: string;
   ratingValue?: number;
@@ -49,9 +50,7 @@ const DEFAULT_REVIEWS: EEATReview[] = [
 export function EEATSignals({
   pageUrl,
   pageName,
-  reviewedBy = "Akheela Balbale",
   reviewerRole = "Head of Curriculum, Rainbow Preschool International",
-  reviewerProfileUrl = "/about/akheela-balbale",
   lastUpdated,
   ratingValue = 4.9,
   reviewCount = 487,
@@ -95,10 +94,9 @@ export function EEATSignals({
       "datePublished": "2024-06-01",
       "dateModified": lastUpdated,
       "author": {
-        "@type": "Person",
-        "name": reviewedBy,
-        "jobTitle": reviewerRole,
-        "url": `https://www.rainbowpreschools.com${reviewerProfileUrl}`,
+        "@type": "Organization",
+        "name": "Rainbow Preschool International",
+        "department": "Curriculum Team",
       },
       "publisher": {
         "@type": "Organization",
@@ -138,7 +136,7 @@ export function EEATSignals({
         if (el) el.remove();
       });
     };
-  }, [pageUrl, pageName, reviewedBy, reviewerRole, reviewerProfileUrl, lastUpdated, ratingValue, reviewCount, reviews, schemaId]);
+  }, [pageUrl, pageName, reviewerRole, lastUpdated, ratingValue, reviewCount, reviews, schemaId]);
 
   return (
     <div
@@ -152,11 +150,8 @@ export function EEATSignals({
           </div>
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-primary">Reviewed by Education Lead</p>
-            <p className="text-sm font-semibold text-gray-900 dark:text-white">
-              <Link href={reviewerProfileUrl} className="hover:underline" data-testid={`link-eeat-author-${schemaId}`}>
-                {reviewedBy}
-              </Link>
-              <span className="font-normal text-muted-foreground"> — {reviewerRole}</span>
+            <p className="text-sm font-semibold text-gray-900 dark:text-white" data-testid={`text-eeat-role-${schemaId}`}>
+              {reviewerRole}
             </p>
             <p className="text-xs text-muted-foreground inline-flex items-center gap-1 mt-0.5">
               <CalendarCheck2 className="w-3 h-3" /> Last updated: {lastUpdated}

@@ -547,23 +547,6 @@ export default function PreschoolAdmissions() {
               </div>
             </section>
 
-            {/* ── E-E-A-T SIGNALS ──────────────────────────────────────────── */}
-            <section className="py-6 md:py-10 px-4 bg-gray-50 dark:bg-gray-900/50">
-              <div className="max-w-4xl mx-auto">
-                <EEATSignals
-                  pageUrl="/preschool-admissions"
-                  pageName="Preschool Admissions 2026–27"
-                  reviewedBy="Akheela Balbale"
-                  reviewerRole="Head of Curriculum"
-                  reviewerProfileUrl="/about/akheela-balbale"
-                  lastUpdated="April 24, 2026"
-                  ratingValue={4.9}
-                  reviewCount={487}
-                  schemaId="preschool-admissions-eeat"
-                />
-              </div>
-            </section>
-
             {/* ── FINAL CTA ─────────────────────────────────────────────────── */}
             <section className="relative overflow-hidden py-8 md:py-12 px-4 bg-gradient-to-r from-primary via-accent to-secondary text-white">
               <div className="absolute inset-0 bg-black/40" />
@@ -578,6 +561,20 @@ export default function PreschoolAdmissions() {
                     WhatsApp Us
                   </a>
                 </div>
+              </div>
+            </section>
+
+            {/* ── E-E-A-T SIGNALS (BOTTOM) ─────────────────────────────────── */}
+            <section className="py-6 md:py-10 px-4 bg-gray-50 dark:bg-gray-900/50">
+              <div className="max-w-4xl mx-auto">
+                <EEATSignals
+                  pageUrl="/preschool-admissions"
+                  pageName="Preschool Admissions 2026–27"
+                  lastUpdated="April 24, 2026"
+                  ratingValue={4.9}
+                  reviewCount={487}
+                  schemaId="preschool-admissions-eeat"
+                />
               </div>
             </section>
           </>

@@ -245,7 +245,7 @@ export default function About() {
                 </p>
                 <p className="pt-2">
                   Yours Sincerely,<br />
-                  <span className="font-semibold text-foreground">Mrs. Akila Balbale</span>
+                  <span className="font-semibold text-foreground">The Rainbow Preschool Leadership Team</span>
                 </p>
               </div>
             )}

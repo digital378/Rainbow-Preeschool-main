@@ -1,6 +1,6 @@
 # SEO Topic-to-URL Map — Rainbow Preschool International
 
-**Owner:** Akheela Balbale, Head of Curriculum
+**Owner:** Head of Curriculum, Rainbow Preschool International
 **Last reviewed:** April 24, 2026
 **Purpose:** Single source of truth for which page targets which keyword family. Every new article, ad, or internal link should reference this map to avoid keyword cannibalisation.
 
@@ -92,7 +92,7 @@ Removed (now 301-redirect to programme pages — DO NOT recreate):
 | rainbow preschool / rainbow preschool thane | `/` (homepage) |
 | rainbow preschool kasarvadavali | `/preschool-in-kasarvadavali-thane` |
 | rainbow international school (sister brand) | `https://rainbowinternationalschool.in` (external) |
-| akheela balbale | `/about/akheela-balbale` |
+| (removed) | n/a — page redirected to /about |
 
 ---
 
@@ -105,4 +105,4 @@ Removed (now 301-redirect to programme pages — DO NOT recreate):
 - [ ] Added an entry to `server/ssr-pages.ts` for bot SSR.
 - [ ] Added at least 3 internal links from related pages.
 - [ ] If replacing an old page: added a 301 in `server/redirects.ts`.
-- [ ] Reviewed by Akheela Balbale before publishing.
+- [ ] Reviewed by the Curriculum Team before publishing.

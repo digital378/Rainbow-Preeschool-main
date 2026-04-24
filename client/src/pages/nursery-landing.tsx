@@ -417,16 +417,6 @@ export default function NurseryLanding() {
 
   return (
     <div className="pt-20 md:pt-24">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
-        <EEATSignals
-          pageUrl="/nursery"
-          pageName="Nursery School in Thane"
-          lastUpdated="April 24, 2026"
-          ratingValue={4.9}
-          reviewCount={487}
-          schemaId="nursery-landing"
-        />
-      </div>
       <SEO
         title="Nursery Near Me in Thane | Ages 2.5–3.5 | Rainbow Preschool"
         description="Looking for a nursery near me in Thane? Rainbow Preschool's nursery programme (ages 2.5–3.5) builds phonics, numeracy & social skills across 6 centres. Enquire for 2026–27 admissions."
@@ -978,6 +968,17 @@ export default function NurseryLanding() {
           </div>
         </div>
       </section>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-4">
+        <EEATSignals
+          pageUrl="/nursery"
+          pageName="Nursery School in Thane"
+          lastUpdated="April 24, 2026"
+          ratingValue={4.9}
+          reviewCount={487}
+          schemaId="nursery-landing"
+        />
+      </div>
 
       {/* Sticky Mobile CTA */}
       <StickyMobileCTA />

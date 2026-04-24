@@ -291,17 +291,6 @@ export default function BestPreschoolInThane() {
 
       <div className="pt-20 md:pt-24 min-h-screen bg-gradient-to-b from-yellow-50 to-white dark:from-yellow-950 dark:to-gray-900">
 
-        <div className="max-w-6xl mx-auto px-4 pt-4">
-          <EEATSignals
-            pageUrl="/best-preschool-near-me-in-thane"
-            pageName="Best Preschool in Thane"
-            lastUpdated="April 24, 2026"
-            ratingValue={4.9}
-            reviewCount={487}
-            schemaId="best-preschool-in-thane"
-          />
-        </div>
-
         {/* ── HERO ─────────────────────────────────────────────────────────── */}
         <section className="py-8 md:py-16 px-4">
           <div className="max-w-6xl mx-auto">
@@ -709,6 +698,17 @@ export default function BestPreschoolInThane() {
                 </div>
               </div>
             </section>
+
+            <div className="max-w-6xl mx-auto px-4 pb-8">
+              <EEATSignals
+                pageUrl="/best-preschool-near-me-in-thane"
+                pageName="Best Preschool in Thane"
+                lastUpdated="April 24, 2026"
+                ratingValue={4.9}
+                reviewCount={487}
+                schemaId="best-preschool-in-thane"
+              />
+            </div>
           </>
         )}
       </div>

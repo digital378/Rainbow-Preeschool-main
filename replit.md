@@ -80,7 +80,8 @@ Preferred communication style: Simple, everyday language.
 - **Robots.txt**: Comprehensive with ad page blocks, WordPress legacy blocks, and canonical www sitemap URL.
 - **Semantic HTML**: Pages use `<article>`, `<section>`, `<nav aria-label>` properly; footer link groups are labeled `<nav>` elements.
 - **Cannibalization Audit**: Homepage targets brand + "preschool in thane"; `/best-preschool-near-me-in-thane` targets "best preschool in thane"; each keyword family has one primary page. 160+ 301 redirects for legacy WordPress URLs and duplicates. Audit summary at `.local/seo-audit-summary.md`.
-- **Author Pages**: `/about/akheela-balbale` (Head of Curriculum, blog post author). Has Person schema, bot SSR entry, sitemap entry, and dedicated page component. For E-E-A-T signals.
+- **Editorial Team Attribution**: Articles, programme pages, and ad pages credit the "Rainbow Preschool Curriculum Team" (Organization-level author in JSON-LD). No personal name is used as a public byline. The legacy `/about/akheela-balbale` URL 301-redirects to `/about`.
+- **EEATSignals Component**: Trust box (review schema + Article schema with Organization author) renders at the **bottom** of all 6 commercial keyword pages — `/kindergarten`, `/nursery`, `/playgroup`, `/play-school-near-me`, `/best-preschool-near-me-in-thane`, `/preschool-admissions` — never at the top.
 
 ## GSC Performance Baselines
 

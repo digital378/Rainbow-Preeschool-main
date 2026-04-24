@@ -392,16 +392,6 @@ export default function KindergartenLanding() {
 
   return (
     <div className="pt-20 md:pt-24">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
-        <EEATSignals
-          pageUrl="/kindergarten"
-          pageName="Kindergarten in Thane"
-          lastUpdated="April 24, 2026"
-          ratingValue={4.9}
-          reviewCount={487}
-          schemaId="kindergarten-landing"
-        />
-      </div>
       <SEO
         title="Kindergarten in Thane | Jr & Sr KG | Rainbow Preschool"
         description="Kindergarten programme in Thane (Jr. KG & Sr. KG) for children aged 3.5-5.5 years — comprehensive school-readiness covering literacy, numeracy, and life skills. 6 Thane centres. Enquire for 2025-26 admissions."
@@ -892,6 +882,17 @@ export default function KindergartenLanding() {
           </div>
         </div>
       </section>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-4">
+        <EEATSignals
+          pageUrl="/kindergarten"
+          pageName="Kindergarten in Thane"
+          lastUpdated="April 24, 2026"
+          ratingValue={4.9}
+          reviewCount={487}
+          schemaId="kindergarten-landing"
+        />
+      </div>
 
       {/* Sticky Mobile CTA */}
       <StickyMobileCTA />

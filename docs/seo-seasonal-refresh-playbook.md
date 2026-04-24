@@ -1,6 +1,6 @@
 # SEO Seasonal Refresh Playbook — Rainbow Preschool International
 
-**Owner:** Akheela Balbale, Head of Curriculum
+**Owner:** Head of Curriculum, Rainbow Preschool International
 **Last reviewed:** April 24, 2026
 **Cadence:** Monthly review · Quarterly deep refresh · Annual content audit
 
@@ -88,9 +88,9 @@ When something appears in this queue, log who owns it and the date completed. Do
 
 | Trigger | Action | Owner | SLA |
 |---|---|---|---|
-| Page loses ≥30% impressions month-over-month | Investigate intent shift, refresh content + republish date | Akheela | 7 days |
-| Keyword drops ≥3 positions | Add 2 internal links + refresh on-page copy | Akheela | 7 days |
-| New high-volume informational query appears in GSC | Write a dedicated blog post | Akheela | 14 days |
+| Page loses ≥30% impressions month-over-month | Investigate intent shift, refresh content + republish date | Curriculum Team | 7 days |
+| Keyword drops ≥3 positions | Add 2 internal links + refresh on-page copy | Curriculum Team | 7 days |
+| New high-volume informational query appears in GSC | Write a dedicated blog post | Curriculum Team | 14 days |
 | Any 4xx/5xx in GSC Pages report | Fix or 301 | Engineering | 3 days |
 | Schema validation warning | Fix the JSON-LD source | Engineering | 7 days |
 

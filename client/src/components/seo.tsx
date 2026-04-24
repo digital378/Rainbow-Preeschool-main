@@ -234,19 +234,11 @@ export function createBlogPostSchema(post: {
     datePublished: post.datePublished,
     dateModified: post.dateModified || post.datePublished,
     author: {
-      "@type": "Person",
-      name: "Akheela Balbale",
-      jobTitle: "Head of Curriculum & Early Childhood Education Specialist",
-      url: `${BASE_URL}/about/akheela-balbale`,
-      description: "Akheela Balbale leads curriculum development at Rainbow Preschool International with 15+ years in early childhood education, an M.Ed in Early Childhood Studies, and Montessori certification.",
-      sameAs: [
-        `${BASE_URL}/about/akheela-balbale`,
-      ],
-      worksFor: {
-        "@type": "Organization",
-        name: "Rainbow Preschool International",
-        url: BASE_URL,
-      },
+      "@type": "Organization",
+      name: "Rainbow Preschool International",
+      url: BASE_URL,
+      department: "Curriculum Team",
+      description: "The Rainbow Preschool curriculum team designs and oversees play-based learning programmes across all 6 Thane centres, with 15+ years of collective experience in early childhood education.",
     },
     publisher: {
       "@type": "Organization",

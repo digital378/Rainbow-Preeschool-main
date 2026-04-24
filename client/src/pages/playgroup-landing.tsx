@@ -402,16 +402,6 @@ export default function PlaygroupLanding() {
 
   return (
     <div className="pt-20 md:pt-24">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
-        <EEATSignals
-          pageUrl="/playgroup"
-          pageName="Playgroup in Thane"
-          lastUpdated="April 24, 2026"
-          ratingValue={4.9}
-          reviewCount={487}
-          schemaId="playgroup-landing"
-        />
-      </div>
       <SEO
         title="Playgroup in Thane | Ages 1.5–2.5 | Rainbow Preschool"
         description="Playgroup programme in Thane for toddlers aged 1.5-2.5 years — play-based early learning in safe, nurturing classrooms. Experienced educators, 6 Thane centres. Enquire for 2025-26 admissions."
@@ -902,6 +892,17 @@ export default function PlaygroupLanding() {
           </div>
         </div>
       </section>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-4">
+        <EEATSignals
+          pageUrl="/playgroup"
+          pageName="Playgroup in Thane"
+          lastUpdated="April 24, 2026"
+          ratingValue={4.9}
+          reviewCount={487}
+          schemaId="playgroup-landing"
+        />
+      </div>
 
       {/* Sticky Mobile CTA */}
       <StickyMobileCTA />
