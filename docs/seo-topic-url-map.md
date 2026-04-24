@@ -28,7 +28,7 @@
 
 > **Cannibalisation rule:** never use these exact keywords as the H1 of any other page. Variations and locality modifiers (e.g. "preschool in Manpada") are fine on locality pages.
 
-> **Important:** the URL paths `/play-school-in-thane`, `/nursery-school-near-me` are **301-redirects** in `server/redirects.ts`. Their `.tsx` files exist for historical reasons but are never served. Do NOT add new content there — edit the canonical pages above.
+> **Important:** the URL paths `/play-school-in-thane`, `/nursery-school-near-me` are **301-redirects** in `server/redirects.ts` (no `.tsx` files exist — do not recreate them; edit the canonical pages above).
 >
 > The URL path `/preschool-near-me` is a **routed alias** that renders the same component as `/best-preschool-near-me-in-thane` (`client/src/pages/best-preschool-in-thane.tsx`). Both URLs serve identical content; the page sets `<link rel="canonical">` to `/best-preschool-near-me-in-thane` so the canonical absorbs all link equity. This satisfies the historical "/preschool-near-me" URL pattern that Google indexed without creating a cannibalising thin page.
 
