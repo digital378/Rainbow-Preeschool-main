@@ -36,10 +36,11 @@ The mid-March 2026 GSC impression drop (~70% reduction) confirms we cannot rely 
 
    **Per-post `<lastmod>` for blog URLs (added April 24, 2026):** each `/blog/:slug` row in /sitemap.xml now emits the post's actual most-recent update date instead of the site-wide `LAST_UPDATED_ISO`. Resolution order in `server/index.ts`'s sitemap handler is:
    1. `getBlogPostLastModified(slug)` from `server/ssr-pages.ts` (i.e. the curated `lastModified` in `BLOG_POST_SEO_DATA` — same value used for the visible byline and the Article JSON-LD `dateModified`), then
-   2. the post's own `publishedAt` ISO date from `storage.getBlogPosts()`, then
-   3. `LAST_UPDATED_ISO` as the final fallback.
+   2. the post's own `updatedAt` ISO date from `storage.getBlogPosts()` (a `BlogPost` column added April 24, 2026 — defaults to `now()` and is bumped by `storage.createBlogPost` and any future update method, so a post created or edited via the admin API emits a freshness-accurate `<lastmod>` even when it is not in `BLOG_POST_SEO_DATA`), then
+   3. the post's own `publishedAt` ISO date as the last per-post fallback, then
+   4. `LAST_UPDATED_ISO` as the final fallback.
 
-   Practical impact: bumping a single blog post's `lastModified` in `BLOG_POST_SEO_DATA` updates that one post's `<lastmod>` in /sitemap.xml on the next request, while every non-blog URL still tracks the monthly site-wide refresh. Bumping `LAST_UPDATED_ISO` itself continues to refresh every non-blog URL (and any future blog post that has not yet been added to `BLOG_POST_SEO_DATA`).
+   Practical impact: bumping a single blog post's `lastModified` in `BLOG_POST_SEO_DATA` updates that one post's `<lastmod>` in /sitemap.xml on the next request. For posts not in `BLOG_POST_SEO_DATA`, simply editing the row through the admin API bumps `updatedAt`, so its `<lastmod>` advances automatically without any code edit. Every non-blog URL still tracks the monthly site-wide refresh — bumping `LAST_UPDATED_ISO` itself continues to refresh every non-blog URL (and any future blog post that hasn't yet been written or edited).
 
    **After bumping, restart the dev server and run the smoke-test guard** to confirm every required URL still emits the visible byline + Article JSON-LD with the new date:
 

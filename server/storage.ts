@@ -106,6 +106,7 @@ export class MemStorage implements IStorage {
         imageUrl: "/images/optimized/DSC00011.webp",
         category: "Education",
         publishedAt: new Date("2025-11-15"),
+        updatedAt: new Date("2025-11-15"),
         isPublished: true,
       },
       {
@@ -117,6 +118,7 @@ export class MemStorage implements IStorage {
         imageUrl: "/images/optimized/children-learning-colorful-toys-preschool.webp",
         category: "Education",
         publishedAt: new Date("2025-10-20"),
+        updatedAt: new Date("2025-10-20"),
         isPublished: true,
       },
       {
@@ -128,6 +130,7 @@ export class MemStorage implements IStorage {
         imageUrl: "/images/optimized/kids-playing-ball-pit-rainbow-preschool.webp",
         category: "Education",
         publishedAt: new Date("2025-09-10"),
+        updatedAt: new Date("2025-09-10"),
         isPublished: true,
       },
     ];
@@ -215,13 +218,18 @@ export class MemStorage implements IStorage {
 
   async createBlogPost(insertPost: InsertBlogPost): Promise<BlogPost> {
     const id = randomUUID();
+    const now = new Date();
     const post: BlogPost = {
       ...insertPost,
       imageUrl: insertPost.imageUrl ?? null,
       category: insertPost.category ?? null,
       isPublished: insertPost.isPublished ?? true,
       id,
-      publishedAt: new Date(),
+      publishedAt: now,
+      // Initialised to the create time so /sitemap.xml emits an accurate
+      // freshness date for non-curated posts. A future update method must
+      // bump this on every write.
+      updatedAt: now,
     };
     this.blogPosts.set(id, post);
     return post;

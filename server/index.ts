@@ -44,8 +44,9 @@ app.use(express.urlencoded({ extended: false }));
 // Blog posts (/blog/:slug) are pulled live from `storage.getBlogPosts()` and
 // appended on top of the curated entries. Each blog row gets its own
 // per-post <lastmod> (curated value from `server/ssr-pages.ts`, else the
-// row's `publishedAt`), so publishing or editing the curated date for a post
-// is reflected on the next /sitemap.xml request without any static edit.
+// row's `updatedAt`, else the row's `publishedAt`), so publishing or editing
+// either the curated date or the row itself is reflected on the next
+// /sitemap.xml request without any static edit.
 //
 // (Must be registered before redirects + the static middleware so it always
 // wins.)
@@ -56,19 +57,26 @@ app.get("/sitemap.xml", async (_req, res) => {
     const posts = await storage.getBlogPosts();
     // Per-post `<lastmod>`: prefer the curated `lastModified` in
     // `server/ssr-pages.ts` (matches the visible byline + Article JSON-LD
-    // dateModified), then fall back to the post's own `publishedAt`. If
-    // neither is available the entry inherits the site-wide
+    // dateModified), then fall back to the post's own `updatedAt` (bumped
+    // on every API write, so even non-curated posts edited through
+    // `storage.createBlogPost` and any future update method emit a
+    // freshness-accurate date), then `publishedAt` as the last resort. If
+    // none are available the entry inherits the site-wide
     // `LAST_UPDATED_ISO` from `buildSitemapXml`'s default.
+    const toIsoDate = (value: Date | null | undefined): string | undefined => {
+      if (!value) return undefined;
+      const parsed = new Date(value);
+      if (Number.isNaN(parsed.getTime())) return undefined;
+      return parsed.toISOString().slice(0, 10);
+    };
     const blogEntries = posts.map((post) => {
       const curated = getBlogPostLastModified(post.slug);
-      let publishedIso: string | undefined;
-      if (post.publishedAt) {
-        const parsed = new Date(post.publishedAt);
-        if (!Number.isNaN(parsed.getTime())) {
-          publishedIso = parsed.toISOString().slice(0, 10);
-        }
-      }
-      return blogPostSitemapEntry(post.slug, curated ?? publishedIso);
+      const updatedIso = toIsoDate(post.updatedAt);
+      const publishedIso = toIsoDate(post.publishedAt);
+      return blogPostSitemapEntry(
+        post.slug,
+        curated ?? updatedIso ?? publishedIso,
+      );
     });
     res.send(buildSitemapXml({ extraEntries: blogEntries }));
   } catch (err) {

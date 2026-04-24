@@ -42,12 +42,20 @@ export const blogPosts = pgTable("blog_posts", {
   // /blog page falls back to "Education" in that case.
   category: text("category"),
   publishedAt: timestamp("published_at").defaultNow(),
+  // Bumped on every write (create + future updates) so /sitemap.xml can
+  // emit an accurate per-post `<lastmod>` for non-curated posts. The
+  // /sitemap.xml handler in `server/index.ts` falls back to this column
+  // when `getBlogPostLastModified(slug)` (i.e. the curated value in
+  // `BLOG_POST_SEO_DATA`) is undefined, then to `publishedAt` as a final
+  // fallback.
+  updatedAt: timestamp("updated_at").defaultNow(),
   isPublished: boolean("is_published").default(true),
 });
 
 export const insertBlogPostSchema = createInsertSchema(blogPosts).omit({
   id: true,
   publishedAt: true,
+  updatedAt: true,
 });
 
 export type InsertBlogPost = z.infer<typeof insertBlogPostSchema>;
