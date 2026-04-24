@@ -7,6 +7,111 @@ import {
   blogPersonToSchema,
   assertAllBlogSlugsCovered,
 } from "@shared/blog-authors";
+import {
+  seoRecoveryBlogPosts,
+  legacyMigratedBlogPosts,
+  ssrOnlyBlogPosts,
+  legacyHardcodedBlogPosts,
+} from "../server/seed-blog-posts";
+
+/**
+ * Strips lightweight markdown markers (`**bold**`, `*italic*`,
+ * `[text](url)`, `# heading`, list bullets, blockquotes) so the body
+ * is delivered as clean human-readable text in bot SSR HTML. Bot SSR
+ * escapes the result, so we MUST remove markdown noise here or it
+ * appears literally in Google's view of the page.
+ */
+function stripMarkdown(input: string): string {
+  return input
+    .replace(/```[\s\S]*?```/g, " ")
+    .replace(/`([^`]+)`/g, "$1")
+    .replace(/!\[[^\]]*\]\([^)]+\)/g, " ")
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+    .replace(/^\s{0,3}#{1,6}\s+/gm, "")
+    .replace(/\*\*([^*]+)\*\*/g, "$1")
+    .replace(/(^|[^*])\*([^*\n]+)\*/g, "$1$2")
+    .replace(/^\s{0,3}>\s?/gm, "")
+    .replace(/^\s*[-*+]\s+/gm, "")
+    .replace(/^\s*\d+\.\s+/gm, "")
+    .replace(/[ \t]+/g, " ")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+}
+
+interface BlogBody {
+  introText: string;
+  contentSections: { heading?: string; text?: string }[];
+}
+
+/**
+ * Parses a blog post's markdown body into the introText + contentSections
+ * shape consumed by `bot-ssr.ts`. Splits on `## ` headings; the first
+ * chunk becomes introText, every subsequent heading + body becomes a
+ * section. Filters out the trailing `EXPLORE_MORE:` token, the
+ * "Reviewed by ..." footer line, and any "Last updated:" footer line so
+ * those don't leak into the article body.
+ */
+function parseBlogBody(rawContent: string): BlogBody {
+  const cleaned = rawContent
+    .split("\n")
+    .filter((line) => {
+      const trimmed = line.trim();
+      if (trimmed.startsWith("EXPLORE_MORE:")) return false;
+      if (/^Reviewed by /i.test(trimmed)) return false;
+      if (/^Last updated:/i.test(trimmed)) return false;
+      return true;
+    })
+    .join("\n");
+
+  const parts = cleaned.split(/\n\s*##\s+/);
+  const introRaw = parts.shift() || "";
+  const introText = stripMarkdown(introRaw).slice(0, 1500);
+
+  const contentSections: { heading?: string; text?: string }[] = [];
+  for (const chunk of parts) {
+    const newlineIdx = chunk.indexOf("\n");
+    const heading = (newlineIdx === -1 ? chunk : chunk.slice(0, newlineIdx)).trim();
+    const bodyRaw = newlineIdx === -1 ? "" : chunk.slice(newlineIdx + 1);
+    const text = stripMarkdown(bodyRaw);
+    if (!heading && !text) continue;
+    contentSections.push({
+      heading: heading || undefined,
+      text: text || undefined,
+    });
+  }
+
+  return { introText, contentSections };
+}
+
+/**
+ * Pre-built lookup: slug → parsed body. Built once at module load from
+ * `seoRecoveryBlogPosts`. This is what gives bot SSR for /blog/<slug>
+ * the actual article content (~2000-3000 words per post) instead of
+ * just the H1 + byline. Without this, Google reads blog pages as
+ * Soft 404s.
+ */
+const BLOG_BODY_BY_SLUG: Record<string, BlogBody> = (() => {
+  const out: Record<string, BlogBody> = {};
+  const allSeed = [
+    ...seoRecoveryBlogPosts,
+    ...legacyMigratedBlogPosts,
+    ...ssrOnlyBlogPosts,
+    ...legacyHardcodedBlogPosts,
+  ];
+  for (const post of allSeed) {
+    if (!post.slug || !post.content) continue;
+    const parsed = parseBlogBody(post.content);
+    const existing = out[post.slug];
+    const existingLen = existing
+      ? (existing.introText.length + existing.contentSections.reduce((s, c) => s + (c.text?.length || 0), 0))
+      : 0;
+    const newLen = parsed.introText.length + parsed.contentSections.reduce((s, c) => s + (c.text?.length || 0), 0);
+    if (!existing || newLen > existingLen) {
+      out[post.slug] = parsed;
+    }
+  }
+  return out;
+})();
 
 /**
  * Canonical list of every blog slug served by SSR. Kept in sync with
@@ -1390,6 +1495,17 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
       }];
       if (faqSchema) schemas.push(faqSchema);
 
+      const body = BLOG_BODY_BY_SLUG[slug];
+      const blogContentSections: { heading?: string; text?: string; items?: string[] }[] = body
+        ? [...body.contentSections]
+        : [];
+      if (postFaqs && postFaqs.length > 0) {
+        blogContentSections.push({
+          heading: "Frequently Asked Questions",
+          items: postFaqs.map((f) => `${f.q} — ${f.a}`),
+        });
+      }
+
       return {
         title: post.title,
         description: post.description,
@@ -1397,8 +1513,10 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
         canonical: `${BASE_URL}/blog/${slug}`,
         ogType: "article",
         h1: post.title,
+        introText: body?.introText,
         breadcrumbs: [{ name: "Home", url: "/" }, { name: "Blog", url: "/blog" }, { name: post.title.split("|")[0].trim(), url: `/blog/${slug}` }],
         structuredData: schemas,
+        contentSections: blogContentSections,
         internalLinks: commonInternalLinks,
         lastModified: post.lastModified,
         lastModifiedDisplay: post.lastModifiedDisplay,

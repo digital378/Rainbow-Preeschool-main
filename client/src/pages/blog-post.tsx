@@ -80,6 +80,25 @@ interface BlogPostData {
   wordCount: number;
 }
 
+/**
+ * SOURCE-OF-TRUTH NOTICE
+ * ======================
+ * The 13 entries in `blogPostsData` are also mirrored in
+ * `server/seed-blog-posts.ts` → `legacyHardcodedBlogPosts`. The mirror
+ * exists so bot SSR for `/blog/<slug>` can emit the full long-form
+ * article body — without it Googlebot only sees ~94–200 words and
+ * flags the URL as Soft 404.
+ *
+ * If you edit any `content: [...]` array below, you MUST also update
+ * the corresponding `content` template literal in
+ * `server/seed-blog-posts.ts` so that React-rendered (human) and
+ * pre-rendered (bot) HTML stay in sync. The simplest way is to copy
+ * the `content` array, join with `"\n\n"`, and paste over the seed
+ * entry's template literal.
+ *
+ * Medium-term: extract these 13 articles into a single shared module
+ * imported by both this file and the seed so the duplication is gone.
+ */
 const blogPostsData: Record<string, BlogPostData> = {
   "what-to-ask-during-a-tour-of-a-preschool-in-thane": {
     id: "1",
