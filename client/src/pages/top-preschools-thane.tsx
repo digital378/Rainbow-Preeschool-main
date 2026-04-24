@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { SEO } from "@/components/seo";
 import { CTASection } from "@/components/cta-section";
 import { BlogInternalLinks } from "@/components/blog-internal-links";
+import { EEATSignals } from "@/components/eeat-signals";
+import { LAST_UPDATED_DISPLAY, LAST_UPDATED_ISO } from "@shared/site-freshness";
 import { Star, MapPin, Users, Shield, BookOpen, Phone, CheckCircle, Award, Clock } from "lucide-react";
 
 interface PreschoolEntry {
@@ -166,6 +168,16 @@ export default function TopPreschoolsThane() {
             An honest, research-backed comparison to help Thane parents find the best preschool for their child. We evaluated 50+ preschools across curriculum, safety, teacher quality, fees, and parent satisfaction.
           </p>
         </div>
+
+        <EEATSignals
+          pageUrl="/top-preschools-in-thane"
+          pageName="Top 10 Preschools in Thane — Comparison Guide"
+          reviewedBy="Rainbow Preschool Curriculum Team"
+          reviewerRole="Curriculum Team, Rainbow Preschool International"
+          lastUpdated={LAST_UPDATED_DISPLAY}
+          lastUpdatedIso={LAST_UPDATED_ISO}
+          schemaId="top-preschools-in-thane-eeat"
+        />
 
         <div className="bg-amber-50 border border-amber-200 rounded-xl p-5 mb-10">
           <h2 className="text-sm font-semibold text-amber-800 mb-2 flex items-center gap-2">

@@ -30,6 +30,8 @@ import { SEO } from "@/components/seo";
 import { ContactForm } from "@/components/contact-form";
 import { CountUp } from "@/components/count-up";
 import { BranchCard } from "@/components/branch-card";
+import { EEATSignals } from "@/components/eeat-signals";
+import { LAST_UPDATED_DISPLAY, LAST_UPDATED_ISO } from "@shared/site-freshness";
 import { branches } from "@shared/schema";
 import { 
   CheckCircle, ArrowRight, MapPin, Phone, Clock, Users, Star, Shield, 
@@ -406,6 +408,18 @@ export default function HappyTimesLanding() {
             </div>
           </div>
         </div>
+      </section>
+
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <EEATSignals
+          pageUrl="/happy-times"
+          pageName="Daycare in Thane | Happy Times After-School Care"
+          reviewedBy="Rainbow Preschool Curriculum Team"
+          reviewerRole="Curriculum Team, Rainbow Preschool International"
+          lastUpdated={LAST_UPDATED_DISPLAY}
+          lastUpdatedIso={LAST_UPDATED_ISO}
+          schemaId="happy-times-eeat"
+        />
       </section>
 
       {/* Why After-School Care Matters - SEO Content */}

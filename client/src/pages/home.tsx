@@ -12,6 +12,8 @@ import {
 } from "@/components/ui/select";
 import { HeroSection } from "@/components/hero-section";
 import { AwardedBySection } from "@/components/awarded-by-section";
+import { EEATSignals } from "@/components/eeat-signals";
+import { LAST_UPDATED_DISPLAY, LAST_UPDATED_ISO } from "@shared/site-freshness";
 import { ProgrammeCard } from "@/components/programme-card";
 import { BranchCard } from "@/components/branch-card";
 import { TestimonialCard } from "@/components/testimonial-card";
@@ -419,6 +421,17 @@ export default function Home() {
         </div>
       </nav>
       <QuickCallbackStrip />
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <EEATSignals
+          pageUrl="/"
+          pageName="Rainbow Preschool International — Preschool in Thane"
+          reviewedBy="Rainbow Preschool Curriculum Team"
+          reviewerRole="Curriculum Team, Rainbow Preschool International"
+          lastUpdated={LAST_UPDATED_DISPLAY}
+          lastUpdatedIso={LAST_UPDATED_ISO}
+          schemaId="home-eeat"
+        />
+      </section>
       <AwardedBySection />
 
       {/* About Section - SEO Enhanced */}

@@ -2,6 +2,8 @@ import { useState, useMemo } from "react";
 import { Link } from "wouter";
 import { CTASection } from "@/components/cta-section";
 import { SEO } from "@/components/seo";
+import { EEATSignals } from "@/components/eeat-signals";
+import { LAST_UPDATED_DISPLAY, LAST_UPDATED_ISO } from "@shared/site-freshness";
 import { legacyPagesData } from "@shared/legacy-pages-data";
 import { ArrowRight, Search, BookOpen } from "lucide-react";
 
@@ -225,6 +227,18 @@ export default function Blog() {
             </p>
           </div>
         </div>
+      </section>
+
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <EEATSignals
+          pageUrl="/blog"
+          pageName="Rainbow Preschool Blog"
+          reviewedBy="Rainbow Preschool Curriculum Team"
+          reviewerRole="Curriculum Team, Rainbow Preschool International"
+          lastUpdated={LAST_UPDATED_DISPLAY}
+          lastUpdatedIso={LAST_UPDATED_ISO}
+          schemaId="blog-eeat"
+        />
       </section>
 
       <section className="py-8 md:py-12 lg:py-16">

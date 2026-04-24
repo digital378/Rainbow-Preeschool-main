@@ -5,6 +5,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { SEO } from "@/components/seo";
 import { CTASection } from "@/components/cta-section";
 import { BlogInternalLinks } from "@/components/blog-internal-links";
+import { EEATSignals } from "@/components/eeat-signals";
+import { LAST_UPDATED_DISPLAY, LAST_UPDATED_ISO } from "@shared/site-freshness";
 import { CheckCircle, XCircle, ArrowRight, ArrowLeft, RotateCcw, Phone, Star, Baby, Users, Brain, MessageCircle, Hand } from "lucide-react";
 
 interface Question {
@@ -126,6 +128,16 @@ export default function ReadinessQuiz() {
             Answer 10 simple questions about your child's development to find out if they're ready for a structured learning environment.
           </p>
         </div>
+
+        <EEATSignals
+          pageUrl="/preschool-readiness-quiz"
+          pageName="Preschool Readiness Quiz"
+          reviewedBy="Rainbow Preschool Curriculum Team"
+          reviewerRole="Curriculum Team, Rainbow Preschool International"
+          lastUpdated={LAST_UPDATED_DISPLAY}
+          lastUpdatedIso={LAST_UPDATED_ISO}
+          schemaId="preschool-readiness-quiz-eeat"
+        />
 
         {!showResult ? (
           <Card className="border-2 shadow-lg" data-testid="quiz-card">

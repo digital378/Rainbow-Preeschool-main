@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { SEO } from "@/components/seo";
 import { CTASection } from "@/components/cta-section";
 import { BlogInternalLinks } from "@/components/blog-internal-links";
+import { EEATSignals } from "@/components/eeat-signals";
+import { LAST_UPDATED_DISPLAY, LAST_UPDATED_ISO } from "@shared/site-freshness";
 import { Star, MapPin, Phone, Quote } from "lucide-react";
 
 interface Testimonial {
@@ -194,6 +196,16 @@ export default function Testimonials() {
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-6">
             Real stories from real families. Hear from parents across our 6 centres in Thane about their experience with Rainbow Preschool International.
           </p>
+
+          <EEATSignals
+            pageUrl="/testimonials"
+            pageName="Parent Testimonials | Rainbow Preschool International"
+            reviewedBy="Rainbow Preschool Curriculum Team"
+            reviewerRole="Curriculum Team, Rainbow Preschool International"
+            lastUpdated={LAST_UPDATED_DISPLAY}
+            lastUpdatedIso={LAST_UPDATED_ISO}
+            schemaId="testimonials-eeat"
+          />
 
           <div className="inline-flex items-center gap-4 bg-amber-50 border border-amber-200 rounded-xl px-6 py-3" data-testid="aggregate-rating">
             <div className="flex items-center gap-1">

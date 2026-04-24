@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { SEO } from "@/components/seo";
 import { CountUp } from "@/components/count-up";
 import { CTASection } from "@/components/cta-section";
+import { EEATSignals } from "@/components/eeat-signals";
+import { LAST_UPDATED_DISPLAY, LAST_UPDATED_ISO } from "@shared/site-freshness";
 import { 
   Phone, 
   Star, 
@@ -178,6 +180,18 @@ export default function About() {
             </div>
           </div>
         </div>
+      </section>
+
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <EEATSignals
+          pageUrl="/about"
+          pageName="About Rainbow Preschool International"
+          reviewedBy="Rainbow Preschool Curriculum Team"
+          reviewerRole="Curriculum Team, Rainbow Preschool International"
+          lastUpdated={LAST_UPDATED_DISPLAY}
+          lastUpdatedIso={LAST_UPDATED_ISO}
+          schemaId="about-eeat"
+        />
       </section>
 
       {/* SECTION B - Our Story */}

@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { SEO } from "@/components/seo";
 import { CTASection } from "@/components/cta-section";
 import { BlogInternalLinks } from "@/components/blog-internal-links";
+import { EEATSignals } from "@/components/eeat-signals";
+import { LAST_UPDATED_DISPLAY, LAST_UPDATED_ISO } from "@shared/site-freshness";
 import { ChevronDown, Phone, Search, GraduationCap, Shield, DollarSign, Clock, Bus, BookOpen, Users, Heart } from "lucide-react";
 
 interface FAQ {
@@ -313,6 +315,16 @@ export default function FAQs() {
             Everything you need to know about Rainbow Preschool International. Can't find your answer? Call us at 82915 68972.
           </p>
         </div>
+
+        <EEATSignals
+          pageUrl="/faqs"
+          pageName="Frequently Asked Questions | Rainbow Preschool"
+          reviewedBy="Rainbow Preschool Curriculum Team"
+          reviewerRole="Curriculum Team, Rainbow Preschool International"
+          lastUpdated={LAST_UPDATED_DISPLAY}
+          lastUpdatedIso={LAST_UPDATED_ISO}
+          schemaId="faqs-eeat"
+        />
 
         <div className="relative mb-8">
           <label htmlFor="faq-search" className="sr-only">Search frequently asked questions</label>

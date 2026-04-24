@@ -5,6 +5,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { CTASection } from "@/components/cta-section";
 import { SEO } from "@/components/seo";
+import { EEATSignals } from "@/components/eeat-signals";
+import { LAST_UPDATED_DISPLAY, LAST_UPDATED_ISO } from "@shared/site-freshness";
 import { programmes } from "@shared/schema";
 import { Baby, BookOpen, GraduationCap, Heart, CheckCircle, ArrowRight, Award, MapPin, ClipboardList, Images } from "lucide-react";
 
@@ -81,6 +83,18 @@ export default function Programmes() {
             </p>
           </div>
         </div>
+      </section>
+
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <EEATSignals
+          pageUrl="/programmes"
+          pageName="Preschool Programmes in Thane"
+          reviewedBy="Rainbow Preschool Curriculum Team"
+          reviewerRole="Curriculum Team, Rainbow Preschool International"
+          lastUpdated={LAST_UPDATED_DISPLAY}
+          lastUpdatedIso={LAST_UPDATED_ISO}
+          schemaId="programmes-eeat"
+        />
       </section>
 
       {/* Programmes List */}

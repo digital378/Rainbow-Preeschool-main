@@ -1,6 +1,8 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { SEO } from "@/components/seo";
 import { Button } from "@/components/ui/button";
+import { EEATSignals } from "@/components/eeat-signals";
+import { LAST_UPDATED_DISPLAY, LAST_UPDATED_ISO } from "@shared/site-freshness";
 import { Link } from "wouter";
 import { X, ChevronLeft, ChevronRight, Images, Award, MapPin, ClipboardList, BookOpen, ZoomIn, Users, Heart, Star } from "lucide-react";
 import {
@@ -247,6 +249,18 @@ export default function Gallery() {
             ))}
           </div>
         </div>
+      </section>
+
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <EEATSignals
+          pageUrl="/gallery"
+          pageName="Rainbow Preschool Gallery — Thane"
+          reviewedBy="Rainbow Preschool Curriculum Team"
+          reviewerRole="Curriculum Team, Rainbow Preschool International"
+          lastUpdated={LAST_UPDATED_DISPLAY}
+          lastUpdatedIso={LAST_UPDATED_ISO}
+          schemaId="gallery-eeat"
+        />
       </section>
 
       {/* ── Stats Trust Bar ──────────────────────────────────────── */}
