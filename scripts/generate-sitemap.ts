@@ -140,108 +140,28 @@ const entries: SitemapEntry[] = [
 
   // ── SEASONAL / STANDALONE ────────────────────────────────
   { url: '/holi-activities-for-kids', priority: 0.6, changefreq: 'yearly' },
-  { url: '/april-fools-day-activities-for-kids', priority: 0.6, changefreq: 'yearly' },
 
   // ── LEGACY PAGES – ADMISSION & PLAYGROUP ────────────────
-  { url: '/mid-term-playgroup-admissions-benefits', priority: 0.65, changefreq: 'monthly' },
   { url: '/preschool-admission-process-guide', priority: 0.65, changefreq: 'monthly' },
-  { url: '/preschool-admission-documents-checklist', priority: 0.65, changefreq: 'monthly' },
-  { url: '/when-apply-preschool-admission-timeline', priority: 0.65, changefreq: 'monthly' },
-  { url: '/questions-ask-preschool-admission-visit', priority: 0.6, changefreq: 'monthly' },
-  { url: '/preschool-fees-thane-what-to-expect', priority: 0.65, changefreq: 'monthly' },
 
   // ── LEGACY PAGES – HOMEPAGE SUPPORT ─────────────────────
-  { url: '/why-rainbow-preschool-best-thane-2026', priority: 0.75, changefreq: 'monthly' },
-  { url: '/top-10-preschools-thane-comparison-guide', priority: 0.7, changefreq: 'monthly' },
-  { url: '/what-makes-great-preschool-checklist', priority: 0.65, changefreq: 'monthly' },
-  { url: '/preschool-vs-daycare-difference', priority: 0.6, changefreq: 'monthly' },
-  { url: '/early-childhood-education-importance-india', priority: 0.65, changefreq: 'monthly' },
-  { url: '/best-early-learning-centres-thane-2026', priority: 0.75, changefreq: 'monthly' },
-  { url: '/montessori-vs-play-based-preschool-thane', priority: 0.7, changefreq: 'monthly' },
-  { url: '/preschool-franchise-vs-standalone-which-better', priority: 0.65, changefreq: 'monthly' },
-  { url: '/working-parents-guide-preschool-thane', priority: 0.7, changefreq: 'monthly' },
-  { url: '/affordable-quality-preschools-thane', priority: 0.7, changefreq: 'monthly' },
-  { url: '/best-preschool-curriculum-thane', priority: 0.7, changefreq: 'monthly' },
-  { url: '/how-to-choose-best-preschool-thane', priority: 0.7, changefreq: 'monthly' },
-  { url: '/playgroup-admission-thane-complete-guide', priority: 0.7, changefreq: 'monthly' },
 
   // ── LEGACY PAGES – ABOUT SUPPORT ────────────────────────
-  { url: '/rainbow-preschool-journey-since-2007', priority: 0.7, changefreq: 'monthly' },
-  { url: '/rainbow-preschool-awards-recognition', priority: 0.7, changefreq: 'monthly' },
-  { url: '/rainbow-preschool-teacher-training-philosophy', priority: 0.65, changefreq: 'monthly' },
-  { url: '/parent-testimonials-rainbow-preschool', priority: 0.7, changefreq: 'monthly' },
-  { url: '/rainbow-preschool-safety-measures-child-security', priority: 0.65, changefreq: 'monthly' },
-  { url: '/rainbow-preschool-teaching-methodology', priority: 0.7, changefreq: 'monthly' },
-  { url: '/rainbow-preschool-infrastructure-facilities', priority: 0.7, changefreq: 'monthly' },
-  { url: '/preschool-accreditation-importance-india', priority: 0.65, changefreq: 'monthly' },
-  { url: '/rainbow-preschool-community-initiatives', priority: 0.65, changefreq: 'monthly' },
-  { url: '/experienced-preschool-teachers-importance', priority: 0.65, changefreq: 'monthly' },
-  { url: '/rainbow-family-wins-cleanest-school-thane', priority: 0.6, changefreq: 'monthly' },
-  { url: '/the-most-promising-preschool-chain-of-the-year-maharashtra', priority: 0.65, changefreq: 'monthly' },
 
   // ── LEGACY PAGES – PROGRAMMES SUPPORT ───────────────────
-  { url: '/play-based-learning-benefits-children', priority: 0.65, changefreq: 'monthly' },
-  { url: '/nep-2020-early-childhood-education-guide', priority: 0.6, changefreq: 'monthly' },
-  { url: '/holistic-child-development-preschool', priority: 0.6, changefreq: 'monthly' },
-  { url: '/preschool-learning-outcomes-what-to-expect', priority: 0.6, changefreq: 'monthly' },
-  { url: '/early-childhood-curriculum-explained', priority: 0.65, changefreq: 'monthly' },
-  { url: '/activity-based-learning-preschool-benefits', priority: 0.65, changefreq: 'monthly' },
-  { url: '/creative-arts-preschool-importance', priority: 0.6, changefreq: 'monthly' },
-  { url: '/physical-development-preschool-activities', priority: 0.6, changefreq: 'monthly' },
-  { url: '/language-development-preschool-activities', priority: 0.6, changefreq: 'monthly' },
-  { url: '/innovative-learning-activities-for-preschoolers', priority: 0.55, changefreq: 'monthly' },
-  { url: '/fun-interactive-learning-activities-for-preschoolers-2', priority: 0.5, changefreq: 'monthly' },
 
   // ── LEGACY PAGES – PLAYGROUP SUPPORT ────────────────────
-  { url: '/benefits-playgroup-toddlers-development', priority: 0.65, changefreq: 'monthly' },
-  { url: '/playgroup-vs-staying-home-which-better', priority: 0.65, changefreq: 'monthly' },
-  { url: '/separation-anxiety-playgroup-tips-parents', priority: 0.6, changefreq: 'monthly' },
-  { url: '/playgroup-activities-toddler-development', priority: 0.6, changefreq: 'monthly' },
-  { url: '/right-age-start-playgroup-india', priority: 0.65, changefreq: 'monthly' },
-  { url: '/toddler-separation-anxiety-guide', priority: 0.6, changefreq: 'monthly' },
-  { url: '/toddler-social-skills-development', priority: 0.6, changefreq: 'monthly' },
-  { url: '/playgroup-daily-schedule-activities', priority: 0.6, changefreq: 'monthly' },
-  { url: '/is-my-toddler-ready-for-playgroup', priority: 0.65, changefreq: 'monthly' },
-  { url: '/benefits-of-early-playgroup-enrollment', priority: 0.65, changefreq: 'monthly' },
-  { url: '/socialisation-benefits-toddlers-playgroup', priority: 0.6, changefreq: 'monthly' },
 
   // ── LEGACY PAGES – NURSERY SUPPORT ──────────────────────
-  { url: '/nursery-school-benefits-2-3-year-olds', priority: 0.65, changefreq: 'monthly' },
-  { url: '/nursery-vs-playgroup-difference', priority: 0.65, changefreq: 'monthly' },
-  { url: '/nursery-curriculum-what-children-learn', priority: 0.6, changefreq: 'monthly' },
-  { url: '/preparing-child-nursery-school', priority: 0.6, changefreq: 'monthly' },
-  { url: '/nursery-admission-age-requirements-india', priority: 0.65, changefreq: 'monthly' },
-  { url: '/why-nursery-school-is-important-for-early-childhood-development', priority: 0.65, changefreq: 'monthly' },
-  { url: '/nursery-importance', priority: 0.6, changefreq: 'monthly' },
 
   // ── LEGACY PAGES – KINDERGARTEN SUPPORT ─────────────────
-  { url: '/kindergarten-readiness-checklist-parents', priority: 0.65, changefreq: 'monthly' },
-  { url: '/jr-kg-sr-kg-difference-explained', priority: 0.65, changefreq: 'monthly' },
-  { url: '/kindergarten-curriculum-primary-school-preparation', priority: 0.6, changefreq: 'monthly' },
-  { url: '/choosing-right-kindergarten-child', priority: 0.6, changefreq: 'monthly' },
-  { url: '/kindergarten-admission-thane-guide', priority: 0.65, changefreq: 'monthly' },
 
   // ── LEGACY PAGES – CONTACT SUPPORT ──────────────────────
-  { url: '/visiting-preschool-what-to-look-for', priority: 0.6, changefreq: 'monthly' },
-  { url: '/how-reach-rainbow-preschool-thane', priority: 0.55, changefreq: 'monthly' },
 
   // ── LEGACY PAGES – CENTRE-SPECIFIC SEO ──────────────────
-  { url: '/early-childhood-education-manpada-ghodbunder-road', priority: 0.7, changefreq: 'monthly' },
-  { url: '/child-development-programs-hariniwas-naupada', priority: 0.7, changefreq: 'monthly' },
-  { url: '/best-playschool-anand-nagar-majiwada', priority: 0.7, changefreq: 'monthly' },
-  { url: '/preschool-options-dhokali-kolshet-road', priority: 0.7, changefreq: 'monthly' },
-  { url: '/trusted-preschool-kalwa-thane', priority: 0.7, changefreq: 'monthly' },
-  { url: '/quality-preschool-kasarvadavali-ghodbunder', priority: 0.7, changefreq: 'monthly' },
-  { url: '/toddler-activities-manpada-preschool', priority: 0.65, changefreq: 'monthly' },
-  { url: '/school-readiness-hariniwas-kindergarten', priority: 0.65, changefreq: 'monthly' },
-  { url: '/nursery-admissions-anand-nagar-thane', priority: 0.65, changefreq: 'monthly' },
-  { url: '/playgroup-enrollment-dhokali-thane', priority: 0.65, changefreq: 'monthly' },
-  { url: '/kindergarten-programs-kalwa-thane', priority: 0.65, changefreq: 'monthly' },
-  { url: '/best-nursery-school-kasarvadavali', priority: 0.65, changefreq: 'monthly' },
 
   // ── LEGACY PAGES – GENERAL RESOURCES ────────────────────
   { url: '/pre-kg-age-guide', priority: 0.6, changefreq: 'monthly' },
-  { url: '/preschool-vs-prekg-2', priority: 0.6, changefreq: 'monthly' },
   { url: '/guide-to-understanding-good-touch-and-bad-touch', priority: 0.6, changefreq: 'monthly' },
   { url: '/impact-of-parent-teacher-communication-on-student-success', priority: 0.55, changefreq: 'monthly' },
   { url: '/7-things-you-can-do-to-help-children-overcome-fear', priority: 0.5, changefreq: 'monthly' },
@@ -250,34 +170,12 @@ const entries: SitemapEntry[] = [
   { url: '/trends-in-early-childhood-education', priority: 0.55, changefreq: 'monthly' },
   { url: '/healthy-preschool-meals-for-bright-minds-and-bodies', priority: 0.5, changefreq: 'monthly' },
   { url: '/boost-early-childhood-development-with-educational-toys', priority: 0.55, changefreq: 'monthly' },
-  { url: '/immunity-boosting-foods-for-kids', priority: 0.5, changefreq: 'monthly' },
-  { url: '/10-easy-ways-to-help-kids-learn-colours-and-shapes-better', priority: 0.5, changefreq: 'monthly' },
-  { url: '/8-amazing-reasons-why-cooking-is-important-for-kids', priority: 0.5, changefreq: 'monthly' },
-  { url: '/6-quick-tips-to-help-children-learn-writing', priority: 0.5, changefreq: 'monthly' },
   { url: '/6-simple-tips-for-improving-listening-skills-in-preschoolers', priority: 0.5, changefreq: 'monthly' },
-  { url: '/what-to-ask-during-a-tour-of-a-preschool-in-thane', priority: 0.6, changefreq: 'monthly' },
-  { url: '/9-questions-to-ask-while-choosing-a-pre-school', priority: 0.6, changefreq: 'monthly' },
-  { url: '/innovative-summer-activities-for-kids-keeping-minds-engaged', priority: 0.5, changefreq: 'yearly' },
-  { url: '/why-preschool-education-shapes-early-childhood-development', priority: 0.65, changefreq: 'monthly' },
-  { url: '/45-signs-of-healthy-physical-development-ages-3-6', priority: 0.5, changefreq: 'monthly' },
-  { url: '/understanding-the-importance-of-preschool-in-early-childhood-development', priority: 0.65, changefreq: 'monthly' },
   { url: '/10-spring-gardening-activitie-for-preschoolers', priority: 0.5, changefreq: 'yearly' },
   { url: '/how-to-motivate-your-kids-for-school-8-ways', priority: 0.5, changefreq: 'monthly' },
   { url: '/7-ways-teaching-aids-help-children-learn-better', priority: 0.5, changefreq: 'monthly' },
 
   // ── LEGACY PAGES – DEEP CONTENT BATCH 2 ─────────────────
-  { url: '/why-early-childhood-education-matters-thane-parents', priority: 0.7, changefreq: 'monthly' },
-  { url: '/choosing-best-preschool-thane-parent-guide', priority: 0.7, changefreq: 'monthly' },
-  { url: '/holistic-child-development-rainbow-approach', priority: 0.7, changefreq: 'monthly' },
-  { url: '/preparing-child-for-preschool-thane-tips', priority: 0.65, changefreq: 'monthly' },
-  { url: '/rainbow-preschool-teaching-philosophy-explained', priority: 0.7, changefreq: 'monthly' },
-  { url: '/history-early-childhood-education-thane', priority: 0.65, changefreq: 'monthly' },
-  { url: '/what-makes-quality-preschool-teacher', priority: 0.65, changefreq: 'monthly' },
-  { url: '/parent-teacher-partnership-early-education', priority: 0.6, changefreq: 'monthly' },
-  { url: '/age-appropriate-learning-activities-explained', priority: 0.6, changefreq: 'monthly' },
-  { url: '/play-based-learning-vs-academic-approach', priority: 0.65, changefreq: 'monthly' },
-  { url: '/how-rainbow-curriculum-prepares-school-readiness', priority: 0.7, changefreq: 'monthly' },
-  { url: '/importance-creative-arts-early-childhood', priority: 0.6, changefreq: 'monthly' },
 ];
 
 // Filter out excluded pages and deduplicate

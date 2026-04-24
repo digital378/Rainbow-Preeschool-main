@@ -659,7 +659,7 @@ const SEO_ACTIONS: { id: string; status: "done" | "pending" | "opportunity"; pri
     id: "monthly-eeat-refresh",
     status: "pending", priority: "high", category: "Content",
     title: "Bump 'Last Updated' on the 6 commercial pages — first Monday each month",
-    detail: "The 6 commercial pages now render an EEATSignals component with a visible 'Last updated' line and dateModified JSON-LD. Each month, edit each page file and update the lastUpdated prop to today's date IF a meaningful copy change was made (a paragraph rewrite is enough to count). Canonical pages with EEATSignals installed: best-preschool-in-thane.tsx (/best-preschool-near-me-in-thane), play-school-near-me.tsx (/play-school-near-me), playgroup-landing.tsx (/playgroup), nursery-landing.tsx (/nursery), kindergarten-landing.tsx (/kindergarten). The 6th, /best-preschool-near-me-in-thane, doubles as 'preschool near me' canonical (see docs/seo-topic-url-map.md).",
+    detail: "The 6 commercial pages now render an EEATSignals component with a visible 'Last updated' line and dateModified JSON-LD. Each month, edit each page file and update the lastUpdated prop to today's date IF a meaningful copy change was made (a paragraph rewrite is enough to count). Canonical pages with EEATSignals installed: (1) best-preschool-in-thane.tsx → /best-preschool-near-me-in-thane (also doubles as 'preschool near me' canonical), (2) play-school-near-me.tsx → /play-school-near-me, (3) playgroup-landing.tsx → /playgroup, (4) nursery-landing.tsx → /nursery, (5) kindergarten-landing.tsx → /kindergarten, (6) preschool-admissions.tsx → /preschool-admissions. See docs/seo-topic-url-map.md.",
     impact: "Fresh dateModified is a measurable Google freshness signal. Monthly bumps with real edits typically lift commercial keyword positions 1–2 spots over a quarter.",
   },
   {
@@ -689,6 +689,48 @@ const SEO_ACTIONS: { id: string; status: "done" | "pending" | "opportunity"; pri
     title: "Run annual content audit every January (next: Jan 5, 2027)",
     detail: "Once a year, follow 'Annual content audit' in docs/seo-seasonal-refresh-playbook.md. Pull every URL from sitemap.xml + 12-month GSC data, sunset pages with <5 clicks AND <500 impressions (consolidate into stronger pages with 301s), then full rewrite of the 6 commercial pages, then schema validation pass on every commercial + locality page.",
     impact: "Single biggest yearly compounding effect. Pruning weak URLs concentrates link equity on canonical pages and lifts site-wide quality signals.",
+  },
+  {
+    id: "seasonal-republic-day",
+    status: "opportunity", priority: "medium", category: "Content",
+    title: "Republic Day content — publish/refresh by 10 Jan (annual)",
+    detail: "Annual reminder: publish 'Republic Day Activities for Preschoolers (YYYY)' AND refresh existing Republic Day blog by 10 Jan each year so it indexes before the 26 Jan peak. Update title year, swap 2-3 photos, add 1 new craft idea, refresh datePublished. See docs/seo-seasonal-refresh-playbook.md → Jan row.",
+    impact: "Republic Day searches spike 15-26 Jan; content published <2 weeks ahead barely indexes in time. Locking in the 10 Jan deadline captures the full peak window.",
+  },
+  {
+    id: "seasonal-holi",
+    status: "opportunity", priority: "medium", category: "Content",
+    title: "Holi content — refresh by 28 Feb (3 weeks before Holi, annual)",
+    detail: "Annual reminder: refresh /holi-activities-for-kids by 28 Feb (3 weeks before Holi). Update title year, refresh hero image, add 2-3 new ideas. /holi-activities-for-kids dropped to #82 post-Holi 2026 — predictable seasonal cycle. See docs/seo-seasonal-refresh-playbook.md → Mar row.",
+    impact: "Holi content historically drives ~180 clicks/year. Hitting the 28 Feb refresh deadline restores rankings to top-10 by mid-March.",
+  },
+  {
+    id: "seasonal-independence-day",
+    status: "opportunity", priority: "medium", category: "Content",
+    title: "Independence Day content — publish/refresh by 25 Jul (annual)",
+    detail: "Annual reminder: publish 'Independence Day Activities for Preschoolers (YYYY)' AND refresh /national-symbols-of-india-for-kids by 25 Jul (3 weeks before 15 Aug). Update year, add new craft, refresh datePublished. See docs/seo-seasonal-refresh-playbook.md → Aug row.",
+    impact: "/national-symbols-of-india-for-kids = 95k impressions / 104 clicks in last 3 months. Annual refresh keeps this top-traffic asset compounding.",
+  },
+  {
+    id: "seasonal-sports-day",
+    status: "opportunity", priority: "medium", category: "Content",
+    title: "Sports Day content — refresh by 20 Aug (3-4 weeks before sports days, annual)",
+    detail: "Annual reminder: refresh /sports-day-activities-for-kindergarten by 20 Aug. Schools across Thane hold sports days from mid-Sep to mid-Oct, so parents/teachers search Aug-Sep. Update photos, add this year's class theme suggestions, refresh year in title. See docs/seo-seasonal-refresh-playbook.md → Sep row.",
+    impact: "/sports-day-activities-for-kindergarten = 16k impressions / 101 clicks last 3 months. Hitting the lead-time deadline doubles peak-season clicks.",
+  },
+  {
+    id: "seasonal-childrens-day",
+    status: "opportunity", priority: "medium", category: "Content",
+    title: "Children's Day content — publish by 25 Oct (annual, 3 weeks before 14 Nov)",
+    detail: "Annual reminder: publish 'Children's Day Celebration Ideas for Preschoolers (YYYY)' by 25 Oct so it indexes before 14 Nov. Pair with a refresh of /nursery (canonical for 'playgroup near me' cluster) — bump EEATSignals lastUpdated and add a Pandit Nehru–themed craft section. See docs/seo-seasonal-refresh-playbook.md → Nov row.",
+    impact: "Children's Day is the only festival peak we currently have NO dedicated content for — pure greenfield. Capturing the Nov spike also lifts /nursery rankings during the Dec admissions warm-up.",
+  },
+  {
+    id: "seasonal-diwali",
+    status: "opportunity", priority: "medium", category: "Content",
+    title: "Diwali content — refresh by 25 Sep (3 weeks before Diwali, annual)",
+    detail: "Annual reminder: refresh /diwali-activity-for-kindergarten by 25 Sep. Bump year in title, refresh hero image, add a fresh activity, update datePublished. See docs/seo-seasonal-refresh-playbook.md → Oct row.",
+    impact: "Diwali is India's largest festival peak; 3-week lead time is the difference between page-1 and page-3 during the Oct surge.",
   },
 ];
 
