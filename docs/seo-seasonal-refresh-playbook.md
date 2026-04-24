@@ -138,7 +138,7 @@ The smoke test asserts (as Googlebot):
 2. `/playgroup`, `/nursery`, `/kindergarten` each also emit Organization JSON-LD (so they have schema parity with the locality pages).
 3. `/play-school-near-me` and `/best-preschool-near-me-in-thane` each contain at least 1,200 visible words inside `<main>` (deep-content threshold).
 4. The homepage (`/`) emits anchor tags to all 5 commercial URLs in body content (link-equity distribution; not just the bottom "Explore More" block).
-5. All 21 ghost-slug variants (with and without trailing slash) 301 to their canonical commercial page — see `server/redirects.ts` for the full list. Critical: `/playschool-near-me` must 301 to `/play-school-near-me` (NOT to `/best-preschool-near-me-in-thane` — historical bug).
+5. All 16 ghost-slug variants (paired with their trailing-slash forms for 32 total redirect assertions) 301 to their canonical commercial page — see `server/redirects.ts` for the full list and `scripts/check-keyword-targets.ts` for the asserted set. Critical: `/playschool-near-me` must 301 to `/play-school-near-me` (NOT to `/best-preschool-near-me-in-thane` — historical bug).
 6. `/preschool-near-me` 301s to `/best-preschool-near-me-in-thane`. The duplicate React route, ssr-pages entry and sitemap entries have been removed; the slug exists only as a server-level redirect.
 
 **When this test fails:** read the `[FAIL]` lines, fix the underlying file, restart the workflow, re-run the test. Do not work around the guarantee — the keyword recovery work depends on every assertion holding.
