@@ -30,7 +30,6 @@ const COMMERCIAL_URLS = [
   "/play-school-near-me",
   "/best-preschool-near-me-in-thane",
   "/preschool-admissions",
-  "/preschool-near-me",
 ];
 
 const LOCALITY_URLS = [

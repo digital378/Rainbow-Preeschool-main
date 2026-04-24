@@ -120,3 +120,25 @@ When something appears in this queue, log who owns it and the date completed. Do
 - **Next monthly review:** May 4, 2026
 - **Next quarterly deep refresh:** July 6, 2026
 - **Next annual audit:** January 5, 2027
+
+---
+
+## 15-keyword commercial page guarantees (added April 24, 2026)
+
+The 15 priority commercial keywords map to 5 destination pages. After every change to `server/redirects.ts`, `server/ssr-pages.ts`, `server/bot-ssr.ts`, `client/src/App.tsx` or either sitemap, run the smoke test below — it will exit non-zero if any of the guarantees regresses.
+
+```bash
+tsx scripts/check-keyword-targets.ts            # localhost:5000
+tsx scripts/check-keyword-targets.ts https://www.rainbowpreschools.com
+```
+
+The smoke test asserts (as Googlebot):
+
+1. The 5 commercial pages — `/playgroup`, `/nursery`, `/kindergarten`, `/play-school-near-me`, `/best-preschool-near-me-in-thane` — each emit a `FAQPage` JSON-LD block.
+2. `/playgroup`, `/nursery`, `/kindergarten` each also emit Organization JSON-LD (so they have schema parity with the locality pages).
+3. `/play-school-near-me` and `/best-preschool-near-me-in-thane` each contain at least 1,200 visible words inside `<main>` (deep-content threshold).
+4. The homepage (`/`) emits anchor tags to all 5 commercial URLs in body content (link-equity distribution; not just the bottom "Explore More" block).
+5. All 21 ghost-slug variants (with and without trailing slash) 301 to their canonical commercial page — see `server/redirects.ts` for the full list. Critical: `/playschool-near-me` must 301 to `/play-school-near-me` (NOT to `/best-preschool-near-me-in-thane` — historical bug).
+6. `/preschool-near-me` 301s to `/best-preschool-near-me-in-thane`. The duplicate React route, ssr-pages entry and sitemap entries have been removed; the slug exists only as a server-level redirect.
+
+**When this test fails:** read the `[FAIL]` lines, fix the underlying file, restart the workflow, re-run the test. Do not work around the guarantee — the keyword recovery work depends on every assertion holding.

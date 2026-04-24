@@ -82,7 +82,6 @@ const entries: SitemapEntry[] = [
 
   // ── HIGH-INTENT LANDING PAGES ────────────────────────────
   { url: '/best-preschool-near-me-in-thane', priority: 1.0, changefreq: 'weekly' },
-  { url: '/preschool-near-me', priority: 0.9, changefreq: 'weekly' },
   { url: '/preschool-admissions', priority: 1.0, changefreq: 'weekly' },
   { url: '/play-school-near-me', priority: 1.0, changefreq: 'weekly' },
 
