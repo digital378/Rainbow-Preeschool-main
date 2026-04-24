@@ -2,6 +2,48 @@ import {
   LAST_UPDATED_DISPLAY,
   LAST_UPDATED_ISO,
 } from "@shared/site-freshness";
+import {
+  getBlogAuthorship,
+  blogPersonToSchema,
+  assertAllBlogSlugsCovered,
+} from "@shared/blog-authors";
+
+/**
+ * Canonical list of every blog slug served by SSR. Kept in sync with
+ * the per-slug `blogPosts` map below and asserted at module load to
+ * guarantee each post has a named author + reviewer in
+ * `shared/blog-authors.ts`. Add a slug here AND in `blogPosts` AND in
+ * `BLOG_AUTHORSHIP` whenever a new blog post is created.
+ */
+const BLOG_SLUGS = [
+  "what-to-ask-during-a-tour-of-a-preschool-in-thane",
+  "understanding-the-importance-of-preschool-in-early-childhood-development",
+  "how-play-based-learning-shapes-young-minds",
+  "preparing-your-child-for-first-day-preschool",
+  "role-of-parents-early-education",
+  "creating-safe-nurturing-learning-environment",
+  "republic-day-2026",
+  "signs-of-good-preschool-thane",
+  "preschool-vs-daycare-difference",
+  "what-age-start-play-school",
+  "benefits-play-school-2-year-olds",
+  "nursery-school-admission-thane-2026",
+  "what-children-learn-nursery-school",
+  "50-fun-learning-activities-preschoolers",
+  "best-childrens-books-indian-preschoolers",
+  "screen-time-guidelines-preschoolers-india",
+  "healthy-tiffin-box-ideas-preschoolers",
+  "toilet-training-toddlers-indian-parents-guide",
+  "picky-eater-toddler-solutions",
+  "toddler-tantrum-management-emotional-regulation",
+  "first-day-preschool-packing-checklist",
+  "stem-activities-preschoolers-home",
+  "yoga-mindfulness-preschoolers-daily-routines",
+  "preparing-preschooler-new-sibling",
+  "toddler-speech-development-milestones-when-to-worry",
+] as const;
+
+assertAllBlogSlugsCovered(BLOG_SLUGS);
 
 const BASE_URL = "https://www.rainbowpreschools.com";
 
@@ -1021,13 +1063,9 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
 
     const post = blogPosts[slug];
     if (post) {
-      const blogAuthor = {
-        "@type": "Organization",
-        name: "Rainbow Preschool International",
-        url: BASE_URL,
-        department: "Curriculum Team",
-        description: "The Rainbow Preschool curriculum team designs play-based learning programmes across all 6 Thane centres, with 15+ years of collective experience in early childhood education.",
-      };
+      const authorship = getBlogAuthorship(slug);
+      const blogAuthor = blogPersonToSchema(authorship.author);
+      const blogReviewer = blogPersonToSchema(authorship.reviewedBy);
 
       const blogFAQs: Record<string, { q: string; a: string }[]> = {
         "what-to-ask-during-a-tour-of-a-preschool-in-thane": [
@@ -1148,6 +1186,7 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
         datePublished: post.datePublished,
         dateModified: post.lastModified,
         author: blogAuthor,
+        reviewedBy: blogReviewer,
         publisher: { "@type": "Organization", name: "Rainbow Preschool International", logo: { "@type": "ImageObject", url: `${BASE_URL}/images/logo.webp` } },
         mainEntityOfPage: { "@type": "WebPage", "@id": `${BASE_URL}/blog/${slug}` },
         articleSection: "Early Childhood Education",

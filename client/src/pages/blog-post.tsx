@@ -12,6 +12,7 @@ import {
   COMMERCIAL_PAGES_LAST_UPDATED,
   COMMERCIAL_PAGES_LAST_UPDATED_DISPLAY,
 } from "@shared/seo-config";
+import { getBlogAuthorship } from "@shared/blog-authors";
 import { Calendar, ArrowLeft, User, Clock, CheckCircle, MapPin, Phone, Download } from "lucide-react";
 import { format } from "date-fns";
 import type { BlogPost as ApiBlogPost } from "@shared/schema";
@@ -1110,16 +1111,41 @@ const blogPostsData: Record<string, BlogPostData> = {
 
 function BlogPostSchema({ post }: { post: BlogPostData }) {
   useEffect(() => {
+    const authorship = getBlogAuthorship(post.slug);
+    const authorPerson = {
+      "@type": "Person",
+      "name": authorship.author.name,
+      "jobTitle": authorship.author.role,
+      "knowsAbout": authorship.author.credentials,
+      "description": authorship.author.bio,
+      ...(authorship.author.url ? { "url": authorship.author.url } : {}),
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Rainbow Preschool International",
+        "url": "https://www.rainbowpreschools.com",
+      },
+    };
+    const reviewerPerson = {
+      "@type": "Person",
+      "name": authorship.reviewedBy.name,
+      "jobTitle": authorship.reviewedBy.role,
+      "knowsAbout": authorship.reviewedBy.credentials,
+      "description": authorship.reviewedBy.bio,
+      ...(authorship.reviewedBy.url ? { "url": authorship.reviewedBy.url } : {}),
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Rainbow Preschool International",
+        "url": "https://www.rainbowpreschools.com",
+      },
+    };
+
     const blogPostingSchema = {
       "@context": "https://schema.org",
       "@type": "BlogPosting",
       "headline": post.title,
       "description": post.seoDescription,
-      "author": {
-        "@type": "Organization",
-        "name": "Rainbow Preschool International",
-        "url": "https://www.rainbowpreschools.com"
-      },
+      "author": authorPerson,
+      "reviewedBy": reviewerPerson,
       "publisher": {
         "@type": "Organization",
         "name": "Rainbow Preschool International",
@@ -1203,6 +1229,7 @@ export default function BlogPost() {
   }
 
   const formattedDate = format(new Date(post.publishedAt), "MMMM dd, yyyy");
+  const authorship = getBlogAuthorship(post.slug);
 
   const renderInline = (text: string): React.ReactNode => {
     const tokens: React.ReactNode[] = [];
@@ -1256,9 +1283,9 @@ export default function BlogPost() {
               {post.title}
             </h1>
             <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
-              <span className="flex items-center gap-1">
+              <span className="flex items-center gap-1" data-testid={`text-byline-author-${post.slug}`}>
                 <User className="w-4 h-4" />
-                {post.author}
+                By {authorship.author.name}, {authorship.author.role}
               </span>
               <span className="flex items-center gap-1">
                 <Calendar className="w-4 h-4" />
@@ -1272,6 +1299,14 @@ export default function BlogPost() {
             <EEATSignals
               pageUrl={`/blog/${post.slug}`}
               pageName={post.title}
+              reviewedBy={authorship.reviewedBy.name}
+              reviewerRole={authorship.reviewedBy.role}
+              reviewerCredentials={authorship.reviewedBy.credentials}
+              reviewerBio={authorship.reviewedBy.bio}
+              reviewerProfileUrl={authorship.reviewedBy.url}
+              authorName={authorship.author.name}
+              authorRole={authorship.author.role}
+              authorCredentials={authorship.author.credentials}
               lastUpdated={COMMERCIAL_PAGES_LAST_UPDATED_DISPLAY}
               lastUpdatedIso={COMMERCIAL_PAGES_LAST_UPDATED}
               ratingValue={4.9}
