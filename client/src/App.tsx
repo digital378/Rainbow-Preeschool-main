@@ -35,6 +35,14 @@ const RISLanding = lazy(() => import("@/pages/ris-landing"));
 const RIS11thLanding = lazy(() => import("@/pages/ris-11th-landing"));
 const GscDashboard = lazy(() => import("@/pages/gsc-dashboard"));
 
+function GscDashboardWithBoundary() {
+  return (
+    <ErrorBoundary name="gsc-dashboard">
+      <GscDashboard />
+    </ErrorBoundary>
+  );
+}
+
 // Interactive tools & content pages
 const ReadinessQuiz = lazy(() => import("@/pages/readiness-quiz"));
 const TopPreschoolsThane = lazy(() => import("@/pages/top-preschools-thane"));
@@ -199,8 +207,8 @@ function Router() {
         <Route path="/ad" component={AdLanding} />
         <Route path="/ad-google" component={AdGoogleLanding} />
         <Route path="/flyer" component={FlyerLanding} />
-        <Route path="/GSC" component={GscDashboard} />
-        <Route path="/gsc" component={GscDashboard} />
+        <Route path="/GSC" component={GscDashboardWithBoundary} />
+        <Route path="/gsc" component={GscDashboardWithBoundary} />
         <Route path="/RIS" component={RISLanding} />
         <Route path="/ris" component={RISLanding} />
         <Route path="/ris-11th" component={RIS11thLanding} />
