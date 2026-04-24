@@ -31,6 +31,18 @@ The mid-March 2026 GSC impression drop (~70% reduction) confirms we cannot rely 
    ```
 
    Both the bot SSR copies (`server/ssr-pages.ts` — staticPages including `/preschool-admissions` and `/preschool-near-me`, plus the preschoolCentres and playgroundPages branches) and the client-rendered `<EEATSignals>` props on the 6 commercial React pages (`/playgroup`, `/nursery`, `/kindergarten`, `/best-preschool-near-me-in-thane`, `/play-school-near-me`, `/preschool-admissions`), the playgroup-landing-template, and the per-locality preschool pages import from this file, so the visible byline AND the `Article.dateModified` JSON-LD update everywhere from one change.
+
+   **After bumping, restart the dev server and run the smoke-test guard** to confirm every required URL still emits the visible byline + Article JSON-LD with the new date:
+
+   ```bash
+   tsx scripts/check-freshness-signal.ts
+   ```
+
+   The script curls all 19 required URLs (7 commercial + 12 locality) as Googlebot and exits non-zero if any of them is missing the signal. After deploying, you can also point it at production:
+
+   ```bash
+   tsx scripts/check-freshness-signal.ts https://www.rainbowpreschools.com
+   ```
 3. **One blog refresh:** Pick the post with the highest impressions but a CTR below 1.5%. Rewrite the title tag, meta description, and first paragraph. Add a fresh internal link.
 4. **Internal-link health:** Run `node scripts/check-internal-links.ts` (if available) — fix broken anchors.
 
