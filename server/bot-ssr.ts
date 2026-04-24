@@ -75,15 +75,41 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
     });
   }
 
-  // NOTE: We intentionally do NOT inject a generic Article schema here even when
-  // `seo.lastModified` is set. Blog posts already provide their own
-  // BlogPosting/Article JSON-LD (with correct datePublished + dateModified) via
-  // `seo.structuredData`, and non-article pages (programme landers, locality
-  // pages, etc.) should not be marked up as Articles at all. Duplicating a
-  // generic Article block here previously caused two JSON-LD blocks per blog
-  // post URL with conflicting publish dates — Google may treat that as a
-  // freshness signal conflict. Freshness for non-article pages is conveyed by
-  // the visible "Last updated" byline + <time> element rendered below.
+  // For E-E-A-T freshness, inject a generic Article JSON-LD with
+  // `dateModified` whenever `seo.lastModified` is set AND no existing
+  // BlogPosting/Article schema is already present in `seo.structuredData`.
+  // This restores the freshness signal on the 6 commercial + 12 locality
+  // pages without duplicating Article markup on blog posts (which already
+  // emit their own BlogPosting/Article block with the correct dates,
+  // headline, author and publisher via `seo.structuredData`). The visible
+  // "Reviewed by Rainbow Preschool Curriculum Team — Last updated …" byline
+  // + <time> element below is rendered from the same `lastModified` field
+  // so the visible and JSON-LD freshness dates can never drift apart.
+  const hasExistingArticle = allStructuredData.some((data) => {
+    const t = (data as { "@type"?: unknown })["@type"];
+    if (typeof t === "string") return t === "Article" || t === "BlogPosting";
+    if (Array.isArray(t)) return t.some((v) => v === "Article" || v === "BlogPosting");
+    return false;
+  });
+  if (seo.lastModified && !hasExistingArticle) {
+    allStructuredData.push({
+      "@context": "https://schema.org",
+      "@type": "Article",
+      headline: seo.h1 || seo.title,
+      description: seo.description,
+      url: canonical,
+      mainEntityOfPage: { "@type": "WebPage", "@id": canonical },
+      dateModified: seo.lastModified,
+      author: { "@type": "Organization", name: "Rainbow Preschool Curriculum Team" },
+      publisher: {
+        "@type": "Organization",
+        name: "Rainbow Preschool International",
+        logo: { "@type": "ImageObject", url: `${BASE_URL}/images/logo.webp` },
+      },
+      image: ogImage,
+      inLanguage: "en-IN",
+    });
+  }
 
   const structuredDataScripts = allStructuredData
     .map((data) => `<script type="application/ld+json">${JSON.stringify(data)}</script>`)
