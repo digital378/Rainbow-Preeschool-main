@@ -1,5 +1,5 @@
 import { sql } from "drizzle-orm";
-import { pgTable, text, varchar, integer, timestamp, boolean, serial, real } from "drizzle-orm/pg-core";
+import { pgTable, text, varchar, integer, timestamp, boolean, serial, real, index } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -211,17 +211,29 @@ export const testimonials = [
 export type Testimonial = typeof testimonials[number];
 
 // GSC keyword tracking snapshots
-export const gscSnapshots = pgTable("gsc_snapshots", {
-  id: serial("id").primaryKey(),
-  snapshotDate: text("snapshot_date").notNull(),
-  keyword: text("keyword").notNull(),
-  clicks: integer("clicks").notNull().default(0),
-  impressions: integer("impressions").notNull().default(0),
-  ctr: real("ctr").notNull().default(0),
-  position: real("position").notNull().default(0),
-  page: text("page"),
-  notes: text("notes"),
-});
+export const gscSnapshots = pgTable(
+  "gsc_snapshots",
+  {
+    id: serial("id").primaryKey(),
+    snapshotDate: text("snapshot_date").notNull(),
+    keyword: text("keyword").notNull(),
+    clicks: integer("clicks").notNull().default(0),
+    impressions: integer("impressions").notNull().default(0),
+    ctr: real("ctr").notNull().default(0),
+    position: real("position").notNull().default(0),
+    page: text("page"),
+    notes: text("notes"),
+  },
+  (table) => ({
+    // Speeds up the periodic retention prune (DELETE … WHERE keyword LIKE …
+    // AND snapshot_date < cutoff) and the existing range-replace on
+    // (__daily__:*, __site_total__) writes performed every 6 hours.
+    keywordDateIdx: index("gsc_snapshots_keyword_date_idx").on(
+      table.keyword,
+      table.snapshotDate,
+    ),
+  }),
+);
 
 export const insertGscSnapshotSchema = createInsertSchema(gscSnapshots).omit({ id: true });
 export type InsertGscSnapshot = z.infer<typeof insertGscSnapshotSchema>;

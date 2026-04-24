@@ -385,6 +385,38 @@ export async function registerRoutes(
   // Track the last successful auto-sync time
   let lastAutoSync: Date | null = null;
   let autoSyncError: string | null = null;
+  let lastPrune: { at: Date; deleted: number; cutoffDate: string } | null = null;
+
+  // Retention window for auto-generated GSC snapshot rows. Anything older than
+  // this is removed by `runPrune` after each successful sync (and on startup).
+  // The 90-day sparkline & 24h delta need ≥ 90 days, so we default to 180 to
+  // give comfortable headroom while keeping the table bounded.
+  const RETENTION_DAYS = (() => {
+    const raw = process.env.GSC_RETENTION_DAYS;
+    if (!raw) return 180;
+    const parsed = parseInt(raw, 10);
+    if (!Number.isFinite(parsed) || parsed < 90) {
+      console.warn(
+        `[GSC] Ignoring GSC_RETENTION_DAYS=${raw} (must be an integer ≥ 90); defaulting to 180`,
+      );
+      return 180;
+    }
+    return parsed;
+  })();
+
+  async function runPrune() {
+    try {
+      const result = await storage.pruneGscSnapshots(RETENTION_DAYS);
+      lastPrune = { at: new Date(), deleted: result.deleted, cutoffDate: result.cutoffDate };
+      if (result.deleted > 0) {
+        console.log(
+          `[GSC] Prune removed ${result.deleted} auto-generated snapshot rows older than ${result.cutoffDate} (retention: ${RETENTION_DAYS}d)`,
+        );
+      }
+    } catch (err: any) {
+      console.error("[GSC] Prune failed:", err?.message || err);
+    }
+  }
 
   async function runAutoSync() {
     if (!isGscConfigured()) return;
@@ -403,17 +435,34 @@ export async function registerRoutes(
       autoSyncError = err?.message || "Unknown error";
       console.error("[GSC] Auto-sync exception:", autoSyncError);
     }
+    // Always attempt a prune, even if the sync itself failed — we still want
+    // the table bounded if the API is temporarily unhappy.
+    await runPrune();
   }
 
   // Auto-sync on startup (after 3 s to let the server settle), then every 6 hours
   setTimeout(runAutoSync, 3000);
   setInterval(runAutoSync, 6 * 60 * 60 * 1000);
+  // Also run a prune shortly after boot, then every 24 hours, independent of
+  // the auto-sync schedule. This guarantees retention is enforced even on
+  // long-running servers that aren't syncing (e.g. if GSC_SERVICE_ACCOUNT_KEY
+  // is removed) and across days where new rows age past the cutoff.
+  setTimeout(runPrune, 15000);
+  setInterval(runPrune, 24 * 60 * 60 * 1000);
 
   app.get("/api/gsc/sync/status", (_req, res) => {
     res.json({
       configured: isGscConfigured(),
       lastAutoSync: lastAutoSync ? lastAutoSync.toISOString() : null,
       autoSyncError,
+      retentionDays: RETENTION_DAYS,
+      lastPrune: lastPrune
+        ? {
+            at: lastPrune.at.toISOString(),
+            deleted: lastPrune.deleted,
+            cutoffDate: lastPrune.cutoffDate,
+          }
+        : null,
       message: isGscConfigured()
         ? "GSC service account key is configured. Auto-sync runs on startup and every 6 hours."
         : "GSC_SERVICE_ACCOUNT_KEY is not set. Add it as a secret to enable auto-sync.",
@@ -436,6 +485,8 @@ export async function registerRoutes(
       }
       lastAutoSync = new Date();
       autoSyncError = null;
+      // Keep the table bounded after manual syncs too, not just the 6-hour timer.
+      await runPrune();
       res.json(result);
     } catch (err: any) {
       console.error("GSC sync error:", err);
