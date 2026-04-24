@@ -446,8 +446,8 @@ const redirectMap: Record<string, string> = {
   "/preschool-fees-thane-what-to-expect/": "/preschool-admissions",
   "/visiting-preschool-what-to-look-for": "/blog/signs-of-good-preschool-thane",
   "/visiting-preschool-what-to-look-for/": "/blog/signs-of-good-preschool-thane",
-  "/how-reach-rainbow-preschool-thane": "/centres",
-  "/how-reach-rainbow-preschool-thane/": "/centres",
+  "/how-reach-rainbow-preschool-thane": "/",
+  "/how-reach-rainbow-preschool-thane/": "/",
 
   // Centre-specific legacy pages → centre canonical pages
   "/early-childhood-education-manpada-ghodbunder-road": "/preschool-in-manpada-thane",
@@ -476,8 +476,8 @@ const redirectMap: Record<string, string> = {
   "/best-nursery-school-kasarvadavali/": "/preschool-in-kasarvadavali-thane",
 
   // Remaining legacy content pages
-  "/best-early-learning-centres-thane-2026": "/centres",
-  "/best-early-learning-centres-thane-2026/": "/centres",
+  "/best-early-learning-centres-thane-2026": "/",
+  "/best-early-learning-centres-thane-2026/": "/",
   "/montessori-vs-play-based-preschool-thane": "/blog/how-play-based-learning-shapes-young-minds",
   "/montessori-vs-play-based-preschool-thane/": "/blog/how-play-based-learning-shapes-young-minds",
   "/preschool-franchise-vs-standalone-which-better": "/about",
@@ -488,8 +488,8 @@ const redirectMap: Record<string, string> = {
   "/affordable-quality-preschools-thane/": "/preschool-admissions",
   "/comparing-preschools-thane": "/top-preschools-in-thane",
   "/comparing-preschools-thane/": "/top-preschools-in-thane",
-  "/rainbow-preschool-centres-thane": "/centres",
-  "/rainbow-preschool-centres-thane/": "/centres",
+  "/rainbow-preschool-centres-thane": "/",
+  "/rainbow-preschool-centres-thane/": "/",
   "/child-safety-preschool-standards": "/blog/creating-safe-nurturing-learning-environment",
   "/child-safety-preschool-standards/": "/blog/creating-safe-nurturing-learning-environment",
   "/quality-preschool-indicators-parents-guide": "/blog/signs-of-good-preschool-thane",
