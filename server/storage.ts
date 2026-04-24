@@ -1,6 +1,8 @@
-import { type User, type InsertUser, type Contact, type InsertContact, type BlogPost, type InsertBlogPost, type GscSnapshot, type InsertGscSnapshot } from "@shared/schema";
+import { type User, type InsertUser, type Contact, type InsertContact, type BlogPost, type InsertBlogPost, type GscSnapshot, type InsertGscSnapshot, gscSnapshots } from "@shared/schema";
 import { randomUUID } from "crypto";
 import { seoRecoveryBlogPosts } from "./seed-blog-posts";
+import { and, asc, between, eq, like, sql } from "drizzle-orm";
+import { getDb, hasDatabase } from "./db";
 
 export interface IStorage {
   getUser(id: string): Promise<User | undefined>;
@@ -26,12 +28,38 @@ export interface IStorage {
   ): Promise<{ deleted: number; inserted: number }>;
 }
 
+const GSC_SEED: Omit<GscSnapshot, "id">[] = [
+  // Feb 4, 2026 — peak traffic period
+  { snapshotDate: "2026-02-04", keyword: "rainbow preschool", clicks: 65, impressions: 4800, ctr: 0.0135, position: 5.48, page: "/", notes: "3-month aggregate Feb period" },
+  { snapshotDate: "2026-02-04", keyword: "rainbow preschool thane", clicks: 48, impressions: 3800, ctr: 0.0126, position: 4.44, page: "/", notes: null },
+  { snapshotDate: "2026-02-04", keyword: "best preschool in thane", clicks: 13, impressions: 1800, ctr: 0.0072, position: 13.64, page: "/best-preschool-near-me-in-thane", notes: null },
+  { snapshotDate: "2026-02-04", keyword: "preschool near me", clicks: 8, impressions: 2800, ctr: 0.0029, position: 21.08, page: "/best-preschool-near-me-in-thane", notes: null },
+  { snapshotDate: "2026-02-04", keyword: "pre kg age", clicks: 19, impressions: 1200, ctr: 0.0158, position: 2.69, page: "/pre-kg-age-guide", notes: null },
+  { snapshotDate: "2026-02-04", keyword: "holi activities for kids", clicks: 184, impressions: 56013, ctr: 0.0033, position: 4.2, page: "/holi-activities-for-kids", notes: "High-impression informational" },
+  { snapshotDate: "2026-02-04", keyword: "national symbols of india for kids", clicks: 104, impressions: 95118, ctr: 0.0011, position: 5.1, page: "/national-symbols-of-india-for-kids", notes: null },
+  // Mar 14, 2026 — impressions cliff begins (redirect issue active)
+  { snapshotDate: "2026-03-14", keyword: "rainbow preschool", clicks: 12, impressions: 2200, ctr: 0.0055, position: 6.0, page: "/", notes: "Impressions cliff — redirects sending bots to /blog" },
+  { snapshotDate: "2026-03-14", keyword: "rainbow preschool thane", clicks: 9, impressions: 1000, ctr: 0.009, position: 5.2, page: "/", notes: null },
+  { snapshotDate: "2026-03-14", keyword: "best preschool in thane", clicks: 5, impressions: 800, ctr: 0.006, position: 14.8, page: "/best-preschool-near-me-in-thane", notes: null },
+  { snapshotDate: "2026-03-14", keyword: "preschool near me", clicks: 3, impressions: 1100, ctr: 0.0027, position: 22.0, page: "/best-preschool-near-me-in-thane", notes: null },
+  { snapshotDate: "2026-03-14", keyword: "pre kg age", clicks: 6, impressions: 450, ctr: 0.0133, position: 3.0, page: "/pre-kg-age-guide", notes: null },
+  { snapshotDate: "2026-03-14", keyword: "holi activities for kids", clicks: 8, impressions: 1200, ctr: 0.0067, position: 4.5, page: "/holi-activities-for-kids", notes: "Deindexing — server was 301-ing to /blog" },
+  { snapshotDate: "2026-03-14", keyword: "national symbols of india for kids", clicks: 4, impressions: 600, ctr: 0.0067, position: 5.8, page: "/national-symbols-of-india-for-kids", notes: null },
+  // Apr 16, 2026 — current (24h snapshot data)
+  { snapshotDate: "2026-04-16", keyword: "rainbow preschool", clicks: 8, impressions: 426, ctr: 0.019, position: 7.44, page: "/", notes: "24h snapshot Apr 16" },
+  { snapshotDate: "2026-04-16", keyword: "rainbow preschool kasarvadavali", clicks: 1, impressions: 20, ctr: 0.05, position: 1.25, page: "/preschool-in-kasarvadavali-thane", notes: "24h" },
+  { snapshotDate: "2026-04-16", keyword: "best preschool in thane", clicks: 1, impressions: 40, ctr: 0.025, position: 16.17, page: "/best-preschool-near-me-in-thane", notes: "24h" },
+  { snapshotDate: "2026-04-16", keyword: "pre kg age", clicks: 1, impressions: 112, ctr: 0.009, position: 2.54, page: "/pre-kg-age-guide", notes: "24h — holding strong" },
+  { snapshotDate: "2026-04-16", keyword: "pre school thane", clicks: 1, impressions: 30, ctr: 0.033, position: 3.6, page: "/", notes: "24h" },
+  { snapshotDate: "2026-04-16", keyword: "preschool near me", clicks: 0, impressions: 100, ctr: 0, position: 23.0, page: "/best-preschool-near-me-in-thane", notes: "24h — redirect fix applied Apr 17" },
+];
+
 export class MemStorage implements IStorage {
   private users: Map<string, User>;
   private contacts: Map<string, Contact>;
   private blogPosts: Map<string, BlogPost>;
-  private gscSnapshots: Map<number, GscSnapshot>;
-  private gscSnapshotCounter: number;
+  protected gscSnapshots: Map<number, GscSnapshot>;
+  protected gscSnapshotCounter: number;
 
   constructor() {
     this.users = new Map();
@@ -163,34 +191,8 @@ export class MemStorage implements IStorage {
     return post;
   }
 
-  private seedGscSnapshots() {
-    const seed: Omit<GscSnapshot, "id">[] = [
-      // Feb 4, 2026 — peak traffic period
-      { snapshotDate: "2026-02-04", keyword: "rainbow preschool", clicks: 65, impressions: 4800, ctr: 0.0135, position: 5.48, page: "/", notes: "3-month aggregate Feb period" },
-      { snapshotDate: "2026-02-04", keyword: "rainbow preschool thane", clicks: 48, impressions: 3800, ctr: 0.0126, position: 4.44, page: "/", notes: null },
-      { snapshotDate: "2026-02-04", keyword: "best preschool in thane", clicks: 13, impressions: 1800, ctr: 0.0072, position: 13.64, page: "/best-preschool-near-me-in-thane", notes: null },
-      { snapshotDate: "2026-02-04", keyword: "preschool near me", clicks: 8, impressions: 2800, ctr: 0.0029, position: 21.08, page: "/best-preschool-near-me-in-thane", notes: null },
-      { snapshotDate: "2026-02-04", keyword: "pre kg age", clicks: 19, impressions: 1200, ctr: 0.0158, position: 2.69, page: "/pre-kg-age-guide", notes: null },
-      { snapshotDate: "2026-02-04", keyword: "holi activities for kids", clicks: 184, impressions: 56013, ctr: 0.0033, position: 4.2, page: "/holi-activities-for-kids", notes: "High-impression informational" },
-      { snapshotDate: "2026-02-04", keyword: "national symbols of india for kids", clicks: 104, impressions: 95118, ctr: 0.0011, position: 5.1, page: "/national-symbols-of-india-for-kids", notes: null },
-      // Mar 14, 2026 — impressions cliff begins (redirect issue active)
-      { snapshotDate: "2026-03-14", keyword: "rainbow preschool", clicks: 12, impressions: 2200, ctr: 0.0055, position: 6.0, page: "/", notes: "Impressions cliff — redirects sending bots to /blog" },
-      { snapshotDate: "2026-03-14", keyword: "rainbow preschool thane", clicks: 9, impressions: 1000, ctr: 0.009, position: 5.2, page: "/", notes: null },
-      { snapshotDate: "2026-03-14", keyword: "best preschool in thane", clicks: 5, impressions: 800, ctr: 0.006, position: 14.8, page: "/best-preschool-near-me-in-thane", notes: null },
-      { snapshotDate: "2026-03-14", keyword: "preschool near me", clicks: 3, impressions: 1100, ctr: 0.0027, position: 22.0, page: "/best-preschool-near-me-in-thane", notes: null },
-      { snapshotDate: "2026-03-14", keyword: "pre kg age", clicks: 6, impressions: 450, ctr: 0.0133, position: 3.0, page: "/pre-kg-age-guide", notes: null },
-      { snapshotDate: "2026-03-14", keyword: "holi activities for kids", clicks: 8, impressions: 1200, ctr: 0.0067, position: 4.5, page: "/holi-activities-for-kids", notes: "Deindexing — server was 301-ing to /blog" },
-      { snapshotDate: "2026-03-14", keyword: "national symbols of india for kids", clicks: 4, impressions: 600, ctr: 0.0067, position: 5.8, page: "/national-symbols-of-india-for-kids", notes: null },
-      // Apr 16, 2026 — current (24h snapshot data)
-      { snapshotDate: "2026-04-16", keyword: "rainbow preschool", clicks: 8, impressions: 426, ctr: 0.019, position: 7.44, page: "/", notes: "24h snapshot Apr 16" },
-      { snapshotDate: "2026-04-16", keyword: "rainbow preschool kasarvadavali", clicks: 1, impressions: 20, ctr: 0.05, position: 1.25, page: "/preschool-in-kasarvadavali-thane", notes: "24h" },
-      { snapshotDate: "2026-04-16", keyword: "best preschool in thane", clicks: 1, impressions: 40, ctr: 0.025, position: 16.17, page: "/best-preschool-near-me-in-thane", notes: "24h" },
-      { snapshotDate: "2026-04-16", keyword: "pre kg age", clicks: 1, impressions: 112, ctr: 0.009, position: 2.54, page: "/pre-kg-age-guide", notes: "24h — holding strong" },
-      { snapshotDate: "2026-04-16", keyword: "pre school thane", clicks: 1, impressions: 30, ctr: 0.033, position: 3.6, page: "/", notes: "24h" },
-      { snapshotDate: "2026-04-16", keyword: "preschool near me", clicks: 0, impressions: 100, ctr: 0, position: 23.0, page: "/best-preschool-near-me-in-thane", notes: "24h — redirect fix applied Apr 17" },
-    ];
-
-    seed.forEach(entry => {
+  protected seedGscSnapshots() {
+    GSC_SEED.forEach(entry => {
       const id = ++this.gscSnapshotCounter;
       this.gscSnapshots.set(id, { ...entry, id });
     });
@@ -259,4 +261,158 @@ export class MemStorage implements IStorage {
   }
 }
 
-export const storage = new MemStorage();
+/**
+ * Hybrid storage: in-memory for users/contacts/blog (no durability needed for
+ * those today), Postgres for GSC snapshots so the 90-day per-keyword sparkline
+ * history and site-total daily series survive every server restart and deploy.
+ *
+ * On first boot against an empty `gsc_snapshots` table, the legacy in-memory
+ * seed data is inserted once so the dashboard isn't blank before the first
+ * 6-hour auto-sync runs.
+ */
+export class DbBackedStorage extends MemStorage {
+  private seedPromise: Promise<void> | null = null;
+
+  constructor() {
+    super();
+    // Kick off the one-time seed asynchronously so the constructor stays sync.
+    this.seedPromise = this.seedGscSnapshotsToDb().catch(err => {
+      console.error("[storage] Failed to seed GSC snapshots into Postgres:", err);
+    });
+  }
+
+  // Override the parent's MemStorage seed so we don't double-seed in memory —
+  // Postgres is now the source of truth for GSC data.
+  protected seedGscSnapshots() {
+    // no-op: seeding happens in `seedGscSnapshotsToDb`
+  }
+
+  private async seedGscSnapshotsToDb(): Promise<void> {
+    const db = getDb();
+    const existing = await db
+      .select({ count: sql<number>`count(*)::int` })
+      .from(gscSnapshots);
+    const count = existing[0]?.count ?? 0;
+    if (count > 0) return;
+    await db.insert(gscSnapshots).values(
+      GSC_SEED.map(row => ({
+        snapshotDate: row.snapshotDate,
+        keyword: row.keyword,
+        clicks: row.clicks,
+        impressions: row.impressions,
+        ctr: row.ctr,
+        position: row.position,
+        page: row.page,
+        notes: row.notes,
+      })),
+    );
+    console.log(`[storage] Seeded ${GSC_SEED.length} initial GSC snapshots into Postgres`);
+  }
+
+  private async ensureSeeded(): Promise<void> {
+    if (this.seedPromise) {
+      await this.seedPromise;
+      this.seedPromise = null;
+    }
+  }
+
+  async getGscSnapshots(): Promise<GscSnapshot[]> {
+    await this.ensureSeeded();
+    const db = getDb();
+    return await db
+      .select()
+      .from(gscSnapshots)
+      .orderBy(asc(gscSnapshots.snapshotDate), asc(gscSnapshots.keyword));
+  }
+
+  async addGscSnapshot(snapshot: InsertGscSnapshot): Promise<GscSnapshot> {
+    await this.ensureSeeded();
+    const db = getDb();
+    const [inserted] = await db
+      .insert(gscSnapshots)
+      .values({
+        snapshotDate: snapshot.snapshotDate,
+        keyword: snapshot.keyword,
+        clicks: snapshot.clicks ?? 0,
+        impressions: snapshot.impressions ?? 0,
+        ctr: snapshot.ctr ?? 0,
+        position: snapshot.position ?? 0,
+        page: snapshot.page ?? null,
+        notes: snapshot.notes ?? null,
+      })
+      .returning();
+    return inserted;
+  }
+
+  async deleteGscSnapshot(id: number): Promise<void> {
+    await this.ensureSeeded();
+    const db = getDb();
+    await db.delete(gscSnapshots).where(eq(gscSnapshots.id, id));
+  }
+
+  async replaceGscSnapshotsInRange(
+    keywordPrefix: string,
+    startDate: string,
+    endDate: string,
+    rows: InsertGscSnapshot[],
+  ): Promise<{ deleted: number; inserted: number }> {
+    await this.ensureSeeded();
+    const db = getDb();
+
+    // Single bulk DELETE … WHERE keyword LIKE 'prefix%' AND snapshot_date BETWEEN …
+    // followed by a single bulk INSERT — replaces the previous ~1,300 round-trips
+    // every 6 hours with two queries. Wrapped in a transaction so the range is
+    // never observed empty if the insert fails midway.
+    const escaped = keywordPrefix.replace(/[\\%_]/g, ch => `\\${ch}`);
+    const pattern = `${escaped}%`;
+
+    return await db.transaction(async tx => {
+      const deletedRows = await tx
+        .delete(gscSnapshots)
+        .where(
+          and(
+            like(gscSnapshots.keyword, pattern),
+            between(gscSnapshots.snapshotDate, startDate, endDate),
+          ),
+        )
+        .returning({ id: gscSnapshots.id });
+      const deleted = deletedRows.length;
+
+      let inserted = 0;
+      if (rows.length > 0) {
+        const values = rows.map(row => ({
+          snapshotDate: row.snapshotDate,
+          keyword: row.keyword,
+          clicks: row.clicks ?? 0,
+          impressions: row.impressions ?? 0,
+          ctr: row.ctr ?? 0,
+          position: row.position ?? 0,
+          page: row.page ?? null,
+          notes: row.notes ?? null,
+        }));
+        const insertedRows = await tx
+          .insert(gscSnapshots)
+          .values(values)
+          .returning({ id: gscSnapshots.id });
+        inserted = insertedRows.length;
+      }
+
+      return { deleted, inserted };
+    });
+  }
+}
+
+function createStorage(): IStorage {
+  if (hasDatabase()) {
+    try {
+      return new DbBackedStorage();
+    } catch (err) {
+      console.error("[storage] Failed to initialise DbBackedStorage, falling back to MemStorage:", err);
+      return new MemStorage();
+    }
+  }
+  console.warn("[storage] DATABASE_URL is not set — GSC snapshot history will not persist across restarts");
+  return new MemStorage();
+}
+
+export const storage: IStorage = createStorage();
