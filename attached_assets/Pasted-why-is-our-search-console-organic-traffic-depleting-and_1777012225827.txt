@@ -1,0 +1,72 @@
+why is our search console organic traffic depleting and what to do about it?
+product icon
+Thinking...
+I'm beginning an investigation into why your organic search traffic is declining and identifying the steps you can take to address it. I am currently gathering the necessary data and insights to provide a comprehensive answer.
+
+Retrieving instructions for analyzing data changes...
+Analyzing organic traffic trends and comparing recent periods...
+Identifying key drivers of the decline through contribution analysis...
+Researching common causes and solutions for organic traffic drops in Google Analytics and Search Console...
+I will provide an update once this initial data is processed.
+
+The preliminary analysis confirms a 27% decline in your Google organic search traffic over the last 28 days compared to the previous period. Specifically, sessions dropped from 814 to 593, with a notable downward trend starting in late March.
+
+To pinpoint the exact cause, I am now proceeding with the following analysis:
+
+Retrieving Search Console metrics (clicks, impressions, CTR) to correlate with the session drop...
+Identifying specific search queries and landing pages that have seen the largest declines...
+Researching potential Google algorithm updates or industry shifts in April 2026...
+Checking for any recent configuration changes or diagnostic alerts in your Analytics account...
+I will provide a detailed synthesis once these findings are combined.
+
+My investigation has uncovered that the decline in your organic traffic coincided with several updates to your key events and audience configurations on March 26 and April 4, 2026. This suggests that the drop may be related to changes made to your site or tracking setup during that time.
+
+To further clarify the situation, I am continuing with the following steps:
+
+Attempting to retrieve specific Search Console clicks and impressions by query and landing page again using revised parameters...
+Investigating if there were any significant Google Search algorithm updates in late March or April 2026 that could have impacted your rankings...
+Verifying the status of your Search Console integration to ensure data is flowing correctly...
+I will provide a final synthesis once these details are confirmed.
+
+I have identified that your top search queries currently include branded terms like "rainbow preschool" and generic terms such as "best preschool in thane." To complete the picture, I am now comparing these results with your performance from the previous month.
+
+Comparing Search Console clicks for top queries between the current and previous 28-day periods...
+Isolating the landing pages specifically associated with organic search traffic to see where the drop-off is most severe...
+Synthesizing all findings into a final explanation and action plan...
+I will provide the final analysis shortly.
+
+Based on my analysis, your Google organic search traffic has declined by approximately 27% over the last 28 days (March 27 – April 23) compared to the previous period. Total sessions dropped from 814 to 593, with the most significant decline beginning around March 27.
+
+Sessions for Session default channel group of Organic Search for Session source of google
+Mar 27–Apr 23, 2026 and Feb 27–Mar 26, 2026
+Sessions
+593
+-27.1%
+Key Findings and Observations
+Primary Pages Impacted: The homepage (/) saw a substantial drop from 588 to 403 sessions. More critically, several specialized pages lost nearly all their organic traffic:
+/holi-activities-for-kids: Dropped from 37 to 1 session.
+/national-symbols-of-india-for-kids: Dropped from 30 to 0 sessions.
+/summer-camp/: Dropped from 34 to 0 sessions.
+Coincidental Timing: The downward trend started immediately after a series of Key Event edits were made in your property on March 26, 2026. Additionally, new audiences were created on April 4.
+Query Shift: While branded search terms like "rainbow preschool" actually increased in clicks (from 20 to 32), generic educational and seasonal queries like "national symbols of india for kids" disappeared from your top results.
+Top Landing page + query string by Sessions for Session source of google for Session medium of organic
+Mar 27–Apr 23, 2026 and Feb 27–Mar 26, 2026
+Landing page + query string	Sessions
+/	403	31.5%
+(not set)	190	15.6%
+/programmes	73	121.2%
+/holi-activities-for-kids	1	97.3%
+/summer-camp/	undefined	-
+/contact	25	21.9%
+/national-symbols-of-india-for-kids	undefined	-
+/playgroup	29	38.1%
+/sports-day-activities-for-kindergarten	5	82.1%
+/about	15	11.8%
+Analysis: Why is this happening?
+Technical or Indexing Issue: The sharp drop to zero for pages like /summer-camp/—which should be gaining relevance in April—is highly suspicious. This, combined with the March 26 configuration changes, suggests that a site update or tracking adjustment may have inadvertently caused indexing issues or broken redirects for those specific URLs.
+Natural Seasonality: The decline for /holi-activities-for-kids is likely seasonal, as the Holi festival occurred in March. However, this does not explain the broader drop across the homepage and summer camp pages.
+Recommended Next Steps
+Audit the March 26 Changes: Review any website or server-side updates made on March 26. Check if these changes affected URL structures, robots.txt, or metadata (e.g., accidental noindex tags).
+Verify URL Status: Check the Google Search Console "Indexing" report specifically for the /summer-camp/ and /national-symbols-of-india-for-kids pages to see if they are still indexed or if errors are reported.
+Check for Redirects: Ensure that no new redirects were implemented that might be stripping GCLID or referrer information, which could misclassify organic traffic.
+Monitor Diagnostic Alerts: Review the "Insights and Recommendations" or "Diagnostics" section in your GA4 property to see if any automated alerts have been triggered regarding data collection.
