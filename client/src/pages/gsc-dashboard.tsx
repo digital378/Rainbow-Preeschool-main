@@ -555,7 +555,7 @@ const SEO_ACTIONS: { id: string; status: "done" | "pending" | "opportunity"; pri
   },
   {
     id: "request-reindexing",
-    status: "completed", priority: "critical", category: "Technical",
+    status: "done", priority: "critical", category: "Technical",
     title: "Request re-indexing of recovered content pages via GSC",
     detail: "Go to GSC → URL Inspection → paste each URL → Request Indexing. GSC allows ~10 requests/day. PRIORITY 1 (top traffic): /national-symbols-of-india-for-kids, /holi-activities-for-kids, /36-motivational-thoughts-of-the-day-for-kids, /sports-day-activities-for-kindergarten, /pre-kg-age-guide. PRIORITY 2 (commercial canonicals only): /, /best-preschool-near-me-in-thane, /play-school-near-me, /preschool-admissions, /nursery, /playgroup, /kindergarten. Skip /admissions, /centres, /preschool-near-me, /best-preschool-in-thane, /preschool-in-thane, /playgroup-in-thane, /play-school-in-thane, /nursery-school-near-me, /playschool-near-me, /preschool-vs-daycare, /nursery-school-admission, /preparing-your-child-for-preschool — these now 301-redirect to canonical pages.",
     impact: "Speeds up impressions recovery by 1–2 weeks vs. waiting for natural re-crawl.",

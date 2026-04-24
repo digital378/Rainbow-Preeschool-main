@@ -572,6 +572,37 @@ const staticPages: Record<string, PageSEOData> = {
     lastModified: "2026-04-24",
     lastModifiedDisplay: "April 24, 2026",
   },
+  "/preschool-near-me": {
+    title: "Preschool Near Me in Thane | Rainbow Preschool",
+    description: "Looking for a preschool near you in Thane? Rainbow Preschool has 6 centres across Thane West — find your nearest centre, see programmes, fees, and book a free visit.",
+    keywords: "preschool near me, preschool near me thane, best preschool near me, preschool near me in thane",
+    canonical: `${BASE_URL}/best-preschool-near-me-in-thane`,
+    h1: "Preschool Near Me in Thane — 6 Rainbow Centres Across Thane West",
+    breadcrumbs: [{ name: "Home", url: "/" }, { name: "Preschool Near Me", url: "/preschool-near-me" }],
+    structuredData: [organizationSchema, websiteSchema, {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: [
+        { "@type": "Question", name: "Which preschool is nearest to me in Thane?", acceptedAnswer: { "@type": "Answer", text: "Rainbow Preschool has 6 centres across Thane West — Manpada, Hariniwas (Naupada), Anand Nagar (Majiwada), Dhokali (Kolshet Road), Kalwa, and Kasarvadavali (Ghodbunder Road). Use our centre finder or call +91-8291568972 to identify the centre closest to your home." } },
+        { "@type": "Question", name: "How do I find the best preschool near me?", acceptedAnswer: { "@type": "Answer", text: "Look for safety (CCTV, female staff, secure premises), small batch sizes (10–12 children), play-based curriculum, qualified teachers, and proximity to home. Rainbow Preschool meets all these criteria across its 6 Thane West centres." } },
+        { "@type": "Question", name: "Can I visit the preschool before admission?", acceptedAnswer: { "@type": "Answer", text: "Yes. Free centre visits are encouraged. Call +91-8291568972 to schedule a visit at your nearest Rainbow Preschool centre." } },
+      ],
+    }],
+    contentSections: [
+      { heading: "6 Rainbow Centres Across Thane West", items: [
+        "Manpada — Hiranandani Estate, Ghodbunder Road",
+        "Hariniwas Circle — Naupada, Thane West",
+        "Anand Nagar — Majiwada, Thane West",
+        "Dhokali — Kolshet Road, Thane West",
+        "Kalwa — Thane",
+        "Kasarvadavali — Ghodbunder Road, Thane West",
+      ]},
+      { heading: "Programmes Available at Every Centre", items: ["Playgroup (1.5–2.5 years)", "Nursery (2.5–4 years)", "Kindergarten (4–6 years)"] },
+    ],
+    internalLinks: commonInternalLinks,
+    lastModified: "2026-04-24",
+    lastModifiedDisplay: "April 24, 2026",
+  },
   "/play-school-near-me": {
     title: "Play School Near Me in Thane | Rainbow Preschool",
     description: "Find the best play school near you in Thane. Rainbow Preschool offers play-based learning for children aged 1.5-6 years across 6 centres.",

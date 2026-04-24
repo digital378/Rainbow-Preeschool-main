@@ -172,7 +172,6 @@ const redirectMap: Record<string, string> = {
   "/questions-ask-school-visit-mid-term-playgroup-admissions/": "/blog/what-to-ask-during-a-tour-of-a-preschool-in-thane",
 
   // ── Near-me page consolidation (Phase 1 SEO) ─────────────────────────────
-  "/preschool-near-me": "/best-preschool-near-me-in-thane",
   "/play-school-in-thane": "/play-school-near-me",
   "/nursery-school-near-me": "/nursery",
 
@@ -218,7 +217,6 @@ const redirectMap: Record<string, string> = {
   "/physical-development-activities-preschoolers": "/blog/how-play-based-learning-shapes-young-minds",
   "/admissions-24-25": "/preschool-admissions",
   "/school-admission-virtual-learning": "/preschool-admissions",
-  "/google-enquiry-2025-26/": "/preschool-admissions",
   "/rotaract-club-": "/about",
   "/rotaract-club-events": "/about",
 
@@ -267,12 +265,8 @@ const redirectMap: Record<string, string> = {
   // NOTE: Pages that have an active route in App.tsx must NOT appear here.
   // Adding a live page to this map causes the server to 301 Google to /blog
   // before Bot SSR can serve the page, erasing its ranking entirely.
-  "/how-mid-term-admission-open-for-playgroup-supports-social-and-emotional-development": "/playgroup",
-  "/how-mid-term-admission-open-for-playgroup-supports-social-and-emotional-development/": "/playgroup",
   "/innovative-learning-activities-for-preschoolers": "/blog/50-fun-learning-activities-preschoolers",
   "/innovative-learning-activities-for-preschoolers/": "/blog/50-fun-learning-activities-preschoolers",
-  "/mid-term-playgroup": "/playgroup",
-  "/mid-term-playgroup/": "/playgroup",
   "/brain-gym-activities-for-preschoolers": "/blog/50-fun-learning-activities-preschoolers",
   "/brain-gym-activities-for-preschoolers/": "/blog/50-fun-learning-activities-preschoolers",
   "/immunity-boosting-foods-for-kids": "/blog",
@@ -281,8 +275,6 @@ const redirectMap: Record<string, string> = {
   "/10-easy-ways-to-help-kids-learn-colours-and-shapes-better/": "/blog",
   "/8-amazing-reasons-why-cooking-is-important-for-kids": "/blog",
   "/8-amazing-reasons-why-cooking-is-important-for-kids/": "/blog",
-  "/parents-guide-mid-term-playgroup-admission": "/playgroup",
-  "/parents-guide-mid-term-playgroup-admission/": "/playgroup",
   "/6-quick-tips-to-help-children-learn-writing": "/blog",
   "/6-quick-tips-to-help-children-learn-writing/": "/blog",
   "/fun-games-teach-even-odd-numbers": "/blog",
@@ -299,7 +291,6 @@ const redirectMap: Record<string, string> = {
   "/rainbow-family-wins-cleanest-school-thane/": "/about",
   "/why-preschool-education-shapes-early-childhood-development": "/blog/understanding-the-importance-of-preschool-in-early-childhood-development",
   "/why-preschool-education-shapes-early-childhood-development/": "/blog/understanding-the-importance-of-preschool-in-early-childhood-development",
-  "/mid-term-playgroup-admission": "/playgroup",
   "/mid-term-playgroup-admission/": "/playgroup",
   "/mid-term-playgroup-admissions-benefits": "/playgroup",
   "/mid-term-playgroup-admissions-benefits/": "/playgroup",
@@ -313,8 +304,6 @@ const redirectMap: Record<string, string> = {
   "/play-these-9-games-to-make-kids-smarter/": "/blog/50-fun-learning-activities-preschoolers",
   "/45-signs-of-healthy-physical-development-ages-3-6": "/blog",
   "/45-signs-of-healthy-physical-development-ages-3-6/": "/blog",
-  "/questions-ask-school-visit-mid-term-playgroup-admissions": "/blog/what-to-ask-during-a-tour-of-a-preschool-in-thane",
-  "/questions-ask-school-visit-mid-term-playgroup-admissions/": "/blog/what-to-ask-during-a-tour-of-a-preschool-in-thane",
   "/understanding-the-importance-of-preschool-in-early-childhood-development": "/blog/understanding-the-importance-of-preschool-in-early-childhood-development",
   "/understanding-the-importance-of-preschool-in-early-childhood-development/": "/blog/understanding-the-importance-of-preschool-in-early-childhood-development",
 
@@ -327,8 +316,6 @@ const redirectMap: Record<string, string> = {
   "/playgroup-admission-thane-complete-guide/": "/preschool-admissions",
   "/why-rainbow-preschool-best-thane-2026": "/best-preschool-near-me-in-thane",
   "/why-rainbow-preschool-best-thane-2026/": "/best-preschool-near-me-in-thane",
-  "/top-10-preschools-thane-comparison-guide": "/top-preschools-in-thane",
-  "/top-10-preschools-thane-comparison-guide/": "/top-preschools-in-thane",
   "/what-makes-great-preschool-checklist": "/blog/signs-of-good-preschool-thane",
   "/what-makes-great-preschool-checklist/": "/blog/signs-of-good-preschool-thane",
   "/preschool-vs-daycare-difference": "/blog/preschool-vs-daycare-difference",
@@ -403,7 +390,6 @@ const redirectMap: Record<string, string> = {
   "/what-makes-quality-preschool-teacher/": "/about",
   "/parent-teacher-partnership-early-education": "/blog/role-of-parents-early-education",
   "/parent-teacher-partnership-early-education/": "/blog/role-of-parents-early-education",
-  "/rainbow-preschool-awards-recognition-thane": "/about",
   "/age-appropriate-learning-activities-explained": "/blog/50-fun-learning-activities-preschoolers",
   "/age-appropriate-learning-activities-explained/": "/blog/50-fun-learning-activities-preschoolers",
   "/play-based-learning-vs-academic-approach": "/blog/how-play-based-learning-shapes-young-minds",

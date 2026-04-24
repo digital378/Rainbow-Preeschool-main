@@ -307,6 +307,7 @@ function Router() {
         {/* High-intent SEO landing pages */}
         <Route path="/preschool-admissions" component={PreschoolAdmissions} />
         <Route path="/best-preschool-near-me-in-thane" component={BestPreschoolInThane} />
+        <Route path="/preschool-near-me" component={BestPreschoolInThane} />
         <Route path="/play-school-near-me" component={PlaySchoolNearMe} />
         
         <Route path="/ad" component={AdLanding} />
