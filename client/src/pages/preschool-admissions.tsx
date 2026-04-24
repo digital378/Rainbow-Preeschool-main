@@ -3,6 +3,7 @@ import { SEO, organizationSchema, websiteSchema, createBreadcrumbSchema, createF
 import { ContactForm } from "@/components/contact-form";
 import { EEATSignals } from "@/components/eeat-signals";
 import { centres } from "@shared/centre-data";
+import { COMMERCIAL_PAGES_LAST_UPDATED_DISPLAY } from "@shared/seo-config";
 import {
   Check, MessageCircle, Phone, ChevronDown,
   ClipboardList, CalendarDays, FileText, Clock,
@@ -570,7 +571,7 @@ export default function PreschoolAdmissions() {
                 <EEATSignals
                   pageUrl="/preschool-admissions"
                   pageName="Preschool Admissions 2026–27"
-                  lastUpdated="April 24, 2026"
+                  lastUpdated={COMMERCIAL_PAGES_LAST_UPDATED_DISPLAY}
                   ratingValue={4.9}
                   reviewCount={487}
                   schemaId="preschool-admissions-eeat"

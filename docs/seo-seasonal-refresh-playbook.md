@@ -23,14 +23,14 @@ The mid-March 2026 GSC impression drop (~70% reduction) confirms we cannot rely 
 ## Monthly tasks (1st Monday of each month)
 
 1. **GSC review:** Open `/gsc-dashboard`. Note any keyword that lost ≥3 positions or any page that lost ≥30% impressions. Add to the action queue.
-2. **Refresh dates:** Bump the "Last updated" date for the **5 commercial pages** to the current month if any meaningful copy change was made (even a paragraph counts). This is now a **single-file edit** — open `shared/seo-config.ts` and update the two constants at the top:
+2. **Refresh dates:** Bump the "Last updated" date for the **7 commercial pages** to the current month if any meaningful copy change was made (even a paragraph counts). This is now a **single-file edit** — open `shared/seo-config.ts` and update the two constants at the top:
 
    ```ts
    export const COMMERCIAL_PAGES_LAST_UPDATED = "2026-04-24";          // ISO-8601
    export const COMMERCIAL_PAGES_LAST_UPDATED_DISPLAY = "April 24, 2026"; // human-readable
    ```
 
-   Both the bot SSR copies (`server/ssr-pages.ts`) and the client-rendered `<EEATSignals>` props on `/playgroup`, `/nursery`, `/kindergarten`, `/best-preschool-near-me-in-thane`, and `/play-school-near-me` import from this file, so the visible byline AND the `Article.dateModified` JSON-LD update everywhere from one change.
+   Both the bot SSR copies (`server/ssr-pages.ts`) and the client-rendered `<EEATSignals>` props on `/playgroup`, `/nursery`, `/kindergarten`, `/best-preschool-near-me-in-thane`, `/play-school-near-me`, `/preschool-admissions`, and `/preschool-near-me` import from this file, so the visible byline AND the `Article.dateModified` JSON-LD update everywhere from one change.
 3. **One blog refresh:** Pick the post with the highest impressions but a CTR below 1.5%. Rewrite the title tag, meta description, and first paragraph. Add a fresh internal link.
 4. **Internal-link health:** Run `node scripts/check-internal-links.ts` (if available) — fix broken anchors.
 

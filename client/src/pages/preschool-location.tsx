@@ -22,6 +22,7 @@ import {
   defaultCentreGalleryImages,
   type CentreData 
 } from "@shared/centre-data";
+import { COMMERCIAL_PAGES_LAST_UPDATED_DISPLAY } from "@shared/seo-config";
 import { trackCallClick, trackWhatsAppClick, trackDirectionsClick, pushToDataLayer } from "@/lib/analytics";
 
 interface PreschoolLocationPageProps {
@@ -248,7 +249,7 @@ function PreschoolLocationTemplate({ localitySlug }: PreschoolLocationPageProps)
               <EEATSignals
                 pageUrl={seo.canonicalPath}
                 pageName={seo.h1}
-                lastUpdated="April 24, 2026"
+                lastUpdated={COMMERCIAL_PAGES_LAST_UPDATED_DISPLAY}
                 ratingValue={4.9}
                 reviewCount={487}
                 schemaId={`preschool-${localitySlug}`}
