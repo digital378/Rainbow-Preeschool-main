@@ -317,7 +317,6 @@ function Router() {
         <Route path="/RIS" component={RISLanding} />
         <Route path="/ris" component={RISLanding} />
         <Route path="/ris-11th" component={RIS11thLanding} />
-        <Route path="/republic-day-2026" component={RepublicDay2026} />
         
         <Route path="/playgroup-in-manpada" component={LazyPlaygroupInManpada} />
         <Route path="/playgroup-in-kalwa" component={LazyPlaygroupInKalwa} />
@@ -335,7 +334,6 @@ function Router() {
         
         <Route path="/36-motivational-thoughts-of-the-day-for-kids" component={LazyMotivationalThoughtsForKids} />
         <Route path="/explore-50-fruits-vegetables-english-hindi" component={LazyFruitsVegetablesEnglishHindi} />
-        <Route path="/mid-term-playgroup-admissions-benefits" component={LazyMidTermPlaygroupBenefits} />
         <Route path="/national-symbols-of-india-for-kids" component={LazyNationalSymbolsOfIndia} />
         <Route path="/solitary-play-activities" component={LazySolitaryPlayActivities} />
         <Route path="/pre-kg-age-guide" component={LazyPreKgAgeGuide} />
@@ -343,7 +341,6 @@ function Router() {
         <Route path="/how-to-motivate-your-kids-for-school-8-ways" component={LazyMotivateKidsForSchool} />
         <Route path="/best-indoor-games-for-kids-at-home" component={LazyIndoorGamesForKids} />
         <Route path="/7-ways-teaching-aids-help-children-learn-better" component={LazyTeachingAidsHelp} />
-        <Route path="/preschool-vs-prekg-2" component={LazyPreschoolVsPreKg} />
         <Route path="/preschool-admission-process-guide" component={LazyPreschoolAdmissionGuide} />
         <Route path="/sports-day-activities-for-kindergarten" component={LazySportsDayActivities} />
         <Route path="/guide-to-understanding-good-touch-and-bad-touch" component={LazyGoodTouchBadTouch} />
@@ -353,174 +350,52 @@ function Router() {
         <Route path="/diwali-activity-for-kindergarten" component={LazyDiwaliActivities} />
         <Route path="/impact-of-parent-teacher-communication-on-student-success" component={LazyParentTeacherCommunication} />
         <Route path="/holi-activities-for-kids" component={LazyHoliActivities} />
-        <Route path="/april-fools-day-activities-for-kids" component={LazyAprilFoolsActivities} />
         <Route path="/7-things-you-can-do-to-help-children-overcome-fear" component={LazyOvercomeFear} />
         <Route path="/importance-of-play-in-childrens-emotional-growth" component={LazyPlayEmotionalGrowth} />
         <Route path="/what-makes-children-forget-their-manners" component={LazyForgetManners} />
         <Route path="/trends-in-early-childhood-education" component={LazyTrendsEarlyChildhood} />
         <Route path="/healthy-preschool-meals-for-bright-minds-and-bodies" component={LazyHealthyPreschoolMeals} />
         <Route path="/boost-early-childhood-development-with-educational-toys" component={LazyEducationalToys} />
-        <Route path="/admissions-24-25" component={LazyAdmissions2425} />
-        <Route path="/innovative-learning-activities-for-preschoolers" component={LazyInnovativeLearning} />
-        <Route path="/mid-term-playgroup" component={LazyMidTermPlaygroup} />
-        <Route path="/brain-gym-activities-for-preschoolers" component={LazyBrainGymActivities} />
-        <Route path="/immunity-boosting-foods-for-kids" component={LazyImmunityBoostingFoods} />
-        <Route path="/10-easy-ways-to-help-kids-learn-colours-and-shapes-better" component={LazyColorsAndShapes} />
-        <Route path="/8-amazing-reasons-why-cooking-is-important-for-kids" component={LazyCookingForKids} />
-        <Route path="/6-quick-tips-to-help-children-learn-writing" component={LazyLearnWritingTips} />
-        <Route path="/fun-games-teach-even-odd-numbers" component={LazyEvenOddNumbers} />
-        <Route path="/what-to-ask-during-a-tour-of-a-preschool-in-thane" component={LazyPreschoolTourQuestions} />
-        <Route path="/9-questions-to-ask-while-choosing-a-pre-school" component={LazyChoosingPreschoolQuestions} />
-        <Route path="/fun-interactive-learning-activities-for-preschoolers-2" component={LazyInteractiveLearning} />
-        <Route path="/innovative-summer-activities-for-kids-keeping-minds-engaged" component={LazySummerActivities} />
-        <Route path="/rainbow-family-wins-cleanest-school-thane" component={LazyCleanestSchoolAward} />
-        <Route path="/why-preschool-education-shapes-early-childhood-development" component={LazyPreschoolDevelopment} />
-        <Route path="/mid-term-playgroup-admission" component={LazyMidTermPlaygroupAdmission} />
-        <Route path="/why-nursery-school-is-important-for-early-childhood-development" component={LazyNurseryImportance} />
-        <Route path="/the-most-promising-preschool-chain-of-the-year-maharashtra" component={LazyPromisingPreschoolAward} />
-        <Route path="/51-inspiring-life-lessons-that-make-children-confident" component={LazyLifeLessonsConfidence} />
-        <Route path="/play-these-9-games-to-make-kids-smarter" component={LazyGamesMakeKidsSmarter} />
-        <Route path="/45-signs-of-healthy-physical-development-ages-3-6" component={LazyPhysicalDevelopmentSigns} />
-        <Route path="/understanding-the-importance-of-preschool-in-early-childhood-development" component={LazyUnderstandingPreschoolImportance} />
         
-        <Route path="/best-preschool-curriculum-thane" component={LazyBestPreschoolCurriculumThane} />
-        <Route path="/how-to-choose-best-preschool-thane" component={LazyHowToChooseBestPreschool} />
-        <Route path="/playgroup-admission-thane-complete-guide" component={LazyPlaygroupAdmissionGuide} />
         
         {/* Homepage supporting blog posts */}
-        <Route path="/why-rainbow-preschool-best-thane-2026" component={LazyRainbowPreschoolCentresThane} />
-        <Route path="/rainbow-preschool-centres-thane" component={LazyRainbowPreschoolCentresThane} />
-        <Route path="/top-10-preschools-thane-comparison-guide" component={LazyComparingPreschoolsThane} />
-        <Route path="/comparing-preschools-thane" component={LazyComparingPreschoolsThane} />
-        <Route path="/what-makes-great-preschool-checklist" component={LazyQualityPreschoolIndicators} />
-        <Route path="/quality-preschool-indicators-parents-guide" component={LazyQualityPreschoolIndicators} />
-        <Route path="/preschool-vs-daycare-difference-explained" component={LazyPreschoolVsDaycare} />
-        <Route path="/preschool-vs-daycare-difference" component={LazyPreschoolVsDaycare} />
-        <Route path="/early-childhood-education-importance-india" component={LazyEarlyChildhoodEducationImportance} />
-        <Route path="/early-childhood-education-importance" component={LazyEarlyChildhoodEducationImportance} />
         
         {/* About page supporting blog posts */}
-        <Route path="/rainbow-preschool-journey-2007-to-2026" component={LazyRainbowPreschoolJourneySince2007} />
-        <Route path="/rainbow-preschool-journey-since-2007" component={LazyRainbowPreschoolJourneySince2007} />
-        <Route path="/rainbow-preschool-awards-achievements" component={LazyRainbowPreschoolAwards} />
-        <Route path="/rainbow-preschool-awards-recognition" component={LazyRainbowPreschoolAwards} />
-        <Route path="/rainbow-preschool-teacher-training-philosophy" component={LazyTeacherTrainingQuality} />
-        <Route path="/teacher-training-quality-preschool" component={LazyTeacherTrainingQuality} />
-        <Route path="/parent-testimonials-rainbow-preschool-thane" component={LazyParentTestimonialsExperiences} />
-        <Route path="/parent-testimonials-rainbow-preschool" component={LazyParentTestimonialsExperiences} />
-        <Route path="/rainbow-preschool-safety-measures-child-security" component={LazyChildSafetyPreschool} />
-        <Route path="/child-safety-preschool-standards" component={LazyChildSafetyPreschool} />
         
         {/* Programmes page supporting blog posts */}
-        <Route path="/play-based-learning-benefits-children" component={LazyPlayBasedLearningBenefits} />
-        <Route path="/nep-2020-early-childhood-education-guide" component={LazyNEP2020EarlyChildhoodGuide} />
-        <Route path="/holistic-child-development-preschool" component={LazyHolisticChildDevelopment} />
-        <Route path="/preschool-learning-outcomes-what-to-expect" component={LazyPreschoolLearningOutcomes} />
         
         {/* Playgroup page supporting blog posts */}
-        <Route path="/benefits-playgroup-toddlers-development" component={LazyBenefitsPlaygroupToddlers} />
-        <Route path="/playgroup-vs-staying-home-which-better" component={LazyPlaygroupVsStayingHome} />
-        <Route path="/separation-anxiety-playgroup-tips-parents" component={LazySeparationAnxietyPlaygroup} />
-        <Route path="/playgroup-activities-toddler-development" component={LazyPlaygroupActivities} />
-        <Route path="/right-age-start-playgroup-india" component={LazyRightAgeStartPlaygroup} />
         
         {/* Nursery page supporting blog posts */}
-        <Route path="/nursery-school-benefits-2-3-year-olds" component={LazyNurserySchoolBenefits} />
-        <Route path="/nursery-vs-playgroup-difference" component={LazyNurseryVsPlaygroup} />
-        <Route path="/nursery-curriculum-what-children-learn" component={LazyNurseryCurriculum} />
-        <Route path="/preparing-child-nursery-school" component={LazyPreparingChildNursery} />
-        <Route path="/nursery-admission-age-requirements-india" component={LazyNurseryAdmissionAge} />
         
         {/* Kindergarten page supporting blog posts */}
-        <Route path="/kindergarten-readiness-checklist-parents" component={LazyKindergartenReadiness} />
-        <Route path="/jr-kg-sr-kg-difference-explained" component={LazyJrKgSrKgDifference} />
-        <Route path="/kindergarten-curriculum-primary-school-preparation" component={LazyKindergartenCurriculumPreparation} />
-        <Route path="/choosing-right-kindergarten-child" component={LazyChoosingRightKindergarten} />
-        <Route path="/kindergarten-admission-thane-guide" component={LazyKindergartenAdmissionThane} />
         
         {/* Admissions page supporting blog posts */}
-        <Route path="/preschool-admission-process-explained" component={LazyPreschoolAdmissionProcess} />
-        <Route path="/preschool-admission-documents-checklist" component={LazyPreschoolAdmissionDocuments} />
-        <Route path="/when-apply-preschool-admission-timeline" component={LazyWhenApplyPreschoolTimeline} />
-        <Route path="/questions-ask-preschool-admission-visit" component={LazyQuestionsAskPreschoolVisit} />
-        <Route path="/preschool-fees-thane-what-to-expect" component={LazyPreschoolFeesThane} />
         
         {/* Contact page supporting blog posts */}
-        <Route path="/visiting-preschool-what-to-look-for" component={LazyVisitingPreschoolGuide} />
-        <Route path="/how-reach-rainbow-preschool-thane" component={LazyHowReachRainbowPreschool} />
         
         {/* Centre-specific local SEO blog posts */}
-        <Route path="/early-childhood-education-manpada-ghodbunder-road" component={LazyEarlyChildhoodManpadaGB} />
-        <Route path="/child-development-programs-hariniwas-naupada" component={LazyChildDevelopmentHariniwas} />
-        <Route path="/best-playschool-anand-nagar-majiwada" component={LazyBestPlayschoolAnandNagar} />
-        <Route path="/preschool-options-dhokali-kolshet-road" component={LazyPreschoolOptionsDhokali} />
-        <Route path="/trusted-preschool-kalwa-thane" component={LazyTrustedPreschoolKalwa} />
-        <Route path="/quality-preschool-kasarvadavali-ghodbunder" component={LazyQualityPreschoolKasarvadavali} />
-        <Route path="/toddler-activities-manpada-preschool" component={LazyToddlerActivitiesManpada} />
-        <Route path="/school-readiness-hariniwas-kindergarten" component={LazySchoolReadinessHariniwas} />
-        <Route path="/nursery-admissions-anand-nagar-thane" component={LazyNurseryAdmissionsAnandNagar} />
-        <Route path="/playgroup-enrollment-dhokali-thane" component={LazyPlaygroupEnrollmentDhokali} />
-        <Route path="/kindergarten-programs-kalwa-thane" component={LazyKindergartenProgramsKalwa} />
-        <Route path="/best-nursery-school-kasarvadavali" component={LazyBestNurseryKasarvadavali} />
         
         {/* NEW SEO BLOG POSTS - BATCH 2 */}
         {/* Homepage supporting posts (new) */}
-        <Route path="/best-early-learning-centres-thane-2026" component={LazyBestEarlyLearningCentresThane} />
-        <Route path="/montessori-vs-play-based-preschool-thane" component={LazyMontessoriVsPlayBased} />
-        <Route path="/preschool-franchise-vs-standalone-which-better" component={LazyFranchiseVsStandalone} />
-        <Route path="/working-parents-guide-preschool-thane" component={LazyWorkingParentsGuide} />
-        <Route path="/affordable-quality-preschools-thane" component={LazyAffordableQualityPreschools} />
         
         {/* About page supporting posts (new) */}
-        <Route path="/rainbow-preschool-teaching-methodology" component={LazyRainbowTeachingMethodology} />
-        <Route path="/rainbow-preschool-infrastructure-facilities" component={LazyRainbowInfrastructureFacilities} />
-        <Route path="/preschool-accreditation-importance-india" component={LazyPreschoolAccreditationImportance} />
-        <Route path="/rainbow-preschool-community-initiatives" component={LazyRainbowCommunityInitiatives} />
-        <Route path="/experienced-preschool-teachers-importance" component={LazyExperiencedTeachersImportance} />
         
         {/* Programmes page supporting posts (new) */}
-        <Route path="/early-childhood-curriculum-explained" component={LazyEarlyChildhoodCurriculumExplained} />
-        <Route path="/activity-based-learning-preschool-benefits" component={LazyActivityBasedLearningBenefits} />
-        <Route path="/creative-arts-preschool-importance" component={LazyCreativeArtsPreschool} />
-        <Route path="/physical-development-preschool-activities" component={LazyPhysicalDevelopmentPreschool} />
-        <Route path="/language-development-preschool-activities" component={LazyLanguageDevelopmentPreschool} />
         
         {/* Playgroup page supporting posts (new) */}
-        <Route path="/toddler-separation-anxiety-guide" component={LazyToddlerSeparationAnxiety} />
-        <Route path="/toddler-social-skills-development" component={LazyToddlerSocialSkills} />
-        <Route path="/playgroup-daily-schedule-activities" component={LazyPlaygroupDailySchedule} />
-        <Route path="/is-my-toddler-ready-for-playgroup" component={LazyToddlerReadyForPlaygroup} />
-        <Route path="/benefits-of-early-playgroup-enrollment" component={LazyBenefitsEarlyPlaygroup} />
         
         {/* NEW SEO BLOG POSTS - BATCH 2 ADDITIONAL */}
         {/* Homepage supporting */}
-        <Route path="/why-early-childhood-education-matters-thane-parents" component={LazyWhyEarlyChildhoodEducation} />
-        <Route path="/choosing-best-preschool-thane-parent-guide" component={LazyChoosingBestPreschool} />
-        <Route path="/holistic-child-development-rainbow-approach" component={LazyHolisticChildDevelopmentApproach} />
-        <Route path="/preschool-vs-daycare-understanding-difference" component={LazyPreschoolVsDaycareDifference} />
-        <Route path="/preparing-child-for-preschool-thane-tips" component={LazyPreparingChildForPreschool} />
         
         {/* About page supporting */}
-        <Route path="/rainbow-preschool-teaching-philosophy-explained" component={LazyRainbowTeachingPhilosophy} />
-        <Route path="/history-early-childhood-education-thane" component={LazyHistoryEarlyChildhoodThane} />
-        <Route path="/what-makes-quality-preschool-teacher" component={LazyQualityPreschoolTeacher} />
-        <Route path="/parent-teacher-partnership-early-education" component={LazyParentTeacherPartnership} />
-        <Route path="/rainbow-preschool-awards-recognition-thane" component={LazyRainbowAwardsRecognition} />
         
         {/* Programmes page supporting */}
-        <Route path="/age-appropriate-learning-activities-explained" component={LazyAgeAppropriateLearning} />
-        <Route path="/play-based-learning-vs-academic-approach" component={LazyPlayBasedVsAcademic} />
-        <Route path="/how-rainbow-curriculum-prepares-school-readiness" component={LazyRainbowCurriculumSchoolReadiness} />
-        <Route path="/importance-creative-arts-early-childhood" component={LazyCreativeArtsEarlyChildhood} />
-        <Route path="/physical-development-activities-preschoolers" component={LazyPhysicalDevelopmentActivities} />
         
         {/* Playgroup page supporting */}
-        <Route path="/separation-anxiety-tips-playgroup-parents" component={LazySeparationAnxietyTips} />
-        <Route path="/socialisation-benefits-toddlers-playgroup" component={LazySocialisationBenefitsToddlers} />
         
         <Route path="/about/akheela-balbale" component={AkheelaBalbale} />
         <Route path="/author/rainbowpreschools" component={LazyAuthorArchivePage} />
-        <Route path="/author/rainbow-preschools" component={LazyAuthorArchivePage} />
         
         <Route path="/terms" component={LazyTermsPage} />
         <Route path="/privacy" component={LazyPrivacyPage} />
