@@ -57,21 +57,34 @@ type CheckResult = {
   missing: string[];
 };
 
+const FETCH_TIMEOUT_MS = 15_000;
+
 async function checkUrl(path: string): Promise<CheckResult> {
   const fullUrl = `${BASE}${path}`;
   let html = "";
   let status = 0;
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
   try {
-    const res = await fetch(fullUrl, { headers: { "User-Agent": UA } });
+    const res = await fetch(fullUrl, {
+      headers: { "User-Agent": UA },
+      signal: controller.signal,
+    });
     status = res.status;
     html = await res.text();
   } catch (err) {
+    const reason =
+      (err as Error).name === "AbortError"
+        ? `timeout after ${FETCH_TIMEOUT_MS}ms`
+        : (err as Error).message;
     return {
       url: path,
       ok: false,
       status: 0,
-      missing: [`fetch failed: ${(err as Error).message}`],
+      missing: [`fetch failed: ${reason}`],
     };
+  } finally {
+    clearTimeout(timer);
   }
 
   const missing: string[] = [];
