@@ -681,6 +681,20 @@ export default function BestPreschoolInThane() {
 
             <SEOCrossLinks currentPath="/best-preschool-near-me-in-thane" />
 
+            <div className="max-w-6xl mx-auto px-4 pb-8">
+              <EEATSignals
+                pageUrl="/best-preschool-near-me-in-thane"
+                pageName="Best Preschool in Thane"
+                reviewedBy="Rainbow Preschool Curriculum Team"
+                reviewerRole="Curriculum Team, Rainbow Preschool International"
+                lastUpdated={LAST_UPDATED_DISPLAY}
+                lastUpdatedIso={LAST_UPDATED_ISO}
+                ratingValue={4.9}
+                reviewCount={487}
+                schemaId="best-preschool-in-thane"
+              />
+            </div>
+
             {/* ── FINAL CTA ────────────────────────────────────────────────── */}
             <section className="relative overflow-hidden py-8 md:py-12 px-4 bg-gradient-to-r from-primary via-accent to-secondary text-white">
               <div className="absolute inset-0 bg-black/40" />
@@ -699,20 +713,6 @@ export default function BestPreschoolInThane() {
                 </div>
               </div>
             </section>
-
-            <div className="max-w-6xl mx-auto px-4 pb-8">
-              <EEATSignals
-                pageUrl="/best-preschool-near-me-in-thane"
-                pageName="Best Preschool in Thane"
-                reviewedBy="Rainbow Preschool Curriculum Team"
-                reviewerRole="Curriculum Team, Rainbow Preschool International"
-                lastUpdated={LAST_UPDATED_DISPLAY}
-                lastUpdatedIso={LAST_UPDATED_ISO}
-                ratingValue={4.9}
-                reviewCount={487}
-                schemaId="best-preschool-in-thane"
-              />
-            </div>
           </>
         )}
       </div>
