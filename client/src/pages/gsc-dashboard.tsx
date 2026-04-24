@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { queryClient, apiRequest } from "@/lib/queryClient";
 import { useForm } from "react-hook-form";
@@ -7,7 +7,7 @@ import { z } from "zod";
 import { format, parseISO, differenceInDays } from "date-fns";
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
-  ResponsiveContainer, BarChart, Bar,
+  ResponsiveContainer, BarChart, Bar, ComposedChart, ReferenceDot,
 } from "recharts";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -15,6 +15,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import {
+  Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription,
+} from "@/components/ui/dialog";
 import {
   TrendingUp, TrendingDown, Minus, CheckCircle2, Clock, AlertCircle,
   Lightbulb, ExternalLink, Plus, Download, ChevronDown, ChevronUp,
@@ -1248,7 +1251,14 @@ function DataExplorer({ snapshots }: { snapshots: GscSnapshot[] }) {
 // when no daily data is available yet. Each row also gets a 90-day position
 // sparkline rendered alongside the 7-day delta.
 
-type Commercial15HistoryPoint = { date: string; position: number };
+type Commercial15HistoryPoint = {
+  date: string;
+  position: number;
+  impressions: number;
+  clicks: number;
+  ctr: number;
+  note?: string | null;
+};
 
 type Commercial15Row = {
   keyword: string;
@@ -1303,7 +1313,14 @@ function computeCommercial15Rows(
 
     const history: Commercial15HistoryPoint[] = rows
       .filter(r => r.snapshotDate >= cutoff)
-      .map(r => ({ date: r.snapshotDate, position: r.position }));
+      .map(r => ({
+        date: r.snapshotDate,
+        position: r.position,
+        impressions: r.impressions,
+        clicks: r.clicks,
+        ctr: r.ctr,
+        note: r.notes ?? null,
+      }));
 
     return {
       keyword,
@@ -1332,15 +1349,19 @@ function commercial15ChangeClasses(change: number | null) {
 function Commercial15Sparkline({
   history,
   keyword,
+  onOpen,
 }: {
   history: Commercial15HistoryPoint[];
   keyword: string;
+  onOpen?: (trigger: HTMLElement | null) => void;
 }) {
+  const kwId = keyword.replace(/\s+/g, "-");
+
   if (history.length === 0) {
     return (
       <span
         className="text-xs text-gray-300"
-        data-testid={`sparkline-empty-${keyword.replace(/\s+/g, "-")}`}
+        data-testid={`sparkline-empty-${kwId}`}
       >
         —
       </span>
@@ -1373,10 +1394,14 @@ function Commercial15Sparkline({
         : "#ef4444"; // red-500 (slipped)
 
   return (
-    <div
-      className="h-9 w-28 inline-block align-middle"
-      data-testid={`sparkline-${keyword.replace(/\s+/g, "-")}`}
-      title={`${data.length} day${data.length === 1 ? "" : "s"} of data`}
+    <button
+      type="button"
+      onClick={(e) => onOpen?.(e.currentTarget)}
+      disabled={!onOpen}
+      className="h-9 w-28 inline-block align-middle p-0 m-0 bg-transparent border-0 rounded-sm cursor-pointer hover:ring-2 hover:ring-red-200 dark:hover:ring-red-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400 disabled:cursor-default disabled:hover:ring-0 transition-shadow"
+      data-testid={`sparkline-${kwId}`}
+      title={`${data.length} day${data.length === 1 ? "" : "s"} of data — click to expand`}
+      aria-label={`Open full 90-day chart for ${keyword}`}
     >
       <ResponsiveContainer width="100%" height="100%">
         <LineChart data={data} margin={{ top: 4, right: 4, bottom: 4, left: 4 }}>
@@ -1416,7 +1441,190 @@ function Commercial15Sparkline({
           />
         </LineChart>
       </ResponsiveContainer>
-    </div>
+    </button>
+  );
+}
+
+// Full-size 90-day chart shown when a sparkline is clicked. Combines the
+// position line (left axis, reversed so up = better) with an impressions bar
+// (right axis), and overlays any per-day notes as ReferenceDots + a list.
+function Commercial15ChartModal({
+  row,
+  open,
+  onOpenChange,
+}: {
+  row: Commercial15Row | null;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}) {
+  if (!row) return null;
+  const kwId = row.keyword.replace(/\s+/g, "-");
+  const data = row.history.map(h => ({
+    date: h.date,
+    label: format(parseISO(h.date), "d MMM"),
+    position: h.position,
+    impressions: h.impressions,
+    clicks: h.clicks,
+    ctr: h.ctr,
+    note: h.note ?? null,
+  }));
+  const annotations = data.filter(d => d.note && d.note.trim().length > 0);
+
+  // Reversed Y axis with a small pad so flat trends still read as intentional.
+  const positions = data.map(d => d.position);
+  const minPos = positions.length ? Math.min(...positions) : 0;
+  const maxPos = positions.length ? Math.max(...positions) : 10;
+  const padPos = Math.max(0.5, (maxPos - minPos) * 0.1);
+  const positionDomain: [number, number] = [
+    Math.max(0, minPos - padPos),
+    maxPos + padPos,
+  ];
+
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent
+        className="max-w-4xl"
+        data-testid={`modal-commercial15-chart-${kwId}`}
+      >
+        <DialogHeader>
+          <DialogTitle className="flex items-center gap-2 text-base">
+            <Target className="h-4 w-4 text-red-600" />
+            <span data-testid={`text-modal-keyword-${kwId}`}>{row.keyword}</span>
+            <Badge variant="outline" className="text-xs font-normal">90-day trend</Badge>
+          </DialogTitle>
+          <DialogDescription className="flex flex-wrap items-center gap-2">
+            <span>Destination:</span>
+            <a
+              href={row.page}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600 dark:text-blue-400 hover:underline inline-flex items-center gap-1"
+              data-testid={`link-modal-destination-${kwId}`}
+            >
+              {row.pageLabel} <ExternalLink className="h-3 w-3" />
+            </a>
+            <span className="text-gray-400">·</span>
+            <span data-testid={`text-modal-days-${kwId}`}>
+              {data.length} day{data.length === 1 ? "" : "s"} of GSC data
+            </span>
+          </DialogDescription>
+        </DialogHeader>
+
+        {data.length === 0 ? (
+          <div
+            className="py-12 text-center text-sm text-gray-500 dark:text-gray-400"
+            data-testid={`text-modal-empty-${kwId}`}
+          >
+            No daily Search Console data yet for this keyword.
+          </div>
+        ) : (
+          <>
+            <div className="h-[360px] w-full" data-testid={`chart-modal-${kwId}`}>
+              <ResponsiveContainer width="100%" height="100%">
+                <ComposedChart
+                  data={data}
+                  margin={{ top: 12, right: 16, bottom: 8, left: 0 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" className="dark:stroke-gray-800" />
+                  <XAxis
+                    dataKey="date"
+                    tick={{ fontSize: 11 }}
+                    tickFormatter={(d: string) => format(parseISO(d), "d MMM")}
+                    minTickGap={24}
+                  />
+                  <YAxis
+                    yAxisId="position"
+                    reversed
+                    domain={positionDomain}
+                    tick={{ fontSize: 11 }}
+                    label={{ value: "Position", angle: -90, position: "insideLeft", style: { fontSize: 11, fill: "#6b7280" } }}
+                  />
+                  <YAxis
+                    yAxisId="impressions"
+                    orientation="right"
+                    tick={{ fontSize: 11 }}
+                    allowDecimals={false}
+                    label={{ value: "Impressions", angle: 90, position: "insideRight", style: { fontSize: 11, fill: "#6b7280" } }}
+                  />
+                  <Tooltip
+                    cursor={{ stroke: "#9ca3af", strokeDasharray: "3 3" }}
+                    contentStyle={{
+                      background: "rgba(17, 24, 39, 0.94)",
+                      border: "none",
+                      borderRadius: 6,
+                      padding: "8px 10px",
+                      fontSize: 12,
+                      color: "#fff",
+                    }}
+                    labelStyle={{ color: "#9ca3af", fontSize: 11, marginBottom: 4 }}
+                    labelFormatter={(d: string) => format(parseISO(d), "EEE d MMM yyyy")}
+                    formatter={(value: number, name: string) => {
+                      if (name === "Position") return [`#${value.toFixed(1)}`, name];
+                      if (name === "Impressions") return [value.toLocaleString(), name];
+                      return [value, name];
+                    }}
+                  />
+                  <Legend wrapperStyle={{ fontSize: 12 }} />
+                  <Bar
+                    yAxisId="impressions"
+                    dataKey="impressions"
+                    name="Impressions"
+                    fill="#bfdbfe"
+                    barSize={6}
+                    isAnimationActive={false}
+                  />
+                  <Line
+                    yAxisId="position"
+                    type="monotone"
+                    dataKey="position"
+                    name="Position"
+                    stroke="#dc2626"
+                    strokeWidth={2}
+                    dot={false}
+                    activeDot={{ r: 4 }}
+                    isAnimationActive={false}
+                  />
+                  {annotations.map(a => (
+                    <ReferenceDot
+                      key={a.date}
+                      x={a.date}
+                      y={a.position}
+                      yAxisId="position"
+                      r={5}
+                      fill="#f59e0b"
+                      stroke="#fff"
+                      strokeWidth={1.5}
+                      ifOverflow="extendDomain"
+                    />
+                  ))}
+                </ComposedChart>
+              </ResponsiveContainer>
+            </div>
+
+            {annotations.length > 0 && (
+              <div
+                className="mt-2 border-t pt-3 space-y-1.5"
+                data-testid={`list-modal-annotations-${kwId}`}
+              >
+                <div className="text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wide">
+                  Notes on this keyword
+                </div>
+                <ul className="text-xs text-gray-600 dark:text-gray-400 space-y-1">
+                  {annotations.map(a => (
+                    <li key={a.date} className="flex gap-2">
+                      <span className="font-mono text-amber-600 dark:text-amber-400 shrink-0">
+                        {format(parseISO(a.date), "d MMM")}
+                      </span>
+                      <span>{a.note}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </>
+        )}
+      </DialogContent>
+    </Dialog>
   );
 }
 
@@ -1430,6 +1638,35 @@ function Commercial15Panel({ rows }: { rows: Commercial15Row[] }) {
     });
     return Array.from(m.entries());
   }, [rows]);
+
+  // Click-to-expand: opens a modal with the full 90-day chart for one keyword.
+  // Because the trigger is a plain <button> (not a Radix DialogTrigger), Radix
+  // doesn't know which element to restore focus to on close — so we capture the
+  // sparkline button at click time and refocus it manually after the dialog
+  // tears down. This keeps keyboard users on the same row they were inspecting.
+  const [activeKeyword, setActiveKeyword] = useState<string | null>(null);
+  const triggerRef = useRef<HTMLElement | null>(null);
+  const activeRow = useMemo(
+    () => (activeKeyword ? rows.find(r => r.keyword === activeKeyword) ?? null : null),
+    [activeKeyword, rows],
+  );
+
+  const openChart = (keyword: string, trigger: HTMLElement | null) => {
+    triggerRef.current = trigger;
+    setActiveKeyword(keyword);
+  };
+
+  const handleOpenChange = (open: boolean) => {
+    if (!open) {
+      setActiveKeyword(null);
+      // Defer to the next frame so Radix has finished unmounting and removed
+      // its focus trap before we move focus back to the row.
+      const target = triggerRef.current;
+      if (target) {
+        requestAnimationFrame(() => target.focus());
+      }
+    }
+  };
 
   const inTop3 = rows.filter(r => r.position !== null && r.position <= 3).length;
   const onPage1 = rows.filter(r => r.position !== null && r.position > 3 && r.position <= 10).length;
@@ -1524,7 +1761,13 @@ function Commercial15Panel({ rows }: { rows: Commercial15Row[] }) {
                           )}
                         </td>
                         <td className="py-2.5 px-3 text-center" data-testid={`cell-commercial15-trend-${kwId}`}>
-                          <Commercial15Sparkline history={row.history} keyword={row.keyword} />
+                          <Commercial15Sparkline
+                            history={row.history}
+                            keyword={row.keyword}
+                            onOpen={row.history.length > 0
+                              ? (el) => openChart(row.keyword, el)
+                              : undefined}
+                          />
                         </td>
                         <td className="py-2.5 px-3 text-right font-mono text-xs text-gray-600 dark:text-gray-400">
                           {row.imprLatest > 0 ? row.imprLatest.toLocaleString() : "—"}
@@ -1549,6 +1792,11 @@ function Commercial15Panel({ rows }: { rows: Commercial15Row[] }) {
           </div>
         ))}
       </CardContent>
+      <Commercial15ChartModal
+        row={activeRow}
+        open={activeRow !== null}
+        onOpenChange={handleOpenChange}
+      />
     </Card>
   );
 }
