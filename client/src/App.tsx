@@ -64,7 +64,6 @@ const LazyPreschoolInKasarvadavali = lazy(() => import("@/pages/preschool-locati
 
 const LazyMotivationalThoughtsForKids = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.MotivationalThoughtsForKids })));
 const LazyFruitsVegetablesEnglishHindi = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.FruitsVegetablesEnglishHindi })));
-const LazyMidTermPlaygroupBenefits = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.MidTermPlaygroupBenefits })));
 const LazyNationalSymbolsOfIndia = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.NationalSymbolsOfIndia })));
 const LazySolitaryPlayActivities = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.SolitaryPlayActivities })));
 const LazyPreKgAgeGuide = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.PreKgAgeGuide })));
@@ -72,7 +71,6 @@ const LazySpringGardeningActivities = lazy(() => import("@/pages/legacy-pages").
 const LazyMotivateKidsForSchool = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.MotivateKidsForSchool })));
 const LazyIndoorGamesForKids = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.IndoorGamesForKids })));
 const LazyTeachingAidsHelp = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.TeachingAidsHelp })));
-const LazyPreschoolVsPreKg = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.PreschoolVsPreKg })));
 const LazyPreschoolAdmissionGuide = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.PreschoolAdmissionGuide })));
 const LazySportsDayActivities = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.SportsDayActivities })));
 const LazyGoodTouchBadTouch = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.GoodTouchBadTouch })));
@@ -82,156 +80,44 @@ const LazyListeningSkillsTips = lazy(() => import("@/pages/legacy-pages").then(m
 const LazyDiwaliActivities = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.DiwaliActivities })));
 const LazyParentTeacherCommunication = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.ParentTeacherCommunication })));
 const LazyHoliActivities = lazy(() => import("@/pages/holi-activities"));
-const LazyAprilFoolsActivities = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.AprilFoolsActivities })));
 const LazyOvercomeFear = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.OvercomeFear })));
 const LazyPlayEmotionalGrowth = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.PlayEmotionalGrowth })));
 const LazyForgetManners = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.ForgetManners })));
 const LazyTrendsEarlyChildhood = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.TrendsEarlyChildhood })));
 const LazyHealthyPreschoolMeals = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.HealthyPreschoolMeals })));
 const LazyEducationalToys = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.EducationalToys })));
-const LazyAdmissions2425 = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.Admissions2425 })));
-const LazyInnovativeLearning = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.InnovativeLearning })));
-const LazyMidTermPlaygroup = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.MidTermPlaygroup })));
-const LazyBrainGymActivities = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.BrainGymActivities })));
-const LazyImmunityBoostingFoods = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.ImmunityBoostingFoods })));
-const LazyColorsAndShapes = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.ColorsAndShapes })));
-const LazyCookingForKids = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.CookingForKids })));
-const LazyLearnWritingTips = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.LearnWritingTips })));
-const LazyEvenOddNumbers = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.EvenOddNumbers })));
-const LazyPreschoolTourQuestions = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.PreschoolTourQuestions })));
-const LazyChoosingPreschoolQuestions = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.ChoosingPreschoolQuestions })));
-const LazyInteractiveLearning = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.InteractiveLearning })));
-const LazySummerActivities = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.SummerActivities })));
-const LazyCleanestSchoolAward = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.CleanestSchoolAward })));
-const LazyPreschoolDevelopment = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.PreschoolDevelopment })));
-const LazyMidTermPlaygroupAdmission = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.MidTermPlaygroupAdmission })));
-const LazyNurseryImportance = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.NurseryImportance })));
-const LazyPromisingPreschoolAward = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.PromisingPreschoolAward })));
-const LazyLifeLessonsConfidence = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.LifeLessonsConfidence })));
-const LazyGamesMakeKidsSmarter = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.GamesMakeKidsSmarter })));
-const LazyPhysicalDevelopmentSigns = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.PhysicalDevelopmentSigns })));
-const LazyUnderstandingPreschoolImportance = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.UnderstandingPreschoolImportance })));
-const LazyBestPreschoolCurriculumThane = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.BestPreschoolCurriculumThane })));
-const LazyHowToChooseBestPreschool = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.HowToChooseBestPreschool })));
-const LazyPlaygroupAdmissionGuide = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.PlaygroupAdmissionGuide })));
 
 // Homepage supporting posts
-const LazyRainbowPreschoolCentresThane = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.RainbowPreschoolCentresThane })));
-const LazyComparingPreschoolsThane = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.ComparingPreschoolsThane })));
-const LazyQualityPreschoolIndicators = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.QualityPreschoolIndicators })));
-const LazyPreschoolVsDaycare = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.PreschoolVsDaycare })));
-const LazyEarlyChildhoodEducationImportance = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.EarlyChildhoodEducationImportance })));
 
 // About page supporting posts
-const LazyRainbowPreschoolJourneySince2007 = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.RainbowPreschoolJourneySince2007 })));
-const LazyRainbowPreschoolAwards = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.RainbowPreschoolAwards })));
-const LazyTeacherTrainingQuality = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.TeacherTrainingQuality })));
-const LazyParentTestimonialsExperiences = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.ParentTestimonialsExperiences })));
-const LazyChildSafetyPreschool = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.ChildSafetyPreschool })));
 
 // Programmes page supporting posts
-const LazyPlayBasedLearningBenefits = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.PlayBasedLearningBenefits })));
-const LazyNEP2020EarlyChildhoodGuide = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.NEP2020EarlyChildhoodGuide })));
-const LazyHolisticChildDevelopment = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.HolisticChildDevelopment })));
-const LazyPreschoolLearningOutcomes = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.PreschoolLearningOutcomes })));
 
 // Playgroup page supporting posts
-const LazyBenefitsPlaygroupToddlers = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.BenefitsPlaygroupToddlers })));
-const LazyPlaygroupVsStayingHome = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.PlaygroupVsStayingHome })));
-const LazySeparationAnxietyPlaygroup = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.SeparationAnxietyPlaygroup })));
-const LazyPlaygroupActivities = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.PlaygroupActivities })));
-const LazyRightAgeStartPlaygroup = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.RightAgeStartPlaygroup })));
 
 // Nursery page supporting posts
-const LazyNurserySchoolBenefits = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.NurserySchoolBenefits })));
-const LazyNurseryVsPlaygroup = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.NurseryVsPlaygroup })));
-const LazyNurseryCurriculum = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.NurseryCurriculum })));
-const LazyPreparingChildNursery = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.PreparingChildNursery })));
-const LazyNurseryAdmissionAge = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.NurseryAdmissionAge })));
 
 // Kindergarten page supporting posts
-const LazyKindergartenReadiness = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.KindergartenReadiness })));
-const LazyJrKgSrKgDifference = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.JrKgSrKgDifference })));
-const LazyKindergartenCurriculumPreparation = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.KindergartenCurriculumPreparation })));
-const LazyChoosingRightKindergarten = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.ChoosingRightKindergarten })));
-const LazyKindergartenAdmissionThane = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.KindergartenAdmissionThane })));
 
 // Admissions page supporting posts
-const LazyPreschoolAdmissionProcess = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.PreschoolAdmissionProcess })));
-const LazyPreschoolAdmissionDocuments = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.PreschoolAdmissionDocuments })));
-const LazyWhenApplyPreschoolTimeline = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.WhenApplyPreschoolTimeline })));
-const LazyQuestionsAskPreschoolVisit = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.QuestionsAskPreschoolVisit })));
-const LazyPreschoolFeesThane = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.PreschoolFeesThane })));
 
 // Contact page supporting posts
-const LazyVisitingPreschoolGuide = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.VisitingPreschoolGuide })));
-const LazyHowReachRainbowPreschool = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.HowReachRainbowPreschool })));
 
 // Centre-specific local SEO posts
-const LazyEarlyChildhoodManpadaGB = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.EarlyChildhoodManpadaGB })));
-const LazyChildDevelopmentHariniwas = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.ChildDevelopmentHariniwas })));
-const LazyBestPlayschoolAnandNagar = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.BestPlayschoolAnandNagar })));
-const LazyPreschoolOptionsDhokali = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.PreschoolOptionsDhokali })));
-const LazyTrustedPreschoolKalwa = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.TrustedPreschoolKalwa })));
-const LazyQualityPreschoolKasarvadavali = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.QualityPreschoolKasarvadavali })));
-const LazyToddlerActivitiesManpada = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.ToddlerActivitiesManpada })));
-const LazySchoolReadinessHariniwas = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.SchoolReadinessHariniwas })));
-const LazyNurseryAdmissionsAnandNagar = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.NurseryAdmissionsAnandNagar })));
-const LazyPlaygroupEnrollmentDhokali = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.PlaygroupEnrollmentDhokali })));
-const LazyKindergartenProgramsKalwa = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.KindergartenProgramsKalwa })));
-const LazyBestNurseryKasarvadavali = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.BestNurseryKasarvadavali })));
 
 // NEW SEO BLOG POSTS - BATCH 2
-const LazyBestEarlyLearningCentresThane = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.BestEarlyLearningCentresThane })));
-const LazyMontessoriVsPlayBased = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.MontessoriVsPlayBased })));
-const LazyFranchiseVsStandalone = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.FranchiseVsStandalone })));
-const LazyWorkingParentsGuide = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.WorkingParentsGuide })));
-const LazyAffordableQualityPreschools = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.AffordableQualityPreschools })));
-const LazyRainbowTeachingMethodology = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.RainbowTeachingMethodology })));
-const LazyRainbowInfrastructureFacilities = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.RainbowInfrastructureFacilities })));
-const LazyPreschoolAccreditationImportance = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.PreschoolAccreditationImportance })));
-const LazyRainbowCommunityInitiatives = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.RainbowCommunityInitiatives })));
-const LazyExperiencedTeachersImportance = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.ExperiencedTeachersImportance })));
 
 // Programmes page supporting posts (new)
-const LazyEarlyChildhoodCurriculumExplained = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.EarlyChildhoodCurriculumExplained })));
-const LazyActivityBasedLearningBenefits = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.ActivityBasedLearningBenefits })));
-const LazyCreativeArtsPreschool = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.CreativeArtsPreschool })));
-const LazyPhysicalDevelopmentPreschool = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.PhysicalDevelopmentPreschool })));
-const LazyLanguageDevelopmentPreschool = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.LanguageDevelopmentPreschool })));
 
 // Playgroup page supporting posts (new)
-const LazyToddlerSeparationAnxiety = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.ToddlerSeparationAnxiety })));
-const LazyToddlerSocialSkills = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.ToddlerSocialSkills })));
-const LazyPlaygroupDailySchedule = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.PlaygroupDailySchedule })));
-const LazyToddlerReadyForPlaygroup = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.ToddlerReadyForPlaygroup })));
-const LazyBenefitsEarlyPlaygroup = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.BenefitsEarlyPlaygroup })));
 
 // NEW SEO BLOG POSTS - BATCH 2 ADDITIONAL
-const LazyWhyEarlyChildhoodEducation = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.WhyEarlyChildhoodEducation })));
-const LazyChoosingBestPreschool = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.ChoosingBestPreschool })));
-const LazyHolisticChildDevelopmentApproach = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.HolisticChildDevelopmentRainbow })));
-const LazyPreschoolVsDaycareDifference = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.PreschoolVsDaycareDifference })));
-const LazyPreparingChildForPreschool = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.PreparingChildForPreschool })));
-const LazyRainbowTeachingPhilosophy = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.RainbowTeachingPhilosophy })));
-const LazyHistoryEarlyChildhoodThane = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.HistoryEarlyChildhoodThane })));
-const LazyQualityPreschoolTeacher = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.QualityPreschoolTeacher })));
-const LazyParentTeacherPartnership = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.ParentTeacherPartnership })));
-const LazyRainbowAwardsRecognition = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.RainbowAwardsRecognition })));
-const LazyAgeAppropriateLearning = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.AgeAppropriateLearning })));
-const LazyPlayBasedVsAcademic = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.PlayBasedVsAcademic })));
-const LazyRainbowCurriculumSchoolReadiness = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.RainbowCurriculumSchoolReadiness })));
-const LazyCreativeArtsEarlyChildhood = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.CreativeArtsEarlyChildhood })));
-const LazyPhysicalDevelopmentActivities = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.PhysicalDevelopmentActivities })));
-const LazySeparationAnxietyTips = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.SeparationAnxietyTips })));
-const LazySocialisationBenefitsToddlers = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.SocialisationBenefitsToddlers })));
 
 const LazyAuthorArchivePage = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.AuthorArchivePage })));
 const AkheelaBalbale = lazy(() => import("@/pages/author-akheela-balbale"));
 
 const LazyTermsPage = lazy(() => import("@/pages/legal").then(m => ({ default: m.TermsPage })));
 const LazyPrivacyPage = lazy(() => import("@/pages/legal").then(m => ({ default: m.PrivacyPage })));
-const RepublicDay2026 = lazy(() => import("@/pages/republic-day-2026"));
 
 import { legacySlugs } from "@shared/legacy-slugs";
 
