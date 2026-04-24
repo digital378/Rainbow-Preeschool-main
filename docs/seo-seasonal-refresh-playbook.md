@@ -43,6 +43,8 @@ The mid-March 2026 GSC impression drop (~70% reduction) confirms we cannot rely 
    ```bash
    tsx scripts/check-freshness-signal.ts https://www.rainbowpreschools.com
    ```
+
+   **Automated guard (added April 24, 2026):** the same smoke-test now runs automatically on every deploy. The `[deployment].build` step in `.replit` is wired to `bash scripts/predeploy.sh`, which runs `npm run build`, boots the production server (`node dist/index.cjs`) on port 5000, waits for it to come up, then runs `tsx scripts/check-freshness-signal.ts http://127.0.0.1:5000`. If any of the 18 commercial + locality URLs is missing the byline, the visible `Last updated:` line, the Article JSON-LD, or the expected `dateModified`, the deploy fails with the offending URL list printed in the deploy log and nothing ships. The manual local run above is still recommended right after a `shared/site-freshness.ts` bump so you catch regressions before pushing — the deploy guard is the safety net, not the first line of defence.
 3. **One blog refresh:** Pick the post with the highest impressions but a CTR below 1.5%. Rewrite the title tag, meta description, and first paragraph. Add a fresh internal link.
 4. **Internal-link health:** Run `node scripts/check-internal-links.ts` (if available) — fix broken anchors.
 
