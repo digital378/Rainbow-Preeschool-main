@@ -19,6 +19,8 @@ import {
   preschoolFAQs,
   getCentreBySlug,
 } from "@shared/centre-data";
+import { legacyPagesData } from "@shared/legacy-pages-data";
+import { shouldNoIndex } from "@shared/seo-config";
 
 /**
  * Strips lightweight markdown markers (`**bold**`, `*italic*`,
@@ -87,6 +89,30 @@ function parseBlogBody(rawContent: string): BlogBody {
   }
 
   return { introText, contentSections };
+}
+
+/**
+ * Strips inline HTML (anchor tags, basic tags, common entities) from
+ * legacy-page intro/section content so the text renders cleanly inside
+ * bot SSR HTML. Bot SSR escapes everything via escapeHtml(), so any raw
+ * <a href="…">…</a> in legacy content would otherwise appear as literal
+ * angle-bracket text in Google's view of the page.
+ */
+function stripInlineHtml(input: string): string {
+  return input
+    .replace(/<a\b[^>]*>([\s\S]*?)<\/a>/gi, "$1")
+    .replace(/<br\s*\/?>/gi, "\n")
+    .replace(/<\/?(p|div|span|strong|em|b|i|u|h[1-6])\b[^>]*>/gi, "")
+    .replace(/<[^>]+>/g, "")
+    .replace(/&nbsp;/g, " ")
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/[ \t]+/g, " ")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
 }
 
 /**
@@ -1624,6 +1650,113 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
       noIndex: true,
       h1: "Rainbow Preschool International",
       internalLinks: commonInternalLinks,
+    };
+  }
+
+  // Legacy WordPress-era pages (~141 URLs in shared/legacy-pages-data.ts).
+  // Without this branch, every legacy page returns the bare SPA shell to
+  // bots — meaning Google sees the homepage <title>/<description> on every
+  // legacy URL and the per-page content is invisible to non-JS-rendering
+  // crawlers (social bots, perplexitybot, semrushbot, etc). The data file
+  // already has rich title, metaDescription, h1, intro, sections, faqs and
+  // internalLinks — we just need to project it onto the PageSEOData shape
+  // the bot SSR renderer consumes. All legacy keys end with a trailing
+  // slash (e.g. "/36-motivational-thoughts-of-the-day-for-kids/") so we
+  // try both forms.
+  const legacyKey = legacyPagesData[cleanPath]
+    ? cleanPath
+    : legacyPagesData[`${cleanPath}/`]
+      ? `${cleanPath}/`
+      : null;
+  if (legacyKey) {
+    const data = legacyPagesData[legacyKey];
+    const slugNoTrail = legacyKey.replace(/\/$/, "") || "/";
+    const category = data.category || "Resources";
+
+    const sections: PageSEOData["contentSections"] = [];
+    for (const s of data.sections) {
+      const text = stripInlineHtml(s.content || "");
+      const items = (s.bulletPoints || [])
+        .map((b) => stripInlineHtml(b))
+        .filter((b) => b.length > 0);
+      sections.push({
+        heading: s.heading,
+        text: text || undefined,
+        items: items.length > 0 ? items : undefined,
+      });
+    }
+
+    const structuredData: object[] = [];
+    if (data.faqs && data.faqs.length > 0) {
+      structuredData.push({
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: data.faqs.map((f) => ({
+          "@type": "Question",
+          name: f.question,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: stripInlineHtml(f.answer),
+          },
+        })),
+      });
+      // Surface the FAQ Q&A as a visible content section too, so bots
+      // see the question/answer text in the rendered HTML body (not just
+      // inside the JSON-LD block). This roughly doubles the indexable
+      // word count on most legacy pages.
+      sections.push({
+        heading: "Frequently Asked Questions",
+        items: data.faqs.map(
+          (f) => `${f.question} — ${stripInlineHtml(f.answer)}`,
+        ),
+      });
+    }
+
+    const introText = stripInlineHtml(data.intro || "").slice(0, 1500);
+
+    // Surface the page's `relatedLinks` as a crawlable <ul><li><a> block
+    // inside the body (via contentSections[].links). Without this, those
+    // anchors only exist in the React-rendered sidebar and are invisible
+    // to non-JS-rendering crawlers — losing extra internal-link signal
+    // back to programme/commercial pages.
+    if (data.relatedLinks && data.relatedLinks.length > 0) {
+      sections.push({
+        heading: "Related Pages",
+        links: data.relatedLinks
+          .filter((l) => l.url && l.title)
+          .map((l) => ({ text: l.title, url: l.url })),
+      });
+    }
+
+    // Merge `commonInternalLinks` (which contains all 6 commercial pillar
+    // URLs) FIRST with the page's own internalLinks and de-duplicate on
+    // URL. Commercial-pillar order matters for equity flow — the first
+    // anchors in the rendered "Explore More" block carry the most weight,
+    // so we deliberately seed them ahead of any legacy-specific links.
+    const linkMap = new Map<string, { text: string; url: string }>();
+    for (const l of [...commonInternalLinks, ...(data.internalLinks || [])]) {
+      if (l.url && !linkMap.has(l.url)) linkMap.set(l.url, l);
+    }
+
+    return {
+      title: data.title,
+      description: data.metaDescription,
+      keywords: data.metaKeywords,
+      canonical: `${BASE_URL}${slugNoTrail}`,
+      ogType: "article",
+      noIndex: shouldNoIndex(slugNoTrail),
+      h1: data.h1,
+      introText,
+      breadcrumbs: [
+        { name: "Home", url: "/" },
+        { name: category, url: "/blog" },
+        { name: data.h1, url: slugNoTrail },
+      ],
+      structuredData,
+      contentSections: sections,
+      internalLinks: Array.from(linkMap.values()),
+      lastModified: LAST_UPDATED_ISO,
+      lastModifiedDisplay: LAST_UPDATED_DISPLAY,
     };
   }
 
