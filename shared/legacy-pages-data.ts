@@ -543,7 +543,7 @@ Object.assign(legacyPagesData, {
     title: "Best Indoor Games for Kids at Home | Rainbow Preschool Thane",
     metaDescription: "Fun indoor games for preschoolers and young children. Keep your kids entertained and learning at home with these engaging activities from Rainbow Preschool.",
     h1: "Best Indoor Games for Kids at Home",
-    intro: "Whether it's a rainy day in Thane or you're looking for screen-free entertainment, these indoor games keep preschoolers engaged while building important developmental skills. At <a href=\"/about\">Rainbow Preschool International</a>, we use many of these activities in our daily curriculum.",
+    intro: "Whether it's a rainy day in Thane or you're looking for screen-free entertainment, these indoor games keep preschoolers engaged while building important developmental skills. At <a href=\"/about\">Rainbow Preschool International</a>, we use many of these activities every day across our <a href=\"/playgroup\">Playgroup</a>, <a href=\"/nursery\">Nursery</a>, and <a href=\"/kindergarten\">Kindergarten</a> classrooms.",
     sections: [
       {
         heading: "Active Indoor Games",
@@ -598,7 +598,7 @@ Object.assign(legacyPagesData, {
     title: "7 Ways Teaching Aids Help Children Learn Better | Rainbow Preschool",
     metaDescription: "Discover how teaching aids enhance preschool learning. Learn about the tools and materials that help children at Rainbow Preschool International learn effectively.",
     h1: "7 Ways Teaching Aids Help Children Learn Better",
-    intro: "Teaching aids are essential tools that make learning concrete, engaging, and memorable for young children. At <a href=\"/about\">Rainbow Preschool International</a>, we use carefully selected teaching aids to enhance every aspect of early childhood education across our <a href=\"/programmes\">programmes</a>.",
+    intro: "Teaching aids are essential tools that make learning concrete, engaging, and memorable for young children. At <a href=\"/about\">Rainbow Preschool International</a>, we use carefully selected teaching aids to enhance every aspect of early childhood education across our <a href=\"/playgroup\">Playgroup</a>, <a href=\"/nursery\">Nursery</a>, and <a href=\"/kindergarten\">Kindergarten</a> programmes.",
     sections: [
       {
         heading: "What Are Teaching Aids?",
@@ -1097,7 +1097,7 @@ Object.assign(legacyPagesData, {
     sections: [
       {
         heading: "Why Communication Matters",
-        content: "Research consistently shows that children whose parents actively communicate with teachers show better academic outcomes, improved behavior, and stronger social-emotional development.\n\nAt <a href=\"/about\">Rainbow Preschool</a>, we prioritize parent partnership as a cornerstone of our approach across all our <a href=\"/programmes\">programmes</a>.",
+        content: "Research consistently shows that children whose parents actively communicate with teachers show better academic outcomes, improved behavior, and stronger social-emotional development.\n\nAt <a href=\"/about\">Rainbow Preschool</a>, we prioritize parent partnership as a cornerstone of our approach across our <a href=\"/playgroup\">Playgroup</a>, <a href=\"/nursery\">Nursery</a>, and <a href=\"/kindergarten\">Kindergarten</a> programmes — and our <a href=\"/preschool-admissions\">preschool admissions</a> orientation makes parent-teacher communication channels clear from day one.",
         bulletPoints: []
       },
       {
@@ -1146,7 +1146,7 @@ Object.assign(legacyPagesData, {
     title: "Holi Activities for Kids | Rainbow Preschool Thane",
     metaDescription: "20+ safe & mess-free Holi activities for kids — color crafts, sensory games & celebration ideas tested with 3–6 year olds. No staining, no skin worries.",
     h1: "Holi Activities for Kids",
-    intro: "Holi, the festival of colors, offers wonderful opportunities for sensory play and cultural learning. Here are safe, age-appropriate Holi activities from <a href=\"/about\">Rainbow Preschool International</a> for preschoolers that bring the joy of the festival without the mess or safety concerns.",
+    intro: "Holi, the festival of colors, offers wonderful opportunities for sensory play and cultural learning. Here are safe, age-appropriate Holi activities from <a href=\"/about\">Rainbow Preschool International</a> — used across our <a href=\"/playgroup\">Playgroup</a>, <a href=\"/nursery\">Nursery</a>, and <a href=\"/kindergarten\">Kindergarten</a> celebrations — that bring the joy of the festival without the mess or safety concerns.",
     sections: [
       {
         heading: "Safe Color Play",
@@ -1213,7 +1213,7 @@ Object.assign(legacyPagesData, {
     title: "7 Ways to Help Children Overcome Fear | Rainbow Preschool Thane",
     metaDescription: "Help your preschooler overcome common childhood fears with these 7 effective strategies. Expert tips from Rainbow Preschool International.",
     h1: "7 Things You Can Do to Help Children Overcome Fear",
-    intro: "Fears are a normal part of childhood development. Whether it's fear of the dark, monsters, or starting school, these seven strategies from <a href=\"/about\">Rainbow Preschool International</a> help children build courage and resilience.",
+    intro: "Fears are a normal part of childhood development. Whether it's fear of the dark, monsters, or starting school, these seven strategies from <a href=\"/about\">Rainbow Preschool International</a> — refined across our <a href=\"/playgroup\">Playgroup</a>, <a href=\"/nursery\">Nursery</a>, and <a href=\"/kindergarten\">Kindergarten</a> classrooms — help children build courage and resilience.",
     sections: [
       {
         heading: "Understanding Childhood Fears",
@@ -1415,7 +1415,7 @@ Object.assign(legacyPagesData, {
     title: "Healthy Preschool Meals for Bright Minds | Rainbow Preschool Thane",
     metaDescription: "Nutritious meal ideas for preschoolers that support brain development and physical growth. Healthy eating tips for parents in Thane.",
     h1: "Healthy Preschool Meals for Bright Minds and Bodies",
-    intro: "Good nutrition fuels learning and growth. This guide from <a href=\"/about\">Rainbow Preschool International</a> provides practical ideas for healthy meals and snacks that support your preschooler's development.",
+    intro: "Good nutrition fuels learning and growth. This guide from <a href=\"/about\">Rainbow Preschool International</a> provides practical ideas for healthy meals and snacks that support your child's development through the <a href=\"/playgroup\">Playgroup</a>, <a href=\"/nursery\">Nursery</a>, and <a href=\"/kindergarten\">Kindergarten</a> years.",
     sections: [
       {
         heading: "Nutrition and Learning",
