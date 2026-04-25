@@ -10,6 +10,7 @@ import fs from "fs";
 import { buildSitemapXml, blogPostSitemapEntry } from "@shared/sitemap-entries";
 import { storage } from "./storage";
 import { getBlogPostLastModified } from "./ssr-pages";
+import { getLiveLegacySitemapEntries } from "./legacy-sitemap";
 
 const app = express();
 
@@ -78,12 +79,27 @@ app.get("/sitemap.xml", async (_req, res) => {
         curated ?? updatedIso ?? publishedIso,
       );
     });
-    res.send(buildSitemapXml({ extraEntries: blogEntries }));
+    // Surviving legacy WordPress-era pages (those NOT 301-redirected by
+    // `server/redirects.ts`). Generated at request-time so any future
+    // soft-duplicate sweep that adds a redirect automatically removes the
+    // URL from the sitemap on the next request, preventing the
+    // "URL is in sitemap but redirects" GSC warning. Curated entries in
+    // `SITEMAP_ENTRIES` (with custom priorities) win on dedupe, so the
+    // legacy entries here only fill in URLs not already hand-listed.
+    const legacyEntries = getLiveLegacySitemapEntries();
+    res.send(
+      buildSitemapXml({
+        extraEntries: [...legacyEntries, ...blogEntries],
+      }),
+    );
   } catch (err) {
     // If the storage layer ever fails, still serve the curated sitemap so we
-    // never 5xx Google's crawler. The non-blog URLs remain discoverable.
+    // never 5xx Google's crawler. The non-blog URLs and surviving legacy
+    // pages remain discoverable.
     console.error("Failed to load blog posts for /sitemap.xml:", err);
-    res.send(buildSitemapXml());
+    res.send(
+      buildSitemapXml({ extraEntries: getLiveLegacySitemapEntries() }),
+    );
   }
 });
 

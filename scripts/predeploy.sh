@@ -30,6 +30,10 @@
 #      canonical page (32 redirect assertions including trailing-slash forms),
 #      and /preschool-near-me 301-redirecting to
 #      /best-preschool-near-me-in-thane.
+#   3. scripts/check-sitemap-200.ts — fetches /sitemap.xml and asserts every
+#      <loc> entry returns 200 OK. Catches any sitemap row that has been
+#      301-redirected (which would surface the "URL is in sitemap but
+#      redirects" warning in Google Search Console).
 #
 # The two HTTP-based checks run against the SAME booted server so we only
 # pay the build-and-boot cost once. The deploy is blocked (non-zero exit)
@@ -126,28 +130,40 @@ npx --no-install tsx scripts/check-freshness-signal.ts "${PREDEPLOY_URL}"
 FRESHNESS_EXIT=$?
 set -e
 
-log "step 6/6 — tsx scripts/check-keyword-targets.ts ${PREDEPLOY_URL}"
+log "step 6/7 — tsx scripts/check-keyword-targets.ts ${PREDEPLOY_URL}"
 set +e
 npx --no-install tsx scripts/check-keyword-targets.ts "${PREDEPLOY_URL}"
 KEYWORD_EXIT=$?
 set -e
 
-if [ "${FRESHNESS_EXIT}" -ne 0 ] || [ "${KEYWORD_EXIT}" -ne 0 ]; then
+log "step 7/7 — tsx scripts/check-sitemap-200.ts ${PREDEPLOY_URL}"
+set +e
+npx --no-install tsx scripts/check-sitemap-200.ts "${PREDEPLOY_URL}"
+SITEMAP_EXIT=$?
+set -e
+
+if [ "${FRESHNESS_EXIT}" -ne 0 ] || [ "${KEYWORD_EXIT}" -ne 0 ] || [ "${SITEMAP_EXIT}" -ne 0 ]; then
   if [ "${FRESHNESS_EXIT}" -ne 0 ]; then
     log "FAIL — freshness smoke-test exited ${FRESHNESS_EXIT}. See offending URLs above."
   fi
   if [ "${KEYWORD_EXIT}" -ne 0 ]; then
     log "FAIL — keyword-targets smoke-test exited ${KEYWORD_EXIT}. See offending assertions above."
   fi
+  if [ "${SITEMAP_EXIT}" -ne 0 ]; then
+    log "FAIL — sitemap-200 smoke-test exited ${SITEMAP_EXIT}. See offending URLs above."
+  fi
   log "tail of booted server log (last 80 lines of ${SERVER_LOG}):"
   tail -n 80 "${SERVER_LOG}" >&2 || true
   log "blocking deploy."
-  # Surface the keyword exit if it failed, otherwise the freshness exit.
+  # Surface whichever HTTP check failed first (freshness → keyword → sitemap).
+  if [ "${FRESHNESS_EXIT}" -ne 0 ]; then
+    exit "${FRESHNESS_EXIT}"
+  fi
   if [ "${KEYWORD_EXIT}" -ne 0 ]; then
     exit "${KEYWORD_EXIT}"
   fi
-  exit "${FRESHNESS_EXIT}"
+  exit "${SITEMAP_EXIT}"
 fi
 
-log "PASS — editorial-byline guard + no-pink guard + production build + freshness smoke-test + keyword-targets smoke-test all succeeded; deploy may proceed."
+log "PASS — editorial-byline guard + no-pink guard + production build + freshness smoke-test + keyword-targets smoke-test + sitemap-200 smoke-test all succeeded; deploy may proceed."
 exit 0

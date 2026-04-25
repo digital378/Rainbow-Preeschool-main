@@ -2,7 +2,11 @@ import type { Express, Request, Response, NextFunction } from "express";
 
 // ─── EXACT PATH REDIRECTS ────────────────────────────────────────────────────
 // All paths are lowercase; middleware lowercases before lookup.
-const redirectMap: Record<string, string> = {
+// Exported so other server modules (e.g. the dynamic /sitemap.xml builder in
+// `server/index.ts`) can filter URLs against the live redirect map and avoid
+// emitting any URL that immediately 301s — which would otherwise trigger
+// "URL is in sitemap but redirects" warnings in Google Search Console.
+export const redirectMap: Record<string, string> = {
   // ── Core navigation ────────────────────────────────────────────────────────
   "/index.php": "/",
   "/home": "/",
