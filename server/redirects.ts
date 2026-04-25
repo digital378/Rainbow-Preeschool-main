@@ -207,6 +207,54 @@ const redirectMap: Record<string, string> = {
   "/play-school-in-thane": "/play-school-near-me",
   "/nursery-school-near-me": "/nursery",
 
+  // ── Wave-2 soft-duplicate guard (Apr 2026 sweep) ──────────────────────────
+  // These slugs returned 200 via the SPA shell (fell through to the homepage
+  // canonical) but had no dedicated page and were not in the sitemap.  Each
+  // one splits ranking signal from the true commercial page, so they are all
+  // 301-redirected to the appropriate canonical destination.
+  //
+  // Commercial keyword variants → canonical commercial pages
+  "/preschool-near-me-in-thane": "/best-preschool-near-me-in-thane",
+  "/preschool-near-me-in-thane/": "/best-preschool-near-me-in-thane",
+  "/best-preschool-near-me": "/best-preschool-near-me-in-thane",
+  "/best-preschool-near-me/": "/best-preschool-near-me-in-thane",
+  "/pre-school-thane": "/best-preschool-near-me-in-thane",
+  "/pre-school-thane/": "/best-preschool-near-me-in-thane",
+  "/playschool-in-thane": "/play-school-near-me",
+  "/playschool-in-thane/": "/play-school-near-me",
+  "/best-play-school-near-me": "/play-school-near-me",
+  "/best-play-school-near-me/": "/play-school-near-me",
+  "/best-play-school-in-thane": "/play-school-near-me",
+  "/best-play-school-in-thane/": "/play-school-near-me",
+  "/best-nursery-near-me": "/nursery",
+  "/best-nursery-near-me/": "/nursery",
+  "/best-nursery-in-thane": "/nursery",
+  "/best-nursery-in-thane/": "/nursery",
+  "/best-playgroup-near-me": "/playgroup",
+  "/best-playgroup-near-me/": "/playgroup",
+  "/best-playgroup-in-thane": "/playgroup",
+  "/best-playgroup-in-thane/": "/playgroup",
+  //
+  // Locality short-form slugs (without the -thane suffix) — ghost because the
+  // real pages are at /preschool-in-{locality}-thane but bots occasionally
+  // index the hyphenated-locality-only form via breadcrumbs or GSC.
+  "/preschool-in-manpada": "/preschool-in-manpada-thane",
+  "/preschool-in-manpada/": "/preschool-in-manpada-thane",
+  "/preschool-in-hariniwas": "/preschool-in-hariniwas-thane",
+  "/preschool-in-hariniwas/": "/preschool-in-hariniwas-thane",
+  "/preschool-in-anand-nagar": "/preschool-in-anand-nagar-thane",
+  "/preschool-in-anand-nagar/": "/preschool-in-anand-nagar-thane",
+  "/preschool-in-dhokali": "/preschool-in-dhokali-thane",
+  "/preschool-in-dhokali/": "/preschool-in-dhokali-thane",
+  "/preschool-in-kalwa": "/preschool-in-kalwa-thane",
+  "/preschool-in-kalwa/": "/preschool-in-kalwa-thane",
+  "/preschool-in-kasarvadavali": "/preschool-in-kasarvadavali-thane",
+  "/preschool-in-kasarvadavali/": "/preschool-in-kasarvadavali-thane",
+  //
+  // Broken internal link from nursery SSR page → nursery canonical
+  "/nursery-school-admission-thane": "/nursery",
+  "/nursery-school-admission-thane/": "/nursery",
+
   // ── Programme-in-thane canonical consolidation (Apr 2026) ────────────────
   // City-broad programme duplicates fold into the main programme page —
   // hyperlocal /playgroup-in-{manpada,kalwa,...} and /preschool-in-{locality}-thane

@@ -88,6 +88,30 @@ const REDIRECT_BASE: Array<{ from: string; to: string }> = [
   // the SPA shell and rendered the homepage canonical (=/), leaking
   // commercial-keyword equity. Must 301 to the canonical commercial page.
   { from: "/preschool-in-thane", to: "/best-preschool-near-me-in-thane" },
+
+  // ── Wave-2 soft-duplicate guard (Apr 2026 sweep) ─────────────────────────
+  // These are the next wave of keyword-close slugs that were returning 200
+  // via the SPA shell instead of 301-ing to the canonical commercial page.
+  // Each one splits ranking signal from the true destination page.
+  { from: "/preschool-near-me-in-thane", to: "/best-preschool-near-me-in-thane" },
+  { from: "/best-preschool-near-me", to: "/best-preschool-near-me-in-thane" },
+  { from: "/pre-school-thane", to: "/best-preschool-near-me-in-thane" },
+  { from: "/playschool-in-thane", to: "/play-school-near-me" },
+  { from: "/best-play-school-near-me", to: "/play-school-near-me" },
+  { from: "/best-play-school-in-thane", to: "/play-school-near-me" },
+  { from: "/best-nursery-near-me", to: "/nursery" },
+  { from: "/best-nursery-in-thane", to: "/nursery" },
+  { from: "/best-playgroup-near-me", to: "/playgroup" },
+  { from: "/best-playgroup-in-thane", to: "/playgroup" },
+  // Locality short-form slugs (without -thane suffix)
+  { from: "/preschool-in-manpada", to: "/preschool-in-manpada-thane" },
+  { from: "/preschool-in-hariniwas", to: "/preschool-in-hariniwas-thane" },
+  { from: "/preschool-in-anand-nagar", to: "/preschool-in-anand-nagar-thane" },
+  { from: "/preschool-in-dhokali", to: "/preschool-in-dhokali-thane" },
+  { from: "/preschool-in-kalwa", to: "/preschool-in-kalwa-thane" },
+  { from: "/preschool-in-kasarvadavali", to: "/preschool-in-kasarvadavali-thane" },
+  // Broken internal link from nursery SSR page
+  { from: "/nursery-school-admission-thane", to: "/nursery" },
 ];
 
 const REDIRECTS: Array<{ from: string; to: string }> = REDIRECT_BASE.flatMap(
