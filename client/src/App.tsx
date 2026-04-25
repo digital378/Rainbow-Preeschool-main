@@ -80,7 +80,6 @@ const LazySpringGardeningActivities = lazy(() => import("@/pages/legacy-pages").
 const LazyMotivateKidsForSchool = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.MotivateKidsForSchool })));
 const LazyIndoorGamesForKids = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.IndoorGamesForKids })));
 const LazyTeachingAidsHelp = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.TeachingAidsHelp })));
-const LazyPreschoolAdmissionGuide = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.PreschoolAdmissionGuide })));
 const LazySportsDayActivities = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.SportsDayActivities })));
 const LazyGoodTouchBadTouch = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.GoodTouchBadTouch })));
 const LazyBodyPartsNames = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.BodyPartsNames })));
@@ -236,7 +235,6 @@ function Router() {
         <Route path="/how-to-motivate-your-kids-for-school-8-ways" component={LazyMotivateKidsForSchool} />
         <Route path="/best-indoor-games-for-kids-at-home" component={LazyIndoorGamesForKids} />
         <Route path="/7-ways-teaching-aids-help-children-learn-better" component={LazyTeachingAidsHelp} />
-        <Route path="/preschool-admission-process-guide" component={LazyPreschoolAdmissionGuide} />
         <Route path="/sports-day-activities-for-kindergarten" component={LazySportsDayActivities} />
         <Route path="/guide-to-understanding-good-touch-and-bad-touch" component={LazyGoodTouchBadTouch} />
         <Route path="/body-parts-names-in-english-for-preschoolers" component={LazyBodyPartsNames} />

@@ -117,7 +117,12 @@ export const SITEMAP_ENTRIES: SitemapEntry[] = [
   { url: "/privacy", priority: 0.3, changefreq: "yearly" },
 
   // ── LEGACY PAGES – ADMISSION & PLAYGROUP ────────────────
-  { url: "/preschool-admission-process-guide", priority: 0.65, changefreq: "monthly" },
+  // Wave-3 consolidation (Apr 2026): /preschool-admission-process-guide was
+  // removed here because it now 301-redirects to the commercial keeper
+  // /preschool-admissions (see server/redirects.ts). Listing a redirected
+  // URL in the curated sitemap would fail the predeploy sitemap-200 check.
+  // The destination /preschool-admissions remains discoverable via the
+  // commercial-pages section of this sitemap.
 
   // ── LEGACY PAGES – GENERAL RESOURCES ────────────────────
   { url: "/pre-kg-age-guide", priority: 0.6, changefreq: "monthly" },

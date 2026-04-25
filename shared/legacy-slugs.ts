@@ -10,7 +10,6 @@ export const legacySlugs = [
   "/best-indoor-games-for-kids-at-home/",
   "/7-ways-teaching-aids-help-children-learn-better/",
   "/preschool-vs-prekg-2/",
-  "/preschool-admission-process-guide/",
   "/sports-day-activities-for-kindergarten/",
   "/guide-to-understanding-good-touch-and-bad-touch/",
   "/body-parts-names-in-english-for-preschoolers/",

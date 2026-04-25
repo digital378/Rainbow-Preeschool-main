@@ -112,6 +112,14 @@ const REDIRECT_BASE: Array<{ from: string; to: string }> = [
   { from: "/preschool-in-kasarvadavali", to: "/preschool-in-kasarvadavali-thane" },
   // Broken internal link from nursery SSR page
   { from: "/nursery-school-admission-thane", to: "/nursery" },
+
+  // ── Wave-3 legacy → commercial consolidation (Apr 2026) ──────────────────
+  // The legacy /preschool-admission-process-guide is a near-duplicate of the
+  // commercial /preschool-admissions page (same documents, fees, process,
+  // "what to look for" content). 301 to concentrate ranking signal on the
+  // single commercial keeper. Smoke-tested in BOTH bare and trailing-slash
+  // form by the REDIRECT_BASE → REDIRECTS expansion below.
+  { from: "/preschool-admission-process-guide", to: "/preschool-admissions" },
 ];
 
 const REDIRECTS: Array<{ from: string; to: string }> = REDIRECT_BASE.flatMap(

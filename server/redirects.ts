@@ -301,6 +301,13 @@ export const redirectMap: Record<string, string> = {
   "/preschool-vs-prekg-2": "/kindergarten",
   "/preschool-vs-prekg-2/": "/kindergarten",
   "/preschool-admission-process-explained": "/preschool-admissions",
+  // Wave-3 consolidation (Apr 2026): legacy /preschool-admission-process-guide
+  // is a near-duplicate of the commercial /preschool-admissions page (same
+  // documents, fees, process, "what to look for" content). 301 to consolidate
+  // ranking signal into the single commercial keeper. Mirrored in
+  // scripts/check-keyword-targets.ts REDIRECT_BASE.
+  "/preschool-admission-process-guide": "/preschool-admissions",
+  "/preschool-admission-process-guide/": "/preschool-admissions",
   "/rainbow-preschool-awards-recognition-thane": "/about",
   "/rainbow-preschool-awards-achievements": "/about",
   "/rainbow-preschool-journey-2007-to-2026": "/about",

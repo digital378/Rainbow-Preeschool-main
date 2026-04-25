@@ -42,7 +42,14 @@ export const REDIRECT_MAP: Record<string, string> = {
   "/preschool-vs-daycare-understanding-difference": "/preschool-vs-daycare-difference",
   
   // Admission process duplicates
-  "/preschool-admission-process-explained": "/preschool-admission-process-guide",
+  // NOTE: This map is currently dead code — the runtime redirect source of
+  // truth is server/redirects.ts (consumed by the Express middleware). This
+  // entry is updated to point at the same final destination as the runtime
+  // map so the two sources do not disagree if/when this map is revived.
+  // Wave-3 (Apr 2026): /preschool-admission-process-guide is itself now a
+  // 301 → /preschool-admissions, so we point /preschool-admission-process-explained
+  // directly at the final commercial keeper to avoid creating a redirect chain.
+  "/preschool-admission-process-explained": "/preschool-admissions",
   
   // Awards/recognition duplicates
   "/rainbow-preschool-awards-recognition-thane": "/rainbow-preschool-awards-recognition",

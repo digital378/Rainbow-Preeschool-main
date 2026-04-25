@@ -22,7 +22,6 @@ export const MotivateKidsForSchool = createLegacyPage("/how-to-motivate-your-kid
 export const IndoorGamesForKids = createLegacyPage("/best-indoor-games-for-kids-at-home/");
 export const TeachingAidsHelp = createLegacyPage("/7-ways-teaching-aids-help-children-learn-better/");
 export const PreschoolVsPreKg = createLegacyPage("/preschool-vs-prekg-2/");
-export const PreschoolAdmissionGuide = createLegacyPage("/preschool-admission-process-guide/");
 export const SportsDayActivities = createLegacyPage("/sports-day-activities-for-kindergarten/");
 export const GoodTouchBadTouch = createLegacyPage("/guide-to-understanding-good-touch-and-bad-touch/");
 export const BodyPartsNames = createLegacyPage("/body-parts-names-in-english-for-preschoolers/");
