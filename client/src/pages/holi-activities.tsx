@@ -197,7 +197,7 @@ export default function HoliActivitiesPage() {
             </Link>
           </div>
 
-          <header className="bg-gradient-to-br from-pink-50 via-yellow-50 to-orange-50 dark:from-pink-950/20 dark:via-yellow-950/20 dark:to-orange-950/20 py-12 md:py-16">
+          <header className="bg-gradient-to-br from-red-50 via-yellow-50 to-orange-50 dark:from-red-950/20 dark:via-yellow-950/20 dark:to-orange-950/20 py-12 md:py-16">
             <div className="container mx-auto px-4">
               <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
                 <span className="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-medium">Festival Guide</span>

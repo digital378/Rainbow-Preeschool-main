@@ -7,9 +7,9 @@ const features = [
     icon: Shield,
     title: "Safety & CCTV",
     description: "CCTV-monitored premises with 100% female teaching staff for a secure environment.",
-    bg: "bg-gradient-to-br from-pink-100 to-pink-200 dark:from-pink-800/40 dark:to-pink-900/40",
-    iconColor: "text-pink-600 dark:text-pink-400",
-    shadow: "shadow-[0_4px_0_0_rgb(219,39,119),0_6px_12px_-2px_rgba(219,39,119,0.3)] dark:shadow-[0_4px_0_0_rgb(157,23,77),0_6px_12px_-2px_rgba(219,39,119,0.2)]",
+    bg: "bg-gradient-to-br from-red-100 to-red-200 dark:from-red-800/40 dark:to-red-900/40",
+    iconColor: "text-red-600 dark:text-red-400",
+    shadow: "shadow-[0_4px_0_0_rgb(220,38,38),0_6px_12px_-2px_rgba(220,38,38,0.3)] dark:shadow-[0_4px_0_0_rgb(153,27,27),0_6px_12px_-2px_rgba(220,38,38,0.2)]",
   },
   {
     icon: Award,

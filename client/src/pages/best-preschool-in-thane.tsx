@@ -72,8 +72,8 @@ const howToChoose = [
   },
   {
     icon: Heart,
-    color: "bg-pink-100 dark:bg-pink-900/50",
-    iconColor: "text-pink-600 dark:text-pink-400",
+    color: "bg-red-100 dark:bg-red-900/50",
+    iconColor: "text-red-600 dark:text-red-400",
     title: "Holistic Child Development Focus",
     desc: "Beyond academics, the right preschool nurtures physical, emotional, social, and creative development so your child grows as a confident, well-rounded individual.",
   },
@@ -148,7 +148,7 @@ const programmes = [
   },
   {
     href: "/happy-times",
-    borderColor: "border-l-pink-400",
+    borderColor: "border-l-red-400",
     name: "Happy Times in Thane",
     age: "3 – 10 years",
     desc: "After-school enrichment combining homework support, creative arts, sports, and personality development in a fun, structured environment.",

@@ -5,7 +5,7 @@ import { ArrowRight } from "lucide-react";
 import { type Programme } from "@shared/schema";
 
 const badgeColorMap: Record<string, string> = {
-  playgroup: "bg-pink-400 text-white no-default-hover-elevate no-default-active-elevate",
+  playgroup: "bg-red-400 text-white no-default-hover-elevate no-default-active-elevate",
   nursery: "bg-blue-400 text-white no-default-hover-elevate no-default-active-elevate",
   kindergarten: "bg-green-400 text-white no-default-hover-elevate no-default-active-elevate",
   "kids-activity-club": "bg-purple-400 text-white no-default-hover-elevate no-default-active-elevate",

@@ -225,6 +225,14 @@ const redirectMap: Record<string, string> = {
   // ── Best preschool slug change ─────────────────────────────────────────────
   "/best-preschool-in-thane": "/best-preschool-near-me-in-thane",
 
+  // ── Generic /preschool-in-thane → canonical commercial page ──────────────
+  // Soft-duplicate guard: this slug used to fall through to the SPA shell
+  // and render the homepage's title + canonical=/, leaking equity from the
+  // canonical commercial URL. Both bare and trailing-slash variants are
+  // covered in scripts/check-keyword-targets.ts.
+  "/preschool-in-thane": "/best-preschool-near-me-in-thane",
+  "/preschool-in-thane/": "/best-preschool-near-me-in-thane",
+
   // ── Top preschools duplicate ──────────────────────────────────────────────
   "/top-10-preschools-thane-comparison-guide": "/top-preschools-in-thane",
   "/top-10-preschools-thane-comparison-guide/": "/top-preschools-in-thane",

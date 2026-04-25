@@ -292,8 +292,8 @@ export function Star3D({
         <svg width={size} height={size} viewBox="0 0 50 50" className="drop-shadow-lg">
           <defs>
             <linearGradient id={`star-gradient-${color}`} x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" className={`stop-color-${color === 'primary' ? 'pink' : color === 'secondary' ? 'yellow' : 'blue'}-400`} style={{ stopColor: color === 'primary' ? '#ec4899' : color === 'secondary' ? '#facc15' : '#3b82f6' }} />
-              <stop offset="100%" className={`stop-color-${color === 'primary' ? 'pink' : color === 'secondary' ? 'yellow' : 'blue'}-200`} style={{ stopColor: color === 'primary' ? '#f9a8d4' : color === 'secondary' ? '#fef08a' : '#93c5fd', stopOpacity: 0.4 }} />
+              <stop offset="0%" className={`stop-color-${color === 'primary' ? 'red' : color === 'secondary' ? 'yellow' : 'blue'}-400`} style={{ stopColor: color === 'primary' ? '#dc2626' : color === 'secondary' ? '#facc15' : '#3b82f6' }} />
+              <stop offset="100%" className={`stop-color-${color === 'primary' ? 'red' : color === 'secondary' ? 'yellow' : 'blue'}-200`} style={{ stopColor: color === 'primary' ? '#fecaca' : color === 'secondary' ? '#fef08a' : '#93c5fd', stopOpacity: 0.4 }} />
             </linearGradient>
           </defs>
           <polygon

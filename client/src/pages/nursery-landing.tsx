@@ -308,7 +308,7 @@ function ActivitiesSection({ activities }: { activities: string[] }) {
 }
 
 const featureItems = [
-  { title: "Phonics Basics", icon: BookOpen, gradient: "from-pink-100 to-pink-200 dark:from-pink-900/30 dark:to-pink-800/30", color: "text-pink-500" },
+  { title: "Phonics Basics", icon: BookOpen, gradient: "from-red-100 to-red-200 dark:from-red-900/30 dark:to-red-800/30", color: "text-red-500" },
   { title: "Numbers 1-20", icon: Hash, gradient: "from-green-100 to-green-200 dark:from-green-900/30 dark:to-green-800/30", color: "text-green-500" },
   { title: "Art & Creativity", icon: Palette, gradient: "from-purple-100 to-purple-200 dark:from-purple-900/30 dark:to-purple-800/30", color: "text-purple-500" },
   { title: "Motor Skills", icon: Activity, gradient: "from-blue-100 to-blue-200 dark:from-blue-900/30 dark:to-blue-800/30", color: "text-blue-500" },
@@ -738,7 +738,7 @@ export default function NurseryLanding() {
               <p className="text-sm text-muted-foreground">All toys, surfaces, and classrooms sanitized multiple times daily</p>
             </Card>
             <Card className="text-center p-6">
-              <UsersRound className="w-12 h-12 text-pink-500 mx-auto mb-4" />
+              <UsersRound className="w-12 h-12 text-red-500 mx-auto mb-4" />
               <h3 className="font-semibold text-lg mb-2">100% Female Staff</h3>
               <p className="text-sm text-muted-foreground">All caregivers and teachers are trained female professionals</p>
             </Card>

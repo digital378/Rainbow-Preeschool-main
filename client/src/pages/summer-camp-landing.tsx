@@ -294,7 +294,7 @@ function ActivitiesSection({ activities }: { activities: string[] }) {
 }
 
 const featureItems = [
-  { title: "Arts & Crafts", icon: Palette, gradient: "from-pink-100 to-pink-200 dark:from-pink-900/30 dark:to-pink-800/30", color: "text-pink-500" },
+  { title: "Arts & Crafts", icon: Palette, gradient: "from-red-100 to-red-200 dark:from-red-900/30 dark:to-red-800/30", color: "text-red-500" },
   { title: "Dance & Music", icon: Music, gradient: "from-purple-100 to-purple-200 dark:from-purple-900/30 dark:to-purple-800/30", color: "text-purple-500" },
   { title: "Sports & Games", icon: Gamepad2, gradient: "from-green-100 to-green-200 dark:from-green-900/30 dark:to-green-800/30", color: "text-green-500" },
   { title: "Cooking Fun", icon: CookingPot, gradient: "from-orange-100 to-orange-200 dark:from-orange-900/30 dark:to-orange-800/30", color: "text-orange-500" },
@@ -594,7 +594,7 @@ export default function SummerCampLanding() {
               <p className="text-sm text-muted-foreground">All equipment and spaces sanitized multiple times daily</p>
             </Card>
             <Card className="text-center p-6">
-              <UsersRound className="w-12 h-12 text-pink-500 mx-auto mb-4" />
+              <UsersRound className="w-12 h-12 text-red-500 mx-auto mb-4" />
               <h3 className="font-semibold text-lg mb-2">100% Female Staff</h3>
               <p className="text-sm text-muted-foreground">All instructors and supervisors are trained female professionals</p>
             </Card>

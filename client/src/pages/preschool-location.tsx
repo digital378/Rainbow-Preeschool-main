@@ -307,8 +307,8 @@ function PreschoolLocationTemplate({ localitySlug }: PreschoolLocationPageProps)
             <Link href="/playgroup">
               <Card className="hover-elevate cursor-pointer h-full" data-testid="card-programme-playgroup">
                 <CardContent className="pt-6">
-                  <div className="w-12 h-12 rounded-full bg-pink-100 dark:bg-pink-900/30 flex items-center justify-center mb-4">
-                    <Heart className="w-6 h-6 text-pink-500" />
+                  <div className="w-12 h-12 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center mb-4">
+                    <Heart className="w-6 h-6 text-red-500" />
                   </div>
                   <h3 className="text-lg font-semibold mb-2">Playgroup</h3>
                   <p className="text-sm text-muted-foreground mb-2">Ages 1.5 - 2.5 years</p>

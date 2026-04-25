@@ -94,7 +94,7 @@ const programmeDetails: Record<string, {
 }> = {
   playgroup: {
     features: [
-      { title: "Introduction to Colors and Shapes", description: "Learning to recognize and identify basic colors and shapes through fun activities.", icon: "shapes", gradient: "from-pink-100 to-pink-200 dark:from-pink-900/30 dark:to-pink-800/30" },
+      { title: "Introduction to Colors and Shapes", description: "Learning to recognize and identify basic colors and shapes through fun activities.", icon: "shapes", gradient: "from-red-100 to-red-200 dark:from-red-900/30 dark:to-red-800/30" },
       { title: "Puppet Shows and Storytelling", description: "Engaging narratives that spark imagination and build listening skills.", icon: "message", gradient: "from-sky-100 to-sky-200 dark:from-sky-900/30 dark:to-sky-800/30" },
       { title: "Sensory Play Activities", description: "Hands-on exploration that stimulates cognitive and motor development.", icon: "hand-heart", gradient: "from-green-100 to-green-200 dark:from-green-900/30 dark:to-green-800/30" },
       { title: "Basic Motor Skill Development", description: "Activities designed to strengthen fine and gross motor abilities.", icon: "activity", gradient: "from-purple-100 to-purple-200 dark:from-purple-900/30 dark:to-purple-800/30" },
@@ -116,7 +116,7 @@ const programmeDetails: Record<string, {
   },
   nursery: {
     features: [
-      { title: "Alphabet and Number Recognition", description: "Building foundation for reading and math through interactive learning.", icon: "book", gradient: "from-pink-100 to-pink-200 dark:from-pink-900/30 dark:to-pink-800/30" },
+      { title: "Alphabet and Number Recognition", description: "Building foundation for reading and math through interactive learning.", icon: "book", gradient: "from-red-100 to-red-200 dark:from-red-900/30 dark:to-red-800/30" },
       { title: "Group Reading Sessions", description: "Developing early literacy skills through shared reading experiences.", icon: "message", gradient: "from-sky-100 to-sky-200 dark:from-sky-900/30 dark:to-sky-800/30" },
       { title: "Creative Arts and Crafts", description: "Expressing creativity through painting, drawing, and craft projects.", icon: "brush", gradient: "from-green-100 to-green-200 dark:from-green-900/30 dark:to-green-800/30" },
       { title: "Physical Development through Yoga", description: "Building flexibility, balance, and body awareness.", icon: "activity", gradient: "from-purple-100 to-purple-200 dark:from-purple-900/30 dark:to-purple-800/30" },
@@ -138,7 +138,7 @@ const programmeDetails: Record<string, {
   },
   kindergarten: {
     features: [
-      { title: "Reading and Writing Readiness", description: "Preparing children for fluent reading and writing skills.", icon: "book", gradient: "from-pink-100 to-pink-200 dark:from-pink-900/30 dark:to-pink-800/30" },
+      { title: "Reading and Writing Readiness", description: "Preparing children for fluent reading and writing skills.", icon: "book", gradient: "from-red-100 to-red-200 dark:from-red-900/30 dark:to-red-800/30" },
       { title: "Math Concepts and Problem Solving", description: "Learning numbers, counting, and basic mathematical operations.", icon: "brain", gradient: "from-sky-100 to-sky-200 dark:from-sky-900/30 dark:to-sky-800/30" },
       { title: "Science Exploration (EVS)", description: "Discovering the natural world through experiments and observation.", icon: "sparkles", gradient: "from-green-100 to-green-200 dark:from-green-900/30 dark:to-green-800/30" },
       { title: "General Knowledge Building", description: "Learning about the world, culture, and current events.", icon: "target", gradient: "from-purple-100 to-purple-200 dark:from-purple-900/30 dark:to-purple-800/30" },
@@ -160,7 +160,7 @@ const programmeDetails: Record<string, {
   },
   "kids-activity-club": {
     features: [
-      { title: "20+ Engaging Activities", description: "A wide variety of activities to keep children entertained and learning.", icon: "sparkles", gradient: "from-pink-100 to-pink-200 dark:from-pink-900/30 dark:to-pink-800/30" },
+      { title: "20+ Engaging Activities", description: "A wide variety of activities to keep children entertained and learning.", icon: "sparkles", gradient: "from-red-100 to-red-200 dark:from-red-900/30 dark:to-red-800/30" },
       { title: "Brain Gym Exercises", description: "Activities designed to enhance cognitive abilities and focus.", icon: "brain", gradient: "from-sky-100 to-sky-200 dark:from-sky-900/30 dark:to-sky-800/30" },
       { title: "Creative Arts and Drama", description: "Expressing creativity through art, drama, and performance.", icon: "brush", gradient: "from-green-100 to-green-200 dark:from-green-900/30 dark:to-green-800/30" },
       { title: "Physical Fitness Programs", description: "Building strength, coordination, and healthy habits.", icon: "activity", gradient: "from-purple-100 to-purple-200 dark:from-purple-900/30 dark:to-purple-800/30" },
@@ -182,7 +182,7 @@ const programmeDetails: Record<string, {
   },
   "summer-camp": {
     features: [
-      { title: "Fun Holiday Activities", description: "Exciting and engaging activities to make the most of summer break.", icon: "sparkles", gradient: "from-pink-100 to-pink-200 dark:from-pink-900/30 dark:to-pink-800/30" },
+      { title: "Fun Holiday Activities", description: "Exciting and engaging activities to make the most of summer break.", icon: "sparkles", gradient: "from-red-100 to-red-200 dark:from-red-900/30 dark:to-red-800/30" },
       { title: "Creative Workshops", description: "Hands-on workshops for art, craft, and creative expression.", icon: "brush", gradient: "from-sky-100 to-sky-200 dark:from-sky-900/30 dark:to-sky-800/30" },
       { title: "Team Building Games", description: "Group activities that build cooperation and teamwork skills.", icon: "users-round", gradient: "from-green-100 to-green-200 dark:from-green-900/30 dark:to-green-800/30" },
       { title: "New Friendships", description: "Meeting new friends and building lasting bonds.", icon: "hand-heart", gradient: "from-purple-100 to-purple-200 dark:from-purple-900/30 dark:to-purple-800/30" },
@@ -204,7 +204,7 @@ const programmeDetails: Record<string, {
   },
   "happy-times": {
     features: [
-      { title: "Safe and Nurturing Environment", description: "A loving space where children feel secure and cared for.", icon: "shield-check", gradient: "from-pink-100 to-pink-200 dark:from-pink-900/30 dark:to-pink-800/30" },
+      { title: "Safe and Nurturing Environment", description: "A loving space where children feel secure and cared for.", icon: "shield-check", gradient: "from-red-100 to-red-200 dark:from-red-900/30 dark:to-red-800/30" },
       { title: "Flexible Hours for Working Parents", description: "Extended timings to accommodate working parents' schedules.", icon: "activity", gradient: "from-sky-100 to-sky-200 dark:from-sky-900/30 dark:to-sky-800/30" },
       { title: "Nutritious Meals Provided", description: "Healthy, home-cooked meals to keep children energized.", icon: "hand-heart", gradient: "from-green-100 to-green-200 dark:from-green-900/30 dark:to-green-800/30" },
       { title: "Engaging Activities Throughout the Day", description: "Fun activities to keep children productively occupied.", icon: "sparkles", gradient: "from-purple-100 to-purple-200 dark:from-purple-900/30 dark:to-purple-800/30" },
@@ -348,18 +348,18 @@ export default function ProgrammeLanding({ programmeSlug }: ProgrammeLandingProp
             {details.features.map((feature, index) => {
               const FeatureIcon = featureIconMap[feature.icon] || ShieldCheck;
               const iconColors: Record<string, string> = {
-                "shield-check": "text-pink-500",
+                "shield-check": "text-red-500",
                 "award": "text-sky-500",
                 "sparkles": "text-green-500",
                 "users-round": "text-purple-500",
                 "bus": "text-orange-500",
                 "gamepad": "text-blue-500",
-                "shapes": "text-pink-500",
+                "shapes": "text-red-500",
                 "message": "text-sky-500",
                 "hand-heart": "text-green-500",
                 "activity": "text-purple-500",
                 "music": "text-blue-500",
-                "book": "text-pink-500",
+                "book": "text-red-500",
                 "brush": "text-green-500",
                 "brain": "text-sky-500",
                 "target": "text-purple-500",

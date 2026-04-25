@@ -13,6 +13,11 @@
 #      individual-name byline into a review/testimonial/parent context.
 #      Runs first because it's a fast static check that doesn't need a
 #      build or a booted server — fail fast before paying the build cost.
+#   0.5 scripts/check-no-pink.ts — static scan that fails if any pink
+#      Tailwind utility (`pink-NNN`), pink palette hex (#ec4899, #fce7f3,
+#      …), or pink CSS named colour appears under client/src, server,
+#      shared, scripts, or in client/index.html. The brand uses
+#      red/primary (#dc2626) only; pink is permanently off-brand.
 #   1. scripts/check-freshness-signal.ts — asserts the visible "Last updated"
 #      byline + Article JSON-LD dateModified across the 18 commercial +
 #      locality URLs.
@@ -71,20 +76,27 @@ cleanup() {
 }
 trap cleanup EXIT INT TERM
 
-log "step 1/5 — tsx scripts/check-no-person-author.ts (editorial-byline guard)"
+log "step 1/6 — tsx scripts/check-no-person-author.ts (editorial-byline guard)"
 if ! npx --no-install tsx scripts/check-no-person-author.ts; then
   log "FAIL — editorial-byline guard found a Person author/reviewer/contributor entry. See file:line above."
   log "blocking deploy."
   exit 1
 fi
 
-log "step 2/5 — npm run build"
+log "step 2/6 — tsx scripts/check-no-pink.ts (no-pink brand-colour guard)"
+if ! npx --no-install tsx scripts/check-no-pink.ts; then
+  log "FAIL — no-pink guard found a pink utility class, hex literal, or named colour. See file:line above."
+  log "blocking deploy."
+  exit 1
+fi
+
+log "step 3/6 — npm run build"
 if ! npm run build; then
   log "FAIL — production build failed; aborting deploy"
   exit 1
 fi
 
-log "step 3/5 — booting production server on ${PREDEPLOY_URL} for the SEO smoke-tests"
+log "step 4/6 — booting production server on ${PREDEPLOY_URL} for the SEO smoke-tests"
 NODE_ENV=production PORT="${PREDEPLOY_PORT}" node dist/index.cjs >"${SERVER_LOG}" 2>&1 &
 SERVER_PID=$!
 
@@ -108,13 +120,13 @@ while :; do
 done
 log "server is up; proceeding to SEO smoke-tests"
 
-log "step 4/5 — tsx scripts/check-freshness-signal.ts ${PREDEPLOY_URL}"
+log "step 5/6 — tsx scripts/check-freshness-signal.ts ${PREDEPLOY_URL}"
 set +e
 npx --no-install tsx scripts/check-freshness-signal.ts "${PREDEPLOY_URL}"
 FRESHNESS_EXIT=$?
 set -e
 
-log "step 5/5 — tsx scripts/check-keyword-targets.ts ${PREDEPLOY_URL}"
+log "step 6/6 — tsx scripts/check-keyword-targets.ts ${PREDEPLOY_URL}"
 set +e
 npx --no-install tsx scripts/check-keyword-targets.ts "${PREDEPLOY_URL}"
 KEYWORD_EXIT=$?
@@ -137,5 +149,5 @@ if [ "${FRESHNESS_EXIT}" -ne 0 ] || [ "${KEYWORD_EXIT}" -ne 0 ]; then
   exit "${FRESHNESS_EXIT}"
 fi
 
-log "PASS — editorial-byline guard + production build + freshness smoke-test + keyword-targets smoke-test all succeeded; deploy may proceed."
+log "PASS — editorial-byline guard + no-pink guard + production build + freshness smoke-test + keyword-targets smoke-test all succeeded; deploy may proceed."
 exit 0

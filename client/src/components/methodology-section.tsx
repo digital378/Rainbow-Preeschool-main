@@ -165,7 +165,7 @@ export function MethodologySection() {
             >
               Research-Based Curriculum for Every Child
               <span 
-                className="absolute left-0 h-1.5 md:h-2 w-full rounded-full bg-gradient-to-r from-primary via-pink-400 to-secondary"
+                className="absolute left-0 h-1.5 md:h-2 w-full rounded-full bg-gradient-to-r from-primary via-red-400 to-secondary"
                 style={{ bottom: "0.5rem" }}
                 aria-hidden="true"
               />
@@ -275,7 +275,7 @@ export function MethodologySection() {
 
               {/* Center Hub - z-index 2 (ONLY icon, no labels) */}
               <div 
-                className="orbit__hub absolute rounded-full bg-gradient-to-br from-pink-400 via-pink-500 to-pink-600 dark:from-pink-500 dark:via-pink-600 dark:to-pink-700 flex items-center justify-center shadow-[0_6px_0_0_rgb(157,23,77),0_8px_20px_-2px_rgba(219,39,119,0.5)] dark:shadow-[0_6px_0_0_rgb(131,24,67),0_8px_20px_-2px_rgba(219,39,119,0.35)]"
+                className="orbit__hub absolute rounded-full bg-gradient-to-br from-red-400 via-red-500 to-red-600 dark:from-red-500 dark:via-red-600 dark:to-red-700 flex items-center justify-center shadow-[0_6px_0_0_rgb(153,27,27),0_8px_20px_-2px_rgba(220,38,38,0.5)] dark:shadow-[0_6px_0_0_rgb(127,29,29),0_8px_20px_-2px_rgba(220,38,38,0.35)]"
                 style={{
                   width: "clamp(100px, 25vw, 144px)",
                   height: "clamp(100px, 25vw, 144px)",

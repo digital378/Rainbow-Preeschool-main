@@ -314,7 +314,7 @@ const featureItems = [
   { title: "Supervised Play", icon: Gamepad2, gradient: "from-green-100 to-green-200 dark:from-green-900/30 dark:to-green-800/30", color: "text-green-500" },
   { title: "Nutritious Snacks", icon: Apple, gradient: "from-orange-100 to-orange-200 dark:from-orange-900/30 dark:to-orange-800/30", color: "text-orange-500" },
   { title: "Activity Sessions", icon: Palette, gradient: "from-purple-100 to-purple-200 dark:from-purple-900/30 dark:to-purple-800/30", color: "text-purple-500" },
-  { title: "Safe Environment", icon: Shield, gradient: "from-pink-100 to-pink-200 dark:from-pink-900/30 dark:to-pink-800/30", color: "text-pink-500" },
+  { title: "Safe Environment", icon: Shield, gradient: "from-red-100 to-red-200 dark:from-red-900/30 dark:to-red-800/30", color: "text-red-500" },
   { title: "Flexible Pickup", icon: Clock4, gradient: "from-sky-100 to-sky-200 dark:from-sky-900/30 dark:to-sky-800/30", color: "text-sky-500" },
 ];
 
@@ -607,7 +607,7 @@ export default function HappyTimesLanding() {
               <p className="text-sm text-muted-foreground">All toys, surfaces, and classrooms sanitized multiple times daily</p>
             </Card>
             <Card className="text-center p-6">
-              <UsersRound className="w-12 h-12 text-pink-500 mx-auto mb-4" />
+              <UsersRound className="w-12 h-12 text-red-500 mx-auto mb-4" />
               <h3 className="font-semibold text-lg mb-2">100% Female Staff</h3>
               <p className="text-sm text-muted-foreground">All caregivers and teachers are trained female professionals</p>
             </Card>

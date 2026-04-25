@@ -230,7 +230,7 @@ export default function AdLanding() {
     { src: "/images/campus/campus-library.webp", label: "Library", color: "#d97706" },
     { src: "/images/campus/campus-reading-room.webp", label: "Reading Room", color: "#ea580c" },
     { src: "/images/campus/campus-computer-lab.webp", label: "Computer Lab", color: "#7c3aed" },
-    { src: "/images/campus/campus-play-corner.webp", label: "Play Corner", color: "#ec4899" },
+    { src: "/images/campus/campus-play-corner.webp", label: "Play Corner", color: "#dc2626" },
     { src: "/images/campus/campus-classroom-1.webp", label: "Classroom", color: "#14b8a6" },
     { src: "/images/campus/campus-classroom-2.webp", label: "Classroom", color: "#f43f5e" },
     { src: "/images/campus/campus-classroom-3.webp", label: "Kindergarten Classroom", color: "#84cc16" },

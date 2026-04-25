@@ -244,7 +244,7 @@ export function LegacyLandingPage({ data }: LegacyLandingPageProps) {
             </Link>
           </div>
 
-          <header className="bg-gradient-to-br from-pink-50 via-yellow-50 to-blue-50 dark:from-pink-950/20 dark:via-yellow-950/20 dark:to-blue-950/20 py-12 md:py-16">
+          <header className="bg-gradient-to-br from-red-50 via-yellow-50 to-blue-50 dark:from-red-950/20 dark:via-yellow-950/20 dark:to-blue-950/20 py-12 md:py-16">
             <div className="container mx-auto px-4">
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6 font-display" data-testid="text-page-title">
                 {data.h1}

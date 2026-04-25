@@ -47,7 +47,7 @@ const KEYWORD_COLORS: Record<string, string> = {
   "pre kg age": "#7c3aed",
   "pre school thane": "#0891b2",
   "holi activities for kids": "#d97706",
-  "national symbols of india for kids": "#db2777",
+  "national symbols of india for kids": "#dc2626",
 };
 
 // ─── 15 Commercial Keywords (Task #26 — weekly top-3 tracker) ────────────────

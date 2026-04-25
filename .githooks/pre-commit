@@ -6,6 +6,8 @@
 #   - JSON-LD `Person` author/reviewer/contributor entries sneaking back in
 #     (scripts/check-no-person-author.ts)
 #   - TypeScript regressions (`tsc`)
+#   - Off-brand pink colour usage (scripts/check-no-pink.ts) — the
+#     Rainbow Preschool brand uses red/primary (#dc2626) only.
 #
 # Enable this hook once with:
 #     bash scripts/install-hooks.sh
@@ -34,6 +36,17 @@ echo "[pre-commit] Running 'npm run check' ..."
 if ! npm run --silent check; then
   echo "" >&2
   echo "[pre-commit] 'npm run check' failed. Commit aborted." >&2
+  echo "[pre-commit] Fix the issues above, or re-run with --no-verify to bypass." >&2
+  exit 1
+fi
+
+# No-pink brand-colour guard. Run separately so it stays enforced even
+# if package.json's `check` script is ever changed; the deploy gate
+# (scripts/predeploy.sh) runs the same script.
+echo "[pre-commit] Running 'tsx scripts/check-no-pink.ts' ..."
+if ! npx --no-install tsx scripts/check-no-pink.ts; then
+  echo "" >&2
+  echo "[pre-commit] 'check-no-pink' failed. Commit aborted." >&2
   echo "[pre-commit] Fix the issues above, or re-run with --no-verify to bypass." >&2
   exit 1
 fi

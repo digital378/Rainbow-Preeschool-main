@@ -381,7 +381,7 @@ export default function Home() {
       <HeroSection />
       
       {/* Quick Navigation Links for SEO - Crawlable anchor tags */}
-      <nav aria-label="Quick links" className="py-5 sm:py-6 bg-gradient-to-br from-red-50 via-yellow-50 to-pink-50 dark:from-red-950/20 dark:to-yellow-950/20 border-y border-red-100 dark:border-red-900/30">
+      <nav aria-label="Quick links" className="py-5 sm:py-6 bg-gradient-to-br from-red-50 via-yellow-50 to-orange-50 dark:from-red-950/20 dark:to-yellow-950/20 border-y border-red-100 dark:border-red-900/30">
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-6 gap-2 sm:gap-3">
             {[
@@ -390,7 +390,7 @@ export default function Home() {
               { href: "/preschool-admissions", label: "Admissions", shortLabel: "Admissions", Icon: FileText, color: "#3b82f6", testid: "link-preschool-admissions" },
               { href: "/playgroup", label: "Playgroup", shortLabel: "Playgroup", Icon: Palette, color: "#f97316", testid: "link-playgroup" },
               { href: "/nursery", label: "Nursery", shortLabel: "Nursery", Icon: BookOpen, color: "#8b5cf6", testid: "link-nursery" },
-              { href: "/kindergarten", label: "Kindergarten", shortLabel: "KG", Icon: GraduationCap, color: "#ec4899", testid: "link-kindergarten" },
+              { href: "/kindergarten", label: "Kindergarten", shortLabel: "KG", Icon: GraduationCap, color: "#14b8a6", testid: "link-kindergarten" },
             ].map(({ href, label, shortLabel, Icon, color, testid }) => (
               <a
                 key={testid}

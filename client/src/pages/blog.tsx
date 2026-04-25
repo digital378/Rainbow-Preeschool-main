@@ -18,7 +18,7 @@ interface BlogEntry {
 
 const CATEGORY_COLORS: Record<string, { bg: string; text: string; border: string }> = {
   "Education": { bg: "bg-blue-50", text: "text-blue-700", border: "border-blue-200" },
-  "Parenting Tips": { bg: "bg-pink-50", text: "text-pink-700", border: "border-pink-200" },
+  "Parenting Tips": { bg: "bg-red-50", text: "text-red-700", border: "border-red-200" },
   "Learning Activities": { bg: "bg-green-50", text: "text-green-700", border: "border-green-200" },
   "Admissions": { bg: "bg-amber-50", text: "text-amber-700", border: "border-amber-200" },
   "Child Development": { bg: "bg-purple-50", text: "text-purple-700", border: "border-purple-200" },
@@ -39,7 +39,7 @@ const ACCENT_BORDERS = [
   "border-l-green-500",
   "border-l-amber-500",
   "border-l-purple-500",
-  "border-l-pink-500",
+  "border-l-cyan-500",
   "border-l-orange-500",
   "border-l-teal-500",
 ];

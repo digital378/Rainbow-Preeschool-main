@@ -84,6 +84,10 @@ const REDIRECT_BASE: Array<{ from: string; to: string }> = [
   { from: "/playschool-thane", to: "/play-school-near-me" },
   { from: "/best-preschool-thane", to: "/best-preschool-near-me-in-thane" },
   { from: "/preschool-thane", to: "/best-preschool-near-me-in-thane" },
+  // Soft-duplicate guard: /preschool-in-thane previously fell through to
+  // the SPA shell and rendered the homepage canonical (=/), leaking
+  // commercial-keyword equity. Must 301 to the canonical commercial page.
+  { from: "/preschool-in-thane", to: "/best-preschool-near-me-in-thane" },
 ];
 
 const REDIRECTS: Array<{ from: string; to: string }> = REDIRECT_BASE.flatMap(

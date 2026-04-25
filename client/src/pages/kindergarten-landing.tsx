@@ -302,7 +302,7 @@ const featureItems = [
   { title: "Math Concepts", icon: Calculator, gradient: "from-green-100 to-green-200 dark:from-green-900/30 dark:to-green-800/30", color: "text-green-500" },
   { title: "Science Exploration", icon: Microscope, gradient: "from-orange-100 to-orange-200 dark:from-orange-900/30 dark:to-orange-800/30", color: "text-orange-500" },
   { title: "Social Studies", icon: Globe, gradient: "from-sky-100 to-sky-200 dark:from-sky-900/30 dark:to-sky-800/30", color: "text-sky-500" },
-  { title: "Physical Development", icon: Dumbbell, gradient: "from-pink-100 to-pink-200 dark:from-pink-900/30 dark:to-pink-800/30", color: "text-pink-500" },
+  { title: "Physical Development", icon: Dumbbell, gradient: "from-red-100 to-red-200 dark:from-red-900/30 dark:to-red-800/30", color: "text-red-500" },
 ];
 
 const dailyRoutine = [
@@ -713,7 +713,7 @@ export default function KindergartenLanding() {
               <p className="text-sm text-muted-foreground">All surfaces, classrooms and materials sanitized multiple times daily</p>
             </Card>
             <Card className="text-center p-6">
-              <UsersRound className="w-12 h-12 text-pink-500 mx-auto mb-4" />
+              <UsersRound className="w-12 h-12 text-red-500 mx-auto mb-4" />
               <h3 className="font-semibold text-lg mb-2">100% Female Staff</h3>
               <p className="text-sm text-muted-foreground">All caregivers and teachers are trained female professionals</p>
             </Card>

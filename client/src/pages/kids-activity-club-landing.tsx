@@ -307,7 +307,7 @@ function ActivitiesSection({ activities }: { activities: string[] }) {
 }
 
 const featureItems = [
-  { title: "Dance & Movement", icon: Music, gradient: "from-pink-100 to-pink-200 dark:from-pink-900/30 dark:to-pink-800/30", color: "text-pink-500" },
+  { title: "Dance & Movement", icon: Music, gradient: "from-red-100 to-red-200 dark:from-red-900/30 dark:to-red-800/30", color: "text-red-500" },
   { title: "Art & Craft", icon: Brush, gradient: "from-orange-100 to-orange-200 dark:from-orange-900/30 dark:to-orange-800/30", color: "text-orange-500" },
   { title: "Music & Rhythm", icon: Music, gradient: "from-blue-100 to-blue-200 dark:from-blue-900/30 dark:to-blue-800/30", color: "text-blue-500" },
   { title: "Drama & Expression", icon: Theater, gradient: "from-purple-100 to-purple-200 dark:from-purple-900/30 dark:to-purple-800/30", color: "text-purple-500" },
@@ -606,7 +606,7 @@ export default function KidsActivityClubLanding() {
               <p className="text-sm text-muted-foreground">All equipment, surfaces, and activity areas sanitized daily</p>
             </Card>
             <Card className="text-center p-6">
-              <UsersRound className="w-12 h-12 text-pink-500 mx-auto mb-4" />
+              <UsersRound className="w-12 h-12 text-red-500 mx-auto mb-4" />
               <h3 className="font-semibold text-lg mb-2">100% Female Staff</h3>
               <p className="text-sm text-muted-foreground">All caregivers and instructors are trained female professionals</p>
             </Card>
