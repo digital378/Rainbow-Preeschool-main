@@ -7,7 +7,9 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Navigation } from "@/components/navigation";
 import { ErrorBoundary } from "@/components/error-boundary";
+import { CookieConsentBanner } from "@/components/cookie-consent-banner";
 import { initGA, initGlobalFormTracking } from "./lib/analytics";
+import { initPixelIfConsented } from "@/lib/cookie-consent";
 import { useAnalytics } from "./hooks/use-analytics";
 import { useScrollRevealOnRoute } from "./hooks/use-scroll-reveal";
 import { setupLinkPrefetching } from "./lib/prefetch";
@@ -372,6 +374,7 @@ function App() {
     }
     initGlobalFormTracking();
     setupLinkPrefetching();
+    initPixelIfConsented();
   }, []);
 
   return (
@@ -381,6 +384,7 @@ function App() {
           <ErrorBoundary name="app-shell">
             <DeferredSparkleTrail />
             <AppContent />
+            <CookieConsentBanner />
             <Toaster />
           </ErrorBoundary>
         </TooltipProvider>

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { hasPixelConsent } from "@/lib/cookie-consent";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -164,8 +165,8 @@ export function ContactForm({ defaultBranch, defaultProgramme, compact = false, 
           phone: form.getValues("phone"),
           childAge: form.getValues("childAge"),
         });
-        // Fire Meta Pixel Lead conversion event only on confirmed email
-        if (typeof window !== 'undefined' && (window as any).fbq) {
+        // Fire Meta Pixel Lead conversion event only when user has consented
+        if (typeof window !== 'undefined' && hasPixelConsent() && (window as any).fbq) {
           // Get form values for advanced matching
           const parentName = form.getValues("parentName") || '';
           const phone = form.getValues("phone") || '';

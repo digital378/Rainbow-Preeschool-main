@@ -1,3 +1,5 @@
+import { hasPixelConsent } from "@/lib/cookie-consent";
+
 // Google Analytics 4 Integration for Rainbow Preschool
 // Clean, non-duplicated form submission tracking using gtag/dataLayer
 // 
@@ -259,7 +261,7 @@ export const trackAdLead = (params: AdLeadParams = {}) => {
   }
   
   // Also fire Meta Pixel Lead event for Meta Ads tracking with user data for better matching
-  if ((window as any).fbq) {
+  if (hasPixelConsent() && (window as any).fbq) {
     // Split parent name into first and last name for Meta matching
     const nameParts = (params.parentName || '').trim().split(' ');
     const firstName = nameParts[0] || '';
@@ -412,7 +414,7 @@ export const trackGoogleAdsLead = (params: AdLeadParams = {}) => {
   }
   
   // Also fire Meta Pixel Lead event for Meta Ads tracking with user data for better matching
-  if ((window as any).fbq) {
+  if (hasPixelConsent() && (window as any).fbq) {
     // Split parent name into first and last name for Meta matching
     const nameParts = (params.parentName || '').trim().split(' ');
     const firstName = nameParts[0] || '';
