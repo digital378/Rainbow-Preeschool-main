@@ -385,12 +385,12 @@ export default function About() {
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">
             {[
-              { name: "Harsha Sutar", centre: "Dhokali Centre", img: "/images/coordinators/harsha-sutra.png" },
-              { name: "Gauri Randhir", centre: "Anand Nagar Centre", img: "/images/coordinators/gauri-randhir.png" },
-              { name: "Swapnali Pandit", centre: "Aggarwal Centre", img: "/images/coordinators/swapnali-pandit.png" },
-              { name: "Shweta Chheda", centre: "Hariniwas Centre", img: "/images/coordinators/shweta-chheda.png" },
-              { name: "Nilsy Jain", centre: "Kasarvadavali Centre", img: "/images/coordinators/nilsy-jain.png" },
-              { name: "Mittal Shah", centre: "Kalwa Centre", img: "/images/coordinators/mittal-shah.png" },
+              { name: "Harsha Sutar", centre: "Dhokali Centre", img: "/images/coordinators/harsha-sutra.webp" },
+              { name: "Gauri Randhir", centre: "Anand Nagar Centre", img: "/images/coordinators/gauri-randhir.webp" },
+              { name: "Swapnali Pandit", centre: "Aggarwal Centre", img: "/images/coordinators/swapnali-pandit.webp" },
+              { name: "Shweta Chheda", centre: "Hariniwas Centre", img: "/images/coordinators/shweta-chheda.webp" },
+              { name: "Nilsy Jain", centre: "Kasarvadavali Centre", img: "/images/coordinators/nilsy-jain.webp" },
+              { name: "Mittal Shah", centre: "Kalwa Centre", img: "/images/coordinators/mittal-shah.webp" },
             ].map((person, i) => (
               <div key={i} className="flex flex-col items-center text-center gap-3" data-testid={`card-coordinator-${i}`}>
                 <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-full overflow-hidden border-4 border-primary/20 shadow-md">
