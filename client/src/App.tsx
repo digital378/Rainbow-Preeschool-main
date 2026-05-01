@@ -7,7 +7,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Navigation } from "@/components/navigation";
 import { ErrorBoundary } from "@/components/error-boundary";
-const CookieConsentBanner = lazy(() => import("@/components/cookie-consent-banner").then(m => ({ default: m.CookieConsentBanner })));
+import { CookieConsentBanner } from "@/components/cookie-consent-banner";
 import { initGA, initGlobalFormTracking } from "./lib/analytics";
 import { initPixelIfConsented } from "@/lib/cookie-consent";
 import { useAnalytics } from "./hooks/use-analytics";
@@ -384,9 +384,7 @@ function App() {
           <ErrorBoundary name="app-shell">
             <DeferredSparkleTrail />
             <AppContent />
-            <Suspense fallback={null}>
-              <CookieConsentBanner />
-            </Suspense>
+            <CookieConsentBanner />
             <Toaster />
           </ErrorBoundary>
         </TooltipProvider>
