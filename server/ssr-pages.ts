@@ -833,6 +833,16 @@ const staticPages: Record<string, PageSEOData> = {
     breadcrumbs: [{ name: "Home", url: "/" }, { name: "Admissions", url: "/preschool-admissions" }],
     lastModified: LAST_UPDATED_ISO,
     lastModifiedDisplay: LAST_UPDATED_DISPLAY,
+    structuredData: [organizationSchema, {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: [
+        { "@type": "Question", name: "What is the admission process at Rainbow Preschool?", acceptedAnswer: { "@type": "Answer", text: "Admissions are open year-round. Enquire online or call 82915 68972, schedule a centre visit, meet our educators, submit your documents, and complete registration. Welcome to the Rainbow family!" } },
+        { "@type": "Question", name: "What age groups can apply?", acceptedAnswer: { "@type": "Answer", text: "Playgroup accepts children aged 1.5 to 2.5 years, Nursery from 2.5 to 4 years, and Kindergarten from 4 to 6 years." } },
+        { "@type": "Question", name: "Are admissions open now?", acceptedAnswer: { "@type": "Answer", text: "Yes, Rainbow Preschool accepts admissions year-round including mid-term enrollment subject to seat availability across all 6 Thane centres." } },
+        { "@type": "Question", name: "What documents are needed for admission?", acceptedAnswer: { "@type": "Answer", text: "Birth certificate, 2 passport-size photographs, parent ID proof, address proof, and previous school records if applicable. Our team will guide you through the requirements." } },
+      ],
+    }],
     contentSections: [
       { heading: "Admission Process", items: ["Step 1: Enquire online or call 82915 68972", "Step 2: Schedule a centre visit", "Step 3: Meet our educators", "Step 4: Complete registration", "Step 5: Welcome to Rainbow!"] },
       { heading: "Age Eligibility", items: ["Playgroup: 1.5 to 2.5 years", "Nursery: 2.5 to 4 years", "Kindergarten: 4 to 6 years"] },
@@ -1040,6 +1050,34 @@ const staticPages: Record<string, PageSEOData> = {
       },
     }],
     internalLinks: commonInternalLinks,
+  },
+  "/terms": {
+    title: "Terms of Service | Rainbow Preschool International",
+    description: "Terms and conditions for using the Rainbow Preschool International website and services.",
+    keywords: "rainbow preschool terms of service, website terms",
+    canonical: `${BASE_URL}/terms`,
+    lastModified: LAST_UPDATED_ISO,
+    lastModifiedDisplay: LAST_UPDATED_DISPLAY,
+    h1: "Terms of Service",
+    breadcrumbs: [{ name: "Home", url: "/" }, { name: "Terms of Service", url: "/terms" }],
+    structuredData: [organizationSchema],
+    contentSections: [
+      { heading: "Use of Website", text: "By accessing the Rainbow Preschool International website you agree to these terms. All content is for informational purposes and may not be reproduced without permission." },
+    ],
+  },
+  "/privacy": {
+    title: "Privacy Policy | Rainbow Preschool International",
+    description: "Privacy policy for Rainbow Preschool International. Learn how we collect, use, and protect your personal data in accordance with applicable laws.",
+    keywords: "rainbow preschool privacy policy, data protection preschool",
+    canonical: `${BASE_URL}/privacy`,
+    lastModified: LAST_UPDATED_ISO,
+    lastModifiedDisplay: LAST_UPDATED_DISPLAY,
+    h1: "Privacy Policy",
+    breadcrumbs: [{ name: "Home", url: "/" }, { name: "Privacy Policy", url: "/privacy" }],
+    structuredData: [organizationSchema],
+    contentSections: [
+      { heading: "Data We Collect", text: "We collect only the information you provide via enquiry and contact forms — name, phone number, and email — to respond to your request. We do not sell or share your data with third parties." },
+    ],
   },
   "/faqs": {
     title: "FAQs | Rainbow Preschool International Thane",

@@ -315,6 +315,9 @@ export const redirectMap: Record<string, string> = {
   "/separation-anxiety-tips-playgroup-parents": "/blog/preparing-your-child-for-first-day-preschool",
   "/physical-development-activities-preschoolers": "/blog/how-play-based-learning-shapes-young-minds",
   "/admissions-24-25": "/preschool-admissions",
+  // URL typo fix (May 2026): "activitie" → "activities" in canonical slug
+  "/10-spring-gardening-activitie-for-preschoolers": "/10-spring-gardening-activities-for-preschoolers",
+  "/10-spring-gardening-activitie-for-preschoolers/": "/10-spring-gardening-activities-for-preschoolers",
   "/school-admission-virtual-learning": "/preschool-admissions",
   "/rotaract-club-": "/about",
   "/rotaract-club-events": "/about",

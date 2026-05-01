@@ -135,7 +135,7 @@ export const SITEMAP_ENTRIES: SitemapEntry[] = [
   { url: "/healthy-preschool-meals-for-bright-minds-and-bodies", priority: 0.5, changefreq: "monthly" },
   { url: "/boost-early-childhood-development-with-educational-toys", priority: 0.55, changefreq: "monthly" },
   { url: "/6-simple-tips-for-improving-listening-skills-in-preschoolers", priority: 0.5, changefreq: "monthly" },
-  { url: "/10-spring-gardening-activitie-for-preschoolers", priority: 0.5, changefreq: "yearly" },
+  { url: "/10-spring-gardening-activities-for-preschoolers", priority: 0.5, changefreq: "yearly" },
   { url: "/how-to-motivate-your-kids-for-school-8-ways", priority: 0.5, changefreq: "monthly" },
   { url: "/7-ways-teaching-aids-help-children-learn-better", priority: 0.5, changefreq: "monthly" },
 ];

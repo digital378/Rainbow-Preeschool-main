@@ -409,8 +409,8 @@ export const legacyPagesData: Record<string, LegacyPageData> = {
     category: "Admissions"
   },
 
-  "/10-spring-gardening-activitie-for-preschoolers/": {
-    slug: "/10-spring-gardening-activitie-for-preschoolers/",
+  "/10-spring-gardening-activities-for-preschoolers/": {
+    slug: "/10-spring-gardening-activities-for-preschoolers/",
     title: "10 Spring Gardening Activities for Preschoolers | Rainbow Preschool",
     metaDescription: "Fun spring gardening activities for preschoolers in Thane. Teach your child about nature, plants, and growth through hands-on gardening experiences.",
     h1: "10 Spring Gardening Activities for Preschoolers",
@@ -1365,7 +1365,7 @@ Object.assign(legacyPagesData, {
 
   "/trends-in-early-childhood-education/": {
     slug: "/trends-in-early-childhood-education/",
-    title: "Trends in Early Childhood Education 2024-25 | Rainbow Preschool",
+    title: "Trends in Early Childhood Education 2025-26 | Rainbow Preschool",
     metaDescription: "Explore current trends shaping early childhood education in India. From play-based learning to technology integration at preschools in Thane.",
     h1: "Trends in Early Childhood Education",
     intro: "Early childhood education continues to evolve with new research and changing societal needs. At <a href=\"/about\">Rainbow Preschool International</a>, we stay current with key trends shaping preschool education in India and globally.",
