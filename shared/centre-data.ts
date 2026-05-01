@@ -213,13 +213,6 @@ export function createBranchLocalBusinessSchema(centre: CentreData) {
       name: "Rainbow Preschool International",
       url: RAINBOW_BASE_URL,
     },
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "4.7",
-      reviewCount: "3997",
-      bestRating: "5",
-      worstRating: "1",
-    },
   };
 }
 
