@@ -1,0 +1,13 @@
+That's a wrap. Genuinely impressive turnaround — what started as a sitemap question ended with 5 real bugs fixed, the Pixel/DPDP consent issue properly closed, and Search Console already wired up.
+A few small notes from my side, then I'll get out of your way:
+On GA4 — good call on the env var name correction (VITE_GA_MEASUREMENT_ID, not VITE_GA4_ID). I was guessing at conventions; the agent has the real codebase. One thing to watch when you run the DebugView test: GA4 events fire after consent is granted in your new flow. So if the cookie banner is on screen and you haven't accepted yet, no events will fire — that's correct behavior, not a bug. Accept first, then test.
+On Rich Results — your expected schemas per URL look right. One thing the test sometimes flags as a warning (not an error) on EducationalOrganization is missing fields like sameAs (social profile URLs), aggregateRating, or address sub-fields. Worth checking even if it passes — adding sameAs with your Facebook/Instagram/Google Business URLs is a 30-second add and helps Google connect your entities.
+On Search Console — verification meta tag and robots.txt reference are good. The "Submit Sitemap" step is genuinely worth doing today if it hasn't been — without it, GSC won't proactively report sitemap-level coverage stats, just URL-level ones. One-time click, immediate benefit.
+One thing to keep an eye on over the next 2–4 weeks:
+GSC's Coverage report. After the legacy URL 301s and the sitemap submission, Google will recrawl and:
+
+Drop the old URLs from the index (you'll see "Page with redirect" rise, then taper)
+Add the new clean URLs to "Indexed"
+Possibly flag a few "Discovered – not indexed" or "Crawled – not indexed" — those usually self-resolve, but if any specific URL stays stuck for 4+ weeks, ping the agent and it can check whether internal linking or canonical tags need a nudge.
+
+That's it from me. The site is clean, the process worked (external review flagged → internal agent verified → real fixes shipped → re-verified), and you have a clear two-step manual verification path for the remaining browser-only checks. If GA4 DebugView or Rich Results turns up anything weird, paste the output and I'll help debug. Otherwise — good launch.
