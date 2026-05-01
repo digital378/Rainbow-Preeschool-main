@@ -9,6 +9,7 @@ export interface CentreData {
   playgroundLandingUrl: string;
   preschoolLandingUrl: string;
   address: string;
+  postalCode: string;
   phoneNumbers: string[];
   whatsappNumber: string;
   googleMapsDirectionsUrl: string;
@@ -43,6 +44,7 @@ export const centres: CentreData[] = [
     playgroundLandingUrl: "/playgroup-in-manpada",
     preschoolLandingUrl: "/preschool-in-manpada-thane",
     address: "Aggarwal Arcade, Near Khewra Circle, Manpada, Thane (W)",
+    postalCode: "400610",
     phoneNumbers: ["022-47762019", "93218 39367"],
     whatsappNumber: "8828195788",
     googleMapsDirectionsUrl: "https://maps.app.goo.gl/jenJNhoqsExdWH5DA",
@@ -64,6 +66,7 @@ export const centres: CentreData[] = [
     playgroundLandingUrl: "/playgroup",
     preschoolLandingUrl: "/preschool-in-hariniwas-thane",
     address: "M.V.Apartments, Bhakti Mandir Road, Opp. Thanawala Garage, Hariniwas Circle, Panchpakadi, Thane (W)",
+    postalCode: "400602",
     phoneNumbers: ["91365 78589"],
     whatsappNumber: "9136578589",
     googleMapsDirectionsUrl: "https://maps.app.goo.gl/KrcVoEu8xSHEzEPd9",
@@ -84,6 +87,7 @@ export const centres: CentreData[] = [
     playgroundLandingUrl: "/playgroup-in-anand-nagar",
     preschoolLandingUrl: "/preschool-in-anand-nagar-thane",
     address: "Kris Commercial Plaza, 1st Floor, Opp. Tropical Lagoon, Anand Nagar, Thane (W)",
+    postalCode: "400601",
     phoneNumbers: ["98337 81550", "91524 89789"],
     whatsappNumber: "9833781550",
     googleMapsDirectionsUrl: "https://maps.app.goo.gl/oFnzPGooMos4qACV9",
@@ -104,6 +108,7 @@ export const centres: CentreData[] = [
     playgroundLandingUrl: "/playgroup-in-dhokali",
     preschoolLandingUrl: "/preschool-in-dhokali-thane",
     address: "Kolshet Road, Dhokali Naka, Opp. Aban Park Society, Thane (W)",
+    postalCode: "400607",
     phoneNumbers: ["93212 38375"],
     whatsappNumber: "9167399247",
     googleMapsDirectionsUrl: "https://maps.app.goo.gl/WAp5VMqUs6UhUK4c8",
@@ -124,6 +129,7 @@ export const centres: CentreData[] = [
     playgroundLandingUrl: "/playgroup-in-kalwa",
     preschoolLandingUrl: "/preschool-in-kalwa-thane",
     address: "Harsh Prasad Co-op Hsg, Soc, Near Sayba Hall, Manisha Nagar, Gate No.1, Kalwa",
+    postalCode: "400605",
     phoneNumbers: ["74003 27905"],
     whatsappNumber: "7400327905",
     googleMapsDirectionsUrl: "https://maps.app.goo.gl/HoW2W9r1v6Jzi397A",
@@ -144,6 +150,7 @@ export const centres: CentreData[] = [
     playgroundLandingUrl: "/playgroup-in-kasarvadavali",
     preschoolLandingUrl: "/preschool-in-kasarvadavali-thane",
     address: "Rosa Gardenia, Next to Parijat Gardens, Kasarvadavali, Behind Hypercity Mall, Thane (W)",
+    postalCode: "400615",
     phoneNumbers: ["022-40062128", "87798 00068"],
     whatsappNumber: "8779800068",
     googleMapsDirectionsUrl: "https://maps.app.goo.gl/kE2EyU3YUuf9ZDuNA",
@@ -186,7 +193,7 @@ export function createBranchLocalBusinessSchema(centre: CentreData) {
       streetAddress: centre.address,
       addressLocality: `${centre.localityName}, Thane`,
       addressRegion: "Maharashtra",
-      postalCode: "400607",
+      postalCode: centre.postalCode,
       addressCountry: "IN",
     },
     geo: {
