@@ -31,6 +31,7 @@ import { ContactForm } from "@/components/contact-form";
 import { CountUp } from "@/components/count-up";
 import { BranchCard } from "@/components/branch-card";
 import { branches } from "@shared/schema";
+import { createAllBranchLocalBusinessSchemas } from "@shared/centre-data";
 import { 
   BookOpen, CheckCircle, ArrowRight, MapPin, Phone, Clock, Users, Star, Shield, 
   Shapes, MessageCircle, HandHeart, Activity, Music, UsersRound, Lock,
@@ -396,7 +397,7 @@ export default function NurseryLanding() {
         { "@type": "ListItem", "position": 3, "name": "Nursery in Thane", "item": "https://www.rainbowpreschools.com/nursery" },
       ],
     };
-    const ids = ['nursery-faq-schema', 'nursery-breadcrumb-schema'];
+    const ids = ['nursery-faq-schema', 'nursery-breadcrumb-schema', 'nursery-branches-schema'];
     ids.forEach(id => { const e = document.getElementById(id); if (e) e.remove(); });
 
     const faqScript = document.createElement('script');
@@ -410,6 +411,12 @@ export default function NurseryLanding() {
     breadcrumbScript.id = 'nursery-breadcrumb-schema';
     breadcrumbScript.textContent = JSON.stringify(breadcrumbSchema);
     document.head.appendChild(breadcrumbScript);
+
+    const branchScript = document.createElement('script');
+    branchScript.type = 'application/ld+json';
+    branchScript.id = 'nursery-branches-schema';
+    branchScript.textContent = JSON.stringify(createAllBranchLocalBusinessSchemas());
+    document.head.appendChild(branchScript);
 
     return () => {
       ids.forEach(id => { const el = document.getElementById(id); if (el) el.remove(); });

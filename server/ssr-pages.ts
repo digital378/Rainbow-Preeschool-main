@@ -18,9 +18,14 @@ import {
   whyParentsChoose,
   preschoolFAQs,
   getCentreBySlug,
+  createAllBranchLocalBusinessSchemas,
 } from "@shared/centre-data";
 import { legacyPagesData } from "@shared/legacy-pages-data";
 import { shouldNoIndex } from "@shared/seo-config";
+
+// Pre-compute the per-branch LocalBusiness JSON-LD array once at module load
+// so commercial-page SSR can splat it into structuredData without per-request work.
+const branchLocalBusinessSchemas = createAllBranchLocalBusinessSchemas();
 
 /**
  * Strips lightweight markdown markers (`**bold**`, `*italic*`,
@@ -279,11 +284,19 @@ const programmeOrgSchema = {
   image: `${BASE_URL}/og-image.jpg`,
   description: "Rainbow Preschool International is a trusted preschool and playgroup in Thane, offering quality early childhood education for children aged 1.5 to 6 years since 2007.",
   foundingDate: "2007",
-  areaServed: {
-    "@type": "City",
-    name: "Thane",
-    containedInPlace: { "@type": "State", name: "Maharashtra" },
-  },
+  numberOfEmployees: { "@type": "QuantitativeValue", minValue: 50 },
+  areaServed: [
+    { "@type": "City", name: "Thane", containedInPlace: { "@type": "State", name: "Maharashtra" } },
+    { "@type": "Place", name: "Thane West" },
+    { "@type": "Place", name: "Ghodbunder Road, Thane" },
+    { "@type": "Place", name: "Manpada, Thane" },
+    { "@type": "Place", name: "Naupada, Thane" },
+    { "@type": "Place", name: "Majiwada, Thane" },
+    { "@type": "Place", name: "Kolshet Road, Thane" },
+    { "@type": "Place", name: "Kalwa, Thane" },
+    { "@type": "Place", name: "Kasarvadavali, Thane" },
+    { "@type": "AdministrativeArea", name: "Mumbai Metropolitan Region" },
+  ],
   address: {
     "@type": "PostalAddress",
     streetAddress: "2nd Floor, Chestnut Plaza, Opp. Edenwoods, Khewra Cir Marg",
@@ -324,11 +337,18 @@ const organizationSchema = {
   description: "Rainbow Preschool International is a trusted preschool and playgroup in Thane, offering quality early childhood education for children aged 1.5 to 6 years since 2007.",
   foundingDate: "2007",
   numberOfEmployees: { "@type": "QuantitativeValue", minValue: 50 },
-  areaServed: {
-    "@type": "City",
-    name: "Thane",
-    containedInPlace: { "@type": "State", name: "Maharashtra" },
-  },
+  areaServed: [
+    { "@type": "City", name: "Thane", containedInPlace: { "@type": "State", name: "Maharashtra" } },
+    { "@type": "Place", name: "Thane West" },
+    { "@type": "Place", name: "Ghodbunder Road, Thane" },
+    { "@type": "Place", name: "Manpada, Thane" },
+    { "@type": "Place", name: "Naupada, Thane" },
+    { "@type": "Place", name: "Majiwada, Thane" },
+    { "@type": "Place", name: "Kolshet Road, Thane" },
+    { "@type": "Place", name: "Kalwa, Thane" },
+    { "@type": "Place", name: "Kasarvadavali, Thane" },
+    { "@type": "AdministrativeArea", name: "Mumbai Metropolitan Region" },
+  ],
   address: {
     "@type": "PostalAddress",
     streetAddress: "2nd Floor, Chestnut Plaza, Opp. Edenwoods, Khewra Cir Marg",
@@ -553,7 +573,7 @@ const staticPages: Record<string, PageSEOData> = {
     lastModifiedDisplay: LAST_UPDATED_DISPLAY,
     h1: "Rainbow Preschool International — Nurturing Young Minds Since 2007",
     introText: "Rainbow Preschool International has been nurturing young minds since 2007. With 6 centres across Thane West and over 1,00,000 alumni, we offer Playgroup, Nursery, and Kindergarten programmes for children aged 1.5 to 5 years. Our play-based curriculum helps children build reading, writing, number skills, creativity, and social confidence in a safe, joyful environment.",
-    structuredData: [organizationSchema, websiteSchema, {
+    structuredData: [organizationSchema, websiteSchema, ...branchLocalBusinessSchemas, {
       "@context": "https://schema.org",
       "@type": "Preschool",
       "@id": `${BASE_URL}/#localbusiness`,
@@ -679,7 +699,7 @@ const staticPages: Record<string, PageSEOData> = {
     canonical: `${BASE_URL}/playgroup`,
     h1: "Playgroup Programme — Ages 1.5 to 2.5 Years",
     breadcrumbs: [{ name: "Home", url: "/" }, { name: "Programmes", url: "/programmes" }, { name: "Playgroup", url: "/playgroup" }],
-    structuredData: [programmeOrgSchema, websiteSchema, {
+    structuredData: [programmeOrgSchema, websiteSchema, ...branchLocalBusinessSchemas, {
       "@context": "https://schema.org",
       "@type": "FAQPage",
       mainEntity: [
@@ -710,7 +730,7 @@ const staticPages: Record<string, PageSEOData> = {
     canonical: `${BASE_URL}/nursery`,
     h1: "Nursery Programme — Ages 2.5 to 4 Years",
     breadcrumbs: [{ name: "Home", url: "/" }, { name: "Programmes", url: "/programmes" }, { name: "Nursery", url: "/nursery" }],
-    structuredData: [programmeOrgSchema, websiteSchema, {
+    structuredData: [programmeOrgSchema, websiteSchema, ...branchLocalBusinessSchemas, {
       "@context": "https://schema.org",
       "@type": "FAQPage",
       mainEntity: [
@@ -742,7 +762,7 @@ const staticPages: Record<string, PageSEOData> = {
     canonical: `${BASE_URL}/kindergarten`,
     h1: "Kindergarten Programme — Ages 4 to 6 Years",
     breadcrumbs: [{ name: "Home", url: "/" }, { name: "Programmes", url: "/programmes" }, { name: "Kindergarten", url: "/kindergarten" }],
-    structuredData: [programmeOrgSchema, websiteSchema, {
+    structuredData: [programmeOrgSchema, websiteSchema, ...branchLocalBusinessSchemas, {
       "@context": "https://schema.org",
       "@type": "FAQPage",
       mainEntity: [
@@ -850,13 +870,13 @@ const staticPages: Record<string, PageSEOData> = {
     internalLinks: commonInternalLinks,
   },
   "/best-preschool-near-me-in-thane": {
-    title: "Best Preschool in Thane 2026 | Rainbow Preschool",
+    title: "Best Preschool in Thane | Top-Rated Since 2007 | Rainbow Preschool International",
     description: "Best preschool in Thane? See why 1 lakh+ parents chose Rainbow ★ 4.7/5, 6 centres, 18+ years, award-winning. Compare programmes & book a free visit today.",
     keywords: "best preschool in thane, best preschool near me, top preschool thane, best playgroup thane, best nursery school thane",
     canonical: `${BASE_URL}/best-preschool-near-me-in-thane`,
-    h1: "Best Preschool in Thane — Why Parents Choose Rainbow",
+    h1: "Best Preschool in Thane — Rainbow Preschool International",
     breadcrumbs: [{ name: "Home", url: "/" }, { name: "Best Preschool in Thane", url: "/best-preschool-near-me-in-thane" }],
-    structuredData: [organizationSchema, websiteSchema, {
+    structuredData: [organizationSchema, websiteSchema, ...branchLocalBusinessSchemas, {
       "@context": "https://schema.org",
       "@type": "FAQPage",
       mainEntity: [
@@ -916,13 +936,13 @@ const staticPages: Record<string, PageSEOData> = {
     lastModifiedDisplay: LAST_UPDATED_DISPLAY,
   },
   "/play-school-near-me": {
-    title: "Play School Near Me in Thane | Rainbow Preschool",
-    description: "Find the best play school near you in Thane. Rainbow Preschool offers play-based learning for children aged 1.5-6 years across 6 centres.",
+    title: "Play School Near Me in Thane | Best Playschool for 1.5–2.5 Years | Rainbow",
+    description: "Best play school near you in Thane — Rainbow Preschool offers safe, play-based early learning for toddlers aged 1.5–2.5 years across 6 centres. Trusted by 1,00,000+ families since 2007.",
     keywords: "play school near me, playschool near me in thane, top playschool thane, best play school thane",
     canonical: `${BASE_URL}/play-school-near-me`,
     h1: "Play School Near Me in Thane",
     breadcrumbs: [{ name: "Home", url: "/" }, { name: "Play School Near Me", url: "/play-school-near-me" }],
-    structuredData: [organizationSchema, websiteSchema, {
+    structuredData: [organizationSchema, websiteSchema, ...branchLocalBusinessSchemas, {
       "@context": "https://schema.org",
       "@type": "FAQPage",
       mainEntity: [

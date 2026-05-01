@@ -30,6 +30,7 @@ import { ContactForm } from "@/components/contact-form";
 import { CountUp } from "@/components/count-up";
 import { BranchCard } from "@/components/branch-card";
 import { branches } from "@shared/schema";
+import { createAllBranchLocalBusinessSchemas } from "@shared/centre-data";
 import {
   Baby, CheckCircle, ArrowRight, MapPin, Phone, Clock, Users, Star, Shield,
   Shapes, MessageCircle, HandHeart, Activity, Music, UsersRound, Lock,
@@ -482,7 +483,20 @@ export default function PlaySchoolNearMe() {
     orgScript.id = 'playschool-near-me-org-schema';
     orgScript.textContent = JSON.stringify(orgSchema);
 
-    ['playschool-near-me-faq-schema', 'playschool-near-me-breadcrumb-schema', 'playschool-near-me-org-schema'].forEach(id => {
+    const branchSchemas = createAllBranchLocalBusinessSchemas();
+    const branchScript = document.createElement('script');
+    branchScript.type = 'application/ld+json';
+    branchScript.id = 'playschool-near-me-branches-schema';
+    branchScript.textContent = JSON.stringify(branchSchemas);
+
+    const schemaIds = [
+      'playschool-near-me-faq-schema',
+      'playschool-near-me-breadcrumb-schema',
+      'playschool-near-me-org-schema',
+      'playschool-near-me-branches-schema',
+    ];
+
+    schemaIds.forEach(id => {
       const existing = document.getElementById(id);
       if (existing) existing.remove();
     });
@@ -490,9 +504,10 @@ export default function PlaySchoolNearMe() {
     document.head.appendChild(faqScript);
     document.head.appendChild(breadcrumbScript);
     document.head.appendChild(orgScript);
+    document.head.appendChild(branchScript);
 
     return () => {
-      ['playschool-near-me-faq-schema', 'playschool-near-me-breadcrumb-schema', 'playschool-near-me-org-schema'].forEach(id => {
+      schemaIds.forEach(id => {
         const el = document.getElementById(id);
         if (el) el.remove();
       });
@@ -502,8 +517,8 @@ export default function PlaySchoolNearMe() {
   return (
     <div className="pt-20 md:pt-24">
       <SEO
-        title="Play School Near Me in Thane | Rainbow Preschool International"
-        description="Looking for a play school near you in Thane? Rainbow Preschool International has 6 centres offering safe, play-based early learning for toddlers aged 1.5–2.5 years. Trusted by families since 2007. Enquire now."
+        title="Play School Near Me in Thane | Best Playschool for 1.5–2.5 Years | Rainbow"
+        description="Best play school near you in Thane — Rainbow Preschool International has 6 centres offering safe, play-based early learning for toddlers aged 1.5–2.5 years. Trusted by 1,00,000+ families since 2007. Enquire now."
         keywords="play school near me, play schools near me, top playschool in mumbai, play school in thane, playschool near me, best playschool thane, play school admission"
         canonical="https://www.rainbowpreschools.com/play-school-near-me"
       />

@@ -1,7 +1,7 @@
 import { Link } from "wouter";
 import { SEO, organizationSchema, websiteSchema, createBreadcrumbSchema, createFAQSchema } from "@/components/seo";
 import { ContactForm } from "@/components/contact-form";
-import { centres } from "@shared/centre-data";
+import { centres, createAllBranchLocalBusinessSchemas } from "@shared/centre-data";
 import {
   GraduationCap, BookOpen, Shield, Palette, MapPin, MessageCircle,
   Award, Phone, ChevronDown, Users, CheckCircle, Star, Heart, Clock
@@ -15,14 +15,14 @@ import { useState, useEffect } from "react";
 // ── Page data ─────────────────────────────────────────────────────────────────
 
 const meta = {
-  title: "Best Preschool in Thane 2026 | Rainbow Preschool",
-  description: "Looking for the best preschool in Thane? Rainbow Preschool International — 18+ years, 6 centres, 4.7★ rating, 1 lakh+ alumni. Award-winning early education.",
+  title: "Best Preschool in Thane | Top-Rated Since 2007 | Rainbow Preschool International",
+  description: "Looking for the best preschool in Thane? Rainbow Preschool International — top-rated since 2007, 6 Thane West centres, 4.7★ from 3,997+ reviews, 1,00,000+ alumni. Award-winning early education.",
   keywords: "best preschool in thane, best preschool near me, top preschool thane, best playgroup thane, best nursery school thane, preschool thane",
 };
 
 const hero = {
   eyebrow: "Award-Winning Preschool Since 2007",
-  h1: "Best Preschool in Thane — Why Parents Choose Rainbow",
+  h1: "Best Preschool in Thane — Rainbow Preschool International",
   subheadline: "Rainbow Preschool International is a trusted early childhood education centre in Thane offering playgroup, nursery, kindergarten, and Happy Times programmes across multiple centres.",
   supporting: "Parents looking for the best preschool in Thane choose Rainbow for its award-winning curriculum, experienced educators, safe child-friendly campuses, and convenient locations across Manpada, Hariniwas, Anand Nagar, Dhokali, Kalwa, and Kasarvadavali.",
 };
@@ -278,6 +278,7 @@ export default function BestPreschoolInThane() {
     websiteSchema,
     createBreadcrumbSchema(breadcrumbs),
     createFAQSchema(faqs),
+    ...createAllBranchLocalBusinessSchemas(),
   ];
 
   return (

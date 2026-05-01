@@ -15,6 +15,7 @@ import { ErrorBoundary } from "@/components/error-boundary";
 import { AwardedBySection } from "@/components/awarded-by-section";
 import { EEATSignals } from "@/components/eeat-signals";
 import { LAST_UPDATED_DISPLAY, LAST_UPDATED_ISO } from "@shared/site-freshness";
+import { createAllBranchLocalBusinessSchemas } from "@shared/centre-data";
 import { ProgrammeCard } from "@/components/programme-card";
 import { BranchCard } from "@/components/branch-card";
 import { TestimonialCard } from "@/components/testimonial-card";
@@ -262,10 +263,18 @@ export default function Home() {
       "logo": "https://www.rainbowpreschools.com/images/logo.webp",
       "description": "Trusted preschool in Thane since 2007. Play-based early learning for children aged 1.5-5 years. 6 centres across Thane West.",
       "foundingDate": "2007",
-      "areaServed": {
-        "@type": "City",
-        "name": "Thane"
-      },
+      "areaServed": [
+        { "@type": "City", "name": "Thane" },
+        { "@type": "Place", "name": "Thane West" },
+        { "@type": "Place", "name": "Ghodbunder Road, Thane" },
+        { "@type": "Place", "name": "Manpada, Thane" },
+        { "@type": "Place", "name": "Naupada, Thane" },
+        { "@type": "Place", "name": "Majiwada, Thane" },
+        { "@type": "Place", "name": "Kolshet Road, Thane" },
+        { "@type": "Place", "name": "Kalwa, Thane" },
+        { "@type": "Place", "name": "Kasarvadavali, Thane" },
+        { "@type": "AdministrativeArea", "name": "Mumbai Metropolitan Region" }
+      ],
       "contactPoint": {
         "@type": "ContactPoint",
         "telephone": "+91-8291568972",
@@ -361,9 +370,18 @@ export default function Home() {
     const existingVideoScript = document.getElementById('video-schema');
     if (existingVideoScript) existingVideoScript.remove();
     document.head.appendChild(videoScript);
-    
+
+    // Add Branch LocalBusiness Schemas (one Preschool node per Thane centre)
+    const existingBranchScript = document.getElementById('home-branches-schema');
+    if (existingBranchScript) existingBranchScript.remove();
+    const branchScript = document.createElement('script');
+    branchScript.type = 'application/ld+json';
+    branchScript.id = 'home-branches-schema';
+    branchScript.textContent = JSON.stringify(createAllBranchLocalBusinessSchemas());
+    document.head.appendChild(branchScript);
+
     return () => {
-      ['organization-schema', 'website-schema', 'faq-schema', 'video-schema'].forEach(id => {
+      ['organization-schema', 'website-schema', 'faq-schema', 'video-schema', 'home-branches-schema'].forEach(id => {
         const s = document.getElementById(id);
         if (s) s.remove();
       });

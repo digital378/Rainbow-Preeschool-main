@@ -163,6 +163,72 @@ export function getCentreBySlug(slug: string): CentreData | undefined {
   return centres.find(c => c.localitySlug === slug);
 }
 
+// Build a Schema.org Preschool LocalBusiness JSON-LD object for a single Rainbow centre.
+// Used to surface every Thane branch as a distinct LocalBusiness on commercial landing pages,
+// improving local-pack visibility for "near me" and locality-modified queries.
+const RAINBOW_BASE_URL = "https://www.rainbowpreschools.com";
+
+export function createBranchLocalBusinessSchema(centre: CentreData) {
+  const primaryPhone = centre.phoneNumbers[0] || "+91-8291568972";
+  return {
+    "@context": "https://schema.org",
+    "@type": "Preschool",
+    "@id": `${RAINBOW_BASE_URL}${centre.preschoolLandingUrl}#localbusiness`,
+    name: `Rainbow Preschool International — ${centre.localityName}`,
+    description: `Rainbow Preschool International branch in ${centre.localityName}, Thane. Playgroup, Nursery and Kindergarten programmes for children aged 1.5–6 years, with trained female educators, CCTV-monitored classrooms and a play-based, NEP 2020-aligned curriculum.`,
+    url: `${RAINBOW_BASE_URL}${centre.preschoolLandingUrl}`,
+    image: `${RAINBOW_BASE_URL}/images/optimized/logo.webp`,
+    logo: `${RAINBOW_BASE_URL}/images/optimized/logo.webp`,
+    telephone: primaryPhone,
+    priceRange: "₹₹",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: centre.address,
+      addressLocality: `${centre.localityName}, Thane`,
+      addressRegion: "Maharashtra",
+      postalCode: "400607",
+      addressCountry: "IN",
+    },
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: centre.latitude,
+      longitude: centre.longitude,
+    },
+    hasMap: centre.googleMapsDirectionsUrl,
+    openingHoursSpecification: [
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+        opens: "08:00",
+        closes: "18:00",
+      },
+    ],
+    areaServed: {
+      "@type": "City",
+      name: "Thane",
+    },
+    parentOrganization: {
+      "@type": "EducationalOrganization",
+      "@id": `${RAINBOW_BASE_URL}/#organization`,
+      name: "Rainbow Preschool International",
+      url: RAINBOW_BASE_URL,
+    },
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.7",
+      reviewCount: "3997",
+      bestRating: "5",
+      worstRating: "1",
+    },
+  };
+}
+
+// Returns a JSON-LD schema array containing one Preschool LocalBusiness object per Rainbow
+// centre — drop into any commercial page's `structuredData` to publish all 6 Thane branches.
+export function createAllBranchLocalBusinessSchemas() {
+  return centres.map(createBranchLocalBusinessSchema);
+}
+
 // Get centre by id
 export function getCentreById(id: string): CentreData | undefined {
   return centres.find(c => c.id === id);

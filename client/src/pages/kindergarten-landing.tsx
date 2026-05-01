@@ -30,6 +30,7 @@ import { ContactForm } from "@/components/contact-form";
 import { CountUp } from "@/components/count-up";
 import { BranchCard } from "@/components/branch-card";
 import { branches } from "@shared/schema";
+import { createAllBranchLocalBusinessSchemas } from "@shared/centre-data";
 import { 
   CheckCircle, ArrowRight, MapPin, Phone, Clock, Users, Star, Shield, 
   Lock, BookOpen, PenTool, Calculator, Microscope, Globe, Dumbbell,
@@ -381,13 +382,19 @@ export default function KindergartenLanding() {
     faqScript.type = 'application/ld+json';
     faqScript.id = 'kindergarten-faq-schema';
     faqScript.textContent = JSON.stringify(faqSchema);
-    const existing = document.getElementById('kindergarten-faq-schema');
-    if (existing) existing.remove();
+
+    const branchScript = document.createElement('script');
+    branchScript.type = 'application/ld+json';
+    branchScript.id = 'kindergarten-branches-schema';
+    branchScript.textContent = JSON.stringify(createAllBranchLocalBusinessSchemas());
+
+    const ids = ['kindergarten-faq-schema', 'kindergarten-branches-schema'];
+    ids.forEach(id => { const e = document.getElementById(id); if (e) e.remove(); });
     document.head.appendChild(faqScript);
+    document.head.appendChild(branchScript);
 
     return () => {
-      const el = document.getElementById('kindergarten-faq-schema');
-      if (el) el.remove();
+      ids.forEach(id => { const el = document.getElementById(id); if (el) el.remove(); });
     };
   }, []);
 
