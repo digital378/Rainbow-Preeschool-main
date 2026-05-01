@@ -195,6 +195,7 @@ export function createBranchLocalBusinessSchema(centre: CentreData) {
       longitude: centre.longitude,
     },
     hasMap: centre.googleMapsDirectionsUrl,
+    openingHours: "Mo-Sa 08:00-18:00",
     openingHoursSpecification: [
       {
         "@type": "OpeningHoursSpecification",
