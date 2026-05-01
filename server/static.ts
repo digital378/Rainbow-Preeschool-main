@@ -14,6 +14,7 @@ export function serveStatic(app: Express) {
     setHeaders(res, filePath) {
       const ext = path.extname(filePath).toLowerCase();
       if ([".js", ".css", ".woff", ".woff2", ".ttf", ".otf", ".webp", ".png", ".jpg", ".jpeg", ".gif", ".svg", ".ico", ".avif"].includes(ext)) {
+        res.removeHeader("Set-Cookie");
         res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
       } else if (ext === ".html") {
         res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
