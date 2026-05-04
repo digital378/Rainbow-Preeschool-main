@@ -595,9 +595,9 @@ const SEO_ACTIONS: { id: string; status: "done" | "pending" | "opportunity"; pri
   },
   {
     id: "gbp-website-url",
-    status: "pending", priority: "high", category: "Local SEO",
+    status: "done", priority: "high", category: "Local SEO",
     title: "Update Google Business Profile website URL",
-    detail: "GBP profile should link to https://www.rainbowpreschools.com/ (clean canonical, no UTM). Currently may include UTM parameters that trigger redirect before visitors reach the site. Do this in GBP manager for all 6 centre listings.",
+    detail: "✅ COMPLETED 4 May 2026 — all 6 centre GBP listings now point to clean https://www.rainbowpreschools.com/ canonical with no UTM parameters. Removed the redirect hop on every GBP click.",
     impact: "Removes redirect hop for GBP visitors; consolidates link equity.",
   },
   {
@@ -633,10 +633,10 @@ const SEO_ACTIONS: { id: string; status: "done" | "pending" | "opportunity"; pri
   // ─── New tasks added 22 Apr 2026 ─────────────────────────────────────────────
   {
     id: "gbp-fresh-reviews",
-    status: "pending", priority: "critical", category: "Local SEO",
+    status: "done", priority: "critical", category: "Local SEO",
     title: "Get 5 fresh Google reviews this week (one per centre)",
-    detail: "Single biggest lever for 'preschool near me' (#41) and 'playschool near me'. Pick 5 happy parents — one from each of the 5 most-visited centres — and WhatsApp them the direct review link for that centre's Google Business Profile. Goal: 5 new reviews in 7 days, then keep adding 3–5 per month. Review velocity (recent + steady, not bulk) is what Google weights highest.",
-    impact: "Each fresh review can move 'near me' position 1–3 spots. 5 reviews could lift 'preschool near me' from #41 to #25–30 within 4 weeks.",
+    detail: "✅ COMPLETED week of 4 May 2026 — 5 fresh reviews collected, one per centre. Single biggest lever for 'preschool near me' (#20.3) and 'playschool near me' (#10.1). Pick 5 happy parents — one from each of the 5 most-visited centres — and WhatsApp them the direct review link for that centre's Google Business Profile. Goal: 5 new reviews in 7 days, then keep adding 3–5 per month. Review velocity (recent + steady, not bulk) is what Google weights highest.",
+    impact: "Each fresh review can move 'near me' position 1–3 spots; expect lift on 'preschool near me' (#20.3) and 'playschool near me' (#10.1) within 2–4 weeks.",
   },
   {
     id: "justdial-sulekha-listings",
