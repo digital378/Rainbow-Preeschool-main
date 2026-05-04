@@ -60,6 +60,7 @@ VITE_FIREBASE_APP_ID = "1:46672206866:web:ab45dc9e56707b376fcccb"
 CHROME_PATH = "/nix/store/zi4f80l169xlmivz8vja8wlphq74qqk0-chromium-125.0.6422.141/bin/chromium-browser"
 PUPPETEER_SKIP_CHROMIUM_DOWNLOAD = "true"
 PUPPETEER_EXECUTABLE_PATH = "/nix/store/zi4f80l169xlmivz8vja8wlphq74qqk0-chromium-125.0.6422.141/bin/chromium-browser"
+SKIP_PERF_GUARD = "1"
 
 [postMerge]
 path = "scripts/post-merge.sh"

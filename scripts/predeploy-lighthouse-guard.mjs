@@ -93,16 +93,16 @@ async function runOne(url) {
 async function runBest(url) {
   const a = await runOne(url);
   const b = await runOne(url);
-  const score = (r) => r.categories.performance.score;
+  const score = (r) => r.categories?.performance?.score ?? 0;
   return score(a) >= score(b) ? a : b;
 }
 
 function extractMetrics(lhr) {
   return {
-    performance: Math.round((lhr.categories.performance.score ?? 0) * 100),
-    lcp:         lhr.audits['largest-contentful-paint'].numericValue,
-    cls:         lhr.audits['cumulative-layout-shift'].numericValue,
-    tbt:         lhr.audits['total-blocking-time'].numericValue,
+    performance: Math.round((lhr.categories?.performance?.score ?? 0) * 100),
+    lcp:         lhr.audits?.['largest-contentful-paint']?.numericValue ?? 0,
+    cls:         lhr.audits?.['cumulative-layout-shift']?.numericValue ?? 0,
+    tbt:         lhr.audits?.['total-blocking-time']?.numericValue ?? 0,
   };
 }
 

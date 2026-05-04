@@ -1,0 +1,45 @@
+Yes, ship it — but not as a hard gate yet. The work is solid and ready for production. The guard isn't ready to be load-bearing until you've run it manually a few times.
+Two things to do before you click publish, and one decision about the guard:
+Before publish
+1. Run the guard locally 3-4 times right now, exactly as Replit suggested. This is the calibration step we agreed on, and it should happen before the guard is in the deploy path, not after. If Chromium fails to launch on Replit's NixOS, or if the numbers swing 15+ points run-to-run, you want to know that now — not when it blocks a real deploy at 11pm.
+bashnpm run build && NODE_ENV=production node dist/index.cjs &
+sleep 3
+BASE_URL=http://localhost:5000 node scripts/predeploy-lighthouse-guard.mjs
+# repeat 3-4 times, kill the server between or reuse it
+Three possible outcomes:
+
+Stable, passing the defaults comfortably — great. Set LH_MIN_PERF etc. to current-minus-buffer, then publish with the guard active.
+Stable but borderline (e.g. Perf 62 with default floor 60) — publish with SKIP_PERF_GUARD=1 for this deploy, then tighten thresholds against the post-deploy production numbers, then make it blocking on the next deploy.
+Chromium errors or wildly unstable numbers — publish with SKIP_PERF_GUARD=1, fix the environment problem as a separate task. Don't let "guard infrastructure broken" block "fixes that already work."
+
+The point is: don't let the guard, which is meant to be a safety net, become the thing that prevents the safety net from being installed.
+2. Have the post-deploy verification commands ready in a terminal. First 5 minutes after publish, run:
+bash# Cloudflare cache, mobile UA — first request
+curl -sI -A "Mozilla/5.0 (iPhone)" https://www.rainbowpreschools.com/ \
+  | grep -iE 'cf-cache-status|cf-ray|cache-control|set-cookie'
+
+# Wait 30s, run again — second should be HIT
+sleep 30
+curl -sI -A "Mozilla/5.0 (iPhone)" https://www.rainbowpreschools.com/ \
+  | grep -iE 'cf-cache-status|cf-ray|cache-control|set-cookie'
+
+# Bot UA — should be DYNAMIC, body should still have JSON-LD
+curl -s -A "Googlebot/2.1" https://www.rainbowpreschools.com/ | grep -c 'application/ld+json'
+What you want to see:
+
+First human request: cache-control: public, max-age=0, s-maxage=300, stale-while-revalidate=86400, cf-ray: ...-BOM, cf-cache-status: MISS or EXPIRED
+Second human request: cf-cache-status: HIT ← this is the win
+Bot request: still has JSON-LD, cache-control: private, no-cache — confirms isolation works
+set-cookie: GAESA=... still present on both — that's the known follow-up for #1
+
+If the second request still says DYNAMIC, the GAESA cookie is suppressing the cache fix and s-maxage=300 is doing nothing. That's the moment Replit's deferred Task #77 becomes urgent rather than tech debt — you'll need the Cloudflare Cache Rule (or to find the CF product injecting the cookie) to realize the LCP win.
+On the guard
+Replit's plan to wire it as blocking with overridable env vars is right. The piece I'd nudge: explicitly set SKIP_PERF_GUARD=1 for the publish-now deploy, even if your local runs pass. Reason: the local preview environment doesn't have Cloudflare in front of it, so local Lighthouse will measure an LCP that's worse than what real Mumbai users see (no edge cache, no compression tuning). You don't want the guard's first production-path appearance to be a false fail on a deploy you actually want to ship.
+After this deploy is live and CrUX has a few days of data, you'll have a real-world floor to calibrate against. That's the right moment to make it blocking by default.
+What I'd tell Replit
+
+Run the guard locally 3-4 times first against node dist/index.cjs to confirm Chromium launches cleanly and numbers are stable. Then publish with SKIP_PERF_GUARD=1 for this one deploy — local Lighthouse can't measure the Cloudflare cache benefit, so the guard would be testing the wrong thing on day one. Have the cache verification curls ready to run within 5 minutes of publish. Once production CrUX has a few days of post-fix data, calibrate LH_MIN_PERF / LH_MAX_LCP to those numbers minus a small buffer, drop the SKIP flag, and the guard becomes a real gate.
+
+Then publish.
+One last thing: capture the current production CrUX numbers (PageSpeed Insights, "Field Data" section) before you publish. You'll want a baseline for the post-deploy comparison, and once the deploy lands the rolling 28-day window starts shifting and the baseline is gone.
+Ship it.
