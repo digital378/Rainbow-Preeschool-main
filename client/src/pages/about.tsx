@@ -85,12 +85,7 @@ export default function About() {
       />
 
       {/* SECTION A - Hero */}
-      <section className="py-16 md:py-24 lg:py-32 flex items-center justify-center relative overflow-hidden">
-        <div 
-          className="absolute inset-0 bg-cover bg-center opacity-[0.15]"
-          style={{ backgroundImage: `url('/images/optimized/DSC00002.webp')` }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-accent/5 to-secondary/5" />
+      <section className="py-16 md:py-24 lg:py-32 flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-primary/5 via-accent/5 to-secondary/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center max-w-4xl mx-auto">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
