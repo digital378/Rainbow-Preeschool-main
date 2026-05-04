@@ -113,6 +113,26 @@ const REDIRECT_BASE: Array<{ from: string; to: string }> = [
   // Broken internal link from nursery SSR page
   { from: "/nursery-school-admission-thane", to: "/nursery" },
 
+  // ── Orphan locality URL variants (May 2026 — Task #67) ──────────────────
+  // Locality slugs without dedicated pages — each 301s to the nearest real
+  // centre or the canonical commercial page when the area is ambiguous.
+  // Mirrored in server/redirects.ts; the bare → trailing-slash expansion at
+  // the bottom of this file generates both variants automatically.
+  { from: "/preschool-in-ghodbunder-road", to: "/preschool-in-kasarvadavali-thane" },
+  { from: "/preschool-in-ghodbunder-road-thane", to: "/preschool-in-kasarvadavali-thane" },
+  { from: "/preschool-in-thane-west", to: "/best-preschool-near-me-in-thane" },
+  { from: "/preschool-in-naupada", to: "/preschool-in-hariniwas-thane" },
+  { from: "/preschool-in-naupada-thane", to: "/preschool-in-hariniwas-thane" },
+  { from: "/preschool-in-panchpakadi", to: "/preschool-in-hariniwas-thane" },
+  { from: "/preschool-in-panchpakadi-thane", to: "/preschool-in-hariniwas-thane" },
+  { from: "/preschool-in-majiwada", to: "/preschool-in-anand-nagar-thane" },
+  { from: "/preschool-in-majiwada-thane", to: "/preschool-in-anand-nagar-thane" },
+  { from: "/preschool-in-kolshet", to: "/preschool-in-dhokali-thane" },
+  { from: "/preschool-in-kolshet-road", to: "/preschool-in-dhokali-thane" },
+  { from: "/preschool-in-kolshet-thane", to: "/preschool-in-dhokali-thane" },
+  { from: "/preschool-in-manisha-nagar", to: "/preschool-in-kalwa-thane" },
+  { from: "/preschool-in-manisha-nagar-thane", to: "/preschool-in-kalwa-thane" },
+
   // ── Wave-3 legacy → commercial consolidation (Apr 2026) ──────────────────
   // The legacy /preschool-admission-process-guide is a near-duplicate of the
   // commercial /preschool-admissions page (same documents, fees, process,

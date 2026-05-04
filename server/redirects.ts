@@ -259,6 +259,50 @@ export const redirectMap: Record<string, string> = {
   "/nursery-school-admission-thane": "/nursery",
   "/nursery-school-admission-thane/": "/nursery",
 
+  // ── Orphan locality URL variants (May 2026 — Task #67) ───────────────────
+  // These slugs do not have dedicated pages and are not in the sitemap, but
+  // may already be indexed via older campaigns or external links. Without an
+  // explicit redirect they fall through to the SPA shell and Google flags
+  // them as Soft 404. Each maps to the geographically-nearest real centre
+  // (or the commercial Thane page when ambiguous). Capitalised variants are
+  // handled automatically because the middleware lowercases before lookup.
+  //
+  // Ghodbunder Road: spans both Manpada and Kasarvadavali. Kasarvadavali is
+  // the most prominent Ghodbunder Road address, so it wins the redirect.
+  "/preschool-in-ghodbunder-road": "/preschool-in-kasarvadavali-thane",
+  "/preschool-in-ghodbunder-road/": "/preschool-in-kasarvadavali-thane",
+  "/preschool-in-ghodbunder-road-thane": "/preschool-in-kasarvadavali-thane",
+  "/preschool-in-ghodbunder-road-thane/": "/preschool-in-kasarvadavali-thane",
+  // Thane West: generic city-area slug → canonical commercial page.
+  "/preschool-in-thane-west": "/best-preschool-near-me-in-thane",
+  "/preschool-in-thane-west/": "/best-preschool-near-me-in-thane",
+  // Naupada / Panchpakadi: Hariniwas centre is at Hariniwas Circle, Panchpakadi.
+  "/preschool-in-naupada": "/preschool-in-hariniwas-thane",
+  "/preschool-in-naupada/": "/preschool-in-hariniwas-thane",
+  "/preschool-in-naupada-thane": "/preschool-in-hariniwas-thane",
+  "/preschool-in-naupada-thane/": "/preschool-in-hariniwas-thane",
+  "/preschool-in-panchpakadi": "/preschool-in-hariniwas-thane",
+  "/preschool-in-panchpakadi/": "/preschool-in-hariniwas-thane",
+  "/preschool-in-panchpakadi-thane": "/preschool-in-hariniwas-thane",
+  "/preschool-in-panchpakadi-thane/": "/preschool-in-hariniwas-thane",
+  // Majiwada: Anand Nagar centre is in the Majiwada area.
+  "/preschool-in-majiwada": "/preschool-in-anand-nagar-thane",
+  "/preschool-in-majiwada/": "/preschool-in-anand-nagar-thane",
+  "/preschool-in-majiwada-thane": "/preschool-in-anand-nagar-thane",
+  "/preschool-in-majiwada-thane/": "/preschool-in-anand-nagar-thane",
+  // Kolshet / Kolshet Road: Dhokali centre is on Kolshet Road.
+  "/preschool-in-kolshet": "/preschool-in-dhokali-thane",
+  "/preschool-in-kolshet/": "/preschool-in-dhokali-thane",
+  "/preschool-in-kolshet-road": "/preschool-in-dhokali-thane",
+  "/preschool-in-kolshet-road/": "/preschool-in-dhokali-thane",
+  "/preschool-in-kolshet-thane": "/preschool-in-dhokali-thane",
+  "/preschool-in-kolshet-thane/": "/preschool-in-dhokali-thane",
+  // Manisha Nagar: Kalwa centre is in Manisha Nagar.
+  "/preschool-in-manisha-nagar": "/preschool-in-kalwa-thane",
+  "/preschool-in-manisha-nagar/": "/preschool-in-kalwa-thane",
+  "/preschool-in-manisha-nagar-thane": "/preschool-in-kalwa-thane",
+  "/preschool-in-manisha-nagar-thane/": "/preschool-in-kalwa-thane",
+
   // ── Programme-in-thane canonical consolidation (Apr 2026) ────────────────
   // City-broad programme duplicates fold into the main programme page —
   // hyperlocal /playgroup-in-{manpada,kalwa,...} and /preschool-in-{locality}-thane
