@@ -625,7 +625,7 @@ export default function Home() {
           <div className="text-center mb-8" data-reveal="float">
             <h2 className="text-2xl md:text-3xl font-bold mb-2" data-sparkle>Find a Centre Near You</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Each of our six centres offers the same trusted curriculum, certified teachers, and safe learning spaces that families have loved for over 18 years.
+              Each of our six centres offers the same trusted curriculum, certified teachers, and safe learning spaces that families have trusted for over 18 years.
             </p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">

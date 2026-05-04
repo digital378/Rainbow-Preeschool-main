@@ -27,7 +27,7 @@ const testimonials: Testimonial[] = [
     centre: "Manpada",
     programme: "Nursery",
     rating: 5,
-    text: "My daughter's transformation at Rainbow Preschool has been incredible. She was extremely shy when she started, and within 3 months she was confidently participating in group activities and making friends. The teachers are patient, loving, and truly understand children. Best decision we made as parents.",
+    text: "My daughter's transformation at Rainbow Preschool has been remarkable. She was extremely shy when she started, and within 3 months she was confidently participating in group activities and making friends. The teachers are patient, loving, and truly understand children. Best decision we made as parents.",
     childAge: "3 years",
   },
   {
@@ -81,7 +81,7 @@ const testimonials: Testimonial[] = [
     centre: "Manpada",
     programme: "Nursery",
     rating: 4,
-    text: "Rainbow Preschool's Manpada centre is conveniently located and well-maintained. My son has learned so much in just 6 months — colours, numbers, alphabets, and most importantly, how to share and make friends. The annual day celebration was absolutely wonderful.",
+    text: "Rainbow Preschool's Manpada centre is conveniently located and well-maintained. My son has learned so much in just 6 months — colours, numbers, alphabets, and most importantly, how to share and make friends. The annual day celebration was thoroughly enjoyable.",
     childAge: "3 years",
   },
   {

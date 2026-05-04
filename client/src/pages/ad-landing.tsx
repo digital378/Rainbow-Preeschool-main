@@ -106,7 +106,7 @@ const CONFIG = {
         location: "Kasarvadavali, Thane",
       },
       {
-        quote: "My daughter loves going to school every day. The activity-based learning is amazing — she's grown so much in just a few months.",
+        quote: "My daughter loves going to school every day. The activity-based learning is genuinely effective — she's grown so much in just a few months.",
         author: "Meera K.",
         location: "Dhokali, Thane",
       },

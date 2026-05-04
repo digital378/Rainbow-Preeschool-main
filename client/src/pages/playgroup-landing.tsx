@@ -651,7 +651,7 @@ export default function PlaygroupLanding() {
           <div className="text-center mb-10">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Playgroup in Thane — Why 1,00,000+ Parents Choose Rainbow</h2>
             <p className="text-muted-foreground text-lg max-w-3xl mx-auto">
-              Looking for a trusted <strong>playgroup in Thane</strong>? Rainbow Preschool International has been Thane's most-loved early-years home since 2007, with 6 centres across Thane West and a 18+ year track record of nurturing happy, confident toddlers.
+              Looking for a trusted <strong>playgroup in Thane</strong>? Rainbow Preschool International has been a trusted early-years home in Thane since 2007, with 6 centres across Thane West and a 18+ year track record of nurturing happy, confident toddlers.
             </p>
           </div>
           <div className="grid md:grid-cols-2 gap-6 mb-10">

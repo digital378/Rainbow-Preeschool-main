@@ -441,7 +441,7 @@ const centreReviews: Record<string, Array<{ summary: string; date: string; ratin
   ],
   Dhokali: [
     { summary: "Aggregated parent feedback for the Dhokali centre on Kolshet Road confirms an age-appropriate curriculum, deep teacher understanding of early childhood development, and consistent rating of safety features (CCTV, secure entry/exit, verified pickup) above 4.8/5.", date: "2025-09-18", rating: "5" },
-    { summary: "Curriculum-team review of the Dhokali centre highlights a wonderful play area, fast settling-in (typically within the first week) and high satisfaction with the daily parent-communication channel used by class teachers.", date: "2025-05-28", rating: "5" },
+    { summary: "Curriculum-team review of the Dhokali centre highlights a well-equipped play area, fast settling-in (typically within the first week) and high satisfaction with the daily parent-communication channel used by class teachers.", date: "2025-05-28", rating: "5" },
   ],
   Kalwa: [
     { summary: "Aggregated parent feedback for the Kalwa centre highlights the Happy Times extended after-school programme as a major reason working parents in East Thane choose Rainbow. Children remain engaged and learning until working parents finish their day.", date: "2025-05-20", rating: "4" },

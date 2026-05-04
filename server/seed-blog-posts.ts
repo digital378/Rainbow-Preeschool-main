@@ -2209,7 +2209,7 @@ RIS_BACKLINK:Play-based learning continues to be valuable as children grow. [Rai
 
 **Visit the School:** If possible, take your child to visit the preschool before the first day. Walk around, meet the teachers, and let your child explore the classroom. Familiarity reduces anxiety.
 
-**Read Books About Starting School:** There are many wonderful picture books about the first day of school. Reading these together helps children understand what to expect and opens conversations about their feelings.
+**Read Books About Starting School:** There are many well-chosen picture books about the first day of school. Reading these together helps children understand what to expect and opens conversations about their feelings.
 
 **Establish Routines:** Start adjusting your daily routine to match school timings a few weeks in advance. Practice waking up, having breakfast, and getting ready at the times you'll need to on school days.
 
@@ -2363,7 +2363,7 @@ Physical safety is essential, but emotional safety matters just as much. Childre
 
 **Supported:** When children struggle - whether with a task or an emotion - they receive gentle guidance, not criticism.
 
-**Loved:** Warm, caring relationships with teachers help children feel secure enough to learn.
+**Cared for:** Warm, caring relationships with teachers help children feel secure enough to learn.
 
 ## The Learning Environment
 
@@ -2875,7 +2875,7 @@ Shy children often benefit the most from play school. The structured, predictabl
 
 ### "Isn't my child better off at home with grandparents or a nanny?"
 
-Home care with loving adults is wonderful, but it cannot replicate the specific benefits of a peer group setting. Children learn crucial skills — sharing, taking turns, cooperating, communicating with non-family adults — that only happen in a group environment.
+Home care with loving adults is valuable, but it cannot replicate the specific benefits of a peer group setting. Children learn crucial skills — sharing, taking turns, cooperating, communicating with non-family adults — that only happen in a group environment.
 
 ## How to Make the Transition Smooth
 
@@ -3359,7 +3359,7 @@ Children now sit for longer stories, point at pictures, and start filling in fam
 - *Brown Bear, Brown Bear, What Do You See?* by Bill Martin Jr — Rhythmic, predictable text. Perfect for participation
 - *We're Going on a Bear Hunt* by Michael Rosen — Action-packed with great sound effects and repetition
 - *Each Peach Pear Plum* by Janet and Allan Ahlberg — Rhyming story with hidden character spotting
-- *Giraffes Can't Dance* by Giles Andreae — A wonderful story about being different and finding your talent
+- *Giraffes Can't Dance* by Giles Andreae — A thoughtful story about being different and finding your talent
 
 **Reading tips for this age:** Let children hold the book and turn pages. Point to pictures and name them. Use funny voices for different characters. Read favourite books again and again — repetition is powerful learning.
 
@@ -3391,7 +3391,7 @@ Children are now developing pre-reading skills. They recognise some letters and 
 
 **Indian Titles:**
 - *Muskaan ki Duniya* series (Hindi readers) — Simple Hindi stories with engaging illustrations for early reading practice
-- *Bondapalli* by Sandhya Rao — Whimsical story about a magical village
+- *Bondapalli* by Sandhya Rao — Whimsical story about an imaginative village
 - *Bahadur* by Menaka Raman — An adventure story about a brave dog in India
 - *Amar Chitra Katha Junior Series* — Simplified Indian mythology stories perfect for this age
 
@@ -3433,7 +3433,7 @@ The book list is only useful if reading becomes a daily habit. Here's how:
 
 **Make it fun:** Use funny voices, let children choose books, re-read favourites endlessly, and never force reading. The goal is to build positive associations with books.
 
-**Make it Indian:** Include books with Indian characters, settings, and languages. Children connect more deeply with stories that reflect their own world. The Indian children's book market has exploded in recent years — there are wonderful options available.
+**Make it Indian:** Include books with Indian characters, settings, and languages. Children connect more deeply with stories that reflect their own world. The Indian children's book market has expanded considerably in recent years — there are plenty of strong options available.
 
 ## Where to Find Children's Books in Thane
 
