@@ -1,0 +1,88 @@
+#!/bin/sh
+#
+# Pre-push hook: second safety net on top of `.githooks/pre-commit`.
+#
+# The pre-commit hook can be bypassed (`git commit --no-verify`,
+# `SKIP_PRECOMMIT=1`), so a teammate can still wind up trying to push
+# code that doesn't pass `npm run check`. This hook re-runs the same
+# check on push and aborts the push on failure.
+#
+# To avoid re-running a full type-check when the pre-commit hook
+# *just* ran successfully on the same tree, both hooks write the
+# git tree-ish of HEAD to `.git/.npm-check-ok` after a successful
+# run. If HEAD's tree still matches, we skip.
+#
+# Enable this hook once with:
+#     bash scripts/install-hooks.sh
+# (or manually:  git config core.hooksPath .githooks)
+#
+# Bypass a single push (e.g. emergency hotfix) with:
+#     git push --no-verify
+# or:
+#     SKIP_PREPUSH=1 git push ...
+
+set -e
+
+if [ "${SKIP_PREPUSH:-0}" = "1" ]; then
+  echo "[pre-push] SKIP_PREPUSH=1 set — skipping npm run check."
+  exit 0
+fi
+
+REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || true)"
+if [ -z "$REPO_ROOT" ]; then
+  echo "[pre-push] not inside a git working tree — skipping." >&2
+  exit 0
+fi
+
+CACHE_FILE="$REPO_ROOT/.git/.npm-check-ok"
+HEAD_TREE="$(git rev-parse HEAD^{tree} 2>/dev/null || true)"
+
+if [ -n "$HEAD_TREE" ] && [ -f "$CACHE_FILE" ]; then
+  CACHED="$(cat "$CACHE_FILE" 2>/dev/null || true)"
+  if [ "$CACHED" = "$HEAD_TREE" ]; then
+    echo "[pre-push] 'npm run check' already passed for this tree — skipping."
+    exit 0
+  fi
+fi
+
+# Fail closed if npm isn't available — we can't verify the tree without it.
+if ! command -v npm >/dev/null 2>&1; then
+  echo "[pre-push] 'npm' not found on PATH — cannot run 'npm run check'." >&2
+  echo "[pre-push] Install Node.js / npm, or bypass once with --no-verify" >&2
+  echo "[pre-push] (or SKIP_PREPUSH=1) if you know the change is safe." >&2
+  exit 1
+fi
+
+echo "[pre-push] Running 'npm run check' ..."
+if ! npm run --silent check; then
+  echo "" >&2
+  echo "[pre-push] 'npm run check' failed. Push aborted." >&2
+  echo "[pre-push] Fix the issues above, or re-run with --no-verify to bypass." >&2
+  exit 1
+fi
+
+# Mirror pre-commit: also run the brand-colour and title guards so a push
+# can't sneak past them even if package.json's `check` script is changed.
+echo "[pre-push] Running 'tsx scripts/check-no-pink.ts' ..."
+if ! npx --no-install tsx scripts/check-no-pink.ts; then
+  echo "" >&2
+  echo "[pre-push] 'check-no-pink' failed. Push aborted." >&2
+  echo "[pre-push] Fix the issues above, or re-run with --no-verify to bypass." >&2
+  exit 1
+fi
+
+echo "[pre-push] Running 'tsx scripts/check-no-title-cannibalisation.ts' ..."
+if ! npx --no-install tsx scripts/check-no-title-cannibalisation.ts; then
+  echo "" >&2
+  echo "[pre-push] 'check-no-title-cannibalisation' failed. Push aborted." >&2
+  echo "[pre-push] Fix the issues above, or re-run with --no-verify to bypass." >&2
+  exit 1
+fi
+
+# Record success so a subsequent push on the same tree can skip.
+if [ -n "$HEAD_TREE" ]; then
+  printf '%s' "$HEAD_TREE" > "$CACHE_FILE" 2>/dev/null || true
+fi
+
+echo "[pre-push] Checks passed."
+exit 0

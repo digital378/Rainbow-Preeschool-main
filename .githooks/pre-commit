@@ -62,5 +62,13 @@ if ! npx --no-install tsx scripts/check-no-title-cannibalisation.ts; then
   exit 1
 fi
 
+# Record success so the pre-push hook can skip a redundant re-run on
+# the same tree. Best-effort only — never fail the commit on this.
+REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || true)"
+HEAD_TREE="$(git write-tree 2>/dev/null || true)"
+if [ -n "$REPO_ROOT" ] && [ -n "$HEAD_TREE" ]; then
+  printf '%s' "$HEAD_TREE" > "$REPO_ROOT/.git/.npm-check-ok" 2>/dev/null || true
+fi
+
 echo "[pre-commit] Checks passed."
 exit 0

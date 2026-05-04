@@ -67,4 +67,5 @@ The application is a full-stack web application with a React-based frontend and 
 ### Build & Development Tools
 -   **Bundler**: Vite for frontend assets and esbuild for backend code.
 -   **TypeScript**: Configured with strict mode and path aliases for enhanced developer experience and code quality.
--   **Local Code Checks**: Pre-commit hooks (`.githooks/pre-commit`) ensure adherence to coding standards, including byline guidelines and type checking, before commits are finalized.
+-   **Local Code Checks**: Pre-commit hooks (`.githooks/pre-commit`) ensure adherence to coding standards, including byline guidelines and type checking, before commits are finalized. Bypass once with `git commit --no-verify` or `SKIP_PRECOMMIT=1 git commit ...`.
+-   **Pre-push Safety Net**: A pre-push hook (`.githooks/pre-push`) re-runs `npm run check` (plus the no-pink and title-cannibalisation guards) before `git push`, so commits that slipped past pre-commit (e.g. via `--no-verify`) still can't reach the remote. It is auto-installed by `bash scripts/install-hooks.sh` and skips re-running if pre-commit just succeeded on the same tree. Bypass once with `git push --no-verify` or `SKIP_PREPUSH=1 git push ...`.
