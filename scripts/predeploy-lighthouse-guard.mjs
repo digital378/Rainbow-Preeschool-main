@@ -27,11 +27,23 @@ const PAGES = [
   { name: 'best-preschool-thane', path: '/best-preschool-near-me-in-thane' },
 ];
 
+// Thresholds can be overridden via env vars so predeploy.sh can pass
+// values calibrated to the current production baseline minus a small buffer,
+// without editing this file.
+//
+//   LH_MIN_PERF  — minimum acceptable performance score (default 60)
+//   LH_MAX_LCP   — maximum acceptable LCP in ms        (default 4000)
+//   LH_MAX_CLS   — maximum acceptable CLS              (default 0.10)
+//   LH_MAX_TBT   — maximum acceptable TBT in ms        (default 1200)
+//
+// After the first successful baseline run, set these in predeploy.sh to
+// "current score minus a small buffer" so the guard catches regressions,
+// not just catastrophic failures.
 const THRESHOLDS = {
-  performance: 60,   // score 0-100
-  lcp:         4000, // ms
-  cls:         0.1,
-  tbt:         1200, // ms
+  performance: parseInt(process.env.LH_MIN_PERF  ?? '60',   10),
+  lcp:         parseInt(process.env.LH_MAX_LCP   ?? '4000', 10),
+  cls:       parseFloat(process.env.LH_MAX_CLS   ?? '0.1'),
+  tbt:         parseInt(process.env.LH_MAX_TBT   ?? '1200', 10),
 };
 
 const LH_CONFIG = {

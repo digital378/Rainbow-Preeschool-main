@@ -142,7 +142,32 @@ npx --no-install tsx scripts/check-sitemap-200.ts "${PREDEPLOY_URL}"
 SITEMAP_EXIT=$?
 set -e
 
-if [ "${FRESHNESS_EXIT}" -ne 0 ] || [ "${KEYWORD_EXIT}" -ne 0 ] || [ "${SITEMAP_EXIT}" -ne 0 ]; then
+# ── step 8 — Lighthouse performance guard ────────────────────────────────────
+# Runs a simulated-mobile Lighthouse audit against home + priority landing page.
+# Skippable during initial threshold calibration: SKIP_PERF_GUARD=1 bash predeploy.sh
+#
+# Thresholds are set via env vars (LH_MIN_PERF, LH_MAX_LCP, LH_MAX_CLS,
+# LH_MAX_TBT). After the first successful baseline run, tune these to
+# "observed score minus a small buffer" so the guard catches regressions, not
+# just catastrophic failures. See scripts/predeploy-lighthouse-guard.mjs.
+PERF_EXIT=0
+if [ "${SKIP_PERF_GUARD:-0}" != "1" ]; then
+  log "step 8/8 — Lighthouse performance guard (BASE_URL=${PREDEPLOY_URL})"
+  set +e
+  BASE_URL="${PREDEPLOY_URL}" \
+    LH_MIN_PERF="${LH_MIN_PERF:-60}" \
+    LH_MAX_LCP="${LH_MAX_LCP:-4000}" \
+    LH_MAX_CLS="${LH_MAX_CLS:-0.1}" \
+    LH_MAX_TBT="${LH_MAX_TBT:-1200}" \
+    node scripts/predeploy-lighthouse-guard.mjs
+  PERF_EXIT=$?
+  set -e
+else
+  log "step 8/8 — Lighthouse performance guard SKIPPED (SKIP_PERF_GUARD=1)"
+fi
+# ─────────────────────────────────────────────────────────────────────────────
+
+if [ "${FRESHNESS_EXIT}" -ne 0 ] || [ "${KEYWORD_EXIT}" -ne 0 ] || [ "${SITEMAP_EXIT}" -ne 0 ] || [ "${PERF_EXIT}" -ne 0 ]; then
   if [ "${FRESHNESS_EXIT}" -ne 0 ]; then
     log "FAIL — freshness smoke-test exited ${FRESHNESS_EXIT}. See offending URLs above."
   fi
@@ -152,18 +177,25 @@ if [ "${FRESHNESS_EXIT}" -ne 0 ] || [ "${KEYWORD_EXIT}" -ne 0 ] || [ "${SITEMAP_
   if [ "${SITEMAP_EXIT}" -ne 0 ]; then
     log "FAIL — sitemap-200 smoke-test exited ${SITEMAP_EXIT}. See offending URLs above."
   fi
+  if [ "${PERF_EXIT}" -ne 0 ]; then
+    log "FAIL — Lighthouse performance guard exited ${PERF_EXIT}. See per-page results above."
+    log "To bypass during threshold calibration: SKIP_PERF_GUARD=1 bash scripts/predeploy.sh"
+  fi
   log "tail of booted server log (last 80 lines of ${SERVER_LOG}):"
   tail -n 80 "${SERVER_LOG}" >&2 || true
   log "blocking deploy."
-  # Surface whichever HTTP check failed first (freshness → keyword → sitemap).
+  # Surface whichever HTTP check failed first (freshness → keyword → sitemap → perf).
   if [ "${FRESHNESS_EXIT}" -ne 0 ]; then
     exit "${FRESHNESS_EXIT}"
   fi
   if [ "${KEYWORD_EXIT}" -ne 0 ]; then
     exit "${KEYWORD_EXIT}"
   fi
-  exit "${SITEMAP_EXIT}"
+  if [ "${SITEMAP_EXIT}" -ne 0 ]; then
+    exit "${SITEMAP_EXIT}"
+  fi
+  exit "${PERF_EXIT}"
 fi
 
-log "PASS — editorial-byline guard + no-pink guard + production build + freshness smoke-test + keyword-targets smoke-test + sitemap-200 smoke-test all succeeded; deploy may proceed."
+log "PASS — byline guard + no-pink guard + build + freshness + keyword-targets + sitemap-200 + Lighthouse perf guard all succeeded; deploy may proceed."
 exit 0

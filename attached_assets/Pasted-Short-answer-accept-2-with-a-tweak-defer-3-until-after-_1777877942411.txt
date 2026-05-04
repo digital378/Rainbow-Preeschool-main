@@ -1,0 +1,62 @@
+Short answer: accept #2 with a tweak, defer #3 until after deploy, and don't accept #1 as written — it's a workaround for a problem you should fix at the source.
+Here's the reasoning on each.
+#1 — Cloudflare Cache Rule to strip Set-Cookie — don't accept yet
+This is the workaround I mentioned in my last message: "if you can't find or remove the source today, the workaround is a Cloudflare Cache Rule that ignores Set-Cookie." It's a workaround, not a fix.
+Stripping Set-Cookie at the CDN means Cloudflare keeps the cookie out of the cached response, but the origin still sets it on every request. If GAESA is doing anything functionally important (session tracking, A/B assignment, server-side measurement), stripping it at the edge silently breaks that thing for every cached visitor. If it's doing nothing important, it should be removed at the source.
+Either way, the right next step is: find what sets GAESA first, then decide. From your previous Replit message it sounded like this hadn't been investigated yet. Run:
+bashgrep -rn 'GAESA\|res\.cookie\|setHeader.*[Ss]et-[Cc]ookie\|cookie-parser\|express-session' server/ shared/
+Three likely outcomes:
+
+It's a session cookie nothing actually depends on — delete the line that sets it. One-line PR. No CF rule needed.
+It's analytics/measurement — move it client-side (GA4 owns its own cookies via gtag), or only set it on routes that need it (form submissions, not the document root). One-day refactor.
+You can't find it in your code — then it's coming from a middleware you didn't write. At that point the CF rule is fine as a workaround, but document it as tech debt.
+
+Tell Replit: "Don't accept this yet. First find what sets GAESA. Then decide whether to remove it at the source or strip it at the edge."
+The DPDP angle also matters here. A cookie set on every HTML response, before consent, by a name nobody can identify, is exactly the kind of thing that fails a privacy audit. Worth fixing at the source for reasons beyond performance.
+#2 — Wire the Lighthouse guard into the deploy process — accept, with the right sequence
+This is what we agreed on, and it's the highest-value of the three. Two conditions:
+First, prove it works manually before making it blocking. Run npm run perf:check against a local production preview 3-4 times in a row. Confirm:
+
+Chromium launches cleanly via the Nix path
+Both pages get audited
+Numbers are stable run-to-run (within ~5 perf points; a wild swing means the simulation isn't stable enough to gate on)
+Exit code is 0 when passing, 1 when failing (test by temporarily lowering a threshold)
+
+Only after that, wire it into predeploy.sh as a blocker.
+Second, be deliberate about thresholds. The guard currently fails on Perf < 60, LCP > 4s, CLS > 0.1, TBT > 1200ms. Before flipping to blocking, run the guard against your current post-fix build. If you're already at, say, Perf 72 / LCP 3.2s, then:
+
+Set the guard at Perf < 65 / LCP > 3.8s — i.e. your current numbers minus a small buffer, not the brief's absolute thresholds
+Otherwise the guard only catches catastrophic regressions, and you've just demonstrated three non-catastrophic ones in a row that need to be caught
+
+A guard tuned to "block on regression from current baseline" is what prevents your 64 → 49 → 25 pattern. A guard tuned to "block only when pages are actively broken" is what you had implicitly before and didn't help.
+Tell Replit: "Accept, but run perf:check 3-4 times against the local preview first. Once stable, calibrate thresholds to current numbers minus a small buffer — not the brief's absolute floors. Then wire it as blocking."
+#3 — Measure real-world CWV improvement after the next deploy — accept, but it's a task for next week, not now
+This is the right thing to do — Lighthouse simulates, real users tell you whether the simulation matched reality. But you can't do it until:
+
+The fixes are actually deployed to production (not just merged)
+CrUX or your RUM has accumulated 24-48 hours of post-deploy data
+You have a baseline to compare against
+
+So accepting it now just creates a task that can't be worked on for several days. Better to accept it after deploy lands and CrUX has fresh data.
+Two things to set up now so the measurement is meaningful later:
+bash# Capture current CrUX baseline before deploy
+# Use the CrUX API or PageSpeed Insights — both pull 28-day p75 field data
+curl "https://chromeuxreport.googleapis.com/v1/records:queryRecord?key=YOUR_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"url":"https://www.rainbowpreschools.com/","formFactor":"PHONE"}'
+Save that output. After deploy, wait 7 days (CrUX has a 28-day rolling window, so meaningful movement takes a week) and re-query. The metrics you care about are field LCP p75 and field CLS p75 — those are what Google actually ranks on.
+If you already have GA4 Web Vitals events firing, that's faster — you'll see real-user numbers within hours instead of days.
+Tell Replit: "Defer this one. Add it back after the deploy lands. In the meantime, capture a CrUX baseline now so we have something to compare to."
+Recommended order to give Replit
+
+Don't accept #1. Find the GAESA source first. If it's removable, remove it; if not, then add the CF rule.
+Accept #2 with conditions. Run perf:check 3-4 times locally first, calibrate thresholds to current-minus-buffer, then make it blocking.
+Defer #3. Capture CrUX baseline now, revisit after the deploy has been live for a week.
+
+Also — separate from these three suggestions — ship the work that's already done. The current changeset (banner, cache headers, hero decode, scripts) is the win. Get it deployed and verified in production before layering on more changes. The verification commands from Section C of the original brief still apply:
+bash# After deploy:
+curl -sI -A "Mozilla/5.0 (iPhone)" https://www.rainbowpreschools.com/ | grep -iE 'cf-cache-status|cf-ray|cache-control'
+# First call: cf-cache-status: MISS or DYNAMIC, cf-ray: ...-BOM
+curl -sI -A "Mozilla/5.0 (iPhone)" https://www.rainbowpreschools.com/ | grep -iE 'cf-cache-status|cf-ray|cache-control'  
+# Second call within 5 min: should show HIT
+If the second call still shows DYNAMIC, the GAESA cookie is actively blocking the cache fix from working — and that escalates #1 from "tech debt" to "blocker." That's the data point that decides whether #1 is urgent.
