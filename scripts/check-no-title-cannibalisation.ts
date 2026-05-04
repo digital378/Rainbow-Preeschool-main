@@ -305,7 +305,13 @@ function validate() {
         );
       }
     }
-    // Rule 2: keyword ownership
+    // Rule 2: max title length (Google SERP truncates around 60 chars; we cap at 65 with a small safety buffer)
+    if (entry.title.length > 65) {
+      errors.push(
+        `${entry.file}:${entry.line} — title for ${entry.url} is ${entry.title.length} chars (limit 65). Title: "${entry.title}"`,
+      );
+    }
+    // Rule 3: keyword ownership
     for (const rule of OWNED_PHRASES) {
       if (!rule.phrase.test(entry.title)) continue;
       if (entry.url === "?") continue; // unknown client URL — only banned-word rule applies

@@ -565,8 +565,8 @@ function localBusinessSchema(locality: string, address: string, phone: string, u
 
 const staticPages: Record<string, PageSEOData> = {
   "/": {
-    title: "Rainbow Preschool International | Trusted Preschool Chain in Thane Since 2007",
-    description: "Thane's trusted preschool since 2007 ★ 4.7/5 from 3,997 parents. Play-based learning for ages 1.5–6 across 6 centres. Admissions open — book a free visit.",
+    title: "Rainbow Preschool | Preschool Chain in Thane Since 2007",
+    description: "Rainbow Preschool International — Playgroup, Nursery & Kindergarten across 6 Thane centres for ages 1.5–6. Play-based learning since 2007. Admissions open.",
     keywords: "rainbow preschool, preschool in thane, playgroup in thane, nursery school thane, early childhood education thane, rainbow preschool international",
     canonical: `${BASE_URL}/`,
     lastModified: LAST_UPDATED_ISO,
@@ -693,7 +693,7 @@ const staticPages: Record<string, PageSEOData> = {
     internalLinks: commonInternalLinks,
   },
   "/playgroup": {
-    title: "Playgroup in Thane | Trusted Toddler Programme (1.5–2.5 yrs) | Rainbow",
+    title: "Playgroup in Thane (1.5–2.5 yrs) | Rainbow Preschool",
     description: "Enroll your child in our Playgroup programme for ages 1.5-2.5 years. Play-based learning, sensory activities, and gentle socialisation at Rainbow Preschool Thane.",
     keywords: "playgroup in thane, playgroup near me, playgroup school thane, toddler programme thane",
     canonical: `${BASE_URL}/playgroup`,
@@ -724,7 +724,7 @@ const staticPages: Record<string, PageSEOData> = {
     lastModifiedDisplay: LAST_UPDATED_DISPLAY,
   },
   "/nursery": {
-    title: "Nursery School in Thane | Trusted Nursery Programme (2.5–4 yrs) | Rainbow",
+    title: "Nursery School in Thane (2.5–4 yrs) | Rainbow Preschool",
     description: "Our Nursery programme for ages 2.5-4 years builds strong foundations in literacy, numeracy, and social skills through engaging activities at Rainbow Preschool Thane.",
     keywords: "nursery school in thane, nursery admission thane, nursery programme thane",
     canonical: `${BASE_URL}/nursery`,
@@ -870,8 +870,8 @@ const staticPages: Record<string, PageSEOData> = {
     internalLinks: commonInternalLinks,
   },
   "/best-preschool-near-me-in-thane": {
-    title: "Best Preschool in Thane | Top-Rated Since 2007 | Rainbow Preschool International",
-    description: "Best preschool in Thane? See why 1 lakh+ parents chose Rainbow ★ 4.7/5, 6 centres, 18+ years, award-winning. Compare programmes & book a free visit today.",
+    title: "Best Preschool in Thane | Top-Rated Since 2007 | Rainbow",
+    description: "Comparing preschools in Thane? Rainbow ranks #1 with 4.7★ from 3,997 parents, awards from India Today & ScooNews, and 18+ years of proven results.",
     keywords: "best preschool in thane, best preschool near me, top preschool thane, best playgroup thane, best nursery school thane",
     canonical: `${BASE_URL}/best-preschool-near-me-in-thane`,
     h1: "Best Preschool in Thane — Rainbow Preschool International",
@@ -936,7 +936,7 @@ const staticPages: Record<string, PageSEOData> = {
     lastModifiedDisplay: LAST_UPDATED_DISPLAY,
   },
   "/play-school-near-me": {
-    title: "Play School Near Me in Thane | Best Playschool for 1.5–2.5 Years | Rainbow",
+    title: "Play School Near Me in Thane (1.5–2.5 yrs) | Rainbow",
     description: "Best play school near you in Thane — Rainbow Preschool offers safe, play-based early learning for toddlers aged 1.5–2.5 years across 6 centres. Trusted by 1,00,000+ families since 2007.",
     keywords: "play school near me, playschool near me in thane, top playschool thane, best play school thane",
     canonical: `${BASE_URL}/play-school-near-me`,
@@ -1287,7 +1287,7 @@ const BLOG_POST_SEO_DATA: Record<string, BlogPostSEORecord> = {
   },
   // ── SEO Recovery evergreen posts (Apr–May 2026) ────────────────────────
   "screen-time-guidelines-preschoolers-india": {
-    title: "Screen Time Guidelines for Indian Preschoolers (2026 Parent Guide)",
+    title: "Screen Time Guidelines for Indian Preschoolers (2026)",
     description: "How much screen time is healthy for preschoolers in India? 2026 expert guide for Thane parents — AAP rules, practical strategies, family media plan.",
     keywords: "screen time preschoolers india, screen time toddlers, screen time guidelines, screen time 2 year old, indian parents screen time",
     datePublished: "2026-04-24",
@@ -1295,7 +1295,7 @@ const BLOG_POST_SEO_DATA: Record<string, BlogPostSEORecord> = {
     lastModifiedDisplay: "April 24, 2026",
   },
   "healthy-tiffin-box-ideas-preschoolers": {
-    title: "50 Healthy Tiffin Box Ideas for Preschoolers | Trusted Indian Parent Picks",
+    title: "50 Healthy Tiffin Box Ideas for Preschoolers (Indian)",
     description: "50 healthy, easy tiffin box ideas for preschoolers — perfect for Indian parents in Thane. Veg, balanced, kid-approved snacks for play school & nursery.",
     keywords: "tiffin ideas for preschoolers, healthy tiffin box ideas, snack ideas for kids india, preschool tiffin recipes, kids tiffin india",
     datePublished: "2026-04-26",
@@ -1303,7 +1303,7 @@ const BLOG_POST_SEO_DATA: Record<string, BlogPostSEORecord> = {
     lastModifiedDisplay: "April 26, 2026",
   },
   "toilet-training-toddlers-indian-parents-guide": {
-    title: "Toilet Training Toddlers: A Calm, Practical Guide for Indian Parents",
+    title: "Toilet Training Toddlers: Practical Guide for Parents",
     description: "Toilet training your toddler in India? Calm, step-by-step guide for parents — when to start, signs of readiness, accidents, and joint family tips.",
     keywords: "toilet training toddlers, potty training india, when to start potty training, toilet training 2 year old, toddler potty training tips",
     datePublished: "2026-04-29",
@@ -1319,7 +1319,7 @@ const BLOG_POST_SEO_DATA: Record<string, BlogPostSEORecord> = {
     lastModifiedDisplay: "May 1, 2026",
   },
   "toddler-tantrum-management-emotional-regulation": {
-    title: "Toddler Tantrum Management: Helping Your Child Build Emotional Regulation",
+    title: "Toddler Tantrum Management: Building Emotional Regulation",
     description: "Toddler tantrums leaving you exhausted? Learn calm, research-backed ways to manage tantrums and help your child build lifelong emotional regulation.",
     keywords: "toddler tantrums, how to handle tantrums, tantrum management, emotional regulation kids, terrible twos india",
     datePublished: "2026-05-03",
@@ -1327,7 +1327,7 @@ const BLOG_POST_SEO_DATA: Record<string, BlogPostSEORecord> = {
     lastModifiedDisplay: "May 3, 2026",
   },
   "first-day-preschool-packing-checklist": {
-    title: "First Day of Preschool Packing Checklist (Free Printable for Thane Parents)",
+    title: "First Day of Preschool Packing Checklist (Printable)",
     description: "Complete first-day-of-preschool packing checklist for Thane parents. Bag essentials, labels, lunch tips, and a free printable to download.",
     keywords: "first day preschool checklist, preschool packing list, what to pack preschool, school bag essentials toddler, preschool first day tips",
     datePublished: "2026-05-05",
@@ -1343,7 +1343,7 @@ const BLOG_POST_SEO_DATA: Record<string, BlogPostSEORecord> = {
     lastModifiedDisplay: "May 8, 2026",
   },
   "yoga-mindfulness-preschoolers-daily-routines": {
-    title: "Yoga & Mindfulness for Preschoolers: Simple Routines for Calmer Mornings",
+    title: "Yoga & Mindfulness for Preschoolers: Calmer Mornings",
     description: "Yoga and mindfulness routines for preschoolers — calmer mornings, better focus, and sleep. Simple poses and breathing for Indian families.",
     keywords: "yoga for preschoolers, kids yoga india, mindfulness for toddlers, calm morning routine kids, breathing exercises children",
     datePublished: "2026-05-10",
@@ -1359,7 +1359,7 @@ const BLOG_POST_SEO_DATA: Record<string, BlogPostSEORecord> = {
     lastModifiedDisplay: "May 12, 2026",
   },
   "toddler-speech-development-milestones-when-to-worry": {
-    title: "Toddler Speech Development Milestones: What's Normal and When to Worry",
+    title: "Toddler Speech Milestones: What's Normal & When to Worry",
     description: "Toddler speech development guide — normal milestones month by month, late talker signs, when to consult a paediatrician. For Indian parents.",
     keywords: "toddler speech milestones, late talker, when to worry speech delay, speech development 2 year old, child not talking",
     datePublished: "2026-05-14",

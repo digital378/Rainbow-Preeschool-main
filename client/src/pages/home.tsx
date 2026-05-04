@@ -380,8 +380,8 @@ export default function Home() {
   return (
     <div>
       <SEO
-        title="Rainbow Preschool International | Trusted Preschool Chain in Thane Since 2007"
-        description="Thane's trusted preschool since 2007 ★ 4.7/5 from 3,997 parents. Play-based learning for ages 1.5–6 across 6 centres. Admissions open — book a free visit."
+        title="Rainbow Preschool | Preschool Chain in Thane Since 2007"
+        description="Rainbow Preschool International — Playgroup, Nursery & Kindergarten across 6 Thane centres for ages 1.5–6. Play-based learning since 2007. Admissions open."
         keywords="rainbow preschool, preschool in thane, playgroup in thane, nursery school thane, early childhood education thane, rainbow preschool international"
         canonical="https://www.rainbowpreschools.com/"
       />

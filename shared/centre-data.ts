@@ -296,7 +296,7 @@ export const preschoolPageSEO: Record<string, PreschoolPageSEO> = {
     canonicalPath: "/preschool-in-kalwa-thane",
   },
   kasarvadavali: {
-    title: "Preschool in Kasarvadavali, Thane | Rainbow Preschool International",
+    title: "Preschool in Kasarvadavali, Thane | Rainbow Preschool",
     description: "Rainbow Preschool in Kasarvadavali, Thane (Rosa Gardenia, behind Hypercity Mall on Ghodbunder Road) — Playgroup, Nursery & Kindergarten for children aged 1.5–5 years. Enquire for 2025-26 seats.",
     h1: "Preschool in Kasarvadavali, Thane",
     canonicalPath: "/preschool-in-kasarvadavali-thane",
