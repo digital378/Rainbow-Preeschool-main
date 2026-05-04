@@ -38,9 +38,12 @@
     <link rel="dns-prefetch" href="https://connect.facebook.net">
     <link rel="dns-prefetch" href="https://www.clarity.ms">
     
-    <!-- Fonts: preload as style to avoid render-blocking -->
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@600;700&display=swap"></noscript>
+    <!-- Fonts: display=optional prevents font-swap CLS (no reflow on swap).
+         On first visit fonts may not render (system fallback used); on return
+         visits fonts are cached and appear instantly within the 100ms block
+         period — best trade-off between typography and CLS score. -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@600;700&display=optional" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@600;700&display=optional"></noscript>
     
     <!-- Preload hero image for fast LCP -->
     <link rel="preload" as="image" href="/images/optimized/hero-banner-1.webp" fetchpriority="high">

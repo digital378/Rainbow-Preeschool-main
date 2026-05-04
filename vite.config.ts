@@ -30,6 +30,10 @@ export default defineConfig({
   build: {
     outDir: path.resolve(import.meta.dirname, "dist/public"),
     emptyOutDir: true,
+    // Target modern browsers to eliminate ~69KB of legacy transpilation overhead.
+    // ES2020 + matching browser versions covers 97%+ of real-world traffic while
+    // dropping class-helper polyfills and arrow-function transpilation.
+    target: ["es2020", "chrome87", "firefox78", "safari14", "edge88"],
   },
   server: {
     fs: {

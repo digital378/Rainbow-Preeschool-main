@@ -14,11 +14,12 @@ import { useAnalytics } from "./hooks/use-analytics";
 import { useScrollRevealOnRoute } from "./hooks/use-scroll-reveal";
 import { setupLinkPrefetching } from "./lib/prefetch";
 import "@/styles/scroll-reveal.css";
+// Home is eagerly imported (not lazy) so the hero section renders in the first
+// JS execution pass — eliminates one Suspense round-trip (~300 ms) from LCP.
+import Home from "@/pages/home";
 
 const Footer = lazy(() => import("@/components/footer").then(m => ({ default: m.Footer })));
 const ChatWidget = lazy(() => import("@/components/chat-widget").then(m => ({ default: m.ChatWidget })));
-
-const Home = lazy(() => import("@/pages/home"));
 
 const About = lazy(() => import("@/pages/about"));
 const Programmes = lazy(() => import("@/pages/programmes"));
