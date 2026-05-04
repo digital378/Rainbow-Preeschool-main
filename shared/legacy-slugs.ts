@@ -31,7 +31,7 @@ export const legacySlugs = [
   "/brain-gym-activities-for-preschoolers/",
   "/immunity-boosting-foods-for-kids/",
   "/10-easy-ways-to-help-kids-learn-colours-and-shapes-better/",
-  "/8-amazing-reasons-why-cooking-is-important-for-kids/",
+  "/8-reasons-cooking-is-important-for-kids/",
   "/parents-guide-mid-term-playgroup-admission/",
   "/6-quick-tips-to-help-children-learn-writing/",
   "/fun-games-teach-even-odd-numbers/",

@@ -1756,11 +1756,11 @@ Object.assign(legacyPagesData, {
     category: "Learning Activities"
   },
 
-  "/8-amazing-reasons-why-cooking-is-important-for-kids/": { // allow-soft-words: legacy URL slug, must stay stable for SEO
-    slug: "/8-amazing-reasons-why-cooking-is-important-for-kids/", // allow-soft-words: legacy URL slug, must stay stable for SEO
+  "/8-reasons-cooking-is-important-for-kids/": {
+    slug: "/8-reasons-cooking-is-important-for-kids/",
     title: "8 Reasons Why Cooking is Important for Kids | Rainbow Preschool",
     metaDescription: "Discover why cooking with your preschooler is valuable for learning and development. Benefits of kitchen activities for young children.",
-    h1: "8 Amazing Reasons Why Cooking is Important for Kids",
+    h1: "8 Reasons Cooking Is Important for Kids",
     intro: "Cooking with children is more than making food—it's a powerful learning experience. <a href=\"/about\">Rainbow Preschool International</a> shares eight compelling reasons to involve your preschooler in the kitchen.",
     sections: [
       { heading: "8 Benefits of Cooking with Kids", content: "", bulletPoints: ["1. Math skills: Counting, measuring, fractions, and sequencing", "2. Reading readiness: Following recipes introduces print awareness", "3. Science concepts: Understanding how ingredients change (mixing, heating, freezing)", "4. Fine motor skills: Stirring, pouring, kneading build hand strength", "5. Healthy eating habits: Children eat what they help prepare", "6. Life skills: Independence and self-sufficiency", "7. Patience and following instructions: Recipes require step-by-step processes", "8. Quality family time: Cooking together creates lasting memories"] },
