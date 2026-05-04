@@ -94,6 +94,12 @@ if ! npx --no-install tsx scripts/check-no-title-cannibalisation.ts; then
   exit 1
 fi
 
+# Non-blocking sibling of the title guard. Scans body copy for the same
+# banned soft-marketing word list and prints warnings (exit 0). Surfaces
+# hype-language drift to PR reviewers without gating the deploy.
+log "step 1.6/6 — tsx scripts/check-soft-marketing-words.ts (body-copy soft-marketing warning, non-blocking)"
+npx --no-install tsx scripts/check-soft-marketing-words.ts || true
+
 log "step 2/6 — tsx scripts/check-no-pink.ts (no-pink brand-colour guard)"
 if ! npx --no-install tsx scripts/check-no-pink.ts; then
   log "FAIL — no-pink guard found a pink utility class, hex literal, or named colour. See file:line above."
