@@ -69,6 +69,13 @@ Preferred communication style: Simple, everyday language.
     curl -s -A "Googlebot/2.1" https://www.rainbowpreschools.com/ | grep -c 'application/ld+json'
     ```
     If second request still shows DYNAMIC, the GAESA Set-Cookie header is blocking CF caching — raise a Cloudflare Cache Rule task urgently.
+-   **Post-deploy diagnosis (2026-05-04)**:
+    - CLS fix confirmed deployed and working: fresh Lighthouse run against live URL shows CLS=0.000. The PSI lab report showing CLS=0.499 was captured during deploy propagation (within minutes of publish) and reflected the old bundle.
+    - Field CLS (0.46, 28-day rolling) will decline over 2–4 weeks as the window rolls forward. No further code changes needed for CLS.
+    - **OPEN BLOCKER — Cloudflare Zaraz injecting `private` into Cache-Control**: Server sends `Cache-Control: public, max-age=0, s-maxage=300, stale-while-revalidate=86400` but live site returns `Cache-Control: private, ...` with `Set-Cookie: GAESA=...`. This causes `cf-cache-status: DYNAMIC` on every request, completely negating the s-maxage TTFB fix. Root cause: Cloudflare Zaraz (or another CF product) sets a server-side `GAESA` cookie on every HTML response, which Cloudflare then marks as `private`. Fix required in Cloudflare dashboard — **not a code issue**:
+      - **Option A**: Zaraz dashboard → find Google Ads/GA tool → disable "server-side cookie" mode for GAESA
+      - **Option B**: Cloudflare Caching → Cache Rules → "Cache Everything" for HTML + "Ignore Set-Cookie"
+    - Once CF caching is active (`cf-cache-status: HIT` on second request), field TTFB should drop from ~1.5s to ~50ms, which will meaningfully improve field LCP toward the 2.5s target.
 
 ## External Dependencies
 

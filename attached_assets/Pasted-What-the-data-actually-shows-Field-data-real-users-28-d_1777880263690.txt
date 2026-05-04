@@ -1,0 +1,98 @@
+What the data actually shows
+Field data (real users, 28-day rolling window — Image 1):
+
+LCP: 3.6s (was 7.9s in Lighthouse lab, but field LCP was likely 5-7s before)
+CLS: 0.46 (was 0.499)
+INP: 263ms (acceptable)
+TTFB: 1.5s
+
+Lab data (Lighthouse, just-now run — Image 2):
+
+Performance: 18
+LCP: 9.3s
+CLS: 0.499
+TBT: 2,150ms
+
+Filmstrip (Image 3): First 4-5 frames are blank/empty. Hero appears around frame 5-6.
+These two datasets are telling different stories, and reading them correctly is the whole job here.
+The CLS field number is the alarm
+Field CLS is 0.46, lab CLS is 0.499. They're nearly identical. That means the cookie banner fix you deployed did not actually take effect in production, or there's a second CLS source the banner fix didn't address.
+Replit's local test showed CLS dropping to 0.001. Production says 0.46. One of these is wrong, and field data is real users, so field data wins.
+Three possible causes, in order of likelihood:
+1. The deployed bundle doesn't contain the banner fix. Replit confirmed the file changed locally, but if the build cached an older version, or the deploy didn't actually pick up the new component, production is still running the mount-at-800ms version. Check first.
+bash# Pull the live banner JS chunk and grep for the fix signature
+curl -s https://www.rainbowpreschools.com/ | grep -oE 'assets/[^"]*\.js' | head -5
+# Then fetch one of those bundles and look for translate-y-full
+curl -s https://www.rainbowpreschools.com/assets/<bundle>.js | grep -c 'translate-y-full'
+# Should be > 0 if the fix is in the deployed bundle
+2. There's a second CLS source that isn't the banner. The PSI report shows a "Layout shift culprits" section (Image 3) — open it. That's the authoritative answer to what's shifting. Common second sources:
+
+Web fonts swapping (FOUT) — text reflows when the custom font loads
+The "Admissions Open" badge or the "Book Visit" / "Request Callback" buttons appearing late
+Hero image dimensions not matching reserved space — the filmstrip in Image 3 shows blank frames before the hero appears, which is suspicious
+JSON-LD or other late-injected DOM elements
+
+3. Field data lag. Field CLS is a 28-day p75. If the deploy happened in the last day or two, the 28-day window still includes 26+ days of pre-fix data. This is real, but it's not enough to explain a near-zero shift. If the fix worked, you'd see some movement in the p75 already.
+The LCP picture is more nuanced — and actually slightly encouraging
+Field LCP 3.6s. Lab LCP 9.3s. Those numbers can legitimately diverge by that much, but the direction tells you something:
+
+The lab number got worse (was 7.9s, now 9.3s) — but lab is one synthetic run with no warm cache, no edge cache, on a throttled simulation. Lab LCP of 9.3s on a fresh Lighthouse run with no Cloudflare cache hit is actually consistent with cache headers being set correctly but the response still going DYNAMIC because of the GAESA cookie. The first hit always misses the edge cache; that's the worst case.
+The field number is 3.6s. That's bad (target is < 2.5s, "needs improvement" up to 4.0s) but it's the real-user p75. If pre-deploy field LCP was substantially worse, 3.6s might be an improvement that just hasn't fully propagated through the 28-day window yet.
+
+So the question I can't answer without more data: what was field LCP before deploy? If you didn't capture the baseline (I asked you to), check Search Console → Core Web Vitals report, which keeps historical trend data.
+What to do right now, in order
+Step 1 — Verify the deploy actually contains the fixes (5 minutes)
+bash# Check Cache-Control on HTML — is the new header live?
+curl -sI -A "Mozilla/5.0 (iPhone)" https://www.rainbowpreschools.com/ | grep -i cache-control
+
+# Expected:  cache-control: public, max-age=0, s-maxage=300, stale-while-revalidate=86400
+# If it still says no-cache, no-store: the deploy didn't pick up server/static.ts changes
+
+# Run twice, check cf-cache-status
+curl -sI -A "Mozilla/5.0 (iPhone)" https://www.rainbowpreschools.com/ | grep -i cf-cache-status
+sleep 30
+curl -sI -A "Mozilla/5.0 (iPhone)" https://www.rainbowpreschools.com/ | grep -i cf-cache-status
+
+# Expected on second call: HIT
+# If still DYNAMIC: either headers didn't deploy, OR GAESA is suppressing cache
+bash# Check the JS bundle for the banner fix
+curl -s https://www.rainbowpreschools.com/ > /tmp/home.html
+grep -oE 'assets/index-[^"]*\.js' /tmp/home.html | head -1
+# Then curl that file and:
+curl -s https://www.rainbowpreschools.com/assets/index-XXXX.js | grep -oE 'translate-y-full|translateY' | head -3
+If any of these come back wrong, the deploy didn't fully land. Force a rebuild and redeploy.
+Step 2 — Read the layout-shift-culprits audit from the PSI report (2 minutes)
+In Image 3, click "Layout shift culprits" — it expands to show the actual elements that shifted. Screenshot that and send it back. That tells us whether the banner is still the source, or whether something else is.
+If the culprit isn't the banner, the banner fix worked but there's a separate CLS source we didn't address. Common culprits to check:
+
+Hero text reflowing when fonts swap → fix with font-display: optional or preload the font
+"Admissions Open" pill / CTA buttons mounting late → same pattern as the banner (always-mounted, transitions)
+Image without explicit dimensions → check that every above-the-fold <img> has width and height attributes
+
+Step 3 — Find the GAESA source (10 minutes, parallel)
+Replit's grep on the codebase found nothing. That confirms it's external. Most likely sources:
+
+Cloudflare Zaraz — go to Cloudflare dashboard → Zaraz → check if any tools are configured to set cookies on the origin response
+Cloudflare Bot Management / Bot Fight Mode — these don't typically set named cookies on the origin response, more likely to set __cf_bm (different name)
+A reverse proxy / WAF rule — check Cloudflare → Rules → Transform Rules → Modify Response Header
+
+Once you find it, either remove it or add the Cloudflare Cache Rule to ignore Set-Cookie for HTML responses. This is now blocking the LCP fix — without it, s-maxage=300 is doing nothing.
+Step 4 — Don't panic about the lab Performance score of 18
+Lab Lighthouse on a SPA with cold edge cache, simulated slow 4G, and 4x CPU slowdown is the worst-case for any site. The metric that matters for your business priorities (local SEO ranking) is field CWV from CrUX, not lab Lighthouse. Google ranks on field data.
+That said: field CLS 0.46 is a genuine problem for ranking, and field LCP 3.6s is borderline. So we do need to fix things — just don't let the lab "18" send you into an emergency response that overshoots.
+Why this happened
+Looking back at the deploy sequence: we pushed five changes simultaneously, and verification was structured around lab Lighthouse against a local preview. Local preview can't measure Cloudflare cache effects (no CF), and lab CLS on a single run can miss issues that show up in field data because real users see different timings.
+Two process changes worth making after this is stable:
+
+Always check the deployed bundle contains the change, not just the local file. A curl | grep on a string unique to the new code, run after deploy, would have caught case (1) above in 30 seconds.
+Field CWV beats lab CWV for go/no-go decisions. The PSI "field data" panel is the truth. Lab is for diagnosing why something is slow, not whether it's slow. The pre/post-deploy comparison should be field-vs-field (Search Console CWV report has the trend graph) — even if you have to wait a few days for the field window to update.
+
+What I need from you to continue
+Run Step 1 (verify deploy contents) and Step 2 (read layout-shift-culprits) and paste back:
+
+The four curl outputs from Step 1
+A screenshot of the expanded "Layout shift culprits" section from PSI
+A screenshot of the expanded "LCP breakdown" section from PSI
+
+With those three things I can tell you whether this is "the deploy didn't fully land" (fixable in 10 minutes) or "the banner fix worked but there's a second CLS source" (different fix, also tractable) or "GAESA is suppressing the cache fix" (Cloudflare dashboard task).
+The site isn't broken. The deploy partially worked, the field data window hasn't fully updated, and there's at least one thing that didn't take effect that needs to be tracked down. Don't roll back. Diagnose first.
