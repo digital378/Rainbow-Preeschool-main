@@ -565,8 +565,8 @@ function localBusinessSchema(locality: string, address: string, phone: string, u
 
 const staticPages: Record<string, PageSEOData> = {
   "/": {
-    title: "Rainbow Preschool International | Preschool in Thane",
-    description: "Thane's most-loved preschool since 2007 ★ 4.7/5 from 3,997 parents. Play-based learning for ages 1.5–6 across 6 centres. Admissions open — book a free visit.",
+    title: "Rainbow Preschool International | Trusted Preschool Chain in Thane Since 2007",
+    description: "Thane's trusted preschool since 2007 ★ 4.7/5 from 3,997 parents. Play-based learning for ages 1.5–6 across 6 centres. Admissions open — book a free visit.",
     keywords: "rainbow preschool, preschool in thane, playgroup in thane, nursery school thane, early childhood education thane, rainbow preschool international",
     canonical: `${BASE_URL}/`,
     lastModified: LAST_UPDATED_ISO,
@@ -693,7 +693,7 @@ const staticPages: Record<string, PageSEOData> = {
     internalLinks: commonInternalLinks,
   },
   "/playgroup": {
-    title: "Playgroup Programme (1.5-2.5 years) | Rainbow Preschool Thane",
+    title: "Playgroup in Thane | Trusted Toddler Programme (1.5–2.5 yrs) | Rainbow",
     description: "Enroll your child in our Playgroup programme for ages 1.5-2.5 years. Play-based learning, sensory activities, and gentle socialisation at Rainbow Preschool Thane.",
     keywords: "playgroup in thane, playgroup near me, playgroup school thane, toddler programme thane",
     canonical: `${BASE_URL}/playgroup`,
@@ -724,7 +724,7 @@ const staticPages: Record<string, PageSEOData> = {
     lastModifiedDisplay: LAST_UPDATED_DISPLAY,
   },
   "/nursery": {
-    title: "Nursery Programme (2.5-4 years) | Rainbow Preschool Thane",
+    title: "Nursery School in Thane | Trusted Nursery Programme (2.5–4 yrs) | Rainbow",
     description: "Our Nursery programme for ages 2.5-4 years builds strong foundations in literacy, numeracy, and social skills through engaging activities at Rainbow Preschool Thane.",
     keywords: "nursery school in thane, nursery admission thane, nursery programme thane",
     canonical: `${BASE_URL}/nursery`,
@@ -756,7 +756,7 @@ const staticPages: Record<string, PageSEOData> = {
     lastModifiedDisplay: LAST_UPDATED_DISPLAY,
   },
   "/kindergarten": {
-    title: "Kindergarten Programme (4-6 years) | Rainbow Preschool Thane",
+    title: "Kindergarten in Thane | Trusted KG Programme (4–6 yrs) | Rainbow",
     description: "Prepare your child for primary school with our Kindergarten programme for ages 4-6 years. Reading, writing, maths, and life skills at Rainbow Preschool Thane.",
     keywords: "kindergarten in thane, kindergarten school thane, school readiness programme thane",
     canonical: `${BASE_URL}/kindergarten`,
@@ -801,7 +801,7 @@ const staticPages: Record<string, PageSEOData> = {
     internalLinks: commonInternalLinks,
   },
   "/contact": {
-    title: "Contact Rainbow Preschool Thane | Enquire Now",
+    title: "Contact Rainbow Preschool Thane | Admissions Enquiry",
     description: "Contact Rainbow Preschool International for admissions enquiries. Call 82915 68972 or visit our centres in Manpada, Hariniwas, Anand Nagar, Dhokali, Kalwa, Kasarvadavali.",
     keywords: "contact rainbow preschool, preschool admission enquiry thane, preschool phone number thane",
     canonical: `${BASE_URL}/contact`,
@@ -1031,7 +1031,7 @@ const staticPages: Record<string, PageSEOData> = {
     internalLinks: commonInternalLinks,
   },
   "/top-preschools-in-thane": {
-    title: "Top 10 Preschools in Thane 2026 | Comparison Guide",
+    title: "Top 10 Preschools in Thane 2026 — Honest Comparison Guide",
     description: "Compare the top 10 preschools in Thane for 2026. Detailed comparison of fees, curriculum, safety, teacher ratios, and parent reviews. Find the best fit for your child.",
     keywords: "top preschools in thane, best preschools thane, preschool comparison thane, preschool rankings thane, best play school thane, top 10 preschools thane",
     canonical: `${BASE_URL}/top-preschools-in-thane`,
@@ -1295,7 +1295,7 @@ const BLOG_POST_SEO_DATA: Record<string, BlogPostSEORecord> = {
     lastModifiedDisplay: "April 24, 2026",
   },
   "healthy-tiffin-box-ideas-preschoolers": {
-    title: "50 Healthy Tiffin Box Ideas for Preschoolers Indian Parents Will Love",
+    title: "50 Healthy Tiffin Box Ideas for Preschoolers | Trusted Indian Parent Picks",
     description: "50 healthy, easy tiffin box ideas for preschoolers — perfect for Indian parents in Thane. Veg, balanced, kid-approved snacks for play school & nursery.",
     keywords: "tiffin ideas for preschoolers, healthy tiffin box ideas, snack ideas for kids india, preschool tiffin recipes, kids tiffin india",
     datePublished: "2026-04-26",

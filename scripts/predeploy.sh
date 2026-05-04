@@ -87,6 +87,13 @@ if ! npx --no-install tsx scripts/check-no-person-author.ts; then
   exit 1
 fi
 
+log "step 1.5/6 — tsx scripts/check-no-title-cannibalisation.ts (title de-cannibalisation guard)"
+if ! npx --no-install tsx scripts/check-no-title-cannibalisation.ts; then
+  log "FAIL — title de-cannibalisation guard rejected a title (banned soft-word and/or keyword poaching). See file:line above."
+  log "blocking deploy."
+  exit 1
+fi
+
 log "step 2/6 — tsx scripts/check-no-pink.ts (no-pink brand-colour guard)"
 if ! npx --no-install tsx scripts/check-no-pink.ts; then
   log "FAIL — no-pink guard found a pink utility class, hex literal, or named colour. See file:line above."

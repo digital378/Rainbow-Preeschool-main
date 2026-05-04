@@ -51,5 +51,16 @@ if ! npx --no-install tsx scripts/check-no-pink.ts; then
   exit 1
 fi
 
+# Title de-cannibalisation guard. Same rationale as check-no-pink — keep it
+# enforced independently of npm run check so it stays wired even if package.json
+# is edited.
+echo "[pre-commit] Running 'tsx scripts/check-no-title-cannibalisation.ts' ..."
+if ! npx --no-install tsx scripts/check-no-title-cannibalisation.ts; then
+  echo "" >&2
+  echo "[pre-commit] 'check-no-title-cannibalisation' failed. Commit aborted." >&2
+  echo "[pre-commit] Fix the issues above, or re-run with --no-verify to bypass." >&2
+  exit 1
+fi
+
 echo "[pre-commit] Checks passed."
 exit 0

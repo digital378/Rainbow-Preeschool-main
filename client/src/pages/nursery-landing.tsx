@@ -426,7 +426,7 @@ export default function NurseryLanding() {
   return (
     <div className="pt-20 md:pt-24">
       <SEO
-        title="Nursery Near Me in Thane | Ages 2.5–3.5 | Rainbow Preschool"
+        title="Nursery School in Thane | Trusted Nursery Programme (2.5–4 yrs) | Rainbow"
         description="Looking for a nursery near me in Thane? Rainbow Preschool's nursery programme (ages 2.5–3.5) builds phonics, numeracy & social skills across 6 centres. Enquire for 2026–27 admissions."
         keywords="nursery school in thane, nursery school near me, best nursery school, nursery school admission near me, nursery school admission enquiry, nursery class for kids, play based nursery school, nursery education program, top nursery school in thane"
         canonical="https://www.rainbowpreschools.com/nursery"
