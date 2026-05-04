@@ -169,6 +169,12 @@ function ScrollToTop() {
     if (!location.includes('#')) {
       window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
     }
+    // Static LCP hero is only valid on the home page. On any SPA navigation
+    // away from "/", remove it so it doesn't bleed through other routes.
+    if (location !== "/") {
+      const staticHero = document.getElementById("static-lcp-hero");
+      if (staticHero) staticHero.remove();
+    }
   }, [location]);
   
   return null;
