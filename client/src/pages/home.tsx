@@ -119,6 +119,93 @@ const childAgeOptions = [
   "5+ years",
 ];
 
+// --- Static JSON-LD schema objects ---
+// Created once at module load (not on every render) to reduce per-mount CPU cost.
+const _organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "EducationalOrganization",
+  "name": "Rainbow Preschool International",
+  "alternateName": "Rainbow Preschools",
+  "url": "https://www.rainbowpreschools.com",
+  "logo": "https://www.rainbowpreschools.com/images/logo.webp",
+  "description": "Trusted preschool in Thane since 2007. Play-based early learning for children aged 1.5-5 years. 6 centres across Thane West.",
+  "foundingDate": "2007",
+  "areaServed": [
+    { "@type": "City", "name": "Thane" },
+    { "@type": "Place", "name": "Thane West" },
+    { "@type": "Place", "name": "Ghodbunder Road, Thane" },
+    { "@type": "Place", "name": "Manpada, Thane" },
+    { "@type": "Place", "name": "Naupada, Thane" },
+    { "@type": "Place", "name": "Majiwada, Thane" },
+    { "@type": "Place", "name": "Kolshet Road, Thane" },
+    { "@type": "Place", "name": "Kalwa, Thane" },
+    { "@type": "Place", "name": "Kasarvadavali, Thane" },
+    { "@type": "AdministrativeArea", "name": "Mumbai Metropolitan Region" }
+  ],
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "+91-8291568972",
+    "contactType": "admissions",
+    "areaServed": "IN",
+    "availableLanguage": ["English", "Hindi", "Marathi"]
+  },
+  "sameAs": [
+    "https://facebook.com/rainbowpreschools",
+    "https://instagram.com/rainbowpreschools",
+    "https://youtube.com/rainbowpreschools"
+  ],
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "2nd Floor, Chestnut Plaza, Opp. Edenwoods, Khewra Cir Marg, Manpada",
+    "addressLocality": "Thane",
+    "addressRegion": "Maharashtra",
+    "postalCode": "400610",
+    "addressCountry": "IN"
+  }
+};
+
+const _websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Rainbow Preschool International",
+  "url": "https://www.rainbowpreschools.com",
+  "description": "Trusted preschool in Thane since 2007"
+};
+
+const _faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map((faq) => ({
+    "@type": "Question",
+    "name": faq.question,
+    "acceptedAnswer": { "@type": "Answer", "text": faq.answerText }
+  }))
+};
+
+const _videoSchema = {
+  "@context": "https://schema.org",
+  "@type": "VideoObject",
+  "name": "Rainbow Preschool International — Campus Walkthrough",
+  "description": "Take a virtual tour of Rainbow Preschool International's campus in Thane. See our colourful classrooms, safe play areas, and nurturing learning environment designed for children aged 1.5 to 6 years.",
+  "thumbnailUrl": "https://www.rainbowpreschools.com/og-image.jpg",
+  "uploadDate": "2025-01-15",
+  "contentUrl": "https://www.rainbowpreschools.com/assets/RPS_Walkthrough_Video_-_Website_1_1766126796450.mp4",
+  "embedUrl": "https://www.rainbowpreschools.com/",
+  "duration": "PT1M30S",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Rainbow Preschool International",
+    "logo": { "@type": "ImageObject", "url": "https://www.rainbowpreschools.com/images/logo.webp" }
+  }
+};
+
+// Pre-serialised JSON strings — JSON.stringify is done once at module load, not at render time.
+const _orgJson      = JSON.stringify(_organizationSchema);
+const _webJson      = JSON.stringify(_websiteSchema);
+const _faqJson      = JSON.stringify(_faqSchema);
+const _videoJson    = JSON.stringify(_videoSchema);
+const _branchJson   = JSON.stringify(createAllBranchLocalBusinessSchemas());
+
 function QuickCallbackStrip() {
   const { toast } = useToast();
   const [formData, setFormData] = useState({
@@ -251,139 +338,41 @@ function QuickCallbackStrip() {
 }
 
 export default function Home() {
-  // Inject all schemas
+  // Inject all schemas after paint so they don't block the main thread (bots get
+  // them via server-side bot-ssr.ts instead).
   useEffect(() => {
-    // Organization Schema
-    const organizationSchema = {
-      "@context": "https://schema.org",
-      "@type": "EducationalOrganization",
-      "name": "Rainbow Preschool International",
-      "alternateName": "Rainbow Preschools",
-      "url": "https://www.rainbowpreschools.com",
-      "logo": "https://www.rainbowpreschools.com/images/logo.webp",
-      "description": "Trusted preschool in Thane since 2007. Play-based early learning for children aged 1.5-5 years. 6 centres across Thane West.",
-      "foundingDate": "2007",
-      "areaServed": [
-        { "@type": "City", "name": "Thane" },
-        { "@type": "Place", "name": "Thane West" },
-        { "@type": "Place", "name": "Ghodbunder Road, Thane" },
-        { "@type": "Place", "name": "Manpada, Thane" },
-        { "@type": "Place", "name": "Naupada, Thane" },
-        { "@type": "Place", "name": "Majiwada, Thane" },
-        { "@type": "Place", "name": "Kolshet Road, Thane" },
-        { "@type": "Place", "name": "Kalwa, Thane" },
-        { "@type": "Place", "name": "Kasarvadavali, Thane" },
-        { "@type": "AdministrativeArea", "name": "Mumbai Metropolitan Region" }
-      ],
-      "contactPoint": {
-        "@type": "ContactPoint",
-        "telephone": "+91-8291568972",
-        "contactType": "admissions",
-        "areaServed": "IN",
-        "availableLanguage": ["English", "Hindi", "Marathi"]
-      },
-      "sameAs": [
-        "https://facebook.com/rainbowpreschools",
-        "https://instagram.com/rainbowpreschools",
-        "https://youtube.com/rainbowpreschools"
-      ],
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "2nd Floor, Chestnut Plaza, Opp. Edenwoods, Khewra Cir Marg, Manpada",
-        "addressLocality": "Thane",
-        "addressRegion": "Maharashtra",
-        "postalCode": "400610",
-        "addressCountry": "IN"
+    const inject = () => {
+      const entries: Array<{ id: string; json: string }> = [
+        { id: 'organization-schema', json: _orgJson },
+        { id: 'website-schema',      json: _webJson },
+        { id: 'faq-schema',          json: _faqJson },
+        { id: 'video-schema',        json: _videoJson },
+        { id: 'home-branches-schema',json: _branchJson },
+      ];
+      for (const { id, json } of entries) {
+        const existing = document.getElementById(id);
+        if (existing) existing.remove();
+        const s = document.createElement('script');
+        s.type = 'application/ld+json';
+        s.id = id;
+        s.textContent = json;
+        document.head.appendChild(s);
       }
     };
 
-    // WebSite Schema with SearchAction
-    const websiteSchema = {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "Rainbow Preschool International",
-      "url": "https://www.rainbowpreschools.com",
-      "description": "Trusted preschool in Thane since 2007"
-    };
-
-    // FAQ Schema - uses plain text answers (not JSX) for valid JSON-LD
-    const faqSchema = {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": faqs.map((faq) => ({
-        "@type": "Question",
-        "name": faq.question,
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": faq.answerText
-        }
-      }))
-    };
-    
-    // Add Organization Schema
-    const orgScript = document.createElement('script');
-    orgScript.type = 'application/ld+json';
-    orgScript.id = 'organization-schema';
-    orgScript.textContent = JSON.stringify(organizationSchema);
-    const existingOrgScript = document.getElementById('organization-schema');
-    if (existingOrgScript) existingOrgScript.remove();
-    document.head.appendChild(orgScript);
-
-    // Add WebSite Schema
-    const webScript = document.createElement('script');
-    webScript.type = 'application/ld+json';
-    webScript.id = 'website-schema';
-    webScript.textContent = JSON.stringify(websiteSchema);
-    const existingWebScript = document.getElementById('website-schema');
-    if (existingWebScript) existingWebScript.remove();
-    document.head.appendChild(webScript);
-
-    // Add FAQ Schema
-    const faqScript = document.createElement('script');
-    faqScript.type = 'application/ld+json';
-    faqScript.id = 'faq-schema';
-    faqScript.textContent = JSON.stringify(faqSchema);
-    const existingFaqScript = document.getElementById('faq-schema');
-    if (existingFaqScript) existingFaqScript.remove();
-    document.head.appendChild(faqScript);
-
-    const videoSchema = {
-      "@context": "https://schema.org",
-      "@type": "VideoObject",
-      "name": "Rainbow Preschool International — Campus Walkthrough",
-      "description": "Take a virtual tour of Rainbow Preschool International's campus in Thane. See our colourful classrooms, safe play areas, and nurturing learning environment designed for children aged 1.5 to 6 years.",
-      "thumbnailUrl": "https://www.rainbowpreschools.com/og-image.jpg",
-      "uploadDate": "2025-01-15",
-      "contentUrl": "https://www.rainbowpreschools.com/assets/RPS_Walkthrough_Video_-_Website_1_1766126796450.mp4",
-      "embedUrl": "https://www.rainbowpreschools.com/",
-      "duration": "PT1M30S",
-      "publisher": {
-        "@type": "Organization",
-        "name": "Rainbow Preschool International",
-        "logo": { "@type": "ImageObject", "url": "https://www.rainbowpreschools.com/images/logo.webp" }
-      }
-    };
-    const videoScript = document.createElement('script');
-    videoScript.type = 'application/ld+json';
-    videoScript.id = 'video-schema';
-    videoScript.textContent = JSON.stringify(videoSchema);
-    const existingVideoScript = document.getElementById('video-schema');
-    if (existingVideoScript) existingVideoScript.remove();
-    document.head.appendChild(videoScript);
-
-    // Add Branch LocalBusiness Schemas (one Preschool node per Thane centre)
-    const existingBranchScript = document.getElementById('home-branches-schema');
-    if (existingBranchScript) existingBranchScript.remove();
-    const branchScript = document.createElement('script');
-    branchScript.type = 'application/ld+json';
-    branchScript.id = 'home-branches-schema';
-    branchScript.textContent = JSON.stringify(createAllBranchLocalBusinessSchemas());
-    document.head.appendChild(branchScript);
+    let cancelFn: (() => void) | undefined;
+    if (typeof requestIdleCallback === 'function') {
+      const id = requestIdleCallback(inject, { timeout: 3000 });
+      cancelFn = () => cancelIdleCallback(id);
+    } else {
+      const id = setTimeout(inject, 300);
+      cancelFn = () => clearTimeout(id);
+    }
 
     return () => {
+      cancelFn?.();
       ['organization-schema', 'website-schema', 'faq-schema', 'video-schema', 'home-branches-schema'].forEach(id => {
-        const s = document.getElementById(id);
-        if (s) s.remove();
+        document.getElementById(id)?.remove();
       });
     };
   }, []);
@@ -519,33 +508,35 @@ export default function Home() {
         </div>
       </article>
 
-      {/* Programmes Section - SEO Cluster Hub */}
-      <section className="py-16 md:py-20 lg:py-24 bg-card cv-auto">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-12" data-reveal="float">
-            <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">Our Programmes</p>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4" data-sparkle>Programmes Designed for Every Stage of Early Learning</h2>
-            <p className="text-muted-foreground text-lg">
-              Explore our age-appropriate programmes designed to support your child's development at every stage.
-            </p>
+      <LazySection minHeight={480} rootMargin="300px">
+        {/* Programmes Section - SEO Cluster Hub */}
+        <section className="py-16 md:py-20 lg:py-24 bg-card cv-auto">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center max-w-3xl mx-auto mb-12" data-reveal="float">
+              <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">Our Programmes</p>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4" data-sparkle>Programmes Designed for Every Stage of Early Learning</h2>
+              <p className="text-muted-foreground text-lg">
+                Explore our age-appropriate programmes designed to support your child's development at every stage.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {programmes
+                .filter(p => !['kids-activity-club', 'summer-camp'].includes(p.id))
+                .map((programme, index) => (
+                  <ProgrammeCard key={programme.id} programme={programme} index={index} />
+                ))}
+            </div>
+            <div className="text-center mt-8">
+              <Link href="/programmes">
+                <Button variant="outline" size="lg" data-testid="button-view-programmes">
+                  View All Programmes
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </Link>
+            </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {programmes
-              .filter(p => !['kids-activity-club', 'summer-camp'].includes(p.id))
-              .map((programme, index) => (
-                <ProgrammeCard key={programme.id} programme={programme} index={index} />
-              ))}
-          </div>
-          <div className="text-center mt-8">
-            <Link href="/programmes">
-              <Button variant="outline" size="lg" data-testid="button-view-programmes">
-                View All Programmes
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </section>
+        </section>
+      </LazySection>
 
       <LazySection minHeight={500}>
         <Suspense fallback={null}>
@@ -563,31 +554,33 @@ export default function Home() {
         </Suspense>
       </LazySection>
 
-      {/* Testimonials Section - Local SEO Enhanced */}
-      <section id="testimonials" className="py-16 md:py-20 lg:py-24 relative overflow-hidden cv-auto">
-        {/* Diagonal gradient background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-amber-50/80 via-background to-primary/5 dark:from-amber-950/20 dark:via-background dark:to-primary/10" />
-        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-amber-300/50 to-transparent" />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-12">
-            <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">Testimonials</p>
-            <h2 className="text-3xl md:text-4xl font-bold mb-2" data-sparkle>Parents from Thane Say...</h2>
-            <div className="flex items-center justify-center gap-2 mt-4 bg-white/60 dark:bg-background/60 backdrop-blur-sm rounded-full px-5 py-2 inline-flex mx-auto border border-amber-200/60 dark:border-amber-700/30 w-fit">
-              <SiGoogle className="w-4 h-4 text-gray-600 dark:text-gray-400" />
-              <span className="font-bold text-foreground">4.7</span>
-              <div className="flex items-center gap-0.5">
-                {[1,2,3,4,5].map(i => <Star key={i} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />)}
+      <LazySection minHeight={440} rootMargin="300px">
+        {/* Testimonials Section - Local SEO Enhanced */}
+        <section id="testimonials" className="py-16 md:py-20 lg:py-24 relative overflow-hidden cv-auto">
+          {/* Diagonal gradient background */}
+          <div className="absolute inset-0 bg-gradient-to-br from-amber-50/80 via-background to-primary/5 dark:from-amber-950/20 dark:via-background dark:to-primary/10" />
+          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-amber-300/50 to-transparent" />
+          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center max-w-3xl mx-auto mb-12">
+              <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">Testimonials</p>
+              <h2 className="text-3xl md:text-4xl font-bold mb-2" data-sparkle>Parents from Thane Say...</h2>
+              <div className="flex items-center justify-center gap-2 mt-4 bg-white/60 dark:bg-background/60 backdrop-blur-sm rounded-full px-5 py-2 inline-flex mx-auto border border-amber-200/60 dark:border-amber-700/30 w-fit">
+                <SiGoogle className="w-4 h-4 text-gray-600 dark:text-gray-400" />
+                <span className="font-bold text-foreground">4.7</span>
+                <div className="flex items-center gap-0.5">
+                  {[1,2,3,4,5].map(i => <Star key={i} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />)}
+                </div>
+                <span className="text-muted-foreground text-sm">· 3,997 Google reviews</span>
               </div>
-              <span className="text-muted-foreground text-sm">· 3,997 Google reviews</span>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {testimonials.map((testimonial) => (
+                <TestimonialCard key={testimonial.id} testimonial={testimonial} />
+              ))}
             </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {testimonials.map((testimonial) => (
-              <TestimonialCard key={testimonial.id} testimonial={testimonial} />
-            ))}
-          </div>
-        </div>
-      </section>
+        </section>
+      </LazySection>
 
       <section className="py-16 md:py-20 lg:py-24 bg-card" style={{ contentVisibility: 'auto', containIntrinsicSize: 'auto 800px' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -673,30 +666,32 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Centres Section - Local SEO Gold */}
-      <section id="centres" className="py-16 md:py-20 lg:py-24 cv-auto">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-12">
-            <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">Our Locations</p>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4" data-sparkle>Our Preschool Centres Across Thane</h2>
-            <p className="text-muted-foreground text-lg">
-              With six branches spread across Thane West, a Rainbow Preschool centre is always close to home. Visit the centre nearest to you and experience our warm, welcoming classrooms firsthand.
-            </p>
-          </div>
+      <LazySection minHeight={600} rootMargin="300px">
+        {/* Centres Section - Local SEO Gold */}
+        <section id="centres" className="py-16 md:py-20 lg:py-24 cv-auto">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center max-w-3xl mx-auto mb-12">
+              <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">Our Locations</p>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4" data-sparkle>Our Preschool Centres Across Thane</h2>
+              <p className="text-muted-foreground text-lg">
+                With six branches spread across Thane West, a Rainbow Preschool centre is always close to home. Visit the centre nearest to you and experience our warm, welcoming classrooms firsthand.
+              </p>
+            </div>
 
-          <ErrorBoundary name="home-3d-map" silent>
-            <Suspense fallback={null}>
-              <Interactive3DMap />
-            </Suspense>
-          </ErrorBoundary>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {branches.map((branch) => (
-              <BranchCard key={branch.id} branch={branch} />
-            ))}
+            <ErrorBoundary name="home-3d-map" silent>
+              <Suspense fallback={null}>
+                <Interactive3DMap />
+              </Suspense>
+            </ErrorBoundary>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {branches.map((branch) => (
+                <BranchCard key={branch.id} branch={branch} />
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </LazySection>
 
       {/* FAQs Section - Homepage SEO with Schema */}
       <section className="py-16 md:py-20 lg:py-24 bg-card cv-auto">
