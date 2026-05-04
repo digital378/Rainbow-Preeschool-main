@@ -1,0 +1,8 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "C0LJ5VrinRIktBMNT06Ni"
+uri = "file://seo-report.md"
+type = "text"
+title = "Rainbow Preschool — Full SEO Report"
