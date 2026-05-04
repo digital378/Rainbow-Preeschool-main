@@ -24,8 +24,8 @@ export function serveStatic(app: Express) {
         // explicitly want CF to honour the same s-maxage as standards-compliant
         // CDNs. Browsers still revalidate via max-age=0.
         res.setHeader("Cache-Control", "public, max-age=0, s-maxage=300, stale-while-revalidate=86400");
-        res.setHeader("CDN-Cache-Control", "public, max-age=300, stale-while-revalidate=86400");
-        res.setHeader("Cloudflare-CDN-Cache-Control", "public, max-age=300, stale-while-revalidate=86400");
+        res.setHeader("CDN-Cache-Control", "public, max-age=3600, stale-while-revalidate=86400");
+        res.setHeader("Cloudflare-CDN-Cache-Control", "public, max-age=3600, stale-while-revalidate=86400");
       }
     },
   }));
@@ -34,8 +34,8 @@ export function serveStatic(app: Express) {
   app.use("*", (_req, res) => {
     res.removeHeader("Set-Cookie");
     res.setHeader("Cache-Control", "public, max-age=0, s-maxage=300, stale-while-revalidate=86400");
-    res.setHeader("CDN-Cache-Control", "public, max-age=300, stale-while-revalidate=86400");
-    res.setHeader("Cloudflare-CDN-Cache-Control", "public, max-age=300, stale-while-revalidate=86400");
+    res.setHeader("CDN-Cache-Control", "public, max-age=3600, stale-while-revalidate=86400");
+    res.setHeader("Cloudflare-CDN-Cache-Control", "public, max-age=3600, stale-while-revalidate=86400");
     res.sendFile(path.resolve(distPath, "index.html"));
   });
 }

@@ -217,5 +217,35 @@ if [ "${FRESHNESS_EXIT}" -ne 0 ] || [ "${KEYWORD_EXIT}" -ne 0 ] || [ "${SITEMAP_
   exit "${PERF_EXIT}"
 fi
 
+# ─────────────────────────────────────────────────────────────────────────────
+# Step 9/9 — Purge Cloudflare edge cache
+#
+# Runs LAST so it only fires after every other guard has passed. Without this,
+# the new CDN-Cache-Control max-age=3600 takes up to an hour to take effect
+# at each POP because old cached responses keep being served until they
+# naturally expire. Purging forces every POP to re-fetch on the next request.
+#
+# Non-blocking: if the purge fails (network blip, token rotated, etc.) we log
+# a warning and let the deploy succeed. The TTL bump still ships; cache just
+# self-heals over the next hour instead of instantly. Skipped entirely when
+# either secret is missing so local dev runs of predeploy.sh stay quiet.
+# ─────────────────────────────────────────────────────────────────────────────
+if [ -n "$CF_ZONE_ID" ] && [ -n "$CF_API_TOKEN" ]; then
+  log "step 9/9 — Purging Cloudflare edge cache ..."
+  PURGE_RESPONSE=$(curl -sX POST \
+    "https://api.cloudflare.com/client/v4/zones/$CF_ZONE_ID/purge_cache" \
+    -H "Authorization: Bearer $CF_API_TOKEN" \
+    -H "Content-Type: application/json" \
+    --data '{"purge_everything":true}')
+  if echo "$PURGE_RESPONSE" | grep -q '"success":true'; then
+    log "Cloudflare cache purged successfully."
+  else
+    log "WARNING — Cloudflare cache purge failed: $PURGE_RESPONSE"
+    log "Continuing anyway; old cached responses will expire within max-age."
+  fi
+else
+  log "step 9/9 — SKIPPED Cloudflare cache purge (CF_ZONE_ID or CF_API_TOKEN not set)."
+fi
+
 log "PASS — byline guard + no-pink guard + build + freshness + keyword-targets + sitemap-200 + Lighthouse perf guard all succeeded; deploy may proceed."
 exit 0
