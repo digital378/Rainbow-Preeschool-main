@@ -1005,7 +1005,7 @@ const staticPages: Record<string, PageSEOData> = {
     lastModifiedDisplay: LAST_UPDATED_DISPLAY,
   },
   "/happy-times": {
-    title: "Happy Times | After-School Care | Rainbow Preschool",
+    title: "Daycare in Thane | Safe After-School Care | Rainbow Preschool",
     description: "Enroll in Happy Times — our after-school enrichment programme featuring art, music, dance, sports, and creative activities for children in Thane.",
     canonical: `${BASE_URL}/happy-times`,
     lastModified: LAST_UPDATED_ISO,

@@ -32,6 +32,14 @@
  *      regex word boundary is anchored to "in <thane>" with thane
  *      immediately after the preposition).
  *
+ *   3. SSR/CLIENT TITLE PARITY — for any URL that has BOTH a server-side
+ *      `staticPages` entry in `server/ssr-pages.ts` AND a matching client
+ *      `<SEO title="...">` literal (per the CLIENT_PAGE_URLS map below),
+ *      the two title strings must be byte-equal. Bots index the SSR title
+ *      and humans see the client title once the SPA mounts; any drift
+ *      means the tab title differs from what ranked the page on Google.
+ *      URLs that exist on only one side are exempt.
+ *
  * Sources scanned:
  *   - server/ssr-pages.ts            staticPages map keys → title
  *                                    BLOG_POST_SEO_DATA slug → title
@@ -313,11 +321,36 @@ function validate() {
   }
 }
 
+function validateSsrClientParity() {
+  const ssrFile = "server/ssr-pages.ts";
+  const clientDir = "client/src/pages";
+  const ssrByUrl = new Map<string, TitleEntry>();
+  const clientByUrl = new Map<string, TitleEntry>();
+  for (const entry of titles) {
+    if (entry.file === ssrFile && !entry.url.startsWith("/blog/")) {
+      if (!ssrByUrl.has(entry.url)) ssrByUrl.set(entry.url, entry);
+    } else if (entry.file.startsWith(clientDir + "/") && entry.url !== "?") {
+      if (!clientByUrl.has(entry.url)) clientByUrl.set(entry.url, entry);
+    }
+  }
+  for (const [url, ssr] of ssrByUrl) {
+    const client = clientByUrl.get(url);
+    if (!client) continue;
+    if (ssr.title !== client.title) {
+      errors.push(
+        `${ssr.file}:${ssr.line} vs ${client.file}:${client.line} — SSR/client title mismatch for ${url}. ` +
+          `SSR: "${ssr.title}" — client: "${client.title}". Pick one wording and apply it to both sides.`,
+      );
+    }
+  }
+}
+
 scanSsrPages();
 scanCentreData();
 scanPlaygroupLanding();
 scanClientPages();
 validate();
+validateSsrClientParity();
 
 if (errors.length > 0) {
   console.error(`[check-no-title-cannibalisation] ${errors.length} violation(s):`);
