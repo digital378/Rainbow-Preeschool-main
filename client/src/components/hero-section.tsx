@@ -1,15 +1,7 @@
 import { Link } from "wouter";
-import { useState, useEffect, useRef, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Phone, Users, Star, MapPin, Shield } from "lucide-react";
 import { trackCTAClick } from "@/lib/analytics";
-
-const banners = [
-  "/images/optimized/hero-banner-1.webp",
-  "/images/optimized/hero-banner-2.webp",
-  "/images/optimized/hero-banner-3.webp",
-  "/images/optimized/hero-banner-4.webp",
-];
 
 const trustBadges = [
   { icon: Users, label: "1,00,000+ Happy Students" },
@@ -19,92 +11,19 @@ const trustBadges = [
 ];
 
 export function HeroSection() {
-  const [currentBanner, setCurrentBanner] = useState(0);
-  const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set([0]));
-  const preloadedRef = useRef<Set<number>>(new Set([0]));
-  const carouselStarted = useRef(false);
-
-  const preloadNext = useCallback((current: number) => {
-    const next = (current + 1) % banners.length;
-    if (!preloadedRef.current.has(next)) {
-      preloadedRef.current.add(next);
-      const img = new Image();
-      img.onload = () => {
-        setLoadedImages(prev => {
-          const newSet = new Set(Array.from(prev));
-          newSet.add(next);
-          return newSet;
-        });
-      };
-      img.src = banners[next];
-    }
-  }, []);
-
-  useEffect(() => {
-    const startCarousel = () => {
-      if (carouselStarted.current) return;
-      carouselStarted.current = true;
-      preloadNext(0);
-
-      const interval = setInterval(() => {
-        setCurrentBanner((prev) => {
-          const next = (prev + 1) % banners.length;
-          preloadNext(next);
-          return next;
-        });
-      }, 5000);
-      return interval;
-    };
-
-    let intervalId: ReturnType<typeof setInterval> | undefined;
-    const timerId = setTimeout(() => {
-      intervalId = startCarousel();
-    }, 3000);
-
-    return () => {
-      clearTimeout(timerId);
-      if (intervalId) clearInterval(intervalId);
-    };
-  }, [preloadNext]);
-
   return (
     <section className="relative min-h-[80vh] flex items-center overflow-hidden">
       <div className="absolute inset-0">
-        {banners.map((banner, index) => {
-          const isLoaded = loadedImages.has(index);
-          const isActive = currentBanner === index;
-          if (!isLoaded && index !== 0) return null;
-          return (
-            <div
-              key={index}
-              className="absolute inset-0 transition-opacity duration-1000 ease-in-out"
-              style={{ opacity: isActive ? 1 : 0 }}
-            >
-              {index === 0 ? (
-                <img
-                  src={banner}
-                  alt="Preschool classroom in Thane - Rainbow Preschool 1"
-                  className="w-full h-full object-cover"
-                  width={1200}
-                  height={675}
-                  decoding="async"
-                  // @ts-ignore - fetchpriority is valid HTML but React types lag behind
-                  fetchpriority="high"
-                />
-              ) : (
-                <img
-                  src={banner}
-                  alt={`Preschool classroom in Thane - Rainbow Preschool ${index + 1}`}
-                  className="w-full h-full object-cover"
-                  width={1200}
-                  height={675}
-                  loading="lazy"
-                  decoding="async"
-                />
-              )}
-            </div>
-          );
-        })}
+        <img
+          src="/images/optimized/hero-banner-1.webp"
+          alt="Preschool classroom in Thane - Rainbow Preschool"
+          className="w-full h-full object-cover"
+          width={1200}
+          height={675}
+          decoding="async"
+          // @ts-ignore - fetchpriority is valid HTML but React types lag behind
+          fetchpriority="high"
+        />
         <div className="absolute inset-0 bg-gradient-to-r from-black/65 via-black/35 to-black/10 dark:from-black/75 dark:via-black/45 dark:to-black/20" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-transparent hidden md:block" />
@@ -187,23 +106,6 @@ export function HeroSection() {
             </Button>
           </div>
         </div>
-      </div>
-
-
-      <div className="absolute bottom-7 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1.5">
-        {banners.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => setCurrentBanner(index)}
-            className={`h-[3px] rounded-full transition-all duration-500 ease-out ${
-              currentBanner === index
-                ? "w-10 bg-white shadow-[0_0_6px_rgba(255,255,255,0.6)]"
-                : "w-4 bg-white/40 hover:bg-white/65"
-            }`}
-            aria-label={`Go to slide ${index + 1}`}
-            data-testid={`button-banner-indicator-${index}`}
-          />
-        ))}
       </div>
 
       <div className="absolute -bottom-1 left-0 right-0">
