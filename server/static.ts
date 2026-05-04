@@ -17,17 +17,25 @@ export function serveStatic(app: Express) {
         res.removeHeader("Set-Cookie");
         res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
       } else if (ext === ".html") {
-        // SPA shell: allow Cloudflare to cache at edge (s-maxage=300),
-        // browsers always revalidate (max-age=0). stale-while-revalidate
-        // keeps edge serving fast even during the revalidation window.
+        // SPA shell: drop any session cookies (e.g. GAESA) so CF cannot flip
+        // public→private and so the edge keeps a cacheable copy.
+        res.removeHeader("Set-Cookie");
+        // CF-specific directives override "Cache Everything" Page Rules; we
+        // explicitly want CF to honour the same s-maxage as standards-compliant
+        // CDNs. Browsers still revalidate via max-age=0.
         res.setHeader("Cache-Control", "public, max-age=0, s-maxage=300, stale-while-revalidate=86400");
+        res.setHeader("CDN-Cache-Control", "public, max-age=300, stale-while-revalidate=86400");
+        res.setHeader("Cloudflare-CDN-Cache-Control", "public, max-age=300, stale-while-revalidate=86400");
       }
     },
   }));
 
   // fall through to index.html for SPA routing
   app.use("*", (_req, res) => {
+    res.removeHeader("Set-Cookie");
     res.setHeader("Cache-Control", "public, max-age=0, s-maxage=300, stale-while-revalidate=86400");
+    res.setHeader("CDN-Cache-Control", "public, max-age=300, stale-while-revalidate=86400");
+    res.setHeader("Cloudflare-CDN-Cache-Control", "public, max-age=300, stale-while-revalidate=86400");
     res.sendFile(path.resolve(distPath, "index.html"));
   });
 }

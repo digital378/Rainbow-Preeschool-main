@@ -271,9 +271,21 @@ export function setupBotSSR(app: Express) {
     res.status(200).set({
       "Content-Type": "text/html; charset=utf-8",
       // Bot SSR responses vary by user-agent and must NEVER be cached at the
-      // CDN edge (using no-store so CF "Cache Everything" page rule cannot
-      // override it). Human SPA shell is cached separately via server/static.ts.
+      // CDN edge. Defence in depth — three layers, because legacy CF "Cache
+      // Everything" Page Rules ignore plain Cache-Control:
+      //   1. Cache-Control: no-store          → browsers + standards-compliant CDNs
+      //   2. CDN-Cache-Control: no-store      → generic CDN-only directive (RFC draft)
+      //   3. Cloudflare-CDN-Cache-Control     → CF-specific, OVERRIDES Page Rules
+      //   4. Vary: User-Agent                 → if CF still caches, at least it segments
+      //      bot vs human responses so a bot HIT cannot poison the human entry.
       "Cache-Control": "no-store",
-    }).send(html);
+      "CDN-Cache-Control": "no-store",
+      "Cloudflare-CDN-Cache-Control": "no-store",
+      "Vary": "User-Agent, Accept-Encoding",
+      // Strip any auth/session cookies that may have been attached upstream —
+      // CF flips public→private when Set-Cookie is present, breaking edge cache
+      // for the human SPA shell on the same URL once a bot response leaks through.
+    }).removeHeader("Set-Cookie");
+    res.send(html);
   });
 }
