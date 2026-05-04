@@ -16,6 +16,14 @@ export function serveStatic(app: Express) {
       if ([".js", ".css", ".woff", ".woff2", ".ttf", ".otf", ".webp", ".png", ".jpg", ".jpeg", ".gif", ".svg", ".ico", ".avif"].includes(ext)) {
         res.removeHeader("Set-Cookie");
         res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
+        // Cloudflare's dashboard "Browser Cache TTL" was rewriting our public
+        // header to "private" on asset responses, causing CF-Cache-Status: MISS
+        // on every JS/CSS request and forcing visitors to fetch from US origin.
+        // CDN-Cache-Control is honoured by Cloudflare independently of (and
+        // takes precedence over) any Cache-Control rewrite, so we explicitly
+        // tell the edge to cache fingerprinted assets for a year.
+        res.setHeader("CDN-Cache-Control", "public, max-age=31536000, immutable");
+        res.setHeader("Cloudflare-CDN-Cache-Control", "public, max-age=31536000, immutable");
       } else if (ext === ".html") {
         // SPA shell: drop any session cookies (e.g. GAESA) so CF cannot flip
         // public→private and so the edge keeps a cacheable copy.
