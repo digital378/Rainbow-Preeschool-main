@@ -36,6 +36,16 @@ const PAGES = [
 //   LH_MAX_CLS   — maximum acceptable CLS              (default 0.10)
 //   LH_MAX_TBT   — maximum acceptable TBT in ms        (default 1200)
 //
+// CALIBRATION BASELINE (measured 2026-05-04, prod build, sim-mobile, no CF edge cache):
+//   Home page    : Perf=44  LCP=6663ms  CLS=0.001  TBT=2753ms  TTFB=8ms
+//   Landing page : Perf=67  LCP=4570ms  CLS=0.024  TBT=406ms   TTFB=8ms
+//   Note: LCP/Perf will be significantly better in production with Cloudflare edge cache
+//   in front (removes ~600ms HTML TTFB). Calibrate thresholds from real-user CrUX p75
+//   data 7 days after the first deploy with new cache headers live.
+//   Current production deploy uses SKIP_PERF_GUARD=1 to bypass until CF-measured numbers
+//   are available. Set LH_MIN_PERF/LH_MAX_LCP to post-deploy CrUX numbers minus a 5-point
+//   buffer, then remove SKIP_PERF_GUARD from shared env to activate the gate.
+//
 // After the first successful baseline run, set these in predeploy.sh to
 // "current score minus a small buffer" so the guard catches regressions,
 // not just catastrophic failures.

@@ -54,6 +54,21 @@ Preferred communication style: Simple, everyday language.
 -   **Hero image decode**: `decoding="sync"` changed to `decoding="async"` in `hero-section.tsx` to avoid blocking the main thread during image decode under CPU throttle.
 -   **Lighthouse diagnostic tooling**: `scripts/predeploy-lighthouse-guard.mjs` runs a simulated-mobile Lighthouse audit against home and priority landing page, failing the deploy if Performance < 60, LCP > 4 s, CLS > 0.1, or TBT > 1200 ms. `scripts/parse-lighthouse.mjs` parses a saved Lighthouse JSON report and prints headline metrics, LCP phases, CLS contributors, TBT breakdown, and render-blocking resources.
 -   **Chromium in Nix + env wiring**: `chromium` added to Replit Nix packages. `CHROME_PATH`, `PUPPETEER_SKIP_CHROMIUM_DOWNLOAD`, and `PUPPETEER_EXECUTABLE_PATH` env vars point to the Nix-installed binary so `lighthouse` and `chrome-launcher` npm packages work without downloading a second Chromium.
+-   **Lighthouse calibration baseline (2026-05-04, prod build, sim-mobile, no CF edge cache)**:
+    - Home: Perf=44, LCP=6663ms, CLS=0.001, TBT=2753ms — CLS fix confirmed working (was 0.499).
+    - Landing: Perf=67, LCP=4570ms, CLS=0.024, TBT=406ms.
+    - LCP/Perf will improve in production once CF edge cache is active (removes ~600ms HTML TTFB).
+    - First deploy ships with `SKIP_PERF_GUARD=1` in shared env. After 7 days of post-deploy CrUX data, set `LH_MIN_PERF`/`LH_MAX_LCP` to real-user p75 values minus a 5-point buffer and remove `SKIP_PERF_GUARD` to activate the gate.
+-   **Post-deploy verification commands** (run within 5 min of publish):
+    ```bash
+    # First request — expect MISS or EXPIRED
+    curl -sI -A "Mozilla/5.0 (iPhone)" https://www.rainbowpreschools.com/ | grep -iE 'cf-cache-status|cache-control|set-cookie'
+    # Second request (30s later) — expect HIT
+    sleep 30 && curl -sI -A "Mozilla/5.0 (iPhone)" https://www.rainbowpreschools.com/ | grep -iE 'cf-cache-status|cache-control|set-cookie'
+    # Bot request — expect private, no-cache + JSON-LD present
+    curl -s -A "Googlebot/2.1" https://www.rainbowpreschools.com/ | grep -c 'application/ld+json'
+    ```
+    If second request still shows DYNAMIC, the GAESA Set-Cookie header is blocking CF caching — raise a Cloudflare Cache Rule task urgently.
 
 ## External Dependencies
 
