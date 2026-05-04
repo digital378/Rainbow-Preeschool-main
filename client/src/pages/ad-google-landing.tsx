@@ -83,33 +83,22 @@ export default function AdGoogleLanding() {
     descMeta.content = 'Join the best preschool in Thane! Rainbow Preschool offers playgroup, nursery & kindergarten with CCTV, female staff & transport. Admissions open 2026-27.';
     document.head.appendChild(descMeta);
 
-    // Load GA4 gtag.js if not already loaded
-    if (!(window as any).gtag) {
-      const gtagScript = document.createElement('script');
-      gtagScript.async = true;
-      gtagScript.src = `https://www.googletagmanager.com/gtag/js?id=${GA4_ID}`;
-      document.head.appendChild(gtagScript);
-      
-      (window as any).dataLayer = (window as any).dataLayer || [];
-      (window as any).gtag = function() { (window as any).dataLayer.push(arguments); };
-      (window as any).gtag('js', new Date());
-      (window as any).gtag('config', GA4_ID, { page_path: '/ad-google', page_title: 'Google Ads Landing Page' });
-      console.log('[GA4] Initialized on /ad-google page');
+    // GA4 + Clarity are loaded by client/index.html on idle / first interaction
+    // (see the deferred loader at lines 81-132 of client/index.html). We only
+    // need to register a page_view config for this specific page once gtag is
+    // available — defer that registration until idle so it can't block TBT.
+    // dataLayer + gtag shim are pre-defined in index.html, so it's safe to
+    // queue the config call immediately; gtag.js will replay the queue on load.
+    const registerAdPageConfig = () => {
+      const w = window as any;
+      w.dataLayer = w.dataLayer || [];
+      w.gtag = w.gtag || function () { w.dataLayer.push(arguments); };
+      w.gtag('config', GA4_ID, { page_path: '/ad-google', page_title: 'Google Ads Landing Page' });
+    };
+    if ('requestIdleCallback' in window) {
+      (window as any).requestIdleCallback(registerAdPageConfig, { timeout: 2000 });
     } else {
-      (window as any).gtag('config', GA4_ID, { page_path: '/ad-google', page_title: 'Google Ads Landing Page' });
-    }
-
-    // Load Microsoft Clarity
-    if (!(window as any).clarity) {
-      const clarityScript = document.createElement('script');
-      clarityScript.innerHTML = `
-        (function(c,l,a,r,i,t,y){
-          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-        })(window, document, "clarity", "script", "m20xf4ffec");
-      `;
-      document.head.appendChild(clarityScript);
+      setTimeout(registerAdPageConfig, 500);
     }
 
     return () => {
