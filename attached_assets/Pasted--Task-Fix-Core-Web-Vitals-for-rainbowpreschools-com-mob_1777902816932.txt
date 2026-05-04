@@ -1,0 +1,92 @@
+# Task: Fix Core Web Vitals for rainbowpreschools.com (mobile + desktop)
+
+## Current field data (PageSpeed Insights, mobile, May 2026)
+- LCP: 3.6s ❌ (target < 2.5s)
+- INP: 263ms ❌ (target < 200ms)
+- CLS: 0.46 ❌ (target < 0.1) — **this is the worst issue, fix first**
+- FCP: 2.8s (needs < 1.8s)
+- TTFB: 1.5s (needs < 0.8s)
+
+## Constraints (read carefully before any change)
+1. **Do NOT touch SEO-related code** (canonical tags, meta tags, sitemap, robots, structured data, internal links). We're in a 7–14 day SEO recovery window from a recent canonical fix.
+2. **Do NOT regress desktop CWV** — desktop is currently passing.
+3. Test changes locally before deploying. Re-run PageSpeed Insights 2–3 times after deploy and take the median (single runs vary ±15 points).
+4. Field data updates on a 28-day rolling window — lab improvements appear immediately, field data takes 1–2 weeks.
+
+## Fix priority order (highest impact first)
+
+### Priority 1: Fix CLS = 0.46 (URGENT)
+CLS this high means above-the-fold content is jumping around as the page loads. Almost always caused by:
+- **Images without explicit `width` and `height` attributes** → browser reserves 0px, then jumps when image loads
+- **Web fonts swapping** without size-adjust → text reflows when custom font loads
+- **Banners/popups/cookie notices/sticky headers** that inject after first paint
+- **Lazy-loaded sections** without reserved minHeight placeholders
+- **CSS animations with `transform` that move layout-affecting elements**
+
+Actions:
+1. Audit every `<img>` and `<picture>` on the home page and all above-fold sections. Add explicit `width={N}` and `height={N}` matching the image's intrinsic aspect ratio.
+2. For background images that are LCP candidates, set `aspect-ratio` or fixed `min-height` on the container.
+3. If using Google Fonts, add `font-display: swap` AND set `size-adjust`, `ascent-override`, `descent-override` in the @font-face fallback declaration to prevent text reflow on font swap.
+4. Any popup/banner/cookie notice/announcement bar that appears after page load → reserve its space with a placeholder div, OR mount it inside a `position: fixed` overlay (overlays don't cause layout shift).
+5. If hero has a slider/carousel, ensure the container has fixed height before slides mount.
+
+### Priority 2: Fix LCP = 3.6s
+Likely causes (check in this order):
+1. **Hero image too large** — convert to WebP, create a separate mobile-sized variant (~800px wide), use `<picture>` with `<source media="(max-width: 768px)" srcSet="...mobile.webp">`. Add `fetchPriority="high"` and `loading="eager"` to the LCP image.
+2. **Add `<link rel="preload" as="image">`** in the `<head>` for the hero image with `imagesrcset` and `imagesizes` attributes for responsive preload.
+3. **TTFB is 1.5s** — check server response. If using WordPress/Hostinger, enable page caching (LiteSpeed Cache or W3 Total Cache). If using a server framework, ensure home page is either statically generated or aggressively cached at the CDN edge (Cloudflare).
+4. **Render-blocking CSS** — inline critical above-fold CSS, defer the rest.
+5. **Render-blocking fonts** — add `<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>`. Self-host fonts if possible.
+
+### Priority 3: Fix INP = 263ms and TBT
+Long-running JavaScript on the main thread blocks user interaction.
+1. **Defer all third-party scripts** (Google Tag Manager, GA4, Facebook Pixel, chat widgets, WhatsApp button scripts) to load AFTER `window.load + 2 seconds` using a small inline scheduler:
+   ```js
+   window.addEventListener('load', () => {
+     setTimeout(() => {
+       // inject GTM/GA4/FB Pixel/etc here
+     }, 2000);
+   });
+   ```
+2. **Code-split below-the-fold sections.** If using React, use `React.lazy()` + `<Suspense>` AND wrap each below-fold section in an IntersectionObserver-based `<LazyVisible>` component that only mounts the section when within 300px of viewport. (`React.lazy` alone does NOT defer rendering — you need IntersectionObserver to actually defer.)
+3. Remove or replace expensive CSS animations (`animate-ping`, `animate-pulse` on multiple elements). Use static `box-shadow` instead.
+4. Audit the main JS bundle. Remove unused dependencies. Check for accidentally-imported large data files (blog post arrays, etc.) on the home page.
+
+### Priority 4: Image optimization (sitewide)
+1. Convert all PNG/JPG images > 100KB to WebP using ffmpeg:
+   ```
+   ffmpeg -i input.jpg -c:v libwebp -quality 80 output.webp
+   ```
+2. For hero/above-fold images, also generate a mobile variant at 800px width.
+3. Use `<picture>` with `<source type="image/webp">` and a JPG/PNG fallback `<img>` for browser compatibility.
+4. Add `loading="lazy"` and `decoding="async"` to all below-fold images.
+5. Add explicit `width` and `height` to every single image (also fixes CLS).
+
+### Priority 5: Cache and delivery
+1. Set `Cache-Control: public, max-age=31536000, immutable` on all hashed static assets (JS, CSS, images in `/assets/`).
+2. Add `<link rel="preconnect">` for any third-party domains used above the fold (fonts, CDN, image host).
+3. Enable Brotli/gzip compression on the server.
+
+## Deliverables
+1. Before making changes, post a summary of:
+   - Which framework the site uses (WordPress? React? Next.js?)
+   - Top 5 images by file size on the home page
+   - Current font loading strategy
+   - List of third-party scripts in `<head>` and their loading method
+2. Implement fixes in the priority order above.
+3. After deploy, run PageSpeed Insights 3 times, average the scores, and report the before/after table.
+
+## Success criteria (mobile field data within 4 weeks)
+- LCP < 2.5s ✅
+- INP < 200ms ✅
+- CLS < 0.1 ✅
+- FCP < 1.8s ✅
+- TTFB < 0.8s ✅
+- Lighthouse mobile performance score: 80+
+
+## What NOT to do
+- Don't add or change any SEO meta tags, canonicals, sitemaps, structured data, or internal link patterns
+- Don't change page URLs or routing
+- Don't remove existing analytics tracking — defer it, don't delete it
+- Don't apply "framework rewrites" or major refactors. Targeted fixes only.
+- Don't trust a single Lighthouse run. Always re-run 2–3 times.
