@@ -87,7 +87,7 @@ export function HeroSection() {
                   className="w-full h-full object-cover"
                   width={1200}
                   height={675}
-                  decoding="sync"
+                  decoding="async"
                   // @ts-ignore - fetchpriority is valid HTML but React types lag behind
                   fetchpriority="high"
                 />

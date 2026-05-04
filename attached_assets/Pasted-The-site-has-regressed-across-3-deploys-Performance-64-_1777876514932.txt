@@ -1,0 +1,51 @@
+The site has regressed across 3 deploys: Performance 64 → 49 → 25, 
+CLS 0 → 0.499, LCP 3.5s → 7.9s. Before any new features, restore 
+the baseline.
+## Section A — Diagnostics first (do not fix anything yet)
+1. Run git log --oneline -20 and identify the 3 most recent deploys
+2. Run git diff between the build that scored Performance 64 and 
+   the current HEAD. Output the full list of changed files
+3. Run Lighthouse locally on the homepage (mobile, slow 4G simulation)
+4. From the Lighthouse JSON output, report:
+   - The exact LCP element (look for "largest-contentful-paint-element")
+   - LCP breakdown: TTFB / Resource Load Delay / Resource Load Time / 
+     Element Render Delay
+   - The top 5 layout shift contributors (look for "layout-shifts")
+   - Total Blocking Time breakdown by long task source
+Pause and report all findings before proceeding to Section B.
+## Section B — Fixes (only after Section A is reviewed)
+### B.1 — Cookie banner CLS fix
+The lazy-load of CookieConsentBanner caused the CLS regression.
+Required changes:
+- Restore eager import of CookieConsentBanner in App.tsx
+- Apply CSS: position: fixed; bottom: 0; left: 0; right: 0; z-index: 50
+  so it renders OUTSIDE document flow and cannot cause CLS
+- Confirm the setTimeout(800ms) appearance does not affect any 
+  parent layout
+- The banner must NOT push content up when it appears
+### B.2 — LCP regression
+Based on Section A diagnostics, identify and fix the root cause. 
+Likely candidates:
+- Hero image lost preload or fetchpriority="high"
+- A new render-blocking script entered <head>
+- A new dependency in the main bundle delays hydration
+Do NOT dismiss as "Lighthouse variance." A 3.5s → 7.9s regression 
+across 3 deploys is signal, not noise.
+### B.3 — Predeploy guard
+Add a quality gate to predeploy:
+- Run Lighthouse on homepage AND on /best-preschool-near-me-in-thane
+- FAIL the deploy if any metric breaches: 
+  Performance < 60, LCP > 4s, CLS > 0.1, TBT > 1200ms
+- This prevents future regressions reaching production
+## Section C — Verification (mandatory before deploy)
+1. Lighthouse on homepage: Performance ≥ 60, LCP ≤ 4s, CLS ≤ 0.1
+2. Lighthouse on /best-preschool-near-me-in-thane: same thresholds
+3. Visual check: confirm cookie banner slides up after 800ms WITHOUT 
+   pushing other content
+4. Confirm cf-cache-status: HIT on a static asset (curl twice)
+5. Confirm cf-ray: ...-BOM from Mumbai (KeyCDN test)
+Report:
+- Files modified
+- Lighthouse before/after numbers per page
+- Specific root cause of the LCP regression
+- Predeploy guard configuration

@@ -4,13 +4,13 @@ import { getConsentState, setConsentState, initPixelIfConsented } from "@/lib/co
 
 export function CookieConsentBanner() {
   const [visible, setVisible] = useState(false);
+  const consentResolved = getConsentState() !== null;
 
   useEffect(() => {
-    if (getConsentState() === null) {
-      const t = setTimeout(() => setVisible(true), 800);
-      return () => clearTimeout(t);
-    }
-  }, []);
+    if (consentResolved) return;
+    const t = setTimeout(() => setVisible(true), 800);
+    return () => clearTimeout(t);
+  }, [consentResolved]);
 
   function accept() {
     setConsentState("accepted");
@@ -23,15 +23,20 @@ export function CookieConsentBanner() {
     setVisible(false);
   }
 
-  if (!visible) return null;
-
   return (
     <div
       role="dialog"
       aria-label="Cookie consent"
       aria-live="polite"
+      aria-hidden={!visible}
       data-testid="cookie-consent-banner"
-      className="fixed bottom-0 left-0 right-0 z-50 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 shadow-lg"
+      className={[
+        "fixed bottom-0 left-0 right-0 z-50",
+        "bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 shadow-lg",
+        "transition-transform duration-300 ease-out will-change-transform",
+        visible ? "translate-y-0" : "translate-y-full pointer-events-none",
+      ].join(" ")}
+      style={{ contain: "layout paint" }}
     >
       <div className="max-w-6xl mx-auto px-4 py-3 flex flex-col sm:flex-row sm:items-center gap-3">
         <p className="text-sm text-gray-700 dark:text-gray-300 flex-1 leading-relaxed">

@@ -1,0 +1,102 @@
+Your review is solid, and it corrects two things I'd have gotten wrong without code access: B.1 Part 1 is already done, and the Replit/NixOS Chrome availability gap. Both fair.
+Three places I want to refine the plan.
+1. Banner fix — agreement on direction, code ready
+You diagnosed it correctly. if (!visible) return null is the gap. Mount-then-paint is technically grey-area for CLS on a fixed element, but the always-mounted + transform pattern is bulletproof and costs nothing, so there's no reason to leave the ambiguity in place.
+Here's the exact change. Adapt to your component's existing shape — I'm showing the structure, not the literal copy-paste:
+tsx// CookieConsentBanner.tsx
+
+export default function CookieConsentBanner() {
+  const [visible, setVisible] = useState(false);
+  const [consentResolved, setConsentResolved] = useState(/* read from storage */);
+
+  useEffect(() => {
+    if (consentResolved) return;
+    const id = setTimeout(() => setVisible(true), 800);
+    return () => clearTimeout(id);
+  }, [consentResolved]);
+
+  // Hide after consent is given — but keep DOM mounted; just slide it back out.
+  // No early return.
+  if (consentResolved && !visible) {
+    // resolved on a previous visit, never show
+    // still render an empty fixed wrapper? No — render nothing only AFTER first
+    // paint has stabilized. Safer: render the wrapper but pointer-events:none.
+  }
+
+  return (
+    <div
+      role="dialog"
+      aria-label="Cookie consent"
+      aria-hidden={!visible}
+      className={[
+        'fixed bottom-0 left-0 right-0 z-50',
+        'transition-transform duration-300 ease-out',
+        visible ? 'translate-y-0' : 'translate-y-full',
+        'will-change-transform',
+        !visible && 'pointer-events-none',
+      ].filter(Boolean).join(' ')}
+      style={{ contain: 'layout paint' }}
+    >
+      {/* existing banner content */}
+    </div>
+  );
+}
+The two key invariants: the wrapper exists in DOM from first render (no conditional mount), and the only thing changing on the 800ms tick is the transform class. No display, no bottom, no height. If your existing component does post-consent dismissal by unmounting, change it to slide back out via translate-y-full and leave the DOM there — unmounting after consent is fine because by then CLS measurement is well past the threshold, but mounting after first paint is what we're trying to avoid.
+2. "Manual check, not blocker" — fine as a way station, not as the destination
+The previous setup was effectively "run Lighthouse manually and trust the developer to notice." Three regressions made it through. A permanent npm run perf:check that doesn't block deploys has the same failure mode by construction. The path I'd commit to:
+
+Land the script as npm run perf:check, verify it runs cleanly two or three times against a staging URL
+Fix the Chrome-on-NixOS gap (below)
+Wire it as blocking once stable
+
+The NixOS fix is one file:
+nix# replit.nix
+{ pkgs }: {
+  deps = [
+    # ... your existing deps ...
+    pkgs.chromium
+  ];
+  env = {
+    CHROME_PATH = "${pkgs.chromium}/bin/chromium";
+    PUPPETEER_SKIP_CHROMIUM_DOWNLOAD = "true";
+    PUPPETEER_EXECUTABLE_PATH = "${pkgs.chromium}/bin/chromium";
+  };
+}
+chrome-launcher honors CHROME_PATH. Closure size goes up by ~200MB but that's a build-time cost, not a runtime cost, and Replit's image cache handles it after the first build.
+If chromium-in-nix turns out to be flaky in your specific environment, the fallback is running the guard externally — GitHub Actions on push, or a tiny separate machine that polls staging. But start with NixOS chromium; it's the simplest path.
+The reason I'm pushing here: a non-blocking guard is just monitoring with extra steps. If the goal is "prevent regressions reaching production," the guard has to actually prevent them.
+3. LCP — what to look for in the parser output
+When you run Lighthouse and feed the JSON to parse-lighthouse.mjs, the four-phase breakdown is the whole game. Map your symptoms to phases:
+
+TTFB high (> 1500ms) → server/SSR/Cloudflare. Your JSON-LD bloat hypothesis lives here. JSON-LD itself is small text, but if the SSR response on your Perf-25 commit is meaningfully larger AND the HTML isn't cached at Cloudflare, you'd see this.
+Resource Load Delay high (> 500ms) → preload isn't doing what you think. Most common cause: href doesn't match the actual fetched URL byte-for-byte (different format, different responsive variant), so Chrome ignores it.
+Resource Load Time high (> 2000ms) → image too large for viewport, or wrong format being chosen.
+Element Render Delay high (> 1000ms) → CPU-bound. Decode cost, hydration cost, big JS bundle parse blocking the paint.
+
+That last bucket is where I'd flag decoding="sync". With Lighthouse's 4x CPU slowdown on mobile, synchronous decode of a hero image can add 200-600ms of Element Render Delay. It's not what caused a 4.4s regression on its own, but if the parser output shows Element Render Delay dominating, switch it to decoding="async". The fetchpriority="high" signal already gives you the network priority you need; sync decode adds little benefit and costs main-thread time.
+Two quick sanity checks you can run right now, before Lighthouse:
+bash# Cache status on the HTML root — run 3-4 times across a few minutes
+for i in 1 2 3 4; do
+  curl -sI https://www.rainbowpreschools.com/ | grep -iE 'cf-cache-status|cf-ray'
+  sleep 5
+done
+# If you see DYNAMIC or BYPASS most of the time, your HTML isn't cached and
+# every page view pays origin TTFB. That's a Cloudflare Page Rules / Cache Rules
+# fix, not a code fix.
+
+# HTML response size now vs. before — if you can find the perf-64 SHA in your
+# build artifacts, compare. If body size jumped by 100KB+, JSON-LD or some other
+# SSR addition is contributing. Bodies under 50KB on a Mumbai→BOM POP are
+# probably <100ms impact, so this is a smaller lever than cache hit rate.
+curl -s https://www.rainbowpreschools.com/ | wc -c
+If cf-cache-status shows mostly DYNAMIC on the HTML, that alone could account for 1-3 seconds of TTFB regression depending on Replit's response time, and no code change will fix it.
+Plan I'd commit to
+
+Today — banner patch, deploy, confirm CLS drops from 0.499 to ~0.
+Today — drop both scripts into scripts/, add npm run perf:check, leave non-blocking for now. Run it once against the live site and capture the parser output.
+Share parser output back — I'll name the LCP regression cause from the phase breakdown rather than guessing between TTFB / Render Delay / bundle bloat.
+After diagnosis — apply the targeted LCP fix.
+After LCP fix lands and is stable — add chromium to replit.nix, run perf:check against staging until reliable, then wire as deploy blocker.
+
+The framing I'd resist is "manual is fine, leave it there." Manual is what we already had. The destination is blocking — we're just routing through manual to derisk the Chrome-on-NixOS unknown.
+Send the parser output when you have it and I'll close out B.2.

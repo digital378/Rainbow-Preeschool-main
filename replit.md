@@ -48,6 +48,12 @@ Preferred communication style: Simple, everyday language.
 ### Performance Optimizations
 -   Employs non-render-blocking Google Fonts, lazy-loaded components, strategic image preloading and lazy loading, and optimized WebP images with immutable cache headers.
 -   **Mobile Core Web Vitals (CWV) optimizations**: Includes disabling heavy graphical elements on mobile, deferring analytics, using `content-visibility: auto`, and optimizing video loading. Hero images are preloaded with `fetchpriority="high"` to optimize Largest Contentful Paint (LCP).
+-   **CLS fix (cookie banner)**: `CookieConsentBanner` is always-mounted; visibility toggled via `translate-y-full → translate-y-0` CSS transform so no DOM insertion happens after paint. `will-change-transform` + `contain: layout paint` prevent layout thrash.
+-   **LCP / TTFB fix (CDN caching)**: HTML responses now send `Cache-Control: public, max-age=0, s-maxage=300, stale-while-revalidate=86400` (both the static `.html` setHeaders path and the SPA catch-all in `server/static.ts`). This allows Cloudflare to cache the SPA shell at the edge and removes the `cf-cache-status: DYNAMIC` penalty that was adding ~200–300 ms TTFB on every visit.
+-   **Bot SSR cache isolation**: Bot SSR responses in `server/bot-ssr.ts` send `Cache-Control: private, no-cache` so they are never served from CDN cache (they vary by User-Agent).
+-   **Hero image decode**: `decoding="sync"` changed to `decoding="async"` in `hero-section.tsx` to avoid blocking the main thread during image decode under CPU throttle.
+-   **Lighthouse diagnostic tooling**: `scripts/predeploy-lighthouse-guard.mjs` runs a simulated-mobile Lighthouse audit against home and priority landing page, failing the deploy if Performance < 60, LCP > 4 s, CLS > 0.1, or TBT > 1200 ms. `scripts/parse-lighthouse.mjs` parses a saved Lighthouse JSON report and prints headline metrics, LCP phases, CLS contributors, TBT breakdown, and render-blocking resources.
+-   **Chromium in Nix + env wiring**: `chromium` added to Replit Nix packages. `CHROME_PATH`, `PUPPETEER_SKIP_CHROMIUM_DOWNLOAD`, and `PUPPETEER_EXECUTABLE_PATH` env vars point to the Nix-installed binary so `lighthouse` and `chrome-launcher` npm packages work without downloading a second Chromium.
 
 ## External Dependencies
 

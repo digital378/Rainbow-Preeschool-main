@@ -1,0 +1,63 @@
+Replit's right. The HTML cache header is the headline finding — cf-cache-status: DYNAMIC on every HTML request from a US origin to a Mumbai user is exactly the 4-second LCP regression we were looking for, and I missed it because I was thinking about the bundle and the image, not the document. Good catch.
+Three notes before they hit Build mode.
+On the cache header — the proposed value is right, with one watch-item
+public, max-age=0, s-maxage=300, stale-while-revalidate=86400
+This is the correct pattern for an SPA shell:
+
+max-age=0 — browsers revalidate every visit, so a code push is reflected immediately for returning users
+s-maxage=300 — Cloudflare caches at the edge for 5 minutes
+stale-while-revalidate=86400 — for 24h after expiry, CF serves stale while fetching fresh in the background, so even the cache-miss case is fast
+
+The watch-item: bot SSR. Your Express layer branches on user-agent and serves different HTML to crawlers (Googlebot, etc.) than to humans. If the same URL with the same Cache-Control header serves two response bodies depending on UA, Cloudflare will cache whichever response arrives first and serve it to everyone. A user landing on cached Googlebot HTML is mostly fine (it's just more SEO content) but a Googlebot landing on cached human HTML is bad — that's the version that ranks.
+Two ways to handle this:
+js// Option A: vary the cache key by bot vs human
+res.setHeader('Vary', 'User-Agent');
+// — but this is dangerous on Cloudflare. UA has thousands of variants;
+//   you'll fragment the cache and hit-rate plummets. Don't do this.
+
+// Option B: set Cache-Control conditionally based on the same UA branch
+//   you're already using to decide SSR
+if (isBotRequest(req)) {
+  res.setHeader('Cache-Control', 'public, max-age=0, s-maxage=600');
+} else {
+  res.setHeader('Cache-Control', 'public, max-age=0, s-maxage=300, stale-while-revalidate=86400');
+}
+// — and add a Cloudflare Cache Rule that varies on a custom request header
+//   you set, OR uses a Worker to split the cache key. Or simplest:
+js// Option C (simplest, recommended): bypass CF cache for bots, cache for humans.
+if (isBotRequest(req)) {
+  res.setHeader('Cache-Control', 'private, no-cache');  // CF won't cache, bot gets fresh SSR
+} else {
+  res.setHeader('Cache-Control', 'public, max-age=0, s-maxage=300, stale-while-revalidate=86400');
+}
+Option C is what I'd ship. Crawlers tolerate slightly slower TTFB; they're not LCP-sensitive. Humans get the edge cache. No cache poisoning risk because the two response types never share a cache entry.
+Verify after deploy:
+bash# Human UA — should HIT after first request
+curl -sI -A "Mozilla/5.0 (iPhone)" https://www.rainbowpreschools.com/ | grep -iE 'cf-cache-status|cache-control'
+curl -sI -A "Mozilla/5.0 (iPhone)" https://www.rainbowpreschools.com/ | grep -iE 'cf-cache-status|cache-control'
+
+# Bot UA — should always be DYNAMIC/BYPASS, and body should be the SSR version
+curl -sI -A "Googlebot/2.1" https://www.rainbowpreschools.com/ | grep -iE 'cf-cache-status|cache-control'
+curl -s  -A "Googlebot/2.1" https://www.rainbowpreschools.com/ | grep -c 'application/ld+json'
+# Second number should be > 0 — confirms bots still get JSON-LD-laden SSR.
+On the GAESA cookie
+Set-Cookie on the HTML response also forces CF to bypass cache by default — even with the corrected Cache-Control, if the cookie keeps getting set, you stay on DYNAMIC. So this isn't a separate cleanup item; it's a blocker for the cache fix to actually work.
+The GAESA name doesn't match GA4's standard cookies (_ga, _ga_<container>). It looks like either a custom cookie or a server-side GTM artifact. Find it with:
+bashgrep -rn 'GAESA\|res\.cookie\|setHeader.*[Ss]et-[Cc]ookie' server/
+If it's measurement-related, move it client-side where it belongs (GA4 handles its own cookies via the gtag snippet). If it's session-related, scope it tighter — set it only on routes that actually need a session (form POST, authenticated areas), not on the document root.
+If you can't find or remove the source today, the workaround is a Cloudflare Cache Rule that ignores Set-Cookie for the HTML root. Dashboard → Caching → Cache Rules → "Override origin Cache-Control" + "Ignore Set-Cookie." But that's a workaround. Find and fix the source — a stray Set-Cookie on every HTML response is also a privacy review item under DPDP if it's tracking-adjacent without consent.
+On testing the guard against the production build locally
+You're right that I had this wrong. Testing the guard against the live URL pre-deploy tests the old version. The correct pattern, which matches what predeploy.sh already does for SEO:
+bash# In predeploy.sh, add after the build step:
+npm run build
+npm run preview &        # serves dist/ on localhost:5173 (Vite default)
+PREVIEW_PID=$!
+sleep 3                  # let the server come up
+BASE_URL=http://localhost:5173 node scripts/predeploy-lighthouse-guard.mjs
+GUARD_EXIT=$?
+kill $PREVIEW_PID
+exit $GUARD_EXIT
+One caveat: vite preview serves the static client bundle but not your Express SSR. If your homepage's LCP depends on SSR'd content (it shouldn't for a React SPA, but worth checking), the local guard will measure a different LCP element than production. If that turns out to matter, swap vite preview for booting your Express server pointed at the built assets.
+Plan — agreed, ship it
+The reordered priority list is correct. Items 1–3 in one PR, items 4–5 in a second PR, item 6 after 4–5 are confirmed stable. Add the bot-vs-human cache split to item 2 and the GAESA source-find to item 2's checklist. Everything else stands.
+Go to Build.

@@ -268,6 +268,11 @@ export function setupBotSSR(app: Express) {
     }
 
     const html = renderSSRHtml(seo, urlPath);
-    res.status(200).set({ "Content-Type": "text/html; charset=utf-8" }).send(html);
+    res.status(200).set({
+      "Content-Type": "text/html; charset=utf-8",
+      // Bot SSR responses vary by user-agent and must not be cached at the
+      // CDN edge. Human SPA shell is cached separately in server/static.ts.
+      "Cache-Control": "private, no-cache",
+    }).send(html);
   });
 }

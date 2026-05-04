@@ -57,6 +57,9 @@ VITE_FIREBASE_API_KEY = "AIzaSyA2DXoMN9pMWCsHMTR8OFBiVVlwzBToFTE"
 VITE_FIREBASE_AUTH_DOMAIN = "rainbow-preschool-be593.firebaseapp.com"
 VITE_FIREBASE_PROJECT_ID = "rainbow-preschool-be593"
 VITE_FIREBASE_APP_ID = "1:46672206866:web:ab45dc9e56707b376fcccb"
+CHROME_PATH = "/nix/store/zi4f80l169xlmivz8vja8wlphq74qqk0-chromium-125.0.6422.141/bin/chromium-browser"
+PUPPETEER_SKIP_CHROMIUM_DOWNLOAD = "true"
+PUPPETEER_EXECUTABLE_PATH = "/nix/store/zi4f80l169xlmivz8vja8wlphq74qqk0-chromium-125.0.6422.141/bin/chromium-browser"
 
 [postMerge]
 path = "scripts/post-merge.sh"
