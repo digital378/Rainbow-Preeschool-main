@@ -23,6 +23,7 @@ import {
   defaultCentreGalleryImages,
   type CentreData 
 } from "@shared/centre-data";
+import { getPlaygroupLandingBySlug } from "@shared/playgroup-landing-data";
 import { COMMERCIAL_PAGES_LAST_UPDATED_DISPLAY } from "@shared/seo-config";
 import { trackCallClick, trackWhatsAppClick, trackDirectionsClick, pushToDataLayer } from "@/lib/analytics";
 
@@ -594,6 +595,29 @@ function PreschoolLocationTemplate({ localitySlug }: PreschoolLocationPageProps)
           </div>
         </div>
       </section>
+
+      {(() => {
+        const siblingPlaygroup = getPlaygroupLandingBySlug(localitySlug);
+        if (!siblingPlaygroup) return null;
+        return (
+          <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-6" data-testid={`section-sibling-playgroup-${localitySlug}`}>
+            <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-4 md:p-5">
+              <p className="text-sm text-gray-700 dark:text-gray-200">
+                <span className="font-semibold">Looking for the toddler programme?</span>{" "}
+                See our{" "}
+                <Link
+                  href={siblingPlaygroup.url}
+                  className="text-primary underline underline-offset-2 hover:text-primary/80"
+                  data-testid={`link-sibling-playgroup-${localitySlug}`}
+                >
+                  Playgroup in {centre.localityName} (1.5–2.5 years)
+                </Link>
+                {" "}page.
+              </p>
+            </div>
+          </section>
+        );
+      })()}
 
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
         <EEATSignals

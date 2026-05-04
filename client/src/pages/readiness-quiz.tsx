@@ -111,7 +111,7 @@ export default function ReadinessQuiz() {
     <article className="min-h-screen bg-gradient-to-b from-white to-gray-50">
       <SEO
         title="Preschool Readiness Quiz — Free Assessment | Rainbow"
-        description="Take this free 2-minute quiz to find out if your child is ready for preschool. 10 research-backed questions covering physical, social, and cognitive readiness."
+        description="Take this free 2-minute quiz to find out if your child is ready for preschool — 10 research-backed questions on physical, social, and cognitive readiness."
         keywords="preschool readiness quiz, is my child ready for preschool, preschool readiness checklist, child development assessment, preschool readiness test"
         canonical="https://www.rainbowpreschools.com/preschool-readiness-quiz"
       />

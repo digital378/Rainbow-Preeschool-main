@@ -94,6 +94,13 @@ if ! npx --no-install tsx scripts/check-no-title-cannibalisation.ts; then
   exit 1
 fi
 
+log "step 1.55/6 — tsx scripts/check-description-length.ts (meta-description ≤155 chars)"
+if ! npx --no-install tsx scripts/check-description-length.ts; then
+  log "FAIL — meta-description length guard rejected a description >155 chars. See file:line above."
+  log "blocking deploy."
+  exit 1
+fi
+
 # Non-blocking sibling of the title guard. Scans body copy for the same
 # banned soft-marketing word list and prints warnings (exit 0). Surfaces
 # hype-language drift to PR reviewers without gating the deploy.

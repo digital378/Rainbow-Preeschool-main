@@ -614,7 +614,7 @@ const staticPages: Record<string, PageSEOData> = {
       "@context": "https://schema.org",
       "@type": "VideoObject",
       name: "Rainbow Preschool International — Campus Walkthrough",
-      description: "Take a virtual tour of Rainbow Preschool International's campus in Thane. See our colourful classrooms, safe play areas, and nurturing learning environment designed for children aged 1.5 to 6 years.",
+      description: "Take a virtual tour of Rainbow Preschool International — colourful classrooms, safe play areas, and a nurturing campus across 6 Thane West centres.",
       thumbnailUrl: `${BASE_URL}/og-image.jpg`,
       uploadDate: "2025-01-15T00:00:00+05:30",
       contentUrl: `${BASE_URL}/assets/RPS_Walkthrough_Video_-_Website_1_1766126796450.mp4`,
@@ -678,7 +678,7 @@ const staticPages: Record<string, PageSEOData> = {
   },
   "/programmes": {
     title: "Preschool Programmes in Thane | Rainbow Preschool",
-    description: "Explore our age-appropriate programmes: Playgroup (1.5-2.5 years), Nursery (2.5-4 years), and Kindergarten (4-6 years). Play-based curriculum at Rainbow Preschool Thane.",
+    description: "Explore Rainbow Preschool's programmes — Playgroup (1.5–2.5 yrs), Nursery (2.5–4 yrs), and Kindergarten (4–6 yrs) across 6 Thane West centres.",
     keywords: "preschool programmes thane, playgroup programme, nursery programme, kindergarten programme, early childhood curriculum",
     canonical: `${BASE_URL}/programmes`,
     lastModified: LAST_UPDATED_ISO,
@@ -694,7 +694,7 @@ const staticPages: Record<string, PageSEOData> = {
   },
   "/playgroup": {
     title: "Playgroup in Thane (1.5–2.5 yrs) | Rainbow Preschool",
-    description: "Enroll your child in our Playgroup programme for ages 1.5-2.5 years. Play-based learning, sensory activities, and gentle socialisation at Rainbow Preschool Thane.",
+    description: "Enroll your toddler in our Playgroup (1.5–2.5 yrs) — play-based learning and gentle socialisation across Rainbow Preschool's 6 Thane West centres.",
     keywords: "playgroup in thane, playgroup near me, playgroup school thane, toddler programme thane",
     canonical: `${BASE_URL}/playgroup`,
     h1: "Playgroup Programme — Ages 1.5 to 2.5 Years",
@@ -725,7 +725,7 @@ const staticPages: Record<string, PageSEOData> = {
   },
   "/nursery": {
     title: "Nursery School in Thane (2.5–4 yrs) | Rainbow Preschool",
-    description: "Our Nursery programme for ages 2.5-4 years builds strong foundations in literacy, numeracy, and social skills through engaging activities at Rainbow Preschool Thane.",
+    description: "Our Nursery (2.5–4 yrs) builds early literacy, numeracy, and social skills through play-based learning across Rainbow Preschool's 6 Thane West centres.",
     keywords: "nursery school in thane, nursery admission thane, nursery programme thane",
     canonical: `${BASE_URL}/nursery`,
     h1: "Nursery Programme — Ages 2.5 to 4 Years",
@@ -757,7 +757,7 @@ const staticPages: Record<string, PageSEOData> = {
   },
   "/kindergarten": {
     title: "Kindergarten in Thane | Trusted KG Programme (4–6 yrs) | Rainbow",
-    description: "Prepare your child for primary school with our Kindergarten programme for ages 4-6 years. Reading, writing, maths, and life skills at Rainbow Preschool Thane.",
+    description: "Prepare your child for primary school with our Kindergarten programme (4–6 yrs) — reading, writing, maths, and life skills at Rainbow Preschool Thane.",
     keywords: "kindergarten in thane, kindergarten school thane, school readiness programme thane",
     canonical: `${BASE_URL}/kindergarten`,
     h1: "Kindergarten Programme — Ages 4 to 6 Years",
@@ -802,7 +802,7 @@ const staticPages: Record<string, PageSEOData> = {
   },
   "/contact": {
     title: "Contact Rainbow Preschool Thane | Admissions Enquiry",
-    description: "Contact Rainbow Preschool International for admissions enquiries. Call 82915 68972 or visit our centres in Manpada, Hariniwas, Anand Nagar, Dhokali, Kalwa, Kasarvadavali.",
+    description: "Contact Rainbow Preschool International for admissions enquiries. Call 82915 68972 or visit any of our 6 centres across Thane West.",
     keywords: "contact rainbow preschool, preschool admission enquiry thane, preschool phone number thane",
     canonical: `${BASE_URL}/contact`,
     lastModified: LAST_UPDATED_ISO,
@@ -846,7 +846,7 @@ const staticPages: Record<string, PageSEOData> = {
   },
   "/preschool-admissions": {
     title: "Preschool Admissions in Thane | Rainbow Preschool",
-    description: "Apply for preschool admissions at Rainbow Preschool International Thane. Playgroup, Nursery, and Kindergarten admissions open. Age eligibility, fees, and process.",
+    description: "Apply for preschool admissions at Rainbow Preschool Thane. Playgroup, Nursery, and Kindergarten — age eligibility, fees, and process.",
     keywords: "preschool admissions thane, preschool admission process, nursery admission thane, kindergarten admission thane",
     canonical: `${BASE_URL}/preschool-admissions`,
     h1: "Preschool Admissions — Rainbow Preschool International",
@@ -937,7 +937,7 @@ const staticPages: Record<string, PageSEOData> = {
   },
   "/play-school-near-me": {
     title: "Play School Near Me in Thane (1.5–2.5 yrs) | Rainbow",
-    description: "Best play school near you in Thane — Rainbow Preschool offers safe, play-based early learning for toddlers aged 1.5–2.5 years across 6 centres. Trusted by 1,00,000+ families since 2007.",
+    description: "Find the best play school near you in Thane — Rainbow Preschool offers safe, play-based early learning for toddlers (1.5–2.5 yrs) across 6 centres.",
     keywords: "play school near me, playschool near me in thane, top playschool thane, best play school thane",
     canonical: `${BASE_URL}/play-school-near-me`,
     h1: "Play School Near Me in Thane",
@@ -1016,7 +1016,7 @@ const staticPages: Record<string, PageSEOData> = {
   },
   "/preschool-readiness-quiz": {
     title: "Preschool Readiness Quiz — Free Assessment | Rainbow",
-    description: "Take this free 2-minute quiz to find out if your child is ready for preschool. 10 research-backed questions covering physical, social, and cognitive readiness.",
+    description: "Take this free 2-minute quiz to find out if your child is ready for preschool — 10 research-backed questions on physical, social, and cognitive readiness.",
     keywords: "preschool readiness quiz, is my child ready for preschool, preschool readiness checklist, child development assessment, preschool readiness test",
     canonical: `${BASE_URL}/preschool-readiness-quiz`,
     lastModified: LAST_UPDATED_ISO,
@@ -1032,7 +1032,7 @@ const staticPages: Record<string, PageSEOData> = {
   },
   "/top-preschools-in-thane": {
     title: "Top 10 Preschools in Thane 2026 — Honest Comparison Guide",
-    description: "Compare the top 10 preschools in Thane for 2026. Detailed comparison of fees, curriculum, safety, teacher ratios, and parent reviews. Find the best fit for your child.",
+    description: "Compare the top 10 preschools in Thane for 2026 — fees, curriculum, safety, teacher ratios, and parent reviews. Find the right fit for your child.",
     keywords: "top preschools in thane, best preschools thane, preschool comparison thane, preschool rankings thane, best play school thane, top 10 preschools thane",
     canonical: `${BASE_URL}/top-preschools-in-thane`,
     lastModified: LAST_UPDATED_ISO,
@@ -1101,7 +1101,7 @@ const staticPages: Record<string, PageSEOData> = {
   },
   "/faqs": {
     title: "FAQs | Rainbow Preschool International Thane",
-    description: "Get answers to all your questions about Rainbow Preschool — admissions, fees, safety, curriculum, timings, transport, and more. Complete FAQ for Thane parents.",
+    description: "Get answers about Rainbow Preschool — admissions, fees, safety, curriculum, timings, and transport. Complete FAQ for parents in Thane.",
     keywords: "rainbow preschool faq, preschool questions thane, preschool admission faq, preschool fees thane, preschool safety questions, preschool curriculum questions",
     canonical: `${BASE_URL}/faqs`,
     lastModified: LAST_UPDATED_ISO,
@@ -1263,7 +1263,7 @@ const BLOG_POST_SEO_DATA: Record<string, BlogPostSEORecord> = {
   },
   "what-children-learn-nursery-school": {
     title: "What Children Learn in Nursery School | Monthly Guide",
-    description: "Month-by-month guide to what children learn in nursery school. From language and maths to social skills and creativity — see the full developmental journey.",
+    description: "Month-by-month guide to what children learn in nursery school — language, maths, social skills, and creativity across the developmental journey.",
     keywords: "what children learn in nursery, nursery school curriculum, nursery school syllabus, nursery school near me",
     datePublished: "2025-12-20",
     lastModified: "2026-03-22",

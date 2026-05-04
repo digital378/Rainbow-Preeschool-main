@@ -151,7 +151,7 @@ export default function TopPreschoolsThane() {
     <article className="min-h-screen bg-gradient-to-b from-white to-gray-50">
       <SEO
         title="Top 10 Preschools in Thane 2026 — Honest Comparison Guide"
-        description="Compare the top 10 preschools in Thane for 2026. Detailed comparison of fees, curriculum, safety, teacher ratios, and parent reviews. Find the best fit for your child."
+        description="Compare the top 10 preschools in Thane for 2026 — fees, curriculum, safety, teacher ratios, and parent reviews. Find the right fit for your child."
         keywords="top preschools in thane, best preschools thane, preschool comparison thane, preschool rankings thane, best play school thane, top 10 preschools thane"
         canonical="https://www.rainbowpreschools.com/top-preschools-in-thane"
       />

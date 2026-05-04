@@ -245,6 +245,25 @@ export function PlaygroupLandingTemplate({ data }: PlaygroupLandingTemplateProps
         </section>
       )}
 
+      {data.centreId && (
+        <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-2" data-testid={`section-sibling-preschool-${data.slug}`}>
+          <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-4 md:p-5">
+            <p className="text-sm text-gray-700 dark:text-gray-200">
+              <span className="font-semibold">Older child (2.5–5 years)?</span>{" "}
+              Visit our{" "}
+              <Link
+                href={`/preschool-in-${data.centreId}-thane`}
+                className="text-primary underline underline-offset-2 hover:text-primary/80"
+                data-testid={`link-sibling-preschool-${data.slug}`}
+              >
+                Preschool in {data.localityName}, Thane
+              </Link>
+              {" "}page (Nursery & Kindergarten).
+            </p>
+          </div>
+        </section>
+      )}
+
       <FAQAccordion faqs={data.faqs} locality={data.localityName} />
 
       <section className="py-10 md:py-12 bg-gray-50 dark:bg-gray-800/50">

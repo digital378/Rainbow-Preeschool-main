@@ -35,7 +35,7 @@ export const playgroundLandingPages: PlaygroupLandingData[] = [
     centreId: "manpada",
     seo: {
       title: "Playgroup in Manpada, Thane (1.5-2.5 Years) | Rainbow Preschool",
-      description: "Best playgroup in Manpada, Thane near Khewra Circle. Rainbow Preschool offers play-based learning for children aged 1.5-2.5 years. Safe, nurturing environment. Book a visit!",
+      description: "Playgroup in Manpada, Thane near Khewra Circle. Rainbow Preschool offers play-based learning for toddlers aged 1.5–2.5 years. Book a visit.",
       h1: "Playgroup in Manpada, Thane (1.5-2.5 Years)",
       canonical: "https://www.rainbowpreschools.com/playgroup-in-manpada",
     },
@@ -67,7 +67,7 @@ export const playgroundLandingPages: PlaygroupLandingData[] = [
     centreId: "kalwa",
     seo: {
       title: "Playgroup in Kalwa, Thane (1.5-2.5 Years) | Rainbow Preschool",
-      description: "Looking for playgroup in Kalwa? Rainbow Preschool near Manisha Nagar offers safe, fun early learning for toddlers aged 1.5-2.5 years. Book a free visit today!",
+      description: "Playgroup in Kalwa, Thane near Manisha Nagar. Rainbow Preschool offers safe, play-based learning for toddlers aged 1.5–2.5 years. Book a visit.",
       h1: "Playgroup in Kalwa, Thane (1.5-2.5 Years)",
       canonical: "https://www.rainbowpreschools.com/playgroup-in-kalwa",
     },
@@ -99,7 +99,7 @@ export const playgroundLandingPages: PlaygroupLandingData[] = [
     centreId: "kasarvadavali",
     seo: {
       title: "Playgroup near Ghodbunder Road Thane | Rainbow Preschool",
-      description: "Best playgroup near Ghodbunder Road in Kasarvadavali. Rainbow Preschool offers play-based learning for children aged 1.5-2.5 years. Near Hypercity Mall. Book a visit!",
+      description: "Playgroup near Ghodbunder Road in Kasarvadavali, Thane. Rainbow Preschool offers play-based learning for toddlers aged 1.5–2.5 years. Book a visit.",
       h1: "Playgroup near Ghodbunder Road, Thane (1.5-2.5 Years)",
       canonical: "https://www.rainbowpreschools.com/playgroup-near-ghodbunder-road",
     },
@@ -131,7 +131,7 @@ export const playgroundLandingPages: PlaygroupLandingData[] = [
     centreId: "anand-nagar",
     seo: {
       title: "Playgroup in Anand Nagar Thane | Rainbow Preschool",
-      description: "Best playgroup in Anand Nagar, Thane near Tropical Lagoon. Rainbow Preschool offers safe, play-based learning for toddlers aged 1.5-2.5 years. Book a visit today!",
+      description: "Playgroup in Anand Nagar, Thane near Tropical Lagoon. Rainbow Preschool offers play-based learning for toddlers aged 1.5–2.5 years. Book a visit.",
       h1: "Playgroup in Anand Nagar, Thane (1.5-2.5 Years)",
       canonical: "https://www.rainbowpreschools.com/playgroup-in-anand-nagar",
     },
@@ -163,7 +163,7 @@ export const playgroundLandingPages: PlaygroupLandingData[] = [
     centreId: "kasarvadavali",
     seo: {
       title: "Playgroup in Kasarvadavali Thane | Rainbow Preschool",
-      description: "Looking for playgroup in Kasarvadavali? Rainbow Preschool near Hypercity Mall offers play-based early learning for toddlers aged 1.5-2.5 years. Book a free visit!",
+      description: "Playgroup in Kasarvadavali, Thane near Hypercity Mall. Rainbow Preschool offers play-based learning for toddlers aged 1.5–2.5 years. Book a visit.",
       h1: "Playgroup in Kasarvadavali, Thane (1.5-2.5 Years)",
       canonical: "https://www.rainbowpreschools.com/playgroup-in-kasarvadavali",
     },
@@ -195,7 +195,7 @@ export const playgroundLandingPages: PlaygroupLandingData[] = [
     centreId: "dhokali",
     seo: {
       title: "Playgroup in Dhokali, Thane (1.5-2.5 Years) | Rainbow Preschool",
-      description: "Best playgroup in Dhokali, Thane on Kolshet Road. Rainbow Preschool offers safe, nurturing early learning for toddlers aged 1.5-2.5 years. Book a visit today!",
+      description: "Playgroup in Dhokali, Thane on Kolshet Road. Rainbow Preschool offers play-based learning for toddlers aged 1.5–2.5 years. Book a free visit.",
       h1: "Playgroup in Dhokali, Thane (1.5-2.5 Years)",
       canonical: "https://www.rainbowpreschools.com/playgroup-in-dhokali",
     },

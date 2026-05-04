@@ -69,7 +69,7 @@ export default function Programmes() {
     <article className="pt-20 md:pt-24">
       <SEO
         title="Preschool Programmes in Thane | Rainbow Preschool"
-        description="Explore all preschool programmes at Rainbow Preschool Thane: Playgroup (1.5–2.5 yrs), Nursery (2.5–3.5 yrs), Kindergarten (3.5–5.5 yrs) & Daycare. Award-winning play-based curriculum since 2007."
+        description="Explore Rainbow Preschool Thane programmes — Playgroup (1.5–2.5 yrs), Nursery (2.5–3.5 yrs), Kindergarten (3.5–5.5 yrs) & Daycare. Since 2007."
         keywords="preschool programmes in thane, rainbow preschool curriculum, playgroup in thane, nursery in thane, kindergarten thane, daycare thane, playgroup programme, nursery curriculum, kg admission thane, lkg ukg thane"
         canonical="/programmes"
       />

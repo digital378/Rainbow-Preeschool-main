@@ -88,7 +88,8 @@ const OWNED_PHRASES: Array<{ phrase: RegExp; label: string; canonicalUrls: RegEx
   {
     phrase: /\bplaygroup in thane\b/i,
     label: "Playgroup in Thane",
-    canonicalUrls: [/^\/playgroup$/, /^\/playgroup-in-thane$/],
+    // /playgroup-in-thane removed Apr 2026 — now 301→/playgroup.
+    canonicalUrls: [/^\/playgroup$/],
   },
   {
     phrase: /\bnursery school in thane\b/i,
@@ -117,10 +118,18 @@ interface TitleEntry {
   line: number;
   url: string;
   title: string;
+  /**
+   * Marks legacy/long-tail blog URLs that we audit but do not block CI on.
+   * Issues found here are emitted as warnings so the team can see drift over
+   * time without breaking the deploy on entries that pre-date the keyword
+   * matrix.
+   */
+  isLegacy?: boolean;
 }
 
 const titles: TitleEntry[] = [];
 const errors: string[] = [];
+const warnings: string[] = [];
 
 function readLines(rel: string): string[] {
   return readFileSync(resolve(ROOT, rel), "utf8").split("\n");
@@ -296,7 +305,15 @@ function scanClientPages() {
 // --- Validation --------------------------------------------------------------
 function validate() {
   for (const entry of titles) {
-    // Rule 1: banned words
+    // Legacy entries (long-tail blog URLs in shared/legacy-pages-data.ts) are
+    // audited as warnings only so the team can fix drift over time without
+    // gating every commit on pre-existing wording. Banned soft-marketing words
+    // are still treated as errors everywhere — those are absolute.
+    const sink = (msg: string) => {
+      if (entry.isLegacy) warnings.push(msg);
+      else errors.push(msg);
+    };
+    // Rule 1: banned words — always blocking
     for (const w of BANNED_TITLE_WORDS) {
       const re = new RegExp(`\\b${w.replace(/-/g, "\\-")}\\b`, "i");
       if (re.test(entry.title)) {
@@ -307,7 +324,7 @@ function validate() {
     }
     // Rule 2: max title length (Google SERP truncates around 60 chars; we cap at 65 with a small safety buffer)
     if (entry.title.length > 65) {
-      errors.push(
+      sink(
         `${entry.file}:${entry.line} — title for ${entry.url} is ${entry.title.length} chars (limit 65). Title: "${entry.title}"`,
       );
     }
@@ -317,7 +334,7 @@ function validate() {
       if (entry.url === "?") continue; // unknown client URL — only banned-word rule applies
       const allowed = rule.canonicalUrls.some((re) => re.test(entry.url));
       if (!allowed) {
-        errors.push(
+        sink(
           `${entry.file}:${entry.line} — title for ${entry.url} contains "${rule.label}", which is owned by ${rule.canonicalUrls
             .map((r) => r.source.replace(/^\^|\$$/g, ""))
             .join(" or ")}. Title: "${entry.title}"`,
@@ -351,12 +368,60 @@ function validateSsrClientParity() {
   }
 }
 
+// --- shared/legacy-pages-data.ts ---------------------------------------------
+//
+// Each legacy entry is keyed by a trailing-slash slug ("/foo-bar/") and has a
+// `title:` field. We strip the trailing slash so the URL matches the rest of
+// the matrix.
+function scanLegacyPagesData() {
+  const file = "shared/legacy-pages-data.ts";
+  let lines: string[];
+  try {
+    lines = readLines(file);
+  } catch {
+    return;
+  }
+  let currentKey = "";
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    const keyMatch = line.match(/^\s\s"(\/[^"]+)":\s*\{/);
+    if (keyMatch) {
+      currentKey = keyMatch[1].replace(/\/+$/, "") || "/";
+      continue;
+    }
+    if (currentKey) {
+      // Titles in this file may use double OR single quotes — the latter is
+      // common for entries containing apostrophes (e.g. Children's Books).
+      const titleMatch =
+        line.match(/^\s+title:\s*"((?:[^"\\]|\\.)*)"/) ||
+        line.match(/^\s+title:\s*'((?:[^'\\]|\\.)*)'/);
+      if (titleMatch) {
+        titles.push({ file, line: i + 1, url: currentKey, title: titleMatch[1], isLegacy: true });
+        currentKey = "";
+      }
+    }
+  }
+}
+
 scanSsrPages();
 scanCentreData();
 scanPlaygroupLanding();
 scanClientPages();
+scanLegacyPagesData();
 validate();
 validateSsrClientParity();
+
+if (warnings.length > 0) {
+  console.warn(
+    `[check-no-title-cannibalisation] ${warnings.length} legacy-page warning(s) (audit-only, not blocking):`,
+  );
+  for (const w of warnings) console.warn("  " + w);
+  console.warn(
+    `\nNote: these come from shared/legacy-pages-data.ts. They are audited but ` +
+      `do NOT block the deploy. Address them opportunistically when revisiting ` +
+      `the relevant blog post.\n`,
+  );
+}
 
 if (errors.length > 0) {
   console.error(`[check-no-title-cannibalisation] ${errors.length} violation(s):`);
@@ -370,6 +435,6 @@ if (errors.length > 0) {
 }
 
 console.log(
-  `[check-no-title-cannibalisation] OK — ${titles.length} titles scanned, no banned words and no keyword poaching detected.`,
+  `[check-no-title-cannibalisation] OK — ${titles.length} titles scanned, no banned words and no keyword poaching detected (${warnings.length} legacy warning(s)).`,
 );
 process.exit(0);

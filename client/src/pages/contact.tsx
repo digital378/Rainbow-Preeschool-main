@@ -31,7 +31,7 @@ export default function Contact() {
     <article className="pt-20 md:pt-24">
       <SEO
         title="Contact Rainbow Preschool Thane | Admissions Enquiry"
-        description="Contact Rainbow Preschool International for admissions, school tours & enquiries. 6 centres across Thane West. Call 82915 68972 or visit our nearest centre today."
+        description="Contact Rainbow Preschool International for admissions, school tours & enquiries. 6 centres in Thane West — call 82915 68972 or visit today."
         keywords="contact rainbow preschool, preschool admissions thane, preschool enquiry, nursery admissions thane, school admission 2025, nursery school fees, preschool registration, preschool admission form, rainbow preschool enquiry thane"
         canonical="https://www.rainbowpreschools.com/contact"
       />

@@ -62,6 +62,18 @@ if ! npx --no-install tsx scripts/check-no-title-cannibalisation.ts; then
   exit 1
 fi
 
+# Meta-description length guard. Google truncates SERP snippets around 155
+# chars on desktop; this guard fails the commit if any title-source file ships
+# a description longer than that. Wired alongside the title guard for the same
+# reason: stays enforced even if package.json is edited.
+echo "[pre-commit] Running 'tsx scripts/check-description-length.ts' ..."
+if ! npx --no-install tsx scripts/check-description-length.ts; then
+  echo "" >&2
+  echo "[pre-commit] 'check-description-length' failed. Commit aborted." >&2
+  echo "[pre-commit] Fix the issues above, or re-run with --no-verify to bypass." >&2
+  exit 1
+fi
+
 # Record success so the pre-push hook can skip a redundant re-run on
 # the same tree. Best-effort only — never fail the commit on this.
 REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || true)"

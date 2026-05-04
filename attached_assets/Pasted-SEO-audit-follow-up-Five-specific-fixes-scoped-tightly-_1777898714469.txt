@@ -1,0 +1,174 @@
+SEO audit follow-up. Five specific fixes, scoped tightly. Do these in order
+and DO NOT expand scope. If you find issues outside this list, log them as
+new tasks instead of fixing them in this PR.
+
+PRECONDITION CHECK (do this first, before any fixes):
+Run `curl -sI https://rainbowpreschools.com/` and `curl -sI 
+https://www.rainbowpreschools.com/` and `curl -sI 
+https://rainbow-preschool.replit.app/`. Report what each returns. If the 
+non-www apex (rainbowpreschools.com) and the Replit subdomain 
+(rainbow-preschool.replit.app) are serving 200 OK with the same content as 
+www.rainbowpreschools.com, STOP and report this — it's a deployment-level 
+canonical problem that needs DNS/Replit settings, not code, and we'll handle 
+it before doing the rest.
+
+If only www.rainbowpreschools.com serves 200 and the others 301 redirect to 
+www, proceed with the fixes below.
+
+---
+
+FIX 1 — Add /playgroup-in-thane to the sitemap
+
+The page exists with full SEO metadata (server/ssr-pages.ts, 
+playgroup-landing-data.ts, or wherever it's defined) but is missing from 
+sitemap.xml. Verify the page is intentional (i.e., it's the canonical owner 
+of "Playgroup in Thane" the bare phrase). 
+
+- If yes: add it to whatever generates sitemap.xml. Confirm it appears in 
+  the dynamic sitemap output.
+- If no (the page is unintended/legacy): add a 301 redirect from 
+  /playgroup-in-thane to /playgroup, and remove the SEO metadata for it.
+
+Report which path you took and why.
+
+---
+
+FIX 2 — Trim 9 over-length descriptions to ≤155 chars
+
+These descriptions exceed Google's mobile SERP truncation limit of ~155-160 
+chars. Trim each to ≤155 chars while keeping the keyword phrase, locality, 
+and a single CTA. Don't add soft-marketing words during the rewrite (the 
+title guard's banned-words list applies in spirit even though it's a 
+description, not a title).
+
+URLs to fix:
+- /contact (170)
+- /programmes (169)
+- /top-preschools-in-thane (167)
+- /nursery (165)
+- /playgroup (162)
+- /preschool-admissions (162)
+- /playgroup-in-anand-nagar (162)
+- /playgroup-in-kasarvadavali (162)
+- /playgroup-in-manpada (173)
+- /playgroup-in-thane (170)
+- /playgroup-near-ghodbunder-road (166)
+- All /preschool-in-{locality}-thane pages (188-203 — these are the worst, 
+  trim aggressively)
+
+After the fix, extend scripts/check-no-title-cannibalisation.ts (or write 
+a sibling check-description-length.ts) to enforce description length 
+≤155 chars and run it on pre-commit. Pattern: same as the title-length 
+check that already exists.
+
+---
+
+FIX 3 — Add canonical strategy for locality pages
+
+Each locality has BOTH:
+- /playgroup-in-{locality}        (or /playgroup-in-{locality}-thane)
+- /preschool-in-{locality}-thane
+
+These target different keywords (playgroup vs preschool) so they're not 
+cannibalising titles, but they serve overlapping intent. Audit each pair 
+and confirm:
+
+- Each page has <link rel="canonical"> pointing to itself, NOT to a 
+  parent page (otherwise the page can't rank for its own locality).
+- Each page has an internal link to its sibling (e.g., the playgroup-locality 
+  page links to the preschool-locality page and vice versa) so Google 
+  understands they're related but distinct.
+
+Don't add canonicals pointing across pages. Self-canonicals only. Report 
+which pages were missing self-canonicals before the fix.
+
+---
+
+FIX 4 — Audit the 24 legacy pages in Section 6 of the SEO report
+
+These pages ship in sitemap.xml but have no row in staticPages, 
+BLOG_POST_SEO_DATA, centre-data.ts, or playgroup-landing-data.ts. They're 
+rendered by a "legacy-pages handler" with inline titles. This is invisible 
+to the title guard.
+
+For each of the 24 URLs:
+1. Curl the page (with Googlebot UA) and extract the <title> tag.
+2. Check the title against the soft-word ban list (loved, most-loved, 
+   amazing, incredible, wonderful, magical, fabulous, awesome) and against 
+   the keyword ownership matrix (any title containing a reserved phrase 
+   on a non-canonical URL).
+3. Check title length ≤65 chars.
+4. Output a markdown table: URL | Title | Length | Soft-word hits | 
+   Cannibalisation hits.
+
+Report the table. DO NOT fix the legacy pages in this PR — just produce the 
+audit. Fixing them is a separate task because it likely involves migrating 
+them into one of the canonical SEO data sources.
+
+After the audit, extend the title guard to scan the legacy-pages handler's 
+title source (whichever file holds those inline titles) so future legacy 
+pages don't bypass the guard. Pattern: same as the existing scanners in 
+scripts/check-no-title-cannibalisation.ts.
+
+---
+
+FIX 5 — Verify the Replit subdomain is not indexable
+
+Production has three domains visible: rainbow-preschool.replit.app, 
+rainbowpreschools.com, www.rainbowpreschools.com. Only www.* should be 
+indexable.
+
+Curl https://rainbow-preschool.replit.app/robots.txt and check whether it 
+disallows all crawlers. It should be:
+
+  User-agent: *
+  Disallow: /
+
+If the Replit subdomain serves the same robots.txt as production (which 
+allows crawlers), Google may be indexing it as a duplicate of the main 
+site. Two ways to fix:
+
+  Option A: serve a different robots.txt on the Replit subdomain only 
+  (detect via Host header in Express, return Disallow: / when host matches 
+  *.replit.app).
+
+  Option B: add <meta name="robots" content="noindex"> to all responses 
+  when Host header is *.replit.app.
+
+Implement Option A — it's cleaner and prevents indexing at the crawl 
+stage rather than the index stage. Report which Host headers you matched 
+on and confirm www.rainbowpreschools.com still serves the normal 
+robots.txt.
+
+---
+
+VERIFICATION (mandatory, in this order):
+
+1. Run npx tsc --noEmit — must be clean
+2. Run npx tsx scripts/check-no-title-cannibalisation.ts — must pass
+3. If you wrote check-description-length.ts, run it — must pass
+4. curl -A "Googlebot/2.1" https://www.rainbowpreschools.com/sitemap.xml | 
+   grep playgroup-in-thane — must find it (Fix 1)
+5. curl -sI https://rainbow-preschool.replit.app/robots.txt — must return 
+   "Disallow: /" body (Fix 5)
+6. Spot-check 3 description lengths via curl + grep og:description — must 
+   be ≤155 chars (Fix 2)
+7. Spot-check 3 locality pages for self-canonical via 
+   curl | grep 'rel="canonical"' — must point to self (Fix 3)
+8. Output the 24-row legacy audit table (Fix 4)
+
+Report:
+- Files modified (list)
+- Fix 4 audit table
+- Verification output for each of the 8 checks
+
+DO NOT:
+- Touch any of the title work from the previous sprint
+- Touch the cookie banner, cache headers, hero image, or anything in 
+  server/static.ts or server/bot-ssr.ts
+- Touch the title guard's existing rules — only ADD new rules (description 
+  length, legacy pages scanner)
+- Refactor the SEO data structures into a "unified content model" or 
+  similar — keep the existing layout, just add scanners
+- Fix the 24 legacy pages — that's a future task
+- Add new soft-marketing words during description rewrites

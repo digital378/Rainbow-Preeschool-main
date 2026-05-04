@@ -418,7 +418,7 @@ export default function PlaygroupLanding() {
     <div className="pt-20 md:pt-24">
       <SEO
         title="Playgroup in Thane (1.5–2.5 yrs) | Rainbow Preschool"
-        description="Playgroup programme in Thane for toddlers aged 1.5-2.5 years — play-based early learning in safe, nurturing classrooms. Experienced educators, 6 Thane centres. Enquire for 2025-26 admissions."
+        description="Playgroup in Thane for toddlers aged 1.5–2.5 years — play-based early learning in safe, nurturing classrooms across 6 Rainbow Preschool centres."
         keywords="playgroup in thane, playgroup near me, best playgroup, playgroup admission near me, playgroup for toddlers, playgroup school in thane, early learning playgroup, play based playgroup, best playgroup in thane"
         canonical="https://www.rainbowpreschools.com/playgroup"
       />

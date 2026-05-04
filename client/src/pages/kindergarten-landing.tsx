@@ -402,7 +402,7 @@ export default function KindergartenLanding() {
     <div className="pt-20 md:pt-24">
       <SEO
         title="Kindergarten in Thane | Trusted KG Programme (4–6 yrs) | Rainbow"
-        description="Kindergarten programme in Thane (Jr. KG & Sr. KG) for children aged 3.5-5.5 years — comprehensive school-readiness covering literacy, numeracy, and life skills. 6 Thane centres. Enquire for 2025-26 admissions."
+        description="Kindergarten in Thane (Jr. KG & Sr. KG) for ages 3.5–5.5 — school-readiness covering literacy, numeracy, and life skills. Enquire for 2026-27."
         keywords="kindergarten school in thane, kindergarten near me, best kindergarten school, kindergarten admission near me, lkg admission near me, ukg admission near me, kindergarten curriculum, school readiness program, kindergarten for kids"
         canonical="https://www.rainbowpreschools.com/kindergarten"
       />
