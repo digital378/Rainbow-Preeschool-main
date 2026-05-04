@@ -48,13 +48,14 @@
     <!-- Preload hero image for fast LCP -->
     <link rel="preload" as="image" href="/images/optimized/hero-banner-1.webp" fetchpriority="high">
     
-    <!-- Inline critical CSS for instant first paint -->
+    <!-- Inline critical CSS for instant first paint + static LCP hero -->
     <style>
-      body{margin:0;font-family:Inter,-apple-system,BlinkMacSystemFont,sans-serif}
-      #root{min-height:100vh}
-      .page-loader{min-height:100vh;display:flex;align-items:center;justify-content:center}
-      .spinner{width:32px;height:32px;border:3px solid #f3f3f3;border-top:3px solid #dc2626;border-radius:50%;animation:spin .8s linear infinite}
-      @keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+      html,body{margin:0;padding:0;background:#1a1a1a;font-family:Inter,-apple-system,BlinkMacSystemFont,sans-serif}
+      #root{min-height:100vh;position:relative;z-index:1}
+      #static-lcp-hero{position:absolute;top:0;left:0;right:0;height:100vh;min-height:560px;max-height:900px;overflow:hidden;z-index:0;pointer-events:none;background:#1a1a1a;contain:layout paint}
+      #static-lcp-hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+      #static-lcp-hero .ov1{position:absolute;inset:0;background:linear-gradient(to right,rgba(0,0,0,.65),rgba(0,0,0,.35) 40%,rgba(0,0,0,.10))}
+      #static-lcp-hero .ov2{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.50),transparent 50%)}
     </style>
     
     <!-- GTM REMOVED - was causing duplicate events. Using direct gtag tracking instead -->
@@ -134,12 +135,19 @@
   <body>
     <!-- GTM noscript removed -->
     <!-- Meta Pixel noscript removed — Pixel is consent-gated (DPDP Act 2023) -->
-    <div id="root">
-      <!-- Instant loading state shown before React hydrates -->
-      <div class="page-loader" id="initial-loader">
-        <div class="spinner"></div>
-      </div>
+    <!-- Static LCP hero — pre-rendered before React mounts. Painted as soon as
+         HTML + image bytes arrive (no JS execution required). Stays in DOM for
+         the home page after React mounts, positioned absolutely behind React
+         content (z-index:0 vs #root z-index:1). React's later-rendered hero is
+         the same image at the same size, so per LCP spec no new larger entry
+         fires and LCP timestamp stays at the early static-paint time. For
+         non-home pages, removed by main.tsx before React renders. -->
+    <div id="static-lcp-hero" aria-hidden="true">
+      <img src="/images/optimized/hero-banner-1.webp" alt="" width="1200" height="675" fetchpriority="high" decoding="async" />
+      <div class="ov1"></div>
+      <div class="ov2"></div>
     </div>
+    <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
