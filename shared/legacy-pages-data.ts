@@ -46,7 +46,7 @@ export const legacyPagesData: Record<string, LegacyPageData> = {
       },
       {
         heading: "Motivational Thoughts for Preschoolers",
-        content: "Here are age-appropriate motivational thoughts that parents and teachers can share with young children. These affirmations are used in our <a href=\"/playgroup\">Playgroup</a>, <a href=\"/nursery\">Nursery</a>, and <a href=\"/kindergarten\">Kindergarten</a> programmes:\n\n1. I am kind and helpful.\n2. I can do hard things.\n3. My mistakes help me learn.\n4. I am a good friend.\n5. I am loved just as I am.\n6. Today will be a great day.\n7. I can try again if I don't succeed.\n8. My words are powerful and kind.\n9. I am brave and strong.\n10. Learning new things is fun.\n\nThese simple affirmations are perfect for morning circle time or as part of your child's bedtime routine. Our experienced teachers use these daily at all Rainbow Preschool centres in Thane.",
+        content: "Here are age-appropriate motivational thoughts that parents and teachers can share with young children. These affirmations are used in our <a href=\"/playgroup\">Playgroup</a>, <a href=\"/nursery\">Nursery</a>, and <a href=\"/kindergarten\">Kindergarten</a> programmes:\n\n1. I am kind and helpful.\n2. I can do hard things.\n3. My mistakes help me learn.\n4. I am a good friend.\n5. I am cared for just as I am.\n6. Today will be a great day.\n7. I can try again if I don't succeed.\n8. My words are powerful and kind.\n9. I am brave and strong.\n10. Learning new things is fun.\n\nThese simple affirmations are perfect for morning circle time or as part of your child's bedtime routine. Our experienced teachers use these daily at all Rainbow Preschool centres in Thane.",
         bulletPoints: [
           "I believe in myself",
           "I am important and special",
@@ -62,7 +62,7 @@ export const legacyPagesData: Record<string, LegacyPageData> = {
       }
     ],
     faqs: [
-      { question: "At what age should I start using affirmations with my child?", answer: "You can start as early as 1.5-2 years. Simple phrases like 'You are loved' and 'You are kind' work well for toddlers. As children grow, you can introduce more complex affirmations. Our <a href=\"/playgroup\">Playgroup programme</a> starts from age 1.5 years." },
+      { question: "At what age should I start using affirmations with my child?", answer: "You can start as early as 1.5-2 years. Simple phrases like 'You are cared for' and 'You are kind' work well for toddlers. As children grow, you can introduce more complex affirmations. Our <a href=\"/playgroup\">Playgroup programme</a> starts from age 1.5 years." },
       { question: "How often should we practice positive affirmations?", answer: "Daily practice is most effective. Choose a consistent time like morning breakfast or bedtime. Even 2-3 minutes of positive affirmations can make a significant difference." },
       { question: "What if my child doesn't want to repeat affirmations?", answer: "Never force it. Instead, model positive self-talk yourself. Say affirmations about yourself out loud and let your child observe. They'll often start joining in naturally." },
       { question: "Can affirmations help with school anxiety?", answer: "Yes! Affirmations like 'I am brave' and 'I can do hard things' help children build confidence. At <a href=\"/about\">Rainbow Preschool</a>, we use affirmations to help children transition smoothly into school life across all our <a href=\"/programmes\">programmes</a>." }
@@ -1033,11 +1033,11 @@ Object.assign(legacyPagesData, {
     title: "Diwali Activities for Kindergarten | Rainbow Preschool Thane",
     metaDescription: "Fun and safe Diwali activities for kindergarten children. Craft ideas, stories, and celebrations for preschoolers in Thane.",
     h1: "Diwali Activities for Kindergarten",
-    intro: "Diwali is a magical time for young children! These age-appropriate activities from <a href=\"/about\">Rainbow Preschool International</a> help <a href=\"/kindergarten\">kindergarteners</a> understand and celebrate the festival of lights while learning about Indian culture and traditions.",
+    intro: "Diwali is a special time for young children! These age-appropriate activities from <a href=\"/about\">Rainbow Preschool International</a> help <a href=\"/kindergarten\">kindergarteners</a> understand and celebrate the festival of lights while learning about Indian culture and traditions.",
     sections: [
       {
         heading: "Learning About Diwali",
-        content: "Help children understand Diwali through simple concepts:\n- Diwali is the festival of lights\n- We celebrate the victory of good over evil\n- Families come together to celebrate\n- We light diyas (lamps) and decorate our homes\n- We share sweets and gifts with loved ones",
+        content: "Help children understand Diwali through simple concepts:\n- Diwali is the festival of lights\n- We celebrate the victory of good over evil\n- Families come together to celebrate\n- We light diyas (lamps) and decorate our homes\n- We share sweets and gifts with family and friends",
         bulletPoints: []
       },
       {
@@ -1146,7 +1146,7 @@ Object.assign(legacyPagesData, {
     title: "Holi Activities for Kids | Rainbow Preschool Thane",
     metaDescription: "20+ safe & mess-free Holi activities for kids — color crafts, sensory games & celebration ideas tested with 3–6 year olds. No staining, no skin worries.",
     h1: "Holi Activities for Kids",
-    intro: "Holi, the festival of colors, offers wonderful opportunities for sensory play and cultural learning. Here are safe, age-appropriate Holi activities from <a href=\"/about\">Rainbow Preschool International</a> — used across our <a href=\"/playgroup\">Playgroup</a>, <a href=\"/nursery\">Nursery</a>, and <a href=\"/kindergarten\">Kindergarten</a> celebrations — that bring the joy of the festival without the mess or safety concerns.",
+    intro: "Holi, the festival of colors, offers rich opportunities for sensory play and cultural learning. Here are safe, age-appropriate Holi activities from <a href=\"/about\">Rainbow Preschool International</a> — used across our <a href=\"/playgroup\">Playgroup</a>, <a href=\"/nursery\">Nursery</a>, and <a href=\"/kindergarten\">Kindergarten</a> celebrations — that bring the joy of the festival without the mess or safety concerns.",
     sections: [
       {
         heading: "Safe Color Play",
@@ -1756,8 +1756,8 @@ Object.assign(legacyPagesData, {
     category: "Learning Activities"
   },
 
-  "/8-amazing-reasons-why-cooking-is-important-for-kids/": {
-    slug: "/8-amazing-reasons-why-cooking-is-important-for-kids/",
+  "/8-amazing-reasons-why-cooking-is-important-for-kids/": { // allow-soft-words: legacy URL slug, must stay stable for SEO
+    slug: "/8-amazing-reasons-why-cooking-is-important-for-kids/", // allow-soft-words: legacy URL slug, must stay stable for SEO
     title: "8 Reasons Why Cooking is Important for Kids | Rainbow Preschool",
     metaDescription: "Discover why cooking with your preschooler is valuable for learning and development. Benefits of kitchen activities for young children.",
     h1: "8 Amazing Reasons Why Cooking is Important for Kids",
@@ -1771,7 +1771,7 @@ Object.assign(legacyPagesData, {
       { question: "Isn't cooking with kids messy and slow?", answer: "Yes! But the learning benefits outweigh the mess. Accept imperfection and focus on the experience, not the result." },
       { question: "What simple recipes can I start with?", answer: "Try sandwich making, fruit salad, no-bake cookies, chapati rolling, or mixing dough. Start with recipes that require minimal cooking." },
       { question: "Is cooking safe for preschoolers?", answer: "Yes, with appropriate supervision and age-appropriate tasks. Keep children away from heat sources and sharp objects." },
-      { question: "How often should we cook together?", answer: "Weekly cooking sessions are wonderful. Even involving children in small meal prep tasks daily helps build skills." }
+      { question: "How often should we cook together?", answer: "Weekly cooking sessions work well. Even involving children in small meal prep tasks daily helps build skills." }
     ],
     relatedLinks: commonRelatedLinks,
     internalLinks: commonInternalLinks,
@@ -1995,7 +1995,7 @@ Object.assign(legacyPagesData, {
     h1: "Why Preschool Education Shapes Early Childhood Development",
     intro: "The first five years of life are critical for brain development. At <a href=\"/about\">Rainbow Preschool International</a>, quality preschool education during this window has lasting effects on children's cognitive, social, and emotional development.",
     sections: [
-      { heading: "The Science Behind Early Learning", content: "90% of brain development occurs before age 5. During this period, neural connections form at an incredible rate, making it the ideal time for learning. Quality preschool experiences literally shape brain architecture.", bulletPoints: [] },
+      { heading: "The Science Behind Early Learning", content: "90% of brain development occurs before age 5. During this period, neural connections form at a rapid rate, making it the ideal time for learning. Quality preschool experiences literally shape brain architecture.", bulletPoints: [] },
       { heading: "Key Benefits of Preschool", content: "", bulletPoints: ["Cognitive development: Early literacy, numeracy, and problem-solving skills", "Social skills: Learning to share, cooperate, and make friends", "Emotional regulation: Managing feelings and building resilience", "Language development: Vocabulary expansion and communication skills", "School readiness: Smooth transition to formal education", "Independence: Self-help skills and confidence"] },
       { heading: "Long-Term Impact", content: "Research shows quality preschool leads to:", bulletPoints: ["Better academic performance throughout school", "Higher high school graduation rates", "Improved social relationships", "Better health outcomes", "Greater career success as adults"] }
     ],
@@ -2107,7 +2107,7 @@ Object.assign(legacyPagesData, {
     intro: "Confidence is one of the greatest gifts we can give our children. <a href=\"/about\">Rainbow Preschool International</a> shares 51 life lessons that help build the self-belief and resilience children need to thrive.",
     sections: [
       { heading: "Building Blocks of Confidence", content: "Confidence isn't about being perfect—it's about believing in yourself and having the courage to try. These lessons help children develop a healthy, grounded sense of self-worth.", bulletPoints: [] },
-      { heading: "Key Life Lessons", content: "", bulletPoints: ["You are loved exactly as you are", "Mistakes are how we learn", "It's okay to ask for help", "Kindness makes you strong, not weak", "Your feelings matter", "Trying is more important than winning", "Everyone is good at different things", "You can do hard things", "Being different is wonderful", "Good friends are treasures"] },
+      { heading: "Key Life Lessons", content: "", bulletPoints: ["You are cared for exactly as you are", "Mistakes are how we learn", "It's okay to ask for help", "Kindness makes you strong, not weak", "Your feelings matter", "Trying is more important than winning", "Everyone is good at different things", "You can do hard things", "Being different is a strength", "Good friends are treasures"] },
       { heading: "More Important Messages", content: "", bulletPoints: ["Your effort matters more than the result", "It's okay to say no sometimes", "Apologizing shows strength", "Curiosity is a superpower", "Hard work pays off over time", "You don't have to be perfect", "Being kind to yourself matters too", "Every day is a new chance to try again", "Your voice matters", "Believe in yourself"] }
     ],
     faqs: [
@@ -6717,7 +6717,7 @@ Object.assign(legacyPagesData, {
     title: "Rainbow Preschool Teaching Methodology Explained | Our Educational Approach",
     metaDescription: "Discover Rainbow Preschool's unique teaching methodology. Learn about our play-based, child-centered approach that develops the whole child in Thane.",
     h1: "Rainbow Preschool Teaching Methodology Explained",
-    intro: "At <a href=\"/about\">Rainbow Preschool International</a>, our teaching methodology has been refined over 18+ years to create optimal learning experiences for young children. We believe that how children learn is as important as what they learn. Our approach combines research-backed practices with the warmth and care that makes early childhood magical. This detailed guide explains our teaching philosophy and methods across all our <a href=\"/programmes\">programmes</a> at our six Thane centres.",
+    intro: "At <a href=\"/about\">Rainbow Preschool International</a>, our teaching methodology has been refined over 18+ years to create optimal learning experiences for young children. We believe that how children learn is as important as what they learn. Our approach combines research-backed practices with the warmth and care that makes early childhood memorable. This detailed guide explains our teaching philosophy and methods across all our <a href=\"/programmes\">programmes</a> at our six Thane centres.",
     sections: [
       {
         heading: "The Foundation of Our Teaching Philosophy",
@@ -8579,7 +8579,7 @@ Object.assign(legacyPagesData, {
       },
       {
         heading: "Personal Qualities That Matter",
-        content: "Beyond training, certain personal qualities make excellent early childhood educators:\n\n<strong>Warmth and Nurturing:</strong>\nChildren need to feel loved and safe. Warm, caring relationships are the foundation of all learning.\n\n<strong>Patience:</strong>\nWorking with young children requires enormous patience. Toddlers learn through repetition and make many mistakes.\n\n<strong>Observation Skills:</strong>\nGreat teachers watch carefully. They notice what interests each child, what challenges them, and what they need.\n\n<strong>Creativity and Flexibility:</strong>\nPlans change constantly with young children. Teachers need creativity to adapt and make learning engaging.\n\n<strong>Communication Skills:</strong>\nTeachers communicate with children, parents, and colleagues. Clear, kind communication builds trust.\n\nMeet our teachers at <a href=\"/preschool-in-manpada-thane\">Manpada</a>, <a href=\"/preschool-in-hariniwas-thane\">Hariniwas</a>, <a href=\"/preschool-in-anand-nagar-thane\">Anand Nagar</a>, <a href=\"/preschool-in-dhokali-thane\">Dhokali</a>, <a href=\"/preschool-in-kalwa-thane\">Kalwa</a>, or <a href=\"/preschool-in-kasarvadavali-thane\">Kasarvadavali</a>.",
+        content: "Beyond training, certain personal qualities make excellent early childhood educators:\n\n<strong>Warmth and Nurturing:</strong>\nChildren need to feel cared for and safe. Warm, caring relationships are the foundation of all learning.\n\n<strong>Patience:</strong>\nWorking with young children requires enormous patience. Toddlers learn through repetition and make many mistakes.\n\n<strong>Observation Skills:</strong>\nGreat teachers watch carefully. They notice what interests each child, what challenges them, and what they need.\n\n<strong>Creativity and Flexibility:</strong>\nPlans change constantly with young children. Teachers need creativity to adapt and make learning engaging.\n\n<strong>Communication Skills:</strong>\nTeachers communicate with children, parents, and colleagues. Clear, kind communication builds trust.\n\nMeet our teachers at <a href=\"/preschool-in-manpada-thane\">Manpada</a>, <a href=\"/preschool-in-hariniwas-thane\">Hariniwas</a>, <a href=\"/preschool-in-anand-nagar-thane\">Anand Nagar</a>, <a href=\"/preschool-in-dhokali-thane\">Dhokali</a>, <a href=\"/preschool-in-kalwa-thane\">Kalwa</a>, or <a href=\"/preschool-in-kasarvadavali-thane\">Kasarvadavali</a>.",
         bulletPoints: [
           "Genuine warmth and nurturing nature",
           "Patience with young learners",
@@ -9224,7 +9224,7 @@ Object.assign(legacyPagesData, {
     title: "April Fool's Day Activities for Preschoolers | Fun, Safe and Creative Ideas",
     metaDescription: "Discover fun, safe and creative April Fool's Day activities for preschoolers. Explore easy classroom ideas, gentle pranks, crafts and games for kids.",
     h1: "April Fool's Day Activities for Preschoolers: Fun, Safe and Creative Ideas for Kids",
-    intro: "April Fool's Day is a wonderful chance to add laughter, imagination and playful learning to a child's routine. For preschoolers, the day should always be light-hearted, safe and easy to understand. Instead of confusing tricks, parents and teachers can plan simple activities that make children smile, encourage participation and support early development.\n\nAt <a href=\"/about\">Rainbow Preschools</a>, we believe children learn best when they feel happy, engaged and curious. Theme-based celebrations and playful classroom experiences help children build confidence, communication skills, creativity and social comfort in a natural way.\n\nIf you are looking for April Fool's Day activities for preschoolers, this guide shares practical ideas that are easy to do in the classroom or at home. Each activity is designed to be fun, age-appropriate and meaningful.",
+    intro: "April Fool's Day is a great chance to add laughter, imagination and playful learning to a child's routine. For preschoolers, the day should always be light-hearted, safe and easy to understand. Instead of confusing tricks, parents and teachers can plan simple activities that make children smile, encourage participation and support early development.\n\nAt <a href=\"/about\">Rainbow Preschools</a>, we believe children learn best when they feel happy, engaged and curious. Theme-based celebrations and playful classroom experiences help children build confidence, communication skills, creativity and social comfort in a natural way.\n\nIf you are looking for April Fool's Day activities for preschoolers, this guide shares practical ideas that are easy to do in the classroom or at home. Each activity is designed to be fun, age-appropriate and meaningful.",
     sections: [
       {
         heading: "Why April Fool's Day Activities Are Good for Preschoolers",

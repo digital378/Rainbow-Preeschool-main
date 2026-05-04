@@ -63,7 +63,7 @@ Children learn best from real people, real objects, and real experiences. The cu
   "Safer" than open YouTube but still problematic — the recommendation algorithm is engineered for engagement, not learning. If you do use it, set a 15-minute timer, sit with your child, and stick to a small list of vetted channels. Avoid letting autoplay roll into the next video.
 
   **What about educational TV like Sesame Street, Peppa Pig, or Marathi rhyme channels?**
-  Slow-paced, story-driven shows with clear narrative arcs (Sesame Street is the gold standard) are good. Fast-edit shows with non-stop action are over-stimulating. Marathi or Hindi rhyme channels are wonderful for language exposure when limited to 10–15 minutes and watched together.
+  Slow-paced, story-driven shows with clear narrative arcs (Sesame Street is the gold standard) are good. Fast-edit shows with non-stop action are over-stimulating. Marathi or Hindi rhyme channels work well for language exposure when limited to 10–15 minutes and watched together.
 
   **My in-laws keep showing the baby reels on their phone. How do I handle this politely?**
   This is one of the most common questions Thane parents ask us. The best approach: explain the developmental reasoning (not the "rule"), suggest an alternative bonding activity grandparents can do (singing old film songs, telling stories, gentle massage), and accept that occasional exceptions are not the end of the world. Consistency at home matters more than perfection at every gathering.
@@ -316,7 +316,7 @@ Last updated: April 2026`,
     title: "Picky Eater Toddler? 12 Gentle Solutions That Actually Work",
     slug: "picky-eater-toddler-solutions",
     excerpt: "Is mealtime a battleground? Learn 12 gentle, effective strategies to encourage your picky eater to try new foods without the stress.",
-    content: `If your toddler suddenly refuses the *dal-chawal* they loved yesterday, you are not alone. Picky eating is a normal developmental phase where children exercise their independence. At **Rainbow Preschool International**, we believe that food should be a source of joy, not a power struggle.
+    content: `If your toddler suddenly refuses the *dal-chawal* they happily ate yesterday, you are not alone. Picky eating is a normal developmental phase where children exercise their independence. At **Rainbow Preschool International**, we believe that food should be a source of joy, not a power struggle.
 
 ## Understanding the "Why"
 Between the ages of 2 and 5, children often develop "neophobia"—a fear of new things, including food. Their appetites also fluctuate as their growth rate slows down compared to infancy.
@@ -742,7 +742,7 @@ Last updated: April 2026`,
     title: "Yoga & Mindfulness for Preschoolers: Simple Routines for Calmer Mornings",
     slug: "yoga-mindfulness-preschoolers-daily-routines",
     excerpt: "Bring peace to your home with simple yoga and mindfulness routines designed for preschoolers. Perfect for active kids in Thane.",
-    content: `In our fast-paced world, even our little ones can feel the buzz of "busy-ness." Yoga and mindfulness aren't just for adults; they are wonderful tools to help preschoolers develop focus, balance, and emotional calm. Integrating these into your morning routine in Thane can set a positive tone for the entire day.
+    content: `In our fast-paced world, even our little ones can feel the buzz of "busy-ness." Yoga and mindfulness aren't just for adults; they are practical tools to help preschoolers develop focus, balance, and emotional calm. Integrating these into your morning routine in Thane can set a positive tone for the entire day.
 
 ## The Benefits of Yoga for Kids
 Yoga helps with physical flexibility and strength, but more importantly, it builds body awareness. For a 3-year-old, it’s about mimicking nature and having fun.
@@ -957,7 +957,7 @@ Last updated: April 2026`,
     title: "Toddler Speech Development Milestones: What's Normal and When to Worry",
     slug: "toddler-speech-development-milestones-when-to-worry",
     excerpt: "Track your child's communication journey. Learn about typical speech milestones and how to support language growth at home.",
-    content: `Watching your child say their first words—"Ma," "Pa," or "Dada"—is one of the most magical moments of parenting. But as they grow, it’s natural to wonder if their speech is on track. This is general information, not medical advice — consult your paediatrician for individual guidance.
+    content: `Watching your child say their first words—"Ma," "Pa," or "Dada"—is one of the milestones parents remember most clearly. But as they grow, it’s natural to wonder if their speech is on track. This is general information, not medical advice — consult your paediatrician for individual guidance.
 
 ## Typical Milestones (Ages 2-4)
 - **By Age 2:** Should have a vocabulary of about 50 words and start combining two words ("Want milk," "Go out").
@@ -1060,7 +1060,7 @@ Last updated: April 2026`,
     excerpt: "A complete Republic Day 2026 guide for Indian families — history of 26 January, parade highlights from Kartavya Path, simple speeches and essays, inspiring quotes, and age-appropriate ways for preschoolers to take part.",
     content: `Every 26th of January, the air in Thane carries a quiet pride. Tricolour flags appear on balcony railings overnight, *desh bhakti* songs play on the radio, and children come back from school with paper hats, *tilak* on their foreheads, and stories about the Republic Day assembly. For many preschoolers, this is the first national festival they truly *understand*. At **Rainbow Preschool International**, we use Republic Day as a gentle introduction to the ideas of belonging, fairness, and the country we share.
 
-This guide pulls together everything an Indian parent needs in one place: the history behind the date, what happens at the Kartavya Path parade, simple speeches and essays children can recite, the most-loved quotes, and — most importantly — practical, age-appropriate ways your preschooler can take part in the celebrations.
+This guide pulls together everything an Indian parent needs in one place: the history behind the date, what happens at the Kartavya Path parade, simple speeches and essays children can recite, the quotes families return to year after year, and — most importantly — practical, age-appropriate ways your preschooler can take part in the celebrations.
 
 ## Why Republic Day Is Celebrated on 26 January
 India became independent on 15 August 1947, but for the first two and a half years the country was governed by an adapted version of the colonial-era Government of India Act, 1935. **The Constitution of India came into force on 26 January 1950**, making India a sovereign democratic republic. From that day, Indians were no longer just free — they were governed entirely by laws written by Indians, for Indians.
@@ -1129,7 +1129,7 @@ These work beautifully on a family WhatsApp group, on a printed card a child can
 2. **Tricolour breakfast plate.** Orange = a slice of papaya or carrot halwa. White = idli or yoghurt. Green = a few mint leaves or sliced cucumber. Children adore the visual surprise.
 3. **Watch the flypast together.** Just 10 minutes of focused TV viewing with a parent narrating ("Look — that's a Rafale!") is more memorable than the full 90-minute broadcast.
 4. **Sing the national anthem.** Stand straight, face an imaginary flag, sing slowly so the child can join. Forty-six seconds of practice per day is enough.
-5. **Read a picture book about India.** *"My First Book of Indian States"* or any age-appropriate Indian flag book is a wonderful keepsake.
+5. **Read a picture book about India.** *"My First Book of Indian States"* or any age-appropriate Indian flag book makes a lasting keepsake.
 6. **Decorate the front door.** A simple paper *toran* in the tricolour, hung the night before, builds anticipation.
 7. **Visit a local Republic Day function.** Many Thane housing societies, gardens, and clubs hold flag-hoisting ceremonies at 9:00 AM. Walk over with your child for ten minutes and witness it.
 8. **Talk about kindness as patriotism.** Tell your child, "Loving India also means being kind to people in our city, picking up litter at the park, and helping our *didi* and *bhaiya* at home." Patriotism, for a four-year-old, looks exactly like that.
@@ -1176,7 +1176,7 @@ This 26 January, take a few minutes to stand with your child, look at the flag, 
 
 
   ## Where to Read Next on the Rainbow Blog
-  If you enjoyed this Republic Day guide, you'll love our **50 Fun Learning Activities for Preschoolers** post for more parent-led activities, our **Best Children's Books for Indian Preschoolers** list (it includes several wonderful India-themed books), and our **Yoga & Mindfulness for Preschoolers** routines for calmer mornings — perfect after a busy 26 January.
+  If you enjoyed this Republic Day guide, you'll love our **50 Fun Learning Activities for Preschoolers** post for more parent-led activities, our **Best Children's Books for Indian Preschoolers** list (it includes several well-reviewed India-themed books), and our **Yoga & Mindfulness for Preschoolers** routines for calmer mornings — perfect after a busy 26 January.
 
 EXPLORE_MORE: [Explore Our Playgroup Program](/playgroup)|[Visit Our Centres](/centres)|[Frequently Asked Questions](/faqs)
 

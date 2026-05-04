@@ -202,7 +202,7 @@ export default function RepublicDay2026() {
             <h3 className="text-xl font-semibold mt-8 mb-3 text-foreground">Highlights of the Republic Day Parade 2026</h3>
             <ul className="list-disc pl-6 space-y-2 my-4">
               <li className="text-muted-foreground"><strong className="text-foreground">Marching contingents:</strong> Disciplined marching contingents of the Indian Army, Navy, and Air Force showcase India's military strength and preparedness.</li>
-              <li className="text-muted-foreground"><strong className="text-foreground">State tableaux:</strong> Beautiful tableaux from different states showcase India's incredible cultural diversity, traditions, and developmental achievements.</li>
+              <li className="text-muted-foreground"><strong className="text-foreground">State tableaux:</strong> Beautiful tableaux from different states showcase India's rich cultural diversity, traditions, and developmental achievements.</li>
               <li className="text-muted-foreground"><strong className="text-foreground">Cultural performances:</strong> School children from across India perform mesmerising dance and music presentations.</li>
               <li className="text-muted-foreground"><strong className="text-foreground">Daredevil motorcycle stunts:</strong> The Border Security Force (BSF) performs breathtaking motorcycle stunts that captivate audiences.</li>
               <li className="text-muted-foreground"><strong className="text-foreground">Indian Air Force fly-past:</strong> The parade concludes with a spectacular fly-past by Indian Air Force aircraft, leaving trails of the tricolour in the sky.</li>
