@@ -230,7 +230,39 @@ export async function registerRoutes(
   
   // Apply SEO redirect middleware for old WordPress URLs
   app.use(seoRedirectMiddleware);
-  
+
+  app.get("/api/rps/export", (req, res) => {
+    res.setHeader("Cache-Control", "no-store, private, max-age=0");
+
+    const adminToken = process.env.ADMIN_TOKEN;
+    if (!adminToken) {
+      res.status(503).json({ message: "Service unavailable" });
+      return;
+    }
+
+    const headerToken = req.header("x-api-key");
+    const authHeader = req.header("authorization") || "";
+    const bearerToken = authHeader.toLowerCase().startsWith("bearer ")
+      ? authHeader.slice(7).trim()
+      : "";
+    const queryTokenRaw = req.query.token;
+    const queryToken = typeof queryTokenRaw === "string" ? queryTokenRaw : "";
+
+    const providedToken = headerToken || bearerToken || queryToken;
+
+    if (!providedToken || providedToken !== adminToken) {
+      res.status(401).json({ message: "Unauthorized" });
+      return;
+    }
+
+    res.status(200).json({
+      generatedAt: new Date().toISOString(),
+      school: "Rainbow Preschools (RPS)",
+      website: "https://www.rainbowpreschools.com",
+      message: "RPS endpoint live - connect marketing data here",
+    });
+  });
+
   // Contact form submission
   app.post("/api/contact", async (req, res) => {
     try {
