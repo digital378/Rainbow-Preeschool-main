@@ -1,0 +1,627 @@
+Replit Build Mode Prompt: Rainbow Preschools SEO Fix – Page-Wise Keyword Separation
+
+You are now in Build Mode for the Rainbow Preschools website.
+
+Objective:
+Fix SEO targeting for three pages so that each page targets a clear and separate search intent without keyword cannibalisation. The current issue is that multiple pages overlap around “preschool near me”, “play school near me”, “playschool near me”, and “playgroup”. This must be corrected page-wise.
+
+Important:
+Do not change the website design, layout, route URLs, CSS, image dimensions, animations, responsiveness, Core Web Vitals, page speed, or existing visual structure. Only update SEO metadata, page headings, content sections, FAQs, structured data where safely supported, internal links, and SSR entries.
+
+Pages to optimise:
+1. /play-school-near-me
+2. /best-preschool-near-me-in-thane
+3. /pre-kg-age-guide
+
+Non-Negotiable Global Rules:
+- Each page must have a separate SEO intent.
+- Do not use the same primary keyword across multiple pages.
+- SEO titles must be under 65 characters.
+- Client-side title and SSR title must match exactly.
+- Each page must have only one H1.
+- Meta descriptions must be unique for each page.
+- Use clean, self-referencing canonical URLs.
+- Do not keyword-stuff.
+- Do not add new dependencies.
+- Do not create new routes unless already supported by the project.
+- Do not create new CTA components if existing CTA components are available.
+- Do not add fake ratings, fake reviews, unverifiable awards, or unsupported claims.
+- Add FAQ schema only when the matching FAQ content is visible on the page or SSR-readable.
+- Add structured data only if JSON-LD is already safely used in the project.
+- Build must pass before completion.
+
+Keyword Separation Rules:
+
+Page 1: /play-school-near-me
+
+Primary keywords:
+- play school near me
+- playschool near me
+
+Allowed supporting terms:
+- play school in Thane
+- playschool in Thane
+- early learning centre near me
+- first school experience
+- child-friendly learning centre
+
+Do not target or use as SEO focus:
+- preschool near me
+- preschool in Thane
+- best preschool near me
+- playgroup near me
+- playgroup in Thane
+
+This page must focus only on a child’s first school experience, settling process, teacher care, safety, early habits, confidence, social comfort, and activity-based learning. It must not become a preschool comparison page.
+
+Page 2: /best-preschool-near-me-in-thane
+
+Primary keywords:
+- preschool near me
+- preschool in Thane
+- best preschool near me
+- best preschool in Thane
+- top preschool in Thane
+
+Allowed supporting terms:
+- nursery school in Thane
+- kindergarten in Thane
+- early childhood education in Thane
+- preschool admission in Thane
+
+Do not target:
+- play school near me
+- playschool near me
+- playgroup near me
+
+This page must serve parents comparing preschool options in Thane. It should focus on safety, teacher care, trust, early childhood learning, school readiness, programmes, locations, and admission support.
+
+Page 3: /pre-kg-age-guide
+
+Primary keyword:
+- pre kg age
+
+Supporting terms:
+- pre kg age in India
+- right age for Pre-KG
+- when to start Pre-KG
+- Pre KG admission age
+
+Do not turn this page into a preschool-near-me page, play-school page, or playgroup page.
+
+Implementation Instructions:
+
+Step 1: Inspect Existing Files
+
+Search the project for these routes:
+- /play-school-near-me
+- /best-preschool-near-me-in-thane
+- /pre-kg-age-guide
+
+Likely files to inspect:
+- client/src/pages/play-school-near-me.tsx
+- client/src/pages/best-preschool-in-thane.tsx
+- server/ssr-pages.ts
+
+Also inspect any shared SEO, metadata, schema, route, or page config files used by the project.
+
+Use existing project patterns. Do not introduce a new SEO system if one already exists.
+
+Page 1 Requirements: /play-school-near-me
+
+SEO Metadata:
+
+Set both client and SSR title exactly as:
+Play School Near Me in Thane | Rainbow Preschools
+
+Meta description:
+Looking for a play school near you in Thane? Rainbow Preschools offers a safe, caring and activity-based first school experience for young children.
+
+Canonical:
+https://www.rainbowpreschools.com/play-school-near-me
+
+Meta keywords only if meta keywords are already used in the project:
+play school near me, playschool near me, play school in thane, playschool in thane, early learning centre near me, first school experience, Rainbow Preschools
+
+Do not include these terms in meta keywords:
+- preschool near me
+- best preschool near me
+- playgroup near me
+
+Page Heading:
+
+H1:
+Play School Near Me in Thane
+
+Hero subheadline:
+A trusted playschool near you for your child’s first learning experience.
+
+Opening paragraph:
+If you are searching for a play school near me or a playschool near me in Thane, Rainbow Preschools offers a safe, caring and activity-based environment for your child’s first school experience. Our centres help young children build confidence, communication, social comfort and early learning habits through stories, rhymes, movement, creative activities and guided classroom routines.
+
+Required Content Sections:
+
+Add or improve the following sections only if they are not already covered clearly.
+
+Section 1
+
+H2:
+Why Parents Choose Rainbow as a Play School Near Me
+
+Content:
+Parents looking for a play school near me usually want a centre that is close, safe, clean and child-friendly. Rainbow Preschools focuses on warm teacher interaction, age-appropriate activities, regular parent communication and a comfortable transition from home to a structured learning environment.
+
+Bullets:
+- Safe and child-friendly classrooms
+- Caring and trained teachers
+- Activity-based first learning experience
+- Regular parent updates
+- Comfortable settling process
+- Convenient centres across Thane
+
+Section 2
+
+H2:
+Playschool Near Me for Your Child’s First School Step
+
+Content:
+A playschool is often the first step in a child’s learning journey. At Rainbow Preschools, children are encouraged to settle gradually, interact with teachers and other children, follow simple routines and enjoy learning through stories, music, movement, art and guided activities.
+
+Section 3
+
+H2:
+What Children Learn at Rainbow Play School
+
+Content:
+The early years are important for confidence, communication and social development. Rainbow Preschools helps children develop basic listening skills, expression, independence, motor coordination, classroom comfort and positive learning habits.
+
+Bullets:
+- Listening and communication
+- Social interaction
+- Creative expression
+- Motor skill development
+- Simple routines
+- Confidence and independence
+
+Section 4
+
+H2:
+Play School Centres Near You in Thane
+
+Content:
+Rainbow Preschools serves families across key areas of Thane, including Dhokali, Kalwa, Kasarvadavali, Anand Nagar, Hariniwas, Manpada and nearby residential communities. Parents can choose a centre that is convenient for their home, commute and daily routine.
+
+Branch links:
+Add branch links only if the branch routes already exist. Do not create new branch pages.
+
+FAQs:
+
+Add this section if it is not already present.
+
+H2:
+FAQs on Finding a Play School Near Me
+
+FAQ 1:
+Q: How do I choose the right play school near me?
+A: Look for a play school that is safe, clean, close to home, age-appropriate and focused on learning through activities. Parents should also check teacher interaction, classroom environment and communication process.
+
+FAQ 2:
+Q: What is the right age for play school?
+A: Many children begin play school around 1.5 to 2.5 years, depending on their readiness and comfort with a structured learning environment.
+
+FAQ 3:
+Q: What should a child learn in play school?
+A: A good play school should help children build confidence, communication, social comfort, independence, motor skills and early learning habits through age-appropriate activities.
+
+FAQ 4:
+Q: Can I visit a Rainbow play school centre before admission?
+A: Yes, parents can book a centre visit to understand the classrooms, teaching approach, safety measures and admission process.
+
+Internal Links Allowed From This Page:
+- /pre-kg-age-guide
+- /nursery
+- /preschool-fees-thane-what-to-expect
+- /best-preschool-near-me-in-thane
+
+Allowed Anchor Text:
+- Pre KG age guide
+- nursery programme
+- fee details
+- preschool options in Thane
+
+Avoid Exact Anchor Text:
+- preschool near me
+- best preschool near me
+- playgroup
+
+Page 2 Requirements: /best-preschool-near-me-in-thane
+
+SEO Metadata:
+
+Set both client and SSR title exactly as:
+Best Preschool Near Me in Thane | Rainbow
+
+Meta description:
+Looking for the best preschool near you in Thane? Rainbow Preschools offers safe classrooms, caring teachers and activity-based learning across Thane.
+
+Canonical:
+https://www.rainbowpreschools.com/best-preschool-near-me-in-thane
+
+Meta keywords only if meta keywords are already used in the project:
+best preschool near me, preschool near me, preschool in thane, best preschool in thane, top preschool in thane, nursery school in thane, kindergarten in thane, preschool admission in thane, Rainbow Preschools
+
+Do not include these terms in meta keywords:
+- play school near me
+- playschool near me
+- playgroup near me
+
+Page Heading:
+
+H1:
+Best Preschool Near Me in Thane
+
+Hero subheadline:
+A trusted preschool in Thane for early childhood learning and school readiness.
+
+Opening paragraph:
+When parents search for the best preschool near me, preschool near me or preschool in Thane, they are looking for a centre that is close, safe, trusted and strong in early childhood learning. Rainbow Preschools provides a caring environment where children learn through activities, stories, music, movement and guided classroom routines.
+
+Required Content Sections:
+
+Section 1
+
+H2:
+A Trusted Preschool Near You in Thane
+
+Content:
+Choosing the right preschool near you is an important decision for every parent. At Rainbow Preschools, children are supported in a safe and caring environment that helps them become comfortable, confident and curious. The learning approach supports social, emotional, physical and cognitive development through age-appropriate activities.
+
+Section 2
+
+H2:
+Why Rainbow is Among the Best Preschools in Thane
+
+Content:
+Rainbow Preschools combines safety, teacher care, structured early learning and parent communication to create a strong foundation for children. The preschool experience is designed to help children become independent, expressive and ready for the next stage of schooling.
+
+Bullets:
+- Safe classrooms and learning spaces
+- Activity-based curriculum
+- Experienced and caring teachers
+- Focus on confidence and communication
+- Regular parent updates
+- Convenient preschool centres across Thane
+- Strong foundation for school readiness
+
+Section 3
+
+H2:
+How to Choose the Top Preschool in Thane
+
+Content:
+The top preschool in Thane should offer more than convenience. Parents should compare safety, hygiene, teacher interaction, classroom environment, curriculum, communication and child comfort before finalising admission.
+
+Checklist:
+- Is the preschool close to home?
+- Are the classrooms safe and clean?
+- Are teachers caring and approachable?
+- Does the curriculum support activity-based learning?
+- Are parents updated regularly?
+- Can parents visit the centre before admission?
+- Does the child feel comfortable during the visit?
+
+Section 4
+
+H2:
+Early Childhood Programmes at Rainbow Preschools
+
+Content:
+Rainbow Preschools offers age-appropriate early childhood programmes that support confidence, communication, motor skills, social development, independence and school readiness.
+
+Programme content:
+Early years programme: Supports first classroom comfort, expression, social interaction and learning through activities.
+
+Nursery: Builds early language, number awareness, independence, motor skills and classroom readiness.
+
+Kindergarten: Prepares children for formal schooling through structured learning, communication and confidence-building.
+
+Important:
+Do not use “play school near me”, “playschool near me”, or “playgroup near me” in this section.
+
+If linking to /play-school-near-me, use this neutral anchor:
+early years learning option
+
+Section 5
+
+H2:
+Rainbow Preschool Centres Across Thane
+
+Content:
+Rainbow Preschools has centres across Thane to help parents choose a preschool that is convenient and trusted. Families can explore centres in Dhokali, Kalwa, Kasarvadavali, Anand Nagar, Hariniwas, Manpada and nearby areas.
+
+Branch links:
+Add branch links only if existing branch routes are available.
+
+Section 6
+
+H2:
+Preschool Admission Support for Parents
+
+Content:
+Parents can connect with Rainbow Preschools to understand the right programme, age eligibility, centre location, classroom environment, fees and admission process. A centre visit helps parents evaluate whether the preschool is suitable for their child’s comfort and learning needs.
+
+Use existing CTA components only, such as:
+- Book a Centre Visit
+- Enquire Now
+- Call for Admissions
+
+Do not create a new CTA component if an existing one is available.
+
+FAQs:
+
+H2:
+FAQs on Choosing the Best Preschool Near Me
+
+FAQ 1:
+Q: How do I choose the best preschool near me?
+A: Parents should look for safety, trained teachers, clean classrooms, activity-based learning, age-appropriate programmes, parent communication and a comfortable environment for the child.
+
+FAQ 2:
+Q: What makes Rainbow one of the best preschools in Thane?
+A: Rainbow Preschools focuses on safe classrooms, caring teachers, activity-based learning, regular parent communication and early school readiness.
+
+FAQ 3:
+Q: Is the nearest preschool always the best choice?
+A: Not always. A nearby preschool is convenient, but parents should also check safety, learning quality, teacher care and how comfortable the child feels during a visit.
+
+FAQ 4:
+Q: What should I check before finalising preschool admission in Thane?
+A: Parents should check safety, hygiene, teacher interaction, curriculum, communication, distance from home, child comfort and the admission process.
+
+FAQ 5:
+Q: Can parents book a preschool visit before admission?
+A: Yes, parents can book a centre visit to understand the learning environment, facilities, safety measures and admission process.
+
+Internal Links Allowed From This Page:
+- /pre-kg-age-guide
+- /nursery
+- /preschool-fees-thane-what-to-expect
+- /play-school-near-me
+
+Allowed Anchor Text:
+- Pre KG age guide
+- nursery programme
+- preschool fees in Thane
+- early years learning option
+
+Avoid Anchor Text:
+- play school near me
+- playschool near me
+- playgroup
+
+Page 3 Requirements: /pre-kg-age-guide
+
+Purpose:
+This page must protect and improve rankings for Pre-KG age queries. Do not turn it into a preschool-near-me page, play-school page, or playgroup page.
+
+Files to check:
+Search for:
+/pre-kg-age-guide
+
+Likely file:
+- server/ssr-pages.ts
+
+If this page is a legacy wrapper or iframe:
+- Do not rebuild the visible page.
+- Only add SSR content and safe internal links where supported.
+- Do not change visual layout.
+
+SEO Metadata:
+
+Set the title exactly as:
+Pre KG Age in India | When to Start Pre-KG
+
+Meta description:
+Understand the right Pre KG age in India, when your child should start Pre-KG and how parents can prepare for preschool admission with Rainbow Preschools.
+
+Canonical:
+https://www.rainbowpreschools.com/pre-kg-age-guide
+
+H1:
+Pre KG Age in India: When Should Your Child Start?
+
+SSR Requirement:
+
+Add a full SSR entry for /pre-kg-age-guide containing:
+- SEO title
+- Meta description
+- Canonical URL
+- H1
+- Readable introduction
+- FAQ content if supported
+- Structured data only if supported by the existing project pattern
+
+SSR Introduction:
+Pre KG age in India usually depends on the child’s readiness, school admission guidelines and the academic year cut-off. Many parents start exploring Pre-KG when their child is around 2.5 to 3.5 years old. At Rainbow Preschools, parents are guided based on age, confidence, communication ability, social readiness and comfort in a structured learning environment.
+
+Optional Visible Content:
+
+Only add the following content if it is safe and does not affect the existing page design.
+
+H2:
+What Is the Right Pre KG Age?
+
+Content:
+The right Pre KG age may vary depending on the school and academic year, but many children are considered for Pre-KG when they are around 2.5 to 3.5 years old. Parents should also consider the child’s comfort, communication, toilet-training progress, social readiness and ability to follow simple routines.
+
+H2:
+Is My Child Ready for Pre-KG?
+
+Content:
+Age is important, but readiness is equally important. A child may be ready for Pre-KG if they can stay away from parents for short periods, respond to simple instructions, interact with other children, express basic needs and participate in simple group activities.
+
+H2:
+Difference Between Pre-KG, Nursery and Kindergarten
+
+Content:
+Pre-KG helps children become comfortable with simple routines, group activities and early learning. Nursery builds further readiness through language, number awareness, motor skills, independence and classroom participation. Kindergarten prepares children for formal schooling with structured learning and confidence-building.
+
+FAQs:
+
+Add only if safe.
+
+FAQ 1:
+Q: What is the right age for Pre KG in India?
+A: The usual Pre KG age in India is around 2.5 to 3.5 years, depending on the school’s admission criteria, academic year cut-off and the child’s readiness.
+
+FAQ 2:
+Q: Is Pre KG compulsory before nursery?
+A: Pre KG may not be compulsory everywhere, but it helps many children adjust to school routines, social interaction and structured early learning before nursery.
+
+FAQ 3:
+Q: Is Pre KG the same as nursery?
+A: No, Pre KG usually comes before nursery and focuses on helping children adjust to school, routines, group activities and early learning.
+
+FAQ 4:
+Q: How do I know if my child is ready for Pre KG?
+A: A child may be ready for Pre KG if they can stay away from parents for short periods, follow simple instructions, communicate basic needs and participate in simple group activities.
+
+Internal Links Allowed From This Page:
+- /nursery
+- /preschool-fees-thane-what-to-expect
+- /play-school-near-me
+- /best-preschool-near-me-in-thane
+
+Allowed Anchor Text:
+- nursery programme
+- preschool fees in Thane
+- early years learning option
+- preschool options in Thane
+
+Avoid Anchor Text:
+- play school near me
+- playschool near me
+- preschool near me
+- best preschool near me
+- playgroup
+
+Structured Data Requirements:
+
+Only add JSON-LD if the existing project already uses JSON-LD safely.
+
+For /play-school-near-me:
+- FAQPage
+- BreadcrumbList
+
+For /best-preschool-near-me-in-thane:
+- FAQPage
+- BreadcrumbList
+
+For /pre-kg-age-guide:
+- FAQPage
+- Article
+- BreadcrumbList
+
+Structured Data Rules:
+- FAQPage schema must match visible or SSR-readable FAQs exactly.
+- BreadcrumbList must use the correct page URL and page name.
+- Article schema for /pre-kg-age-guide must be used only if the page is treated as an informational guide.
+- Do not add AggregateRating.
+- Do not add Review schema.
+- Do not add fake author details.
+- Do not add unverifiable claims.
+
+Technical Validation Checklist:
+
+For /play-school-near-me:
+- Title is exactly: Play School Near Me in Thane | Rainbow Preschools
+- H1 is exactly: Play School Near Me in Thane
+- Page targets only: play school near me, playschool near me
+- Page does not target: preschool near me, best preschool near me, playgroup near me
+- Canonical is clean and self-referencing
+- Internal links work
+- Only one H1 exists
+- FAQ schema matches visible or SSR-readable FAQs, if added
+
+For /best-preschool-near-me-in-thane:
+- Title is exactly: Best Preschool Near Me in Thane | Rainbow
+- H1 is exactly: Best Preschool Near Me in Thane
+- Page targets: preschool near me, preschool in Thane, best preschool near me, best preschool in Thane, top preschool in Thane
+- Page does not target: play school near me, playschool near me, playgroup near me
+- Canonical is clean and self-referencing
+- Internal links work
+- Only one H1 exists
+- FAQ schema matches visible or SSR-readable FAQs, if added
+
+For /pre-kg-age-guide:
+- Title is exactly: Pre KG Age in India | When to Start Pre-KG
+- H1 is exactly: Pre KG Age in India: When Should Your Child Start?
+- Page targets: pre kg age
+- Page does not become a preschool-near-me or play-school landing page
+- SSR entry is added or improved
+- Canonical is clean and self-referencing
+- Internal links are added only if safe
+- FAQ schema matches visible or SSR-readable FAQs, if added
+
+General Validation:
+- All SEO titles are under 65 characters
+- Client-side titles and SSR titles match exactly
+- Meta descriptions are unique
+- Each page has only one H1
+- Canonicals are self-referencing
+- No broken internal links
+- No new dependencies added
+- No design or layout changes made
+- No responsiveness issues introduced
+- No CLS or page speed impact introduced
+- No keyword cannibalisation remains between the three pages
+- Build passes successfully
+
+Recommended Search Commands:
+Use project-appropriate search. If available, run:
+
+rg "/play-school-near-me|/best-preschool-near-me-in-thane|/pre-kg-age-guide"
+rg "play school near me|playschool near me|preschool near me|best preschool near me|playgroup near me"
+rg "title|meta|canonical|FAQPage|BreadcrumbList|Article"
+
+Build Command:
+Run:
+
+npm run build
+
+Final Response Format After Implementation:
+
+Provide the final implementation summary in this exact structure:
+
+Files changed:
+- 
+
+Titles updated:
+- 
+
+Meta descriptions updated:
+- 
+
+H1s updated:
+- 
+
+Sections added or improved:
+- 
+
+Internal links added:
+- 
+
+SSR status for /pre-kg-age-guide:
+- 
+
+Structured data added:
+- 
+
+Validation completed:
+- 
+
+Build result:
+- 
+
+Issues or skipped items:
+- 
