@@ -1,0 +1,114 @@
+Please replace the placeholder response in GET /api/rps/export with this exact JSON 
+(just swap the generatedAt to be dynamic using new Date().toISOString()):
+
+{
+  "generatedAt": "<dynamic ISO timestamp>",
+  "lastUpdated": "May 4, 2026",
+  "school": "Rainbow Preschools (RPS)",
+  "website": "https://www.rainbowpreschools.com",
+  "centres": ["Aggarwal","Anand Nagar","Kasarvadavali","Hariniwas","Dhokali","Kalwa"],
+  "monthly": [
+    {"month":"Dec 25","rps":{"leads":261,"bookings":58,"walkins":45,"admissions":19,"spend":93108,"meta":46254,"google":46854}},
+    {"month":"Jan 26","rps":{"leads":543,"bookings":113,"walkins":86,"admissions":19,"spend":257351,"meta":141133,"google":116218}},
+    {"month":"Feb 26","rps":{"leads":238,"bookings":79,"walkins":67,"admissions":18,"spend":129285,"meta":51750,"google":77535}},
+    {"month":"Mar 26","rps":{"leads":287,"bookings":130,"walkins":81,"admissions":36,"spend":148955,"meta":68927,"google":80028}},
+    {"month":"Apr 26","rps":{"leads":206,"bookings":86,"walkins":45,"admissions":15,"spend":108264,"meta":53846,"google":54418}},
+    {"month":"May 26","rps":{"leads":20,"bookings":3,"walkins":3,"admissions":1,"spend":14245,"meta":4824,"google":9421}}
+  ],
+  "organicPreSpend": {"leads":63,"bookings":35,"walkins":53,"admissions":9},
+  "lastYear": [
+    {"month":"Oct 24","rps":{"spend":57147,"leads":78,"walkins":24,"admissions":12}},
+    {"month":"Nov 24","rps":{"spend":61853,"leads":96,"walkins":36,"admissions":13}},
+    {"month":"Dec 24","rps":{"spend":88738,"leads":158,"walkins":59,"admissions":20}},
+    {"month":"Jan 25","rps":{"spend":89510,"leads":160,"walkins":68,"admissions":25}},
+    {"month":"Feb 25","rps":{"spend":130200,"leads":62,"walkins":29,"admissions":12}},
+    {"month":"Mar 25","rps":{"spend":200000,"leads":122,"walkins":66,"admissions":14}},
+    {"month":"Apr 25","rps":{"spend":120000,"leads":89,"walkins":41,"admissions":11}},
+    {"month":"May 25","rps":{"spend":60000,"leads":54,"walkins":22,"admissions":8}},
+    {"month":"Jun 25","rps":{"spend":30000,"leads":28,"walkins":11,"admissions":4}}
+  ],
+  "mayWeekly": [
+    {"week":"Wk1 (May 1-4)","rps":{"leads":20,"bookings":3,"walkins":3,"admissions":1,"spend":14245}}
+  ],
+  "social": {
+    "instagramFollowers": 1247,
+    "facebookFollowers": 3200,
+    "youtubeSubscribers": 89,
+    "websiteClicksMonthly": 410
+  },
+  "fixedCosts": {
+    "rps": {"salaryPerMonth": 125000, "note": "Fixed monthly salary cost for RPS operations"}
+  },
+  "crmCentreWise": [
+    {
+      "month": "Jan 26",
+      "centres": [
+        {"centre":"Aggarwal","leads":55,"bookings":20,"walkins":18,"admissions":4},
+        {"centre":"Anand Nagar","leads":148,"bookings":24,"walkins":20,"admissions":4},
+        {"centre":"Kasarvadavali","leads":134,"bookings":30,"walkins":22,"admissions":4},
+        {"centre":"Hariniwas","leads":83,"bookings":18,"walkins":14,"admissions":3},
+        {"centre":"Dhokali","leads":57,"bookings":9,"walkins":6,"admissions":2},
+        {"centre":"Kalwa","leads":31,"bookings":6,"walkins":4,"admissions":1},
+        {"centre":"Unassigned","leads":35,"bookings":6,"walkins":2,"admissions":1}
+      ],
+      "total":{"centre":"Total","leads":543,"bookings":113,"walkins":86,"admissions":19}
+    },
+    {
+      "month": "Feb 26",
+      "centres": [
+        {"centre":"Aggarwal","leads":37,"bookings":12,"walkins":10,"admissions":3},
+        {"centre":"Anand Nagar","leads":61,"bookings":20,"walkins":18,"admissions":4},
+        {"centre":"Kasarvadavali","leads":55,"bookings":18,"walkins":15,"admissions":4},
+        {"centre":"Hariniwas","leads":42,"bookings":14,"walkins":12,"admissions":3},
+        {"centre":"Dhokali","leads":22,"bookings":7,"walkins":6,"admissions":2},
+        {"centre":"Kalwa","leads":15,"bookings":5,"walkins":4,"admissions":1},
+        {"centre":"Unassigned","leads":6,"bookings":3,"walkins":2,"admissions":1}
+      ],
+      "total":{"centre":"Total","leads":238,"bookings":79,"walkins":67,"admissions":18}
+    },
+    {
+      "month": "Mar 26",
+      "centres": [
+        {"centre":"Aggarwal","leads":42,"bookings":18,"walkins":12,"admissions":6},
+        {"centre":"Anand Nagar","leads":78,"bookings":35,"walkins":22,"admissions":9},
+        {"centre":"Kasarvadavali","leads":68,"bookings":28,"walkins":19,"admissions":8},
+        {"centre":"Hariniwas","leads":52,"bookings":24,"walkins":14,"admissions":6},
+        {"centre":"Dhokali","leads":28,"bookings":14,"walkins":8,"admissions":4},
+        {"centre":"Kalwa","leads":17,"bookings":9,"walkins":5,"admissions":3},
+        {"centre":"Unassigned","leads":2,"bookings":2,"walkins":1,"admissions":0}
+      ],
+      "total":{"centre":"Total","leads":287,"bookings":130,"walkins":81,"admissions":36}
+    },
+    {
+      "month": "Apr 26",
+      "centres": [
+        {"centre":"Aggarwal","leads":28,"bookings":14,"walkins":8,"admissions":2},
+        {"centre":"Anand Nagar","leads":55,"bookings":22,"walkins":12,"admissions":4},
+        {"centre":"Kasarvadavali","leads":38,"bookings":16,"walkins":9,"admissions":3},
+        {"centre":"Hariniwas","leads":32,"bookings":14,"walkins":7,"admissions":3},
+        {"centre":"Dhokali","leads":22,"bookings":10,"walkins":5,"admissions":2},
+        {"centre":"Kalwa","leads":18,"bookings":7,"walkins":3,"admissions":1},
+        {"centre":"Unassigned","leads":13,"bookings":3,"walkins":1,"admissions":0}
+      ],
+      "total":{"centre":"Total","leads":206,"bookings":86,"walkins":45,"admissions":15}
+    },
+    {
+      "month": "May 26",
+      "centres": [
+        {"centre":"Aggarwal","leads":3,"bookings":0,"walkins":1,"admissions":0},
+        {"centre":"Anand Nagar","leads":6,"bookings":2,"walkins":1,"admissions":1},
+        {"centre":"Kasarvadavali","leads":24,"bookings":10,"walkins":3,"admissions":2},
+        {"centre":"Hariniwas","leads":34,"bookings":19,"walkins":6,"admissions":3},
+        {"centre":"Dhokali","leads":26,"bookings":12,"walkins":1,"admissions":0},
+        {"centre":"Kalwa","leads":37,"bookings":15,"walkins":4,"admissions":1},
+        {"centre":"Unassigned","leads":0,"bookings":0,"walkins":0,"admissions":0}
+      ],
+      "total":{"centre":"Total","leads":176,"bookings":84,"walkins":25,"admissions":9}
+    }
+  ]
+}
+
+After updating, please:
+1. Deploy/publish the site
+2. Test that GET https://www.rainbowpreschools.com/api/rps/export returns this JSON with HTTP 200 when called with header X-Api-Key: rps-mkt-2026-4b8d2e9f1a7c3e6b0d5f8a2c9e4b7d1f3a6c8e2
+3. Confirm when done
