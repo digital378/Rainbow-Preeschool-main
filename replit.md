@@ -43,7 +43,19 @@ The application is a full-stack web application with a React-based frontend and 
 -   **AI Search Visibility**: Provides an AI-readable site summary at `/llms.txt` and comprehensive XML sitemap.
 -   **Content Freshness**: Site-wide last-updated signals are propagated to visible bylines and `Article` JSON-LD `dateModified`.
 -   **Brand Guidelines**: Enforced policies for author attributions (organization-level only, no personal names) and brand color usage (no pink).
--   **SEO Keyword Management**: Strict guidelines prevent keyword cannibalization, ensuring each commercial keyword phrase has a single canonical URL owner, and disallowing specific soft-marketing words in page titles.
+-   **SEO Keyword Management**: Strict guidelines prevent keyword cannibalization, ensuring each commercial keyword phrase has a single canonical URL owner, and disallowing specific soft-marketing words in page titles. Enforced by `scripts/check-no-title-cannibalisation.ts` (pre-commit + pre-push + predeploy):
+    - **Keyword ownership matrix** (one canonical URL per phrase):
+      - "Best Preschool in Thane" → `/best-preschool-near-me-in-thane`
+      - "Play School Near Me" → `/play-school-near-me`
+      - "Playgroup in Thane" → `/playgroup`
+      - "Nursery School in Thane" → `/nursery`
+      - "Kindergarten in Thane" → `/kindergarten`
+      - "Preschool Admissions in Thane" → `/preschool-admissions`
+      - Bare "Preschool in Thane" → `/best-preschool-near-me-in-thane` (the homepage is brand-led and uses "Preschool Chain in Thane" instead)
+    - **Banned soft-marketing words in titles** (case-insensitive): `loved`, `most-loved`, `amazing`, `incredible`, `wonderful`, `magical`, `fabulous`, `awesome`. Body copy is unaffected; only `title:` and `<SEO title=…>` are gated.
+    - **Title length cap**: 65 chars (Google SERP truncates ~60).
+    - **SSR/client title parity**: any URL with both an SSR `staticPages` entry and a client `<SEO title=…>` literal must have byte-equal titles on both sides.
+    - **Legacy blog titles** in `shared/legacy-pages-data.ts` are audited as warnings only (non-blocking) so the team can address drift opportunistically without gating every commit.
 -   **Performance Optimizations**: Employs non-render-blocking Google Fonts, lazy-loaded components, strategic image preloading and lazy loading, optimized WebP images with immutable cache headers, and mobile Core Web Vitals (CWV) optimizations including disabling heavy graphical elements on mobile and deferring analytics. Specific fixes for CLS, LCP, and TTFB are implemented.
 
 ## External Dependencies

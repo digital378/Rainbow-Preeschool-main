@@ -51,6 +51,9 @@ export function HeroSection() {
               Preschool
             </span>
             <br className="hidden sm:block" /> International
+            <span className="block mt-3 text-base sm:text-lg md:text-xl font-semibold tracking-normal text-white/85">
+              Trusted Preschool Chain in Thane Since 2007
+            </span>
           </h1>
 
           <p

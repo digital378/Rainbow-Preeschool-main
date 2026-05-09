@@ -8165,9 +8165,9 @@ Object.assign(legacyPagesData, {
 
   "/choosing-best-preschool-thane-parent-guide/": {
     slug: "/choosing-best-preschool-thane-parent-guide/",
-    title: "Complete Guide to Choosing the Best Preschool in Thane | Rainbow Preschool",
+    title: "Choosing the Right Preschool: A Thane Parent's Guide | Rainbow",
     metaDescription: "Expert guide for Thane parents on choosing the right preschool. Learn what to look for, questions to ask, and how to evaluate preschool quality.",
-    h1: "Complete Guide to Choosing the Best Preschool in Thane",
+    h1: "Choosing the Right Preschool: A Thane Parent's Guide",
     intro: "Choosing a preschool is one of the most important decisions you'll make for your child. With numerous options in Thane, how do you identify the best fit? This comprehensive guide from <a href=\"/about\">Rainbow Preschool International</a> helps you evaluate preschools and make an informed choice.",
     sections: [
       {
