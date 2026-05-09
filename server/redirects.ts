@@ -708,6 +708,19 @@ export function setupRedirects(app: Express) {
       return res.redirect(301, clean + qs);
     }
 
+    // ── Trailing-slash canonicals (no-slash form is canonical) ────────────
+    // For URLs whose canonical/registered route is the no-slash form but
+    // whose legacy WordPress slug had a trailing slash, 301 the slash
+    // variant to the no-slash canonical. Kept outside `redirectMap` so the
+    // legacy sitemap still emits the canonical (no-slash) URL — adding to
+    // redirectMap would cause `getLiveLegacySitemapEntries()` to skip it.
+    const trailingSlashCanonicals = new Set<string>([
+      "/pre-kg-age-guide/",
+    ]);
+    if (trailingSlashCanonicals.has(lowerPath)) {
+      return res.redirect(301, lowerPath.slice(0, -1) + qs);
+    }
+
     // ── Strip WordPress pagination suffix /1000 ────────────────────────────
     if (/\/1000\/?$/.test(lowerPath)) {
       const base = lowerPath.replace(/\/1000\/?$/, "") || "/";
