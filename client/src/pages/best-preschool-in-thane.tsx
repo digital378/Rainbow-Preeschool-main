@@ -15,14 +15,14 @@ import { useState, useEffect } from "react";
 // ── Page data ─────────────────────────────────────────────────────────────────
 
 const meta = {
-  title: "Best Preschool in Thane | Top-Rated Since 2007 | Rainbow Preschool International",
-  description: "Looking for the best preschool in Thane? Rainbow Preschool International — top-rated since 2007, 6 Thane West centres, 4.7★ from 3,997+ reviews, 1,00,000+ alumni. Award-winning early education.",
-  keywords: "best preschool in thane, best preschool near me, top preschool thane, best playgroup thane, best nursery school thane, preschool thane",
+  title: "Best Preschool Near Me in Thane | Rainbow",
+  description: "Looking for the best preschool near you in Thane? Rainbow Preschool International — 4.7★ from 3,997+ parents, 6 Thane West centres, trusted since 2007.",
+  keywords: "best preschool near me, preschool near me, preschool in thane, best preschool in thane, top preschool in thane, nursery school in thane, kindergarten in thane, preschool admission in thane, Rainbow Preschools",
 };
 
 const hero = {
-  eyebrow: "Award-Winning Preschool Since 2007",
-  h1: "Best Preschool in Thane — Rainbow Preschool International",
+  eyebrow: "Trusted Preschool in Thane Since 2007",
+  h1: "Best Preschool Near Me in Thane",
   subheadline: "Rainbow Preschool International is a trusted early childhood education centre in Thane offering playgroup, nursery, kindergarten, and Happy Times programmes across multiple centres.",
   supporting: "Parents looking for the best preschool in Thane choose Rainbow for its award-winning curriculum, experienced educators, safe child-friendly campuses, and convenient locations across Manpada, Hariniwas, Anand Nagar, Dhokali, Kalwa, and Kasarvadavali.",
 };

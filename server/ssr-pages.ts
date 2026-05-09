@@ -870,11 +870,11 @@ const staticPages: Record<string, PageSEOData> = {
     internalLinks: commonInternalLinks,
   },
   "/best-preschool-near-me-in-thane": {
-    title: "Best Preschool in Thane | Top-Rated Since 2007 | Rainbow",
-    description: "Comparing preschools in Thane? Rainbow ranks #1 with 4.7★ from 3,997 parents, awards from India Today & ScooNews, and 18+ years of proven results.",
-    keywords: "best preschool in thane, best preschool near me, top preschool thane, best playgroup thane, best nursery school thane",
+    title: "Best Preschool Near Me in Thane | Rainbow",
+    description: "Looking for the best preschool near you in Thane? Rainbow Preschool International — 4.7★ from 3,997+ parents, 6 Thane West centres, trusted since 2007.",
+    keywords: "best preschool near me, preschool near me, preschool in thane, best preschool in thane, top preschool in thane, nursery school in thane, kindergarten in thane, preschool admission in thane, Rainbow Preschools",
     canonical: `${BASE_URL}/best-preschool-near-me-in-thane`,
-    h1: "Best Preschool in Thane — Rainbow Preschool International",
+    h1: "Best Preschool Near Me in Thane",
     breadcrumbs: [{ name: "Home", url: "/" }, { name: "Best Preschool in Thane", url: "/best-preschool-near-me-in-thane" }],
     structuredData: [organizationSchema, websiteSchema, ...branchLocalBusinessSchemas, {
       "@context": "https://schema.org",
@@ -936,7 +936,7 @@ const staticPages: Record<string, PageSEOData> = {
     lastModifiedDisplay: LAST_UPDATED_DISPLAY,
   },
   "/play-school-near-me": {
-    title: "Play School Near Me in Thane (1.5–2.5 yrs) | Rainbow",
+    title: "Play School Near Me in Thane | Rainbow Preschools",
     description: "Find the best play school near you in Thane — Rainbow Preschool offers safe, play-based early learning for toddlers (1.5–2.5 yrs) across 6 centres.",
     keywords: "play school near me, playschool near me in thane, top playschool thane, best play school thane",
     canonical: `${BASE_URL}/play-school-near-me`,

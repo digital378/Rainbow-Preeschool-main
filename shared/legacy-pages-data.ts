@@ -308,9 +308,9 @@ export const legacyPagesData: Record<string, LegacyPageData> = {
 
   "/pre-kg-age-guide/": {
     slug: "/pre-kg-age-guide/",
-    title: "Pre-KG Age Guide: When Should Your Child Start? | Rainbow Preschool",
-    metaDescription: "Pre-KG age in India: most kids start at 3 years. 5 readiness signs, what to expect on day 1, and a simple checklist parents can use this week.",
-    h1: "Pre-KG Age Guide: Is Your Child Ready?",
+    title: "Pre KG Age in India | When to Start Pre-KG",
+    metaDescription: "Understand the right Pre KG age in India, when your child should start Pre-KG and how parents can prepare for preschool admission with Rainbow Preschools.",
+    h1: "Pre KG Age in India: When Should Your Child Start?",
     intro: "Deciding when to start Pre-KG is an important decision for parents. This guide helps you understand the appropriate age, readiness signs, and what Pre-Kindergarten education involves at <a href=\"/about\">Rainbow Preschool International</a> in Thane.",
     sections: [
       {
