@@ -3,11 +3,12 @@
 @tailwind utilities;
 
 /* Font metric overrides: make system-font fallback match Poppins/Inter dimensions
-   so there is zero visual shift when the web font loads (eliminates font-swap CLS) */
+   so there is near-zero visual shift when the web font loads (keeps CLS minimal
+   during display=swap). */
 @font-face {
   font-family: 'Poppins';
   src: local('Arial Bold'), local('Arial');
-  font-weight: 600 700;
+  font-weight: 600 800;
   font-style: normal;
   size-adjust: 105%;
   ascent-override: 94%;
