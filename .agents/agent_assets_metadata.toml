@@ -12,3 +12,9 @@ id = "Wkz4DDeUUznZIREINzYae"
 uri = "file://rpi_pages_inventory.csv"
 type = "table"
 title = "RPI Pages Inventory — URLs, Meta Titles & H1s"
+
+[[outputs]]
+id = "zjkmMfF_qtVWsPATUbZVg"
+uri = "file://RPI_Pages_Inventory.xlsx"
+type = "table"
+title = "RPI Pages Inventory — URLs, Meta Titles & H1s"
