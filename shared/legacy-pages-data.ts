@@ -78,7 +78,7 @@ export const legacyPagesData: Record<string, LegacyPageData> = {
 
   "/explore-50-fruits-vegetables-english-hindi/": {
     slug: "/explore-50-fruits-vegetables-english-hindi/",
-    title: "50 Fruits & Vegetables Names in English & Hindi for Kids | Rainbow Preschool",
+    title: "50 Fruits & Vegetables in English & Hindi | Rainbow Preschool",
     metaDescription: "Teach your child 50 fruits and vegetables names in both English and Hindi. Perfect vocabulary builder for preschoolers in Thane with fun learning activities.",
     h1: "Explore 50 Fruits & Vegetables in English and Hindi",
     intro: "Learning fruit and vegetable names in both English and Hindi helps preschoolers build vocabulary while connecting with their cultural roots. This bilingual guide is perfect for families in Thane who want their children to be fluent in both languages. At <a href=\"/about\">Rainbow Preschool International</a>, we make bilingual learning fun and engaging.",
@@ -249,7 +249,7 @@ export const legacyPagesData: Record<string, LegacyPageData> = {
 
   "/solitary-play-activities/": {
     slug: "/solitary-play-activities/",
-    title: "Solitary Play Activities for Toddlers & Preschoolers | Rainbow Preschool",
+    title: "Solitary Play Activities for Toddlers | Rainbow Preschool",
     metaDescription: "Discover age-appropriate solitary play activities for toddlers and preschoolers. Learn why independent play is important for child development.",
     h1: "Solitary Play Activities for Toddlers and Preschoolers",
     intro: "Solitary play is an essential stage in child development where children play alone, fully absorbed in their own activities. Understanding and encouraging this type of play helps build independence, creativity, and self-regulation skills. At <a href=\"/about\">Rainbow Preschool International</a>, we create environments that support healthy solitary play.",
@@ -411,7 +411,7 @@ export const legacyPagesData: Record<string, LegacyPageData> = {
 
   "/10-spring-gardening-activities-for-preschoolers/": {
     slug: "/10-spring-gardening-activities-for-preschoolers/",
-    title: "10 Spring Gardening Activities for Preschoolers | Rainbow Preschool",
+    title: "Spring Gardening Activities for Preschoolers | Rainbow Preschool",
     metaDescription: "Fun spring gardening activities for preschoolers in Thane. Teach your child about nature, plants, and growth through hands-on gardening experiences.",
     h1: "10 Spring Gardening Activities for Preschoolers",
     intro: "Spring is the perfect time to introduce preschoolers to gardening! These hands-on activities teach children about nature, responsibility, and the joy of growing things. Here are 10 age-appropriate gardening activities perfect for young children in Thane. At <a href=\"/about\">Rainbow Preschool International</a>, we incorporate nature-based learning into our curriculum.",
@@ -595,7 +595,7 @@ Object.assign(legacyPagesData, {
 
   "/7-ways-teaching-aids-help-children-learn-better/": {
     slug: "/7-ways-teaching-aids-help-children-learn-better/",
-    title: "7 Ways Teaching Aids Help Children Learn Better | Rainbow Preschool",
+    title: "7 Ways Teaching Aids Help Kids Learn | Rainbow Preschool",
     metaDescription: "Discover how teaching aids enhance preschool learning. Learn about the tools and materials that help children at Rainbow Preschool International learn effectively.",
     h1: "7 Ways Teaching Aids Help Children Learn Better",
     intro: "Teaching aids are essential tools that make learning concrete, engaging, and memorable for young children. At <a href=\"/about\">Rainbow Preschool International</a>, we use carefully selected teaching aids to enhance every aspect of early childhood education across our <a href=\"/playgroup\">Playgroup</a>, <a href=\"/nursery\">Nursery</a>, and <a href=\"/kindergarten\">Kindergarten</a> programmes.",
@@ -645,7 +645,7 @@ Object.assign(legacyPagesData, {
 
   "/preschool-vs-prekg-2/": {
     slug: "/preschool-vs-prekg-2/",
-    title: "Preschool vs Pre-KG: Understanding the Difference | Rainbow Preschool",
+    title: "Preschool vs Pre-KG: Key Differences | Rainbow Preschool",
     metaDescription: "Confused about preschool vs Pre-KG? Learn the differences between early childhood programmes and find the right fit for your child in Thane.",
     h1: "Preschool vs Pre-KG: What's the Difference?",
     intro: "Parents often wonder about the difference between preschool and Pre-KG. This guide from <a href=\"/about\">Rainbow Preschool International</a> clarifies the terminology and helps you understand which programme is right for your child's age and developmental stage.",
@@ -923,7 +923,7 @@ Object.assign(legacyPagesData, {
 
   "/rainy-season-activities-for-kindergarten/": {
     slug: "/rainy-season-activities-for-kindergarten/",
-    title: "Rainy Season Activities for Kindergarten | Rainbow Preschool Thane",
+    title: "Rainy Season Activities for Kindergarten | Rainbow Preschool",
     metaDescription: "Fun monsoon activities for kindergarten children in Thane. Indoor and outdoor rainy day ideas that keep preschoolers engaged and learning.",
     h1: "Rainy Season Activities for Kindergarten",
     intro: "The Mumbai-Thane monsoon season brings new learning opportunities! These activities from <a href=\"/about\">Rainbow Preschool International</a> help <a href=\"/kindergarten\">kindergarten</a> children explore the rainy season while staying safe, engaged, and learning.",
@@ -983,7 +983,7 @@ Object.assign(legacyPagesData, {
 
   "/6-simple-tips-for-improving-listening-skills-in-preschoolers/": {
     slug: "/6-simple-tips-for-improving-listening-skills-in-preschoolers/",
-    title: "6 Tips to Improve Listening Skills in Preschoolers | Rainbow Preschool",
+    title: "Listening Skills for Preschoolers: 6 Tips | Rainbow Preschool",
     metaDescription: "Help your preschooler become a better listener with these 6 practical tips. Improve attention and focus for better learning outcomes.",
     h1: "6 Simple Tips for Improving Listening Skills in Preschoolers",
     intro: "Good listening skills are fundamental to learning. These six simple strategies from <a href=\"/about\">Rainbow Preschool International</a> help preschoolers develop better attention and listening abilities, preparing them for school success.",
@@ -1090,7 +1090,7 @@ Object.assign(legacyPagesData, {
 
   "/impact-of-parent-teacher-communication-on-student-success/": {
     slug: "/impact-of-parent-teacher-communication-on-student-success/",
-    title: "Parent-Teacher Communication Impact on Student Success | Rainbow Preschool",
+    title: "Parent-Teacher Communication & Child Success | Rainbow Preschool",
     metaDescription: "Discover how effective parent-teacher communication improves your child's preschool experience. Tips for building strong school partnerships.",
     h1: "Impact of Parent-Teacher Communication on Student Success",
     intro: "When parents and teachers work together, children thrive. At <a href=\"/about\">Rainbow Preschool International</a>, strong parent-teacher communication creates a supportive environment that enhances learning outcomes and emotional well-being.",
@@ -1258,7 +1258,7 @@ Object.assign(legacyPagesData, {
 
   "/importance-of-play-in-childrens-emotional-growth/": {
     slug: "/importance-of-play-in-childrens-emotional-growth/",
-    title: "Importance of Play in Children's Emotional Growth | Rainbow Preschool",
+    title: "Play and Children's Emotional Growth | Rainbow Preschool",
     metaDescription: "Discover how play supports emotional development in preschoolers. Learn why play-based learning is central to early childhood education.",
     h1: "The Importance of Play in Children's Emotional Growth",
     intro: "Play is not just fun—it's essential for emotional development. At <a href=\"/about\">Rainbow Preschool International</a>, we believe that through play, children learn to express feelings, develop empathy, manage emotions, and build social skills that last a lifetime.",
@@ -1412,7 +1412,7 @@ Object.assign(legacyPagesData, {
 
   "/healthy-preschool-meals-for-bright-minds-and-bodies/": {
     slug: "/healthy-preschool-meals-for-bright-minds-and-bodies/",
-    title: "Healthy Preschool Meals for Bright Minds | Rainbow Preschool Thane",
+    title: "Healthy Preschool Meals for Bright Minds | Rainbow Preschool",
     metaDescription: "Nutritious meal ideas for preschoolers that support brain development and physical growth. Healthy eating tips for parents in Thane.",
     h1: "Healthy Preschool Meals for Bright Minds and Bodies",
     intro: "Good nutrition fuels learning and growth. This guide from <a href=\"/about\">Rainbow Preschool International</a> provides practical ideas for healthy meals and snacks that support your child's development through the <a href=\"/playgroup\">Playgroup</a>, <a href=\"/nursery\">Nursery</a>, and <a href=\"/kindergarten\">Kindergarten</a> years.",
@@ -1464,7 +1464,7 @@ Object.assign(legacyPagesData, {
 
   "/boost-early-childhood-development-with-educational-toys/": {
     slug: "/boost-early-childhood-development-with-educational-toys/",
-    title: "Educational Toys for Early Childhood Development | Rainbow Preschool",
+    title: "Educational Toys for Early Childhood | Rainbow Preschool",
     metaDescription: "Guide to choosing educational toys that support preschool learning and development. Age-appropriate toy recommendations for children in Thane.",
     h1: "Boost Early Childhood Development with Educational Toys",
     intro: "The right toys do more than entertain—they support cognitive, physical, and social-emotional development. This guide from <a href=\"/about\">Rainbow Preschool International</a> shows how to choose educational toys that grow with your child.",
@@ -1515,7 +1515,7 @@ Object.assign(legacyPagesData, {
 
   "/how-mid-term-admission-open-for-playgroup-supports-social-and-emotional-development/": {
     slug: "/how-mid-term-admission-open-for-playgroup-supports-social-and-emotional-development/",
-    title: "Mid-Term Playgroup Admission & Social Development | Rainbow Preschool",
+    title: "Mid-Term Playgroup & Social Development | Rainbow Preschool",
     metaDescription: "How mid-term playgroup admission supports your child's social and emotional growth. Benefits of flexible enrollment at Rainbow Preschool Thane.",
     h1: "How Mid-Term Playgroup Admission Supports Social and Emotional Development",
     intro: "Joining <a href=\"/playgroup\">playgroup</a> mid-term offers unique benefits for social and emotional development. Learn how <a href=\"/about\">Rainbow Preschool's</a> flexible admission approach supports children's growth.",
@@ -1640,7 +1640,7 @@ Object.assign(legacyPagesData, {
 Object.assign(legacyPagesData, {
   "/innovative-learning-activities-for-preschoolers/": {
     slug: "/innovative-learning-activities-for-preschoolers/",
-    title: "Innovative Learning Activities for Preschoolers | Rainbow Preschool",
+    title: "Creative Learning Activities for Preschoolers | Rainbow Preschool",
     metaDescription: "Creative and innovative learning activities for preschoolers that make education fun. Ideas from Rainbow Preschool International, Thane.",
     h1: "Innovative Learning Activities for Preschoolers",
     intro: "Learning doesn't have to be boring! These innovative activities from <a href=\"/about\">Rainbow Preschool International</a> engage preschoolers while building essential skills. Perfect for both classroom and home use.",
@@ -1780,7 +1780,7 @@ Object.assign(legacyPagesData, {
 
   "/parents-guide-mid-term-playgroup-admission/": {
     slug: "/parents-guide-mid-term-playgroup-admission/",
-    title: "Parent's Guide to Mid-Term Playgroup Admission | Rainbow Preschool",
+    title: "Mid-Term Playgroup Admission: Parent's Guide | Rainbow Preschool",
     metaDescription: "Complete guide for parents considering mid-term playgroup admission. Everything you need to know about enrolling mid-year at Rainbow Preschool Thane.",
     h1: "Parent's Guide to Mid-Term Playgroup Admission",
     intro: "Thinking about enrolling your child mid-term? This comprehensive guide answers all your questions about mid-year <a href=\"/playgroup\">playgroup</a> admission at <a href=\"/about\">Rainbow Preschool International</a>.",
@@ -1916,7 +1916,7 @@ Object.assign(legacyPagesData, {
 
   "/fun-interactive-learning-activities-for-preschoolers-2/": {
     slug: "/fun-interactive-learning-activities-for-preschoolers-2/",
-    title: "Fun Interactive Learning Activities for Preschoolers | Rainbow Preschool",
+    title: "Fun Learning Activities for Preschoolers | Rainbow Preschool",
     metaDescription: "Engaging interactive learning activities for preschoolers. Ideas for hands-on learning that makes education fun.",
     h1: "Fun Interactive Learning Activities for Preschoolers",
     intro: "Interactive activities keep preschoolers engaged while building important skills. These hands-on ideas from <a href=\"/about\">Rainbow Preschool International</a> work beautifully both at home and in the classroom.",
@@ -1939,7 +1939,7 @@ Object.assign(legacyPagesData, {
 
   "/innovative-summer-activities-for-kids-keeping-minds-engaged/": {
     slug: "/innovative-summer-activities-for-kids-keeping-minds-engaged/",
-    title: "Summer Activities for Kids to Keep Minds Engaged | Rainbow Preschool",
+    title: "Summer Activities to Engage Kids' Minds | Rainbow Preschool",
     metaDescription: "Creative summer activities for preschoolers that prevent learning loss. Fun ideas to keep children learning during summer holidays in Thane.",
     h1: "Innovative Summer Activities for Kids: Keeping Minds Engaged",
     intro: "Summer holidays don't have to mean learning loss! These innovative activities from <a href=\"/about\">Rainbow Preschool International</a> keep preschoolers' minds engaged while still having fun during the break.",
@@ -1990,7 +1990,7 @@ Object.assign(legacyPagesData, {
 
   "/why-preschool-education-shapes-early-childhood-development/": {
     slug: "/why-preschool-education-shapes-early-childhood-development/",
-    title: "Why Preschool Shapes Early Childhood Development | Rainbow Preschool",
+    title: "Preschool & Early Childhood Development | Rainbow Preschool",
     metaDescription: "The lasting impact of quality preschool education on child development. Research-backed benefits of early childhood education.",
     h1: "Why Preschool Education Shapes Early Childhood Development",
     intro: "The first five years of life are critical for brain development. At <a href=\"/about\">Rainbow Preschool International</a>, quality preschool education during this window has lasting effects on children's cognitive, social, and emotional development.",
@@ -2145,7 +2145,7 @@ Object.assign(legacyPagesData, {
 
   "/45-signs-of-healthy-physical-development-ages-3-6/": {
     slug: "/45-signs-of-healthy-physical-development-ages-3-6/",
-    title: "45 Signs of Healthy Physical Development Ages 3-6 | Rainbow Preschool",
+    title: "45 Healthy Development Signs for Ages 3-6 | Rainbow Preschool",
     metaDescription: "Physical development milestones for children aged 3-6. Guide to healthy gross and fine motor skill development for preschoolers.",
     h1: "45 Signs of Healthy Physical Development: Ages 3-6",
     intro: "Physical development is crucial during the preschool years. This guide from <a href=\"/about\">Rainbow Preschool International</a> helps parents recognize healthy physical milestones and support their child's growing abilities.",
@@ -2167,7 +2167,7 @@ Object.assign(legacyPagesData, {
 
   "/questions-ask-school-visit-mid-term-playgroup-admissions/": {
     slug: "/questions-ask-school-visit-mid-term-playgroup-admissions/",
-    title: "Questions for Mid-Term Playgroup Admission Visits | Rainbow Preschool",
+    title: "Questions for Playgroup Admission Visits | Rainbow Preschool",
     metaDescription: "Essential questions to ask when visiting preschools for mid-term admission. Checklist for Thane parents considering mid-year enrollment.",
     h1: "Questions to Ask During School Visits for Mid-Term Playgroup Admissions",
     intro: "Considering mid-term enrollment? <a href=\"/about\">Rainbow Preschool International</a> shares targeted questions for your preschool visits to ensure you make the best choice for your child.",
@@ -2198,7 +2198,7 @@ Object.assign(legacyPagesData, {
 
   "/understanding-the-importance-of-preschool-in-early-childhood-development/": {
     slug: "/understanding-the-importance-of-preschool-in-early-childhood-development/",
-    title: "Understanding the Importance of Preschool in Early Childhood Development | Rainbow Preschool",
+    title: "Why Preschool Matters in Early Childhood | Rainbow Preschool",
     metaDescription: "Discover why preschool education is crucial for early childhood development. Learn how quality preschool programs in Thane support cognitive, social, and emotional growth.",
     h1: "Understanding the Importance of Preschool in Early Childhood Development",
     intro: "The early years of a child's life are the most formative period for brain development and learning. At <a href=\"/about\">Rainbow Preschool International</a>, quality preschool education plays a vital role in shaping your child's future success in school and life.",
@@ -2252,7 +2252,7 @@ Object.assign(legacyPagesData, {
 
   "/best-preschool-curriculum-thane/": {
     slug: "/best-preschool-curriculum-thane/",
-    title: "Best Preschool Curriculum in Thane 2026 | What Parents Should Know",
+    title: "Best Preschool Curriculum in Thane 2026 | Rainbow Preschool",
     metaDescription: "Discover what makes the best preschool curriculum in Thane. Learn about play-based learning, NEP 2020 alignment, and how to evaluate preschool programmes near you.",
     h1: "Best Preschool Curriculum in Thane: Complete Guide for Parents",
     intro: "Choosing the best preschool in Thane starts with understanding the curriculum. A quality preschool curriculum should nurture your child's cognitive, social, emotional, and physical development through age-appropriate activities. At <a href=\"/about\">Rainbow Preschool International</a>, we've been perfecting our play-based curriculum since 2007, helping over 1,00,000 children become confident learners.",
@@ -2305,7 +2305,7 @@ Object.assign(legacyPagesData, {
 
   "/how-to-choose-best-preschool-thane/": {
     slug: "/how-to-choose-best-preschool-thane/",
-    title: "How to Choose the Best Preschool Near Me in Thane | Parent's Guide 2026",
+    title: "How to Choose a Thane Preschool | Parent's Guide 2026",
     metaDescription: "Complete guide to choosing the best preschool near you in Thane. 15 questions to ask, what to look for, and tips from early childhood education experts.",
     h1: "How to Choose the Best Preschool Near Me in Thane",
     intro: "Finding the best preschool near you in Thane can feel overwhelming with so many options available. This comprehensive guide will help you evaluate preschools and make the right choice for your child. At <a href=\"/about\">Rainbow Preschool International</a>, we welcome parents to visit our 6 centres across Thane and see firsthand why families have trusted us since 2007.",
@@ -2367,7 +2367,7 @@ Object.assign(legacyPagesData, {
 
   "/playgroup-admission-thane-complete-guide/": {
     slug: "/playgroup-admission-thane-complete-guide/",
-    title: "Playgroup Admission in Thane 2026 | Age, Documents & Complete Process",
+    title: "Playgroup Admission in Thane 2026 | Age & Documents Guide",
     metaDescription: "Complete guide to playgroup admission in Thane. Know the right age, required documents, admission timeline, and how to choose the best playgroup near you.",
     h1: "Playgroup Admission in Thane: Complete Guide for Parents",
     intro: "Planning to admit your child to a playgroup in Thane? This comprehensive guide covers everything you need to know about playgroup admissions, from the right age to start to the documents required. At <a href=\"/about\">Rainbow Preschool International</a>, we offer <a href=\"/playgroup\">Playgroup programmes</a> at all 6 of our centres across Thane.",
@@ -2434,7 +2434,7 @@ Object.assign(legacyPagesData, {
 
   "/why-rainbow-preschool-best-thane-2026/": {
     slug: "/why-rainbow-preschool-best-thane-2026/",
-    title: "Why Rainbow Preschool is the Best Preschool in Thane 2026 | Complete Guide",
+    title: "Why Rainbow Preschool Leads Thane in Early Education | 2026",
     metaDescription: "Discover why Rainbow Preschool International is rated the best preschool in Thane. 18+ years experience, 1,00,000+ alumni, 6 centres, play-based curriculum, and exceptional safety standards.",
     h1: "Why Rainbow Preschool is the Best Preschool in Thane in 2026",
     intro: "Choosing the <a href=\"/\">best preschool in Thane</a> is one of the most important decisions parents make for their child's future. With over 18 years of experience and more than 1,00,000 happy alumni, <a href=\"/about\">Rainbow Preschool International</a> has established itself as Thane's most trusted early childhood education institution. In this comprehensive guide, we'll explore what makes Rainbow Preschool stand out and why thousands of families choose us every year.",
@@ -2521,7 +2521,7 @@ Object.assign(legacyPagesData, {
 
   "/top-10-preschools-thane-comparison-guide/": {
     slug: "/top-10-preschools-thane-comparison-guide/",
-    title: "Top 10 Preschools in Thane 2026 | Complete Comparison Guide for Parents",
+    title: "Top 10 Preschools in Thane 2026 | Comparison Guide",
     metaDescription: "Compare the top 10 preschools in Thane. Detailed analysis of curriculum, fees, facilities, locations, and parent reviews to help you choose the best preschool for your child.",
     h1: "Top 10 Preschools in Thane: Complete Comparison Guide for Parents",
     intro: "Finding the <a href=\"/\">best preschool in Thane</a> requires careful research and comparison. With numerous options available, parents often feel overwhelmed trying to evaluate different preschools. This comprehensive guide compares the top preschools in Thane based on curriculum, facilities, safety, teacher quality, locations, and parent feedback to help you make an informed decision.",
@@ -2601,7 +2601,7 @@ Object.assign(legacyPagesData, {
 
   "/what-makes-great-preschool-checklist/": {
     slug: "/what-makes-great-preschool-checklist/",
-    title: "What Makes a Great Preschool? Complete Checklist for Parents | 2026 Guide",
+    title: "What Makes a Great Preschool? | Parent Checklist 2026",
     metaDescription: "Comprehensive checklist to identify a great preschool. Learn the 25 signs of quality early childhood education, what to look for, and red flags to avoid.",
     h1: "What Makes a Great Preschool? Complete Checklist for Parents",
     intro: "Every parent wants the <a href=\"/\">best preschool</a> for their child, but how do you identify quality when comparing options? This comprehensive guide provides a detailed checklist covering all aspects of preschool quality - from curriculum and teachers to safety and facilities. Use this checklist when evaluating preschools in Thane or anywhere else.",
@@ -2725,7 +2725,7 @@ Object.assign(legacyPagesData, {
 
   "/preschool-vs-daycare-difference-explained/": {
     slug: "/preschool-vs-daycare-difference-explained/",
-    title: "Preschool vs Daycare: Key Differences Explained | What's Best for Your Child?",
+    title: "Preschool vs Daycare: Key Differences | Rainbow Preschool",
     metaDescription: "Understand the difference between preschool and daycare. Compare curriculum, hours, goals, and benefits to decide what's best for your child's early education needs.",
     h1: "Preschool vs Daycare: Understanding the Key Differences",
     intro: "Many parents wonder about the difference between preschool and daycare when planning their child's early education. While both provide care for young children, they serve different purposes and offer different experiences. This guide explains the key differences to help you make the right choice. At <a href=\"/about\">Rainbow Preschool International</a>, we focus on quality early childhood education through our structured <a href=\"/programmes\">programmes</a>.",
@@ -2827,7 +2827,7 @@ Object.assign(legacyPagesData, {
 
   "/early-childhood-education-importance-india/": {
     slug: "/early-childhood-education-importance-india/",
-    title: "Importance of Early Childhood Education in India | Why Preschool Matters",
+    title: "Early Childhood Education in India | Rainbow Preschool",
     metaDescription: "Discover why early childhood education is crucial for your child's development. Research-backed benefits of preschool, NEP 2020 insights, and how quality ECE shapes future success.",
     h1: "The Importance of Early Childhood Education in India",
     intro: "The first six years of a child's life are the most critical for brain development and learning. Early Childhood Education (ECE) during this period shapes your child's cognitive abilities, social skills, emotional intelligence, and future academic success. In India, the National Education Policy (NEP) 2020 recognizes this and has placed significant emphasis on foundational learning. At <a href=\"/about\">Rainbow Preschool International</a>, we've been championing quality early education since 2007.",
@@ -2911,7 +2911,7 @@ Object.assign(legacyPagesData, {
 
   "/rainbow-preschool-journey-2007-to-2026/": {
     slug: "/rainbow-preschool-journey-2007-to-2026/",
-    title: "Rainbow Preschool Journey: From 2007 to 2026 | Our Story of Excellence",
+    title: "Rainbow Preschool: Our Journey from 2007 to 2026",
     metaDescription: "Discover the inspiring journey of Rainbow Preschool International from 2007 to 2026. Learn how we grew from one centre to 6 locations serving 1,00,000+ children in Thane.",
     h1: "Rainbow Preschool Journey: From 2007 to 2026",
     intro: "Every great institution has a story. <a href=\"/about\">Rainbow Preschool International's</a> journey from a single centre with a vision to Thane's most trusted preschool network is a story of passion, dedication, and unwavering commitment to early childhood education. Here's how we became the <a href=\"/\">best preschool in Thane</a>.",
@@ -2990,7 +2990,7 @@ Object.assign(legacyPagesData, {
 
   "/rainbow-preschool-awards-achievements/": {
     slug: "/rainbow-preschool-awards-achievements/",
-    title: "Rainbow Preschool Awards & Achievements | Thane's Award-Winning Preschool",
+    title: "Rainbow Preschool Awards & Achievements in Thane",
     metaDescription: "Explore Rainbow Preschool International's awards and achievements. From 'Most Promising Preschool Chain' to 'Cleanest School in Thane', discover why we're Thane's most recognized preschool.",
     h1: "Rainbow Preschool Awards and Achievements",
     intro: "At <a href=\"/about\">Rainbow Preschool International</a>, our commitment to excellence has been recognized through numerous awards and achievements over our 18+ years of serving families in Thane. These recognitions validate our dedication to providing the <a href=\"/\">best preschool education</a> and motivate us to continue raising the bar.",
@@ -3049,7 +3049,7 @@ Object.assign(legacyPagesData, {
 
   "/rainbow-preschool-teacher-training-philosophy/": {
     slug: "/rainbow-preschool-teacher-training-philosophy/",
-    title: "Rainbow Preschool Teacher Training & Philosophy | Expert Educators",
+    title: "Rainbow Preschool Teacher Training & Philosophy",
     metaDescription: "Learn about Rainbow Preschool's rigorous teacher training and teaching philosophy. Our qualified, trained teachers make the difference in your child's early education.",
     h1: "Rainbow Preschool Teacher Training and Teaching Philosophy",
     intro: "At <a href=\"/about\">Rainbow Preschool International</a>, we believe that great teachers make great schools. Our teaching staff undergoes rigorous selection, training, and continuous professional development to ensure they deliver the highest quality early childhood education. Here's what makes Rainbow Preschool teachers exceptional.",
@@ -3125,7 +3125,7 @@ Object.assign(legacyPagesData, {
 
   "/parent-testimonials-rainbow-preschool-thane/": {
     slug: "/parent-testimonials-rainbow-preschool-thane/",
-    title: "Parent Testimonials | What Parents Say About Rainbow Preschool Thane",
+    title: "Parent Testimonials | Rainbow Preschool Thane",
     metaDescription: "Read real parent testimonials about Rainbow Preschool Thane. Discover why thousands of families trust us for their child's early education since 2007.",
     h1: "What Parents Say About Rainbow Preschool",
     intro: "The best endorsement of <a href=\"/about\">Rainbow Preschool International</a> comes from the families we serve. Over 18+ years and 1,00,000+ children, we've built lasting relationships with parents who trust us with their most precious responsibility - their child's early education. Here's what parents say about their Rainbow Preschool experience.",
@@ -3188,7 +3188,7 @@ Object.assign(legacyPagesData, {
 
   "/rainbow-preschool-safety-measures-child-security/": {
     slug: "/rainbow-preschool-safety-measures-child-security/",
-    title: "Rainbow Preschool Safety Measures | Child Security & Protection Standards",
+    title: "Rainbow Preschool Safety & Child Security Standards",
     metaDescription: "Learn about Rainbow Preschool's comprehensive safety measures. CCTV surveillance, 100% female staff, controlled entry, emergency protocols, and more for complete child protection.",
     h1: "Rainbow Preschool Safety Measures and Child Security",
     intro: "At <a href=\"/about\">Rainbow Preschool International</a>, child safety is our highest priority. Every decision we make - from staff hiring to facility design - is guided by the question: \"Is this safe for children?\" Parents can rest assured that when they drop their child at Rainbow Preschool, they're leaving them in the safest possible environment.",
@@ -3289,7 +3289,7 @@ Object.assign(legacyPagesData, {
 
   "/play-based-learning-benefits-children/": {
     slug: "/play-based-learning-benefits-children/",
-    title: "Play-Based Learning Benefits for Children | Why Play Matters in Preschool",
+    title: "Play-Based Learning Benefits for Children | Rainbow Preschool",
     metaDescription: "Discover the science-backed benefits of play-based learning for children. Learn why play is essential for cognitive, social, emotional, and physical development in preschool.",
     h1: "The Benefits of Play-Based Learning for Children",
     intro: "At <a href=\"/about\">Rainbow Preschool International</a>, play isn't just recreation - it's the foundation of our <a href=\"/programmes\">curriculum</a>. Research consistently shows that play-based learning is the most effective approach for young children. Here's why play matters and how it shapes your child's development.",
@@ -3366,7 +3366,7 @@ Object.assign(legacyPagesData, {
 
   "/nep-2020-early-childhood-education-guide/": {
     slug: "/nep-2020-early-childhood-education-guide/",
-    title: "NEP 2020 Early Childhood Education Guide | What Parents Need to Know",
+    title: "NEP 2020 Early Childhood Education Guide | Rainbow Preschool",
     metaDescription: "Understand NEP 2020's impact on preschool education in India. Learn about foundational stage, play-based learning requirements, and how to choose an NEP-aligned preschool.",
     h1: "NEP 2020 and Early Childhood Education: A Parent's Guide",
     intro: "India's National Education Policy (NEP) 2020 has transformed early childhood education, recognizing its critical importance for the first time in national policy. As a parent in Thane, understanding NEP 2020 helps you choose the <a href=\"/\">best preschool</a> for your child. At <a href=\"/about\">Rainbow Preschool International</a>, our <a href=\"/programmes\">curriculum</a> is fully aligned with NEP 2020 guidelines.",
@@ -3441,7 +3441,7 @@ Object.assign(legacyPagesData, {
 
   "/holistic-child-development-preschool/": {
     slug: "/holistic-child-development-preschool/",
-    title: "Holistic Child Development in Preschool | The 5 Key Developmental Domains",
+    title: "Holistic Child Development in Preschool | 5 Key Domains",
     metaDescription: "Learn about holistic child development and the 5 key developmental domains. Discover how quality preschool nurtures cognitive, social, emotional, physical, and creative development.",
     h1: "Holistic Child Development in Preschool: The Complete Guide",
     intro: "Quality preschool education isn't just about teaching ABCs and 123s. At <a href=\"/about\">Rainbow Preschool International</a>, we focus on holistic child development - nurturing every aspect of your child's growth. Our <a href=\"/programmes\">curriculum</a> addresses all five developmental domains to help your child thrive.",
@@ -3539,7 +3539,7 @@ Object.assign(legacyPagesData, {
 
   "/preschool-learning-outcomes-what-to-expect/": {
     slug: "/preschool-learning-outcomes-what-to-expect/",
-    title: "Preschool Learning Outcomes: What Your Child Will Learn | Parent's Guide",
+    title: "Preschool Learning Outcomes: What Your Child Will Learn",
     metaDescription: "Understand preschool learning outcomes and what children learn at each stage. From Playgroup to Kindergarten, know what to expect from quality early childhood education.",
     h1: "Preschool Learning Outcomes: What to Expect at Each Stage",
     intro: "Parents often wonder what their child will actually learn in preschool. At <a href=\"/about\">Rainbow Preschool International</a>, our <a href=\"/programmes\">programmes</a> have clear learning outcomes aligned with child development milestones and NEP 2020 guidelines. Here's what you can expect at each stage.",
@@ -3630,7 +3630,7 @@ Object.assign(legacyPagesData, {
 
   "/benefits-playgroup-toddlers-development/": {
     slug: "/benefits-playgroup-toddlers-development/",
-    title: "Benefits of Playgroup for Toddlers | Why Your 1.5 Year Old Needs Playgroup",
+    title: "Benefits of Playgroup for Toddlers | Rainbow Preschool",
     metaDescription: "Discover the developmental benefits of playgroup for toddlers. Learn why enrolling your 1.5-2.5 year old in playgroup supports social, emotional, and cognitive growth.",
     h1: "Benefits of Playgroup for Toddler Development",
     intro: "Is your toddler ready for playgroup? Many parents wonder if their 1.5-year-old is too young for preschool. At <a href=\"/about\">Rainbow Preschool International</a>, our <a href=\"/playgroup\">Playgroup programme</a> is specially designed for children aged 1.5-2.5 years. Here's why playgroup is beneficial for toddler development.",
@@ -3809,7 +3809,7 @@ Object.assign(legacyPagesData, {
 
   "/separation-anxiety-playgroup-tips-parents/": {
     slug: "/separation-anxiety-playgroup-tips-parents/",
-    title: "Separation Anxiety in Playgroup: Tips for Parents | First Day Success",
+    title: "Separation Anxiety in Playgroup: Tips for Parents",
     metaDescription: "Help your toddler overcome separation anxiety when starting playgroup. Expert tips from Rainbow Preschool for parents navigating the first day and beyond.",
     h1: "Separation Anxiety in Playgroup: A Guide for Parents",
     intro: "Separation anxiety when starting <a href=\"/playgroup\">Playgroup</a> is completely normal. At <a href=\"/about\">Rainbow Preschool International</a>, we've helped thousands of toddlers and parents navigate this transition successfully. Here's everything you need to know about managing separation anxiety.",
@@ -3903,7 +3903,7 @@ Object.assign(legacyPagesData, {
 
   "/playgroup-activities-toddler-development/": {
     slug: "/playgroup-activities-toddler-development/",
-    title: "Playgroup Activities for Toddler Development | Learning Through Play",
+    title: "Playgroup Activities for Toddler Development | Rainbow Preschool",
     metaDescription: "Discover the playgroup activities that support toddler development. Learn what children do in Rainbow Preschool's play-based Playgroup programme for ages 1.5-2.5.",
     h1: "Playgroup Activities for Toddler Development",
     intro: "What do toddlers actually do in <a href=\"/playgroup\">Playgroup</a>? At <a href=\"/about\">Rainbow Preschool International</a>, our Playgroup activities are carefully designed to support development in 1.5-2.5 year olds. Here's a look at the types of activities your toddler will experience and how they support growth.",
@@ -4187,7 +4187,7 @@ Object.assign(legacyPagesData, {
 
   "/nursery-vs-playgroup-difference/": {
     slug: "/nursery-vs-playgroup-difference/",
-    title: "Nursery vs Playgroup: Key Differences | Which is Right for Your Child?",
+    title: "Nursery vs Playgroup: Key Differences | Rainbow Preschool",
     metaDescription: "Understand the difference between nursery and playgroup. Compare age requirements, curriculum, and learning outcomes to choose the right programme for your child.",
     h1: "Nursery vs Playgroup: Understanding the Differences",
     intro: "Parents often wonder about the difference between <a href=\"/playgroup\">Playgroup</a> and <a href=\"/nursery\">Nursery</a>. At <a href=\"/about\">Rainbow Preschool International</a>, these are distinct programmes designed for different developmental stages. Here's a detailed comparison to help you understand which is right for your child.",
@@ -4253,7 +4253,7 @@ Object.assign(legacyPagesData, {
 
   "/nursery-curriculum-what-children-learn/": {
     slug: "/nursery-curriculum-what-children-learn/",
-    title: "Nursery Curriculum: What Children Learn | Complete Guide for Parents",
+    title: "Nursery Curriculum: What Children Learn | Rainbow Preschool",
     metaDescription: "Explore what children learn in nursery curriculum. From pre-literacy to social skills, discover Rainbow Preschool's comprehensive Nursery programme for ages 2.5-3.5.",
     h1: "Nursery Curriculum: What Your Child Will Learn",
     intro: "What exactly do children learn in <a href=\"/nursery\">Nursery</a>? At <a href=\"/about\">Rainbow Preschool International</a>, our Nursery curriculum is carefully designed to build foundations for future learning while respecting how young children learn best - through play. Here's a detailed look at our curriculum.",
@@ -4536,7 +4536,7 @@ Object.assign(legacyPagesData, {
 
   "/kindergarten-readiness-checklist-parents/": {
     slug: "/kindergarten-readiness-checklist-parents/",
-    title: "Kindergarten Readiness Checklist for Parents | Is Your Child Ready?",
+    title: "Kindergarten Readiness Checklist for Parents | Rainbow Preschool",
     metaDescription: "Complete kindergarten readiness checklist covering academic, social, emotional, and physical skills. Assess if your child is ready for Jr. KG and Sr. KG.",
     h1: "Kindergarten Readiness Checklist: Is Your Child Ready?",
     intro: "Is your child ready for <a href=\"/kindergarten\">Kindergarten</a>? At <a href=\"/about\">Rainbow Preschool International</a>, we assess readiness across multiple dimensions. Use this comprehensive checklist to evaluate your child's preparedness for Jr. KG and Sr. KG.",
@@ -4712,7 +4712,7 @@ Object.assign(legacyPagesData, {
 
   "/kindergarten-curriculum-primary-school-preparation/": {
     slug: "/kindergarten-curriculum-primary-school-preparation/",
-    title: "Kindergarten Curriculum for Primary School Preparation | Complete Guide",
+    title: "Kindergarten Curriculum for School Readiness | Rainbow Preschool",
     metaDescription: "Explore how kindergarten curriculum prepares children for primary school. Learn about literacy, numeracy, and school readiness skills developed in Jr. KG and Sr. KG.",
     h1: "Kindergarten Curriculum: Preparing for Primary School",
     intro: "How does <a href=\"/kindergarten\">Kindergarten</a> prepare your child for primary school? At <a href=\"/about\">Rainbow Preschool International</a>, our kindergarten curriculum is designed to build all the skills needed for successful transition to Class 1. Here's what children learn.",
@@ -5183,7 +5183,7 @@ Object.assign(legacyPagesData, {
 
   "/questions-ask-preschool-admission-visit/": {
     slug: "/questions-ask-preschool-admission-visit/",
-    title: "Questions to Ask During Preschool Admission Visit | Parent's Guide",
+    title: "Preschool Admission Visit: Questions to Ask | Rainbow Preschool",
     metaDescription: "Essential questions to ask when visiting preschools for admission. From curriculum to safety, know what to ask to choose the best school for your child.",
     h1: "Questions to Ask During Preschool Admission Visit",
     intro: "Visiting schools is crucial for choosing the right preschool. But what should you ask? Here's a comprehensive list of questions to ask during your <a href=\"/preschool-admissions\">admission</a> visits. At <a href=\"/about\">Rainbow Preschool International</a>, we welcome all questions from parents.",
@@ -5359,7 +5359,7 @@ Object.assign(legacyPagesData, {
 
   "/visiting-preschool-what-to-look-for/": {
     slug: "/visiting-preschool-what-to-look-for/",
-    title: "Visiting a Preschool: What to Look For | Parent's Observation Guide",
+    title: "Visiting a Preschool: What to Look For | Rainbow Preschool",
     metaDescription: "Know what to look for when visiting preschools. From classroom observation to safety checks, this guide helps you evaluate preschool quality during campus visits.",
     h1: "Visiting a Preschool: What to Look For",
     intro: "Visiting potential preschools is essential before making your decision. But what should you observe? At <a href=\"/about\">Rainbow Preschool International</a>, we welcome parent visits and encourage careful observation. Here's what to look for during your <a href=\"/contact\">campus visit</a>.",
@@ -5449,7 +5449,7 @@ Object.assign(legacyPagesData, {
 
   "/how-reach-rainbow-preschool-thane/": {
     slug: "/how-reach-rainbow-preschool-thane/",
-    title: "How to Reach Rainbow Preschool Thane | All Centre Locations & Directions",
+    title: "How to Reach Rainbow Preschool Thane | Centre Locations",
     metaDescription: "Find directions to all Rainbow Preschool centres in Thane. Get detailed location information for Manpada, Hariniwas, Anand Nagar, Dhokali, Kalwa, and Kasarvadavali.",
     h1: "How to Reach Rainbow Preschool Thane",
     intro: "<a href=\"/about\">Rainbow Preschool International</a> has 6 conveniently located centres across Thane. Find the centre nearest to you and get directions. Visit our <a href=\"/contact\">Contact page</a> for direct enquiry.",
@@ -5512,7 +5512,7 @@ Object.assign(legacyPagesData, {
 
   "/early-childhood-education-manpada-ghodbunder-road/": {
     slug: "/early-childhood-education-manpada-ghodbunder-road/",
-    title: "Early Childhood Education in Manpada | Best Preschool Near Ghodbunder Road",
+    title: "Early Childhood Education in Manpada, Thane | Rainbow Preschool",
     metaDescription: "Discover quality early childhood education in Manpada near Ghodbunder Road. Rainbow Preschool offers play-based learning for children aged 1.5-5.5 years.",
     h1: "Early Childhood Education in Manpada, Ghodbunder Road",
     intro: "Looking for quality early childhood education in Manpada near Ghodbunder Road? <a href=\"/preschool-in-manpada-thane\">Rainbow Preschool Manpada</a> has been serving families in this growing residential area with excellence since our establishment. Our <a href=\"/programmes\">programmes</a> provide the perfect start for your child.",
@@ -5567,7 +5567,7 @@ Object.assign(legacyPagesData, {
 
   "/child-development-programs-hariniwas-naupada/": {
     slug: "/child-development-programs-hariniwas-naupada/",
-    title: "Child Development Programs in Naupada Thane | Rainbow Preschool Hariniwas",
+    title: "Child Development Programs in Naupada Thane | Rainbow Preschool",
     metaDescription: "Explore child development programs at Rainbow Preschool Hariniwas in Naupada, Thane West. Quality early education for ages 1.5-5.5 years.",
     h1: "Child Development Programs in Naupada, Thane West",
     intro: "Families in central Thane West - Naupada, Ram Maruti Road, and the Thane Station area - have access to quality early childhood education at <a href=\"/preschool-in-hariniwas-thane\">Rainbow Preschool Hariniwas</a>. Our child development <a href=\"/programmes\">programs</a> nurture every aspect of your child's growth.",
@@ -5675,7 +5675,7 @@ Object.assign(legacyPagesData, {
 
   "/preschool-options-dhokali-kolshet-road/": {
     slug: "/preschool-options-dhokali-kolshet-road/",
-    title: "Preschool Options in Dhokali Kolshet Road | Rainbow Preschool Thane",
+    title: "Preschool Options in Dhokali Kolshet Road | Rainbow Preschool",
     metaDescription: "Explore preschool options in Dhokali on Kolshet Road, Thane. Rainbow Preschool offers quality early education with proven curriculum and caring teachers.",
     h1: "Preschool Options in Dhokali, Kolshet Road",
     intro: "Looking for preschool options in Dhokali and the Kolshet Road area? <a href=\"/preschool-in-dhokali-thane\">Rainbow Preschool Dhokali</a> offers proven early childhood education backed by 18+ years of experience. Explore what makes us the right choice for your family.",
@@ -5729,7 +5729,7 @@ Object.assign(legacyPagesData, {
 
   "/trusted-preschool-kalwa-thane/": {
     slug: "/trusted-preschool-kalwa-thane/",
-    title: "Trusted Preschool in Kalwa Thane | Rainbow Preschool Quality Education",
+    title: "Trusted Preschool in Kalwa Thane | Rainbow Preschool",
     metaDescription: "Find a trusted preschool in Kalwa, Thane. Rainbow Preschool offers quality early childhood education with experienced teachers and proven curriculum.",
     h1: "Trusted Preschool in Kalwa, Thane",
     intro: "Kalwa families deserve a preschool they can trust. <a href=\"/preschool-in-kalwa-thane\">Rainbow Preschool Kalwa</a> brings the same quality and trust that has made us Thane's leading preschool to the Kalwa community. Our <a href=\"/programmes\">programmes</a> provide the foundation your child needs.",
@@ -5782,7 +5782,7 @@ Object.assign(legacyPagesData, {
 
   "/quality-preschool-kasarvadavali-ghodbunder/": {
     slug: "/quality-preschool-kasarvadavali-ghodbunder/",
-    title: "Quality Preschool in Kasarvadavali | Rainbow Preschool Ghodbunder Road",
+    title: "Quality Preschool in Kasarvadavali | Rainbow Preschool",
     metaDescription: "Discover quality preschool education in Kasarvadavali on Ghodbunder Road. Rainbow Preschool offers proven curriculum and experienced teachers for ages 1.5-5.5.",
     h1: "Quality Preschool in Kasarvadavali, Ghodbunder Road",
     intro: "Families in Kasarvadavali and the western stretch of Ghodbunder Road have access to quality early education at <a href=\"/preschool-in-kasarvadavali-thane\">Rainbow Preschool Kasarvadavali</a>. Our <a href=\"/programmes\">programmes</a> offer the same excellence that has made Rainbow Preschool Thane's leading preschool.",
@@ -5835,7 +5835,7 @@ Object.assign(legacyPagesData, {
 
   "/toddler-activities-manpada-preschool/": {
     slug: "/toddler-activities-manpada-preschool/",
-    title: "Toddler Activities at Rainbow Preschool Manpada | Ages 1.5-2.5 Years",
+    title: "Toddler Activities at Rainbow Preschool Manpada | Ages 1.5-2.5",
     metaDescription: "Explore toddler activities at Rainbow Preschool Manpada. Age-appropriate sensory play, art, music, and movement activities for children 1.5-2.5 years.",
     h1: "Toddler Activities at Rainbow Preschool Manpada",
     intro: "What will your toddler do at <a href=\"/preschool-in-manpada-thane\">Rainbow Preschool Manpada</a>? Our <a href=\"/playgroup\">Playgroup programme</a> is filled with age-appropriate activities designed for 1.5-2.5 year olds. Here's a glimpse into a toddler's day at our Manpada centre.",
@@ -5905,7 +5905,7 @@ Object.assign(legacyPagesData, {
 
   "/school-readiness-hariniwas-kindergarten/": {
     slug: "/school-readiness-hariniwas-kindergarten/",
-    title: "School Readiness at Rainbow Preschool Hariniwas | Kindergarten Preparation",
+    title: "School Readiness at Rainbow Preschool Hariniwas | KG Prep",
     metaDescription: "Prepare your child for primary school at Rainbow Preschool Hariniwas, Naupada. Our kindergarten programme builds academic, social, and emotional readiness.",
     h1: "School Readiness at Rainbow Preschool Hariniwas",
     intro: "Is your child ready for primary school? At <a href=\"/preschool-in-hariniwas-thane\">Rainbow Preschool Hariniwas</a> in Naupada, our <a href=\"/kindergarten\">Kindergarten programme</a> comprehensively prepares children for successful transition to Class 1. Here's how we build school readiness.",
@@ -5965,7 +5965,7 @@ Object.assign(legacyPagesData, {
 
   "/nursery-admissions-anand-nagar-thane/": {
     slug: "/nursery-admissions-anand-nagar-thane/",
-    title: "Nursery Admissions in Anand Nagar Thane | Rainbow Preschool Enrollment",
+    title: "Nursery Admissions in Anand Nagar Thane | Rainbow Preschool",
     metaDescription: "Apply for nursery admissions at Rainbow Preschool Anand Nagar in Majiwada, Thane. Quality education for ages 2.5-3.5 years. Simple admission process.",
     h1: "Nursery Admissions at Rainbow Preschool Anand Nagar",
     intro: "Looking for <a href=\"/nursery\">Nursery</a> admissions near Anand Nagar and Majiwada? <a href=\"/preschool-in-anand-nagar-thane\">Rainbow Preschool Anand Nagar</a> offers a straightforward <a href=\"/preschool-admissions\">admission process</a> for quality nursery education. Here's everything you need to know.",
@@ -6016,7 +6016,7 @@ Object.assign(legacyPagesData, {
 
   "/playgroup-enrollment-dhokali-thane/": {
     slug: "/playgroup-enrollment-dhokali-thane/",
-    title: "Playgroup Enrollment in Dhokali Thane | Rainbow Preschool Registration",
+    title: "Playgroup Enrollment in Dhokali Thane | Rainbow Preschool",
     metaDescription: "Enroll your toddler in Playgroup at Rainbow Preschool Dhokali, Kolshet Road. For ages 1.5-2.5 years. Simple registration process. Start your child's journey.",
     h1: "Playgroup Enrollment at Rainbow Preschool Dhokali",
     intro: "Ready to start your toddler's educational journey in Dhokali? <a href=\"/preschool-in-dhokali-thane\">Rainbow Preschool Dhokali</a> offers <a href=\"/playgroup\">Playgroup enrollment</a> for children 1.5-2.5 years. Begin the enrollment process for quality early education.",
@@ -6068,7 +6068,7 @@ Object.assign(legacyPagesData, {
 
   "/kindergarten-programs-kalwa-thane/": {
     slug: "/kindergarten-programs-kalwa-thane/",
-    title: "Kindergarten Programs in Kalwa Thane | Jr KG & Sr KG at Rainbow Preschool",
+    title: "Kindergarten Programme in Kalwa Thane | Rainbow Preschool",
     metaDescription: "Explore kindergarten programs at Rainbow Preschool Kalwa. Jr. KG and Sr. KG for ages 3.5-5.5 years. Complete primary school preparation in Kalwa, Thane.",
     h1: "Kindergarten Programs at Rainbow Preschool Kalwa",
     intro: "Looking for <a href=\"/kindergarten\">Kindergarten</a> programs in Kalwa? <a href=\"/preschool-in-kalwa-thane\">Rainbow Preschool Kalwa</a> offers comprehensive Jr. KG and Sr. KG programs that prepare children for primary school success. Discover what our kindergarten offers.",
@@ -6126,7 +6126,7 @@ Object.assign(legacyPagesData, {
 
   "/best-nursery-school-kasarvadavali/": {
     slug: "/best-nursery-school-kasarvadavali/",
-    title: "Best Nursery School in Kasarvadavali | Rainbow Preschool Ghodbunder Road",
+    title: "Best Nursery School in Kasarvadavali | Rainbow Preschool",
     metaDescription: "Find the best nursery school in Kasarvadavali on Ghodbunder Road. Rainbow Preschool offers quality nursery education for ages 2.5-3.5 years.",
     h1: "Best Nursery School in Kasarvadavali",
     intro: "Searching for a quality <a href=\"/nursery\">nursery school</a> in Kasarvadavali? <a href=\"/preschool-in-kasarvadavali-thane\">Rainbow Preschool Kasarvadavali</a> on Ghodbunder Road brings 18+ years of trusted early education to your neighborhood. Discover why we're considered among the best.",
@@ -6191,7 +6191,7 @@ Object.assign(legacyPagesData, {
 
   "/best-early-learning-centres-thane-2026/": {
     slug: "/best-early-learning-centres-thane-2026/",
-    title: "Best Early Learning Centres in Thane 2026 | Complete Guide for Parents",
+    title: "Best Early Learning Centres in Thane 2026 | Rainbow Preschool",
     metaDescription: "Discover the best early learning centres in Thane for 2026. Compare preschools, playgroups, and daycare options across Manpada, Ghodbunder Road, Kalwa & more.",
     h1: "Best Early Learning Centres in Thane 2026",
     intro: "Finding the right early learning centre for your child is one of the most important decisions you'll make as a parent. Thane, with its rapidly growing population and numerous educational options, offers a wide variety of early childhood education centres. This comprehensive guide for 2026 will help you navigate through the best options available, understand what makes a quality early learning centre, and make an informed decision for your child's foundational years. At <a href=\"/about\">Rainbow Preschool International</a>, we've been part of Thane's early education landscape for over 18 years, and we're excited to share our insights with you.",
@@ -6299,7 +6299,7 @@ Object.assign(legacyPagesData, {
 
   "/montessori-vs-play-based-preschool-thane/": {
     slug: "/montessori-vs-play-based-preschool-thane/",
-    title: "Montessori vs Play-Based Preschool in Thane | Which is Best for Your Child?",
+    title: "Montessori vs Play-Based Learning in Thane | Rainbow Preschool",
     metaDescription: "Compare Montessori and play-based preschool approaches in Thane. Understand key differences, benefits, and how to choose the right method for your child's development.",
     h1: "Montessori vs Play-Based Preschool: Which is Best for Your Child in Thane?",
     intro: "Choosing between Montessori and play-based preschool approaches is one of the most common dilemmas Thane parents face when selecting early education for their children. Both methodologies have strong research backing and produce successful learners, but they differ significantly in their philosophy, classroom environment, and teaching methods. This comprehensive guide will help you understand both approaches, their benefits and limitations, and how to determine which is the best fit for your child. At <a href=\"/about\">Rainbow Preschool International</a>, we incorporate the best elements of various approaches to create an optimal learning experience for every child.",
@@ -6410,7 +6410,7 @@ Object.assign(legacyPagesData, {
 
   "/preschool-franchise-vs-standalone-which-better/": {
     slug: "/preschool-franchise-vs-standalone-which-better/",
-    title: "Preschool Franchise vs Standalone: Which is Better for Your Child in Thane?",
+    title: "Preschool Franchise vs Standalone | Rainbow Preschool",
     metaDescription: "Compare franchise and standalone preschools in Thane. Learn the pros and cons of each to make the best choice for your child's early education.",
     h1: "Preschool Franchise vs Standalone: Which is Better for Your Child?",
     intro: "When searching for a preschool in Thane, parents often face the choice between national franchise chains and independent standalone preschools. Each type has its advantages and considerations. This guide explores both options to help you make an informed decision. <a href=\"/about\">Rainbow Preschool International</a>, with 18+ years in Thane and six centres, represents a unique hybrid – the consistency of a network with the personalization of a local institution.",
@@ -6505,7 +6505,7 @@ Object.assign(legacyPagesData, {
 
   "/working-parents-guide-preschool-thane/": {
     slug: "/working-parents-guide-preschool-thane/",
-    title: "Working Parents Guide to Preschools in Thane | Timing, Location & Tips",
+    title: "Working Parents Guide to Preschools in Thane | Rainbow Preschool",
     metaDescription: "A complete guide for working parents in Thane to find the right preschool. Tips on timing, location, extended hours, and balancing work with your child's education.",
     h1: "Working Parents Guide to Preschools in Thane",
     intro: "Balancing a career with your child's early education presents unique challenges. Working parents in Thane need preschools that understand their constraints while providing quality education. This comprehensive guide addresses the specific concerns of working parents – from timing and location to communication and backup plans. At <a href=\"/about\">Rainbow Preschool International</a>, with six centres across Thane, we're committed to supporting working families in their early education journey.",
@@ -6612,7 +6612,7 @@ Object.assign(legacyPagesData, {
 
   "/affordable-quality-preschools-thane/": {
     slug: "/affordable-quality-preschools-thane/",
-    title: "Affordable Quality Preschools in Thane | Value for Money Guide 2026",
+    title: "Affordable Preschools in Thane | Value for Money Guide 2026",
     metaDescription: "Find affordable preschools in Thane without compromising on quality. Compare fees, understand value, and make smart choices for your child's early education.",
     h1: "Affordable Quality Preschools in Thane: Getting Value for Money",
     intro: "Quality early education shouldn't be accessible only to the wealthy. Many Thane parents seek affordable preschools that deliver genuine value without cutting essential corners. This guide helps you find quality education within your budget, understand what costs you should never compromise on, and recognize when lower fees signal lower quality. At <a href=\"/about\">Rainbow Preschool International</a>, we've built our reputation on delivering excellent early education at reasonable fees across our six Thane centres.",
@@ -6714,7 +6714,7 @@ Object.assign(legacyPagesData, {
 
   "/rainbow-preschool-teaching-methodology/": {
     slug: "/rainbow-preschool-teaching-methodology/",
-    title: "Rainbow Preschool Teaching Methodology Explained | Our Educational Approach",
+    title: "Rainbow Preschool Teaching Methodology Explained",
     metaDescription: "Discover Rainbow Preschool's unique teaching methodology. Learn about our play-based, child-centered approach that develops the whole child in Thane.",
     h1: "Rainbow Preschool Teaching Methodology Explained",
     intro: "At <a href=\"/about\">Rainbow Preschool International</a>, our teaching methodology has been refined over 18+ years to create optimal learning experiences for young children. We believe that how children learn is as important as what they learn. Our approach combines research-backed practices with the warmth and care that makes early childhood memorable. This detailed guide explains our teaching philosophy and methods across all our <a href=\"/programmes\">programmes</a> at our six Thane centres.",
@@ -6823,7 +6823,7 @@ Object.assign(legacyPagesData, {
 
   "/rainbow-preschool-infrastructure-facilities/": {
     slug: "/rainbow-preschool-infrastructure-facilities/",
-    title: "Rainbow Preschool Infrastructure and Facilities | Safe Learning Spaces in Thane",
+    title: "Rainbow Preschool Infrastructure and Facilities in Thane",
     metaDescription: "Explore Rainbow Preschool's child-friendly infrastructure and facilities across Thane. Safe, hygienic, and stimulating environments for early learning.",
     h1: "Rainbow Preschool Infrastructure and Facilities",
     intro: "The physical environment profoundly influences children's learning and wellbeing. At <a href=\"/about\">Rainbow Preschool International</a>, our infrastructure is purposefully designed to create safe, stimulating, and nurturing spaces for young learners. Across our six centres in Thane, we maintain consistent standards while adapting to each location's unique characteristics. This guide details the facilities and infrastructure that support quality early education at Rainbow Preschool.",
@@ -6924,7 +6924,7 @@ Object.assign(legacyPagesData, {
 
   "/preschool-accreditation-importance-india/": {
     slug: "/preschool-accreditation-importance-india/",
-    title: "Preschool Accreditation: Why It Matters in India | Quality Standards Guide",
+    title: "Preschool Accreditation & Quality Standards | Rainbow Preschool",
     metaDescription: "Understand preschool accreditation in India - what it means, why it matters, and how to evaluate preschool quality standards for your child's education.",
     h1: "Preschool Accreditation: Why It Matters in India",
     intro: "As a parent searching for preschools in Thane, you may encounter terms like 'accredited,' 'certified,' or 'recognized.' Understanding what these labels mean – and don't mean – helps you evaluate quality effectively. This guide explains the landscape of preschool accreditation and quality standards in India, helping you make informed decisions for your child's early education. At <a href=\"/about\">Rainbow Preschool International</a>, we maintain quality standards that meet and exceed expectations, regardless of formal accreditation labels.",
@@ -7024,7 +7024,7 @@ Object.assign(legacyPagesData, {
 
   "/rainbow-preschool-community-initiatives/": {
     slug: "/rainbow-preschool-community-initiatives/",
-    title: "Rainbow Preschool Community Initiatives | Social Responsibility in Thane",
+    title: "Rainbow Preschool Community Initiatives in Thane",
     metaDescription: "Discover Rainbow Preschool's community initiatives in Thane. Learn how we give back to the community and teach children social responsibility values.",
     h1: "Rainbow Preschool Community Initiatives",
     intro: "At <a href=\"/about\">Rainbow Preschool International</a>, we believe education extends beyond classroom walls. Our community initiatives connect children with the wider world, teaching values of kindness, responsibility, and civic engagement. Over 18+ years in Thane, we've woven community involvement into the fabric of our educational approach. This guide shares our initiatives and how they benefit both children and community.",
@@ -7101,7 +7101,7 @@ Object.assign(legacyPagesData, {
 
   "/experienced-preschool-teachers-importance/": {
     slug: "/experienced-preschool-teachers-importance/",
-    title: "Why Experienced Preschool Teachers Matter | Teacher Quality Impact on Children",
+    title: "Why Experienced Preschool Teachers Matter | Rainbow Preschool",
     metaDescription: "Discover why experienced, qualified preschool teachers make a crucial difference in your child's early education. Learn what to look for in preschool staff.",
     h1: "Why Experienced Preschool Teachers Matter",
     intro: "When evaluating preschools, parents often focus on curriculum, facilities, and fees. While these matter, the quality of teachers has the greatest impact on your child's experience and development. Research consistently shows that teacher quality is the single most important in-school factor affecting student learning. This comprehensive guide explains why experienced preschool teachers matter and what to look for when evaluating preschool staff. At <a href=\"/about\">Rainbow Preschool International</a>, we invest significantly in recruiting, training, and retaining quality teachers across our six Thane centres.",
@@ -7203,7 +7203,7 @@ Object.assign(legacyPagesData, {
 
   "/early-childhood-curriculum-explained/": {
     slug: "/early-childhood-curriculum-explained/",
-    title: "Early Childhood Curriculum Explained | What Preschoolers Actually Learn",
+    title: "Early Childhood Curriculum Explained | Rainbow Preschool",
     metaDescription: "Comprehensive guide to early childhood curriculum. Understand what preschoolers learn, how they learn, and why curriculum matters for your child's development.",
     h1: "Early Childhood Curriculum Explained",
     intro: "When choosing a preschool, parents often ask: 'What will my child learn?' The answer involves more than alphabet and numbers. Early childhood curriculum encompasses cognitive, physical, social, emotional, and creative development – all taught through age-appropriate methods. This comprehensive guide explains what early childhood curriculum includes, how children learn at this age, and what to look for in preschool programmes. At <a href=\"/about\">Rainbow Preschool International</a>, our <a href=\"/programmes\">curriculum</a> is designed based on child development research and refined over 18+ years of implementation across our six Thane centres.",
@@ -7311,7 +7311,7 @@ Object.assign(legacyPagesData, {
 
   "/activity-based-learning-preschool-benefits/": {
     slug: "/activity-based-learning-preschool-benefits/",
-    title: "Activity-Based Learning in Preschool | Benefits & Methods for Young Children",
+    title: "Activity-Based Learning in Preschool | Benefits & Methods",
     metaDescription: "Discover how activity-based learning benefits preschoolers. Learn about hands-on learning methods that engage children and build lasting knowledge.",
     h1: "Activity-Based Learning in Preschool",
     intro: "Children don't learn best by sitting and listening – they learn by doing. Activity-based learning engages children through hands-on experiences that make abstract concepts concrete and memorable. This approach is especially powerful in early childhood when children naturally learn through exploration and play. This comprehensive guide explains activity-based learning, its benefits, and how quality preschools implement it. At <a href=\"/about\">Rainbow Preschool International</a>, activity-based learning is central to our <a href=\"/programmes\">curriculum</a> across all six Thane centres.",
@@ -7396,7 +7396,7 @@ Object.assign(legacyPagesData, {
 
   "/creative-arts-preschool-importance/": {
     slug: "/creative-arts-preschool-importance/",
-    title: "Creative Arts in Preschool | Why Art, Music, and Drama Matter for Children",
+    title: "Creative Arts in Preschool | Why Art, Music & Drama Matter",
     metaDescription: "Discover why creative arts are essential in preschool. Learn how art, music, dance, and drama support your child's development and prepare them for success.",
     h1: "Creative Arts in Preschool",
     intro: "In an era focused on academics and STEM, creative arts sometimes seem like extras. But for young children, arts aren't just nice-to-have – they're essential for development. Art, music, dance, and drama build cognitive skills, emotional intelligence, fine motor abilities, and self-expression that support all learning. This guide explains why creative arts matter in preschool and what to look for in quality arts programming. At <a href=\"/about\">Rainbow Preschool International</a>, creative arts are integrated throughout our <a href=\"/programmes\">curriculum</a> because we understand their importance.",
@@ -7482,7 +7482,7 @@ Object.assign(legacyPagesData, {
 
   "/physical-development-preschool-activities/": {
     slug: "/physical-development-preschool-activities/",
-    title: "Physical Development in Preschool | Activities & Milestones for Young Children",
+    title: "Physical Development in Preschool | Activities & Milestones",
     metaDescription: "Complete guide to physical development in preschool. Learn about gross motor, fine motor milestones and activities that support your child's physical growth.",
     h1: "Physical Development in Preschool",
     intro: "Physical development is a crucial but sometimes overlooked aspect of early childhood education. As children develop motor skills, they're not just becoming physically capable – they're building brain connections that support all learning. This comprehensive guide covers physical development milestones, activities that support growth, and what to look for in preschool physical education. At <a href=\"/about\">Rainbow Preschool International</a>, physical development is integrated throughout our <a href=\"/programmes\">curriculum</a> because we understand its importance.",
@@ -7566,7 +7566,7 @@ Object.assign(legacyPagesData, {
 
   "/language-development-preschool-activities/": {
     slug: "/language-development-preschool-activities/",
-    title: "Language Development in Preschool | Activities to Build Communication Skills",
+    title: "Language Development for Preschoolers | Rainbow Preschool",
     metaDescription: "Comprehensive guide to language development in preschool. Learn activities that build vocabulary, conversation, and pre-reading skills in young children.",
     h1: "Language Development in Preschool",
     intro: "Language development in the early years lays the foundation for reading, writing, and lifelong communication. The preschool years are a critical window when vocabulary grows exponentially and children learn to express complex thoughts. This guide covers language development stages, effective activities, and what to look for in preschool language programming. At <a href=\"/about\">Rainbow Preschool International</a>, language development is a priority across our <a href=\"/programmes\">curriculum</a> because we understand its foundational importance.",
@@ -7654,7 +7654,7 @@ Object.assign(legacyPagesData, {
 
   "/toddler-separation-anxiety-guide/": {
     slug: "/toddler-separation-anxiety-guide/",
-    title: "Toddler Separation Anxiety | Complete Guide for Parents Starting Playgroup",
+    title: "Toddler Separation Anxiety | Guide for Parents Starting Playgroup",
     metaDescription: "Help your toddler overcome separation anxiety when starting playgroup. Expert strategies for smooth transitions and building confidence in young children.",
     h1: "Toddler Separation Anxiety Guide",
     intro: "Your toddler is about to start playgroup, and you're worried about separation anxiety. You're not alone – this is one of the most common concerns parents have about early education. Separation anxiety is actually a sign of healthy attachment, and with the right approach, most children adjust well within weeks. This comprehensive guide explains why separation anxiety happens, strategies that work, and how quality preschools support smooth transitions. At <a href=\"/about\">Rainbow Preschool International</a>, we've helped thousands of families through this transition over 18+ years.",
@@ -7915,7 +7915,7 @@ Object.assign(legacyPagesData, {
 
   "/is-my-toddler-ready-for-playgroup/": {
     slug: "/is-my-toddler-ready-for-playgroup/",
-    title: "Is My Toddler Ready for Playgroup? | Signs of School Readiness at 1.5-2 Years",
+    title: "Is My Toddler Ready for Playgroup? | Rainbow Preschool",
     metaDescription: "Wondering if your toddler is ready for playgroup? Learn the signs of readiness, when to start, and how to prepare your child for this exciting transition.",
     h1: "Is My Toddler Ready for Playgroup?",
     intro: "The decision to start playgroup is significant. Parents wonder: Is my child ready? Will they benefit or is it too early? This guide helps you assess your toddler's readiness, understand what 'ready' actually means, and prepare for this transition. At <a href=\"/about\">Rainbow Preschool International</a>, we've welcomed thousands of toddlers to our <a href=\"/playgroup\">Playgroup programme</a> and understand the readiness question well.",
@@ -8001,7 +8001,7 @@ Object.assign(legacyPagesData, {
 
   "/benefits-of-early-playgroup-enrollment/": {
     slug: "/benefits-of-early-playgroup-enrollment/",
-    title: "Benefits of Early Playgroup Enrollment | Why Start Preschool at 1.5-2 Years",
+    title: "Benefits of Early Playgroup Enrollment | Rainbow Preschool",
     metaDescription: "Discover the developmental benefits of starting playgroup early. Learn how quality early education at 1.5-2 years supports your child's growth and school readiness.",
     h1: "Benefits of Early Playgroup Enrollment",
     intro: "Is starting playgroup at 1.5-2 years too early? Research increasingly suggests that quality early childhood education benefits children – and earlier can be better than later. This guide explores the benefits of early playgroup enrollment, addressing common concerns and explaining how quality programmes support young children. At <a href=\"/about\">Rainbow Preschool International</a>, our <a href=\"/playgroup\">Playgroup programme</a> is designed to maximize these benefits for the youngest learners.",
@@ -8099,7 +8099,7 @@ Object.assign(legacyPagesData, {
 
   "/why-early-childhood-education-matters-thane-parents/": {
     slug: "/why-early-childhood-education-matters-thane-parents/",
-    title: "Why Early Childhood Education Matters for Thane Parents | Rainbow Preschool",
+    title: "Why Early Childhood Education Matters | Rainbow Preschool Thane",
     metaDescription: "Discover why early childhood education is crucial for your child's development. Learn how quality preschool in Thane shapes lifelong learning success.",
     h1: "Why Early Childhood Education Matters for Thane Parents",
     intro: "The first five years of life are the most critical period for brain development. As parents in Thane, understanding the profound impact of early childhood education helps you make informed decisions about your child's future. At <a href=\"/about\">Rainbow Preschool International</a>, we've witnessed thousands of children flourish through quality early education across our six centres.",
@@ -8231,7 +8231,7 @@ Object.assign(legacyPagesData, {
 
   "/holistic-child-development-rainbow-approach/": {
     slug: "/holistic-child-development-rainbow-approach/",
-    title: "Holistic Child Development: The Rainbow Preschool Approach | Thane",
+    title: "Holistic Child Development: Rainbow Preschool Approach",
     metaDescription: "Learn about Rainbow Preschool's holistic approach to child development. We nurture cognitive, social, emotional, physical, and creative growth in every child.",
     h1: "Holistic Child Development: The Rainbow Preschool Approach",
     intro: "At <a href=\"/about\">Rainbow Preschool International</a>, we believe education is about developing the whole child – not just academic skills. Our holistic approach nurtures every dimension of your child's development, creating well-rounded individuals ready for life's challenges.",
@@ -8297,7 +8297,7 @@ Object.assign(legacyPagesData, {
 
   "/preschool-vs-daycare-understanding-difference/": {
     slug: "/preschool-vs-daycare-understanding-difference/",
-    title: "Preschool vs Daycare: Understanding the Key Differences | Rainbow Preschool Thane",
+    title: "Preschool vs Daycare: What's the Difference? | Rainbow Preschool",
     metaDescription: "Learn the important differences between preschool and daycare. Understand which option best suits your child's developmental needs and your family's requirements.",
     h1: "Preschool vs Daycare: Understanding the Key Differences",
     intro: "Parents often wonder about the difference between preschool and daycare. While both provide care for young children, they have different purposes, structures, and outcomes. <a href=\"/about\">Rainbow Preschool International</a> explains these differences to help Thane parents make informed decisions.",
@@ -8363,7 +8363,7 @@ Object.assign(legacyPagesData, {
 
   "/preparing-child-for-preschool-thane-tips/": {
     slug: "/preparing-child-for-preschool-thane-tips/",
-    title: "Preparing Your Child for Preschool: Tips for Thane Parents | Rainbow Preschool",
+    title: "Preparing Your Child for Preschool | Tips for Thane Parents",
     metaDescription: "Expert tips for preparing your child for preschool. Help your toddler transition smoothly to school with these practical strategies from Rainbow Preschool Thane.",
     h1: "Preparing Your Child for Preschool: Tips for Thane Parents",
     intro: "Starting preschool is a major milestone for both children and parents. With the right preparation, this transition can be smooth and exciting rather than stressful. <a href=\"/about\">Rainbow Preschool International</a> shares expert tips for preparing your child for this important step.",
@@ -8627,7 +8627,7 @@ Object.assign(legacyPagesData, {
 
   "/parent-teacher-partnership-early-education/": {
     slug: "/parent-teacher-partnership-early-education/",
-    title: "Parent-Teacher Partnership in Early Education | Rainbow Preschool Thane",
+    title: "Parent-Teacher Partnership in Early Education | Rainbow Preschool",
     metaDescription: "Learn why parent-teacher partnership matters for your child's preschool success. Discover how Rainbow Preschool Thane builds strong family-school connections.",
     h1: "Parent-Teacher Partnership in Early Education",
     intro: "Your child's education works best when home and school work together. At <a href=\"/about\">Rainbow Preschool International</a>, we believe parents are essential partners, not just customers. Here's why this partnership matters and how we build it.",
@@ -8693,7 +8693,7 @@ Object.assign(legacyPagesData, {
 
   "/rainbow-preschool-awards-recognition-thane/": {
     slug: "/rainbow-preschool-awards-recognition-thane/",
-    title: "Rainbow Preschool Awards and Recognition in Thane | Rainbow Preschool",
+    title: "Rainbow Preschool Awards and Recognition in Thane",
     metaDescription: "Discover Rainbow Preschool International's awards and recognition in Thane. Our commitment to quality early childhood education has earned recognition across India.",
     h1: "Rainbow Preschool Awards and Recognition in Thane",
     intro: "Over 18+ years of serving Thane families, <a href=\"/about\">Rainbow Preschool International</a> has earned recognition for our commitment to quality early childhood education. These awards reflect not just institutional achievement but the success of thousands of children who've learned with us.",
@@ -8759,7 +8759,7 @@ Object.assign(legacyPagesData, {
 
   "/age-appropriate-learning-activities-explained/": {
     slug: "/age-appropriate-learning-activities-explained/",
-    title: "Age-Appropriate Learning Activities for Preschoolers Explained | Rainbow Preschool",
+    title: "Age-Appropriate Activities for Preschoolers | Rainbow Preschool",
     metaDescription: "Understand what age-appropriate learning looks like for toddlers and preschoolers. Learn how Rainbow Preschool Thane designs activities for each developmental stage.",
     h1: "Age-Appropriate Learning Activities for Preschoolers Explained",
     intro: "Not all activities are suitable for all ages. Understanding age-appropriate learning helps parents and educators provide experiences that challenge without overwhelming and engage without frustrating. <a href=\"/about\">Rainbow Preschool International</a> explains how we design activities for each stage.",
@@ -8825,7 +8825,7 @@ Object.assign(legacyPagesData, {
 
   "/play-based-learning-vs-academic-approach/": {
     slug: "/play-based-learning-vs-academic-approach/",
-    title: "Play-Based Learning vs Academic Approach for Preschoolers | Rainbow Preschool",
+    title: "Play-Based vs Academic Approach | Rainbow Preschool",
     metaDescription: "Compare play-based learning and academic approaches for preschoolers. Learn why Rainbow Preschool Thane chooses developmentally appropriate play-based education.",
     h1: "Play-Based Learning vs Academic Approach for Preschoolers",
     intro: "Parents often wonder whether preschool should be more 'academic' or 'play-based.' This is a crucial question with significant implications for your child's development. <a href=\"/about\">Rainbow Preschool International</a> explains both approaches and why we choose play-based learning.",
@@ -8891,7 +8891,7 @@ Object.assign(legacyPagesData, {
 
   "/how-rainbow-curriculum-prepares-school-readiness/": {
     slug: "/how-rainbow-curriculum-prepares-school-readiness/",
-    title: "How Rainbow Curriculum Prepares Children for School | Rainbow Preschool Thane",
+    title: "Rainbow Curriculum & School Readiness | Rainbow Preschool",
     metaDescription: "Discover how Rainbow Preschool's curriculum ensures school readiness. Learn about the specific skills and approaches that prepare Thane children for formal schooling.",
     h1: "How Rainbow Curriculum Prepares Children for School",
     intro: "Every parent wonders: will my child be ready for 'real' school? At <a href=\"/about\">Rainbow Preschool International</a>, school readiness isn't an afterthought – it's built into everything we do. Here's how our curriculum prepares children for successful school transitions.",
@@ -8957,7 +8957,7 @@ Object.assign(legacyPagesData, {
 
   "/importance-creative-arts-early-childhood/": {
     slug: "/importance-creative-arts-early-childhood/",
-    title: "Importance of Creative Arts in Early Childhood | Rainbow Preschool Thane",
+    title: "Creative Arts in Early Childhood | Rainbow Preschool",
     metaDescription: "Discover why creative arts matter in early childhood education. Learn how Rainbow Preschool Thane uses art, music, and drama to develop the whole child.",
     h1: "Importance of Creative Arts in Early Childhood",
     intro: "In the rush to develop academic skills, creative arts are sometimes overlooked. Yet art, music, drama, and creative expression are not extras – they're essential to healthy child development. <a href=\"/about\">Rainbow Preschool International</a> explains why creative arts matter and how we incorporate them.",
@@ -9023,7 +9023,7 @@ Object.assign(legacyPagesData, {
 
   "/physical-development-activities-preschoolers/": {
     slug: "/physical-development-activities-preschoolers/",
-    title: "Physical Development Activities for Preschoolers | Rainbow Preschool Thane",
+    title: "Physical Development for Preschoolers | Rainbow Preschool",
     metaDescription: "Learn about essential physical development activities for preschoolers. Discover how Rainbow Preschool Thane supports gross and fine motor skill development.",
     h1: "Physical Development Activities for Preschoolers",
     intro: "Physical development is as important as cognitive development in early childhood. Strong bodies support learning, and motor skills underpin many academic abilities. <a href=\"/about\">Rainbow Preschool International</a> explains the importance of physical development and how we support it.",
@@ -9089,7 +9089,7 @@ Object.assign(legacyPagesData, {
 
   "/separation-anxiety-tips-playgroup-parents/": {
     slug: "/separation-anxiety-tips-playgroup-parents/",
-    title: "Separation Anxiety Tips for Playgroup Parents | Rainbow Preschool Thane",
+    title: "Separation Anxiety Tips for Playgroup Parents | Rainbow Preschool",
     metaDescription: "Expert tips for managing separation anxiety when starting playgroup. Help your toddler transition smoothly with advice from Rainbow Preschool Thane.",
     h1: "Separation Anxiety Tips for Playgroup Parents",
     intro: "Separation anxiety is one of the biggest concerns for parents starting their toddler in <a href=\"/playgroup\">playgroup</a>. The good news? It's normal, manageable, and temporary. <a href=\"/about\">Rainbow Preschool International</a> shares expert strategies to help you and your child through this transition.",
@@ -9155,7 +9155,7 @@ Object.assign(legacyPagesData, {
 
   "/socialisation-benefits-toddlers-playgroup/": {
     slug: "/socialisation-benefits-toddlers-playgroup/",
-    title: "Socialisation Benefits for Toddlers in Playgroup | Rainbow Preschool Thane",
+    title: "Playgroup Socialisation Benefits for Toddlers | Rainbow Preschool",
     metaDescription: "Discover the socialisation benefits of playgroup for toddlers. Learn how Rainbow Preschool Thane helps young children develop essential social skills.",
     h1: "Socialisation Benefits for Toddlers in Playgroup",
     intro: "One of the most valuable aspects of <a href=\"/playgroup\">playgroup</a> is socialisation – the opportunity for toddlers to learn with and from other children. At <a href=\"/about\">Rainbow Preschool International</a>, we've seen thousands of toddlers develop social skills that serve them throughout life.",
@@ -9221,7 +9221,7 @@ Object.assign(legacyPagesData, {
 
   "/april-fools-day-activities-for-kids/": {
     slug: "/april-fools-day-activities-for-kids/",
-    title: "April Fool's Day Activities for Preschoolers | Fun, Safe and Creative Ideas",
+    title: "April Fool's Day Activities for Preschoolers | Rainbow Preschool",
     metaDescription: "Discover fun, safe and creative April Fool's Day activities for preschoolers. Explore easy classroom ideas, gentle pranks, crafts and games for kids.",
     h1: "April Fool's Day Activities for Preschoolers: Fun, Safe and Creative Ideas for Kids",
     intro: "April Fool's Day is a great chance to add laughter, imagination and playful learning to a child's routine. For preschoolers, the day should always be light-hearted, safe and easy to understand. Instead of confusing tricks, parents and teachers can plan simple activities that make children smile, encourage participation and support early development.\n\nAt <a href=\"/about\">Rainbow Preschools</a>, we believe children learn best when they feel happy, engaged and curious. Theme-based celebrations and playful classroom experiences help children build confidence, communication skills, creativity and social comfort in a natural way.\n\nIf you are looking for April Fool's Day activities for preschoolers, this guide shares practical ideas that are easy to do in the classroom or at home. Each activity is designed to be fun, age-appropriate and meaningful.",
