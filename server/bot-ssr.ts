@@ -148,6 +148,21 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
         });
         html += "</ul>\n";
       }
+      if (section.table) {
+        html += "<table>\n<thead>\n<tr>";
+        section.table.headers.forEach((h) => {
+          html += `<th>${escapeHtml(h)}</th>`;
+        });
+        html += "</tr>\n</thead>\n<tbody>\n";
+        section.table.rows.forEach((row) => {
+          html += "<tr>";
+          row.forEach((cell) => {
+            html += `<td>${escapeHtml(cell)}</td>`;
+          });
+          html += "</tr>\n";
+        });
+        html += "</tbody>\n</table>\n";
+      }
       html += `</section>`;
       return html;
     })

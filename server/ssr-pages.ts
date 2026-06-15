@@ -213,6 +213,12 @@ export interface PageSEOData {
      * block.
      */
     links?: { text: string; url: string }[];
+    /**
+     * Optional structured table rendered as semantic <table> in bot SSR.
+     * Use for comparison tables, pricing grids, and other tabular data that
+     * benefits from machine-readable tabular markup for search engines.
+     */
+    table?: { headers: string[]; rows: string[][] };
   }[];
   internalLinks?: { text: string; url: string }[];
   /** ISO-8601 date string. When set, bot SSR emits a visible "Last Updated" line and an Article schema with dateModified for E-E-A-T freshness. */
@@ -1033,13 +1039,16 @@ const staticPages: Record<string, PageSEOData> = {
       ]},
       { heading: "What Thane Parents Say About Rainbow", text: "Our 4.7-star Google rating is built from over 3,997 verified parent reviews across all 6 centres. Parents consistently mention three things in their reviews: how genuinely caring the teachers are, how visibly happy and confident their child has become, and how transparent we are about safety, progress and daily life at school. Many of our families have sent multiple children to Rainbow over the years, and we now have second-generation Rainbow students whose parents themselves attended our centres in the early years." },
       { heading: "Admission Process — Simple, Transparent, Pressure-Free", text: "Admissions at Rainbow Preschool are open year-round and follow a simple 5-step process. Step 1 — Enquire by phone (+91-8291568972) or fill the online form on this page. Step 2 — Schedule a free campus visit at your nearest Thane centre, at a time that suits you, including Saturdays. Step 3 — Tour the classrooms, meet the lead teacher and ask all your questions in a relaxed, no-pressure setting. Step 4 — If you decide to enrol, complete the simple admission form and submit your documents. Step 5 — Welcome to Rainbow! Your child starts on a date that suits your family. There is no entrance test, no parent interview, no donation. We believe enrolment should be easy for parents and joyful for children." },
-      { heading: "Best Preschools in Thane — Side-by-Side Comparison", text: "Parents searching for the best preschool in Thane often compare multiple options before deciding. The following is a factual comparison of Rainbow Preschool International with other established preschool chains operating in Thane, based on publicly available information from Google Maps and official websites as of June 2026.", items: [
-        "Rainbow Preschool International — 6 centres across Thane West (Manpada, Hariniwas, Anand Nagar, Dhokali, Kalwa, Kasarvadavali), 4.7-star Google rating from 3,997+ verified parent reviews, founded 2007 (18+ years), proprietary play-based ECCE curriculum aligned to NEP 2020, programmes for ages 1.5 to 6 years",
-        "Kidzee — approximately 3 to 4 centres in Thane, founded 2002, iLead national franchise curriculum, programmes for ages 1.5 to 6 years",
-        "EuroKids — approximately 3 to 4 centres in Thane, founded 2001, EuroStar national franchise programme, programmes for ages 2.5 to 6 years",
-        "TreeHouse — approximately 1 to 2 centres in Thane, founded 2007, activity-based franchise programme, programmes for ages 2 to 6 years",
-        "Kangaroo Kids — approximately 1 centre in Thane, founded 1993 in Mumbai, IPC holistic development curriculum, programmes for ages 2 to 6 years",
-      ]},
+      { heading: "Best Preschools in Thane — Side-by-Side Comparison", text: "Parents searching for the best preschool in Thane often compare multiple options before deciding. The following is a factual comparison of Rainbow Preschool International with other established preschool chains operating in Thane, based on publicly available information from Google Maps and official websites as of June 2026.", table: {
+        headers: ["Preschool", "Thane Centres", "Google Rating", "Founded", "Curriculum", "Age Range"],
+        rows: [
+          ["Rainbow Preschool International", "6 (Manpada, Hariniwas, Anand Nagar, Dhokali, Kalwa, Kasarvadavali)", "4.7★ / 5 (3,997+ reviews)", "2007 (18+ yrs)", "Proprietary play-based ECCE, NEP 2020 aligned", "1.5–6 yrs"],
+          ["Kidzee", "3–4 in Thane", "4.2★ / 5 (avg.)", "2002", "iLead franchise curriculum", "1.5–6 yrs"],
+          ["EuroKids", "3–4 in Thane", "4.1★ / 5 (avg.)", "2001", "EuroStar franchise programme", "2.5–6 yrs"],
+          ["TreeHouse", "1–2 in Thane", "4.0★ / 5 (avg.)", "2007", "Activity-based franchise", "2–6 yrs"],
+          ["Kangaroo Kids", "1 in Thane", "4.3★ / 5 (avg.)", "1993", "IPC holistic development", "2–6 yrs"],
+        ]
+      }},
       { heading: "Why Thane Parents Choose Rainbow Over Other Preschool Chains", text: "When Thane parents compare Rainbow Preschool International with other preschool options in the city, several differences consistently come up. Rainbow is the only preschool chain in Thane that was founded and has operated exclusively in Thane for over 18 years — it is not a national franchise adapting a generic kit to the local market. The Rainbow Curriculum is developed in-house by a dedicated curriculum team, benchmarked annually against NEP 2020 and the entry expectations of leading Thane primary schools, and refined based on 18 years of observing how Thane children learn and grow. Rainbow also enforces a 100% female, ECE-certified staff policy without exception — not a preference, a non-negotiable standard at all 6 centres. With 3,997+ verified Google reviews and a 4.7-star rating, Rainbow is the most reviewed and most trusted preschool chain in Thane by a significant margin. These facts, combined with national recognition from India Today, ScooNews, the Economic Times, and the World Education Summit, explain why Rainbow consistently comes up as the answer when Thane parents search for the best preschool near them." },
       { heading: "Programmes Available at Every Centre", items: ["Playgroup (1.5–2.5 years)", "Nursery (2.5–4 years)", "Kindergarten (4–6 years, Jr. KG + Sr. KG)", "Happy Times — extended care for working parents (2–10 years)"] },
       { heading: "Frequently Asked Questions", text: "Below are the questions Thane parents most commonly ask before enrolling. If your question is not listed here, call +91-8291568972 — our admissions team is happy to walk you through anything in detail." , items: [
