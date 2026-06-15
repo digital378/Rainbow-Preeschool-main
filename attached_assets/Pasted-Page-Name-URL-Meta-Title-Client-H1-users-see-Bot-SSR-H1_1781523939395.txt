@@ -1,0 +1,19 @@
+Page Name	URL	Meta Title	Client H1 (users see)	Bot SSR H1 (Google sees)
+Home	/	Rainbow Preschool | Preschool Chain in Thane Since 2007	Rainbow Preschool International — Trusted Preschool Chain in Thane Since 2007	Rainbow Preschool International — Trusted Preschool Chain in Thane Since 2007
+About	/about	About Rainbow Preschool Thane | Since 2007	About Rainbow Preschool International	About Rainbow Preschool International
+Programmes	/programmes	Preschool Programmes in Thane | Rainbow Preschool	Preschool Programmes in Thane	Preschool Programmes in Thane
+Playgroup	/playgroup	Best Playgroup near me in thane	Best Playgroup in Thane for Children Aged 1.5 to 2.5 Years	Best Playgroup in Thane for Children Aged 1.5 to 2.5 Years
+Nursery	/nursery	Best Nursery School near me in thane	Best Nursery School in Thane for Children Aged 2.5 to 3.5 Years	Best Nursery School in Thane for Children Aged 2.5 to 3.5 Years
+Kindergarten	/kindergarten	Best Kindergarten near me in thane | Junior & Senior KG	Best Kindergarten in Thane for Children Aged 3.5 to 5.5 Years	Best Kindergarten in Thane for Children Aged 3.5 to 5.5 Years
+Gallery	/gallery	Photo Gallery | Rainbow Preschool International Thane	Rainbow Preschool Photo's	Rainbow Preschool Photo's
+Blog	/blog	Parenting Tips & Education Articles | Rainbow Preschool	Rainbow Preschool Blog	Rainbow Preschool Blog
+Contact	/contact	Contact Rainbow Preschool Thane | Admissions Enquiry	Contact Us	Contact Us - Rainbow Preschool International
+FAQs	/faqs	FAQs | Rainbow Preschool International Thane	Frequently Asked Questions	Frequently Asked Questions
+Preschool Admissions	/preschool-admissions	Preschool Admissions in Thane | Rainbow Preschool	Preschool Admissions in Thane	Preschool Admissions in Thane
+Best Preschool Near Me	/best-preschool-near-me-in-thane	Best Preschool Near Me in Thane	Best Preschool Near Me in Thane	Best Preschool Near Me in Thane
+Play School Near Me	/play-school-near-me	Play School Near Me in Thane	Play School Near Me in Thane	Play School Near Me in Thane
+Daycare / Happy Times	/happy-times	Daycare in Thane | Safe After-School Care | Rainbow Preschool	Daycare in Thane for Children Aged 2 to 10 Years	Happy Times - After-School Enrichment Programme
+Readiness Quiz	/readiness-quiz	Is My Child Ready for Preschool?	Is My Child Ready for Preschool?	Is My Child Ready for Preschool?
+Top Preschools Comparison	/top-preschools-thane	Top 10 Preschools in Thane 2026	Top 10 Preschools in Thane 2026	Top 10 Preschools in Thane 2026
+Terms of Service	/terms	Terms of Service | Rainbow Preschool International	Terms of Service	Terms of Service
+Privacy Policy	/privacy	Privacy Policy | Rainbow Preschool International	Privacy Policy	Privacy Policy
