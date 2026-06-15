@@ -1,0 +1,26 @@
+#105 - Fix SEO Micro-Bugs (noindex, double H1)
+What & Why
+Two confirmed SEO bugs found in a site-wide audit:
+
+Bug 1 — not-found.tsx missing noindex The 404 page renders an <h1>404 Page Not Found</h1> but has no <SEO> component and no noindex meta tag. If Googlebot follows a stale inbound link it receives a 200 OK (SPA shell) with no robots directive, meaning the error page can be indexed. Indexed soft-404s waste crawl budget and can dilute domain quality signals.
+
+Bug 2 — legacy-landing-page.tsx double H1 The component contains two <h1> tags: line 249 renders {data.h1} (the real page title) and line 577 renders "Resources & Parenting Guides" (a fallback/navigation section). If both render simultaneously on any page, Google sees multiple H1s and may struggle to determine the primary topic. The fix is to downgrade the line-577 heading to <h2> (it is a navigational section header, not a page title).
+
+Done looks like
+Visiting /404 or any unknown route in a Googlebot UA curl receives a <meta name="robots" content="noindex, follow"> tag in the HTML.
+not-found.tsx uses the standard <SEO> component with noIndex={true}.
+legacy-landing-page.tsx has exactly one <h1> per rendered page (the {data.h1} heading); the "Resources & Parenting Guides" heading is an <h2>.
+npm run check still passes.
+The cannibalisation guard still exits clean.
+Out of scope
+Adding new content to the 404 page.
+Fixing SSR rendering of the 404 page (bot SSR already returns null for unknown paths, which is correct — this fix is for client-side rendering only).
+Any changes to the legacy page body copy or schema.
+Steps
+Add SEO component to not-found.tsx — Import the SEO component and add <SEO title="Page Not Found | Rainbow Preschool" description="The page you are looking for could not be found." noIndex={true} /> at the top of the render output.
+Downgrade second H1 in legacy-landing-page.tsx — Change the <h1> at the "Resources & Parenting Guides" heading (line ~577) to <h2>. Confirm via grep that the file now has exactly one <h1> tag.
+Verify — Run grep -c "<h1" client/src/components/legacy-landing-page.tsx to confirm count is 1.
+Relevant files
+client/src/pages/not-found.tsx
+client/src/components/legacy-landing-page.tsx
+client/src/components/seo.tsx

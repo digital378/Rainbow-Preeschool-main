@@ -574,9 +574,9 @@ export function AuthorArchivePage() {
           </nav>
 
           <header className="mb-12">
-            <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4 font-display">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 font-display">
               Resources & Parenting Guides
-            </h1>
+            </h2>
             <p className="text-lg text-muted-foreground max-w-3xl">
               Our collection of articles and resources has moved! Explore our updated content and find helpful parenting tips, activity ideas, and early childhood education insights.
             </p>
