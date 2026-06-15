@@ -39,7 +39,7 @@ export default function Contact() {
       <section className="py-24 md:py-32 lg:py-40 bg-gradient-to-br from-primary/5 via-accent/5 to-secondary/5 flex items-center justify-center">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">Get In Touch</h1>
+            <h1 className="text-4xl md:text-5xl font-bold mb-6">Contact Us</h1>
             <p className="text-lg text-muted-foreground leading-relaxed">
               Have questions about admissions or want to schedule a tour? We'd love to hear from you!
             </p>

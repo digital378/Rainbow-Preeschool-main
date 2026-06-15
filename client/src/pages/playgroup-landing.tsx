@@ -437,7 +437,7 @@ export default function PlaygroupLanding() {
                 Ages 1.5 - 2.5 Years
               </Badge>
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-                Playgroup in Thane for Children Aged 1.5 to 2.5 Years
+                Best Playgroup in Thane for Children Aged 1.5 to 2.5 Years
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed">
                 A joyful, safe, and nurturing first step into learning, routine, and social confidence.

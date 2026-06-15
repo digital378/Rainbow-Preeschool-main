@@ -1,0 +1,2 @@
+- [H1 sync pattern](h1-sync.md) — SSR h1: field in ssr-pages.ts must equal client <h1> text exactly; guard checks parity.
+- [Title cannibalisation guard](title-guard.md) — scripts/check-no-title-cannibalisation.ts; wired in pre-commit, pre-push, predeploy; NOT in npm run check (cannot edit package.json).

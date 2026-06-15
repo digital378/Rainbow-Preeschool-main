@@ -218,7 +218,7 @@ export default function Gallery() {
             Life at Rainbow Preschools
           </div>
           <h1 className="text-3xl md:text-5xl font-bold text-foreground mb-4 leading-tight">
-            Gallery
+            Rainbow Preschool Photos
           </h1>
           <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
             Explore our classrooms, activities, events, and joyful learning moments across our 6 centres in Thane.

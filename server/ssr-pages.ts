@@ -571,7 +571,7 @@ const staticPages: Record<string, PageSEOData> = {
     canonical: `${BASE_URL}/`,
     lastModified: LAST_UPDATED_ISO,
     lastModifiedDisplay: LAST_UPDATED_DISPLAY,
-    h1: "Rainbow Preschool International — Nurturing Young Minds Since 2007",
+    h1: "Rainbow Preschool International — Trusted Preschool Chain in Thane Since 2007",
     introText: "Rainbow Preschool International has been nurturing young minds since 2007. With 6 centres across Thane West and over 1,00,000 alumni, we offer Playgroup, Nursery, and Kindergarten programmes for children aged 1.5 to 5 years. Our play-based curriculum helps children build reading, writing, number skills, creativity, and social confidence in a safe, joyful environment.",
     structuredData: [organizationSchema, websiteSchema, ...branchLocalBusinessSchemas, {
       "@context": "https://schema.org",
@@ -683,7 +683,7 @@ const staticPages: Record<string, PageSEOData> = {
     canonical: `${BASE_URL}/programmes`,
     lastModified: LAST_UPDATED_ISO,
     lastModifiedDisplay: LAST_UPDATED_DISPLAY,
-    h1: "Our Early Childhood Programmes",
+    h1: "Preschool Programmes in Thane",
     breadcrumbs: [{ name: "Home", url: "/" }, { name: "Programmes", url: "/programmes" }],
     contentSections: [
       { heading: "Playgroup (1.5–2.5 years)", text: "A gentle introduction to the world of learning through play, sensory exploration, and social interaction. Perfect for toddlers taking their first steps into structured education." },
@@ -697,7 +697,7 @@ const staticPages: Record<string, PageSEOData> = {
     description: "Enroll your toddler in our Playgroup (1.5–2.5 yrs) — play-based learning and gentle socialisation across Rainbow Preschool's 6 Thane West centres.",
     keywords: "playgroup in thane, playgroup near me, playgroup school thane, toddler programme thane",
     canonical: `${BASE_URL}/playgroup`,
-    h1: "Playgroup Programme — Ages 1.5 to 2.5 Years",
+    h1: "Best Playgroup in Thane for Children Aged 1.5 to 2.5 Years",
     breadcrumbs: [{ name: "Home", url: "/" }, { name: "Programmes", url: "/programmes" }, { name: "Playgroup", url: "/playgroup" }],
     structuredData: [programmeOrgSchema, websiteSchema, ...branchLocalBusinessSchemas, {
       "@context": "https://schema.org",
@@ -728,7 +728,7 @@ const staticPages: Record<string, PageSEOData> = {
     description: "Our Nursery (2.5–4 yrs) builds early literacy, numeracy, and social skills through play-based learning across Rainbow Preschool's 6 Thane West centres.",
     keywords: "nursery school in thane, nursery admission thane, nursery programme thane",
     canonical: `${BASE_URL}/nursery`,
-    h1: "Nursery Programme — Ages 2.5 to 4 Years",
+    h1: "Best Nursery School in Thane for Children Aged 2.5 to 3.5 Years",
     breadcrumbs: [{ name: "Home", url: "/" }, { name: "Programmes", url: "/programmes" }, { name: "Nursery", url: "/nursery" }],
     structuredData: [programmeOrgSchema, websiteSchema, ...branchLocalBusinessSchemas, {
       "@context": "https://schema.org",
@@ -760,7 +760,7 @@ const staticPages: Record<string, PageSEOData> = {
     description: "Prepare your child for primary school with our Kindergarten programme (4–6 yrs) — reading, writing, maths, and life skills at Rainbow Preschool Thane.",
     keywords: "kindergarten in thane, kindergarten school thane, school readiness programme thane",
     canonical: `${BASE_URL}/kindergarten`,
-    h1: "Kindergarten Programme — Ages 4 to 6 Years",
+    h1: "Best Kindergarten in Thane for Children Aged 3.5 to 5.5 Years",
     breadcrumbs: [{ name: "Home", url: "/" }, { name: "Programmes", url: "/programmes" }, { name: "Kindergarten", url: "/kindergarten" }],
     structuredData: [programmeOrgSchema, websiteSchema, ...branchLocalBusinessSchemas, {
       "@context": "https://schema.org",
@@ -793,7 +793,7 @@ const staticPages: Record<string, PageSEOData> = {
     canonical: `${BASE_URL}/gallery`,
     lastModified: LAST_UPDATED_ISO,
     lastModifiedDisplay: LAST_UPDATED_DISPLAY,
-    h1: "Rainbow Preschool Photo Gallery",
+    h1: "Rainbow Preschool Photos",
     breadcrumbs: [{ name: "Home", url: "/" }, { name: "Gallery", url: "/gallery" }],
     contentSections: [
       { heading: "Our Gallery Categories", items: ["Classrooms — Bright, child-friendly learning spaces", "Activities — Creative arts, music, and hands-on learning", "Events & Celebrations — Annual days, festivals, and special events", "Happy Times — Joyful moments from school life", "Infrastructure — Modern facilities and safe premises", "Centres in Thane — Our 6 locations across Thane West"] },
@@ -849,7 +849,7 @@ const staticPages: Record<string, PageSEOData> = {
     description: "Apply for preschool admissions at Rainbow Preschool Thane. Playgroup, Nursery, and Kindergarten — age eligibility, fees, and process.",
     keywords: "preschool admissions thane, preschool admission process, nursery admission thane, kindergarten admission thane",
     canonical: `${BASE_URL}/preschool-admissions`,
-    h1: "Preschool Admissions — Rainbow Preschool International",
+    h1: "Preschool Admissions in Thane",
     breadcrumbs: [{ name: "Home", url: "/" }, { name: "Admissions", url: "/preschool-admissions" }],
     lastModified: LAST_UPDATED_ISO,
     lastModifiedDisplay: LAST_UPDATED_DISPLAY,
@@ -1010,7 +1010,7 @@ const staticPages: Record<string, PageSEOData> = {
     canonical: `${BASE_URL}/happy-times`,
     lastModified: LAST_UPDATED_ISO,
     lastModifiedDisplay: LAST_UPDATED_DISPLAY,
-    h1: "Happy Times — After-School Enrichment Programme",
+    h1: "Daycare in Thane for Children Aged 2 to 10 Years",
     breadcrumbs: [{ name: "Home", url: "/" }, { name: "Happy Times", url: "/happy-times" }],
     internalLinks: commonInternalLinks,
   },

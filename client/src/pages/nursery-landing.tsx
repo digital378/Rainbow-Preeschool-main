@@ -446,7 +446,7 @@ export default function NurseryLanding() {
                 Ages 2.5 - 3.5 Years
               </Badge>
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-                Nursery School in Thane for Children Aged 2.5 to 3.5 Years
+                Best Nursery School in Thane for Children Aged 2.5 to 3.5 Years
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed">
                 Building on playgroup foundations with structured learning, phonics, numbers, and creative expression.

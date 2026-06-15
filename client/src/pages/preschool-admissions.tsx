@@ -23,7 +23,7 @@ const meta = {
 
 const hero = {
   eyebrow: "Admissions Open 2026–27",
-  h1: "Preschool Admissions in Thane at Rainbow Preschool International",
+  h1: "Preschool Admissions in Thane",
   subheadline: "Start your child's early learning journey with Rainbow Preschool International. We offer admissions for Playgroup, Nursery, Jr. KG, and Sr. KG across multiple centres in Thane.",
   supporting: "Explore age criteria, admission process, centre options, and submit an enquiry to speak with our admissions team.",
   form: {

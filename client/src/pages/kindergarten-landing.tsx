@@ -421,7 +421,7 @@ export default function KindergartenLanding() {
                 Ages 3.5 - 5.5 Years (Jr. KG & Sr. KG)
               </Badge>
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-                Kindergarten School in Thane for Children Aged 3.5 to 5.5 Years
+                Best Kindergarten in Thane for Children Aged 3.5 to 5.5 Years
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed">
                 Building strong foundations in reading, writing, and math to prepare your child for Grade 1 success.
