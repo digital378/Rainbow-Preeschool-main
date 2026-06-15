@@ -846,28 +846,140 @@ const staticPages: Record<string, PageSEOData> = {
   },
   "/preschool-admissions": {
     title: "Preschool Admissions in Thane | Rainbow Preschool",
-    description: "Apply for preschool admissions at Rainbow Preschool Thane. Playgroup, Nursery, and Kindergarten — age eligibility, fees, and process.",
-    keywords: "preschool admissions thane, preschool admission process, nursery admission thane, kindergarten admission thane",
+    description: "Apply for preschool admission at Rainbow Preschool International in Thane. Explore playgroup, nursery and kindergarten admissions, age criteria, admission process, required documents, and centre options across Thane.",
+    keywords: "preschool admissions in thane, preschool admission near me, nursery admission thane, kindergarten admission thane, playgroup admission thane, preschool admission process, preschool admission form, preschool admission enquiry",
     canonical: `${BASE_URL}/preschool-admissions`,
     h1: "Preschool Admissions in Thane",
     breadcrumbs: [{ name: "Home", url: "/" }, { name: "Admissions", url: "/preschool-admissions" }],
     lastModified: LAST_UPDATED_ISO,
     lastModifiedDisplay: LAST_UPDATED_DISPLAY,
-    structuredData: [organizationSchema, {
+    introText: "Rainbow Preschool International offers preschool admissions in Thane for children aged 1.5 to 5.5 years across four programmes — Playgroup, Nursery, Junior KG, and Senior KG. With 6 centres across Thane West and 18+ years of experience educating over one lakh children, Rainbow is one of Thane's most trusted names in early childhood education. Admissions for the 2026–27 academic year are now open. Whether you are enquiring about playgroup admission, nursery admission, or kindergarten admission in Thane, our team will guide you through every step — from your first call to your child's first day.",
+    structuredData: [programmeOrgSchema, websiteSchema, ...branchLocalBusinessSchemas, {
       "@context": "https://schema.org",
       "@type": "FAQPage",
       mainEntity: [
-        { "@type": "Question", name: "What is the admission process at Rainbow Preschool?", acceptedAnswer: { "@type": "Answer", text: "Admissions are open year-round. Enquire online or call 82915 68972, schedule a centre visit, meet our educators, submit your documents, and complete registration. Welcome to the Rainbow family!" } },
-        { "@type": "Question", name: "What age groups can apply?", acceptedAnswer: { "@type": "Answer", text: "Playgroup accepts children aged 1.5 to 2.5 years, Nursery from 2.5 to 4 years, and Kindergarten from 4 to 6 years." } },
-        { "@type": "Question", name: "Are admissions open now?", acceptedAnswer: { "@type": "Answer", text: "Yes, Rainbow Preschool accepts admissions year-round including mid-term enrollment subject to seat availability across all 6 Thane centres." } },
-        { "@type": "Question", name: "What documents are needed for admission?", acceptedAnswer: { "@type": "Answer", text: "Birth certificate, 2 passport-size photographs, parent ID proof, address proof, and previous school records if applicable. Our team will guide you through the requirements." } },
+        {
+          "@type": "Question",
+          name: "What is the admission process for preschool at Rainbow Preschool?",
+          acceptedAnswer: { "@type": "Answer", text: "The admission process at Rainbow Preschool has six steps: (1) Submit an enquiry online, by phone at 82915 68972, or by walking into any of our 6 Thane centres. (2) Schedule a free campus tour — our admissions team arranges a visit to your preferred centre. (3) Speak with the admissions team to discuss your child's age, preferred programme, and any questions. (4) Complete the formal registration form and submit it to the centre. (5) Provide required documents — birth certificate, ID proof, photographs, and address proof. (6) Pay the admission fee to confirm your child's seat and attend our parent orientation session. The entire process typically takes 3 to 5 working days from enquiry to confirmed admission." }
+        },
+        {
+          "@type": "Question",
+          name: "What documents are required for preschool admission in Thane?",
+          acceptedAnswer: { "@type": "Answer", text: "Please keep the following documents ready when completing admission at Rainbow Preschool: child's birth certificate (mandatory for age verification), 4 to 6 passport-size photographs of the child, parent or guardian ID proof (Aadhaar, passport, voter ID, or driving licence), address proof (Aadhaar, utility bill, or rental agreement with Thane address), child's Aadhaar card if available, previous school records or transfer certificate if applicable, vaccination card and any relevant medical or allergy records, and two passport-size photographs of both parents for ID card purposes. If any document is unavailable, provisional admission can be granted with a 30-day submission commitment." }
+        },
+        {
+          "@type": "Question",
+          name: "What is the age criteria for admission to each programme?",
+          acceptedAnswer: { "@type": "Answer", text: "Age is calculated as of June 1st of the academic year. Playgroup is for children aged 1.5 to 2.5 years — their first structured learning experience. Nursery is for children aged 2.5 to 3.5 years, building language, phonics, fine motor, and independence skills. Junior KG is for children aged 3.5 to 4.5 years with pre-reading, early writing, and structured play-based learning. Senior KG is for children aged 4.5 to 5.5 years with full school-readiness preparation for a smooth Class 1 transition. If your child's age falls between two programmes, our educators will assess developmental readiness and guide you to the right fit." }
+        },
+        {
+          "@type": "Question",
+          name: "When do preschool admissions open for the new academic year?",
+          acceptedAnswer: { "@type": "Answer", text: "Rainbow Preschool follows an annual admission cycle but welcomes enquiries year-round. October to November is the early admission window — families who apply early get preferred centres and batch timings. December to February is the main admission window with the most seat availability across all 6 Thane centres. March to May is the final round; seats fill quickly, especially at Manpada and Hariniwas centres. From June onwards the academic year begins, and mid-term admissions are accepted subject to seat availability — ideal for families relocating to Thane." }
+        },
+        {
+          "@type": "Question",
+          name: "What are the fees for preschool admission at Rainbow Preschool Thane?",
+          acceptedAnswer: { "@type": "Answer", text: "Rainbow Preschool offers competitive and transparent pricing. Fee components include: a one-time admission fee at enrolment covering registration, orientation, and starter kit; monthly or term-based tuition fee covering curriculum, teaching staff, and learning materials; an activity fee covering art, music, dance, yoga, sports, and field trips; and an optional transport fee for GPS-tracked vehicles with female attendants. Flexible payment plans are available — monthly, quarterly, half-yearly, or annual. There are no hidden charges — the full fee breakdown is shared before admission is confirmed. For exact fees at your preferred centre, call 82915 68972 or fill the enquiry form on this page." }
+        },
+        {
+          "@type": "Question",
+          name: "Do you offer mid-term preschool admissions in Thane?",
+          acceptedAnswer: { "@type": "Answer", text: "Yes, Rainbow Preschool accepts mid-term admissions throughout the academic year, subject to seat availability at the preferred centre. A brief assessment ensures your child is placed in the appropriate group. Catch-up support from teachers helps mid-term joiners settle in comfortably. Fees are calculated on a pro-rata basis from the month of joining. Mid-term admission is ideal for families relocating to Thane or switching from another preschool. Contact us to check current seat availability at your nearest Rainbow centre." }
+        },
+        {
+          "@type": "Question",
+          name: "Can I visit the preschool before taking admission?",
+          acceptedAnswer: { "@type": "Answer", text: "Absolutely — Rainbow Preschool strongly encourages every parent to schedule a campus tour before enrolling. During the visit, you receive a guided tour of classrooms, play areas, washrooms, kitchen, and safety installations; you meet the centre head and teaching staff who will work with your child; you can observe an ongoing class session to see our teaching approach in action; your child is welcome to attend a free trial class; and you get clear answers on fees, timings, transport, and the full admission process. Book a visit by calling 82915 68972, filling the form on this page, or messaging us on WhatsApp." }
+        },
+        {
+          "@type": "Question",
+          name: "How do I choose the right Rainbow Preschool centre for admission?",
+          acceptedAnswer: { "@type": "Answer", text: "With 6 centres across Thane, consider these factors: proximity — choose the centre closest to your home, workplace, or daily commute route; transport availability — check if a Rainbow bus route covers your building or area; batch timing — different centres may offer slightly different session start times; campus visit — visit the centre in person and let your child's comfort guide the final decision. Our 6 centres are located in Manpada, Hariniwas, Anand Nagar, Dhokali, Kalwa, and Kasarvadavali. Our admissions team is happy to help you compare options and find the best fit." }
+        },
       ],
     }],
     contentSections: [
-      { heading: "Admission Process", items: ["Step 1: Enquire online or call 82915 68972", "Step 2: Schedule a centre visit", "Step 3: Meet our educators", "Step 4: Complete registration", "Step 5: Welcome to Rainbow!"] },
-      { heading: "Age Eligibility", items: ["Playgroup: 1.5 to 2.5 years", "Nursery: 2.5 to 4 years", "Kindergarten: 4 to 6 years"] },
+      {
+        heading: "About Preschool Admissions at Rainbow Preschool International",
+        text: "Rainbow Preschool International has been welcoming children into its family since 2007 — over 18 years of nurturing young minds across Thane. Today, with 6 centres in Thane West and more than one lakh alumni, Rainbow is the preschool of choice for thousands of Thane families. Admissions are open for Playgroup (ages 1.5–2.5 years), Nursery (2.5–3.5 years), Junior KG (3.5–4.5 years), and Senior KG (4.5–5.5 years). Every Rainbow centre maintains the same high standards: small class sizes of 10–15 children, 100% trained and ECE-qualified female teaching staff, CCTV-monitored classrooms, and a play-based curriculum aligned with NEP 2020. The admissions process is designed to be simple, transparent, and stress-free for parents — from first enquiry to your child's first day."
+      },
+      {
+        heading: "Step-by-Step Preschool Admission Process",
+        items: [
+          "Step 1 — Submit an Enquiry: Fill the online enquiry form on this page, call us at 82915 68972, or walk into any Rainbow Preschool centre in Thane, Monday to Saturday, 9 AM to 6 PM.",
+          "Step 2 — Schedule a Free Campus Visit: Our admissions team will arrange a guided tour of your preferred centre, covering classrooms, play areas, and safety installations so you can experience the Rainbow environment firsthand.",
+          "Step 3 — Speak with the Admissions Team: Discuss your child's age, preferred programme (Playgroup, Nursery, or KG), batch timing preferences, transport requirements, and any questions about the curriculum or fees.",
+          "Step 4 — Complete the Registration Form: Fill the formal admission registration form at the centre and submit it to reserve your child's seat. Forms are available at all 6 Thane centres.",
+          "Step 5 — Submit Required Documents: Provide the necessary documents — birth certificate, ID proof, photographs, address proof, and vaccination card — to complete your child's admission file.",
+          "Step 6 — Confirm Admission and Attend Orientation: Pay the admission fee to confirm the seat. Attend our parent orientation session before your child's first day to meet teachers and understand the daily routine."
+        ]
+      },
+      {
+        heading: "Age Eligibility for Preschool Admission in Thane",
+        text: "Each programme at Rainbow Preschool is carefully designed for a specific stage of early childhood development. Age is calculated as of June 1st of the academic year. Choosing the right programme for your child's age ensures they are developmentally ready for the curriculum and social environment.",
+        items: [
+          "Playgroup — Ages 1.5 to 2.5 years: Designed for toddlers taking their very first steps into a learning environment. Focuses on sensory play, music, movement, and gentle socialisation. Helps children develop separation comfort, basic routines, and an appetite for exploration through play.",
+          "Nursery — Ages 2.5 to 3.5 years: Introduces structured early learning through phonics, early numeracy, storytelling, and fine motor activities. Children build language confidence, independence, and creative expression in a warm, supportive classroom.",
+          "Junior KG (Jr. KG) — Ages 3.5 to 4.5 years: Pre-reading, early writing skills, and introductory mathematics. Children engage in project-based learning, science discovery activities, and structured group work that builds both academic and social skills.",
+          "Senior KG (Sr. KG) — Ages 4.5 to 5.5 years: Full school-readiness programme covering reading fluency, sentence writing, mental maths, and general knowledge. Designed for a smooth, confident transition into Class 1 at any CBSE, ICSE, or IB school."
+        ]
+      },
+      {
+        heading: "Documents Required for Admission",
+        text: "Please keep the following documents ready when completing the admission process at any Rainbow Preschool centre in Thane. Bring originals and one photocopy of each document.",
+        items: [
+          "Child's birth certificate — original and one photocopy (mandatory for age verification at the time of admission)",
+          "4 to 6 recent passport-size photographs of the child — white background preferred",
+          "Parent or guardian ID proof — Aadhaar card, passport, or driving licence of both parents",
+          "Address proof — Aadhaar card, utility bill, or rental agreement showing current Thane address",
+          "Child's Aadhaar card — if available (not mandatory but strongly recommended)",
+          "Previous school records — transfer certificate or most recent progress report if applicable",
+          "Vaccination card and any relevant medical history or allergy information the school should be aware of",
+          "Two passport-size photographs of both parents for ID card preparation at the centre"
+        ]
+      },
+      {
+        heading: "Key Admission Dates for 2026–27 Academic Year",
+        items: [
+          "October to November 2025 — Early Admission Window: Applications open for 2026–27. Families who apply early secure their preferred centre and batch timing. Seats at popular centres fill during this window.",
+          "December 2025 to February 2026 — Main Admission Period: Peak window with maximum seat availability across all 6 Rainbow Preschool centres in Thane. Ideal time to confirm admission before competition increases.",
+          "March to May 2026 — Final Admission Round: Remaining seats are filled; availability is limited especially at Manpada and Hariniwas. Early enquiry during this period is strongly recommended.",
+          "June 2026 Onwards — Academic Year Begins: Mid-term admissions are accepted throughout the year subject to seat availability — well suited for families relocating to Thane or switching from another preschool."
+        ]
+      },
+      {
+        heading: "Why Thane Families Choose Rainbow Preschool",
+        text: "Rainbow Preschool International has built its reputation over 18 years on consistent quality, care, and outcomes. Our commitment to every child's holistic development — cognitive, social, emotional, and physical — sets us apart from other preschools in Thane.",
+        items: [
+          "18+ years of preschool education experience in Thane since 2007, with over 1,00,000 alumni across 6 generations of families",
+          "100% trained female teaching staff — ECE-qualified and Montessori-trained educators with an average tenure of 5+ years",
+          "Small class sizes — maximum 10 to 15 children per group — ensuring meaningful individual attention for every child every day",
+          "CCTV-monitored, child-safe premises with secure entry and exit, child-proofed furniture, and daily sanitisation at all 6 centres",
+          "Play-based, NEP 2020-aligned curriculum developed by our Head of Curriculum and updated annually with current ECE best practices",
+          "Regular parent communication — daily verbal feedback, monthly written progress updates, and open access to your child's teacher",
+          "6 convenient locations across Thane West — Manpada, Hariniwas, Anand Nagar, Dhokali, Kalwa, and Kasarvadavali — for easy access from any neighbourhood"
+        ]
+      },
+      {
+        heading: "Frequently Asked Questions — Preschool Admissions in Thane",
+        text: "Parents often have many questions before enrolling their child in preschool for the first time. Here are answers to the most common queries our admissions team receives about the preschool admission process, age eligibility, documents, and fees at Rainbow Preschool International."
+      },
+      {
+        heading: "What is the admission process for playgroup in Thane?",
+        text: "The playgroup admission process at Rainbow Preschool is simple and takes 3 to 5 working days. Start by submitting an enquiry — online, by calling 82915 68972, or by walking into any of our 6 Thane centres. Our admissions team will schedule a free campus tour at your nearest Rainbow centre. You can visit the playgroup classroom, meet the teachers, and let your toddler experience the environment. Once satisfied, complete the registration form and submit documents. Confirm the seat with the admission fee. Playgroup admissions are open for children aged 1.5 to 2.5 years. Mid-term admissions are also accepted subject to seat availability."
+      },
+      {
+        heading: "What documents do I need for nursery admission in Thane?",
+        text: "For nursery admission at Rainbow Preschool, please bring: the child's birth certificate (original plus one photocopy), 4 to 6 passport-size photographs of the child, parent ID proof (Aadhaar, passport, or driving licence), address proof showing your Thane address, child's Aadhaar card if available, and vaccination card. If the child attended another school previously, a transfer certificate or progress report is also required. All these documents are needed in original and one photocopy each. If any document is temporarily unavailable, provisional admission can be granted with a commitment to submit the document within 30 days."
+      },
+      {
+        heading: "Is there a waiting list for preschool admission at Rainbow?",
+        text: "Rainbow Preschool has limited seats per batch to maintain small class sizes of 10 to 15 children — this is essential for the individual attention our teachers provide. During peak admission months (December to March), popular centres and timings can fill up. We recommend enquiring as early as possible — ideally in October or November before the main window opens — to secure your preferred centre and batch. We do maintain a waiting list for filled batches, and parents are notified if a seat becomes available. For the most current availability at any centre, call 82915 68972 or fill the enquiry form on this page."
+      },
     ],
-    internalLinks: commonInternalLinks,
+    internalLinks: [...commonInternalLinks, { text: "Playgroup Programme", url: "/playgroup" }, { text: "Nursery Programme", url: "/nursery" }, { text: "Kindergarten Programme", url: "/kindergarten" }],
   },
   "/best-preschool-near-me-in-thane": {
     title: "Best Preschool Near Me in Thane | Rainbow",
