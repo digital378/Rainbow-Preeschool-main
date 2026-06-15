@@ -164,6 +164,14 @@ const whyParentsChoose = [
   { icon: Clock, title: "Flexible Programmes for Every Family", desc: "From half-day playgroup and nursery sessions to full-day daycare and after-school Happy Times, Rainbow has a schedule that works for every family in Thane." },
 ];
 
+const competitorRows: { school: string; highlight?: boolean; centres: string; rating: string; founded: string; curriculum: string; ages: string }[] = [
+  { school: "Rainbow Preschool International", highlight: true, centres: "6 (Manpada, Hariniwas, Anand Nagar, Dhokali, Kalwa, Kasarvadavali)", rating: "★ 4.7 / 5 (3,997+ reviews)", founded: "2007 (18+ yrs)", curriculum: "Proprietary play-based ECCE, NEP 2020 aligned", ages: "1.5–6 yrs" },
+  { school: "Kidzee", centres: "3–4 in Thane", rating: "★ 4.2 / 5 (avg.)", founded: "2002", curriculum: "iLead franchise curriculum", ages: "1.5–6 yrs" },
+  { school: "EuroKids", centres: "3–4 in Thane", rating: "★ 4.1 / 5 (avg.)", founded: "2001", curriculum: "EuroStar franchise programme", ages: "2.5–6 yrs" },
+  { school: "TreeHouse", centres: "1–2 in Thane", rating: "★ 4.0 / 5 (avg.)", founded: "2007", curriculum: "Activity-based franchise", ages: "2–6 yrs" },
+  { school: "Kangaroo Kids", centres: "1 in Thane", rating: "★ 4.3 / 5 (avg.)", founded: "1993", curriculum: "IPC holistic development", ages: "2–6 yrs" },
+];
+
 const faqs = [
   {
     question: "Why is Rainbow considered one of the best preschools in Thane?",
@@ -246,6 +254,95 @@ const faqs = [
       "Call directly at +91 82915 68972 (Mon–Sat, 9 AM–5 PM)",
       "Walk in to any of our 6 Thane centres during school hours — no appointment needed",
       "Campus tours are free of charge and include a meet-and-greet with our educators",
+    ],
+  },
+  {
+    question: "Which is the best preschool in Thane for 2-year-olds?",
+    answer: "For 2-year-olds, Rainbow Preschool International's Playgroup programme (1.5–2.5 years) is purpose-built for toddlers taking their first steps into a structured environment. Key advantages for this age group:",
+    bullets: [
+      "Small batches of 10–12 children so toddlers never feel overwhelmed",
+      "Gentle separation support — experienced teachers guide the settling-in process over 2–3 weeks",
+      "100% female teaching staff who understand toddler developmental needs",
+      "Sensory play, music, movement, and free exploration — no academics at this stage",
+      "Available at all 6 Thane centres, so there is always one close to your home",
+    ],
+  },
+  {
+    question: "How does Rainbow Preschool compare with Kidzee in Thane?",
+    answer: "Both Rainbow and Kidzee are well-established names in preschool education in Thane. Key differences parents ask about:",
+    bullets: [
+      "Origin — Rainbow is Thane-founded (2007), not a national franchise; curriculum is developed in-house over 18 years specifically for Thane children",
+      "Centres — Rainbow has 6 dedicated Thane centres; Kidzee has 3–4 centres across Thane",
+      "Rating — Rainbow holds a 4.7★ Google rating from 3,997+ reviews, the highest-reviewed preschool in Thane",
+      "Curriculum — Rainbow's proprietary NEP 2020-aligned curriculum vs. Kidzee's iLead franchise kit",
+      "Staff — Rainbow enforces a 100% female, ECE-certified staff policy across all centres",
+      "Awards — Recognised by India Today, ScooNews, Economic Times, and the World Education Summit",
+    ],
+  },
+  {
+    question: "How do I choose the best preschool near me in Thane?",
+    answer: "Choosing the right preschool in Thane comes down to five things that directly affect your child's daily experience:",
+    bullets: [
+      "Safety infrastructure — check for CCTV in every classroom, biometric entry, and female staff before anything else",
+      "Teacher qualifications — ask specifically for ECE (Early Childhood Education) certification, not just a general degree",
+      "Student-teacher ratio — the ideal is 1:10 to 1:15; anything above 1:20 limits individual attention",
+      "Curriculum approach — play-based and experiential beats rote and worksheet-heavy at the preschool stage",
+      "Campus visit and trial class — let your child attend a free trial; their comfort is the best indicator",
+    ],
+  },
+  {
+    question: "What makes a preschool the best for early childhood education?",
+    answer: "The best preschools in Thane share these non-negotiable qualities that directly impact a child's development:",
+    bullets: [
+      "Qualified early childhood educators — teachers trained specifically in child development, not just subject-matter graduates",
+      "Small class sizes — maximum 15 children per group to ensure individual attention every day",
+      "Play-based curriculum — joyful, exploratory learning aligned to developmental milestones, never rote or drill-based",
+      "Safe and hygienic campus — CCTV, clean washrooms, child-proof furniture, and proper outdoor play areas",
+      "Regular parent communication — daily feedback, progress notes, and an open-door policy build trust",
+    ],
+  },
+  {
+    question: "Which preschool in Thane offers the best value for fees?",
+    answer: "Rainbow Preschool offers transparent, competitive fees that reflect genuine value — trained ECE educators, an award-winning curriculum, CCTV-monitored campuses, and comprehensive parent communication. The fee structure covers:",
+    bullets: [
+      "One-time admission fee — covers registration, orientation, and starter kit",
+      "Monthly or term tuition — curriculum delivery, teaching staff, and all learning materials",
+      "Activity fee — art, music, dance, yoga, sports, and field trips throughout the year",
+      "Optional transport — GPS-tracked vehicles with female attendants",
+      "No hidden charges — full breakdown shared before admission is confirmed",
+      "Sibling concessions and alumni-family discounts available — ask during your campus visit",
+    ],
+  },
+  {
+    question: "Is there a preschool in Thane with 100% female teaching staff?",
+    answer: "Yes — Rainbow Preschool International operates a 100% female teaching and care staff policy across all 6 Thane centres. This is one of the most frequently cited reasons Thane parents choose Rainbow:",
+    bullets: [
+      "Every teacher, classroom assistant, and care staff member is female — no exceptions at any centre",
+      "All staff are background-verified before joining Rainbow",
+      "ECE certification or Montessori training is mandatory for every teaching role",
+      "Female staff policy extends to daycare and Happy Times after-school care as well",
+    ],
+  },
+  {
+    question: "What is the best play school near me in Thane?",
+    answer: "Rainbow Preschool International's Playgroup programme is widely regarded as the best play school in Thane, with 6 centres covering most of Thane West. Find the one nearest you:",
+    bullets: [
+      "Manpada — Ghodbunder Road, Hiranandani Estate area",
+      "Hariniwas — Naupada, Panchpakadi, Charai area",
+      "Anand Nagar — Majiwada, Tropical Lagoon area",
+      "Dhokali — Kolshet Road, Vandana Nagar, Balkum area",
+      "Kalwa — Kalwa, Vitawa, Kharegaon area",
+      "Kasarvadavali — Ghodbunder Road, Hiranandani Meadows, Brahmand area",
+    ],
+  },
+  {
+    question: "Is Rainbow Preschool CBSE or ICSE affiliated?",
+    answer: "Rainbow Preschool International is a standalone preschool chain — preschools in India are not affiliated to CBSE, ICSE, or any school board (board affiliation begins from Class 1). What Rainbow does is prepare children thoroughly for entry into leading primary schools:",
+    bullets: [
+      "Sr. KG graduates are assessed as school-ready for CBSE, ICSE, IGCSE, and IB primary programmes",
+      "Curriculum is benchmarked annually against Singhania School, Hiranandani Foundation, Universal High School, and other leading Thane schools",
+      "Children leave with reading fluency, writing ability, basic mathematics, and social-emotional readiness for Grade 1",
+      "Rainbow does not conduct an entrance test for admission — no academic pressure before age 6",
     ],
   },
 ];
@@ -610,6 +707,44 @@ export default function BestPreschoolInThane() {
                 </div>
                 <p className="text-xs text-gray-500 dark:text-gray-400 mt-3 text-center">
                   Comparison based on publicly-listed information from preschools in Thane West (April 2026).
+                </p>
+              </div>
+            </section>
+
+            {/* ── NAMED COMPETITOR COMPARISON ──────────────────────────────── */}
+            <section className="py-8 md:py-12 px-4" style={{ contentVisibility: 'auto', containIntrinsicSize: '0 480px' }}>
+              <div className="max-w-5xl mx-auto">
+                <h2 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-2 text-center">
+                  Best Preschools in Thane — Side-by-Side Comparison
+                </h2>
+                <p className="text-sm text-gray-600 dark:text-gray-300 text-center mb-6 max-w-2xl mx-auto">
+                  How Rainbow Preschool International compares with other established preschool chains in Thane, based on publicly available data as of June 2026.
+                </p>
+                <div className="overflow-x-auto rounded-xl border border-gray-200 dark:border-gray-700">
+                  <table className="w-full text-xs md:text-sm">
+                    <thead className="bg-gray-50 dark:bg-gray-900">
+                      <tr>
+                        {["Preschool", "Thane Centres", "Google Rating", "Founded", "Curriculum", "Age Range"].map((h) => (
+                          <th key={h} className="text-left p-3 font-semibold text-gray-900 dark:text-white whitespace-nowrap">{h}</th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+                      {competitorRows.map((row, i) => (
+                        <tr key={i} className={row.highlight ? "bg-yellow-50 dark:bg-yellow-900/20" : "bg-white dark:bg-gray-800"}>
+                          <td className={`p-3 font-semibold align-top ${row.highlight ? "text-primary" : "text-gray-900 dark:text-white"}`}>{row.school}</td>
+                          <td className="p-3 text-gray-700 dark:text-gray-300 align-top">{row.centres}</td>
+                          <td className="p-3 text-gray-700 dark:text-gray-300 align-top whitespace-nowrap">{row.rating}</td>
+                          <td className="p-3 text-gray-700 dark:text-gray-300 align-top whitespace-nowrap">{row.founded}</td>
+                          <td className="p-3 text-gray-700 dark:text-gray-300 align-top">{row.curriculum}</td>
+                          <td className="p-3 text-gray-700 dark:text-gray-300 align-top whitespace-nowrap">{row.ages}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-3 text-center">
+                  Centre counts and ratings sourced from Google Maps; accurate as of June 2026. Competitor ratings shown as averages across their Thane branches.
                 </p>
               </div>
             </section>
