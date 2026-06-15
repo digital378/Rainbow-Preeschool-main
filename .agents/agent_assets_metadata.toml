@@ -6,3 +6,9 @@ id = "C0LJ5VrinRIktBMNT06Ni"
 uri = "file://seo-report.md"
 type = "text"
 title = "Rainbow Preschool — Full SEO Report"
+
+[[outputs]]
+id = "Wkz4DDeUUznZIREINzYae"
+uri = "file://rpi_pages_inventory.csv"
+type = "table"
+title = "RPI Pages Inventory — URLs, Meta Titles & H1s"
