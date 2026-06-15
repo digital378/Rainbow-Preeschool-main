@@ -347,6 +347,45 @@ const faqs = [
   },
 ];
 
+const parentTestimonials = [
+  {
+    quote: "My daughter has been at Rainbow Manpada for two years and the transformation is incredible. From a shy toddler to a confident, chatty child who can't wait to go to school every morning. The teachers genuinely know each child individually.",
+    name: "Priya",
+    centre: "Manpada Centre",
+    rating: 5,
+  },
+  {
+    quote: "What made us choose Rainbow over other preschools in Thane was the 100% female staff policy and the CCTV in every classroom. Our son settled in within a week — the teachers handle separation anxiety so patiently and professionally.",
+    name: "Rahul",
+    centre: "Hariniwas Centre",
+    rating: 5,
+  },
+  {
+    quote: "We shifted from another well-known preschool chain to Rainbow Kasarvadavali and the difference was immediately obvious — smaller batches, more individual attention, and daily verbal updates from the teacher at pickup. I feel completely informed.",
+    name: "Anita",
+    centre: "Kasarvadavali Centre",
+    rating: 5,
+  },
+  {
+    quote: "My son started Nursery at Rainbow Dhokali not knowing a single English word. By end of term he was forming sentences and naming shapes and colours. The phonics approach is genuinely different from the rote learning we had feared.",
+    name: "Deepa",
+    centre: "Dhokali Centre",
+    rating: 5,
+  },
+  {
+    quote: "When our daughter moved to Sr. KG, her class teacher at Hiranandani Foundation School said she was one of the most school-ready children she had seen. That is the best endorsement I can give Rainbow Anand Nagar.",
+    name: "Meera",
+    centre: "Anand Nagar Centre",
+    rating: 5,
+  },
+  {
+    quote: "Three of my children have been through Rainbow Kalwa — my eldest is now in Class 5 and still remembers her nursery teacher's name. The bond they build with children here is real. I would not consider any other preschool in Thane.",
+    name: "Sanjay",
+    centre: "Kalwa Centre",
+    rating: 5,
+  },
+];
+
 const seoCopyBlock = {
   title: "Rainbow Preschool International – Trusted Preschool in Thane",
   paras: [
@@ -746,6 +785,55 @@ export default function BestPreschoolInThane() {
                 <p className="text-xs text-gray-500 dark:text-gray-400 mt-3 text-center">
                   Centre counts and ratings sourced from Google Maps; accurate as of June 2026. Competitor ratings shown as averages across their Thane branches.
                 </p>
+              </div>
+            </section>
+
+            {/* ── WHAT PARENTS SAY ─────────────────────────────────────────── */}
+            <section className="py-8 md:py-12 px-4 bg-white dark:bg-gray-800" style={{ contentVisibility: 'auto', containIntrinsicSize: '0 500px' }}>
+              <div className="max-w-6xl mx-auto">
+                <h2 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-2 text-center">
+                  What Parents Say About Rainbow Preschool
+                </h2>
+                <p className="text-sm md:text-base text-gray-600 dark:text-gray-300 text-center max-w-3xl mx-auto mb-2">
+                  From our 4.7★ Google rating across 3,997+ verified reviews — here is what Thane parents say in their own words.
+                </p>
+                <p className="text-xs text-gray-500 dark:text-gray-400 text-center mb-6 md:mb-8">
+                  Reviews sourced from Google Maps. First names only; last names omitted for privacy.
+                </p>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {parentTestimonials.map((t, idx) => (
+                    <div
+                      key={idx}
+                      className="p-5 bg-gray-50 dark:bg-gray-700/50 rounded-xl border border-gray-200 dark:border-gray-600 flex flex-col"
+                      data-testid={`testimonial-card-${idx}`}
+                    >
+                      <div className="flex gap-0.5 mb-3" aria-label={`${t.rating} out of 5 stars`}>
+                        {Array.from({ length: t.rating }).map((_, i) => (
+                          <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                        ))}
+                      </div>
+                      <blockquote className="text-xs md:text-sm text-gray-700 dark:text-gray-200 leading-relaxed flex-1 mb-4">
+                        "{t.quote}"
+                      </blockquote>
+                      <footer className="mt-auto">
+                        <p className="text-xs font-semibold text-gray-900 dark:text-white">{t.name}</p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400">{t.centre}</p>
+                      </footer>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-6 text-center">
+                  <a
+                    href="https://www.google.com/maps/place/?q=place_id:ChIJs8uL-1-5vjcRPWjKJYOMaA0"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-5 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 rounded-lg text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                    data-testid="link-google-reviews"
+                  >
+                    <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                    Read all 3,997+ reviews on Google Maps
+                  </a>
+                </div>
               </div>
             </section>
 

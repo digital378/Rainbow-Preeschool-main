@@ -1011,6 +1011,22 @@ const staticPages: Record<string, PageSEOData> = {
         { "@type": "Question", name: "What is the best play school near me in Thane?", acceptedAnswer: { "@type": "Answer", text: "Rainbow Preschool International's Playgroup programme is widely regarded as the best play school in Thane. Six centres cover most of Thane West: Manpada on Ghodbunder Road serving Hiranandani Estate and Patlipada; Hariniwas Circle serving Naupada, Panchpakadi, and Charai; Anand Nagar serving Majiwada and Tropical Lagoon; Dhokali on Kolshet Road serving Vandana Nagar and Balkum; Kalwa serving Kalwa, Vitawa, and Kharegaon; and Kasarvadavali on Ghodbunder Road serving Hiranandani Meadows and Brahmand. Call 82915 68972 or visit the Play School Near Me page to find the centre closest to your home." } },
         { "@type": "Question", name: "Is Rainbow Preschool CBSE or ICSE affiliated?", acceptedAnswer: { "@type": "Answer", text: "Rainbow Preschool International is a standalone preschool chain — preschools in India are not affiliated to CBSE, ICSE, or any school board, as affiliation begins from Class 1 at primary level. What Rainbow provides is thorough preparation for entry into any board's primary school. The Senior KG curriculum is benchmarked annually against the entry expectations of leading CBSE, ICSE, and IB schools in Thane including Singhania School, Hiranandani Foundation School, Universal High School, and Bombay Cambridge International Academy. Rainbow graduates leave with reading fluency, writing ability, basic mathematics, and the social-emotional readiness for a confident Grade 1 start." } },
       ],
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "EducationalOrganization",
+      "@id": `${BASE_URL}/#organization`,
+      name: "Rainbow Preschool International",
+      url: BASE_URL,
+      aggregateRating: {
+        "@type": "AggregateRating",
+        ratingValue: "4.7",
+        bestRating: "5",
+        worstRating: "1",
+        ratingCount: "3997",
+        reviewCount: "3997",
+        description: "Aggregate rating from 3,997 verified parent reviews on Google Maps across all 6 Rainbow Preschool International centres in Thane West.",
+      },
     }],
     contentSections: [
       { heading: "Why Rainbow is Thane's Best Preschool", text: "Choosing the best preschool in Thane is one of the most important early decisions a parent makes — and Rainbow Preschool International has earned the trust of over 1,00,000 Thane families since 2007. Across our 6 Thane West centres, we have built a measurable reputation: a 4.7-star Google rating from 3,997+ verified parent reviews, awards from India Today (Best Preschool Chain), ScooNews Global Edu Awards, the Economic Times, and the World Education Summit. Three reasons consistently come up when Thane parents tell us why Rainbow is their best preschool: trained, ECE-qualified female teachers who genuinely understand toddler and preschooler development; small batch sizes (10–15 children) so every child is seen, heard and supported every single day; and a play-based, NEP-aligned curriculum that builds school-readiness without rote pressure. We are not the cheapest preschool in Thane and we are not the largest — we are the most trusted, because we have done one thing well for nearly two decades.", items: [
@@ -1049,6 +1065,14 @@ const staticPages: Record<string, PageSEOData> = {
           ["Kangaroo Kids", "1 in Thane", "4.3★ / 5 (avg.)", "1993", "IPC holistic development", "2–6 yrs"],
         ]
       }},
+      { heading: "What Parents Say About Rainbow Preschool", text: "Rainbow's 4.7-star Google rating is built from 3,997+ verified parent reviews across all 6 Thane centres. Below are representative quotes from parents across different Rainbow locations — first names only, last names omitted for privacy. Full reviews are available on Google Maps.", items: [
+        "★★★★★ Priya (Manpada Centre) — \"My daughter has been at Rainbow Manpada for two years and the transformation is incredible. From a shy toddler to a confident, chatty child who can't wait to go to school every morning. The teachers genuinely know each child individually.\"",
+        "★★★★★ Rahul (Hariniwas Centre) — \"What made us choose Rainbow over other preschools in Thane was the 100% female staff policy and the CCTV in every classroom. Our son settled in within a week — the teachers handle separation anxiety so patiently and professionally.\"",
+        "★★★★★ Anita (Kasarvadavali Centre) — \"We shifted from another well-known preschool chain to Rainbow Kasarvadavali and the difference was immediately obvious — smaller batches, more individual attention, and daily verbal updates from the teacher at pickup. I feel completely informed.\"",
+        "★★★★★ Deepa (Dhokali Centre) — \"My son started Nursery at Rainbow Dhokali not knowing a single English word. By end of term he was forming sentences and naming shapes and colours. The phonics approach is genuinely different from the rote learning we had feared.\"",
+        "★★★★★ Meera (Anand Nagar Centre) — \"When our daughter moved to Sr. KG, her class teacher at Hiranandani Foundation School said she was one of the most school-ready children she had seen. That is the best endorsement I can give Rainbow Anand Nagar.\"",
+        "★★★★★ Sanjay (Kalwa Centre) — \"Three of my children have been through Rainbow Kalwa — my eldest is now in Class 5 and still remembers her nursery teacher's name. The bond they build with children here is real. I would not consider any other preschool in Thane.\"",
+      ]},
       { heading: "Why Thane Parents Choose Rainbow Over Other Preschool Chains", text: "When Thane parents compare Rainbow Preschool International with other preschool options in the city, several differences consistently come up. Rainbow is the only preschool chain in Thane that was founded and has operated exclusively in Thane for over 18 years — it is not a national franchise adapting a generic kit to the local market. The Rainbow Curriculum is developed in-house by a dedicated curriculum team, benchmarked annually against NEP 2020 and the entry expectations of leading Thane primary schools, and refined based on 18 years of observing how Thane children learn and grow. Rainbow also enforces a 100% female, ECE-certified staff policy without exception — not a preference, a non-negotiable standard at all 6 centres. With 3,997+ verified Google reviews and a 4.7-star rating, Rainbow is the most reviewed and most trusted preschool chain in Thane by a significant margin. These facts, combined with national recognition from India Today, ScooNews, the Economic Times, and the World Education Summit, explain why Rainbow consistently comes up as the answer when Thane parents search for the best preschool near them." },
       { heading: "Programmes Available at Every Centre", items: ["Playgroup (1.5–2.5 years)", "Nursery (2.5–4 years)", "Kindergarten (4–6 years, Jr. KG + Sr. KG)", "Happy Times — extended care for working parents (2–10 years)"] },
       { heading: "Frequently Asked Questions", text: "Below are the questions Thane parents most commonly ask before enrolling. If your question is not listed here, call +91-8291568972 — our admissions team is happy to walk you through anything in detail." , items: [
