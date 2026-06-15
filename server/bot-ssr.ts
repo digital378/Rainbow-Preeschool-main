@@ -3,6 +3,11 @@ import fs from "fs";
 import path from "path";
 import { getPageSEO, type PageSEOData } from "./ssr-pages";
 
+// Inclusion rule: only add UA strings that appear EXCLUSIVELY in automated
+// crawlers / bots and NEVER in any human-operated browser or in-app browser.
+// Do NOT add social-app in-app browsers (WhatsApp, Instagram, Pinterest,
+// Facebook app, Telegram app) — those are real users and must receive the
+// full React app, not the plain bot HTML.
 const BOT_USER_AGENTS = [
   "googlebot",
   "bingbot",
@@ -14,10 +19,8 @@ const BOT_USER_AGENTS = [
   "facebot",
   "twitterbot",
   "linkedinbot",
-  "whatsapp",
   "telegrambot",
   "applebot",
-  "pinterest",
   "semrushbot",
   "ahrefsbot",
   "mj12bot",
