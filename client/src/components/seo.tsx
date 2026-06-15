@@ -8,6 +8,7 @@ interface SEOProps {
   ogType?: "website" | "article";
   ogImage?: string;
   noIndex?: boolean;
+  robots?: string;
   structuredData?: object | object[];
 }
 
@@ -22,6 +23,7 @@ export function SEO({
   ogType = "website",
   ogImage,
   noIndex = false,
+  robots,
   structuredData,
 }: SEOProps) {
   useEffect(() => {
@@ -52,7 +54,7 @@ export function SEO({
       updateMeta('meta[name="keywords"]', keywords);
     }
 
-    const robotsContent = noIndex ? "noindex, nofollow" : "index, follow";
+    const robotsContent = robots ?? (noIndex ? "noindex, nofollow" : "index, follow");
     updateOrCreateMeta("robots", robotsContent);
 
     const fullCanonical = canonical

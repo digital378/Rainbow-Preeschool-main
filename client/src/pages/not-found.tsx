@@ -8,7 +8,7 @@ export default function NotFound() {
       <SEO
         title="Page Not Found | Rainbow Preschool"
         description="The page you are looking for could not be found."
-        noIndex={true}
+        robots="noindex, follow"
       />
       <Card className="w-full max-w-md mx-4">
         <CardContent className="pt-6">
