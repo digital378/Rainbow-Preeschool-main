@@ -684,7 +684,7 @@ const staticPages: Record<string, PageSEOData> = {
   },
   "/programmes": {
     title: "Preschool Programmes in Thane | Rainbow Preschool",
-    description: "Explore Rainbow Preschool's programmes — Playgroup (1.5–2.5 yrs), Nursery (2.5–4 yrs), and Kindergarten (4–6 yrs) across 6 Thane West centres.",
+    description: "Explore Rainbow Preschool's programmes — Playgroup (1.5–2.5 yrs), Nursery (2.5–4 yrs), Kindergarten (4–6 yrs). Book a free campus visit today.",
     keywords: "preschool programmes thane, playgroup programme, nursery programme, kindergarten programme, early childhood curriculum",
     canonical: `${BASE_URL}/programmes`,
     lastModified: LAST_UPDATED_ISO,
@@ -731,7 +731,7 @@ const staticPages: Record<string, PageSEOData> = {
   },
   "/nursery": {
     title: "Nursery School in Thane (2.5–4 yrs) | Rainbow Preschool",
-    description: "Our Nursery (2.5–4 yrs) builds early literacy, numeracy, and social skills through play-based learning across Rainbow Preschool's 6 Thane West centres.",
+    description: "Enroll in our Nursery (2.5–4 yrs) — early literacy, numeracy & social skills through play-based learning across Rainbow Preschool's 6 Thane centres.",
     keywords: "nursery school in thane, nursery admission thane, nursery programme thane",
     canonical: `${BASE_URL}/nursery`,
     h1: "Best Nursery School in Thane for Children Aged 2.5 to 3.5 Years",
@@ -852,7 +852,7 @@ const staticPages: Record<string, PageSEOData> = {
   },
   "/preschool-admissions": {
     title: "Preschool Admissions in Thane | Rainbow Preschool",
-    description: "Apply for preschool admission at Rainbow Preschool Thane. Playgroup, nursery & kindergarten admissions open. Age criteria, documents & process.",
+    description: "Apply for preschool admission at Rainbow Preschool Thane. Playgroup, Nursery & KG open — age criteria, documents, fee structure & step-by-step process.",
     keywords: "preschool admissions in thane, preschool admission near me, nursery admission thane, kindergarten admission thane, playgroup admission thane, preschool admission process, preschool admission form, preschool admission enquiry",
     canonical: `${BASE_URL}/preschool-admissions`,
     h1: "Preschool Admissions in Thane",
@@ -1167,7 +1167,7 @@ const staticPages: Record<string, PageSEOData> = {
   },
   "/happy-times": {
     title: "Daycare in Thane | Safe After-School Care | Rainbow Preschool",
-    description: "Enroll in Happy Times — our after-school enrichment programme featuring art, music, dance, sports, and creative activities for children in Thane.",
+    description: "Enroll your child (ages 2–10) in Happy Times — Rainbow Preschool's after-school enrichment in Thane. Art, music, dance, sports & creative play.",
     canonical: `${BASE_URL}/happy-times`,
     lastModified: LAST_UPDATED_ISO,
     lastModifiedDisplay: LAST_UPDATED_DISPLAY,
@@ -1234,7 +1234,7 @@ const staticPages: Record<string, PageSEOData> = {
   },
   "/terms": {
     title: "Terms of Service | Rainbow Preschool International",
-    description: "Terms and conditions for using the Rainbow Preschool International website and services.",
+    description: "Read the terms and conditions for using the Rainbow Preschool International website, enquiry forms, and educational services.",
     keywords: "rainbow preschool terms of service, website terms",
     canonical: `${BASE_URL}/terms`,
     lastModified: LAST_UPDATED_ISO,
@@ -1352,7 +1352,7 @@ const BLOG_POST_SEO_DATA: Record<string, BlogPostSEORecord> = {
   },
   "preparing-your-child-for-first-day-preschool": {
     title: "Preparing Your Child for First Day at Preschool | Expert Tips",
-    description: "Practical tips to prepare your child for their first day at preschool. Managing separation anxiety and building excitement.",
+    description: "Expert tips to prepare your child for their first day at preschool — manage separation anxiety, what to pack, and build school excitement.",
     keywords: "first day preschool, preparing child for school, preschool preparation tips",
     datePublished: "2025-08-05",
     lastModified: "2026-03-28",
@@ -1360,7 +1360,7 @@ const BLOG_POST_SEO_DATA: Record<string, BlogPostSEORecord> = {
   },
   "role-of-parents-early-education": {
     title: "Role of Parents in Early Childhood Education | Rainbow Preschool",
-    description: "Learn how parents play a crucial role in early education. Discover ways to support your child's learning at home.",
+    description: "Learn the crucial role parents play in early education. Practical strategies to support your child's learning at home — for Indian families.",
     keywords: "parents role in education, early education at home, parent involvement preschool",
     datePublished: "2025-07-22",
     lastModified: "2026-04-08",
@@ -1368,7 +1368,7 @@ const BLOG_POST_SEO_DATA: Record<string, BlogPostSEORecord> = {
   },
   "creating-safe-nurturing-learning-environment": {
     title: "Safe Learning Environment for Children | Rainbow Preschool",
-    description: "Learn how a safe and nurturing environment supports child development. Discover how Rainbow Preschool creates secure, stimulating learning spaces.",
+    description: "Discover how a safe, nurturing environment accelerates child development — and how Rainbow Preschool Thane builds secure, stimulating classrooms.",
     keywords: "safe preschool environment, nurturing learning environment, child safety preschool",
     datePublished: "2025-06-18",
     lastModified: "2026-04-15",
