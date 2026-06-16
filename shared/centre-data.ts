@@ -611,37 +611,37 @@ export const localPageSEO: Record<string, LocalPageSEO> = {
   // The bare "Playgroup in Thane" phrase is owned by /playgroup.
   manpada: {
     title: "Playgroup in Manpada, Thane | Rainbow Preschool (1.5-2.5 Years)",
-    description: "Playgroup in Manpada, Thane near Khewra Circle — small batches, 100% female staff & CCTV safety. Rainbow Preschool since 2007. Book a free visit.",
+    description: "Rainbow Preschool's flagship Manpada centre (est. 2007) at Aggarwal Arcade — play-based learning trusted by Edenwoods families. Book a free visit.",
     h1: "Playgroup in Manpada, Thane (1.5-2.5 Years)",
     canonicalPath: "/playgroup-in-manpada",
   },
   kalwa: {
     title: "Playgroup in Kalwa, Thane | Rainbow Preschool (1.5-2.5 Years)",
-    description: "Playgroup in Kalwa, Thane near Sayba Hall — female staff, CCTV safety & 15:1 teacher ratio. Rainbow Preschool since 2007. Book a free visit.",
+    description: "Playgroup in Kalwa near Sayba Hall, Manisha Nagar — 15:1 student-teacher ratio & trained female staff. Convenient to Kalwa station. Enquire now.",
     h1: "Playgroup in Kalwa, Thane (1.5-2.5 Years)",
     canonicalPath: "/playgroup-in-kalwa",
   },
   "ghodbunder-road": {
     title: "Playgroup near Ghodbunder Road, Thane | Rainbow Preschool",
-    description: "Playgroup near Ghodbunder Road, Kasarvadavali (behind Hypercity Mall) — female staff & small batches. Rainbow Preschool since 2007. Book a free visit.",
+    description: "Playgroup near Ghodbunder Road at Kasarvadavali — NEP 2020-aligned curriculum, ages 1.5–2.5 yrs. Rainbow Preschool beside Parijat Gardens. Enquire now.",
     h1: "Playgroup near Ghodbunder Road, Thane (1.5-2.5 Years)",
     canonicalPath: "/playgroup-near-ghodbunder-road",
   },
   "anand-nagar": {
     title: "Playgroup in Anand Nagar Thane | Rainbow Preschool",
-    description: "Playgroup in Anand Nagar, Thane opp. Tropical Lagoon — small batches, 100% female staff & safe campus. Rainbow Preschool. Book a free visit.",
+    description: "Playgroup in Anand Nagar opp. Tropical Lagoon — daily art, music & movement woven into every session. Rainbow Preschool. Book a free visit.",
     h1: "Playgroup in Anand Nagar, Thane (1.5-2.5 Years)",
     canonicalPath: "/playgroup-in-anand-nagar",
   },
   kasarvadavali: {
     title: "Playgroup in Kasarvadavali Thane | Rainbow Preschool",
-    description: "Playgroup in Kasarvadavali, Thane near Hypercity Mall — female staff, CCTV safety & small batches. Rainbow Preschool since 2007. Book a free visit.",
+    description: "Playgroup in Kasarvadavali at Rosa Gardenia, Patlipada — spacious classrooms & outdoor play area. Rainbow Preschool behind Hypercity Mall. Enquire now.",
     h1: "Playgroup in Kasarvadavali, Thane (1.5-2.5 Years)",
     canonicalPath: "/playgroup-in-kasarvadavali",
   },
   dhokali: {
     title: "Playgroup in Dhokali, Thane | Rainbow Preschool (1.5-2.5 Years)",
-    description: "Playgroup in Dhokali, Thane on Kolshet Road — female staff, CCTV safety & small batches. Rainbow Preschool since 2007. Book a free visit.",
+    description: "Playgroup in Dhokali on Kolshet Rd (opp. Aban Park Society) — serving Dhokali, Kolshet & Majiwada families. Rainbow Preschool. Book a free visit.",
     h1: "Playgroup in Dhokali, Thane (1.5-2.5 Years)",
     canonicalPath: "/playgroup-in-dhokali",
   },
