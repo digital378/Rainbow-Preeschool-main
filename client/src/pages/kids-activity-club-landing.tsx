@@ -362,7 +362,7 @@ export default function KidsActivityClubLanding() {
     <div className="pt-20 md:pt-24">
       <SEO
         title="Kids Activity Club Thane | After School | Rainbow"
-        description="Best kids activity club in Thane (3–10 yrs) — dance, art, music, drama, public speaking & sports. Flexible weekend and evening batches."
+        description="Enrol your child (ages 3–10) in Rainbow's Kids Activity Club, Thane — dance, art, music, drama, sports & public speaking. Flexible batches. Book now!"
         keywords="kids activity club thane, after school activities thane, extracurricular activities for kids thane, hobby classes for children thane, dance classes for kids thane, art classes for children thane"
         canonical="https://www.rainbowpreschools.com/kids-activity-club"
         noIndex={true}

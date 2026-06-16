@@ -365,7 +365,7 @@ export default function HappyTimesLanding() {
     <div className="pt-20 md:pt-24">
       <SEO
         title="Daycare in Thane | Safe After-School Care | Rainbow Preschool"
-        description="Daycare in Thane for children aged 2-10 years. Best daycare with CCTV, homework help & healthy snacks for working parents. Book a visit today!"
+        description="Enroll your child (ages 2–10) in Happy Times — Rainbow Preschool's after-school enrichment in Thane. Art, music, dance, sports & creative play."
         keywords="daycare in thane, daycare near me, best daycare in thane, daycare for children near me, daycare for working parents, safe daycare for kids, daycare with cctv, full day daycare, preschool daycare"
         canonical="https://www.rainbowpreschools.com/happy-times"
       />
