@@ -349,7 +349,7 @@ export default function SummerCampLanding() {
   return (
     <div className="pt-20 md:pt-24">
       <SEO
-        title="Summer Camp for Kids in Thane 2025 | Rainbow Preschool"
+        title="Summer Camp for Kids in Thane 2026 | Rainbow Preschool"
         description="Best Summer Camp in Thane for children aged 2-10 years. Fun activities including art, dance, sports, cooking, science experiments, and swimming. Book now!"
         keywords="summer camp thane, summer camp for kids thane, summer activities for children thane, summer vacation classes thane, kids summer camp near me thane"
         canonical="https://www.rainbowpreschools.com/summer-camp"
@@ -370,7 +370,7 @@ export default function SummerCampLanding() {
                 <Sun className="w-4 h-4 mr-1" /> Ages 2 - 10 Years
               </Badge>
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-                Summer Camp for Kids in Thane 2025
+                Summer Camp for Kids in Thane 2026
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed">
                 Make this summer unforgettable! Fun-filled activities, new friends, and exciting learning experiences await your child.
