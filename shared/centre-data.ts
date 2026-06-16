@@ -267,37 +267,37 @@ export interface PreschoolPageSEO {
 export const preschoolPageSEO: Record<string, PreschoolPageSEO> = {
   manpada: {
     title: "Preschool in Manpada, Thane | Rainbow Preschool International",
-    description: "Rainbow Preschool in Manpada, Thane (Aggarwal Arcade, near Khewra Circle) — Playgroup, Nursery & Kindergarten since 2007. Enquire for 2026-27 seats.",
+    description: "Trusted by Edenwoods families since 2007, Rainbow Preschool Manpada offers Playgroup to KG with small batches & 100% female staff. Enquire for 2026-27.",
     h1: "Preschool in Manpada, Thane",
     canonicalPath: "/preschool-in-manpada-thane",
   },
   hariniwas: {
     title: "Preschool in Hariniwas, Thane | Rainbow Preschool International",
-    description: "Rainbow Preschool Hariniwas, Thane (Bhakti Mandir Rd, Panchpakadi) — Playgroup, Nursery & Kindergarten, ages 1.5–5. Female staff. Enquire for 2026-27.",
+    description: "Rainbow Preschool at Hariniwas Circle, Panchpakadi — blending traditional values with modern teaching. Playgroup, Nursery & KG, ages 1.5–5. Enquire now.",
     h1: "Preschool in Hariniwas, Thane",
     canonicalPath: "/preschool-in-hariniwas-thane",
   },
   "anand-nagar": {
     title: "Preschool in Anand Nagar, Thane | Rainbow Preschool International",
-    description: "Rainbow Preschool in Anand Nagar, Thane (opp. Tropical Lagoon) — Playgroup, Nursery & KG, ages 1.5–5. Small batches & female staff. Enquire today.",
+    description: "Rainbow Preschool Anand Nagar (opp. Tropical Lagoon) — art, music & movement every day. Playgroup, Nursery & KG, ages 1.5–5. Enquire for 2026-27.",
     h1: "Preschool in Anand Nagar, Thane",
     canonicalPath: "/preschool-in-anand-nagar-thane",
   },
   dhokali: {
     title: "Preschool in Dhokali, Thane | Rainbow Preschool International",
-    description: "Rainbow Preschool in Dhokali, Thane (Kolshet Rd, opp. Aban Park) — Playgroup, Nursery & KG, ages 1.5–5. Female staff & safe campus. Enquire now.",
+    description: "Rainbow Preschool Dhokali on Kolshet Rd — the local choice for Dhokali, Kolshet & Majiwada families. Playgroup to KG, ages 1.5–5. Enquire for 2026-27.",
     h1: "Preschool in Dhokali, Thane",
     canonicalPath: "/preschool-in-dhokali-thane",
   },
   kalwa: {
     title: "Preschool in Kalwa, Thane | Rainbow Preschool International",
-    description: "Rainbow Preschool in Kalwa, Thane (Manisha Nagar, near Sayba Hall) — Playgroup, Nursery & KG, ages 1.5–5. Small batches. Enquire for 2026-27.",
+    description: "Rainbow Preschool Kalwa, Manisha Nagar — near Kalwa station, small batches & caring female staff. Playgroup, Nursery & KG, ages 1.5–5. Enquire now.",
     h1: "Preschool in Kalwa, Thane",
     canonicalPath: "/preschool-in-kalwa-thane",
   },
   kasarvadavali: {
     title: "Preschool in Kasarvadavali, Thane | Rainbow Preschool",
-    description: "Rainbow Preschool in Kasarvadavali, Thane (behind Hypercity Mall) — Playgroup, Nursery & KG for ages 1.5–5. Small batches. Enquire for 2026-27.",
+    description: "Rainbow Preschool Kasarvadavali (behind Hypercity, Ghodbunder Rd) — preferred by Patlipada families. Playgroup to KG, ages 1.5–5. Enquire for 2026-27.",
     h1: "Preschool in Kasarvadavali, Thane",
     canonicalPath: "/preschool-in-kasarvadavali-thane",
   },
