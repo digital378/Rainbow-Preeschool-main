@@ -101,6 +101,13 @@ if ! npx --no-install tsx scripts/check-description-length.ts; then
   exit 1
 fi
 
+log "step 1.57/6 — tsx scripts/check-bot-ua-list.ts (no social-app in-app browser UAs in BOT_USER_AGENTS)"
+if ! npx --no-install tsx scripts/check-bot-ua-list.ts; then
+  log "FAIL — check-bot-ua-list found a social-app in-app browser UA in BOT_USER_AGENTS. See file:line above."
+  log "blocking deploy."
+  exit 1
+fi
+
 # Non-blocking sibling of the title guard. Scans body copy for the same
 # banned soft-marketing word list and prints warnings (exit 0). Surfaces
 # hype-language drift to PR reviewers without gating the deploy.
@@ -162,6 +169,12 @@ npx --no-install tsx scripts/check-sitemap-200.ts "${PREDEPLOY_URL}"
 SITEMAP_EXIT=$?
 set -e
 
+log "step 7.5/7 — tsx scripts/check-bot-detection.ts ${PREDEPLOY_URL}"
+set +e
+npx --no-install tsx scripts/check-bot-detection.ts "${PREDEPLOY_URL}"
+BOT_DETECTION_EXIT=$?
+set -e
+
 # ── step 8 — Lighthouse performance guard ────────────────────────────────────
 # Runs a simulated-mobile Lighthouse audit against home + priority landing page.
 # Skippable during initial threshold calibration: SKIP_PERF_GUARD=1 bash predeploy.sh
@@ -187,7 +200,7 @@ else
 fi
 # ─────────────────────────────────────────────────────────────────────────────
 
-if [ "${FRESHNESS_EXIT}" -ne 0 ] || [ "${KEYWORD_EXIT}" -ne 0 ] || [ "${SITEMAP_EXIT}" -ne 0 ] || [ "${PERF_EXIT}" -ne 0 ]; then
+if [ "${FRESHNESS_EXIT}" -ne 0 ] || [ "${KEYWORD_EXIT}" -ne 0 ] || [ "${SITEMAP_EXIT}" -ne 0 ] || [ "${BOT_DETECTION_EXIT}" -ne 0 ] || [ "${PERF_EXIT}" -ne 0 ]; then
   if [ "${FRESHNESS_EXIT}" -ne 0 ]; then
     log "FAIL — freshness smoke-test exited ${FRESHNESS_EXIT}. See offending URLs above."
   fi
@@ -197,6 +210,10 @@ if [ "${FRESHNESS_EXIT}" -ne 0 ] || [ "${KEYWORD_EXIT}" -ne 0 ] || [ "${SITEMAP_
   if [ "${SITEMAP_EXIT}" -ne 0 ]; then
     log "FAIL — sitemap-200 smoke-test exited ${SITEMAP_EXIT}. See offending URLs above."
   fi
+  if [ "${BOT_DETECTION_EXIT}" -ne 0 ]; then
+    log "FAIL — bot-detection smoke-test exited ${BOT_DETECTION_EXIT}. A social-app in-app browser UA may have been added to BOT_USER_AGENTS."
+    log "       Real users (WhatsApp, Pinterest, Instagram) must receive the React shell, not the SSR page."
+  fi
   if [ "${PERF_EXIT}" -ne 0 ]; then
     log "FAIL — Lighthouse performance guard exited ${PERF_EXIT}. See per-page results above."
     log "To bypass during threshold calibration: SKIP_PERF_GUARD=1 bash scripts/predeploy.sh"
@@ -204,7 +221,7 @@ if [ "${FRESHNESS_EXIT}" -ne 0 ] || [ "${KEYWORD_EXIT}" -ne 0 ] || [ "${SITEMAP_
   log "tail of booted server log (last 80 lines of ${SERVER_LOG}):"
   tail -n 80 "${SERVER_LOG}" >&2 || true
   log "blocking deploy."
-  # Surface whichever HTTP check failed first (freshness → keyword → sitemap → perf).
+  # Surface whichever HTTP check failed first (freshness → keyword → sitemap → bot-detection → perf).
   if [ "${FRESHNESS_EXIT}" -ne 0 ]; then
     exit "${FRESHNESS_EXIT}"
   fi
@@ -213,6 +230,9 @@ if [ "${FRESHNESS_EXIT}" -ne 0 ] || [ "${KEYWORD_EXIT}" -ne 0 ] || [ "${SITEMAP_
   fi
   if [ "${SITEMAP_EXIT}" -ne 0 ]; then
     exit "${SITEMAP_EXIT}"
+  fi
+  if [ "${BOT_DETECTION_EXIT}" -ne 0 ]; then
+    exit "${BOT_DETECTION_EXIT}"
   fi
   exit "${PERF_EXIT}"
 fi
@@ -247,5 +267,5 @@ else
   log "step 9/9 — SKIPPED Cloudflare cache purge (CF_ZONE_ID or CF_API_TOKEN not set)."
 fi
 
-log "PASS — byline guard + no-pink guard + build + freshness + keyword-targets + sitemap-200 + Lighthouse perf guard all succeeded; deploy may proceed."
+log "PASS — byline guard + no-pink guard + build + freshness + keyword-targets + sitemap-200 + bot-detection + Lighthouse perf guard all succeeded; deploy may proceed."
 exit 0

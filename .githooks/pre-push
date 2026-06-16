@@ -91,6 +91,16 @@ if ! npx --no-install tsx scripts/check-description-length.ts; then
   exit 1
 fi
 
+echo "[pre-push] Running 'tsx scripts/check-bot-ua-list.ts' ..."
+if ! npx --no-install tsx scripts/check-bot-ua-list.ts; then
+  echo "" >&2
+  echo "[pre-push] 'check-bot-ua-list' failed. Push aborted." >&2
+  echo "[pre-push] A social-app in-app browser UA (WhatsApp, Pinterest, Instagram) was found in" >&2
+  echo "[pre-push] BOT_USER_AGENTS. Real users must get the React shell, not the SSR page." >&2
+  echo "[pre-push] Fix server/bot-ssr.ts, or re-run with --no-verify to bypass." >&2
+  exit 1
+fi
+
 # Record success so a subsequent push on the same tree can skip.
 if [ -n "$HEAD_TREE" ]; then
   printf '%s' "$HEAD_TREE" > "$CACHE_FILE" 2>/dev/null || true
