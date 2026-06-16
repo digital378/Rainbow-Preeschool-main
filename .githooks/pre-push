@@ -79,6 +79,14 @@ if ! npx --no-install tsx scripts/check-no-title-cannibalisation.ts; then
   exit 1
 fi
 
+echo "[pre-push] Running 'tsx scripts/check-description-length.ts' ..."
+if ! npx --no-install tsx scripts/check-description-length.ts; then
+  echo "" >&2
+  echo "[pre-push] 'check-description-length' failed. Push aborted." >&2
+  echo "[pre-push] Fix the issues above, or re-run with --no-verify to bypass." >&2
+  exit 1
+fi
+
 # Record success so a subsequent push on the same tree can skip.
 if [ -n "$HEAD_TREE" ]; then
   printf '%s' "$HEAD_TREE" > "$CACHE_FILE" 2>/dev/null || true

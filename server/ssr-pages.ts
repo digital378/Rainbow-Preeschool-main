@@ -852,7 +852,7 @@ const staticPages: Record<string, PageSEOData> = {
   },
   "/preschool-admissions": {
     title: "Preschool Admissions in Thane | Rainbow Preschool",
-    description: "Apply for preschool admission at Rainbow Preschool International in Thane. Explore playgroup, nursery and kindergarten admissions, age criteria, admission process, required documents, and centre options across Thane.",
+    description: "Apply for preschool admission at Rainbow Preschool Thane. Playgroup, nursery & kindergarten admissions open. Age criteria, documents & process.",
     keywords: "preschool admissions in thane, preschool admission near me, nursery admission thane, kindergarten admission thane, playgroup admission thane, preschool admission process, preschool admission form, preschool admission enquiry",
     canonical: `${BASE_URL}/preschool-admissions`,
     h1: "Preschool Admissions in Thane",
