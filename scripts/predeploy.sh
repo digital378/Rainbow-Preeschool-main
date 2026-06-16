@@ -108,6 +108,13 @@ if ! npx --no-install tsx scripts/check-bot-ua-list.ts; then
   exit 1
 fi
 
+log "step 1.58/6 — tsx scripts/check-h1-parity.ts (SSR h1 vs client <h1> parity)"
+if ! npx --no-install tsx scripts/check-h1-parity.ts; then
+  log "FAIL — H1 parity guard found a mismatch between server/ssr-pages.ts h1: and client <h1>. See file:line above."
+  log "blocking deploy."
+  exit 1
+fi
+
 # Non-blocking sibling of the title guard. Scans body copy for the same
 # banned soft-marketing word list and prints warnings (exit 0). Surfaces
 # hype-language drift to PR reviewers without gating the deploy.

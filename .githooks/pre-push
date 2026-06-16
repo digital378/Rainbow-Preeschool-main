@@ -65,8 +65,8 @@ if ! npm run --silent check; then
   exit 1
 fi
 
-# Mirror pre-commit: also run the brand-colour and title guards so a push
-# can't sneak past them even if package.json's `check` script is changed.
+# Mirror pre-commit: also run the brand-colour, title, and H1 guards so a
+# push can't sneak past them even if package.json's `check` script is changed.
 echo "[pre-push] Running 'tsx scripts/check-no-pink.ts' ..."
 if ! npx --no-install tsx scripts/check-no-pink.ts; then
   echo "" >&2
@@ -98,6 +98,15 @@ if ! npx --no-install tsx scripts/check-bot-ua-list.ts; then
   echo "[pre-push] A social-app in-app browser UA (WhatsApp, Pinterest, Instagram) was found in" >&2
   echo "[pre-push] BOT_USER_AGENTS. Real users must get the React shell, not the SSR page." >&2
   echo "[pre-push] Fix server/bot-ssr.ts, or re-run with --no-verify to bypass." >&2
+  exit 1
+fi
+
+echo "[pre-push] Running 'tsx scripts/check-h1-parity.ts' ..."
+if ! npx --no-install tsx scripts/check-h1-parity.ts; then
+  echo "" >&2
+  echo "[pre-push] 'check-h1-parity' failed. Push aborted." >&2
+  echo "[pre-push] The h1: in server/ssr-pages.ts and the <h1> in the client page must match." >&2
+  echo "[pre-push] Fix the issues above, or re-run with --no-verify to bypass." >&2
   exit 1
 fi
 
