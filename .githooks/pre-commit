@@ -8,6 +8,10 @@
 #   - TypeScript regressions (`tsc`)
 #   - Off-brand pink colour usage (scripts/check-no-pink.ts) — the
 #     Rainbow Preschool brand uses red/primary (#dc2626) only.
+#   - SEO title keyword cannibalization and soft-marketing words
+#     (scripts/check-no-title-cannibalisation.ts)
+#   - Meta-description exceeding 155 chars — Google truncates SERP snippets
+#     around that length (scripts/check-description-length.ts)
 #
 # Enable this hook once with:
 #     bash scripts/install-hooks.sh
