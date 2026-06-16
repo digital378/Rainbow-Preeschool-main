@@ -281,8 +281,43 @@ export function setupBotSSR(app: Express) {
     }
 
     const seo = getPageSEO(urlPath);
+
     if (!seo) {
-      return next();
+      // Unknown URL — serve a proper noindex 404 SSR page so bots don't
+      // fall through to the SPA shell that defaults to "index, follow".
+      // A soft 404 (200 + indexable) would let Googlebot try to crawl and
+      // index every typo/spam URL that hits the site.
+      const notFoundSeo: PageSEOData = {
+        title: "Page Not Found | Rainbow Preschool International",
+        description: "The page you requested does not exist. Explore our preschool programmes, centres, and admissions information.",
+        noIndex: true,
+        h1: "Page Not Found",
+        canonical: `${BASE_URL}/`,
+        breadcrumbs: [{ name: "Home", url: "/" }],
+        introText: "Sorry, we couldn't find what you were looking for. Please visit our home page or use the links below to find information about our programmes.",
+        contentSections: [
+          {
+            heading: "Popular Pages",
+            links: [
+              { text: "Playgroup (1.5–2.5 yrs)", url: "/playgroup" },
+              { text: "Nursery (2.5–4 yrs)", url: "/nursery" },
+              { text: "Kindergarten (4–6 yrs)", url: "/kindergarten" },
+              { text: "Preschool Admissions", url: "/preschool-admissions" },
+              { text: "Contact Us", url: "/contact" },
+            ],
+          },
+        ],
+      };
+      const notFoundHtml = renderSSRHtml(notFoundSeo, urlPath);
+      res.status(404).set({
+        "Content-Type": "text/html; charset=utf-8",
+        "Cache-Control": "no-store",
+        "CDN-Cache-Control": "no-store",
+        "Cloudflare-CDN-Cache-Control": "no-store",
+        "Vary": "User-Agent, Accept-Encoding",
+      }).removeHeader("Set-Cookie");
+      res.send(notFoundHtml);
+      return;
     }
 
     const html = renderSSRHtml(seo, urlPath);
