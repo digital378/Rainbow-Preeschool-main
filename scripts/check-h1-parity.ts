@@ -274,8 +274,221 @@ const CLIENT_H1_MAP: Record<string, { file: string; nthH1?: number }> = {
 };
 
 // ---------------------------------------------------------------------------
-// Step 4: Compare and report
+// Step 4: Compare and report (static pages)
 // ---------------------------------------------------------------------------
+
+// ---------------------------------------------------------------------------
+// Step 5: Locality pages (preschool-in-* and playgroup-in-*)
+// ---------------------------------------------------------------------------
+//
+// These pages use template-generated SSR h1s and shared data for client h1s.
+// We parse both sides statically and compare per-URL.
+
+/**
+ * Parse preschoolCentres map from server/ssr-pages.ts.
+ * Returns Map<url, locality>, e.g. "/preschool-in-manpada-thane" → "Manpada"
+ */
+function parsePrischoolCentresLocalities(): Map<string, string> {
+  const lines = readLines("server/ssr-pages.ts");
+  const result = new Map<string, string>();
+  let inMap = false;
+  for (const line of lines) {
+    if (!inMap) {
+      if (/^const preschoolCentres:/.test(line)) inMap = true;
+      continue;
+    }
+    if (/^\};\s*$/.test(line)) break;
+    const m = line.match(/"(\/preschool-in-[^"]+)":\s*\{[^}]*\blocality:\s*"([^"]+)"/);
+    if (m) result.set(m[1], m[2]);
+  }
+  return result;
+}
+
+/**
+ * Find the h1 template for preschool locality pages in server/ssr-pages.ts.
+ * Scans inside the `if (preschoolCentres[cleanPath])` block.
+ * Returns the raw template string, e.g. "Preschool in ${centre.locality}, Thane".
+ */
+function parsePrischoolSSRH1Template(): string | null {
+  const lines = readLines("server/ssr-pages.ts");
+  let inBranch = false;
+  for (const line of lines) {
+    if (!inBranch) {
+      if (/if\s*\(preschoolCentres\[cleanPath\]\)/.test(line)) inBranch = true;
+      continue;
+    }
+    const m = line.match(/^\s+h1:\s*`([^`]+)`/);
+    if (m) return m[1];
+    if (/if\s*\(playgroundPages\[cleanPath\]\)/.test(line)) break;
+  }
+  return null;
+}
+
+/**
+ * Parse preschoolPageSEO from shared/centre-data.ts.
+ * Returns Map<localitySlug, h1>, e.g. "manpada" → "Preschool in Manpada, Thane"
+ */
+function parsePrischoolClientH1s(): Map<string, string> {
+  const lines = readLines("shared/centre-data.ts");
+  const result = new Map<string, string>();
+  let inObj = false;
+  let depth = 0;
+  let currentSlug = "";
+
+  for (const line of lines) {
+    if (!inObj) {
+      if (/^export const preschoolPageSEO/.test(line)) { inObj = true; depth = 1; }
+      continue;
+    }
+    const opens = (line.match(/\{/g) ?? []).length;
+    const closes = (line.match(/\}/g) ?? []).length;
+    depth += opens - closes;
+    if (depth <= 0) break;
+
+    if (depth === 2 && opens > closes) {
+      const slugM = line.match(/^\s+["']?([^"':{}\s]+)["']?\s*:\s*\{/);
+      if (slugM) currentSlug = slugM[1];
+    }
+    const h1M = line.match(/^\s+h1:\s*["']([^"']+)["']/);
+    if (h1M && currentSlug) result.set(currentSlug, h1M[1]);
+  }
+  return result;
+}
+
+/**
+ * Parse playgroundPages URL→h1 from server/ssr-pages.ts.
+ * Each entry must have an explicit `h1:` field (added as part of H1 parity fix).
+ */
+function parsePlaygroupSSRH1s(): Map<string, string> {
+  const lines = readLines("server/ssr-pages.ts");
+  const result = new Map<string, string>();
+  let inMap = false;
+  for (const line of lines) {
+    if (!inMap) {
+      if (/^const playgroundPages:/.test(line)) inMap = true;
+      continue;
+    }
+    if (/^\};\s*$/.test(line)) break;
+    const m = line.match(/"(\/playgroup[^"]+)":\s*\{[^}]*\bh1:\s*"([^"]+)"/);
+    if (m) result.set(m[1], m[2]);
+  }
+  return result;
+}
+
+/**
+ * Parse playgroundLandingPages from shared/playgroup-landing-data.ts.
+ * Returns Map<url, h1>, e.g. "/playgroup-in-manpada" → "Playgroup in Manpada, Thane (1.5-2.5 Years)"
+ */
+function parsePlaygroupClientH1s(): Map<string, string> {
+  const lines = readLines("shared/playgroup-landing-data.ts");
+  const result = new Map<string, string>();
+  let inArray = false;
+  let currentUrl = "";
+  let inSeo = false;
+  let seoDepth = 0;
+
+  for (const line of lines) {
+    if (!inArray) {
+      if (/^export const playgroundLandingPages/.test(line)) inArray = true;
+      continue;
+    }
+    const urlM = line.match(/^\s+url:\s*["']([^"']+)["']/);
+    if (urlM) currentUrl = urlM[1];
+
+    if (!inSeo && /^\s+seo:\s*\{/.test(line)) {
+      inSeo = true;
+      seoDepth = 1;
+      continue;
+    }
+    if (inSeo) {
+      seoDepth += (line.match(/\{/g) ?? []).length - (line.match(/\}/g) ?? []).length;
+      const h1M = line.match(/^\s+h1:\s*["']([^"']+)["']/);
+      if (h1M && currentUrl) result.set(currentUrl, h1M[1]);
+      if (seoDepth <= 0) inSeo = false;
+    }
+  }
+  return result;
+}
+
+/**
+ * Check that SSR h1s for locality pages match the client h1 values from shared data.
+ * Returns an array of error strings (empty = all pass).
+ */
+function checkLocalityPages(): { errors: string[]; checked: number } {
+  const errors: string[] = [];
+  let checked = 0;
+
+  // --- Preschool locality pages ---
+  const preschoolLocalities = parsePrischoolCentresLocalities();
+  const preschoolTemplate = parsePrischoolSSRH1Template();
+  const preschoolClientH1s = parsePrischoolClientH1s();
+
+  if (!preschoolTemplate) {
+    errors.push(
+      "server/ssr-pages.ts — could not find h1 template literal in the preschoolCentres branch. " +
+        "Check that the h1 line uses a template literal (backticks) inside the " +
+        "`if (preschoolCentres[cleanPath])` block.",
+    );
+  } else {
+    for (const [url, locality] of preschoolLocalities) {
+      const ssrH1 = preschoolTemplate.replace("${centre.locality}", locality);
+      const localitySlug = locality.toLowerCase().replace(/ /g, "-");
+      const clientH1 = preschoolClientH1s.get(localitySlug);
+      if (!clientH1) {
+        errors.push(
+          `H1 MISMATCH for ${url}:\n` +
+            `  SSR computed: "${ssrH1}"\n` +
+            `  Client: no preschoolPageSEO entry for slug "${localitySlug}" in shared/centre-data.ts. ` +
+            `Add the missing entry or remove it from preschoolCentres.`,
+        );
+        continue;
+      }
+      checked++;
+      if (ssrH1 !== clientH1) {
+        errors.push(
+          `H1 MISMATCH for ${url}:\n` +
+            `  SSR (server/ssr-pages.ts preschoolCentres h1 template → locality "${locality}"): "${ssrH1}"\n` +
+            `  Client (shared/centre-data.ts preschoolPageSEO["${localitySlug}"].h1): "${clientH1}"\n` +
+            `  Fix: update one side so the h1 texts are byte-equal.`,
+        );
+      }
+    }
+  }
+
+  // --- Playgroup locality pages ---
+  const playgroupSSRH1s = parsePlaygroupSSRH1s();
+  const playgroupClientH1s = parsePlaygroupClientH1s();
+
+  if (playgroupSSRH1s.size === 0) {
+    errors.push(
+      "server/ssr-pages.ts — playgroundPages map has no explicit h1 fields. " +
+        "Add an `h1:` string to every entry in the playgroundPages map.",
+    );
+  } else {
+    for (const [url, ssrH1] of playgroupSSRH1s) {
+      const clientH1 = playgroupClientH1s.get(url);
+      if (!clientH1) {
+        errors.push(
+          `H1 MISMATCH for ${url}:\n` +
+            `  SSR: "${ssrH1}"\n` +
+            `  Client: no entry with url="${url}" in shared/playgroup-landing-data.ts playgroundLandingPages.`,
+        );
+        continue;
+      }
+      checked++;
+      if (ssrH1 !== clientH1) {
+        errors.push(
+          `H1 MISMATCH for ${url}:\n` +
+            `  SSR (server/ssr-pages.ts playgroundPages[url].h1): "${ssrH1}"\n` +
+            `  Client (shared/playgroup-landing-data.ts playgroundLandingPages[url].seo.h1): "${clientH1}"\n` +
+            `  Fix: update one side so the h1 texts are byte-equal.`,
+        );
+      }
+    }
+  }
+
+  return { errors, checked };
+}
 
 function main() {
   const ssrH1s = parseSsrH1s();
@@ -285,7 +498,6 @@ function main() {
   for (const [url, clientSpec] of Object.entries(CLIENT_H1_MAP)) {
     const ssr = ssrH1s.get(url);
     if (!ssr) {
-      // SSR entry was removed without updating this script's map
       console.warn(
         `[check-h1-parity] WARN  ${url} — no h1 found in server/ssr-pages.ts staticPages. ` +
           `If the SSR entry was intentionally removed, also remove it from CLIENT_H1_MAP ` +
@@ -317,6 +529,10 @@ function main() {
     }
   }
 
+  const locality = checkLocalityPages();
+  errors.push(...locality.errors);
+  checked += locality.checked;
+
   if (errors.length > 0) {
     console.error(
       `[check-h1-parity] ${errors.length} H1 parity violation(s) found:`,
@@ -329,7 +545,7 @@ function main() {
   }
 
   console.log(
-    `[check-h1-parity] OK — ${checked} pages checked, SSR h1 fields and client <h1> elements all match.`,
+    `[check-h1-parity] OK — ${checked} pages checked (${Object.keys(CLIENT_H1_MAP).length} static + ${locality.checked} locality), SSR h1 fields and client <h1> elements all match.`,
   );
   process.exit(0);
 }

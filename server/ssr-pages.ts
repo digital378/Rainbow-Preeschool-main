@@ -1355,13 +1355,13 @@ const preschoolCentres: Record<string, { locality: string; address: string; phon
   "/preschool-in-kasarvadavali-thane": { locality: "Kasarvadavali", address: "Rosa Gardenia, Next to Parijat Gardens, Kasarvadavali, Behind Hypercity Mall, Thane (W)", phone: "+91-8291568972", lat: "19.2499", lng: "72.9721" },
 };
 
-const playgroundPages: Record<string, { locality: string }> = {
-  "/playgroup-in-manpada": { locality: "Manpada" },
-  "/playgroup-in-kalwa": { locality: "Kalwa" },
-  "/playgroup-near-ghodbunder-road": { locality: "Ghodbunder Road" },
-  "/playgroup-in-anand-nagar": { locality: "Anand Nagar" },
-  "/playgroup-in-kasarvadavali": { locality: "Kasarvadavali" },
-  "/playgroup-in-dhokali": { locality: "Dhokali" },
+const playgroundPages: Record<string, { locality: string; h1: string }> = {
+  "/playgroup-in-manpada": { locality: "Manpada", h1: "Playgroup in Manpada, Thane (1.5-2.5 Years)" },
+  "/playgroup-in-kalwa": { locality: "Kalwa", h1: "Playgroup in Kalwa, Thane (1.5-2.5 Years)" },
+  "/playgroup-near-ghodbunder-road": { locality: "Ghodbunder Road", h1: "Playgroup near Ghodbunder Road, Thane (1.5-2.5 Years)" },
+  "/playgroup-in-anand-nagar": { locality: "Anand Nagar", h1: "Playgroup in Anand Nagar, Thane (1.5-2.5 Years)" },
+  "/playgroup-in-kasarvadavali": { locality: "Kasarvadavali", h1: "Playgroup in Kasarvadavali, Thane (1.5-2.5 Years)" },
+  "/playgroup-in-dhokali": { locality: "Dhokali", h1: "Playgroup in Dhokali, Thane (1.5-2.5 Years)" },
 };
 
 const noIndexPages = ["/ad", "/ad-google", "/flyer", "/RIS", "/ris", "/ris-11th", "/gsc", "/GSC"];
@@ -1693,7 +1693,7 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
       description: `Best preschool in ${centre.locality}, Thane. Rainbow Preschool offers Playgroup, Nursery, and Kindergarten for children aged 1.5-6 years. Visit our ${centre.locality} centre today.`,
       keywords: `preschool in ${centre.locality.toLowerCase()}, preschool in ${centre.locality.toLowerCase()} thane, best preschool ${centre.locality.toLowerCase()}, nursery school ${centre.locality.toLowerCase()}, play school ${centre.locality.toLowerCase()}, kindergarten ${centre.locality.toLowerCase()}, preschool near me ${centre.locality.toLowerCase()}`,
       canonical: `${BASE_URL}${cleanPath}`,
-      h1: `Preschool in ${centre.locality}, Thane — Rainbow Preschool International`,
+      h1: `Preschool in ${centre.locality}, Thane`,
       introText: intros?.paragraph1 ?? `Looking for a quality preschool in ${centre.locality}, Thane? Rainbow Preschool International's ${centre.locality} centre offers Playgroup, Nursery, and Kindergarten programmes in a safe, nurturing environment.`,
       breadcrumbs: [{ name: "Home", url: "/" }, { name: "Best Preschool in Thane", url: "/best-preschool-near-me-in-thane" }, { name: `Preschool in ${centre.locality}`, url: cleanPath }],
       structuredData: [localBusinessSchema(centre.locality, centre.address, centre.phone, cleanPath, centre.lat, centre.lng), richFAQSchema],
@@ -1730,9 +1730,7 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
         ? `playgroup in thane, playgroup near me thane, toddler playgroup thane, playschool thane, best playgroup thane west, playgroup 1.5 years thane`
         : `playgroup in ${pg.locality.toLowerCase()}, playgroup near ${pg.locality.toLowerCase()}, toddler playgroup ${pg.locality.toLowerCase()}`,
       canonical: `${BASE_URL}${cleanPath}`,
-      h1: isThanePage
-        ? `Playgroup in Thane — Rainbow Preschool International`
-        : `Playgroup in ${pg.locality} — Rainbow Preschool International`,
+      h1: pg.h1,
       introText: isThanePage
         ? `Looking for the best playgroup in Thane for your toddler? Rainbow Preschool International has been providing trusted, high-quality playgroup education to Thane families since 2007. Our Playgroup programme is designed specifically for children aged 1.5 to 2.5 years, providing a warm, nurturing, and stimulating first school experience that sets the foundation for a lifetime of learning.`
         : `Looking for a quality playgroup in ${pg.locality}, Thane? Rainbow Preschool International's ${pg.locality} centre offers a trusted Playgroup programme for toddlers aged 1.5 to 2.5 years.`,

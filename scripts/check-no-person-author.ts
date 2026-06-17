@@ -144,6 +144,10 @@ function scanFile(file: string): Hit[] {
       const end = Math.min(lines.length, i + 9);
       const window = lines.slice(start, end).join("\n");
       if (!BYLINE_CONTEXT_RE.test(window)) continue;
+      // HowToStep schema step names (e.g. `name: "Submit Required Documents"`)
+      // look like person names but are schema labels — skip them.
+      const HOWTO_CONTEXT_RE = /@type["']?\s*:\s*["']HowTo(?:Step)?["']/;
+      if (HOWTO_CONTEXT_RE.test(window)) continue;
       hits.push({
         file: rel,
         line: i + 1,
