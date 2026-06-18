@@ -18,12 +18,11 @@ import { LAST_UPDATED_DISPLAY, LAST_UPDATED_ISO } from "@shared/site-freshness";
 import { createAllBranchLocalBusinessSchemas } from "@shared/centre-data";
 import { ProgrammeCard } from "@/components/programme-card";
 import { BranchCard } from "@/components/branch-card";
+import { FindNearestCentre } from "@/components/find-nearest-centre";
 import { TestimonialCard } from "@/components/testimonial-card";
 import { CountUp } from "@/components/count-up";
 import { SEO } from "@/components/seo";
 import { programmes, branches, testimonials } from "@shared/schema";
-import { preschoolLandingPages } from "@shared/centre-data";
-import { pushToDataLayer } from "@/lib/analytics";
 import { ArrowRight, Star, Users, MapPin, Shield, Lock, Phone, Award, FileText, Palette, BookOpen, GraduationCap } from "lucide-react";
 import { SiGoogle } from "react-icons/si";
 import { useState, useEffect, lazy, Suspense, useRef } from "react";
@@ -619,44 +618,19 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Find Preschool Near You - Local SEO Links */}
-      <nav aria-label="Preschool centre locations" className="py-12 md:py-16 bg-primary/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Find Your Nearest Centre — interactive locality search */}
+      <section aria-label="Find your nearest Rainbow Preschool centre" className="py-12 md:py-16 bg-primary/5">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8" data-reveal="float">
-            <h2 className="text-2xl md:text-3xl font-bold mb-2" data-sparkle>Find a Centre Near You</h2>
+            <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">Our Locations</p>
+            <h2 className="text-2xl md:text-3xl font-bold mb-2" data-sparkle>Find Your Nearest Centre</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Each of our six centres offers the same trusted curriculum, certified teachers, and safe learning spaces that families have trusted for over 18 years.
+              Type your area or neighbourhood below — we'll show you which Rainbow Preschool centre is closest to you.
             </p>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
-            {preschoolLandingPages.map((locality) => (
-              <a 
-                key={locality.slug} 
-                href={locality.url}
-                onClick={() => {
-                  pushToDataLayer({
-                    event: 'homepage_location_click',
-                    locality: locality.name,
-                    slug: locality.url,
-                  });
-                }}
-                data-testid={`link-preschool-${locality.slug}`}
-                className="block"
-              >
-                <Card 
-                  className="text-center hover-elevate cursor-pointer h-full"
-                  data-testid={`card-preschool-${locality.slug}`}
-                >
-                  <CardContent className="pt-4 pb-4">
-                    <MapPin className="w-6 h-6 text-primary mx-auto mb-2" />
-                    <p className="font-medium text-sm">{locality.name}</p>
-                  </CardContent>
-                </Card>
-              </a>
-            ))}
-          </div>
+          <FindNearestCentre />
         </div>
-      </nav>
+      </section>
 
       <div className="py-6 bg-primary/5">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
