@@ -345,6 +345,63 @@ const faqs = [
       "Rainbow does not conduct an entrance test for admission — no academic pressure before age 6",
     ],
   },
+  {
+    question: "Is there a preschool near me in Kasarvadavali or on Ghodbunder Road, Thane?",
+    answer: "Yes — Rainbow Preschool International has two centres on Ghodbunder Road that serve families across Kasarvadavali and the broader Ghodbunder corridor:",
+    bullets: [
+      "Kasarvadavali Centre — Rosa Gardenia, next to Parijat Gardens, behind Hypercity Mall (serves Kasarvadavali, Hiranandani Meadows, Brahmand, and upper Ghodbunder Road)",
+      "Manpada Centre — Aggarwal Arcade, near Khewra Circle, Manpada (serves Hiranandani Estate, Patlipada, and lower Ghodbunder Road)",
+      "Both centres offer Playgroup (1.5–2.5 yrs), Nursery (2.5–4 yrs), and Kindergarten (4–6 yrs) with the same curriculum and safety standards",
+      "Happy Times after-school care is also available at both centres for families on Ghodbunder Road",
+      "Call +91 82915 68972 to confirm which centre is closest to your residential society",
+    ],
+  },
+  {
+    question: "How does Rainbow Preschool compare with EuroKids in Thane?",
+    answer: "Rainbow Preschool International and EuroKids are both established names in early childhood education. Here is a factual comparison based on publicly available information as of 2026:",
+    bullets: [
+      "Thane centres — Rainbow has 6 dedicated centres across Thane West; EuroKids has 3–4 centres",
+      "Google rating — Rainbow holds 4.7★ from 3,997+ verified parent reviews; EuroKids averages 4.1★ in Thane",
+      "Curriculum — Rainbow uses a proprietary NEP 2020-aligned curriculum developed in-house over 18 years; EuroKids uses the EuroStar franchise programme",
+      "Age range — Rainbow accepts children from 1.5 years (Playgroup); EuroKids typically from 2.5 years",
+      "Staff — Rainbow enforces 100% female, ECE-certified staff at every centre; EuroKids policy varies by franchise owner",
+      "Recognition — Rainbow has received awards from India Today, ScooNews, Economic Times, and the World Education Summit",
+    ],
+  },
+  {
+    question: "Which preschool in Thane has the highest Google rating and most parent reviews?",
+    answer: "Based on verified Google Maps reviews as of 2026, Rainbow Preschool International holds the highest aggregate rating among preschool chains in Thane:",
+    bullets: [
+      "Rainbow Preschool International — 4.7★ from 3,997+ verified parent reviews across all 6 Thane West centres",
+      "Kangaroo Kids — 4.3★ average in Thane (1 centre)",
+      "Kidzee — 4.2★ average across Thane locations (3–4 centres)",
+      "EuroKids — 4.1★ average across Thane locations (3–4 centres)",
+      "TreeHouse — 4.0★ average in Thane (1–2 centres)",
+      "We recommend checking Google Maps directly for the most current ratings before making your decision",
+    ],
+  },
+  {
+    question: "What is the step-by-step admission process at Rainbow Preschool in Thane?",
+    answer: "Rainbow Preschool International follows a simple 5-step admission process — no entrance test, no parent interview, no donation required:",
+    bullets: [
+      "Step 1 — Enquire: Fill the callback form on this page, WhatsApp +91 82915 68972, or call directly during school hours",
+      "Step 2 — Campus visit: Our team schedules a free tour at your nearest Thane centre, Monday to Saturday including evenings",
+      "Step 3 — Tour and Q&A: Walk through classrooms, meet the lead teacher, ask everything — no pressure and no obligation",
+      "Step 4 — Enrol: Complete the admission form and submit a birth certificate, vaccination record, and 2 passport-size photographs",
+      "Step 5 — Welcome aboard: Your child starts on a date that suits your family; mid-year admissions are available at all 6 Thane centres",
+    ],
+  },
+  {
+    question: "Can my child attend a free trial class at Rainbow Preschool in Thane before I enrol?",
+    answer: "Yes — Rainbow Preschool International offers free trial classes at all 6 Thane centres. It is the best way for your child to experience our environment and for you to meet the teaching team before deciding:",
+    bullets: [
+      "Call or WhatsApp +91 82915 68972 to schedule a free trial class at your nearest centre — available Monday to Saturday",
+      "Your child spends 30–45 minutes in the age-appropriate classroom with the class teacher and assistant",
+      "Parents can observe from a designated area so you see exactly how the team interacts with children",
+      "Available at all 6 Thane centres — Manpada, Hariniwas, Anand Nagar, Dhokali, Kalwa, and Kasarvadavali",
+      "There is no obligation to enrol — the trial class is offered as a genuine, pressure-free experience",
+    ],
+  },
 ];
 
 const parentTestimonials = [
