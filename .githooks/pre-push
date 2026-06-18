@@ -7,9 +7,11 @@
 # code that doesn't pass `npm run check`. This hook re-runs the same
 # suite of checks on push and aborts the push on failure:
 #   - npm run check  (TypeScript + existing lint/test scripts)
-#   - scripts/check-no-pink.ts             (brand colour guard)
-#   - scripts/check-no-title-cannibalisation.ts  (SEO keyword guard)
-#   - scripts/check-description-length.ts  (meta-description ≤ 155 chars)
+#   - scripts/check-no-pink.ts                      (brand colour guard)
+#   - scripts/check-no-title-cannibalisation.ts      (SEO keyword guard)
+#   - scripts/check-description-length.ts            (meta-description ≤ 155 chars)
+#   - scripts/check-bot-ua-list.ts                   (bot UA allowlist guard)
+#   - scripts/check-h1-parity.ts                     (SSR ↔ client H1 parity, 29 pages)
 #
 # To avoid re-running a full type-check when the pre-commit hook
 # *just* ran successfully on the same tree, both hooks write the

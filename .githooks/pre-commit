@@ -12,6 +12,7 @@
 #     (scripts/check-no-title-cannibalisation.ts)
 #   - Meta-description exceeding 155 chars — Google truncates SERP snippets
 #     around that length (scripts/check-description-length.ts)
+#   - SSR ↔ client H1 drift across 29 pages (scripts/check-h1-parity.ts)
 #
 # Enable this hook once with:
 #     bash scripts/install-hooks.sh
