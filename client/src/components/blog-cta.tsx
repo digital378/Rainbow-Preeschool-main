@@ -1,6 +1,6 @@
 import { Link } from "wouter";
 import { MessageCircle, ClipboardList } from "lucide-react";
-import { trackWhatsAppClick } from "@/lib/analytics";
+import { trackWhatsAppClick, trackCTAClick } from "@/lib/analytics";
 
 export type BlogCTATopic = "playgroup" | "nursery" | "kindergarten" | "admissions" | "general";
 
@@ -12,8 +12,18 @@ interface BlogCTAProps {
 const WHATSAPP_URL =
   "https://wa.me/918291568972?text=Hi%2C+I+read+a+Rainbow+Preschool+blog+post+and+would+like+to+know+more+about+admissions.";
 
+const TOPIC_DESTINATIONS: Record<BlogCTATopic, string> = {
+  playgroup: "/playgroup",
+  nursery: "/nursery",
+  kindergarten: "/kindergarten",
+  admissions: "/preschool-admissions",
+  general: "/preschool-admissions",
+};
+
 export function BlogCTA({ topic = "general", variant = "mid" }: BlogCTAProps) {
   const isMid = variant === "mid";
+  const enquireHref = TOPIC_DESTINATIONS[topic];
+
   return (
     <div
       className="my-8 p-5 md:p-6 rounded-xl bg-red-50 dark:bg-red-950/20 border-l-4 border-l-primary border border-red-100 dark:border-red-900/30"
@@ -43,7 +53,8 @@ export function BlogCTA({ topic = "general", variant = "mid" }: BlogCTAProps) {
           WhatsApp Us
         </a>
         <Link
-          href="/preschool-admissions"
+          href={enquireHref}
+          onClick={() => trackCTAClick("blog_enquire_now", `${variant}_${topic}`)}
           className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg text-sm font-semibold hover:bg-red-700 transition-colors"
           data-testid={`link-blog-cta-enquire-${variant}`}
         >
