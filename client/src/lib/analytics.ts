@@ -558,6 +558,42 @@ export const trackLeadFormSubmit = (params: LeadEventParams) => {
 };
 
 // ============================================
+// NAV CENTRE SEARCH TRACKING
+// ============================================
+
+interface NavCentreSearchParams {
+  searchTerm: string;
+  hasMatch: boolean;
+  context: 'desktop' | 'mobile';
+}
+
+/**
+ * Track nav centre search queries fired after ≥3 chars + 700 ms debounce.
+ * No-match searches set has_match: false so underserved localities are visible
+ * in GA4 reports.
+ */
+export const trackNavCentreSearch = ({ searchTerm, hasMatch, context }: NavCentreSearchParams) => {
+  if (typeof window === 'undefined') return;
+
+  const measurementId = import.meta.env.VITE_GA_MEASUREMENT_ID;
+  const eventData = {
+    search_term: searchTerm,
+    has_match: hasMatch,
+    context,
+    page_path: window.location.pathname,
+  };
+
+  if (typeof window.gtag === 'function' && measurementId) {
+    window.gtag('event', 'nav_centre_search', { ...eventData, send_to: measurementId });
+  } else {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ event: 'nav_centre_search', ...eventData });
+  }
+
+  console.debug('[GA4] nav_centre_search', eventData);
+};
+
+// ============================================
 // OTHER GA4 TRACKING EVENTS
 // ============================================
 

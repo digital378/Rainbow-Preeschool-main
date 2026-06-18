@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { centres } from "@shared/centre-data";
 import type { CentreData } from "@shared/centre-data";
-import { pushToDataLayer } from "@/lib/analytics";
+import { pushToDataLayer, trackNavCentreSearch } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 
 function matchesCentre(centre: CentreData, query: string): boolean {
@@ -66,6 +66,28 @@ export function Navigation() {
   useEffect(() => {
     setIsOpen(false);
   }, [location]);
+
+  // Debounced GA4 tracking for desktop centre search
+  useEffect(() => {
+    const trimmed = centreSearch.trim();
+    if (trimmed.length < 3) return;
+    const timer = setTimeout(() => {
+      const hasMatch = centres.some((c) => matchesCentre(c, trimmed));
+      trackNavCentreSearch({ searchTerm: trimmed, hasMatch, context: 'desktop' });
+    }, 700);
+    return () => clearTimeout(timer);
+  }, [centreSearch]);
+
+  // Debounced GA4 tracking for mobile centre search
+  useEffect(() => {
+    const trimmed = mobileCentreSearch.trim();
+    if (trimmed.length < 3) return;
+    const timer = setTimeout(() => {
+      const hasMatch = centres.some((c) => matchesCentre(c, trimmed));
+      trackNavCentreSearch({ searchTerm: trimmed, hasMatch, context: 'mobile' });
+    }, 700);
+    return () => clearTimeout(timer);
+  }, [mobileCentreSearch]);
 
   // Use transparent header only on homepage when not scrolled
   const useTransparentHeader = isHomepage && !isScrolled;
