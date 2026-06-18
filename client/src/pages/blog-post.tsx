@@ -13,7 +13,8 @@ import {
   COMMERCIAL_PAGES_LAST_UPDATED_DISPLAY,
 } from "@shared/seo-config";
 import { getBlogAuthorship, blogPersonToSchema } from "@shared/blog-authors";
-import { Calendar, ArrowLeft, User, Clock, CheckCircle, MapPin, Phone, Download } from "lucide-react";
+import { Calendar, ArrowLeft, User, Clock, CheckCircle, Download } from "lucide-react";
+import { BlogCTA, type BlogCTATopic } from "@/components/blog-cta";
 import { format } from "date-fns";
 import type { BlogPost as ApiBlogPost } from "@shared/schema";
 
@@ -1226,6 +1227,28 @@ export default function BlogPost() {
   const formattedDate = format(new Date(post.publishedAt), "MMMM dd, yyyy");
   const authorship = getBlogAuthorship(post.slug);
 
+  const postTopic: BlogCTATopic = (() => {
+    const s = post.slug;
+    if (s.includes("playgroup") || s.includes("toddler")) return "playgroup";
+    if (s.includes("nursery")) return "nursery";
+    if (
+      s.includes("kindergarten") ||
+      s.includes("school-readiness") ||
+      s.includes("school-ready")
+    )
+      return "kindergarten";
+    if (s.includes("admission")) return "admissions";
+    return "general";
+  })();
+
+  const midCTAIndex = (() => {
+    const oneThird = Math.floor(post.content.length / 3);
+    for (let i = oneThird; i < post.content.length; i++) {
+      if (post.content[i].startsWith("## ")) return i;
+    }
+    return oneThird;
+  })();
+
   const renderInline = (text: string): React.ReactNode => {
     const tokens: React.ReactNode[] = [];
     const regex = /\*\*([^*]+)\*\*|\*([^*]+)\*|\[([^\]]+)\]\(([^)]+)\)/g;
@@ -1335,6 +1358,14 @@ export default function BlogPost() {
                 );
               }
               if (paragraph.startsWith("## ")) {
+                if (index === midCTAIndex) {
+                  return [
+                    <BlogCTA key="mid-cta" topic={postTopic} variant="mid" />,
+                    <h2 key={`h2-${index}`} className="text-2xl font-bold mt-10 mb-4 text-foreground">
+                      {paragraph.replace("## ", "")}
+                    </h2>,
+                  ];
+                }
                 return (
                   <h2 key={index} className="text-2xl font-bold mt-10 mb-4 text-foreground">
                     {paragraph.replace("## ", "")}
@@ -1487,6 +1518,14 @@ export default function BlogPost() {
                   </ol>
                 );
               }
+              if (index === midCTAIndex) {
+                return [
+                  <BlogCTA key="mid-cta" topic={postTopic} variant="mid" />,
+                  <p key={`p-${index}`} className="text-muted-foreground leading-relaxed mb-4">
+                    {renderInline(paragraph)}
+                  </p>,
+                ];
+              }
               return (
                 <p key={index} className="text-muted-foreground leading-relaxed mb-4">
                   {renderInline(paragraph)}
@@ -1495,28 +1534,7 @@ export default function BlogPost() {
             })}
           </div>
 
-          <Card className="mt-12 bg-primary/5 border-primary/20">
-            <CardContent className="pt-6">
-              <h3 className="text-xl font-semibold mb-2">Ready to Give Your Child the Best Start?</h3>
-              <p className="text-muted-foreground mb-4">
-                Visit Rainbow Preschool International to see our nurturing learning environment firsthand. With 6 centres across Thane and 17+ years of experience, we're here to support your child's early learning journey.
-              </p>
-              <div className="flex flex-wrap gap-4">
-                <Link href="/contact">
-                  <Button data-testid="button-contact-us">
-                    <Phone className="w-4 h-4 mr-2" />
-                    Contact Us
-                  </Button>
-                </Link>
-                <Link href="/play-school-near-me">
-                  <Button variant="outline" data-testid="button-view-centres">
-                    <MapPin className="w-4 h-4 mr-2" />
-                    View Our Centres
-                  </Button>
-                </Link>
-              </div>
-            </CardContent>
-          </Card>
+          <BlogCTA topic={postTopic} variant="bottom" />
 
           <Card className="mt-6 border-blue-200/60 bg-blue-50/30">
             <CardContent className="pt-5 pb-4">
@@ -1557,7 +1575,7 @@ export default function BlogPost() {
           </div>
 
           {/* Internal Links Section */}
-          <BlogInternalLinks currentSlug={post.slug} />
+          <BlogInternalLinks currentSlug={post.slug} topic={postTopic} />
 
           <div className="mt-12 pt-8 border-t">
             <h3 className="text-lg font-semibold mb-4">Related Articles</h3>
