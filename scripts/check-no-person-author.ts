@@ -34,10 +34,11 @@ const EXCLUDE_DIR_NAMES = new Set([
 // pattern as a literal regex to detect — they must be allow-listed.
 const ALLOW_FILES = new Set([
   "scripts/check-no-person-author.ts",
+  "scripts/check-no-person-author.test.ts",
   "scripts/check-keyword-targets.ts",
 ]);
 
-interface Hit {
+export interface Hit {
   file: string;
   line: number;
   text: string;
@@ -60,7 +61,7 @@ function walk(dir: string, out: string[]): void {
 // either single or double quotes around the key/value. Catches both
 // JSON-LD literals embedded in source and JS object literals that get
 // JSON.stringified at runtime.
-const PERSON_RE = /["']@type["']\s*:\s*["']Person["']/;
+export const PERSON_RE = /["']@type["']\s*:\s*["']Person["']/;
 
 // Restrict failures to Person nodes that sit underneath a property
 // indicating editorial attribution. We scan a 6-line window before each
@@ -75,7 +76,7 @@ const ATTRIBUTION_KEYS = [
   "publisher",
   "editor",
 ];
-const ATTRIBUTION_RE = new RegExp(
+export const ATTRIBUTION_RE = new RegExp(
   `["']?(${ATTRIBUTION_KEYS.join("|")})["']?\\s*:`,
 );
 
@@ -87,33 +88,37 @@ const ATTRIBUTION_RE = new RegExp(
 // like "Us"/"Me"/"Of" that would otherwise produce false positives on
 // breadcrumb labels such as "About Us". Single capitalised words (brands
 // like "Kangaroo Kids") are left to the context check below.
-const VISIBLE_NAME_RE =
-  /\bname\s*:\s*["']([A-Z][a-z'’]{2,}(?:\s+(?:&|and))?\s+[A-Z][a-z'’]{2,}(?:\s+[A-Z][a-z'’]{2,})?)["']/g;
+export const VISIBLE_NAME_RE =
+  /\bname\s*:\s*["']([A-Z][a-z'']{2,}(?:\s+(?:&|and))?\s+[A-Z][a-z'']{2,}(?:\s+[A-Z][a-z'']{2,})?)["']/g;
 
 // Surrounding-context keywords that indicate the literal is being used as
 // a visible byline / reviewer / testimonial author.
-const BYLINE_CONTEXT_RE =
+export const BYLINE_CONTEXT_RE =
   /\b(testimonial|reviewer|review|quote|parent|byline|byLine|author|contributor|reviewedBy)\b/i;
+
+// HowToStep schema step names (e.g. `name: "Submit Required Documents"`)
+// look like person names but are schema labels — skip them.
+export const HOWTO_CONTEXT_RE = /@type["']?\s*:\s*["']HowTo(?:Step)?["']/;
 
 // Strictly approved attribution values. Compared exactly against the
 // captured `name` literal — anything else fails. Only the two
 // organisation names plus the single sanctioned generic testimonial
 // label are permitted.
-const APPROVED_NAMES = new Set<string>([
+export const APPROVED_NAMES = new Set<string>([
   "Rainbow Preschool International",
   "Rainbow Preschool Curriculum Team",
   "A Rainbow Parent",
 ]);
 
-function isApproved(name: string): boolean {
+export function isApproved(name: string): boolean {
   return APPROVED_NAMES.has(name);
 }
 
-function scanFile(file: string): Hit[] {
-  const rel = relative(ROOT, file).replace(/\\/g, "/");
-  if (ALLOW_FILES.has(rel)) return [];
-  const content = readFileSync(file, "utf-8");
-  const lines = content.split(/\r?\n/);
+/**
+ * Core scanning logic operating on pre-split lines. Exported for testing.
+ * `relPath` is used only for the Hit.file field (default "fixture").
+ */
+export function scanLines(lines: string[], relPath = "fixture"): Hit[] {
   const hits: Hit[] = [];
 
   // --- Pass 1: schema Person nodes ---------------------------------------
@@ -123,7 +128,7 @@ function scanFile(file: string): Hit[] {
     const window = lines.slice(start, i + 1).join("\n");
     if (!ATTRIBUTION_RE.test(window)) continue;
     hits.push({
-      file: rel,
+      file: relPath,
       line: i + 1,
       text: `[schema] ${lines[i].trim()}`,
     });
@@ -144,12 +149,9 @@ function scanFile(file: string): Hit[] {
       const end = Math.min(lines.length, i + 9);
       const window = lines.slice(start, end).join("\n");
       if (!BYLINE_CONTEXT_RE.test(window)) continue;
-      // HowToStep schema step names (e.g. `name: "Submit Required Documents"`)
-      // look like person names but are schema labels — skip them.
-      const HOWTO_CONTEXT_RE = /@type["']?\s*:\s*["']HowTo(?:Step)?["']/;
       if (HOWTO_CONTEXT_RE.test(window)) continue;
       hits.push({
-        file: rel,
+        file: relPath,
         line: i + 1,
         text: `[visible-byline] ${line.trim()}`,
       });
@@ -157,6 +159,14 @@ function scanFile(file: string): Hit[] {
   }
 
   return hits;
+}
+
+function scanFile(file: string): Hit[] {
+  const rel = relative(ROOT, file).replace(/\\/g, "/");
+  if (ALLOW_FILES.has(rel)) return [];
+  const content = readFileSync(file, "utf-8");
+  const lines = content.split(/\r?\n/);
+  return scanLines(lines, rel);
 }
 
 function main(): void {
@@ -195,4 +205,12 @@ function main(): void {
   process.exit(1);
 }
 
-main();
+// Only run when invoked directly (not when imported by the test suite).
+const isMain =
+  process.argv[1] &&
+  (process.argv[1].endsWith("check-no-person-author.ts") ||
+    process.argv[1].endsWith("check-no-person-author.js"));
+
+if (isMain) {
+  main();
+}
