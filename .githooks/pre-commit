@@ -4,7 +4,7 @@
 #
 # This guards against:
 #   - JSON-LD `Person` author/reviewer/contributor entries sneaking back in
-#     (scripts/check-no-person-author.ts)
+#     (scripts/check-no-person-author.ts — run explicitly AND via npm run check)
 #   - TypeScript regressions (`tsc`)
 #   - Off-brand pink colour usage (scripts/check-no-pink.ts) — the
 #     Rainbow Preschool brand uses red/primary (#dc2626) only.
@@ -87,6 +87,18 @@ echo "[pre-commit] Running 'tsx scripts/check-h1-parity.ts' ..."
 if ! npx --no-install tsx scripts/check-h1-parity.ts; then
   echo "" >&2
   echo "[pre-commit] 'check-h1-parity' failed. Commit aborted." >&2
+  echo "[pre-commit] Fix the issues above, or re-run with --no-verify to bypass." >&2
+  exit 1
+fi
+
+# Person-author guard. Scans the live codebase for JSON-LD Person author/
+# reviewer/contributor nodes and unapproved visible-byline name literals.
+# Wired explicitly here (independent of npm run check) so it stays enforced
+# even if package.json's `check` script is restructured or skipped.
+echo "[pre-commit] Running 'tsx scripts/check-no-person-author.ts' ..."
+if ! npx --no-install tsx scripts/check-no-person-author.ts; then
+  echo "" >&2
+  echo "[pre-commit] 'check-no-person-author' failed. Commit aborted." >&2
   echo "[pre-commit] Fix the issues above, or re-run with --no-verify to bypass." >&2
   exit 1
 fi
