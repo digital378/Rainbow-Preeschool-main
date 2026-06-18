@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
-import { Menu, X, ChevronDown, MapPin, Phone } from "lucide-react";
+import { Menu, X, ChevronDown, MapPin, Phone, Search } from "lucide-react";
 import { SiWhatsapp } from "react-icons/si";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { ThemeToggle } from "@/components/theme-toggle";
 import {
   DropdownMenu,
@@ -11,8 +12,21 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { centres } from "@shared/centre-data";
+import type { CentreData } from "@shared/centre-data";
 import { pushToDataLayer } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
+
+function matchesCentre(centre: CentreData, query: string): boolean {
+  const q = query.toLowerCase().trim();
+  if (!q) return true;
+  const terms = [
+    centre.localityName,
+    centre.name,
+    ...(centre.areasServed ?? []),
+    ...(centre.landmarks ?? []),
+  ];
+  return terms.some((t) => t.toLowerCase().includes(q));
+}
 const logoImage = "/images/optimized/rainbow-logo.webp";
 
 const navLinks = [
@@ -28,6 +42,8 @@ export function Navigation() {
   const [location] = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [centreSearch, setCentreSearch] = useState("");
+  const [mobileCentreSearch, setMobileCentreSearch] = useState("");
   
   // Only use transparent header on homepage
   const isHomepage = location === "/";
@@ -165,7 +181,7 @@ export function Navigation() {
             </Link>
             
             {/* Centres Dropdown */}
-            <DropdownMenu>
+            <DropdownMenu onOpenChange={(open) => { if (!open) setCentreSearch(""); }}>
               <DropdownMenuTrigger asChild>
                 <Button 
                   variant="ghost" 
@@ -175,30 +191,67 @@ export function Navigation() {
                   Centres <ChevronDown className="ml-1 h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-72">
-                {centres.map((centre) => (
-                  <DropdownMenuItem key={centre.id} asChild>
-                    <Link
-                      href={centre.preschoolLandingUrl}
-                      onClick={() => {
-                        pushToDataLayer({
-                          event: 'header_centre_click',
-                          centre: centre.name,
-                          locality: centre.localityName,
-                          slug: centre.preschoolLandingUrl,
-                        });
-                      }}
-                      className="flex flex-col items-start gap-1 py-2 cursor-pointer"
-                      data-testid={`link-centre-${centre.id}`}
-                    >
-                      <span className="font-medium text-sm">{centre.name}</span>
-                      <span className="text-xs text-muted-foreground flex items-center gap-1">
-                        <MapPin className="h-3 w-3" />
-                        Preschool in {centre.localityName}
-                      </span>
-                    </Link>
-                  </DropdownMenuItem>
-                ))}
+              <DropdownMenuContent align="end" className="w-80 p-0">
+                {/* Search input */}
+                <div className="p-2 border-b">
+                  <div className="relative">
+                    <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground pointer-events-none" />
+                    <Input
+                      type="search"
+                      placeholder="Search by area or landmark…"
+                      value={centreSearch}
+                      onChange={(e) => setCentreSearch(e.target.value)}
+                      onKeyDown={(e) => e.stopPropagation()}
+                      className="h-8 pl-8 text-xs"
+                      data-testid="input-nav-centre-search"
+                      aria-label="Search centres by area"
+                    />
+                  </div>
+                </div>
+                {/* Filtered centre list */}
+                {(() => {
+                  const filtered = centres.filter((c) => matchesCentre(c, centreSearch));
+                  if (filtered.length === 0) {
+                    return (
+                      <div className="py-6 text-center text-xs text-muted-foreground" data-testid="text-nav-centre-no-match">
+                        No centre found for &ldquo;{centreSearch.trim()}&rdquo;
+                      </div>
+                    );
+                  }
+                  return filtered.map((centre) => (
+                    <DropdownMenuItem key={centre.id} asChild>
+                      <Link
+                        href={centre.preschoolLandingUrl}
+                        onClick={() => {
+                          pushToDataLayer({
+                            event: 'header_centre_click',
+                            centre: centre.name,
+                            locality: centre.localityName,
+                            slug: centre.preschoolLandingUrl,
+                          });
+                        }}
+                        className="flex flex-col items-start gap-1 py-2 cursor-pointer"
+                        data-testid={`link-centre-${centre.id}`}
+                      >
+                        <span className="font-medium text-sm">{centre.name}</span>
+                        <span className="text-xs text-muted-foreground flex items-center gap-1">
+                          <MapPin className="h-3 w-3" />
+                          Preschool in {centre.localityName}
+                        </span>
+                      </Link>
+                    </DropdownMenuItem>
+                  ));
+                })()}
+                {/* noscript fallback */}
+                <noscript>
+                  <ul className="py-2 px-3 space-y-1 text-xs">
+                    {centres.map((c) => (
+                      <li key={c.id}>
+                        <a href={c.preschoolLandingUrl} className="font-medium underline">{c.name}</a>
+                      </li>
+                    ))}
+                  </ul>
+                </noscript>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
@@ -271,25 +324,60 @@ export function Navigation() {
               {/* Mobile Centres Section */}
               <div className="pt-4 border-t mt-2">
                 <p className="text-sm font-semibold text-muted-foreground mb-2 px-4">Our Centres</p>
-                {centres.map((centre) => (
-                  <Link
-                    key={centre.id}
-                    href={centre.preschoolLandingUrl}
-                    onClick={() => {
-                      pushToDataLayer({
-                        event: 'mobile_centre_click',
-                        centre: centre.name,
-                        locality: centre.localityName,
-                        slug: centre.preschoolLandingUrl,
-                      });
-                    }}
-                    className="flex items-center gap-2 px-4 py-2 text-sm hover-elevate rounded-md"
-                    data-testid={`link-mobile-centre-${centre.id}`}
-                  >
-                    <MapPin className="h-4 w-4 text-primary" />
-                    <span>{centre.name}</span>
-                  </Link>
-                ))}
+                {/* Mobile centre search */}
+                <div className="px-4 mb-2">
+                  <div className="relative">
+                    <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground pointer-events-none" />
+                    <Input
+                      type="search"
+                      placeholder="Search by area or landmark…"
+                      value={mobileCentreSearch}
+                      onChange={(e) => setMobileCentreSearch(e.target.value)}
+                      className="h-8 pl-8 text-xs"
+                      data-testid="input-mobile-centre-search"
+                      aria-label="Search centres by area"
+                    />
+                  </div>
+                </div>
+                {(() => {
+                  const filtered = centres.filter((c) => matchesCentre(c, mobileCentreSearch));
+                  if (filtered.length === 0) {
+                    return (
+                      <p className="px-4 py-3 text-xs text-muted-foreground" data-testid="text-mobile-centre-no-match">
+                        No centre found for &ldquo;{mobileCentreSearch.trim()}&rdquo;
+                      </p>
+                    );
+                  }
+                  return filtered.map((centre) => (
+                    <Link
+                      key={centre.id}
+                      href={centre.preschoolLandingUrl}
+                      onClick={() => {
+                        pushToDataLayer({
+                          event: 'mobile_centre_click',
+                          centre: centre.name,
+                          locality: centre.localityName,
+                          slug: centre.preschoolLandingUrl,
+                        });
+                      }}
+                      className="flex items-center gap-2 px-4 py-2 text-sm hover-elevate rounded-md"
+                      data-testid={`link-mobile-centre-${centre.id}`}
+                    >
+                      <MapPin className="h-4 w-4 text-primary" />
+                      <span>{centre.name}</span>
+                    </Link>
+                  ));
+                })()}
+                {/* noscript fallback */}
+                <noscript>
+                  <ul className="px-4 space-y-1 text-sm">
+                    {centres.map((c) => (
+                      <li key={c.id}>
+                        <a href={c.preschoolLandingUrl} className="font-medium underline">{c.name}</a>
+                      </li>
+                    ))}
+                  </ul>
+                </noscript>
               </div>
               
               <Link href="/contact" className="mt-4">
