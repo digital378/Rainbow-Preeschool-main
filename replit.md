@@ -63,7 +63,7 @@ The application is a full-stack web application with a React-based frontend and 
 ## External Dependencies
 
 ### Third-Party Services
--   **Google Analytics 4**: For website analytics and tracking.
+-   **Google Analytics 4**: For website analytics and tracking. Measurement ID: `G-G1MX1N0M05`. Fires a `nav_centre_search` event (with `has_match`, `context`, `search_term` parameters) every time a parent uses the nav centre search box — filtering by `has_match = false` reveals unserved localities. See **`docs/ga4-no-match-search-report.md`** for the step-by-step guide to creating the GA4 custom dimension and Exploration report.
 -   **Google Fonts**: Used for custom web typography.
 -   **Firebase Phone Authentication**: Utilized for OTP verification on ad landing pages.
 -   **Cloudflare**: For CDN caching and performance optimization.
