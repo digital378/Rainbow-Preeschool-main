@@ -268,6 +268,10 @@ const CLIENT_H1_MAP: Record<string, { file: string; nthH1?: number }> = {
   "/preschool-admissions":        { file: "client/src/pages/preschool-admissions.tsx" },
   "/best-preschool-near-me-in-thane": { file: "client/src/pages/best-preschool-in-thane.tsx" },
   "/play-school-near-me":         { file: "client/src/pages/play-school-near-me.tsx" },
+  // Hyperlocal "near {landmark}" play school pages
+  "/play-school-near-ghodbunder-road": { file: "client/src/pages/play-school-near-ghodbunder-road.tsx" },
+  "/play-school-near-majiwada":   { file: "client/src/pages/play-school-near-majiwada.tsx" },
+  "/play-school-near-naupada":    { file: "client/src/pages/play-school-near-naupada.tsx" },
   // Legal — one file, two routes; nthH1 selects which <h1> applies
   "/terms":                       { file: "client/src/pages/legal.tsx", nthH1: 1 },
   "/privacy":                     { file: "client/src/pages/legal.tsx", nthH1: 2 },

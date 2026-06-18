@@ -263,6 +263,10 @@ const CLIENT_PAGE_URLS: Record<string, string> = {
   // Mapped to /playgroup so the bare "Playgroup in Thane" rule still
   // accepts their titles via the /playgroup canonical owner.
   "local-playgroup.tsx": "/playgroup",
+  // Hyperlocal "near {landmark}" play school pages
+  "play-school-near-ghodbunder-road.tsx": "/play-school-near-ghodbunder-road",
+  "play-school-near-majiwada.tsx": "/play-school-near-majiwada",
+  "play-school-near-naupada.tsx": "/play-school-near-naupada",
 };
 
 function scanClientPages() {

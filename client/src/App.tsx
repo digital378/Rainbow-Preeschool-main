@@ -57,6 +57,9 @@ const PreschoolAdmissions = lazy(() => import("@/pages/preschool-admissions"));
 const Gallery = lazy(() => import("@/pages/gallery"));
 const BestPreschoolInThane = lazy(() => import("@/pages/best-preschool-in-thane"));
 const PlaySchoolNearMe = lazy(() => import("@/pages/play-school-near-me"));
+const PlaySchoolNearGhodbunderRoad = lazy(() => import("@/pages/play-school-near-ghodbunder-road"));
+const PlaySchoolNearMajiwada = lazy(() => import("@/pages/play-school-near-majiwada"));
+const PlaySchoolNearNaupada = lazy(() => import("@/pages/play-school-near-naupada"));
 
 const RainbowSparkleTrail = lazy(() => import("@/components/rainbow-sparkle-trail").then(m => ({ default: m.RainbowSparkleTrail })));
 
@@ -132,6 +135,9 @@ const LazyPrivacyPage = lazy(() => import("@/pages/legal").then(m => ({ default:
 import { legacySlugs } from "@shared/legacy-slugs";
 
 const STANDALONE_LANDING_PATHS = [
+  "/play-school-near-ghodbunder-road",
+  "/play-school-near-majiwada",
+  "/play-school-near-naupada",
   "/playgroup-in-manpada",
   "/playgroup-in-kalwa",
   "/playgroup-near-ghodbunder-road",
@@ -211,6 +217,9 @@ function Router() {
         <Route path="/preschool-admissions" component={PreschoolAdmissions} />
         <Route path="/best-preschool-near-me-in-thane" component={BestPreschoolInThane} />
         <Route path="/play-school-near-me" component={PlaySchoolNearMe} />
+        <Route path="/play-school-near-ghodbunder-road" component={PlaySchoolNearGhodbunderRoad} />
+        <Route path="/play-school-near-majiwada" component={PlaySchoolNearMajiwada} />
+        <Route path="/play-school-near-naupada" component={PlaySchoolNearNaupada} />
         
         <Route path="/ad" component={AdLanding} />
         <Route path="/ad-google" component={AdGoogleLanding} />
