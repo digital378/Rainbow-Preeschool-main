@@ -23,6 +23,7 @@ export interface CentreData {
     kindergarten: string;
   };
   galleryImages?: string[];
+  areasServed?: string[];
 }
 
 // Default gallery images for all centres
@@ -57,6 +58,7 @@ export const centres: CentreData[] = [
       nursery: "/nursery",
       kindergarten: "/kindergarten",
     },
+    areasServed: ["Manpada", "Edenwoods", "Hiranandani Estate", "Patlipada"],
   },
   {
     id: "hariniwas",
@@ -78,6 +80,7 @@ export const centres: CentreData[] = [
       nursery: "/nursery",
       kindergarten: "/kindergarten",
     },
+    areasServed: ["Hariniwas", "Panchpakadi", "Naupada", "Charai", "Khopat"],
   },
   {
     id: "anand-nagar",
@@ -99,6 +102,7 @@ export const centres: CentreData[] = [
       nursery: "/nursery",
       kindergarten: "/kindergarten",
     },
+    areasServed: ["Anand Nagar", "Majiwada", "Vasant Vihar", "Kapurbawdi"],
   },
   {
     id: "dhokali",
@@ -120,6 +124,7 @@ export const centres: CentreData[] = [
       nursery: "/nursery",
       kindergarten: "/kindergarten",
     },
+    areasServed: ["Dhokali", "Kolshet Road", "Vandana Nagar", "Balkum"],
   },
   {
     id: "kalwa",
@@ -141,6 +146,7 @@ export const centres: CentreData[] = [
       nursery: "/nursery",
       kindergarten: "/kindergarten",
     },
+    areasServed: ["Kalwa", "Manisha Nagar", "Vitawa", "Kharegaon"],
   },
   {
     id: "kasarvadavali",
@@ -162,6 +168,7 @@ export const centres: CentreData[] = [
       nursery: "/nursery",
       kindergarten: "/kindergarten",
     },
+    areasServed: ["Kasarvadavali", "Patlipada", "Brahmand", "Hiranandani Meadows"],
   },
 ];
 
@@ -211,10 +218,12 @@ export function createBranchLocalBusinessSchema(centre: CentreData) {
         closes: "18:00",
       },
     ],
-    areaServed: {
-      "@type": "City",
-      name: "Thane",
-    },
+    areaServed: centre.areasServed && centre.areasServed.length > 0
+      ? centre.areasServed.map((neighbourhood) => ({
+          "@type": "Place",
+          name: `${neighbourhood}, Thane`,
+        }))
+      : [{ "@type": "City", name: "Thane" }],
     parentOrganization: {
       "@type": "EducationalOrganization",
       "@id": `${RAINBOW_BASE_URL}/#organization`,

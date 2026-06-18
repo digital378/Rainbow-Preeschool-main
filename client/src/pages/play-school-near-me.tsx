@@ -30,7 +30,7 @@ import { ContactForm } from "@/components/contact-form";
 import { CountUp } from "@/components/count-up";
 import { BranchCard } from "@/components/branch-card";
 import { branches } from "@shared/schema";
-import { createAllBranchLocalBusinessSchemas } from "@shared/centre-data";
+import { createAllBranchLocalBusinessSchemas, centres } from "@shared/centre-data";
 import {
   Baby, CheckCircle, ArrowRight, MapPin, Phone, Clock, Users, Star, Shield,
   Shapes, MessageCircle, HandHeart, Activity, Music, UsersRound, Lock,
@@ -452,7 +452,6 @@ const centreAreasServed = [
     localityName: "Manpada",
     preschoolLandingUrl: "/preschool-in-manpada-thane",
     address: "Aggarwal Arcade, Near Khewra Circle, Manpada",
-    neighbourhoods: ["Manpada", "Edenwoods", "Hiranandani Estate", "Patlipada"],
     landmarks: ["Khewra Circle", "Edenwoods Township", "Ghodbunder Road"],
     routeNote: "Off Ghodbunder Road at the Manpada signal — 2 min from Edenwoods main gate.",
   },
@@ -461,7 +460,6 @@ const centreAreasServed = [
     localityName: "Hariniwas (Naupada)",
     preschoolLandingUrl: "/preschool-in-hariniwas-thane",
     address: "Bhakti Mandir Road, Hariniwas Circle, Panchpakadi",
-    neighbourhoods: ["Hariniwas", "Panchpakadi", "Naupada", "Charai", "Khopat"],
     landmarks: ["Hariniwas Circle", "Bhakti Mandir Road", "Thanawala Garage"],
     routeNote: "Central Thane — walkable from Panchpakadi and Naupada, auto-accessible from Thane station.",
   },
@@ -470,7 +468,6 @@ const centreAreasServed = [
     localityName: "Anand Nagar (Majiwada)",
     preschoolLandingUrl: "/preschool-in-anand-nagar-thane",
     address: "Kris Commercial Plaza, Opp. Tropical Lagoon, Anand Nagar",
-    neighbourhoods: ["Anand Nagar", "Majiwada", "Vasant Vihar", "Kapurbawdi"],
     landmarks: ["Tropical Lagoon", "Majiwada Junction", "Kris Commercial Plaza"],
     routeNote: "Visible from Majiwada Junction, directly opposite Tropical Lagoon — easy by auto or two-wheeler.",
   },
@@ -479,7 +476,6 @@ const centreAreasServed = [
     localityName: "Dhokali (Kolshet Road)",
     preschoolLandingUrl: "/preschool-in-dhokali-thane",
     address: "Kolshet Road, Dhokali Naka, Opp. Aban Park Society",
-    neighbourhoods: ["Dhokali", "Kolshet Road", "Vandana Nagar", "Balkum"],
     landmarks: ["Dhokali Naka", "Aban Park Society", "Kolshet Road"],
     routeNote: "On Kolshet Road at Dhokali Naka — convenient for families from Eastern Thane and Ghodbunder Road.",
   },
@@ -488,7 +484,6 @@ const centreAreasServed = [
     localityName: "Kalwa",
     preschoolLandingUrl: "/preschool-in-kalwa-thane",
     address: "Near Sayba Hall, Manisha Nagar, Gate No. 1, Kalwa",
-    neighbourhoods: ["Kalwa", "Manisha Nagar", "Vitawa", "Kharegaon"],
     landmarks: ["Sayba Hall", "Kalwa Station", "Manisha Nagar"],
     routeNote: "Short walk from Kalwa station — the nearest Rainbow centre for families east of Thane creek.",
   },
@@ -497,7 +492,6 @@ const centreAreasServed = [
     localityName: "Kasarvadavali (Ghodbunder Road)",
     preschoolLandingUrl: "/preschool-in-kasarvadavali-thane",
     address: "Rosa Gardenia, Behind Hypercity Mall, Kasarvadavali",
-    neighbourhoods: ["Kasarvadavali", "Patlipada", "Brahmand", "Hiranandani Meadows"],
     landmarks: ["Hypercity Mall", "Parijat Gardens", "Ghodbunder Road"],
     routeNote: "Behind Hypercity Mall on Ghodbunder Road — ideal for upper Ghodbunder, Brahmand and Hiranandani Meadows families.",
   },
@@ -1122,7 +1116,7 @@ export default function PlaySchoolNearMe() {
                 <div className="mb-3">
                   <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-1">Neighbourhoods Served</p>
                   <div className="flex flex-wrap gap-1">
-                    {centre.neighbourhoods.map((n) => (
+                    {(centres.find(c => c.id === centre.id)?.areasServed ?? []).map((n) => (
                       <Badge key={n} variant="secondary" className="text-xs">{n}</Badge>
                     ))}
                   </div>

@@ -93,6 +93,9 @@ function PreschoolLocationTemplate({ localitySlug }: PreschoolLocationPageProps)
         "addressRegion": "Maharashtra",
         "addressCountry": "IN"
       },
+      "areaServed": centre.areasServed && centre.areasServed.length > 0
+        ? centre.areasServed.map((neighbourhood: string) => ({ "@type": "Place", "name": `${neighbourhood}, Thane` }))
+        : [{ "@type": "City", "name": "Thane" }],
       "parentOrganization": {
         "@type": "Organization",
         "name": "Rainbow Preschool International",

@@ -518,7 +518,7 @@ function playgroupSchema(locality: string, url: string) {
   };
 }
 
-function localBusinessSchema(locality: string, address: string, phone: string, url: string, lat?: string, lng?: string) {
+function localBusinessSchema(locality: string, address: string, phone: string, url: string, lat?: string, lng?: string, areasServed?: string[]) {
   const reviews = centreReviews[locality] || [];
   return {
     "@context": "https://schema.org",
@@ -547,6 +547,9 @@ function localBusinessSchema(locality: string, address: string, phone: string, u
       opens: "08:00",
       closes: "18:00",
     }],
+    areaServed: areasServed && areasServed.length > 0
+      ? areasServed.map((neighbourhood) => ({ "@type": "Place", name: `${neighbourhood}, Thane` }))
+      : [{ "@type": "City", name: "Thane" }],
     priceRange: "$$",
     image: `${BASE_URL}/og-image.jpg`,
     aggregateRating: {
@@ -1864,7 +1867,7 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
       h1: `Preschool in ${centre.locality}, Thane`,
       introText: intros?.paragraph1 ?? `Looking for a quality preschool in ${centre.locality}, Thane? Rainbow Preschool International's ${centre.locality} centre offers Playgroup, Nursery, and Kindergarten programmes in a safe, nurturing environment.`,
       breadcrumbs: [{ name: "Home", url: "/" }, { name: "Best Preschool in Thane", url: "/best-preschool-near-me-in-thane" }, { name: `Preschool in ${centre.locality}`, url: cleanPath }],
-      structuredData: [localBusinessSchema(centre.locality, centre.address, centre.phone, cleanPath, centre.lat, centre.lng), richFAQSchema],
+      structuredData: [localBusinessSchema(centre.locality, centre.address, centre.phone, cleanPath, centre.lat, centre.lng, getCentreBySlug(localitySlug)?.areasServed), richFAQSchema],
       contentSections: richSections,
       internalLinks: [
         ...commonInternalLinks,
