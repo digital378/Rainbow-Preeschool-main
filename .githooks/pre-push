@@ -12,6 +12,7 @@
 #   - scripts/check-description-length.ts            (meta-description ≤ 155 chars)
 #   - scripts/check-bot-ua-list.ts                   (bot UA allowlist guard)
 #   - scripts/check-h1-parity.ts                     (SSR ↔ client H1 parity, 29 pages)
+#   - scripts/check-no-person-author.test.ts          (person-author guard regression tests)
 #
 # To avoid re-running a full type-check when the pre-commit hook
 # *just* ran successfully on the same tree, both hooks write the
@@ -109,6 +110,15 @@ if ! npx --no-install tsx scripts/check-h1-parity.ts; then
   echo "[pre-push] 'check-h1-parity' failed. Push aborted." >&2
   echo "[pre-push] The h1: in server/ssr-pages.ts and the <h1> in the client page must match." >&2
   echo "[pre-push] Fix the issues above, or re-run with --no-verify to bypass." >&2
+  exit 1
+fi
+
+echo "[pre-push] Running person-author guard regression tests ..."
+if ! npx --no-install tsx --test scripts/check-no-person-author.test.ts; then
+  echo "" >&2
+  echo "[pre-push] 'check-no-person-author' regression tests failed. Push aborted." >&2
+  echo "[pre-push] The person-author guard itself has a bug — fix scripts/check-no-person-author.ts" >&2
+  echo "[pre-push] before pushing, or re-run with --no-verify to bypass." >&2
   exit 1
 fi
 
