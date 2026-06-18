@@ -8,6 +8,38 @@ import { MapPin, Phone, ArrowRight, Search, ExternalLink } from "lucide-react";
 import { centres } from "@shared/centre-data";
 import type { CentreData } from "@shared/centre-data";
 
+function CentreMapThumbnail({ centre }: { centre: CentreData }) {
+  const [imgError, setImgError] = useState(false);
+
+  const staticMapUrl =
+    `https://staticmap.openstreetmap.de/staticmap.php` +
+    `?center=${centre.latitude},${centre.longitude}` +
+    `&zoom=15&size=320x120` +
+    `&markers=${centre.latitude},${centre.longitude},lightblue1`;
+
+  if (imgError) return null;
+
+  return (
+    <a
+      href={centre.googleMapsDirectionsUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="block w-full overflow-hidden rounded-md border border-border/40 mb-1"
+      aria-label={`Open Google Maps directions to ${centre.name}`}
+      data-testid={`link-map-thumbnail-${centre.id}`}
+    >
+      <img
+        src={staticMapUrl}
+        alt={`Map showing location of ${centre.name}`}
+        className="w-full h-[120px] object-cover hover:opacity-90 transition-opacity duration-150"
+        loading="lazy"
+        onError={() => setImgError(true)}
+        data-testid={`img-map-thumbnail-${centre.id}`}
+      />
+    </a>
+  );
+}
+
 function matchesCentre(centre: CentreData, query: string): boolean {
   const q = query.toLowerCase().trim();
   if (!q) return true;
@@ -26,7 +58,8 @@ function CentreResultCard({ centre }: { centre: CentreData }) {
       className="h-full hover:-translate-y-0.5 transition-transform duration-200 border border-border/60"
       data-testid={`card-nearest-centre-${centre.id}`}
     >
-      <CardContent className="pt-5 pb-5 flex flex-col gap-3 h-full">
+      <CardContent className="pt-4 pb-5 flex flex-col gap-3 h-full">
+        <CentreMapThumbnail centre={centre} />
         <div className="flex items-start gap-2">
           <MapPin className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
           <div>
