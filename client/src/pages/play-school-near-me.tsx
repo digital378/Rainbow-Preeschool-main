@@ -424,6 +424,83 @@ const faqs = [
     question: "What should I look for when choosing a play school near me?",
     answer: "When searching for a play school near you, evaluate these key factors: safety and hygiene standards, curriculum approach (play-based is recommended), teacher qualifications and batch size, location convenience, reputation and awards, and parent communication practices. Rainbow Preschool scores highly on all these parameters with its 18+ year track record."
   },
+  {
+    question: "Which Rainbow Preschool is nearest to Ghodbunder Road?",
+    answer: "Families on Ghodbunder Road have two Rainbow centres to choose from: the Kasarvadavali centre at Rosa Gardenia, behind Hypercity Mall — ideal for upper Ghodbunder Road, Brahmand and Hiranandani Meadows residents — and the Manpada centre at Aggarwal Arcade near Khewra Circle, which serves Manpada, Edenwoods and Hiranandani Estate families. Call 82915 68972 to confirm which is closer to your home."
+  },
+  {
+    question: "Is there a play school near Majiwada in Thane?",
+    answer: "Yes. Rainbow Preschool's Anand Nagar centre is located at Kris Commercial Plaza, directly opposite Tropical Lagoon at Majiwada Junction, Thane West. It is the nearest Rainbow play school for families in Anand Nagar, Majiwada, Vasant Vihar, and Kapurbawdi. Visit /preschool-in-anand-nagar-thane or call 98337 81550 for details."
+  },
+  {
+    question: "How do I find a preschool near me in Thane West?",
+    answer: "Rainbow Preschool runs 6 centres across Thane West: Manpada (Ghodbunder Road), Hariniwas Circle (Naupada/Panchpakadi), Anand Nagar (Majiwada), Dhokali (Kolshet Road), and Kasarvadavali (upper Ghodbunder Road). For Eastern Thane, our Kalwa centre serves Manisha Nagar and surrounding areas. Share your locality with our team at 82915 68972 and we will direct you to the nearest centre within minutes."
+  },
+  {
+    question: "Which is the nearest play school to Hariniwas Circle or Panchpakadi?",
+    answer: "Rainbow Preschool's Hariniwas centre, located at M.V. Apartments on Bhakti Mandir Road, opposite Thanawala Garage, is the closest Rainbow play school to Hariniwas Circle and Panchpakadi. It also serves Naupada, Charai, and Khopat families. Contact 91365 78589 to book a visit or enquire about admissions."
+  },
+  {
+    question: "Is there a Rainbow play school near Kolshet Road or Dhokali Naka?",
+    answer: "Yes. Rainbow Preschool's Dhokali centre is located directly on Kolshet Road at Dhokali Naka, opposite Aban Park Society. It is the nearest Rainbow play school for families in Dhokali, Kolshet Road, Vandana Nagar, and Balkum. Call 93212 38375 or visit /preschool-in-dhokali-thane for more information."
+  },
+];
+
+const centreAreasServed = [
+  {
+    id: "manpada",
+    localityName: "Manpada",
+    preschoolLandingUrl: "/preschool-in-manpada-thane",
+    address: "Aggarwal Arcade, Near Khewra Circle, Manpada",
+    neighbourhoods: ["Manpada", "Edenwoods", "Hiranandani Estate", "Patlipada"],
+    landmarks: ["Khewra Circle", "Edenwoods Township", "Ghodbunder Road"],
+    routeNote: "Off Ghodbunder Road at the Manpada signal — 2 min from Edenwoods main gate.",
+  },
+  {
+    id: "hariniwas",
+    localityName: "Hariniwas (Naupada)",
+    preschoolLandingUrl: "/preschool-in-hariniwas-thane",
+    address: "Bhakti Mandir Road, Hariniwas Circle, Panchpakadi",
+    neighbourhoods: ["Hariniwas", "Panchpakadi", "Naupada", "Charai", "Khopat"],
+    landmarks: ["Hariniwas Circle", "Bhakti Mandir Road", "Thanawala Garage"],
+    routeNote: "Central Thane — walkable from Panchpakadi and Naupada, auto-accessible from Thane station.",
+  },
+  {
+    id: "anand-nagar",
+    localityName: "Anand Nagar (Majiwada)",
+    preschoolLandingUrl: "/preschool-in-anand-nagar-thane",
+    address: "Kris Commercial Plaza, Opp. Tropical Lagoon, Anand Nagar",
+    neighbourhoods: ["Anand Nagar", "Majiwada", "Vasant Vihar", "Kapurbawdi"],
+    landmarks: ["Tropical Lagoon", "Majiwada Junction", "Kris Commercial Plaza"],
+    routeNote: "Visible from Majiwada Junction, directly opposite Tropical Lagoon — easy by auto or two-wheeler.",
+  },
+  {
+    id: "dhokali",
+    localityName: "Dhokali (Kolshet Road)",
+    preschoolLandingUrl: "/preschool-in-dhokali-thane",
+    address: "Kolshet Road, Dhokali Naka, Opp. Aban Park Society",
+    neighbourhoods: ["Dhokali", "Kolshet Road", "Vandana Nagar", "Balkum"],
+    landmarks: ["Dhokali Naka", "Aban Park Society", "Kolshet Road"],
+    routeNote: "On Kolshet Road at Dhokali Naka — convenient for families from Eastern Thane and Ghodbunder Road.",
+  },
+  {
+    id: "kalwa",
+    localityName: "Kalwa",
+    preschoolLandingUrl: "/preschool-in-kalwa-thane",
+    address: "Near Sayba Hall, Manisha Nagar, Gate No. 1, Kalwa",
+    neighbourhoods: ["Kalwa", "Manisha Nagar", "Vitawa", "Kharegaon"],
+    landmarks: ["Sayba Hall", "Kalwa Station", "Manisha Nagar"],
+    routeNote: "Short walk from Kalwa station — the nearest Rainbow centre for families east of Thane creek.",
+  },
+  {
+    id: "kasarvadavali",
+    localityName: "Kasarvadavali (Ghodbunder Road)",
+    preschoolLandingUrl: "/preschool-in-kasarvadavali-thane",
+    address: "Rosa Gardenia, Behind Hypercity Mall, Kasarvadavali",
+    neighbourhoods: ["Kasarvadavali", "Patlipada", "Brahmand", "Hiranandani Meadows"],
+    landmarks: ["Hypercity Mall", "Parijat Gardens", "Ghodbunder Road"],
+    routeNote: "Behind Hypercity Mall on Ghodbunder Road — ideal for upper Ghodbunder, Brahmand and Hiranandani Meadows families.",
+  },
 ];
 
 export default function PlaySchoolNearMe() {
@@ -1022,8 +1099,111 @@ export default function PlaySchoolNearMe() {
         </div>
       </section>
 
-      {/* FAQ Section */}
+      {/* Areas We Serve Near You */}
       <section className="py-16 md:py-20 lg:py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">Preschool Near Me</p>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Areas We Serve Across Thane</h2>
+            <p className="text-muted-foreground text-lg max-w-3xl mx-auto">
+              Rainbow Preschool's 6 centres are spread across Thane West so that a quality play school is always close to your neighbourhood. Find your nearest centre below.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            {centreAreasServed.map((centre) => (
+              <Card key={centre.id} className="p-6 hover:shadow-md transition-shadow">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-primary/10 shrink-0">
+                    <MapPin className="w-5 h-5 text-primary" />
+                  </div>
+                  <h3 className="font-bold text-lg leading-tight">{centre.localityName}</h3>
+                </div>
+                <p className="text-sm text-muted-foreground mb-3">{centre.address}</p>
+                <div className="mb-3">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-1">Neighbourhoods Served</p>
+                  <div className="flex flex-wrap gap-1">
+                    {centre.neighbourhoods.map((n) => (
+                      <Badge key={n} variant="secondary" className="text-xs">{n}</Badge>
+                    ))}
+                  </div>
+                </div>
+                <div className="mb-4">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-1">Nearby Landmarks</p>
+                  <div className="flex flex-wrap gap-1">
+                    {centre.landmarks.map((l) => (
+                      <Badge key={l} variant="outline" className="text-xs">{l}</Badge>
+                    ))}
+                  </div>
+                </div>
+                <p className="text-xs text-muted-foreground italic mb-4">{centre.routeNote}</p>
+                <Link href={centre.preschoolLandingUrl}>
+                  <Button variant="outline" size="sm" className="w-full" data-testid={`link-ps-centre-${centre.id}`}>
+                    View {centre.localityName} Centre <ArrowRight className="ml-1 h-3 w-3" />
+                  </Button>
+                </Link>
+              </Card>
+            ))}
+          </div>
+
+          {/* How to find your nearest centre */}
+          <div className="bg-muted/40 rounded-2xl p-6 md:p-10">
+            <h3 className="text-2xl font-bold mb-6 text-center">How to Find Your Nearest Play School in Thane</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="flex items-start gap-4">
+                <div className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary text-white font-bold text-sm shrink-0 mt-0.5">1</div>
+                <div>
+                  <p className="font-semibold mb-1">Manpada — Ghodbunder Road</p>
+                  <p className="text-sm text-muted-foreground">Aggarwal Arcade near Khewra Circle. Off Ghodbunder Road, 2 min from the Edenwoods main gate. Serves Manpada, Edenwoods, Hiranandani Estate and Patlipada.</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4">
+                <div className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary text-white font-bold text-sm shrink-0 mt-0.5">2</div>
+                <div>
+                  <p className="font-semibold mb-1">Hariniwas — Naupada / Panchpakadi</p>
+                  <p className="text-sm text-muted-foreground">Bhakti Mandir Road, near Hariniwas Circle. Central Thane location — walkable from Panchpakadi, Naupada, Charai and Khopat. Auto-accessible from Thane station.</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4">
+                <div className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary text-white font-bold text-sm shrink-0 mt-0.5">3</div>
+                <div>
+                  <p className="font-semibold mb-1">Anand Nagar — Majiwada Junction</p>
+                  <p className="text-sm text-muted-foreground">Opposite Tropical Lagoon at Majiwada Junction. Easily visible landmark — serves Anand Nagar, Majiwada, Vasant Vihar and Kapurbawdi families.</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4">
+                <div className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary text-white font-bold text-sm shrink-0 mt-0.5">4</div>
+                <div>
+                  <p className="font-semibold mb-1">Dhokali — Kolshet Road</p>
+                  <p className="text-sm text-muted-foreground">Kolshet Road at Dhokali Naka, opposite Aban Park Society. Ideal for Eastern Thane families in Dhokali, Kolshet Road, Vandana Nagar and Balkum.</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4">
+                <div className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary text-white font-bold text-sm shrink-0 mt-0.5">5</div>
+                <div>
+                  <p className="font-semibold mb-1">Kalwa — Manisha Nagar</p>
+                  <p className="text-sm text-muted-foreground">Near Sayba Hall, Manisha Nagar, Gate No. 1. Short walk from Kalwa station — the nearest Rainbow play school for families east of the Thane creek.</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4">
+                <div className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary text-white font-bold text-sm shrink-0 mt-0.5">6</div>
+                <div>
+                  <p className="font-semibold mb-1">Kasarvadavali — Ghodbunder Road (upper)</p>
+                  <p className="text-sm text-muted-foreground">Rosa Gardenia, behind Hypercity Mall, Ghodbunder Road. Serves Kasarvadavali, Patlipada, Brahmand and Hiranandani Meadows.</p>
+                </div>
+              </div>
+            </div>
+            <div className="text-center mt-8">
+              <p className="text-muted-foreground mb-4">Not sure which centre is closest? Our team will guide you.</p>
+              <Button onClick={() => document.getElementById('ps-enquiry-form')?.scrollIntoView({ behavior: 'smooth' })} data-testid="button-ps-areas-enquire">
+                Find My Nearest Centre <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-16 md:py-20 lg:py-24 bg-muted/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Frequently Asked Questions About Play Schools</h2>
