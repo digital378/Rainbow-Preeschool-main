@@ -2859,7 +2859,7 @@ Some crying during the first week is completely normal and expected. At Rainbow 
 
 We also offer a gradual settling-in process where parents can stay for short periods initially and gradually increase separation time.
 
-EXPLORE_MORE:[Explore Our Playgroup Programme](/playgroup)|[Nursery Programme](/nursery)|[Kindergarten Programme](/kindergarten)|[Top Preschool in Thane](/best-preschool-near-me-in-thane)
+EXPLORE_MORE:[Explore Our Playgroup Programme](/playgroup)|[Nursery Programme](/nursery)|[Kindergarten Programme](/kindergarten)|[Play School Near Me in Thane](/play-school-near-me)
 
 ### "My child isn't talking yet. Can they still join?"
 
@@ -2977,7 +2977,7 @@ While flexibility is important for toddlers, some structure is beneficial. A con
 
 Through art activities, pretend play, music, and open-ended exploration, play school nurtures the creative thinking that is foundational to problem-solving and innovation throughout life.
 
-EXPLORE_MORE:[Rainbow Playgroup Programme](/playgroup)|[Find a Preschool Near You in Thane](/best-preschool-near-me-in-thane)|[Admissions Open 2026-27](/preschool-admissions)|[Compare Top Preschools in Thane](/top-preschools-in-thane)
+EXPLORE_MORE:[Rainbow Playgroup Programme](/playgroup)|[Play School Near Me in Thane](/play-school-near-me)|[Admissions Open 2026-27](/preschool-admissions)|[Compare Top Preschools in Thane](/top-preschools-in-thane)
 
 ### 9. Cognitive Stimulation
 
@@ -3128,7 +3128,7 @@ Once offered admission, confirm your seat by paying the admission fees within th
 
 Before the first day, label all belongings with your child's name, attend any welcome/orientation events, establish a morning routine, and talk to your child about school in a positive way.
 
-EXPLORE_MORE:[Rainbow Nursery Programme](/nursery)|[Best Preschool Near You in Thane](/best-preschool-near-me-in-thane)|[Compare Top 10 Preschools in Thane](/top-preschools-in-thane)|[Schedule a Campus Visit](/contact)
+EXPLORE_MORE:[Rainbow Nursery Programme](/nursery)|[Play School Near Me in Thane](/play-school-near-me)|[Compare Top 10 Preschools in Thane](/top-preschools-in-thane)|[Schedule a Campus Visit](/contact)
 
 ## Understanding Nursery School Fees in Thane
 
