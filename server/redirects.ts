@@ -210,6 +210,10 @@ export const redirectMap: Record<string, string> = {
   // ── Near-me page consolidation (Phase 1 SEO) ─────────────────────────────
   "/play-school-in-thane": "/play-school-near-me",
   "/nursery-school-near-me": "/nursery",
+  "/how-to-find-preschool-near-me-thane": "/play-school-near-me",
+  "/how-to-find-preschool-near-me-thane/": "/play-school-near-me",
+  "/how-to-find-a-preschool-near-me-thane": "/play-school-near-me",
+  "/how-to-find-a-preschool-near-me-thane/": "/play-school-near-me",
 
   // ── Wave-2 soft-duplicate guard (Apr 2026 sweep) ──────────────────────────
   // These slugs returned 200 via the SPA shell (fell through to the homepage
