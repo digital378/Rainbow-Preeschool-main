@@ -448,7 +448,7 @@ export default function Home() {
                 Our curriculum covers language, maths, science awareness, creative arts, and social skills. Children also participate in yoga, dance, and special activities like field trips and celebrations. Fees vary by programme and centre — contact us for the latest fee structure.
               </p>
               <p className="text-muted-foreground leading-relaxed mb-8">
-                All six centres are in Thane West, close to residential areas and main roads. Whether you are in Manpada, Kalwa, Dhokali, or Kasarvadavali, there is a Rainbow Preschool near you.
+                All six centres are in Thane West, close to residential areas and main roads. Whether you are in Manpada, Kalwa, Dhokali, or Kasarvadavali, there is a <Link href="/play-school-near-me" className="text-primary hover:underline">play school and preschool near you</Link>.
               </p>
               <Link href="/about">
                 <Button variant="outline" data-testid="button-learn-more">

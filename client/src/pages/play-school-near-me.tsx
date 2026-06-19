@@ -444,6 +444,26 @@ const faqs = [
     question: "Is there a Rainbow play school near Kolshet Road or Dhokali Naka?",
     answer: "Yes. Rainbow Preschool's Dhokali centre is located directly on Kolshet Road at Dhokali Naka, opposite Aban Park Society. It is the nearest Rainbow play school for families in Dhokali, Kolshet Road, Vandana Nagar, and Balkum. Call 93212 38375 or visit /preschool-in-dhokali-thane for more information."
   },
+  {
+    question: "What is the difference between a 'play school near me' and a 'preschool near me'?",
+    answer: "Both phrases describe the same type of early learning setting. Parents searching for a 'play school near me' or a 'preschool near me' are looking for a structured, safe environment where young children aged 1.5 to 5 years learn through play. At Rainbow Preschool in Thane, our Playgroup (1.5–2.5 yrs), Nursery (2.5–3.5 yrs), and Kindergarten (3.5–5 yrs) programmes form a complete preschool — making us your neighbourhood play school and preschool, all in one."
+  },
+  {
+    question: "Which is the nearest preschool to me in Thane West?",
+    answer: "The nearest Rainbow Preschool to you depends on your locality. Ghodbunder Road families choose Manpada (near Khewra Circle) or Kasarvadavali (behind Hypercity Mall). Central Thane families visit Hariniwas in Naupada. Majiwada families use Anand Nagar (opposite Tropical Lagoon). Kolshet Road residents use Dhokali. Eastern Thane families use Kalwa. Call 82915 68972 — our team will direct you to the nearest centre in minutes."
+  },
+  {
+    question: "Is Rainbow the best preschool near me in Thane?",
+    answer: "Rainbow Preschool International has been recognised by India Today, ScooNews Global Edu Awards, and the Economic Times as one of India's top preschools. With 18+ years of experience, a 4.7-star Google rating from 3,997+ parent reviews, 1,00,000+ alumni, and 6 Thane West centres, Rainbow is consistently rated the best preschool near you in Thane. Visit any centre for a free campus tour."
+  },
+  {
+    question: "What should I look for in a preschool near me?",
+    answer: "When choosing a preschool near you, evaluate: safety (24/7 CCTV, trained female staff, hygiene routines), curriculum approach (play-based rather than rote learning), teacher qualifications and class size (10–12 children per batch at Rainbow), location convenience, and transparent parent communication. Rainbow Preschool scores strongly on all these criteria with its 18+ year track record in Thane."
+  },
+  {
+    question: "How quickly can my child start at a preschool near me in Thane?",
+    answer: "Rainbow Preschool accepts admissions year-round on a rolling basis, subject to seat availability at the centre nearest your home. Once you submit an enquiry, our admissions team responds within 24 hours to schedule a free campus visit. Most children can begin within 1–2 weeks of completing the admission paperwork."
+  },
 ];
 
 const centreAreasServed = [
@@ -588,9 +608,9 @@ export default function PlaySchoolNearMe() {
   return (
     <div className="pt-20 md:pt-24">
       <SEO
-        title="Play School Near Me in Thane | Rainbow Preschools"
-        description="Find the best play school near you in Thane — Rainbow Preschool offers safe, play-based early learning for toddlers (1.5–2.5 yrs) across 6 centres."
-        keywords="play school near me, playschool near me, play school in thane, playschool in thane, early learning centre near me, first school experience, Rainbow Preschools"
+        title="Play School & Preschool Near Me in Thane | Rainbow"
+        description="Find the best play school & preschool near you in Thane — Rainbow Preschool, 6 centres across Thane West, safe play-based learning since 2007."
+        keywords="play school near me, preschool near me, playschool near me, play school in thane, preschool in thane, early learning centre near me, Rainbow Preschools"
         canonical="https://www.rainbowpreschools.com/play-school-near-me"
       />
 
@@ -608,10 +628,10 @@ export default function PlaySchoolNearMe() {
                 Ages 1.5 - 2.5 Years
               </Badge>
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-                Play School Near Me in Thane
+                Play School & Preschool Near Me in Thane
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed">
-                Rainbow Preschool International offers a safe, joyful, and developmentally rich play school experience across 6 centres in Thane. Trusted by 1,00,000+ families since 2007.
+                Rainbow Preschool International is Thane's trusted play school and preschool near you — 6 centres across Thane West offering safe, play-based early learning for 1,00,000+ families since 2007.
               </p>
               <div className="flex flex-wrap gap-4">
                 <Button size="lg" onClick={() => document.getElementById('ps-centres')?.scrollIntoView({ behavior: 'smooth' })} data-testid="button-ps-hero-enquire">
@@ -647,7 +667,7 @@ export default function PlaySchoolNearMe() {
                 At a quality play school, children are introduced to routines, group interactions, and sensory-rich experiences that build the foundation for cognitive, emotional, and social development. Activities like circle time, rhymes, art, sensory play, and outdoor exploration are carefully designed to suit a toddler's natural curiosity and developmental needs.
               </p>
               <p className="text-lg leading-relaxed">
-                If you're searching for a <strong>play school near you</strong>, it's important to choose one that prioritises safety, nurturing relationships, and a developmentally appropriate curriculum — not one that pushes academics too early. The right play school gives your child confidence, independence, and a love for learning that lasts a lifetime.
+                Whether you're searching for a <strong>play school</strong> or a <strong>preschool near you</strong>, look for safety, nurturing relationships, and a developmentally appropriate curriculum — not one that pushes academics too early. The right preschool gives your child confidence, independence, and a love for learning that lasts a lifetime.
               </p>
             </div>
           </div>
@@ -1100,7 +1120,7 @@ export default function PlaySchoolNearMe() {
             <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">Preschool Near Me</p>
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Areas We Serve Across Thane</h2>
             <p className="text-muted-foreground text-lg max-w-3xl mx-auto">
-              Rainbow Preschool's 6 centres are spread across Thane West so that a quality play school is always close to your neighbourhood. Find your nearest centre below.
+              Rainbow Preschool's 6 centres are spread across Thane West so that a quality play school and preschool is always close to your neighbourhood. Whether you search "play school near me" or "preschool near me" in Thane, you'll find a Rainbow centre nearby.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
