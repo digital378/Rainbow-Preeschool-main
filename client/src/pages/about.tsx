@@ -92,7 +92,7 @@ export default function About() {
               About Rainbow Preschool International
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground mb-8">
-              Leading Preschool in Thane since 2007.
+              Trusted preschool chain in Thane since 2007.
             </p>
             
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
