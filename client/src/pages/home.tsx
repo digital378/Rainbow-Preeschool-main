@@ -466,7 +466,7 @@ export default function Home() {
                   <div className="absolute -top-5 -right-5 w-20 h-20 bg-primary/10 rounded-full" />
                   <Users className="w-6 h-6 sm:w-8 sm:h-8 text-primary mb-2 sm:mb-3 relative z-10" />
                   <p className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-foreground mb-0.5 relative z-10 whitespace-nowrap">
-                    <CountUp end={100000} duration={2000} suffix="+" />
+                    <CountUp end={100000} duration={2000} delay={0} suffix="+" />
                   </p>
                   <p className="text-xs sm:text-sm text-muted-foreground font-medium relative z-10">Young Learners</p>
                 </div>
