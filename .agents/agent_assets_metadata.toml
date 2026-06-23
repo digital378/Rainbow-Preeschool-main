@@ -18,3 +18,9 @@ id = "zjkmMfF_qtVWsPATUbZVg"
 uri = "file://RPI_Pages_Inventory.xlsx"
 type = "table"
 title = "RPI Pages Inventory — URLs, Meta Titles & H1s"
+
+[[outputs]]
+id = "BvtwfctiWmd668zfZVq3g"
+uri = "file://rainbowpreschools-url-audit.xlsx"
+type = "table"
+title = "Rainbow Preschools — Full URL Audit"
