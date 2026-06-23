@@ -15,6 +15,7 @@ import {
 import { getBlogAuthorship, blogPersonToSchema } from "@shared/blog-authors";
 import { Calendar, ArrowLeft, User, Clock, CheckCircle, Download } from "lucide-react";
 import { BlogCTA, type BlogCTATopic } from "@/components/blog-cta";
+import { BlogStickyBar } from "@/components/blog-sticky-bar";
 import { format } from "date-fns";
 import type { BlogPost as ApiBlogPost } from "@shared/schema";
 
@@ -1623,6 +1624,8 @@ export default function BlogPost() {
         title="Explore More Articles"
         description="Stay updated with the latest parenting tips and early education insights from Rainbow Preschool."
       />
+
+      <BlogStickyBar />
     </div>
   );
 }
