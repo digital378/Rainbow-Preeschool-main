@@ -1,0 +1,440 @@
+This is a correction to Issue #158 — Homepage SEO Audit & Fixes.
+
+The current #158 plan is incomplete because it keeps the homepage title in scope protection but leaves other cannibalisation signals unprotected.
+
+Do not treat title alone as the only cannibalisation factor. Audit and protect:
+- Title
+- H1
+- H2/H3 headings
+- Meta description
+- FAQ questions and answers
+- Hero copy
+- Programme card copy
+- Internal anchor text
+- Footer labels rendered on homepage
+- JSON-LD schema names/descriptions
+- Breadcrumb text
+- Image alt text where SEO-relevant
+
+The homepage must remain the brand/chain authority page, not a duplicate target for specific SEO landing pages.
+
+------------------------------------------------------------
+PAGE ROLE BOUNDARY
+------------------------------------------------------------
+
+Homepage / should target:
+- Rainbow Preschool brand
+- Preschool chain in Thane
+- Trusted preschool chain since 2007
+- 6 centres across Thane
+- Parent trust, safety, curriculum, admissions journey
+
+Homepage / should NOT directly compete with these pages:
+
+1. /best-preschool-near-me-in-thane
+Reserved intent:
+- best preschool in Thane
+- preschool in Thane
+- preschool near me in Thane
+- best preschool near me
+
+2. /play-school-near-me
+Reserved intent:
+- play school near me
+- play school in Thane
+- playschool near me
+- play school near me in Thane
+
+3. /preschool-admissions
+Reserved intent:
+- preschool admissions
+- nursery admissions
+- admission form
+- admission process
+- admissions open
+
+4. /playgroup
+Reserved intent:
+- playgroup in Thane
+- playgroup age
+- playgroup admission
+
+5. /nursery
+Reserved intent:
+- nursery in Thane
+- nursery age
+- nursery admission
+
+6. /kindergarten
+Reserved intent:
+- kindergarten in Thane
+- kindergarten age
+- kindergarten admission
+
+Homepage may link to these pages, but it should not use their exact keyword targets as homepage headings, homepage title, homepage H1, schema headline, or repeated body copy.
+
+Exact-match anchor text is acceptable only when used as a navigational link pointing to the correct canonical landing page. It should not become a repeated homepage content theme.
+
+------------------------------------------------------------
+ABSOLUTE OUT OF SCOPE / DO NOT CHANGE
+------------------------------------------------------------
+
+1. Do not change homepage title.
+Keep exactly:
+"Rainbow Preschool | Preschool Chain in Thane Since 2007"
+
+2. Do not modify:
+- server/homepage-freshness.ts
+- server/bot-ssr.ts
+- server/ssr-pages.ts
+- scripts/predeploy.sh
+
+3. Do not add AggregateRating schema.
+
+4. Do not add SearchAction schema because there is no functional ?s= search handler.
+
+5. Do not change @type from EducationalOrganization.
+
+6. Do not update programme ages on non-homepage pages in this task.
+
+7. Do not regenerate or replace OG image. Verify and report only.
+
+------------------------------------------------------------
+NEW REQUIRED TASK — HOMEPAGE CANNIBALISATION AUDIT
+------------------------------------------------------------
+
+Before implementing #158, audit client/src/pages/home.tsx and all homepage-rendered components for cannibalisation.
+
+Files to inspect:
+- client/src/pages/home.tsx
+- client/src/components/hero-section.tsx
+- client/src/components/navigation.tsx
+- client/src/components/footer.tsx
+- client/src/components/cta-section.tsx
+- client/src/components/find-nearest-centre.tsx
+- client/src/components/seo.tsx
+- shared/centre-data.ts
+- any homepage FAQ/component file
+- any programme card component rendered on homepage
+
+Search for these exact or near-exact phrases:
+
+A. Reserved for /best-preschool-near-me-in-thane
+- Preschool in Thane
+- Best Preschool in Thane
+- Best Preschool Near Me
+- Preschool Near Me
+- best preschool near me in Thane
+
+B. Reserved for /play-school-near-me
+- Play School Near Me
+- Playschool Near Me
+- Play School in Thane
+- Playschool in Thane
+
+C. Reserved for /preschool-admissions
+- Preschool Admissions
+- Nursery Admissions
+- Admissions Open
+- Admission Form
+- Admission Process
+
+D. Reserved for programme pages
+- Playgroup in Thane
+- Nursery in Thane
+- Kindergarten in Thane
+- Playgroup admission
+- Nursery admission
+- Kindergarten admission
+
+E. Local page intent
+- preschool in Manpada
+- preschool in Hariniwas
+- preschool in Anand Nagar
+- preschool in Dhokali
+- preschool in Kalwa
+- preschool in Kasarvadavali
+
+------------------------------------------------------------
+HOW TO HANDLE FOUND PHRASES
+------------------------------------------------------------
+
+Do not blindly remove every phrase. Classify each occurrence:
+
+1. Allowed occurrence
+Allowed if:
+- It is a navigation link pointing to the correct landing page.
+- It appears once in a compact link list.
+- It is not used as H1, H2, repeated body text, schema headline, or meta title.
+
+Example allowed:
+Anchor text "Best Preschool in Thane" linking to /best-preschool-near-me-in-thane
+
+2. Risky occurrence
+Risky if:
+- It appears in H1/H2/H3.
+- It appears in homepage title.
+- It appears repeatedly in body copy.
+- It appears in schema name/headline/description.
+- It appears in FAQ questions as a homepage topic.
+- It appears in image alt text unnecessarily.
+- It appears in multiple homepage sections.
+
+3. Required rewrite
+Rewrite risky homepage occurrences into brand-safe variants.
+
+Use these homepage-safe alternatives:
+- "preschool chain in Thane"
+- "early years programmes across Thane"
+- "six Rainbow Preschool centres in Thane"
+- "trusted preschool network since 2007"
+- "play-based early learning"
+- "programmes for young learners"
+- "book a campus visit"
+- "admissions support team"
+
+Avoid making homepage copy target a single landing-page keyword.
+
+------------------------------------------------------------
+H1 REQUIREMENT
+------------------------------------------------------------
+
+The H1 is not out of scope.
+
+Audit the homepage H1 inside LandingHero or the relevant hero component.
+
+Required:
+- Exactly one visible H1
+- H1 must not use reserved exact-match phrases like:
+  "Preschool in Thane"
+  "Best Preschool in Thane"
+  "Play School Near Me"
+  "Preschool Admissions"
+
+Recommended H1:
+"Rainbow Preschool International — Trusted Preschool Chain in Thane Since 2007"
+
+If the current H1 is already equivalent and brand-safe, keep it.
+If it uses a reserved landing-page phrase, rewrite it to the recommended H1.
+
+Do not change the homepage title.
+
+------------------------------------------------------------
+META DESCRIPTION REQUIREMENT
+------------------------------------------------------------
+
+Replace the current 159-character description with exactly:
+
+"Trusted preschool chain in Thane since 2007 — Playgroup, Nursery & Kindergarten across 6 centres. Play-based learning. Admissions open."
+
+Confirm it is <=155 characters.
+
+This description is allowed because it uses "preschool chain in Thane", not the reserved bare phrase "Preschool in Thane".
+
+------------------------------------------------------------
+FAQ CANNIBALISATION REQUIREMENT
+------------------------------------------------------------
+
+FAQ schema parity is still required, but also audit FAQ intent.
+
+Homepage FAQs should answer brand/chain-level questions only.
+
+Allowed homepage FAQ themes:
+- What age groups does Rainbow Preschool serve?
+- How many Rainbow Preschool centres are there in Thane?
+- What makes Rainbow Preschool trusted by parents?
+- How can parents book a campus visit?
+- What programmes are available across centres?
+
+Avoid homepage FAQ questions that directly target reserved pages:
+- What is the best preschool in Thane?
+- Which is the best preschool near me?
+- What is the nursery admission process?
+- What is the playgroup age?
+- Which play school is near me?
+
+Those belong on their respective landing pages.
+
+If such FAQs exist on the homepage:
+- Remove from homepage FAQ schema and visible FAQ, or
+- Rewrite into brand-safe chain-level wording.
+
+Every FAQPage schema question must exactly match visible FAQ text.
+
+------------------------------------------------------------
+SCHEMA CANNIBALISATION REQUIREMENT
+------------------------------------------------------------
+
+Keep @type:
+"EducationalOrganization"
+
+Do not use:
+"Preschool"
+
+Audit schema fields:
+- name
+- alternateName
+- description
+- headline
+- mainEntity
+- FAQPage questions
+- WebSite name
+- Organization description
+
+Schema should describe the homepage as:
+- Rainbow Preschool International
+- preschool chain in Thane
+- 6 centres
+- since 2007
+- Playgroup, Nursery, Kindergarten, Happy Times
+
+Schema should not repeatedly target:
+- Best Preschool in Thane
+- Preschool Near Me
+- Play School Near Me
+- Preschool Admissions
+- Playgroup in Thane
+- Nursery in Thane
+- Kindergarten in Thane
+
+BreadcrumbList:
+Add:
+Home → https://www.rainbowpreschools.com/
+
+Breadcrumb name should be:
+"Home"
+
+Do not use:
+"Preschool in Thane"
+or
+"Best Preschool in Thane"
+as breadcrumb text.
+
+------------------------------------------------------------
+PROGRAMME AGE CENTRALISATION
+------------------------------------------------------------
+
+Create:
+shared/programme-data.ts
+
+Add canonical data:
+- Playgroup: 1.5–2.5 years
+- Nursery: 2.5–3.5 years
+- Kindergarten: 3.5–5 years
+- Happy Times: 2–10 years
+
+Use this shared data only for homepage-visible areas in this task:
+- homepage programme cards
+- homepage FAQs
+- homepage schema
+- footer labels rendered on homepage, if applicable
+
+Do not update non-homepage pages in this task.
+
+------------------------------------------------------------
+REVIEW TEXT REQUIREMENT
+------------------------------------------------------------
+
+Locate:
+"3,997 Google reviews"
+
+If hardcoded with no verified documented source:
+Replace with:
+"Trusted by parents across Thane since 2007."
+
+If verified source exists:
+Retain it and add a short code comment naming the source.
+
+Do not add AggregateRating schema either way.
+
+------------------------------------------------------------
+EXPLORE MORE / DUPLICATE LINK REQUIREMENT
+------------------------------------------------------------
+
+Search homepage for any mid-page block repeating navigation or footer links.
+
+If found:
+- Remove it, or
+- Rewrite as compact "Popular Searches for Parents in Thane"
+
+If rewritten:
+- Use no more than 4–6 links.
+- Each link must point to the correct landing page.
+- Do not repeat the same exact-match keyword multiple times.
+- Add one short descriptive sentence per link only if useful.
+
+Do not let this block become a keyword-stuffing section.
+
+------------------------------------------------------------
+REPORT-ONLY PERFORMANCE CHECKS
+------------------------------------------------------------
+
+Do not over-expand this issue, but report:
+
+1. public/og-image.jpg
+- exists
+- dimensions 1200x630
+- file size under 8 MB
+
+2. Hero image
+- fetchpriority="high"
+- loading="eager"
+- width/height set
+- not lazy-loaded if LCP
+
+3. Fonts
+- Google Fonts preconnect exists
+- stylesheet load does not block unnecessarily
+
+4. Firebase
+- Firebase Auth SDK is not imported into the homepage bundle unless required
+
+5. GSC startup sync
+- server/index.ts startup sync is fire-and-forget
+- it does not block HTTP server binding
+
+Fix only if clearly broken and safe.
+
+------------------------------------------------------------
+GUARDS TO RUN
+------------------------------------------------------------
+
+Run:
+
+npx tsx scripts/check-description-length.ts
+npx tsx scripts/check-no-title-cannibalisation.ts
+npm run check
+
+If available, also run any H1/copy parity or schema checks already present.
+
+------------------------------------------------------------
+FINAL REPORT FORMAT
+------------------------------------------------------------
+
+Report:
+
+1. Files changed
+2. Files read but intentionally not changed
+3. Homepage title status:
+   Must say unchanged
+4. Homepage H1 found
+5. Homepage H1 final value
+6. Reserved keyword occurrences found
+7. Which occurrences were allowed navigation links
+8. Which occurrences were rewritten or removed
+9. Final meta description and character count
+10. BreadcrumbList added: yes/no
+11. EducationalOrganization retained: yes/no
+12. AggregateRating status: must remain absent
+13. Review text decision
+14. Programme age data centralised: yes/no
+15. Homepage-visible age ranges replaced: yes/no
+16. FAQ schema parity confirmed: yes/no
+17. Explore More decision
+18. OG image report
+19. LCP hero report
+20. Firebase homepage bundle report
+21. GSC startup sync report
+22. Guard results
+
+Do not proceed to other pages until this corrected #158 scope is completed and reviewed.

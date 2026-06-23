@@ -1,0 +1,331 @@
+You are continuing the SEO audit and implementation for rainbowpreschools.com.
+
+Important:
+Do not treat the homepage / as defective only because it is CSR-only. The homepage is intentionally excluded from Bot SSR. This is an accepted architecture decision.
+
+Confirmed setup:
+- React 18 + TypeScript
+- Vite frontend
+- Express.js backend
+- Homepage: client/src/pages/home.tsx
+- SEO component: client/src/components/seo.tsx
+- Header: client/src/components/navigation.tsx
+- Footer: client/src/components/footer.tsx
+- CTA: client/src/components/cta-section.tsx
+- Find Nearest Centre widget: client/src/components/find-nearest-centre.tsx
+- Bot SSR middleware: server/bot-ssr.ts
+- SSR page definitions: server/ssr-pages.ts
+- Branch data: shared/centre-data.ts
+- Homepage freshness injection: server/homepage-freshness.ts
+
+Critical file protection:
+Do not modify server/homepage-freshness.ts.
+This file injects Article JSON-LD and the hidden byline freshness signal into the HTML shell at serve-time. The freshness guard depends on it. Any homepage schema cleanup must happen in home.tsx or the SEO component only, unless explicitly instructed otherwise.
+
+------------------------------------------------------------
+BUILD GUARDS TO RESPECT
+------------------------------------------------------------
+
+1. Meta description length
+The guard check-description-length.ts enforces a hard limit of 155 characters.
+
+Do not use this description:
+"Rainbow Preschool International is a trusted preschool chain in Thane since 2007, offering Playgroup, Nursery, Kindergarten and daycare programmes across 6 centres. Book a campus visit today."
+
+It is too long and will fail pre-commit.
+
+Use this compliant description instead:
+"Trusted preschool chain in Thane since 2007 — Playgroup, Nursery & Kindergarten across 6 centres. Play-based learning. Admissions open."
+
+Confirm final character count is <=155.
+
+Also check the current homepage description. If it is 159 characters, shorten it to the compliant version above.
+
+2. Title cannibalisation guard
+Do not use the phrase:
+"Preschool in Thane"
+
+That phrase is reserved for:
+/best-preschool-near-me-in-thane
+
+Do not change the homepage title if the current title uses:
+"Preschool Chain in Thane"
+
+Recommended:
+Keep the current homepage title if it already uses the approved brand-safe phrase:
+"Preschool Chain in Thane"
+
+3. Schema type
+Do not use:
+"@type": "Preschool"
+
+Keep the current schema type:
+"@type": "EducationalOrganization"
+
+Optional only if already aligned:
+Add:
+"additionalType": "https://schema.org/ChildCare"
+
+Do not change schema type without confirming it passes existing schema checks.
+
+------------------------------------------------------------
+TASK 1 — Homepage SEO audit
+------------------------------------------------------------
+
+Review:
+- client/src/pages/home.tsx
+- client/src/components/seo.tsx
+- client/src/components/navigation.tsx
+- client/src/components/footer.tsx
+- shared/centre-data.ts
+- any existing programme data file, if present
+
+Do not modify server/homepage-freshness.ts.
+
+Check and report before implementing:
+
+1. Homepage title
+Confirm the current homepage title.
+If it already uses "Preschool Chain in Thane", keep it unchanged.
+Do not use "Preschool in Thane".
+
+2. Homepage meta description
+Confirm current description length.
+If over 155 characters, replace with:
+
+"Trusted preschool chain in Thane since 2007 — Playgroup, Nursery & Kindergarten across 6 centres. Play-based learning. Admissions open."
+
+Confirm final length is <=155 characters.
+
+3. Canonical
+Confirm homepage canonical in the <SEO /> call is exactly:
+https://www.rainbowpreschools.com/
+
+Do not change infrastructure redirects. HTTP/HTTPS and www/non-www redirects are Cloudflare/DNS-level items.
+
+4. Star rating / review claim
+Search homepage copy for:
+- star ratings
+- 4.9/5
+- 487 parent reviews
+- 3,997 Google reviews
+- Google reviews
+- parent reviews
+- any visible review-count claim
+
+Specific known item:
+There may be visible text around line 572:
+"3,997 Google reviews"
+
+Decision rule:
+A. If the review count comes from a real-time or periodically updated verified source:
+   - Keep it.
+   - Add a short code comment documenting the source.
+   - Do not add AggregateRating unless business confirms schema eligibility.
+
+B. If the review count is hardcoded or cannot be verified:
+   - Replace it with:
+     "Trusted by parents across Thane since 2007."
+   - Do not add AggregateRating schema.
+
+C. If AggregateRating exists without verified review source:
+   - Remove AggregateRating.
+
+Current expectation:
+There is no AggregateRating schema currently. Confirm this.
+
+5. Structured data
+Review homepage structuredData in home.tsx.
+
+Keep:
+- EducationalOrganization
+- WebSite
+- FAQPage only if visible FAQ content exactly matches schema FAQs
+- VideoObject only if the video is visible and valid
+
+Add if missing:
+- BreadcrumbList
+
+BreadcrumbList should be:
+Home → https://www.rainbowpreschools.com/
+
+Branch data:
+Ensure EducationalOrganization includes all 6 branches using shared/centre-data.ts where available.
+Do not hardcode branch names, phone numbers, or addresses if shared data exists.
+
+Do not modify server/homepage-freshness.ts.
+
+6. WebSite schema SearchAction
+Check whether the site has a functional internal search experience.
+
+Only add SearchAction if the target URL actually works and returns useful search results.
+
+Potential SearchAction format:
+"potentialAction": {
+  "@type": "SearchAction",
+  "target": "https://www.rainbowpreschools.com/?s={search_term_string}",
+  "query-input": "required name=search_term_string"
+}
+
+Important:
+Do not add fake SearchAction if the site does not process ?s= queries.
+If there is no functional search page or search handler, report this as a recommendation and do not implement yet.
+
+Do not point SearchAction to a non-search page unless that page genuinely handles the query.
+
+7. Programme age-range centralisation
+Search for hardcoded age ranges:
+- 1.5–2.5
+- 2.5–3.5
+- 2.5–4
+- 3.5–5
+- 4–6
+- 2–10
+
+Create a central shared programme data object if one does not already exist.
+
+Preferred file:
+shared/programme-data.ts
+
+Canonical programme ages:
+- Playgroup: 1.5–2.5 years
+- Nursery: 2.5–3.5 years
+- Kindergarten: 3.5–5 years
+- Happy Times: 2–10 years
+
+Scope rule:
+For this task, only update homepage-related usage and shared components used by the homepage.
+If Happy Times is not shown on homepage programme cards or homepage FAQs, do not expand homepage scope just to include it.
+Create the shared value for future consistency, but avoid unrelated page edits unless necessary for build consistency.
+
+Update homepage-visible areas only:
+- homepage programme cards
+- homepage FAQs, if age ranges appear there
+- footer programme labels, if homepage renders them
+- homepage schema, if programme ages appear in schema
+
+8. FAQ schema parity
+If FAQPage schema exists:
+- Every FAQ in schema must be visible on the homepage.
+- Every visible FAQ intended for schema should match the schema question and answer.
+- Remove schema-only FAQs.
+- Do not keep hidden FAQ schema.
+
+9. Explore More / internal link duplication
+Audit homepage for a mid-page "Explore More" block or similar repeated navigation section.
+
+Decision rule:
+A. If it simply repeats header/footer links:
+   - Remove it.
+
+B. If it has unique parent-search value:
+   - Rewrite it as a smaller contextual section, such as:
+     "Popular Searches for Parents in Thane"
+   - Keep only high-intent links.
+   - Add short useful descriptions.
+   - Avoid repeating the complete header/footer navigation.
+
+Do not over-link the homepage.
+
+10. Footer duplication
+Review client/src/components/footer.tsx.
+
+Footer should remain grouped and useful:
+- Programmes
+- Centres
+- Admissions
+- Contact
+- Legal
+
+Avoid repeating the same links multiple times inside the footer.
+
+11. OG image
+Check /og-image.jpg.
+
+Verify:
+- file exists
+- final URL reference is:
+  https://www.rainbowpreschools.com/og-image.jpg
+- dimensions are exactly 1200 x 630 px
+- file size is under 8 MB
+- image is not visually cropped
+
+If not compliant, report it. Do not generate or replace image unless asked.
+
+12. LCP and performance checks
+Audit homepage performance-related implementation.
+
+Check:
+A. Hero image
+- fetchpriority="high"
+- loading="eager"
+- width and height set
+- not lazy-loaded if it is the LCP image
+
+B. Google Fonts
+- preconnect is present before stylesheet
+- font loading is not blocking unnecessarily
+
+C. Firebase Auth SDK
+- Confirm Firebase Auth SDK is not loaded on the homepage unless required.
+- It should only load on ad landing pages or pages that need it, such as /google-ads-landing.
+- If Firebase is imported globally and affects homepage bundle, report and suggest route-level lazy loading.
+
+D. GSC auto-sync
+- Confirm GSC auto-sync at server startup does not block request path.
+- If it runs on every boot, report whether it is async and non-blocking.
+- Do not modify unless clearly safe.
+
+E. Images below fold
+- Confirm below-fold images are lazy-loaded.
+- Confirm key images have alt text.
+
+------------------------------------------------------------
+TASK 2 — Implement safe homepage fixes only
+------------------------------------------------------------
+
+After reporting findings, implement only safe fixes:
+
+1. Keep homepage title unchanged if it uses "Preschool Chain in Thane".
+2. Fix homepage meta description to <=155 characters if needed.
+3. Confirm canonical is exactly:
+   https://www.rainbowpreschools.com/
+4. Add BreadcrumbList schema if missing.
+5. Keep schema @type as EducationalOrganization.
+6. Do not modify server/homepage-freshness.ts.
+7. Remove or replace unverified review-count text.
+8. Do not add AggregateRating unless verified review source exists.
+9. Centralise programme ages in shared/programme-data.ts or equivalent.
+10. Update only homepage-related hardcoded age ranges.
+11. Ensure FAQ schema matches visible FAQs.
+12. Remove or rewrite duplicate Explore More section.
+13. Verify OG image dimensions and report.
+14. Report SearchAction feasibility; implement only if a real search URL exists.
+15. Report Firebase, LCP, font preconnect, and GSC startup findings.
+
+------------------------------------------------------------
+TASK 3 — Final report format
+------------------------------------------------------------
+
+After implementation, report:
+
+1. Files changed
+2. Files intentionally not changed, especially server/homepage-freshness.ts
+3. Homepage title retained or changed
+4. Final homepage meta description and character count
+5. Homepage canonical value
+6. Schema types present after fix
+7. BreadcrumbList added: yes/no
+8. AggregateRating status: absent / removed / retained with source
+9. Review-count text decision: retained with source / replaced / removed
+10. Programme age data centralised: yes/no
+11. Explore More decision: removed / rewritten / retained with reason
+12. FAQ schema parity confirmed: yes/no
+13. OG image status and dimensions
+14. LCP hero image status
+15. Firebase homepage loading status
+16. Google Fonts preconnect status
+17. GSC startup sync status
+18. Any remaining business decisions needed
+
+Do not proceed to other pages until this homepage implementation is reviewed.

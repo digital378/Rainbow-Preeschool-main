@@ -1,0 +1,250 @@
+You are continuing the SEO audit for rainbowpreschools.com.
+
+Important architecture decision:
+Do not flag the homepage / as defective only because it is CSR-only. The homepage is intentionally excluded from Bot SSR. Treat this as an accepted architecture trade-off. Focus only on actual SEO risks inside the current setup.
+
+Confirmed setup:
+- React 18 + TypeScript
+- Vite frontend
+- Express.js backend
+- Homepage file: client/src/pages/home.tsx
+- SEO component: client/src/components/seo.tsx
+- Header: client/src/components/navigation.tsx
+- Footer: client/src/components/footer.tsx
+- CTA: client/src/components/cta-section.tsx
+- Find Nearest Centre widget: client/src/components/find-nearest-centre.tsx
+- Bot SSR middleware: server/bot-ssr.ts
+- SSR page definitions: server/ssr-pages.ts
+- Branch data: shared/centre-data.ts
+
+Your task:
+Audit and fix homepage SEO risks only. Do not move to other pages yet.
+
+------------------------------------------------------------
+TASK 1 — Audit homepage SEO implementation
+------------------------------------------------------------
+
+Review:
+- client/src/pages/home.tsx
+- client/src/components/seo.tsx
+- client/src/components/navigation.tsx
+- client/src/components/footer.tsx
+- shared/centre-data.ts
+
+Report first, then implement.
+
+Check:
+
+1. Canonical
+Confirm the homepage <SEO /> call uses exactly:
+https://www.rainbowpreschools.com/
+
+Confirm there are no conflicting canonical values for the homepage.
+
+2. Title and meta description
+Check the homepage title and description.
+
+Recommended title:
+Rainbow Preschool in Thane | Playgroup, Nursery & Kindergarten
+
+Recommended meta description:
+Rainbow Preschool International is a trusted preschool chain in Thane since 2007, offering Playgroup, Nursery, Kindergarten and daycare programmes across 6 centres. Book a campus visit today.
+
+If current metadata is stronger and within SEO limits, report it before changing.
+
+3. Star rating / review claim
+Find all visible homepage text showing:
+- stars
+- 4.9/5
+- 487 parent reviews
+- parent review rating
+- similar rating claims
+
+Decision rule:
+- If there is no verified review source in the codebase or business-approved data source, remove the rating claim.
+- Replace it with:
+  “Trusted by parents across Thane since 2007.”
+
+Do not add AggregateRating schema unless the review source is verified.
+
+4. AggregateRating schema
+Search homepage structured data for AggregateRating.
+
+If AggregateRating exists but there is no verified review source:
+- Remove AggregateRating from homepage schema.
+- Remove matching visible rating claim.
+- Report this as a trust-risk cleanup.
+
+If AggregateRating does not exist:
+- Do not add it.
+
+5. Structured data completeness
+Review homepage structuredData prop in home.tsx.
+
+Required schema:
+A. Organization or Preschool schema
+B. WebSite schema
+C. BreadcrumbList schema
+D. FAQPage schema only if matching FAQs are visible on the homepage
+E. Branch/location data for all 6 centres from shared/centre-data.ts
+
+Use branch data from shared/centre-data.ts.
+Do not hardcode centre names, phone numbers, or addresses if central data exists.
+
+Add BreadcrumbList if missing:
+Home → https://www.rainbowpreschools.com/
+
+For organization type, prefer:
+@type: Preschool
+
+Include:
+- name
+- url
+- logo
+- description
+- telephone
+- address or areaServed
+- branch/location information for all 6 centres where data exists
+
+6. Programme age-range consistency
+Search the codebase for all hardcoded programme age ranges:
+- 1.5–2.5
+- 2.5–3.5
+- 2.5–4
+- 3.5–5
+- 4–6
+- 2–10
+
+Required canonical age ranges unless business data says otherwise:
+- Playgroup: 1.5–2.5 years
+- Nursery: 2.5–3.5 years
+- Kindergarten: 3.5–5 years
+- Happy Times: 2–10 years
+
+Create or use a central programme data object, preferably in shared/centre-data.ts or a new shared/programme-data.ts file.
+
+Then update:
+- homepage programme cards
+- footer programme links
+- schema
+- any visible homepage copy
+- any homepage internal link labels
+
+Do not leave conflicting age ranges.
+
+7. Navigation and footer duplication
+Audit:
+- client/src/components/navigation.tsx
+- client/src/components/footer.tsx
+- any mid-page homepage “Explore More” block in home.tsx
+
+Required:
+- Keep header navigation.
+- Keep grouped footer navigation.
+- Remove the mid-page “Explore More” block if it simply repeats header/footer links.
+- If the block is useful, rewrite it into a contextual “Popular Searches for Parents in Thane” section with fewer links and unique explanatory text.
+
+Preferred approach:
+Remove the duplicate Explore More section unless it has strong unique content.
+
+8. Footer cleanup
+Footer should remain grouped and useful.
+
+Recommended footer groups:
+- Programmes
+- Centres
+- Admissions
+- Contact
+- Legal
+
+Avoid repeating the same internal links multiple times in the same footer.
+
+9. OG image
+Check public file:
+/og-image.jpg
+
+Verify:
+- exists
+- returns correctly in build/public path
+- dimensions are 1200 x 630 px
+- file size under 8 MB
+- referenced by homepage SEO component as absolute URL:
+  https://www.rainbowpreschools.com/og-image.jpg
+
+If file is not 1200 x 630, report it. Do not generate a new image unless asked.
+
+10. Homepage H1
+Inspect LandingHero or the component rendering the homepage H1.
+
+Confirm:
+- Exactly one visible H1.
+- H1 is relevant to preschool + Thane + brand.
+
+Recommended H1:
+Rainbow Preschool International — Trusted Preschool Chain in Thane Since 2007
+
+If current H1 is close and stronger for conversion, report before changing.
+
+11. FAQ schema parity
+If FAQPage schema exists:
+- Confirm all FAQ questions and answers are visibly present on the homepage.
+- If schema-only FAQs exist without visible FAQ content, remove FAQPage schema or add visible FAQ section.
+- Do not keep hidden FAQ schema.
+
+12. Image and technical checks
+Check homepage for:
+- missing image alt text
+- images without width/height
+- hero image LCP optimisation
+- lazy loading below-fold images
+- broken internal links
+- CTA buttons that are not real links/buttons
+- duplicate CTAs with unclear destination
+
+Do not over-optimise if CWV fixes are already implemented. Report only meaningful issues.
+
+------------------------------------------------------------
+TASK 2 — Implement safe fixes
+------------------------------------------------------------
+
+After reporting the audit findings, implement only these safe fixes:
+
+1. Replace unsupported rating text with:
+“Trusted by parents across Thane since 2007.”
+unless verified review data exists.
+
+2. Remove AggregateRating schema if unsupported.
+
+3. Add BreadcrumbList schema if missing.
+
+4. Ensure Organization/Preschool schema uses all 6 centre records from shared/centre-data.ts.
+
+5. Standardise age ranges using central programme data.
+
+6. Remove or rewrite duplicate mid-page Explore More block.
+
+7. Confirm homepage canonical in <SEO /> is exactly:
+https://www.rainbowpreschools.com/
+
+8. Confirm OG image reference is correct.
+
+9. Ensure FAQPage schema matches visible FAQ content exactly.
+
+------------------------------------------------------------
+TASK 3 — Final report format
+------------------------------------------------------------
+
+After implementation, report:
+
+1. Files changed
+2. Issues found
+3. Fixes completed
+4. Fixes intentionally not completed
+5. Whether AggregateRating was removed or retained
+6. Whether all age ranges are now centralised
+7. Homepage canonical value
+8. Homepage schema types now present
+9. OG image status and dimensions
+10. Any business decision still needed
+
+Do not proceed to programme pages or local landing pages until this homepage task is reviewed.
