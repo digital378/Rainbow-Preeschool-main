@@ -21,10 +21,9 @@ import { BranchCard } from "@/components/branch-card";
 import { FindNearestCentre } from "@/components/find-nearest-centre";
 import { TestimonialCard } from "@/components/testimonial-card";
 import { CountUp } from "@/components/count-up";
-import { SEO } from "@/components/seo";
+import { SEO, createBreadcrumbSchema } from "@/components/seo";
 import { programmes, branches, testimonials } from "@shared/schema";
 import { ArrowRight, Star, Users, MapPin, Shield, Lock, Phone, Award, FileText, Palette, BookOpen, GraduationCap } from "lucide-react";
-import { SiGoogle } from "react-icons/si";
 import { useState, useEffect, lazy, Suspense, useRef } from "react";
 
 const Interactive3DMap = lazy(() => import("@/components/interactive-3d-map").then(m => ({ default: m.Interactive3DMap })));
@@ -127,7 +126,7 @@ const _organizationSchema = {
   "alternateName": "Rainbow Preschools",
   "url": "https://www.rainbowpreschools.com",
   "logo": "https://www.rainbowpreschools.com/images/logo.webp",
-  "description": "Trusted preschool in Thane since 2007. Play-based early learning for children aged 1.5-5 years. 6 centres across Thane West.",
+  "description": "Trusted preschool chain in Thane since 2007. Play-based early learning for children aged 1.5-5 years. 6 centres across Thane West.",
   "foundingDate": "2007",
   "areaServed": [
     { "@type": "City", "name": "Thane" },
@@ -168,7 +167,7 @@ const _websiteSchema = {
   "@type": "WebSite",
   "name": "Rainbow Preschool International",
   "url": "https://www.rainbowpreschools.com",
-  "description": "Trusted preschool in Thane since 2007"
+  "description": "Trusted preschool chain in Thane since 2007"
 };
 
 const _faqSchema = {
@@ -203,7 +202,8 @@ const _orgJson      = JSON.stringify(_organizationSchema);
 const _webJson      = JSON.stringify(_websiteSchema);
 const _faqJson      = JSON.stringify(_faqSchema);
 const _videoJson    = JSON.stringify(_videoSchema);
-const _branchJson   = JSON.stringify(createAllBranchLocalBusinessSchemas());
+const _branchJson      = JSON.stringify(createAllBranchLocalBusinessSchemas());
+const _breadcrumbJson  = JSON.stringify(createBreadcrumbSchema([{ name: "Home", url: "https://www.rainbowpreschools.com/" }]));
 
 function QuickCallbackStrip() {
   const { toast } = useToast();
@@ -347,6 +347,7 @@ export default function Home() {
         { id: 'faq-schema',          json: _faqJson },
         { id: 'video-schema',        json: _videoJson },
         { id: 'home-branches-schema',json: _branchJson },
+        { id: 'breadcrumb-schema',   json: _breadcrumbJson },
       ];
       for (const { id, json } of entries) {
         const existing = document.getElementById(id);
@@ -370,7 +371,7 @@ export default function Home() {
 
     return () => {
       cancelFn?.();
-      ['organization-schema', 'website-schema', 'faq-schema', 'video-schema', 'home-branches-schema'].forEach(id => {
+      ['organization-schema', 'website-schema', 'faq-schema', 'video-schema', 'home-branches-schema', 'breadcrumb-schema'].forEach(id => {
         document.getElementById(id)?.remove();
       });
     };
@@ -380,7 +381,7 @@ export default function Home() {
     <div>
       <SEO
         title="Rainbow Preschool | Preschool Chain in Thane Since 2007"
-        description="Rainbow Preschool International — Playgroup, Nursery & Kindergarten across 6 Thane centres for ages 1.5–6. Play-based learning since 2007. Admissions open."
+        description="Trusted preschool chain in Thane since 2007 — Playgroup, Nursery & Kindergarten across 6 centres. Play-based learning. Admissions open."
         keywords="rainbow preschool, preschool in thane, playgroup in thane, nursery school thane, early childhood education thane, rainbow preschool international"
         canonical="https://www.rainbowpreschools.com/"
       />
@@ -437,7 +438,7 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <div data-reveal="float">
               <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">About Us</p>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6" data-sparkle>Why Parents Choose Rainbow Preschool in Thane</h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6" data-sparkle>Why Parents Choose Rainbow Preschool</h2>
               <p className="text-muted-foreground text-lg leading-relaxed mb-6">
                 Since 2007, Rainbow Preschool International has helped over 1,00,000 children learn, play, and grow across Thane. Our centres follow a play-based curriculum that builds reading, writing, and number skills through hands-on activities, stories, art, and outdoor play.
               </p>
@@ -563,14 +564,7 @@ export default function Home() {
             <div className="text-center max-w-3xl mx-auto mb-12">
               <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">Testimonials</p>
               <h2 className="text-3xl md:text-4xl font-bold mb-2" data-sparkle>Parents from Thane Say...</h2>
-              <div className="flex items-center justify-center gap-2 mt-4 bg-white/60 dark:bg-background/60 backdrop-blur-sm rounded-full px-5 py-2 inline-flex mx-auto border border-amber-200/60 dark:border-amber-700/30 w-fit">
-                <SiGoogle className="w-4 h-4 text-gray-600 dark:text-gray-400" />
-                <span className="font-bold text-foreground">4.7</span>
-                <div className="flex items-center gap-0.5">
-                  {[1,2,3,4,5].map(i => <Star key={i} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />)}
-                </div>
-                <span className="text-muted-foreground text-sm">· 3,997 Google reviews</span>
-              </div>
+              <p className="text-sm text-muted-foreground mt-3">Trusted by parents across Thane since 2007.</p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {testimonials.map((testimonial) => (
@@ -702,7 +696,7 @@ export default function Home() {
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
         <EEATSignals
           pageUrl="/"
-          pageName="Rainbow Preschool International — Preschool in Thane"
+          pageName="Rainbow Preschool International — Preschool Chain in Thane"
           reviewedBy="Rainbow Preschool Curriculum Team"
           reviewerRole="Curriculum Team, Rainbow Preschool International"
           lastUpdated={LAST_UPDATED_DISPLAY}
