@@ -334,14 +334,54 @@ describe("TRUE NEGATIVES — meta fields in shared data files are skipped", () =
     assert.strictEqual(errors.length, 0, "url: field must be skipped");
   });
 
-  it("does not flag a line in a visible field when href= is present", () => {
+  it("does not flag a line in a visible field when href= appears before the phrase", () => {
     const src = `
       {
         heading: '<a href="/best-preschool-near-me-in-thane">Best Preschool in Thane</a>',
       }
     `;
     const errors = scanDataLines(lines(src), "shared/centre-data.ts");
-    assert.strictEqual(errors.length, 0, "heading with href= is anchor text — must be skipped");
+    assert.strictEqual(errors.length, 0, "phrase after href= is anchor text — must be skipped");
+  });
+});
+
+// ---------------------------------------------------------------------------
+// TRUE POSITIVES — question: field in inline FAQ objects
+// ---------------------------------------------------------------------------
+
+describe("TRUE POSITIVES — question: field in inline FAQ objects", () => {
+  it("flags a reserved phrase in a question: field in an inline { question, answer } object", () => {
+    const src = `
+      faqs: [
+        { question: "How many hours is playgroup in Thane?", answer: "Three hours per day." },
+      ]
+    `;
+    const errors = scanDataLines(lines(src), "shared/legacy-pages-data.ts");
+    assert.ok(errors.length > 0, "expected a violation from the inline question field");
+    assert.ok(
+      errors.some((e) => e.includes('"question:"')),
+      "expected the error to identify the question field",
+    );
+  });
+
+  it("flags a reserved phrase in a question: field even when the answer: value contains href=", () => {
+    const src = `
+      faqs: [
+        { question: "Is there a Rainbow Preschool in Thane West?", answer: 'Yes, <a href="/preschool-in-hariniwas-thane">Hariniwas</a>.' },
+      ]
+    `;
+    const errors = scanDataLines(lines(src), "shared/legacy-pages-data.ts");
+    assert.ok(errors.length > 0, "href= in answer must not shield a reserved phrase in question:");
+  });
+
+  it("does NOT flag a question: field that has no reserved phrase", () => {
+    const src = `
+      faqs: [
+        { question: "How many hours per day does the playgroup programme run?", answer: "Three hours." },
+      ]
+    `;
+    const errors = scanDataLines(lines(src), "shared/legacy-pages-data.ts");
+    assert.strictEqual(errors.length, 0, "rephrased question must pass cleanly");
   });
 });
 

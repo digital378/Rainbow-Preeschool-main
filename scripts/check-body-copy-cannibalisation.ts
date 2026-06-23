@@ -9,8 +9,9 @@
  * designated canonical page.
  *
  * It also scans shared data files (centre-data.ts, legacy-pages-data.ts,
- * playgroup-landing-data.ts) for reserved phrases in `heading:` field values
- * — these become rendered H2/H3 elements on page.
+ * playgroup-landing-data.ts) for reserved phrases in visible-text field values
+ * (`heading:`, `question:`, `answer:`, `content:`, `intro:`, `introParagraph:`)
+ * — these become rendered headings, FAQ text, and section copy on page.
  *
  * WHY THIS MATTERS
  * ─────────────────
@@ -257,23 +258,40 @@ export function scanPageLines(lines: string[], filename: string): string[] {
 export function scanDataLines(lines: string[], relPath: string): string[] {
   const errors: string[] = [];
 
+  // Regex matching any visible-text field name — handles both standalone
+  // (`question: "…"`) and inline-object (`{ question: "…", answer: "…" }`) forms.
+  // Must stay in sync with VISIBLE_DATA_FIELDS.
+  const visibleFieldRe = new RegExp(`\\b(${[...VISIBLE_DATA_FIELDS].join("|")})\\s*:`);
+
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
 
-    if (isSkippedLineType(line)) continue;
-
+    // Skip comment and import lines (same markers as page scanning).
+    // We do NOT call isSkippedLineType here because data-file answer/content
+    // strings routinely contain inline HTML markup (href=, <a>) — skipping
+    // the entire line would miss reserved phrases in the question: portion.
     const trimmed = line.trimStart();
-    const colonIdx = trimmed.indexOf(":");
-    if (colonIdx === -1) continue;
-    const fieldName = trimmed.slice(0, colonIdx).trim();
-    if (!VISIBLE_DATA_FIELDS.has(fieldName)) continue;
+    if (trimmed.startsWith("//") || trimmed.startsWith("/*") || trimmed.startsWith("*")) continue;
+    if (trimmed.startsWith("import ")) continue;
 
-    if (/href=/.test(line)) continue;
+    // Skip pure meta-link field lines (url: fields are link definitions, not body copy).
     if (/\burl:/.test(line)) continue;
+
+    // Skip if the line does not contain any visible-text field name.
+    // Word-boundary matching handles both `question: "…"` (standalone) and
+    // `{ question: "…", answer: "…" }` (inline-object) forms.
+    const fieldMatch = visibleFieldRe.exec(line);
+    if (!fieldMatch) continue;
+    const fieldName = fieldMatch[1];
 
     for (const rule of OWNED_PHRASES) {
       const match = rule.phrase.exec(line);
       if (!match) continue;
+
+      // Skip if the phrase appears after href= on the same line — it is
+      // anchor text for a link pointing to the canonical page (SEO-neutral).
+      const beforePhrase = line.slice(0, match.index);
+      if (/href=/.test(beforePhrase)) continue;
 
       errors.push(
         `${relPath}:${i + 1} — "${rule.label}" appears in a "${fieldName}:" field of a ` +
