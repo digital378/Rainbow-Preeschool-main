@@ -83,7 +83,7 @@ const PAGES_DIR = "client/src/pages";
 // ── Files completely exempt from body-copy scanning ─────────────────────────
 // These are paid-ad landing pages, event pages, or internal tools that are not
 // organic SEO targets. Adding a page here should always have a written reason.
-const EXEMPT_FILES = new Set<string>([
+export const EXEMPT_FILES = new Set<string>([
   "gsc-dashboard.tsx",      // internal analytics dashboard, never indexed
   "ad-landing.tsx",         // paid-ad landing page (Google/Meta ads) — not organic
   "ad-google-landing.tsx",  // paid-ad landing page — not organic
@@ -93,14 +93,14 @@ const EXEMPT_FILES = new Set<string>([
 ]);
 
 // ── Reserved phrases and their canonical source files ───────────────────────
-interface PhraseRule {
+export interface PhraseRule {
   phrase: RegExp;
   label: string;
   /** File basenames that ARE allowed to contain this phrase in body copy. */
   canonicalFiles: ReadonlyArray<string | RegExp>;
 }
 
-const OWNED_PHRASES: PhraseRule[] = [
+export const OWNED_PHRASES: PhraseRule[] = [
   {
     phrase: /\bbest preschool in thane\b/i,
     label: "Best Preschool in Thane",
@@ -161,7 +161,7 @@ function readLines(rel: string): string[] {
  * Limitation: multi-line template literals are not tracked across lines, but
  * they are uncommon for the kind of body copy we are guarding against.
  */
-function isPhraseInsideQuotedString(line: string, phraseIndex: number): boolean {
+export function isPhraseInsideQuotedString(line: string, phraseIndex: number): boolean {
   const before = line.slice(0, phraseIndex);
   // Count unescaped double quotes
   const dq = (before.match(/(?<!\\)"/g) ?? []).length;
@@ -179,7 +179,7 @@ function isPhraseInsideQuotedString(line: string, phraseIndex: number): boolean 
  * Returns true when `filename` matches one of the canonical-file patterns
  * for `rule`.
  */
-function isCanonicalFile(filename: string, rule: PhraseRule): boolean {
+export function isCanonicalFile(filename: string, rule: PhraseRule): boolean {
   return rule.canonicalFiles.some((pattern) =>
     pattern instanceof RegExp ? pattern.test(filename) : pattern === filename,
   );
@@ -192,7 +192,7 @@ function isCanonicalFile(filename: string, rule: PhraseRule): boolean {
  *   - lines containing anchor-tag patterns (href=, <a, <Link)
  *   - SEO component lines
  */
-function isSkippedLineType(line: string): boolean {
+export function isSkippedLineType(line: string): boolean {
   const trimmed = line.trimStart();
   if (trimmed.startsWith("//") || trimmed.startsWith("/*") || trimmed.startsWith("*")) return true;
   if (trimmed.startsWith("import ")) return true;
@@ -205,15 +205,19 @@ function isSkippedLineType(line: string): boolean {
   return false;
 }
 
-// ── Main scan ────────────────────────────────────────────────────────────────
+// ── Testable scan functions ───────────────────────────────────────────────────
 
-const errors: string[] = [];
+/**
+ * Scans an array of lines (representing a .tsx page file) for body-copy
+ * keyword violations. Returns an array of error message strings.
+ *
+ * `filename` is the basename only (e.g. "about.tsx") — used to check
+ * canonical-file and exempt-file rules.
+ */
+export function scanPageLines(lines: string[], filename: string): string[] {
+  if (EXEMPT_FILES.has(filename)) return [];
 
-function scanFile(filename: string): void {
-  if (EXEMPT_FILES.has(filename)) return;
-
-  const rel = `${PAGES_DIR}/${filename}`;
-  const lines = readLines(rel);
+  const errors: string[] = [];
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
@@ -226,11 +230,10 @@ function scanFile(filename: string): void {
       const match = rule.phrase.exec(line);
       if (!match) continue;
 
-      // Skip if the phrase is inside a quoted string (data value / JSX attr)
       if (isPhraseInsideQuotedString(line, match.index)) continue;
 
       errors.push(
-        `${rel}:${i + 1} — "${rule.label}" appears as unquoted body copy on a ` +
+        `${filename}:${i + 1} — "${rule.label}" appears as unquoted body copy on a ` +
           `non-canonical page. Canonical owner: ${
             rule.canonicalFiles
               .map((p) => (p instanceof RegExp ? p.source : p))
@@ -241,57 +244,31 @@ function scanFile(filename: string): void {
       );
     }
   }
+
+  return errors;
 }
 
-// ── Shared data file scan ─────────────────────────────────────────────────────
-// Scans `heading:` field values in shared data files.
-// These values are rendered as H2/H3 section headings on public pages, making
-// them high-impact body-copy signals. Meta fields (title, description, canonical,
-// canonicalPath, slug) are exempted — they are already covered by the title and
-// description guards.
-
-const DATA_FILES = [
-  "shared/centre-data.ts",
-  "shared/legacy-pages-data.ts",
-  "shared/playgroup-landing-data.ts",
-] as const;
-
-// Visible-text field names in shared data files — values rendered as on-page text.
-// `h1:` is intentionally excluded: it is already covered by the title-cannibalisation
-// and h1-parity guards, so double-flagging here adds noise without extra protection.
-// Meta/link fields (title, description, metaDescription, canonical, canonicalPath,
-// slug, url) are also excluded — they are covered by the title and description guards.
-const VISIBLE_DATA_FIELDS = new Set<string>([
-  "heading",
-  "content",
-  "intro",
-  "introParagraph",
-  "question",
-  "answer",
-]);
-
-function scanDataFile(relPath: string): void {
-  const lines = readLines(relPath);
+/**
+ * Scans an array of lines (representing a shared data file) for body-copy
+ * keyword violations in visible-text fields. Returns an array of error strings.
+ *
+ * `relPath` is used only for the error message label.
+ */
+export function scanDataLines(lines: string[], relPath: string): string[] {
+  const errors: string[] = [];
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
 
-    // Skip comment lines and import statements
     if (isSkippedLineType(line)) continue;
 
-    // Determine the field name on this line (the key before the first colon).
-    // Only examine fields whose values are rendered as visible on-page text.
     const trimmed = line.trimStart();
     const colonIdx = trimmed.indexOf(":");
     if (colonIdx === -1) continue;
     const fieldName = trimmed.slice(0, colonIdx).trim();
     if (!VISIBLE_DATA_FIELDS.has(fieldName)) continue;
 
-    // Skip if the line contains a link context — the phrase would be anchor text,
-    // not standalone visible copy.
     if (/href=/.test(line)) continue;
-
-    // Skip if the value also contains a url: key on the same line (link-pair pattern).
     if (/\burl:/.test(line)) continue;
 
     for (const rule of OWNED_PHRASES) {
@@ -310,47 +287,90 @@ function scanDataFile(relPath: string): void {
       );
     }
   }
+
+  return errors;
 }
 
-let pages: string[];
-try {
-  pages = readdirSync(resolve(ROOT, PAGES_DIR)).filter((f) => f.endsWith(".tsx"));
-} catch (err) {
-  console.error(`[check-body-copy-cannibalisation] Cannot read ${PAGES_DIR}:`, err);
-  process.exit(1);
-}
+// ── Shared constants used by both scan functions and the main runner ──────────
 
-for (const page of pages) {
-  scanFile(page);
-}
+// Visible-text field names in shared data files — values rendered as on-page text.
+// `h1:` is intentionally excluded: it is already covered by the title-cannibalisation
+// and h1-parity guards, so double-flagging here adds noise without extra protection.
+// Meta/link fields (title, description, metaDescription, canonical, canonicalPath,
+// slug, url) are also excluded — they are covered by the title and description guards.
+export const VISIBLE_DATA_FIELDS = new Set<string>([
+  "heading",
+  "content",
+  "intro",
+  "introParagraph",
+  "question",
+  "answer",
+]);
 
-for (const dataFile of DATA_FILES) {
-  scanDataFile(dataFile);
-}
+const DATA_FILES = [
+  "shared/centre-data.ts",
+  "shared/legacy-pages-data.ts",
+  "shared/playgroup-landing-data.ts",
+] as const;
 
-if (errors.length > 0) {
-  console.error(
-    `[check-body-copy-cannibalisation] ${errors.length} body-copy keyword violation(s) found:`,
+// ── Main scan ─────────────────────────────────────────────────────────────────
+
+function main(): void {
+  const allErrors: string[] = [];
+
+  let pages: string[];
+  try {
+    pages = readdirSync(resolve(ROOT, PAGES_DIR)).filter((f) => f.endsWith(".tsx"));
+  } catch (err) {
+    console.error(`[check-body-copy-cannibalisation] Cannot read ${PAGES_DIR}:`, err);
+    process.exit(1);
+  }
+
+  for (const page of pages) {
+    const rel = `${PAGES_DIR}/${page}`;
+    const fileLines = readLines(rel);
+    allErrors.push(...scanPageLines(fileLines, page));
+  }
+
+  for (const dataFile of DATA_FILES) {
+    const fileLines = readLines(dataFile);
+    allErrors.push(...scanDataLines(fileLines, dataFile));
+  }
+
+  if (allErrors.length > 0) {
+    console.error(
+      `[check-body-copy-cannibalisation] ${allErrors.length} body-copy keyword violation(s) found:`,
+    );
+    for (const e of allErrors) console.error("  " + e);
+    console.error(
+      `\nWhy this matters: reserved keyword phrases in rendered headings let Google ` +
+        `associate the phrase with the wrong URL, diluting the ranking signal for the ` +
+        `canonical page.\n` +
+        `Fix options:\n` +
+        `  1. Rephrase the copy to avoid the exact match (e.g. "Preschool Chain in Thane"\n` +
+        `     instead of "Preschool in Thane").\n` +
+        `  2. Replace the text with an <a>/<Link> anchor pointing to the canonical URL\n` +
+        `     (anchor text linking to the canonical page is SEO-neutral or beneficial).\n` +
+        `  3. For TSX pages: add the file to EXEMPT_FILES only for non-organic pages\n` +
+        `     (ad pages, internal tools).`,
+    );
+    process.exit(1);
+  }
+
+  console.log(
+    `[check-body-copy-cannibalisation] OK — ${pages.length} page files and ` +
+      `${DATA_FILES.length} shared data files scanned, ` +
+      `no reserved-phrase violations detected.`,
   );
-  for (const e of errors) console.error("  " + e);
-  console.error(
-    `\nWhy this matters: reserved keyword phrases in rendered headings let Google ` +
-      `associate the phrase with the wrong URL, diluting the ranking signal for the ` +
-      `canonical page.\n` +
-      `Fix options:\n` +
-      `  1. Rephrase the copy to avoid the exact match (e.g. "Preschool Chain in Thane"\n` +
-      `     instead of "Preschool in Thane").\n` +
-      `  2. Replace the text with an <a>/<Link> anchor pointing to the canonical URL\n` +
-      `     (anchor text linking to the canonical page is SEO-neutral or beneficial).\n` +
-      `  3. For TSX pages: add the file to EXEMPT_FILES only for non-organic pages\n` +
-      `     (ad pages, internal tools).`,
-  );
-  process.exit(1);
+  process.exit(0);
 }
 
-console.log(
-  `[check-body-copy-cannibalisation] OK — ${pages.length} page files and ` +
-    `${DATA_FILES.length} shared data files scanned, ` +
-    `no reserved-phrase violations detected.`,
-);
-process.exit(0);
+// Only run when invoked directly (not when imported by the test suite).
+const isMain =
+  process.argv[1] &&
+  (process.argv[1].endsWith("check-body-copy-cannibalisation.ts") ||
+    process.argv[1].endsWith("check-body-copy-cannibalisation.js"));
+
+if (isMain) {
+  main();
+}
