@@ -2,6 +2,7 @@ import { Link } from "wouter";
 import { SEO, organizationSchema, websiteSchema, createBreadcrumbSchema, createFAQSchema } from "@/components/seo";
 import { ContactForm } from "@/components/contact-form";
 import { EEATSignals } from "@/components/eeat-signals";
+import { VERIFIED_RATING } from "@/lib/verified-rating";
 import { LAST_UPDATED_DISPLAY, LAST_UPDATED_ISO } from "@shared/site-freshness";
 import { centres } from "@shared/centre-data";
 import { COMMERCIAL_PAGES_LAST_UPDATED_DISPLAY, PREFERRED_DOMAIN } from "@shared/seo-config";
@@ -619,7 +620,8 @@ export default function PreschoolAdmissions() {
                   reviewerRole="Curriculum Team, Rainbow Preschool International"
                   lastUpdated={LAST_UPDATED_DISPLAY}
                   lastUpdatedIso={LAST_UPDATED_ISO}
-                  showRating={false}
+                  ratingValue={VERIFIED_RATING.ratingValue}
+                  reviewCount={VERIFIED_RATING.reviewCount}
                   schemaId="preschool-admissions-eeat"
                 />
               </div>

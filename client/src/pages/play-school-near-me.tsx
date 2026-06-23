@@ -47,6 +47,7 @@ import { useToast } from "@/hooks/use-toast";
 import { trackFormSubmit } from "@/lib/analytics";
 import { SEOCrossLinks } from "@/components/seo-crosslinks";
 import { EEATSignals } from "@/components/eeat-signals";
+import { VERIFIED_RATING } from "@/lib/verified-rating";
 import { LAST_UPDATED_DISPLAY, LAST_UPDATED_ISO } from "@shared/site-freshness";
 
 const callbackFormSchema = z.object({
@@ -1260,7 +1261,8 @@ export default function PlaySchoolNearMe() {
           reviewerRole="Curriculum Team, Rainbow Preschool International"
           lastUpdated={LAST_UPDATED_DISPLAY}
           lastUpdatedIso={LAST_UPDATED_ISO}
-          showRating={false}
+          ratingValue={VERIFIED_RATING.ratingValue}
+          reviewCount={VERIFIED_RATING.reviewCount}
           schemaId="play-school-near-me"
         />
       </div>

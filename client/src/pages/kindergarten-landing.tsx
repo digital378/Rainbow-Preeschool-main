@@ -45,6 +45,7 @@ import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { EEATSignals } from "@/components/eeat-signals";
+import { VERIFIED_RATING } from "@/lib/verified-rating";
 import { LAST_UPDATED_DISPLAY, LAST_UPDATED_ISO } from "@shared/site-freshness";
 import { trackProgrammeView, trackFormSubmit } from "@/lib/analytics";
 
@@ -855,7 +856,8 @@ export default function KindergartenLanding() {
           reviewerRole="Curriculum Team, Rainbow Preschool International"
           lastUpdated={LAST_UPDATED_DISPLAY}
           lastUpdatedIso={LAST_UPDATED_ISO}
-          showRating={false}
+          ratingValue={VERIFIED_RATING.ratingValue}
+          reviewCount={VERIFIED_RATING.reviewCount}
           schemaId="kindergarten-landing"
         />
       </div>
