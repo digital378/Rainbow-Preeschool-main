@@ -127,7 +127,7 @@ const _organizationSchema = {
   "alternateName": "Rainbow Preschools",
   "url": "https://www.rainbowpreschools.com",
   "logo": "https://www.rainbowpreschools.com/images/logo.webp",
-  "description": "Trusted preschool chain in Thane since 2007. Play-based early learning for children aged 1.5-5 years. 6 centres across Thane West.",
+  "description": `Trusted preschool chain in Thane since 2007. Play-based early learning for children aged ${PLAYGROUP.ageMin}–${KINDERGARTEN.ageMax} years. 6 centres across Thane West.`,
   "foundingDate": "2007",
   "areaServed": [
     { "@type": "City", "name": "Thane" },
@@ -185,7 +185,7 @@ const _videoSchema = {
   "@context": "https://schema.org",
   "@type": "VideoObject",
   "name": "Rainbow Preschool International — Campus Walkthrough",
-  "description": "Take a virtual tour of Rainbow Preschool International's campus in Thane. See our colourful classrooms, safe play areas, and nurturing learning environment designed for children aged 1.5 to 6 years.",
+  "description": `Take a virtual tour of Rainbow Preschool International's campus in Thane. See our colourful classrooms, safe play areas, and nurturing learning environment designed for children aged ${PLAYGROUP.ageMin} to ${KINDERGARTEN.ageMax} years.`,
   "thumbnailUrl": "https://www.rainbowpreschools.com/og-image.jpg",
   "uploadDate": "2025-01-15",
   "contentUrl": "https://www.rainbowpreschools.com/assets/RPS_Walkthrough_Video_-_Website_1_1766126796450.mp4",
