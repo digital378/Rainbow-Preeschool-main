@@ -464,7 +464,26 @@ function PreschoolLocationTemplate({ localitySlug }: PreschoolLocationPageProps)
                   <p className="font-medium mb-1">Address</p>
                   <p className="text-muted-foreground" data-testid="text-address">{centre.address}</p>
                 </div>
-                
+
+                {centre.areasServed && centre.areasServed.length > 0 && (
+                  <div data-testid="section-areas-served">
+                    <p className="font-medium mb-2">Neighbourhoods We Serve</p>
+                    <div className="flex flex-wrap gap-2">
+                      {centre.areasServed.map((area) => (
+                        <Badge key={area} variant="secondary" data-testid={`badge-area-${area.toLowerCase().replace(/\s+/g, '-')}`}>
+                          <MapPin className="w-3 h-3 mr-1" />
+                          {area}
+                        </Badge>
+                      ))}
+                    </div>
+                    <p className="text-xs text-muted-foreground mt-2">
+                      Serving {centre.areasServed.slice(0, -1).join(", ")}
+                      {centre.areasServed.length > 1 ? ` and ${centre.areasServed[centre.areasServed.length - 1]}` : centre.areasServed[0]}
+                      {" "}and surrounding areas in Thane.
+                    </p>
+                  </div>
+                )}
+
                 <div>
                   <p className="font-medium mb-2">Phone Numbers</p>
                   <div className="space-y-2">

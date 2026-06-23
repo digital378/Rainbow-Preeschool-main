@@ -1761,6 +1761,17 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
       });
     }
 
+    if (richCentre && richCentre.areasServed && richCentre.areasServed.length > 0) {
+      const areaList = richCentre.areasServed;
+      const areaText = areaList.length > 1
+        ? `${areaList.slice(0, -1).join(", ")} and ${areaList[areaList.length - 1]}`
+        : areaList[0];
+      richSections.push({
+        heading: `Neighbourhoods Served by Our ${centre.locality} Centre`,
+        text: `Our ${centre.locality} centre primarily serves families living in ${areaText} and surrounding areas in Thane. If you are looking for a preschool near ${areaList[0]} or a playgroup close to ${areaList[1] ?? areaList[0]}, Rainbow Preschool's ${centre.locality} branch is your nearest option. Children from all these neighbourhoods attend our centre, making it a true community preschool where your child will grow up alongside familiar faces from the same streets and residential complexes.`,
+      });
+    }
+
     richSections.push({
       heading: `Visit, Address & Contact for the ${centre.locality} Centre`,
       text: `Our ${centre.locality} centre is located at ${centre.address}. To plan a visit or speak with the centre head, call ${centre.phone} between 9 AM and 6 PM, Monday to Saturday. We strongly encourage a free, no-obligation campus tour before you enrol — you will see our classrooms, meet the teachers, observe a live class in session, and have all your questions answered candidly. Walk-ins are welcome during school hours, and we can also arrange a guided trial class so your child can experience a typical Rainbow morning before you decide. Admissions for the 2025-26 academic year are open on a rolling basis, and seats are allocated on a first-come, first-served basis subject to age criteria and batch availability at the ${centre.locality} centre.`,
