@@ -48,14 +48,16 @@ const LOCALITY_URLS = [
 ];
 
 // Remaining indexable, evergreen landers (supporting pages).
-// Each one sets `lastModified` / `lastModifiedDisplay` in `server/ssr-pages.ts`
-// so the bot SSR Article-injector emits the "Reviewed by…" byline + Article
-// JSON-LD with `dateModified`.
-// NOTE: "/" is intentionally omitted — the homepage is served as the React SPA
-// to all visitors (bots and humans). Googlebot executes JS and indexes the live
-// page. The freshness byline/Article JSON-LD is not present in the SPA shell
-// and is not expected here. See server/bot-ssr.ts for the bypass.
+// "/" is served as the React SPA (bot SSR is bypassed at that path), so its
+// freshness signals come from two places:
+//   • server/homepage-freshness.ts injects a hidden Article JSON-LD and a
+//     hidden byline <div> into the HTML shell at serve-time (visible to this
+//     fetch-based check and to non-JS bots).
+//   • The <EEATSignals> component in client/src/pages/home.tsx renders the
+//     visible byline after React hydrates (visible to Googlebot and users).
+// All other URLs use bot SSR (server/ssr-pages.ts) for their freshness signal.
 const EVERGREEN_LANDER_URLS = [
+  "/",
   "/about",
   "/programmes",
   "/gallery",

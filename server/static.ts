@@ -1,6 +1,7 @@
 import express, { type Express } from "express";
 import fs from "fs";
 import path from "path";
+import { injectHomepageFreshness } from "./homepage-freshness";
 
 export function serveStatic(app: Express) {
   const distPath = path.resolve(__dirname, "public");
@@ -10,7 +11,25 @@ export function serveStatic(app: Express) {
     );
   }
 
+  // Homepage: inject freshness signals into the SPA shell before serving.
+  // MUST be registered before express.static so it wins over the static
+  // middleware's automatic index.html serving for "/".
+  app.get("/", (_req, res) => {
+    const indexPath = path.resolve(distPath, "index.html");
+    let html = fs.readFileSync(indexPath, "utf-8");
+    html = injectHomepageFreshness("/", html);
+    res.removeHeader("Set-Cookie");
+    res.setHeader("Cache-Control", "public, max-age=0, s-maxage=300, stale-while-revalidate=86400");
+    res.setHeader("CDN-Cache-Control", "public, max-age=3600, stale-while-revalidate=86400");
+    res.setHeader("Cloudflare-CDN-Cache-Control", "public, max-age=3600, stale-while-revalidate=86400");
+    res.setHeader("Content-Type", "text/html; charset=utf-8");
+    res.send(html);
+  });
+
   app.use(express.static(distPath, {
+    // Disable automatic index.html serving for directory requests so the
+    // explicit app.get("/") handler above always handles "/" in production.
+    index: false,
     setHeaders(res, filePath) {
       const ext = path.extname(filePath).toLowerCase();
       if ([".js", ".css", ".woff", ".woff2", ".ttf", ".otf", ".webp", ".png", ".jpg", ".jpeg", ".gif", ".svg", ".ico", ".avif"].includes(ext)) {
