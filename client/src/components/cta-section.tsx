@@ -11,7 +11,7 @@ interface CTASectionProps {
 
 export function CTASection({
   title = "Ready to begin your child's learning journey?",
-  description = "Join 1,00,000+ families who trust Rainbow Preschool International. Schedule a visit to our nearest centre today.",
+  description = "Join 1,00,000+ young learners who began their early learning journey with Rainbow Preschool. Schedule a free campus visit today.",
 }: CTASectionProps) {
   return (
     <section className="relative overflow-hidden bg-gradient-to-r from-primary via-accent to-secondary">

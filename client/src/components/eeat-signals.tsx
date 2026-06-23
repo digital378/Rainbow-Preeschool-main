@@ -22,6 +22,8 @@ interface EEATSignalsProps {
   lastUpdatedIso?: string;
   ratingValue?: number;
   reviewCount?: number;
+  /** When false, suppresses the star/rating display and the AggregateRating JSON-LD block. */
+  showRating?: boolean;
   schemaId: string;
 }
 
@@ -40,6 +42,7 @@ export function EEATSignals({
   lastUpdatedIso,
   ratingValue = 4.9,
   reviewCount = 487,
+  showRating = true,
   schemaId,
 }: EEATSignalsProps) {
   useEffect(() => {
@@ -116,11 +119,6 @@ export function EEATSignals({
       },
     };
 
-    const reviewScript = document.createElement("script");
-    reviewScript.type = "application/ld+json";
-    reviewScript.id = `${schemaId}-review-schema`;
-    reviewScript.textContent = JSON.stringify(reviewSchema);
-
     const articleScript = document.createElement("script");
     articleScript.type = "application/ld+json";
     articleScript.id = `${schemaId}-article-schema`;
@@ -131,7 +129,13 @@ export function EEATSignals({
       if (existing) existing.remove();
     });
 
-    document.head.appendChild(reviewScript);
+    if (showRating) {
+      const reviewScript = document.createElement("script");
+      reviewScript.type = "application/ld+json";
+      reviewScript.id = `${schemaId}-review-schema`;
+      reviewScript.textContent = JSON.stringify(reviewSchema);
+      document.head.appendChild(reviewScript);
+    }
     document.head.appendChild(articleScript);
 
     return () => {
@@ -140,7 +144,7 @@ export function EEATSignals({
         if (el) el.remove();
       });
     };
-  }, [pageUrl, pageName, reviewedBy, reviewerRole, reviewerCredentials, reviewerProfileUrl, authorName, authorRole, authorCredentials, lastUpdated, lastUpdatedIso, ratingValue, reviewCount, schemaId]);
+  }, [pageUrl, pageName, reviewedBy, reviewerRole, reviewerCredentials, reviewerProfileUrl, authorName, authorRole, authorCredentials, lastUpdated, lastUpdatedIso, ratingValue, reviewCount, showRating, schemaId]);
 
   const reviewerEyebrow = "Reviewed by";
 
@@ -180,19 +184,21 @@ export function EEATSignals({
             </p>
           </div>
         </div>
-        <div className="flex items-center gap-2 sm:flex-col sm:items-end" data-testid={`eeat-rating-${schemaId}`}>
-          <div className="flex items-center gap-0.5" aria-label={`Rated ${ratingValue} out of 5`}>
-            {[1, 2, 3, 4, 5].map((i) => (
-              <Star
-                key={i}
-                className={`w-4 h-4 ${i <= Math.round(ratingValue) ? "fill-yellow-400 text-yellow-400" : "text-gray-300"}`}
-              />
-            ))}
+        {showRating && (
+          <div className="flex items-center gap-2 sm:flex-col sm:items-end" data-testid={`eeat-rating-${schemaId}`}>
+            <div className="flex items-center gap-0.5" aria-label={`Rated ${ratingValue} out of 5`}>
+              {[1, 2, 3, 4, 5].map((i) => (
+                <Star
+                  key={i}
+                  className={`w-4 h-4 ${i <= Math.round(ratingValue) ? "fill-yellow-400 text-yellow-400" : "text-gray-300"}`}
+                />
+              ))}
+            </div>
+            <span className="text-xs text-muted-foreground">
+              <strong className="text-gray-900 dark:text-white">{ratingValue.toFixed(1)}</strong> from {reviewCount.toLocaleString()} parent reviews
+            </span>
           </div>
-          <span className="text-xs text-muted-foreground">
-            <strong className="text-gray-900 dark:text-white">{ratingValue.toFixed(1)}</strong> from {reviewCount.toLocaleString()} parent reviews
-          </span>
-        </div>
+        )}
       </div>
     </div>
   );

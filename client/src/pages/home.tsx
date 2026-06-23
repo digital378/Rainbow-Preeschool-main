@@ -86,9 +86,9 @@ const faqs: Array<{question: string; answer: React.ReactNode; answerText: string
     answerText: "Our teachers hold degrees or diplomas in Early Childhood Education (ECE), Montessori training, or equivalent qualifications. All staff undergo background checks and regular training in child development, classroom management, and first aid."
   },
   {
-    question: "What is the admission process and fee structure?",
-    answer: <>Admissions involve selecting a programme, choosing a centre, and scheduling a campus visit. Our team will guide you through the paperwork. Fees depend on the programme and centre — <a href="/contact" className="text-primary hover:underline">contact us</a> or call 82915 68972 for the latest fee details. <a href="/preschool-admissions" className="text-primary hover:underline">View full admissions information</a>.</>,
-    answerText: "Admissions involve selecting a programme, choosing a centre, and scheduling a campus visit. Our team will guide you through the paperwork. Fees depend on the programme and centre — contact us or call 82915 68972 for the latest fee details."
+    question: "How can parents book a campus visit and get fee details?",
+    answer: <>Book a campus visit by contacting any of our six Thane centres — our team will guide you through the process and share the latest fee structure. You can also <a href="/contact" className="text-primary hover:underline">fill in our contact form</a> or call 82915 68972. <a href="/preschool-admissions" className="text-primary hover:underline">View full admissions information</a>.</>,
+    answerText: "Book a campus visit by contacting any of our six Thane centres — our team will guide you through the process and share the latest fee structure. You can also fill in our contact form or call 82915 68972."
   },
   {
     question: "Where are Rainbow Preschool centres located in Thane?",
@@ -393,9 +393,9 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-6 gap-2 sm:gap-3">
             {[
-              { href: "/best-preschool-near-me-in-thane", label: "Award Winning", shortLabel: "Award Winning", Icon: Award, color: "#ef4444", testid: "link-best-preschool" },
-              { href: "/play-school-near-me", label: "Near Me", shortLabel: "Near Me", Icon: MapPin, color: "#10b981", testid: "link-preschool-near-me" },
-              { href: "/preschool-admissions", label: "Admissions", shortLabel: "Admissions", Icon: FileText, color: "#3b82f6", testid: "link-preschool-admissions" },
+              { href: "/best-preschool-near-me-in-thane", label: "Why Choose Us", shortLabel: "Why Choose Us", Icon: Award, color: "#ef4444", testid: "link-best-preschool" },
+              { href: "/play-school-near-me", label: "Find a Centre", shortLabel: "Find a Centre", Icon: MapPin, color: "#10b981", testid: "link-preschool-near-me" },
+              { href: "/preschool-admissions", label: "Book a Visit", shortLabel: "Book a Visit", Icon: FileText, color: "#3b82f6", testid: "link-preschool-admissions" },
               { href: "/playgroup", label: "Playgroup", shortLabel: "Playgroup", Icon: Palette, color: "#f97316", testid: "link-playgroup" },
               { href: "/nursery", label: "Nursery", shortLabel: "Nursery", Icon: BookOpen, color: "#8b5cf6", testid: "link-nursery" },
               { href: "/kindergarten", label: "Kindergarten", shortLabel: "KG", Icon: GraduationCap, color: "#14b8a6", testid: "link-kindergarten" },
@@ -450,7 +450,7 @@ export default function Home() {
                 Our curriculum covers language, maths, science awareness, creative arts, and social skills. Children also participate in yoga, dance, and special activities like field trips and celebrations. Fees vary by programme and centre — contact us for the latest fee structure.
               </p>
               <p className="text-muted-foreground leading-relaxed mb-8">
-                All six centres are in Thane West, close to residential areas and main roads. Whether you are in Manpada, Kalwa, Dhokali, or Kasarvadavali, there is a <Link href="/play-school-near-me" className="text-primary hover:underline">play school and preschool near you</Link>.
+                All six centres are in Thane West, close to residential areas and main roads. Whether you are in Manpada, Kalwa, Dhokali, or Kasarvadavali, families can find a <Link href="/play-school-near-me" className="text-primary hover:underline">Rainbow Preschool centre close to their neighbourhood</Link>.
               </p>
               <Link href="/about">
                 <Button variant="outline" data-testid="button-learn-more">
@@ -466,9 +466,9 @@ export default function Home() {
                   <div className="absolute -top-5 -right-5 w-20 h-20 bg-primary/10 rounded-full" />
                   <Users className="w-6 h-6 sm:w-8 sm:h-8 text-primary mb-2 sm:mb-3 relative z-10" />
                   <p className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-foreground mb-0.5 relative z-10 whitespace-nowrap">
-                    1 Lac+
+                    1,00,000+
                   </p>
-                  <p className="text-xs sm:text-sm text-muted-foreground font-medium relative z-10">Happy Students</p>
+                  <p className="text-xs sm:text-sm text-muted-foreground font-medium relative z-10">Young Learners</p>
                 </div>
               </Link>
               {/* Years */}
@@ -630,7 +630,7 @@ export default function Home() {
       <div className="py-6 bg-primary/5">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <p className="text-sm text-muted-foreground text-center leading-relaxed" data-testid="text-seo-interlinks">
-            Helpful guides for Thane parents: compare options on our <a href="/best-preschool-near-me-in-thane" className="text-primary hover:underline font-medium" data-testid="link-inline-best-preschool-in-thane">best preschool in Thane</a> page, locate a <a href="/play-school-near-me" className="text-primary hover:underline font-medium" data-testid="link-inline-play-school-near-me-in-thane">play school near me</a>, or explore programme guides for <a href="/playgroup" className="text-primary hover:underline font-medium" data-testid="link-inline-playgroup-in-thane">Playgroup in Thane</a>, <a href="/nursery" className="text-primary hover:underline font-medium" data-testid="link-inline-nursery-in-thane">Nursery in Thane</a>, and <a href="/kindergarten" className="text-primary hover:underline font-medium" data-testid="link-inline-kindergarten-in-thane">Kindergarten in Thane</a>.
+            Helpful guides for Thane parents: compare options on our <a href="/best-preschool-near-me-in-thane" className="text-primary hover:underline font-medium" data-testid="link-inline-best-preschool-in-thane">best preschool guide</a>, find a <a href="/play-school-near-me" className="text-primary hover:underline font-medium" data-testid="link-inline-play-school-near-me-in-thane">centre near you</a>, or explore programme guides for <a href="/playgroup" className="text-primary hover:underline font-medium" data-testid="link-inline-playgroup-in-thane">Playgroup</a>, <a href="/nursery" className="text-primary hover:underline font-medium" data-testid="link-inline-nursery-in-thane">Nursery</a>, and <a href="/kindergarten" className="text-primary hover:underline font-medium" data-testid="link-inline-kindergarten-in-thane">Kindergarten</a>.
           </p>
         </div>
       </div>
@@ -702,6 +702,7 @@ export default function Home() {
           reviewerRole="Curriculum Team, Rainbow Preschool International"
           lastUpdated={LAST_UPDATED_DISPLAY}
           lastUpdatedIso={LAST_UPDATED_ISO}
+          showRating={false}
           schemaId="home-eeat"
         />
       </section>

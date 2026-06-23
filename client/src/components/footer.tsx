@@ -27,7 +27,7 @@ export function Footer() {
               />
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              Laying the foundation for tomorrow since 2007. Over 1,00,000 young students have completed their Pre-Primary education with us.
+              Laying the foundation for tomorrow since 2007. Over 1,00,000 young learners have completed their Pre-Primary education with us.
             </p>
             <div className="flex items-center gap-3">
               <a

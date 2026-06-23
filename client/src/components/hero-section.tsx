@@ -4,7 +4,7 @@ import { ArrowRight, Phone, Users, Star, MapPin, Shield } from "lucide-react";
 import { trackCTAClick } from "@/lib/analytics";
 
 const trustBadges = [
-  { icon: Users, label: "1,00,000+ Happy Students" },
+  { icon: Users, label: "1,00,000+ Young Learners" },
   { icon: Star, label: "18+ Years of Excellence" },
   { icon: MapPin, label: "6 Centres Across Thane" },
   { icon: Shield, label: "100% Female Staff" },
