@@ -310,10 +310,14 @@ function scanClientPages() {
 function validate() {
   for (const entry of titles) {
     // Legacy entries (long-tail blog URLs in shared/legacy-pages-data.ts) are
-    // audited as warnings only so the team can fix drift over time without
-    // gating every commit on pre-existing wording. Banned soft-marketing words
-    // are still treated as errors everywhere — those are absolute.
-    const sink = (msg: string) => {
+    // audited as warnings only for title-length so the team can fix drift
+    // over time without gating every commit on pre-existing long titles.
+    //
+    // Banned soft-marketing words (Rule 1) and keyword ownership (Rule 3) are
+    // ALWAYS treated as errors for both legacy and non-legacy entries — a
+    // legacy blog post that poaches "Best Preschool in Thane" dilutes the
+    // canonical URL's ranking signal just as much as any other page.
+    const sinkLength = (msg: string) => {
       if (entry.isLegacy) warnings.push(msg);
       else errors.push(msg);
     };
@@ -327,18 +331,20 @@ function validate() {
       }
     }
     // Rule 2: max title length (Google SERP truncates around 60 chars; we cap at 65 with a small safety buffer)
+    // Legacy entries emit a warning rather than an error — old titles can't always be shortened immediately.
     if (entry.title.length > 65) {
-      sink(
+      sinkLength(
         `${entry.file}:${entry.line} — title for ${entry.url} is ${entry.title.length} chars (limit 65). Title: "${entry.title}"`,
       );
     }
-    // Rule 3: keyword ownership
+    // Rule 3: keyword ownership — always blocking, even for legacy blog posts.
+    // A poached keyword in any title (legacy or not) dilutes the canonical URL.
     for (const rule of OWNED_PHRASES) {
       if (!rule.phrase.test(entry.title)) continue;
       if (entry.url === "?") continue; // unknown client URL — only banned-word rule applies
       const allowed = rule.canonicalUrls.some((re) => re.test(entry.url));
       if (!allowed) {
-        sink(
+        errors.push(
           `${entry.file}:${entry.line} — title for ${entry.url} contains "${rule.label}", which is owned by ${rule.canonicalUrls
             .map((r) => r.source.replace(/^\^|\$$/g, ""))
             .join(" or ")}. Title: "${entry.title}"`,
@@ -417,13 +423,13 @@ validateSsrClientParity();
 
 if (warnings.length > 0) {
   console.warn(
-    `[check-no-title-cannibalisation] ${warnings.length} legacy-page warning(s) (audit-only, not blocking):`,
+    `[check-no-title-cannibalisation] ${warnings.length} legacy-page warning(s) (title-length only, not blocking):`,
   );
   for (const w of warnings) console.warn("  " + w);
   console.warn(
-    `\nNote: these come from shared/legacy-pages-data.ts. They are audited but ` +
-      `do NOT block the deploy. Address them opportunistically when revisiting ` +
-      `the relevant blog post.\n`,
+    `\nNote: these come from shared/legacy-pages-data.ts and are title-length warnings only. ` +
+      `Keyword-ownership violations in legacy titles ARE blocking errors. ` +
+      `Address length warnings opportunistically when revisiting the relevant blog post.\n`,
   );
 }
 
