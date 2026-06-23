@@ -1,0 +1,364 @@
+You are Replit Agent working on rainbowpreschools.com.
+
+Goal:
+Diagnose and fix homepage SEO risks step by step, especially duplication, canonical issues, structured data gaps, unsupported review/rating markup, internal-link duplication, OG image issues, and any SEO-impacting bugs.
+
+STEP 0 — First confirm the technical setup before changing files
+
+Before making changes, inspect the codebase and report:
+
+1. Framework used:
+   - Next.js, Nuxt, React/Vite, plain Node, static HTML, or other?
+
+2. Rendering model:
+   - Is the homepage server-side rendered, statically generated, or client-side rendered?
+   - Confirm whether bots receive full HTML without JavaScript execution.
+   - Check the built output or server response where possible.
+
+3. Folder structure:
+   - Is it using /pages, /app, /src, /components, /layouts, or another structure?
+   - Identify the exact homepage file path.
+
+4. Meta tag management:
+   - Are meta tags controlled by next/head, metadata export, layout component, SEO component, CMS, or hardcoded HTML?
+
+5. Schema management:
+   - Is JSON-LD already implemented anywhere?
+   - Identify the file/component responsible for schema injection.
+
+6. Shared components:
+   - Identify header/nav component.
+   - Identify footer component.
+   - Identify any shared CTA, programme card, or Explore More component.
+
+Do not begin fixes until you report these answers.
+
+------------------------------------------------------------
+STEP 1 — Homepage SEO diagnosis
+------------------------------------------------------------
+
+Audit only the homepage first: /
+
+Check and report the following:
+
+A. Canonical and indexability
+1. Confirm there is exactly one canonical tag.
+2. Canonical must point to:
+   https://www.rainbowpreschools.com/
+3. Check for duplicate canonical tags.
+4. Check for missing canonical tag.
+5. Check for incorrect non-www, http, trailing duplicate, or relative canonical.
+6. Confirm robots meta tag is not set to noindex or nofollow.
+7. Confirm homepage is included in sitemap.xml.
+8. Confirm robots.txt does not block homepage or core assets.
+
+B. Duplicate homepage versions
+Check whether these URL versions resolve correctly:
+
+- http://rainbowpreschools.com/
+- http://www.rainbowpreschools.com/
+- https://rainbowpreschools.com/
+- https://www.rainbowpreschools.com/
+- https://www.rainbowpreschools.com/index.html
+- https://www.rainbowpreschools.com/?utm_source=test
+
+Required result:
+- All non-canonical versions should 301 redirect to:
+  https://www.rainbowpreschools.com/
+- UTM versions should remain accessible but canonical should still point to the clean homepage.
+- /index.html should either 301 to / or return 404 if not used. It should not be indexable as a duplicate homepage.
+
+C. Navigation and internal-link duplication
+The current homepage has duplicate navigation-style link blocks:
+1. Header navigation
+2. Mid-page “Explore More” section
+3. Footer repeated navigation links
+
+Fix:
+- Keep one clean header nav.
+- Keep one clean footer nav.
+- Remove the mid-page “Explore More” duplicate block completely unless it is rewritten as a useful contextual section.
+- Do not repeat the same sitewide links three times on the homepage.
+- Footer links should be concise and grouped.
+
+Recommended footer groups:
+- Programmes: Playgroup, Nursery, Kindergarten, Admissions
+- Centres: Manpada, Hariniwas, Anand Nagar, Dhokali, Kalwa, Kasarvadavali
+- Company: About, Gallery, Contact, Blog, Privacy Policy, Terms
+
+D. Programme age-range consistency
+Find all homepage mentions of programme age ranges.
+
+Current inconsistency detected:
+- Programme section says:
+  Playgroup: 1.5–2.5 years
+  Nursery: 2.5–3.5 years
+  Kindergarten: 3.5–5 years
+
+- Footer/Explore links show:
+  Nursery: 2.5–4 years
+  Kindergarten: 4–6 years
+
+Required fix:
+- Standardize one canonical set of programme age ranges across homepage, footer, programme cards, metadata, schema, and internal links.
+- Use this recommended set unless leadership has confirmed another version:
+  Playgroup: 1.5–2.5 years
+  Nursery: 2.5–3.5 years
+  Kindergarten: 3.5–5 years
+  Happy Times: 2–10 years
+
+E. Review rating risk
+The homepage currently displays:
+★★★★★ 4.9/5 (487 parent reviews)
+
+This is an SEO and trust risk if not backed by valid, verifiable review data and structured data.
+
+Required fix:
+Choose one of these two options:
+
+Option 1 — Preferred if real review proof exists:
+- Add valid AggregateRating JSON-LD.
+- The rating must be linked to actual verifiable parent reviews.
+- ratingValue: 4.9
+- reviewCount: 487
+- bestRating: 5
+- worstRating: 1
+- Do not add fake review text.
+
+Option 2 — Safer if review source cannot be verified:
+- Remove “★★★★★ 4.9/5 (487 parent reviews)” from visible HTML.
+- Replace with trust copy such as:
+  “Trusted by parents across Thane since 2007.”
+
+Do not leave unsupported star ratings as plain text.
+
+F. Structured data / JSON-LD
+Check whether homepage currently has JSON-LD.
+
+If missing, add JSON-LD in the homepage head or shared SEO component.
+
+Required homepage schema:
+
+1. EducationalOrganization or Preschool
+Use:
+@context: https://schema.org
+@type: Preschool
+name: Rainbow Preschool International
+url: https://www.rainbowpreschools.com/
+logo: absolute logo URL
+description: Trusted preschool chain in Thane since 2007 offering Playgroup, Nursery, Kindergarten, and Happy Times programmes across 6 centres.
+
+2. Branch / location data
+Add 6 branch locations as either:
+- department
+- subOrganization
+- or hasMap/address entries where suitable
+
+Branches to include:
+- Aggarwal / Manpada
+- Hariniwas / Naupada
+- Anand Nagar / Majiwada
+- Dhokali / Kolshet Road
+- Kalwa
+- Kasarvadavali / Ghodbunder Road
+
+Each branch should include:
+- name
+- addressLocality
+- addressRegion: Maharashtra
+- addressCountry: IN
+- telephone where available
+- url if branch page exists
+
+3. BreadcrumbList
+Homepage breadcrumb:
+Home → https://www.rainbowpreschools.com/
+
+4. AggregateRating
+Only add if real review source exists.
+Do not add unsupported ratings.
+
+5. FAQPage
+Only add FAQPage schema if actual FAQ content is visible on the homepage.
+Do not add hidden FAQ schema.
+
+G. Open Graph and social image
+Check the current OG tags:
+- og:title
+- og:description
+- og:url
+- og:image
+- twitter:card
+- twitter:title
+- twitter:description
+- twitter:image
+
+Check /og-image.jpg:
+- File must exist.
+- Must return 200.
+- Recommended dimensions: 1200 x 630 px.
+- File size should be under 8 MB.
+- Image should not have cut-off text.
+- Image should visually represent Rainbow Preschool and admissions.
+
+If current image is not 1200 x 630, replace with a correct version and update all references.
+
+H. Heading structure
+Check:
+- Exactly one H1 on homepage.
+- H1 should be admissions and location focused.
+
+Recommended H1:
+Rainbow Preschool International — Trusted Preschool Chain in Thane Since 2007
+
+Check H2s:
+- Programmes
+- Curriculum and Teaching Approach
+- Safety and Security
+- Our 6 Centres in Thane
+- Admissions Process
+
+Avoid multiple H1s.
+
+I. Metadata improvement
+Review title and meta description.
+
+Recommended title:
+Rainbow Preschool in Thane | Playgroup, Nursery & Kindergarten
+
+Recommended meta description:
+Rainbow Preschool International is a trusted preschool chain in Thane since 2007, offering Playgroup, Nursery, Kindergarten and daycare programmes across 6 centres. Book a campus visit today.
+
+Rules:
+- Title ideally under 60 characters if possible.
+- Meta description ideally 140–160 characters.
+- Include Thane and preschool naturally.
+- Avoid keyword stuffing.
+
+J. Local SEO homepage content improvement
+Improve homepage copy without making it thin or repetitive.
+
+Add or strengthen:
+1. Clear admission CTA above the fold:
+   - Book a Campus Visit
+   - Call 82915 68972
+   - Enquire for Admissions
+
+2. Centre discovery section:
+   - Add links to all 6 centre pages.
+   - Each centre should have a short 1-line local description.
+   - Avoid repeating the same paragraph for every centre.
+
+3. Parent decision factors:
+   - Safety
+   - Teacher quality
+   - Age-appropriate curriculum
+   - Individual attention
+   - Hygiene
+   - Timings
+   - Daycare / Happy Times where relevant
+
+4. Admissions section:
+   - Simple 3-step admission journey:
+     Step 1: Choose programme and centre
+     Step 2: Book campus visit
+     Step 3: Complete admission formalities
+
+5. Add FAQs visibly on homepage only if useful:
+   Suggested FAQs:
+   - What is the right age for Playgroup?
+   - Which Rainbow Preschool centre is nearest to me in Thane?
+   - Are admissions open through the year?
+   - What are the school timings?
+   - Do you offer daycare or extended care?
+
+If FAQs are added visibly, add matching FAQPage JSON-LD.
+
+K. Technical SEO checks
+Run checks for:
+1. Broken internal links.
+2. Broken image URLs.
+3. Missing alt text on images.
+4. Duplicate title tags.
+5. Duplicate meta descriptions.
+6. Multiple canonical tags.
+7. Missing canonical tags.
+8. 404 assets.
+9. Incorrect redirects.
+10. Mixed content HTTP assets.
+11. Large images affecting LCP.
+12. Unused heavy JavaScript impacting page speed.
+13. Missing width/height on images causing layout shift.
+14. Missing preload for hero image if it is LCP.
+15. Mobile viewport issues.
+16. Accessibility issues affecting SEO, especially buttons/links without labels.
+
+L. SSR / React / bot-rendering verification
+Confirm:
+1. Homepage main content exists in server response HTML.
+2. H1, programme content, centre links, phone number, CTA, and footer links are visible without JavaScript.
+3. Metadata and canonical are present in initial HTML.
+4. JSON-LD is present in initial HTML.
+5. No critical SEO content is injected only after client-side hydration.
+
+If React/Next.js is used:
+- Ensure metadata is server-rendered.
+- Do not rely on useEffect for SEO tags.
+- Avoid client-only schema injection.
+- Use server components/layout metadata where applicable.
+
+------------------------------------------------------------
+STEP 2 — Implement homepage fixes
+------------------------------------------------------------
+
+After reporting diagnosis, implement only safe homepage fixes:
+
+1. Fix canonical to exactly:
+   https://www.rainbowpreschools.com/
+
+2. Remove duplicate mid-page “Explore More” navigation block.
+
+3. Standardize programme age ranges site-wide in shared components used by homepage.
+
+4. Either:
+   - Add valid AggregateRating schema if verified review data exists, OR
+   - Remove unsupported star rating text from visible homepage.
+
+5. Add homepage JSON-LD:
+   - Preschool / EducationalOrganization
+   - Branch locations
+   - BreadcrumbList
+   - AggregateRating only if verified
+   - FAQPage only if visible FAQs are added
+
+6. Verify /og-image.jpg:
+   - 200 status
+   - 1200 x 630 px
+   - under 8 MB
+   - correct meta reference
+   Replace if required.
+
+7. Improve title and meta description.
+
+8. Ensure footer is clean and not over-repetitive.
+
+9. Add clear admissions CTA above the fold if missing.
+
+10. Add or improve homepage local centre section.
+
+------------------------------------------------------------
+STEP 3 — Report back after implementation
+------------------------------------------------------------
+
+After changes, report:
+
+1. Files changed.
+2. Exact fixes completed.
+3. Any fixes skipped and why.
+4. Canonical value after fix.
+5. Whether JSON-LD validates structurally.
+6. Whether homepage content is server-rendered.
+7. Whether og-image exists and its dimensions.
+8. Any remaining risks requiring manual business confirmation.
+
+Do not proceed to other pages until homepage fixes are reviewed.

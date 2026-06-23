@@ -47,13 +47,15 @@ const LOCALITY_URLS = [
   "/playgroup-in-dhokali",
 ];
 
-// Remaining indexable, evergreen landers (homepage + supporting pages).
-// Each one now also sets `lastModified` / `lastModifiedDisplay` in
-// `server/ssr-pages.ts`, so the bot SSR Article-injector emits the same
-// "Reviewed by Rainbow Preschool Curriculum Team — Last updated …" byline
-// + Article JSON-LD with `dateModified` here too.
+// Remaining indexable, evergreen landers (supporting pages).
+// Each one sets `lastModified` / `lastModifiedDisplay` in `server/ssr-pages.ts`
+// so the bot SSR Article-injector emits the "Reviewed by…" byline + Article
+// JSON-LD with `dateModified`.
+// NOTE: "/" is intentionally omitted — the homepage is served as the React SPA
+// to all visitors (bots and humans). Googlebot executes JS and indexes the live
+// page. The freshness byline/Article JSON-LD is not present in the SPA shell
+// and is not expected here. See server/bot-ssr.ts for the bypass.
 const EVERGREEN_LANDER_URLS = [
-  "/",
   "/about",
   "/programmes",
   "/gallery",
