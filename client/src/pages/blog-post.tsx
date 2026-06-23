@@ -1614,8 +1614,7 @@ export default function BlogPost() {
           authorCredentials={authorship.author.credentials}
           lastUpdated={COMMERCIAL_PAGES_LAST_UPDATED_DISPLAY}
           lastUpdatedIso={COMMERCIAL_PAGES_LAST_UPDATED}
-          ratingValue={4.9}
-          reviewCount={487}
+          showRating={false}
           schemaId={`blog-${post.slug}`}
         />
       </section>

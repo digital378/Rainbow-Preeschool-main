@@ -970,8 +970,7 @@ export default function BestPreschoolInThane() {
                 reviewerRole="Curriculum Team, Rainbow Preschool International"
                 lastUpdated={LAST_UPDATED_DISPLAY}
                 lastUpdatedIso={LAST_UPDATED_ISO}
-                ratingValue={4.9}
-                reviewCount={487}
+                showRating={false}
                 schemaId="best-preschool-in-thane"
               />
             </div>

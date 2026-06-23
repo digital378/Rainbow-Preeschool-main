@@ -445,6 +445,7 @@ export default function About() {
           reviewerRole="Curriculum Team, Rainbow Preschool International"
           lastUpdated={LAST_UPDATED_DISPLAY}
           lastUpdatedIso={LAST_UPDATED_ISO}
+          showRating={false}
           schemaId="about-eeat"
         />
       </section>

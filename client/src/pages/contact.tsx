@@ -178,6 +178,7 @@ export default function Contact() {
           reviewerRole="Curriculum Team, Rainbow Preschool International"
           lastUpdated={LAST_UPDATED_DISPLAY}
           lastUpdatedIso={LAST_UPDATED_ISO}
+          showRating={false}
           schemaId="contact-eeat"
         />
       </section>

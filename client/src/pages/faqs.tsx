@@ -417,6 +417,7 @@ export default function FAQs() {
           reviewerRole="Curriculum Team, Rainbow Preschool International"
           lastUpdated={LAST_UPDATED_DISPLAY}
           lastUpdatedIso={LAST_UPDATED_ISO}
+          showRating={false}
           schemaId="faqs-eeat"
         />
       </section>

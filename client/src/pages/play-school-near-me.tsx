@@ -1260,8 +1260,7 @@ export default function PlaySchoolNearMe() {
           reviewerRole="Curriculum Team, Rainbow Preschool International"
           lastUpdated={LAST_UPDATED_DISPLAY}
           lastUpdatedIso={LAST_UPDATED_ISO}
-          ratingValue={4.9}
-          reviewCount={487}
+          showRating={false}
           schemaId="play-school-near-me"
         />
       </div>

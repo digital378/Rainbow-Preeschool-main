@@ -743,6 +743,7 @@ export default function HappyTimesLanding() {
           reviewerRole="Curriculum Team, Rainbow Preschool International"
           lastUpdated={LAST_UPDATED_DISPLAY}
           lastUpdatedIso={LAST_UPDATED_ISO}
+          showRating={false}
           schemaId="happy-times-eeat"
         />
       </section>
