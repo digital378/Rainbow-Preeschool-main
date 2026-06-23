@@ -1,0 +1,585 @@
+Implement a focused homepage optimisation pass based on the latest screenshots and our SEO/cannibalisation plan.
+
+Do not redesign the homepage. Do not make broad layout changes. Fix only the remaining homepage content, SEO-overlap, trust-claim, internal-link, FAQ, and consistency issues listed below.
+
+------------------------------------------------------------
+APPROVED HOMEPAGE TITLE AND H1
+------------------------------------------------------------
+
+Keep the approved homepage meta title exactly as:
+
+"Rainbow Preschool | Playschool, Nursery & Kindergarten"
+
+Keep the approved homepage H1 structure as:
+
+Line 1:
+"Rainbow Preschool"
+
+Line 2:
+"Playschool, Nursery & Kindergarten"
+
+Semantic H1:
+"Rainbow Preschool Playschool, Nursery & Kindergarten"
+
+Do not change the title to:
+"Rainbow Preschool | Preschool Chain in Thane Since 2007"
+
+Do not change the H1 to:
+"Rainbow Preschool International — Trusted Preschool Chain in Thane Since 2007"
+
+The current title and H1 are approved because they are parent-friendly, admissions-focused, and guard-safe.
+
+------------------------------------------------------------
+DO NOT MODIFY
+------------------------------------------------------------
+
+Do not modify:
+- server/homepage-freshness.ts
+- server/bot-ssr.ts
+- server/ssr-pages.ts
+- scripts/predeploy.sh
+
+Do not add:
+- AggregateRating schema
+- SearchAction schema
+
+Do not change:
+- "@type": "EducationalOrganization"
+
+Do not regenerate or replace:
+- public/og-image.jpg
+
+Do not expand:
+- Bot SSR coverage for homepage
+
+------------------------------------------------------------
+PRIMARY OBJECTIVE
+------------------------------------------------------------
+
+The homepage should remain a parent-friendly brand and programme-introduction page.
+
+It should support:
+- Rainbow Preschool brand
+- Playschool, Nursery and Kindergarten offering
+- trust since 2007
+- six centres across Thane
+- safety
+- curriculum
+- campus visit / callback conversion
+
+It should not compete negatively with dedicated SEO landing pages.
+
+Reserved landing-page intents:
+
+/best-preschool-near-me-in-thane
+- best preschool in Thane
+- preschool in Thane
+- preschool near me
+- best preschool near me
+
+/play-school-near-me
+- play school near me
+- play school in Thane
+- playschool near me
+
+/preschool-admissions
+- preschool admissions
+- nursery admissions
+- admission form
+- admission process
+
+/playgroup
+- playgroup in Thane
+- playgroup admission
+- playgroup age
+
+/nursery
+- nursery in Thane
+- nursery admission
+- nursery age
+
+/kindergarten
+- kindergarten in Thane
+- kindergarten admission
+- kindergarten age
+
+Exact-match phrases may appear only as controlled navigational anchor text pointing to the correct canonical page. They should not appear as repeated homepage themes, headings, schema descriptions, FAQ topics, tile labels, or image alt text.
+
+------------------------------------------------------------
+TASK 1 — REMOVE OR VERIFY REVIEW / RATING CLAIMS
+------------------------------------------------------------
+
+The screenshots show review and rating claims still visible on the homepage.
+
+Visible claims include:
+- "4.7 · 3,997 Google reviews"
+- "4.9 from 487 parent reviews"
+- star-rating displays
+
+This is a trust and SEO risk unless verified and documented.
+
+Search homepage and homepage-rendered components for:
+- 3,997 Google reviews
+- 4.7
+- 4.9
+- 487 parent reviews
+- Google reviews
+- parent reviews
+- star ratings
+- ★
+- reviewCount
+- ratingValue
+
+Decision rule:
+
+If the review/rating number is hardcoded or has no verified documented source:
+- Remove the rating number and review-count text.
+- Replace the visible rating block with:
+  "Trusted by parents across Thane since 2007."
+
+If there is a verified and periodically updated source:
+- Retain the text only if a clear code comment documents the source.
+- Still do not add AggregateRating schema.
+
+Do not add AggregateRating schema under any condition in this task.
+
+Final expected result:
+- No unsupported review count visible.
+- No unsupported star rating visible.
+- No AggregateRating schema present.
+
+------------------------------------------------------------
+TASK 2 — CLEAN TOP SHORTCUT TILES
+------------------------------------------------------------
+
+The top shortcut tiles currently include labels that can overlap with dedicated SEO pages.
+
+Current visible shortcut tile labels include:
+- Award Winning
+- Near Me
+- Admissions
+- Playgroup
+- Nursery
+- Kindergarten
+
+Update labels to be more parent-friendly and less cannibalising.
+
+Required label changes:
+- "Award Winning" → "Why Choose Us"
+- "Near Me" → "Find a Centre"
+- "Admissions" → "Book a Visit"
+
+Keep:
+- "Playgroup"
+- "Nursery"
+- "Kindergarten"
+
+The destination URLs can remain useful and relevant, but avoid using exact-match reserved phrases as homepage shortcut labels.
+
+Confirm that the homepage no longer shows "Near Me" as a standalone tile label.
+
+------------------------------------------------------------
+TASK 3 — REMOVE RISKY “NEAR ME” BODY COPY
+------------------------------------------------------------
+
+The screenshots show body copy in the “Why Parents Choose Rainbow Preschool” section that says:
+
+"there is a play school and preschool near you"
+
+This overlaps with:
+- /play-school-near-me
+- /best-preschool-near-me-in-thane
+
+Replace that sentence with one of the following approved versions:
+
+Option A:
+"families can find a Rainbow Preschool centre close to their neighbourhood."
+
+Option B:
+"there is a Rainbow Preschool centre close to your neighbourhood."
+
+Do not use these phrases in homepage body copy:
+- play school near me
+- preschool near me
+- play school near you
+- preschool near you
+- near me
+
+These phrases should belong to dedicated landing pages only.
+
+------------------------------------------------------------
+TASK 4 — STANDARDISE TRUST NUMBERS
+------------------------------------------------------------
+
+The screenshots show inconsistent trust-number wording:
+- "1,00,000+ Happy Students"
+- "1 Lac+ Happy Students"
+- "1,00,000 young students"
+- "1,00,000+ families"
+
+Standardise the claim across the homepage.
+
+Use this approved wording everywhere:
+
+"1,00,000+ Young Learners"
+
+Replace inconsistent versions in:
+- hero trust badge
+- Why Parents Choose stats card
+- CTA section
+- footer copy
+- any homepage schema or EEAT signal if present
+
+Do not use "families" unless the number is actually a verified family count.
+
+Do not use "1 Lac+" in one place and "1,00,000+" in another.
+
+Final expected result:
+- One consistent homepage trust metric:
+  "1,00,000+ Young Learners"
+
+------------------------------------------------------------
+TASK 5 — STANDARDISE PROGRAMME AGE DISPLAY
+------------------------------------------------------------
+
+Programme age badges in screenshots display with spaced hyphens, such as:
+- "1.5 - 2.5 years"
+- "2.5 - 3.5 years"
+- "3.5 - 5 years"
+- "2 - 10 years"
+
+Use shared programme data and display with en-dash format:
+
+- "1.5–2.5 years"
+- "2.5–3.5 years"
+- "3.5–5 years"
+- "2–10 years"
+
+Confirm all homepage-visible programme age displays come from:
+shared/programme-data.ts
+
+Do not update non-homepage pages unless the shared component makes it unavoidable.
+
+------------------------------------------------------------
+TASK 6 — IMPROVE KEY HEADINGS WITHOUT CANNIBALISATION
+------------------------------------------------------------
+
+Review the following homepage headings visible in the screenshots.
+
+1. Current:
+"Award Winning Preschool Born in Thane"
+
+This heading feels forced and slightly SEO-heavy.
+
+Replace with one approved option:
+
+Preferred:
+"A Trusted Early Learning Journey Since 2007"
+
+Alternative:
+"Why Rainbow Preschool Stands Out"
+
+Alternative:
+"Built for Safe, Joyful Early Learning"
+
+Use the best-fitting option based on the section design.
+
+2. Keep this heading if unchanged:
+"Why Parents Choose Rainbow Preschool"
+
+This is clean and brand-safe.
+
+3. Keep this heading if unchanged:
+"Programmes Designed for Every Stage of Early Learning"
+
+This is clean and non-cannibalising.
+
+4. Keep this heading if unchanged:
+"Our Preschool Centres Across Thane"
+
+This supports the homepage’s chain/location role and is acceptable.
+
+Do not introduce:
+- Best Preschool in Thane
+- Preschool in Thane
+- Play School Near Me
+- Preschool Admissions
+- Playgroup in Thane
+- Nursery in Thane
+- Kindergarten in Thane
+
+as headings.
+
+------------------------------------------------------------
+TASK 7 — CLEAN BORDERLINE FAQ INTENT
+------------------------------------------------------------
+
+Current visible FAQ includes:
+
+"What is the admission process and fee structure?"
+
+This is useful but overlaps with /preschool-admissions.
+
+Rewrite it to:
+
+"How can parents book a campus visit and get fee details?"
+
+Update both:
+- visible FAQ question
+- FAQPage schema question
+
+Ensure the FAQ schema and visible FAQ remain exactly matched.
+
+The answer can still include a contextual link to /preschool-admissions if useful, but the homepage FAQ should not directly target the admissions-page keyword.
+
+Do not add schema-only FAQs.
+
+Do not leave FAQ schema out of sync with visible content.
+
+------------------------------------------------------------
+TASK 8 — FOOTER AND INTERNAL LINK REPETITION CHECK
+------------------------------------------------------------
+
+Audit homepage footer, shortcut tiles, internal link blocks, CTA blocks and navigation for repeated exact-match SEO anchors.
+
+Search for:
+- Best Preschool in Thane
+- Play School Near Me
+- Preschool Admissions
+- Playgroup in Thane
+- Nursery in Thane
+- Kindergarten in Thane
+- Near Me
+- Admissions
+
+Rules:
+
+1. Exact-match anchors are allowed only when:
+- they appear once
+- they point to the correct canonical page
+- they are not repeated across multiple homepage sections
+
+2. If the same exact-match anchor appears in footer and in a homepage body/internal-link block:
+- keep the most useful placement
+- rewrite the other into a softer label
+
+Suggested softer labels:
+- "Best Preschool in Thane" → "Best Preschool Guide"
+- "Play School Near Me" → "Find a Play School"
+- "Preschool Admissions" → "Admission Guide"
+- "Playgroup in Thane" → "Playgroup Guide"
+- "Nursery in Thane" → "Nursery Guide"
+- "Kindergarten in Thane" → "Kindergarten Guide"
+
+Do not remove important navigation unnecessarily. Reduce repetition and avoid homepage keyword stuffing.
+
+Final report must show:
+- exact-match anchors found
+- destination URL
+- number of homepage occurrences
+- whether retained, rewritten or removed
+
+------------------------------------------------------------
+TASK 9 — CTA COPY CONSISTENCY
+------------------------------------------------------------
+
+Review the CTA section visible near the footer.
+
+Current visible copy includes:
+"Ready to begin your child's learning journey?"
+"Join 1,00,000+ families who trust Rainbow Preschool International."
+
+If "families" is not a verified count, rewrite to:
+
+"Join the Rainbow community trusted by parents across Thane since 2007."
+
+or:
+
+"Join 1,00,000+ young learners who began their early learning journey with Rainbow."
+
+Use only verified claims.
+
+Make CTA copy consistent with the approved trust metric:
+"1,00,000+ Young Learners"
+
+------------------------------------------------------------
+TASK 10 — IMAGE ALT TEXT AND ACCESSIBILITY CHECK
+------------------------------------------------------------
+
+Audit homepage image alt text.
+
+Avoid keyword-stuffed alt text containing:
+- best preschool in Thane
+- preschool in Thane
+- preschool near me
+- play school near me
+- preschool admissions
+- playgroup in Thane
+- nursery in Thane
+- kindergarten in Thane
+
+Use natural descriptive alt text, such as:
+- children learning through play at Rainbow Preschool
+- Rainbow Preschool classroom with learning materials
+- Rainbow Preschool centre exterior
+- early learning activity at Rainbow Preschool
+- children participating in classroom activities
+
+Also check:
+- key CTA buttons have accessible labels
+- icon-only buttons have aria-labels
+- WhatsApp and call buttons have clear labels
+- centre direction buttons have clear labels
+
+------------------------------------------------------------
+TASK 11 — SCHEMA CONSISTENCY CHECK
+------------------------------------------------------------
+
+Audit homepage schema after the above content changes.
+
+Confirm:
+- "@type": "EducationalOrganization" remains unchanged
+- BreadcrumbList remains present with name "Home"
+- FAQPage schema exactly matches visible FAQs
+- no AggregateRating schema exists
+- no SearchAction schema exists
+- schema descriptions do not contain reserved landing-page phrases
+
+Schema should not contain:
+- Best Preschool in Thane
+- Preschool in Thane
+- Play School Near Me
+- Preschool Admissions
+- Playgroup in Thane
+- Nursery in Thane
+- Kindergarten in Thane
+
+Schema may contain:
+- Rainbow Preschool International
+- preschool chain in Thane
+- early learning
+- six centres across Thane
+- Playschool, Nursery and Kindergarten
+
+------------------------------------------------------------
+TASK 12 — QUICK VISUAL / UX CLEANUP CHECK
+------------------------------------------------------------
+
+Based on the screenshots, check these small visual issues:
+
+1. Header spacing:
+Ensure sticky header does not cover section headings when anchor links are clicked.
+
+2. Hero trust badges:
+Ensure trust badges do not wrap awkwardly on desktop and mobile.
+
+3. Programme cards:
+Ensure age badges are readable and not visually clipped.
+
+4. Testimonials section:
+After removing rating counts, ensure the section still looks balanced.
+
+5. Footer:
+Ensure footer links are grouped clearly and not excessive.
+
+Do not redesign the page. Only make small safe adjustments if required.
+
+------------------------------------------------------------
+TASK 13 — RUN GUARDS
+------------------------------------------------------------
+
+Run:
+
+npx tsx scripts/check-description-length.ts
+npx tsx scripts/check-no-title-cannibalisation.ts
+npm run check
+
+If any fail:
+- report the exact failure
+- file
+- line
+- likely cause
+- recommended fix
+
+Fix only if clearly caused by this task.
+
+------------------------------------------------------------
+FINAL REPORT FORMAT
+------------------------------------------------------------
+
+Respond with:
+
+1. Files changed
+
+Table:
+File | Change made | Reason
+
+2. Review/rating claim status
+
+Table:
+Claim found | Location | Action taken | Source documented? | AggregateRating added?
+
+3. Shortcut tile changes
+
+Table:
+Old label | New label | Destination | Status
+
+4. “Near me” cleanup
+
+Table:
+Old copy | New copy | Location | Status
+
+5. Trust-number consistency
+
+Table:
+Old wording | New wording | Location | Status
+
+6. Programme age display
+
+Table:
+Programme | Display value | Source | Status
+
+7. Heading changes
+
+Table:
+Old heading | New heading | Reason
+
+8. FAQ changes
+
+Table:
+Old question | New question | Visible updated? | Schema updated? | Parity confirmed?
+
+9. Footer/internal-link audit
+
+Table:
+Anchor text | URL | Occurrences | Allowed? | Action taken
+
+10. CTA copy changes
+
+Table:
+Old copy | New copy | Reason
+
+11. Image alt/accessibility findings
+
+Table:
+Element | Issue | Action taken
+
+12. Schema verification
+
+Table:
+Schema item | Status | Notes
+
+13. Guard results
+
+Table:
+Command | Pass/Fail | Notes
+
+14. Final conclusion
+
+State clearly:
+- whether homepage title remained unchanged
+- whether homepage H1 remained unchanged
+- whether unsupported review/rating claims are removed or verified
+- whether keyword overlap has been reduced
+- whether all guards pass
+- any remaining risk or business decision needed
