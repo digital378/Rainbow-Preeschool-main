@@ -26,7 +26,8 @@ The application is a full-stack web application with a React-based frontend and 
 -   **Core Functions**: Manages contact form submissions, retrieves blog posts, serves static files, and provides bot-specific SSR for SEO.
 
 ### Bot SSR System
--   A dedicated system delivers pre-rendered HTML with comprehensive meta tags, structured data (JSON-LD), and semantic content to over 20 search engine bot user-agents. This improves SEO across all main pages, local SEO pages, blog posts, and ad landing pages.
+-   A dedicated system delivers pre-rendered HTML with comprehensive meta tags, structured data (JSON-LD), and semantic content to over 20 search engine bot user-agents. This improves SEO across all commercial pages, local SEO pages, blog posts, and ad landing pages.
+-   **Homepage exception**: The homepage (`/`) is intentionally excluded from Bot SSR. Both bots and humans receive the same React SPA at `/`, so Googlebot executes JavaScript and indexes the live React page. All other routes retain Bot SSR. This is enforced in `server/bot-ssr.ts` (path `"/"` bypasses the middleware) and `server/ssr-pages.ts` (no `"/"` entry in `staticPages`).
 
 ### Data Layer
 -   **Schema Definition**: Shared TypeScript schemas ensure consistency between frontend and backend.
