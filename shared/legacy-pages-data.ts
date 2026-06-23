@@ -2333,7 +2333,7 @@ Object.assign(legacyPagesData, {
       },
       {
         heading: "Red Flags to Watch For",
-        content: "When looking for the best preschool in Thane, avoid schools that show these warning signs:",
+        content: "When evaluating preschools in Thane, watch out for these warning signs:",
         bulletPoints: [
           "Overcrowded classrooms with poor teacher-student ratio",
           "Lack of proper safety measures or CCTV",
@@ -2373,7 +2373,7 @@ Object.assign(legacyPagesData, {
     intro: "Planning to admit your child to a playgroup in Thane? This comprehensive guide covers everything you need to know about playgroup admissions, from the right age to start to the documents required. At <a href=\"/about\">Rainbow Preschool International</a>, we offer <a href=\"/playgroup\">Playgroup programmes</a> at all 6 of our centres across Thane.",
     sections: [
       {
-        heading: "What is the Right Age for Playgroup in Thane?",
+        heading: "What is the Right Age to Start Playgroup?",
         content: "The ideal age to start playgroup is between 1.5 to 2.5 years. At this age, children are developmentally ready for:\n\n- Separating from parents for short periods\n- Basic social interaction with other children\n- Following simple routines\n- Engaging in sensory and motor activities\n\nAt Rainbow Preschool, our <a href=\"/playgroup\">Playgroup programme</a> is specifically designed for children aged 1.5 to 2.5 years, with activities appropriate for their developmental stage.",
         bulletPoints: [
           "Minimum age: 1.5 years (18 months)",
@@ -3408,7 +3408,7 @@ Object.assign(legacyPagesData, {
       },
       {
         heading: "Choosing an NEP 2020 Aligned Preschool",
-        content: "When choosing a preschool in Thane, check for NEP 2020 alignment:",
+        content: "When choosing a preschool, check for NEP 2020 alignment:",
         bulletPoints: [
           "Ask about curriculum approach - should be play-based, not worksheet-heavy",
           "Check teacher qualifications and training",

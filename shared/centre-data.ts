@@ -660,7 +660,7 @@ export const localPageSEO: Record<string, LocalPageSEO> = {
 export const localityFAQs: Record<string, Array<{ question: string; answer: string }>> = {
   thane: [
     {
-      question: "What is the best age to start playgroup in Thane?",
+      question: "What is the right age for toddlers to start playgroup?",
       answer: "Children can start playgroup at Rainbow Preschool from 1.5 years (18 months). Our playgroup programme is designed for toddlers aged 1.5 to 2.5 years, introducing learning through fun activities, play, and social interaction."
     },
     {

@@ -8,6 +8,10 @@
  * between JSX tags (H1-H3, paragraphs, divs, etc.) — on pages other than the
  * designated canonical page.
  *
+ * It also scans shared data files (centre-data.ts, legacy-pages-data.ts,
+ * playgroup-landing-data.ts) for reserved phrases in `heading:` field values
+ * — these become rendered H2/H3 elements on page.
+ *
  * WHY THIS MATTERS
  * ─────────────────
  * If "/about" renders an <h2> that says "Leading Preschool in Thane since 2007",
@@ -15,8 +19,8 @@
  * the canonical /best-preschool-near-me-in-thane. That dilutes the ranking
  * signal for the page that is supposed to own the phrase.
  *
- * HOW IT WORKS
- * ─────────────
+ * HOW IT WORKS — TSX PAGE FILES
+ * ──────────────────────────────
  * 1. For each .tsx in client/src/pages/ (excluding exempt ad/event pages):
  * 2. Each line is examined for one of the seven reserved phrases (case-insensitive).
  * 3. A line is SKIPPED (not flagged) when:
@@ -31,13 +35,27 @@
  *         internal tools that are not organic SEO targets).
  * 4. Unquoted phrase occurrences on non-canonical, non-exempt pages = ERROR.
  *
+ * HOW IT WORKS — SHARED DATA FILES
+ * ──────────────────────────────────
+ * 1. For each file in DATA_FILES (shared/centre-data.ts, etc.):
+ * 2. Only lines whose field name is in VISIBLE_DATA_FIELDS are examined.
+ *    Covered fields: heading, content, intro, introParagraph, question, answer.
+ *    These values are rendered as visible on-page text (H2/H3 headings, section
+ *    copy, FAQ text, intro paragraphs).
+ * 3. Pure meta fields (title:, description:, metaDescription:, canonical:,
+ *    canonicalPath:, slug:, url:) are skipped — covered by other guards.
+ * 4. `h1:` in data files is intentionally excluded — the title-cannibalisation
+ *    and h1-parity guards already cover those fields.
+ * 5. Lines containing href= or url: are skipped (the phrase is link/anchor text).
+ * 6. A reserved phrase in a visible-text field = ERROR, because the value is
+ *    shared across pages and the scanner cannot verify it only appears on the
+ *    canonical URL.
+ *
  * KNOWN LIMITATION
  * ─────────────────
- * Phrases that appear as quoted string values in data arrays (e.g. testimonial
- * text stored in a `text: "..."` property) are skipped by the quote heuristic
- * even though they may eventually be rendered as body copy. This is a deliberate
- * trade-off: unquoted JSX text (the highest-risk form) is caught reliably, and
- * the false-negative rate for quoted data properties is low in practice.
+ * Multi-line string values (template literals spanning multiple lines) are not
+ * tracked across lines. In practice this is rare in these data files — most
+ * visible-text fields are single-line string literals.
  *
  * RESERVED PHRASES AND CANONICAL PAGES
  * ──────────────────────────────────────
@@ -225,6 +243,75 @@ function scanFile(filename: string): void {
   }
 }
 
+// ── Shared data file scan ─────────────────────────────────────────────────────
+// Scans `heading:` field values in shared data files.
+// These values are rendered as H2/H3 section headings on public pages, making
+// them high-impact body-copy signals. Meta fields (title, description, canonical,
+// canonicalPath, slug) are exempted — they are already covered by the title and
+// description guards.
+
+const DATA_FILES = [
+  "shared/centre-data.ts",
+  "shared/legacy-pages-data.ts",
+  "shared/playgroup-landing-data.ts",
+] as const;
+
+// Visible-text field names in shared data files — values rendered as on-page text.
+// `h1:` is intentionally excluded: it is already covered by the title-cannibalisation
+// and h1-parity guards, so double-flagging here adds noise without extra protection.
+// Meta/link fields (title, description, metaDescription, canonical, canonicalPath,
+// slug, url) are also excluded — they are covered by the title and description guards.
+const VISIBLE_DATA_FIELDS = new Set<string>([
+  "heading",
+  "content",
+  "intro",
+  "introParagraph",
+  "question",
+  "answer",
+]);
+
+function scanDataFile(relPath: string): void {
+  const lines = readLines(relPath);
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+
+    // Skip comment lines and import statements
+    if (isSkippedLineType(line)) continue;
+
+    // Determine the field name on this line (the key before the first colon).
+    // Only examine fields whose values are rendered as visible on-page text.
+    const trimmed = line.trimStart();
+    const colonIdx = trimmed.indexOf(":");
+    if (colonIdx === -1) continue;
+    const fieldName = trimmed.slice(0, colonIdx).trim();
+    if (!VISIBLE_DATA_FIELDS.has(fieldName)) continue;
+
+    // Skip if the line contains a link context — the phrase would be anchor text,
+    // not standalone visible copy.
+    if (/href=/.test(line)) continue;
+
+    // Skip if the value also contains a url: key on the same line (link-pair pattern).
+    if (/\burl:/.test(line)) continue;
+
+    for (const rule of OWNED_PHRASES) {
+      const match = rule.phrase.exec(line);
+      if (!match) continue;
+
+      errors.push(
+        `${relPath}:${i + 1} — "${rule.label}" appears in a "${fieldName}:" field of a ` +
+          `shared data file. This text is rendered on pages that may not be the ` +
+          `canonical owner. Canonical owner: ${
+            rule.canonicalFiles
+              .map((p) => (p instanceof RegExp ? p.source : p))
+              .join(" or ")
+          }. ` +
+          `Rephrase to avoid the exact keyword phrase. Line: ${line.trim()}`,
+      );
+    }
+  }
+}
+
 let pages: string[];
 try {
   pages = readdirSync(resolve(ROOT, PAGES_DIR)).filter((f) => f.endsWith(".tsx"));
@@ -237,27 +324,33 @@ for (const page of pages) {
   scanFile(page);
 }
 
+for (const dataFile of DATA_FILES) {
+  scanDataFile(dataFile);
+}
+
 if (errors.length > 0) {
   console.error(
     `[check-body-copy-cannibalisation] ${errors.length} body-copy keyword violation(s) found:`,
   );
   for (const e of errors) console.error("  " + e);
   console.error(
-    `\nWhy this matters: unquoted JSX body text on a non-canonical page lets Google ` +
-      `associate the reserved phrase with the wrong URL, diluting the ranking signal ` +
-      `for the canonical page.\n` +
+    `\nWhy this matters: reserved keyword phrases in rendered headings let Google ` +
+      `associate the phrase with the wrong URL, diluting the ranking signal for the ` +
+      `canonical page.\n` +
       `Fix options:\n` +
       `  1. Rephrase the copy to avoid the exact match (e.g. "Preschool Chain in Thane"\n` +
       `     instead of "Preschool in Thane").\n` +
       `  2. Replace the text with an <a>/<Link> anchor pointing to the canonical URL\n` +
       `     (anchor text linking to the canonical page is SEO-neutral or beneficial).\n` +
-      `  3. Add the file to EXEMPT_FILES only for non-organic pages (ad pages, internal tools).`,
+      `  3. For TSX pages: add the file to EXEMPT_FILES only for non-organic pages\n` +
+      `     (ad pages, internal tools).`,
   );
   process.exit(1);
 }
 
 console.log(
-  `[check-body-copy-cannibalisation] OK — ${pages.length} page files scanned, ` +
-    `no unquoted reserved-phrase violations detected.`,
+  `[check-body-copy-cannibalisation] OK — ${pages.length} page files and ` +
+    `${DATA_FILES.length} shared data files scanned, ` +
+    `no reserved-phrase violations detected.`,
 );
 process.exit(0);
