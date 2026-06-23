@@ -276,36 +276,42 @@ const parentTestimonials = [
     name: "Priya",
     centre: "Manpada Centre",
     rating: 5,
+    googleReviewUrl: "https://www.google.com/search?sca_esv=b89316bc51f952b2&authuser=0&hl=en&gl=in&output=search&q=Rainbow+Preschool+%E2%80%93+Aggarwal+Arcade,+Manpada+%7C+Best+Preschool+in+Thane&ludocid=1398522179201165373&lsig=AB86z5U9CDFfYeDdrfeFqhIXz3eN&ved=1i%3A0%2Ct%3A109124%2Ce%3A55%2Cp%3ADkQ6arGdCtbv4-EP0N-FgAI%3A23&safe=active&ssui=on#mpd=~4522241588269863442/customers/reviews",
   },
   {
     quote: "What made us choose Rainbow over other preschools in Thane was the 100% female staff policy and the CCTV in every classroom. Our son settled in within a week — the teachers handle separation anxiety so patiently and professionally.",
     name: "Rahul",
     centre: "Hariniwas Centre",
     rating: 5,
+    googleReviewUrl: "https://www.google.com/search?q=rainbow+preschool+-+hariniwas+centre&oq=&gs_lcrp=EgZjaHJvbWUqCQgGEEUYOxjCAzIJCAAQRRg7GMIDMgkIARBFGDsYwgMyCQgCEEUYOxjCAzIJCAMQRRg7GMIDMgkIBBBFGDsYwgMyCQgFEEUYOxjCAzIJCAYQRRg7GMIDMgkIBxBFGDsYwgPSAQkyOTUzajBqMTWoAgiwAgHxBc9Puuffm06z8QXPT7rn35tOsw&sourceid=chrome&ie=UTF-8&safe=active&ssui=on#mpd=~14681818391688771716/customers/reviews",
   },
   {
     quote: "We shifted from another well-known preschool chain to Rainbow Kasarvadavali and the difference was immediately obvious — smaller batches, more individual attention, and daily verbal updates from the teacher at pickup. I feel completely informed.",
     name: "Anita",
     centre: "Kasarvadavali Centre",
     rating: 5,
+    googleReviewUrl: "https://www.google.com/search?q=Rainbow+Preschool+-+Kasarvadavli+%7C+Best+Pre+School+Near+You&stick=H4sIAAAAAAAA_-NgU1I1qDBOSjVPSko0S7Q0TjMyS06yMqiwNDFLMUxLTUtKtEi2SLWwWMRqHZSYmZeUX64QUJRanJyRn5-joKvgnVicWFSWmJJYlpOpUKPglFpcApJXCIYo8EtNLFKIzC8FALKBdatnAAAA&hl=en-GB&mat=CVPX1zlDjTxcElcBTVDHnu3FUbq15hdoDka43vkYpd6G7abITju9F5Sg18z1R1sGOqgngu1VSkFNs7jE4dhxCGIeLV3Q7I5fc6vvLwx98Ns3ToiVs1v_B2673_bQvqDIaxk&authuser=0&ved=2ahUKEwjxmeTexLWUAxV7oGMGHaG-E1MQ-MgIegQIGRAi&safe=active&ssui=on#mpd=~6646342469964781395/customers/reviews",
   },
   {
     quote: "My son started Nursery at Rainbow Dhokali not knowing a single English word. By end of term he was forming sentences and naming shapes and colours. The phonics approach is genuinely different from the rote learning we had feared.",
     name: "Deepa",
     centre: "Dhokali Centre",
     rating: 5,
+    googleReviewUrl: "https://www.google.com/search?sca_esv=79222c262c147aa4&rlz=1C1GCEU_enIN1161IN1161&q=Rainbow+Preschool+-+Dhokali+Centre+%7C+Preschool+in+Dhokali,+Thane,+Kolshet+Road,+opp.+Vakratunda+residency,+Dhokali+Pada,+Dhokali,+Dhokali+Naka,+Thane,+Maharashtra&spell=1&sa=X&ved=2ahUKEwjOsLW656yPAxWU2TgGHS3GEsEQBSgAegQIKhAB&biw=1920&bih=945&dpr=1&safe=active&ssui=on#mpd=~15184327537350178218/customers/reviews",
   },
   {
     quote: "When our daughter moved to Sr. KG, her class teacher at Hiranandani Foundation School said she was one of the most school-ready children she had seen. That is the best endorsement I can give Rainbow Anand Nagar.",
     name: "Meera",
     centre: "Anand Nagar Centre",
     rating: 5,
+    googleReviewUrl: "https://www.google.com/search?gs_ssp=eJzj4tFP1zfMSIk3NTAvNzZgtFIxqDBOSjVPSrI0TzYxNDY1TzK3MqgwS0sytkg2TQMJpaaleMkWJWbmJeWXKxQUpRYnZ-Tn5ygk5iXmpSjkJaYnFgEA8iEaIA&q=rainbow+preschool+anand+nagar&oq=rainbow+preschool+ana&gs_lcrp=EgZjaHJvbWUqDQgBEC4YrwEYxwEYgAQyCggAEAAY4wIYgAQyDQgBEC4YrwEYxwEYgAQyBggCEEUYOTINCAMQLhivARjHARiABDIICAQQABgWGB4yCAgFEAAYFhgeMggIBhAAGBYYHjINCAcQABiGAxiABBiKBTINCAgQABiGAxiABBiKBTINCAkQABiGAxiABBiKBdIBCjE1NTY2ajBqMTWoAgCwAgA&sourceid=chrome&ie=UTF-8&safe=active&ssui=on#mpd=~998231844853016979/customers/reviews",
   },
   {
     quote: "Three of my children have been through Rainbow Kalwa — my eldest is now in Class 5 and still remembers her nursery teacher's name. The bond they build with children here is real. I would not consider any other preschool in Thane.",
     name: "Sanjay",
     centre: "Kalwa Centre",
     rating: 5,
+    googleReviewUrl: "https://www.google.com/search?q=Rainbow+Preschool+-+Kalwa+Centre&oq=&gs_lcrp=EgZjaHJvbWUqCQgFEEUYOxjCAzIJCAAQRRg7GMIDMgkIARBFGDsYwgMyCQgCEEUYOxjCAzIJCAMQRRg7GMIDMgkIBBBFGDsYwgMyCQgFEEUYOxjCAzIJCAYQRRg7GMIDMgkIBxBFGDsYwgPSAQkxMzAxajBqMTWoAgiwAgHxBcvTntCZ3xe-&sourceid=chrome&ie=UTF-8&safe=active&ssui=on#mpd=~6219421961311007993/customers/reviews",
   },
 ];
 
@@ -690,21 +696,19 @@ export default function BestPreschoolInThane() {
                       <footer className="mt-auto">
                         <p className="text-xs font-semibold text-gray-900 dark:text-white">{t.name}</p>
                         <p className="text-xs text-gray-500 dark:text-gray-400">{t.centre}</p>
+                        <a
+                          href={t.googleReviewUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 mt-2 text-xs text-gray-500 dark:text-gray-400 hover:text-yellow-600 dark:hover:text-yellow-400 transition-colors"
+                          data-testid={`link-google-reviews-${idx}`}
+                        >
+                          <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" />
+                          See reviews on Google Maps
+                        </a>
                       </footer>
                     </div>
                   ))}
-                </div>
-                <div className="mt-6 text-center">
-                  <a
-                    href="https://www.google.com/maps/place/?q=place_id:ChIJs8uL-1-5vjcRPWjKJYOMaA0"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-5 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 rounded-lg text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
-                    data-testid="link-google-reviews"
-                  >
-                    <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                    See our reviews on Google Maps
-                  </a>
                 </div>
               </div>
             </section>
