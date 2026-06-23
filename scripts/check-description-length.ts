@@ -14,6 +14,7 @@
  *   - shared/centre-data.ts          preschoolPageSEO + localPageSEO →
  *                                    description (paired with canonicalPath)
  *   - shared/playgroup-landing-data  url → seo.description
+ *   - shared/legacy-pages-data.ts    141 blog entries → metaDescription
  *   - client/src/pages/*.tsx         <SEO description="..."> literal
  *
  * Run locally:   npx tsx scripts/check-description-length.ts
@@ -134,6 +135,31 @@ function scanPlaygroupLanding() {
   }
 }
 
+// --- shared/legacy-pages-data.ts ---------------------------------------------
+// Each blog entry has a `metaDescription:` field (not `description:`).
+function scanLegacyPages() {
+  const file = "shared/legacy-pages-data.ts";
+  const lines = readLines(file);
+  let currentSlug = "";
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    const slugMatch = line.match(/^\s+slug:\s*"((?:[^"\\]|\\.)*)"/);
+    if (slugMatch) {
+      currentSlug = slugMatch[1];
+      continue;
+    }
+    const dMatch = line.match(/^\s+metaDescription:\s*"((?:[^"\\]|\\.)*)"/);
+    if (dMatch) {
+      entries.push({
+        file,
+        line: i + 1,
+        url: `/blog/${currentSlug}`,
+        description: dMatch[1],
+      });
+    }
+  }
+}
+
 // --- client/src/pages/*.tsx --------------------------------------------------
 const CLIENT_PAGE_URLS: Record<string, string> = {
   "home.tsx": "/",
@@ -195,6 +221,7 @@ function scanClientPages() {
 scanSsrPages();
 scanCentreData();
 scanPlaygroupLanding();
+scanLegacyPages();
 scanClientPages();
 
 for (const e of entries) {
