@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { PLAYGROUP, KINDERGARTEN, HAPPY_TIMES } from "@shared/programme-data";
 
 interface SEOProps {
   title: string;
@@ -118,7 +119,7 @@ export const organizationSchema = {
   url: BASE_URL,
   logo: `${BASE_URL}/images/logo.webp`,
   description:
-    "Rainbow Preschool International is a trusted preschool and playgroup in Thane, offering quality early childhood education for children aged 1.5 to 10 years.",
+    `Rainbow Preschool International is a trusted preschool and playgroup in Thane, offering quality early childhood education for children aged ${PLAYGROUP.ageMin}\u2013${HAPPY_TIMES.ageMax} years.`,
   foundingDate: "2007",
   address: {
     "@type": "PostalAddress",
@@ -172,7 +173,7 @@ export function createLocalBusinessSchema(centre: {
     "@type": "Preschool",
     "@id": `${BASE_URL}${centre.url}`,
     name: `Rainbow Preschool International - ${centre.locality}`,
-    description: `Quality preschool and playgroup in ${centre.locality}, Thane offering Playgroup, Nursery, and Kindergarten programmes for children aged 1.5-6 years.`,
+    description: `Quality preschool and playgroup in ${centre.locality}, Thane offering Playgroup, Nursery, and Kindergarten programmes for children aged ${PLAYGROUP.ageMin}\u2013${KINDERGARTEN.ageMax} years.`,
     url: `${BASE_URL}${centre.url}`,
     telephone: centre.phone,
     address: {
