@@ -831,7 +831,7 @@ const staticPages: Record<string, PageSEOData> = {
           name: "Submit an Enquiry",
           text: "Fill the online enquiry form on this page, call 82915 68972, or walk into any of the 6 Rainbow Preschool centres in Thane, Monday to Saturday, 9 AM to 6 PM.",
           url: `${BASE_URL}/preschool-admissions`,
-          image: { "@type": "ImageObject", url: `${BASE_URL}/og-image.jpg` },
+          image: { "@type": "ImageObject", url: `${BASE_URL}/images/gallery/rainbow-preschool-admin-office.webp` },
         },
         {
           "@type": "HowToStep",
@@ -839,7 +839,7 @@ const staticPages: Record<string, PageSEOData> = {
           name: "Schedule a Free Campus Visit",
           text: "Our admissions team will arrange a guided tour of your preferred centre, covering classrooms, play areas, and safety installations so you can experience the Rainbow environment firsthand.",
           url: `${BASE_URL}/preschool-admissions`,
-          image: { "@type": "ImageObject", url: `${BASE_URL}/og-image.jpg` },
+          image: { "@type": "ImageObject", url: `${BASE_URL}/images/gallery/rainbow-preschool-entrance-area.webp` },
         },
         {
           "@type": "HowToStep",
@@ -847,7 +847,7 @@ const staticPages: Record<string, PageSEOData> = {
           name: "Speak with the Admissions Team",
           text: "Discuss your child's age, preferred programme (Playgroup, Nursery, or KG), batch timing preferences, transport requirements, and any questions about the curriculum or fees.",
           url: `${BASE_URL}/preschool-admissions`,
-          image: { "@type": "ImageObject", url: `${BASE_URL}/og-image.jpg` },
+          image: { "@type": "ImageObject", url: `${BASE_URL}/images/gallery/rainbow-preschool-100-percent-female-staff.webp` },
         },
         {
           "@type": "HowToStep",
@@ -855,7 +855,7 @@ const staticPages: Record<string, PageSEOData> = {
           name: "Complete the Registration Form",
           text: "Fill the formal admission registration form at the centre and submit it to reserve your child's seat. Forms are available at all 6 Rainbow Preschool centres across Thane West.",
           url: `${BASE_URL}/preschool-admissions`,
-          image: { "@type": "ImageObject", url: `${BASE_URL}/og-image.jpg` },
+          image: { "@type": "ImageObject", url: `${BASE_URL}/images/campus/campus-lobby.webp` },
         },
         {
           "@type": "HowToStep",
@@ -863,7 +863,7 @@ const staticPages: Record<string, PageSEOData> = {
           name: "Submit Required Documents",
           text: "Provide the necessary documents — child's birth certificate, parent ID proof, photographs, address proof, and vaccination card — to complete your child's admission file.",
           url: `${BASE_URL}/preschool-admissions`,
-          image: { "@type": "ImageObject", url: `${BASE_URL}/og-image.jpg` },
+          image: { "@type": "ImageObject", url: `${BASE_URL}/images/campus/campus-building.webp` },
         },
         {
           "@type": "HowToStep",
@@ -871,7 +871,7 @@ const staticPages: Record<string, PageSEOData> = {
           name: "Confirm Admission and Attend Orientation",
           text: "Pay the admission fee to confirm the seat. Attend our parent orientation session before your child's first day to meet teachers and understand the daily routine.",
           url: `${BASE_URL}/preschool-admissions`,
-          image: { "@type": "ImageObject", url: `${BASE_URL}/og-image.jpg` },
+          image: { "@type": "ImageObject", url: `${BASE_URL}/images/campus/campus-classroom-1.webp` },
         },
       ],
     }],
