@@ -274,5 +274,5 @@ else
   log "step 9/9 — SKIPPED Cloudflare cache purge (CF_ZONE_ID or CF_API_TOKEN not set)."
 fi
 
-log "PASS — byline guard + no-pink guard + build + freshness + keyword-targets + sitemap-200 + bot-detection + Lighthouse perf guard all succeeded; deploy may proceed."
+log "PASS — byline guard + title-cannibalisation + description-length + bot-ua-list + h1-parity + no-pink guard + build + freshness + keyword-targets + sitemap-200 + bot-detection + Lighthouse perf guard all succeeded; deploy may proceed."
 exit 0
