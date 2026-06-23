@@ -1,0 +1,112 @@
+Final decision for Task #158 and Task #161:
+
+Do NOT revert the homepage title or H1.
+
+The current title and H1 are approved.
+
+Approved homepage meta title:
+"Rainbow Preschool | Playschool, Nursery & Kindergarten"
+
+Approved homepage H1:
+"Rainbow Preschool"
+with second visual line:
+"Playschool, Nursery & Kindergarten"
+
+Semantic H1:
+"Rainbow Preschool Playschool, Nursery & Kindergarten"
+
+Reason:
+This version is parent-friendly and clearly communicates Rainbow’s core programmes. It is stronger for admissions conversion because parents immediately understand the offering: Playschool, Nursery and Kindergarten.
+
+It is also guard-safe because it does not use the reserved bare phrase:
+"Preschool in Thane"
+
+It also does not use:
+- Best Preschool in Thane
+- Play School Near Me
+- Preschool Admissions
+- Playgroup in Thane
+- Nursery in Thane
+- Kindergarten in Thane
+
+Therefore, keep the current title and H1 unchanged.
+
+------------------------------------------------------------
+CLOSE THE TITLE/H1 DECISION
+------------------------------------------------------------
+
+Update the final verification status:
+
+1. Homepage title
+Status: Approved as current
+Final title:
+"Rainbow Preschool | Playschool, Nursery & Kindergarten"
+
+2. Homepage H1
+Status: Approved as current
+Final semantic H1:
+"Rainbow Preschool Playschool, Nursery & Kindergarten"
+
+3. Do not change title to:
+"Rainbow Preschool | Preschool Chain in Thane Since 2007"
+
+4. Do not change H1 to:
+"Rainbow Preschool International — Trusted Preschool Chain in Thane Since 2007"
+
+Those versions are acceptable SEO options, but they are not the chosen direction.
+
+------------------------------------------------------------
+CONFIRM ALL OTHER COMPLETED ITEMS REMAIN UNCHANGED
+------------------------------------------------------------
+
+Do not modify:
+- meta description
+- BreadcrumbList
+- programme-data.ts
+- FAQ schema parity
+- review text fallback
+- schema @type
+- footer navigation
+- interlinks block
+- OG image
+- Firebase imports
+- GSC startup sync
+
+Do not modify:
+- server/homepage-freshness.ts
+- server/bot-ssr.ts
+- server/ssr-pages.ts
+- scripts/predeploy.sh
+
+Do not add:
+- AggregateRating schema
+- SearchAction schema
+
+Do not change:
+- "@type": "EducationalOrganization"
+
+------------------------------------------------------------
+RUN FINAL GUARDS
+------------------------------------------------------------
+
+Run:
+
+npx tsx scripts/check-description-length.ts
+npx tsx scripts/check-no-title-cannibalisation.ts
+npm run check
+
+------------------------------------------------------------
+FINAL REPORT FORMAT
+------------------------------------------------------------
+
+Report:
+
+1. Final approved title
+2. Final approved H1
+3. Confirmation title/H1 were not changed
+4. Confirmation title cannibalisation guard passes
+5. Confirmation description length guard passes
+6. Confirmation npm run check passes
+7. Confirmation Task #158 is complete
+8. Confirmation Task #161 is complete
+9. Any remaining low-risk future recommendation, if any
