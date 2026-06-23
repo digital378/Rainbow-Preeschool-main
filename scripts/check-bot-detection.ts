@@ -27,7 +27,12 @@
 
 const BASE = (process.argv[2] || "http://localhost:5000").replace(/\/$/, "");
 const FETCH_TIMEOUT_MS = 15_000;
-const TEST_PATH = "/";
+// Use /about (not /) for the bot-SSR assertion.
+// The homepage is intentionally served as the React SPA to all visitors
+// including Googlebot — it is excluded from bot-ssr.ts. /about is a stable
+// Bot-SSR'd page that carries full JSON-LD and is a safe proxy for "the
+// bot-SSR middleware is alive and routing correctly". See server/bot-ssr.ts.
+const TEST_PATH = "/about";
 
 // ── Real-user in-app browser UAs ─────────────────────────────────────────────
 // These MUST receive the React shell (<div id="root">).
