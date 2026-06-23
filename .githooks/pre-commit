@@ -125,6 +125,18 @@ if ! npx --no-install tsx scripts/check-body-copy-cannibalisation.ts; then
   exit 1
 fi
 
+# EEATSignals showRating guard. Every <EEATSignals> call in client/src/pages/
+# must pass showRating={false} explicitly. The prop defaults to true, which
+# emits star-rating rich-result markup — publishing unverified ratings violates
+# Google's rich-result policy.
+echo "[pre-commit] Running 'tsx scripts/check-eeat-show-rating.ts' ..."
+if ! npx --no-install tsx scripts/check-eeat-show-rating.ts; then
+  echo "" >&2
+  echo "[pre-commit] 'check-eeat-show-rating' failed. Commit aborted." >&2
+  echo "[pre-commit] Fix the issues above, or re-run with --no-verify to bypass." >&2
+  exit 1
+fi
+
 # Record success so the pre-push hook can skip a redundant re-run on
 # the same tree. Best-effort only — never fail the commit on this.
 REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || true)"

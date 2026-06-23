@@ -144,6 +144,19 @@ if ! npx --no-install tsx scripts/check-body-copy-cannibalisation.ts; then
   exit 1
 fi
 
+# EEATSignals showRating guard. Every <EEATSignals> call in client/src/pages/
+# must pass showRating={false} explicitly. The prop defaults to true, which
+# emits star-rating rich-result markup — publishing unverified ratings violates
+# Google's rich-result policy.
+echo "[pre-push] Running 'tsx scripts/check-eeat-show-rating.ts' ..."
+if ! npx --no-install tsx scripts/check-eeat-show-rating.ts; then
+  echo "" >&2
+  echo "[pre-push] 'check-eeat-show-rating' failed. Push aborted." >&2
+  echo "[pre-push] A <EEATSignals> call is missing showRating={false} in client/src/pages/." >&2
+  echo "[pre-push] Fix the issues above, or re-run with --no-verify to bypass." >&2
+  exit 1
+fi
+
 # Record success so a subsequent push on the same tree can skip.
 if [ -n "$HEAD_TREE" ]; then
   printf '%s' "$HEAD_TREE" > "$CACHE_FILE" 2>/dev/null || true
