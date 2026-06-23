@@ -114,6 +114,17 @@ if ! npx --no-install tsx --test scripts/check-no-person-author.test.ts; then
   exit 1
 fi
 
+# Body-copy cannibalisation guard regression tests. Verifies the guard itself
+# hasn't regressed — tests run in <1 s and have no side effects. Running here
+# (not just pre-push) gives early feedback before the commit lands locally.
+echo "[pre-commit] Running 'tsx --test scripts/check-body-copy-cannibalisation.test.ts' ..."
+if ! npx --no-install tsx --test scripts/check-body-copy-cannibalisation.test.ts; then
+  echo "" >&2
+  echo "[pre-commit] 'check-body-copy-cannibalisation' tests failed. Commit aborted." >&2
+  echo "[pre-commit] Fix the issues above, or re-run with --no-verify to bypass." >&2
+  exit 1
+fi
+
 # Body-copy keyword-cannibalization guard. Catches reserved keyword phrases
 # appearing as unquoted JSX body text on non-canonical pages — a class of SEO
 # regression that the title guard does not cover.
