@@ -189,7 +189,7 @@ export default function TopPreschoolsThane() {
               {school.isRainbow && (
                 <div className="bg-red-600 text-white text-center py-1.5 text-sm font-semibold flex items-center justify-center gap-2">
                   <Award className="w-4 h-4" />
-                  #1 Rated Preschool in Thane
+                  #1 Rated · Rainbow Preschool
                 </div>
               )}
               <CardContent className={`p-5 sm:p-6 ${school.isRainbow ? "bg-red-50/30" : ""}`}>

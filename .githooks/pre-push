@@ -13,6 +13,7 @@
 #   - scripts/check-bot-ua-list.ts                   (bot UA allowlist guard)
 #   - scripts/check-h1-parity.ts                     (SSR ↔ client H1 parity, 29 pages)
 #   - scripts/check-no-person-author.test.ts          (person-author guard regression tests)
+#   - scripts/check-body-copy-cannibalisation.ts       (reserved phrases in JSX body copy)
 #
 # To avoid re-running a full type-check when the pre-commit hook
 # *just* ran successfully on the same tree, both hooks write the
@@ -119,6 +120,18 @@ if ! npx --no-install tsx --test scripts/check-no-person-author.test.ts; then
   echo "[pre-push] 'check-no-person-author' regression tests failed. Push aborted." >&2
   echo "[pre-push] The person-author guard itself has a bug — fix scripts/check-no-person-author.ts" >&2
   echo "[pre-push] before pushing, or re-run with --no-verify to bypass." >&2
+  exit 1
+fi
+
+# Body-copy keyword-cannibalization guard. Catches reserved keyword phrases
+# appearing as unquoted JSX body text on non-canonical pages — a class of SEO
+# regression that the title guard does not cover.
+echo "[pre-push] Running 'tsx scripts/check-body-copy-cannibalisation.ts' ..."
+if ! npx --no-install tsx scripts/check-body-copy-cannibalisation.ts; then
+  echo "" >&2
+  echo "[pre-push] 'check-body-copy-cannibalisation' failed. Push aborted." >&2
+  echo "[pre-push] Unquoted reserved keyword phrase found in JSX body copy on a non-canonical page." >&2
+  echo "[pre-push] Fix the issues above, or re-run with --no-verify to bypass." >&2
   exit 1
 fi
 
