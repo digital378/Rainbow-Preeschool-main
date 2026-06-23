@@ -441,7 +441,7 @@ export default function Home() {
               <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">About Us</p>
               <h2 className="text-3xl md:text-4xl font-bold mb-6" data-sparkle>Why Parents Choose Rainbow Preschool</h2>
               <p className="text-muted-foreground text-lg leading-relaxed mb-6">
-                Since 2007, Rainbow Preschool International has helped over 1,00,000 children learn, play, and grow across Thane. Our centres follow a play-based curriculum that builds reading, writing, and number skills through hands-on activities, stories, art, and outdoor play.
+                Since 2007, Rainbow Preschool International has helped over 1,00,000 young learners learn, play, and grow across Thane. Our centres follow a play-based curriculum that builds reading, writing, and number skills through hands-on activities, stories, art, and outdoor play.
               </p>
               <p className="text-muted-foreground leading-relaxed mb-4">
                 Each child learns in small batches of 10–12, guided by trained female teachers. Our classrooms are CCTV-monitored, and every centre follows strict hygiene and safety routines. We are open Monday to Saturday, 8 AM to 6 PM, and offer half-day and full-day options for all age groups.
@@ -630,7 +630,7 @@ export default function Home() {
       <div className="py-6 bg-primary/5">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <p className="text-sm text-muted-foreground text-center leading-relaxed" data-testid="text-seo-interlinks">
-            Helpful guides for Thane parents: compare options on our <a href="/best-preschool-near-me-in-thane" className="text-primary hover:underline font-medium" data-testid="link-inline-best-preschool-in-thane">best preschool guide</a>, find a <a href="/play-school-near-me" className="text-primary hover:underline font-medium" data-testid="link-inline-play-school-near-me-in-thane">centre near you</a>, or explore programme guides for <a href="/playgroup" className="text-primary hover:underline font-medium" data-testid="link-inline-playgroup-in-thane">Playgroup</a>, <a href="/nursery" className="text-primary hover:underline font-medium" data-testid="link-inline-nursery-in-thane">Nursery</a>, and <a href="/kindergarten" className="text-primary hover:underline font-medium" data-testid="link-inline-kindergarten-in-thane">Kindergarten</a>.
+            Helpful guides for Thane parents: compare options on our <a href="/best-preschool-near-me-in-thane" className="text-primary hover:underline font-medium" data-testid="link-inline-best-preschool-in-thane">best preschool guide</a>, <a href="/play-school-near-me" className="text-primary hover:underline font-medium" data-testid="link-inline-play-school-near-me-in-thane">find a centre near you</a>, or explore programme guides for <a href="/playgroup" className="text-primary hover:underline font-medium" data-testid="link-inline-playgroup-in-thane">Playgroup guide</a>, <a href="/nursery" className="text-primary hover:underline font-medium" data-testid="link-inline-nursery-in-thane">Nursery guide</a>, and <a href="/kindergarten" className="text-primary hover:underline font-medium" data-testid="link-inline-kindergarten-in-thane">Kindergarten guide</a>.
           </p>
         </div>
       </div>
