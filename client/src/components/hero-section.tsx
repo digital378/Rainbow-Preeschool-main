@@ -50,9 +50,8 @@ export function HeroSection() {
             <span className="text-yellow-400 drop-shadow-[0_2px_8px_rgba(250,204,21,0.4)]">
               Preschool
             </span>
-            <br className="hidden sm:block" /> International
-            <span className="block mt-3 text-base sm:text-lg md:text-xl font-semibold tracking-normal text-white/85">
-              Trusted Preschool Chain in Thane Since 2007
+            <span className="block mt-3 text-xl sm:text-2xl md:text-3xl font-semibold tracking-normal text-white/90">
+              Playschool, Nursery &amp; Kindergarten
             </span>
           </h1>
 

@@ -1,0 +1,456 @@
+Redraft Issue #158. Do not implement code yet.
+
+The current plan is still incorrectly scoped. It places important SEO signals out of scope, especially homepage title, H1, footer/navigation signals, and other cannibalisation factors.
+
+We need a corrected plan that audits and fixes the homepage as a full SEO entity, not just four isolated text strings.
+
+------------------------------------------------------------
+PRIMARY OBJECTIVE
+------------------------------------------------------------
+
+The homepage / must become the clear brand and chain authority page for Rainbow Preschool International.
+
+It should not compete with its own SEO landing pages, but it also should not be weakened by making critical homepage SEO elements “out of scope.”
+
+The corrected plan must include:
+
+1. Homepage title audit
+2. Homepage H1 audit
+3. H2/H3 audit
+4. Meta description fix
+5. Schema description audit
+6. BreadcrumbList addition
+7. FAQ schema and visible FAQ parity
+8. Programme age centralisation
+9. Review-count verification or replacement
+10. Footer and internal-link audit
+11. Explore More / duplicate-link audit
+12. Image, OG, LCP, font, Firebase and GSC report-only checks
+13. Guard execution
+
+Do not implement yet. First produce a corrected plan.
+
+------------------------------------------------------------
+IMPORTANT CORRECTION TO CURRENT PLAN
+------------------------------------------------------------
+
+Do NOT keep homepage title and H1 completely out of scope.
+
+The current plan says:
+“Homepage title — keep exactly: Rainbow Preschool | Preschool Chain in Thane Since 2007”
+
+This is too restrictive.
+
+Correct approach:
+- The homepage title must be audited.
+- The homepage H1 must be audited.
+- If current title/H1 are already best and guard-safe, they can be retained.
+- If stronger, guard-safe alternatives are better, propose them clearly.
+- Do not change title/H1 automatically without listing the recommended option and confirming it passes guards.
+
+Potential safe homepage title directions include:
+1. "Rainbow Preschool | Preschool Chain in Thane Since 2007"
+2. "Rainbow Preschool | Playgroup, Nursery & Kindergarten"
+3. "Rainbow Preschool | Early Learning Centres in Thane"
+4. "Rainbow Preschool International | 6 Centres Across Thane"
+
+Avoid titles that use the reserved bare phrase:
+"Preschool in Thane"
+
+Also avoid titles that directly compete with:
+"Best Preschool in Thane"
+"Play School Near Me"
+"Preschool Admissions"
+"Playgroup in Thane"
+"Nursery in Thane"
+"Kindergarten in Thane"
+
+The corrected issue should include a title recommendation table:
+- Current title
+- Character length
+- Risk level
+- Guard risk
+- Recommended action
+
+------------------------------------------------------------
+H1 MUST BE IN SCOPE
+------------------------------------------------------------
+
+The H1 is a primary SEO signal and must not be excluded.
+
+Audit the homepage H1 inside the hero component.
+
+The corrected plan must include:
+- Current H1
+- Whether exactly one H1 exists
+- Whether it contains any reserved landing-page keyword
+- Recommended final H1
+
+Safe H1 directions:
+1. "Rainbow Preschool International — Trusted Preschool Chain in Thane Since 2007"
+2. "Rainbow Preschool International — Playgroup, Nursery & Kindergarten Across Thane"
+3. "Rainbow Preschool International — Early Learning Across 6 Thane Centres"
+
+Avoid:
+- "Best Preschool in Thane"
+- "Preschool in Thane"
+- "Play School Near Me"
+- "Preschool Admissions"
+- "[Programme] in Thane"
+
+------------------------------------------------------------
+PAGE ROLE BOUNDARY
+------------------------------------------------------------
+
+The homepage should own:
+
+- Rainbow Preschool brand
+- Preschool chain in Thane
+- Trusted since 2007
+- Six centres across Thane
+- Playgroup, Nursery, Kindergarten and Happy Times at brand level
+- Parent trust
+- Safety
+- Curriculum
+- Campus visit journey
+
+The homepage should not directly own:
+
+/best-preschool-near-me-in-thane
+- best preschool in Thane
+- preschool in Thane
+- preschool near me
+- best preschool near me
+
+/play-school-near-me
+- play school near me
+- play school in Thane
+- playschool near me
+
+/preschool-admissions
+- preschool admissions
+- nursery admissions
+- admission form
+- admission process
+
+/playgroup
+- playgroup in Thane
+- playgroup admission
+- playgroup age
+
+/nursery
+- nursery in Thane
+- nursery admission
+- nursery age
+
+/kindergarten
+- kindergarten in Thane
+- kindergarten admission
+- kindergarten age
+
+Local pages:
+- preschool in Manpada
+- preschool in Hariniwas
+- preschool in Anand Nagar
+- preschool in Dhokali
+- preschool in Kalwa
+- preschool in Kasarvadavali
+
+Important:
+Exact-match phrases may be used as controlled navigational anchor text only when they point to the correct canonical landing page. They should not appear as homepage H1, H2, repeated section copy, schema headline, FAQ topic, or meta title.
+
+------------------------------------------------------------
+FOOTER MUST NOT BE BLANKET OUT OF SCOPE
+------------------------------------------------------------
+
+The current plan says footer navigation links are allowed and should not be changed.
+
+This is too broad.
+
+Correct approach:
+Footer links should be audited.
+
+Allowed:
+- Footer links using exact-match anchor text if they point to the correct canonical page.
+- Example: "Best Preschool in Thane" linking to /best-preschool-near-me-in-thane
+
+Not allowed:
+- Same exact-match links repeated multiple times across homepage body, Explore More, footer and CTA blocks.
+- Footer labels that create keyword stuffing.
+- Footer links duplicated unnecessarily in multiple footer groups.
+- Footer text that reads like SEO content instead of navigation.
+
+The corrected plan must classify footer links into:
+1. Allowed navigational links
+2. Duplicate/redundant links
+3. Keyword-stuffing risk
+4. Recommended action
+
+Do not automatically remove footer links. Audit them and recommend only necessary changes.
+
+------------------------------------------------------------
+INTERNAL LINK BLOCKS MUST BE AUDITED
+------------------------------------------------------------
+
+The current plan says the internal link block at line 638 is allowed and should stay.
+
+This should not be accepted without audit.
+
+Correct approach:
+Audit all internal link blocks, including line 638.
+
+Classify each link:
+- Destination URL
+- Anchor text
+- Reserved keyword or not
+- Is it pointing to the correct canonical page?
+- Is it repeated elsewhere on the homepage?
+- Keep / rewrite / remove
+
+Allowed:
+- One clean contextual link to each canonical landing page.
+
+Risky:
+- Repeating the same keyword anchor in multiple sections.
+- Using exact-match anchors inside non-contextual blocks.
+- Blocks that look like SEO link dumps.
+
+The corrected plan should not blindly protect the line 638 block. It should verify it.
+
+------------------------------------------------------------
+TITLE AND DESCRIPTION GUARDS
+------------------------------------------------------------
+
+The corrected plan must respect guards.
+
+1. Description guard:
+scripts/check-description-length.ts allows maximum 155 characters.
+
+Use this description unless a better compliant one is proposed:
+"Trusted preschool chain in Thane since 2007 — Playgroup, Nursery & Kindergarten across 6 centres. Play-based learning. Admissions open."
+
+The plan must include character count.
+
+2. Title cannibalisation guard:
+scripts/check-no-title-cannibalisation.ts reserves the bare phrase:
+"Preschool in Thane"
+
+Do not use this phrase in homepage title.
+
+Allowed phrase:
+"Preschool Chain in Thane"
+
+But still audit whether the current title or an alternate title is stronger.
+
+------------------------------------------------------------
+SCHEMA REQUIREMENTS
+------------------------------------------------------------
+
+Keep:
+"@type": "EducationalOrganization"
+
+Do not use:
+"@type": "Preschool"
+
+Do not add:
+AggregateRating
+
+Do not add:
+SearchAction, because no functional ?s= search handler exists.
+
+Schema must be audited for cannibalisation:
+- Organization description
+- WebSite description
+- pageName
+- FAQPage questions
+- Breadcrumb name
+- Any schema headline or description
+
+Replace risky phrases:
+"preschool in Thane" → "preschool chain in Thane"
+"best preschool in Thane" → remove from homepage schema
+"play school near me" → remove from homepage schema
+"preschool admissions" → avoid as schema theme
+
+Add BreadcrumbList:
+Home → https://www.rainbowpreschools.com/
+
+Breadcrumb name must be:
+"Home"
+
+------------------------------------------------------------
+PROGRAMME AGE CENTRALISATION
+------------------------------------------------------------
+
+Create:
+shared/programme-data.ts
+
+Include:
+- Playgroup: 1.5–2.5 years
+- Nursery: 2.5–3.5 years
+- Kindergarten: 3.5–5 years
+- Happy Times: 2–10 years
+
+The corrected plan should include:
+- where age ranges are currently hardcoded
+- which homepage-visible occurrences will be replaced
+- which non-homepage occurrences will be left for future phase
+
+Do not update non-homepage pages in this issue unless required by shared component usage.
+
+------------------------------------------------------------
+FAQ REQUIREMENTS
+------------------------------------------------------------
+
+FAQ audit must cover both:
+1. Schema parity
+2. Cannibalisation intent
+
+Every FAQPage schema question must appear visibly and verbatim on the homepage.
+
+Homepage FAQs should be brand/chain-level only.
+
+Allowed homepage FAQ topics:
+- What age groups does Rainbow Preschool serve?
+- How many centres does Rainbow Preschool have in Thane?
+- What programmes are offered?
+- How can parents book a campus visit?
+- What makes Rainbow Preschool trusted by parents?
+
+Risky FAQ topics:
+- What is the best preschool in Thane?
+- Which preschool is near me?
+- What is the preschool admission process?
+- What is the nursery admission age?
+- Which play school is near me?
+
+Such questions belong on their dedicated landing pages, not the homepage.
+
+------------------------------------------------------------
+REVIEW TEXT REQUIREMENT
+------------------------------------------------------------
+
+Audit visible review/rating claims:
+- 3,997 Google reviews
+- 4.7 stars
+- 4.9/5
+- 487 parent reviews
+- any similar claim
+
+Corrected plan must say:
+- where the claim appears
+- whether it is hardcoded
+- whether there is a verified source
+- final recommendation
+
+If no verified source:
+Replace with:
+"Trusted by parents across Thane since 2007."
+
+Do not add AggregateRating schema.
+
+------------------------------------------------------------
+EXPLORE MORE / DUPLICATION REQUIREMENT
+------------------------------------------------------------
+
+Audit all homepage link sections.
+
+If there is an Explore More or SEO-link block:
+- Do not automatically retain it.
+- Do not automatically delete it.
+- Assess whether it adds parent value or only repeats navigation.
+
+If retained:
+- Rename to parent-useful language such as:
+  "Popular Searches for Parents in Thane"
+- Keep max 4–6 links
+- Each link must point to correct canonical page
+- Avoid repeating the same anchor already used prominently elsewhere
+- Add short descriptive text only if useful
+
+If it is just a link dump:
+- Recommend removal.
+
+------------------------------------------------------------
+REPORT-ONLY TECHNICAL CHECKS
+------------------------------------------------------------
+
+Keep these in the corrected plan as report-only unless clearly broken and safe to fix:
+
+1. OG image
+- public/og-image.jpg
+- target 1200x630
+- file size
+- reference URL
+
+2. Hero LCP image
+- fetchpriority="high"
+- loading is not lazy
+- width and height set
+
+3. Fonts
+- preconnect
+- non-blocking preload as style
+- onload swap
+
+4. Firebase Auth SDK
+- not imported into homepage bundle
+
+5. GSC startup sync
+- fire-and-forget
+- not awaited before HTTP server bind
+
+------------------------------------------------------------
+TRUE OUT OF SCOPE
+------------------------------------------------------------
+
+Only these should remain out of scope:
+
+1. server/homepage-freshness.ts
+Reason: injects Article JSON-LD and freshness byline into HTML shell. Predeploy freshness guard depends on it.
+
+2. server/bot-ssr.ts
+Reason: homepage CSR architecture is accepted for now.
+
+3. server/ssr-pages.ts
+Reason: no SSR expansion in this issue.
+
+4. scripts/predeploy.sh
+Reason: guard orchestration should not be modified.
+
+5. AggregateRating schema
+Reason: no verified review source.
+
+6. SearchAction schema
+Reason: no functional search handler.
+
+7. OG image replacement/regeneration
+Reason: verify only.
+
+Everything else affecting homepage SEO should be in scope for audit, including title, H1, footer, schema descriptions, and internal links.
+
+------------------------------------------------------------
+REQUIRED OUTPUT FROM REPLIT
+------------------------------------------------------------
+
+Before writing code, redraft #158 with:
+
+1. Revised issue title
+2. Corrected What & Why
+3. Revised Done Looks Like
+4. True Out of Scope
+5. In Scope SEO Signals
+6. Page Role Boundary
+7. Title audit section
+8. H1 audit section
+9. Cannibalisation phrase audit section
+10. Footer/internal link audit section
+11. Schema audit section
+12. FAQ parity and intent audit section
+13. Programme age centralisation section
+14. Review text decision section
+15. Technical report-only checks
+16. Guard commands
+17. Final report format
+
+Do not implement code until the corrected plan is approved.

@@ -1,0 +1,442 @@
+Create a new task: #159 — Homepage Title, H1 & Cannibalisation Signal Alignment
+
+Do not modify or redraft Task #158.
+
+Task #158 remains focused on:
+- meta description length
+- BreadcrumbList
+- programme age centralisation
+- FAQ schema parity
+- review text verification
+- known confirmed "Preschool in Thane" fixes
+- report-only OG/LCP/Firebase/GSC checks
+
+Task #159 is a separate follow-up task focused on deeper homepage SEO positioning and cannibalisation control.
+
+------------------------------------------------------------
+TASK #159 — WHAT & WHY
+------------------------------------------------------------
+
+The homepage must act as the brand and chain authority page for Rainbow Preschool International.
+
+Currently, Task #158 handles technical and confirmed cannibalisation fixes, but it does not fully cover strategic homepage SEO signals such as title direction, H1 positioning, footer/internal-link repetition, schema wording, image alt text, FAQ intent, and homepage body-copy keyword boundaries.
+
+Task #159 will audit and align all homepage SEO signals so the homepage supports the brand without competing with dedicated landing pages such as:
+
+- /best-preschool-near-me-in-thane
+- /play-school-near-me
+- /preschool-admissions
+- /playgroup
+- /nursery
+- /kindergarten
+- centre/location pages
+
+------------------------------------------------------------
+TASK #159 — DONE LOOKS LIKE
+------------------------------------------------------------
+
+1. Homepage title is audited and either retained or improved using a guard-safe, brand-safe option.
+2. Homepage H1 is audited and either retained or improved.
+3. H2/H3 headings are checked for cannibalisation.
+4. Homepage copy is checked for repeated reserved keywords.
+5. Footer navigation is audited for useful navigation versus keyword repetition.
+6. Internal SEO-link blocks are audited for duplication and intent clarity.
+7. Schema names/descriptions are checked for homepage role alignment.
+8. FAQ questions are checked for intent cannibalisation, not just schema parity.
+9. Image alt text is checked for keyword stuffing or reserved landing-page intent.
+10. Homepage remains focused on brand, chain trust, six centres, safety, curriculum, and campus visits.
+11. Dedicated landing-page keywords are used only as controlled links to their correct pages.
+12. All relevant guards pass before completion.
+
+------------------------------------------------------------
+IMPORTANT RELATIONSHIP WITH TASK #158
+------------------------------------------------------------
+
+Do not duplicate work from #158.
+
+Task #158 handles:
+- exact meta description fix
+- BreadcrumbList addition
+- shared programme-data.ts creation
+- 3,997 Google reviews decision
+- confirmed risky "Preschool in Thane" occurrences
+- FAQ schema parity
+- report-only performance checks
+
+Task #159 should begin after #158 is complete.
+
+Task #159 should not re-edit files already correctly fixed by #158 unless further cannibalisation or positioning issues remain.
+
+------------------------------------------------------------
+TRUE OUT OF SCOPE FOR #159
+------------------------------------------------------------
+
+Do not modify:
+- server/homepage-freshness.ts
+- server/bot-ssr.ts
+- server/ssr-pages.ts
+- scripts/predeploy.sh
+
+Do not add:
+- AggregateRating schema
+- SearchAction schema
+
+Do not change:
+- @type from EducationalOrganization to Preschool
+
+Do not regenerate:
+- OG image
+
+Do not expand:
+- Bot SSR coverage for homepage
+
+------------------------------------------------------------
+IN SCOPE FOR #159
+------------------------------------------------------------
+
+Audit and, if needed, improve:
+
+1. Homepage title
+2. Homepage H1
+3. H2/H3 headings
+4. Hero copy
+5. Homepage section copy
+6. FAQ wording and intent
+7. Schema names and descriptions
+8. Footer navigation labels
+9. Internal link blocks
+10. CTA copy
+11. Programme-card wording
+12. Centre-card wording
+13. Image alt text
+14. Breadcrumb/page labels, if any remain after #158
+15. Any homepage-visible component that sends SEO signals
+
+Relevant files:
+- client/src/pages/home.tsx
+- client/src/components/hero-section.tsx
+- client/src/components/navigation.tsx
+- client/src/components/footer.tsx
+- client/src/components/cta-section.tsx
+- client/src/components/find-nearest-centre.tsx
+- client/src/components/seo.tsx
+- shared/centre-data.ts
+- shared/programme-data.ts, if created by #158
+- any component rendered on the homepage
+
+------------------------------------------------------------
+PAGE ROLE BOUNDARY
+------------------------------------------------------------
+
+Homepage / should target and reinforce:
+
+- Rainbow Preschool International
+- Rainbow Preschool brand
+- preschool chain in Thane
+- trusted preschool network since 2007
+- six Rainbow Preschool centres in Thane
+- early years learning
+- Playgroup, Nursery, Kindergarten and Happy Times at brand level
+- parent trust
+- child safety
+- curriculum quality
+- campus visit journey
+
+Homepage / should not directly compete with:
+
+/best-preschool-near-me-in-thane
+Reserved:
+- best preschool in Thane
+- preschool in Thane
+- preschool near me
+- best preschool near me
+
+/play-school-near-me
+Reserved:
+- play school near me
+- play school in Thane
+- playschool near me
+
+/preschool-admissions
+Reserved:
+- preschool admissions
+- nursery admissions
+- admission form
+- admission process
+
+/playgroup
+Reserved:
+- playgroup in Thane
+- playgroup admission
+- playgroup age
+
+/nursery
+Reserved:
+- nursery in Thane
+- nursery admission
+- nursery age
+
+/kindergarten
+Reserved:
+- kindergarten in Thane
+- kindergarten admission
+- kindergarten age
+
+Centre pages:
+Reserved:
+- preschool in Manpada
+- preschool in Hariniwas
+- preschool in Anand Nagar
+- preschool in Dhokali
+- preschool in Kalwa
+- preschool in Kasarvadavali
+
+Exact-match phrases may appear once as navigational anchor text only when pointing to the correct canonical page.
+
+They should not appear as:
+- homepage title
+- homepage H1
+- H2/H3 section heading
+- repeated body-copy theme
+- schema headline
+- schema description
+- FAQ topic
+- image alt text
+- repeated footer keyword block
+
+------------------------------------------------------------
+TITLE AUDIT REQUIREMENT
+------------------------------------------------------------
+
+Task #159 must audit the homepage title.
+
+Do not automatically freeze the current title.
+
+Check:
+- current title
+- character length
+- keyword focus
+- cannibalisation risk
+- whether it passes check-no-title-cannibalisation.ts
+- whether it clearly positions the homepage as brand/chain page
+
+Possible title directions to compare:
+
+Option A:
+"Rainbow Preschool | Preschool Chain in Thane Since 2007"
+
+Option B:
+"Rainbow Preschool | Playgroup, Nursery & Kindergarten"
+
+Option C:
+"Rainbow Preschool | Early Learning Centres in Thane"
+
+Option D:
+"Rainbow Preschool International | 6 Centres Across Thane"
+
+Do not use:
+"Rainbow Preschool in Thane"
+"Best Preschool in Thane"
+"Play School Near Me"
+"Preschool Admissions"
+
+Final task output should recommend one title with reason.
+
+If the existing title remains the best option, say so clearly.
+
+------------------------------------------------------------
+H1 AUDIT REQUIREMENT
+------------------------------------------------------------
+
+Task #159 must audit the homepage H1.
+
+Check:
+- exactly one visible H1
+- current H1 text
+- whether it uses reserved keyword phrases
+- whether it supports homepage brand/chain role
+- whether it is aligned with but not identical to the title
+
+Safe H1 directions:
+
+Option A:
+"Rainbow Preschool International — Trusted Preschool Chain in Thane Since 2007"
+
+Option B:
+"Rainbow Preschool International — Playgroup, Nursery & Kindergarten Across Thane"
+
+Option C:
+"Rainbow Preschool International — Early Learning Across 6 Thane Centres"
+
+Do not use:
+"Best Preschool in Thane"
+"Preschool in Thane"
+"Play School Near Me"
+"Preschool Admissions"
+
+Final task output should recommend one H1 with reason.
+
+------------------------------------------------------------
+HEADING AND BODY COPY AUDIT
+------------------------------------------------------------
+
+Audit all homepage H2/H3 headings and main section copy.
+
+Classify reserved keyword usage as:
+
+1. Allowed
+Used once as a navigational link to the correct canonical page.
+
+2. Risky
+Used as heading, repeated copy, schema description, FAQ, CTA, or alt text.
+
+3. Must fix
+Competes directly with a dedicated landing page.
+
+Rewrite risky terms using brand-safe alternatives:
+
+Use:
+- preschool chain in Thane
+- early years programmes across Thane
+- six Rainbow Preschool centres in Thane
+- trusted preschool network since 2007
+- early learning programmes
+- campus visit
+- admissions support team
+
+Avoid:
+- preschool in Thane
+- best preschool in Thane
+- play school near me
+- preschool admissions
+- nursery admissions
+- playgroup in Thane
+- nursery in Thane
+- kindergarten in Thane
+
+------------------------------------------------------------
+FOOTER AND INTERNAL LINK AUDIT
+------------------------------------------------------------
+
+Footer is not automatically out of scope.
+
+Audit footer navigation labels and internal link blocks.
+
+For each reserved phrase link, document:
+- anchor text
+- URL
+- whether URL is the correct canonical page
+- whether anchor is repeated elsewhere on homepage
+- action: keep, rewrite, reduce, or remove
+
+Allowed:
+- One clear footer/navigation link to correct landing page.
+
+Risky:
+- Same keyword anchor repeated in footer, body, Explore More block, CTA and schema.
+- Footer groups that look like keyword stuffing.
+- Link labels that use exact-match keywords where a brand-safe label would work better.
+
+Do not remove useful navigation unnecessarily. Reduce repetition and keep link equity clean.
+
+------------------------------------------------------------
+FAQ INTENT AUDIT
+------------------------------------------------------------
+
+Task #159 must go beyond FAQ schema parity.
+
+Audit whether FAQ questions poach landing-page intent.
+
+Allowed homepage FAQ examples:
+- What age groups does Rainbow Preschool serve?
+- How many Rainbow Preschool centres are there in Thane?
+- What programmes are available?
+- How can parents book a campus visit?
+- What makes Rainbow Preschool trusted by parents?
+
+Risky homepage FAQ examples:
+- What is the best preschool in Thane?
+- Which preschool is near me?
+- What is the preschool admission process?
+- What is the nursery admission age?
+- Which play school is near me?
+
+If risky questions exist:
+- rewrite them into brand-level questions, or
+- recommend moving them to the correct landing page.
+
+------------------------------------------------------------
+SCHEMA AUDIT REQUIREMENT
+------------------------------------------------------------
+
+Audit homepage schema after #158.
+
+Keep:
+"@type": "EducationalOrganization"
+
+Check:
+- Organization description
+- WebSite description
+- pageName
+- FAQPage questions
+- Breadcrumb name
+- schema descriptions
+- any schema headline fields
+
+Schema should support:
+- Rainbow Preschool International
+- preschool chain in Thane
+- six centres
+- since 2007
+- early years programmes
+
+Schema should not target:
+- best preschool in Thane
+- preschool in Thane
+- play school near me
+- preschool admissions
+- playgroup in Thane
+- nursery in Thane
+- kindergarten in Thane
+
+------------------------------------------------------------
+IMAGE ALT TEXT AUDIT
+------------------------------------------------------------
+
+Audit homepage image alt text.
+
+Allowed:
+- descriptive, natural alt text
+- brand/centre/curriculum descriptions
+
+Avoid:
+- keyword-stuffed alt text
+- repeated "best preschool in Thane"
+- "preschool near me"
+- "play school near me"
+- programme-specific landing-page keywords
+
+------------------------------------------------------------
+FINAL OUTPUT FORMAT FOR TASK #159
+------------------------------------------------------------
+
+Before implementation, report:
+
+1. Current homepage title
+2. Recommended homepage title
+3. Reason for title recommendation
+4. Current H1
+5. Recommended H1
+6. Reason for H1 recommendation
+7. Reserved keyword occurrences found
+8. Occurrences allowed as navigational links
+9. Occurrences that need rewriting
+10. Footer/internal-link findings
+11. FAQ intent findings
+12. Schema wording findings
+13. Image alt-text findings
+14. Recommended files to change
+15. Guard commands to run
+16. Any business approval required before implementation
+
+Do not implement code until this #159 plan is reviewed.

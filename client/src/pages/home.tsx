@@ -16,6 +16,7 @@ import { AwardedBySection } from "@/components/awarded-by-section";
 import { EEATSignals } from "@/components/eeat-signals";
 import { LAST_UPDATED_DISPLAY, LAST_UPDATED_ISO } from "@shared/site-freshness";
 import { createAllBranchLocalBusinessSchemas } from "@shared/centre-data";
+import { PLAYGROUP, NURSERY, KINDERGARTEN } from "@shared/programme-data";
 import { ProgrammeCard } from "@/components/programme-card";
 import { BranchCard } from "@/components/branch-card";
 import { FindNearestCentre } from "@/components/find-nearest-centre";
@@ -66,8 +67,8 @@ import {
 const faqs: Array<{question: string; answer: React.ReactNode; answerText: string}> = [
   {
     question: "What programmes does Rainbow Preschool offer and for which ages?",
-    answer: <>We offer three main programmes: <a href="/playgroup" className="text-primary hover:underline">Playgroup</a> for children aged 1.5–2.5 years, <a href="/nursery" className="text-primary hover:underline">Nursery</a> for ages 2.5–3.5 years, and <a href="/kindergarten" className="text-primary hover:underline">Kindergarten</a> for ages 3.5–5 years. Each programme follows a play-based curriculum that covers language, numbers, art, and social skills.</>,
-    answerText: "We offer three main programmes: Playgroup for children aged 1.5–2.5 years, Nursery for ages 2.5–3.5 years, and Kindergarten for ages 3.5–5 years. Each programme follows a play-based curriculum that covers language, numbers, art, and social skills."
+    answer: <>We offer three main programmes: <a href="/playgroup" className="text-primary hover:underline">Playgroup</a> for children aged {PLAYGROUP.ageRange}, <a href="/nursery" className="text-primary hover:underline">Nursery</a> for ages {NURSERY.ageRange}, and <a href="/kindergarten" className="text-primary hover:underline">Kindergarten</a> for ages {KINDERGARTEN.ageRange}. Each programme follows a play-based curriculum that covers language, numbers, art, and social skills.</>,
+    answerText: `We offer three main programmes: Playgroup for children aged ${PLAYGROUP.ageRange}, Nursery for ages ${NURSERY.ageRange}, and Kindergarten for ages ${KINDERGARTEN.ageRange}. Each programme follows a play-based curriculum that covers language, numbers, art, and social skills.`
   },
   {
     question: "What are the school timings and working days?",
@@ -380,7 +381,7 @@ export default function Home() {
   return (
     <div>
       <SEO
-        title="Rainbow Preschool | Preschool Chain in Thane Since 2007"
+        title="Rainbow Preschool | Playschool, Nursery & Kindergarten"
         description="Trusted preschool chain in Thane since 2007 — Playgroup, Nursery & Kindergarten across 6 centres. Play-based learning. Admissions open."
         keywords="rainbow preschool, preschool in thane, playgroup in thane, nursery school thane, early childhood education thane, rainbow preschool international"
         canonical="https://www.rainbowpreschools.com/"
