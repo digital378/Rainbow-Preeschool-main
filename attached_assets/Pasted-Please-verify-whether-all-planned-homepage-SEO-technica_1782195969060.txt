@@ -1,0 +1,679 @@
+Please verify whether all planned homepage SEO, technical SEO, and cannibalisation changes have been completed for Task #158 and Task #161.
+
+Do not make any new changes yet.
+
+First, audit the current codebase and report exactly:
+- what was changed
+- what is still missing
+- what is risky
+- what needs approval before implementation
+
+------------------------------------------------------------
+CONTEXT
+------------------------------------------------------------
+
+We are working on homepage SEO improvements for rainbowpreschools.com.
+
+Task #158 covered homepage technical SEO cleanup:
+- Homepage meta description under 155 characters
+- BreadcrumbList schema
+- Programme age-range centralisation
+- Homepage-visible hardcoded programme age replacements
+- Review-count verification or fallback replacement
+- FAQPage schema parity
+- Confirmed “Preschool in Thane” cannibalisation fixes
+- Report-only OG, LCP, Firebase, Fonts and GSC checks
+
+Task #161 covered homepage SEO positioning and cannibalisation alignment:
+- Homepage title audit
+- Homepage H1 audit
+- H2/H3 cannibalisation audit
+- Footer/internal-link signal audit
+- Schema wording audit
+- FAQ intent audit
+- Image alt-text audit
+- Homepage keyword-boundary audit
+
+Important:
+Task #159 does not exist. Any previous reference to Task #159 should be treated as Task #161.
+
+------------------------------------------------------------
+DO NOT MODIFY THESE FILES
+------------------------------------------------------------
+
+Only inspect and report.
+
+Do not modify:
+- server/homepage-freshness.ts
+- server/bot-ssr.ts
+- server/ssr-pages.ts
+- scripts/predeploy.sh
+
+Do not add:
+- AggregateRating schema
+- SearchAction schema
+
+Do not change:
+- "@type": "EducationalOrganization" to "@type": "Preschool"
+
+Do not regenerate or replace:
+- public/og-image.jpg
+
+Do not expand:
+- Bot SSR coverage for homepage
+
+------------------------------------------------------------
+EXPECTED HOMEPAGE META TITLE AND H1
+------------------------------------------------------------
+
+The homepage meta title must remain:
+
+"Rainbow Preschool | Preschool Chain in Thane Since 2007"
+
+Confirm:
+- It exists as the homepage title.
+- It was not changed to “Preschool in Thane”.
+- It does not contain the reserved bare phrase “Preschool in Thane”.
+- It passes the title cannibalisation guard.
+
+The homepage H1 must remain brand-safe and should be:
+
+"Rainbow Preschool International — Trusted Preschool Chain in Thane Since 2007"
+
+Confirm:
+- Exactly one visible H1 exists on the homepage.
+- The H1 uses “Preschool Chain in Thane”, not the reserved bare phrase “Preschool in Thane”.
+- The H1 does not use:
+  - Best Preschool in Thane
+  - Play School Near Me
+  - Preschool Admissions
+  - Playgroup in Thane
+  - Nursery in Thane
+  - Kindergarten in Thane
+
+If the H1 is slightly different but still brand-safe, report the exact H1 and whether it should be changed back to the expected version above.
+
+------------------------------------------------------------
+VERIFY TASK #158 COMPLETION
+------------------------------------------------------------
+
+Check the current codebase and report the status of each item.
+
+1. Meta description
+
+File:
+client/src/pages/home.tsx
+
+Confirm current homepage meta description.
+
+Expected approved description:
+
+"Trusted preschool chain in Thane since 2007 — Playgroup, Nursery & Kindergarten across 6 centres. Play-based learning. Admissions open."
+
+Confirm:
+- actual description
+- character count
+- whether it is <=155 characters
+- whether it passes:
+
+npx tsx scripts/check-description-length.ts
+
+If different from expected, report:
+- actual description
+- character count
+- whether it is still valid
+- whether it should be changed
+
+2. Homepage title
+
+Confirm:
+- current homepage title
+- character count
+- whether it matches:
+
+"Rainbow Preschool | Preschool Chain in Thane Since 2007"
+
+- whether it contains the reserved bare phrase “Preschool in Thane”
+- whether it passes:
+
+npx tsx scripts/check-no-title-cannibalisation.ts
+
+If changed, report:
+- old expected title
+- current title
+- whether change was intentional
+- whether it should be reverted
+
+3. BreadcrumbList schema
+
+Confirm BreadcrumbList exists in homepage structured data.
+
+Expected:
+- @type: BreadcrumbList
+- one item only
+- name: Home
+- item: https://www.rainbowpreschools.com/
+
+Confirm BreadcrumbList does not use:
+- Preschool in Thane
+- Best Preschool in Thane
+- Play School Near Me
+- Preschool Admissions
+
+4. Schema type
+
+Confirm homepage schema still uses:
+
+"@type": "EducationalOrganization"
+
+Confirm it was not changed to:
+
+"@type": "Preschool"
+
+If "@type": "Preschool" exists anywhere in homepage schema, flag as incorrect.
+
+5. AggregateRating
+
+Confirm no AggregateRating schema was added.
+
+If AggregateRating exists, flag as incorrect.
+
+6. SearchAction
+
+Confirm no SearchAction schema was added.
+
+If SearchAction exists, flag as incorrect because no functional ?s= search handler exists.
+
+7. Programme age centralisation
+
+Confirm whether this file exists:
+
+shared/programme-data.ts
+
+Confirm it includes canonical programme data:
+
+- Playgroup: 1.5–2.5 years
+- Nursery: 2.5–3.5 years
+- Kindergarten: 3.5–5 years
+- Happy Times: 2–10 years
+
+Confirm homepage-visible hardcoded age ranges were replaced with imports from shared programme data.
+
+Check:
+- client/src/pages/home.tsx
+- homepage-rendered programme cards
+- homepage FAQ content
+- homepage schema
+- footer labels if homepage-visible and age ranges appear there
+
+Search and report any remaining homepage-visible hardcoded age ranges:
+- 1.5–2.5
+- 2.5–3.5
+- 2.5–4
+- 3.5–5
+- 4–6
+- 2–10
+
+Classify each remaining occurrence:
+- acceptable because it comes from shared/programme-data.ts
+- risky hardcoded homepage occurrence
+- non-homepage occurrence, out of scope for #158
+
+8. Review-count text
+
+Locate any visible text containing:
+- 3,997 Google reviews
+- 4.7 stars
+- 4.9/5
+- 487 parent reviews
+- Google reviews
+- parent reviews
+
+Report:
+- whether the text was retained or replaced
+- if retained, whether there is a code comment documenting the verified source
+- if no verified source exists, whether it was replaced with:
+
+"Trusted by parents across Thane since 2007."
+
+Confirm no AggregateRating schema was added.
+
+9. FAQPage schema parity
+
+List every FAQ question in FAQPage schema.
+
+List every visible homepage FAQ question.
+
+Confirm:
+- every schema FAQ appears visibly and verbatim on the homepage
+- there are no schema-only FAQs
+- visible FAQs intended for schema are included in schema
+- FAQ answers are not materially different between visible copy and schema
+
+10. Confirmed cannibalisation fixes from Task #158
+
+Check these four previously confirmed risky occurrences.
+
+A. H2 in home.tsx
+
+Old risky text:
+"Why Parents Choose Rainbow Preschool in Thane"
+
+Expected:
+Should no longer use the bare phrase “Preschool in Thane”.
+
+Acceptable examples:
+- "Why Parents Choose Rainbow Preschool"
+- "Why Thane Parents Trust Rainbow Preschool"
+
+Report current text.
+
+B. EEATSignals pageName
+
+Old risky text:
+"Rainbow Preschool International — Preschool in Thane"
+
+Expected:
+"Rainbow Preschool International — Preschool Chain in Thane"
+
+Report current value.
+
+C. Organization schema description
+
+Old risky phrase:
+"Trusted preschool in Thane since 2007"
+
+Expected:
+"Trusted preschool chain in Thane since 2007"
+
+Report current value.
+
+D. WebSite schema description
+
+Old risky phrase:
+"Trusted preschool in Thane since 2007"
+
+Expected:
+"Trusted preschool chain in Thane since 2007"
+
+Report current value.
+
+------------------------------------------------------------
+VERIFY TASK #161 COMPLETION
+------------------------------------------------------------
+
+Task #161 is the homepage title, H1, and cannibalisation signal alignment task.
+
+If Task #161 has not been implemented yet, say clearly:
+
+"Task #161 not implemented yet."
+
+If Task #161 has been implemented or partially implemented, verify the following.
+
+1. Homepage title audit
+
+Confirm:
+- current title
+- character count
+- whether it matches expected title:
+
+"Rainbow Preschool | Preschool Chain in Thane Since 2007"
+
+- whether it contains reserved phrases
+- whether it supports homepage as brand/chain page
+- whether it passes title cannibalisation guard
+
+Reserved phrases not allowed in homepage title:
+- Preschool in Thane
+- Best Preschool in Thane
+- Play School Near Me
+- Preschool Admissions
+- Playgroup in Thane
+- Nursery in Thane
+- Kindergarten in Thane
+
+2. Homepage H1 audit
+
+Confirm:
+- current visible H1
+- whether exactly one visible H1 exists
+- whether it matches expected H1:
+
+"Rainbow Preschool International — Trusted Preschool Chain in Thane Since 2007"
+
+- whether it uses any reserved exact-match landing-page phrases
+- whether it supports brand/chain positioning
+
+Reserved phrases not allowed in H1:
+- Preschool in Thane
+- Best Preschool in Thane
+- Play School Near Me
+- Preschool Admissions
+- Playgroup in Thane
+- Nursery in Thane
+- Kindergarten in Thane
+
+3. H2/H3 heading audit
+
+Search all homepage-rendered H2/H3 headings for reserved phrases:
+
+- Preschool in Thane
+- Best Preschool in Thane
+- Preschool Near Me
+- Play School Near Me
+- Play School in Thane
+- Preschool Admissions
+- Nursery Admissions
+- Playgroup in Thane
+- Nursery in Thane
+- Kindergarten in Thane
+- preschool in Manpada
+- preschool in Hariniwas
+- preschool in Anand Nagar
+- preschool in Dhokali
+- preschool in Kalwa
+- preschool in Kasarvadavali
+
+Classify each occurrence:
+- allowed navigational anchor
+- risky heading/body/schema usage
+- fixed
+- still missing
+
+4. Homepage body-copy cannibalisation audit
+
+Search homepage-rendered body copy for repeated reserved phrases.
+
+Reserved phrases:
+- best preschool in Thane
+- preschool in Thane
+- preschool near me
+- best preschool near me
+- play school near me
+- play school in Thane
+- preschool admissions
+- nursery admissions
+- admission form
+- admission process
+- playgroup in Thane
+- nursery in Thane
+- kindergarten in Thane
+- playgroup admission
+- nursery admission
+- kindergarten admission
+
+Classify:
+- allowed once as navigational anchor to correct page
+- risky repeated content theme
+- fixed
+- still missing
+
+5. Footer/internal-link audit
+
+Check:
+- client/src/components/footer.tsx
+- homepage internal link blocks
+- navigation links
+- CTA links
+- any Explore More or Popular Searches block
+
+For each reserved keyword anchor, report:
+- anchor text
+- destination URL
+- whether URL is the correct canonical page
+- whether the same anchor repeats elsewhere on homepage
+- whether it is allowed
+- whether action is needed
+
+Do not flag a link as bad only because it uses exact-match keyword text.
+
+It is acceptable if:
+- it is a controlled navigation link
+- it points to the correct canonical page
+- it is not repeated excessively across multiple blocks
+
+6. Explore More / duplicate navigation audit
+
+Search homepage for:
+- Explore More
+- Popular Searches
+- repeated footer-like link block
+- duplicate navigation block
+- SEO link dump
+
+Report:
+- whether such a block exists
+- location
+- links inside it
+- whether it is useful parent navigation or keyword stuffing
+- whether it was removed, rewritten, retained, or still needs action
+
+7. FAQ intent audit
+
+Confirm homepage FAQ questions are brand/chain-level, not landing-page intent.
+
+Allowed homepage FAQ themes:
+- age groups served
+- number of centres
+- programmes offered
+- campus visit booking
+- trust
+- safety
+- curriculum
+
+Risky homepage FAQ themes:
+- best preschool in Thane
+- preschool near me
+- play school near me
+- preschool admission process
+- nursery admission age
+- playgroup admission
+- kindergarten admission
+
+Report any risky FAQ still present.
+
+8. Schema wording audit
+
+Audit all homepage structured data fields:
+- name
+- alternateName
+- description
+- pageName
+- headline
+- mainEntity
+- FAQPage questions
+- BreadcrumbList name
+- WebSite description
+- Organization description
+- any schema description/headline field
+
+Report any remaining reserved keyword usage in schema that could cause cannibalisation.
+
+Schema should support:
+- Rainbow Preschool International
+- preschool chain in Thane
+- six centres
+- since 2007
+- early years programmes
+- Playgroup, Nursery, Kindergarten and Happy Times at brand level
+
+Schema should not target:
+- best preschool in Thane
+- preschool in Thane
+- play school near me
+- preschool admissions
+- playgroup in Thane
+- nursery in Thane
+- kindergarten in Thane
+
+9. Image alt-text audit
+
+Search homepage-rendered images for alt text using reserved keywords.
+
+Report any alt text containing:
+- best preschool in Thane
+- preschool in Thane
+- preschool near me
+- play school near me
+- preschool admissions
+- playgroup in Thane
+- nursery in Thane
+- kindergarten in Thane
+
+Classify each as:
+- natural/descriptive
+- keyword-stuffed
+- needs rewrite
+
+------------------------------------------------------------
+REPORT-ONLY TECHNICAL CHECKS
+------------------------------------------------------------
+
+Verify and report only. Do not change unless already changed by prior approved task.
+
+1. OG image
+
+Check:
+- public/og-image.jpg exists
+- pixel dimensions
+- file size
+- whether it matches 1200x630 target
+- whether meta reference uses:
+
+https://www.rainbowpreschools.com/og-image.jpg
+
+2. Hero LCP image
+
+Check:
+- file/component checked
+- fetchpriority="high" present or absent
+- loading="lazy" absent on LCP image
+- width and height present or absent
+- whether loading is eager or default browser loading
+
+3. Fonts
+
+Check:
+- client/index.html
+- Google Fonts preconnect present or absent
+- non-blocking preload as="style" onload=swap present or absent
+
+4. Firebase Auth SDK
+
+Confirm:
+- whether Firebase Auth SDK is imported into homepage bundle
+- if yes, report where
+- if no, confirm clean
+
+5. GSC startup sync
+
+Check:
+- server/index.ts
+- whether GSC sync is fire-and-forget
+- whether it is awaited before HTTP server binds
+- whether it could block startup or request path
+
+------------------------------------------------------------
+RUN GUARDS
+------------------------------------------------------------
+
+Run and report results:
+
+npx tsx scripts/check-description-length.ts
+npx tsx scripts/check-no-title-cannibalisation.ts
+npm run check
+
+If any fail:
+- report exact failure
+- file/line
+- likely cause
+- recommended fix
+
+Do not fix yet unless I approve.
+
+------------------------------------------------------------
+FINAL RESPONSE FORMAT
+------------------------------------------------------------
+
+Respond in this exact format.
+
+1. Executive summary
+
+Use four bullets:
+- Completed
+- Missing
+- Risky
+- Needs approval
+
+2. Files changed
+
+Table:
+File | What changed | Related task
+
+3. Files inspected but not changed
+
+Table:
+File | Why inspected | Notes
+
+4. Task #158 checklist
+
+Table:
+Item | Status | Evidence | Missing Action
+
+5. Task #161 checklist
+
+Table:
+Item | Status | Evidence | Missing Action
+
+6. Meta title and H1 verification
+
+Table:
+Signal | Expected | Current | Status | Action Needed
+
+Expected title:
+"Rainbow Preschool | Preschool Chain in Thane Since 2007"
+
+Expected H1:
+"Rainbow Preschool International — Trusted Preschool Chain in Thane Since 2007"
+
+7. Cannibalisation findings
+
+Table:
+Phrase | Location | Classification | Action Taken | Remaining Risk
+
+8. Schema findings
+
+Table:
+Schema Type or Field | Present? | Issue? | Action Needed
+
+9. Link findings
+
+Table:
+Anchor Text | URL | Allowed? | Repeated? | Action Needed
+
+10. FAQ findings
+
+Table:
+FAQ Question | Visible? | In Schema? | Intent Risk? | Action Needed
+
+11. Technical report-only findings
+
+Table:
+Check | Status | Evidence | Action Needed
+
+12. Guard results
+
+Table:
+Command | Pass/Fail | Notes
+
+13. Final conclusion
+
+State clearly:
+- Is Task #158 fully complete?
+- Is Task #161 fully complete?
+- Is the homepage meta title exactly as expected?
+- Is the homepage H1 exactly as expected?
+- What is still missing?
+- What should be done next?
+
+Do not make additional code changes in this verification pass.
