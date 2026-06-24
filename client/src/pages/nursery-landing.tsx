@@ -31,7 +31,6 @@ import { ContactForm } from "@/components/contact-form";
 import { CountUp } from "@/components/count-up";
 import { BranchCard } from "@/components/branch-card";
 import { branches } from "@shared/schema";
-import { createAllBranchLocalBusinessSchemas } from "@shared/centre-data";
 import { 
   BookOpen, CheckCircle, ArrowRight, MapPin, Phone, Clock, Users, Star, Shield, 
   Shapes, MessageCircle, HandHeart, Activity, Music, UsersRound, Lock,
@@ -376,52 +375,6 @@ const activities = ["Circle time", "Phonics", "Number games", "Art & craft", "Ou
 export default function NurseryLanding() {
   useEffect(() => {
     trackProgrammeView("nursery");
-
-    const faqSchema = {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": faqs.map((faq) => ({
-        "@type": "Question",
-        "name": faq.question,
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": faq.answer
-        }
-      }))
-    };
-    const breadcrumbSchema = {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.rainbowpreschools.com/" },
-        { "@type": "ListItem", "position": 2, "name": "Programmes", "item": "https://www.rainbowpreschools.com/programmes" },
-        { "@type": "ListItem", "position": 3, "name": "Nursery in Thane", "item": "https://www.rainbowpreschools.com/nursery" },
-      ],
-    };
-    const ids = ['nursery-faq-schema', 'nursery-breadcrumb-schema', 'nursery-branches-schema'];
-    ids.forEach(id => { const e = document.getElementById(id); if (e) e.remove(); });
-
-    const faqScript = document.createElement('script');
-    faqScript.type = 'application/ld+json';
-    faqScript.id = 'nursery-faq-schema';
-    faqScript.textContent = JSON.stringify(faqSchema);
-    document.head.appendChild(faqScript);
-
-    const breadcrumbScript = document.createElement('script');
-    breadcrumbScript.type = 'application/ld+json';
-    breadcrumbScript.id = 'nursery-breadcrumb-schema';
-    breadcrumbScript.textContent = JSON.stringify(breadcrumbSchema);
-    document.head.appendChild(breadcrumbScript);
-
-    const branchScript = document.createElement('script');
-    branchScript.type = 'application/ld+json';
-    branchScript.id = 'nursery-branches-schema';
-    branchScript.textContent = JSON.stringify(createAllBranchLocalBusinessSchemas());
-    document.head.appendChild(branchScript);
-
-    return () => {
-      ids.forEach(id => { const el = document.getElementById(id); if (el) el.remove(); });
-    };
   }, []);
 
   return (

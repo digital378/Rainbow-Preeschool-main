@@ -30,7 +30,6 @@ import { ContactForm } from "@/components/contact-form";
 import { CountUp } from "@/components/count-up";
 import { BranchCard } from "@/components/branch-card";
 import { branches } from "@shared/schema";
-import { createAllBranchLocalBusinessSchemas } from "@shared/centre-data";
 import { 
   CheckCircle, ArrowRight, MapPin, Phone, Clock, Users, Star, Shield, 
   Lock, BookOpen, PenTool, Calculator, Microscope, Globe, Dumbbell,
@@ -366,37 +365,6 @@ const activities = ["Assembly", "Reading", "Writing", "Math games", "Science act
 export default function KindergartenLanding() {
   useEffect(() => {
     trackProgrammeView("kindergarten");
-
-    const faqSchema = {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": faqs.map((faq) => ({
-        "@type": "Question",
-        "name": faq.question,
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": faq.answer
-        }
-      }))
-    };
-    const faqScript = document.createElement('script');
-    faqScript.type = 'application/ld+json';
-    faqScript.id = 'kindergarten-faq-schema';
-    faqScript.textContent = JSON.stringify(faqSchema);
-
-    const branchScript = document.createElement('script');
-    branchScript.type = 'application/ld+json';
-    branchScript.id = 'kindergarten-branches-schema';
-    branchScript.textContent = JSON.stringify(createAllBranchLocalBusinessSchemas());
-
-    const ids = ['kindergarten-faq-schema', 'kindergarten-branches-schema'];
-    ids.forEach(id => { const e = document.getElementById(id); if (e) e.remove(); });
-    document.head.appendChild(faqScript);
-    document.head.appendChild(branchScript);
-
-    return () => {
-      ids.forEach(id => { const el = document.getElementById(id); if (el) el.remove(); });
-    };
   }, []);
 
   return (

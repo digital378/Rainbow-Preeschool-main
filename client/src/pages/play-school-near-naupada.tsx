@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { Link } from "wouter";
 import { SEO } from "@/components/seo";
 import { Badge } from "@/components/ui/badge";
@@ -35,43 +34,6 @@ const faqItems = [
 ];
 
 export default function PlaySchoolNearNaupada() {
-  useEffect(() => {
-    const schema = {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      mainEntity: faqItems.map((item) => ({
-        "@type": "Question",
-        name: item.q,
-        acceptedAnswer: { "@type": "Answer", text: item.a },
-      })),
-    };
-    const el = document.createElement("script");
-    el.type = "application/ld+json";
-    el.id = "faq-schema-naupada";
-    el.text = JSON.stringify(schema);
-    document.head.appendChild(el);
-
-    const breadcrumb = {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      itemListElement: [
-        { "@type": "ListItem", position: 1, name: "Home", item: "https://www.rainbowpreschools.com/" },
-        { "@type": "ListItem", position: 2, name: "Play School Near Me", item: "https://www.rainbowpreschools.com/play-school-near-me" },
-        { "@type": "ListItem", position: 3, name: "Naupada", item: PAGE_CANONICAL },
-      ],
-    };
-    const bel = document.createElement("script");
-    bel.type = "application/ld+json";
-    bel.id = "breadcrumb-schema-naupada";
-    bel.text = JSON.stringify(breadcrumb);
-    document.head.appendChild(bel);
-
-    return () => {
-      document.getElementById("faq-schema-naupada")?.remove();
-      document.getElementById("breadcrumb-schema-naupada")?.remove();
-    };
-  }, []);
-
   return (
     <div className="min-h-screen">
       <SEO

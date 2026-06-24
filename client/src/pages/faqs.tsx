@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link } from "wouter";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -210,35 +210,6 @@ const faqCategories: FAQCategory[] = [
 
 const allFAQs = faqCategories.flatMap(cat => cat.faqs);
 
-function FAQSchema() {
-  useEffect(() => {
-    const schema = {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": allFAQs.map(faq => ({
-        "@type": "Question",
-        "name": faq.question,
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": faq.answer,
-        },
-      })),
-    };
-
-    const script = document.createElement("script");
-    script.type = "application/ld+json";
-    script.text = JSON.stringify(schema);
-    script.id = "faq-hub-schema";
-    document.head.appendChild(script);
-
-    return () => {
-      const el = document.getElementById("faq-hub-schema");
-      if (el) el.remove();
-    };
-  }, []);
-  return null;
-}
-
 function FAQItem({ faq, isOpen, onToggle, id }: { faq: FAQ; isOpen: boolean; onToggle: () => void; id: string }) {
   const panelId = `faq-panel-${id}`;
   const buttonId = `faq-btn-${id}`;
@@ -301,7 +272,6 @@ export default function FAQs() {
         keywords="rainbow preschool faq, preschool questions thane, preschool admission faq, preschool fees thane, preschool safety questions, preschool curriculum questions"
         canonical="https://www.rainbowpreschools.com/faqs"
       />
-      <FAQSchema />
 
       <section className="max-w-4xl mx-auto px-4 py-12 sm:py-16">
         <div className="text-center mb-10">
