@@ -147,6 +147,10 @@ function PreschoolLocationTemplate({ localitySlug }: PreschoolLocationPageProps)
       existingScript.remove();
     }
 
+    // AUDIT-206: Retained — dynamic per-centre component. Per-centre SSR locality
+    // pages exist but contain different/static FAQ content. This injection provides
+    // dynamic LocalBusiness + FAQPage + BreadcrumbList schemas for JS-rendered users.
+    // Remove once SSR per-centre entries include equivalent dynamic structuredData.
     const script = document.createElement('script');
     script.id = scriptId;
     script.type = 'application/ld+json';

@@ -30,7 +30,7 @@ import { ContactForm } from "@/components/contact-form";
 import { CountUp } from "@/components/count-up";
 import { BranchCard } from "@/components/branch-card";
 import { branches } from "@shared/schema";
-import { createAllBranchLocalBusinessSchemas, centres } from "@shared/centre-data";
+import { centres } from "@shared/centre-data";
 import {
   Baby, CheckCircle, ArrowRight, MapPin, Phone, Clock, Users, Star, Shield,
   Shapes, MessageCircle, HandHeart, Activity, Music, UsersRound, Lock,
@@ -519,92 +519,6 @@ const centreAreasServed = [
 ];
 
 export default function PlaySchoolNearMe() {
-  useEffect(() => {
-    const faqSchema = {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": faqs.map((faq) => ({
-        "@type": "Question",
-        "name": faq.question,
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": faq.answer
-        }
-      }))
-    };
-    const faqScript = document.createElement('script');
-    faqScript.type = 'application/ld+json';
-    faqScript.id = 'playschool-near-me-faq-schema';
-    faqScript.textContent = JSON.stringify(faqSchema);
-
-    const breadcrumbSchema = {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.rainbowpreschools.com/" },
-        { "@type": "ListItem", "position": 2, "name": "Programmes", "item": "https://www.rainbowpreschools.com/programmes" },
-        { "@type": "ListItem", "position": 3, "name": "Play School Near Me", "item": "https://www.rainbowpreschools.com/play-school-near-me" }
-      ]
-    };
-    const breadcrumbScript = document.createElement('script');
-    breadcrumbScript.type = 'application/ld+json';
-    breadcrumbScript.id = 'playschool-near-me-breadcrumb-schema';
-    breadcrumbScript.textContent = JSON.stringify(breadcrumbSchema);
-
-    const orgSchema = {
-      "@context": "https://schema.org",
-      "@type": "Preschool",
-      "name": "Rainbow Preschool International",
-      "url": "https://www.rainbowpreschools.com/",
-      "logo": "https://www.rainbowpreschools.com/images/optimized/logo.webp",
-      "description": "Leading play school in Thane with 6 centres, 18+ years of experience, and award-winning play-based curriculum for children aged 1.5 to 2.5 years.",
-      "telephone": "+918291568972",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Thane",
-        "addressRegion": "Maharashtra",
-        "addressCountry": "IN"
-      },
-      "areaServed": ["Thane", "Mumbai", "Navi Mumbai"],
-      "numberOfEmployees": "100+",
-      "foundingDate": "2007",
-      "award": ["India Today Best Preschool", "ScooNews Global Edu Awards", "Economic Times Best Brand"]
-    };
-    const orgScript = document.createElement('script');
-    orgScript.type = 'application/ld+json';
-    orgScript.id = 'playschool-near-me-org-schema';
-    orgScript.textContent = JSON.stringify(orgSchema);
-
-    const branchSchemas = createAllBranchLocalBusinessSchemas();
-    const branchScript = document.createElement('script');
-    branchScript.type = 'application/ld+json';
-    branchScript.id = 'playschool-near-me-branches-schema';
-    branchScript.textContent = JSON.stringify(branchSchemas);
-
-    const schemaIds = [
-      'playschool-near-me-faq-schema',
-      'playschool-near-me-breadcrumb-schema',
-      'playschool-near-me-org-schema',
-      'playschool-near-me-branches-schema',
-    ];
-
-    schemaIds.forEach(id => {
-      const existing = document.getElementById(id);
-      if (existing) existing.remove();
-    });
-
-    document.head.appendChild(faqScript);
-    document.head.appendChild(breadcrumbScript);
-    document.head.appendChild(orgScript);
-    document.head.appendChild(branchScript);
-
-    return () => {
-      schemaIds.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.remove();
-      });
-    };
-  }, []);
 
   return (
     <div className="pt-20 md:pt-24">

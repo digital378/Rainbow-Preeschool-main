@@ -189,6 +189,10 @@ export function LegacyLandingPage({ data }: LegacyLandingPageProps) {
       }
     };
 
+    // AUDIT-206: Retained — legacy blog pages have no `structuredData` field in
+    // their ssr-pages.ts entries. Bot SSR adds a generic Article via bot-ssr.ts
+    // but not FAQPage or BreadcrumbList. This useEffect is the sole source of
+    // those schemas. Remove once SSR entries include equivalent structuredData.
     const scriptId = `legacy-schema-${data.slug.replace(/\//g, '-')}`;
     let existingScript = document.getElementById(scriptId);
     if (existingScript) {

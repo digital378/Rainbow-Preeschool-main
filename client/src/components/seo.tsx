@@ -89,6 +89,10 @@ export function SEO({
     updateOrCreateMeta("twitter:description", description);
     updateOrCreateMeta("twitter:image", ogImageUrl);
 
+    // AUDIT-206: Core client-side schema mechanism for JS-rendered users.
+    // Pages pass structuredData via SEO props; this injects it into <head>.
+    // Bot SSR already handles the same structuredData server-side for bots.
+    // This is the correct pattern — not a rogue injection.
     if (structuredData) {
       const existingScripts = document.querySelectorAll('script[data-seo-schema="true"]');
       existingScripts.forEach((script) => script.remove());

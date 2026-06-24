@@ -77,6 +77,10 @@ function RepublicDaySchema() {
       ]
     };
 
+    // AUDIT-206: Retained — server/ssr-pages.ts has a "republic-day-2026" entry
+    // but with no structuredData field. Bot SSR generates a generic Article via
+    // bot-ssr.ts but not FAQPage. This useEffect is the sole FAQPage source.
+    // Remove once a structuredData field is added to the SSR entry.
     const script1 = document.createElement('script');
     script1.type = 'application/ld+json';
     script1.text = JSON.stringify(articleSchema);

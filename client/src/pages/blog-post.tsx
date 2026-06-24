@@ -1137,6 +1137,11 @@ function BlogPostSchema({ post }: { post: BlogPostData }) {
     const authorOrg = blogPersonToSchema(authorship.author);
     const reviewerOrg = blogPersonToSchema(authorship.reviewedBy);
 
+    // AUDIT-206: Retained — BlogPosting includes article-specific fields
+    // (wordCount, articleSection, reviewedBy, full dates) not present in
+    // the generic Article bot-ssr.ts injects for non-JS bots. Remove once
+    // blog post SSR staticPages entries include a structuredData field with
+    // the equivalent BlogPosting schema.
     const blogPostingSchema = {
       "@context": "https://schema.org",
       "@type": "BlogPosting",

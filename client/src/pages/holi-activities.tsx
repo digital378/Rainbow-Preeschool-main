@@ -141,6 +141,9 @@ export default function HoliActivitiesPage() {
     let existingScript = document.getElementById(scriptId);
     if (existingScript) existingScript.remove();
 
+    // AUDIT-206: Retained — this page is in shared/legacy-pages-data.ts but has
+    // no staticPages entry in server/ssr-pages.ts. This useEffect is the sole
+    // structured-data source. Remove once an SSR entry with structuredData exists.
     const script = document.createElement('script');
     script.id = scriptId;
     script.type = 'application/ld+json';

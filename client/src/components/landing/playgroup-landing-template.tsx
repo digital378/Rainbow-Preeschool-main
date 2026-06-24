@@ -91,6 +91,9 @@ export function PlaygroupLandingTemplate({ data }: PlaygroupLandingTemplateProps
 
     const schemas = [orgSchema, webSchema, breadcrumbSchema, faqSchema, localBusinessSchema].filter(Boolean);
 
+    // AUDIT-206: Retained — /playgroup-in-* locality pages have minimal SSR
+    // entries (locality + h1 only). This useEffect is the sole structured-data
+    // source for these routes. Remove once full SSR structuredData is added.
     schemas.forEach((schema, idx) => {
       const script = document.createElement("script");
       script.type = "application/ld+json";

@@ -45,6 +45,10 @@ export function EEATSignals({
   showRating = true,
   schemaId,
 }: EEATSignalsProps) {
+  // AUDIT-206: Retained — SSR bot-ssr.ts emits a generic Article (no reviewedBy)
+  // and the org-level AggregateRating only. This useEffect adds the `reviewedBy`
+  // E-E-A-T signal (unique per page) and a page-specific AggregateRating node.
+  // Remove once SSR blog-post structuredData entries include Article + reviewedBy.
   useEffect(() => {
     // AggregateRating only; no per-Review nodes.
     const reviewSchema = {

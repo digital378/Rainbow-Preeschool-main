@@ -31,7 +31,6 @@ import { ContactForm } from "@/components/contact-form";
 import { CountUp } from "@/components/count-up";
 import { BranchCard } from "@/components/branch-card";
 import { branches } from "@shared/schema";
-import { createAllBranchLocalBusinessSchemas } from "@shared/centre-data";
 import { 
   Baby, CheckCircle, ArrowRight, MapPin, Phone, Clock, Users, Star, Shield, 
   Shapes, MessageCircle, HandHeart, Activity, Music, UsersRound, Lock,
@@ -376,43 +375,6 @@ const activities = ["Circle time", "Music & movement", "Art exploration", "Free 
 export default function PlaygroupLanding() {
   useEffect(() => {
     trackProgrammeView("playgroup");
-
-    const faqSchema = {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": faqs.map((faq) => ({
-        "@type": "Question",
-        "name": faq.question,
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": faq.answer
-        }
-      }))
-    };
-    const faqScript = document.createElement('script');
-    faqScript.type = 'application/ld+json';
-    faqScript.id = 'playgroup-faq-schema';
-    faqScript.textContent = JSON.stringify(faqSchema);
-
-    const branchScript = document.createElement('script');
-    branchScript.type = 'application/ld+json';
-    branchScript.id = 'playgroup-branches-schema';
-    branchScript.textContent = JSON.stringify(createAllBranchLocalBusinessSchemas());
-
-    const ids = ['playgroup-faq-schema', 'playgroup-branches-schema'];
-    ids.forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.remove();
-    });
-    document.head.appendChild(faqScript);
-    document.head.appendChild(branchScript);
-
-    return () => {
-      ids.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.remove();
-      });
-    };
   }, []);
 
   return (
