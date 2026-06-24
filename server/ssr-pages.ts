@@ -1694,10 +1694,6 @@ const BLOG_POST_SEO_DATA: Record<string, BlogPostSEORecord> = {
     datePublished: "2026-04-01",
     lastModified: "2026-04-01",
     lastModifiedDisplay: "April 1, 2026",
-    // Seed entry for this slug is a short stub (~40 words); the full article
-    // in blog-post.tsx is ~2 800 words. Override here so the SSR BlogPosting
-    // schema emits the correct wordCount to bots.
-    wordCount: 2800,
   },
   "best-childrens-books-indian-preschoolers": {
     title: "Best Children's Books for Indian Preschoolers | Age-Wise List",
