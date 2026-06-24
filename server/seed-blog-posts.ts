@@ -1185,7 +1185,7 @@ Last updated: April 2026`,
     imageUrl: "/images/optimized/children-learning-colorful-toys-preschool.webp",
     category: "School Events",
     publishedAt: new Date("2026-01-20"),
-    updatedAt: new Date("2026-01-20"),
+    updatedAt: new Date("2026-01-26"),
     isPublished: true,
   },
 ];
@@ -1208,7 +1208,7 @@ export const legacyMigratedBlogPosts: BlogPost[] = [
     imageUrl: "/images/optimized/children-learning-colorful-toys-preschool.webp",
     category: "Parenting Tips",
     publishedAt: new Date("2025-08-05"),
-    updatedAt: new Date("2025-08-05"),
+    updatedAt: new Date("2026-03-28"),
     isPublished: true,
   },
   {
@@ -1220,7 +1220,7 @@ export const legacyMigratedBlogPosts: BlogPost[] = [
     imageUrl: "/images/optimized/kids-playing-ball-pit-rainbow-preschool.webp",
     category: "Parenting Tips",
     publishedAt: new Date("2025-07-22"),
-    updatedAt: new Date("2025-07-22"),
+    updatedAt: new Date("2026-04-08"),
     isPublished: true,
   },
   {
@@ -1232,7 +1232,7 @@ export const legacyMigratedBlogPosts: BlogPost[] = [
     imageUrl: "/images/optimized/DSC00011.webp",
     category: "Education",
     publishedAt: new Date("2025-06-18"),
-    updatedAt: new Date("2025-06-18"),
+    updatedAt: new Date("2026-04-15"),
     isPublished: true,
   },
 ];
@@ -1258,7 +1258,7 @@ export const ssrOnlyBlogPosts: BlogPost[] = [
     imageUrl: "/images/optimized/children-learning-colorful-toys-preschool.webp",
     category: "Education",
     publishedAt: new Date("2026-03-20"),
-    updatedAt: new Date("2026-03-20"),
+    updatedAt: new Date("2026-04-10"),
     isPublished: true,
   },
   {
@@ -1270,7 +1270,7 @@ export const ssrOnlyBlogPosts: BlogPost[] = [
     imageUrl: "/images/optimized/kids-playing-ball-pit-rainbow-preschool.webp",
     category: "Education",
     publishedAt: new Date("2026-03-10"),
-    updatedAt: new Date("2026-03-10"),
+    updatedAt: new Date("2026-04-05"),
     isPublished: true,
   },
   {
@@ -1282,7 +1282,7 @@ export const ssrOnlyBlogPosts: BlogPost[] = [
     imageUrl: "/images/optimized/DSC00011.webp",
     category: "Child Development",
     publishedAt: new Date("2026-02-25"),
-    updatedAt: new Date("2026-02-25"),
+    updatedAt: new Date("2026-04-02"),
     isPublished: true,
   },
   {
@@ -1294,7 +1294,7 @@ export const ssrOnlyBlogPosts: BlogPost[] = [
     imageUrl: "/images/optimized/children-learning-colorful-toys-preschool.webp",
     category: "Child Development",
     publishedAt: new Date("2026-02-10"),
-    updatedAt: new Date("2026-02-10"),
+    updatedAt: new Date("2026-04-20"),
     isPublished: true,
   },
   {
@@ -1306,7 +1306,7 @@ export const ssrOnlyBlogPosts: BlogPost[] = [
     imageUrl: "/images/optimized/kids-playing-ball-pit-rainbow-preschool.webp",
     category: "Admissions",
     publishedAt: new Date("2026-01-15"),
-    updatedAt: new Date("2026-01-15"),
+    updatedAt: new Date("2026-03-15"),
     isPublished: true,
   },
   {
@@ -1318,7 +1318,7 @@ export const ssrOnlyBlogPosts: BlogPost[] = [
     imageUrl: "/images/optimized/DSC00011.webp",
     category: "Child Development",
     publishedAt: new Date("2025-12-20"),
-    updatedAt: new Date("2025-12-20"),
+    updatedAt: new Date("2026-03-22"),
     isPublished: true,
   },
   {
@@ -1342,7 +1342,7 @@ export const ssrOnlyBlogPosts: BlogPost[] = [
     imageUrl: "/images/optimized/kids-playing-ball-pit-rainbow-preschool.webp",
     category: "Learning Activities",
     publishedAt: new Date("2026-03-28"),
-    updatedAt: new Date("2026-03-28"),
+    updatedAt: new Date("2026-04-14"),
     isPublished: true,
   },
 ];
@@ -1627,7 +1627,7 @@ RIS_BACKLINK:Looking beyond preschool? Our sister institution, [Rainbow Internat
     imageUrl: "/images/optimized/children-learning-colorful-toys-preschool.webp",
     category: "Education",
     publishedAt: new Date("2025-11-15"),
-    updatedAt: new Date("2025-11-15"),
+    updatedAt: new Date("2026-04-18"),
     isPublished: true,
   },
   {
@@ -1882,7 +1882,7 @@ RIS_BACKLINK:As your child grows, [Rainbow International School](https://rainbow
     imageUrl: "/images/optimized/children-learning-colorful-toys-preschool.webp",
     category: "Education",
     publishedAt: new Date("2025-10-20"),
-    updatedAt: new Date("2025-10-20"),
+    updatedAt: new Date("2026-04-12"),
     isPublished: true,
   },
   {
@@ -2195,7 +2195,7 @@ RIS_BACKLINK:Play-based learning continues to be valuable as children grow. [Rai
     imageUrl: "/images/optimized/children-learning-colorful-toys-preschool.webp",
     category: "Education",
     publishedAt: new Date("2025-09-10"),
-    updatedAt: new Date("2025-09-10"),
+    updatedAt: new Date("2026-04-22"),
     isPublished: true,
   },
   {
@@ -2257,7 +2257,7 @@ RIS_BACKLINK:When your child is ready for primary school, [Rainbow International
     imageUrl: "/images/optimized/children-learning-colorful-toys-preschool.webp",
     category: "Education",
     publishedAt: new Date("2025-08-05"),
-    updatedAt: new Date("2025-08-05"),
+    updatedAt: new Date("2026-03-28"),
     isPublished: true,
   },
   {
@@ -2331,7 +2331,7 @@ RIS_BACKLINK:Parental involvement continues to be important through primary scho
     imageUrl: "/images/optimized/children-learning-colorful-toys-preschool.webp",
     category: "Education",
     publishedAt: new Date("2025-07-22"),
-    updatedAt: new Date("2025-07-22"),
+    updatedAt: new Date("2026-04-08"),
     isPublished: true,
   },
   {
@@ -2417,7 +2417,7 @@ RIS_BACKLINK:Our commitment to safety and nurturing environments extends beyond 
     imageUrl: "/images/optimized/children-learning-colorful-toys-preschool.webp",
     category: "Education",
     publishedAt: new Date("2025-06-18"),
-    updatedAt: new Date("2025-06-18"),
+    updatedAt: new Date("2026-04-15"),
     isPublished: true,
   },
   {
@@ -2594,7 +2594,7 @@ RIS_BACKLINK:Looking for a quality school beyond preschool? Our sister instituti
     imageUrl: "/images/optimized/children-learning-colorful-toys-preschool.webp",
     category: "Education",
     publishedAt: new Date("2026-03-20"),
-    updatedAt: new Date("2026-03-20"),
+    updatedAt: new Date("2026-04-10"),
     isPublished: true,
   },
   {
@@ -2766,7 +2766,7 @@ RIS_BACKLINK:When your child graduates from preschool, [Rainbow International Sc
     imageUrl: "/images/optimized/children-learning-colorful-toys-preschool.webp",
     category: "Education",
     publishedAt: new Date("2026-03-10"),
-    updatedAt: new Date("2026-03-10"),
+    updatedAt: new Date("2026-04-05"),
     isPublished: true,
   },
   {
@@ -2917,7 +2917,7 @@ RIS_BACKLINK:As your child grows beyond preschool, [Rainbow International School
     imageUrl: "/images/optimized/children-learning-colorful-toys-preschool.webp",
     category: "Education",
     publishedAt: new Date("2026-02-25"),
-    updatedAt: new Date("2026-02-25"),
+    updatedAt: new Date("2026-04-02"),
     isPublished: true,
   },
   {
@@ -3039,7 +3039,7 @@ RIS_BACKLINK:Early learning is just the beginning. [Rainbow International School
     imageUrl: "/images/optimized/children-learning-colorful-toys-preschool.webp",
     category: "Education",
     publishedAt: new Date("2026-02-10"),
-    updatedAt: new Date("2026-02-10"),
+    updatedAt: new Date("2026-04-20"),
     isPublished: true,
   },
   {
@@ -3174,7 +3174,7 @@ RIS_BACKLINK:Planning your child's education beyond preschool? [Rainbow Internat
     imageUrl: "/images/optimized/children-learning-colorful-toys-preschool.webp",
     category: "Education",
     publishedAt: new Date("2026-01-15"),
-    updatedAt: new Date("2026-01-15"),
+    updatedAt: new Date("2026-03-15"),
     isPublished: true,
   },
   {
@@ -3299,7 +3299,7 @@ RIS_BACKLINK:The skills built in nursery provide the foundation for primary scho
     imageUrl: "/images/optimized/children-learning-colorful-toys-preschool.webp",
     category: "Education",
     publishedAt: new Date("2025-12-20"),
-    updatedAt: new Date("2025-12-20"),
+    updatedAt: new Date("2026-03-22"),
     isPublished: true,
   },
   {
@@ -3453,7 +3453,7 @@ RIS_BACKLINK:A love for reading developed in preschool lasts a lifetime. [Rainbo
     imageUrl: "/images/optimized/children-learning-colorful-toys-preschool.webp",
     category: "Education",
     publishedAt: new Date("2026-03-28"),
-    updatedAt: new Date("2026-03-28"),
+    updatedAt: new Date("2026-04-14"),
     isPublished: true,
   },
   {
