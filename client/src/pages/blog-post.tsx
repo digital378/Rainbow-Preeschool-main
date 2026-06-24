@@ -1,5 +1,5 @@
 import { useParams, Link } from "wouter";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -12,7 +12,7 @@ import {
   COMMERCIAL_PAGES_LAST_UPDATED,
   COMMERCIAL_PAGES_LAST_UPDATED_DISPLAY,
 } from "@shared/seo-config";
-import { getBlogAuthorship, blogPersonToSchema } from "@shared/blog-authors";
+import { getBlogAuthorship } from "@shared/blog-authors";
 import { VERIFIED_RATING } from "@shared/verified-rating";
 import { Calendar, ArrowLeft, User, Clock, CheckCircle, Download } from "lucide-react";
 import { BlogCTA, type BlogCTATopic } from "@/components/blog-cta";
@@ -1131,59 +1131,6 @@ const blogPostsData: Record<string, BlogPostData> = {
   },
 };
 
-function BlogPostSchema({ post }: { post: BlogPostData }) {
-  useEffect(() => {
-    const authorship = getBlogAuthorship(post.slug);
-    const authorOrg = blogPersonToSchema(authorship.author);
-    const reviewerOrg = blogPersonToSchema(authorship.reviewedBy);
-
-    // AUDIT-206: Retained — BlogPosting includes article-specific fields
-    // (wordCount, articleSection, reviewedBy, full dates) not present in
-    // the generic Article bot-ssr.ts injects for non-JS bots. Remove once
-    // blog post SSR staticPages entries include a structuredData field with
-    // the equivalent BlogPosting schema.
-    const blogPostingSchema = {
-      "@context": "https://schema.org",
-      "@type": "BlogPosting",
-      "headline": post.title,
-      "description": post.seoDescription,
-      "author": authorOrg,
-      "reviewedBy": reviewerOrg,
-      "publisher": {
-        "@type": "Organization",
-        "name": "Rainbow Preschool International",
-        "logo": {
-          "@type": "ImageObject",
-          "url": "https://www.rainbowpreschools.com/images/logo.webp"
-        }
-      },
-      "datePublished": post.publishedAt.toISOString(),
-      "dateModified": COMMERCIAL_PAGES_LAST_UPDATED,
-      "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": `https://www.rainbowpreschools.com/blog/${post.slug}`
-      },
-      "wordCount": post.wordCount,
-      "articleSection": "Early Childhood Education",
-      "keywords": post.seoKeywords
-    };
-
-    const script = document.createElement('script');
-    script.type = 'application/ld+json';
-    script.text = JSON.stringify(blogPostingSchema);
-    script.id = 'blog-post-schema';
-    document.head.appendChild(script);
-
-    return () => {
-      const existingScript = document.getElementById('blog-post-schema');
-      if (existingScript) {
-        existingScript.remove();
-      }
-    };
-  }, [post]);
-
-  return null;
-}
 
 export default function BlogPost() {
   const { slug } = useParams();
@@ -1291,8 +1238,6 @@ export default function BlogPost() {
         canonical={`https://www.rainbowpreschools.com/blog/${post.slug}`}
         ogType="article"
       />
-      <BlogPostSchema post={post} />
-
       <article className="py-12 md:py-16 lg:py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <Link href="/blog">

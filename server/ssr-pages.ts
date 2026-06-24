@@ -152,6 +152,32 @@ const BLOG_BODY_BY_SLUG: Record<string, BlogBody> = (() => {
 })();
 
 /**
+ * Pre-built lookup: slug → word count derived from raw seed content.
+ * Used to populate `wordCount` in the BlogPosting SSR schema so bots
+ * see the same value that the client-side BlogPosting injected.
+ * Computed once at module load from the same allSeed array used by
+ * BLOG_BODY_BY_SLUG, taking the longest content version when duplicates exist.
+ */
+const BLOG_WORD_COUNT_BY_SLUG: Record<string, number> = (() => {
+  const out: Record<string, number> = {};
+  const allSeed = [
+    ...seoRecoveryBlogPosts,
+    ...legacyMigratedBlogPosts,
+    ...ssrOnlyBlogPosts,
+    ...legacyHardcodedBlogPosts,
+  ];
+  for (const post of allSeed) {
+    if (!post.slug || !post.content) continue;
+    const count = post.content.split(/\s+/).filter(Boolean).length;
+    const existing = out[post.slug] ?? 0;
+    if (count > existing) {
+      out[post.slug] = count;
+    }
+  }
+  return out;
+})();
+
+/**
  * Canonical list of every blog slug served by SSR. Kept in sync with
  * the per-slug `blogPosts` map below and asserted at module load to
  * guarantee each post has a named author + reviewer in
@@ -2024,6 +2050,7 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
         })),
       } : null;
 
+      const wordCount = BLOG_WORD_COUNT_BY_SLUG[slug];
       const schemas: object[] = [{
         "@context": "https://schema.org",
         "@type": ["BlogPosting", "Article"],
@@ -2038,6 +2065,7 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
         mainEntityOfPage: { "@type": "WebPage", "@id": `${BASE_URL}/blog/${slug}` },
         articleSection: "Early Childhood Education",
         keywords: post.keywords,
+        ...(wordCount ? { wordCount } : {}),
         image: `${BASE_URL}/og-image.jpg`,
         inLanguage: "en-IN",
       }];

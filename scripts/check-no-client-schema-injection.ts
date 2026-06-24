@@ -21,7 +21,6 @@
  *                                  bot SSR by design (replit.md); sole schema source.
  *
  *   DEFERRED — retained with AUDIT-206 comments until SSR parity is achieved:
- *     • pages/blog-post.tsx                           — richer BlogPosting vs generic SSR Article
  *     • components/eeat-signals.tsx                   — reviewedBy + page AggregateRating (see #212)
  *     • components/legacy-landing-page.tsx            — no SSR structuredData for legacy routes
  *     • components/landing/playgroup-landing-template.tsx — minimal SSR entries for locality pages
@@ -60,7 +59,6 @@ const PERMANENT_ALLOWLIST = new Set([
  * Remove entries here as their corresponding SSR coverage is added.
  */
 const DEFERRED_ALLOWLIST = new Set([
-  "client/src/pages/blog-post.tsx",
   "client/src/components/legacy-landing-page.tsx",
   "client/src/components/landing/playgroup-landing-template.tsx",
   "client/src/pages/holi-activities.tsx",
