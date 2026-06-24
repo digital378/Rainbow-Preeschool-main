@@ -146,10 +146,11 @@ function BotTypingIndicator() {
 }
 
 function LeadForm({ onSubmit, isSubmitting }: {
-  onSubmit: (data: { name: string; phone: string; childAge: string; area: string }) => void;
+  onSubmit: (data: { name: string; childName: string; phone: string; childAge: string; area: string }) => void;
   isSubmitting: boolean;
 }) {
   const [name, setName] = useState("");
+  const [childName, setChildName] = useState("");
   const [phone, setPhone] = useState("");
   const [childAge, setChildAge] = useState("");
   const [area, setArea] = useState("");
@@ -158,6 +159,7 @@ function LeadForm({ onSubmit, isSubmitting }: {
   const validate = () => {
     const e: Record<string, string> = {};
     if (!name.trim()) e.name = "Please enter your name";
+    if (!childName.trim()) e.childName = "Please enter your child's name";
     if (!phone.match(/^[6-9]\d{9}$/)) e.phone = "Enter a valid 10-digit mobile number";
     if (!childAge) e.childAge = "Please select child's age";
     if (!area) e.area = "Please select a centre area";
@@ -167,7 +169,7 @@ function LeadForm({ onSubmit, isSubmitting }: {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!isSubmitting && validate()) onSubmit({ name, phone, childAge, area });
+    if (!isSubmitting && validate()) onSubmit({ name, childName, phone, childAge, area });
   };
 
   const inputClass = "w-full text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary/40 bg-white";
@@ -186,6 +188,18 @@ function LeadForm({ onSubmit, isSubmitting }: {
           disabled={isSubmitting}
         />
         {errors.name && <p className={errClass}>{errors.name}</p>}
+      </div>
+      <div>
+        <input
+          type="text"
+          placeholder="Child's name *"
+          value={childName}
+          onChange={e => setChildName(e.target.value)}
+          className={inputClass}
+          data-testid="chatbot-input-child-name"
+          disabled={isSubmitting}
+        />
+        {errors.childName && <p className={errClass}>{errors.childName}</p>}
       </div>
       <div>
         <input
@@ -291,13 +305,13 @@ export function ChatWidget() {
     addBotMessage(value);
   };
 
-  const handleFormSubmit = async (data: { name: string; phone: string; childAge: string; area: string }) => {
+  const handleFormSubmit = async (data: { name: string; childName: string; phone: string; childAge: string; area: string }) => {
     setIsSubmitting(true);
     try {
       const res = await apiRequest("POST", "/api/contact", {
         parentName: data.name,
         phone: data.phone,
-        childName: "Not Provided",
+        childName: data.childName,
         childAge: data.childAge,
         programme: PROGRAMME_MAP[data.childAge] || "Not sure",
         branch: data.area,

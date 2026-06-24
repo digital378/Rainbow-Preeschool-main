@@ -6,6 +6,7 @@ import { z } from "zod";
 import { sendLeadNotificationEmail } from "./gmail";
 import { sendLeadToMCB, getBranchID } from "./mcb";
 import { syncGscData, isGscConfigured } from "./gsc-sync";
+import { appendEnquiryRow } from "./sheets-sync";
 import path from "path";
 import fs from "fs";
 
@@ -321,6 +322,24 @@ export async function registerRoutes(
           console.log(`[Contact] MCB ${result.success ? 'success' : 'FAILED'} for ${validatedData.parentName}`);
         } catch (err) {
           console.error("[Contact] MCB error:", err);
+        }
+      })();
+
+      // Append to Google Sheet in background (non-blocking)
+      (async () => {
+        try {
+          await appendEnquiryRow({
+            parentName: validatedData.parentName,
+            childName: validatedData.childName,
+            phone: validatedData.phone,
+            programme: validatedData.programme,
+            branch: validatedData.branch,
+            leadSource: formData.leadSource,
+            leadMedium: formData.leadMedium,
+          });
+          console.log(`[Contact] Sheets sync success for ${validatedData.parentName}`);
+        } catch (err) {
+          console.error("[Contact] Sheets sync error:", err);
         }
       })();
     } catch (error) {
