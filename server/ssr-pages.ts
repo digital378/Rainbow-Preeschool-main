@@ -1429,6 +1429,25 @@ const playgroundPages: Record<string, { locality: string; h1: string }> = {
   "/playgroup-in-dhokali": { locality: "Dhokali", h1: "Playgroup in Dhokali, Thane (1.5-2.5 Years)" },
 };
 
+// ── Pages intentionally excluded from indexing ──────────────────────────────
+// All paths below are served with `noIndex: true` by the SSR middleware AND
+// are blocked in `client/public/robots.txt` with a matching `Disallow:` rule.
+// Both layers must stay in sync. Decision rationale per path:
+//
+//   /ad, /ad-google   — Google Ads conversion landing pages; noindex prevents
+//                       organic traffic diluting paid campaign quality scores.
+//   /flyer            — Print/WhatsApp flyer landing page; internal use only.
+//   /RIS, /ris        — Rainbow International School (Grade 9-10) campaign
+//                       pages; separate school entity, should never surface in
+//                       preschool search results.
+//   /ris-11th         — Grade 11 CBSE admissions campaign for Rainbow
+//                       International School (Science / Commerce / Humanities).
+//                       Same reasoning as /ris above. Robots.txt Disallow
+//                       already present (added Jun 2026). GSC should confirm
+//                       deindexed — if still indexed, a 410 Gone response from
+//                       the route handler is the fastest deindex signal.
+//   /gsc, /GSC        — Internal Google Search Console data explorer; not a
+//                       public page.
 const noIndexPages = ["/ad", "/ad-google", "/flyer", "/RIS", "/ris", "/ris-11th", "/gsc", "/GSC"];
 
 /**
