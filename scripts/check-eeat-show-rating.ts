@@ -196,6 +196,12 @@ const BODY_COPY_FILES = [
 // "5-star service" or React JSX expressions.
 const HARDCODED_STAR_RE = /\d+\.\d+★/;
 
+// Pattern: a hardcoded review-count like "487+ reviews", "3,997+ families",
+// or "1,200+ parents". Matches a digit sequence (with optional commas) followed
+// by "+" and one of the social-proof nouns. Template literals that interpolate
+// VERIFIED_RATING.reviewCount are intentionally allowed through.
+const HARDCODED_REVIEW_COUNT_RE = /\d[\d,]*\+\s*(reviews?|families|parents)/i;
+
 for (const relPath of BODY_COPY_FILES) {
   const absPath = resolve(ROOT, relPath);
   let src: string;
@@ -211,15 +217,27 @@ for (const relPath of BODY_COPY_FILES) {
   const lines = src.split("\n");
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
-    if (!HARDCODED_STAR_RE.test(line)) continue;
-    // Allow lines that already use VERIFIED_RATING interpolation.
+    // Allow lines that already use VERIFIED_RATING interpolation — these are
+    // the correct template-literal form and must never be flagged.
     if (line.includes("VERIFIED_RATING")) continue;
-    violations.push({
-      file: relPath,
-      line: i + 1,
-      reason:
-        "hardcoded star-rating literal — interpolate VERIFIED_RATING.ratingValue (and VERIFIED_RATING.reviewCount if a count appears too) so the figure stays in sync when the GBP data is refreshed",
-    });
+
+    if (HARDCODED_STAR_RE.test(line)) {
+      violations.push({
+        file: relPath,
+        line: i + 1,
+        reason:
+          "hardcoded star-rating literal — interpolate VERIFIED_RATING.ratingValue (and VERIFIED_RATING.reviewCount if a count appears too) so the figure stays in sync when the GBP data is refreshed",
+      });
+    }
+
+    if (HARDCODED_REVIEW_COUNT_RE.test(line)) {
+      violations.push({
+        file: relPath,
+        line: i + 1,
+        reason:
+          "hardcoded review-count literal (e.g. '487+ reviews') — interpolate VERIFIED_RATING.reviewCount so the figure stays in sync when the GBP data is refreshed",
+      });
+    }
   }
 }
 
