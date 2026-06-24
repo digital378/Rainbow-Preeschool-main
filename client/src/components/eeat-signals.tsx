@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { ShieldCheck, CalendarCheck2, Star } from "lucide-react";
 
 interface EEATSignalsProps {
@@ -28,129 +27,29 @@ interface EEATSignalsProps {
 }
 
 export function EEATSignals({
-  pageUrl,
-  pageName,
+  pageUrl: _pageUrl,
+  pageName: _pageName,
   reviewedBy = "Rainbow Preschool Curriculum Team",
   reviewerRole = "Curriculum Team, Rainbow Preschool International",
   reviewerCredentials,
   reviewerBio,
-  reviewerProfileUrl,
-  authorName,
-  authorRole,
-  authorCredentials,
+  reviewerProfileUrl: _reviewerProfileUrl,
+  authorName: _authorName,
+  authorRole: _authorRole,
+  authorCredentials: _authorCredentials,
   lastUpdated,
-  lastUpdatedIso,
+  lastUpdatedIso: _lastUpdatedIso,
   ratingValue = 4.9,
   reviewCount = 487,
   showRating = true,
   schemaId,
 }: EEATSignalsProps) {
-  // AUDIT-209 (verified): Intentionally client-side-only. bot-ssr.ts emits a
-  // generic Article (no reviewedBy field) and an org-level AggregateRating only.
-  // This useEffect adds the per-page `reviewedBy` Organization E-E-A-T signal and
-  // a page-specific AggregateRating node that are unique per blog post.
-  // Remove once the blog-post SSR path in server/ssr-pages.ts produces an
-  // Article with `reviewedBy` for each post (see follow-up task #212).
-  useEffect(() => {
-    // AggregateRating only; no per-Review nodes.
-    const reviewSchema = {
-      "@context": "https://schema.org",
-      "@type": "Preschool",
-      "name": "Rainbow Preschool International",
-      "url": `https://www.rainbowpreschools.com${pageUrl}`,
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": ratingValue.toFixed(1),
-        "reviewCount": reviewCount,
-        "bestRating": "5",
-        "worstRating": "1",
-      },
-    };
-
-    // Author / reviewer always emitted as Organization, never Person.
-    const articleAuthor = authorName
-      ? {
-          "@type": "Organization",
-          "name": authorName,
-          ...(authorName !== "Rainbow Preschool International"
-            ? {
-                "parentOrganization": {
-                  "@type": "Organization",
-                  "name": "Rainbow Preschool International",
-                },
-              }
-            : {}),
-        }
-      : {
-          "@type": "Organization",
-          "name": "Rainbow Preschool International",
-          "department": "Curriculum Team",
-        };
-
-    const articleReviewer = reviewedBy
-      ? {
-          "@type": "Organization",
-          "name": reviewedBy,
-          ...(reviewerProfileUrl ? { "url": reviewerProfileUrl } : {}),
-          ...(reviewedBy !== "Rainbow Preschool International"
-            ? {
-                "parentOrganization": {
-                  "@type": "Organization",
-                  "name": "Rainbow Preschool International",
-                },
-              }
-            : {}),
-        }
-      : null;
-
-    const articleSchema: Record<string, unknown> = {
-      "@context": "https://schema.org",
-      "@type": "Article",
-      "headline": pageName,
-      "datePublished": "2024-06-01",
-      "dateModified": lastUpdatedIso ?? lastUpdated,
-      "author": articleAuthor,
-      ...(articleReviewer ? { "reviewedBy": articleReviewer } : {}),
-      "publisher": {
-        "@type": "Organization",
-        "name": "Rainbow Preschool International",
-        "logo": {
-          "@type": "ImageObject",
-          "url": "https://www.rainbowpreschools.com/images/optimized/logo.webp",
-        },
-      },
-      "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": `https://www.rainbowpreschools.com${pageUrl}`,
-      },
-    };
-
-    const articleScript = document.createElement("script");
-    articleScript.type = "application/ld+json";
-    articleScript.id = `${schemaId}-article-schema`;
-    articleScript.textContent = JSON.stringify(articleSchema);
-
-    [`${schemaId}-review-schema`, `${schemaId}-article-schema`].forEach((id) => {
-      const existing = document.getElementById(id);
-      if (existing) existing.remove();
-    });
-
-    if (showRating) {
-      const reviewScript = document.createElement("script");
-      reviewScript.type = "application/ld+json";
-      reviewScript.id = `${schemaId}-review-schema`;
-      reviewScript.textContent = JSON.stringify(reviewSchema);
-      document.head.appendChild(reviewScript);
-    }
-    document.head.appendChild(articleScript);
-
-    return () => {
-      [`${schemaId}-review-schema`, `${schemaId}-article-schema`].forEach((id) => {
-        const el = document.getElementById(id);
-        if (el) el.remove();
-      });
-    };
-  }, [pageUrl, pageName, reviewedBy, reviewerRole, reviewerCredentials, reviewerProfileUrl, authorName, authorRole, authorCredentials, lastUpdated, lastUpdatedIso, ratingValue, reviewCount, showRating, schemaId]);
+  // Schema injection removed — Task #212.
+  // Article with reviewedBy + Preschool/AggregateRating are now emitted by
+  // server/bot-ssr.ts for all pages that have `lastModified` in their SSR entry,
+  // so bots receive them without executing JavaScript.
+  // This component is now UI-only: it renders the visible E-E-A-T strip
+  // (reviewer byline, date, star rating) but no longer touches the DOM schema.
 
   const reviewerEyebrow = "Reviewed by";
 

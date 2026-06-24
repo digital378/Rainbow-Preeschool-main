@@ -61,11 +61,9 @@ const PERMANENT_ALLOWLIST = new Set([
  */
 const DEFERRED_ALLOWLIST = new Set([
   "client/src/pages/blog-post.tsx",
-  "client/src/components/eeat-signals.tsx",
   "client/src/components/legacy-landing-page.tsx",
   "client/src/components/landing/playgroup-landing-template.tsx",
   "client/src/pages/holi-activities.tsx",
-  "client/src/pages/republic-day-2026.tsx",
   "client/src/pages/preschool-location.tsx",
 ]);
 

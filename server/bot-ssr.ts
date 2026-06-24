@@ -2,6 +2,7 @@ import type { Request, Response, NextFunction, Express } from "express";
 import fs from "fs";
 import path from "path";
 import { getPageSEO, type PageSEOData } from "./ssr-pages";
+import { VERIFIED_RATING } from "../shared/verified-rating";
 
 // Inclusion rule: only add UA strings that appear EXCLUSIVELY in automated
 // crawlers / bots and NEVER in any human-operated browser or in-app browser.
@@ -95,6 +96,17 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
     return false;
   });
   if (seo.lastModified && !hasExistingArticle) {
+    // E-E-A-T: emit a rich Article with reviewedBy so bots get the same
+    // signal as JS-rendered users (previously only eeat-signals.tsx injected
+    // this client-side). author and reviewer are always the org Curriculum Team.
+    const curriculumTeam = {
+      "@type": "Organization",
+      name: "Rainbow Preschool Curriculum Team",
+      parentOrganization: {
+        "@type": "Organization",
+        name: "Rainbow Preschool International",
+      },
+    };
     allStructuredData.push({
       "@context": "https://schema.org",
       "@type": "Article",
@@ -103,7 +115,8 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
       url: canonical,
       mainEntityOfPage: { "@type": "WebPage", "@id": canonical },
       dateModified: seo.lastModified,
-      author: { "@type": "Organization", name: "Rainbow Preschool Curriculum Team" },
+      author: curriculumTeam,
+      reviewedBy: curriculumTeam,
       publisher: {
         "@type": "Organization",
         name: "Rainbow Preschool International",
@@ -111,6 +124,22 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
       },
       image: ogImage,
       inLanguage: "en-IN",
+    });
+    // AggregateRating for the school entity — mirrors the node eeat-signals.tsx
+    // previously injected client-side. Uses the same verified figures so
+    // bot-rendered and JS-rendered pages emit identical rating markup.
+    allStructuredData.push({
+      "@context": "https://schema.org",
+      "@type": "Preschool",
+      name: "Rainbow Preschool International",
+      url: canonical,
+      aggregateRating: {
+        "@type": "AggregateRating",
+        ratingValue: VERIFIED_RATING.ratingValue.toFixed(1),
+        reviewCount: VERIFIED_RATING.reviewCount,
+        bestRating: "5",
+        worstRating: "1",
+      },
     });
   }
 
