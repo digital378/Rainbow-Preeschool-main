@@ -1,0 +1,152 @@
+Next task: targeted About Us page UI + content enhancement.
+
+Important:
+Do not rebuild the page from scratch.
+Do not make code changes yet.
+First audit the current implementation and provide a plan for approval.
+
+Page:
+https://www.rainbowpreschools.com/about
+
+Primary goal:
+Improve the existing About page for parent trust, admissions conversion, and local SEO while keeping the page lightweight and technically safe.
+
+SEO goals:
+- Strengthen relevance for Rainbow Preschool International, preschool in Thane, playgroup, nursery, kindergarten, and 6 centres in Thane.
+- Improve internal linking to programme and centre pages.
+- Add useful parent-focused content without duplicating the homepage.
+- Ensure Googlebot and users see aligned content through both client and SSR output.
+
+Conversion goals:
+- Make parents feel Rainbow is established, safe, caring, and worth visiting.
+- Improve CTA visibility for Book a Visit, WhatsApp Admissions, and Explore Programmes.
+- Help parents quickly understand programmes, centres, safety, and admission next steps.
+
+Current page already has:
+- H1: About Rainbow Preschool International
+- Reviewed/updated trust line with 4.9/5 and 487 parent reviews
+- Since 2007 positioning
+- 1,00,000+ learners
+- Our Story
+- Mission
+- Values
+- Internal links to Programmes, Playgroup, Nursery, Kindergarten, Admissions, Best Preschool in Thane, Play School Near Me, Blog, and Contact
+- CTA: Enquire Now — Call 82915 68972
+
+Performance constraint:
+The About page mobile performance is already weak, with LCP around 7.8s and unused JavaScript around 506 KiB. Do not add sliders, video, heavy animations, large uncompressed images, or unnecessary dependencies. Use existing components and lightweight UI only.
+
+Files to inspect:
+- client/src/pages/about.tsx
+- server/ssr-pages.ts /about entry
+- existing reusable components for buttons, cards, accordions, centre links, programme cards, and CTA sections
+
+First provide a plan only. Do not edit code.
+
+Audit the current page and classify recommendations into:
+
+A. Must-have improvements
+These should improve SEO, parent trust, internal linking, or admissions conversion with low performance risk.
+
+B. Nice-to-have improvements
+These can wait if they add complexity, design work, or performance risk.
+
+C. Avoid
+Anything that could slow the page, duplicate homepage content, create unsupported claims, or create SSR/client mismatch.
+
+Evaluate and propose improvements for:
+
+1. Hero section
+Keep the current H1 and trust line.
+Recommend layout or CTA improvements only if needed.
+Suggested CTAs:
+- Book a Visit
+- WhatsApp Admissions
+- Explore Programmes
+
+2. Brand story section
+Keep the existing story but suggest a stronger parent-focused version.
+Avoid copying homepage text.
+Focus on Rainbow’s journey since 2007, early learning, child confidence, and parent trust.
+
+3. Why Parents Trust Rainbow
+Add a lightweight section only if not already sufficiently covered.
+Suggested cards:
+- Safe and child-friendly environment
+- Play-based learning
+- Experienced early-years educators
+- Strong parent communication
+- Age-appropriate programmes
+- 6 centres across Thane
+
+4. Learning Approach
+Add or improve 3 programme cards with internal links:
+- Playgroup → /playgroup
+- Nursery → /nursery
+- Kindergarten → /kindergarten
+
+Each card should briefly explain the parent benefit and child development focus.
+
+5. Safety and Care
+Add concise copy only using claims already supported elsewhere on the site.
+Possible points:
+- CCTV-enabled centres
+- verified pickup
+- hygiene and cleanliness
+- female staff
+- safe classrooms
+- first-aid readiness
+
+Do not add unsupported claims.
+
+6. Our Centres in Thane
+Add a lightweight centre grid with internal links to:
+- /preschool-in-manpada-thane
+- /preschool-in-hariniwas-thane
+- /preschool-in-anand-nagar-thane
+- /preschool-in-dhokali-thane
+- /preschool-in-kalwa-thane
+- /preschool-in-kasarvadavali-thane
+
+Each centre card should be simple:
+- centre name
+- short area descriptor
+- View Centre link
+
+7. FAQ section
+Recommend 5–6 visible FAQs only if FAQ schema can match the visible content exactly.
+Suggested FAQs:
+- When did Rainbow Preschool start?
+- How many centres does Rainbow Preschool have in Thane?
+- Which programmes are offered?
+- What age groups are accepted?
+- How does Rainbow ensure child safety?
+- How can parents book a visit?
+
+8. Final CTA
+Recommend a stronger end-of-page CTA:
+Heading:
+Ready to visit Rainbow Preschool?
+
+Supporting line:
+Book a campus visit and speak with our admissions team.
+
+Buttons:
+- Book a Visit
+- WhatsApp Admissions
+
+Also report:
+- current sections to keep unchanged
+- current sections to improve
+- new sections to add
+- exact copy suggestions
+- exact UI layout suggestions
+- internal links to add
+- SSR updates needed so Googlebot and users see aligned content
+- schema changes, if any
+- duplication risk with homepage
+- performance risks
+- exact implementation order
+- tests and guards to run after implementation
+
+Do not edit code until the plan is reviewed and approved.
