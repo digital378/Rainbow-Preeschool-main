@@ -1,5 +1,5 @@
 import type { Express, Request, Response } from "express";
-import { appendHighIntentRow, type MetaLeadData } from "./sheets-sync";
+import { appendHighIntentRow } from "./sheets-sync";
 import { sendLeadToMCB, getBranchID } from "./mcb";
 import { sendLeadNotificationEmail } from "./gmail";
 import { storage } from "./storage";
@@ -252,28 +252,15 @@ async function processLead(
   }).catch(err => console.error("[Meta] Email error:", err));
 
   // 3. Google Sheets — High Intent sheet (non-blocking)
-  const sheetData: MetaLeadData = {
-    leadgenId,
-    formId,
-    adId: lead.adId,
-    adGroupId: lead.adGroupId,
-    campaignId: lead.campaignId,
-    adGroupName: lead.campaignName,
-    adSetName: lead.campaignName,
-    campaignName: lead.campaignName,
-    formName: lead.formName,
-    isOrganic: lead.isOrganic,
-    platform: lead.platform,
-    createdTime: lead.createdTime,
-    rawProgramme: lead.rawProgramme,
-    rawBranch: lead.rawBranch,
+  appendHighIntentRow({
     parentName: lead.parentName,
     childName: lead.childName,
     phone: lead.phone,
-    email: lead.email,
-    location: lead.location,
-  };
-  appendHighIntentRow(sheetData).catch(err => console.error("[Meta] Sheets error:", err));
+    programme: lead.programme,
+    branch: lead.branch,
+    leadSource: "facebook",
+    leadMedium: "meta_lead_ads",
+  }).catch(err => console.error("[Meta] Sheets error:", err));
 
   // 4. MCB CRM (non-blocking)
   if (lead.phone) {
