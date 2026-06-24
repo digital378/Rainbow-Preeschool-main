@@ -132,6 +132,56 @@ for (const name of names) {
   }
 }
 
+// ─── SSR pages hardcoded aggregateRating guard ─────────────────────────────
+// server/ssr-pages.ts must NOT contain hardcoded ratingValue or reviewCount
+// literals inside an aggregateRating block. All values must flow from
+// VERIFIED_RATING (imported from @shared/verified-rating) so there is a
+// single source of truth that is date-stamped and sourced.
+const SSR_PAGES_FILE = resolve(ROOT, "server/ssr-pages.ts");
+try {
+  const ssrSrc = readFileSync(SSR_PAGES_FILE, "utf8");
+  const ssrLines = ssrSrc.split("\n");
+
+  // Flag any ratingValue or reviewCount/ratingCount literal string that looks
+  // like a hardcoded number inside an aggregateRating block.
+  // We detect this by scanning for aggregateRating blocks and checking whether
+  // the values within them are string literals (e.g. "4.7", "3997") rather
+  // than VERIFIED_RATING references.
+  let inAggregateRating = false;
+  let aggregateRatingStartLine = -1;
+
+  for (let i = 0; i < ssrLines.length; i++) {
+    const line = ssrLines[i];
+
+    if (line.includes("aggregateRating:")) {
+      inAggregateRating = true;
+      aggregateRatingStartLine = i + 1;
+    }
+
+    if (inAggregateRating) {
+      // Detect hardcoded numeric string literals for rating/count fields.
+      // Pattern: ratingValue: "4.7" or reviewCount: "3997" or ratingCount: "3997"
+      if (/(?:ratingValue|reviewCount|ratingCount)\s*:\s*"[\d.]+"/i.test(line)) {
+        violations.push({
+          file: "server/ssr-pages.ts",
+          line: i + 1,
+          reason:
+            `hardcoded aggregateRating literal — use VERIFIED_RATING from @shared/verified-rating instead (e.g. String(VERIFIED_RATING.ratingValue))`,
+        });
+      }
+
+      // Exit the block when we see the closing brace of the aggregateRating object.
+      if (i > aggregateRatingStartLine && /^\s*\},?\s*$/.test(line)) {
+        inAggregateRating = false;
+      }
+    }
+  }
+} catch {
+  console.warn(
+    `[check-eeat-show-rating] WARNING — could not read ${SSR_PAGES_FILE} for aggregateRating guard.`,
+  );
+}
+
 if (violations.length > 0) {
   console.error(
     `[check-eeat-show-rating] ${violations.length} violation(s) found:\n`,
@@ -160,7 +210,7 @@ console.log(
 // Read lastVerifiedDate from verified-rating.ts and warn if it is older than
 // 120 days (≈ one quarter). Non-blocking: prints a warning but exits 0.
 const STALE_DAYS = 120;
-const VERIFIED_RATING_FILE = resolve(ROOT, "client/src/lib/verified-rating.ts");
+const VERIFIED_RATING_FILE = resolve(ROOT, "shared/verified-rating.ts");
 try {
   const src = readFileSync(VERIFIED_RATING_FILE, "utf8");
   const match = src.match(/lastVerifiedDate:\s*"(\d{4}-\d{2}-\d{2})"/);

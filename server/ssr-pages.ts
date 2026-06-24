@@ -22,6 +22,7 @@ import {
 } from "@shared/centre-data";
 import { legacyPagesData } from "@shared/legacy-pages-data";
 import { shouldNoIndex } from "@shared/seo-config";
+import { VERIFIED_RATING } from "@shared/verified-rating";
 
 // Pre-compute the per-branch LocalBusiness JSON-LD array once at module load
 // so commercial-page SSR can splat it into structuredData without per-request work.
@@ -319,10 +320,10 @@ const programmeOrgSchema = {
   },
   aggregateRating: {
     "@type": "AggregateRating",
-    ratingValue: "4.7",
+    ratingValue: String(VERIFIED_RATING.ratingValue),
     bestRating: "5",
-    ratingCount: "3997",
-    reviewCount: "3997",
+    ratingCount: String(VERIFIED_RATING.reviewCount),
+    reviewCount: String(VERIFIED_RATING.reviewCount),
   },
 };
 
@@ -371,10 +372,10 @@ const organizationSchema = {
   },
   aggregateRating: {
     "@type": "AggregateRating",
-    ratingValue: "4.7",
+    ratingValue: String(VERIFIED_RATING.ratingValue),
     bestRating: "5",
-    ratingCount: "3997",
-    reviewCount: "3997",
+    ratingCount: String(VERIFIED_RATING.reviewCount),
+    reviewCount: String(VERIFIED_RATING.reviewCount),
   },
   // NOTE: per-Review nodes intentionally omitted. The editorial rule is that
   // only "Rainbow Preschool International" / "Rainbow Preschool Curriculum
@@ -510,9 +511,9 @@ function playgroupSchema(locality: string, url: string) {
     }],
     aggregateRating: {
       "@type": "AggregateRating",
-      ratingValue: "4.7",
+      ratingValue: String(VERIFIED_RATING.ratingValue),
       bestRating: "5",
-      ratingCount: "3997",
+      ratingCount: String(VERIFIED_RATING.reviewCount),
     },
     parentOrganization: { "@id": `${BASE_URL}/#organization` },
   };
@@ -554,9 +555,9 @@ function localBusinessSchema(locality: string, address: string, phone: string, u
     image: `${BASE_URL}/og-image.jpg`,
     aggregateRating: {
       "@type": "AggregateRating",
-      ratingValue: "4.7",
+      ratingValue: String(VERIFIED_RATING.ratingValue),
       bestRating: "5",
-      ratingCount: "3997",
+      ratingCount: String(VERIFIED_RATING.reviewCount),
     },
     ...(reviews.length > 0 && {
       review: reviews.map(r => ({
@@ -1346,8 +1347,8 @@ const staticPages: Record<string, PageSEOData> = {
       url: BASE_URL,
       aggregateRating: {
         "@type": "AggregateRating",
-        ratingValue: "4.7",
-        reviewCount: "3997",
+        ratingValue: String(VERIFIED_RATING.ratingValue),
+        reviewCount: String(VERIFIED_RATING.reviewCount),
         bestRating: "5",
         worstRating: "1",
       },
