@@ -157,6 +157,20 @@ if ! npx --no-install tsx scripts/check-eeat-show-rating.ts; then
   exit 1
 fi
 
+# Shell ↔ React SEO sync guard. Verifies that the title, description, og:title,
+# og:description, twitter:title, and twitter:description in client/index.html
+# match the <SEO> component props in client/src/pages/home.tsx. Social scrapers
+# and crawlers read the static shell before JS runs — drift between the two
+# causes stale social cards and incorrect pre-hydration metadata.
+echo "[pre-push] Running 'tsx scripts/check-shell-seo-sync.ts' ..."
+if ! npx --no-install tsx scripts/check-shell-seo-sync.ts; then
+  echo "" >&2
+  echo "[pre-push] 'check-shell-seo-sync' failed. Push aborted." >&2
+  echo "[pre-push] client/index.html shell tags are out of sync with the home.tsx <SEO> props." >&2
+  echo "[pre-push] Update both files together, or re-run with --no-verify to bypass." >&2
+  exit 1
+fi
+
 # Record success so a subsequent push on the same tree can skip.
 if [ -n "$HEAD_TREE" ]; then
   printf '%s' "$HEAD_TREE" > "$CACHE_FILE" 2>/dev/null || true
