@@ -7,6 +7,7 @@ import { CTASection } from "@/components/cta-section";
 import { BlogInternalLinks } from "@/components/blog-internal-links";
 import { EEATSignals } from "@/components/eeat-signals";
 import { LAST_UPDATED_DISPLAY, LAST_UPDATED_ISO } from "@shared/site-freshness";
+import { VERIFIED_RATING } from "@shared/verified-rating";
 import { Star, MapPin, Phone, Quote } from "lucide-react";
 
 interface Testimonial {
@@ -143,8 +144,8 @@ function TestimonialsSchema() {
       "url": "https://www.rainbowpreschools.com",
       "aggregateRating": {
         "@type": "AggregateRating",
-        "ratingValue": "4.7",
-        "reviewCount": "3997",
+        "ratingValue": String(VERIFIED_RATING.ratingValue),
+        "reviewCount": String(VERIFIED_RATING.reviewCount),
         "bestRating": "5",
         "worstRating": "1"
       },
@@ -179,7 +180,7 @@ export default function Testimonials() {
     <article className="min-h-screen bg-gradient-to-b from-white to-gray-50">
       <SEO
         title="Parent Testimonials | Rainbow Preschool International Thane"
-        description="Read genuine reviews from parents across Thane. Discover why 3,997+ families trust Rainbow Preschool International with their children's early education."
+        description="Parents across Thane trust Rainbow Preschool for safe, play-based early learning across 6 centres."
         keywords="rainbow preschool reviews, preschool testimonials thane, rainbow preschool parent feedback, best preschool thane reviews, preschool reviews manpada thane"
         canonical="https://www.rainbowpreschools.com/testimonials"
       />
@@ -200,12 +201,12 @@ export default function Testimonials() {
           <div className="inline-flex items-center gap-4 bg-amber-50 border border-amber-200 rounded-xl px-6 py-3" data-testid="aggregate-rating">
             <div className="flex items-center gap-1">
               {[1, 2, 3, 4, 5].map(star => (
-                <Star key={star} className={`w-6 h-6 ${star <= 4 ? "fill-amber-400 text-amber-400" : star === 5 ? "fill-amber-200 text-amber-400" : "text-gray-300"}`} />
+                <Star key={star} className={`w-6 h-6 ${star <= Math.round(VERIFIED_RATING.ratingValue) ? "fill-amber-400 text-amber-400" : "text-gray-300"}`} />
               ))}
             </div>
             <div className="text-left">
-              <p className="text-2xl font-bold text-amber-800">4.7 / 5</p>
-              <p className="text-xs text-amber-700">Based on 3,997+ Google Reviews</p>
+              <p className="text-2xl font-bold text-amber-800">{VERIFIED_RATING.ratingValue} / 5</p>
+              <p className="text-xs text-amber-700">Based on {VERIFIED_RATING.reviewCount}+ Google Reviews</p>
             </div>
           </div>
         </div>
@@ -241,7 +242,7 @@ export default function Testimonials() {
 
         <div className="text-center mt-12">
           <p className="text-muted-foreground mb-4">
-            Join 3,997+ happy families. See all our reviews on Google.
+            Join {VERIFIED_RATING.reviewCount}+ happy families. See all our reviews on Google.
           </p>
           <div className="flex flex-wrap gap-3 justify-center">
             <Link href="/contact">
