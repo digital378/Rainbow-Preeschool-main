@@ -180,7 +180,7 @@ export default function About() {
                   data-testid="button-about-hero-whatsapp"
                 >
                   <SiWhatsapp className="mr-2 h-5 w-5" />
-                  WhatsApp Us
+                  WhatsApp Admissions
                 </Button>
               </a>
               <Link href="/programmes">
