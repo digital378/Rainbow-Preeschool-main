@@ -96,9 +96,10 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
     return false;
   });
   if (seo.lastModified && !hasExistingArticle) {
-    // E-E-A-T: emit a rich Article with reviewedBy so bots get the same
-    // signal as JS-rendered users (previously only eeat-signals.tsx injected
-    // this client-side). author and reviewer are always the org Curriculum Team.
+    // E-E-A-T: emit a rich Article with reviewedBy for pages that don't already
+    // have their own Article/BlogPosting in structuredData. Blog posts are excluded
+    // here because their ssr-pages.ts entry already includes BlogPosting + reviewedBy.
+    // author and reviewer are always the org Curriculum Team for non-blog pages.
     const curriculumTeam = {
       "@type": "Organization",
       name: "Rainbow Preschool Curriculum Team",
@@ -125,9 +126,13 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
       image: ogImage,
       inLanguage: "en-IN",
     });
-    // AggregateRating for the school entity — mirrors the node eeat-signals.tsx
-    // previously injected client-side. Uses the same verified figures so
-    // bot-rendered and JS-rendered pages emit identical rating markup.
+  }
+
+  // AggregateRating for the school entity — emitted for ALL pages with lastModified,
+  // including blog posts (which have BlogPosting and skip the generic Article above).
+  // Decoupled from hasExistingArticle so blog pages also receive this node.
+  // Mirrors the node eeat-signals.tsx previously injected client-side.
+  if (seo.lastModified) {
     allStructuredData.push({
       "@context": "https://schema.org",
       "@type": "Preschool",
