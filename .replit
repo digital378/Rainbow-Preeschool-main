@@ -73,8 +73,6 @@ CHROME_PATH = "/nix/store/zi4f80l169xlmivz8vja8wlphq74qqk0-chromium-125.0.6422.1
 PUPPETEER_SKIP_CHROMIUM_DOWNLOAD = "true"
 PUPPETEER_EXECUTABLE_PATH = "/nix/store/zi4f80l169xlmivz8vja8wlphq74qqk0-chromium-125.0.6422.141/bin/chromium-browser"
 SKIP_PERF_GUARD = "1"
-META_WEBHOOK_VERIFY_TOKEN = "f478cbad4f71711c68842ae46723f2943d12c320397d0c239b96843889fc182d"
-META_APP_ID = "883055597564875"
 
 [postMerge]
 path = "scripts/post-merge.sh"

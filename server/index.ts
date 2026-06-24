@@ -1,7 +1,6 @@
 import express, { type Request, Response, NextFunction } from "express";
 import compression from "compression";
 import { registerRoutes } from "./routes";
-import { registerMetaLeadsWebhook } from "./meta-leads-webhook";
 import { serveStatic } from "./static";
 import { setupRedirects } from "./redirects";
 import { setupBotSSR } from "./bot-ssr";
@@ -214,7 +213,6 @@ app.use((req, res, next) => {
 
 (async () => {
   await registerRoutes(httpServer, app);
-  registerMetaLeadsWebhook(app);
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
     const status = err.status || err.statusCode || 500;
