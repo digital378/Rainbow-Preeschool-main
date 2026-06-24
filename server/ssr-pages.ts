@@ -1544,6 +1544,10 @@ interface BlogPostSEORecord {
   datePublished: string;
   lastModified: string;
   lastModifiedDisplay: string;
+  /** Explicit override for posts whose seed content is a short stub rather
+   *  than the full article. When set, this value is used instead of the
+   *  computed BLOG_WORD_COUNT_BY_SLUG figure in the BlogPosting schema. */
+  wordCount?: number;
 }
 
 const BLOG_POST_SEO_DATA: Record<string, BlogPostSEORecord> = {
@@ -1658,6 +1662,10 @@ const BLOG_POST_SEO_DATA: Record<string, BlogPostSEORecord> = {
     datePublished: "2026-04-01",
     lastModified: "2026-04-01",
     lastModifiedDisplay: "April 1, 2026",
+    // Seed entry for this slug is a short stub (~40 words); the full article
+    // in blog-post.tsx is ~2 800 words. Override here so the SSR BlogPosting
+    // schema emits the correct wordCount to bots.
+    wordCount: 2800,
   },
   "best-childrens-books-indian-preschoolers": {
     title: "Best Children's Books for Indian Preschoolers | Age-Wise List",
@@ -2050,7 +2058,9 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
         })),
       } : null;
 
-      const wordCount = BLOG_WORD_COUNT_BY_SLUG[slug];
+      // Prefer an explicit override from BLOG_POST_SEO_DATA (set for posts whose
+      // seed content is a short stub), then fall back to the computed count.
+      const wordCount = post.wordCount ?? BLOG_WORD_COUNT_BY_SLUG[slug];
       const schemas: object[] = [{
         "@context": "https://schema.org",
         "@type": ["BlogPosting", "Article"],
