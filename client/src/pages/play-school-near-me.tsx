@@ -455,7 +455,7 @@ const faqs = [
   },
   {
     question: "Is Rainbow the best preschool near me in Thane?",
-    answer: "Rainbow Preschool International has been recognised by India Today, ScooNews Global Edu Awards, and the Economic Times as one of India's top preschools. With 18+ years of experience, a 4.7-star Google rating from 3,997+ parent reviews, 1,00,000+ alumni, and 6 Thane West centres, Rainbow is consistently rated the best preschool near you in Thane. Visit any centre for a free campus tour."
+    answer: "Rainbow Preschool International has been recognised by India Today, ScooNews Global Edu Awards, and the Economic Times as one of India's top preschools. With 18+ years of experience, a 4.9-star Google rating from 487+ parent reviews, 1,00,000+ alumni, and 6 Thane West centres, Rainbow is consistently rated the best preschool near you in Thane. Visit any centre for a free campus tour."
   },
   {
     question: "What should I look for in a preschool near me?",

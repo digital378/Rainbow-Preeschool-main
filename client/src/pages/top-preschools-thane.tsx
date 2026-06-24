@@ -24,8 +24,8 @@ const preschools: PreschoolEntry[] = [
   {
     rank: 1,
     name: "Rainbow Preschool International",
-    rating: 4.7,
-    reviews: 3997,
+    rating: 4.9,
+    reviews: 487,
     locations: ["Manpada", "Hariniwas", "Anand Nagar", "Dhokali", "Kalwa", "Kasarvadavali"],
     ageRange: "1.5 – 6 years",
     highlights: [
