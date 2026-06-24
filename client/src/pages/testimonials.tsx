@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { Link } from "wouter";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -134,37 +133,6 @@ const testimonials: Testimonial[] = [
 
 const avgRating = (testimonials.reduce((sum, t) => sum + t.rating, 0) / testimonials.length).toFixed(1);
 
-function TestimonialsSchema() {
-  useEffect(() => {
-    // AggregateRating only; no per-Review nodes.
-    const reviewSchema = {
-      "@context": "https://schema.org",
-      "@type": "EducationalOrganization",
-      "name": "Rainbow Preschool International",
-      "url": "https://www.rainbowpreschools.com",
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": String(VERIFIED_RATING.ratingValue),
-        "reviewCount": String(VERIFIED_RATING.reviewCount),
-        "bestRating": "5",
-        "worstRating": "1"
-      },
-    };
-
-    const script = document.createElement("script");
-    script.type = "application/ld+json";
-    script.text = JSON.stringify(reviewSchema);
-    script.id = "testimonials-schema";
-    document.head.appendChild(script);
-
-    return () => {
-      const el = document.getElementById("testimonials-schema");
-      if (el) el.remove();
-    };
-  }, []);
-  return null;
-}
-
 function StarDisplay({ rating }: { rating: number }) {
   return (
     <div className="flex items-center gap-0.5">
@@ -184,8 +152,6 @@ export default function Testimonials() {
         keywords="rainbow preschool reviews, preschool testimonials thane, rainbow preschool parent feedback, best preschool thane reviews, preschool reviews manpada thane"
         canonical="https://www.rainbowpreschools.com/testimonials"
       />
-      <TestimonialsSchema />
-
       <section className="max-w-5xl mx-auto px-4 py-12 sm:py-16">
         <div className="text-center mb-12">
           <span className="inline-block px-4 py-1.5 bg-red-50 text-red-600 text-sm font-semibold rounded-full mb-4" data-testid="testimonials-badge">
