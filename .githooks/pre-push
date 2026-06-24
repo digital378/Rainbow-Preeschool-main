@@ -162,6 +162,17 @@ fi
 # match the <SEO> component props in client/src/pages/home.tsx. Social scrapers
 # and crawlers read the static shell before JS runs — drift between the two
 # causes stale social cards and incorrect pre-hydration metadata.
+echo "[pre-push] Running 'tsx scripts/check-no-client-schema-injection.ts' ..."
+if ! npx --no-install tsx scripts/check-no-client-schema-injection.ts; then
+  echo "" >&2
+  echo "[pre-push] 'check-no-client-schema-injection' failed. Push aborted." >&2
+  echo "[pre-push] A new application/ld+json DOM injection was added to a client page" >&2
+  echo "[pre-push] or component that is not on the allowlist. Move the schema to" >&2
+  echo "[pre-push] server/ssr-pages.ts, or add the file to the DEFERRED_ALLOWLIST" >&2
+  echo "[pre-push] in scripts/check-no-client-schema-injection.ts with an AUDIT comment." >&2
+  exit 1
+fi
+
 echo "[pre-push] Running 'tsx scripts/check-shell-seo-sync.ts' ..."
 if ! npx --no-install tsx scripts/check-shell-seo-sync.ts; then
   echo "" >&2
