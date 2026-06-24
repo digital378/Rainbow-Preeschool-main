@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "wouter";
+import { SEO } from "@/components/seo";
 import { ChevronRight, Phone, MessageCircle, BookOpen, GraduationCap, MapPin, Download, ChevronDown, ChevronUp, Palette, Music, Shield, Users, Flame, PenTool, Award, Share2, Heart, Sparkles, ClipboardList, Images, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -58,48 +59,6 @@ function CollapsibleSection({ title, children, defaultOpen = false }: { title: s
 }
 
 export default function HoliActivitiesPage() {
-  const canonicalUrl = "https://www.rainbowpreschools.com/holi-activities-for-kids";
-
-  useEffect(() => {
-    document.title = "Holi Activities for Kids – History, Speeches, Essays & Celebration Ideas | Rainbow Preschool";
-
-    const updateMeta = (name: string, content: string, isProperty = false) => {
-      const attr = isProperty ? 'property' : 'name';
-      let meta = document.querySelector(`meta[${attr}="${name}"]`);
-      if (!meta) {
-        meta = document.createElement('meta');
-        meta.setAttribute(attr, name);
-        document.head.appendChild(meta);
-      }
-      meta.setAttribute('content', content);
-    };
-
-    updateMeta('description', 'Complete guide to Holi activities for kids & schools: history, speeches (English, Hindi, Marathi), essays, slogans, downloadable Happy Holi images, social media post ideas & safe celebration tips. Free resources from Rainbow Preschool International, Thane.');
-    updateMeta('keywords', 'holi activities for kids, holi speech in english, holi essay in english, happy holi images download, holi celebration in school, holi activities for preschoolers, holi speech in hindi, holi essay in hindi, holi speech in marathi, holi 2026, safe holi tips, holi slogans, holi quotes, festival of colors activities, holi craft ideas for kids, rainbow preschool thane');
-    updateMeta('og:title', 'Holi Activities for Kids – History, Speeches, Essays & Celebration Ideas', true);
-    updateMeta('og:description', 'Complete guide: Holi history, school activities, speeches & essays in English, Hindi, Marathi. Free downloadable Happy Holi images & safe celebration tips.', true);
-    updateMeta('og:type', 'article', true);
-    updateMeta('og:url', canonicalUrl, true);
-    updateMeta('og:image', 'https://www.rainbowpreschools.com/images/holi/holi-img-1.webp', true);
-    updateMeta('twitter:card', 'summary_large_image');
-    updateMeta('twitter:title', 'Holi Activities for Kids – Complete Guide with Speeches, Essays & Images');
-    updateMeta('twitter:description', 'Free Holi resources: speeches, essays, downloadable images, school activities & safe celebration tips from Rainbow Preschool International.');
-    updateMeta('twitter:image', 'https://www.rainbowpreschools.com/images/holi/holi-img-1.webp');
-    updateMeta('robots', 'index, follow');
-
-    let canonical = document.querySelector('link[rel="canonical"]');
-    if (!canonical) {
-      canonical = document.createElement('link');
-      canonical.setAttribute('rel', 'canonical');
-      document.head.appendChild(canonical);
-    }
-    canonical.setAttribute('href', canonicalUrl);
-
-    return () => {
-      document.title = "Rainbow Preschool International";
-    };
-  }, []);
-
   const handleDownload = async (downloadUrl: string, filename: string) => {
     try {
       const response = await fetch(downloadUrl);
@@ -119,6 +78,15 @@ export default function HoliActivitiesPage() {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title="Holi Activities for Kids | Rainbow Preschool Thane"
+        description="Complete guide to Holi activities for kids: history, speeches, essays, images & safe celebration tips. Free resources from Rainbow Preschool, Thane."
+        keywords="holi activities for kids, holi speech in english, holi essay in english, happy holi images download, holi celebration in school, holi activities for preschoolers, holi speech in hindi, holi essay in hindi, holi speech in marathi, holi 2026, safe holi tips, holi slogans, holi quotes, festival of colors activities, holi craft ideas for kids, rainbow preschool thane"
+        canonical="https://www.rainbowpreschools.com/holi-activities-for-kids"
+        ogType="article"
+        ogImage="https://www.rainbowpreschools.com/images/holi/holi-img-1.webp"
+        noIndex={false}
+      />
       <Navigation />
       
       <main className="pt-20 md:pt-24">
