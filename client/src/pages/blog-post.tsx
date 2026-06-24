@@ -13,6 +13,7 @@ import {
   COMMERCIAL_PAGES_LAST_UPDATED_DISPLAY,
 } from "@shared/seo-config";
 import { getBlogAuthorship, blogPersonToSchema } from "@shared/blog-authors";
+import { VERIFIED_RATING } from "@shared/verified-rating";
 import { Calendar, ArrowLeft, User, Clock, CheckCircle, Download } from "lucide-react";
 import { BlogCTA, type BlogCTATopic } from "@/components/blog-cta";
 import { BlogStickyBar } from "@/components/blog-sticky-bar";
@@ -598,7 +599,7 @@ const blogPostsData: Record<string, BlogPostData> = {
       "## Sign 9: Positive Reviews and Reputation",
       "Research the school's reputation:",
       "- Check Google reviews and ratings\n- Ask other parents about their experience\n- Look for awards or recognitions\n- Visit the school's website and social media\n- Ask for references from current parents",
-      "**Why it matters:** While no school is perfect, consistent positive feedback from multiple parents is a strong indicator of quality. Rainbow Preschool International maintains a 4.9★ Google rating with 487+ reviews — one of the highest among preschools in Thane.",
+      `**Why it matters:** While no school is perfect, consistent positive feedback from multiple parents is a strong indicator of quality. Rainbow Preschool International maintains a ${VERIFIED_RATING.ratingValue}★ Google rating with ${VERIFIED_RATING.reviewCount}+ reviews — one of the highest among preschools in Thane.`,
       "## Sign 10: Alignment with Your Values and Priorities",
       "Finally, the best preschool for your child is one that aligns with your family's values:",
       "- Does the school's philosophy match your parenting approach?\n- Are the timings convenient for your family?\n- Is the location accessible?\n- Does the fee structure fit your budget?\n- Do you feel welcome and comfortable at the school?",
@@ -862,7 +863,7 @@ const blogPostsData: Record<string, BlogPostData> = {
       "1. **Start early** — Begin researching in October for a June start\n2. **Visit multiple schools** — Compare at least 3-5 options\n3. **Ask the right questions** — Teacher ratios, safety, curriculum, batch sizes\n4. **Trust your instinct** — If a school feels right, it probably is\n5. **Don't overthink** — Preschool is about joy and exploration, not academic pressure\n6. **Check for flexibility** — Can you switch batches? What's the cancellation policy?\n7. **Talk to other parents** — Personal recommendations are invaluable",
       "## Rainbow Preschool International: Admissions Open 2026-27",
       "We're currently accepting admissions for 2026-27 across all six centres in Thane. Here's why thousands of families choose Rainbow:",
-      "- 18+ years of trusted excellence since 2007\n- 4.9★ Google rating with 487+ reviews\n- 6 centres across Thane (one is always near you)\n- Small batch sizes: 10-12 children per teacher\n- 100% ECE/Montessori certified female staff\n- 24/7 CCTV, verified pickup, daily hygiene routines\n- Play-based curriculum with clear developmental goals",
+      `- 18+ years of trusted excellence since 2007\n- ${VERIFIED_RATING.ratingValue}★ Google rating with ${VERIFIED_RATING.reviewCount}+ reviews\n- 6 centres across Thane (one is always near you)\n- Small batch sizes: 10-12 children per teacher\n- 100% ECE/Montessori certified female staff\n- 24/7 CCTV, verified pickup, daily hygiene routines\n- Play-based curriculum with clear developmental goals`,
       "**Our Centres:** Manpada, Hariniwas, Anand Nagar, Dhokali, Kalwa, Kasarvadavali",
       "Secure your child's spot today — call 82915 68972 or visit our admissions page for details.",
       "RIS_BACKLINK:Planning your child's education beyond preschool? [Rainbow International School](https://rainbowinternationalschool.in) offers a seamless progression from [pre-primary](https://rainbowinternationalschool.in/pre-primary-school-thane) to [Class 12](https://rainbowinternationalschool.in/senior-secondary-section) with CBSE affiliation and [state-of-the-art amenities](https://rainbowinternationalschool.in/amenities)."

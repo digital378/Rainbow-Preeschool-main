@@ -182,6 +182,47 @@ try {
   );
 }
 
+// ─── Body-copy hardcoded star-rating guard ────────────────────────────────
+// Scans known body-copy / blog files for hardcoded star-rating literals of
+// the form "X.Y★" (e.g. "4.9★") that appear WITHOUT a VERIFIED_RATING
+// interpolation on the same line. After the template-literal refactor in
+// blog-post.tsx, any such literal is a regression that will drift stale when
+// the GBP figures are refreshed.
+const BODY_COPY_FILES = [
+  "client/src/pages/blog-post.tsx",
+];
+// Pattern: a numeric star-rating like 4.9★ or 4.7★ as a literal string.
+// This deliberately matches only digit.digit★ so it won't fire on prose like
+// "5-star service" or React JSX expressions.
+const HARDCODED_STAR_RE = /\d+\.\d+★/;
+
+for (const relPath of BODY_COPY_FILES) {
+  const absPath = resolve(ROOT, relPath);
+  let src: string;
+  try {
+    src = readFileSync(absPath, "utf8");
+  } catch {
+    console.warn(
+      `[check-eeat-show-rating] WARNING — could not read ${relPath} for star-rating guard.`,
+    );
+    continue;
+  }
+
+  const lines = src.split("\n");
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    if (!HARDCODED_STAR_RE.test(line)) continue;
+    // Allow lines that already use VERIFIED_RATING interpolation.
+    if (line.includes("VERIFIED_RATING")) continue;
+    violations.push({
+      file: relPath,
+      line: i + 1,
+      reason:
+        "hardcoded star-rating literal — interpolate VERIFIED_RATING.ratingValue (and VERIFIED_RATING.reviewCount if a count appears too) so the figure stays in sync when the GBP data is refreshed",
+    });
+  }
+}
+
 if (violations.length > 0) {
   console.error(
     `[check-eeat-show-rating] ${violations.length} violation(s) found:\n`,
