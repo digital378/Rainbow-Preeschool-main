@@ -15,6 +15,12 @@
  * `client/src/lib/verified-rating.ts`. All other pages must still include
  * `showRating={false}`.
  *
+ * STALENESS CHECK: After the structural scan, this script also reads
+ * `lastVerifiedDate` from `client/src/lib/verified-rating.ts` and prints a
+ * prominent WARNING if the date is older than 120 days. The check is
+ * non-blocking (exit 0) — it will not stop a commit or deploy — but it is
+ * intentionally loud so the team knows the GBP figures need refreshing.
+ *
  * Run locally:   npx tsx scripts/check-eeat-show-rating.ts
  */
 import { readFileSync, readdirSync } from "node:fs";
@@ -149,4 +155,56 @@ const total = names.filter((n) => n.endsWith(".tsx")).length;
 console.log(
   `[check-eeat-show-rating] OK — scanned ${total} page file(s); verified-rating pages: ${VERIFIED_RATING_PAGES.size}; all others have showRating={false}.`,
 );
+
+// ─── Staleness check ──────────────────────────────────────────────────────────
+// Read lastVerifiedDate from verified-rating.ts and warn if it is older than
+// 120 days (≈ one quarter). Non-blocking: prints a warning but exits 0.
+const STALE_DAYS = 120;
+const VERIFIED_RATING_FILE = resolve(ROOT, "client/src/lib/verified-rating.ts");
+try {
+  const src = readFileSync(VERIFIED_RATING_FILE, "utf8");
+  const match = src.match(/lastVerifiedDate:\s*"(\d{4}-\d{2}-\d{2})"/);
+  if (match) {
+    const lastVerified = new Date(match[1]);
+    const today = new Date();
+    const ageDays = Math.floor(
+      (today.getTime() - lastVerified.getTime()) / (1000 * 60 * 60 * 24),
+    );
+    if (ageDays > STALE_DAYS) {
+      console.warn(`
+╔══════════════════════════════════════════════════════════════════════╗
+║  ⚠  RATING FIGURES ARE STALE — ACTION REQUIRED                      ║
+╠══════════════════════════════════════════════════════════════════════╣
+║  client/src/lib/verified-rating.ts                                   ║
+║  lastVerifiedDate: ${match[1]}  (${ageDays} days ago)${" ".repeat(Math.max(0, 18 - String(ageDays).length))}║
+║                                                                      ║
+║  Google's rich-result policy requires AggregateRating figures to     ║
+║  match the live review source. Please:                               ║
+║    1. Open the Rainbow Preschool International Google Business        ║
+║       Profile listing (maps.google.com).                             ║
+║    2. Note the current star rating and total review count.           ║
+║    3. Update ratingValue, reviewCount, and lastVerifiedDate in        ║
+║       client/src/lib/verified-rating.ts.                             ║
+║                                                                      ║
+║  This warning is non-blocking — commit/deploy will proceed.          ║
+║  Refresh target: every 120 days (quarterly).                         ║
+╚══════════════════════════════════════════════════════════════════════╝
+`);
+    } else {
+      const daysUntilStale = STALE_DAYS - ageDays;
+      console.log(
+        `[check-eeat-show-rating] Rating freshness OK — last verified ${ageDays} day(s) ago (${match[1]}); next refresh due in ${daysUntilStale} day(s).`,
+      );
+    }
+  } else {
+    console.warn(
+      `[check-eeat-show-rating] WARNING — could not parse lastVerifiedDate from ${VERIFIED_RATING_FILE}. Check the file format.`,
+    );
+  }
+} catch {
+  console.warn(
+    `[check-eeat-show-rating] WARNING — could not read ${VERIFIED_RATING_FILE} for staleness check.`,
+  );
+}
+
 process.exit(0);
