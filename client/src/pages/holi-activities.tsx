@@ -141,9 +141,13 @@ export default function HoliActivitiesPage() {
     let existingScript = document.getElementById(scriptId);
     if (existingScript) existingScript.remove();
 
-    // AUDIT-206: Retained — this page is in shared/legacy-pages-data.ts but has
-    // no staticPages entry in server/ssr-pages.ts. This useEffect is the sole
-    // structured-data source. Remove once an SSR entry with structuredData exists.
+    // AUDIT-209 (verified): Intentionally client-side-only. This page is in
+    // shared/legacy-pages-data.ts but has no entry in server/ssr-pages.ts
+    // staticPages. The legacy-pages branch in getPageSEO() builds a FAQPage from
+    // data.faqs but does NOT emit an Article or BreadcrumbList schema.
+    // This useEffect is the sole source of Article + BreadcrumbList + FAQPage for
+    // bots that execute JS (Googlebot). Remove once an ssr-pages.ts entry with
+    // a structuredData field containing all three schemas is added for this slug.
     const script = document.createElement('script');
     script.id = scriptId;
     script.type = 'application/ld+json';

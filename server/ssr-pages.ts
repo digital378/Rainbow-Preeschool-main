@@ -1860,6 +1860,12 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
           { q: "What questions should I ask when visiting a preschool?", a: "Key questions include: What is the teacher-to-child ratio? What safety measures are in place? How is the curriculum structured? What are the qualifications of the teachers? How do you communicate progress to parents? Rainbow Preschool welcomes these questions during campus tours." },
           { q: "What should I look for during a preschool tour?", a: "Observe cleanliness, classroom setup, teacher interactions with children, safety measures (CCTV, secure entry), play areas, and overall atmosphere. A good preschool like Rainbow will welcome your observations and answer all questions openly." },
         ],
+        "republic-day-2026": [
+          { q: "Why is Republic Day celebrated on 26 January?", a: "Republic Day is celebrated on 26 January because the Constitution of India came into effect on this date in 1950. The date was chosen to commemorate the Purna Swaraj Declaration of 1930." },
+          { q: "Where is the Republic Day parade held?", a: "The main Republic Day parade is held at Kartavya Path (formerly Rajpath) in New Delhi, in the presence of the President of India." },
+          { q: "Which Republic Day is celebrated in 2026?", a: "India will celebrate its 77th Republic Day on 26 January 2026." },
+          { q: "Who drafted the Indian Constitution?", a: "Dr. B. R. Ambedkar was the chief architect of the Indian Constitution. He chaired the Drafting Committee that prepared the final draft." },
+        ],
         "understanding-the-importance-of-preschool-in-early-childhood-development": [
           { q: "Why is preschool important for early childhood development?", a: "Research shows that preschool education significantly impacts cognitive development, social skills, emotional regulation, and language acquisition. Children who attend quality preschools like Rainbow Preschool International show stronger school readiness and academic performance." },
           { q: "At what age should a child start preschool?", a: "Most child development experts recommend starting preschool between 1.5 to 3 years. Rainbow Preschool offers Playgroup for ages 1.5–2.5, Nursery for 2.5–4, and Kindergarten for 4–6 years — each tailored to the developmental stage of the child." },

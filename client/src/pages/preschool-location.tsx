@@ -147,10 +147,13 @@ function PreschoolLocationTemplate({ localitySlug }: PreschoolLocationPageProps)
       existingScript.remove();
     }
 
-    // AUDIT-206: Retained — dynamic per-centre component. Per-centre SSR locality
-    // pages exist but contain different/static FAQ content. This injection provides
-    // dynamic LocalBusiness + FAQPage + BreadcrumbList schemas for JS-rendered users.
-    // Remove once SSR per-centre entries include equivalent dynamic structuredData.
+    // AUDIT-209 (verified): Intentionally client-side-only. Per-centre SSR locality
+    // pages exist in server/ssr-pages.ts but their FAQPage schema is built from a
+    // static centreFAQSchema helper, whereas this component uses dynamic `faqs` data
+    // (locality-specific Q&A from shared/centre-data.ts) that differs per centre.
+    // The LocalBusiness schema here also includes dynamic address/phone from props.
+    // Remove only after SSR per-centre entries are updated to use the same dynamic
+    // structuredData (localBusinessSchema + richFAQSchema) they already compute.
     const script = document.createElement('script');
     script.id = scriptId;
     script.type = 'application/ld+json';

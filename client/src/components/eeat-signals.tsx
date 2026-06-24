@@ -45,10 +45,12 @@ export function EEATSignals({
   showRating = true,
   schemaId,
 }: EEATSignalsProps) {
-  // AUDIT-206: Retained — SSR bot-ssr.ts emits a generic Article (no reviewedBy)
-  // and the org-level AggregateRating only. This useEffect adds the `reviewedBy`
-  // E-E-A-T signal (unique per page) and a page-specific AggregateRating node.
-  // Remove once SSR blog-post structuredData entries include Article + reviewedBy.
+  // AUDIT-209 (verified): Intentionally client-side-only. bot-ssr.ts emits a
+  // generic Article (no reviewedBy field) and an org-level AggregateRating only.
+  // This useEffect adds the per-page `reviewedBy` Organization E-E-A-T signal and
+  // a page-specific AggregateRating node that are unique per blog post.
+  // Remove once the blog-post SSR path in server/ssr-pages.ts produces an
+  // Article with `reviewedBy` for each post (see follow-up task #212).
   useEffect(() => {
     // AggregateRating only; no per-Review nodes.
     const reviewSchema = {

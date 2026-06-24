@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -7,102 +6,6 @@ import { CTASection } from "@/components/cta-section";
 import { SEO } from "@/components/seo";
 import { Calendar, User, Clock, Download, MapPin, Phone, Award, ClipboardList, Images, ArrowLeft } from "lucide-react";
 
-function RepublicDaySchema() {
-  useEffect(() => {
-    const articleSchema = {
-      "@context": "https://schema.org",
-      "@type": "Article",
-      "headline": "Republic Day 2026 in India: History, Significance, Parade, Speeches, Essays, Quotes, Images & Wishes",
-      "description": "Complete guide to Republic Day 2026 — 26 January history, parade highlights, speeches in English & Hindi, essays, quotes, DP images & wishes.",
-      "author": {
-        "@type": "Organization",
-        "name": "Rainbow Preschool International",
-        "url": "https://www.rainbowpreschools.com"
-      },
-      "publisher": {
-        "@type": "Organization",
-        "name": "Rainbow Preschool International",
-        "logo": {
-          "@type": "ImageObject",
-          "url": "https://www.rainbowpreschools.com/images/logo.webp"
-        }
-      },
-      "datePublished": "2026-01-20T00:00:00.000Z",
-      "dateModified": "2026-01-20T00:00:00.000Z",
-      "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": "https://www.rainbowpreschools.com/republic-day-2026"
-      },
-      "wordCount": 2100,
-      "articleSection": "Republic Day",
-      "keywords": "republic day 2026, 26 january 2026, republic day parade, republic day speech, republic day essay, republic day quotes, republic day wishes, republic day images, republic day dp, indian constitution day, republic day india, gantantra diwas 2026, 77th republic day"
-    };
-
-    const faqSchema = {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "Why is Republic Day celebrated on 26 January?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Republic Day is celebrated on 26 January because the Constitution of India came into effect on this date in 1950. The date was chosen to commemorate the Purna Swaraj Declaration of 1930."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Where is the Republic Day parade held?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "The main Republic Day parade is held at Kartavya Path (formerly Rajpath) in New Delhi, in the presence of the President of India."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Which Republic Day is celebrated in 2026?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "India will celebrate its 77th Republic Day on 26 January 2026."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Who drafted the Indian Constitution?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Dr. B. R. Ambedkar was the chief architect of the Indian Constitution. He chaired the Drafting Committee that prepared the final draft."
-          }
-        }
-      ]
-    };
-
-    // AUDIT-206: Retained — server/ssr-pages.ts has a "republic-day-2026" entry
-    // but with no structuredData field. Bot SSR generates a generic Article via
-    // bot-ssr.ts but not FAQPage. This useEffect is the sole FAQPage source.
-    // Remove once a structuredData field is added to the SSR entry.
-    const script1 = document.createElement('script');
-    script1.type = 'application/ld+json';
-    script1.text = JSON.stringify(articleSchema);
-    script1.id = 'republic-day-article-schema';
-    document.head.appendChild(script1);
-
-    const script2 = document.createElement('script');
-    script2.type = 'application/ld+json';
-    script2.text = JSON.stringify(faqSchema);
-    script2.id = 'republic-day-faq-schema';
-    document.head.appendChild(script2);
-
-    return () => {
-      const existingScript1 = document.getElementById('republic-day-article-schema');
-      const existingScript2 = document.getElementById('republic-day-faq-schema');
-      if (existingScript1) existingScript1.remove();
-      if (existingScript2) existingScript2.remove();
-    };
-  }, []);
-
-  return null;
-}
 
 const dpImages = [
   { src: "/images/republic-day-dp-1.png", alt: "Republic Day 2026 DP - Tricolour Profile Frame", title: "Republic Day Profile Frame" },
@@ -122,7 +25,6 @@ export default function RepublicDay2026() {
         ogType="article"
         noIndex={false}
       />
-      <RepublicDaySchema />
 
       <article className="py-12 md:py-16 lg:py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
