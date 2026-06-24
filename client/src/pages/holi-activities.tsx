@@ -100,66 +100,6 @@ export default function HoliActivitiesPage() {
     };
   }, []);
 
-  useEffect(() => {
-    const faqSchema = {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
-        { "@type": "Question", "name": "When is Holi 2026?", "acceptedAnswer": { "@type": "Answer", "text": "Holi 2026 will be celebrated on Tuesday, 3rd March 2026. Holika Dahan will take place on Monday, 2nd March 2026." } },
-        { "@type": "Question", "name": "How do schools celebrate Holi safely?", "acceptedAnswer": { "@type": "Answer", "text": "Schools celebrate Holi with eco-friendly natural colors, cultural programs, art competitions, speeches, dance performances, and awareness activities about safe celebrations. At Rainbow Preschool International in Thane, we use only natural, skin-safe colors and have supervised activities." } },
-        { "@type": "Question", "name": "What are safe Holi colors for kids?", "acceptedAnswer": { "@type": "Answer", "text": "Safe Holi colors for kids include natural colors made from turmeric (yellow), beetroot (pink/red), henna/mehndi (green), dried flower petals, and food-grade colors. Avoid chemical-based colors that can harm sensitive skin." } },
-        { "@type": "Question", "name": "How does Rainbow Preschool celebrate Holi?", "acceptedAnswer": { "@type": "Answer", "text": "We have safe, supervised Holi celebrations at our centres in Manpada, Kalwa, Kasarvadavali, Anand Nagar, Dhokali and Hariniwas with natural colors, water play, and color-themed activities. Children wear old clothes and parents are informed in advance." } },
-        { "@type": "Question", "name": "Can I download Happy Holi images from this page?", "acceptedAnswer": { "@type": "Answer", "text": "Yes! We have 9 free downloadable Happy Holi images that you can use for WhatsApp, Instagram, Facebook, and other social media. Just click the download button below each image." } },
-        { "@type": "Question", "name": "What are some easy Holi activities for preschoolers?", "acceptedAnswer": { "@type": "Answer", "text": "Easy Holi activities for preschoolers include natural color play with turmeric and flower petals, rainbow handprint art, tissue paper color collage, musical colors game, color treasure hunts, and making Holi greeting cards." } },
-      ]
-    };
-
-    const breadcrumbSchema = {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.rainbowpreschools.com" },
-        { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://www.rainbowpreschools.com/blog" },
-        { "@type": "ListItem", "position": 3, "name": "Holi Activities for Kids", "item": canonicalUrl }
-      ]
-    };
-
-    const articleSchema = {
-      "@context": "https://schema.org",
-      "@type": "Article",
-      "headline": "Holi Activities for Kids – History, Speeches, Essays & Celebration Ideas",
-      "description": "Complete guide to Holi activities for kids and schools with speeches, essays, downloadable images, and safe celebration tips.",
-      "url": canonicalUrl,
-      "datePublished": "2025-03-01",
-      "dateModified": "2026-02-16",
-      "image": "https://www.rainbowpreschools.com/images/holi/holi-img-1.webp",
-      "author": { "@type": "Organization", "name": "Rainbow Preschool International", "url": "https://www.rainbowpreschools.com" },
-      "publisher": { "@type": "Organization", "name": "Rainbow Preschool International", "url": "https://www.rainbowpreschools.com", "logo": { "@type": "ImageObject", "url": "https://www.rainbowpreschools.com/images/optimized/rainbow-logo.webp" } }
-    };
-
-    const scriptId = 'holi-activities-schema';
-    let existingScript = document.getElementById(scriptId);
-    if (existingScript) existingScript.remove();
-
-    // AUDIT-209 (verified): Intentionally client-side-only. This page is in
-    // shared/legacy-pages-data.ts but has no entry in server/ssr-pages.ts
-    // staticPages. The legacy-pages branch in getPageSEO() builds a FAQPage from
-    // data.faqs but does NOT emit an Article or BreadcrumbList schema.
-    // This useEffect is the sole source of Article + BreadcrumbList + FAQPage for
-    // bots that execute JS (Googlebot). Remove once an ssr-pages.ts entry with
-    // a structuredData field containing all three schemas is added for this slug.
-    const script = document.createElement('script');
-    script.id = scriptId;
-    script.type = 'application/ld+json';
-    script.textContent = JSON.stringify([faqSchema, breadcrumbSchema, articleSchema]);
-    document.head.appendChild(script);
-
-    return () => {
-      const s = document.getElementById(scriptId);
-      if (s) s.remove();
-    };
-  }, []);
-
   const handleDownload = async (downloadUrl: string, filename: string) => {
     try {
       const response = await fetch(downloadUrl);
