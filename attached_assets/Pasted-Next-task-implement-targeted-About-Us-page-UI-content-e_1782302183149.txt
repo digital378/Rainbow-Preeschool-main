@@ -1,0 +1,192 @@
+Next task: implement targeted About Us page UI + content enhancement.
+
+Page:
+https://www.rainbowpreschools.com/about
+
+Primary goal:
+Improve the existing About page for parent trust, admissions conversion, and local SEO while keeping the page lightweight and technically safe.
+
+Important:
+Do not rebuild the page from scratch.
+Do not change site architecture, homepage, redirects, robots.txt, sitemap, global SEO component, rating values, title, H1, or meta description.
+Use existing components and lightweight UI only.
+
+Important wording rule:
+Do not use the word "daycare" anywhere on the About page. Use "Happy Times extended care" or "after-school care" instead.
+
+Current page already has:
+- H1: About Rainbow Preschool International
+- Reviewed/updated trust line with 4.9/5 and 487 parent reviews
+- Since 2007 positioning
+- 1,00,000+ learners
+- Our Story
+- Chairperson's Note
+- Curriculum Framework
+- Why Parents Trust Rainbow
+- Our Journey
+- Academic Coordinators
+- Internal links grid
+- EEATSignals
+- CTASection
+
+Verified USPs to include clearly:
+- 100% female teaching staff
+- CCTV-enabled campuses
+
+Avoid saying “24/7 CCTV” unless that exact claim is already verified for all centres.
+
+Performance constraint:
+The About page mobile performance is already weak, with LCP around 7.8s and unused JavaScript around 506 KiB. Do not add sliders, video, heavy animations, large uncompressed images, or new npm packages.
+
+Files to edit:
+- client/src/pages/about.tsx
+- server/ssr-pages.ts /about entry
+
+Implement only these must-have improvements:
+
+1. Hero CTA labels
+Update the hero CTAs for stronger admissions conversion:
+- Request a Callback → Book a Visit
+- WhatsApp Us → WhatsApp Admissions
+- Add or retain Explore Programmes linking to /programmes
+
+Links:
+- Book a Visit → /contact
+- WhatsApp Admissions → existing WhatsApp link
+- Explore Programmes → /programmes
+
+Keep the existing H1 and trust line unchanged.
+
+2. Add Programme Cards section after Our Story
+Section heading:
+Our Programmes
+
+Section subheading:
+We offer age-appropriate programmes for children aged 1.5 to 6 years.
+
+Cards:
+- Playgroup → /playgroup
+  Age: 1.5–2.5 years
+  Copy: Your toddler's first gentle steps into play-based learning and socialisation.
+
+- Nursery → /nursery
+  Age: 2.5–3.5 years
+  Copy: Building early literacy, numeracy, and confidence through creative exploration.
+
+- Kindergarten → /kindergarten
+  Age: 3.5–5.5 years
+  Copy: Full school-readiness programme covering reading, writing, maths, and life skills.
+
+CTA below cards:
+View All Programmes → /programmes
+
+Use existing card/button styling where possible. No new dependency.
+
+3. Add Centre Grid section after Why Parents Trust Rainbow
+Section heading:
+Our 6 Centres Across Thane
+
+Use lightweight text cards only. No images.
+
+Centres:
+- Manpada → /preschool-in-manpada-thane — Near Khewra Circle
+- Hariniwas → /preschool-in-hariniwas-thane — Naupada, Central Thane
+- Anand Nagar → /preschool-in-anand-nagar-thane — Majiwada, opposite Tropical Lagoon
+- Dhokali → /preschool-in-dhokali-thane — Kolshet Road
+- Kalwa → /preschool-in-kalwa-thane — Eastern Thane
+- Kasarvadavali → /preschool-in-kasarvadavali-thane — Ghodbunder Road
+
+Each card should include:
+- centre name
+- area descriptor
+- View Centre link
+
+4. Add FAQ section after centre grid
+Use a visible lightweight accordion or existing UI pattern.
+Add FAQPage schema only if schema answers match visible answers exactly.
+Do not claim FAQ rich results.
+
+FAQs:
+
+Q1: When did Rainbow Preschool start?
+A1: Rainbow Preschool International started in Thane in 2007 and has grown into a trusted early learning network for young children.
+
+Q2: How many centres does Rainbow Preschool have in Thane?
+A2: Rainbow Preschool has 6 centres across Thane: Manpada, Hariniwas, Anand Nagar, Dhokali, Kalwa, and Kasarvadavali.
+
+Q3: Which programmes are offered?
+A3: Rainbow Preschool offers Playgroup, Nursery, Kindergarten, and Happy Times extended care for young children.
+
+Q4: What age groups are accepted?
+A4: Rainbow offers age-appropriate early learning programmes for children aged 1.5 to 6 years.
+
+Q5: How does Rainbow support child safety?
+A5: Rainbow supports child safety through CCTV-enabled campuses, 100% female teaching staff, secure pickup practices, child-friendly classrooms, and daily hygiene routines.
+
+Q6: How can parents book a visit?
+A6: Parents can call 82915 68972, send a WhatsApp enquiry, or fill in the contact form to book a campus visit.
+
+5. Add final CTA block before the existing CTASection
+Heading:
+Ready to visit Rainbow Preschool?
+
+Supporting line:
+Book a campus tour and speak with our admissions team — no obligation, no entrance test.
+
+Buttons:
+- Book a Visit → /contact
+- WhatsApp Admissions → existing WhatsApp link
+
+6. SSR alignment
+Update server/ssr-pages.ts /about entry so Googlebot sees aligned content:
+- Programme section with Playgroup, Nursery, Kindergarten and their URLs
+- Centre list with all 6 centre URLs
+- FAQ content
+- FAQPage schema only if the visible FAQ is implemented and answers match exactly
+
+Avoid SSR/client drift. The visible About page and SSR About content should communicate the same key sections.
+
+Do not change:
+- H1
+- title
+- meta description
+- rating values
+- homepage Bot SSR bypass
+- sitemap
+- robots.txt
+- redirects
+- global SEO component
+- existing Chairperson's Note
+- Our Journey
+- Academic Coordinators
+- EEATSignals
+- existing CTASection unless needed for layout compatibility
+
+Do not add:
+- new npm packages
+- sliders
+- videos
+- heavy animations
+- new large images
+- unsupported awards or claims
+- “24/7 CCTV” wording
+- the word “daycare”
+
+After implementation, run:
+- npm run build
+- check-h1-parity
+- check-description-length
+- check-no-title-cannibalisation
+- check-eeat-show-rating
+- check-no-client-schema-injection if available
+
+Then report:
+- exact files changed
+- sections added
+- SSR changes made
+- schema changes made
+- build result
+- guard results
+- any remaining SSR/client mismatch risk
+- any performance risks
+- confirmation that the word “daycare” does not appear on the About page

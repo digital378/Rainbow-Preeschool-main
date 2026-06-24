@@ -6,13 +6,13 @@ import { CountUp } from "@/components/count-up";
 import { CTASection } from "@/components/cta-section";
 import { EEATSignals } from "@/components/eeat-signals";
 import { LAST_UPDATED_DISPLAY, LAST_UPDATED_ISO } from "@shared/site-freshness";
-import { 
-  Phone, 
-  Star, 
-  ChevronDown, 
-  Shield, 
-  Users, 
-  GraduationCap, 
+import {
+  Phone,
+  Star,
+  ChevronDown,
+  Shield,
+  Users,
+  GraduationCap,
   Sparkles,
   Heart,
   Handshake,
@@ -24,11 +24,12 @@ import {
   Award,
   MapPin,
   ClipboardList,
-  Images
+  Images,
 } from "lucide-react";
 import { SiWhatsapp } from "react-icons/si";
 import { useState } from "react";
 import { trackCTAClick, trackCallClick, trackWhatsAppClick } from "@/lib/analytics";
+
 const PHONE_NUMBER = "+918291568972";
 const WHATSAPP_LINK = "https://wa.me/918291568972?text=Hi%2C%20I%20would%20like%20to%20know%20more%20about%20Rainbow%20Preschool";
 
@@ -72,8 +73,69 @@ const effectiveImplementation = [
   "Enriching Environment",
 ];
 
+const programmeItems = [
+  {
+    icon: Sparkles,
+    title: "Playgroup",
+    href: "/playgroup",
+    age: "1.5–2.5 years",
+    copy: "Your toddler's first gentle steps into play-based learning and socialisation.",
+  },
+  {
+    icon: Brain,
+    title: "Nursery",
+    href: "/nursery",
+    age: "2.5–3.5 years",
+    copy: "Building early literacy, numeracy, and confidence through creative exploration.",
+  },
+  {
+    icon: GraduationCap,
+    title: "Kindergarten",
+    href: "/kindergarten",
+    age: "3.5–5.5 years",
+    copy: "Full school-readiness programme covering reading, writing, maths, and life skills.",
+  },
+];
+
+const centreItems = [
+  { name: "Manpada", area: "Near Khewra Circle", href: "/preschool-in-manpada-thane" },
+  { name: "Hariniwas", area: "Naupada, Central Thane", href: "/preschool-in-hariniwas-thane" },
+  { name: "Anand Nagar", area: "Majiwada, opposite Tropical Lagoon", href: "/preschool-in-anand-nagar-thane" },
+  { name: "Dhokali", area: "Kolshet Road", href: "/preschool-in-dhokali-thane" },
+  { name: "Kalwa", area: "Eastern Thane", href: "/preschool-in-kalwa-thane" },
+  { name: "Kasarvadavali", area: "Ghodbunder Road", href: "/preschool-in-kasarvadavali-thane" },
+];
+
+const faqItems = [
+  {
+    question: "When did Rainbow Preschool start?",
+    answer: "Rainbow Preschool International started in Thane in 2007 and has grown into a trusted early learning network for young children.",
+  },
+  {
+    question: "How many centres does Rainbow Preschool have in Thane?",
+    answer: "Rainbow Preschool has 6 centres across Thane: Manpada, Hariniwas, Anand Nagar, Dhokali, Kalwa, and Kasarvadavali.",
+  },
+  {
+    question: "Which programmes are offered?",
+    answer: "Rainbow Preschool offers Playgroup, Nursery, Kindergarten, and Happy Times extended care for young children.",
+  },
+  {
+    question: "What age groups are accepted?",
+    answer: "Rainbow offers age-appropriate early learning programmes for children aged 1.5 to 6 years.",
+  },
+  {
+    question: "How does Rainbow support child safety?",
+    answer: "Rainbow supports child safety through CCTV-enabled campuses, 100% female teaching staff, secure pickup practices, child-friendly classrooms, and daily hygiene routines.",
+  },
+  {
+    question: "How can parents book a visit?",
+    answer: "Parents can call 82915 68972, send a WhatsApp enquiry, or fill in the contact form to book a campus visit.",
+  },
+];
+
 export default function About() {
   const [isChairpersonExpanded, setIsChairpersonExpanded] = useState(false);
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   return (
     <article className="pt-20 md:pt-24">
@@ -94,46 +156,44 @@ export default function About() {
             <p className="text-xl md:text-2xl text-muted-foreground mb-8">
               Trusted preschool chain in Thane since 2007.
             </p>
-            
+
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
               <Link href="/contact">
-                <Button 
-                  size="lg" 
+                <Button
+                  size="lg"
                   className="text-base px-8"
-                  onClick={() => trackCTAClick("request_callback", "about_hero")}
-                  data-testid="button-about-hero-callback"
+                  onClick={() => trackCTAClick("book_visit", "about_hero")}
+                  data-testid="button-about-hero-book-visit"
                 >
-                  Request a Callback
+                  Book a Visit
                 </Button>
               </Link>
-              <a 
+              <a
                 href={WHATSAPP_LINK}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => trackWhatsAppClick({ source_page: "about" })}
               >
-                <Button 
-                  size="lg" 
+                <Button
+                  size="lg"
                   className="text-base px-8 bg-[#25D366] hover:bg-[#20BD5A] text-white border-[#25D366]"
                   data-testid="button-about-hero-whatsapp"
                 >
                   <SiWhatsapp className="mr-2 h-5 w-5" />
-                  WhatsApp Us
+                  WhatsApp Admissions
                 </Button>
               </a>
-              <a 
-                href={`tel:${PHONE_NUMBER}`}
-                onClick={() => trackCallClick({ source_page: "about" })}
-              >
-                <Button 
-                  size="lg" 
-                  className="text-base px-8 bg-white hover:bg-gray-100 text-gray-900 border border-gray-300"
-                  data-testid="button-about-hero-call"
+              <Link href="/programmes">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="text-base px-8"
+                  onClick={() => trackCTAClick("explore_programmes", "about_hero")}
+                  data-testid="button-about-hero-programmes"
                 >
-                  <Phone className="mr-2 h-5 w-5" />
-                  Call Now
+                  Explore Programmes
                 </Button>
-              </a>
+              </Link>
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -206,15 +266,55 @@ export default function About() {
         </div>
       </section>
 
-      {/* SECTION C - Chairperson's Note (Collapsed by default) */}
+      {/* SECTION B2 - Our Programmes */}
       <section className="py-16 md:py-20 bg-card">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-10">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Programmes</h2>
+            <p className="text-muted-foreground text-lg">
+              We offer age-appropriate programmes for children aged 1.5 to 6 years.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            {programmeItems.map((prog, i) => (
+              <Link key={i} href={prog.href}>
+                <Card className="hover:shadow-md transition-shadow cursor-pointer h-full" data-testid={`card-programme-${i}`}>
+                  <CardContent className="pt-6">
+                    <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+                      <prog.icon className="w-6 h-6 text-primary" />
+                    </div>
+                    <h3 className="font-bold text-lg mb-1">{prog.title}</h3>
+                    <p className="text-xs text-primary font-medium mb-3">{prog.age}</p>
+                    <p className="text-sm text-muted-foreground">{prog.copy}</p>
+                  </CardContent>
+                </Card>
+              </Link>
+            ))}
+          </div>
+          <div className="text-center">
+            <Link href="/programmes">
+              <Button
+                variant="outline"
+                size="lg"
+                onClick={() => trackCTAClick("view_all_programmes", "about_programmes")}
+                data-testid="link-about-view-programmes"
+              >
+                View All Programmes
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION C - Chairperson's Note (Collapsed by default) */}
+      <section className="py-16 md:py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl md:text-4xl font-bold mb-6 text-center">A Note from Our Chairperson</h2>
           <div className="max-w-3xl mx-auto">
             <p className="text-muted-foreground leading-relaxed text-center mb-4">
               At Rainbow, parents play a vital role in our journey towards excellence. Together, we shape each child into a confident, skilled learner with a global perspective.
             </p>
-            
+
             <div className="text-center">
               <button
                 onClick={() => setIsChairpersonExpanded(!isChairpersonExpanded)}
@@ -225,7 +325,7 @@ export default function About() {
                 <ChevronDown className={`w-4 h-4 transition-transform ${isChairpersonExpanded ? "rotate-180" : ""}`} />
               </button>
             </div>
-            
+
             {isChairpersonExpanded && (
               <div className="mt-6 space-y-4 text-muted-foreground leading-relaxed bg-background/50 rounded-lg p-6">
                 <p className="italic text-center">
@@ -251,7 +351,7 @@ export default function About() {
       </section>
 
       {/* SECTION D - Curriculum Framework */}
-      <section className="py-16 md:py-20">
+      <section className="py-16 md:py-20 bg-card">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Rainbow Preschool International Curriculum</h2>
@@ -302,8 +402,8 @@ export default function About() {
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link href="/programmes">
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 size="lg"
                 onClick={() => trackCTAClick("explore_programmes", "about_curriculum")}
                 data-testid="link-about-programmes"
@@ -312,7 +412,7 @@ export default function About() {
               </Button>
             </Link>
             <Link href="/contact">
-              <Button 
+              <Button
                 size="lg"
                 onClick={() => trackCTAClick("enquire_admissions", "about_curriculum")}
                 data-testid="link-about-admissions"
@@ -325,7 +425,7 @@ export default function About() {
       </section>
 
       {/* SECTION E - Why Parents Trust Us */}
-      <section className="py-16 md:py-20 bg-card">
+      <section className="py-16 md:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl md:text-4xl font-bold mb-8 text-center">Why Parents Trust Rainbow Preschool</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -348,8 +448,63 @@ export default function About() {
         </div>
       </section>
 
-      {/* SECTION F - Our Journey */}
+      {/* SECTION E2 - Our 6 Centres Across Thane */}
+      <section className="py-16 md:py-20 bg-card">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl md:text-4xl font-bold mb-8 text-center">Our 6 Centres Across Thane</h2>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {centreItems.map((centre, i) => (
+              <Card key={i} data-testid={`card-centre-${i}`}>
+                <CardContent className="pt-5 pb-5">
+                  <div className="flex items-start gap-3">
+                    <MapPin className="w-5 h-5 text-primary mt-0.5 shrink-0" />
+                    <div>
+                      <h3 className="font-semibold">{centre.name}</h3>
+                      <p className="text-xs text-muted-foreground mb-2">{centre.area}</p>
+                      <Link
+                        href={centre.href}
+                        className="text-xs font-medium text-primary hover:underline"
+                        data-testid={`link-centre-${i}`}
+                      >
+                        View Centre →
+                      </Link>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION E3 - FAQ */}
       <section className="py-16 md:py-20">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl md:text-4xl font-bold mb-8 text-center">Frequently Asked Questions</h2>
+          <div className="space-y-3">
+            {faqItems.map((faq, i) => (
+              <div key={i} className="border rounded-lg overflow-hidden" data-testid={`faq-item-${i}`}>
+                <button
+                  className="w-full flex items-center justify-between gap-4 px-5 py-4 text-left font-medium hover:bg-muted/50 transition-colors"
+                  onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                  data-testid={`faq-toggle-${i}`}
+                >
+                  <span>{faq.question}</span>
+                  <ChevronDown className={`w-4 h-4 shrink-0 text-muted-foreground transition-transform ${openFaq === i ? "rotate-180" : ""}`} />
+                </button>
+                {openFaq === i && (
+                  <div className="px-5 pb-4 text-muted-foreground text-sm leading-relaxed">
+                    {faq.answer}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION F - Our Journey */}
+      <section className="py-16 md:py-20 bg-card">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl md:text-4xl font-bold mb-8 text-center">Our Journey</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -370,7 +525,7 @@ export default function About() {
       </section>
 
       {/* SECTION G - Academic Coordinators */}
-      <section className="py-16 md:py-20 bg-card">
+      <section className="py-16 md:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Academic Coordinators</h2>
@@ -448,6 +603,43 @@ export default function About() {
           showRating={false}
           schemaId="about-eeat"
         />
+      </section>
+
+      {/* Final CTA */}
+      <section className="py-16 md:py-20 bg-gradient-to-br from-primary/5 via-accent/5 to-secondary/5">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready to visit Rainbow Preschool?</h2>
+          <p className="text-muted-foreground text-lg mb-8">
+            Book a campus tour and speak with our admissions team — no obligation, no entrance test.
+          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Link href="/contact">
+              <Button
+                size="lg"
+                className="text-base px-8"
+                onClick={() => trackCTAClick("book_visit", "about_final_cta")}
+                data-testid="button-about-final-book-visit"
+              >
+                Book a Visit
+              </Button>
+            </Link>
+            <a
+              href={WHATSAPP_LINK}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackWhatsAppClick({ source_page: "about_final_cta" })}
+            >
+              <Button
+                size="lg"
+                className="text-base px-8 bg-[#25D366] hover:bg-[#20BD5A] text-white border-[#25D366]"
+                data-testid="button-about-final-whatsapp"
+              >
+                <SiWhatsapp className="mr-2 h-5 w-5" />
+                WhatsApp Admissions
+              </Button>
+            </a>
+          </div>
+        </div>
       </section>
 
       <CTASection />
