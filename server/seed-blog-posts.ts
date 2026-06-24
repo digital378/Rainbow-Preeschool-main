@@ -2544,7 +2544,7 @@ Research the school's reputation:
 - Visit the school's website and social media
 - Ask for references from current parents
 
-**Why it matters:** While no school is perfect, consistent positive feedback from multiple parents is a strong indicator of quality. Rainbow Preschool International maintains a 4.7★ Google rating with 3,997+ reviews — one of the highest among preschools in Thane.
+**Why it matters:** While no school is perfect, consistent positive feedback from multiple parents is a strong indicator of quality. Rainbow Preschool International maintains a 4.9★ Google rating with 487+ reviews — one of the highest among preschools in Thane.
 
 ## Sign 10: Alignment with Your Values and Priorities
 
@@ -3159,7 +3159,7 @@ Nursery school fees in Thane vary widely based on the school's reputation, locat
 We're currently accepting admissions for 2026-27 across all six centres in Thane. Here's why thousands of families choose Rainbow:
 
 - 18+ years of trusted excellence since 2007
-- 4.7★ Google rating with 3,997+ reviews
+- 4.9★ Google rating with 487+ reviews
 - 6 centres across Thane (one is always near you)
 - Small batch sizes: 10-12 children per teacher
 - 100% ECE/Montessori certified female staff

@@ -38,7 +38,7 @@ export function BlogCTA({ topic = "general", variant = "mid" }: BlogCTAProps) {
       <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
         {isMid
           ? "18+ years · 6 centres in Thane · 1 lakh+ students"
-          : "Trusted by 1,00,000+ Thane families since 2007 · 4.7★ Google rating · No entrance test"}
+          : "Trusted by 1,00,000+ Thane families since 2007 · 4.9★ Google rating · No entrance test"}
       </p>
       <div className="flex flex-wrap gap-3">
         <a

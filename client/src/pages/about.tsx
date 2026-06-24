@@ -165,7 +165,7 @@ export default function About() {
                 <CardContent className="pt-6 pb-4">
                   <div className="flex items-center justify-center gap-1">
                     <p className="text-2xl md:text-3xl font-bold text-primary">
-                      <CountUp end={4.7} duration={1500} delay={600} decimals={1} />
+                      <CountUp end={4.9} duration={1500} delay={600} decimals={1} />
                     </p>
                     <Star className="w-5 h-5 fill-yellow-400 text-yellow-400" />
                   </div>
