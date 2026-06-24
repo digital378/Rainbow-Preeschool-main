@@ -605,43 +605,6 @@ export default function About() {
         />
       </section>
 
-      {/* Final CTA */}
-      <section className="py-16 md:py-20 bg-gradient-to-br from-primary/5 via-accent/5 to-secondary/5">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready to visit Rainbow Preschool?</h2>
-          <p className="text-muted-foreground text-lg mb-8">
-            Book a campus tour and speak with our admissions team — no obligation, no entrance test.
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link href="/contact">
-              <Button
-                size="lg"
-                className="text-base px-8"
-                onClick={() => trackCTAClick("book_visit", "about_final_cta")}
-                data-testid="button-about-final-book-visit"
-              >
-                Book a Visit
-              </Button>
-            </Link>
-            <a
-              href={WHATSAPP_LINK}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => trackWhatsAppClick({ source_page: "about_final_cta" })}
-            >
-              <Button
-                size="lg"
-                className="text-base px-8 bg-[#25D366] hover:bg-[#20BD5A] text-white border-[#25D366]"
-                data-testid="button-about-final-whatsapp"
-              >
-                <SiWhatsapp className="mr-2 h-5 w-5" />
-                WhatsApp Us
-              </Button>
-            </a>
-          </div>
-        </div>
-      </section>
-
       <CTASection />
     </article>
   );
