@@ -249,7 +249,7 @@ function Router() {
         <Route path="/national-symbols-of-india-for-kids" component={LazyNationalSymbolsOfIndia} />
         <Route path="/solitary-play-activities" component={LazySolitaryPlayActivities} />
         <Route path="/pre-kg-age-guide" component={LazyPreKgAgeGuide} />
-        <Route path="/10-spring-gardening-activitie-for-preschoolers" component={LazySpringGardeningActivities} />
+        <Route path="/10-spring-gardening-activities-for-preschoolers" component={LazySpringGardeningActivities} />
         <Route path="/how-to-motivate-your-kids-for-school-8-ways" component={LazyMotivateKidsForSchool} />
         <Route path="/best-indoor-games-for-kids-at-home" component={LazyIndoorGamesForKids} />
         <Route path="/7-ways-teaching-aids-help-children-learn-better" component={LazyTeachingAidsHelp} />

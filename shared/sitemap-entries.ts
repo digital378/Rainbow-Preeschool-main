@@ -110,12 +110,6 @@ export const SITEMAP_ENTRIES: SitemapEntry[] = [
   { url: "/top-preschools-in-thane", priority: 0.7, changefreq: "monthly" },
   { url: "/testimonials", priority: 0.6, changefreq: "monthly" },
 
-  // ── LEGAL / TRUST PAGES ──────────────────────────────────
-  // Low-priority but indexable — included so they are discovered
-  // through the sitemap rather than only through the footer link.
-  { url: "/terms", priority: 0.3, changefreq: "yearly" },
-  { url: "/privacy", priority: 0.3, changefreq: "yearly" },
-
   // ── LEGACY PAGES – ADMISSION & PLAYGROUP ────────────────
   // Wave-3 consolidation (Apr 2026): /preschool-admission-process-guide was
   // removed here because it now 301-redirects to the commercial keeper

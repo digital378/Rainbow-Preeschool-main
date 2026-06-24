@@ -578,7 +578,7 @@ const staticPages: Record<string, PageSEOData> = {
   // All other commercial, local-SEO, and blog pages retain Bot SSR.
   "/about": {
     title: "About Rainbow Preschool Thane | Since 2007",
-    description: "Learn about Rainbow Preschool International — Thane's trusted preschool since 2007. 6 centres, 1,00,000+ alumni, award-winning early childhood education.",
+    description: "Learn about Rainbow Preschool International — Thane's trusted preschool since 2007. 6 centres, play-based learning, 1,00,000+ alumni. Our story and values.",
     keywords: "about rainbow preschool, preschool thane history, early childhood education thane",
     canonical: `${BASE_URL}/about`,
     lastModified: LAST_UPDATED_ISO,
