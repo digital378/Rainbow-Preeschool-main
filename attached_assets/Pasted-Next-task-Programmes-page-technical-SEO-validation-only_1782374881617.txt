@@ -1,0 +1,131 @@
+Next task: Programmes page technical SEO validation only.
+
+Page:
+https://www.rainbowpreschools.com/programmes
+
+Goal:
+Confirm the Programmes page is technically clean. Do not redesign the page and do not add long content. This page should remain a simple hub page that links parents to the detailed Playgroup, Nursery, and Kindergarten pages.
+
+Do not make code changes yet. First audit and report.
+
+Check the following:
+
+1. Rendering / SSR
+- Confirm whether /programmes is handled through Bot SSR, static SSR, or React-only rendering.
+- Confirm Googlebot sees the same key content as users.
+- Check SSR/client parity for:
+  - title
+  - meta description
+  - H1
+  - programme age ranges
+  - programme links
+  - CTAs
+  - schema, if any
+
+2. Canonical and indexability
+- Confirm canonical is absolute and self-referencing:
+  https://www.rainbowpreschools.com/programmes
+- Confirm robots tag is index, follow.
+- Confirm /programmes is included in sitemap.
+- Confirm no noindex conflict.
+- Check /programmes/ trailing slash behaviour.
+- Check UTM version canonicalises correctly:
+  /programmes?utm_source=test
+
+3. Metadata
+Report current:
+- title
+- meta description
+- canonical
+- OG title/description
+- Twitter title/description
+- H1
+- H2 structure
+
+Flag only if there is mismatch, duplication, missing data, or title cannibalisation.
+
+4. Internal links
+Confirm these links return 200:
+- /playgroup
+- /nursery
+- /kindergarten
+- /preschool-admissions
+- /contact
+- /about
+
+Also check if the page links to all relevant detail pages without broken links.
+
+5. Age consistency
+Confirm programme age ranges are consistent across:
+- /programmes
+- /about
+- /playgroup
+- /nursery
+- /kindergarten
+- visible FAQ content
+- schema, if any
+- llms.txt / llms-full.txt if relevant
+
+Expected current age ranges:
+- Playgroup: 1.5–2.5 years
+- Nursery: 2.5–3.5 years
+- Kindergarten: 3.5–5.5 years
+
+Do not change unless inconsistency is found.
+
+6. Duplication / cannibalisation
+Check whether /programmes is acting as a hub page and not duplicating too much content from:
+- /playgroup
+- /nursery
+- /kindergarten
+- /about
+- homepage
+
+Important:
+Do not recommend adding detailed content here. Detailed content belongs on the individual programme pages.
+
+7. Schema
+Check if /programmes has suitable schema:
+- BreadcrumbList if already used sitewide
+- ItemList or hasPart only if already consistent with site architecture
+- FAQPage only if visible FAQs exist and answers match exactly
+
+Do not add new schema unless there is a clear issue.
+
+8. Wording rules
+Confirm the page does not use:
+- “daycare”
+- “24/7 CCTV”
+- unsupported awards or claims
+
+Preferred wording:
+- Happy Times extended care
+- CCTV-enabled campuses
+- 100% female teaching staff
+
+9. Performance
+Current mobile PageSpeed is weak:
+- Performance around 53
+- LCP around 5.7s
+- unused JS around 509 KiB
+- unused CSS around 25 KiB
+
+Audit only:
+- LCP element
+- heavy images
+- unused JS
+- unused CSS
+- whether any page-specific code is causing avoidable delay
+
+Do not add new packages, sliders, videos, heavy animations, or new large images.
+
+Output format:
+- Executive summary
+- Issues found, if any
+- No-change confirmations
+- Exact files checked
+- Evidence with file names and line numbers
+- Whether code changes are needed or not
+- If fixes are needed, provide a priority-wise fix plan only
+
+Do not edit code until approval.
