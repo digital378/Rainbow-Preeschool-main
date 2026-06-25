@@ -44,7 +44,7 @@ const programmeDetails: Record<string, { features: string[]; schedule: string; a
   "happy-times": {
     features: ["Safe and nurturing environment", "Flexible hours for working parents", "Nutritious meals", "Engaging activities throughout the day"],
     schedule: "Extended hours available",
-    activities: ["100% female staff", "Homely care for children", "CCTV surveillance across all daycare areas"],
+    activities: ["100% female staff", "Homely care for children", "CCTV-enabled care areas"],
     image: "/images/optimized/happy-times-daycare-kids.webp",
   },
 };
@@ -69,8 +69,8 @@ export default function Programmes() {
     <article className="pt-20 md:pt-24">
       <SEO
         title="Preschool Programmes in Thane | Rainbow Preschool"
-        description="Explore Rainbow Preschool Thane programmes — Playgroup (1.5–2.5 yrs), Nursery (2.5–3.5 yrs), Kindergarten (3.5–5.5 yrs) & Daycare. Since 2007."
-        keywords="preschool programmes in thane, rainbow preschool curriculum, playgroup in thane, nursery in thane, kindergarten thane, daycare thane, playgroup programme, nursery curriculum, kg admission thane, lkg ukg thane"
+        description="Rainbow Preschool offers Playgroup (1.5–2.5 yrs), Nursery (2.5–3.5 yrs), Kindergarten (3.5–5.5 yrs). Book a free campus visit today."
+        keywords="preschool programmes in thane, rainbow preschool curriculum, playgroup in thane, nursery in thane, kindergarten thane, playgroup programme, nursery curriculum, kg admission thane, lkg ukg thane"
         canonical="/programmes"
       />
       {/* Hero Section */}

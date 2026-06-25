@@ -97,7 +97,7 @@ export const programmes = [
   {
     id: "kindergarten",
     name: "Kindergarten",
-    ageRange: "3.5 - 5 years",
+    ageRange: "3.5 - 5.5 years",
     description: "Exciting learning experience adding sophisticated skills in different subjects: English, Math, EVS, GK, Art & Craft",
     icon: "graduation-cap",
     image: "/images/optimized/kindergarten-kids-colorful-mats.webp",
