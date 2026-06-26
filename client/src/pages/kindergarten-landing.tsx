@@ -348,7 +348,7 @@ const faqs = [
   },
   {
     question: "Is the kindergarten environment safe for my child?",
-    answer: "Every Rainbow Preschool kindergarten centre in Thane prioritises child safety. All centres have trained and experienced female teachers, 24/7 CCTV monitoring, child-safe classrooms with age-appropriate furniture, and regularly sanitised premises. We also maintain a secure entry-exit system and ensure that every child is supervised at all times, whether in the classroom, during outdoor play, or at assembly."
+    answer: "Every Rainbow Preschool kindergarten centre in Thane prioritises child safety. All centres have trained and experienced female teachers, CCTV-enabled classrooms, child-safe classrooms with age-appropriate furniture, and regularly sanitised premises. We also maintain a secure entry-exit system and ensure that every child is supervised at all times, whether in the classroom, during outdoor play, or at assembly."
   },
   {
     question: "Do you send regular updates on my child's progress in kindergarten?",
@@ -370,7 +370,7 @@ export default function KindergartenLanding() {
   return (
     <div className="pt-20 md:pt-24">
       <SEO
-        title="Kindergarten in Thane | Trusted KG Programme (4–6 yrs) | Rainbow"
+        title="Kindergarten in Thane | KG Programme (3.5–5.5 yrs) | Rainbow"
         description="Kindergarten in Thane (Jr. KG & Sr. KG) for ages 3.5–5.5 — school-readiness covering literacy, numeracy, and life skills. Enquire for 2026-27."
         keywords="kindergarten school in thane, kindergarten near me, best kindergarten school, kindergarten admission near me, lkg admission near me, ukg admission near me, kindergarten curriculum, school readiness program, kindergarten for kids"
         canonical="https://www.rainbowpreschools.com/kindergarten"
@@ -574,21 +574,21 @@ export default function KindergartenLanding() {
               </Card>
               <Card className="text-center p-6">
                 <Star className="w-10 h-10 text-secondary mx-auto mb-3" />
-                <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground whitespace-nowrap">
+                <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground whitespace-nowrap min-h-[2.5rem] flex items-center justify-center">
                   <CountUp end={18} duration={1500} delay={200} suffix="+" />
                 </div>
                 <div className="text-sm text-muted-foreground">Years of Excellence</div>
               </Card>
               <Card className="text-center p-6">
                 <MapPin className="w-10 h-10 text-accent mx-auto mb-3" />
-                <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground whitespace-nowrap">
+                <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground whitespace-nowrap min-h-[2.5rem] flex items-center justify-center">
                   <CountUp end={6} duration={1500} delay={400} prefix="0" />
                 </div>
                 <div className="text-sm text-muted-foreground">Centres in Thane</div>
               </Card>
               <Card className="text-center p-6">
                 <GraduationCap className="w-10 h-10 text-green-500 mx-auto mb-3" />
-                <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground whitespace-nowrap">
+                <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground whitespace-nowrap min-h-[2.5rem] flex items-center justify-center">
                   <CountUp end={100} duration={1500} delay={600} suffix="%" />
                 </div>
                 <div className="text-sm text-muted-foreground">Grade 1 Ready</div>
@@ -604,7 +604,7 @@ export default function KindergartenLanding() {
           <div className="text-center mb-10">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Kindergarten in Thane — School-Ready by Grade 1</h2>
             <p className="text-muted-foreground text-lg max-w-3xl mx-auto">
-              Looking for the best <strong>kindergarten in Thane</strong>? Rainbow Preschool International prepares 4–6 year olds for the demands of Grade 1 with structured literacy, numeracy, and life-skills programmes — across 6 trusted Thane West centres since 2007.
+              Looking for the best <strong>kindergarten in Thane</strong>? Rainbow Preschool International prepares 3.5–5.5 year olds for the demands of Grade 1 with structured literacy, numeracy, and life-skills programmes — across 6 trusted Thane West centres since 2007.
             </p>
           </div>
           <div className="grid md:grid-cols-2 gap-6 mb-10">
@@ -695,8 +695,8 @@ export default function KindergartenLanding() {
             </Card>
             <Card className="text-center p-6">
               <Eye className="w-12 h-12 text-blue-500 mx-auto mb-4" />
-              <h3 className="font-semibold text-lg mb-2">CCTV Surveillance</h3>
-              <p className="text-sm text-muted-foreground">24/7 monitoring across all areas of the premises</p>
+              <h3 className="font-semibold text-lg mb-2">CCTV Surveillance in Classrooms</h3>
+              <p className="text-sm text-muted-foreground">Cameras cover classrooms and common areas for child safety.</p>
             </Card>
             <Card className="text-center p-6">
               <MessageSquare className="w-12 h-12 text-purple-500 mx-auto mb-4" />

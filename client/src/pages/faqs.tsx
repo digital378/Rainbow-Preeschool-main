@@ -35,7 +35,7 @@ const faqCategories: FAQCategory[] = [
       },
       {
         question: "What age groups do you accept?",
-        answer: "We accept children from 1.5 to 6 years of age. Our programmes are: Playgroup (1.5-2.5 years), Nursery (2.5–3.5 years), and Kindergarten / Jr. KG / Sr. KG (4-6 years). We also offer Happy Times extended care for ages 2-10.",
+        answer: "We accept children from 1.5 to 6 years of age. Our programmes are: Playgroup (1.5-2.5 years), Nursery (2.5–3.5 years), and Kindergarten / Jr. KG / Sr. KG (3.5–5.5 years). We also offer Happy Times extended care for ages 2-10.",
       },
       {
         question: "What documents are required for admission?",

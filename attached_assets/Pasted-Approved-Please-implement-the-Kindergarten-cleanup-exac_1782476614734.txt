@@ -1,0 +1,197 @@
+Approved. Please implement the Kindergarten cleanup exactly as per the audit.
+
+Page:
+https://www.rainbowpreschools.com/kindergarten
+
+Goal:
+Fix all confirmed Kindergarten SEO, age consistency, safety wording, and CountUp CLS issues.
+
+Do not redesign the page.
+Do not add new sections.
+Do not change H1, canonical, sitemap, redirects, breadcrumbs, CTA structure, gallery images, EEATSignals, or schema architecture.
+Do not add new packages.
+
+Approved Kindergarten age range:
+3.5–5.5 years
+
+Approved safety wording:
+- CCTV-enabled classrooms
+- CCTV-enabled campuses
+- CCTV surveillance in classrooms and common areas
+- cameras cover classrooms and common areas for child safety
+- 100% female teaching staff
+- secure pickup practices
+- child-friendly classrooms
+- daily hygiene routines
+
+Important CCTV wording rule:
+Do not avoid the word "CCTV surveillance" completely.
+Avoid only unsupported broad claims such as:
+- "24/7 CCTV monitoring"
+- "24/7 CCTV surveillance"
+- "24/7 monitoring across all areas"
+- "surveillance across all areas"
+
+Preferred wording:
+- "CCTV-enabled campuses"
+- "CCTV-enabled classrooms"
+- "CCTV surveillance in classrooms and common areas"
+- "Cameras cover classrooms and common areas for child safety."
+
+Avoid:
+- 4–6 years
+- 4 to 6 years
+- 24/7 CCTV
+- 24/7 monitoring
+- daycare
+- old rating references such as 4.7, 3,997, or 3997
+
+Implement these fixes:
+
+1. Title fix in SSR and client
+Files:
+- server/ssr-pages.ts
+- client/src/pages/kindergarten-landing.tsx
+
+Replace current title:
+"Kindergarten in Thane | Trusted KG Programme (4–6 yrs) | Rainbow"
+
+With:
+"Kindergarten in Thane | KG Programme (3.5–5.5 yrs) | Rainbow"
+
+Reason:
+Fix wrong age and keep title within SEO length limit.
+
+2. SSR meta description age fix
+File:
+server/ssr-pages.ts
+
+Replace "(4–6 yrs)" with "(3.5–5.5 yrs)" in the Kindergarten SSR description.
+
+Do not change the client meta description because it already has the correct 3.5–5.5 age range.
+
+3. SSR contentSection age fixes
+File:
+server/ssr-pages.ts
+
+Replace:
+"children aged 4 to 6 years"
+
+With:
+"children aged 3.5 to 5.5 years"
+
+Apply in all Kindergarten SSR contentSections found in the audit.
+
+4. Bot SSR nav age fix
+File:
+server/bot-ssr.ts
+
+Replace:
+"Kindergarten (4–6 yrs)"
+
+With:
+"Kindergarten (3.5–5.5 yrs)"
+
+5. Client body age fix
+File:
+client/src/pages/kindergarten-landing.tsx
+
+Replace:
+"prepares 4–6 year olds"
+
+With:
+"prepares 3.5–5.5 year olds"
+
+6. Cross-page age references
+Files:
+- shared/legacy-pages-data.ts
+- client/src/pages/faqs.tsx
+- client/src/pages/readiness-quiz.tsx
+
+Replace all Kindergarten references:
+"Kindergarten (4-6 years)"
+"Kindergarten / Jr. KG / Sr. KG (4-6 years)"
+"Prepares children for Kindergarten (4-6 years)"
+
+With:
+"Kindergarten (3.5–5.5 years)"
+"Kindergarten / Jr. KG / Sr. KG (3.5–5.5 years)"
+"Prepares children for Kindergarten (3.5–5.5 years)"
+
+7. SSR FAQPage safety wording
+File:
+server/ssr-pages.ts
+
+In the Kindergarten FAQPage answer, replace:
+"24/7 CCTV monitoring"
+
+With:
+"CCTV-enabled classrooms"
+
+8. Client FAQ safety wording
+File:
+client/src/pages/kindergarten-landing.tsx
+
+Replace:
+"24/7 CCTV monitoring"
+
+With:
+"CCTV-enabled classrooms"
+
+9. Safety card wording
+File:
+client/src/pages/kindergarten-landing.tsx
+
+Replace heading:
+"CCTV Surveillance"
+
+With:
+"CCTV Surveillance in Classrooms"
+
+Replace body:
+"24/7 monitoring across all areas..."
+
+With:
+"Cameras cover classrooms and common areas for child safety."
+
+10. CountUp CLS fix
+File:
+client/src/pages/kindergarten-landing.tsx
+
+For the three CountUp stat number wrapper divs, add stable height reservation:
+min-h-[2.5rem] flex items-center justify-center
+
+Do not change the static "1 Lac+" stat unless needed.
+Do not remove CountUp.
+Do not change stat values.
+
+After implementation, run:
+- npm run build
+- npx tsx scripts/check-h1-parity.ts
+- npx tsx scripts/check-description-length.ts
+- npx tsx scripts/check-no-title-cannibalisation.ts
+- npx tsx scripts/check-no-client-schema-injection.ts
+
+Also run searches:
+- "4–6"
+- "4 - 6"
+- "4-6"
+- "4 to 6"
+- "24/7 CCTV"
+- "24/7 monitoring"
+- "daycare"
+- "4.7"
+- "3,997"
+- "3997"
+
+Report:
+- exact files changed
+- exact lines changed
+- build result
+- guard results
+- remaining wrong Kindergarten age references, if any
+- remaining banned wording references, if any
+- confirmation that SSR and client title now match
+- confirmation that title length is under 65 characters
+- confirmation that H1 remained unchanged
+- confirmation that no schema architecture was changed

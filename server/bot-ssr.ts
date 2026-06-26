@@ -336,7 +336,7 @@ export function setupBotSSR(app: Express) {
             links: [
               { text: "Playgroup (1.5–2.5 yrs)", url: "/playgroup" },
               { text: "Nursery (2.5–3.5 yrs)", url: "/nursery" },
-              { text: "Kindergarten (4–6 yrs)", url: "/kindergarten" },
+              { text: "Kindergarten (3.5–5.5 yrs)", url: "/kindergarten" },
               { text: "Preschool Admissions", url: "/preschool-admissions" },
               { text: "Contact Us", url: "/contact" },
             ],
