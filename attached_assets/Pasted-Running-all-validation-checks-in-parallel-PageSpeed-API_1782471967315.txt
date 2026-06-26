@@ -1,0 +1,48 @@
+Running all validation checks in parallel — PageSpeed API, live page source, and a screenshot:
+
+
+5 actions
+The PageSpeed API call timed out / returned empty. Let me check the raw error and retry it properly:
+
+
+2 actions
+The free API quota is exhausted at the environment level (429). Let me screenshot the live PageSpeed Insights results page directly instead:
+
+
+2 actions
+The PSI page caught mid-load (the screenshot redirected to a real analysis riarnbose1 from 7:03 AM today, but it was still processing when captured). The API quota is exhausted for this environment. Here's the complete validation report based on everything I could verify:
+
+Live /nursery Validation Report
+1. PageSpeed — Not automatable today
+The PageSpeed Insights API returned HTTP 429 (daily quota exhausted for this environment). The web.dev page navigated to a real in-progress analysis — to see the result, open this URL directly in your browser:
+
+https://pagespeed.web.dev/analysis/https-www-rainbowpreschools-com-nursery/riarnbose1?form_factor=mobile
+
+The analysis was triggered at Jun 26, 2026 – 7:03 AM so results should be available.
+
+2. Content checks — all passed ✅
+Check	Result	Live value
+Title has 2.5–3.5 yrs	✅	Nursery School in Thane (2.5–3.5 yrs) | Rainbow Preschool
+H1 has 2.5 to 3.5 Years	✅	Best Nursery School in Thane for Children Aged 2.5 to 3.5 Years
+Meta description correct	✅	Looking for nursery near me in Thane? Rainbow Preschool's Nursery (2.5–3.5 yrs) builds phonics, numeracy & social skills…
+No 24/7 CCTV monitoring	✅	absent
+No 24/7 monitoring	✅	absent
+No wrong 2.5–4 years Nursery age	✅	absent
+No daycare	✅	absent
+3. Links and CTAs — all verified ✅
+Item	Result	Note
+/contact	✅	present in HTML
+/preschool-admissions	✅	present
+/kindergarten	✅	present
+All 6 centre pages	✅	Manpada, Hariniwas, Anand Nagar, Dhokali, Kalwa, Kasarvadavali all present
+WhatsApp wa.me	✅	client-rendered — visible in screenshot as WhatsApp Us button
+Enquire Now	✅	visible in screenshot
+Request a Free Callback form	✅	visible in screenshot — form with name, mobile, age, centre dropdowns
+4. Visual confirmation
+Screenshot confirms the live hero shows:
+
+"Ages 2.5 – 3.5 Years" badge
+Correct H1 in large bold type
+"Enquire Now" + "WhatsApp Us" CTAs
+Contact form with "Request a Free Callback"
+Everything except the PageSpeed number is fully validated and clean. Open the analysis link above in your browser to get the new CLS/LCP/FCP numbers and compare against the 29/0.499/7.3s baseline.
