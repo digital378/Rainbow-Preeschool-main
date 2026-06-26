@@ -1,0 +1,78 @@
+Next task: Nursery Batch 2 — CLS and mobile performance fix only.
+
+Page:
+https://www.rainbowpreschools.com/nursery
+
+Goal:
+Fix the confirmed CLS issue on /nursery without redesigning the page.
+
+Current PageSpeed issue:
+- Mobile performance around 29
+- CLS around 0.499
+- LCP around 7.3s
+- FCP around 2.3s
+- unused JS around 500 KiB
+
+Important:
+Do not change page content, title, H1, meta description, canonical, schema, sitemap, CTAs, layout structure, images, or section order.
+Do not add new packages.
+Do not redesign.
+Do not touch Kindergarten, Best Preschool, Play School Near Me, blog content, or centre pages in this batch.
+
+Implement only safe CLS fixes:
+
+1. Font swap CLS fix
+Inspect client/index.html Google Fonts loading.
+
+Current audit suggests font swap from Poppins may be causing large mobile CLS.
+
+Apply the safest no-package fix:
+- Either preload the exact Poppins woff2 font files used above the fold
+- Or adjust font loading to reduce layout shift safely
+
+Do not break font loading.
+Do not add heavy font variants.
+Use the minimum required font preload only.
+
+2. CountUp stat cards height reservation
+File:
+client/src/pages/nursery-landing.tsx
+
+For the stat number containers around the CountUp values, add a fixed or minimum height reservation, for example:
+min-h-[2.5rem]
+
+Goal:
+Prevent stat card text from changing layout height during CountUp animation.
+
+Do not remove CountUp.
+Do not change stat values.
+Do not change visual design beyond reserving stable space.
+
+3. Re-check CLS sources
+After fixes, confirm:
+- no image is causing CLS
+- StickyMobileCTA is not causing CLS
+- ActivitiesSection animations are transform/opacity only
+- gallery images remain lazy-loaded with explicit dimensions
+- no new layout shift was introduced
+
+After implementation, run:
+- npm run build
+- npx tsx scripts/check-h1-parity.ts
+- npx tsx scripts/check-description-length.ts
+- npx tsx scripts/check-no-title-cannibalisation.ts
+- npx tsx scripts/check-no-client-schema-injection.ts
+
+Then run mobile PageSpeed again for:
+https://www.rainbowpreschools.com/nursery
+
+Report:
+- exact files changed
+- exact code changes
+- build result
+- guard results
+- new mobile Performance score
+- new CLS
+- new LCP
+- whether CLS dropped below 0.1
+- whether there was any negative impact on layout or content

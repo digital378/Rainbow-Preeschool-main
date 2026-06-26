@@ -42,7 +42,11 @@
          the web font once it arrives. The @font-face metric overrides in
          index.css are tuned so the fallback (Arial Bold) is dimensionally
          identical to Poppins, keeping CLS near zero while the swap is visible.
-         Poppins 800 is loaded because the hero uses font-extrabold. -->
+         Poppins 800 is loaded because the hero uses font-extrabold.
+         The woff2 preload below fetches the Poppins 700 Latin file directly
+         so it arrives in the same network round-trip as the CSS, eliminating
+         the two-hop delay (CSS → then font) that caused swap-visible CLS. -->
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="https://fonts.gstatic.com/s/poppins/v24/pxiByp8kv8JHgFVrLCz7Z1xlFd2JQEk.woff2">
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@600;700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@600;700;800&display=swap"></noscript>
     
