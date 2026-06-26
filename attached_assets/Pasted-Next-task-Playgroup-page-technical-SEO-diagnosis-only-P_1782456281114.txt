@@ -1,0 +1,198 @@
+Next task: Playgroup page technical SEO diagnosis only.
+
+Page:
+https://www.rainbowpreschools.com/playgroup
+
+Goal:
+Audit the Playgroup page for technical SEO, SSR/client alignment, metadata, canonical, sitemap, duplication, schema, internal links, wording, age consistency, and performance risks.
+
+Do not make code changes yet.
+Do not redesign the page.
+Do not add new sections unless a clear issue is found and approved later.
+
+Important context:
+We already cleaned:
+- /about
+- /programmes
+
+Current confirmed programme age ranges:
+- Playgroup: 1.5–2.5 years
+- Nursery: 2.5–3.5 years
+- Kindergarten: 3.5–5.5 years
+
+The Playgroup page should be the detailed page for Playgroup and should not duplicate too much of /programmes, /about, or homepage.
+
+Files to inspect:
+- client/src/pages/playgroup.tsx
+- client/src/pages/playgroup-landing.tsx if used
+- server/ssr-pages.ts /playgroup entry
+- shared/schema.ts
+- SEO config files
+- sitemap generation files
+- redirects files
+- llms.txt / llms-full.txt if relevant
+
+Audit these areas:
+
+1. Rendering / SSR
+- Confirm whether /playgroup is handled through Bot SSR, static SSR, or React-only rendering.
+- Confirm Googlebot receives pre-rendered HTML.
+- Compare SSR output and client-rendered content for:
+  - title
+  - meta description
+  - H1
+  - age range
+  - CTA labels
+  - programme details
+  - internal links
+  - schema
+- Flag any SSR/client drift.
+
+2. Canonical and indexability
+Confirm:
+- canonical is absolute and self-referencing:
+  https://www.rainbowpreschools.com/playgroup
+- robots tag is index, follow
+- /playgroup is included in sitemap
+- no noindex conflict
+- trailing slash /playgroup/ redirects or canonicalises correctly
+- UTM version canonicalises correctly:
+  /playgroup?utm_source=test
+
+3. Metadata
+Report current:
+- title
+- meta description
+- canonical
+- robots
+- OG title/description
+- Twitter title/description
+- H1
+- H2/H3 structure
+
+Flag:
+- duplicate title
+- duplicate description
+- missing OG/Twitter
+- title cannibalisation
+- description over 155 chars
+- mismatch between SSR and client metadata
+
+4. Age consistency
+Confirm Playgroup age range is consistently shown as:
+1.5–2.5 years
+
+Check across:
+- /playgroup visible content
+- /playgroup SSR content
+- /programmes
+- /about
+- shared/schema.ts
+- schema JSON-LD
+- FAQs, if any
+- llms.txt / llms-full.txt if relevant
+
+5. Duplication / cannibalisation
+Compare /playgroup with:
+- /programmes
+- /about
+- homepage
+- /nursery
+- /kindergarten
+
+Check whether /playgroup has enough unique detailed Playgroup content and does not simply repeat the Programmes page.
+
+Expected structure:
+- /programmes = hub page
+- /playgroup = detailed Playgroup landing page
+
+Flag any repeated copy blocks or competing keyword targeting.
+
+6. Internal links
+Confirm important links return 200:
+- /programmes
+- /nursery
+- /kindergarten
+- /preschool-admissions
+- /contact
+- /about
+- relevant centre/location pages if linked
+- WhatsApp CTA if used
+
+Check whether Playgroup links naturally back to /programmes and admissions/contact pages.
+
+7. Schema
+Check all schema on /playgroup:
+- BreadcrumbList
+- Preschool / EducationalOrganization if present
+- Course or EducationalOccupationalProgram if used
+- FAQPage only if visible FAQs exist and answers match exactly
+- AggregateRating only if using verified rating source consistently
+
+Confirm:
+- no client-side schema injection issue
+- no schema/visible content mismatch
+- no old 4.7 / 3997 rating references
+- rating, if shown, uses verified 4.9 / 487+ source
+
+8. Wording rules
+Confirm the page does not use:
+- "daycare"
+- "24/7 CCTV"
+- unsupported awards or unverifiable claims
+- outdated rating references
+
+Preferred wording:
+- Happy Times extended care, if needed
+- CCTV-enabled campuses
+- 100% female teaching staff
+- secure pickup practices
+- child-friendly classrooms
+- daily hygiene routines
+
+9. CTA and conversion review
+Check if CTAs are clear and admission-focused:
+- Book a Visit
+- WhatsApp Admissions
+- Enquire Now
+- View Programmes
+- Contact Admissions
+
+Flag confusing, duplicated, or weak CTA labels.
+
+10. Performance
+Current mobile PageSpeed:
+- Performance around 70
+- LCP around 5.6s
+- FCP around 2.3s
+- CLS 0
+- unused JS around 498 KiB
+- unused CSS around 24 KiB
+
+Audit:
+- LCP element
+- images above the fold
+- image dimensions
+- lazy loading
+- unused JS/CSS
+- heavy components
+- sliders/videos/animations if any
+- page-specific performance issues versus global JS issue
+
+Do not recommend new packages, sliders, videos, heavy animations, or large new images.
+
+11. Output format
+Provide:
+- Executive summary
+- Critical issues
+- High-priority issues
+- Medium-priority improvements
+- Low-priority improvements
+- No-change confirmations
+- Exact files checked
+- Evidence with file names and line numbers
+- Recommended implementation order
+- What not to change
+- Tests and guards to run
+
+Do not edit code yet. First provide the diagnosis and fix plan for approval.
