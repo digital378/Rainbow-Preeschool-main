@@ -187,7 +187,7 @@ const _videoSchema = {
   "name": "Rainbow Preschool International — Campus Walkthrough",
   "description": `Take a virtual tour of Rainbow Preschool International's campus in Thane. See our colourful classrooms, safe play areas, and nurturing learning environment designed for children aged ${PLAYGROUP.ageMin} to ${KINDERGARTEN.ageMax} years.`,
   "thumbnailUrl": "https://www.rainbowpreschools.com/og-image.jpg",
-  "uploadDate": "2025-01-15",
+  "uploadDate": "2025-01-15T00:00:00+05:30",
   "contentUrl": "https://www.rainbowpreschools.com/assets/RPS_Walkthrough_Video_-_Website_1_1766126796450.mp4",
   "embedUrl": "https://www.rainbowpreschools.com/",
   "duration": "PT1M30S",
