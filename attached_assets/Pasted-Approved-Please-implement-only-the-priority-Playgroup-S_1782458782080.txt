@@ -1,0 +1,135 @@
+Approved. Please implement only the priority Playgroup SEO clean-up fixes below.
+
+Page:
+https://www.rainbowpreschools.com/playgroup
+
+Do not redesign the page.
+Do not add new sections.
+Do not change title, H1, canonical, sitemap, redirects, schema architecture, layout, CTAs, or performance-related components.
+Do not add new packages.
+
+Implement only these fixes:
+
+1. Sync client meta description with SSR
+File:
+client/src/pages/playgroup-landing.tsx
+
+Replace the current client meta description with:
+"Enroll your toddler in our Playgroup (1.5–2.5 yrs) — play-based learning and gentle socialisation across Rainbow Preschool's 6 Thane West centres."
+
+Reason:
+Fix SSR/client meta description drift.
+
+2. Remove "24/7 CCTV" wording from visible FAQ
+File:
+client/src/pages/playgroup-landing.tsx
+
+Replace:
+"24/7 CCTV surveillance"
+
+With safer wording:
+"CCTV-enabled classrooms, child-proofed furniture, and regularly sanitised spaces"
+
+Reason:
+Use approved safety wording and avoid unsupported "24/7 CCTV" claim.
+
+3. Remove "24/7 CCTV monitoring" from SSR FAQPage schema
+File:
+server/ssr-pages.ts
+
+In the /playgroup FAQPage Q5 answer, replace:
+"24/7 CCTV monitoring"
+
+With:
+"CCTV-enabled classrooms"
+
+Keep the schema answer aligned with visible page wording as much as possible.
+
+Reason:
+Avoid unsupported safety wording in structured data.
+
+4. Fix Nursery age range in SSR FAQPage schema
+File:
+server/ssr-pages.ts
+
+In the /playgroup FAQPage answer "How is playgroup different from nursery?", replace:
+"Nursery (2.5–4 years)"
+
+With:
+"Nursery (2.5–3.5 years)"
+
+Reason:
+Keep Nursery age range consistent across the site.
+
+5. Fix /branches internal link chain
+File:
+client/src/pages/playgroup-landing.tsx
+
+Replace href="/branches" with the correct direct live route.
+
+If this link is meant for centre/location discovery, use:
+href="/contact"
+
+Or, if there is already a correct centres page route, use that exact route.
+
+Reason:
+Avoid internal link passing through a 301 redirect.
+
+6. Remove "24/7 monitoring" from CCTV card body
+File:
+client/src/pages/playgroup-landing.tsx
+
+Replace:
+"24/7 monitoring across all areas"
+
+With:
+"Monitoring across key campus areas"
+
+Reason:
+Avoid unsupported "24/7" claim while keeping the safety message.
+
+7. Remove the word "daycare" from the FAQ Q&A
+File:
+client/src/pages/playgroup-landing.tsx
+
+Current FAQ:
+"How is playgroup different from daycare or creche?"
+
+Reword without using "daycare":
+"How is playgroup different from basic child supervision?"
+
+Answer should explain:
+Playgroup is a structured early learning programme with play-based activities, social interaction, language development, motor skills, and teacher-led routines.
+
+Do not use the word "daycare" anywhere in the visible Playgroup page copy.
+
+Do not implement optional internal link additions yet:
+- Do not add /kindergarten link now.
+- Do not add /programmes link now.
+We will review internal linking separately after this cleanup.
+
+Important:
+The FAQPage schema and visible FAQ content currently do not fully match. Do not attempt a full FAQ rewrite now. Only fix the safety wording and age inconsistency in the existing schema. After this batch, report whether a separate FAQ schema alignment task is needed.
+
+After implementation, run:
+- npm run build
+- check-h1-parity
+- check-description-length
+- check-no-title-cannibalisation
+- check-no-client-schema-injection
+
+Also run searches for:
+- "daycare" in client/src/pages/playgroup-landing.tsx
+- "24/7 CCTV" in client/src/pages/playgroup-landing.tsx and server/ssr-pages.ts
+- "24/7 monitoring" in client/src/pages/playgroup-landing.tsx
+- "2.5–4 years" and "2.5-4 years" in server/ssr-pages.ts
+
+Then report:
+- exact files changed
+- exact lines changed
+- build result
+- guard results
+- confirmation that visible Playgroup copy no longer contains "daycare"
+- confirmation that "24/7 CCTV" no longer appears in Playgroup visible copy or SSR schema
+- confirmation that Nursery age is corrected to 2.5–3.5 years in Playgroup SSR FAQ schema
+- whether FAQPage schema still has answer mismatch with visible FAQs and should be handled as a separate task

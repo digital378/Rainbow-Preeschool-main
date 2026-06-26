@@ -342,15 +342,15 @@ const faqs = [
   },
   {
     question: "Is the playgroup safe for my toddler?",
-    answer: "Safety is the top priority at every Rainbow Preschool playgroup centre in Thane. All our centres have 100% trained female staff, 24/7 CCTV surveillance, child-proofed furniture, and regularly sanitized classrooms. We maintain small batch sizes of 10-12 children per class so every toddler receives individual attention. Our premises are designed specifically for young children with rounded corners, non-toxic materials, and secure entry-exit systems."
+    answer: "Safety is the top priority at every Rainbow Preschool playgroup centre in Thane. All our centres have 100% trained female staff, CCTV-enabled classrooms, child-proofed furniture, and regularly sanitized classrooms. We maintain small batch sizes of 10-12 children per class so every toddler receives individual attention. Our premises are designed specifically for young children with rounded corners, non-toxic materials, and secure entry-exit systems."
   },
   {
     question: "What will my child learn in playgroup?",
     answer: "In the playgroup programme at Rainbow Preschool Thane, your toddler will develop essential early learning skills through a carefully designed play-based curriculum. This includes fine and gross motor coordination through art and movement activities, language development through rhymes, songs, and storytelling, social skills through group circle time and guided free play, cognitive skills through sensory exploration and age-appropriate puzzles, and emotional growth through a nurturing and supportive classroom environment."
   },
   {
-    question: "How is playgroup different from daycare or creche?",
-    answer: "A playgroup is a structured early learning programme, not a daycare or creche. At Rainbow Preschool Thane, our playgroup follows a planned curriculum that focuses on your child's cognitive, social, emotional, and physical development through guided play-based activities. Unlike daycare, playgroup has specific learning goals for each term — including language development, motor skills, and social interaction — delivered by trained early childhood educators in a classroom setting."
+    question: "How is playgroup different from informal childcare?",
+    answer: "A playgroup is a structured early learning programme with a planned curriculum focused on your child's cognitive, social, emotional, and physical development through guided play-based activities. Unlike informal childcare arrangements, Rainbow Preschool's playgroup has specific learning goals for each term — including language development, motor skills, and social interaction — all delivered by trained early childhood educators in a proper classroom setting."
   },
   {
     question: "What does a typical day at Rainbow Playgroup look like?",
@@ -381,7 +381,7 @@ export default function PlaygroupLanding() {
     <div className="pt-20 md:pt-24">
       <SEO
         title="Playgroup in Thane (1.5–2.5 yrs) | Rainbow Preschool"
-        description="Playgroup in Thane for toddlers aged 1.5–2.5 years — play-based early learning in safe, nurturing classrooms across 6 Rainbow Preschool centres."
+        description="Enroll your toddler in our Playgroup (1.5–2.5 yrs) — play-based learning and gentle socialisation across Rainbow Preschool's 6 Thane West centres."
         keywords="playgroup in thane, playgroup near me, best playgroup, playgroup admission near me, playgroup for toddlers, playgroup school in thane, early learning playgroup, play based playgroup, best playgroup in thane"
         canonical="https://www.rainbowpreschools.com/playgroup"
       />
@@ -623,7 +623,7 @@ export default function PlaygroupLanding() {
               <p className="text-muted-foreground mb-4">
                 With centres in <strong>Manpada, Hariniwas (Panchpakadi), Anand Nagar, Dhokali, Kalwa and Kasarvadavali</strong>, most Thane West homes are within a 10-minute drive of a Rainbow playgroup. We're easy to reach from Ghodbunder Road, LBS Marg, Pokhran Road, and the Eastern Express Highway.
               </p>
-              <Link href="/branches" className="text-primary font-medium hover:underline" data-testid="link-find-nearest-centre">
+              <Link href="/contact" className="text-primary font-medium hover:underline" data-testid="link-find-nearest-centre">
                 Find your nearest centre →
               </Link>
             </Card>
@@ -706,7 +706,7 @@ export default function PlaygroupLanding() {
             <Card className="text-center p-6">
               <Eye className="w-12 h-12 text-blue-500 mx-auto mb-4" />
               <h3 className="font-semibold text-lg mb-2">CCTV Surveillance</h3>
-              <p className="text-sm text-muted-foreground">24/7 monitoring across all areas of the premises</p>
+              <p className="text-sm text-muted-foreground">Monitoring across key campus areas</p>
             </Card>
             <Card className="text-center p-6">
               <MessageSquare className="w-12 h-12 text-purple-500 mx-auto mb-4" />
