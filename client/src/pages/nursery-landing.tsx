@@ -354,7 +354,7 @@ const faqs = [
   },
   {
     question: "Is the nursery environment safe for my child?",
-    answer: "Every Rainbow Preschool nursery centre in Thane is designed with your child's safety as the top priority. All centres have 100% trained female staff, 24/7 CCTV monitoring, child-proofed classrooms with rounded furniture, and regularly sanitised spaces. We maintain small batch sizes of 12-15 children per class, ensuring each child receives personalised attention and care throughout the day."
+    answer: "Every Rainbow Preschool nursery centre in Thane is designed with your child's safety as the top priority. All centres have 100% trained female staff, CCTV-enabled classrooms, child-proofed furniture, and regularly sanitised spaces. We maintain small batch sizes of 12-15 children per class, ensuring each child receives personalised attention and care throughout the day."
   },
   {
     question: "How does nursery prepare my child for kindergarten?",
@@ -380,7 +380,7 @@ export default function NurseryLanding() {
   return (
     <div className="pt-20 md:pt-24">
       <SEO
-        title="Nursery School in Thane (2.5–4 yrs) | Rainbow Preschool"
+        title="Nursery School in Thane (2.5–3.5 yrs) | Rainbow Preschool"
         description="Looking for nursery near me in Thane? Rainbow Preschool's Nursery (2.5–3.5 yrs) builds phonics, numeracy & social skills across 6 centres. Enquire now."
         keywords="nursery school in thane, nursery school near me, best nursery school, nursery school admission near me, nursery school admission enquiry, nursery class for kids, play based nursery school, nursery education program, top nursery school in thane"
         canonical="https://www.rainbowpreschools.com/nursery"
@@ -640,7 +640,7 @@ export default function NurseryLanding() {
           </div>
           <div className="bg-muted/40 rounded-2xl p-6 md:p-8 text-center">
             <p className="text-base md:text-lg mb-4">
-              <strong>Already attended playgroup?</strong> Nursery is the natural next step. Read our <Link href="/blog/preschool-vs-daycare" className="text-primary hover:underline">guide to preschool vs daycare</Link> or jump straight to <Link href="/kindergarten" className="text-primary hover:underline">our Kindergarten programme</Link> if your child is 4+.
+              <strong>Already attended playgroup?</strong> Nursery is the natural next step. Read our <Link href="/blog/preschool-vs-daycare" className="text-primary hover:underline">guide to choosing a preschool</Link> or jump straight to <Link href="/kindergarten" className="text-primary hover:underline">our Kindergarten programme</Link> if your child is 4+.
             </p>
             <div className="flex flex-wrap gap-3 justify-center">
               <Link href="/preschool-admissions" className="inline-flex items-center px-5 py-2.5 rounded-full bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors" data-testid="link-admissions-nursery">
@@ -706,7 +706,7 @@ export default function NurseryLanding() {
             <Card className="text-center p-6">
               <Eye className="w-12 h-12 text-blue-500 mx-auto mb-4" />
               <h3 className="font-semibold text-lg mb-2">CCTV Surveillance</h3>
-              <p className="text-sm text-muted-foreground">24/7 monitoring across all areas of the premises</p>
+              <p className="text-sm text-muted-foreground">Monitoring across key campus areas</p>
             </Card>
             <Card className="text-center p-6">
               <MessageSquare className="w-12 h-12 text-purple-500 mx-auto mb-4" />

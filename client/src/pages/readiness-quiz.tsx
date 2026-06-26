@@ -47,7 +47,7 @@ function getResult(score: number) {
       bgColor: "bg-green-50",
       borderColor: "border-green-200",
       description: "Based on your answers, your child shows strong readiness signs for a structured preschool programme. They have the physical, social, and communication foundations to thrive in an early learning environment.",
-      recommendation: "We recommend enrolling your child in a quality preschool programme. At Rainbow Preschool International, our Playgroup (1.5-2.5 years), Nursery (2.5-4 years), and Kindergarten (4-6 years) programmes are designed to nurture each child's unique developmental stage.",
+      recommendation: "We recommend enrolling your child in a quality preschool programme. At Rainbow Preschool International, our Playgroup (1.5-2.5 years), Nursery (2.5–3.5 years), and Kindergarten (4-6 years) programmes are designed to nurture each child's unique developmental stage.",
       cta: "Schedule a Visit Today",
     };
   }

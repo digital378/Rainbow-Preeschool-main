@@ -1,0 +1,131 @@
+Approved for Batch 1 only: Nursery critical SEO, age consistency, and wording cleanup.
+
+Page:
+https://www.rainbowpreschools.com/nursery
+
+Do not redesign the page.
+Do not change H1, canonical, sitemap, route registration, redirects, layout, gallery images, CTAs, EEATSignals, StickyMobileCTA, or schema architecture.
+Do not touch CLS/performance fixes yet.
+Do not align FAQ schema yet.
+Do not edit blog-post.tsx or seed-blog-posts.ts in this batch.
+
+Goal of this batch:
+Fix all critical and high-priority Nursery age and wording issues that affect /nursery, Bot SSR, sitewide navigation, key FAQs, admissions SSR, locality SSR, and visible Nursery page copy.
+
+Approved Nursery age range:
+2.5–3.5 years
+
+Approved safety wording:
+- CCTV-enabled classrooms
+- CCTV-enabled campuses
+- 100% female teaching staff
+- child-proofed classrooms/furniture
+- secure pickup practices
+- daily hygiene routines
+
+Avoid:
+- daycare
+- 24/7 CCTV
+- 24/7 monitoring
+- CCTV surveillance if used as a claim-heavy phrase
+
+Implement only these fixes:
+
+1. server/ssr-pages.ts — Nursery SSR page
+Fix the /nursery SSR entry:
+- Title: change "Nursery School in Thane (2.5–4 yrs) | Rainbow Preschool" to "Nursery School in Thane (2.5–3.5 yrs) | Rainbow Preschool"
+- Description: sync with the client description:
+  "Looking for nursery near me in Thane? Rainbow Preschool's Nursery (2.5–3.5 yrs) builds phonics, numeracy & social skills across 6 centres. Enquire now."
+- ContentSection: change "aged 2.5 to 4 years" to "aged 2.5 to 3.5 years"
+- ContentSection: change "Nursery admissions are open for children aged 2.5 to 4 years" to "Nursery admissions are open for children aged 2.5 to 3.5 years"
+- FAQPage Q6: replace "24/7 CCTV monitoring" with "CCTV-enabled classrooms"
+
+2. server/ssr-pages.ts — locality centre FAQ template
+Fix shared locality FAQ references:
+- Replace "Nursery (2.5–4 years)" with "Nursery (2.5–3.5 years)" wherever used in the shared locality FAQ template.
+- This affects all 6 centre SSR pages.
+
+3. server/ssr-pages.ts — best-preschool SSR entry
+Fix all "Nursery (2.5–4 years)" references in the /best-preschool-near-me-in-thane SSR contentSections and internal links.
+Replace with:
+"Nursery (2.5–3.5 years)"
+
+4. server/ssr-pages.ts — preschool admissions SSR FAQPage
+Fix admissions FAQ age references:
+- Replace "Nursery for 2.5–4" with "Nursery for 2.5–3.5"
+- Replace "2.5 and 4 years" with "2.5 and 3.5 years"
+
+5. server/bot-ssr.ts
+Fix sitewide Bot SSR nav:
+- Replace "Nursery (2.5–4 yrs)" with "Nursery (2.5–3.5 yrs)"
+
+6. client/src/pages/nursery-landing.tsx
+Fix client Nursery page:
+- SEO title: change "Nursery School in Thane (2.5–4 yrs) | Rainbow Preschool" to "Nursery School in Thane (2.5–3.5 yrs) | Rainbow Preschool"
+- FAQ Q6: replace "24/7 CCTV monitoring" with "CCTV-enabled classrooms"
+- Safety card body: replace "24/7 monitoring across all areas of the premises" with "Monitoring across key campus areas"
+- Anchor text: replace "guide to preschool vs daycare" with "guide to choosing a preschool"
+- Keep the href /blog/preschool-vs-daycare unchanged because URL slug change is not part of this batch.
+
+7. client/src/components/seo-crosslinks.tsx
+Replace:
+"Ages 2.5–4 years"
+With:
+"Ages 2.5–3.5 years"
+
+8. client/src/pages/faqs.tsx
+Replace:
+"Nursery (2.5-4 years)"
+With:
+"Nursery (2.5–3.5 years)"
+
+9. client/src/pages/readiness-quiz.tsx
+Replace:
+"Nursery (2.5-4 years)"
+With:
+"Nursery (2.5–3.5 years)"
+
+10. shared/legacy-pages-data.ts
+Replace:
+title: "Nursery (2.5-4 years)"
+With:
+title: "Nursery (2.5–3.5 years)"
+
+Important exclusions for this batch:
+- Do not fix blog-post.tsx yet.
+- Do not fix seed-blog-posts.ts yet.
+- Do not implement font preload or CountUp CLS fixes yet.
+- Do not align FAQ schema/client FAQ yet.
+- Do not add /playgroup or /programmes internal links yet.
+- Do not update June 2026 dates yet.
+- Do not change "Award-Winning Preschool" yet.
+
+After implementation, run:
+- npm run build
+- npx tsx scripts/check-h1-parity.ts
+- npx tsx scripts/check-description-length.ts
+- npx tsx scripts/check-no-title-cannibalisation.ts
+- npx tsx scripts/check-no-client-schema-injection.ts
+
+Also run searches:
+- Search for Nursery age wrong variants:
+  "2.5–4"
+  "2.5 - 4"
+  "2.5-4"
+  "2.5 to 4"
+  "2.5 and 4"
+  "2.5–4 yrs"
+- Search for wording issues in nursery-related files:
+  "daycare"
+  "24/7 CCTV"
+  "24/7 monitoring"
+  "CCTV surveillance"
+
+When reporting, separate:
+A. Fixed files and exact line changes
+B. Guard results
+C. Remaining wrong Nursery age references, if any
+D. Remaining "daycare" references, if any
+E. Remaining "24/7 CCTV" or "24/7 monitoring" references, if any
+F. Confirm whether Nursery SSR title, client title, SSR description, and client description are now consistent
+G. Confirm that no layout/performance changes were made in this batch

@@ -4,7 +4,7 @@ import { Star, BookOpen, Heart, GraduationCap, Search, Baby } from "lucide-react
 const seoPages = [
   { href: "/best-preschool-near-me-in-thane", label: "Best Preschool in Thane", icon: Star, desc: "Top-rated since 2007" },
   { href: "/play-school-near-me", label: "Play School Near Me", icon: Baby, desc: "Ages 1.5–2.5 years" },
-  { href: "/nursery", label: "Nursery Programme", icon: BookOpen, desc: "Ages 2.5–4 years" },
+  { href: "/nursery", label: "Nursery Programme", icon: BookOpen, desc: "Ages 2.5–3.5 years" },
   { href: "/preschool-admissions", label: "Admissions 2026-27", icon: GraduationCap, desc: "Enquire now" },
   { href: "/top-preschools-in-thane", label: "Top Preschools in Thane", icon: Search, desc: "Compare top 10" },
   { href: "/preschool-readiness-quiz", label: "Readiness Quiz", icon: Heart, desc: "Is your child ready?" },

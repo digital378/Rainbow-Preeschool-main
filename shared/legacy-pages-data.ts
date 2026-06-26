@@ -18,7 +18,7 @@ const commonInternalLinks = [
 // Common related links
 const commonRelatedLinks = [
   { title: "Playgroup (1.5-2.5 years)", url: "/playgroup", description: "Early learning through play" },
-  { title: "Nursery (2.5-4 years)", url: "/nursery", description: "Building foundations for school" },
+  { title: "Nursery (2.5–3.5 years)", url: "/nursery", description: "Building foundations for school" },
   { title: "Kindergarten (4-6 years)", url: "/kindergarten", description: "School readiness programme" },
   { title: "Contact & Admissions", url: "/contact", description: "Get in touch with us" },
   { title: "Play School Near Me", url: "/play-school-near-me", description: "Find a play school near you in Thane" },
