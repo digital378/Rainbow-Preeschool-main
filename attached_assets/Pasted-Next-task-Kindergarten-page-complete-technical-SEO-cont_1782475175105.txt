@@ -1,0 +1,461 @@
+Next task: Kindergarten page complete technical SEO, content consistency, schema, internal linking, wording, and performance diagnosis.
+
+Page:
+https://www.rainbowpreschools.com/kindergarten
+
+Goal:
+Do a complete diagnosis in one audit pass. Identify all SEO-impacting issues, bugs, SSR/client drift, duplication risks, wrong age references, wording violations, schema mismatches, broken links, canonical/indexing issues, and performance causes.
+
+Important:
+Do not implement any fixes in this task.
+This is diagnosis only.
+After the audit, recommend fixes in batches and wait for approval.
+
+Do not redesign the page.
+Do not add new sections.
+Do not make code changes yet.
+First audit and report everything with file names and line numbers.
+
+Important context:
+We already cleaned:
+- /about
+- /programmes
+- /playgroup
+- /nursery Batch 1 SEO/age/wording cleanup
+- /nursery Batch 2 mobile CLS cleanup
+
+Current approved programme age ranges:
+- Playgroup: 1.5–2.5 years
+- Nursery: 2.5–3.5 years
+- Kindergarten: 3.5–5.5 years
+
+Known issue to investigate:
+During Nursery cleanup, remaining "24/7 CCTV monitoring" references were found around /kindergarten and other pages. The Kindergarten page must be checked carefully for:
+- "24/7 CCTV"
+- "24/7 monitoring"
+- "CCTV surveillance"
+- "daycare"
+- outdated age references
+- old ratings like 4.7 / 3,997
+
+Current mobile PageSpeed for /kindergarten:
+- Performance around 54
+- LCP around 9.4s
+- FCP around 3.8s
+- CLS 0
+- unused JS around 502 KiB
+- unused CSS around 24 KiB
+
+CLS is clean, but LCP is very weak at 9.4s. Please identify whether this is page-specific or caused by global JS/font issues.
+
+Files and areas to inspect:
+- client/src/pages/kindergarten.tsx
+- client/src/pages/kindergarten-landing.tsx if used
+- server/ssr-pages.ts /kindergarten entry
+- shared/schema.ts
+- client/src/App.tsx route registration
+- server/redirects.ts
+- sitemap generation files
+- SEO config files
+- shared/common internal links, CTA, FAQ, EEAT, card, image, and form components used by Kindergarten
+- llms.txt and llms-full.txt if relevant
+- any image assets used by the Kindergarten page
+- any JSON-LD or structured-data helpers used by Kindergarten
+- any sitewide nav or crosslink component that mentions Kindergarten
+
+Audit scope:
+
+1. Rendering / architecture
+Confirm:
+- whether /kindergarten is handled through Bot SSR, static SSR, or React-only rendering
+- whether Googlebot receives pre-rendered HTML
+- which file defines the client page
+- which file defines SSR content
+- whether page content depends on React-only hydration for key SEO text
+
+Compare SSR output and client-rendered content for:
+- title
+- meta description
+- H1
+- H2/H3 sections
+- age range
+- CTA labels
+- programme benefits
+- FAQ content
+- internal links
+- breadcrumbs
+- structured data
+- rating/trust signals
+
+Flag all SSR/client drift.
+
+2. Canonical and indexability
+Confirm:
+- canonical is absolute and self-referencing:
+  https://www.rainbowpreschools.com/kindergarten
+- robots tag is index, follow
+- /kindergarten is included in sitemap
+- sitemap URL matches canonical
+- no noindex conflict
+- /kindergarten/ trailing slash behaviour
+- /kindergarten?utm_source=test canonical behaviour
+- uppercase/lowercase route behaviour if applicable
+- old Kindergarten-related URLs redirect correctly to /kindergarten, if any exist
+
+Report any redirect chains, orphan routes, or canonical inconsistencies.
+
+3. Metadata audit
+Report current values from both SSR and client:
+- title
+- meta description
+- canonical
+- robots
+- OG title
+- OG description
+- Twitter title
+- Twitter description
+- keywords, if present
+- H1
+- H2/H3 structure
+
+Flag:
+- SSR/client mismatch
+- duplicate title
+- duplicate description
+- missing OG/Twitter
+- title cannibalisation
+- description over 155 chars
+- weak or misleading meta copy
+- old age range in metadata
+- use of "daycare" or unsupported wording in metadata
+
+4. Age range consistency audit
+Approved Kindergarten age range:
+3.5–5.5 years
+
+Find every occurrence related to Kindergarten age across the codebase and output:
+- file
+- line number
+- exact text
+- whether correct or incorrect
+
+Search for all variants:
+- "3.5–5"
+- "3.5 - 5"
+- "3.5 to 5"
+- "3.5-5"
+- "3.5–5 yrs"
+- "3.5 to 5 years"
+- "3.5–5.5"
+- "3.5 - 5.5"
+- "3.5 to 5.5"
+- "4–6"
+- "4 - 6"
+- "4 to 6"
+- "4-6"
+
+Check specifically:
+- /kindergarten visible content
+- /kindergarten SSR content
+- /kindergarten schema
+- /kindergarten FAQ
+- /programmes
+- /about
+- /playgroup references, if any
+- /nursery references, if any
+- shared/schema.ts
+- bot SSR nav
+- seo-crosslinks
+- readiness quiz
+- global FAQ page
+- sitemap/llms files if they include age copy
+- internal link grids and programme cards
+
+Do not change yet. Report all locations.
+
+5. Duplication and keyword cannibalisation
+Compare /kindergarten against:
+- /programmes
+- /playgroup
+- /nursery
+- /about
+- homepage
+- preschool admissions page if relevant
+
+Determine whether /kindergarten is a unique detailed landing page or too similar to /programmes.
+
+Expected structure:
+- /programmes = hub page with short summaries and comparison
+- /kindergarten = detailed Kindergarten page with deeper content for parents of 3.5–5.5 year children
+
+Check:
+- repeated paragraphs
+- repeated FAQs
+- repeated meta descriptions
+- same title pattern causing cannibalisation
+- same H1 or overly similar H1 with another page
+- whether /kindergarten targets the right keyword set:
+  "kindergarten in thane", "kindergarten school in thane", "kindergarten admission in thane", "kindergarten near me", "junior kg", "senior kg"
+
+Report whether duplication is acceptable or risky.
+
+6. Internal links audit
+Find and validate all internal links on /kindergarten.
+
+Confirm important links return 200 and do not pass through redirect chains:
+- /programmes
+- /playgroup
+- /nursery
+- /preschool-admissions
+- /contact
+- /about
+- /best-preschool-near-me-in-thane
+- /play-school-near-me
+- relevant blog links
+- relevant centre/location pages
+- WhatsApp CTA, if present
+
+Flag:
+- 404 links
+- 301/302 redirect chains
+- orphaned routes
+- missing important links
+- wrong route names
+- weak anchor text
+- links to outdated pages
+- links using /branches or any non-registered route
+
+Also check whether /kindergarten naturally links back to:
+- /programmes as parent hub
+- /nursery as previous stage
+- /preschool-admissions or /contact for conversion
+- all relevant centre/location pages if present
+
+7. Schema / structured data audit
+Check all structured data emitted for /kindergarten:
+- BreadcrumbList
+- FAQPage
+- Preschool / EducationalOrganization
+- Course or EducationalOccupationalProgram, if used
+- AggregateRating / Review, if used
+- any page-specific schema
+
+Confirm:
+- schema is emitted in SSR, not injected only client-side
+- no unauthorized client-side schema injection
+- FAQPage schema exists only if visible FAQs exist
+- FAQPage questions and answers match visible FAQ text exactly
+- age range in schema is correct: 3.5–5.5 years
+- no old rating references: 4.7 or 3,997
+- rating uses verified source: 4.9 / 487+ if shown
+- no "daycare"
+- no "24/7 CCTV"
+- no "24/7 monitoring"
+- no unsupported award claims
+- BreadcrumbList matches visible breadcrumb path
+
+If schema and visible FAQ do not match, report clearly whether this is critical, high, medium, or low priority.
+
+8. Wording and claim safety audit
+Search the Kindergarten page and related SSR/schema for:
+- "daycare"
+- "24/7 CCTV"
+- "24/7 monitoring"
+- "CCTV surveillance"
+- "best" if unsupported
+- "No. 1" / "#1" if unsupported
+- "guaranteed"
+- "100%" claims other than verified "100% female teaching staff"
+- old rating references: "4.7", "3997", "3,997"
+- outdated or unverifiable awards
+
+Approved wording:
+- "Happy Times extended care" instead of daycare
+- "CCTV-enabled campuses" or "CCTV-enabled classrooms"
+- "100% female teaching staff"
+- "secure pickup practices"
+- "child-friendly classrooms"
+- "daily hygiene routines"
+
+Flag every wording issue with file and line number.
+
+9. CTA and admissions conversion audit
+Review all CTAs on /kindergarten.
+
+Check if labels are clear and admission-focused:
+- Book a Visit
+- WhatsApp Admissions
+- Enquire Now
+- Request Callback
+- Contact Admissions
+- View Programmes
+- Admission Process
+
+Flag:
+- weak labels
+- too many different CTA labels
+- broken WhatsApp link
+- form placement issues
+- CTA links going through redirects
+- CTA text mismatch between SSR and client
+- missing mobile CTA issue
+- any "Call Now" or generic CTA that should be improved later
+
+Do not redesign. Only report.
+
+10. Performance and LCP diagnosis
+Current mobile PageSpeed:
+- Performance around 54
+- LCP around 9.4s
+- FCP around 3.8s
+- CLS 0
+- unused JS around 502 KiB
+- unused CSS around 24 KiB
+
+CLS is clean, but LCP is weak.
+
+Identify:
+- exact LCP element
+- whether LCP is text, image, form, hero card, or background
+- whether an above-fold image is lazy-loaded incorrectly
+- whether a font swap or font preload issue affects LCP
+- whether hero text waits for JS/hydration
+- whether form/sidebar delays render
+- whether render-blocking CSS/JS is page-specific or global
+- whether unused JS is global or page-specific
+- whether any image lacks width/height
+- whether any above-fold image is not optimised
+- whether any animation delays LCP visibility
+- whether mobile network throttling makes the JS bundle the main cause
+
+Check:
+- image width and height attributes
+- lazy loading of above-fold images
+- hero structure
+- mobile layout
+- forms
+- cards
+- accordions
+- CountUp
+- sticky CTA
+- gallery
+- font loading
+- hydration timing
+
+Do not recommend:
+- new packages
+- sliders
+- videos
+- heavy animations
+- large new images
+
+11. Image and asset audit
+List all images used by /kindergarten and report:
+- file name
+- alt text
+- width/height present or missing
+- loading attribute
+- decoding attribute
+- likely above-fold or below-fold
+- whether image filename uses outdated wording like "daycare"
+- whether image could contribute to LCP or CLS
+- whether image alt text is SEO-safe and parent-friendly
+
+12. Content completeness check
+Do not recommend long duplicate content. But confirm whether the page has enough unique Kindergarten-specific content, such as:
+- school-readiness focus
+- phonics, reading, writing, numeracy
+- confidence and social development
+- Junior KG / Senior KG clarity if applicable
+- daily routine / learning approach
+- safety/hygiene
+- admissions next step
+- FAQs
+- internal link to previous stage Nursery
+
+Report only if there is a genuine content gap affecting parent clarity or SEO.
+
+13. Cross-page consistency check
+Compare with already cleaned pages:
+- /about
+- /programmes
+- /playgroup
+- /nursery
+
+Check that:
+- age ranges match
+- rating values match
+- safety wording matches
+- "daycare" wording rule is followed
+- CTA naming is reasonably consistent
+- internal linking pattern is logical
+- title/meta style is not conflicting
+- schema pattern is consistent with Playgroup and Nursery
+
+14. Output format
+Return the audit in this structure:
+
+A. Executive summary
+- Is the Kindergarten page mostly clean or not?
+- Is it safe to edit?
+- Top 3 risks
+
+B. Critical issues
+Only issues that can hurt indexability, trust, structured data quality, or user experience.
+
+C. High-priority issues
+Important consistency or SEO cleanup issues.
+
+D. Medium-priority improvements
+Useful but not urgent.
+
+E. Low-priority improvements
+Cosmetic or later-pass items.
+
+F. No-change confirmations
+Confirm what is already clean:
+- title
+- H1
+- canonical
+- sitemap
+- redirects
+- schema architecture
+- CTAs
+- content depth
+- duplication status
+- CLS status
+- etc.
+
+G. Evidence table
+For every issue:
+- issue
+- file
+- line number
+- current text
+- recommended fix
+- priority
+
+H. Recommended implementation order
+Group fixes into safe batches:
+- Batch 1: critical SEO, age, metadata, and wording fixes
+- Batch 2: performance/LCP fixes
+- Batch 3: schema/FAQ alignment if needed
+- Batch 4: optional internal link/content refinements
+
+I. What not to change
+List anything that should be preserved.
+
+J. Guards/tests to run after fixes
+Include:
+- npm run build
+- check-h1-parity
+- check-description-length
+- check-no-title-cannibalisation
+- check-no-client-schema-injection
+- search for wrong Kindergarten age variants
+- search for "daycare"
+- search for "24/7 CCTV" and "24/7 monitoring"
+- run mobile PageSpeed again after any LCP fix
+- test all internal links
+
+Do not edit code yet. First provide the complete diagnosis and fix plan for approval.
