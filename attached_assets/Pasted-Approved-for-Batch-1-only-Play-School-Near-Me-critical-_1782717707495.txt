@@ -1,0 +1,220 @@
+Approved for Batch 1 only: Play School Near Me critical wording, age, factual, and SSR link cleanup.
+
+Page:
+https://www.rainbowpreschools.com/play-school-near-me
+
+Do not redesign the page.
+Do not change title, H1, meta description, canonical, sitemap, redirects, route registration, schema architecture, CTA structure, page layout, or FAQ structure.
+Do not change the legitimate "play school vs daycare" comparison content.
+Do not change the /happy-times link.
+Do not change gallery images.
+Do not change ratings.
+Do not implement performance/LCP fixes in this batch.
+Do not implement full FAQ schema alignment in this batch.
+Do not make optional link/copy refinements in this batch.
+
+Approved programme ages:
+- Playgroup: 1.5–2.5 years
+- Nursery: 2.5–3.5 years
+- Kindergarten: 3.5–5.5 years
+
+Approved safety wording:
+- CCTV-enabled campuses
+- CCTV-enabled classrooms
+- CCTV surveillance in classrooms and common areas
+- cameras cover classrooms and common areas for child safety
+- 100% female teaching staff
+- secure pickup practices
+- child-friendly classrooms
+- daily hygiene routines
+
+Important daycare wording rule:
+The word "daycare" is allowed only when used as a generic comparison topic, for example:
+- play school vs daycare
+- difference between play school and daycare
+
+Do not flag or remove these comparison uses.
+
+Only avoid using "daycare" if Rainbow's own service, Happy Times, CTAs, admissions copy, or metadata describe Rainbow as offering daycare.
+
+Implement only these Batch 1 fixes:
+
+1. FAQ Q5 safety wording in SSR schema/content
+File:
+server/ssr-pages.ts
+
+Replace:
+"All 6 centres have 24/7 CCTV surveillance, 100% trained female staff…"
+
+With:
+"All 6 centres have CCTV-enabled classrooms and campuses, 100% female teaching staff…"
+
+Reason:
+Remove unsupported "24/7 CCTV surveillance" wording and align with approved USP wording.
+
+2. FAQ Q5 safety wording in visible client FAQ
+File:
+client/src/pages/play-school-near-me.tsx
+
+Replace the same visible FAQ answer phrase:
+"All 6 centres have 24/7 CCTV surveillance, 100% trained female staff…"
+
+With:
+"All 6 centres have CCTV-enabled classrooms and campuses, 100% female teaching staff…"
+
+3. FAQ Q19 safety wording in SSR
+File:
+server/ssr-pages.ts
+
+Replace:
+"safety (24/7 CCTV, female staff, hygiene)"
+
+With:
+"safety (CCTV-enabled classrooms, 100% female teaching staff, daily hygiene routines)"
+
+4. FAQ Q19 safety wording in visible client FAQ
+File:
+client/src/pages/play-school-near-me.tsx
+
+Replace:
+"safety (24/7 CCTV, female staff, hygiene)"
+
+With:
+"safety (CCTV-enabled classrooms, 100% female teaching staff, daily hygiene routines)"
+
+5. SSR contentSection safety bullet
+File:
+server/ssr-pages.ts
+
+Replace:
+"24/7 CCTV in every classroom, child-proofed furniture…"
+
+With:
+"CCTV-enabled classrooms, child-proofed furniture…"
+
+6. SSR safety paragraph
+File:
+server/ssr-pages.ts
+
+Replace:
+"Every classroom and corridor is on 24/7 CCTV monitoring."
+
+With:
+"Classrooms and common areas are CCTV-enabled."
+
+7. Client safety card wording
+File:
+client/src/pages/play-school-near-me.tsx
+
+Replace:
+"24/7 surveillance across all areas of every centre for complete peace of mind"
+
+With:
+"Cameras cover classrooms and common areas at every centre for child safety"
+
+8. Kindergarten age in SSR Continue Exploring link
+File:
+server/ssr-pages.ts
+
+Replace:
+"Kindergarten Programme (4–6 years)"
+
+With:
+"Kindergarten Programme (3.5–5.5 yrs)"
+
+9. Kindergarten age in SSR FAQ Q16
+File:
+server/ssr-pages.ts
+
+Replace:
+"Kindergarten (3.5–5 yrs)"
+
+With:
+"Kindergarten (3.5–5.5 yrs)"
+
+10. Kindergarten age in visible client FAQ Q16
+File:
+client/src/pages/play-school-near-me.tsx
+
+Replace:
+"Kindergarten (3.5–5 yrs)"
+
+With:
+"Kindergarten (3.5–5.5 yrs)"
+
+11. Batch size factual consistency
+File:
+client/src/pages/play-school-near-me.tsx
+
+Replace:
+"Small batch sizes with 15 children for individual attention"
+
+With:
+"Small batch sizes of 10–12 children per group for individual attention"
+
+12. General advice card CCTV wording
+File:
+client/src/pages/play-school-near-me.tsx
+
+Replace:
+"Look for CCTV surveillance, sanitized premises, child-proofed furniture…"
+
+With:
+"Look for CCTV-enabled classrooms, sanitised premises, child-proofed furniture…"
+
+Reason:
+Keep CCTV wording consistent and update spelling to brand style.
+
+13. Add missing SSR centre link: Hariniwas
+File:
+server/ssr-pages.ts
+
+In the /play-school-near-me SSR "Continue Exploring" internal links block, add:
+{ text: "Preschool in Hariniwas, Thane", url: "/preschool-in-hariniwas-thane" }
+
+14. Add missing SSR centre link: Kalwa
+File:
+server/ssr-pages.ts
+
+In the same SSR internal links block, add:
+{ text: "Preschool in Kalwa, Thane", url: "/preschool-in-kalwa-thane" }
+
+Important exclusions:
+- Do not change title, H1, description, canonical, redirects, or sitemap.
+- Do not remove valid "play school vs daycare" comparison content.
+- Do not change /blog or /happy-times URLs.
+- Do not do FAQ schema alignment yet.
+- Do not apply CountUp min-height fix yet.
+- Do not change duplicate /best-preschool link yet.
+- Do not change video.
+- Do not change rating references.
+- Do not change the 20-question FAQ structure.
+
+After implementation, run:
+- npm run build
+- npx tsx scripts/check-no-title-cannibalisation.ts
+- npx tsx scripts/check-description-length.ts
+- npx tsx scripts/check-h1-parity.ts
+- npx tsx scripts/check-no-client-schema-injection.ts
+
+Also run searches on server/ssr-pages.ts and client/src/pages/play-school-near-me.tsx:
+- "24/7 CCTV"
+- "24/7 monitor"
+- "surveillance across"
+- "4-6"
+- "4–6"
+- "3.5–5 yrs"
+- "3.5–5 years"
+- "4.7"
+- "3,997"
+- "3997"
+
+Report:
+- exact files changed
+- exact lines changed
+- build result
+- guard results
+- remaining banned safety wording, if any
+- remaining wrong Kindergarten age references on this page, if any
+- confirmation that valid "play school vs daycare" comparison content was not removed
+- confirmation that title, H1, meta description, canonical, schema architecture, and FAQ structure were unchanged

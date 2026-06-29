@@ -350,7 +350,7 @@ const topPreschools = [
 ];
 
 const howToChooseItems = [
-  { icon: ShieldCheck, title: "Safety & Hygiene Standards", description: "Look for CCTV surveillance, sanitized premises, child-proofed furniture, and a 100% female staff policy for added safety." },
+  { icon: ShieldCheck, title: "Safety & Hygiene Standards", description: "Look for CCTV-enabled classrooms, sanitised premises, child-proofed furniture, and a 100% female staff policy for added safety." },
   { icon: BookOpen, title: "Curriculum & Learning Approach", description: "A good play school uses play-based learning, not rote memorisation. Ask about the daily schedule and how it nurtures cognitive and social skills." },
   { icon: Users, title: "Teacher-to-Child Ratio", description: "Smaller batches (10-12 children) mean more individual attention. Experienced, trained teachers make a significant difference." },
   { icon: MapPin, title: "Location & Accessibility", description: "Choose a play school near your home or workplace. Proximity reduces commute stress for both parent and child." },
@@ -403,7 +403,7 @@ const faqs = [
   },
   {
     question: "Are play schools near me in Thane safe for toddlers?",
-    answer: "At Rainbow Preschool, safety is our highest priority. All 6 centres have 24/7 CCTV surveillance, 100% trained female staff, child-proofed furniture, daily sanitisation of toys and surfaces, and secure entry/exit systems. We maintain small batch sizes of 10-12 children for individual attention and close supervision."
+    answer: "At Rainbow Preschool, safety is our highest priority. All 6 centres have CCTV-enabled classrooms and campuses, 100% female teaching staff, child-proofed furniture, daily sanitisation of toys and surfaces, and secure entry/exit systems. We maintain small batch sizes of 10-12 children for individual attention and close supervision."
   },
   {
     question: "What are the timings for play school?",
@@ -447,7 +447,7 @@ const faqs = [
   },
   {
     question: "What is the difference between a 'play school near me' and a 'preschool near me'?",
-    answer: "Both phrases describe the same type of early learning setting. Parents searching for a 'play school near me' or a 'preschool near me' are looking for a structured, safe environment where young children aged 1.5 to 5 years learn through play. At Rainbow Preschool in Thane, our Playgroup (1.5–2.5 yrs), Nursery (2.5–3.5 yrs), and Kindergarten (3.5–5 yrs) programmes form a complete preschool — making us your neighbourhood play school and preschool, all in one."
+    answer: "Both phrases describe the same type of early learning setting. Parents searching for a 'play school near me' or a 'preschool near me' are looking for a structured, safe environment where young children aged 1.5 to 5.5 years learn through play. At Rainbow Preschool in Thane, our Playgroup (1.5–2.5 yrs), Nursery (2.5–3.5 yrs), and Kindergarten (3.5–5.5 yrs) programmes form a complete preschool — making us your neighbourhood play school and preschool, all in one."
   },
   {
     question: "Which is the nearest preschool to me in Thane West?",
@@ -459,7 +459,7 @@ const faqs = [
   },
   {
     question: "What should I look for in a preschool near me?",
-    answer: "When choosing a preschool near you, evaluate: safety (24/7 CCTV, trained female staff, hygiene routines), curriculum approach (play-based rather than rote learning), teacher qualifications and class size (10–12 children per batch at Rainbow), location convenience, and transparent parent communication. Rainbow Preschool scores strongly on all these criteria with its 18+ year track record in Thane."
+    answer: "When choosing a preschool near you, evaluate: safety (CCTV-enabled classrooms, 100% female teaching staff, daily hygiene routines), curriculum approach (play-based rather than rote learning), teacher qualifications and class size (10–12 children per batch at Rainbow), location convenience, and transparent parent communication. Rainbow Preschool scores strongly on all these criteria with its 18+ year track record in Thane."
   },
   {
     question: "How quickly can my child start at a preschool near me in Thane?",
@@ -907,7 +907,7 @@ export default function PlaySchoolNearMe() {
               <ul className="space-y-4">
                 <li className="flex items-start gap-3">
                   <Star className="w-5 h-5 text-secondary mt-0.5 shrink-0" />
-                  <span className="text-lg">Small batch sizes with 15 children for individual attention</span>
+                  <span className="text-lg">Small batch sizes of 10–12 children per group for individual attention</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <Star className="w-5 h-5 text-secondary mt-0.5 shrink-0" />
@@ -996,7 +996,7 @@ export default function PlaySchoolNearMe() {
             <Card className="text-center p-6">
               <Eye className="w-12 h-12 text-blue-500 mx-auto mb-4" />
               <h3 className="font-semibold text-lg mb-2">CCTV Monitoring</h3>
-              <p className="text-sm text-muted-foreground">24/7 surveillance across all areas of every centre for complete peace of mind</p>
+              <p className="text-sm text-muted-foreground">Cameras cover classrooms and common areas at every centre for child safety</p>
             </Card>
             <Card className="text-center p-6">
               <MessageSquare className="w-12 h-12 text-purple-500 mx-auto mb-4" />
