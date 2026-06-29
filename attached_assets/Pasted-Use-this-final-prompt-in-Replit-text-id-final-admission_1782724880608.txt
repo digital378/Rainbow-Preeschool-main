@@ -1,0 +1,610 @@
+Use this final prompt in Replit:
+
+```text id="final-admissions-audit"
+Next task: Preschool Admissions page complete technical SEO, admissions clarity, schema, internal linking, wording, age consistency, conversion, and performance diagnosis.
+
+Page:
+https://www.rainbowpreschools.com/preschool-admissions
+
+Goal:
+Do a complete diagnosis in one audit pass. Identify all SEO-impacting issues, bugs, SSR/client drift, duplication or cannibalisation risks, wrong age references, stale admission-year references, wording violations, schema mismatches, broken links, canonical/indexing issues, conversion issues, and performance causes.
+
+Important:
+Do not implement any fixes in this task.
+This is diagnosis only.
+After the audit, recommend fixes in batches and wait for approval.
+
+Do not redesign the page.
+Do not add new sections.
+Do not make code changes yet.
+First audit and report everything with file names and line numbers.
+
+Important context:
+We already cleaned:
+- /about
+- /programmes
+- /playgroup
+- /nursery
+- /kindergarten
+- /play-school-near-me
+
+Current approved programme age ranges:
+- Playgroup: 1.5–2.5 years
+- Nursery: 2.5–3.5 years
+- Kindergarten: 3.5–5.5 years
+
+Approved trust/rating standard:
+- Rainbow rating references should use verified rating: 4.9 / 487+ reviews, if rating is shown.
+- Do not use old Rainbow rating references such as 4.7, 3,997, or 3997.
+
+Approved safety wording:
+- CCTV-enabled campuses
+- CCTV-enabled classrooms
+- CCTV surveillance in classrooms and common areas
+- cameras cover classrooms and common areas for child safety
+- 100% female teaching staff
+- secure pickup practices
+- child-friendly classrooms
+- daily hygiene routines
+
+Avoid:
+- 24/7 CCTV
+- 24/7 CCTV monitoring
+- 24/7 CCTV surveillance
+- 24/7 monitoring
+- surveillance across all areas
+- guaranteed admission
+- guaranteed learning outcomes
+- misleading urgency such as limited seats or closing soon if not operationally verified
+- outdated intake-year or admission-year references
+
+Important claim rule:
+Rainbow Preschool may use “No. 1”, “#1”, “best”, “trusted”, and “award-winning” where it reflects Rainbow’s verified brand positioning, awards, reviews, parent trust, or established market claim.
+
+Do not remove these terms automatically.
+
+Only flag “No. 1”, “#1”, “best”, “trusted”, or “award-winning” if:
+- the exact usage appears unsupported in that specific context
+- the wording is exaggerated or legally risky
+- the claim is used without any nearby trust proof
+- the claim suggests a guaranteed outcome or guaranteed admission
+
+Important daycare wording rule:
+The word "daycare" is allowed only when used as a generic comparison topic.
+
+Only flag "daycare" as a wording issue if:
+- Rainbow's own service is described as daycare
+- Happy Times is called daycare
+- daycare appears in meta title/description in a way that positions Rainbow as offering daycare
+- daycare appears in CTA or admissions copy as Rainbow's own service
+
+Current mobile PageSpeed for /preschool-admissions:
+- Performance around 57
+- LCP around 5.4s
+- FCP around 2.3s
+- CLS 0
+- unused JS around 506 KiB
+- unused CSS around 25 KiB
+
+CLS is clean, but LCP is weak. Please identify whether this is page-specific or caused by global JS/font issues.
+
+Files and areas to inspect:
+- client/src/pages/preschool-admissions.tsx
+- client/src/pages/preschool-admissions-landing.tsx if used
+- server/ssr-pages.ts /preschool-admissions entry
+- shared/schema.ts
+- client/src/App.tsx route registration
+- server/redirects.ts
+- sitemap generation files
+- SEO config files
+- shared/common internal links, CTA, FAQ, EEAT, card, image, and form components used by this page
+- llms.txt and llms-full.txt if relevant
+- any image assets used by this page
+- any JSON-LD or structured-data helpers used by this page
+- any sitewide nav or crosslink component that mentions admissions
+
+Audit scope:
+
+1. Rendering / architecture
+Confirm:
+- whether /preschool-admissions is handled through Bot SSR, static SSR, or React-only rendering
+- whether Googlebot receives pre-rendered HTML
+- which file defines the client page
+- which file defines SSR content
+- whether page content depends on React-only hydration for key SEO/admissions text
+
+Compare SSR output and client-rendered content for:
+- title
+- meta description
+- H1
+- H2/H3 sections
+- CTA labels
+- programme age ranges
+- admissions process content
+- required document content
+- centre/location content
+- FAQ content
+- internal links
+- breadcrumbs
+- structured data
+- rating/trust signals
+
+Flag all SSR/client drift.
+
+2. Canonical and indexability
+Confirm:
+- canonical is absolute and self-referencing:
+  https://www.rainbowpreschools.com/preschool-admissions
+- robots tag is index, follow
+- /preschool-admissions is included in sitemap
+- sitemap URL matches canonical
+- no noindex conflict
+- /preschool-admissions/ trailing slash behaviour
+- /preschool-admissions?utm_source=test canonical behaviour
+- uppercase/lowercase route behaviour if applicable
+- old related URLs redirect correctly to /preschool-admissions, if any exist
+
+Report any redirect chains, orphan routes, or canonical inconsistencies.
+
+3. Metadata audit
+Report current values from both SSR and client:
+- title
+- meta description
+- canonical
+- robots
+- OG title
+- OG description
+- Twitter title
+- Twitter description
+- keywords, if present
+- H1
+- H2/H3 structure
+
+Flag:
+- SSR/client mismatch
+- duplicate title
+- duplicate description
+- missing OG/Twitter
+- title cannibalisation
+- description over 155 chars
+- weak or misleading meta copy
+- stale year/date in metadata
+- old programme age ranges
+- old rating references
+- misuse of "daycare" in metadata
+- unsupported or legally risky wording in metadata
+
+4. Keyword ownership and cannibalisation
+This page should primarily own:
+- preschool admissions
+- preschool admission in Thane
+- preschool admission process
+- playgroup admission in Thane
+- nursery admission in Thane, only if used carefully
+- kindergarten admission in Thane
+
+Compare this page against:
+- /
+- /about
+- /programmes
+- /playgroup
+- /nursery
+- /kindergarten
+- /play-school-near-me
+- /best-preschool-near-me-in-thane
+- all 6 centre pages
+- relevant blog admission pages, if any
+
+Check whether /preschool-admissions is competing too directly with:
+- individual programme pages
+- centre pages
+- blog admission guides
+- /play-school-near-me
+- /best-preschool-near-me-in-thane
+
+Report:
+- whether title/H1/meta are distinct enough
+- whether the page clearly owns admissions intent
+- whether any other page is overusing the same admissions keywords
+- whether internal links support the correct keyword ownership
+- whether admissions content is duplicated too heavily from programme pages or blog posts
+
+5. Age and programme consistency audit
+Approved programme ages:
+- Playgroup: 1.5–2.5 years
+- Nursery: 2.5–3.5 years
+- Kindergarten: 3.5–5.5 years
+
+Find every occurrence of programme age references on this page and related SSR/schema/crosslinks:
+- file
+- line number
+- exact text
+- whether correct or incorrect
+
+Search for wrong variants:
+- Nursery: "2.5–4", "2.5 - 4", "2.5-4", "2.5 to 4", "2.5 and 4"
+- Kindergarten: "4–6", "4 - 6", "4-6", "4 to 6", "3.5–5", "3.5 - 5", "3.5 to 5"
+- Overall preschool range: "1.5–6", "1.5 - 6", "1.5 to 6" if used in a misleading way
+
+Check:
+- visible page copy
+- SSR contentSections
+- FAQ/schema
+- admission eligibility sections
+- internal links
+- programme cards
+- shared/schema.ts
+- bot SSR nav
+- global FAQ/crosslink references if this page pulls them in
+- llms files if relevant
+
+Do not change yet. Report all locations.
+
+6. Admission-year and date freshness audit
+Search for stale or time-sensitive references:
+- 2025
+- 2026
+- 2027
+- current academic year
+- admission open
+- term begins
+- June 2026
+- June 2027
+- age as on date
+- deadline
+- last date
+- limited seats
+- admission closing soon
+
+Flag:
+- outdated academic-year references
+- stale term dates
+- misleading urgency
+- old eligibility cutoff dates
+- year-specific content that should be evergreen or dynamically updated
+
+Recommend whether copy should be evergreen or updated for the current admission cycle.
+
+7. Admissions clarity and conversion audit
+Check whether the page clearly explains:
+- who can apply
+- programme eligibility
+- admission process steps
+- campus visit process
+- enquiry/callback process
+- documents required
+- centre selection
+- fee discussion or fee enquiry path, if present
+- WhatsApp/call/contact options
+- whether admission is based on interaction, visit, availability, or form completion
+- parent next step after form submission
+- whether any wording suggests guaranteed admission
+
+Flag:
+- unclear steps
+- missing documents section
+- missing centre selection explanation
+- weak CTAs
+- confusing form flow
+- unclear post-enquiry expectation
+- over-promising or guaranteed admission language
+
+8. Local SEO audit
+Since admissions are centre-driven, check whether the page supports local SEO properly.
+
+Confirm whether the page includes:
+- Thane mention in title/meta/H1/body
+- 6 centre/locality references
+- links to all 6 centre pages:
+  - /preschool-in-manpada-thane
+  - /preschool-in-hariniwas-thane
+  - /preschool-in-anand-nagar-thane
+  - /preschool-in-dhokali-thane
+  - /preschool-in-kalwa-thane
+  - /preschool-in-kasarvadavali-thane
+- centre-specific admission relevance
+- admissions/contact CTA
+- consistent NAP/phone number if used
+
+Flag:
+- missing centre links
+- wrong centre names
+- weak local relevance
+- local content duplicated from centre pages
+- unsupported claims like “nearest” if not backed by location selection
+
+9. Internal links audit
+Find and validate all internal links on /preschool-admissions.
+
+Confirm important links return 200 and do not pass through redirect chains:
+- /programmes
+- /playgroup
+- /nursery
+- /kindergarten
+- /play-school-near-me
+- /best-preschool-near-me-in-thane
+- /contact
+- /about
+- relevant blog links
+- all 6 centre/location pages
+- WhatsApp CTA, if present
+
+Flag:
+- 404 links
+- 301/302 redirect chains
+- orphaned routes
+- missing important links
+- wrong route names
+- weak anchor text
+- links to outdated pages
+- links using /branches or any non-registered route
+
+Also check whether /preschool-admissions naturally links to:
+- programmes as the parent programme hub
+- individual programme pages
+- centre pages for local admission intent
+- contact/WhatsApp for conversion
+- blog/supporting admission guides where useful
+
+10. Schema / structured data audit
+Check all structured data emitted for /preschool-admissions:
+- BreadcrumbList
+- FAQPage
+- Preschool / LocalBusiness / EducationalOrganization
+- AggregateRating / Review
+- ItemList or hasPart if used for programmes/centres
+- admissions-related schema, if any
+- any page-specific schema
+
+Confirm:
+- schema is emitted in SSR, not injected only client-side
+- no unauthorized client-side schema injection
+- FAQPage schema exists only if visible FAQs exist
+- FAQPage questions and answers match visible FAQ text exactly
+- programme age ranges in schema are correct
+- no old rating references: 4.7 or 3,997 / 3997
+- rating uses verified source: 4.9 / 487+ if shown
+- no incorrect use of daycare as Rainbow’s own service
+- no "24/7 CCTV"
+- no "24/7 monitoring"
+- no unsupported or legally risky award/No. 1 claims
+- no guaranteed admission claims
+- BreadcrumbList matches visible breadcrumb path
+- LocalBusiness/Preschool data is accurate and not over-marked
+
+If schema and visible FAQ do not match, report clearly whether this is critical, high, medium, or low priority.
+
+11. Wording and claim safety audit
+Search the page and related SSR/schema for:
+- "daycare"
+- "24/7 CCTV"
+- "24/7 monitoring"
+- "CCTV surveillance"
+- "surveillance across all areas"
+- "guaranteed"
+- "guaranteed admission"
+- "guaranteed learning outcomes"
+- "limited seats"
+- "closing soon"
+- "100%" claims other than verified "100% female teaching staff"
+- old rating references: "4.7", "3997", "3,997"
+- outdated or unverifiable awards
+- misleading urgency
+
+Apply claim rule:
+- Do not automatically remove “No. 1”, “#1”, “best”, “trusted”, or “award-winning”.
+- Rainbow Preschool may use these where they reflect verified brand positioning, awards, reviews, parent trust, or established market claim.
+- Only flag these phrases if the exact usage is unsupported, misleading, legally risky, or lacks nearby trust proof.
+
+Apply daycare nuance:
+- Do not flag "daycare" when used as a generic comparison topic.
+- Flag "daycare" only when Rainbow or Happy Times is described as daycare, or when daycare appears in CTA/admissions/meta copy as Rainbow’s own offering.
+
+Approved wording:
+- "Happy Times extended care" instead of daycare
+- "CCTV-enabled campuses" or "CCTV-enabled classrooms"
+- "CCTV surveillance in classrooms and common areas"
+- "100% female teaching staff"
+- "secure pickup practices"
+- "child-friendly classrooms"
+- "daily hygiene routines"
+
+Flag every wording issue with file and line number.
+
+12. CTA and admissions conversion audit
+Review all CTAs on /preschool-admissions.
+
+Check if labels are clear and admission-focused:
+- Book a Visit
+- WhatsApp Admissions
+- Enquire Now
+- Request Callback
+- Contact Admissions
+- View Programmes
+- Admission Process
+- Find Nearest Centre, only if it leads to real centre/contact selection
+
+Flag:
+- weak labels
+- too many different CTA labels
+- broken WhatsApp link
+- form placement issues
+- CTA links going through redirects
+- CTA text mismatch between SSR and client
+- missing mobile CTA issue
+- any "Call Now" or generic CTA that should be improved later
+- CTAs that imply geolocation without functionality
+- any CTA that suggests guaranteed admission
+
+Do not redesign. Only report.
+
+13. Performance and LCP diagnosis
+Current mobile PageSpeed:
+- Performance around 57
+- LCP around 5.4s
+- FCP around 2.3s
+- CLS 0
+- unused JS around 506 KiB
+- unused CSS around 25 KiB
+
+CLS is clean, but LCP is weak.
+
+Identify:
+- exact LCP element
+- whether LCP is text, image, form, hero card, background, or late-rendered section
+- whether an above-fold image is lazy-loaded incorrectly
+- whether a font swap or font preload issue affects LCP
+- whether hero text waits for JS/hydration
+- whether form/sidebar delays render
+- whether render-blocking CSS/JS is page-specific or global
+- whether unused JS is global or page-specific
+- whether any image lacks width/height
+- whether any above-fold image is not optimised
+- whether any animation delays LCP visibility
+- whether mobile network throttling makes the JS bundle the main cause
+- whether legacy-pages-data.js or Firebase/global chunks are contributing
+
+Check:
+- image width and height attributes
+- lazy loading of above-fold images
+- hero structure
+- mobile layout
+- forms
+- cards
+- accordions
+- CountUp
+- sticky CTA
+- gallery
+- font loading
+- hydration timing
+
+Do not recommend:
+- new packages
+- sliders
+- videos
+- heavy animations
+- large new images
+
+14. Image and asset audit
+List all images used by /preschool-admissions and report:
+- file name
+- alt text
+- width/height present or missing
+- loading attribute
+- decoding attribute
+- likely above-fold or below-fold
+- whether image filename uses outdated wording like "daycare"
+- whether image could contribute to LCP or CLS
+- whether image alt text is SEO-safe and parent-friendly
+
+15. Content completeness check
+Do not recommend long duplicate content unless needed. Confirm whether the page has enough unique admissions-specific content, such as:
+- admission process
+- eligibility
+- programme-wise age guidance
+- documents required
+- campus visit guidance
+- fee enquiry path
+- 6 centres/locality coverage
+- safety/trust signals
+- parent next step
+- FAQs
+- internal links to centre pages and programme pages
+
+Report only if there is a genuine content gap affecting parent clarity, SEO, or conversion.
+
+16. Cross-page consistency check
+Compare with already cleaned pages:
+- /about
+- /programmes
+- /playgroup
+- /nursery
+- /kindergarten
+- /play-school-near-me
+
+Check that:
+- age ranges match
+- rating values match
+- safety wording matches
+- daycare wording nuance is followed
+- CTA naming is reasonably consistent
+- internal linking pattern is logical
+- title/meta style is not conflicting
+- schema pattern is consistent with other SEO landing pages
+- admissions page does not duplicate programme pages or admission blog posts too closely
+
+17. Output format
+Return the audit in this structure:
+
+A. Executive summary
+- Is the Preschool Admissions page mostly clean or not?
+- Is it safe to edit?
+- Top 3 risks
+
+B. Critical issues
+Only issues that can hurt indexability, trust, structured data quality, admissions conversion, local SEO, or user experience.
+
+C. High-priority issues
+Important consistency or SEO cleanup issues.
+
+D. Medium-priority improvements
+Useful but not urgent.
+
+E. Low-priority improvements
+Cosmetic or later-pass items.
+
+F. No-change confirmations
+Confirm what is already clean:
+- title
+- H1
+- canonical
+- sitemap
+- redirects
+- schema architecture
+- CTAs
+- content depth
+- admissions clarity
+- local SEO structure
+- duplication status
+- CLS status
+- etc.
+
+G. Evidence table
+For every issue:
+- issue
+- file
+- line number
+- current text
+- recommended fix
+- priority
+
+H. Recommended implementation order
+Group fixes into safe batches:
+- Batch 1: critical SEO, metadata, age/rating, wording, and factual fixes
+- Batch 2: schema/FAQ alignment if needed
+- Batch 3: performance/LCP or CLS fixes if needed
+- Batch 4: optional internal link/content refinements
+
+Note:
+If many safety wording violations are found, keep the safety wording cleanup as a dedicated batch. Do not mix performance/LCP fixes with wording fixes.
+
+I. What not to change
+List anything that should be preserved.
+
+J. Guards/tests to run after fixes
+Include:
+- npm run build
+- check-h1-parity
+- check-description-length
+- check-no-title-cannibalisation
+- check-no-client-schema-injection
+- search for wrong age variants
+- search for incorrect daycare usage
+- search for "24/7 CCTV" and "24/7 monitoring"
+- search for old rating references 4.7, 3,997, 3997
+- search for stale admission-year references
+- run mobile PageSpeed again after any LCP fix
+- test all internal links
+
+Do not edit code yet. First provide the complete diagnosis and fix plan for approval.
+```
