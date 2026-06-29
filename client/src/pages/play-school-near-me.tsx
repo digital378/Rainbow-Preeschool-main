@@ -949,21 +949,21 @@ export default function PlaySchoolNearMe() {
               </Card>
               <Card className="text-center p-6">
                 <Star className="w-10 h-10 text-secondary mx-auto mb-3" />
-                <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground whitespace-nowrap">
+                <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground whitespace-nowrap min-h-[2.5rem] flex items-center justify-center">
                   <CountUp end={18} duration={1500} delay={200} suffix="+" />
                 </div>
                 <div className="text-sm text-muted-foreground">Years of Excellence</div>
               </Card>
               <Card className="text-center p-6">
                 <MapPin className="w-10 h-10 text-accent mx-auto mb-3" />
-                <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground whitespace-nowrap">
+                <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground whitespace-nowrap min-h-[2.5rem] flex items-center justify-center">
                   <CountUp end={6} duration={1500} delay={400} prefix="0" />
                 </div>
                 <div className="text-sm text-muted-foreground">Centres in Thane</div>
               </Card>
               <Card className="text-center p-6">
                 <Shield className="w-10 h-10 text-green-500 mx-auto mb-3" />
-                <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground whitespace-nowrap">
+                <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground whitespace-nowrap min-h-[2.5rem] flex items-center justify-center">
                   <CountUp end={100} duration={1500} delay={600} suffix="%" />
                 </div>
                 <div className="text-sm text-muted-foreground">Female Staff</div>
