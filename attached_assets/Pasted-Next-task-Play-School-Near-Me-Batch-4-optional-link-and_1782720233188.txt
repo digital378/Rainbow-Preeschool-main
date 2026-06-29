@@ -1,0 +1,75 @@
+Next task: Play School Near Me Batch 4 — optional link and copy refinements only.
+
+Page:
+https://www.rainbowpreschools.com/play-school-near-me
+
+Goal:
+Polish minor internal linking and copy consistency issues after the main SEO cleanup is complete.
+
+Do not redesign.
+Do not change title, H1, meta description, canonical, sitemap, redirects, schema architecture, FAQ structure, ratings, images, CTAs outside the specified button, or page layout.
+Do not remove valid “play school vs daycare” comparison content.
+Do not touch performance/LCP bundle splitting.
+Do not add new packages.
+
+Implement only these optional refinements:
+
+1. Replace duplicate /best-preschool-near-me-in-thane button
+File:
+client/src/pages/play-school-near-me.tsx
+
+In the “Explore More Programmes” / related links button area, there are two buttons linking to:
+`/best-preschool-near-me-in-thane`
+
+Keep one link to `/best-preschool-near-me-in-thane`.
+
+Change the duplicate button:
+From:
+href="/best-preschool-near-me-in-thane"
+Label: "Award-Winning Preschool"
+
+To:
+href="/preschool-admissions"
+Label: "Admission Process"
+
+Reason:
+Avoid duplicate internal link target in the same section and improve admissions conversion flow.
+
+2. British English copy consistency
+File:
+client/src/pages/play-school-near-me.tsx
+
+Replace:
+"Sanitized Daily"
+
+With:
+"Sanitised Daily"
+
+Replace:
+"sanitized premises"
+
+With:
+"sanitised premises"
+
+Reason:
+Align spelling with Rainbow’s existing brand copy style.
+
+Important:
+Do not change any other text.
+Do not change SSR unless these exact words also exist in the /play-school-near-me SSR entry and clearly need the same spelling consistency.
+Do not change any daycare comparison wording.
+
+After implementation, run:
+- npm run build
+- npx tsx scripts/check-h1-parity.ts
+- npx tsx scripts/check-description-length.ts
+- npx tsx scripts/check-no-title-cannibalisation.ts
+- npx tsx scripts/check-no-client-schema-injection.ts
+
+Then report:
+- exact files changed
+- exact lines changed
+- build result
+- guard results
+- confirmation that only the duplicate button and spelling were changed
+- confirmation that title, H1, meta description, canonical, FAQ, schema, ratings, images, and “play school vs daycare” content were unchanged

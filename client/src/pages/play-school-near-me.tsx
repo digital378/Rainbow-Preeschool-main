@@ -302,7 +302,7 @@ const topPreschools = [
     name: "Rainbow Preschool International",
     location: "Thane (6 Centres), Mumbai Metropolitan Region",
     curriculum: "Play-Based + Montessori Blend",
-    safety: "CCTV, 100% Female Staff, Sanitized Daily",
+    safety: "CCTV, 100% Female Staff, Sanitised Daily",
     experience: "18+ Years",
     awards: "India Today, ScooNews, Economic Times",
     highlight: true,
@@ -847,8 +847,8 @@ export default function PlaySchoolNearMe() {
                   <Link href="/best-preschool-near-me-in-thane">
                     <Button variant="outline" size="sm" data-testid="link-ps-preschool-near-me">Find Nearest Centre</Button>
                   </Link>
-                  <Link href="/best-preschool-near-me-in-thane">
-                    <Button variant="outline" size="sm" data-testid="link-ps-best-preschool">Award-Winning Preschool</Button>
+                  <Link href="/preschool-admissions">
+                    <Button variant="outline" size="sm" data-testid="link-ps-admissions">Admission Process</Button>
                   </Link>
                   <Link href="/happy-times">
                     <Button variant="outline" size="sm" data-testid="link-ps-happy-times">Happy Times</Button>
