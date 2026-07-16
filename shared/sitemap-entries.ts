@@ -61,6 +61,9 @@ export const SITEMAP_ENTRIES: SitemapEntry[] = [
   { url: "/best-preschool-near-me-in-thane", priority: 1.0, changefreq: "weekly" },
   { url: "/preschool-admissions", priority: 1.0, changefreq: "weekly" },
   { url: "/play-school-near-me", priority: 1.0, changefreq: "weekly" },
+  { url: "/play-school-near-ghodbunder-road", priority: 0.85, changefreq: "monthly" },
+  { url: "/play-school-near-majiwada", priority: 0.85, changefreq: "monthly" },
+  { url: "/play-school-near-naupada", priority: 0.85, changefreq: "monthly" },
 
   // ── PROGRAMME PAGES ──────────────────────────────────────
   { url: "/playgroup", priority: 0.9, changefreq: "monthly" },
