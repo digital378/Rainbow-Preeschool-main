@@ -21,7 +21,6 @@
  *                                  bot SSR by design (replit.md); sole schema source.
  *
  *   DEFERRED — retained with AUDIT-206 comments until SSR parity is achieved:
- *     • components/eeat-signals.tsx                   — reviewedBy + page AggregateRating (see #212)
  *     • components/legacy-landing-page.tsx            — no SSR structuredData for legacy routes
  *     • components/landing/playgroup-landing-template.tsx — minimal SSR entries for locality pages
  *     • pages/holi-activities.tsx                     — not in SSR staticPages (see #211)

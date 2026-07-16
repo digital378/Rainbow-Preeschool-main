@@ -1,0 +1,125 @@
+We need to create an llms.txt file to improve AI search visibility (Perplexity, ChatGPT Search, Google AI Overviews, Claude). This is a read-first, then build task.
+
+Step 1 — Read these files before writing anything:
+
+shared/centre-data.ts — for all 6 centre names, addresses, and locations (do NOT use individual centre phone numbers from this file)
+server/ssr-pages.ts — for accurate page titles, descriptions, programme details, FAQ entries, and content sections
+client/src/App.tsx — for the full list of routes
+shared/sitemap-entries.ts — for the complete page inventory
+Do not guess or use generic placeholder content. Every fact must come from the actual codebase. The only phone number that may appear anywhere in either file is +91 82915 68972 — this is the admissions line and applies to all centres.
+
+Step 2 — Create public/llms.txt with exactly this structure, populated with real data from the files above:
+
+# Rainbow Preschool International
+> Thane's most trusted preschool since 2007. Playgroup, Nursery and Kindergarten for children aged 1.5 to 6 years across 6 centres in Thane, Maharashtra, India.
+## About
+Rainbow Preschool International has been serving families in Thane since 2007 — over 18 years of early childhood education. More than 1,00,000 children have learned with us. All staff are female. Admissions are open for the 2026–27 academic year.
+- Founded: 2007
+- Location: Thane, Maharashtra, India
+- Centres: 6 (across Thane West and Thane East)
+- Age range: 1.5 years to 6 years
+- Staff: 100% female
+- Rating: 4.9/5 (487 parent reviews)
+- Admissions contact: +91 82915 68972
+## Programmes
+### Playgroup (Ages 1.5–2.5 years)
+A gentle introduction to structured learning through play and sensory exploration. Batch size: 10–12 children.
+### Nursery (Ages 2.5–4 years)
+Language development, early numeracy, motor skills and social confidence. Batch size: 12–15 children.
+### Kindergarten (Ages 4–6 years)
+School readiness, reading, writing, logical thinking and creative expression. Batch size: 12–15 children.
+### Happy Times
+[Read the Happy Times page description from server/ssr-pages.ts and write an accurate 2-sentence summary here]
+## Our 6 Centres in Thane
+[For each of the 6 centres, read the name and address from shared/centre-data.ts and list as below. Use only +91 82915 68972 as the phone number for every centre — do not use individual centre numbers from the data file.]
+### Rainbow Preschool — [Centre Name]
+- Area: [locality], Thane
+- Address: [full address from centre-data.ts]
+- Admissions: +91 82915 68972
+- Page: https://www.rainbowpreschools.com/preschool-in-[slug]-thane
+[Repeat for all 6 centres: Manpada, Hariniwas, Anand Nagar, Dhokali, Kalwa, Kasarvadavali]
+## Admission Process
+1. Enquire online or call +91 82915 68972
+2. Schedule a school visit
+3. Meet the centre head
+4. Complete enrolment formalities
+Admissions are open for the 2026–27 academic year.
+Full details: https://www.rainbowpreschools.com/preschool-admissions
+## Key Pages
+- Homepage: https://www.rainbowpreschools.com/
+- About us: https://www.rainbowpreschools.com/about
+- All programmes: https://www.rainbowpreschools.com/programmes
+- Playgroup: https://www.rainbowpreschools.com/playgroup
+- Nursery: https://www.rainbowpreschools.com/nursery
+- Kindergarten: https://www.rainbowpreschools.com/kindergarten
+- Admissions: https://www.rainbowpreschools.com/preschool-admissions
+- Find a centre: https://www.rainbowpreschools.com/contact
+- Blog: https://www.rainbowpreschools.com/blog
+- FAQs: https://www.rainbowpreschools.com/faqs
+- Testimonials: https://www.rainbowpreschools.com/testimonials
+- Preschool readiness quiz: https://www.rainbowpreschools.com/preschool-readiness-quiz
+- Top preschools in Thane: https://www.rainbowpreschools.com/top-preschools-in-thane
+- Best preschool near me: https://www.rainbowpreschools.com/best-preschool-near-me-in-thane
+## Frequently Asked Questions
+[Read the FAQPage schema from server/ssr-pages.ts for the homepage and /faqs entries. Extract every question and answer and list them all here in plain text. Do not truncate — include every single Q&A.]
+Q: [question]
+A: [answer]
+## Contact
+Admissions line: +91 82915 68972
+Website: https://www.rainbowpreschools.com
+Admissions enquiry form: https://www.rainbowpreschools.com/contact
+
+Step 3 — Create public/llms-full.txt
+
+This is the extended version for AI systems that support deeper context. Start with everything in llms.txt and then append the following additional sections after the Contact section:
+
+Section: Locality Pages List every locality-specific sub-page with its URL and a one-line description. Read these from shared/sitemap-entries.ts and client/src/App.tsx:
+
+All /playgroup-in-[area] pages
+All /play-school-near-[area] pages
+All /preschool-in-[area]-thane centre pages (already listed above — link back, don't duplicate)
+Format:
+
+## Locality Pages
+- Playgroup in Manpada: https://www.rainbowpreschools.com/playgroup-in-manpada — Playgroup programme for children aged 1.5–2.5 years in Manpada, Thane.
+[Continue for all locality pages found in the sitemap]
+
+Section: Blog & Articles List every blog post and hardcoded SEO article page. Read hardcoded article routes from client/src/App.tsx. For database blog posts, list the route pattern and note it is dynamically populated:
+
+## Blog & Articles
+[List each hardcoded SEO article page with its URL and title from server/ssr-pages.ts]
+- [Article title]: https://www.rainbowpreschools.com/[slug]
+Dynamic blog posts: https://www.rainbowpreschools.com/blog
+
+Section: Full About Content Read the contentSections for /about in server/ssr-pages.ts and write the full about content here in plain prose.
+
+Section: Full Admissions Detail Read the contentSections for /preschool-admissions in server/ssr-pages.ts and write the complete admissions information here including all steps, dates, batch sizes, and FAQs.
+
+Step 4 — Serve both files
+
+Check whether Express already serves the public/ directory as static files — it should, since public/robots.txt was recently added. If yes, no new route is needed. Both files will be available at:
+
+https://www.rainbowpreschools.com/llms.txt
+https://www.rainbowpreschools.com/llms-full.txt
+If static serving of public/ is not already configured in server/index.ts, add it — but only if missing. Do not add a duplicate static middleware call.
+
+Step 5 — Update public/robots.txt
+
+Open public/robots.txt and append these two lines at the very end:
+
+LLMs-txt: https://www.rainbowpreschools.com/llms.txt
+LLMs-full-txt: https://www.rainbowpreschools.com/llms-full.txt
+
+Step 6 — Verify before finishing
+
+Check every item below and confirm each one:
+
+public/llms.txt exists and contains real data — no placeholder text remaining
+public/llms-full.txt exists and is meaningfully more detailed than llms.txt
+The phone number +91 82915 68972 is the only phone number appearing in either file — search both files for any other number and remove it
+All 6 centre addresses are accurate and match shared/centre-data.ts
+All URLs use https://www.rainbowpreschools.com as the base — no relative URLs
+Both files will be served correctly via the existing static file setup
+public/robots.txt now contains both LLMs-txt declarations at the bottom
+Flag anything that had to be left as a placeholder and tell me exactly what data was missing and where to find it
+Make no other changes to any other file. Report everything that was created or modified.
