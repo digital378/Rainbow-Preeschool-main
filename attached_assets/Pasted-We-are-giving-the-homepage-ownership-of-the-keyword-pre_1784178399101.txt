@@ -1,0 +1,67 @@
+We are giving the homepage ownership of the keyword "preschool in thane" — this phrase is currently unclaimed in the cannibalisation guard. This is a careful, guard-aware change touching three places. Read everything before changing anything.
+
+Step 1 — Read these files first:
+
+server/ssr-pages.ts — find the homepage (/) entry: read its current title, description, H1, and structuredData
+client/src/pages/home.tsx (or wherever the homepage client component lives — find it via client/src/App.tsx) — read its current SEO component props and H1
+scripts/check-no-title-cannibalisation.ts — read the full keyword ownership matrix and understand the exact format used to register a new keyword
+Do not proceed until you have read all three.
+
+Step 2 — Confirm no conflict exists
+
+Before changing anything, verify:
+
+No existing page in the ownership matrix owns "preschool in thane" exactly
+No existing page title contains "preschool in thane" as a substring
+The homepage title change will not cause SSR/client parity violation
+Report what you find. If a conflict exists, stop and tell me — do not proceed.
+
+Step 3 — Update server/ssr-pages.ts (SSR — what Googlebot sees)
+
+Find the homepage (/) entry. Make only these changes:
+
+Title: Update to include "Preschool in Thane" as the primary phrase. The title must:
+
+Be ≤65 characters
+Not use any phrase already owned by another page (check the matrix)
+Not use banned soft-marketing words (check the guard for the banned list)
+Contain "Preschool in Thane" and "Rainbow Preschool" as a brand anchor
+Suggested format: "Preschool in Thane | Rainbow Preschool International" — use this unless it fails any of the above checks, in which case propose an alternative before applying
+Meta description: Update to ≤155 characters, naturally including "preschool in thane". Do not copy the description from any other page. Write one that is specific to the homepage — broad, trust-building, covering the range of programmes and the 18+ year legacy.
+
+Do not change: H1, canonical, schema, breadcrumbs, contentSections, or any other field in the homepage SSR entry.
+
+Step 4 — Update the client homepage component
+
+Find the SEO component on the homepage client file. Update only the title and description props to exactly match what you set in Step 3. Character for character — the parity guard will fail if they differ.
+
+Do not change any visible page content, layout, components, or styling.
+
+Step 5 — Register the keyword in the cannibalisation guard
+
+Open scripts/check-no-title-cannibalisation.ts. Following the exact same format already used for other entries, add this to the keyword ownership matrix:
+
+"Preschool in Thane" → /  (homepage)
+
+Use the exact syntax the file already uses — do not invent a new format.
+
+Step 6 — Run all guards
+
+pnpm run check-no-title-cannibalisation
+pnpm run check-description-length
+pnpm run check-h1-parity
+pnpm run check-no-client-schema-injection
+
+All 4 must pass. If any fails, fix it before declaring done. Show me the output of each guard.
+
+Step 7 — Confirm
+
+Tell me:
+
+The exact final title string applied
+The exact final description string applied and its character count
+That SSR and client strings match exactly
+That the cannibalisation guard now lists the homepage as the owner of "Preschool in Thane"
+That all 4 guards passed
+Make no other changes to any other file.
+
