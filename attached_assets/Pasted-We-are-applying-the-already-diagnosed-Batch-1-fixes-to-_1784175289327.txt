@@ -1,0 +1,24 @@
+We are applying the already-diagnosed Batch 1 fixes to /preschool-admissions. There are 7 specific issues. Fix them in the order listed. Before touching any file, read the current state of both server/ssr-pages.ts (the SSR entry for /preschool-admissions) and client/src/pages/preschool-admissions.tsx (or wherever the client page lives — find it first). Do not proceed on memory alone.
+
+Fix 1 — Client meta description is 216 characters (must be ≤155) Find the <meta name="description"> or SEO component description prop on the client page for /preschool-admissions. Rewrite it to convey the same meaning in 155 characters or fewer. Run scripts/check-description-length.ts after to confirm it passes.
+
+Fix 2 — SSR "Key Admission Dates" content section has stale dates In server/ssr-pages.ts, find the contentSection for /preschool-admissions that references "Key Admission Dates". All dates referencing 2025 or early 2026 must be updated to reflect the current 2026–27 admission cycle. Use only dates that are accurate — if unsure of the exact date, use the academic year reference (e.g. "2026–27 academic year") rather than a specific date that may be wrong.
+
+Fix 3 — SSR breadcrumb label "Admissions" ≠ client "Preschool Admissions" In server/ssr-pages.ts, find the breadcrumb for /preschool-admissions. The label must be changed to match the client exactly. Determine which side is correct by checking what the page's H1 says, then update the SSR breadcrumb label to match. Run scripts/check-h1-parity.ts after.
+
+Fix 4 — FAQ Q7/Q8 order swapped between SSR and client In server/ssr-pages.ts, find the FAQPage schema for /preschool-admissions. Reorder Q7 and Q8 so they match the order the user sees on the client page. Read both files side by side before making the change.
+
+Fix 5 — FAQ question text strings drift between SSR schema and client Compare every FAQ question string between the SSR FAQPage schema in server/ssr-pages.ts and the rendered FAQ on the client page. Where wording differs (even minor differences — punctuation, capitalisation, word order), update the SSR schema strings to match the client exactly, word for word. The client is the source of truth.
+
+Fix 6 — Batch size "10–15" inconsistent with programme-specific "10–12/12–15" Search the entire codebase for the string "10–15" or "10-15" in the context of batch/class sizes on the /preschool-admissions page. Replace with the programme-specific values: "10–12" for Playgroup and "12–15" for Nursery/Kindergarten, wherever the context makes the programme clear. If the context is general (not programme-specific), use "10–15 children per batch" as an acceptable fallback. Do not change this value on any other page.
+
+Fix 7 — Hero video autoPlay + preload="none" causing ~5.4s LCP Find the hero video element on client/src/pages/preschool-admissions.tsx. Change preload="none" to preload="metadata". Do not remove autoPlay — only change the preload attribute. This tells the browser to load enough of the video to begin playing without downloading the full file upfront, reducing LCP.
+
+After all 7 fixes, run the full guard suite:
+
+pnpm run check-no-title-cannibalisation
+pnpm run check-description-length
+pnpm run check-h1-parity
+pnpm run check-no-client-schema-injection
+
+Report the result of each guard. If any guard fails, fix it before declaring this done.

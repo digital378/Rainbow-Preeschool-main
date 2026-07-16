@@ -1,0 +1,45 @@
+We need to systematically audit all 6 centre pages for SSR/client drift and quality issues. This is an audit-first, fix-second workflow. Do not change anything until the full audit table is complete.
+
+The 6 centre pages are:
+
+/preschool-in-manpada-thane
+/preschool-in-hariniwas-thane
+/preschool-in-anand-nagar-thane
+/preschool-in-dhokali-thane
+/preschool-in-kalwa-thane
+/preschool-in-kasarvadavali-thane
+Step 1 — Read the source files Read server/ssr-pages.ts for all 6 centre entries. Read shared/centre-data.ts in full. Find the client-side component that renders centre pages (it may be a shared template — find it).
+
+Step 2 — For each of the 6 pages, check every item below and record pass ✅ or fail ❌:
+
+Check	What to verify
+Title length	≤65 characters
+Title keyword	Contains the area name + "Thane"
+Title cannibalisation	Does not use a phrase owned by another page per the cannibalisation guard
+Description length	≤155 characters
+Description content	Mentions area name, programme types, and a CTA
+SSR H1 = Client H1	Exact string match — run scripts/check-h1-parity.ts
+SSR description = Client description	Exact or intentional match
+Canonical URL	Present and correct (self-referencing)
+BreadcrumbList	Present in SSR with correct labels and URLs
+LocalBusiness schema	Present in SSR with correct name, address, phone, lat/lng from shared/centre-data.ts
+FAQPage schema	Present in SSR
+FAQ SSR/client parity	All question strings match between SSR schema and client render
+Address accuracy	SSR address matches shared/centre-data.ts exactly
+Phone number	Correct and consistent with shared/centre-data.ts
+Images	Alt text present and descriptive (not empty, not generic)
+Internal links	At least 2–3 links to related pages (programmes, admissions, other centres)
+Step 3 — Produce the full audit table Output a table with all 6 centres as rows and all 16 checks as columns. Mark each cell ✅ or ❌. Add a notes column for any specific issue found.
+
+Step 4 — Only after the table is complete, ask me to confirm before fixing anything.
+
+State clearly: "Audit complete. Ready to apply fixes — confirm to proceed." Do not begin fixing until I say yes.
+
+When I confirm, fix all failures in server/ssr-pages.ts and the client template. After fixes, re-run:
+
+pnpm run check-no-title-cannibalisation
+pnpm run check-description-length
+pnpm run check-h1-parity
+pnpm run check-no-client-schema-injection
+
+All 4 guards must pass before this is done.

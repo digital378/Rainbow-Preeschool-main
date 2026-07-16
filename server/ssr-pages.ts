@@ -809,7 +809,7 @@ const staticPages: Record<string, PageSEOData> = {
     keywords: "preschool admissions in thane, preschool admission near me, nursery admission thane, kindergarten admission thane, playgroup admission thane, preschool admission process, preschool admission form, preschool admission enquiry",
     canonical: `${BASE_URL}/preschool-admissions`,
     h1: "Preschool Admissions in Thane",
-    breadcrumbs: [{ name: "Home", url: "/" }, { name: "Admissions", url: "/preschool-admissions" }],
+    breadcrumbs: [{ name: "Home", url: "/" }, { name: "Preschool Admissions", url: "/preschool-admissions" }],
     lastModified: LAST_UPDATED_ISO,
     lastModifiedDisplay: LAST_UPDATED_DISPLAY,
     introText: "Rainbow Preschool International offers preschool admissions in Thane for children aged 1.5 to 5.5 years across four programmes — Playgroup, Nursery, Junior KG, and Senior KG. With 6 centres across Thane West and 18+ years of experience educating over one lakh children, Rainbow is one of Thane's most trusted names in early childhood education. Admissions for the 2026–27 academic year are now open. Whether you are enquiring about playgroup admission, nursery admission, or kindergarten admission in Thane, our team will guide you through every step — from your first call to your child's first day.",
@@ -819,12 +819,12 @@ const staticPages: Record<string, PageSEOData> = {
       mainEntity: [
         {
           "@type": "Question",
-          name: "What is the admission process for preschool at Rainbow Preschool?",
+          name: "What is the admission process for Rainbow Preschool?",
           acceptedAnswer: { "@type": "Answer", text: "The admission process at Rainbow Preschool has six steps: (1) Submit an enquiry online, by phone at 82915 68972, or by walking into any of our 6 Thane centres. (2) Schedule a free campus tour — our admissions team arranges a visit to your preferred centre. (3) Speak with the admissions team to discuss your child's age, preferred programme, and any questions. (4) Complete the formal registration form and submit it to the centre. (5) Provide required documents — birth certificate, ID proof, photographs, and address proof. (6) Pay the admission fee to confirm your child's seat and attend our parent orientation session. The entire process typically takes 3 to 5 working days from enquiry to confirmed admission." }
         },
         {
           "@type": "Question",
-          name: "What documents are required for preschool admission in Thane?",
+          name: "What documents are required for preschool admission?",
           acceptedAnswer: { "@type": "Answer", text: "Please keep the following documents ready when completing admission at Rainbow Preschool: child's birth certificate (mandatory for age verification), 4 to 6 passport-size photographs of the child, parent or guardian ID proof (Aadhaar, passport, voter ID, or driving licence), address proof (Aadhaar, utility bill, or rental agreement with Thane address), child's Aadhaar card if available, previous school records or transfer certificate if applicable, vaccination card and any relevant medical or allergy records, and two passport-size photographs of both parents for ID card purposes. If any document is unavailable, provisional admission can be granted with a 30-day submission commitment." }
         },
         {
@@ -839,23 +839,23 @@ const staticPages: Record<string, PageSEOData> = {
         },
         {
           "@type": "Question",
-          name: "What are the fees for preschool admission at Rainbow Preschool Thane?",
+          name: "What are the fees for preschool admission in Thane?",
           acceptedAnswer: { "@type": "Answer", text: "Rainbow Preschool offers competitive and transparent pricing. Fee components include: a one-time admission fee at enrolment covering registration, orientation, and starter kit; monthly or term-based tuition fee covering curriculum, teaching staff, and learning materials; an activity fee covering art, music, dance, yoga, sports, and field trips; and an optional transport fee for GPS-tracked vehicles with female attendants. Flexible payment plans are available — monthly, quarterly, half-yearly, or annual. There are no hidden charges — the full fee breakdown is shared before admission is confirmed. For exact fees at your preferred centre, call 82915 68972 or fill the enquiry form on this page." }
         },
         {
           "@type": "Question",
-          name: "Do you offer mid-term preschool admissions in Thane?",
+          name: "Do you offer mid-term preschool admissions?",
           acceptedAnswer: { "@type": "Answer", text: "Yes, Rainbow Preschool accepts mid-term admissions throughout the academic year, subject to seat availability at the preferred centre. A brief assessment ensures your child is placed in the appropriate group. Catch-up support from teachers helps mid-term joiners settle in comfortably. Fees are calculated on a pro-rata basis from the month of joining. Mid-term admission is ideal for families relocating to Thane or switching from another preschool. Contact us to check current seat availability at your nearest Rainbow centre." }
-        },
-        {
-          "@type": "Question",
-          name: "Can I visit the preschool before taking admission?",
-          acceptedAnswer: { "@type": "Answer", text: "Absolutely — Rainbow Preschool strongly encourages every parent to schedule a campus tour before enrolling. During the visit, you receive a guided tour of classrooms, play areas, washrooms, kitchen, and safety installations; you meet the centre head and teaching staff who will work with your child; you can observe an ongoing class session to see our teaching approach in action; your child is welcome to attend a free trial class; and you get clear answers on fees, timings, transport, and the full admission process. Book a visit by calling 82915 68972, filling the form on this page, or messaging us on WhatsApp." }
         },
         {
           "@type": "Question",
           name: "How do I choose the right Rainbow Preschool centre for admission?",
           acceptedAnswer: { "@type": "Answer", text: "With 6 centres across Thane, consider these factors: proximity — choose the centre closest to your home, workplace, or daily commute route; transport availability — check if a Rainbow bus route covers your building or area; batch timing — different centres may offer slightly different session start times; campus visit — visit the centre in person and let your child's comfort guide the final decision. Our 6 centres are located in Manpada, Hariniwas, Anand Nagar, Dhokali, Kalwa, and Kasarvadavali. Our admissions team is happy to help you compare options and find the best fit." }
+        },
+        {
+          "@type": "Question",
+          name: "Can I visit the preschool before taking admission?",
+          acceptedAnswer: { "@type": "Answer", text: "Absolutely — Rainbow Preschool strongly encourages every parent to schedule a campus tour before enrolling. During the visit, you receive a guided tour of classrooms, play areas, washrooms, kitchen, and safety installations; you meet the centre head and teaching staff who will work with your child; you can observe an ongoing class session to see our teaching approach in action; your child is welcome to attend a free trial class; and you get clear answers on fees, timings, transport, and the full admission process. Book a visit by calling 82915 68972, filling the form on this page, or messaging us on WhatsApp." }
         },
       ],
     }, {
@@ -957,12 +957,12 @@ const staticPages: Record<string, PageSEOData> = {
         ]
       },
       {
-        heading: "Key Admission Dates for 2026–27 Academic Year",
+        heading: "Key Admission Dates for 2027–28 Academic Year",
         items: [
-          "October to November 2025 — Early Admission Window: Applications open for 2026–27. Families who apply early secure their preferred centre and batch timing. Seats at popular centres fill during this window.",
-          "December 2025 to February 2026 — Main Admission Period: Peak window with maximum seat availability across all 6 Rainbow Preschool centres in Thane. Ideal time to confirm admission before competition increases.",
-          "March to May 2026 — Final Admission Round: Remaining seats are filled; availability is limited especially at Manpada and Hariniwas. Early enquiry during this period is strongly recommended.",
-          "June 2026 Onwards — Academic Year Begins: Mid-term admissions are accepted throughout the year subject to seat availability — well suited for families relocating to Thane or switching from another preschool."
+          "October to November 2026 — Early Admission Window: Applications open for 2027–28. Families who apply early secure their preferred centre and batch timing. Seats at popular centres fill during this window.",
+          "December 2026 to February 2027 — Main Admission Period: Peak window with maximum seat availability across all 6 Rainbow Preschool centres in Thane. Ideal time to confirm admission before competition increases.",
+          "March to May 2027 — Final Admission Round: Remaining seats are filled; availability is limited especially at Manpada and Hariniwas. Early enquiry during this period is strongly recommended.",
+          "June 2027 Onwards — Academic Year Begins: Mid-term admissions are accepted throughout the year subject to seat availability — well suited for families relocating to Thane or switching from another preschool."
         ]
       },
       {
@@ -971,7 +971,7 @@ const staticPages: Record<string, PageSEOData> = {
         items: [
           "18+ years of preschool education experience in Thane since 2007, with over 1,00,000 alumni across 6 generations of families",
           "100% trained female teaching staff — ECE-qualified and Montessori-trained educators with an average tenure of 5+ years",
-          "Small class sizes — maximum 10 to 15 children per group — ensuring meaningful individual attention for every child every day",
+          "Small class sizes — maximum 10–15 children per batch — ensuring meaningful individual attention for every child every day",
           "CCTV-monitored, child-safe premises with secure entry and exit, child-proofed furniture, and daily sanitisation at all 6 centres",
           "Play-based, NEP 2020-aligned curriculum developed by our Head of Curriculum and updated annually with current ECE best practices",
           "Regular parent communication — daily verbal feedback, monthly written progress updates, and open access to your child's teacher",
@@ -992,7 +992,7 @@ const staticPages: Record<string, PageSEOData> = {
       },
       {
         heading: "Is there a waiting list for preschool admission at Rainbow?",
-        text: "Rainbow Preschool has limited seats per batch to maintain small class sizes of 10 to 15 children — this is essential for the individual attention our teachers provide. During peak admission months (December to March), popular centres and timings can fill up. We recommend enquiring as early as possible — ideally in October or November before the main window opens — to secure your preferred centre and batch. We do maintain a waiting list for filled batches, and parents are notified if a seat becomes available. For the most current availability at any centre, call 82915 68972 or fill the enquiry form on this page."
+        text: "Rainbow Preschool has limited seats per batch to maintain small class sizes of 10–15 children — this is essential for the individual attention our teachers provide. During peak admission months (December to March), popular centres and timings can fill up. We recommend enquiring as early as possible — ideally in October or November before the main window opens — to secure your preferred centre and batch. We do maintain a waiting list for filled batches, and parents are notified if a seat becomes available. For the most current availability at any centre, call 82915 68972 or fill the enquiry form on this page."
       },
     ],
     internalLinks: [...commonInternalLinks, { text: "Playgroup Programme", url: "/playgroup" }, { text: "Nursery Programme", url: "/nursery" }, { text: "Kindergarten Programme", url: "/kindergarten" }],

@@ -18,7 +18,7 @@ import { useState, useEffect } from "react";
 
 const meta = {
   title: "Preschool Admissions in Thane | Rainbow Preschool",
-  description: "Apply for preschool admission at Rainbow Preschool International in Thane. Explore playgroup, nursery and kindergarten admissions, age criteria, admission process, required documents, and centre options across Thane.",
+  description: "Apply for preschool admission at Rainbow Preschool Thane. Playgroup, Nursery & KG open — age criteria, documents, fee structure & step-by-step process.",
   keywords: "preschool admissions in thane, preschool admission near me, nursery admission thane, kindergarten admission thane, playgroup admission thane, preschool admission process, preschool admission form, preschool admission enquiry",
 };
 
@@ -369,7 +369,7 @@ export default function PreschoolAdmissions() {
 
             {/* Video */}
             <div className="mt-5 rounded-xl overflow-hidden shadow-md">
-              <video autoPlay loop muted playsInline preload="none" className="w-full h-auto" data-testid="video-walkthrough-admissions">
+              <video autoPlay loop muted playsInline preload="metadata" className="w-full h-auto" data-testid="video-walkthrough-admissions">
                 <source src="/assets/RPS_Walkthrough_Video_-_Website_1_1766126796450.mp4" type="video/mp4" />
               </video>
             </div>
