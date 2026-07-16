@@ -108,8 +108,8 @@ const OWNED_PHRASES: Array<{ phrase: RegExp; label: string; canonicalUrls: RegEx
   },
   {
     phrase: /\bpreschool in thane\b/i,
-    label: "Preschool in Thane (bare)",
-    canonicalUrls: [/^\/best-preschool-near-me-in-thane$/, /^\/preschool-admissions$/],
+    label: "Preschool in Thane",
+    canonicalUrls: [/^\/$/],
   },
 ];
 
