@@ -1,0 +1,33 @@
+The EEATSignals component currently injects AggregateRating and Article schema client-side. Googlebot does not reliably execute this JavaScript, so it is not seeing these schema types. We need to move them into the SSR layer so bots receive them in the initial HTML response.
+
+Step 1 — Read and understand the current setup Read client/src/components/eeat-signals.tsx in full. Identify:
+
+What schema types it emits (AggregateRating, Article, or others)
+What data it uses (static values, props, or fetched data)
+Which pages currently use this component (search all files that import eeat-signals)
+Read server/ssr-pages.ts to understand the exact shape of the structuredData field used for each page entry. You need to match this structure exactly.
+
+Read scripts/check-no-client-schema-injection.ts to understand what it currently blocks. We must not trigger this guard — the migration must satisfy it, not fight it.
+
+Step 2 — Plan before touching anything Tell me:
+
+Exactly which schema types will move to SSR
+Which pages will receive the new SSR schema entries
+Whether the AggregateRating values are static or dynamic — if dynamic, where the values come from
+Whether check-no-client-schema-injection.ts needs to be updated to cover the newly migrated types, or whether those types are already covered
+Wait for my confirmation of the plan before proceeding.
+
+Step 3 — Implement after confirmation
+
+Add the AggregateRating and Article schema to the structuredData array for each relevant page in server/ssr-pages.ts
+Use the same data values currently in the client component — do not change any rating values, review counts, or author information
+After adding to SSR, remove the schema emission from client/src/components/eeat-signals.tsx — keep the component if it still renders visible UI elements, but remove only the JSON-LD <script> injection
+If the component becomes empty after removal (no visible UI), flag this for me to decide whether to delete it
+Step 4 — Verify Run all 4 guards:
+
+pnpm run check-no-title-cannibalisation
+pnpm run check-description-length
+pnpm run check-h1-parity
+pnpm run check-no-client-schema-injection
+
+All must pass. Confirm that the schema now appears in the SSR HTML output by checking the rendered HTML string for one of the affected pages in server/ssr-pages.ts. Do not deploy or restart anything — just confirm the code is correct.
