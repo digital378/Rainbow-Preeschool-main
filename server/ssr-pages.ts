@@ -657,8 +657,6 @@ const staticPages: Record<string, PageSEOData> = {
     description: "Enroll your toddler in our Playgroup (1.5–2.5 yrs) — play-based learning and gentle socialisation across Rainbow Preschool's 6 Thane West centres.",
     keywords: "playgroup in thane, playgroup near me, playgroup school thane, toddler programme thane",
     canonical: `${BASE_URL}/playgroup`,
-    lastModified: LAST_UPDATED_ISO,
-    lastModifiedDisplay: LAST_UPDATED_DISPLAY,
     h1: "Best Playgroup in Thane for Children Aged 1.5 to 2.5 Years",
     breadcrumbs: [{ name: "Home", url: "/" }, { name: "Programmes", url: "/programmes" }, { name: "Playgroup", url: "/playgroup" }],
     structuredData: [programmeOrgSchema, websiteSchema, ...branchLocalBusinessSchemas, {
@@ -690,8 +688,6 @@ const staticPages: Record<string, PageSEOData> = {
     description: "Looking for nursery near me in Thane? Rainbow Preschool's Nursery (2.5–3.5 yrs) builds phonics, numeracy & social skills across 6 centres. Enquire now.",
     keywords: "nursery school in thane, nursery admission thane, nursery programme thane",
     canonical: `${BASE_URL}/nursery`,
-    lastModified: LAST_UPDATED_ISO,
-    lastModifiedDisplay: LAST_UPDATED_DISPLAY,
     h1: "Best Nursery School in Thane for Children Aged 2.5 to 3.5 Years",
     breadcrumbs: [{ name: "Home", url: "/" }, { name: "Programmes", url: "/programmes" }, { name: "Nursery", url: "/nursery" }],
     structuredData: [programmeOrgSchema, websiteSchema, ...branchLocalBusinessSchemas, {
@@ -724,8 +720,6 @@ const staticPages: Record<string, PageSEOData> = {
     description: "Prepare your child for primary school with our Kindergarten programme (3.5–5.5 yrs) — reading, writing, maths, and life skills at Rainbow Preschool Thane.",
     keywords: "kindergarten in thane, kindergarten school thane, school readiness programme thane",
     canonical: `${BASE_URL}/kindergarten`,
-    lastModified: LAST_UPDATED_ISO,
-    lastModifiedDisplay: LAST_UPDATED_DISPLAY,
     h1: "Best Kindergarten in Thane for Children Aged 3.5 to 5.5 Years",
     breadcrumbs: [{ name: "Home", url: "/" }, { name: "Programmes", url: "/programmes" }, { name: "Kindergarten", url: "/kindergarten" }],
     structuredData: [programmeOrgSchema, websiteSchema, ...branchLocalBusinessSchemas, {
@@ -1009,8 +1003,6 @@ const staticPages: Record<string, PageSEOData> = {
     description: "Looking for the best preschool near you in Thane? Explore Rainbow Preschool's 6 centres, safety, curriculum and campus visit options.",
     keywords: "best preschool near me, preschool near me, preschool in thane, best preschool in thane, top preschool in thane, nursery school in thane, kindergarten in thane, preschool admission in thane, Rainbow Preschools",
     canonical: `${BASE_URL}/best-preschool-near-me-in-thane`,
-    lastModified: LAST_UPDATED_ISO,
-    lastModifiedDisplay: LAST_UPDATED_DISPLAY,
     h1: "Best Preschool Near Me in Thane",
     breadcrumbs: [{ name: "Home", url: "/" }, { name: "Best Preschool in Thane", url: "/best-preschool-near-me-in-thane" }],
     structuredData: [organizationSchema, websiteSchema, ...branchLocalBusinessSchemas, {
@@ -1108,8 +1100,6 @@ const staticPages: Record<string, PageSEOData> = {
     description: "Find the best play school & preschool near you in Thane — Rainbow Preschool, 6 centres across Thane West, safe play-based learning since 2007.",
     keywords: "play school near me, preschool near me, playschool near me in thane, preschool near me in thane, top playschool thane, best play school thane",
     canonical: `${BASE_URL}/play-school-near-me`,
-    lastModified: LAST_UPDATED_ISO,
-    lastModifiedDisplay: LAST_UPDATED_DISPLAY,
     h1: "Play School & Preschool Near Me in Thane",
     breadcrumbs: [{ name: "Home", url: "/" }, { name: "Play School Near Me", url: "/play-school-near-me" }],
     structuredData: [organizationSchema, websiteSchema, ...branchLocalBusinessSchemas, {
