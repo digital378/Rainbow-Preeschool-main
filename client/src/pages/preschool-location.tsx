@@ -350,7 +350,7 @@ function PreschoolLocationTemplate({ localitySlug }: PreschoolLocationPageProps)
                     <Star className="w-6 h-6 text-yellow-500" />
                   </div>
                   <h3 className="text-lg font-semibold mb-2">Kindergarten</h3>
-                  <p className="text-sm text-muted-foreground mb-2">Ages 3.5 - 5 years</p>
+                  <p className="text-sm text-muted-foreground mb-2">Ages 3.5 - 5.5 years</p>
                   <p className="text-sm text-muted-foreground">
                     School readiness with English, Math, EVS, GK, Art & Craft, and more.
                   </p>

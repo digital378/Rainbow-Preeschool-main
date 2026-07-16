@@ -17,6 +17,7 @@ import {
   preschoolIntros,
   whyParentsChoose,
   preschoolFAQs,
+  preschoolPageSEO,
   getCentreBySlug,
   createAllBranchLocalBusinessSchemas,
 } from "@shared/centre-data";
@@ -1872,7 +1873,7 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
       items: [
         "Playgroup (1.5–2.5 years) — sensory play, early socialisation, gentle separation, foundational language",
         "Nursery (2.5–3.5 years) — phonics, number sense, fine-motor skills, structured group activities",
-        "Kindergarten (3.5–5 years) — pre-reading, pre-writing, early maths, science wonder, school-readiness",
+        "Kindergarten (3.5–5.5 years) — pre-reading, pre-writing, early maths, science wonder, school-readiness",
         "Kids Activity Club — after-school enrichment in dance, art, music, and physical play",
         "Summer Camp — themed weekly programmes during May and April vacation",
         "Happy Times — extended-care option for working parents in " + centre.locality,
@@ -1901,7 +1902,7 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
 
     richSections.push({
       heading: `Visit, Address & Contact for the ${centre.locality} Centre`,
-      text: `Our ${centre.locality} centre is located at ${centre.address}. To plan a visit or speak with the centre head, call ${centre.phone} between 9 AM and 6 PM, Monday to Saturday. We strongly encourage a free, no-obligation campus tour before you enrol — you will see our classrooms, meet the teachers, observe a live class in session, and have all your questions answered candidly. Walk-ins are welcome during school hours, and we can also arrange a guided trial class so your child can experience a typical Rainbow morning before you decide. Admissions for the 2025-26 academic year are open on a rolling basis, and seats are allocated on a first-come, first-served basis subject to age criteria and batch availability at the ${centre.locality} centre.`,
+      text: `Our ${centre.locality} centre is located at ${centre.address}. To plan a visit or speak with the centre head, call ${centre.phone} between 9 AM and 6 PM, Monday to Saturday. We strongly encourage a free, no-obligation campus tour before you enrol — you will see our classrooms, meet the teachers, observe a live class in session, and have all your questions answered candidly. Walk-ins are welcome during school hours, and we can also arrange a guided trial class so your child can experience a typical Rainbow morning before you decide. Admissions for the 2026-27 academic year are open on a rolling basis, and seats are allocated on a first-come, first-served basis subject to age criteria and batch availability at the ${centre.locality} centre.`,
     });
 
     if (centreFaqs && centreFaqs.length > 0) {
@@ -1913,12 +1914,12 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
 
     return {
       title: `Preschool in ${centre.locality}, Thane | Rainbow Preschool`,
-      description: `Best preschool in ${centre.locality}, Thane. Rainbow Preschool offers Playgroup, Nursery, and Kindergarten for children aged 1.5-6 years. Visit our ${centre.locality} centre today.`,
+      description: preschoolPageSEO[localitySlug]?.description ?? `Best preschool in ${centre.locality}, Thane. Rainbow Preschool offers Playgroup, Nursery, and Kindergarten for children aged 1.5–5.5 years. Visit our ${centre.locality} centre today.`,
       keywords: `preschool in ${centre.locality.toLowerCase()}, preschool in ${centre.locality.toLowerCase()} thane, best preschool ${centre.locality.toLowerCase()}, nursery school ${centre.locality.toLowerCase()}, play school ${centre.locality.toLowerCase()}, kindergarten ${centre.locality.toLowerCase()}, preschool near me ${centre.locality.toLowerCase()}`,
       canonical: `${BASE_URL}${cleanPath}`,
       h1: `Preschool in ${centre.locality}, Thane`,
       introText: intros?.paragraph1 ?? `Looking for a quality preschool in ${centre.locality}, Thane? Rainbow Preschool International's ${centre.locality} centre offers Playgroup, Nursery, and Kindergarten programmes in a safe, nurturing environment.`,
-      breadcrumbs: [{ name: "Home", url: "/" }, { name: "Best Preschool in Thane", url: "/best-preschool-near-me-in-thane" }, { name: `Preschool in ${centre.locality}`, url: cleanPath }],
+      breadcrumbs: [{ name: "Home", url: "/" }, { name: "Centres", url: "/best-preschool-near-me-in-thane" }, { name: `Preschool in ${centre.locality}, Thane`, url: cleanPath }],
       structuredData: [localBusinessSchema(centre.locality, centre.address, centre.phone, cleanPath, centre.lat, centre.lng, getCentreBySlug(localitySlug)?.areasServed), richFAQSchema],
       contentSections: richSections,
       internalLinks: [
@@ -1927,7 +1928,7 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
         { text: `Playgroup near ${centre.locality}`, url: "/playgroup" },
         { text: `Nursery near ${centre.locality}`, url: "/nursery" },
         { text: `Kindergarten near ${centre.locality}`, url: "/kindergarten" },
-        { text: "Preschool Admissions 2025-26", url: "/preschool-admissions" },
+        { text: "Preschool Admissions 2026-27", url: "/preschool-admissions" },
       ],
       lastModified: LAST_UPDATED_ISO,
       lastModifiedDisplay: LAST_UPDATED_DISPLAY,

@@ -403,7 +403,7 @@ export const preschoolFAQs: Record<string, Array<{ question: string; answer: str
   manpada: [
     {
       question: "What age groups does Rainbow Preschool Manpada accept?",
-      answer: "Our Manpada centre accepts children from 1.5 years (18 months) for Playgroup, 2.5-3.5 years for Nursery, and 3.5-5 years for Kindergarten. Each programme is age-appropriate and designed for optimal development."
+      answer: "Our Manpada centre accepts children from 1.5 years (18 months) for Playgroup, 2.5-3.5 years for Nursery, and 3.5-5.5 years for Kindergarten. Each programme is age-appropriate and designed for optimal development."
     },
     {
       question: "Where exactly is Rainbow Preschool located in Manpada?",
@@ -415,7 +415,7 @@ export const preschoolFAQs: Record<string, Array<{ question: string; answer: str
     },
     {
       question: "What programmes are available at the Manpada centre?",
-      answer: "We offer Playgroup (1.5-2.5 years), Nursery (2.5-3.5 years), Kindergarten (3.5-5 years), Kids Activity Club, Summer Camp, and Happy Times extended care."
+      answer: "We offer Playgroup (1.5-2.5 years), Nursery (2.5-3.5 years), Kindergarten (3.5-5.5 years), Kids Activity Club, Summer Camp, and Happy Times extended care."
     },
     {
       question: "How do I enroll my child at Rainbow Preschool Manpada?",
@@ -475,7 +475,7 @@ export const preschoolFAQs: Record<string, Array<{ question: string; answer: str
     },
     {
       question: "What programmes does the Anand Nagar centre offer?",
-      answer: "We offer Playgroup (1.5-2.5 years), Nursery (2.5-3.5 years), Kindergarten (3.5-5 years), along with Kids Activity Club and Summer Camp."
+      answer: "We offer Playgroup (1.5-2.5 years), Nursery (2.5-3.5 years), Kindergarten (3.5-5.5 years), along with Kids Activity Club and Summer Camp."
     },
     {
       question: "How do I reach Rainbow Preschool Anand Nagar?",
@@ -547,7 +547,7 @@ export const preschoolFAQs: Record<string, Array<{ question: string; answer: str
     },
     {
       question: "What programmes are available at Kalwa?",
-      answer: "We offer Playgroup (1.5-2.5 years), Nursery (2.5-3.5 years), Kindergarten (3.5-5 years), and Kids Activity Club."
+      answer: "We offer Playgroup (1.5-2.5 years), Nursery (2.5-3.5 years), Kindergarten (3.5-5.5 years), and Kids Activity Club."
     },
     {
       question: "What are the timings at Kalwa centre?",
@@ -717,7 +717,7 @@ export const localityFAQs: Record<string, Array<{ question: string; answer: stri
     },
     {
       question: "What programmes are available at the Kalwa centre?",
-      answer: "Our Kalwa centre offers Playgroup (1.5-2.5 years), Nursery (2.5-3.5 years), and Kindergarten (3.5-5 years). We also have Kids Activity Club for extended learning."
+      answer: "Our Kalwa centre offers Playgroup (1.5-2.5 years), Nursery (2.5-3.5 years), and Kindergarten (3.5-5.5 years). We also have Kids Activity Club for extended learning."
     },
     {
       question: "How do I enroll my child at Rainbow Preschool Kalwa?",
