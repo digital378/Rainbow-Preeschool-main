@@ -1,0 +1,145 @@
+I need you to implement SEO improvements for the website at https://www.rainbowpreschools.com/. This is a live preschool website. Do NOT break any existing functionality, design, layout, or navigation. Only make additive or text-level changes unless explicitly stated.
+
+Work through each task below in order. Read the existing code before editing any file — never overwrite structure blindly.
+
+TASK 1 — Fix Homepage Title & Meta Description
+Find the homepage's <title> tag and update it from: "Rainbow Preschool | Playschool, Nursery & Kindergarten" to: "Best Preschool in Thane | Rainbow Preschool International"
+
+Also update the homepage <meta name="description"> to: "Rainbow Preschool International — Thane's most trusted preschool since 2007. Offering Playgroup, Nursery & Kindergarten across 6 centres. 1 lakh+ young learners. Admissions open 2026–27."
+
+TASK 2 — Fix Programme Page Titles & H1s
+Find and update the title and H1 on each of these pages so every one includes "in Thane":
+
+/playgroup → Title: "Best Playgroup in Thane for Ages 1.5–2.5 | Rainbow Preschool" | H1: "Best Playgroup in Thane for Children Aged 1.5 to 2.5 Years"
+/nursery → Title: "Best Nursery School in Thane | Rainbow Preschool International" | H1: "Nursery Programme in Thane — Rainbow Preschool International"
+/kindergarten → Title: "Best Kindergarten in Thane | Rainbow Preschool International" | H1: "Kindergarten Programme in Thane — Rainbow Preschool International"
+Update the <meta name="description"> for each programme page to include "Thane", the age range, and a call to action for admissions.
+
+TASK 3 — Add Review Schema Markup (JSON-LD) to All Location Pages
+The site has location-specific pages (e.g. /preschool-in-kasarvadavali-thane, /preschool-in-kalwa-thane). Find all such location pages.
+
+On each location page, inject a JSON-LD <script type="application/ld+json"> block in the <head> with the following schema types:
+
+LocalBusiness schema:
+
+{
+  "@context": "https://schema.org",
+  "@type": "ChildCare",
+  "name": "Rainbow Preschool International — [Area Name]",
+  "description": "Rainbow Preschool International in [Area Name], Thane. Playgroup, Nursery & Kindergarten for ages 1.5–5.5 years.",
+  "url": "https://www.rainbowpreschools.com/preschool-in-[area-slug]-thane",
+  "telephone": "+918291568972",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "[Area Name]",
+    "addressRegion": "Thane",
+    "addressCountry": "IN"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.9",
+    "reviewCount": "487",
+    "bestRating": "5"
+  },
+  "priceRange": "₹₹"
+}
+
+Fill in the correct [Area Name] and [area-slug] for each location page. Do not hardcode a fake address — only include address fields where the real address text already exists on that page.
+
+TASK 4 — Add Organization + WebSite Schema to Homepage
+In the homepage <head>, add two JSON-LD blocks:
+
+Organization:
+
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Rainbow Preschool International",
+  "url": "https://www.rainbowpreschools.com",
+  "logo": "https://www.rainbowpreschools.com/[path-to-logo]",
+  "foundingDate": "2007",
+  "description": "Leading preschool chain in Thane offering Playgroup, Nursery and Kindergarten since 2007.",
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "+918291568972",
+    "contactType": "admissions"
+  },
+  "sameAs": [
+    "https://www.facebook.com/rainbowpreschools",
+    "https://www.instagram.com/rainbowpreschools"
+  ]
+}
+
+Find the actual logo path from the existing code and use it. Find the actual social media links from the site footer and use them. If social links don't exist in the code, omit the sameAs array.
+
+WebSite (enables Google Sitelinks Search):
+
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "url": "https://www.rainbowpreschools.com",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://www.rainbowpreschools.com/?s={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+
+TASK 5 — Ensure Sitemap.xml Exists and Is Correct
+Check if /sitemap.xml is being generated or exists as a static file. If it does not exist:
+
+Create a sitemap.xml file that includes all known URLs: homepage, /about, /contact, /playgroup, /nursery, /kindergarten, /preschool-admissions, all location pages, and all blog post URLs.
+Use <priority>1.0</priority> for homepage, 0.9 for programme and admission pages, 0.8 for location pages, 0.6 for blog posts.
+Use <changefreq>monthly</changefreq> for most pages, weekly for homepage and admissions.
+If the site uses WordPress or a CMS, check if an SEO plugin (Yoast, RankMath) is already handling this — if so, do not duplicate it.
+
+Also verify robots.txt exists at the root and contains at minimum:
+
+User-agent: *
+Allow: /
+Sitemap: https://www.rainbowpreschools.com/sitemap.xml
+
+TASK 6 — Optimize Image Loading on Homepage
+Find the hero/banner image on the homepage. Ensure:
+
+It uses loading="eager" (since it's above the fold) with a proper width and height attribute set to avoid layout shift.
+All other images below the fold use loading="lazy".
+If images are referenced as <img src="*.jpg"> or <img src="*.png">, add a fetchpriority="high" attribute to the hero image only.
+Do NOT change any image files themselves. Only update HTML attributes.
+
+TASK 7 — Add Missing Alt Text to All Images
+Find every <img> tag across all pages that has an empty alt="" or missing alt attribute.
+
+For logo: alt="Rainbow Preschool International Logo"
+For hero/banner images: alt="Children learning at Rainbow Preschool International, Thane"
+For staff photos: alt="Rainbow Preschool trained female staff member"
+For classroom images: alt="Safe and colourful classroom at Rainbow Preschool Thane"
+For generic decorative images that carry no meaning: use alt="" (empty is correct for decorative)
+TASK 8 — Create Admissions Page Schema
+On the /preschool-admissions page, add a JSON-LD FAQ schema using the most common admission questions. Find what questions/answers already exist on the page and convert them to schema format:
+
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the admission age for Rainbow Preschool?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Rainbow Preschool International accepts children from 1.5 years to 5.5 years across Playgroup, Nursery and Kindergarten programmes."
+      }
+    }
+  ]
+}
+
+Read the actual content of the admissions page first and extract real Q&As that are already there. Do not fabricate answers.
+
+IMPORTANT RULES
+Read every file before editing it. Never overwrite a file from scratch.
+Do not change any CSS, layout, navigation, images, or visual design.
+Do not add any visible content to the page — all additions in Tasks 3, 4, 6, 8 go inside <head> or as HTML attribute changes only.
+If the site is WordPress-based, make all changes through the theme's functions.php, header.php, or via page templates — not by editing WordPress core files.
+After each task, confirm what was changed and what file was edited.
+If any page or file cannot be found, say so clearly and move to the next task — do not guess.
+At the end, provide a checklist summary of every change made and which file it's in.

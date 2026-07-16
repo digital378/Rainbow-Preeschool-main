@@ -1,0 +1,63 @@
+Before we make any SEO changes, I need you to do a full audit of our existing SEO setup. Do NOT change any files. This is read-only investigation only.
+
+Please explore the codebase thoroughly and answer every question below in detail.
+
+1. Tech Stack & Routing
+What framework is this built on? (React, Next.js, Express, etc.)
+How is routing handled — file-based, React Router, Express routes?
+Is rendering SSR, SSG, CSR, or a mix?
+Where is the entry point for the server?
+2. SEO Infrastructure
+Is there a dedicated SEO utility, helper, or service file? Share its full path and contents.
+Where are <title>, <meta name="description">, and canonical tags set? Is it done per-page or globally?
+Is there a keyword ownership / cannibalisation guard system? If yes — show me the full file(s), how it works, and what it currently blocks.
+Are there any SEO-related validation scripts, CI checks, or build-time guards? List every one with its file path and what it checks.
+3. Schema / Structured Data
+Where is schema markup generated? List every file that emits JSON-LD.
+What schema types are currently implemented? (LocalBusiness, Organization, FAQPage, HowTo, WebSite, etc.)
+Is schema injected server-side (SSR) or client-side? Show the relevant code.
+Is there a guard that prevents client-side schema injection?
+4. Sitemap
+Where is the sitemap generated? Static file or dynamic endpoint?
+Show me the sitemap generation logic (full file contents).
+What pages are currently included in the sitemap? How are new pages added?
+What is the sitemap URL structure?
+5. Robots.txt
+Where is robots.txt served from?
+Show me its current contents.
+6. Page Inventory
+List every route/page that currently exists with its URL slug and the page component/template file that renders it.
+For each page, what title tag and meta description is currently set?
+Which pages have schema markup and what type?
+Are there any pages that are noindex'd? Which ones and why?
+7. Location / Centre Pages
+How many centre/location pages exist? List all their URLs.
+What is the template used to generate them — are they dynamically generated from a data source or individually hand-built?
+What SEO elements does each location page currently have (title, description, schema, canonical)?
+Which centre pages are complete and which are pending?
+8. Programme Pages
+List all programme pages (/playgroup, /nursery, /kindergarten, etc.) with their current title tags and meta descriptions.
+Have these been through the cannibalisation guard? What keywords do they own?
+9. Blog / Content Pages
+How many blog posts exist?
+Where is the blog content stored — CMS, markdown files, database, hardcoded?
+How are blog page titles and meta descriptions generated?
+Are blog pages in the sitemap?
+10. Pending / In-Progress SEO Work
+Is there any file, comment, or TODO in the codebase that references pending SEO work?
+What was "Batch 1" for /preschool-admissions that was previously diagnosed? Show the relevant diagnosis or notes.
+What is the current status of the 6 centre pages — which are done, which are pending, and what remains to be built for the pending ones?
+11. Performance & Core Web Vitals
+Is there any image optimisation in place (WebP conversion, lazy loading, size attributes)?
+Is there a CDN in use?
+Are fonts preloaded? Where is that configured?
+12. Analytics & Search Console
+Is Google Analytics or any tracking script present? Where is it added?
+Is there any Search Console verification meta tag or file?
+After answering all of the above, please give me a summary of:
+
+What is already well-implemented in the SEO setup
+What is genuinely missing or incomplete
+What the highest-priority next actions are, based only on what you found in the actual code
+Do not suggest generic SEO best practices. Only report what is and isn't present in this specific codebase.
+
