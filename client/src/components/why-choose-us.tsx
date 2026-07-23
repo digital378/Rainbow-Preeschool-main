@@ -1,3 +1,4 @@
+import { Card, CardContent } from "@/components/ui/card";
 import { Shield, Award, Sparkles, Users, Bus, Gamepad2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -5,152 +6,90 @@ const features = [
   {
     icon: Shield,
     title: "Safety & CCTV",
-    description: "CCTV-monitored premises with 100% female teaching staff for a secure environment. Verified pickup system and daily hygiene routines keep every child safe.",
-    bg: "bg-gradient-to-br from-red-50 to-red-100/60 dark:from-red-900/25 dark:to-red-900/10",
-    iconBg: "bg-red-100 dark:bg-red-900/40",
+    description: "CCTV-monitored premises with 100% female teaching staff for a secure environment.",
+    bg: "bg-gradient-to-br from-red-100 to-red-200 dark:from-red-800/40 dark:to-red-900/40",
     iconColor: "text-red-600 dark:text-red-400",
-    accent: "border-red-200/60 dark:border-red-800/30",
-    stat: "100% Female Staff",
-    statColor: "text-red-600 dark:text-red-400",
+    shadow: "shadow-[0_4px_0_0_rgb(220,38,38),0_6px_12px_-2px_rgba(220,38,38,0.3)] dark:shadow-[0_4px_0_0_rgb(153,27,27),0_6px_12px_-2px_rgba(220,38,38,0.2)]",
   },
   {
     icon: Award,
     title: "Certified Teachers",
     description: "ECCEd certified & experienced teachers who nurture every child with love and attention.",
-    bg: "bg-gradient-to-br from-blue-50 to-blue-100/50 dark:from-blue-900/20 dark:to-transparent",
-    iconBg: "bg-blue-100 dark:bg-blue-900/40",
+    bg: "bg-gradient-to-br from-blue-100 to-blue-200 dark:from-blue-800/40 dark:to-blue-900/40",
     iconColor: "text-blue-600 dark:text-blue-400",
-    accent: "border-blue-200/60 dark:border-blue-800/30",
-    stat: null,
-    statColor: "",
+    shadow: "shadow-[0_4px_0_0_rgb(37,99,235),0_6px_12px_-2px_rgba(37,99,235,0.3)] dark:shadow-[0_4px_0_0_rgb(30,64,175),0_6px_12px_-2px_rgba(37,99,235,0.2)]",
   },
   {
     icon: Sparkles,
     title: "Hygiene & Cleanliness",
-    description: "Daily sanitisation, child-safe washrooms, and hygiene-first practices throughout.",
-    bg: "bg-gradient-to-br from-emerald-50 to-emerald-100/50 dark:from-emerald-900/20 dark:to-transparent",
-    iconBg: "bg-emerald-100 dark:bg-emerald-900/40",
-    iconColor: "text-emerald-600 dark:text-emerald-400",
-    accent: "border-emerald-200/60 dark:border-emerald-800/30",
-    stat: null,
-    statColor: "",
+    description: "Daily sanitisation, child-safe washrooms, and hygiene-first practices.",
+    bg: "bg-gradient-to-br from-green-100 to-green-200 dark:from-green-800/40 dark:to-green-900/40",
+    iconColor: "text-green-600 dark:text-green-400",
+    shadow: "shadow-[0_4px_0_0_rgb(22,163,74),0_6px_12px_-2px_rgba(22,163,74,0.3)] dark:shadow-[0_4px_0_0_rgb(21,128,61),0_6px_12px_-2px_rgba(22,163,74,0.2)]",
   },
   {
     icon: Users,
     title: "Ideal Student-Teacher Ratio",
     description: "30:2 ratio ensuring personalised care and individual attention for every child.",
-    bg: "bg-gradient-to-br from-violet-50 to-violet-100/50 dark:from-violet-900/20 dark:to-transparent",
-    iconBg: "bg-violet-100 dark:bg-violet-900/40",
-    iconColor: "text-violet-600 dark:text-violet-400",
-    accent: "border-violet-200/60 dark:border-violet-800/30",
-    stat: null,
-    statColor: "",
+    bg: "bg-gradient-to-br from-purple-100 to-purple-200 dark:from-purple-800/40 dark:to-purple-900/40",
+    iconColor: "text-purple-600 dark:text-purple-400",
+    shadow: "shadow-[0_4px_0_0_rgb(147,51,234),0_6px_12px_-2px_rgba(147,51,234,0.3)] dark:shadow-[0_4px_0_0_rgb(107,33,168),0_6px_12px_-2px_rgba(147,51,234,0.2)]",
   },
   {
     icon: Bus,
     title: "Transport Facility",
     description: "Safe, GPS-enabled in-house transport with real-time tracking for parents.",
-    bg: "bg-gradient-to-br from-orange-50 to-orange-100/50 dark:from-orange-900/20 dark:to-transparent",
-    iconBg: "bg-orange-100 dark:bg-orange-900/40",
+    bg: "bg-gradient-to-br from-orange-100 to-orange-200 dark:from-orange-800/40 dark:to-orange-900/40",
     iconColor: "text-orange-600 dark:text-orange-400",
-    accent: "border-orange-200/60 dark:border-orange-800/30",
-    stat: null,
-    statColor: "",
+    shadow: "shadow-[0_4px_0_0_rgb(234,88,12),0_6px_12px_-2px_rgba(234,88,12,0.3)] dark:shadow-[0_4px_0_0_rgb(194,65,12),0_6px_12px_-2px_rgba(234,88,12,0.2)]",
   },
   {
     icon: Gamepad2,
     title: "Play-Based Learning",
     description: "Holistic, play-based curriculum for confident early development and growth.",
-    bg: "bg-gradient-to-br from-teal-50 to-teal-100/50 dark:from-teal-900/20 dark:to-transparent",
-    iconBg: "bg-teal-100 dark:bg-teal-900/40",
+    bg: "bg-gradient-to-br from-teal-100 to-teal-200 dark:from-teal-800/40 dark:to-teal-900/40",
     iconColor: "text-teal-600 dark:text-teal-400",
-    accent: "border-teal-200/60 dark:border-teal-800/30",
-    stat: null,
-    statColor: "",
+    shadow: "shadow-[0_4px_0_0_rgb(13,148,136),0_6px_12px_-2px_rgba(13,148,136,0.3)] dark:shadow-[0_4px_0_0_rgb(17,94,89),0_6px_12px_-2px_rgba(13,148,136,0.2)]",
   },
 ];
 
 export function WhyChooseUs() {
-  const [hero, ...rest] = features;
-  const [f1, f2, f3, f4, f5] = rest;
-
   return (
-    <section className="section-py bg-card">
-      <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
-
-        {/* Section heading */}
-        <div className="max-w-2xl mb-12 md:mb-14">
-          <span className="section-eyebrow">Why Choose Us</span>
-          <h2 className="text-headline">A Trusted Early Learning Journey Since 2007</h2>
+    <section className="py-16 md:py-20 lg:py-24 bg-card">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
+          <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">
+            Why Choose Us
+          </p>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            A Trusted Early Learning Journey Since 2007
+          </h2>
         </div>
 
-        {/* Bento grid — desktop: Safety spans 2 rows × 2 cols; last 3 fill row 3 */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5 md:grid-rows-[minmax(220px,auto)_minmax(220px,auto)_minmax(180px,auto)]">
-
-          {/* [0] Safety — hero card (col-span-2, row-span-2) */}
-          <div
-            className={cn(
-              "md:col-span-2 md:row-span-2 rounded-xl border overflow-hidden flex flex-col justify-between p-7 min-h-[280px] md:min-h-0",
-              "transition-all duration-[250ms] hover:-translate-y-1 hover:shadow-card-hover shadow-card",
-              hero.bg, hero.accent
-            )}
-            data-testid="card-feature-0"
-          >
-            <div>
-              <div className={cn("icon-xl rounded-2xl mb-6", hero.iconBg)}>
-                <hero.icon className={cn("w-8 h-8", hero.iconColor)} aria-hidden />
-              </div>
-              <h3 className="font-heading font-bold text-2xl text-foreground mb-3" style={{ letterSpacing: "-0.02em" }}>
-                {hero.title}
-              </h3>
-              <p className="text-muted-foreground leading-relaxed text-base max-w-md">
-                {hero.description}
-              </p>
-            </div>
-            {hero.stat && (
-              <div className="mt-6 pt-5 border-t border-current/10">
-                <p className={cn("text-sm font-semibold tracking-wide", hero.statColor)}>
-                  ✓ {hero.stat}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+          {features.map((feature, index) => (
+            <Card 
+              key={index} 
+              className="border-0 shadow-none bg-transparent"
+              data-testid={`card-feature-${index}`}
+            >
+              <CardContent className="pt-6 text-center">
+                <div className={cn(
+                    "w-14 h-14 rounded-xl flex items-center justify-center mx-auto mb-4",
+                    feature.bg,
+                    feature.shadow
+                  )}>
+                    <feature.icon className={cn("w-7 h-7", feature.iconColor)} />
+                  </div>
+                <h3 className="font-semibold text-lg mb-2">{feature.title}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  {feature.description}
                 </p>
-              </div>
-            )}
-          </div>
-
-          {/* [1] Certified Teachers — top-right */}
-          <SmallCard feature={f1} index={1} />
-
-          {/* [2] Hygiene — mid-right */}
-          <SmallCard feature={f2} index={2} />
-
-          {/* [3] Ratio, [4] Transport, [5] Play — bottom row */}
-          <SmallCard feature={f3} index={3} />
-          <SmallCard feature={f4} index={4} />
-          <SmallCard feature={f5} index={5} />
+              </CardContent>
+            </Card>
+          ))}
         </div>
       </div>
     </section>
-  );
-}
-
-function SmallCard({ feature: f, index }: { feature: typeof features[0]; index: number }) {
-  return (
-    <div
-      className={cn(
-        "rounded-xl border p-5 flex flex-col gap-3",
-        "transition-all duration-[250ms] hover:-translate-y-1 hover:shadow-card-hover shadow-card",
-        f.bg, f.accent
-      )}
-      data-testid={`card-feature-${index}`}
-    >
-      <div className={cn("icon-md rounded-xl flex-shrink-0", f.iconBg)}>
-        <f.icon className={cn("w-5 h-5", f.iconColor)} aria-hidden />
-      </div>
-      <div>
-        <h3 className="font-semibold text-base text-foreground mb-1.5">{f.title}</h3>
-        <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">
-          {f.description}
-        </p>
-      </div>
-    </div>
   );
 }

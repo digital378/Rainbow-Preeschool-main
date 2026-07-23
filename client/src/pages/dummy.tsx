@@ -1,823 +1,550 @@
 /**
- * /dummy — Premium Design System v2.0 Showcase
+ * /dummy — Homepage Redesign Prototype
  * Rainbow Preschool International
  *
- * This page is the CANONICAL REFERENCE for all future visual decisions.
- * Every token, component style, and pattern shown here is the source of truth.
- * Delete this route after design system is fully adopted across main pages.
+ * This is a STANDALONE visual prototype of the redesigned homepage.
+ * Review, approve, then apply the patterns to the real components.
+ * Delete this route when done.
  *
- * Design principles applied:
- *  ▸ Soft Minimalism       — generous whitespace, restraint in decoration
- *  ▸ Organic Design        — warm surfaces, natural shapes, breathing layouts
- *  ▸ Glassmorphism Lite    — blur only on nav + floating elements (not decoration)
- *  ▸ Bento Layouts         — information-dense grid sections
- *  ▸ Large type hierarchy  — Poppins headings, tight tracking, clear scale
- *  ▸ Rounded geometry      — 20px cards, 14px inputs, 8px tags (vs old 9/6/3px)
- *  ▸ Real shadows          — layered, soft (all shadows were 0 before)
- *  ▸ Consistent animation  — 150/250/400ms, spring/smooth easing
- *
- * noIndex: true — not for public search indexing
+ * noIndex — not for public search indexing
  */
-import { motion, useInView } from "framer-motion";
-import { Link } from "wouter";
 import { SEO } from "@/components/seo";
 import { cn } from "@/lib/utils";
-import { useRef } from "react";
+import { programmes, testimonials } from "@shared/schema";
 import {
-  ArrowRight, Sparkles, Shield, GraduationCap, Heart, MapPin,
-  Clock, Users, Star, Phone, BookOpen, Music, Palette,
-  ChevronRight, Check, Info, Bell, Zap,
+  ArrowRight, Phone, Users, Star, MapPin, Shield, Award,
+  Sparkles, Bus, Gamepad2, FileText, BookOpen, Palette,
+  GraduationCap, Lock,
 } from "lucide-react";
+import { SiWhatsapp } from "react-icons/si";
 
-// ─────────────────────────────────────────────────────────────────────────────
-// FADE-UP WRAPPER
-// ─────────────────────────────────────────────────────────────────────────────
-function FadeUp({ children, delay = 0, className }: {
-  children: React.ReactNode; delay?: number; className?: string;
-}) {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-40px" });
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 20 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.5, delay, ease: [0.22, 1, 0.36, 1] }}
-      className={className}
-    >
-      {children}
-    </motion.div>
-  );
-}
+/* ── data ─────────────────────────────────────────────────────────────────── */
+const trustBadges = [
+  { Icon: Users,  label: "1,00,000+ Young Learners" },
+  { Icon: Star,   label: "18+ Years of Excellence"  },
+  { Icon: MapPin, label: "6 Centres Across Thane"   },
+  { Icon: Shield, label: "100% Female Staff"         },
+];
 
-// ─────────────────────────────────────────────────────────────────────────────
-// SECTION WRAPPER
-// ─────────────────────────────────────────────────────────────────────────────
-function Section({ children, className, warm }: {
-  children: React.ReactNode; className?: string; warm?: boolean;
-}) {
-  return (
-    <section className={cn(
-      "section-py",
-      warm ? "bg-surface-warm" : "bg-background",
-      className
-    )}>
-      <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">{children}</div>
-    </section>
-  );
-}
+const quickLinks = [
+  { href: "/best-preschool-near-me-in-thane", label: "Why Choose Us", Icon: Award,         color: "#ef4444" },
+  { href: "/play-school-near-me",             label: "Find a Centre", Icon: MapPin,        color: "#10b981" },
+  { href: "/preschool-admissions",            label: "Book a Visit",  Icon: FileText,      color: "#3b82f6" },
+  { href: "/playgroup",                       label: "Playgroup",     Icon: Palette,       color: "#f97316" },
+  { href: "/nursery",                         label: "Nursery",       Icon: BookOpen,      color: "#8b5cf6" },
+  { href: "/kindergarten",                    label: "Kindergarten",  Icon: GraduationCap, color: "#14b8a6" },
+];
 
-// ─────────────────────────────────────────────────────────────────────────────
-// TOKEN BADGE
-// ─────────────────────────────────────────────────────────────────────────────
-function Token({ name }: { name: string }) {
-  return (
-    <code className="mt-2 block text-center text-[10px] font-mono text-muted-foreground bg-muted/50 rounded px-2 py-0.5">
-      {name}
-    </code>
-  );
-}
+const stats = [
+  { Icon: Users,  value: "1,00,000+", label: "Young Learners",     from: "from-red-50",    to: "to-red-100/40",     border: "border-red-200",   icon: "text-primary",     accent: "bg-red-100"    },
+  { Icon: Star,   value: "18+",       label: "Years of Excellence", from: "from-amber-50",  to: "to-amber-100/40",   border: "border-amber-200", icon: "text-amber-500",   accent: "bg-amber-100"  },
+  { Icon: MapPin, value: "06",        label: "Centres in Thane",   from: "from-sky-50",    to: "to-sky-100/40",     border: "border-sky-200",   icon: "text-sky-500",     accent: "bg-sky-100"    },
+  { Icon: Shield, value: "100%",      label: "Female Staff",        from: "from-green-50",  to: "to-emerald-100/40", border: "border-green-200", icon: "text-green-500",   accent: "bg-green-100"  },
+];
 
-// ─────────────────────────────────────────────────────────────────────────────
-// SECTION HEADING
-// ─────────────────────────────────────────────────────────────────────────────
-function SectionHeading({ eyebrow, title, desc }: {
-  eyebrow: string; title: React.ReactNode; desc?: string;
-}) {
-  return (
-    <FadeUp className="mb-12 max-w-2xl">
-      <span className="section-eyebrow">{eyebrow}</span>
-      <h2 className="text-headline">{title}</h2>
-      {desc && <p className="text-body-lg mt-3">{desc}</p>}
-    </FadeUp>
-  );
-}
+const features = [
+  {
+    Icon: Shield, title: "Safety & CCTV",
+    description: "CCTV-monitored premises with 100% female teaching staff for a secure environment. Verified pickup system and daily hygiene routines keep every child safe.",
+    bg: "bg-gradient-to-br from-red-50 to-red-100/60", iconBg: "bg-red-100",     iconColor: "text-red-600",     border: "border-red-200/60",
+    highlight: "✓ CCTV Monitored · Verified Pickup · 100% Female Staff",
+    highlightColor: "text-red-600",
+  },
+  {
+    Icon: Award, title: "Certified Teachers",
+    description: "ECCEd certified & experienced teachers who nurture every child with love and individual attention.",
+    bg: "bg-gradient-to-br from-blue-50 to-blue-100/50", iconBg: "bg-blue-100",   iconColor: "text-blue-600",   border: "border-blue-200/60",
+    highlight: null, highlightColor: "",
+  },
+  {
+    Icon: Sparkles, title: "Hygiene & Cleanliness",
+    description: "Daily sanitisation, child-safe washrooms, and hygiene-first practices throughout.",
+    bg: "bg-gradient-to-br from-emerald-50 to-emerald-100/50", iconBg: "bg-emerald-100", iconColor: "text-emerald-600", border: "border-emerald-200/60",
+    highlight: null, highlightColor: "",
+  },
+  {
+    Icon: Users, title: "Ideal Student-Teacher Ratio",
+    description: "30:2 ratio ensuring personalised care and individual attention for every child.",
+    bg: "bg-gradient-to-br from-violet-50 to-violet-100/50", iconBg: "bg-violet-100", iconColor: "text-violet-600", border: "border-violet-200/60",
+    highlight: null, highlightColor: "",
+  },
+  {
+    Icon: Bus, title: "Transport Facility",
+    description: "Safe, GPS-enabled in-house transport with real-time tracking for parents.",
+    bg: "bg-gradient-to-br from-orange-50 to-orange-100/50", iconBg: "bg-orange-100", iconColor: "text-orange-600", border: "border-orange-200/60",
+    highlight: null, highlightColor: "",
+  },
+  {
+    Icon: Gamepad2, title: "Play-Based Learning",
+    description: "Holistic, play-based curriculum for confident early development and growth.",
+    bg: "bg-gradient-to-br from-teal-50 to-teal-100/50", iconBg: "bg-teal-100", iconColor: "text-teal-600", border: "border-teal-200/60",
+    highlight: null, highlightColor: "",
+  },
+];
 
-// ─────────────────────────────────────────────────────────────────────────────
-// PAGE
-// ─────────────────────────────────────────────────────────────────────────────
-export default function DummyPage() {
+const badgeColors: Record<string, string> = {
+  playgroup: "bg-red-500", nursery: "bg-blue-500",
+  kindergarten: "bg-emerald-500", "happy-times": "bg-rose-500",
+  "kids-activity-club": "bg-violet-500", "summer-camp": "bg-orange-500",
+};
+
+/* ── component ────────────────────────────────────────────────────────────── */
+export default function Dummy() {
+  const [heroF, ...restF] = features;
+
   return (
-    <>
+    <div>
       <SEO
         title="Design System v2.0 | Rainbow Preschool International"
-        description="Premium design system reference — not public."
-        noIndex
-        canonical="https://www.rainbowpreschools.com/dummy"
+        description="Internal design prototype — not for public search indexing."
       />
 
-      {/* ── Demo notice ── */}
-      <div className="fixed top-0 left-0 right-0 z-[200] bg-amber-400 text-amber-950 text-xs font-bold text-center py-1.5 px-4">
-        ⚠ DESIGN SYSTEM REFERENCE — Delete route after adoption.&nbsp;
-        <Link href="/" className="underline">← Main site</Link>
+      {/* ── Prototype banner ─────────────────────────────────────────────── */}
+      <div className="sticky top-0 z-50 flex items-center justify-center gap-4 px-4 py-2.5 bg-amber-400 text-amber-950 text-xs font-bold">
+        <span>⬡ HOMEPAGE REDESIGN PROTOTYPE — Review &amp; approve, then apply to real site.</span>
+        <a href="/" className="underline underline-offset-2 hover:text-amber-800 transition-colors">← Live site</a>
       </div>
 
-      <main className="pt-8 pb-24">
-
-        {/* ══════════════════════════════════════════════════════════════════
-            HERO — Design System Identity
-        ══════════════════════════════════════════════════════════════════ */}
-        <section className="section-py-lg bg-background border-b border-border">
-          <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
-            <FadeUp>
-              <span className="section-eyebrow">Rainbow Preschool International</span>
-            </FadeUp>
-            <FadeUp delay={0.05}>
-              <h1 className="text-display max-w-3xl">
-                Premium Design System{" "}
-                <span className="text-gradient-brand">v2.0</span>
-              </h1>
-            </FadeUp>
-            <FadeUp delay={0.10}>
-              <p className="text-body-lg mt-5 max-w-2xl">
-                A unified visual language inspired by Apple HIG, Airbnb, Notion,
-                and premium Montessori school websites. Every token, component,
-                and pattern documented here is the canonical reference for all
-                future edits.
-              </p>
-            </FadeUp>
-
-            <FadeUp delay={0.15} className="mt-8 flex flex-wrap gap-3">
-              {[
-                "Soft Minimalism", "Organic Design", "Glassmorphism Lite",
-                "Bento Layouts", "Premium Whitespace", "Rounded Geometry",
-                "Real Shadows", "Motion System",
-              ].map(p => (
-                <span key={p} className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-3.5 py-1.5 text-xs font-medium text-foreground shadow-xs">
-                  <Check className="h-3 w-3 text-emerald-500" aria-hidden />
-                  {p}
-                </span>
-              ))}
-            </FadeUp>
-
-            {/* Quick navigation */}
-            <FadeUp delay={0.2} className="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-3">
-              {[
-                { label: "Colors", href: "#colors" },
-                { label: "Typography", href: "#typography" },
-                { label: "Radius & Shadow", href: "#radius" },
-                { label: "Buttons & Cards", href: "#buttons" },
-              ].map(n => (
-                <a key={n.label} href={n.href}
-                  className="card-premium flex items-center justify-between p-4 rounded-xl cursor-pointer group"
-                >
-                  <span className="text-sm font-semibold">{n.label}</span>
-                  <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:translate-x-0.5 transition-transform" aria-hidden />
-                </a>
-              ))}
-            </FadeUp>
-          </div>
-        </section>
-
-        {/* ══════════════════════════════════════════════════════════════════
-            SECTION 1 — BRAND COLOR SYSTEM
-        ══════════════════════════════════════════════════════════════════ */}
-        <Section id="colors" warm>
-          <SectionHeading
-            eyebrow="01 — Color System"
-            title="Brand Colors (Unchanged)"
-            desc="The brand palette is locked. What changes is how we use tone, opacity, and warm surfaces to add depth without altering the core hues."
+      {/* ═══════════════════════════════════════════════════════════════════
+          SECTION 1 — HERO
+      ═══════════════════════════════════════════════════════════════════ */}
+      <section className="relative min-h-[85vh] flex items-center overflow-hidden">
+        {/* Photo */}
+        <div className="absolute inset-0">
+          <img
+            src="/images/optimized/hero-banner-1.webp"
+            alt="Children learning at Rainbow Preschool in Thane"
+            className="w-full h-full object-cover"
           />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/72 via-black/42 to-black/12" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/62 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-transparent hidden md:block" />
+        </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-
-            {/* Primary */}
-            <FadeUp className="card-premium p-6 rounded-xl">
-              <div className="h-24 rounded-lg mb-4" style={{ background: "hsl(0 85% 50%)" }} />
-              <p className="font-semibold text-sm">Primary — Brand Red</p>
-              <p className="text-body text-xs mt-1">Main CTAs, key actions, logo accents</p>
-              <Token name="hsl(var(--primary)) · #DC2626" />
-              <div className="mt-3 flex gap-2">
-                {[90, 80, 60, 40, 20, 10].map(l => (
-                  <div key={l} className="flex-1 h-6 rounded" style={{ background: `hsl(0 85% ${l}%)` }} title={`${l}%`} />
-                ))}
-              </div>
-            </FadeUp>
-
-            {/* Secondary */}
-            <FadeUp delay={0.05} className="card-premium p-6 rounded-xl">
-              <div className="h-24 rounded-lg mb-4" style={{ background: "hsl(45 90% 55%)" }} />
-              <p className="font-semibold text-sm">Secondary — Brand Amber</p>
-              <p className="text-body text-xs mt-1">Highlights, accents, warm decorative use</p>
-              <Token name="hsl(var(--secondary)) · #F5A623" />
-              <div className="mt-3 flex gap-2">
-                {[90, 80, 65, 50, 35, 15].map(l => (
-                  <div key={l} className="flex-1 h-6 rounded" style={{ background: `hsl(45 90% ${l}%)` }} />
-                ))}
-              </div>
-            </FadeUp>
-
-            {/* Accent */}
-            <FadeUp delay={0.10} className="card-premium p-6 rounded-xl">
-              <div className="h-24 rounded-lg mb-4" style={{ background: "hsl(200 75% 50%)" }} />
-              <p className="font-semibold text-sm">Accent — Brand Blue</p>
-              <p className="text-body text-xs mt-1">Links, info states, supporting elements</p>
-              <Token name="hsl(var(--accent)) · #2196F3" />
-              <div className="mt-3 flex gap-2">
-                {[90, 75, 60, 45, 30, 15].map(l => (
-                  <div key={l} className="flex-1 h-6 rounded" style={{ background: `hsl(200 75% ${l}%)` }} />
-                ))}
-              </div>
-            </FadeUp>
-
-            {/* Surface Warm */}
-            <FadeUp delay={0.05} className="card-premium p-6 rounded-xl">
-              <div className="h-24 rounded-lg mb-4 border border-border" style={{ background: "hsl(32 40% 97%)" }} />
-              <p className="font-semibold text-sm">Surface Warm</p>
-              <p className="text-body text-xs mt-1">Alternating section backgrounds — replaces stark white</p>
-              <Token name="hsl(var(--surface-warm)) · NEW" />
-            </FadeUp>
-
-            {/* Text */}
-            <FadeUp delay={0.10} className="card-premium p-6 rounded-xl">
-              <div className="h-24 rounded-lg mb-4 flex items-center justify-center" style={{ background: "hsl(220 20% 12%)" }}>
-                <span className="text-white font-bold text-lg">Aa</span>
-              </div>
-              <p className="font-semibold text-sm">Foreground (Text)</p>
-              <p className="text-body text-xs mt-1">All body & heading text — 4.5:1+ contrast on white</p>
-              <Token name="hsl(var(--foreground)) · #16181F" />
-            </FadeUp>
-
-            {/* Muted */}
-            <FadeUp delay={0.15} className="card-premium p-6 rounded-xl">
-              <div className="h-24 rounded-lg mb-4 flex items-center justify-center" style={{ background: "hsl(220 10% 46%)" }}>
-                <span className="text-white font-medium text-sm">Secondary text</span>
-              </div>
-              <p className="font-semibold text-sm">Muted Foreground</p>
-              <p className="text-body text-xs mt-1">Descriptions, captions, supporting copy</p>
-              <Token name="hsl(var(--muted-foreground)) · #6B7280" />
-            </FadeUp>
-          </div>
-
-          {/* Rainbow palette strip */}
-          <FadeUp delay={0.1} className="mt-6 card-premium p-6 rounded-xl">
-            <p className="font-semibold text-sm mb-4">Rainbow Brand Gradient — Programme & Decorative Use Only</p>
-            <div className="h-12 rounded-xl rainbow-gradient" />
-            <div className="mt-3 flex gap-2 flex-wrap">
-              {[
-                { label: "Red", var: "--rainbow-red" },
-                { label: "Orange", var: "--rainbow-orange" },
-                { label: "Yellow", var: "--rainbow-yellow" },
-                { label: "Green", var: "--rainbow-green" },
-                { label: "Blue", var: "--rainbow-blue" },
-                { label: "Purple", var: "--rainbow-purple" },
-              ].map(c => (
-                <div key={c.label} className="flex-1 min-w-[60px]">
-                  <div className="h-8 rounded-md" style={{ background: `hsl(var(${c.var}))` }} />
-                  <p className="text-[10px] text-center mt-1 text-muted-foreground font-mono">{c.label}</p>
-                </div>
-              ))}
-            </div>
-          </FadeUp>
-        </Section>
-
-        {/* ══════════════════════════════════════════════════════════════════
-            SECTION 2 — TYPOGRAPHY SCALE
-        ══════════════════════════════════════════════════════════════════ */}
-        <Section id="typography">
-          <SectionHeading
-            eyebrow="02 — Typography"
-            title="Type Scale"
-            desc="Poppins for headings (tight tracking, bold weight). Inter for body (relaxed leading, high legibility). Both were always present — the scale and tracking are new."
-          />
-
-          <div className="space-y-6">
-            {[
-              { label: ".text-display", size: "clamp(2.5rem→5rem)", weight: "800", tracking: "-0.03em", leading: "1.05", usage: "Hero H1 only", sample: "Where Little Minds Bloom" },
-              { label: ".text-headline", size: "clamp(1.75rem→3rem)", weight: "700", tracking: "-0.025em", leading: "1.1", usage: "Section H2", sample: "Programmes for Every Stage" },
-              { label: ".text-title",   size: "clamp(1.25rem→1.75rem)", weight: "600", tracking: "-0.02em", leading: "1.2", usage: "Card headings, H3", sample: "Playgroup Programme" },
-              { label: "text-xl / 20px", size: "1.25rem", weight: "600", tracking: "-0.01em", leading: "1.4", usage: "Large labels, H4", sample: "Age 1.5 – 2.5 Years" },
-              { label: ".text-body-lg", size: "1.125rem", weight: "400", tracking: "0", leading: "1.7", usage: "Lead paragraphs", sample: "Play-based learning across 6 centres in Thane West." },
-              { label: ".text-body",    size: "1rem",     weight: "400", tracking: "0", leading: "1.65", usage: "General body copy", sample: "Safe, nurturing classrooms where every child discovers joy." },
-              { label: ".text-label",   size: "0.8125rem", weight: "500", tracking: "0.06em", leading: "1", usage: "Eyebrows, caps labels", sample: "PLAYGROUP PROGRAMME" },
-            ].map((t, i) => (
-              <FadeUp key={t.label} delay={i * 0.04} className="card-premium rounded-xl p-6 flex flex-col sm:flex-row sm:items-center gap-4">
-                <div className="flex-1 min-w-0">
-                  <p className={cn("font-heading text-foreground overflow-hidden", t.label.startsWith(".") ? t.label.replace(".", "").replace("-", " ") : "")}
-                    style={{ fontFamily: "var(--font-heading)", fontSize: t.size.split("→")[0], fontWeight: t.weight, letterSpacing: t.tracking, lineHeight: t.leading }}>
-                    {t.sample}
-                  </p>
-                </div>
-                <div className="flex-shrink-0 grid grid-cols-2 sm:grid-cols-4 gap-x-6 gap-y-1 text-xs">
-                  <div><p className="text-muted-foreground">Token</p><code className="font-mono text-foreground">{t.label}</code></div>
-                  <div><p className="text-muted-foreground">Size</p><code className="font-mono">{t.size}</code></div>
-                  <div><p className="text-muted-foreground">Weight</p><code className="font-mono">{t.weight}</code></div>
-                  <div><p className="text-muted-foreground">Use</p><code className="font-mono">{t.usage}</code></div>
-                </div>
-              </FadeUp>
-            ))}
-          </div>
-
-          {/* Font pairing note */}
-          <FadeUp delay={0.1} className="mt-6 card-bento rounded-xl p-6 bg-surface-warm">
-            <div className="flex gap-3">
-              <Info className="h-5 w-5 text-accent flex-shrink-0 mt-0.5" aria-hidden />
-              <div>
-                <p className="font-semibold text-sm">Font Pairing Rule</p>
-                <p className="text-body text-sm mt-1">
-                  Always pair <code className="font-mono text-xs bg-muted px-1.5 py-0.5 rounded">font-heading (Poppins)</code> for H1–H4 
-                  with <code className="font-mono text-xs bg-muted px-1.5 py-0.5 rounded">font-sans (Inter)</code> for all body.
-                  Never use Poppins at sizes below 18px — Inter reads better small.
-                  Negative letter-spacing (−0.02em to −0.03em) is mandatory on all display headings.
-                </p>
-              </div>
-            </div>
-          </FadeUp>
-        </Section>
-
-        {/* ══════════════════════════════════════════════════════════════════
-            SECTION 3 — BORDER RADIUS + SHADOW
-        ══════════════════════════════════════════════════════════════════ */}
-        <Section id="radius" warm>
-          <SectionHeading
-            eyebrow="03 — Geometry & Depth"
-            title={<>Border Radius <span className="text-gradient-brand">&</span> Shadow System</>}
-            desc="The biggest upgrade: border radius increased 2–5× for premium feel, and all shadows are now real (previously every shadow had 0 opacity)."
-          />
-
-          {/* Radius */}
-          <div className="mb-10">
-            <h3 className="text-title mb-5">Border Radius Scale</h3>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
-              {[
-                { label: "xs",   px: "6px",   tw: "rounded-xs",   var: "--radius-xs"  },
-                { label: "sm",   px: "8px",   tw: "rounded-sm",   var: "--radius-sm"  },
-                { label: "md",   px: "14px",  tw: "rounded-md",   var: "--radius-md"  },
-                { label: "lg",   px: "20px",  tw: "rounded-lg",   var: "--radius-lg"  },
-                { label: "xl",   px: "28px",  tw: "rounded-xl",   var: "--radius-xl"  },
-                { label: "2xl",  px: "36px",  tw: "rounded-2xl",  var: "--radius-2xl" },
-              ].map((r, i) => (
-                <FadeUp key={r.label} delay={i * 0.05} className="text-center">
-                  <div className="bg-primary/10 border-2 border-primary/20 flex items-center justify-center h-20"
-                    style={{ borderRadius: `var(${r.var})` }}>
-                    <span className="text-xs font-semibold text-primary">{r.px}</span>
-                  </div>
-                  <p className="mt-2 text-xs font-semibold">{r.label}</p>
-                  <code className="text-[10px] text-muted-foreground font-mono">{r.tw}</code>
-                </FadeUp>
-              ))}
-            </div>
-            <FadeUp delay={0.1} className="mt-4">
-              <div className="flex items-center gap-3 p-4 rounded-full border border-border bg-card justify-center">
-                <span className="text-xs font-semibold">full (pill)</span>
-                <div className="flex-1 max-w-xs h-10 bg-primary/10 border-2 border-primary/20 rounded-full" />
-                <code className="text-[10px] font-mono text-muted-foreground">rounded-full · 9999px</code>
-              </div>
-            </FadeUp>
-          </div>
-
-          {/* Shadows */}
-          <div>
-            <h3 className="text-title mb-5">Shadow Scale <span className="text-sm font-normal text-muted-foreground ml-2">(previously all opacity: 0 — now real depth)</span></h3>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">
-              {[
-                { level: "xs",  desc: "Hairline depth",      tw: "shadow-xs" },
-                { level: "sm",  desc: "Subtle lift",         tw: "shadow-sm" },
-                { level: "md",  desc: "Card elevation",      tw: "shadow-md" },
-                { level: "lg",  desc: "Floating element",    tw: "shadow-lg" },
-                { level: "xl",  desc: "Modal / popover",     tw: "shadow-xl" },
-                { level: "2xl", desc: "Deep drop",           tw: "shadow-2xl" },
-              ].map((s, i) => (
-                <FadeUp key={s.level} delay={i * 0.05}>
-                  <div className={cn("bg-white dark:bg-card rounded-lg h-20 flex items-center justify-center", s.tw)}>
-                    <span className="text-xs font-bold text-foreground">{s.level}</span>
-                  </div>
-                  <p className="mt-2 text-xs font-semibold text-center">{s.desc}</p>
-                  <Token name={`.${s.tw}`} />
-                </FadeUp>
-              ))}
+        {/* Content */}
+        <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-28 md:py-36 w-full">
+          <div className="max-w-2xl">
+            {/* Admissions pill */}
+            <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/12 backdrop-blur-md border border-white/25 mb-8 cursor-default">
+              <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse shadow-[0_0_8px_3px_rgba(74,222,128,0.5)]" />
+              <span className="text-sm font-semibold text-white/95 tracking-wide">Admissions Open · 2026–27</span>
             </div>
 
-            {/* Semantic shadows */}
-            <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <FadeUp className="bg-white dark:bg-card rounded-xl p-5" style={{ boxShadow: "var(--shadow-card)" }}>
-                <p className="font-semibold text-sm">Card default</p>
-                <Token name="var(--shadow-card)" />
-              </FadeUp>
-              <FadeUp delay={0.05} className="bg-white dark:bg-card rounded-xl p-5" style={{ boxShadow: "var(--shadow-card-hover)" }}>
-                <p className="font-semibold text-sm">Card hover</p>
-                <Token name="var(--shadow-card-hover)" />
-              </FadeUp>
-              <FadeUp delay={0.10} className="bg-white dark:bg-card rounded-xl p-5" style={{ boxShadow: "var(--shadow-primary-glow)" }}>
-                <p className="font-semibold text-sm">Primary glow (CTAs)</p>
-                <Token name="var(--shadow-primary-glow)" />
-              </FadeUp>
-            </div>
-          </div>
-        </Section>
+            {/* H1 */}
+            <h1
+              className="font-heading font-extrabold text-white mb-5"
+              style={{ fontSize: "clamp(2.4rem,5.5vw,4.5rem)", lineHeight: 1.06, letterSpacing: "-0.03em" }}
+            >
+              Rainbow{" "}
+              <span className="text-yellow-400" style={{ textShadow: "0 2px 20px rgba(250,204,21,0.5)" }}>
+                Preschool
+              </span>
+              <span
+                className="block mt-3 font-semibold text-white/85"
+                style={{ fontSize: "clamp(1.1rem,2.4vw,1.875rem)", letterSpacing: "-0.01em" }}
+              >
+                Playschool, Nursery &amp; Kindergarten
+              </span>
+            </h1>
 
-        {/* ══════════════════════════════════════════════════════════════════
-            SECTION 4 — BUTTONS
-        ══════════════════════════════════════════════════════════════════ */}
-        <Section id="buttons">
-          <SectionHeading
-            eyebrow="04 — Buttons"
-            title="Button System"
-            desc="All CTAs minimum 48px height. Primary uses glow shadow. Hover scales up, active scales down — spring easing throughout."
-          />
-
-          <div className="space-y-8">
-            {/* Row 1: Sizes */}
-            <FadeUp className="card-premium rounded-xl p-8">
-              <p className="text-label mb-6">Sizes — all ≥ 44px touch target</p>
-              <div className="flex flex-wrap items-center gap-4">
-                <button className="btn-primary-premium text-sm px-4 py-2.5 min-h-[40px]" data-testid="btn-sm-dummy">Small</button>
-                <button className="btn-primary-premium" data-testid="btn-md-dummy">Medium (Default)</button>
-                <button className="btn-primary-premium text-base px-8 py-4 min-h-[56px]" data-testid="btn-lg-dummy">Large</button>
-              </div>
-            </FadeUp>
-
-            {/* Row 2: Variants */}
-            <FadeUp delay={0.05} className="card-premium rounded-xl p-8">
-              <p className="text-label mb-6">Variants</p>
-              <div className="flex flex-wrap items-center gap-4">
-                <button className="btn-primary-premium" data-testid="btn-primary-dummy">
-                  <Sparkles className="h-4 w-4" aria-hidden /> Primary
-                </button>
-                <button className="btn-secondary-premium" data-testid="btn-secondary-dummy">
-                  Secondary
-                </button>
-                <button className="inline-flex items-center gap-2 rounded-full px-6 py-3 min-h-[48px] font-semibold text-foreground hover:bg-muted/60 transition-colors" data-testid="btn-ghost-dummy">
-                  Ghost
-                </button>
-                <button className="inline-flex items-center gap-2 rounded-full px-6 py-3 min-h-[48px] font-semibold border-2 border-primary text-primary hover:bg-primary/5 transition-colors" data-testid="btn-outline-dummy">
-                  Outline
-                </button>
-                <a href="tel:+918291568972">
-                  <button className="btn-secondary-premium" data-testid="btn-phone-dummy">
-                    <Phone className="h-4 w-4" aria-hidden /> +91 82915 68972
-                  </button>
-                </a>
-              </div>
-            </FadeUp>
-
-            {/* Row 3: Icon containers */}
-            <FadeUp delay={0.10} className="card-premium rounded-xl p-8">
-              <p className="text-label mb-6">Icon Containers — Consistent styling for all icon blocks</p>
-              <div className="flex flex-wrap items-end gap-6">
-                {[
-                  { size: "icon-sm",  bg: "bg-primary/10", color: "text-primary", label: "sm · 36px" },
-                  { size: "icon-md",  bg: "bg-secondary/20", color: "text-amber-600", label: "md · 44px" },
-                  { size: "icon-lg",  bg: "bg-accent/10",  color: "text-accent",  label: "lg · 56px" },
-                  { size: "icon-xl",  bg: "bg-emerald-100 dark:bg-emerald-900/20", color: "text-emerald-600", label: "xl · 64px" },
-                ].map(ic => (
-                  <div key={ic.size} className="flex flex-col items-center gap-2">
-                    <div className={cn(ic.size, ic.bg)}>
-                      <Star className={cn("h-1/2 w-1/2", ic.color)} aria-hidden />
-                    </div>
-                    <Token name={`.${ic.size}`} />
-                    <p className="text-[10px] text-muted-foreground">{ic.label}</p>
-                  </div>
-                ))}
-              </div>
-            </FadeUp>
-          </div>
-        </Section>
-
-        {/* ══════════════════════════════════════════════════════════════════
-            SECTION 5 — CARDS
-        ══════════════════════════════════════════════════════════════════ */}
-        <Section warm>
-          <SectionHeading
-            eyebrow="05 — Cards"
-            title="Card System"
-            desc="Four card styles for different contexts. All share the same border radius but differ in shadow, background, and border treatment."
-          />
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-            {/* Default */}
-            <FadeUp>
-              <div className="card-premium rounded-xl p-7 cursor-default">
-                <div className="icon-lg bg-primary/10 mb-5">
-                  <Shield className="h-7 w-7 text-primary" aria-hidden />
-                </div>
-                <h3 className="text-title mb-2">card-premium</h3>
-                <p className="text-body text-sm">White background, var(--shadow-card), 1px border. Lifts +2px on hover with shadow-card-hover. Used for: feature cards, programme items, info blocks.</p>
-                <Token name=".card-premium — bg-white + shadow-card + rounded-lg" />
-              </div>
-            </FadeUp>
-
-            {/* Elevated */}
-            <FadeUp delay={0.05}>
-              <div className="card-elevated rounded-xl p-7 cursor-default">
-                <div className="icon-lg bg-secondary/20 mb-5">
-                  <GraduationCap className="h-7 w-7 text-amber-600" aria-hidden />
-                </div>
-                <h3 className="text-title mb-2">card-elevated</h3>
-                <p className="text-body text-sm">Stronger shadow, no border. Lifts +3px on hover with shadow-xl. Used for: testimonials, featured content, hero cards.</p>
-                <Token name=".card-elevated — bg-white + shadow-lg → shadow-xl" />
-              </div>
-            </FadeUp>
-
-            {/* Glass */}
-            <FadeUp delay={0.05}>
-              <div className="relative overflow-hidden rounded-xl p-7 cursor-default"
-                style={{
-                  background: "linear-gradient(135deg, hsl(0 85% 50% / 0.08), hsl(45 90% 55% / 0.08))",
-                  border: "1px solid hsl(0 85% 50% / 0.15)",
-                }}>
-                <div className="card-glass rounded-lg p-5">
-                  <div className="icon-lg bg-white/20 mb-4">
-                    <Heart className="h-7 w-7 text-foreground" aria-hidden />
-                  </div>
-                  <h3 className="text-title mb-2">card-glass</h3>
-                  <p className="text-body text-sm">72% opacity white + 20px blur + saturate. Nav, floating elements ONLY — not for decorative use.</p>
-                  <Token name=".card-glass — backdrop-blur(20px) + saturate(180%)" />
-                </div>
-              </div>
-            </FadeUp>
-
-            {/* Bento */}
-            <FadeUp delay={0.10}>
-              <div className="card-bento rounded-xl p-7 cursor-default">
-                <div className="icon-lg bg-accent/10 mb-5">
-                  <Zap className="h-7 w-7 text-accent" aria-hidden />
-                </div>
-                <h3 className="text-title mb-2">card-bento</h3>
-                <p className="text-body text-sm">Information-dense grid card. Subtle scale(1.005) on hover. Used for: "Why Rainbow" bento grids, feature overviews, dashboard-style layouts.</p>
-                <Token name=".card-bento — rounded-xl + shadow-card + scale on hover" />
-              </div>
-            </FadeUp>
-          </div>
-        </Section>
-
-        {/* ══════════════════════════════════════════════════════════════════
-            SECTION 6 — SPACING & SECTION RHYTHM
-        ══════════════════════════════════════════════════════════════════ */}
-        <Section id="spacing">
-          <SectionHeading
-            eyebrow="06 — Spacing & Rhythm"
-            title="Section Spacing System"
-            desc="Consistent vertical rhythm prevents the page from feeling cramped or unbalanced. Three section sizes + a standard container width."
-          />
-
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-8">
-            {[
-              { token: "--section-py",    value: "80px", tw: ".section-py",    use: "Standard sections" },
-              { token: "--section-py-lg", value: "112px", tw: ".section-py-lg", use: "Hero / large feature" },
-              { token: "--section-py-sm", value: "48px",  tw: ".section-py-sm", use: "Connector sections" },
-            ].map((s, i) => (
-              <FadeUp key={s.token} delay={i * 0.05} className="card-premium rounded-xl p-6">
-                <div className="relative bg-primary/5 rounded-lg flex items-center justify-center mb-4"
-                  style={{ height: `${parseInt(s.value) * 0.4}px` }}>
-                  <div className="absolute left-3 inset-y-2 w-0.5 bg-primary/30 rounded" />
-                  <span className="font-bold text-primary text-lg">{s.value}</span>
-                  <div className="absolute right-3 inset-y-2 w-0.5 bg-primary/30 rounded" />
-                </div>
-                <p className="font-semibold text-sm">{s.use}</p>
-                <Token name={`${s.tw} · ${s.token}`} />
-              </FadeUp>
-            ))}
-          </div>
-
-          {/* Container */}
-          <FadeUp delay={0.1} className="card-bento rounded-xl p-6">
-            <p className="text-label mb-4">Container — Standard Width</p>
-            <div className="bg-muted/40 rounded-lg p-4 border border-dashed border-border">
-              <div className="bg-primary/10 rounded-lg h-12 flex items-center justify-center text-sm font-mono text-primary">
-                max-w-7xl mx-auto px-5 sm:px-6 lg:px-8
-              </div>
-            </div>
-            <p className="text-body text-sm mt-3">1280px max width. Mobile: 20px padding. Tablet: 24px. Desktop: 32px. Never break this — consistent margins feel premium.</p>
-          </FadeUp>
-        </Section>
-
-        {/* ══════════════════════════════════════════════════════════════════
-            SECTION 7 — ANIMATION SYSTEM
-        ══════════════════════════════════════════════════════════════════ */}
-        <Section warm>
-          <SectionHeading
-            eyebrow="07 — Motion"
-            title="Animation System"
-            desc="Every animation serves a purpose — it must express cause-effect, not just decorate. Three durations, three easing curves, one spring."
-          />
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-            {/* Durations */}
-            <FadeUp className="card-premium rounded-xl p-6">
-              <p className="text-label mb-5">Duration Tokens</p>
-              <div className="space-y-4">
-                {[
-                  { name: "--dur-fast",   value: "150ms", use: "Hover states, icon scale, button feedback" },
-                  { name: "--dur-normal", value: "250ms", use: "Card hover, slide-in panels, page elements" },
-                  { name: "--dur-slow",   value: "400ms", use: "Hero reveals, page transitions, modals" },
-                ].map(d => (
-                  <div key={d.name} className="flex items-start gap-4">
-                    <div className="w-16 h-8 rounded-md bg-primary flex-shrink-0 flex items-center justify-center text-white text-xs font-bold"
-                      style={{ transition: `all ${d.value} ease` }}>
-                      {d.value}
-                    </div>
-                    <div>
-                      <code className="text-xs font-mono text-foreground">{d.name}</code>
-                      <p className="text-[11px] text-muted-foreground mt-0.5">{d.use}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </FadeUp>
-
-            {/* Easing */}
-            <FadeUp delay={0.05} className="card-premium rounded-xl p-6">
-              <p className="text-label mb-5">Easing Curves</p>
-              <div className="space-y-4">
-                {[
-                  { name: "--ease-spring",   label: "Spring",   use: "Button press, icon bounce, scale feedback" },
-                  { name: "--ease-smooth",   label: "Smooth",   use: "Enter animations, reveals, fade-ups" },
-                  { name: "--ease-out-expo", label: "Out Expo", use: "Exit animations, deceleration" },
-                  { name: "--ease-in-out",   label: "In-Out",   use: "Carousels, accordions, tab switches" },
-                ].map(e => (
-                  <div key={e.name} className="flex items-start gap-4">
-                    <div className="w-16 text-center flex-shrink-0">
-                      <span className="text-xs font-bold bg-muted rounded px-2 py-1">{e.label}</span>
-                    </div>
-                    <div>
-                      <code className="text-xs font-mono text-foreground">{e.name}</code>
-                      <p className="text-[11px] text-muted-foreground mt-0.5">{e.use}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </FadeUp>
-
-            {/* Rules */}
-            <FadeUp delay={0.05} className="card-bento rounded-xl p-6 sm:col-span-2 bg-surface-warm">
-              <p className="text-label mb-4">Animation Rules — Must Follow</p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {[
-                  { icon: <Check className="h-4 w-4 text-emerald-500" />, rule: "Use transform/opacity only — never width/height/top/left" },
-                  { icon: <Check className="h-4 w-4 text-emerald-500" />, rule: "Max 1-2 animated elements per view — not everything moves" },
-                  { icon: <Check className="h-4 w-4 text-emerald-500" />, rule: "Exit animations 60-70% of enter duration (faster = feels responsive)" },
-                  { icon: <Check className="h-4 w-4 text-emerald-500" />, rule: "Always include prefers-reduced-motion: reduce override" },
-                  { icon: <Check className="h-4 w-4 text-emerald-500" />, rule: "Stagger list/grid items by 40-60ms per row" },
-                  { icon: <Check className="h-4 w-4 text-emerald-500" />, rule: "Never block user input during animation" },
-                ].map((r, i) => (
-                  <div key={i} className="flex items-start gap-2 text-sm">
-                    {r.icon}
-                    <p className="text-foreground">{r.rule}</p>
-                  </div>
-                ))}
-              </div>
-            </FadeUp>
-          </div>
-        </Section>
-
-        {/* ══════════════════════════════════════════════════════════════════
-            SECTION 8 — GLASSMORPHISM LITE
-        ══════════════════════════════════════════════════════════════════ */}
-        <Section>
-          <SectionHeading
-            eyebrow="08 — Glassmorphism Lite"
-            title="Glass — Navigation & Floating Only"
-            desc="Use blur ONLY to indicate elevated/overlapping surfaces (Apple HIG). Never apply glass as decoration on flat sections."
-          />
-
-          {/* Glass demo */}
-          <FadeUp className="relative rounded-2xl overflow-hidden p-8" style={{
-            background: "linear-gradient(135deg, hsl(0 85% 55%), hsl(45 90% 55%), hsl(200 75% 50%))",
-          }}>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              {[
-                { title: "Floating card", desc: "backdrop-blur(20px) + saturate(180%)", heavy: false },
-                { title: "Sticky nav", desc: "backdrop-blur(20px) + bg-white/72", heavy: true },
-                { title: "Modal overlay", desc: "backdrop-blur(20px) + bg-white/88", heavy: false },
-              ].map((g, i) => (
-                <FadeUp key={g.title} delay={i * 0.05}>
-                  <div className="card-glass rounded-xl p-5">
-                    <Bell className="h-6 w-6 text-foreground mb-3" aria-hidden />
-                    <p className="font-semibold text-sm text-foreground">{g.title}</p>
-                    <p className="text-[11px] text-muted-foreground mt-1">{g.desc}</p>
-                    <Token name=".card-glass" />
-                  </div>
-                </FadeUp>
-              ))}
-            </div>
-            <p className="text-white/70 text-xs text-center mt-6">
-              Glass works here because it's over a rich coloured background.
-              On white sections — don't use glass. Use .card-premium instead.
+            {/* Tagline */}
+            <p className="text-lg md:text-xl text-white/80 max-w-xl mb-9 leading-relaxed">
+              Thane's trusted preschool since 2007 — where every child's first steps into learning are joyful, safe, and full of wonder.
             </p>
-          </FadeUp>
-        </Section>
 
-        {/* ══════════════════════════════════════════════════════════════════
-            SECTION 9 — LIVE BENTO EXAMPLE
-        ══════════════════════════════════════════════════════════════════ */}
-        <Section warm>
-          <SectionHeading
-            eyebrow="09 — Bento Layout"
-            title="Bento Grid Example"
-            desc="Information-dense, asymmetric grids with consistent card styling. Works for 'Why Rainbow', programme overviews, and trust signals."
-          />
+            {/* Trust badge row */}
+            <div className="flex flex-wrap gap-2 mb-9">
+              {trustBadges.map(({ Icon, label }, i) => (
+                <div key={i} className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-sm border border-white/20">
+                  <Icon className="w-3.5 h-3.5 text-yellow-400 flex-shrink-0" />
+                  <span className="text-xs font-semibold text-white/90">{label}</span>
+                </div>
+              ))}
+            </div>
 
-          <div className="grid grid-cols-6 gap-4 auto-rows-[120px]">
-            {/* Large feature */}
-            <FadeUp className="col-span-6 sm:col-span-4 row-span-2">
-              <div className="card-bento h-full p-7 flex flex-col justify-between"
-                style={{ background: "linear-gradient(135deg, hsl(0 85% 97%), hsl(0 85% 94%))" }}>
-                <div className="icon-xl bg-primary/15">
-                  <Shield className="h-8 w-8 text-primary" aria-hidden />
+            {/* CTA buttons */}
+            <div className="flex flex-col sm:flex-row gap-3">
+              <button
+                className="inline-flex items-center justify-center gap-2 rounded-full px-8 font-semibold text-white transition-all duration-[250ms] hover:-translate-y-0.5 active:scale-95"
+                style={{ height: 52, background: "hsl(var(--primary))", boxShadow: "0 8px 32px rgba(220,38,38,0.35), 0 4px 16px rgba(220,38,38,0.20)" }}
+              >
+                <Phone className="w-4 h-4" />
+                Request a Callback
+              </button>
+              <button className="inline-flex items-center justify-center gap-2 rounded-full px-8 font-semibold text-white border border-white/30 bg-white/10 backdrop-blur-sm transition-all duration-[250ms] hover:-translate-y-0.5 hover:bg-white/20 active:scale-95" style={{ height: 52 }}>
+                Explore Programmes
+                <ArrowRight className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Wave transition */}
+        <div className="absolute -bottom-1 left-0 right-0 pointer-events-none">
+          <svg viewBox="0 0 1440 96" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto block" preserveAspectRatio="none">
+            <path d="M0 96L80 88C160 80 320 64 480 58C640 52 800 56 960 60C1120 64 1280 68 1360 70L1440 72V96H1360C1280 96 1120 96 960 96C800 96 640 96 480 96C320 96 160 96 80 96H0Z" className="fill-background" />
+          </svg>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════════════
+          SECTION 2 — QUICK NAV
+      ═══════════════════════════════════════════════════════════════════ */}
+      <nav className="py-5 sm:py-6 border-y" style={{ background: "linear-gradient(135deg,#fff7f5 0%,#fffdf2 50%,#f5fff8 100%)" }}>
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="grid grid-cols-3 sm:grid-cols-6 gap-2 sm:gap-3">
+            {quickLinks.map(({ href, label, Icon, color }) => (
+              <a
+                key={href}
+                href={href}
+                className="flex flex-col items-center gap-1.5 p-2.5 sm:p-3 rounded-2xl text-center transition-all duration-200 hover:-translate-y-1 min-h-[72px] justify-center"
+                style={{
+                  background: `radial-gradient(circle at 40% 30%,${color}18,${color}08)`,
+                  border: `1px solid ${color}30`,
+                  boxShadow: `0 4px 14px ${color}18,0 1px 3px rgba(0,0,0,.06),inset 0 1px 0 rgba(255,255,255,.85)`,
+                }}
+              >
+                <div className="w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-full"
+                  style={{ background: `radial-gradient(circle at 35% 35%,${color}dd,${color})`, boxShadow: `0 3px 8px ${color}80` }}>
+                  <Icon style={{ width: 16, height: 16, color: "white" }} />
+                </div>
+                <span className="text-[10px] sm:text-xs font-semibold leading-tight" style={{ color }}>{label}</span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </nav>
+
+      {/* Quick callback strip */}
+      <div className="py-6 md:py-8 relative overflow-hidden border-b">
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/8 via-amber-50/60 to-primary/5 dark:from-primary/10 dark:via-background dark:to-primary/8" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-6">
+            <div className="flex-shrink-0 hidden md:block">
+              <p className="text-sm font-bold text-foreground">Quick Callback</p>
+              <p className="text-xs text-muted-foreground">Free consultation</p>
+            </div>
+            <div className="hidden md:block w-px h-10 bg-border flex-shrink-0" />
+            <div className="flex flex-col md:flex-row items-center gap-3 flex-1">
+              <input placeholder="Your Name" className="flex-1 w-full md:w-auto h-10 rounded-md border border-input bg-white/80 px-3 text-sm" />
+              <input placeholder="Phone Number" type="tel" className="flex-1 w-full md:w-auto h-10 rounded-md border border-input bg-white/80 px-3 text-sm" />
+              <select className="flex-1 w-full md:w-auto h-10 rounded-md border border-input bg-white/80 px-3 text-sm text-muted-foreground">
+                <option value="">Child's Age</option>
+                <option>1.5 – 2 years</option><option>2 – 3 years</option><option>3 – 4 years</option><option>4 – 5 years</option>
+              </select>
+              <button
+                className="w-full md:w-auto px-8 h-10 rounded-md text-sm font-semibold text-white transition-all duration-[250ms] hover:-translate-y-0.5"
+                style={{ background: "hsl(var(--primary))", boxShadow: "0 4px 14px rgba(220,38,38,.30)" }}
+              >
+                Get a Free Callback
+              </button>
+            </div>
+          </div>
+          <p className="text-xs text-muted-foreground mt-3 flex items-center gap-1.5">
+            <Lock className="w-3 h-3 text-green-500" />
+            No spam · One call from our admissions team · Free
+          </p>
+        </div>
+      </div>
+
+      {/* ═══════════════════════════════════════════════════════════════════
+          SECTION 3 — ABOUT + STATS
+      ═══════════════════════════════════════════════════════════════════ */}
+      <section className="py-16 md:py-24 bg-surface-warm">
+        <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            {/* Text */}
+            <div>
+              <p className="section-eyebrow">About Us</p>
+              <h2 className="text-headline mb-6">Why Parents Choose Rainbow Preschool</h2>
+              <p className="text-muted-foreground text-lg leading-relaxed mb-5">
+                Since 2007, Rainbow Preschool International has helped over 1,00,000 young learners learn, play, and grow across Thane. Our centres follow a play-based curriculum that builds reading, writing, and number skills through hands-on activities, stories, art, and outdoor play.
+              </p>
+              <p className="text-muted-foreground leading-relaxed mb-4">
+                Each child learns in small batches of 10–12, guided by trained female teachers. Our classrooms are CCTV-monitored, and every centre follows strict hygiene and safety routines. We are open Monday to Saturday, 8 AM to 6 PM, and offer half-day and full-day options for all age groups.
+              </p>
+              <p className="text-muted-foreground leading-relaxed mb-8">
+                All six centres are in Thane West, close to residential areas and main roads. Whether you are in Manpada, Kalwa, Dhokali, or Kasarvadavali, families can find a Rainbow Preschool centre close to their neighbourhood.
+              </p>
+              <a href="/about" className="inline-flex items-center gap-2 rounded-full px-6 py-2.5 text-sm font-semibold border border-border hover:bg-muted transition-colors duration-[150ms]">
+                Learn More About Us <ArrowRight className="w-4 h-4" />
+              </a>
+            </div>
+
+            {/* Stats 2×2 */}
+            <div className="grid grid-cols-2 gap-3 sm:gap-4">
+              {stats.map(({ Icon, value, label, from, to, border, icon }) => (
+                <div
+                  key={label}
+                  className={cn(
+                    "relative rounded-2xl overflow-hidden p-4 sm:p-5",
+                    "shadow-card hover:shadow-card-hover hover:-translate-y-1 transition-all duration-[250ms]",
+                    `bg-gradient-to-br ${from} ${to} to-transparent border ${border}`
+                  )}
+                >
+                  <div className="absolute -top-5 -right-5 w-20 h-20 rounded-full bg-white/30" />
+                  <Icon className={cn("w-6 h-6 sm:w-8 sm:h-8 mb-2 sm:mb-3 relative z-10", icon)} />
+                  <p className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-foreground mb-0.5 relative z-10">{value}</p>
+                  <p className="text-xs sm:text-sm text-muted-foreground font-medium relative z-10">{label}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════════════
+          SECTION 4 — PROGRAMMES
+      ═══════════════════════════════════════════════════════════════════ */}
+      <section className="py-16 md:py-24 bg-background">
+        <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-12">
+            <p className="section-eyebrow">Our Programmes</p>
+            <h2 className="text-headline mb-4">Programmes Designed for Every Stage of Early Learning</h2>
+            <p className="text-muted-foreground text-lg">
+              Explore our age-appropriate programmes designed to support your child's development at every stage.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {programmes
+              .filter(p => !["kids-activity-club", "summer-camp"].includes(p.id))
+              .map(p => (
+                <div
+                  key={p.id}
+                  className="group h-full cursor-pointer overflow-hidden rounded-xl bg-white dark:bg-card border border-card-border shadow-card hover:shadow-card-hover transition-all duration-[250ms] hover:-translate-y-2"
+                >
+                  {/* Image */}
+                  <div className="relative overflow-hidden">
+                    <div className="aspect-[4/3] overflow-hidden">
+                      <img
+                        src={p.image}
+                        alt={`${p.name} at Rainbow Preschool`}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        loading="lazy"
+                      />
+                    </div>
+                    {/* Hover overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    {/* Age badge */}
+                    <span className={cn("absolute top-3 right-3 text-xs font-semibold px-2.5 py-1 rounded-full text-white shadow-sm", badgeColors[p.id] || "bg-red-500")}>
+                      {p.ageRange}
+                    </span>
+                  </div>
+                  {/* Content */}
+                  <div className="p-5 space-y-2.5">
+                    <h3 className="font-heading font-semibold text-base text-foreground group-hover:text-primary transition-colors duration-[150ms]" style={{ letterSpacing: "-0.01em" }}>
+                      {p.name}
+                    </h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">{p.description}</p>
+                    <div className="flex items-center gap-1.5 text-sm font-semibold text-primary pt-1.5">
+                      Learn More
+                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-[150ms]" />
+                    </div>
+                  </div>
+                </div>
+              ))}
+          </div>
+
+          <div className="text-center mt-10">
+            <a href="/programmes" className="inline-flex items-center gap-2 rounded-full px-8 py-3 text-sm font-semibold border border-border hover:bg-muted transition-colors duration-[150ms]">
+              View All Programmes <ArrowRight className="w-4 h-4" />
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════════════
+          SECTION 5 — WHY CHOOSE US (BENTO)
+      ═══════════════════════════════════════════════════════════════════ */}
+      <section className="py-16 md:py-24 bg-card">
+        <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
+          <div className="max-w-2xl mb-12 md:mb-14">
+            <p className="section-eyebrow">Why Choose Us</p>
+            <h2 className="text-headline">A Trusted Early Learning Journey Since 2007</h2>
+          </div>
+
+          {/* Bento grid: Safety = 2 cols × 2 rows on desktop */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
+
+            {/* [0] Safety — hero tile */}
+            <div className={cn(
+              "md:col-span-2 md:row-span-2 rounded-xl border overflow-hidden flex flex-col justify-between p-7 min-h-[280px] md:min-h-[440px]",
+              "shadow-card hover:shadow-card-hover transition-all duration-[250ms] hover:-translate-y-1",
+              heroF.bg, heroF.border
+            )}>
+              <div>
+                <div className={cn("icon-xl rounded-2xl mb-6", heroF.iconBg)}>
+                  <heroF.Icon className={cn("w-8 h-8", heroF.iconColor)} />
+                </div>
+                <h3 className="font-heading font-bold text-2xl text-foreground mb-3" style={{ letterSpacing: "-0.02em" }}>
+                  {heroF.title}
+                </h3>
+                <p className="text-muted-foreground leading-relaxed text-base max-w-md">{heroF.description}</p>
+              </div>
+              {heroF.highlight && (
+                <div className="mt-6 pt-5 border-t border-current/10">
+                  <p className={cn("text-sm font-semibold", heroF.highlightColor)}>{heroF.highlight}</p>
+                </div>
+              )}
+            </div>
+
+            {/* [1–5] Small tiles */}
+            {restF.map((f, i) => (
+              <div key={i} className={cn(
+                "rounded-xl border p-5 flex flex-col gap-3",
+                "shadow-card hover:shadow-card-hover transition-all duration-[250ms] hover:-translate-y-1",
+                f.bg, f.border
+              )}>
+                <div className={cn("icon-md rounded-xl flex-shrink-0", f.iconBg)}>
+                  <f.Icon className={cn("w-5 h-5", f.iconColor)} />
                 </div>
                 <div>
-                  <h3 className="text-title">100% Safe Campuses</h3>
-                  <p className="text-body text-sm mt-1">CCTV, biometric entry, verified female staff, GPS transport.</p>
+                  <h3 className="font-semibold text-base text-foreground mb-1.5">{f.title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">{f.description}</p>
                 </div>
               </div>
-            </FadeUp>
+            ))}
+          </div>
+        </div>
+      </section>
 
-            {/* Stat */}
-            <FadeUp delay={0.05} className="col-span-3 sm:col-span-2 row-span-1">
-              <div className="card-bento h-full p-5 flex flex-col justify-center">
-                <p className="text-4xl font-extrabold font-heading text-foreground" style={{ letterSpacing: "-0.03em" }}>18+</p>
-                <p className="text-body text-sm mt-1">Years of excellence</p>
-              </div>
-            </FadeUp>
+      {/* ═══════════════════════════════════════════════════════════════════
+          SECTION 6 — TESTIMONIALS
+      ═══════════════════════════════════════════════════════════════════ */}
+      <section className="py-16 md:py-24 relative overflow-hidden bg-surface-warm">
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-amber-300/40 to-transparent" />
+        <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-12">
+            <p className="section-eyebrow">Testimonials</p>
+            <h2 className="text-headline mb-2">Parents from Thane Say...</h2>
+            <p className="text-sm text-muted-foreground mt-3">Trusted by parents across Thane since 2007.</p>
+          </div>
 
-            {/* Stat */}
-            <FadeUp delay={0.08} className="col-span-3 sm:col-span-2 row-span-1">
-              <div className="card-bento h-full p-5 flex flex-col justify-center bg-primary">
-                <p className="text-4xl font-extrabold font-heading text-white" style={{ letterSpacing: "-0.03em" }}>1L+</p>
-                <p className="text-sm text-white/80 mt-1">Happy families</p>
-              </div>
-            </FadeUp>
-
-            {/* Activity cards */}
-            {[
-              { icon: <Palette className="h-5 w-5" />, label: "Art & Craft", color: "bg-orange-50 dark:bg-orange-900/20", iconColor: "text-orange-500" },
-              { icon: <Music className="h-5 w-5" />, label: "Music",      color: "bg-blue-50 dark:bg-blue-900/20",   iconColor: "text-blue-500"   },
-              { icon: <BookOpen className="h-5 w-5" />, label: "Literacy", color: "bg-emerald-50 dark:bg-emerald-900/20", iconColor: "text-emerald-500" },
-              { icon: <Users className="h-5 w-5" />, label: "Play",       color: "bg-violet-50 dark:bg-violet-900/20", iconColor: "text-violet-500" },
-              { icon: <Star className="h-5 w-5" />,  label: "4.9★ Rating", color: "bg-amber-50 dark:bg-amber-900/20", iconColor: "text-amber-500"   },
-              { icon: <MapPin className="h-5 w-5" />, label: "6 Centres", color: "bg-red-50 dark:bg-red-900/20",     iconColor: "text-red-500"     },
-            ].map((a, i) => (
-              <FadeUp key={a.label} delay={i * 0.04} className="col-span-2 row-span-1">
-                <div className={cn("card-bento h-full p-4 flex flex-col justify-between", a.color)}>
-                  <div className={cn("icon-md bg-white/60 dark:bg-white/10", a.iconColor)}>{a.icon}</div>
-                  <p className="text-xs font-semibold text-foreground">{a.label}</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {testimonials.map(t => {
+              const initials = t.name.split(" ").map(n => n[0]).join("").slice(0, 2).toUpperCase();
+              return (
+                <div
+                  key={t.id}
+                  className="h-full flex flex-col rounded-xl bg-white dark:bg-card border border-card-border shadow-card hover:shadow-card-hover transition-all duration-[250ms] hover:-translate-y-1 p-5 sm:p-6"
+                >
+                  {/* Stars */}
+                  <div className="flex items-center gap-0.5 mb-4">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <Star key={i} className={cn("w-4 h-4", i < t.rating ? "fill-amber-400 text-amber-400" : "text-muted-foreground/30")} />
+                    ))}
+                  </div>
+                  {/* Decorative opening quote */}
+                  <div className="font-serif text-5xl leading-none text-primary/15 select-none mb-1" aria-hidden>&ldquo;</div>
+                  {/* Quote text */}
+                  <blockquote className="flex-1 text-sm text-foreground/80 leading-relaxed line-clamp-4 mb-5">
+                    {t.text}
+                  </blockquote>
+                  {/* Separator */}
+                  <div className="w-full h-px bg-border mb-4" />
+                  {/* Author */}
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-full bg-primary/10 text-primary font-semibold text-sm flex items-center justify-center ring-2 ring-primary/15 ring-offset-1 flex-shrink-0">
+                      {initials}
+                    </div>
+                    <div>
+                      <p className="font-semibold text-sm text-foreground">{t.name}</p>
+                      <p className="text-xs text-muted-foreground mt-0.5">Parent · {t.locality}</p>
+                    </div>
+                  </div>
                 </div>
-              </FadeUp>
-            ))}
+              );
+            })}
           </div>
-        </Section>
+        </div>
+      </section>
 
-        {/* ══════════════════════════════════════════════════════════════════
-            SECTION 10 — USAGE RULES SUMMARY
-        ══════════════════════════════════════════════════════════════════ */}
-        <Section>
-          <SectionHeading
-            eyebrow="10 — Rules"
-            title="Design System Rules"
-            desc="Non-negotiable constraints for all future edits. These prevent drift and keep the site feeling unified."
-          />
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {[
-              { icon: "🎨", title: "Never change brand colors", rule: "Primary red, secondary amber, accent blue are locked. Use opacity/tint variants instead of introducing new hues." },
-              { icon: "📏", title: "Use the type scale only", rule: "No ad-hoc font sizes. Always pick from: .text-display → .text-headline → .text-title → text-xl → .text-body-lg → .text-body → .text-label." },
-              { icon: "📐", title: "Radius from the scale", rule: "Cards: rounded-lg (20px). Buttons/inputs: rounded-md (14px) or rounded-full. Tags: rounded-sm (8px). Never custom px values." },
-              { icon: "🌑", title: "Shadows are required", rule: "Every floating element needs a shadow. Use .shadow-card for cards, .shadow-primary-glow for CTAs, .shadow-glass for glass elements." },
-              { icon: "🫧", title: "Glass = nav/float only", rule: ".card-glass only on elements overlapping coloured backgrounds (nav, modals, floating pills). Never on content cards over white." },
-              { icon: "⚡", title: "Animate with purpose", rule: "Every animation must express cause-effect. Max 2 animated elements per viewport. Always include prefers-reduced-motion override." },
-              { icon: "📦", title: "Use semantic sections", rule: ".section-py + mx-auto max-w-7xl px-5 sm:px-6 lg:px-8 on every section. No custom padding values." },
-              { icon: "🚫", title: "No pink — ever", rule: "Brand uses red (#DC2626) only. pink-* Tailwind classes and pink CSS named colors are banned. The predeploy check catches violations before deploy." },
-              { icon: "✅", title: "44px touch targets", rule: "Every interactive element must be ≥44px in height. Buttons: min-h-[48px]. Icon buttons: w-11 h-11 (44px). Never smaller on mobile." },
-            ].map((r, i) => (
-              <FadeUp key={r.title} delay={i * 0.04} className="card-premium rounded-xl p-5">
-                <span className="text-2xl mb-3 block" role="img" aria-hidden>{r.icon}</span>
-                <p className="font-semibold text-sm mb-2">{r.title}</p>
-                <p className="text-body text-xs leading-relaxed">{r.rule}</p>
-              </FadeUp>
-            ))}
-          </div>
-        </Section>
-
-        {/* ══════════════════════════════════════════════════════════════════
-            FOOTER
-        ══════════════════════════════════════════════════════════════════ */}
-        <section className="section-py-sm border-t border-border bg-surface-warm">
-          <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8 text-center">
-            <p className="text-label mb-2">Design System v2.0</p>
-            <p className="text-display text-gradient-brand" style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)" }}>
-              Rainbow Preschool International
-            </p>
-            <p className="text-body mt-4 max-w-lg mx-auto">
-              This is the canonical reference. When in doubt, come back here.
-              All future page edits must pull from these tokens.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3 justify-center">
-              <Link href="/">
-                <button className="btn-primary-premium" data-testid="btn-home-dummy">
-                  <ArrowRight className="h-4 w-4" aria-hidden /> View Main Site
-                </button>
-              </Link>
-              <Link href="/playgroup">
-                <button className="btn-secondary-premium" data-testid="btn-playgroup-dummy">
-                  Playgroup Page →
-                </button>
-              </Link>
+      {/* ═══════════════════════════════════════════════════════════════════
+          SECTION 7 — CTA
+      ═══════════════════════════════════════════════════════════════════ */}
+      <section className="relative overflow-hidden">
+        {/* Layered premium red background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-red-700 via-red-600 to-red-800" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(250,204,21,0.18)_0%,transparent_60%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(0,0,0,0.25)_0%,transparent_55%)]" />
+        {/* Dot texture */}
+        <div
+          className="absolute inset-0 opacity-[0.06]"
+          style={{ backgroundImage: "radial-gradient(circle,white 1px,transparent 1px)", backgroundSize: "24px 24px" }}
+        />
+        <div className="relative z-10 py-16 md:py-24 max-w-3xl mx-auto px-5 sm:px-6 text-center">
+          <h2
+            className="font-heading font-bold text-white mb-4 md:mb-5"
+            style={{ fontSize: "clamp(1.5rem,3.5vw,2.5rem)", letterSpacing: "-0.025em" }}
+          >
+            Ready to begin your child's learning journey?
+          </h2>
+          <p className="text-white/75 mb-9 max-w-xl mx-auto leading-relaxed">
+            Join 1,00,000+ young learners who began their early learning journey with Rainbow Preschool. Schedule a free campus visit today.
+          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
+            <a
+              href="/contact"
+              className="inline-flex items-center justify-center gap-2 rounded-full px-8 font-semibold bg-white text-red-700 hover:bg-white/92 transition-all duration-[250ms] hover:-translate-y-0.5 shadow-[0_4px_24px_rgba(0,0,0,0.20)]"
+              style={{ height: 52 }}
+            >
+              Request a Callback <ArrowRight className="w-4 h-4" />
+            </a>
+            <div className="flex items-center gap-2.5">
+              <a
+                href="https://wa.me/918291568972?text=Hi%2C%20I%20would%20like%20to%20know%20more%20about%20Rainbow%20Preschool"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 rounded-full px-6 font-semibold text-white border border-white/20 bg-white/12 hover:bg-white/22 transition-all duration-[250ms] hover:-translate-y-0.5"
+                style={{ height: 52 }}
+              >
+                <SiWhatsapp className="w-4 h-4" /> WhatsApp
+              </a>
+              <a
+                href="tel:+918291568972"
+                className="inline-flex items-center justify-center gap-2 rounded-full px-6 font-semibold text-white border border-white/20 bg-white/12 hover:bg-white/22 transition-all duration-[250ms] hover:-translate-y-0.5"
+                style={{ height: 52 }}
+              >
+                <Phone className="w-4 h-4" /> Call Now
+              </a>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-      </main>
-    </>
+      {/* ═══════════════════════════════════════════════════════════════════
+          FOOTER PREVIEW (simplified)
+      ═══════════════════════════════════════════════════════════════════ */}
+      <div className="bg-card border-t">
+        <div className="h-1 rainbow-gradient" />
+        <div className="max-w-7xl mx-auto px-5 sm:px-6 py-12">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <img src="/images/optimized/rainbow-logo.webp" alt="Rainbow Preschool Logo" className="w-14 h-14 object-contain" loading="lazy" />
+              <div>
+                <p className="font-semibold text-sm text-foreground">Rainbow Preschool International</p>
+                <p className="text-xs text-muted-foreground">Laying the foundation for tomorrow since 2007</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-3">
+              {/* Social icons — improved */}
+              {["facebook", "instagram", "youtube"].map(s => (
+                <div key={s} className="w-9 h-9 rounded-full bg-muted flex items-center justify-center transition-all duration-[150ms] hover:bg-primary/10 hover:text-primary hover:scale-110 shadow-xs cursor-pointer">
+                  <span className="text-xs font-bold">{s[0].toUpperCase()}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="mt-8 pt-6 border-t flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-muted-foreground">
+            <p>&copy; {new Date().getFullYear()} Rainbow Preschool International. All rights reserved.</p>
+            <div className="flex gap-4">
+              <a href="/privacy" className="hover:text-foreground transition-colors">Privacy Policy</a>
+              <a href="/terms" className="hover:text-foreground transition-colors">Terms of Service</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
