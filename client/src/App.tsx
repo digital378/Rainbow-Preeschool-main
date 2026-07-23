@@ -62,6 +62,7 @@ const PlaySchoolNearMajiwada = lazy(() => import("@/pages/play-school-near-majiw
 const PlaySchoolNearNaupada = lazy(() => import("@/pages/play-school-near-naupada"));
 
 const RainbowSparkleTrail = lazy(() => import("@/components/rainbow-sparkle-trail").then(m => ({ default: m.RainbowSparkleTrail })));
+const DummyPage = lazy(() => import("@/pages/dummy"));
 
 const LazyPlaygroupInManpada = lazy(() => import("@/pages/local-playgroup").then(m => ({ default: m.PlaygroupInManpada })));
 const LazyPlaygroupInKalwa = lazy(() => import("@/pages/local-playgroup").then(m => ({ default: m.PlaygroupInKalwa })));
@@ -309,6 +310,7 @@ function Router() {
         
         <Route path="/terms" component={LazyTermsPage} />
         <Route path="/privacy" component={LazyPrivacyPage} />
+        <Route path="/dummy" component={DummyPage} />
         
         <Route component={NotFound} />
         </Switch>
