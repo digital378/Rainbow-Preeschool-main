@@ -171,7 +171,7 @@ const WHYS = [
   { icon: <Users className="h-7 w-7" aria-hidden />, title: "1:10 Teacher Ratio", body: "Every child gets personal attention. Small batches, big impact.", color: "text-blue-400", bg: "bg-blue-500/10" },
   { icon: <Clock className="h-7 w-7" aria-hidden />, title: "Flexible Timings", body: "Morning and afternoon batches. Extended care through Happy Times.", color: "text-amber-400", bg: "bg-amber-500/10" },
   { icon: <MapPin className="h-7 w-7" aria-hidden />, title: "6 Convenient Centres", body: "Manpada, Kalwa, Anand Nagar, Dhokali, Kasarvadavali, Hariniwas.", color: "text-rose-400", bg: "bg-rose-500/10" },
-  { icon: <Heart className="h-7 w-7" aria-hidden />, title: "18+ Years of Love", body: "Over 1,00,000 children nurtured. Thane's most trusted preschool chain.", color: "text-pink-400", bg: "bg-pink-500/10" },
+  { icon: <Heart className="h-7 w-7" aria-hidden />, title: "18+ Years of Love", body: "Over 1,00,000 children nurtured. Thane's most trusted preschool chain.", color: "text-red-400", bg: "bg-red-500/10" },
 ];
 
 const TESTIMONIALS = [
