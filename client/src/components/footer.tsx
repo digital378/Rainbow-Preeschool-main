@@ -35,7 +35,7 @@ export function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Follow us on Facebook"
-                className="w-9 h-9 rounded-full bg-muted flex items-center justify-center hover-elevate"
+                className="w-9 h-9 rounded-full bg-muted flex items-center justify-center transition-all duration-[150ms] hover:bg-primary/12 hover:text-primary hover:scale-110 shadow-xs"
                 data-testid="link-social-facebook"
               >
                 <SiFacebook className="h-4 w-4" aria-hidden="true" />
@@ -45,7 +45,7 @@ export function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Follow us on Instagram"
-                className="w-9 h-9 rounded-full bg-muted flex items-center justify-center hover-elevate"
+                className="w-9 h-9 rounded-full bg-muted flex items-center justify-center transition-all duration-[150ms] hover:bg-primary/12 hover:text-primary hover:scale-110 shadow-xs"
                 data-testid="link-social-instagram"
               >
                 <SiInstagram className="h-4 w-4" aria-hidden="true" />
@@ -55,7 +55,7 @@ export function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Watch us on YouTube"
-                className="w-9 h-9 rounded-full bg-muted flex items-center justify-center hover-elevate"
+                className="w-9 h-9 rounded-full bg-muted flex items-center justify-center transition-all duration-[150ms] hover:bg-primary/12 hover:text-primary hover:scale-110 shadow-xs"
                 data-testid="link-social-youtube"
               >
                 <SiYoutube className="h-4 w-4" aria-hidden="true" />

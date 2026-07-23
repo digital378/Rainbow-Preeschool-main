@@ -433,13 +433,13 @@ export default function Home() {
       <AwardedBySection />
 
       {/* About Section - SEO Enhanced */}
-      <article className="py-16 md:py-20 lg:py-24 relative overflow-hidden cv-auto">
+      <article className="py-16 md:py-20 lg:py-24 relative overflow-hidden cv-auto bg-surface-warm">
         <div className="absolute inset-0 pointer-events-none hidden md:block" style={{ backgroundImage: 'url(/images/centres/manpada.webp)', backgroundSize: 'cover', backgroundPosition: 'center', opacity: 0.06 }} />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <div data-reveal="float">
-              <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">About Us</p>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6" data-sparkle>Why Parents Choose Rainbow Preschool</h2>
+              <p className="section-eyebrow">About Us</p>
+              <h2 className="text-headline mb-6" data-sparkle>Why Parents Choose Rainbow Preschool</h2>
               <p className="text-muted-foreground text-lg leading-relaxed mb-6">
                 Since 2007, Rainbow Preschool International has helped over 1,00,000 young learners learn, play, and grow across Thane. Our centres follow a play-based curriculum that builds reading, writing, and number skills through hands-on activities, stories, art, and outdoor play.
               </p>
@@ -462,7 +462,7 @@ export default function Home() {
             <div className="grid grid-cols-2 gap-3 sm:gap-4" data-stagger="children">
               {/* Happy Students */}
               <Link href="#testimonials" data-reveal="pop">
-                <div className="relative rounded-2xl overflow-hidden p-4 sm:p-5 cursor-pointer group hover:-translate-y-1 transition-all duration-300 bg-gradient-to-br from-primary/10 via-primary/5 to-transparent border border-primary/20 hover:border-primary/40 hover:shadow-lg dark:border-primary/30">
+                <div className="relative rounded-2xl overflow-hidden p-4 sm:p-5 cursor-pointer group hover:-translate-y-1 transition-all duration-[250ms] bg-gradient-to-br from-primary/10 via-primary/5 to-transparent border border-primary/20 hover:border-primary/40 shadow-card hover:shadow-card-hover dark:border-primary/30">
                   <div className="absolute -top-5 -right-5 w-20 h-20 bg-primary/10 rounded-full" />
                   <Users className="w-6 h-6 sm:w-8 sm:h-8 text-primary mb-2 sm:mb-3 relative z-10" />
                   <p className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-foreground mb-0.5 relative z-10 whitespace-nowrap">
@@ -473,7 +473,7 @@ export default function Home() {
               </Link>
               {/* Years */}
               <Link href="/about" data-reveal="pop">
-                <div className="relative rounded-2xl overflow-hidden p-4 sm:p-5 cursor-pointer group hover:-translate-y-1 transition-all duration-300 bg-gradient-to-br from-amber-50 via-yellow-50 to-transparent dark:from-amber-950/30 dark:via-yellow-950/20 dark:to-transparent border border-amber-200 dark:border-amber-800/40 hover:border-amber-400 hover:shadow-lg">
+                <div className="relative rounded-2xl overflow-hidden p-4 sm:p-5 cursor-pointer group hover:-translate-y-1 transition-all duration-[250ms] bg-gradient-to-br from-amber-50 via-yellow-50 to-transparent dark:from-amber-950/30 dark:via-yellow-950/20 dark:to-transparent border border-amber-200 dark:border-amber-800/40 hover:border-amber-400 shadow-card hover:shadow-card-hover">
                   <div className="absolute -top-5 -right-5 w-20 h-20 bg-amber-200/40 dark:bg-amber-700/20 rounded-full" />
                   <Star className="w-6 h-6 sm:w-8 sm:h-8 text-amber-500 fill-amber-400 mb-2 sm:mb-3 relative z-10" />
                   <p className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-foreground mb-0.5 relative z-10 whitespace-nowrap">
@@ -484,7 +484,7 @@ export default function Home() {
               </Link>
               {/* Centres */}
               <Link href="#centres" data-reveal="pop">
-                <div className="relative rounded-2xl overflow-hidden p-4 sm:p-5 cursor-pointer group hover:-translate-y-1 transition-all duration-300 bg-gradient-to-br from-sky-50 via-blue-50 to-transparent dark:from-sky-950/30 dark:via-blue-950/20 dark:to-transparent border border-sky-200 dark:border-sky-800/40 hover:border-sky-400 hover:shadow-lg">
+                <div className="relative rounded-2xl overflow-hidden p-4 sm:p-5 cursor-pointer group hover:-translate-y-1 transition-all duration-[250ms] bg-gradient-to-br from-sky-50 via-blue-50 to-transparent dark:from-sky-950/30 dark:via-blue-950/20 dark:to-transparent border border-sky-200 dark:border-sky-800/40 hover:border-sky-400 shadow-card hover:shadow-card-hover">
                   <div className="absolute -top-5 -right-5 w-20 h-20 bg-sky-200/40 dark:bg-sky-700/20 rounded-full" />
                   <MapPin className="w-6 h-6 sm:w-8 sm:h-8 text-sky-500 mb-2 sm:mb-3 relative z-10" />
                   <p className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-foreground mb-0.5 relative z-10 whitespace-nowrap">
@@ -511,11 +511,11 @@ export default function Home() {
 
       <LazySection minHeight={480} rootMargin="300px">
         {/* Programmes Section - SEO Cluster Hub */}
-        <section className="py-16 md:py-20 lg:py-24 bg-card cv-auto">
+        <section className="py-16 md:py-20 lg:py-24 bg-background cv-auto">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-12" data-reveal="float">
-              <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">Our Programmes</p>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4" data-sparkle>Programmes Designed for Every Stage of Early Learning</h2>
+              <p className="section-eyebrow">Our Programmes</p>
+              <h2 className="text-headline mb-4" data-sparkle>Programmes Designed for Every Stage of Early Learning</h2>
               <p className="text-muted-foreground text-lg">
                 Explore our age-appropriate programmes designed to support your child's development at every stage.
               </p>
@@ -557,14 +557,13 @@ export default function Home() {
 
       <LazySection minHeight={440} rootMargin="300px">
         {/* Testimonials Section - Local SEO Enhanced */}
-        <section id="testimonials" className="py-16 md:py-20 lg:py-24 relative overflow-hidden cv-auto">
-          {/* Diagonal gradient background */}
-          <div className="absolute inset-0 bg-gradient-to-br from-amber-50/80 via-background to-primary/5 dark:from-amber-950/20 dark:via-background dark:to-primary/10" />
-          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-amber-300/50 to-transparent" />
+        <section id="testimonials" className="py-16 md:py-20 lg:py-24 relative overflow-hidden cv-auto bg-surface-warm">
+          {/* Subtle top accent line */}
+          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-amber-300/40 to-transparent" />
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-12">
-              <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">Testimonials</p>
-              <h2 className="text-3xl md:text-4xl font-bold mb-2" data-sparkle>Parents from Thane Say...</h2>
+              <p className="section-eyebrow">Testimonials</p>
+              <h2 className="text-headline mb-2" data-sparkle>Parents from Thane Say...</h2>
               <p className="text-sm text-muted-foreground mt-3">Trusted by parents across Thane since 2007.</p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -580,12 +579,12 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
             <div data-reveal="slide" data-direction="left">
-              <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">Get In Touch</p>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4" data-sparkle>Request A Callback</h2>
+              <p className="section-eyebrow">Get In Touch</p>
+              <h2 className="text-headline mb-4" data-sparkle>Request A Callback</h2>
               <p className="text-muted-foreground text-lg mb-8">
                 Submit your details and queries here. We'd be glad to help you out!
               </p>
-              <div className="rounded-xl overflow-hidden shadow-md" data-testid="callback-video">
+              <div className="rounded-xl overflow-hidden shadow-card" data-testid="callback-video">
                 <video
                   src="/assets/RPS_Walkthrough_Video_-_Website_1_1766126796450.mp4"
                   poster="/assets/walkthrough-poster.webp"
@@ -614,11 +613,11 @@ export default function Home() {
       </section>
 
       {/* Find Your Nearest Centre — interactive locality search */}
-      <section aria-label="Find your nearest Rainbow Preschool centre" className="py-12 md:py-16 bg-primary/5">
+      <section aria-label="Find your nearest Rainbow Preschool centre" className="py-12 md:py-16 bg-surface-warm border-y border-border/40">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8" data-reveal="float">
-            <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">Our Locations</p>
-            <h2 className="text-2xl md:text-3xl font-bold mb-2" data-sparkle>Find Your Nearest Centre</h2>
+            <p className="section-eyebrow">Our Locations</p>
+            <h2 className="text-2xl md:text-3xl font-bold mb-2 tracking-tight" data-sparkle>Find Your Nearest Centre</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               Type your area or neighbourhood below — we'll show you which Rainbow Preschool centre is closest to you.
             </p>
@@ -640,8 +639,8 @@ export default function Home() {
         <section id="centres" className="py-16 md:py-20 lg:py-24 cv-auto">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-12">
-              <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">Our Locations</p>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4" data-sparkle>Our Preschool Centres Across Thane</h2>
+              <p className="section-eyebrow">Our Locations</p>
+              <h2 className="text-headline mb-4" data-sparkle>Our Preschool Centres Across Thane</h2>
               <p className="text-muted-foreground text-lg">
                 With six branches spread across Thane West, a Rainbow Preschool centre is always close to home. Visit the centre nearest to you and experience our warm, welcoming classrooms firsthand.
               </p>
@@ -666,8 +665,8 @@ export default function Home() {
       <section className="py-16 md:py-20 lg:py-24 bg-card cv-auto">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12" data-reveal="float">
-            <h2 className="text-3xl md:text-4xl font-bold" data-sparkle>Frequently Asked Questions</h2>
-            <p className="text-muted-foreground mt-2">Common questions about Rainbow Preschool International</p>
+            <h2 className="text-headline" data-sparkle>Frequently Asked Questions</h2>
+            <p className="text-muted-foreground mt-3">Common questions about Rainbow Preschool International</p>
           </div>
           <Accordion type="single" collapsible className="w-full">
             {faqs.map((faq, index) => (
