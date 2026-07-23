@@ -1,0 +1,268 @@
+The homepage should feel like entering a beautiful preschool campus—not browsing a typical website.
+
+The experience should be:
+
+• Immersive
+• Creative
+• Premium
+• Warm
+• Trustworthy
+• Elegant
+• Calm
+• Cheerful
+• Spacious
+• Child-friendly
+• Sophisticated
+
+Think:
+
+"Disney's warmth with Apple's simplicity."
+
+Every element should feel intentional.
+
+Nothing should feel cluttered.
+
+Nothing should feel gimmicky.
+
+Nothing should distract from the content.
+
+The experience should delight both children and parents.
+
+======================================================
+STRICT RULES
+======================================================
+
+DO NOT
+
+• Change the homepage structure
+• Change section order
+• Rewrite content
+• Replace images
+• Change brand colours
+• Change logo
+• Change navigation
+• Add unnecessary sections
+• Add heavy graphics
+• Add large illustrations
+• Use Lottie
+• Use GSAP
+• Reduce loading speed
+
+This is an enhancement project only.
+
+======================================================
+VISUAL EXPERIENCE
+======================================================
+
+The current homepage feels like stacked sections.
+
+Transform it into one seamless visual journey.
+
+Each section should naturally flow into the next.
+
+Introduce depth, breathing space and visual storytelling.
+
+The page should feel alive without looking busy.
+
+Create smooth transitions between sections using subtle background treatments rather than obvious separators.
+
+Introduce gentle asymmetry where appropriate while maintaining perfect alignment.
+
+======================================================
+LAYOUT REFINEMENT
+======================================================
+
+Improve throughout the homepage:
+
+• Whitespace
+• Vertical rhythm
+• Content spacing
+• Alignment
+• Card proportions
+• Image framing
+• Section balance
+• Visual hierarchy
+• Readability
+• Typography scale
+
+Nothing should feel cramped.
+
+Nothing should feel oversized.
+
+Everything should breathe.
+
+======================================================
+IMMERSIVE DETAILS
+======================================================
+
+Introduce subtle environmental elements using lightweight CSS.
+
+Examples include:
+
+• soft floating abstract rainbow shapes
+• organic curves
+• paper-cut inspired layers
+• gentle gradients
+• subtle educational motifs
+• tiny stars
+• alphabet-inspired accents
+• playful circles
+• leaves
+• soft light glows
+• watercolor-inspired backgrounds
+• curved section transitions
+
+These should remain in the background.
+
+They should enhance the atmosphere without competing with the content.
+
+The homepage should feel magical but refined.
+
+======================================================
+HERO SECTION
+======================================================
+
+Transform the hero into an emotional first impression.
+
+Improve:
+
+• composition
+• typography hierarchy
+• CTA emphasis
+• image depth
+• spacing
+• layering
+• background atmosphere
+
+Use subtle decorative elements around the children without overwhelming the design.
+
+Create visual depth through layering rather than excessive graphics.
+
+Parents should immediately feel:
+
+"This is a place where my child will be safe, happy and inspired."
+
+======================================================
+CARD DESIGN
+======================================================
+
+Redesign every card to feel premium.
+
+Use:
+
+• soft rounded corners
+• elegant shadows
+• subtle gradients
+• layered depth
+• clean iconography
+• refined spacing
+
+Cards should feel tactile and inviting.
+
+Hover effects should be subtle and sophisticated.
+
+======================================================
+MICRO INTERACTIONS
+======================================================
+
+Introduce elegant interactions across the homepage.
+
+Examples:
+
+• gentle button lift
+• smooth hover transitions
+• subtle image zoom
+• elegant underline animations
+• soft card elevation
+• animated counters
+• fade-up reveals
+• staggered entrance animations
+
+Animations should feel natural and calm.
+
+Never flashy.
+
+Never distracting.
+
+======================================================
+COLOUR TREATMENT
+======================================================
+
+Do NOT change the Rainbow Preschool colour palette.
+
+Instead, improve how colours are used.
+
+Introduce:
+
+• soft pastel tints
+• subtle transparency
+• elegant gradients
+• warmer backgrounds
+• premium contrast
+
+Colours should feel softer, richer and more refined.
+
+======================================================
+PREMIUM POLISH
+======================================================
+
+Reduce visual noise.
+
+Increase sophistication.
+
+Improve consistency across:
+
+• typography
+• spacing
+• icons
+• buttons
+• cards
+• shadows
+• border radius
+• backgrounds
+• dividers
+
+Every element should belong to one unified design language.
+
+======================================================
+PERFORMANCE
+======================================================
+
+Every enhancement must remain lightweight.
+
+Use:
+
+• CSS transforms
+• CSS opacity animations
+• hardware acceleration
+• Intersection Observer
+• lazy loading
+• optimized rendering
+
+Avoid unnecessary JavaScript.
+
+Maintain excellent Lighthouse scores.
+
+======================================================
+FINAL RESULT
+======================================================
+
+The homepage should not look redesigned.
+
+It should look like the same website—but elevated to the quality of an award-winning premium international preschool.
+
+The final experience should feel immersive, creative, elegant and emotionally engaging while remaining clean, minimal, intuitive and exceptionally fast.
+
+Every parent visiting the homepage should subconsciously feel:
+
+"This school is premium.
+This school is safe.
+This school genuinely cares about children."
+
+Focus on refinement over decoration.
+
+Less clutter.
+More emotion.
+More depth.
+More elegance.
+More delight.
