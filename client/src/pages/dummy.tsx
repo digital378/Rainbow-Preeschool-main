@@ -55,6 +55,24 @@ const STYLES = `
   /* programme card image zoom */
   .prog-img { transition: transform 0.7s cubic-bezier(.22,1,.36,1); }
   .prog-card:hover .prog-img { transform: scale(1.07); }
+
+  /* ── Hero entrance — plays on page load, not IntersectionObserver ──────── */
+  @keyframes d-hero-in {
+    from { opacity: 0; transform: translateY(26px); }
+    to   { opacity: 1; transform: none; }
+  }
+  .d-h0 { animation: d-hero-in 0.90s cubic-bezier(.22,1,.36,1)        both; }
+  .d-h1 { animation: d-hero-in 0.90s cubic-bezier(.22,1,.36,1) 0.15s  both; }
+  .d-h2 { animation: d-hero-in 0.90s cubic-bezier(.22,1,.36,1) 0.32s  both; }
+  .d-h3 { animation: d-hero-in 0.90s cubic-bezier(.22,1,.36,1) 0.50s  both; }
+  .d-h4 { animation: d-hero-in 0.90s cubic-bezier(.22,1,.36,1) 0.68s  both; }
+
+  /* ── prefers-reduced-motion — mandatory accessibility fallback ─────────── */
+  @media (prefers-reduced-motion: reduce) {
+    .d-h0,.d-h1,.d-h2,.d-h3,.d-h4 { animation: none !important; }
+    .du-fade { opacity: 1 !important; transform: none !important; transition: none !important; }
+    .d-float-a,.d-float-b,.d-float-c,.d-pulse,.d-spin,.d-tw1,.d-tw2,.d-tw3 { animation: none !important; }
+  }
 `;
 
 /* ═══════════════════════════════════════════════════════════════════════════════
@@ -234,99 +252,170 @@ export default function Dummy() {
       </div>
 
       {/* ═══════════════════════════════════════════════════════════════════════
-          §1 HERO
+          §1 HERO — Cinematic full-viewport entrance
       ═══════════════════════════════════════════════════════════════════════ */}
-      <section className="relative min-h-[90vh] flex items-center overflow-hidden">
+      <section className="relative flex items-center overflow-hidden" style={{ minHeight: "100svh" }}>
 
-        {/* Photo */}
+        {/* ── Atmosphere layer stack (bottom → top) ── */}
         <div className="absolute inset-0">
-          <img src="/images/optimized/hero-banner-1.webp"
-            alt="Children learning at Rainbow Preschool in Thane"
-            className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/42 to-black/10" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-transparent to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/22 via-transparent to-transparent" />
-          {/* Brand warm left glow */}
-          <div className="absolute left-0 top-0 bottom-0 w-1/2 pointer-events-none"
-            style={{ background: "radial-gradient(ellipse at 0% 60%, rgba(220,38,38,0.18) 0%, transparent 65%)" }} />
+          {/* 1. Full-bleed photo */}
+          <img
+            src="/images/optimized/hero-banner-1.webp"
+            alt="Children learning joyfully at Rainbow Preschool in Thane"
+            className="w-full h-full object-cover object-center"
+            decoding="async"
+          />
+          {/* 2. Left text-zone darkness — deep enough for white type to sing */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/52 to-black/08" />
+          {/* 3. Bottom scrim — grounds the image, softens feet into wave */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/72 via-black/18 to-transparent" />
+          {/* 4. Subtle top vignette */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-transparent to-transparent" />
+          {/* 5. Brand red warmth — breathes life into the left zone */}
+          <div className="absolute inset-0 pointer-events-none"
+            style={{ background: "radial-gradient(ellipse at -8% 58%, rgba(220,38,38,0.26) 0%, transparent 55%)" }} />
+          {/* 6. Amber photo bloom — photo-right light leak */}
+          <div className="absolute inset-0 pointer-events-none"
+            style={{ background: "radial-gradient(ellipse at 88% 40%, rgba(251,191,36,0.10) 0%, transparent 42%)" }} />
         </div>
 
-        {/* Atmospheric floating orbs */}
-        <Orb cls="d-float-a d-pulse w-[380px] h-[380px] top-[4%] right-[4%]"
-          style={{ background: "radial-gradient(circle, rgba(251,191,36,0.22) 0%, transparent 62%)", filter: "blur(36px)" }} />
-        <Orb cls="d-float-b w-52 h-52 bottom-[16%] right-[18%]"
-          style={{ background: "radial-gradient(circle, rgba(220,38,38,0.16) 0%, transparent 65%)", filter: "blur(24px)" }} />
-        <Orb cls="d-float-c w-40 h-40 top-[28%] left-[4%]"
-          style={{ background: "radial-gradient(circle, rgba(59,130,246,0.10) 0%, transparent 65%)", filter: "blur(20px)" }} />
+        {/* ── Floating atmospheric orbs ── */}
+        {/* Large amber halo — top right, dreamy */}
+        <Orb cls="d-float-a d-pulse absolute rounded-full pointer-events-none"
+          style={{
+            width: "clamp(320px,42vw,540px)", height: "clamp(320px,42vw,540px)",
+            top: "-10%", right: "-6%",
+            background: "radial-gradient(circle, rgba(251,191,36,0.24) 0%, transparent 60%)",
+            filter: "blur(48px)",
+          }} />
+        {/* Secondary red orb — mid right */}
+        <Orb cls="d-float-b absolute rounded-full pointer-events-none"
+          style={{
+            width: 260, height: 260,
+            bottom: "18%", right: "16%",
+            background: "radial-gradient(circle, rgba(220,38,38,0.16) 0%, transparent 65%)",
+            filter: "blur(28px)",
+          }} />
+        {/* Soft blue orb — lower left, balances the warmth */}
+        <Orb cls="d-float-c absolute rounded-full pointer-events-none"
+          style={{
+            width: 200, height: 200,
+            bottom: "6%", left: "-2%",
+            background: "radial-gradient(circle, rgba(59,130,246,0.12) 0%, transparent 65%)",
+            filter: "blur(24px)",
+          }} />
+        {/* Small accent orb — center area */}
+        <Orb cls="d-float-a absolute rounded-full pointer-events-none"
+          style={{
+            width: 120, height: 120,
+            top: "42%", left: "52%",
+            background: "radial-gradient(circle, rgba(251,191,36,0.10) 0%, transparent 65%)",
+            filter: "blur(16px)",
+            animationDelay: "3s",
+          }} />
 
-        {/* Tiny twinkling stars */}
-        <StarDot cls="d-tw1 text-yellow-300/55 top-[14%] left-[38%] w-3 h-3" />
-        <StarDot cls="d-tw2 text-yellow-200/45 top-[32%] right-[26%] w-2.5 h-2.5" />
-        <StarDot cls="d-tw3 text-white/35 bottom-[36%] left-[24%] w-2 h-2" />
-        <StarDot cls="d-tw1 text-yellow-300/40 top-[56%] right-[12%] w-2 h-2" />
+        {/* ── Twinkling star accents ── */}
+        <StarDot cls="d-tw1 text-yellow-300/60 top-[13%] left-[37%] w-3.5 h-3.5" />
+        <StarDot cls="d-tw2 text-yellow-200/50 top-[29%] right-[24%] w-3 h-3" />
+        <StarDot cls="d-tw3 text-white/40 bottom-[34%] left-[22%] w-2.5 h-2.5" />
+        <StarDot cls="d-tw1 text-yellow-300/45 top-[55%] right-[11%] w-2.5 h-2.5" />
+        <StarDot cls="d-tw2 text-white/30 top-[38%] left-[48%] w-2 h-2" />
 
-        {/* Content */}
-        <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-36 md:py-44 w-full">
-          <div className="max-w-[640px]">
+        {/* ── Hero content ── */}
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-5 sm:px-6 lg:px-8"
+          style={{ paddingTop: "clamp(5rem,12vh,8.5rem)", paddingBottom: "clamp(6rem,13vh,9rem)" }}>
+          <div className="max-w-[680px]">
 
-            {/* Admissions badge */}
-            <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/22 mb-8">
-              <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse shadow-[0_0_8px_4px_rgba(74,222,128,0.5)]" />
-              <span className="text-sm font-semibold text-white/95 tracking-wide">Admissions Open · 2026–27</span>
+            {/* Admissions badge — first to appear */}
+            <div className="d-h0 inline-flex items-center gap-2.5 px-4 py-2.5 rounded-full mb-9 cursor-default select-none"
+              style={{
+                background: "rgba(255,255,255,0.10)",
+                backdropFilter: "blur(14px)",
+                border: "1px solid rgba(255,255,255,0.22)",
+                boxShadow: "0 2px 12px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.12)",
+              }}>
+              <span className="w-2 h-2 rounded-full bg-green-400 flex-shrink-0"
+                style={{ boxShadow: "0 0 0 3px rgba(74,222,128,0.30)", animation: "d-pulse 2s ease-in-out infinite" }} />
+              <span className="text-sm font-semibold text-white/95 tracking-wide">
+                Admissions Open · 2026–27
+              </span>
+              <span className="text-white/50 text-xs font-medium">→ Limited seats</span>
             </div>
 
-            {/* H1 — large, emotional, typographic */}
-            <h1 className="font-heading font-extrabold text-white mb-6"
-              style={{ fontSize: "clamp(2.6rem,5.5vw,5rem)", lineHeight: 1.04, letterSpacing: "-0.035em" }}>
+            {/* H1 — the centrepiece typographic moment */}
+            <h1 className="d-h1 font-heading font-extrabold text-white mb-6"
+              style={{ fontSize: "clamp(2.9rem, 6.5vw, 5.6rem)", lineHeight: 1.01, letterSpacing: "-0.038em" }}>
               Rainbow{" "}
-              <span className="text-yellow-400"
-                style={{ textShadow: "0 2px 28px rgba(251,191,36,0.55)" }}>
+              <span
+                className="text-yellow-400"
+                style={{ textShadow: "0 2px 40px rgba(251,191,36,0.65), 0 0 80px rgba(251,191,36,0.22)" }}>
                 Preschool
               </span>
-              <span className="block mt-3 font-semibold text-white/80"
-                style={{ fontSize: "clamp(1.1rem,2.4vw,1.9rem)", letterSpacing: "-0.01em", lineHeight: 1.35 }}>
+              <span
+                className="block mt-4 font-semibold text-white/78"
+                style={{ fontSize: "clamp(1.15rem, 2.6vw, 2rem)", letterSpacing: "-0.014em", lineHeight: 1.32 }}>
                 Playschool, Nursery &amp; Kindergarten
               </span>
             </h1>
 
             {/* Tagline */}
-            <p className="text-lg md:text-xl text-white/76 max-w-[520px] mb-9 leading-[1.7]">
+            <p className="d-h2 text-[1.1rem] md:text-xl text-white/72 max-w-[510px] mb-10 leading-[1.74]">
               Thane's trusted preschool since 2007 — where every child's first steps into learning are joyful, safe, and full of wonder.
             </p>
 
-            {/* Trust badges */}
-            <div className="flex flex-wrap gap-2 mb-10">
+            {/* Trust badge pills */}
+            <div className="d-h3 flex flex-wrap gap-2.5 mb-10">
               {trustBadges.map(({ Icon, label }, i) => (
                 <div key={i}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-sm border border-white/18 hover:bg-white/16 transition-colors duration-200">
+                  className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full transition-colors duration-200"
+                  style={{
+                    background: "rgba(255,255,255,0.09)",
+                    backdropFilter: "blur(10px)",
+                    border: "1px solid rgba(255,255,255,0.16)",
+                  }}>
                   <Icon className="w-3.5 h-3.5 text-yellow-400 flex-shrink-0" />
-                  <span className="text-[11px] font-semibold text-white/88 tracking-wide">{label}</span>
+                  <span className="text-[11.5px] font-semibold text-white/90 tracking-wide whitespace-nowrap">{label}</span>
                 </div>
               ))}
             </div>
 
             {/* CTAs */}
-            <div className="flex flex-col sm:flex-row gap-3">
-              <button
-                className="group inline-flex items-center justify-center gap-2 rounded-full px-9 font-semibold text-white transition-all duration-200 hover:-translate-y-1 hover:scale-[1.03] active:scale-95"
-                style={{ height: 56, background: "hsl(var(--primary))", boxShadow: "0 8px 36px rgba(220,38,38,0.40), 0 4px 16px rgba(220,38,38,0.22), inset 0 1px 0 rgba(255,255,255,0.15)" }}>
-                <Phone className="w-4 h-4" />
+            <div className="d-h4 flex flex-col sm:flex-row gap-3.5">
+              {/* Primary — brand red, premium shadow */}
+              <a href="/contact" data-testid="hero-cta-callback"
+                className="group inline-flex items-center justify-center gap-2.5 rounded-full font-semibold text-white transition-all duration-200 hover:-translate-y-1.5 hover:scale-[1.03] active:scale-[0.97] active:translate-y-0"
+                style={{
+                  height: 60, paddingLeft: "2.5rem", paddingRight: "2.5rem",
+                  background: "hsl(var(--primary))",
+                  boxShadow: "0 10px 40px rgba(220,38,38,0.45), 0 4px 18px rgba(220,38,38,0.28), inset 0 1px 0 rgba(255,255,255,0.20)",
+                }}>
+                <Phone className="w-4 h-4 flex-shrink-0" />
                 Request a Callback
-              </button>
-              <button
-                className="group inline-flex items-center justify-center gap-2 rounded-full px-9 font-semibold text-white border border-white/28 bg-white/10 backdrop-blur-sm transition-all duration-200 hover:-translate-y-1 hover:bg-white/18 active:scale-95"
-                style={{ height: 56 }}>
+              </a>
+              {/* Secondary — frosted glass */}
+              <a href="/programmes" data-testid="hero-cta-programmes"
+                className="group inline-flex items-center justify-center gap-2.5 rounded-full font-semibold text-white transition-all duration-200 hover:-translate-y-1.5 hover:bg-white/20 active:scale-[0.97]"
+                style={{
+                  height: 60, paddingLeft: "2.5rem", paddingRight: "2.5rem",
+                  background: "rgba(255,255,255,0.11)",
+                  backdropFilter: "blur(12px)",
+                  border: "1px solid rgba(255,255,255,0.28)",
+                }}>
                 Explore Programmes
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform duration-150" />
-              </button>
+                <ArrowRight className="w-4 h-4 flex-shrink-0 group-hover:translate-x-1.5 transition-transform duration-200" />
+              </a>
             </div>
+
           </div>
         </div>
 
-        {/* Organic wave out */}
-        <div className="absolute -bottom-px left-0 right-0 pointer-events-none">
-          <svg viewBox="0 0 1440 80" className="w-full block" preserveAspectRatio="none" style={{ height: 80 }}>
-            <path d="M0,60 C200,20 400,80 600,52 C800,28 1100,75 1440,44 L1440,80 L0,80 Z" fill="hsl(var(--background))" />
+        {/* ── Organic wave exit → awards strip ── */}
+        <div className="absolute -bottom-px left-0 right-0 pointer-events-none" aria-hidden="true">
+          <svg viewBox="0 0 1440 88" xmlns="http://www.w3.org/2000/svg"
+            className="w-full block" preserveAspectRatio="none" style={{ height: 88 }}>
+            <path
+              d="M0,56 C120,20 300,80 520,52 C700,28 880,78 1080,46 C1220,24 1350,68 1440,44 L1440,88 L0,88 Z"
+              fill="hsl(var(--background))" />
           </svg>
         </div>
       </section>
