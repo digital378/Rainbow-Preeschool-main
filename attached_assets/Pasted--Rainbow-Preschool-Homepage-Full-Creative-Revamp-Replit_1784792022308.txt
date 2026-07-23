@@ -1,0 +1,126 @@
+# Rainbow Preschool Homepage — Full Creative Revamp (Replit Agent Brief v2)
+
+## Role
+You are a senior frontend engineer and creative director working inside the existing Rainbow Preschool codebase. This is a **full visual and experiential revamp of the homepage** — not a subtle polish pass. The homepage can look completely different from how it looks today. Structure, layout, section order, and imagery are all open to change in service of the creative direction below.
+
+## Business Context (why this matters)
+This homepage is a **lead-generation page** for a Thane-based preschool chain with six centres. The primary conversion action is **"Request a Callback"** (the form). Secondary actions are **"Book Visit"** and **"WhatsApp Admissions"**. Every design decision should support parents — mostly mothers, mostly on mobile, mostly in Thane — taking one of these actions.
+
+If a beautiful visual would push these CTAs below the fold or make them harder to spot, the CTA wins. Aesthetics serve conversion here, not the other way around.
+
+## Working Environment
+**Do not touch the live homepage.** All of this work happens on the existing `/dummy` route, which is already set up as the test copy of the homepage for exactly this purpose.
+
+Before starting, confirm:
+1. You are editing the `/dummy` route, not the live homepage.
+2. What framework/stack this codebase uses (Next.js? Vite + React? Astro? something else?). If unclear, ask before choosing motion libraries or CSS strategies — don't guess.
+3. That `/dummy` currently mirrors the live homepage. If it has drifted, note the diff before starting so nothing important is lost.
+
+Keep production untouched until this is reviewed and approved for promotion.
+
+## Creative Direction
+**Disney meets Apple, built for a preschool in India.**
+
+Concretely:
+- **Structural sleekness** — think Apple product pages (especially recent iPhone/iPad launch pages) for cinematic scroll storytelling and layered depth, and **Lego.com** for how a kid-focused brand can still feel premium, structured, and considered. Layered scroll transitions, glassmorphic overlays, gradient-mesh backgrounds, morphing shapes, parallax depth, cinematic scroll-linked reveals. The page should feel like it's responding to the visitor.
+- **Emotional warmth** — think **Duolingo's marketing pages** for how mascots and playful motion coexist with polished modern design (this is the closest working analog for the exact tension we're holding), **Lovevery.com** for the "premium warmth for parents of very young children" register we want to hit, and any recent Pixar movie microsite for cinematic emotional atmosphere. Organic rounded shapes, soft glows, warm colour washes, playful bounce on small delightful moments (a mascot wiggle, a card lift, an icon wink), gentle depth.
+- The tension to hold: **sleek and futuristic, never cold or sterile.** A parent should feel "this is cutting-edge" AND "my child will be adored here" at the same time.
+
+### Failure-mode checks (test your output against these)
+- If it starts feeling like a B2B SaaS landing page (Stripe / Notion / Linear vibe) → **warm it up**: soften palette use, round the edges, add whimsy/mascots/organic accents.
+- If it starts feeling like a generic Nickelodeon/Barbie kids' site → **sharpen it**: reintroduce structural elegance, restrained typography, considered whitespace.
+- If it starts feeling like a stock preschool template → **both are failing**. Start over on that section.
+
+## What's Already Fixed (use, don't reinvent)
+- **Brand design system** — colours, typography, logo, iconography. Use as source of truth. Apply more **boldly and expressively** than currently (richer gradients from brand colours, bigger type moments, layered palette use) — but no new palette or typeface family.
+- **Logo** stays as-is.
+- **All informational content** must remain findable on the page. Restructure, re-sequence, re-group as you like — nothing is locked to its current position, but nothing gets deleted.
+- **Trust signals are non-negotiable AND must stay prominent** — not just present. Specifically:
+  - The "Awarded By" logo row (India Today, Scoo News, ET, NSA, etc.)
+  - The stats bar (1,00,000+ learners, 18+ years, 6 centres, 100% female staff)
+  - The parent testimonials
+  - The "Reviewed by Rainbow Preschool Curriculum Team" credibility bar
+  - These convert visitors. Do not bury them in accordions or move them below the fold for aesthetics.
+- **Functional destinations** — nav links, CTA buttons, forms — must still go where they currently go. Redesign how they look and where they sit; don't break what they do.
+- **SEO signals** — preserve the current H1, meta title/description, structured data (schema.org), canonical tags, and heading hierarchy semantics. Restructure visuals, not SEO.
+- **Analytics** — preserve existing form submission events, phone/WhatsApp click tracking, and any pixel/conversion tags already firing on the page.
+
+## What's Now Open
+- **Section order and structure** — free to redesign entirely for better flow and pacing.
+- **Images** — free to remove, recrop, resize, or replace any image that fights the new visual direction. Prefer pulling replacements from existing brand/media assets already in the repo. If a section genuinely needs new imagery that doesn't exist in the codebase, **flag it explicitly and describe what you need. Do not source stock photos** — especially not stock photos of non-Indian children. This is a Thane preschool; imagery must feel local.
+- **Cards, components, dividers, backgrounds** — full redesign, not just refinement.
+- **Overall page length/pacing** — sections can be combined, split, or reordered.
+
+## Guardrails
+- **Mobile is first-class**, not an afterthought. Most Rainbow parents browse on mobile. Design and test mobile alongside desktop through every phase — not just in QA. Any scroll-linked or hover-dependent effect needs a considered mobile equivalent (tap, touch, static, or removal), not a "hope it degrades."
+- **Age-appropriate warmth.** No matter how futuristic the interaction design gets, this is a preschool. Keep the feel safe, bright, inviting. No dark/moody themes, no aggressive motion, nothing that reads as corporate.
+- **Accessibility.** Maintain WCAG AA contrast, keyboard navigability, visible focus rings, alt text on images. Wrap non-essential motion in a `prefers-reduced-motion` fallback — **mandatory, not optional.** A static, fully functional version of the page must exist for users who need it.
+- **Reasonable performance.** Big visual ambition is welcome, but avoid bloated dependencies where CSS/SVG gets you 80% there. Prefer CSS gradients, SVG morphs, and lightweight motion libraries over heavy particle libraries. Lazy-load below-the-fold images. **Target LCP < 2.5s and CLS < 0.1 on 4G mobile.** If a specific effect genuinely needs a heavier library, flag it and justify it.
+
+---
+
+## Suggested Workflow (checkpoint, don't one-shot it)
+
+Work in stages and check in after each phase. This makes course-correction cheap.
+
+### Phase 0 — Setup, Inventory, and Confirmations
+Deliverables to share before you start building:
+- Confirmation of the `/dummy` route being edited and the stack in use.
+- A new git branch created for this work.
+- Full-page screenshots of current `/dummy` (desktop + mobile) saved as "before."
+- **A content inventory file** (`content-inventory.md`): every text block, image path, CTA destination, and form on the current page, listed exhaustively. This is our guarantee nothing gets accidentally lost during restructuring, and it becomes the checklist for Phase 8 QA.
+- A list of existing brand tokens (colour vars, font families, spacing scale, logo asset paths) you'll be pulling from.
+
+**Pause and share these before Phase 1.**
+
+### Phase 1 — Concept & Structure Proposal
+Before writing implementation code, propose (as text/markdown, no code yet):
+- A new section flow/order — one-line rationale per section, mapped to which current content lives there.
+- The core motion/transition concept that will run through the page.
+- A rough hero concept (description plus a wireframe sketch, ASCII, or markdown mock — no need for polished visuals yet).
+- **A considered mobile version of the above**, not a mirror. Mobile-first thinking, not mobile-last.
+
+**Pause here for confirmation before building.**
+
+### Phase 2 — Hero
+Build the new hero as the strongest first impression: layered depth, cinematic entrance, futuristic-meets-Disney atmosphere. This section sets the vocabulary (shapes, easing, overlay style) that the rest of the page will echo.
+
+Ship mobile + desktop together. The primary CTA (Request a Callback / Book Visit) must be visible above the fold on both.
+
+### Phase 3 — Section Flow & Layout
+Implement the new section structure from Phase 1. Rework layout, spacing, and image placement per section; remove/replace images that don't fit; flag any missing imagery instead of stock-sourcing.
+
+### Phase 4 — Signature Transitions & Overlays
+Build the scroll-linked transition system between sections: gradient-mesh or glass overlays, morphing SVG dividers, parallax layers, cinematic reveals. This is the "futuristic" backbone — it must be consistent across every section boundary, not just one or two.
+
+### Phase 5 — Cards & Components
+Redesign all cards/components with a unified premium language: elevation, rounded geometry, layered shadows, refined iconography. Programme cards, feature cards, testimonial cards, centre cards, FAQ items — all speak the same visual language.
+
+### Phase 6 — Disney Warmth Layer
+Add ambient touches that keep the page feeling warm and childlike amid the futuristic structure: soft glows, organic floating shapes, gentle colour washes, mascot/illustrative accents. These sit in the atmosphere; they support content, they don't compete with it.
+
+### Phase 7 — Micro-interactions
+Hover states, button lift, cursor-responsive elements, staggered scroll reveals, animated counters where relevant. Calm and premium in structural areas; playful/bouncy on small delightful details.
+
+### Phase 8 — QA Pass
+- Every guardrail above re-checked.
+- Content inventory from Phase 0 re-verified — nothing missing, nothing demoted.
+- Every link, CTA, and form tested end-to-end.
+- `prefers-reduced-motion` fallback tested by toggling the OS setting.
+- Lighthouse pass on mobile + desktop (share the scores).
+- Cross-browser check (Chrome, Safari, Firefox at minimum; Safari on iOS specifically).
+- Before/after screenshots (desktop + mobile) attached.
+
+---
+
+## Definition of Done
+- The homepage feels like a cinematic, immersive campus experience — futuristic in how it moves, Disney-warm in how it feels.
+- Brand colours, typography, and logo are the same system, used more expressively.
+- All original informational content is present, findable, and no less prominent than before — especially the trust signals (awards row, stats bar, testimonials, reviewed-by bar).
+- All links, CTAs, forms, and analytics still function.
+- Mobile experience is at parity with desktop, not an afterthought.
+- Accessibility (WCAG AA) and `prefers-reduced-motion` fallback verified.
+- LCP < 2.5s and CLS < 0.1 on 4G mobile.
+- The page still feels unmistakably *for a preschool in India* — warm and safe, never sterile or corporate.
+- All changes live on `/dummy` only; the production homepage is untouched.
+- Change is on a reviewable branch with before/after screenshots attached, ready for review before any decision to promote it live.
