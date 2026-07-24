@@ -1,0 +1,43 @@
+# ART DIRECTION — CENTRES ON ONE LINE + MASCOT PLACEMENT (/dummy, About)
+
+## FIX 1 — ALL CENTRE CHIPS ON ONE LINE
+The 6 centre chips (Manpada, Hariniwas, Anand Nagar, Dhokali, Kalwa,
+Kasarvadavali) currently wrap onto 2 rows. Put ALL 6 on a SINGLE row:
+- One horizontal row, no wrapping (flex-nowrap). Reduce chip padding, gap, and
+  font-size as needed so all six fit the column width on one line (compact pills:
+  smaller map-pin icon, ~13px label, tighter padding).
+- If the column is too narrow for six on very small desktop widths, allow the row
+  to horizontally scroll (overflow-x auto, hidden scrollbar) rather than wrap —
+  but on standard 1440 they must all sit on one line.
+- Keep them as working links (respective centre pages), hover = lift + red accent,
+  focus ring. Even spacing.
+- Mobile: a single horizontal snap-scroll row (all 6, swipeable), not wrapped
+  rows; ≥44px tap targets.
+
+## FIX 2 — MASCOT PLACEMENT (now too much space BELOW her)
+She's currently anchored near the TOP with a large empty gap below and the
+caption floating in the middle. Center her properly in the stage:
+- BOTTOM-ANCHOR her: feet rest on the ground-shadow near the LOWER portion of the
+  stage. Scale her to fill ~80–85% of the stage height so both the top gap AND
+  the bottom gap are small, even breathing margins only.
+- PIN the "Join Our Family!" caption chip to the BOTTOM of the stage (just below
+  her feet / overlapping the ground shadow) — not floating in the vertical middle.
+- If gaps remain, make the stage's height match its content (mascot + caption)
+  instead of stretching to the full bento height with empty voids. The stage
+  should look filled and balanced, mascot clearly the focal element, centered
+  horizontally, fully visible (bows, head, shoes — no cropping).
+- Keep the soft pastel/rainbow glow as a backdrop directly behind her, sized to
+  her — not a big empty halo above or below.
+- Idle breathe + occasional wave, subtle cursor tilt.
+- Mobile: same — mascot large and bottom-anchored, caption pinned at the bottom,
+  minimal empty space, fully visible.
+
+## RULES / BRAND
+- Smooth-motion (transform/opacity, 60fps), semantic links + focus states,
+  reduced-motion fallback. RPS red #EC210F leads. No fabricated centre names/URLs
+  — real data only (the 6 already sourced). Mascot is an illustrated character.
+
+## DELIVER
+Show desktop @1440 + mobile @390. Success = all 6 centre chips on one line
+(scroll on mobile), and the mascot fills her stage with the caption pinned at the
+bottom — no large empty gap above or below her.

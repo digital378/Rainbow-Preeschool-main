@@ -72,8 +72,16 @@ const STYLES = `
   .bento-photo { grid-column:1/3; min-height:220px; }
   .bento-trust { grid-column:1/3; align-self:start; }
   .bento-s1,.bento-s2,.bento-s3,.bento-s4 { align-self:start; }
-  /* Mascot stage image — width-based sizing, height auto-scales from natural ratio */
+  /* Mascot stage image — mobile: width-based; desktop: height-based (82% of card) */
   .mascot-stage-img { display:block; width:78%; height:auto; margin:12px auto 0; }
+  /* Centre chip row — single horizontal line, no wrap, scroll if needed */
+  .chip-row { display:flex; flex-wrap:nowrap; overflow-x:auto; gap:5px;
+    scrollbar-width:none; -webkit-overflow-scrolling:touch; }
+  .chip-row::-webkit-scrollbar { display:none; }
+  .chip-row .centre-chip { flex-shrink:0; }
+  @media (max-width:1023px) {
+    .chip-row .centre-chip { min-height:44px; }
+  }
   /* Centre chips */
   .centre-chip { transition:all 0.18s ease; cursor:pointer; text-decoration:none; }
   .centre-chip:hover { border-color:#EC210F !important; color:#EC210F !important; box-shadow:0 3px 14px rgba(236,33,15,.15); transform:translateY(-2px); }
@@ -87,7 +95,8 @@ const STYLES = `
     .bento-trust { grid-column:1/3 !important; grid-row:2/3; }
     .bento-s3 { grid-column:1/2; grid-row:3/4; }
     .bento-s4 { grid-column:2/3; grid-row:3/4; }
-    .mascot-stage-img { width:100%; margin:0; }
+    /* height:82% of the grid-determined card height → ~338px; transparent PNG margins absorb the width clip */
+    .mascot-stage-img { height:82%; width:auto; margin:0; max-width:none; }
   }
   @media (prefers-reduced-motion:reduce) {
     .mascot-char { animation:none !important; }
@@ -1563,17 +1572,17 @@ function StatsSection() {
               All six centres are in Thane West — a Rainbow Preschool is always close to home.
             </p>
 
-            {/* Centre chips — sourced from shared/centre-data (same source as nav dropdown) */}
-            <div style={{ display:"flex", flexWrap:"wrap", gap:8, margin:"0 0 32px" }}>
+            {/* Centre chips — single no-wrap row, scroll on narrow viewports */}
+            <div className="chip-row" style={{ margin:"0 0 32px" }}>
               {centres.map(c => (
                 <a key={c.id} href={c.preschoolLandingUrl}
                   className="centre-chip"
                   aria-label={`Visit our ${c.localityName} centre`}
-                  style={{ display:"inline-flex", alignItems:"center", gap:5,
-                    padding:"5px 13px 5px 10px", borderRadius:999, fontSize:"0.76rem", fontWeight:600,
+                  style={{ display:"inline-flex", alignItems:"center", gap:3,
+                    padding:"4px 8px 4px 7px", borderRadius:999, fontSize:"0.70rem", fontWeight:600,
                     color:"#211B2E", background:"rgba(33,27,46,.05)", border:"1px solid rgba(33,27,46,.09)",
-                    minHeight:44 }}>
-                  <MapPin size={11} className="centre-pin" style={{ color:"#EC210F", flexShrink:0 }}/>
+                    whiteSpace:"nowrap" }}>
+                  <MapPin size={10} className="centre-pin" style={{ color:"#EC210F", flexShrink:0 }}/>
                   {c.localityName}
                 </a>
               ))}
@@ -1610,6 +1619,7 @@ function StatsSection() {
                 transitionDelay:"80ms",
                 background:"linear-gradient(155deg,#FFF5F0 0%,#FFF0FB 40%,#EEF6FF 100%)",
                 display:"flex", flexDirection:"column", alignItems:"center",
+                justifyContent:"flex-end",
                 position:"relative" }}
               intensity={4}
             >
