@@ -1,0 +1,58 @@
+# ART DIRECTION — QUICK-SELECT FIXES (/dummy): mobile layout + colour vibrancy
+Keep the "Start Exploring" concept and the desktop 3D tilt cards. Fix two things:
+(1) mobile is congested, (2) colours are washed out. Also stop rendering the
+literal "[verify age]" text on the live page — hide the age tag until real,
+verified age bands are supplied (don't show the placeholder to visitors).
+
+## FIX 1 — MAKE THE COLOURS VIBRANT (they're too pale right now)
+Each tile's icon must sit on a SOLID VIVID GRADIENT chip (not a pale tint) with
+a WHITE icon and a soft coloured glow of the same hue. Label text = the vivid
+hue, weight 700. Add a 3px vivid top-accent bar and a faint (6–8%) wash of the
+hue at the card's bottom so each card clearly "owns" its colour. Use these
+saturated gradients:
+- Why Us       → #F5320C → #FF5A3C   (brand red, lead)
+- Find Centre  → #06B463 → #22D67E
+- Book Visit   → #1F7AF0 → #48A0FF
+- Playgroup    → #FB6112 → #FF8A3D
+- Nursery      → #7C4DFF → #A06BFF
+- Kindergarten → #06B6A4 → #2CD8C4
+Icon chip ~60–64px, radius 18px, coloured drop-shadow (same hue, 30% alpha).
+On hover the chip saturates further + the glow blooms. Result: the row should
+read as a bright, confident rainbow — not pastel and faint.
+
+## FIX 2 — REDESIGN MOBILE (stop the cramped horizontal scroll)
+Do NOT put both groups in one horizontal row on mobile. Instead:
+- Stack the two groups VERTICALLY, each full-width, with its heading above:
+  "QUICK LINKS" block, then "OUR PROGRAMMES" block. Remove the vertical divider.
+- Within each group use FULL-WIDTH HORIZONTAL ROW-TILES (list style), one per
+  line, stacked:
+    [ vivid icon chip ]  Label (bold, hue)              →
+    optional one-line subtext in --ink-soft
+  Card: white, radius 18px, 1px hairline, coloured left-edge accent (4px) in the
+  tile's hue, min-height 64px (big tap target), 14px vertical gap between tiles,
+  20px section padding. Full width — nothing cut off, no peek, no side-scroll.
+- Tap: tile lifts + icon does its signature animation + soft coloured ripple.
+- This layout is clean, vibrant, thumb-friendly, and eliminates the congestion.
+(If you prefer cards over rows on mobile, use a 2-COLUMN GRID within each group
+— never a single overflowing row. Row-tiles are the recommended default.)
+
+## FIX 3 — TIGHTEN DESKTOP SPACING
+The two groups are floating too far apart with a lonely divider. Bring them into
+a balanced centered layout: two 3-card clusters with comfortable but not huge
+gap, group labels aligned above each cluster, and a slim rainbow-gradient
+divider (not a plain grey line) between them. Keep the 3D tilt + pop-up entrance.
+
+## KEEP
+- Same hero look/fonts, smooth-motion rules (transform/opacity, eased, 60fps,
+  Lenis+GSAP), real semantic links + focus states, prefers-reduced-motion
+  fallback (static, still vibrant).
+
+## BRAND (RPS)
+- Red #EC210F family stays the lead brand colour; the other hues are SUGGESTED
+  supporting colours (pending brand approval). No fabricated age ranges — hide
+  the age tag entirely until verified values exist.
+
+## DELIVER
+Show desktop @1440 + mobile @390. Success = mobile is a clean vertical stack
+with big colourful tap targets (zero congestion), and the whole row reads as a
+bright, saturated rainbow rather than washed-out pastels.

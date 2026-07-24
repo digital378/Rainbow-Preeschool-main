@@ -182,12 +182,17 @@ const STYLES = `
   }
   .rs-pop.rs-visible { opacity:1;transform:none; }
 
-  /* Mobile snap scroll */
-  @media (max-width:767px) {
-    .rs-scroll { overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none; }
-    .rs-scroll::-webkit-scrollbar { display:none; }
-    .rs-snap { scroll-snap-align:start;flex-shrink:0; }
+  /* Mobile row tiles */
+  .rs-row-tile {
+    display:flex;align-items:center;gap:14px;
+    min-height:64px;background:white;border-radius:18px;
+    border:1px solid rgba(33,27,46,.06);
+    padding:12px 16px 12px 20px;
+    position:relative;overflow:hidden;text-decoration:none;
+    -webkit-tap-highlight-color:transparent;
+    transition:transform 0.2s cubic-bezier(.22,1,.36,1),box-shadow 0.25s;
   }
+  .rs-row-tile:active { transform:scale(0.975); }
 
   /* Reduced-motion overrides */
   @media (prefers-reduced-motion:reduce) {
@@ -438,23 +443,23 @@ const quickLinks = [
 /* ── Rainbow Shelf data ── */
 const SHELF_ITEMS = [
   { href:"/best-preschool-near-me-in-thane", label:"Why Us",       Icon:Award,
-    color:"#EC210F", gradient:"linear-gradient(145deg,#FF5533,#C4160A)",
+    color:"#F5320C", gradient:"linear-gradient(145deg,#FF5A3C,#F5320C)",
     group:"A" as const, sigAnim:"rs-sig-medal", ageBand:null },
   { href:"/play-school-near-me",             label:"Find Centre",  Icon:MapPin,
-    color:"#12B76A", gradient:"linear-gradient(145deg,#34D399,#059652)",
+    color:"#06B463", gradient:"linear-gradient(145deg,#22D67E,#06B463)",
     group:"A" as const, sigAnim:"rs-sig-pin",   ageBand:null },
   { href:"/preschool-admissions",            label:"Book Visit",   Icon:FileText,
-    color:"#2E90FA", gradient:"linear-gradient(145deg,#60A5FA,#1D6FDC)",
+    color:"#1F7AF0", gradient:"linear-gradient(145deg,#48A0FF,#1F7AF0)",
     group:"A" as const, sigAnim:"rs-sig-cal",   ageBand:null },
   { href:"/playgroup",                       label:"Playgroup",    Icon:Palette,
-    color:"#FB6514", gradient:"linear-gradient(145deg,#FB923C,#EA5100)",
-    group:"B" as const, sigAnim:"rs-sig-pal",   ageBand:"[verify age]" },
+    color:"#FB6112", gradient:"linear-gradient(145deg,#FF8A3D,#FB6112)",
+    group:"B" as const, sigAnim:"rs-sig-pal",   ageBand:null },
   { href:"/nursery",                         label:"Nursery",      Icon:BookOpen,
-    color:"#9B8AFB", gradient:"linear-gradient(145deg,#A78BFA,#6D35E8)",
-    group:"B" as const, sigAnim:"rs-sig-book",  ageBand:"[verify age]" },
+    color:"#7C4DFF", gradient:"linear-gradient(145deg,#A06BFF,#7C4DFF)",
+    group:"B" as const, sigAnim:"rs-sig-book",  ageBand:null },
   { href:"/kindergarten",                    label:"Kindergarten", Icon:GraduationCap,
-    color:"#06B6A4", gradient:"linear-gradient(145deg,#34D5C8,#0891B2)",
-    group:"B" as const, sigAnim:"rs-sig-grad",  ageBand:"[verify age]" },
+    color:"#06B6A4", gradient:"linear-gradient(145deg,#2CD8C4,#06B6A4)",
+    group:"B" as const, sigAnim:"rs-sig-grad",  ageBand:null },
 ];
 
 const stats = [
@@ -916,48 +921,42 @@ function ShelfCard({ item, globalIdx, isActive, onActivate }: {
             <div style={{ position:"absolute",top:0,left:0,right:0,height:3,
               background:item.gradient,borderRadius:"22px 22px 0 0" }}/>
 
+            {/* Bottom colour wash */}
+            <div style={{ position:"absolute",bottom:0,left:0,right:0,height:"45%",
+              background:`linear-gradient(to top,${item.color}0D 0%,transparent 100%)`,
+              pointerEvents:"none",borderRadius:"0 0 22px 22px" }}/>
+
             {/* Coloured aura behind icon */}
-            <div style={{ position:"absolute",top:10,left:"50%",transform:"translateX(-50%)",
-              width:78,height:78,borderRadius:"50%",
-              background:`radial-gradient(circle,${item.color}22 0%,transparent 68%)`,
-              filter:"blur(10px)" }}/>
+            <div style={{ position:"absolute",top:8,left:"50%",transform:"translateX(-50%)",
+              width:90,height:90,borderRadius:"50%",
+              background:`radial-gradient(circle,${item.color}35 0%,transparent 68%)`,
+              filter:"blur(14px)" }}/>
 
             {/* Icon — parallax wrapper + bob + sig animation on separate layers */}
-            <div className="flex justify-center" style={{ marginBottom:12,marginTop:6 }}>
+            <div className="flex justify-center" style={{ marginBottom:12,marginTop:4 }}>
               <div ref={parallaxRef} style={{ willChange:"transform" }}>
                 <div
                   className={`${bobClass} ${item.sigAnim}`}
                   style={{
-                    width:52,height:52,borderRadius:14,
+                    width:62,height:62,borderRadius:18,
                     background:item.gradient,
                     display:"flex",alignItems:"center",justifyContent:"center",
-                    boxShadow:`0 8px 20px ${item.color}55`,
+                    boxShadow:`0 10px 28px ${item.color}55`,
                     willChange:"transform",
                   }}
                 >
-                  <item.Icon style={{ width:24,height:24,color:"white" }}/>
+                  <item.Icon style={{ width:26,height:26,color:"white" }}/>
                 </div>
               </div>
             </div>
 
             {/* Label */}
-            <p style={{ textAlign:"center",fontWeight:600,fontSize:"0.795rem",
+            <p style={{ textAlign:"center",fontWeight:700,fontSize:"0.795rem",
               color:item.color,margin:0,lineHeight:1.3,
               fontFamily:"'Fredoka One','Baloo 2',system-ui,sans-serif",
               letterSpacing:"-0.01em" }}>
               {item.label}
             </p>
-
-            {/* Age band (programmes only) */}
-            {item.ageBand && (
-              <div style={{ display:"flex",justifyContent:"center",marginTop:5 }}>
-                <span style={{ fontSize:9,color:item.color,
-                  background:`${item.color}15`,borderRadius:100,
-                  padding:"2px 7px",fontWeight:700,letterSpacing:"0.04em" }}>
-                  {item.ageBand}
-                </span>
-              </div>
-            )}
 
             {/* Arrow — hidden, slides in on hover via CSS */}
             <div className="rs-arrow"
@@ -971,6 +970,61 @@ function ShelfCard({ item, globalIdx, isActive, onActivate }: {
         </div>
       </a>
     </div>
+  );
+}
+
+function MobileRowTile({ item, globalIdx, isActive, onActivate }: {
+  item: ShelfItem; globalIdx: number; isActive: boolean; onActivate: () => void;
+}) {
+  const [tapped, setTapped] = useState(false);
+
+  function handleClick(e: React.MouseEvent<HTMLAnchorElement>) {
+    e.preventDefault();
+    onActivate();
+    setTapped(true);
+    setTimeout(() => setTapped(false), 380);
+  }
+
+  return (
+    <a href={item.href} onClick={handleClick} aria-label={item.label}
+      className="rs-pop rs-row-tile"
+      style={{
+        transitionDelay: `${globalIdx * 60}ms`,
+        transform: tapped ? "scale(0.975)" : "none",
+        boxShadow: isActive
+          ? `inset 0 0 0 2px ${item.color},0 8px 24px ${item.color}30`
+          : tapped
+          ? `0 8px 24px ${item.color}30,0 4px 12px rgba(33,27,46,.08)`
+          : "0 4px 16px rgba(33,27,46,.06)",
+      } as React.CSSProperties}
+    >
+      {/* Left colour accent bar */}
+      <div style={{ position:"absolute",left:0,top:0,bottom:0,width:4,
+        background:item.gradient,borderRadius:"18px 0 0 18px",flexShrink:0 }}/>
+
+      {/* Icon chip */}
+      <div className={tapped ? item.sigAnim : ""}
+        style={{
+          width:44,height:44,borderRadius:12,flexShrink:0,
+          background:item.gradient,
+          display:"flex",alignItems:"center",justifyContent:"center",
+          boxShadow:`0 6px 16px ${item.color}55`,
+        }}
+      >
+        <item.Icon style={{ width:20,height:20,color:"white" }}/>
+      </div>
+
+      {/* Label */}
+      <span style={{ flex:1,fontWeight:700,fontSize:"0.9rem",
+        color:item.color,fontFamily:"'Fredoka One','Baloo 2',system-ui,sans-serif",
+        letterSpacing:"-0.01em" }}>
+        {item.label}
+      </span>
+
+      {/* Arrow */}
+      <span style={{ color:item.color,fontSize:16,fontWeight:700,
+        flexShrink:0,marginRight:2 }}>→</span>
+    </a>
   );
 }
 
@@ -1042,9 +1096,10 @@ function RainbowShelfSection() {
             {grpCards(groupA, 0)}
           </div>
 
-          {/* Vertical hairline divider */}
-          <div style={{ width:1,background:"rgba(33,27,46,.10)",
-            alignSelf:"stretch",margin:"36px 16px 0",flexShrink:0 }}/>
+          {/* Rainbow gradient divider */}
+          <div style={{ width:3,flexShrink:0,alignSelf:"stretch",margin:"30px 20px 0",
+            borderRadius:4,opacity:0.6,
+            background:"linear-gradient(180deg,#F5320C 0%,#FB6112 28%,#7C4DFF 62%,#06B6A4 100%)" }}/>
 
           {/* Group B — Our Programmes */}
           <div style={{ flex:1 }}>
@@ -1054,35 +1109,28 @@ function RainbowShelfSection() {
         </div>
       </div>
 
-      {/* ── MOBILE: horizontal snap scroll with peek ── */}
-      <div className="md:hidden">
-        <div className="rs-scroll"
-          style={{ display:"flex",padding:"0 20px 10px",gap:0 }}>
+      {/* ── MOBILE: vertical stacked groups ── */}
+      <div className="md:hidden" style={{ maxWidth:440,margin:"0 auto",padding:"0 20px" }}>
 
-          {/* Group A block */}
-          <div className="rs-snap" style={{ flexShrink:0,paddingRight:6 }}>
-            {grpLabel("Quick Links")}
-            <div style={{ display:"flex",gap:10 }}>
-              {groupA.map((item, i) => (
-                <ShelfCard key={item.href} item={item} globalIdx={i}
-                  isActive={activeIdx === i} onActivate={setActiveIdx}/>
-              ))}
-            </div>
+        {/* Group A — Quick Links */}
+        <div style={{ marginBottom:28 }}>
+          {grpLabel("Quick Links")}
+          <div style={{ display:"flex",flexDirection:"column",gap:12 }}>
+            {groupA.map((item,i) => (
+              <MobileRowTile key={item.href} item={item} globalIdx={i}
+                isActive={activeIdx===i} onActivate={() => setActiveIdx(i)}/>
+            ))}
           </div>
+        </div>
 
-          {/* Mobile divider */}
-          <div style={{ flexShrink:0,width:1,background:"rgba(33,27,46,.10)",
-            alignSelf:"stretch",margin:"22px 18px 0" }}/>
-
-          {/* Group B block */}
-          <div className="rs-snap" style={{ flexShrink:0,paddingRight:20 }}>
-            {grpLabel("Our Programmes")}
-            <div style={{ display:"flex",gap:10 }}>
-              {groupB.map((item, i) => (
-                <ShelfCard key={item.href} item={item} globalIdx={i+3}
-                  isActive={activeIdx === i+3} onActivate={setActiveIdx}/>
-              ))}
-            </div>
+        {/* Group B — Our Programmes */}
+        <div>
+          {grpLabel("Our Programmes")}
+          <div style={{ display:"flex",flexDirection:"column",gap:12 }}>
+            {groupB.map((item,i) => (
+              <MobileRowTile key={item.href} item={item} globalIdx={i+3}
+                isActive={activeIdx===i+3} onActivate={() => setActiveIdx(i+3)}/>
+            ))}
           </div>
         </div>
       </div>
