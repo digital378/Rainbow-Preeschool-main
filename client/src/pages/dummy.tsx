@@ -15,7 +15,7 @@ import {
   ArrowRight, Phone, Users, Star, MapPin, Shield, Award,
   Sparkles, Bus, Gamepad2, FileText, BookOpen, Palette,
   GraduationCap, Lock, Heart, Play, ChevronDown,
-  Volume2, VolumeX,
+  Volume2, VolumeX, Puzzle, ShieldCheck,
 } from "lucide-react";
 import { SiWhatsapp } from "react-icons/si";
 
@@ -46,6 +46,15 @@ const STYLES = `
   @keyframes d-morph   { 0%,100%{border-radius:60% 40% 30% 70%/60% 30% 70% 40%} 50%{border-radius:30% 60% 70% 40%/50% 60% 30% 60%} }
   @keyframes d-counter-in { from{transform:translateY(20px);opacity:0} to{transform:none;opacity:1} }
   @keyframes le-filmstrip  { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+  @keyframes le-bob-a { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+  @keyframes le-bob-b { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+  .le-chip    { transition:box-shadow 0.22s ease,transform 0.22s ease; }
+  .le-chip:hover { transform:translateY(-4px) scale(1.02) !important; box-shadow:0 18px 44px rgba(33,27,46,.18) !important; }
+  .le-chip:hover .le-icon-box { transform:scale(1.14) rotate(-6deg) !important; }
+  .le-icon-box { transition:transform 0.28s cubic-bezier(.34,1.56,.64,1),box-shadow 0.25s ease; }
+  .le-input:focus { border-color:#EC210F !important; box-shadow:0 0 0 3px rgba(236,33,15,.14) !important; outline:none !important; }
+  .le-cta-btn:hover { transform:translateY(-2px) !important; box-shadow:0 12px 32px rgba(236,33,15,.45) !important; }
+  .le-cta-btn:active { transform:scale(0.98) !important; }
 
   .d-float-a { animation: d-float-a 9s ease-in-out infinite; }
   .d-float-b { animation: d-float-b 12s ease-in-out infinite; }
@@ -1192,10 +1201,10 @@ function LearningEnvironmentSection() {
   };
 
   const CHIPS = [
-    { Icon: Gamepad2,      label: "Play-Based Learning", color: "#D97706", bg: "rgba(251,191,36,.15)", side: "left"  as const },
-    { Icon: Shield,        label: "CCTV-Safe Campuses",  color: "#059669", bg: "rgba(16,185,129,.13)", side: "right" as const },
-    { Icon: GraduationCap, label: "Expert Teachers",     color: "#2563EB", bg: "rgba(59,130,246,.13)", side: "left"  as const },
-    { Icon: Users,         label: "Small Batches",       color: "#7C3AED", bg: "rgba(139,92,246,.13)", side: "right" as const },
+    { Icon: Puzzle,        label: "Play-Based Learning", grad:"linear-gradient(135deg,#FB6112 0%,#FF8A3D 100%)", glow:"rgba(251,97,18,.32)",  side:"left"  as const, bob:"le-bob-a 5.0s ease-in-out 0.0s infinite" },
+    { Icon: ShieldCheck,   label: "CCTV-Safe Campuses",  grad:"linear-gradient(135deg,#06B463 0%,#22D67E 100%)", glow:"rgba(6,180,99,.28)",   side:"right" as const, bob:"le-bob-b 5.5s ease-in-out 0.4s infinite" },
+    { Icon: GraduationCap, label: "Expert Teachers",     grad:"linear-gradient(135deg,#1F7AF0 0%,#48A0FF 100%)", glow:"rgba(31,122,240,.28)", side:"left"  as const, bob:"le-bob-a 4.5s ease-in-out 0.8s infinite" },
+    { Icon: Users,         label: "Small Batches",       grad:"linear-gradient(135deg,#7C4DFF 0%,#A06BFF 100%)", glow:"rgba(124,77,255,.28)", side:"right" as const, bob:"le-bob-b 6.0s ease-in-out 0.2s infinite" },
   ];
 
   const FILMSTRIP = [
@@ -1259,30 +1268,42 @@ function LearningEnvironmentSection() {
             gridTemplateColumns:"200px 1fr 200px", gap:"0 16px", alignItems:"center" }}>
 
           {/* Left chips */}
-          <div style={{ display:"flex", flexDirection:"column", gap:16, alignItems:"flex-end" }}>
-            {CHIPS.filter(c => c.side === "left").map(({ Icon, label, color, bg }, i) => (
-              <div key={label} style={{ display:"flex", alignItems:"center", flexDirection:"row",
-                opacity: chipsIn ? 1 : 0,
-                transform: chipsIn ? "none" : "translateX(-20px) scale(0.88)",
-                transition:`opacity 0.55s cubic-bezier(.34,1.56,.64,1) ${i*110}ms, transform 0.55s cubic-bezier(.34,1.56,.64,1) ${i*110}ms` }}>
-                <div style={{ display:"flex", alignItems:"center", gap:10, padding:"9px 14px", borderRadius:18,
-                  background:"rgba(255,251,245,0.92)", backdropFilter:"blur(12px)", WebkitBackdropFilter:"blur(12px)",
-                  border:`1px solid ${color}28`,
-                  boxShadow:`0 4px 20px rgba(0,0,0,0.07), 0 0 0 1px ${color}10` }}>
-                  <div style={{ width:36, height:36, borderRadius:11, background:bg, flexShrink:0,
-                    display:"flex", alignItems:"center", justifyContent:"center" }}>
-                    <Icon size={17} style={{ color }}/>
+          <div style={{ display:"flex", flexDirection:"column", gap:18, alignItems:"flex-end" }}>
+            {CHIPS.filter(c => c.side === "left").map(({ Icon, label, grad, glow, bob }, i) => {
+              const delay = i * 140;
+              return (
+                <div key={label} style={{ display:"flex", alignItems:"center", flexDirection:"row",
+                  animation: chipsIn ? bob : "none" }}>
+                  {/* Card */}
+                  <div className="le-chip" style={{ display:"flex", alignItems:"center", gap:12,
+                    padding:"10px 16px 10px 10px", borderRadius:16, width:210, flexShrink:0, cursor:"default",
+                    background:"rgba(255,255,255,0.97)", backdropFilter:"blur(16px)", WebkitBackdropFilter:"blur(16px)",
+                    border:"1px solid rgba(33,27,46,.08)", boxShadow:"0 10px 30px rgba(33,27,46,.10)",
+                    opacity: chipsIn ? 1 : 0,
+                    transform: chipsIn ? "none" : "translateX(-24px) scale(0.88)",
+                    transition:`opacity 0.55s cubic-bezier(.34,1.56,.64,1) ${delay}ms, transform 0.55s cubic-bezier(.34,1.56,.64,1) ${delay}ms` }}>
+                    <div className="le-icon-box" style={{ width:46, height:46, borderRadius:12, background:grad,
+                      flexShrink:0, display:"flex", alignItems:"center", justifyContent:"center",
+                      boxShadow:`0 4px 14px ${glow}` }}>
+                      <Icon size={21} color="white" strokeWidth={2.2}/>
+                    </div>
+                    <span style={{ fontSize:"0.8rem", fontWeight:700, color:"#211B2E", lineHeight:1.25 }}>{label}</span>
                   </div>
-                  <span style={{ fontSize:"0.76rem", fontWeight:700, color:"#211B2E", lineHeight:1.25, whiteSpace:"nowrap" }}>{label}</span>
+                  {/* Connector: draws in (scaleX from chip outward) */}
+                  <div style={{ position:"relative", width:40, height:2, marginLeft:4, flexShrink:0, overflow:"visible" }}>
+                    <div style={{ position:"absolute", inset:0,
+                      background:"repeating-linear-gradient(90deg,rgba(33,27,46,.28) 0,rgba(33,27,46,.28) 4px,transparent 4px,transparent 9px)",
+                      transformOrigin:"left center",
+                      transform: chipsIn ? "scaleX(1)" : "scaleX(0)",
+                      transition:`transform 0.5s ease ${delay + 350}ms` }}/>
+                    <div style={{ position:"absolute", right:-1, top:"50%", transform:"translateY(-50%)",
+                      width:7, height:7, borderRadius:"50%", background:"rgba(33,27,46,.28)",
+                      opacity: chipsIn ? 1 : 0,
+                      transition:`opacity 0.3s ease ${delay + 820}ms` }}/>
+                  </div>
                 </div>
-                <div style={{ position:"relative", width:32, height:2, marginLeft:6, flexShrink:0,
-                  background:`repeating-linear-gradient(90deg,${color} 0,${color} 4px,transparent 4px,transparent 9px)`,
-                  opacity:0.55 }}>
-                  <div style={{ position:"absolute", right:-1, top:"50%", transform:"translateY(-50%)",
-                    width:7, height:7, borderRadius:"50%", background:color }}/>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           {/* ── Video window ── */}
@@ -1316,30 +1337,42 @@ function LearningEnvironmentSection() {
           </div>
 
           {/* Right chips */}
-          <div style={{ display:"flex", flexDirection:"column", gap:16, alignItems:"flex-start" }}>
-            {CHIPS.filter(c => c.side === "right").map(({ Icon, label, color, bg }, i) => (
-              <div key={label} style={{ display:"flex", alignItems:"center", flexDirection:"row",
-                opacity: chipsIn ? 1 : 0,
-                transform: chipsIn ? "none" : "translateX(20px) scale(0.88)",
-                transition:`opacity 0.55s cubic-bezier(.34,1.56,.64,1) ${(i+2)*110}ms, transform 0.55s cubic-bezier(.34,1.56,.64,1) ${(i+2)*110}ms` }}>
-                <div style={{ position:"relative", width:32, height:2, marginRight:6, flexShrink:0,
-                  background:`repeating-linear-gradient(90deg,${color} 0,${color} 4px,transparent 4px,transparent 9px)`,
-                  opacity:0.55 }}>
-                  <div style={{ position:"absolute", left:-1, top:"50%", transform:"translateY(-50%)",
-                    width:7, height:7, borderRadius:"50%", background:color }}/>
-                </div>
-                <div style={{ display:"flex", alignItems:"center", gap:10, padding:"9px 14px", borderRadius:18,
-                  background:"rgba(255,251,245,0.92)", backdropFilter:"blur(12px)", WebkitBackdropFilter:"blur(12px)",
-                  border:`1px solid ${color}28`,
-                  boxShadow:`0 4px 20px rgba(0,0,0,0.07), 0 0 0 1px ${color}10` }}>
-                  <div style={{ width:36, height:36, borderRadius:11, background:bg, flexShrink:0,
-                    display:"flex", alignItems:"center", justifyContent:"center" }}>
-                    <Icon size={17} style={{ color }}/>
+          <div style={{ display:"flex", flexDirection:"column", gap:18, alignItems:"flex-start" }}>
+            {CHIPS.filter(c => c.side === "right").map(({ Icon, label, grad, glow, bob }, i) => {
+              const delay = (i + 2) * 140;
+              return (
+                <div key={label} style={{ display:"flex", alignItems:"center", flexDirection:"row",
+                  animation: chipsIn ? bob : "none" }}>
+                  {/* Connector: draws from video edge outward */}
+                  <div style={{ position:"relative", width:40, height:2, marginRight:4, flexShrink:0, overflow:"visible" }}>
+                    <div style={{ position:"absolute", inset:0,
+                      background:"repeating-linear-gradient(90deg,rgba(33,27,46,.28) 0,rgba(33,27,46,.28) 4px,transparent 4px,transparent 9px)",
+                      transformOrigin:"right center",
+                      transform: chipsIn ? "scaleX(1)" : "scaleX(0)",
+                      transition:`transform 0.5s ease ${delay + 350}ms` }}/>
+                    <div style={{ position:"absolute", left:-1, top:"50%", transform:"translateY(-50%)",
+                      width:7, height:7, borderRadius:"50%", background:"rgba(33,27,46,.28)",
+                      opacity: chipsIn ? 1 : 0,
+                      transition:`opacity 0.3s ease ${delay + 820}ms` }}/>
                   </div>
-                  <span style={{ fontSize:"0.76rem", fontWeight:700, color:"#211B2E", lineHeight:1.25, whiteSpace:"nowrap" }}>{label}</span>
+                  {/* Card */}
+                  <div className="le-chip" style={{ display:"flex", alignItems:"center", gap:12,
+                    padding:"10px 16px 10px 10px", borderRadius:16, width:210, flexShrink:0, cursor:"default",
+                    background:"rgba(255,255,255,0.97)", backdropFilter:"blur(16px)", WebkitBackdropFilter:"blur(16px)",
+                    border:"1px solid rgba(33,27,46,.08)", boxShadow:"0 10px 30px rgba(33,27,46,.10)",
+                    opacity: chipsIn ? 1 : 0,
+                    transform: chipsIn ? "none" : "translateX(24px) scale(0.88)",
+                    transition:`opacity 0.55s cubic-bezier(.34,1.56,.64,1) ${delay}ms, transform 0.55s cubic-bezier(.34,1.56,.64,1) ${delay}ms` }}>
+                    <div className="le-icon-box" style={{ width:46, height:46, borderRadius:12, background:grad,
+                      flexShrink:0, display:"flex", alignItems:"center", justifyContent:"center",
+                      boxShadow:`0 4px 14px ${glow}` }}>
+                      <Icon size={21} color="white" strokeWidth={2.2}/>
+                    </div>
+                    <span style={{ fontSize:"0.8rem", fontWeight:700, color:"#211B2E", lineHeight:1.25 }}>{label}</span>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 
@@ -1366,18 +1399,19 @@ function LearningEnvironmentSection() {
           </div>
 
           <div className="grid grid-cols-2 gap-3 mb-2">
-            {CHIPS.map(({ Icon, label, color, bg }, i) => (
+            {CHIPS.map(({ Icon, label, grad, glow }, i) => (
               <div key={label} style={{
-                display:"flex", alignItems:"center", gap:10, padding:"10px 12px", borderRadius:16,
-                background:"rgba(255,251,245,.95)", border:`1px solid ${color}22`,
-                boxShadow:"0 2px 12px rgba(0,0,0,.06)",
+                display:"flex", alignItems:"center", gap:11, padding:"11px 12px", borderRadius:16,
+                background:"rgba(255,255,255,.97)", border:"1px solid rgba(33,27,46,.07)",
+                boxShadow:"0 6px 20px rgba(33,27,46,.08)",
                 opacity: chipsIn ? 1 : 0,
                 transform: chipsIn ? "none" : "scale(0.88) translateY(10px)",
                 transition:`opacity 0.45s ease ${i*85}ms, transform 0.45s ease ${i*85}ms`,
               }}>
-                <div style={{ width:34, height:34, borderRadius:10, background:bg, flexShrink:0,
-                  display:"flex", alignItems:"center", justifyContent:"center" }}>
-                  <Icon size={16} style={{ color }}/>
+                <div style={{ width:38, height:38, borderRadius:10, background:grad, flexShrink:0,
+                  display:"flex", alignItems:"center", justifyContent:"center",
+                  boxShadow:`0 3px 10px ${glow}` }}>
+                  <Icon size={17} color="white" strokeWidth={2.2}/>
                 </div>
                 <span style={{ fontSize:"0.73rem", fontWeight:700, color:"#211B2E", lineHeight:1.3 }}>{label}</span>
               </div>
@@ -1770,35 +1804,131 @@ function TestimonialsSection() {
 ═══════════════════════════════════════════════════════════════════════════════ */
 function CallbackSection() {
   return (
-    <div className="py-6 md:py-8 relative overflow-hidden border-b bg-white">
-      <div className="absolute inset-0 pointer-events-none"
-        style={{ background: "linear-gradient(135deg,rgba(220,38,38,0.04) 0%,rgba(251,191,36,0.06) 50%,rgba(220,38,38,0.03) 100%)" }} />
-      <div className="du-fade relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-6">
-          <div className="flex-shrink-0 hidden md:block">
-            <p className="text-sm font-bold text-foreground">Quick Callback</p>
-            <p className="text-xs text-muted-foreground mt-0.5">Free — no obligation</p>
+    <>
+      {/* ── MOBILE: premium branded card ─────────────────────────────── */}
+      <div className="md:hidden relative bg-white border-b overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none"
+          style={{ background:"linear-gradient(150deg,rgba(236,33,15,.04) 0%,rgba(251,191,36,.06) 60%,rgba(236,33,15,.02) 100%)" }}/>
+        {/* Floating star */}
+        <div aria-hidden style={{ position:"absolute", top:18, right:26, width:16, height:16,
+          color:"rgba(251,191,36,.55)", pointerEvents:"none", animation:"d-twinkle 3.5s ease-in-out 0.8s infinite" }}>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>
+        </div>
+        {/* Card */}
+        <div style={{ margin:"24px 20px 28px", borderRadius:20, background:"white", padding:"24px 22px 22px",
+          boxShadow:"0 20px 60px rgba(33,27,46,.12), 0 2px 8px rgba(33,27,46,.06)",
+          border:"1px solid rgba(33,27,46,.06)", position:"relative", overflow:"hidden" }}>
+          {/* Red accent bar */}
+          <div style={{ position:"absolute", top:0, left:0, right:0, height:4,
+            background:"linear-gradient(90deg,#EC210F 0%,#FF6B35 100%)", borderRadius:"20px 20px 0 0" }}/>
+          {/* Header */}
+          <div style={{ marginBottom:20, marginTop:4 }}>
+            <h3 className="section-title" style={{ fontSize:"1.25rem", margin:"0 0 4px" }}>Quick Callback</h3>
+            <p style={{ fontSize:"0.83rem", color:"#55506A", margin:0, lineHeight:1.4 }}>Free — no obligation</p>
           </div>
-          <div className="hidden md:block w-px h-10 bg-border/60 flex-shrink-0" />
-          <div className="flex flex-col md:flex-row items-stretch gap-3 flex-1">
-            <input placeholder="Your Name" className="flex-1 h-11 rounded-xl border border-input bg-white/90 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20" />
-            <input placeholder="Phone Number" type="tel" className="flex-1 h-11 rounded-xl border border-input bg-white/90 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20" />
-            <select className="flex-1 h-11 rounded-xl border border-input bg-white/90 px-4 text-sm text-muted-foreground">
-              <option value="">Child's Age</option>
-              <option>1.5 – 2 years</option><option>2 – 3 years</option><option>3 – 4 years</option><option>4 – 5 years</option>
-            </select>
-            <button className="h-11 px-8 rounded-xl text-sm font-semibold text-white transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg whitespace-nowrap"
-              style={{ background: "hsl(var(--primary))", boxShadow: "0 4px 14px rgba(220,38,38,.28)" }}>
+          {/* Fields */}
+          <div style={{ display:"flex", flexDirection:"column", gap:14 }}>
+            <div>
+              <label style={{ display:"block", fontSize:"0.74rem", fontWeight:600, color:"#211B2E", marginBottom:6 }}>
+                Your Name
+              </label>
+              <input placeholder="e.g. Priya Sharma" className="le-input"
+                style={{ display:"block", width:"100%", height:52, borderRadius:12,
+                  border:"1.5px solid rgba(33,27,46,.12)", padding:"0 16px", fontSize:16,
+                  color:"#211B2E", background:"#F9F9FB", boxSizing:"border-box", outline:"none" }}/>
+            </div>
+            <div>
+              <label style={{ display:"block", fontSize:"0.74rem", fontWeight:600, color:"#211B2E", marginBottom:6 }}>
+                Phone Number
+              </label>
+              <input placeholder="Your 10-digit mobile number" type="tel" className="le-input"
+                style={{ display:"block", width:"100%", height:52, borderRadius:12,
+                  border:"1.5px solid rgba(33,27,46,.12)", padding:"0 16px", fontSize:16,
+                  color:"#211B2E", background:"#F9F9FB", boxSizing:"border-box", outline:"none" }}/>
+            </div>
+            <div style={{ position:"relative" }}>
+              <label style={{ display:"block", fontSize:"0.74rem", fontWeight:600, color:"#211B2E", marginBottom:6 }}>
+                Child's Age
+              </label>
+              <select className="le-input"
+                style={{ display:"block", width:"100%", height:52, borderRadius:12,
+                  border:"1.5px solid rgba(33,27,46,.12)", padding:"0 40px 0 16px", fontSize:16,
+                  color:"#55506A", background:"#F9F9FB", boxSizing:"border-box",
+                  appearance:"none", outline:"none", cursor:"pointer" }}>
+                <option value="">Select age group</option>
+                <option>1.5 – 2 years</option>
+                <option>2 – 3 years</option>
+                <option>3 – 4 years</option>
+                <option>4 – 5 years</option>
+              </select>
+              <ChevronDown size={16} style={{ position:"absolute", right:14, bottom:18,
+                color:"#55506A", pointerEvents:"none" }}/>
+            </div>
+            <button className="le-cta-btn"
+              style={{ width:"100%", height:54, borderRadius:999, fontWeight:700, fontSize:"1rem",
+                background:"#EC210F", color:"white", border:"none", cursor:"pointer", marginTop:2,
+                boxShadow:"0 8px 24px rgba(236,33,15,.35)",
+                transition:"transform 0.15s ease, box-shadow 0.15s ease" }}>
               Get a Free Callback
             </button>
+            <p style={{ display:"flex", alignItems:"flex-start", gap:6, fontSize:"0.73rem",
+              color:"#55506A", lineHeight:1.55, margin:0 }}>
+              <Lock size={13} style={{ flexShrink:0, color:"#059669", marginTop:2 }}/>
+              No spam · One call from our admissions team · Completely free
+            </p>
           </div>
         </div>
-        <p className="text-xs text-muted-foreground mt-3 flex items-center gap-1.5">
-          <Lock className="w-3 h-3 text-green-500" />
-          No spam · One call from our admissions team · Completely free
-        </p>
       </div>
-    </div>
+
+      {/* ── DESKTOP: polished horizontal bar ─────────────────────────── */}
+      <div className="hidden md:block py-5 relative overflow-hidden border-b bg-white">
+        <div className="absolute inset-0 pointer-events-none"
+          style={{ background:"linear-gradient(135deg,rgba(236,33,15,.04) 0%,rgba(251,191,36,.06) 50%,rgba(236,33,15,.02) 100%)" }}/>
+        <div className="du-fade relative max-w-7xl mx-auto px-6 lg:px-8">
+          <div style={{ display:"flex", alignItems:"center", gap:20 }}>
+            <div style={{ flexShrink:0 }}>
+              <p style={{ fontSize:"0.875rem", fontWeight:700, color:"#211B2E", margin:0 }}>Quick Callback</p>
+              <p style={{ fontSize:"0.75rem", color:"#55506A", margin:"2px 0 0" }}>Free — no obligation</p>
+            </div>
+            <div style={{ width:1, height:40, background:"rgba(33,27,46,.12)", flexShrink:0 }}/>
+            <div style={{ display:"flex", alignItems:"center", gap:10, flex:1 }}>
+              <input placeholder="Your Name" className="le-input"
+                style={{ flex:1, height:44, borderRadius:12, border:"1.5px solid rgba(33,27,46,.10)",
+                  padding:"0 14px", fontSize:14, color:"#211B2E", background:"#F9F9FB",
+                  outline:"none", boxSizing:"border-box" }}/>
+              <input placeholder="Phone Number" type="tel" className="le-input"
+                style={{ flex:1, height:44, borderRadius:12, border:"1.5px solid rgba(33,27,46,.10)",
+                  padding:"0 14px", fontSize:14, color:"#211B2E", background:"#F9F9FB",
+                  outline:"none", boxSizing:"border-box" }}/>
+              <div style={{ position:"relative", flex:1 }}>
+                <select className="le-input"
+                  style={{ width:"100%", height:44, borderRadius:12, border:"1.5px solid rgba(33,27,46,.10)",
+                    padding:"0 34px 0 14px", fontSize:14, color:"#55506A", background:"#F9F9FB",
+                    outline:"none", appearance:"none", cursor:"pointer", boxSizing:"border-box" }}>
+                  <option value="">Child's Age</option>
+                  <option>1.5 – 2 years</option><option>2 – 3 years</option>
+                  <option>3 – 4 years</option><option>4 – 5 years</option>
+                </select>
+                <ChevronDown size={14} style={{ position:"absolute", right:10, top:"50%",
+                  transform:"translateY(-50%)", color:"#55506A", pointerEvents:"none" }}/>
+              </div>
+              <button className="le-cta-btn"
+                style={{ height:44, padding:"0 24px", borderRadius:999, fontSize:"0.875rem",
+                  fontWeight:700, color:"white", background:"#EC210F", border:"none", cursor:"pointer",
+                  whiteSpace:"nowrap", flexShrink:0, boxShadow:"0 4px 14px rgba(236,33,15,.30)",
+                  transition:"transform 0.15s ease, box-shadow 0.15s ease" }}>
+                Get a Free Callback
+              </button>
+            </div>
+          </div>
+          <p style={{ display:"flex", alignItems:"center", gap:6, fontSize:"0.72rem",
+            color:"#55506A", margin:"10px 0 0" }}>
+            <Lock size={12} style={{ color:"#059669" }}/>
+            No spam · One call from our admissions team · Completely free
+          </p>
+        </div>
+      </div>
+    </>
   );
 }
 

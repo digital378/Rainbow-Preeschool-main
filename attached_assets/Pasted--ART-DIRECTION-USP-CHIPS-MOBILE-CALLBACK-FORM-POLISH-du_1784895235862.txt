@@ -1,0 +1,55 @@
+# ART DIRECTION — USP CHIPS + MOBILE CALLBACK FORM POLISH (/dummy)
+Two fixes. Keep everything else in the learning-environment section as-is.
+
+## FIX 1 — MAKE THE USP CHIPS VIBRANT & UNIFORM (match the quick-select tiles)
+Right now the chips (Play-Based Learning · Expert Teachers · CCTV-Safe Campuses ·
+Small Batches) look pale, uneven, and their icons are faint. Rebuild them:
+- Each chip = a clean white glass card, SAME width (~210px desktop), radius 16px,
+  1px hairline, soft shadow 0 10px 30px rgba(33,27,46,.10), consistent padding.
+- Icon = a SOLID VIVID GRADIENT chip (46–48px, radius 12px) with a WHITE icon
+  and a soft coloured glow — exactly like the quick-select tiles. Label beside it
+  in bold (weight 700), ink #211B2E.
+- Palette + clearer icons per chip:
+    Play-Based Learning → orange #FB6112→#FF8A3D → puzzle/building-blocks icon
+    Expert Teachers     → blue   #1F7AF0→#48A0FF → teacher / graduation-cap icon
+    CCTV-Safe Campuses  → green  #06B463→#22D67E → shield-check icon
+    Small Batches       → purple #7C4DFF→#A06BFF → small-group (users) icon
+- ALIGN them: 2 on the left, 2 on the right, vertically balanced and evenly
+  spaced against the video (equal top/bottom offsets — not staggered awkwardly).
+- Connector: dotted line + end-dot in the chip's hue; animate it drawing in on
+  scroll. Hover/tap = chip lifts + icon does a small animation + glow blooms.
+- Chips gently bob at idle (varied phase). Vivid, premium, consistent.
+
+## FIX 2 — MOBILE QUICK CALLBACK FORM (make it premium, not plain)
+The mobile form is cramped and generic. Rebuild it as a proper card:
+- Wrap in a white card: radius 20px, soft shadow, 20px inner padding, 20px side
+  margins (never edge-to-edge). Optional faint red top-accent bar.
+- Header: "Quick Callback" in the rounded display font (ink), small subline
+  "Free — no obligation" in --ink-soft.
+- Inputs (Your Name, Phone Number, Child's Age): FULL width, min-height 52px,
+  radius 12px, 1.5px hairline border, comfortable 14px vertical gaps, 16px text
+  (prevents iOS zoom), clear placeholder colour. Focus state = 2px brand-red
+  ring + subtle glow. Style the Child's Age <select> to match with a custom
+  chevron (no default OS look).
+- CTA "Get a Free Callback": full-width, solid brand red #EC210F, white bold
+  text, min-height 54px, radius 999px (or 14px to match), soft red shadow,
+  clear press/active state.
+- Trust line: lock icon + "No spam · One call from our admissions team ·
+  Completely free" in small --ink-soft, wraps cleanly on 2 lines, doesn't crowd.
+- Big tap targets throughout; everything thumb-friendly and spacious.
+- Optional: one small floating balloon/star accent behind the card to match the
+  template — subtle, must not reduce legibility.
+
+## KEEP / RULES
+- Same template look, display-font heading token, vivid palette, smooth-motion
+  rules (transform/opacity, eased, 60fps), real semantic form fields + labels +
+  focus states, prefers-reduced-motion fallback.
+
+## BRAND (RPS)
+- Red #EC210F leads; other hues are suggested supporting colours. USP wording
+  must be approved RPS USPs — verify before publishing; don't invent claims.
+
+## DELIVER
+Show desktop @1440 (chips) + mobile @390 (form + chips). Success = chips are
+vibrant, uniform and aligned like the quick-select tiles, and the mobile form
+looks like a polished branded card with big, easy inputs.
