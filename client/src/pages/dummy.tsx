@@ -1612,28 +1612,28 @@ function StatsSection() {
                 borderRadius:"50%", pointerEvents:"none" }}/>
               {/* Girl mascot — flex fills height, grounded at baseline */}
               <div style={{ flex:1, display:"flex", alignItems:"flex-end",
-                justifyContent:"center", padding:"20px 12px 0",
-                width:"100%", minHeight:0, overflow:"hidden" }}>
+                justifyContent:"center", padding:"6px 6px 0",
+                width:"100%", minHeight:0 }}>
                 <img
                   src="/characters/student-girl.png"
                   alt=""
                   aria-hidden="true"
                   className="mascot-char"
-                  style={{ height:"100%", width:"auto", maxWidth:"88%",
-                    objectFit:"contain", objectPosition:"bottom center",
+                  style={{ width:"auto", height:"auto",
+                    maxWidth:"100%", maxHeight:"100%",
                     display:"block",
                     filter:"drop-shadow(0 8px 28px rgba(33,27,46,.16))" }}
                 />
               </div>
               {/* Caption chip */}
-              <div style={{ margin:"0 0 16px", background:"rgba(255,255,255,.88)",
+              <div style={{ margin:"0 0 14px", background:"rgba(255,255,255,.88)",
                 backdropFilter:"blur(12px)", WebkitBackdropFilter:"blur(12px)",
                 borderRadius:999, padding:"6px 16px", fontSize:"0.72rem",
                 fontWeight:600, color:"#211B2E",
                 display:"inline-flex", alignItems:"center", gap:6,
                 boxShadow:"0 2px 12px rgba(33,27,46,.09)", position:"relative", zIndex:1 }}>
                 <span aria-hidden>⭐</span>
-                Meet our little Rainbow star
+                Join Our Family!
               </div>
             </TiltCard>
 
