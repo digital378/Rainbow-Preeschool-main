@@ -11,6 +11,7 @@ import { SEO } from "@/components/seo";
 import { cn } from "@/lib/utils";
 import Hero3D from "@/components/hero3d";
 import { programmes, testimonials } from "@shared/schema";
+import { centres } from "@shared/centre-data";
 import {
   ArrowRight, Phone, Users, Star, MapPin, Shield, Award,
   Sparkles, Bus, Gamepad2, FileText, BookOpen, Palette,
@@ -71,14 +72,22 @@ const STYLES = `
   .bento-photo { grid-column:1/3; min-height:220px; }
   .bento-trust { grid-column:1/3; align-self:start; }
   .bento-s1,.bento-s2,.bento-s3,.bento-s4 { align-self:start; }
+  /* Mascot stage image — width-based sizing, height auto-scales from natural ratio */
+  .mascot-stage-img { display:block; width:78%; height:auto; margin:12px auto 0; }
+  /* Centre chips */
+  .centre-chip { transition:all 0.18s ease; cursor:pointer; text-decoration:none; }
+  .centre-chip:hover { border-color:#EC210F !important; color:#EC210F !important; box-shadow:0 3px 14px rgba(236,33,15,.15); transform:translateY(-2px); }
+  .centre-chip:hover .centre-pin { color:#EC210F !important; }
+  .centre-chip:focus-visible { outline:2px solid #EC210F; outline-offset:2px; border-radius:999px; }
   @media (min-width:1024px) {
-    .bento-grid { grid-template-columns:1fr 1fr 1fr; }
+    .bento-grid { grid-template-columns:1fr 1fr 1.4fr; }
     .bento-photo { grid-column:3/4 !important; grid-row:1/4 !important; min-height:0; height:100%; align-self:stretch; }
     .bento-s1 { grid-column:1/2; grid-row:1/2; }
     .bento-s2 { grid-column:2/3; grid-row:1/2; }
     .bento-trust { grid-column:1/3 !important; grid-row:2/3; }
     .bento-s3 { grid-column:1/2; grid-row:3/4; }
     .bento-s4 { grid-column:2/3; grid-row:3/4; }
+    .mascot-stage-img { width:100%; margin:0; }
   }
   @media (prefers-reduced-motion:reduce) {
     .mascot-char { animation:none !important; }
@@ -1486,7 +1495,7 @@ function LearningEnvironmentSection() {
    SECTION: STATS — Animated counters with 3D tilt cards
 ═══════════════════════════════════════════════════════════════════════════════ */
 function StatsSection() {
-  const CENTRES = ["Manpada", "Kalwa", "Dhokali", "Kasarvadavali"];
+  // Centres sourced from @shared/centre-data — same array the nav dropdown uses
   const AVATARS = [
     { bg:"#EC210F", l:"A" }, { bg:"#F59E0B", l:"B" },
     { bg:"#1F7AF0", l:"C" }, { bg:"#06B463", l:"D" },
@@ -1554,15 +1563,19 @@ function StatsSection() {
               All six centres are in Thane West — a Rainbow Preschool is always close to home.
             </p>
 
-            {/* Centre location chips */}
+            {/* Centre chips — sourced from shared/centre-data (same source as nav dropdown) */}
             <div style={{ display:"flex", flexWrap:"wrap", gap:8, margin:"0 0 32px" }}>
-              {CENTRES.map(name => (
-                <span key={name} style={{ display:"inline-flex", alignItems:"center", gap:5,
-                  padding:"5px 13px 5px 10px", borderRadius:999, fontSize:"0.76rem", fontWeight:600,
-                  color:"#211B2E", background:"rgba(33,27,46,.05)", border:"1px solid rgba(33,27,46,.09)" }}>
-                  <MapPin size={11} style={{ color:"#EC210F", flexShrink:0 }}/>
-                  {name}
-                </span>
+              {centres.map(c => (
+                <a key={c.id} href={c.preschoolLandingUrl}
+                  className="centre-chip"
+                  aria-label={`Visit our ${c.localityName} centre`}
+                  style={{ display:"inline-flex", alignItems:"center", gap:5,
+                    padding:"5px 13px 5px 10px", borderRadius:999, fontSize:"0.76rem", fontWeight:600,
+                    color:"#211B2E", background:"rgba(33,27,46,.05)", border:"1px solid rgba(33,27,46,.09)",
+                    minHeight:44 }}>
+                  <MapPin size={11} className="centre-pin" style={{ color:"#EC210F", flexShrink:0 }}/>
+                  {c.localityName}
+                </a>
               ))}
             </div>
 
@@ -1606,25 +1619,18 @@ function StatsSection() {
                 borderRadius:"50%", pointerEvents:"none",
                 background:"radial-gradient(circle,rgba(236,33,15,.06) 0%,rgba(251,191,36,.06) 35%,rgba(34,197,94,.04) 65%,transparent 100%)" }}/>
               {/* Ground shadow ellipse */}
-              <div aria-hidden style={{ position:"absolute", bottom:46, left:"50%",
+              <div aria-hidden style={{ position:"absolute", bottom:44, left:"50%",
                 transform:"translateX(-50%)", width:"52%", height:18,
                 background:"radial-gradient(ellipse,rgba(33,27,46,.17) 0%,transparent 70%)",
                 borderRadius:"50%", pointerEvents:"none" }}/>
-              {/* Girl mascot — flex fills height, grounded at baseline */}
-              <div style={{ flex:1, display:"flex", alignItems:"flex-end",
-                justifyContent:"center", padding:"6px 6px 0",
-                width:"100%", minHeight:0 }}>
-                <img
-                  src="/characters/student-girl.png"
-                  alt=""
-                  aria-hidden="true"
-                  className="mascot-char"
-                  style={{ width:"auto", height:"auto",
-                    maxWidth:"100%", maxHeight:"100%",
-                    display:"block",
-                    filter:"drop-shadow(0 8px 28px rgba(33,27,46,.16))" }}
-                />
-              </div>
+              {/* Girl mascot — in-flow, width:100% desktop (1.4fr col) / 78% mobile */}
+              <img
+                src="/characters/student-girl.png"
+                alt=""
+                aria-hidden="true"
+                className="mascot-char mascot-stage-img"
+                style={{ filter:"drop-shadow(0 8px 28px rgba(33,27,46,.16))" }}
+              />
               {/* Caption chip */}
               <div style={{ margin:"0 0 14px", background:"rgba(255,255,255,.88)",
                 backdropFilter:"blur(12px)", WebkitBackdropFilter:"blur(12px)",

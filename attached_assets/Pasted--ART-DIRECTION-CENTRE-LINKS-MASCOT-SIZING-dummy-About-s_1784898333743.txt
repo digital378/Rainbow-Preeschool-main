@@ -1,0 +1,52 @@
+# ART DIRECTION — CENTRE LINKS + MASCOT SIZING (/dummy, About section)
+
+## PART A — SHOW ALL CENTRES AS CLICKABLE LINKS
+Currently only 4 location chips show (Manpada, Kalwa, Dhokali, Kasarvadavali),
+but the stat says "06 Centres". Fix:
+1. Render ALL centres (all 6), not just 4. Do NOT hardcode or invent centre names
+   or URLs — pull the centre list from the SAME data source the nav "Centres"
+   dropdown already uses (name + page route/slug for each centre). Single source
+   of truth so nav and this section never drift.
+2. Make each chip a real LINK that navigates to that centre's own page (its
+   respective route, e.g. /centres/<slug> — use whatever the existing routing
+   uses). Full <a> tags, keyboard-focusable, proper aria-labels.
+3. If a specific centre has no dedicated page yet, link it to the Centres listing
+   page (/centres) anchored to that centre, and leave a clear
+   `// TODO: point to <centre> page` comment — never invent a URL.
+4. Chip styling: keep the current pill look (map-pin icon + name) but make them
+   feel interactive — on hover: lift slightly, border/pin turn brand red
+   #EC210F, subtle shadow; on focus: visible ring. Cursor pointer.
+5. Layout: chips wrap neatly onto 2 rows if needed, even gaps, no overflow. All 6
+   evenly spaced and aligned under the paragraph.
+6. VERIFY the count matches: the "06 Centres in Thane" stat and the number of
+   chips must agree. If the real data has a different count, make the stat match
+   the real data (don't fabricate to force 6).
+
+## PART B — FIX THE BLANK SPACE ABOVE THE MASCOT (still too much)
+The mascot still sits low with a large empty area above her in the tall stage.
+1. Anchor her to the BOTTOM of the stage: her shoes sit on the ground-shadow
+   ellipse near the lower edge (just above the "Join Our Family!" caption).
+2. Scale her UP significantly so she occupies roughly the bottom 65–75% of the
+   stage height — head reaching into the upper third. Only a small breathing
+   margin remains at the very top (not a big void).
+3. Use object-fit/anchor from the bottom (e.g. the image bottom-aligned within
+   the stage, transform-origin bottom) so enlarging her grows upward, not
+   downward past the card.
+4. Keep her fully visible — no cropping of bows, head, or shoes. Grounded shadow,
+   idle breathe + occasional wave, subtle cursor tilt.
+5. Reduce the stage's internal top padding; the soft pastel/rainbow glow can stay
+   but should read as a backdrop behind her, not empty space above her.
+6. Keep caption exactly "Join Our Family!" with the star icon.
+- Mobile: same — mascot large, bottom-anchored, minimal top gap, all centre chips
+  shown and tappable (≥44px targets), caption "Join Our Family!".
+
+## RULES / BRAND
+- Smooth-motion (transform/opacity, 60fps), semantic links + focus states,
+  reduced-motion fallback. RPS red #EC210F leads; other hues suggested. No
+  fabricated centre names, URLs, addresses, or counts — use real data only.
+
+## DELIVER
+Show desktop @1440 + mobile @390. Success = all 6 centres shown as working links
+to their respective pages (sourced from the nav's centre data), the count matches
+the "06" stat, and the mascot is large and bottom-anchored with no big empty
+space above her.
