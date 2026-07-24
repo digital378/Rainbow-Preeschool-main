@@ -1,0 +1,49 @@
+# ART DIRECTION — DESKTOP QUICK-SELECT DECLUTTER (/dummy)
+Mobile is approved — keep it exactly as is. Fix the DESKTOP layout only: it looks
+cluttered/unbalanced because the two 3-card clusters are pushed to opposite edges
+with a large empty middle and a floating divider bar. Unify it into one calm,
+centered row and match the vibrant colours mobile already has.
+
+## FIX 1 — ONE UNIFIED CENTERED ROW (kills the void)
+- Put ALL SIX cards in a SINGLE horizontal row inside a centered container
+  (max-width ~1120px, margin auto). Equal card widths (~168px), equal gap (~20px).
+- REMOVE the floating vertical gradient divider entirely.
+- Separate the two groups with just a slightly larger gap (~52px) between card 3
+  (Book Visit) and card 4 (Playgroup) — no line, no big void.
+- Group labels sit in a small header row ABOVE the cards, each label centered
+  over its own 3-card set ("QUICK LINKS" over 1–3, "OUR PROGRAMMES" over 4–6).
+- All cards same height, tops aligned. Result: one balanced, symmetrical row —
+  nothing shoved to the edges, no empty middle.
+
+## FIX 2 — TIGHTEN VERTICAL SPACING
+- Reduce the oversized whitespace: the gap between the "Start Exploring" heading
+  and the cards, and the section's top/bottom padding, are too large. Bring the
+  heading closer to the cards (~40px) and use balanced section padding (~72px
+  top/bottom, not more). The section should feel intentional, not sparse.
+
+## FIX 3 — MATCH MOBILE'S VIBRANCY ON DESKTOP
+The desktop cards are washed-out vs the mobile tiles. Apply the SAME treatment:
+solid vivid gradient icon chips with WHITE icons + coloured glow, bold hue-
+coloured labels, 3px vivid top accent, faint hue wash at the card bottom. Same
+saturated palette (Why Us #F5320C→#FF5A3C, Find Centre #06B463→#22D67E, Book
+Visit #1F7AF0→#48A0FF, Playgroup #FB6112→#FF8A3D, Nursery #7C4DFF→#A06BFF,
+Kindergarten #06B6A4→#2CD8C4). Desktop and mobile must look equally vibrant.
+
+## FIX 4 — HERO CLEARANCE
+The greeter's shoes from the hero bleed down into this section. Add bottom
+clearance to the hero so the character sits fully within the hero and doesn't
+overlap the "Start Exploring" area.
+
+## KEEP
+- The 3D tilt, hover lift, signature icon animations, and pop-up stagger
+  entrance on the cards. Smooth-motion rules (transform/opacity, eased, 60fps).
+  Real semantic links + focus states. prefers-reduced-motion fallback.
+
+## BRAND (RPS)
+- Red #EC210F family leads; other hues are suggested supporting colours. No
+  fabricated age ranges — keep the age tag hidden until verified.
+
+## DELIVER
+Show desktop @1440 + mobile @390. Success = desktop is one balanced centered row
+with no empty middle and no floating divider, equally vibrant as mobile, with
+comfortable (not sparse) spacing.

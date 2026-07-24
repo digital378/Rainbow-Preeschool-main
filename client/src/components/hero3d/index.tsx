@@ -1223,8 +1223,8 @@ export default function Hero3D() {
 
         {/* RIGHT — desktop student character */}
         <div className="hidden lg:flex flex-col items-center justify-end relative"
-          style={{ minHeight:"80vh", zIndex:8 }}>
-          <StudentCharacter charH="80vh" maxH={710}/>
+          style={{ minHeight:"80vh", zIndex:8, paddingBottom:72 }}>
+          <StudentCharacter charH="80vh" maxH={680}/>
           {/* Floating proof chip — bottom-left corner of column */}
           <div className="absolute" style={{ bottom:"12%", left:"-4px", zIndex:15 }}>
             <ProofChip/>

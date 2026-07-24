@@ -907,7 +907,7 @@ function ShelfCard({ item, globalIdx, isActive, onActivate }: {
               border: isActive ? `2px solid ${item.color}` : "1px solid rgba(33,27,46,.06)",
               boxShadow: isActive
                 ? `0 0 0 4px ${item.color}22,0 16px 40px ${item.color}30`
-                : "0 10px 30px rgba(33,27,46,.08)",
+                : `0 10px 30px ${item.color}1A,0 4px 12px rgba(33,27,46,.05)`,
               padding: "22px 14px 16px",
               position: "relative",
               overflow: "hidden",
@@ -1051,30 +1051,22 @@ function RainbowShelfSection() {
   const groupA = SHELF_ITEMS.filter(x => x.group === "A");
   const groupB = SHELF_ITEMS.filter(x => x.group === "B");
 
-  const grpLabel = (txt: string) => (
+  const grpLabel = (txt: string, centered?: boolean) => (
     <p className="rs-pop" style={{
       fontSize:"0.68rem",fontWeight:700,letterSpacing:"0.15em",textTransform:"uppercase",
       color:"#55506A",margin:"0 0 14px 2px",whiteSpace:"nowrap",
+      textAlign: centered ? "center" : "left",
     }}>{txt}</p>
-  );
-
-  const grpCards = (items: ShelfItem[], offset: number) => (
-    <div style={{ display:"flex",gap:10 }}>
-      {items.map((item, i) => (
-        <ShelfCard key={item.href} item={item} globalIdx={i + offset}
-          isActive={activeIdx === i + offset} onActivate={setActiveIdx}/>
-      ))}
-    </div>
   );
 
   return (
     <section ref={sectionRef} style={{
       background:"linear-gradient(180deg,#FFFBF5 0%,#FFF6EE 55%,#FFFBF5 100%)",
-      padding:"68px 0 88px",overflow:"hidden",
+      padding:"72px 0 72px",overflow:"hidden",
     }}>
 
       {/* Section heading */}
-      <div className="rs-pop text-center" style={{ marginBottom:48 }}>
+      <div className="rs-pop text-center" style={{ marginBottom:40 }}>
         <p style={{ fontSize:"0.63rem",fontWeight:700,letterSpacing:"0.2em",
           textTransform:"uppercase",color:"#55506A",margin:"0 0 8px" }}>
           WHERE TO NEXT?
@@ -1086,25 +1078,34 @@ function RainbowShelfSection() {
         </h2>
       </div>
 
-      {/* ── DESKTOP: two groups side-by-side ── */}
-      <div className="hidden md:block" style={{ maxWidth:1080,margin:"0 auto",padding:"0 28px" }}>
-        <div style={{ display:"flex",alignItems:"flex-start",gap:24 }}>
+      {/* ── DESKTOP: unified centered row ── */}
+      <div className="hidden md:block" style={{ maxWidth:1120,margin:"0 auto",padding:"0 40px" }}>
+        <div style={{ display:"flex",justifyContent:"center",alignItems:"flex-start",gap:52 }}>
 
           {/* Group A — Quick Links */}
-          <div style={{ flex:1 }}>
-            {grpLabel("Quick Links")}
-            {grpCards(groupA, 0)}
+          <div>
+            {grpLabel("Quick Links", true)}
+            <div style={{ display:"flex",gap:16 }}>
+              {groupA.map((item,i) => (
+                <div key={item.href} style={{ width:160,flexShrink:0 }}>
+                  <ShelfCard item={item} globalIdx={i}
+                    isActive={activeIdx===i} onActivate={setActiveIdx}/>
+                </div>
+              ))}
+            </div>
           </div>
 
-          {/* Rainbow gradient divider */}
-          <div style={{ width:3,flexShrink:0,alignSelf:"stretch",margin:"30px 20px 0",
-            borderRadius:4,opacity:0.6,
-            background:"linear-gradient(180deg,#F5320C 0%,#FB6112 28%,#7C4DFF 62%,#06B6A4 100%)" }}/>
-
           {/* Group B — Our Programmes */}
-          <div style={{ flex:1 }}>
-            {grpLabel("Our Programmes")}
-            {grpCards(groupB, 3)}
+          <div>
+            {grpLabel("Our Programmes", true)}
+            <div style={{ display:"flex",gap:16 }}>
+              {groupB.map((item,i) => (
+                <div key={item.href} style={{ width:160,flexShrink:0 }}>
+                  <ShelfCard item={item} globalIdx={i+3}
+                    isActive={activeIdx===i+3} onActivate={setActiveIdx}/>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
