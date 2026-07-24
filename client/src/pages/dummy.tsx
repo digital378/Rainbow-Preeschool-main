@@ -1325,6 +1325,7 @@ export default function Dummy() {
       <SEO
         title="Design System v4.0 | Rainbow Preschool International"
         description="Internal design prototype — not for public search indexing."
+        noIndex
       />
 
       {/* Prototype banner */}

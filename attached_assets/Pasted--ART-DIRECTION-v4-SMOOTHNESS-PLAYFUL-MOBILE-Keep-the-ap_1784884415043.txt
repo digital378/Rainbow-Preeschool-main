@@ -1,0 +1,87 @@
+# ART DIRECTION v4 — SMOOTHNESS + PLAYFUL MOBILE. Keep the approved desktop look.
+
+## PART A — FIX THE LAG (do this first; it's why everything feels cheap)
+The jank almost always comes from these. Audit and fix all of them:
+
+1. NEVER animate on React state or re-renders. All continuous motion (bob,
+   spin, parallax, mouse follow) must run inside a single R3F `useFrame` loop
+   using lerp/damping — not setState, not per-frame new objects. Use
+   `THREE.MathUtils.damp` for smooth follow, not spring libs firing every frame.
+2. Animated `backdrop-filter: blur()` is the #1 killer. Do NOT animate blurred
+   glass or drift blobs that have blur filters. Instead: render the pastel
+   aurora ONCE to a static layer and animate its POSITION via `transform:
+   translate3d()` only (GPU-composited). Cap glass blur to a few static
+   elements (nav, badge, chips) — never moving ones.
+3. Only ever animate `transform` and `opacity`. Never animate width, top/left,
+   box-shadow, or filter on scroll — those trigger layout/paint every frame.
+   Add `will-change: transform` to the moving layers, remove it when idle.
+4. Sync scroll properly: use Lenis + `ScrollTrigger.scrollerProxy` + GSAP
+   `ticker` (lenis.raf driven by gsap.ticker). Use `scrub: 1` (smoothing) not
+   `scrub: true`. This alone removes scroll stutter.
+5. Cap `dpr={[1, 1.75]}` and add drei `<PerformanceMonitor>` to auto-downscale
+   quality if FPS drops. Reduce postprocessing: Bloom only, `mipmapBlur`,
+   low samples. Kill DoF on mobile entirely.
+6. Instance repeated props (`<Instances>`/InstancedMesh). Bake lighting where
+   possible (few lights, no per-frame shadow map updates — use a baked contact
+   shadow via drei `<ContactShadows>` frames={1}). Merge geometries.
+7. Throttle the mouse-parallax: read pointer in useFrame and damp toward it;
+   don't attach high-frequency listeners that setState.
+Target: locked 60fps on desktop, 60 on modern phones, no stutter on scroll.
+
+## PART B — MOTION QUALITY (make transitions feel expensive, not linear)
+- Easing: stop using linear/default. Entrances use a soft overshoot
+  cubic-bezier(0.22, 1, 0.36, 1) ("easeOutExpo" feel); playful pops use a
+  gentle back-out cubic-bezier(0.34, 1.56, 0.64, 1). Floats use sine easing.
+- Orchestrate the load as a STAGGERED timeline (GSAP timeline), not everything
+  at once: badge → H1 word-by-word (each letter/word rises + fades, 60ms
+  stagger) → subhead → paragraph → chips pop one-by-one (80ms stagger, tiny
+  scale bounce) → CTAs → card floats up + settles with one soft wobble.
+- Everything has inertia: parallax, cursor follow, and card tilt all EASE
+  toward their target (damp), never snap.
+- Magnetic CTA: button center lerps ~8px toward cursor, returns on leave.
+- Continuous life: props bob on sine with varied phase/speed; the rainbow has a
+  faint shimmer; the sun glow breathes slowly (scale 1→1.03). Subtle, never busy.
+
+## PART C — MOBILE: make it genuinely playful (this is the priority)
+Current mobile = flat faded icons + a plain photo = boring. Rebuild it as a
+compact, alive scene:
+
+1. PROPS MUST BE REAL 3D TOYS, not faded flat PNG/emoji icons. Same low-poly
+   matte toy set as desktop (balloons, ABC blocks, star, crayon, paper plane,
+   cloud), scaled for mobile, with real depth + soft shadows. If keeping them
+   2D for perf, use crisp full-color illustrated stickers with a slight drop
+   shadow and gentle float — never washed-out ghost icons.
+2. SIGNATURE HERO MOMENT on load: 3–4 balloons rise from the bottom past the
+   headline and drift off the top; the rainbow DRAWS itself in behind
+   "Preschool" (SVG stroke-dashoffset animation); a few sparkles twinkle. Give
+   the user something delightful in the first 1.5s.
+3. GYRO PARALLAX: tilting the phone moves the prop layers and the sun glow at
+   different depths (deviceorientation, damped). This is the "intriguing" hook
+   mobile is missing. Fallback to scroll-parallax if permission denied.
+4. CARD: give it personality — a soft 3D resting tilt (~3°), a floating shadow,
+   an animated twinkling star on the 4.9 badge, and a gentle continuous float.
+   On scroll it straightens and rises. Legible dark scrim on the caption.
+5. SCROLL CHOREOGRAPHY: as the user scrolls, props parallax at different
+   speeds, the rainbow shifts, balloons drift, and the scalloped cloud divider
+   at the bottom gently rolls. Momentum scrolling via Lenis.
+6. MICRO-INTERACTIONS: tapping a stat chip gives a bouncy scale; CTA has a soft
+   ripple; the hamburger opens with a spring. Small joys everywhere.
+7. Keep text crisp: props live in margins/behind at real depth, not muddying
+   the copy. Bump the pastel aurora saturation slightly so mobile bg feels
+   warm and alive, not a flat wash.
+
+## PART D — SIGNATURE "WOW" IDEAS (pick 1–2, don't do all)
+- MASCOT: a simple friendly 3D character (a smiling cloud or a little rainbow
+  mascot) that waves on load and blinks occasionally — a face gives a preschool
+  page instant warmth and is very shareable. Strong recommendation.
+- CURSOR TRAIL (desktop): soft sparkles / tiny stars trail the cursor; hovering
+  a prop makes it giggle-bounce.
+- SCROLL "PORTAL": on scroll the camera gently pushes through the clouds into
+  the next section, clouds parting like a doorway into the school world.
+- INTERACTIVE BALLOONS: tap/drag a balloon and it bounces away on a spring.
+- DAY GLOW: the sun subtly pulses warm light across the scene on a slow loop.
+
+## DELIVER
+Show desktop @1440 and mobile @390 with a screen-recording if possible so I can
+judge smoothness. Success = 60fps, buttery eased transitions, and a mobile hero
+that feels playful and alive on load, not static.
