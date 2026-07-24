@@ -128,6 +128,76 @@ const STYLES = `
     .shimmer-text { animation: none !important; }
     .spark { animation: none !important; opacity: 0; }
   }
+
+  /* ═══ Rainbow Shelf ══════════════════════════════════════════════════════ */
+  @keyframes rs-bob-1 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-7px)} }
+  @keyframes rs-bob-2 { 0%,100%{transform:translateY(-3px)} 50%{transform:translateY(-10px)} }
+  @keyframes rs-bob-3 { 0%,100%{transform:translateY(-5px)} 50%{transform:translateY(-11px)} }
+  @keyframes rs-swing  { 0%{transform:rotate(0)} 25%{transform:rotate(-14deg)} 55%{transform:rotate(11deg)} 80%{transform:rotate(-5deg)} 100%{transform:rotate(0)} }
+  @keyframes rs-bdrop  { 0%{transform:translateY(-16px)} 35%{transform:translateY(0)} 55%{transform:translateY(-7px)} 75%{transform:translateY(0)} 90%{transform:translateY(-3px)} 100%{transform:translateY(0)} }
+  @keyframes rs-flip   { 0%,100%{transform:rotateY(0deg)} 45%{transform:rotateY(-28deg)} }
+  @keyframes rs-jiggle { 0%,100%{transform:rotate(0) scale(1)} 25%{transform:rotate(-12deg) scale(1.1)} 75%{transform:rotate(12deg) scale(1.1)} }
+  @keyframes rs-flutter{ 0%,100%{transform:scaleX(1) scaleY(1)} 30%{transform:scaleX(0.85) scaleY(1.08)} 65%{transform:scaleX(1.08) scaleY(0.92)} }
+  @keyframes rs-cap    { 0%,100%{transform:translateY(0) rotate(0)} 40%{transform:translateY(-16px) rotate(10deg)} 70%{transform:translateY(-8px) rotate(4deg)} }
+  @keyframes rs-confetti { 0%{transform:translate(0,0) rotate(0deg) scale(1);opacity:1} 100%{transform:translate(var(--cx),var(--cy)) rotate(var(--cr)) scale(0);opacity:0} }
+
+  .rs-bob-1 { animation: rs-bob-1 3.8s ease-in-out infinite; }
+  .rs-bob-2 { animation: rs-bob-2 4.5s ease-in-out infinite; }
+  .rs-bob-3 { animation: rs-bob-3 4.0s ease-in-out infinite; }
+
+  /* Signature hover animations — override bob */
+  .rs-card:hover .rs-sig-medal { animation: rs-swing   0.6s cubic-bezier(.22,1,.36,1) !important; }
+  .rs-card:hover .rs-sig-pin   { animation: rs-bdrop   0.6s cubic-bezier(.22,1,.36,1) !important; }
+  .rs-card:hover .rs-sig-cal   { animation: rs-flip    0.6s cubic-bezier(.22,1,.36,1) !important; }
+  .rs-card:hover .rs-sig-pal   { animation: rs-jiggle  0.6s cubic-bezier(.22,1,.36,1) !important; }
+  .rs-card:hover .rs-sig-book  { animation: rs-flutter 0.6s cubic-bezier(.22,1,.36,1) !important; }
+  .rs-card:hover .rs-sig-grad  { animation: rs-cap     0.6s cubic-bezier(.22,1,.36,1) !important; }
+
+  /* Arrow — hidden until hover */
+  .rs-arrow { opacity:0; transform:translateY(4px); transition:opacity 0.2s,transform 0.25s cubic-bezier(.22,1,.36,1); }
+  .rs-card:hover .rs-arrow { opacity:1; transform:translateY(0); }
+
+  /* Lift wrapper — CSS handles the -10px vertical lift */
+  .rs-lift { transition:transform 0.35s cubic-bezier(.22,1,.36,1); }
+  .rs-card:hover .rs-lift { transform:translateY(-10px); }
+
+  /* Shadow glow on hover — read --card-color set inline */
+  .rs-card:hover .rs-inner-card {
+    box-shadow: 0 24px 56px var(--card-shadow,rgba(33,27,46,.15)), 0 8px 20px rgba(33,27,46,.08) !important;
+  }
+
+  /* Shine sweep */
+  .rs-shine {
+    position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+    background:linear-gradient(118deg,transparent 30%,rgba(255,255,255,.65) 50%,transparent 70%);
+    background-size:260% 100%;background-position:-100% 0;
+    transition:background-position 0.55s ease;mix-blend-mode:screen;
+  }
+  .rs-card:hover .rs-shine { background-position:200% 0; }
+
+  /* Scroll-entrance pop */
+  .rs-pop {
+    opacity:0;transform:scale(0.82) translateY(22px);
+    transition:opacity 0.5s cubic-bezier(.34,1.56,.64,1),transform 0.5s cubic-bezier(.34,1.56,.64,1);
+  }
+  .rs-pop.rs-visible { opacity:1;transform:none; }
+
+  /* Mobile snap scroll */
+  @media (max-width:767px) {
+    .rs-scroll { overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none; }
+    .rs-scroll::-webkit-scrollbar { display:none; }
+    .rs-snap { scroll-snap-align:start;flex-shrink:0; }
+  }
+
+  /* Reduced-motion overrides */
+  @media (prefers-reduced-motion:reduce) {
+    .rs-bob-1,.rs-bob-2,.rs-bob-3 { animation:none !important; }
+    .rs-card:hover .rs-sig-medal,.rs-card:hover .rs-sig-pin,.rs-card:hover .rs-sig-cal,
+    .rs-card:hover .rs-sig-pal,.rs-card:hover .rs-sig-book,.rs-card:hover .rs-sig-grad { animation:none !important; }
+    .rs-lift { transition:none !important; }
+    .rs-pop { opacity:1 !important;transform:none !important;transition:none !important; }
+    .rs-shine { transition:none !important; }
+  }
 `;
 
 /* ═══════════════════════════════════════════════════════════════════════════════
@@ -363,6 +433,28 @@ const quickLinks = [
   { href: "/playgroup",                       label: "Playgroup",     Icon: Palette,       color: "#f97316" },
   { href: "/nursery",                         label: "Nursery",       Icon: BookOpen,      color: "#8b5cf6" },
   { href: "/kindergarten",                    label: "Kindergarten",  Icon: GraduationCap, color: "#14b8a6" },
+];
+
+/* ── Rainbow Shelf data ── */
+const SHELF_ITEMS = [
+  { href:"/best-preschool-near-me-in-thane", label:"Why Us",       Icon:Award,
+    color:"#EC210F", gradient:"linear-gradient(145deg,#FF5533,#C4160A)",
+    group:"A" as const, sigAnim:"rs-sig-medal", ageBand:null },
+  { href:"/play-school-near-me",             label:"Find Centre",  Icon:MapPin,
+    color:"#12B76A", gradient:"linear-gradient(145deg,#34D399,#059652)",
+    group:"A" as const, sigAnim:"rs-sig-pin",   ageBand:null },
+  { href:"/preschool-admissions",            label:"Book Visit",   Icon:FileText,
+    color:"#2E90FA", gradient:"linear-gradient(145deg,#60A5FA,#1D6FDC)",
+    group:"A" as const, sigAnim:"rs-sig-cal",   ageBand:null },
+  { href:"/playgroup",                       label:"Playgroup",    Icon:Palette,
+    color:"#FB6514", gradient:"linear-gradient(145deg,#FB923C,#EA5100)",
+    group:"B" as const, sigAnim:"rs-sig-pal",   ageBand:"[verify age]" },
+  { href:"/nursery",                         label:"Nursery",      Icon:BookOpen,
+    color:"#9B8AFB", gradient:"linear-gradient(145deg,#A78BFA,#6D35E8)",
+    group:"B" as const, sigAnim:"rs-sig-book",  ageBand:"[verify age]" },
+  { href:"/kindergarten",                    label:"Kindergarten", Icon:GraduationCap,
+    color:"#06B6A4", gradient:"linear-gradient(145deg,#34D5C8,#0891B2)",
+    group:"B" as const, sigAnim:"rs-sig-grad",  ageBand:"[verify age]" },
 ];
 
 const stats = [
@@ -717,6 +809,284 @@ function QuickNavSection() {
         </div>
       </div>
     </nav>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   SECTION: RAINBOW SHELF — Immersive 3D quick-select
+═══════════════════════════════════════════════════════════════════════════════ */
+type ShelfItem = typeof SHELF_ITEMS[number];
+
+function ShelfCard({ item, globalIdx, isActive, onActivate }: {
+  item: ShelfItem; globalIdx: number; isActive: boolean; onActivate: (i: number) => void;
+}) {
+  const innerRef    = useRef<HTMLDivElement>(null);
+  const parallaxRef = useRef<HTMLDivElement>(null);
+  const mouseT      = useRef({ x: 0, y: 0 });
+  const smoothed    = useRef({ x: 0, y: 0 });
+
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion:reduce)").matches) return;
+    let raf: number;
+    const tick = () => {
+      const lp = 0.09;
+      smoothed.current.x += (mouseT.current.x - smoothed.current.x) * lp;
+      smoothed.current.y += (mouseT.current.y - smoothed.current.y) * lp;
+      const { x, y } = smoothed.current;
+      if (innerRef.current) {
+        innerRef.current.style.transform =
+          `perspective(800px) rotateY(${(x*10).toFixed(3)}deg) rotateX(${(-y*10).toFixed(3)}deg)`;
+      }
+      if (parallaxRef.current) {
+        parallaxRef.current.style.transform =
+          `translateX(${(-x*6).toFixed(2)}px) translateY(${(-y*4).toFixed(2)}px)`;
+      }
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, []);
+
+  function onMouseMove(e: React.MouseEvent<HTMLDivElement>) {
+    const r = innerRef.current?.getBoundingClientRect();
+    if (!r) return;
+    mouseT.current.x = (e.clientX - r.left) / r.width  - 0.5;
+    mouseT.current.y = (e.clientY - r.top)  / r.height - 0.5;
+  }
+  function onMouseLeave() { mouseT.current = { x: 0, y: 0 }; }
+
+  function handleClick(e: React.MouseEvent<HTMLAnchorElement>) {
+    e.preventDefault();
+    onActivate(globalIdx);
+    const r = innerRef.current?.getBoundingClientRect();
+    if (!r) return;
+    const cx = e.clientX - r.left, cy = e.clientY - r.top;
+    for (let i = 0; i < 12; i++) {
+      const el = document.createElement("div");
+      const angle = (i / 12) * Math.PI * 2;
+      const dist  = 36 + Math.random() * 32;
+      const size  = 5 + Math.random() * 5;
+      el.setAttribute("style",
+        `position:absolute;left:${cx}px;top:${cy}px;width:${size}px;height:${size}px;` +
+        `border-radius:50%;background:${item.color};pointer-events:none;z-index:50;` +
+        `animation:rs-confetti 0.65s cubic-bezier(.22,1,.36,1) ${i*28}ms forwards;`);
+      el.style.setProperty("--cx", `${(Math.cos(angle)*dist).toFixed(1)}px`);
+      el.style.setProperty("--cy", `${(Math.sin(angle)*dist).toFixed(1)}px`);
+      el.style.setProperty("--cr", `${((Math.random()-.5)*360).toFixed(0)}deg`);
+      innerRef.current?.appendChild(el);
+      setTimeout(() => el.remove(), 900 + i * 28);
+    }
+  }
+
+  const bobClass = ["rs-bob-1","rs-bob-2","rs-bob-3"][globalIdx % 3];
+
+  return (
+    <div
+      className="rs-card rs-pop rs-snap"
+      onMouseMove={onMouseMove}
+      onMouseLeave={onMouseLeave}
+      style={{ transitionDelay:`${globalIdx * 65}ms` }}
+    >
+      <a href={item.href} onClick={handleClick} aria-label={item.label}
+        className="block rounded-[22px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+        style={{ "--tw-ring-color": item.color } as React.CSSProperties}>
+
+        {/* Lift wrapper — CSS hover translates this up */}
+        <div className="rs-lift">
+
+          {/* Tilt inner — JS sets perspective rotateX/Y directly */}
+          <div ref={innerRef} className="rs-inner-card"
+            style={{
+              borderRadius: 22,
+              background: "white",
+              border: isActive ? `2px solid ${item.color}` : "1px solid rgba(33,27,46,.06)",
+              boxShadow: isActive
+                ? `0 0 0 4px ${item.color}22,0 16px 40px ${item.color}30`
+                : "0 10px 30px rgba(33,27,46,.08)",
+              padding: "22px 14px 16px",
+              position: "relative",
+              overflow: "hidden",
+              transformStyle: "preserve-3d",
+              willChange: "transform",
+              transition: "box-shadow 0.3s,border-color 0.25s",
+              "--card-shadow": `${item.color}40`,
+            } as React.CSSProperties}
+          >
+            {/* Gradient top accent (3px bar) */}
+            <div style={{ position:"absolute",top:0,left:0,right:0,height:3,
+              background:item.gradient,borderRadius:"22px 22px 0 0" }}/>
+
+            {/* Coloured aura behind icon */}
+            <div style={{ position:"absolute",top:10,left:"50%",transform:"translateX(-50%)",
+              width:78,height:78,borderRadius:"50%",
+              background:`radial-gradient(circle,${item.color}22 0%,transparent 68%)`,
+              filter:"blur(10px)" }}/>
+
+            {/* Icon — parallax wrapper + bob + sig animation on separate layers */}
+            <div className="flex justify-center" style={{ marginBottom:12,marginTop:6 }}>
+              <div ref={parallaxRef} style={{ willChange:"transform" }}>
+                <div
+                  className={`${bobClass} ${item.sigAnim}`}
+                  style={{
+                    width:52,height:52,borderRadius:14,
+                    background:item.gradient,
+                    display:"flex",alignItems:"center",justifyContent:"center",
+                    boxShadow:`0 8px 20px ${item.color}55`,
+                    willChange:"transform",
+                  }}
+                >
+                  <item.Icon style={{ width:24,height:24,color:"white" }}/>
+                </div>
+              </div>
+            </div>
+
+            {/* Label */}
+            <p style={{ textAlign:"center",fontWeight:600,fontSize:"0.795rem",
+              color:item.color,margin:0,lineHeight:1.3,
+              fontFamily:"'Fredoka One','Baloo 2',system-ui,sans-serif",
+              letterSpacing:"-0.01em" }}>
+              {item.label}
+            </p>
+
+            {/* Age band (programmes only) */}
+            {item.ageBand && (
+              <div style={{ display:"flex",justifyContent:"center",marginTop:5 }}>
+                <span style={{ fontSize:9,color:item.color,
+                  background:`${item.color}15`,borderRadius:100,
+                  padding:"2px 7px",fontWeight:700,letterSpacing:"0.04em" }}>
+                  {item.ageBand}
+                </span>
+              </div>
+            )}
+
+            {/* Arrow — hidden, slides in on hover via CSS */}
+            <div className="rs-arrow"
+              style={{ display:"flex",justifyContent:"center",marginTop:5 }}>
+              <span style={{ color:item.color,fontSize:13,fontWeight:700 }}>→</span>
+            </div>
+
+            {/* Shine sweep overlay */}
+            <div className="rs-shine"/>
+          </div>
+        </div>
+      </a>
+    </div>
+  );
+}
+
+function RainbowShelfSection() {
+  const [activeIdx, setActiveIdx] = useState<number | null>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const sec = sectionRef.current;
+    if (!sec) return;
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        sec.querySelectorAll<HTMLElement>(".rs-pop").forEach((el, i) => {
+          setTimeout(() => el.classList.add("rs-visible"), i * 65);
+        });
+        obs.unobserve(sec);
+      });
+    }, { threshold: 0.12 });
+    obs.observe(sec);
+    return () => obs.disconnect();
+  }, []);
+
+  const groupA = SHELF_ITEMS.filter(x => x.group === "A");
+  const groupB = SHELF_ITEMS.filter(x => x.group === "B");
+
+  const grpLabel = (txt: string) => (
+    <p className="rs-pop" style={{
+      fontSize:"0.68rem",fontWeight:700,letterSpacing:"0.15em",textTransform:"uppercase",
+      color:"#55506A",margin:"0 0 14px 2px",whiteSpace:"nowrap",
+    }}>{txt}</p>
+  );
+
+  const grpCards = (items: ShelfItem[], offset: number) => (
+    <div style={{ display:"flex",gap:10 }}>
+      {items.map((item, i) => (
+        <ShelfCard key={item.href} item={item} globalIdx={i + offset}
+          isActive={activeIdx === i + offset} onActivate={setActiveIdx}/>
+      ))}
+    </div>
+  );
+
+  return (
+    <section ref={sectionRef} style={{
+      background:"linear-gradient(180deg,#FFFBF5 0%,#FFF6EE 55%,#FFFBF5 100%)",
+      padding:"68px 0 88px",overflow:"hidden",
+    }}>
+
+      {/* Section heading */}
+      <div className="rs-pop text-center" style={{ marginBottom:48 }}>
+        <p style={{ fontSize:"0.63rem",fontWeight:700,letterSpacing:"0.2em",
+          textTransform:"uppercase",color:"#55506A",margin:"0 0 8px" }}>
+          WHERE TO NEXT?
+        </p>
+        <h2 style={{ fontFamily:"'Fredoka One','Baloo 2',system-ui,sans-serif",
+          fontWeight:600,fontSize:"clamp(1.85rem,4vw,2.75rem)",
+          color:"#211B2E",margin:0,letterSpacing:"-0.02em" }}>
+          Start Exploring
+        </h2>
+      </div>
+
+      {/* ── DESKTOP: two groups side-by-side ── */}
+      <div className="hidden md:block" style={{ maxWidth:1080,margin:"0 auto",padding:"0 28px" }}>
+        <div style={{ display:"flex",alignItems:"flex-start",gap:24 }}>
+
+          {/* Group A — Quick Links */}
+          <div style={{ flex:1 }}>
+            {grpLabel("Quick Links")}
+            {grpCards(groupA, 0)}
+          </div>
+
+          {/* Vertical hairline divider */}
+          <div style={{ width:1,background:"rgba(33,27,46,.10)",
+            alignSelf:"stretch",margin:"36px 16px 0",flexShrink:0 }}/>
+
+          {/* Group B — Our Programmes */}
+          <div style={{ flex:1 }}>
+            {grpLabel("Our Programmes")}
+            {grpCards(groupB, 3)}
+          </div>
+        </div>
+      </div>
+
+      {/* ── MOBILE: horizontal snap scroll with peek ── */}
+      <div className="md:hidden">
+        <div className="rs-scroll"
+          style={{ display:"flex",padding:"0 20px 10px",gap:0 }}>
+
+          {/* Group A block */}
+          <div className="rs-snap" style={{ flexShrink:0,paddingRight:6 }}>
+            {grpLabel("Quick Links")}
+            <div style={{ display:"flex",gap:10 }}>
+              {groupA.map((item, i) => (
+                <ShelfCard key={item.href} item={item} globalIdx={i}
+                  isActive={activeIdx === i} onActivate={setActiveIdx}/>
+              ))}
+            </div>
+          </div>
+
+          {/* Mobile divider */}
+          <div style={{ flexShrink:0,width:1,background:"rgba(33,27,46,.10)",
+            alignSelf:"stretch",margin:"22px 18px 0" }}/>
+
+          {/* Group B block */}
+          <div className="rs-snap" style={{ flexShrink:0,paddingRight:20 }}>
+            {grpLabel("Our Programmes")}
+            <div style={{ display:"flex",gap:10 }}>
+              {groupB.map((item, i) => (
+                <ShelfCard key={item.href} item={item} globalIdx={i+3}
+                  isActive={activeIdx === i+3} onActivate={setActiveIdx}/>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -1335,7 +1705,7 @@ export default function Dummy() {
       </div>
 
       <Hero3D />
-      <QuickNavSection />
+      <RainbowShelfSection />
       <CallbackSection />
       <ContainerScrollSection />
       <StatsSection />

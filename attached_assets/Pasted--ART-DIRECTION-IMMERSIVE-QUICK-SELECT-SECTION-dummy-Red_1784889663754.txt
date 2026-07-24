@@ -1,0 +1,79 @@
+# ART DIRECTION — IMMERSIVE QUICK-SELECT SECTION (/dummy)
+Redesign the 6-tile quick-select row (Why Us · Find Centre · Book Visit ·
+Playgroup · Nursery · Kindergarten) into a playful, modern, 3D "Rainbow Shelf".
+Match the hero's look (cream bg, pastel aurora, red #EC210F brand accent,
+Fredoka/Baloo headings + Plus Jakarta Sans body) and the same smooth-motion
+rules (transform/opacity only, eased, 60fps, Lenis + GSAP).
+
+## CONCEPT — "Rainbow Shelf of Toys"
+The tiles sit on the cloud divider like colourful toys lined up on a shelf.
+Each tile is a soft 3D-tilting card with ONE chunky 3D icon floating above its
+surface (real parallax depth), its own brand-spectrum colour, and a signature
+playful animation on hover. The row reads as a rainbow left→right.
+
+## STRUCTURE (group + label the two categories)
+Add a small playful section heading centered above the row:
+  eyebrow: "WHERE TO NEXT?"  (uppercase, letter-spacing, --ink-soft)
+  title:   "Start Exploring"  (Fredoka, --ink)
+Then TWO labelled groups on one row (divider/gap between them):
+  GROUP A — "Quick Links":  Why Us · Find Centre · Book Visit
+  GROUP B — "Our Programmes":  Playgroup · Nursery · Kindergarten
+On the 3 programme cards add a small age-band tag ONLY if verified — otherwise
+use a "[verify age]" placeholder, do NOT invent ranges.
+
+## PER-TILE COLOUR + 3D ICON + SIGNATURE HOVER MOTION
+Keep each tile's existing colour, upgraded to a rich gradient + soft coloured
+aura. Each icon is a chunky, rounded, matte 3D object floating ~16px above the
+card (drop shadow on the card below it), gently bobbing at idle:
+- Why Us       → red #EC210F     → award medal/ribbon → shines + swings on hover
+- Find Centre  → green #12B76A   → map pin           → drops & bounces, ripple ring
+- Book Visit   → blue #2E90FA    → calendar           → a page flips up
+- Playgroup    → orange #FB6514  → paint palette      → tilts, paint dabs jiggle
+- Nursery      → purple #9B8AFB  → open book          → pages flutter open
+- Kindergarten → teal #06B6A4    → graduation cap     → cap lifts, tassel swings
+
+## CARD DESIGN (exact)
+- Soft white card, radius 22px, 1px hairline, base shadow
+  0 10px 30px rgba(33,27,46,0.08). Generous padding, icon centered top,
+  label below (Fredoka 600, the card's colour), and a tiny "→" that's hidden
+  until hover.
+- Idle: card rests flat; icon bobs slowly (sine, phase-varied per card).
+- The card's colour lives as a faint radial glow behind the icon + a 2px
+  gradient top-border accent.
+
+## INTERACTIONS (the "wow")
+1. 3D TILT: card tilts toward the cursor (rotateX/Y, max ~10°, perspective
+   ~800px), icon parallax-shifts opposite for depth. Damped, springy return.
+2. LIFT: on hover the card rises 10px off the shelf, shadow grows + tints to
+   the card colour, coloured aura blooms, the "→" slides in, and the icon runs
+   its signature animation (above).
+3. MAGNETIC: the icon (and card) gently pull ~6px toward the cursor.
+4. SELECT/ACTIVE state: clicked/active card gets a coloured ring + filled
+   colour chip; others dim slightly (focus the choice).
+5. SCROLL ENTRANCE: as the section enters, tiles POP UP one-by-one from behind
+   the cloud (stagger 70ms, back-out ease) like toys being placed on the shelf.
+   Group labels fade/slide in first.
+6. CURSOR: soft sparkle on hover; on click a tiny confetti/star burst in the
+   card's colour.
+
+## MOBILE
+- Horizontal snap-scroll carousel (peek the next card) OR 2-column grid — pick
+  whichever keeps tap targets ≥44px. Keep the 3D icons, bob, tap-to-animate,
+  and coloured auras. Tilt driven by touch/gyro. Snap has soft momentum (Lenis).
+- Group labels stack above their sets. Buttery 60fps; reduce shadows/blur.
+
+## PERFORMANCE & ACCESSIBILITY
+- Real semantic <a>/<button> links with clear focus rings (keyboard + screen
+  reader labels). The 3D/tilt is decorative and must not block clicks.
+- transform/opacity only; will-change on hover; icons preloaded; respect
+  prefers-reduced-motion (static tiles, colour + icon, no bob/tilt).
+
+## BRAND (RPS)
+- Rainbow International Pre-School. Red #EC210F stays the lead brand colour;
+  the other tile colours are a SUGGESTED supporting spectrum (pending brand
+  approval), not official. No fabricated age ranges, facilities, or claims.
+
+## DELIVER
+Show desktop @1440 + mobile @390 with a screen recording of hover, tilt,
+select, and the pop-up entrance. Success = playful, premium, obviously
+clickable, and smooth.
