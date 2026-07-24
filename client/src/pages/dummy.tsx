@@ -15,6 +15,7 @@ import {
   ArrowRight, Phone, Users, Star, MapPin, Shield, Award,
   Sparkles, Bus, Gamepad2, FileText, BookOpen, Palette,
   GraduationCap, Lock, Heart, Play, ChevronDown,
+  Volume2, VolumeX,
 } from "lucide-react";
 import { SiWhatsapp } from "react-icons/si";
 
@@ -44,6 +45,7 @@ const STYLES = `
   @keyframes d-slide-up { from{opacity:0;transform:translateY(40px)} to{opacity:1;transform:none} }
   @keyframes d-morph   { 0%,100%{border-radius:60% 40% 30% 70%/60% 30% 70% 40%} 50%{border-radius:30% 60% 70% 40%/50% 60% 30% 60%} }
   @keyframes d-counter-in { from{transform:translateY(20px);opacity:0} to{transform:none;opacity:1} }
+  @keyframes le-filmstrip  { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
 
   .d-float-a { animation: d-float-a 9s ease-in-out infinite; }
   .d-float-b { animation: d-float-b 12s ease-in-out infinite; }
@@ -1138,111 +1140,286 @@ function RainbowShelfSection() {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════════
-   SECTION: CONTAINER SCROLL — Apple-style 3D rotate in on scroll
-   Replicates manuarora700's Container Scroll Animation (id:1081) pattern
+   SECTION: LEARNING ENVIRONMENT — "Step Inside Our World"
+   Real walkthrough video as centerpiece. Warm cream palette, continuous
+   with the hero and quick-select. No dark/starry theme.
 ═══════════════════════════════════════════════════════════════════════════════ */
-function ContainerScrollSection() {
-  const wrapRef = useRef<HTMLDivElement>(null);
-  const cardRef = useRef<HTMLDivElement>(null);
-  const headingRef = useRef<HTMLDivElement>(null);
+function LearningEnvironmentSection() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const tiltRef    = useRef<HTMLDivElement>(null);
+  const videoRef   = useRef<HTMLVideoElement>(null);
+  const [muted,       setMuted]       = useState(true);
+  const [winIn,       setWinIn]       = useState(false);
+  const [chipsIn,     setChipsIn]     = useState(false);
+  const [stripPaused, setStripPaused] = useState(false);
 
   useEffect(() => {
-    const wrap = wrapRef.current;
-    if (!wrap) return;
-    const update = () => {
-      const rect = wrap.getBoundingClientRect();
-      const winH = window.innerHeight;
-      const progress = Math.max(0, Math.min(1, (-rect.top) / (rect.height - winH)));
-      if (cardRef.current) {
-        const rotX = 28 * (1 - progress);
-        const scale = 0.88 + 0.12 * progress;
-        cardRef.current.style.transform = `perspective(1200px) rotateX(${rotX}deg) scale(${scale})`;
-        cardRef.current.style.opacity = String(0.5 + 0.5 * progress);
+    const el = sectionRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) {
+        setWinIn(true);
+        setTimeout(() => setChipsIn(true), 420);
+        videoRef.current?.play().catch(() => {});
+      } else {
+        videoRef.current?.pause();
       }
-      if (headingRef.current) {
-        headingRef.current.style.transform = `translateY(${progress * -30}px)`;
-        headingRef.current.style.opacity = String(Math.max(0, 1 - progress * 2.2));
-      }
-    };
-    window.addEventListener("scroll", update, { passive: true });
-    update();
-    return () => window.removeEventListener("scroll", update);
+    }, { threshold: 0.2 });
+    obs.observe(el);
+    return () => obs.disconnect();
   }, []);
 
+  useEffect(() => {
+    const el = tiltRef.current;
+    if (!el) return;
+    const onMove = (e: MouseEvent) => {
+      const r  = el.getBoundingClientRect();
+      const rx = ((e.clientX - r.left) / r.width  - 0.5) * 10;
+      const ry = ((e.clientY - r.top)  / r.height - 0.5) * 7;
+      el.style.transform = `perspective(900px) rotateY(${rx}deg) rotateX(${-ry}deg)`;
+    };
+    const onLeave = () => { el.style.transform = ""; };
+    el.addEventListener("mousemove", onMove);
+    el.addEventListener("mouseleave", onLeave);
+    return () => { el.removeEventListener("mousemove", onMove); el.removeEventListener("mouseleave", onLeave); };
+  }, []);
+
+  const toggleSound = () => {
+    const v = videoRef.current;
+    if (!v) return;
+    v.muted = !v.muted;
+    setMuted(v.muted);
+  };
+
+  const CHIPS = [
+    { Icon: Gamepad2,      label: "Play-Based Learning", color: "#D97706", bg: "rgba(251,191,36,.15)", side: "left"  as const },
+    { Icon: Shield,        label: "CCTV-Safe Campuses",  color: "#059669", bg: "rgba(16,185,129,.13)", side: "right" as const },
+    { Icon: GraduationCap, label: "Expert Teachers",     color: "#2563EB", bg: "rgba(59,130,246,.13)", side: "left"  as const },
+    { Icon: Users,         label: "Small Batches",       color: "#7C3AED", bg: "rgba(139,92,246,.13)", side: "right" as const },
+  ];
+
+  const FILMSTRIP = [
+    "rainbow-preschool-classroom-activity-01.webp",
+    "rainbow-preschool-classroom-learning-01.webp",
+    "rainbow-preschool-activity-room-01.webp",
+    "rainbow-preschool-learning-through-play-01.webp",
+    "rainbow-preschool-classroom-activity-02.webp",
+    "rainbow-preschool-classroom-learning-02.webp",
+    "rainbow-preschool-activity-room-02.webp",
+    "rainbow-preschool-learning-through-play-02.webp",
+  ];
+
   return (
-    <div ref={wrapRef} className="relative" style={{ height: "220vh" }}>
-      <div className="sticky top-0 h-screen flex flex-col items-center justify-center overflow-hidden"
-        style={{ background: "linear-gradient(170deg,#0a0a0f 0%,#110a18 40%,#0d0a12 100%)" }}>
+    <section ref={sectionRef} className="relative overflow-hidden"
+      style={{ background:"linear-gradient(170deg,#FFFBF5 0%,#FFF3EA 52%,#FFFBF5 100%)" }}>
 
-        {/* Stars background */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          {Array.from({ length: 60 }).map((_, i) => (
-            <div key={i} className="absolute rounded-full bg-white"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                width: Math.random() * 2.5 + 0.5,
-                height: Math.random() * 2.5 + 0.5,
-                opacity: Math.random() * 0.6 + 0.1,
-                animation: `d-twinkle ${1.5 + Math.random() * 2.5}s ease-in-out ${Math.random() * 3}s infinite`,
-              }} />
-          ))}
-        </div>
+      {/* ── Cloud scallop — top ── */}
+      <div aria-hidden className="absolute top-0 inset-x-0 z-20 pointer-events-none">
+        <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"
+          style={{ display:"block", width:"100%", height:80 }}>
+          <path d="M0,80 L0,42 Q60,4 120,42 Q180,80 240,42 Q300,4 360,42 Q420,80 480,42 Q540,4 600,42 Q660,80 720,42 Q780,4 840,42 Q900,80 960,42 Q1020,4 1080,42 Q1140,80 1200,42 Q1260,4 1320,42 Q1380,80 1440,42 L1440,0 L0,0 Z"
+            fill="#FFFBF5"/>
+        </svg>
+      </div>
 
-        {/* Heading — fades out as you scroll */}
-        <div ref={headingRef} className="text-center mb-12 px-6 max-w-3xl mx-auto z-10"
-          style={{ transition: "opacity 0.1s, transform 0.1s" }}>
-          <p className="text-xs font-bold tracking-[0.2em] uppercase text-amber-400 mb-4">Our Learning Environment</p>
-          <h2 className="section-title mb-4"
-            style={{ fontSize: "clamp(2rem,4.5vw,3.4rem)", color:"white" }}>
-            A world built for<br />
-            <span className="shimmer-text">little explorers</span>
+      {/* ── Aurora blobs ── */}
+      <Orb cls="d-float-a d-pulse w-[500px] h-[500px] -top-32 -left-24 opacity-50"
+        style={{ background:"radial-gradient(circle,rgba(251,191,36,.20) 0%,transparent 65%)", filter:"blur(50px)" }}/>
+      <Orb cls="d-float-b w-96 h-96 bottom-20 -right-20 opacity-40"
+        style={{ background:"radial-gradient(circle,rgba(236,33,15,.11) 0%,transparent 65%)", filter:"blur(42px)" }}/>
+      <Orb cls="d-float-c w-64 h-64 top-1/3 right-[12%] opacity-30"
+        style={{ background:"radial-gradient(circle,rgba(139,92,246,.13) 0%,transparent 65%)", filter:"blur(36px)" }}/>
+      <StarDot cls="d-tw2 text-amber-300/60 top-[16%] left-[43%] w-3.5 h-3.5"/>
+      <StarDot cls="d-tw3 text-amber-200/40 bottom-[26%] right-[36%] w-2.5 h-2.5"/>
+
+      {/* ── Content ── */}
+      <div className="relative z-10" style={{ padding:"100px 0 80px" }}>
+
+        {/* ── Heading ── */}
+        <div className="text-center du-fade" style={{ marginBottom:52, padding:"0 20px" }}>
+          <p style={{ fontSize:"0.63rem", fontWeight:700, letterSpacing:"0.22em",
+            textTransform:"uppercase", color:"#EC210F", margin:"0 0 12px" }}>
+            OUR LEARNING ENVIRONMENT
+          </p>
+          <h2 className="section-title" style={{ fontSize:"clamp(2rem,4.5vw,3.4rem)", margin:"0 0 14px" }}>
+            A world built for{" "}
+            <span style={{
+              background:"linear-gradient(95deg,#F59E0B 0%,#EF4444 100%)",
+              WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent", backgroundClip:"text",
+            }}>little explorers</span>
           </h2>
-          <p className="text-white/55 text-[15px] leading-relaxed">Scroll down to step inside Rainbow Preschool</p>
+          <p style={{ color:"#55506A", fontSize:"1rem", maxWidth:440, margin:"0 auto", lineHeight:1.65 }}>
+            Peek inside a real day at Rainbow Preschool
+          </p>
         </div>
 
-        {/* 3D rotating card */}
-        <div ref={cardRef} className="w-full max-w-4xl mx-auto px-4 z-10"
-          style={{
-            transform: "perspective(1200px) rotateX(28deg) scale(0.88)",
-            opacity: 0.5,
-            transition: "transform 0.05s linear, opacity 0.05s linear",
-            transformOrigin: "center bottom",
-          }}>
-          <div className="rounded-3xl overflow-hidden border border-white/10"
-            style={{ boxShadow: "0 40px 120px rgba(0,0,0,0.60), 0 0 80px rgba(251,191,36,0.08)" }}>
-            <div className="relative aspect-video bg-gradient-to-br from-gray-900 to-gray-800 flex items-center justify-center overflow-hidden">
-              <img
-                src="/images/optimized/hero-banner-1.webp"
-                alt="Rainbow Preschool learning environment"
-                className="w-full h-full object-cover"
-                loading="lazy"
-              />
-              {/* Overlay with playful stats */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-              <div className="absolute inset-x-0 bottom-0 p-8 flex flex-wrap gap-3 justify-center">
-                {[
-                  { label: "Play-Based", color: "#fbbf24" },
-                  { label: "CCTV Safe", color: "#34d399" },
-                  { label: "Expert Teachers", color: "#60a5fa" },
-                  { label: "Small Batches", color: "#f472b6" },
-                ].map(({ label, color }) => (
-                  <span key={label}
-                    className="px-4 py-1.5 rounded-full text-sm font-semibold text-white border"
-                    style={{ borderColor: `${color}50`, background: `${color}22`, backdropFilter: "blur(8px)" }}>
-                    {label}
-                  </span>
-                ))}
+        {/* ── Desktop: 3-col (left chips | video window | right chips) ── */}
+        <div className="hidden md:grid mx-auto"
+          style={{ maxWidth:1080, padding:"0 40px",
+            gridTemplateColumns:"200px 1fr 200px", gap:"0 16px", alignItems:"center" }}>
+
+          {/* Left chips */}
+          <div style={{ display:"flex", flexDirection:"column", gap:16, alignItems:"flex-end" }}>
+            {CHIPS.filter(c => c.side === "left").map(({ Icon, label, color, bg }, i) => (
+              <div key={label} style={{ display:"flex", alignItems:"center", flexDirection:"row",
+                opacity: chipsIn ? 1 : 0,
+                transform: chipsIn ? "none" : "translateX(-20px) scale(0.88)",
+                transition:`opacity 0.55s cubic-bezier(.34,1.56,.64,1) ${i*110}ms, transform 0.55s cubic-bezier(.34,1.56,.64,1) ${i*110}ms` }}>
+                <div style={{ display:"flex", alignItems:"center", gap:10, padding:"9px 14px", borderRadius:18,
+                  background:"rgba(255,251,245,0.92)", backdropFilter:"blur(12px)", WebkitBackdropFilter:"blur(12px)",
+                  border:`1px solid ${color}28`,
+                  boxShadow:`0 4px 20px rgba(0,0,0,0.07), 0 0 0 1px ${color}10` }}>
+                  <div style={{ width:36, height:36, borderRadius:11, background:bg, flexShrink:0,
+                    display:"flex", alignItems:"center", justifyContent:"center" }}>
+                    <Icon size={17} style={{ color }}/>
+                  </div>
+                  <span style={{ fontSize:"0.76rem", fontWeight:700, color:"#211B2E", lineHeight:1.25, whiteSpace:"nowrap" }}>{label}</span>
+                </div>
+                <div style={{ position:"relative", width:32, height:2, marginLeft:6, flexShrink:0,
+                  background:`repeating-linear-gradient(90deg,${color} 0,${color} 4px,transparent 4px,transparent 9px)`,
+                  opacity:0.55 }}>
+                  <div style={{ position:"absolute", right:-1, top:"50%", transform:"translateY(-50%)",
+                    width:7, height:7, borderRadius:"50%", background:color }}/>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* ── Video window ── */}
+          <div ref={tiltRef} style={{ transition:"transform 0.3s ease", willChange:"transform" }}>
+            <div style={{
+              borderRadius:28, overflow:"hidden",
+              opacity: winIn ? 1 : 0,
+              transform: winIn ? "none" : "scale(0.9) translateY(28px)",
+              transition:"opacity 0.75s ease, transform 0.75s cubic-bezier(.22,1,.36,1)",
+              boxShadow:"0 40px 80px rgba(33,27,46,.20), 0 0 0 6px rgba(255,255,255,.95), 0 0 0 7.5px rgba(33,27,46,.05)",
+              willChange:"opacity,transform",
+            }}>
+              <div className="relative aspect-video">
+                <video ref={videoRef}
+                  src="/assets/RPS_Walkthrough_Video_-_Website_1_1766126796450.mp4"
+                  poster="/images/optimized/classroom-rainbow-preschool.webp"
+                  autoPlay muted loop playsInline
+                  aria-label="Campus walkthrough of Rainbow Preschool — classrooms, activity areas, outdoor spaces"
+                  style={{ display:"block", width:"100%", height:"100%", objectFit:"cover" }}
+                />
+                <button onClick={toggleSound} data-testid="button-video-sound-toggle"
+                  className="absolute bottom-3 right-3 flex items-center gap-1.5 rounded-full text-white text-xs font-semibold"
+                  style={{ padding:"6px 12px", background:"rgba(0,0,0,.42)", backdropFilter:"blur(8px)",
+                    border:"1px solid rgba(255,255,255,.22)", cursor:"pointer" }}
+                  aria-label={muted ? "Unmute video" : "Mute video"}>
+                  {muted ? <VolumeX size={13}/> : <Volume2 size={13}/>}
+                  {muted ? "Sound off" : "Sound on"}
+                </button>
               </div>
             </div>
           </div>
+
+          {/* Right chips */}
+          <div style={{ display:"flex", flexDirection:"column", gap:16, alignItems:"flex-start" }}>
+            {CHIPS.filter(c => c.side === "right").map(({ Icon, label, color, bg }, i) => (
+              <div key={label} style={{ display:"flex", alignItems:"center", flexDirection:"row",
+                opacity: chipsIn ? 1 : 0,
+                transform: chipsIn ? "none" : "translateX(20px) scale(0.88)",
+                transition:`opacity 0.55s cubic-bezier(.34,1.56,.64,1) ${(i+2)*110}ms, transform 0.55s cubic-bezier(.34,1.56,.64,1) ${(i+2)*110}ms` }}>
+                <div style={{ position:"relative", width:32, height:2, marginRight:6, flexShrink:0,
+                  background:`repeating-linear-gradient(90deg,${color} 0,${color} 4px,transparent 4px,transparent 9px)`,
+                  opacity:0.55 }}>
+                  <div style={{ position:"absolute", left:-1, top:"50%", transform:"translateY(-50%)",
+                    width:7, height:7, borderRadius:"50%", background:color }}/>
+                </div>
+                <div style={{ display:"flex", alignItems:"center", gap:10, padding:"9px 14px", borderRadius:18,
+                  background:"rgba(255,251,245,0.92)", backdropFilter:"blur(12px)", WebkitBackdropFilter:"blur(12px)",
+                  border:`1px solid ${color}28`,
+                  boxShadow:`0 4px 20px rgba(0,0,0,0.07), 0 0 0 1px ${color}10` }}>
+                  <div style={{ width:36, height:36, borderRadius:11, background:bg, flexShrink:0,
+                    display:"flex", alignItems:"center", justifyContent:"center" }}>
+                    <Icon size={17} style={{ color }}/>
+                  </div>
+                  <span style={{ fontSize:"0.76rem", fontWeight:700, color:"#211B2E", lineHeight:1.25, whiteSpace:"nowrap" }}>{label}</span>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
 
-        {/* Brand glow */}
-        <div className="absolute inset-0 pointer-events-none"
-          style={{ background: "radial-gradient(ellipse at 50% 80%, rgba(251,191,36,0.06) 0%, transparent 60%)" }} />
+        {/* ── Mobile: video full-width + chips 2×2 below ── */}
+        <div className="md:hidden px-4">
+          <div style={{ borderRadius:22, overflow:"hidden", marginBottom:18,
+            boxShadow:"0 24px 60px rgba(33,27,46,.15), 0 0 0 5px rgba(255,255,255,.88), 0 0 0 6px rgba(33,27,46,.05)" }}>
+            <div className="relative aspect-video">
+              <video
+                src="/assets/RPS_Walkthrough_Video_-_Website_1_1766126796450.mp4"
+                poster="/images/optimized/classroom-rainbow-preschool.webp"
+                autoPlay muted loop playsInline
+                aria-label="Campus walkthrough of Rainbow Preschool"
+                style={{ display:"block", width:"100%", height:"100%", objectFit:"cover" }}
+              />
+              <button onClick={toggleSound} data-testid="button-video-sound-toggle-mobile"
+                className="absolute bottom-3 right-3 flex items-center rounded-full text-white"
+                style={{ padding:"5px 10px", gap:5, fontSize:"0.7rem", fontWeight:600, cursor:"pointer",
+                  background:"rgba(0,0,0,.42)", backdropFilter:"blur(8px)", border:"1px solid rgba(255,255,255,.2)" }}
+                aria-label={muted ? "Unmute" : "Mute"}>
+                {muted ? <VolumeX size={12}/> : <Volume2 size={12}/>}
+              </button>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3 mb-2">
+            {CHIPS.map(({ Icon, label, color, bg }, i) => (
+              <div key={label} style={{
+                display:"flex", alignItems:"center", gap:10, padding:"10px 12px", borderRadius:16,
+                background:"rgba(255,251,245,.95)", border:`1px solid ${color}22`,
+                boxShadow:"0 2px 12px rgba(0,0,0,.06)",
+                opacity: chipsIn ? 1 : 0,
+                transform: chipsIn ? "none" : "scale(0.88) translateY(10px)",
+                transition:`opacity 0.45s ease ${i*85}ms, transform 0.45s ease ${i*85}ms`,
+              }}>
+                <div style={{ width:34, height:34, borderRadius:10, background:bg, flexShrink:0,
+                  display:"flex", alignItems:"center", justifyContent:"center" }}>
+                  <Icon size={16} style={{ color }}/>
+                </div>
+                <span style={{ fontSize:"0.73rem", fontWeight:700, color:"#211B2E", lineHeight:1.3 }}>{label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* ── Filmstrip of real classroom moments ── */}
+        <div className="du-fade" style={{ marginTop:52, overflow:"hidden" }}>
+          <p style={{ textAlign:"center", fontSize:"0.62rem", fontWeight:700, letterSpacing:"0.2em",
+            textTransform:"uppercase", color:"#9A8FA8", margin:"0 0 16px" }}>
+            REAL CLASSROOMS · REAL MOMENTS
+          </p>
+          <div
+            style={{ display:"flex", gap:12, width:"max-content",
+              animation:"le-filmstrip 40s linear infinite",
+              animationPlayState: stripPaused ? "paused" : "running" }}
+            onMouseEnter={() => setStripPaused(true)}
+            onMouseLeave={() => setStripPaused(false)}>
+            {[...FILMSTRIP, ...FILMSTRIP].map((src, i) => (
+              <div key={i} style={{ flexShrink:0, width:240, height:152, borderRadius:16, overflow:"hidden",
+                boxShadow:"0 4px 18px rgba(33,27,46,.10)" }}>
+                <img src={`/images/gallery/${src}`}
+                  alt="Rainbow Preschool classroom moment"
+                  loading="lazy"
+                  style={{ display:"block", width:"100%", height:"100%", objectFit:"cover" }}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
-    </div>
+
+      {/* ── Cloud scallop — bottom ── */}
+      <div aria-hidden className="absolute bottom-0 inset-x-0 z-20 pointer-events-none">
+        <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"
+          style={{ display:"block", width:"100%", height:80 }}>
+          <path d="M0,0 L0,38 Q60,76 120,38 Q180,0 240,38 Q300,76 360,38 Q420,0 480,38 Q540,76 600,38 Q660,0 720,38 Q780,76 840,38 Q900,0 960,38 Q1020,76 1080,38 Q1140,0 1200,38 Q1260,76 1320,38 Q1380,0 1440,38 L1440,80 L0,80 Z"
+            fill="#FFFBF5"/>
+        </svg>
+      </div>
+    </section>
   );
 }
 
@@ -1754,7 +1931,7 @@ export default function Dummy() {
       <Hero3D />
       <RainbowShelfSection />
       <CallbackSection />
-      <ContainerScrollSection />
+      <LearningEnvironmentSection />
       <StatsSection />
 
       {/* Wave */}

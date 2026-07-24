@@ -1,0 +1,82 @@
+# ART DIRECTION — REVAMP "OUR LEARNING ENVIRONMENT" SECTION (/dummy)
+Fully rebuild the "A world built for little explorers" section. Problem: it's a
+dark starry theme that clashes with the bright, warm template used in the hero
+and quick-select. Bring it fully into the SAME template (cream bg, pastel
+aurora, rainbow accents, red #EC210F lead, rounded display font) and make the
+REAL classroom video the immersive centerpiece.
+
+## CONCEPT — "Step Inside Our World" (a window into the school)
+A bright, warm showcase that lets parents peek into daily life at Rainbow
+Preschool. The centerpiece is the school's real video footage framed like a
+soft "window" into a classroom, with floating USP chips that annotate the scene
+as you scroll. Warm, joyful, premium — continuous with the rest of the page.
+
+## BACKGROUND & COHESION (kill the dark theme)
+- Same cream base (#FFFBF5→#FFF3EA) + soft pastel aurora blobs + a few floating
+  toy props (balloon, star, cloud) at low opacity, exactly like the hero/selector.
+- Scalloped cloud dividers top AND bottom so it flows seamlessly from the
+  quick-select section into this one and out to the next.
+- NO stars / NO near-black background. If you want depth, use a faint warm
+  radial glow, not darkness.
+
+## HEADING (use the shared display-font heading token)
+- Eyebrow: "OUR LEARNING ENVIRONMENT" (uppercase, letter-spacing, red #EC210F).
+- Title: "A world built for little explorers" in the SAME rounded display font
+  as "Rainbow Preschool" / "Start Exploring" — "little explorers" in the gold→
+  amber gradient, rest in ink #211B2E. Centered.
+- Subline: "Peek inside a real day at Rainbow Preschool" (--ink-soft).
+
+## CENTERPIECE — THE REAL VIDEO "WINDOW"
+- Use the school's existing classroom/campus video (the footage from the live
+  Request-a-Callback section). Place it at /public/video/ as compressed
+  mp4 + webm; autoplay, muted, loop, playsInline, with a poster image fallback
+  and lazy-load (only plays when in view).
+- Frame it as a large rounded "window": radius 28px, soft white inner frame,
+  big warm shadow (0 40px 80px rgba(33,27,46,.18)), a subtle 3D tilt that eases
+  toward the cursor, and gentle float. On scroll it scales up slightly and
+  "opens" (a soft mask/curtain or scale-in reveal) — the "step inside" moment.
+- A small round PLAY/İSound toggle in the corner (glass) in case they want audio.
+- Clean the footage: NO muddy yellow-green overlay. If a scrim is needed for
+  text legibility, use a soft warm gradient only at the bottom edge.
+
+## FLOATING USP CHIPS (annotate the scene)
+- 4 glass chips float around the window, each = vivid icon + short label,
+  connected to a point on the video by a thin dotted line + dot (like friendly
+  annotations pointing into the classroom): 
+    Play-Based · CCTV-Safe · Expert Teachers · Small Batches   [VERIFY these are
+    approved RPS USPs — if any isn't on the official USP list, replace with an
+    approved one; do not invent new claims].
+- Chips use the same vivid palette + white icons as the quick-select tiles.
+- On scroll they pop in one-by-one (stagger, back-out ease) and bob gently;
+  their connector lines draw in. Hover/tap = chip lifts + icon animates.
+
+## SIGNATURE SCROLL INTERACTION
+- As the section enters: heading rises → the video window scales up & "opens" →
+  USP chips + connector lines animate in around it → props parallax at depth.
+- Optional secondary touch: a slow auto-scrolling filmstrip/marquee of a few
+  more real classroom moments (rounded thumbnails) beneath the main window,
+  pausing on hover. Only if real photos are available — no stock/AI as "real".
+
+## MOBILE
+- Window video full-width (16:9), rounded, gentle tilt via gyro. USP chips move
+  BELOW the video as a 2-col grid or a neat horizontal snap row (not overlapping
+  the video — avoid the congestion issue). Chips animate in on scroll, tap to
+  highlight. Everything stacked, spacious, 60fps.
+
+## PERFORMANCE & A11Y
+- Optimize the video (short loop, compressed, poster, pause when offscreen).
+- transform/opacity animation only; will-change on hover; prefers-reduced-motion
+  → static window (poster frame), chips visible but no motion, no autoplay-heavy
+  load. Captions/aria labels on the video; real semantic structure.
+
+## BRAND (RPS)
+- Rainbow International Pre-School. Red #EC210F leads; other hues are suggested
+  supporting colours. The video/photos are REAL footage of the real environment
+  (never present AI/stock as real students or campus). Use only approved USPs —
+  no fabricated facilities, ratios, safety, or staffing claims.
+
+## DELIVER
+Show desktop @1440 + mobile @390 with a screen recording of the scroll reveal +
+video playing. Success = the section is bright and continuous with the rest of
+the page (no dark clash), the real video is the immersive centerpiece, and the
+USP chips annotate it smoothly at 60fps.
