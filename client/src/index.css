@@ -288,6 +288,16 @@
 /* ── COMPONENT LAYER — PREMIUM DESIGN SYSTEM UTILITIES ──────────────────── */
 @layer components {
 
+  /* ── Display heading token — matches hero H1 "Rainbow Preschool" ──────── */
+  /* Usage: className="section-title" — add size (font-size) inline per usage. */
+  .section-title {
+    font-family: 'Fredoka', 'Baloo 2', system-ui, sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    color: #211B2E;
+  }
+
   /* ── Section spacing ──────────────────────────────────────────────── */
   .section-py    { padding-top: var(--section-py);    padding-bottom: var(--section-py); }
   .section-py-lg { padding-top: var(--section-py-lg); padding-bottom: var(--section-py-lg); }

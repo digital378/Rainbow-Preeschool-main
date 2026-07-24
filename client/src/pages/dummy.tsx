@@ -1071,9 +1071,7 @@ function RainbowShelfSection() {
           textTransform:"uppercase",color:"#55506A",margin:"0 0 8px" }}>
           WHERE TO NEXT?
         </p>
-        <h2 style={{ fontFamily:"'Fredoka One','Baloo 2',system-ui,sans-serif",
-          fontWeight:600,fontSize:"clamp(1.85rem,4vw,2.75rem)",
-          color:"#211B2E",margin:0,letterSpacing:"-0.02em" }}>
+        <h2 className="section-title" style={{ fontSize:"clamp(2rem,4vw,3rem)", margin:0 }}>
           Start Exploring
         </h2>
       </div>
@@ -1195,8 +1193,8 @@ function ContainerScrollSection() {
         <div ref={headingRef} className="text-center mb-12 px-6 max-w-3xl mx-auto z-10"
           style={{ transition: "opacity 0.1s, transform 0.1s" }}>
           <p className="text-xs font-bold tracking-[0.2em] uppercase text-amber-400 mb-4">Our Learning Environment</p>
-          <h2 className="font-heading font-extrabold text-white mb-4"
-            style={{ fontSize: "clamp(2rem,4.5vw,3.4rem)", letterSpacing: "-0.035em" }}>
+          <h2 className="section-title mb-4"
+            style={{ fontSize: "clamp(2rem,4.5vw,3.4rem)", color:"white" }}>
             A world built for<br />
             <span className="shimmer-text">little explorers</span>
           </h2>
@@ -1660,8 +1658,8 @@ function CtaSection() {
           <Sparkles className="w-3 h-3 text-yellow-300" />
           Free Campus Visits Available
         </div>
-        <h2 className="font-heading font-bold text-white mb-5"
-          style={{ fontSize: "clamp(1.65rem,3.8vw,2.7rem)", letterSpacing: "-0.03em", lineHeight: 1.14 }}>
+        <h2 className="section-title mb-5"
+          style={{ fontSize: "clamp(1.65rem,3.8vw,2.7rem)", lineHeight: 1.14, color:"white" }}>
           Ready to begin your child's<br className="hidden sm:block" /> learning journey?
         </h2>
         <p className="text-white/70 mb-11 max-w-lg mx-auto leading-[1.72] text-[16px]">
