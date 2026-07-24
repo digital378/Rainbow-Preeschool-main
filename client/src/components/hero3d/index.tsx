@@ -138,6 +138,53 @@ const HERO3D_STYLES = `
     0%,100%{transform:scale(1)} 40%{transform:scale(1.12)} 70%{transform:scale(0.96)}
   }
 
+  /* ── Student character layers ── */
+  .h3d-student-lean { will-change:transform; transform-origin:50% 95%; display:block; }
+  .h3d-student      { will-change:transform; transform-origin:50% 95%; display:block; }
+  .h3d-student-body { will-change:transform; transform-origin:50% 95%; display:block; }
+  .h3d-student-img  { display:block; width:auto; max-width:100%;
+                      user-select:none; -webkit-user-drag:none; }
+  .h3d-shadow {
+    position:absolute; bottom:-2px; left:50%; transform:translateX(-50%);
+    width:52%; height:16px; border-radius:50%;
+    background:rgba(33,27,46,0.20); filter:blur(14px);
+    pointer-events:none; will-change:opacity,transform;
+  }
+  /* Speech bubble — initially hidden; GSAP autoAlpha controls visibility */
+  .h3d-bubble {
+    position:absolute; top:6%; right:-5%;
+    background:#fff; border-radius:18px;
+    padding:9px 16px;
+    font-family:'Fredoka','Baloo 2',system-ui,sans-serif;
+    font-size:1.05rem; font-weight:600; color:#211B2E;
+    box-shadow:0 6px 24px rgba(33,27,46,0.14),0 0 0 1px rgba(33,27,46,0.06);
+    white-space:nowrap; pointer-events:none; z-index:20;
+    opacity:0; transform-origin:bottom left;
+  }
+  .h3d-bubble::after {
+    content:''; position:absolute; bottom:-9px; left:20px;
+    border:9px solid transparent; border-top-color:#fff; border-bottom:none;
+  }
+  /* Floating glass proof chip */
+  .h3d-proof-chip {
+    display:flex; align-items:center; gap:6px; flex-wrap:wrap;
+    background:rgba(255,255,255,0.80); backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    border:1px solid rgba(33,27,46,0.07); border-radius:16px;
+    padding:9px 13px;
+    box-shadow:0 6px 24px rgba(33,27,46,0.09);
+    font-family:'Plus Jakarta Sans',system-ui,sans-serif;
+    font-size:0.76rem; font-weight:500; color:#55506A;
+  }
+  .h3d-proof-star  { color:#FFB020; font-size:0.88rem; }
+  .h3d-proof-score { color:#211B2E; font-weight:700; font-size:0.88rem; }
+  .h3d-av {
+    display:flex; align-items:center; justify-content:center;
+    width:24px; height:24px; border-radius:50%;
+    color:#fff; font-weight:800; font-size:0.65rem;
+    border:2px solid #fff; flex-shrink:0;
+  }
+
   /* ── Typography ── */
   .h3d-display { font-family:'Fredoka','Baloo 2',system-ui,sans-serif; }
   .h3d-body    { font-family:'Plus Jakarta Sans',system-ui,sans-serif; }
@@ -773,6 +820,60 @@ function GlassCard() {
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
+   STUDENT CHARACTER  (mascot greeter — replaces photo card)
+   Layer order: lean (cursor RAF) → student (GSAP sway) → body (GSAP breathe)
+   Bubble + proof chip live as siblings, positioned absolutely in the wrapper.
+───────────────────────────────────────────────────────────────────────── */
+function ProofChip() {
+  const COLORS = [T.brandRed, "#3B82F6", "#22C55E", "#F97316"] as const;
+  return (
+    <div className="h3d-proof-chip">
+      <span className="h3d-proof-star">★</span>
+      <span className="h3d-proof-score">4.9</span>
+      <span style={{ color:T.inkSoft }}>· 1 Lakh+ families · Thane since 2007</span>
+      <div style={{ display:"flex", marginLeft:2 }}>
+        {(["A","B","C","D"] as const).map((l,i) => (
+          <div key={l} className="h3d-av"
+            style={{ background:COLORS[i], marginLeft:i>0?-8:0, zIndex:4-i }}>
+            {l}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function StudentCharacter({ charH="80vh", maxH=700 }:
+  { charH?:string; maxH?:number }) {
+  return (
+    <div className="h3d-char-outer relative flex flex-col items-center justify-end w-full">
+      {/* Contact shadow — grounding ellipse */}
+      <div className="h3d-shadow"/>
+
+      {/* Three nested wrappers for independent transform axes:
+          lean (cursor RAF) → student (GSAP sway) → body (GSAP breathe+hop) */}
+      <div className="h3d-student-lean">
+        <div className="h3d-student">
+          <div className="h3d-student-body">
+            <img
+              src="/characters/student-boy.png"
+              alt="Rainbow Preschool student mascot"
+              className="h3d-student-img"
+              style={{ height:charH, maxHeight:maxH }}
+              loading="eager"
+              draggable={false}
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Speech bubble — shown by GSAP on greeting */}
+      <div className="h3d-bubble">👋 Hi there!</div>
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
    STAT CHIPS
 ───────────────────────────────────────────────────────────────────────── */
 const STATS = [
@@ -842,11 +943,9 @@ export default function Hero3D() {
         hero.style.setProperty("--mx", mSmooth.x.toFixed(4));
         hero.style.setProperty("--my", mSmooth.y.toFixed(4));
       }
-      /* Tilt all card-inner elements imperatively */
-      const tx = mSmooth.y * 8;
-      const ty = mSmooth.x * -8;
-      hero.querySelectorAll<HTMLElement>(".h3d-card-inner").forEach(el => {
-        el.style.transform = `rotateX(${tx}deg) rotateY(${ty}deg)`;
+      /* Student cursor lean (separate layer, no GSAP conflict) */
+      hero.querySelectorAll<HTMLElement>(".h3d-student-lean").forEach(el => {
+        el.style.transform = `rotate(${(mSmooth.x * 1.8).toFixed(3)}deg)`;
       });
     }
     mouseRafId = requestAnimationFrame(mouseTick);
@@ -863,27 +962,76 @@ export default function Hero3D() {
       gyroActive = true;
     }
 
-    /* ── GSAP entrance — staggered, expo.out ── */
+    /* ── GSAP entrance + character life ── */
+    let greetInterval: ReturnType<typeof setInterval>;
+    let charEnterEl: Element | null = null;
+
+    /* Greeting function — hop + bubble, pure GSAP, no setState */
+    function doGreeting() {
+      if (prefersReduced.current) return;
+      gsap.timeline()
+        .to(".h3d-student-body", { y:-26, duration:0.20, ease:"power2.out", overwrite:"auto" })
+        .to(".h3d-student-body", { y:0,   duration:0.55, ease:"bounce.out", overwrite:"auto" })
+        .to(".h3d-bubble", { autoAlpha:1, scale:1, duration:0.28, ease:"back.out(1.7)" }, "-=0.42")
+        .to(".h3d-bubble", { autoAlpha:0, scale:0.82, duration:0.22, delay:1.0 });
+    }
+
     const ctx = gsap.context(() => {
       const ease = "expo.out";
+
+      /* Set initial state of bubble (hidden) */
+      gsap.set(".h3d-bubble", { autoAlpha:0, scale:0.82, transformOrigin:"bottom left" });
+
       const tl = gsap.timeline({ delay:0.1 });
 
+      /* Text entrance */
       tl.from(".h3d-badge",     { y:24, opacity:0, duration:0.6, ease })
-        /* H1: letter-by-letter for "Rainbow" (ink, no gradient), word for "Preschool" */
         .from(".h3d-line1 .h3d-letter",{ y:55, opacity:0, stagger:0.04, duration:0.6, ease }, "-=0.15")
         .from(".h3d-line2",     { y:55, opacity:0, duration:0.75, ease }, "-=0.45")
-        /* Sub-headline word-by-word */
         .from(".h3d-sub-word, .h3d-sub-dot",
               { y:24, opacity:0, stagger:0.07, duration:0.5, ease }, "-=0.35")
         .from(".h3d-desc",      { y:20, opacity:0, duration:0.5, ease }, "-=0.25")
-        /* Chips pop in with back-out (playful) */
         .from(".h3d-chip",      { y:18, opacity:0, scale:0.88, stagger:0.08,
               duration:0.45, ease:"back.out(1.7)" }, "-=0.20")
         .from(".h3d-cta",       { y:20, opacity:0, stagger:0.10, duration:0.45, ease }, "-=0.15")
-        .from(".h3d-card",      { x:65, opacity:0, duration:0.85, ease }, "-=0.55")
-        .from(".h3d-scroll",    { opacity:0, y:10, duration:0.4, ease }, "-=0.15");
 
-      /* Scroll: camera push + text parallax */
+        /* Character entrance — rises up from below with back-out overshoot (no opacity fade
+           so the character is never invisible mid-animation in the screenshot) */
+        .from(".h3d-char-outer", { y:90, scale:0.88,
+              duration:1.0, ease:"back.out(1.4)", transformOrigin:"50% 100%" }, "-=0.55")
+        .from(".h3d-shadow",    { scaleX:0.3, opacity:0, duration:0.55, ease }, "-=0.80")
+        .from(".h3d-proof-chip",{ y:20, opacity:0, duration:0.5, ease:"back.out(1.5)" }, "-=0.30")
+        .from(".h3d-scroll",    { opacity:0, y:10, duration:0.4, ease }, "-=0.20")
+
+        /* After entrance: kick off idle breathe + sway + first greeting */
+        .add(() => {
+          if (prefersReduced.current) return;
+
+          /* Breathe — on body element (y + scaleY) */
+          gsap.to(".h3d-student-body", {
+            y:-8, scaleY:1.012, duration:3.5,
+            yoyo:true, repeat:-1, ease:"sine.inOut",
+            transformOrigin:"50% 95%",
+          });
+          /* Sway — on middle element (rotation + x), phase-offset from breathe */
+          gsap.to(".h3d-student", {
+            rotation:1.5, x:4, duration:5.2,
+            yoyo:true, repeat:-1, ease:"sine.inOut",
+            transformOrigin:"50% 95%", delay:0.9,
+          });
+          /* Shadow breathes with body */
+          gsap.to(".h3d-shadow", {
+            scaleX:0.80, opacity:0.60, duration:3.5,
+            yoyo:true, repeat:-1, ease:"sine.inOut",
+          });
+
+          /* First greeting after short pause */
+          setTimeout(doGreeting, 500);
+          /* Auto-repeat every 6s */
+          greetInterval = setInterval(doGreeting, 6000);
+        });
+
+      /* Scroll parallax */
       ScrollTrigger.create({
         trigger:hero, start:"top top", end:"bottom top",
         onUpdate(s) {
@@ -897,11 +1045,19 @@ export default function Hero3D() {
       });
     }, hero);
 
+    /* Hover / tap → repeat greeting */
+    charEnterEl = hero.querySelector(".h3d-char-outer");
+    charEnterEl?.addEventListener("mouseenter", doGreeting);
+    charEnterEl?.addEventListener("touchstart", doGreeting, { passive:true });
+
     return () => {
       ctx.revert();
       gsap.ticker.remove(leanisTick);
       lenis.destroy();
       cancelAnimationFrame(mouseRafId);
+      clearInterval(greetInterval);
+      charEnterEl?.removeEventListener("mouseenter", doGreeting);
+      charEnterEl?.removeEventListener("touchstart", doGreeting);
       if (gyroActive) window.removeEventListener("deviceorientation", onGyro, true);
       sceneRef.current?.cleanup();
     };
@@ -1056,25 +1212,23 @@ export default function Hero3D() {
             </MagneticButton>
           </div>
 
-          {/* Mobile card (below CTAs) — same GlassCard, float animation */}
-          <div className="h3d-card block lg:hidden mt-4"
-            style={{ animation:"h3d-card-float 6s ease-in-out infinite", maxWidth:"340px" }}>
-            <div className="relative">
-              <GlassCard/>
-              <div className="absolute -top-4 -right-3 pointer-events-none" style={{ zIndex:2 }}>
-                <StarShape color="#FFB020" size={20} delay="0s" dur="3.5s"/>
-              </div>
-              <div className="absolute -bottom-2 -left-4 pointer-events-none" style={{ zIndex:2 }}>
-                <Balloon color="#FFB4A2" size={24} anim="h3d-f3" dur="4s" delay="0.8s"/>
-              </div>
+          {/* Mobile character (below CTAs) */}
+          <div className="block lg:hidden mt-6 relative" style={{ zIndex:8 }}>
+            <StudentCharacter charH="54vh" maxH={460}/>
+            <div className="flex justify-center mt-4" style={{ zIndex:15 }}>
+              <ProofChip/>
             </div>
           </div>
         </div>
 
-        {/* RIGHT — desktop card */}
-        <div className="h3d-card hidden lg:flex items-center justify-center"
-          style={{ animation:"h3d-card-float 6s ease-in-out infinite" }}>
-          <GlassCard/>
+        {/* RIGHT — desktop student character */}
+        <div className="hidden lg:flex flex-col items-center justify-end relative"
+          style={{ minHeight:"80vh", zIndex:8 }}>
+          <StudentCharacter charH="80vh" maxH={710}/>
+          {/* Floating proof chip — bottom-left corner of column */}
+          <div className="absolute" style={{ bottom:"12%", left:"-4px", zIndex:15 }}>
+            <ProofChip/>
+          </div>
         </div>
       </div>
 

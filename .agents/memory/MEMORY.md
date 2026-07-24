@@ -4,3 +4,4 @@
 - [Homepage redesign patterns](homepage-redesign-patterns.md) — design system token application patterns; bento grid, shadow-card, section-eyebrow, bg-surface-warm, icon-xl/md/sm usage.
 - [Premium Design System v2.0](design-system-v2.md) — all tokens, component classes, shadow/radius/surface/animation vars; shadows were all 0 before; /dummy is the visual reference page.
 - [R3F firewall + Three.js fallback](r3f-firewall.md) — @react-three/fiber/@react-three/drei blocked by Replit firewall; use raw Three.js. Replit preview has no GPU so need isWebGLAvailable() + CSS fallback.
+- [Hero3D body style specificity](hero3d-body-style-specificity.md) — inline `<style>` in body beats Tailwind head stylesheet; use `style={{ height }}` prop (inline) instead of Tailwind class when a CSS rule exists for same property.

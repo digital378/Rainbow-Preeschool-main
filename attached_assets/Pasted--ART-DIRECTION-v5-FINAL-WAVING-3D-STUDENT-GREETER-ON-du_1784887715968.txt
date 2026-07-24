@@ -1,0 +1,66 @@
+# ART DIRECTION v5 (FINAL) — WAVING 3D STUDENT GREETER ON /dummy
+Add the RPS student boy as the animated hero greeter. Keep the approved
+background, rainbow, floating props, typography and smooth-motion setup.
+
+## ASSET
+- `/public/characters/student-full.png` — transparent full-body boy (provided),
+  red tee, plaid shorts, rainbow socks, black shoes, arms behind back, smiling.
+- (If provided) `/public/characters/student-arm.png` — a raised waving arm/hand
+  layer, transparent, same canvas size, pivots at the shoulder.
+Never stretch, recolour, crop or distort the character. Preserve aspect ratio.
+
+## PLACEMENT & COMPOSITION
+- Boy STANDS as the hero focal point in the right column, full height, feet on
+  the section's bottom baseline, grounded by a soft blurred ellipse contact
+  shadow beneath him.
+- Social proof = a small FLOATING GLASS CHIP beside him (replaces the photo):
+  "★ 4.9  ·  Loved by 1 Lakh+ families  ·  Serving Thane since 2007" + the
+  A/B/C/D avatar cluster. Frosted white glass, rounded, soft shadow.
+- Rainbow arcs behind him; a balloon + a star + a cloud float around him so he
+  belongs to the scene.
+- Layer order back→front: aurora bg → rainbow/clouds → contact shadow →
+  student-full → student-arm (if present) → glass proof chip → foreground props.
+
+## MOTION GRAPHICS — make him ALIVE (single GSAP timeline, transform+opacity
+only, eased not linear):
+1. ENTRANCE (load): rises up + scales 0.9→1 with soft back-out
+   cubic-bezier(.34,1.56,.64,1); contact shadow fades in; then his greeting.
+2. IDLE BREATHING: vertical bob + tiny scaleY (1→1.015→1), 3.5s sine, infinite.
+3. SWAY: whole-body rotation ±1.5° + x-shift ±4px, ~5s, phase-offset from breathe.
+4. BLINK: quick eye squash/overlay every 4–7s (randomised).
+5. HEAD/EYES follow the cursor slightly (damped, a few degrees) so he "looks at"
+   the visitor. Gyro-driven on mobile.
+
+## THE GREETING — choose based on assets:
+A) IF `student-arm.png` EXISTS → real WAVE: rotate the arm layer around the
+   shoulder pivot (transform-origin at the joint) rest→~35°→rest, 3 friendly
+   oscillations easeInOut, then rest. Auto every ~6s AND on hover/tap. Add a
+   slight head-tilt toward the arm.
+B) IF ONLY `student-full.png` (arms behind back) → GREETING HOP instead: a
+   springy little bounce + happy head-tilt + a "Hi!" speech bubble that pops
+   near his head (scale-in back-out, fades after 1.2s). Auto every ~6s and on
+   hover/tap. (Do NOT fake-rotate a hidden arm — it looks broken.)
+
+## INTERACTION
+- Hover (desktop) / tap (mobile): repeat the greeting + a happy hop; nearby
+  props jiggle. All eased toward targets (damp/GSAP), never snapping.
+
+## MOBILE (priority — must feel playful)
+- Boy centred (or right) below the headline block, ~55–65vh tall, greeting on
+  load — this is the mobile "wow" moment. Glass proof chip sits under/beside him.
+  Props float in the margins. Gyro tilt on the character. Keep it 60fps (one
+  timeline, reduced prop count).
+
+## PERFORMANCE
+- PNG on GPU-composited transforms only; preload it; no animated blur/filter on
+  the character. Cap image at ~2x display res, compressed.
+- prefers-reduced-motion: standing + slow breathe only, no loop, still grounded.
+
+## BRAND (RPS)
+- Rainbow International Pre-School. Red #EC210F stays the CTA colour. He is a
+  friendly illustrated mascot — never labelled or implied to be a real specific
+  student. Keep a real classroom photo elsewhere on the site for authentic proof.
+
+## DELIVER
+Show desktop @1440 + mobile @390 with a screen recording of the idle + greeting
+loop. Success = warm, alive, smooth greeting that anchors the hero, no lag.

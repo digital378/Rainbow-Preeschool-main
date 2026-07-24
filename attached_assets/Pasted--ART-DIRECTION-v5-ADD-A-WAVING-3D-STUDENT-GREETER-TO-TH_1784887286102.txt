@@ -1,0 +1,76 @@
+# ART DIRECTION v5 — ADD A WAVING 3D STUDENT GREETER TO THE HERO (/dummy)
+Replace the static classroom photo as the hero's focal point with an animated
+3D student character who STANDS, BREATHES, BLINKS and WAVES. Keep the approved
+background, props, rainbow, typography and smooth-motion setup.
+
+## ASSETS (I will provide these in /public/characters/)
+For the chosen character you'll get a small layered set so it can animate:
+- `student-body.png`      → full character, transparent bg, arm-down base
+- `student-arm.png`       → the waving arm/hand only, transparent, pivots at
+                            the shoulder (registered to the same canvas size)
+- `student-eyes-open.png` / `student-eyes-closed.png` → for blinking (optional)
+- `student-full.png`      → flat fallback (no layers) if needed
+All PNGs share identical dimensions/anchor so layers stack pixel-perfect.
+DO NOT stretch, recolor, crop or distort the character. Preserve aspect ratio.
+
+## PLACEMENT & COMPOSITION
+- The student stands in the RIGHT column as the hero's focal point, full height,
+  feet near the section's bottom baseline, "grounded" by a soft ellipse contact
+  shadow beneath (drei ContactShadows if in R3F, or a blurred CSS ellipse).
+- Keep social proof but as a small FLOATING GLASS CHIP near the student (NOT the
+  full photo): "★ 4.9 · Loved by 1 Lakh+ families · Serving Thane since 2007"
+  + the A/B/C/D avatar cluster. This preserves trust without a real-photo card.
+- The rainbow arcs BEHIND the student; a couple of toy props (balloon, star)
+  float around them so they feel part of the scene.
+- Layer order (back→front): aurora bg → rainbow/clouds → contact shadow →
+  student-body → student-arm → floating glass proof chip → foreground props.
+
+## MOTION GRAPHICS — the character must feel ALIVE (GSAP timelines)
+Run everything in a single rAF/GSAP timeline; transform+opacity only; eased,
+never linear. Layer these looping motions with varied timing so it never looks
+robotic:
+1. ENTRANCE (on load): character rises up + scales from 0.9→1 with a soft
+   back-out (cubic-bezier .34,1.56,.64,1), contact shadow fades in, then it
+   does its first big wave. ~1s, delightful.
+2. IDLE BREATHING: subtle vertical bob + tiny scaleY (1→1.015→1), 3.5s sine,
+   infinite. This is the base "aliveness."
+3. SWAY: gentle whole-body rotation ±1.5° and x-shift ±4px, ~5s, offset phase
+   from the breathe so it feels organic.
+4. BLINK: swap eyes-open→closed for ~120ms every 4–7s (randomized interval).
+   If no eye layers, fake with a thin scaleY squash on a head mask.
+5. WAVE (the hero move): rotate `student-arm` around the SHOULDER pivot
+   (transform-origin at the shoulder joint) from rest → ~35° and back, 3 quick
+   friendly oscillations with easeInOut, then rest. Auto-plays every ~6s AND on
+   hover/tap. Add a tiny head-tilt toward the raised arm during the wave.
+6. Optional: a small "Hi!" speech bubble pops near the head during the wave
+   (scale-in with back-out, fades after 1.2s).
+
+## INTERACTION
+- Hover (desktop) / tap (mobile): character waves again + does a happy little
+  hop; props near it jiggle.
+- Cursor/gyro tracking: the head + eyes follow the pointer slightly (damped,
+  max a few degrees / few px) so it "looks at" the visitor. Very subtle.
+- Everything eases toward targets (THREE.MathUtils.damp or GSAP), no snapping.
+
+## MOBILE
+- Student is centered (or right) below the headline block, ~55–65vh tall,
+  waving on load — this becomes the mobile "wow" moment. Glass proof chip sits
+  beside/under it. Props float in the margins. Keep it smooth (single timeline,
+  reduced prop count). Gyro tilt on the character if permission granted.
+
+## PERFORMANCE
+- PNG layers on GPU-composited transforms only. Preload the images. Cap sizes
+  (~2x display res max, compressed). No animated filters/blur on the character.
+- Respect prefers-reduced-motion: show the character standing with a slow
+  breathe only (no wave loop), still grounded and polished.
+
+## BRAND
+- This is Rainbow International Pre-School (RPS). Red #EC210F stays the CTA
+  colour. The character is a friendly illustrated mascot — never label it or
+  imply it is a specific real student. Keep the real classroom photo available
+  elsewhere on the site for authentic social proof.
+
+## DELIVER
+Show desktop @1440 + mobile @390 with a screen recording of the wave/idle loop.
+Success = the student feels warm and alive, waves smoothly, and anchors the
+hero without any lag.
