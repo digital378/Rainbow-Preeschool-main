@@ -1,0 +1,123 @@
+# ART DIRECTION — READ FIRST. The motion is approved; the VISUAL LOOK is not.
+Rebuild the LOOK of the /dummy hero to this exact spec. Keep all existing
+scroll/mouse/3D interactions. Do not invent your own styling — match these values.
+
+## FIX THESE SPECIFIC FAILURES FROM THE CURRENT BUILD
+1. The background is a muddy grey→brown gradient with no purpose. REMOVE it.
+2. The description paragraph is unreadable (dark text on dark). FIX contrast.
+3. A rainbow arc/blob is sitting BEHIND the headline + paragraph, turning
+   the text into mud. Decorative shapes must NEVER sit behind text. Move all
+   glow/blobs to the empty areas (top-right, behind the photo card, bottom
+   edges) at low opacity + heavy blur.
+4. Everything feels flat and dim. We want bright, clean, joyful, premium.
+
+## OVERALL MOOD (the target)
+Bright, warm, joyful "morning light" preschool world — clean and premium like
+a modern Apple/Linear landing page, but soft, rounded and childlike. Think:
+airy cream canvas, soft pastel-rainbow glow, one confident red accent, crisp
+readable type, and colorful low-poly 3D toys floating in real depth. NOT dark,
+NOT muddy, NOT cluttered.
+
+## BACKGROUND SYSTEM (exact)
+- Base: soft warm cream. CSS: linear-gradient(180deg, #FFFBF5 0%, #FFF3EA 100%).
+- On top, a soft "aurora mesh" of blurred pastel blobs — filter: blur(90px),
+  opacity 0.35–0.5, positioned ONLY in negative space:
+    • top-right coral blob  #FFB4A2
+    • right / behind-card peach blob #FFD6A5
+    • bottom-left mint blob  #CAFFBF
+    • mid-left sky-blue blob #A0C4FF (small, low)
+    • lilac accent #BDB2FF near top
+  These drift very slowly (20–30s loops). They must sit BELOW the 3D canvas
+  and BELOW all text. Never behind the H1/paragraph column.
+- Add a very subtle grain/noise overlay (opacity 0.03) so gradients don't band.
+- A soft radial vignette of pure white behind the TEXT COLUMN only
+  (radial-gradient, white → transparent, ~0.6 opacity) to guarantee the copy
+  reads cleanly. This is the text "safe zone."
+
+## COLOR TOKENS (use these, nothing else)
+--brand-red:      #EC210F   /* primary CTA, badge dot, active accents */
+--brand-red-deep: #C4160A
+--gold-1:         #FFB020   /* "Preschool" gradient start */
+--gold-2:         #FF7A00   /* "Preschool" gradient end */
+--ink:            #211B2E   /* headings — near-black warm charcoal */
+--ink-soft:       #55506A   /* body text — MUST be this dark on cream */
+--cream:          #FFFBF5
+--surface:        #FFFFFF   /* cards */
+--hairline:       rgba(33,27,46,0.08)
+Contrast rule: body text (--ink-soft) on cream must pass WCAG AA (≥4.5:1). No
+light-grey text on light background, ever.
+
+## TYPOGRAPHY (exact)
+- Display font (headings, badge, chips numbers): "Fredoka" OR "Baloo 2"
+  (rounded, friendly, playful) — weights 600/700.
+- Body/UI font: "Plus Jakarta Sans" — weights 400/500/600.
+- H1 "Rainbow": color --ink, weight 700, size clamp(3.5rem, 7vw, 6.5rem),
+  line-height 0.95, letter-spacing -0.02em.
+- H1 "Preschool": SAME size, filled with
+  linear-gradient(100deg, #FFB020 0%, #FF7A00 100%), animated shimmer sweep
+  on load. Add a soft warm text-shadow (0 6px 30px rgba(255,122,0,0.25)).
+- Sub-headline "Playschool · Nursery · Kindergarten": --ink, weight 600,
+  clamp(1.1rem,2vw,1.6rem), the "·" separators in --brand-red.
+- Description: --ink-soft, weight 400, 1.05–1.15rem, line-height 1.6,
+  max-width 30rem. FULLY READABLE.
+
+## LAYOUT & SPACING (exact)
+- 12-col grid, max-width 1280px, centered, side padding 48px (24px mobile).
+- Two columns: LEFT text column ~52% width, RIGHT photo card ~44%, gap 64px.
+- Vertical rhythm between hero elements: 24px. Badge → H1: 32px. Description →
+  chips: 32px. Chips → CTAs: 40px.
+- Generous whitespace. Do NOT crowd elements. Hero fills 100vh, content
+  vertically centered.
+
+## ELEMENT SPECS
+Nav bar:
+- Floating pill nav, frosted white glass: background rgba(255,255,255,0.7),
+  backdrop-filter blur(16px), border 1px --hairline, border-radius 999px,
+  soft shadow 0 8px 30px rgba(33,27,46,0.08). Links --ink weight 500; hover
+  → --brand-red. "Book Visit" = amber/gold pill; "Admissions" = green pill
+  with WhatsApp icon. Keep the logo crisp at left (never distort).
+
+Badge pill ("Admissions Open · 2026–27"):
+- White glass pill, border-radius 999px, --hairline border, small shadow.
+- Live green dot (pulsing). Text --ink weight 500. Keep it subtle & classy.
+
+Stat chips (4):
+- White rounded pills (radius 14px), 1px --hairline, shadow
+  0 4px 16px rgba(33,27,46,0.06), padding 10px 16px. Icon in --brand-red,
+  number in --ink weight 700, label in --ink-soft. On hover: lift 4px + shadow
+  grows. Wrap to 2 rows as in reference (3 + 1).
+
+Primary CTA "Request a Callback":
+- Solid --brand-red, white text weight 600, radius 999px, padding 16px 28px,
+  shadow 0 12px 30px rgba(236,33,15,0.35). Hover: brighten + lift + red glow.
+  Magnetic pull toward cursor. Phone icon left.
+Secondary CTA "Explore Programmes →":
+- Ghost: transparent, 1.5px --ink/20% border, --ink text, radius 999px.
+  Hover: border → --brand-red, text → --brand-red, arrow slides right.
+
+Photo card (right):
+- Radius 28px, pure white 6px inner frame feel, big soft shadow
+  0 40px 80px rgba(33,27,46,0.18), 1px --hairline. Photo fills top ~72%.
+- "4.9 ★" pill top-right: dark glass rgba(20,15,30,0.7), white text, gold star.
+- Bottom overlay for "Loved by 1 Lakh+ families / Serving Thane since 2007":
+  MUST be legible — put a real gradient scrim behind it
+  (linear-gradient(transparent, rgba(20,15,30,0.75))), white text. The current
+  pink overlay kills legibility — replace it.
+- Avatar circles A B C D: overlapping, white ring, brand-ish colors, small.
+- Card tilts in 3D on mouse (max 8°), floats gently (parallax, 6px).
+
+Scroll indicator: "Scroll to explore" in --ink-soft, uppercase, letter-spacing
+0.2em, tiny, with an animated bouncing chevron in --brand-red.
+
+## 3D SCENE AESTHETIC (make it look expensive, not busy)
+- Palette of props matches the pastel + brand set above. Materials: soft matte
+  (MeshStandardMaterial, low roughness variance), gentle rim light, NO harsh
+  metallic. Everything looks like soft plastic/felt toys.
+- Lighting: bright key light top-right (warm), soft fill, subtle ambient. The
+  whole scene reads sunlit and clean, not shadowy.
+- Props (low-poly, rounded, ~7–10 total, NOT more): ABC blocks, 2 balloons,
+  a crayon, a star, a paper plane, a soft cloud, one thin rainbow arc.
+  Distribute in the RIGHT and TOP空 space and mid-depth — keep the LEFT text
+  column visually calm. Slow bob + slow spin. Slight blur on far props (DoF)
+  for depth.
+- Postprocessing: gentle Bloom (intensity ~0.4) + very light

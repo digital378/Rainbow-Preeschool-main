@@ -3,3 +3,4 @@
 - [Predeploy smoke-test suite](predeploy-smoke-tests.md) — 4 checks run against production build; homepage SPA exception; API truncates logs to ~75 lines (use Replit UI for full output).
 - [Homepage redesign patterns](homepage-redesign-patterns.md) — design system token application patterns; bento grid, shadow-card, section-eyebrow, bg-surface-warm, icon-xl/md/sm usage.
 - [Premium Design System v2.0](design-system-v2.md) — all tokens, component classes, shadow/radius/surface/animation vars; shadows were all 0 before; /dummy is the visual reference page.
+- [R3F firewall + Three.js fallback](r3f-firewall.md) — @react-three/fiber/@react-three/drei blocked by Replit firewall; use raw Three.js. Replit preview has no GPU so need isWebGLAvailable() + CSS fallback.

@@ -1,15 +1,15 @@
 /**
- * /dummy — Homepage Redesign Prototype v4 (Immersive 3D · Playful · Interactive)
+ * /dummy — Homepage Redesign Prototype v5 (Full R3F-spec 3D · Three.js · GSAP · Lenis)
  * Rainbow Preschool International
  *
  * STANDALONE — does NOT touch any live component.
- * All 3D effects: CSS perspective + mouse events + IntersectionObserver.
- * Patterns inspired by 21st.dev: Tilt Card, Parallax Unfurling, Container Scroll,
- * Sparkles, Text Scramble, Magnified Bento — all built from scratch.
+ * Hero: Three.js scene + GSAP + Lenis (self-contained in components/hero3d/).
+ * Remaining sections: CSS 3D (TiltCard, ContainerScroll, Bento, etc.)
  */
 import { useState, useEffect, useRef } from "react";
 import { SEO } from "@/components/seo";
 import { cn } from "@/lib/utils";
+import Hero3D from "@/components/hero3d";
 import { programmes, testimonials } from "@shared/schema";
 import {
   ArrowRight, Phone, Users, Star, MapPin, Shield, Award,
@@ -1329,11 +1329,11 @@ export default function Dummy() {
 
       {/* Prototype banner */}
       <div className="sticky top-0 z-50 flex items-center justify-center gap-4 px-4 py-2.5 bg-amber-400 text-amber-950 text-xs font-bold shadow-sm">
-        <span>⬡ HOMEPAGE REDESIGN PROTOTYPE v4 — 3D Immersive · Review &amp; approve before applying to real site.</span>
+        <span>⬡ HOMEPAGE REDESIGN PROTOTYPE v5 — Three.js · GSAP · Lenis · CSS 3D · Review &amp; approve before applying to real site.</span>
         <a href="/" className="underline underline-offset-2 hover:text-amber-800 transition-colors">← Live site</a>
       </div>
 
-      <HeroSection />
+      <Hero3D />
       <QuickNavSection />
       <CallbackSection />
       <ContainerScrollSection />
