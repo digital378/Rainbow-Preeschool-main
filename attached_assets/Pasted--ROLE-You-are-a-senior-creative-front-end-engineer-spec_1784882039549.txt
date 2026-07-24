@@ -1,0 +1,140 @@
+# ROLE
+You are a senior creative front-end engineer specializing in immersive 3D web
+experiences (React Three Fiber, drei, GSAP, Framer Motion). You use the
+**21st.dev Magic** component tooling (`/ui` + the 21st.dev MCP / component
+generator) to scaffold and source polished UI blocks, then heavily customize
+them. Prioritize taste, motion quality, and performance.
+
+# PROJECT
+This is the website for **Rainbow International Pre-School (RPS)** — a trusted
+preschool in Thane, India (est. 2007). We are converting the site into a 3D,
+immersive, scroll-driven experience. We are starting with the HERO (first
+section) of the homepage ONLY.
+
+# CRITICAL WORKFLOW RULE
+Do ALL work on a NEW isolated test route: `/dummy`.
+- Build the entire new hero on `/dummy` first.
+- DO NOT touch or modify the existing homepage (`/` or `Home`) yet.
+- Once I approve `/dummy`, I will tell you to port it to the real homepage.
+- Keep the new hero fully self-contained in its own component folder
+  (e.g. `components/hero3d/`) so it can be dropped into `/` later with one import.
+
+# TECH STACK (use these)
+- React + Vite (or Next.js if already present — match the existing repo).
+- `three`, `@react-three/fiber`, `@react-three/drei`, `@react-three/postprocessing`.
+- `gsap` + `ScrollTrigger` for scroll-driven animation.
+- `framer-motion` for 2D UI micro-interactions.
+- 21st.dev Magic for sourcing/generating the base UI blocks (nav, badges,
+  stat chips, glass rating card, buttons), which you then restyle to brand.
+- `@studio-freight/lenis` (or `lenis`) for smooth inertial scrolling.
+- Respect `prefers-reduced-motion`: provide a graceful static/2D fallback.
+
+# BRAND RULES (do not violate)
+- This is RPS (the PRE-SCHOOL brand), NOT "Rainbow International School".
+  Never rename it to "School".
+- Primary brand color: RED `#EC210F`. Warm, joyful, playful, child-centred,
+  reassuring. Supporting accent: warm gold/amber gradient for the word
+  "Preschool" (as in the reference). Soft cream/warm dark backgrounds.
+- Tagline (RPS): "The Future Begins Here".
+- Tone: warm, caring, playful, joyful, parent-friendly. NOT corporate.
+- Keep the logo as-is; never distort, recolor, rotate, or recreate it.
+- Do NOT invent facts, stats, awards, or facilities. Use ONLY the copy given
+  below. Treat every number as client-provided — reproduce it exactly, change nothing.
+- Admissions CTAs must stay trust-first (no aggressive fake urgency).
+
+# EXACT HERO CONTENT (reproduce verbatim — do not rewrite)
+Top nav (left → right): Home · About Us · Programmes · Gallery · Blogs ·
+Contact · Centres (dropdown). Logo at top-left (Rainbow Pre-School
+International). Right-side buttons: "Book Visit" (phone icon) and
+"Admissions" (WhatsApp icon, green). Include a light/dark toggle icon.
+
+- Status badge (pill): "Admissions Open · 2026–27  →  Limited seats"
+- H1 (two lines):
+    Line 1 "Rainbow"  — white
+    Line 2 "Preschool" — animated warm gold→amber gradient
+- Sub-headline: "Playschool · Nursery · Kindergarten"
+- Description: "Thane's trusted preschool since 2007 — where every child's
+  first steps into learning are joyful, safe, and full of wonder."
+- Stat chips (4): "1,00,000+ Learners" · "18+ Years" ·
+  "6 Centres Thane" · "100% Female Staff"
+- Primary CTA (red, phone icon): "Request a Callback"
+- Secondary CTA (ghost/outline): "Explore Programmes →"
+- Floating glass card (right side): child photo, "4.9 ★" rating badge
+  (top-right), bottom overlay "Loved by 1 Lakh+ families /
+  Serving Thane since 2007", and a stack of 4 avatar circles (A B C D).
+- Bottom-left: "↓ Scroll to explore" indicator.
+
+# THE 3D / IMMERSIVE DIRECTION (this is the heart of the task)
+Build a dreamy, playful "world of wonder" 3D hero — the feeling of a child's
+imagination. Concept: a soft, sunlit floating world.
+
+1. **3D scene (R3F canvas as the hero background):**
+   - Soft volumetric clouds / gradient sky using drei (`<Cloud/>`, `<Sky/>`
+     or a custom shader gradient in RPS warm tones).
+   - Floating, gently-bobbing low-poly playful props scattered in 3D depth:
+     ABC alphabet blocks, balloons, crayons, stars, a paper plane, a small
+     rocket, building blocks, and a soft rainbow arc. Use instancing where
+     possible. Gentle sine-wave float + slow rotation on each.
+   - Subtle bloom + depth-of-field via postprocessing (keep it tasteful,
+     performance-safe).
+
+2. **The child image → make it feel 3D (2.5D depth parallax):**
+   - Take the hero child photo and render it as a depth-displaced plane:
+     use the photo as the color texture + a generated depth map to displace
+     it, so moving the mouse gives a real parallax "pop-out" 3D effect.
+   - The floating glass rating card tilts in 3D on hover (react to cursor,
+     glassmorphism, soft shadow).
+   - (Leave a clearly-commented slot `// TODO: swap plane for GLB model`
+     so we can later drop in an actual glTF 3D child/school model.)
+
+3. **Mouse interactions:**
+   - Whole scene has camera/parallax reaction to mouse position (subtle,
+     springy, damped — not jittery).
+   - Custom playful cursor with a soft sparkle/trail (respects reduced motion).
+   - Props nearest the cursor drift slightly away / react.
+
+4. **Scroll-driven storytelling (GSAP ScrollTrigger + Lenis):**
+   - On load: staggered reveal of badge → H1 (per-word, with the gold
+     gradient sweeping across "Preschool") → subhead → description →
+     chips (pop in one by one) → CTAs → card floats up.
+   - On scroll: camera pushes gently INTO the scene, clouds part, the
+     rainbow arc draws/forms, props parallax at different depths, and the
+     hero text pins briefly then releases into the next section.
+   - The "Scroll to explore" indicator animates and fades as user scrolls.
+
+5. **Polish:**
+   - Animated gradient / aurora glow behind the H1.
+   - Magnetic buttons (CTA subtly pulls toward cursor).
+   - Chips and card have soft 3D hover lift.
+
+# RESPONSIVE
+- Match BOTH provided screenshots: full desktop layout AND the stacked mobile
+  layout (nav collapses to hamburger + Book Visit/Admissions buttons; content
+  stacks vertically; child photo behind the text).
+- On mobile/low-power devices: reduce particle/prop count, lower DPR, disable
+  heavy postprocessing, use device-orientation (gyro) for parallax instead of
+  mouse where available. Keep it smooth (target 60fps mid-range phone).
+
+# PERFORMANCE & QUALITY BARS
+- Lazy-load the 3D canvas; show a lightweight branded loader/skeleton first.
+- Cap DPR (e.g. `dpr={[1, 2]}`), use `frameloop="demand"` where sensible,
+  dispose geometries/textures, keep draw calls low (instancing).
+- Full `prefers-reduced-motion` fallback: static, beautiful 2D hero with the
+  exact same content and layout, no motion.
+- Accessible: real semantic nav, buttons, alt text, keyboard focus states,
+  sufficient contrast. The 3D canvas is decorative (`aria-hidden`).
+
+# DELIVERABLES
+1. A working `/dummy` route showing the full new 3D hero.
+2. Self-contained `components/hero3d/` folder, ready to import into the real
+   homepage later.
+3. A short README note listing: which 21st.dev blocks you used, where the 3D
+   props/models live, how to swap in real GLB models, and any assets I still
+   need to provide (child photo cutout, depth map, logo file).
+
+# START
+First confirm the repo's framework and existing routing, install the deps,
+scaffold the `/dummy` route, then build the hero in this order: static
+brand-correct layout → R3F scene + props → depth-parallax photo → mouse
+parallax → GSAP scroll + reveal → polish. Show me `/dummy` when the static
+layout + basic 3D scene are working, before adding scroll choreography.
