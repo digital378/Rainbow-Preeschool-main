@@ -143,12 +143,12 @@ const HERO3D_STYLES = `
   .h3d-body    { font-family:'Plus Jakarta Sans',system-ui,sans-serif; }
 
   .h3d-preschool-text {
-    background:linear-gradient(100deg,${T.gold1} 0%,${T.gold2} 50%,${T.gold1} 100%);
+    background:linear-gradient(100deg,#FF5544 0%,#EC210F 35%,#C4160A 65%,#FF5544 100%);
     background-size:300% auto;
     -webkit-background-clip:text; background-clip:text;
     -webkit-text-fill-color:transparent;
     animation:h3d-shimmer 5s linear infinite;
-    filter:drop-shadow(0 6px 24px rgba(255,122,0,0.22));
+    filter:drop-shadow(0 6px 24px rgba(236,33,15,0.28));
   }
 
   /* ── Buttons ── */
