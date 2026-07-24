@@ -1,0 +1,58 @@
+# ART DIRECTION — REVAMP "WHY PARENTS CHOOSE" (ABOUT) SECTION (/dummy)
+Bring this section fully into the template and make it feel alive. Keep the copy
+and the real stats exactly as written (they're verified client facts).
+
+## TEMPLATE COHESION
+- Same cream base + soft pastel aurora + a few low-opacity floating props
+  (star, balloon, cloud) in the negative space, exactly like the other sections.
+- Comfortable section padding; scalloped/soft transitions consistent with the page.
+
+## HEADING (use the shared display-font token)
+- Eyebrow "ABOUT US" (uppercase, letter-spacing, red #EC210F).
+- Title "Why Parents Choose Rainbow Preschool" in the SAME rounded display font
+  as "Rainbow Preschool"/"Start Exploring" — put "Rainbow Preschool" in the
+  gold→amber gradient, the rest in ink #211B2E. Add a small hand-drawn rainbow
+  underline/swoosh accent beneath it.
+- Keep both body paragraphs in --ink-soft, readable, max-width ~34rem.
+- "Learn More About Us" → styled secondary CTA (ghost, 1.5px border → brand red
+  on hover, arrow slides, magnetic pull), matching the hero's secondary button.
+- Optional delight: render the 4 centre names (Manpada, Kalwa, Dhokali,
+  Kasarvadavali) as small location chips under the paragraph, or reveal them on
+  hover of the "Centres" stat card.
+
+## STAT CARDS — VIBRANT + ANIMATED COUNT-UP (this is the main fix)
+The 2×2 cards are pale and static. Rebuild them to match the vivid system:
+- Each card: white surface, radius 20px, 1px hairline, soft shadow, a faint hue
+  wash + a 3px vivid top-accent bar in its colour. Solid VIVID GRADIENT icon
+  chip (48px, white icon, coloured glow) top-left.
+- Big number in the rounded DISPLAY font (weight 700, ink), label in --ink-soft.
+- Palette + icons:
+    1,00,000+  Young Learners     → red   #F5320C→#FF5A3C → people icon
+    18+        Years of Excellence→ amber #FFB020→#FF7A00 → star icon
+    06         Centres in Thane   → blue  #1F7AF0→#48A0FF → map-pin icon
+    100%       Female Staff       → green #06B463→#22D67E → shield icon
+- COUNT-UP on scroll into view: numbers animate from 0 → final value (respect
+  Indian formatting "1,00,000+", keep "18+", "06", "100%"). Ease-out, ~1.2s,
+  runs once. This makes the section feel immersive.
+- Cards pop in one-by-one (stagger, back-out ease), tilt gently toward cursor,
+  lift + glow on hover, icon does a small animation. Idle: very subtle float.
+
+## LAYOUT
+- Desktop: text left (~48%), 2×2 stat grid right (~48%), balanced, aligned tops.
+- Mobile: heading + paragraphs + button, then the stats as a 2-column grid
+  (2×2), full width, vibrant, big tap-friendly cards, count-up on scroll. Spacious.
+
+## RULES
+- Smooth-motion (transform/opacity, eased, 60fps), Lenis+GSAP, real semantic
+  headings/links + focus states, prefers-reduced-motion (static, numbers show
+  final value immediately, no count-up/tilt).
+
+## BRAND (RPS)
+- Rainbow International Pre-School. Red #EC210F leads; other hues are suggested
+  supporting colours. Keep all stats/centre names exactly as given — do not alter
+  or invent numbers, and confirm they're current before publishing.
+
+## DELIVER
+Show desktop @1440 + mobile @390 with a screen recording of the count-up +
+card entrance. Success = the section matches the template, the stat cards are
+vibrant with animated numbers, and the heading uses the rounded display font.

@@ -55,6 +55,12 @@ const STYLES = `
   .le-input:focus { border-color:#EC210F !important; box-shadow:0 0 0 3px rgba(236,33,15,.14) !important; outline:none !important; }
   .le-cta-btn:hover { transform:translateY(-2px) !important; box-shadow:0 12px 32px rgba(236,33,15,.45) !important; }
   .le-cta-btn:active { transform:scale(0.98) !important; }
+  .stat-card:hover { box-shadow:0 24px 56px rgba(33,27,46,.16) !important; }
+  .stat-card:hover .stat-icon-box { transform:scale(1.12) rotate(-5deg) !important; }
+  .stat-icon-box { transition:transform 0.28s cubic-bezier(.34,1.56,.64,1); }
+  .about-cta:hover { border-color:#EC210F !important; color:#EC210F !important; box-shadow:0 4px 20px rgba(236,33,15,.14) !important; }
+  .about-cta:hover .about-arrow { transform:translateX(5px) !important; }
+  .about-arrow { transition:transform 0.2s ease; }
 
   .d-float-a { animation: d-float-a 9s ease-in-out infinite; }
   .d-float-b { animation: d-float-b 12s ease-in-out infinite; }
@@ -474,17 +480,13 @@ const SHELF_ITEMS = [
 ];
 
 const stats = [
-  { Icon: Users,  label: "Young Learners",      accent: "#ef4444",
-    bg: "from-red-50 to-red-100/30", border: "border-red-200",
+  { Icon: Users,  label: "Young Learners",      grad:"linear-gradient(135deg,#F5320C 0%,#FF5A3C 100%)", glow:"rgba(245,50,12,.28)",
     target: 100000, format: (n: number) => `${n >= 100000 ? "1,00,000" : n.toLocaleString("en-IN")}+` },
-  { Icon: Star,   label: "Years of Excellence", accent: "#f59e0b",
-    bg: "from-amber-50 to-amber-100/30", border: "border-amber-200",
+  { Icon: Star,   label: "Years of Excellence", grad:"linear-gradient(135deg,#FFB020 0%,#FF7A00 100%)", glow:"rgba(255,122,0,.26)",
     target: 18, format: (n: number) => `${n}+` },
-  { Icon: MapPin, label: "Centres in Thane",    accent: "#0ea5e9",
-    bg: "from-sky-50 to-sky-100/30", border: "border-sky-200",
+  { Icon: MapPin, label: "Centres in Thane",    grad:"linear-gradient(135deg,#1F7AF0 0%,#48A0FF 100%)", glow:"rgba(31,122,240,.26)",
     target: 6, format: (n: number) => String(n).padStart(2, "0") },
-  { Icon: Shield, label: "Female Staff",        accent: "#22c55e",
-    bg: "from-green-50 to-green-100/30", border: "border-green-200",
+  { Icon: Shield, label: "Female Staff",        grad:"linear-gradient(135deg,#06B463 0%,#22D67E 100%)", glow:"rgba(6,180,99,.26)",
     target: 100, format: (n: number) => `${n}%` },
 ];
 
@@ -1461,65 +1463,136 @@ function LearningEnvironmentSection() {
    SECTION: STATS — Animated counters with 3D tilt cards
 ═══════════════════════════════════════════════════════════════════════════════ */
 function StatsSection() {
+  const CENTRES = ["Manpada", "Kalwa", "Dhokali", "Kasarvadavali"];
   return (
-    <section className="relative py-20 md:py-32 overflow-hidden"
-      style={{ background: "linear-gradient(160deg,#fffbf5 0%,#fff9f0 45%,#fef8ff 80%,#f5fff8 100%)" }}>
-      <Orb cls="d-float-a d-pulse w-80 h-80 -top-20 -right-16 opacity-60"
-        style={{ background: "radial-gradient(circle,rgba(251,191,36,0.20) 0%,transparent 65%)", filter: "blur(30px)" }} />
-      <Orb cls="d-float-b w-56 h-56 bottom-12 left-[8%] opacity-50"
-        style={{ background: "radial-gradient(circle,rgba(220,38,38,0.10) 0%,transparent 65%)", filter: "blur(24px)" }} />
-      <StarDot cls="d-tw2 text-amber-300/60 top-[10%] left-[44%] w-3.5 h-3.5" />
-      <StarDot cls="d-tw3 text-amber-200/50 bottom-[22%] right-[22%] w-3 h-3" />
+    <section className="relative overflow-hidden"
+      style={{ background:"linear-gradient(170deg,#FFFBF5 0%,#FFF3EA 52%,#FFFBF5 100%)", padding:"88px 0 100px" }}>
 
-      <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-20 items-center">
+      {/* Aurora blobs */}
+      <Orb cls="d-float-b w-[440px] h-[440px] -top-28 -right-20 opacity-40"
+        style={{ background:"radial-gradient(circle,rgba(251,191,36,.18) 0%,transparent 65%)", filter:"blur(52px)" }}/>
+      <Orb cls="d-float-c w-80 h-80 bottom-16 -left-16 opacity-35"
+        style={{ background:"radial-gradient(circle,rgba(236,33,15,.09) 0%,transparent 65%)", filter:"blur(44px)" }}/>
+      <StarDot cls="d-tw2 text-amber-300/55 top-[14%] left-[40%] w-4 h-4"/>
+      <StarDot cls="d-tw3 text-amber-200/40 bottom-[20%] right-[16%] w-3 h-3"/>
+      {/* Floating balloon prop */}
+      <div className="d-float-a absolute top-[10%] right-[7%] pointer-events-none opacity-20" aria-hidden
+        style={{ width:28, height:36 }}>
+        <svg viewBox="0 0 28 36" fill="none"><ellipse cx="14" cy="13" rx="10" ry="12" fill="#EC210F"/>
+          <path d="M14 25 Q13 30 14 35" stroke="rgba(33,27,46,.5)" strokeWidth="1.5" strokeLinecap="round"/></svg>
+      </div>
 
-          {/* Text */}
+      <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-16 items-start">
+
+          {/* ── Left: text column ─────────────────────────────────────── */}
           <div className="du-fade">
-            <p className="section-eyebrow">About Us</p>
-            <h2 className="text-headline mb-7">Why Parents Choose Rainbow Preschool</h2>
-            <p className="text-muted-foreground text-[17px] leading-[1.78] mb-5">
+            {/* Eyebrow */}
+            <p style={{ fontSize:"0.63rem", fontWeight:700, letterSpacing:"0.22em",
+              textTransform:"uppercase", color:"#EC210F", margin:"0 0 14px" }}>
+              ABOUT US
+            </p>
+            {/* Heading with gradient span */}
+            <h2 className="section-title" style={{ fontSize:"clamp(1.9rem,3.6vw,3rem)",
+              margin:"0 0 4px", lineHeight:1.15 }}>
+              Why Parents Choose{" "}
+              <span style={{
+                background:"linear-gradient(95deg,#F59E0B 0%,#EC210F 100%)",
+                WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent", backgroundClip:"text",
+              }}>Rainbow Preschool</span>
+            </h2>
+            {/* Rainbow swoosh underline */}
+            <div style={{ margin:"0 0 22px" }}>
+              <svg width="230" height="11" viewBox="0 0 230 11" fill="none"
+                xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M4 8 Q57 2 115 5.5 Q173 9 226 3.5"
+                  stroke="url(#ab-sw)" strokeWidth="3.5" strokeLinecap="round" fill="none"/>
+                <defs>
+                  <linearGradient id="ab-sw" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stopColor="#EF4444"/>
+                    <stop offset="28%" stopColor="#F59E0B"/>
+                    <stop offset="54%" stopColor="#22C55E"/>
+                    <stop offset="78%" stopColor="#3B82F6"/>
+                    <stop offset="100%" stopColor="#8B5CF6"/>
+                  </linearGradient>
+                </defs>
+              </svg>
+            </div>
+
+            <p style={{ color:"#55506A", fontSize:"1.0625rem", lineHeight:1.78, margin:"0 0 16px", maxWidth:"34rem" }}>
               Since 2007, Rainbow Preschool International has helped over 1,00,000 young learners learn, play, and grow across Thane. Our centres follow a play-based curriculum that builds reading, writing, and number skills through hands-on activities, stories, art, and outdoor play.
             </p>
-            <p className="text-muted-foreground leading-[1.72] mb-10">
-              All six centres are in Thane West — in Manpada, Kalwa, Dhokali, and Kasarvadavali. A Rainbow Preschool centre is always close to home.
+            <p style={{ color:"#55506A", lineHeight:1.72, margin:"0 0 24px", maxWidth:"34rem" }}>
+              All six centres are in Thane West — a Rainbow Preschool is always close to home.
             </p>
-            <a href="/about"
-              className="group inline-flex items-center gap-2 rounded-full px-7 py-3.5 text-sm font-semibold border border-border/80 bg-white hover:bg-muted transition-all duration-200 hover:-translate-y-0.5 shadow-sm">
+
+            {/* Centre location chips */}
+            <div style={{ display:"flex", flexWrap:"wrap", gap:8, margin:"0 0 32px" }}>
+              {CENTRES.map(name => (
+                <span key={name} style={{ display:"inline-flex", alignItems:"center", gap:5,
+                  padding:"5px 13px 5px 10px", borderRadius:999, fontSize:"0.76rem", fontWeight:600,
+                  color:"#211B2E", background:"rgba(33,27,46,.05)",
+                  border:"1px solid rgba(33,27,46,.09)" }}>
+                  <MapPin size={11} style={{ color:"#EC210F", flexShrink:0 }}/>
+                  {name}
+                </span>
+              ))}
+            </div>
+
+            {/* Ghost CTA — brand-red on hover */}
+            <a href="/about" className="about-cta inline-flex items-center gap-2"
+              style={{ padding:"12px 26px", borderRadius:999, fontSize:"0.9rem", fontWeight:600,
+                border:"1.5px solid rgba(33,27,46,.20)", color:"#211B2E", background:"white",
+                transition:"all 0.22s ease", boxShadow:"0 2px 10px rgba(33,27,46,.06)",
+                textDecoration:"none", display:"inline-flex", alignItems:"center", gap:8 }}>
               Learn More About Us
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-150" />
+              <ArrowRight size={16} className="about-arrow"/>
             </a>
           </div>
 
-          {/* Stats 2×2 — 3D tilt cards */}
+          {/* ── Right: 2×2 vivid stat grid ────────────────────────────── */}
           <div className="grid grid-cols-2 gap-4 sm:gap-5">
-            {stats.map(({ Icon, label, accent, bg, border, target, format }, i) => (
+            {stats.map(({ Icon, label, grad, glow, target, format }, i) => (
               <TiltCard
                 key={label}
-                className={cn("du-fade h-full", `bg-gradient-to-br ${bg} border ${border} rounded-2xl`)}
+                className="stat-card du-fade h-full"
                 style={{
-                  boxShadow: "0 4px 24px rgba(0,0,0,0.07)",
-                  transitionDelay: `${i * 70}ms`,
-                  minHeight: 160,
+                  borderRadius:20, background:"white",
+                  border:"1px solid rgba(33,27,46,.07)",
+                  boxShadow:"0 10px 30px rgba(33,27,46,.09)",
+                  minHeight:164, transitionDelay:`${i * 80}ms`,
                 }}
-                intensity={8}
+                intensity={7}
               >
-                <div className="p-5 sm:p-6 flex flex-col h-full relative">
-                  {/* Top accent bar */}
-                  <div className="absolute top-0 left-0 right-0 h-[3px] rounded-t-2xl"
-                    style={{ background: `linear-gradient(90deg,${accent},${accent}88)` }} />
-                  <div className="absolute -top-6 -right-6 w-24 h-24 rounded-full opacity-40"
-                    style={{ background: `radial-gradient(circle,${accent}44,transparent)` }} />
-                  <Icon className="w-7 h-7 sm:w-8 sm:h-8 mb-3 relative z-10" style={{ color: accent }} />
-                  <p className="text-3xl sm:text-[2.1rem] font-extrabold text-foreground mb-1 relative z-10 tabular-nums"
-                    style={{ letterSpacing: "-0.03em" }}>
-                    <AnimatedCounter target={target} format={format} />
+                <div style={{ padding:"20px 18px 22px", display:"flex", flexDirection:"column",
+                  height:"100%", position:"relative", overflow:"hidden" }}>
+                  {/* Vivid 3px top accent bar */}
+                  <div style={{ position:"absolute", top:0, left:0, right:0, height:3,
+                    background:grad, borderRadius:"20px 20px 0 0" }}/>
+                  {/* Faint corner hue wash */}
+                  <div aria-hidden style={{ position:"absolute", top:-10, right:-10, width:90, height:90,
+                    borderRadius:"50%", background:`radial-gradient(circle,${glow.replace(".26",".10")} 0%,transparent 70%)`,
+                    pointerEvents:"none" }}/>
+                  {/* Vivid gradient icon chip */}
+                  <div className="stat-icon-box" style={{ width:48, height:48, borderRadius:13,
+                    background:grad, display:"flex", alignItems:"center", justifyContent:"center",
+                    marginBottom:14, flexShrink:0, boxShadow:`0 4px 14px ${glow}` }}>
+                    <Icon size={22} color="white" strokeWidth={2.1}/>
+                  </div>
+                  {/* Animated number — Fredoka display font */}
+                  <p className="section-title" style={{ fontSize:"clamp(1.75rem,3vw,2.4rem)",
+                    letterSpacing:"-0.04em", margin:"0 0 5px", lineHeight:1, color:"#211B2E" }}>
+                    <AnimatedCounter target={target} format={format}/>
                   </p>
-                  <p className="text-xs sm:text-sm text-muted-foreground font-medium relative z-10">{label}</p>
+                  {/* Label */}
+                  <p style={{ fontSize:"0.8rem", color:"#55506A", fontWeight:500, margin:0, lineHeight:1.35 }}>
+                    {label}
+                  </p>
                 </div>
               </TiltCard>
             ))}
           </div>
+
         </div>
       </div>
     </section>
