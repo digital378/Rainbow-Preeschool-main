@@ -1,0 +1,55 @@
+# ART DIRECTION — FIX THE BENTO PROPORTIONS + SWAP MASCOT (/dummy)
+Keep the concept (bento of stats + photo + rating tile, mascot, display heading,
+rainbow underline, centre chips, count-up). Fix the layout problems below.
+
+## FIX 1 — TILE PROPORTIONS (main problem)
+Right now the stat tiles are far too TALL with large empty space under the
+numbers, and the columns don't line up — it looks unbalanced and hollow.
+- Size stat tiles to their CONTENT: icon chip + number + label, with balanced
+  padding — roughly square-ish or short cards (~150–170px tall), NOT tall
+  half-empty boxes. No large empty area below the label.
+- Make the bento a proper aligned grid: all tiles snap to a consistent row/col
+  grid with equal gaps; tile bottoms/tops align across columns (no ragged,
+  mismatched heights). If a tile spans 2 rows (the photo), the stat tiles beside
+  it should stack to match its height exactly — no overflow, no gaps.
+- Suggested desktop bento (tune to look balanced):
+    • Photo tile = tall, spans 2 rows on the right.
+    • 1,00,000+ and 18+ = two short tiles top-left.
+    • 4.9★ rating tile = wide tile spanning 2 cols in the middle-left.
+    • 06 and 100% = two short tiles bottom-left.
+  Everything should read as ONE tidy rectangle block, edges aligned, no floating
+  or dead space inside tiles.
+- Fill the rating tile properly too (it currently has empty space) — center its
+  content vertically or make it shorter.
+
+## FIX 2 — USE THE PONYTAIL FEMALE MASCOT
+- Replace the boy mascot with the existing PONYTAIL FEMALE MASCOT already in the
+  project. Place her at the bottom-left of the text column, standing on the
+  section baseline, grounded by a soft contact shadow, subtly gesturing toward
+  the bento stats. Idle breathe + occasional wave/greeting.
+- Size her to sit neatly in the space beneath the "Learn More About Us" button —
+  not too large, fully visible (no cropping at the edges), not overlapping the
+  copy. She should feel intentionally placed, not floating.
+
+## FIX 3 — BALANCE
+- The left column (heading → paragraphs → chips → button → mascot) and the right
+  bento should feel like two balanced halves of equal visual weight, vertically
+  centered to each other. Trim excess whitespace. Add a faint rainbow glow behind
+  the bento so it's anchored.
+
+## MOBILE
+- Bento collapses to a clean stack: photo tile first (full-width, shorter aspect),
+  then stat tiles in a 2-col grid (short, content-sized — not tall/empty), then
+  the rating tile (full-width). Mascot below the button, smaller, fully visible.
+  Count-up on scroll, vibrant, spacious, 60fps.
+
+## RULES / BRAND
+- Same template, smooth-motion (transform/opacity, eased, 60fps), semantic markup,
+  focus states, reduced-motion fallback. RPS: red #EC210F leads, other hues
+  suggested; real photo only; stats/centre names unchanged; mascot is an
+  illustrated character, not a real named student.
+
+## DELIVER
+Show desktop @1440 + mobile @390. Success = a tidy, aligned bento with content-
+sized tiles (no hollow tall boxes), the ponytail female mascot neatly placed, and
+two balanced columns.

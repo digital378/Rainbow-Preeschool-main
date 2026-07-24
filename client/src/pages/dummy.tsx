@@ -68,10 +68,11 @@ const STYLES = `
   .mascot-char { animation:mascot-breathe 4s ease-in-out infinite; transform-origin:bottom center; }
   .bento-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
   .bento-photo { grid-column:1/3; min-height:220px; }
-  .bento-trust { grid-column:1/3; }
+  .bento-trust { grid-column:1/3; align-self:start; }
+  .bento-s1,.bento-s2,.bento-s3,.bento-s4 { align-self:start; }
   @media (min-width:1024px) {
     .bento-grid { grid-template-columns:1fr 1fr 1fr; }
-    .bento-photo { grid-column:3/4 !important; grid-row:1/4 !important; min-height:0; height:100%; }
+    .bento-photo { grid-column:3/4 !important; grid-row:1/4 !important; min-height:0; height:100%; align-self:stretch; }
     .bento-s1 { grid-column:1/2; grid-row:1/2; }
     .bento-s2 { grid-column:2/3; grid-row:1/2; }
     .bento-trust { grid-column:1/3 !important; grid-row:2/3; }
@@ -1580,7 +1581,7 @@ function StatsSection() {
             <div className="mascot-char hidden lg:flex items-end justify-start"
               style={{ marginTop:"auto", paddingTop:28 }}>
               <img
-                src="/characters/student-boy.png"
+                src="/characters/student-boy-2.png"
                 alt=""
                 aria-hidden="true"
                 style={{
@@ -1594,7 +1595,7 @@ function StatsSection() {
             <div className="mascot-char lg:hidden flex items-end justify-start"
               style={{ marginTop:28 }}>
               <img
-                src="/characters/student-boy.png"
+                src="/characters/student-boy-2.png"
                 alt=""
                 aria-hidden="true"
                 style={{
@@ -1658,7 +1659,7 @@ function StatsSection() {
                 intensity={9}
               >
                 <div style={{ padding:"18px 16px 20px", display:"flex", flexDirection:"column",
-                  height:"100%", position:"relative", overflow:"hidden" }}>
+                  position:"relative", overflow:"hidden" }}>
                   {/* Top accent bar */}
                   <div style={{ position:"absolute", top:0, left:0, right:0, height:3,
                     background:grad, borderRadius:"20px 20px 0 0" }}/>
