@@ -1,0 +1,73 @@
+# ART DIRECTION v3 — POPULATE THE SCENE. Keep the clean look + motion.
+The layout/typography/readability are approved. The problem: the 3D world is
+almost empty and the composition has large dead zones (top strip, left of the
+card, and ALL of mobile). Fill the space with tasteful, purposeful 3D depth.
+Rule stays: nothing sits behind the headline/paragraph text safe-zone.
+
+## DESKTOP — fill the dead zones (place props in these exact regions)
+Think of a soft, sunlit floating playroom in the air. ~12–14 props total,
+low-poly, matte, rounded, in the approved palette (red #EC210F + pastels +
+gold). Distribute across THREE depth layers (far = smaller, blurred, slow;
+near = larger, crisp, more parallax):
+
+- TOP STRIP (above H1, right of logo, the empty band): 2 balloons on strings
+  drifting up slowly + 1 paper plane doing a slow arc across the width.
+- LEFT GUTTER (outside the text column, screen edge): a stacked ABC block tower
+  (3 blocks) low and small, + 2–3 tiny twinkling stars. Keep clear of text.
+- CENTER GAP (between text column and photo card — the big empty middle):
+  the HERO cluster. Enlarge the rainbow arc so it sweeps behind the card
+  bottom-left corner elegantly (not a lonely stub). Add 2 soft 3D clouds, a
+  little rocket tilted up, and a floating crayon. This is the visual anchor.
+- BEHIND / AROUND CARD: a couple of soft blocks + 1 balloon peeking from
+  behind the card's right edge, so the card sits INSIDE the world, not on top.
+- BOTTOM EDGE: a row of slow-rising translucent bubbles + a very soft cloud
+  bank fading into the section divider.
+- TOP-RIGHT: a large soft warm "sun" glow (radial, #FFE3B0, blur 120px) as the
+  light source everything is lit from.
+
+Motion: each prop bobs (sine, 3–6s, varied phase) + slow spin; layers parallax
+at different rates on mouse. Nothing frantic — calm, dreamy drift.
+Depth cues: far layer blur 3–5px + opacity 0.6; near layer crisp. Add gentle
+Bloom on the sun + rainbow only.
+
+## SECTION DIVIDER (bring back polish)
+Add a soft white SCALLOPED / wavy bottom edge to the hero (like a torn-paper
+cloud line) transitioning into the next section — the original reference had
+this and it's missing. SVG wave, white, sitting above the fold's bottom.
+
+## MOBILE — this is the priority. Right now it's empty and flat. FIX IT.
+Mobile must feel like a mini immersive scene, not a stripped text page.
+1. BACKGROUND: make the pastel aurora mesh MORE present on mobile — larger,
+   slightly more saturated blobs (coral top, gold mid, mint/sky bottom) slowly
+   drifting. Add the sun glow top-right. It should feel alive, not a flat wash.
+2. FLOATING PROPS (5–7, scaled for small screen): balloons rising top, 2–3
+   stars sprinkled, an ABC block near the badge, a paper plane crossing once
+   on load. Place them in the MARGINS and BEHIND text at 12–20% opacity so
+   they add depth without hurting readability. A rainbow arc curves softly
+   behind the "Preschool" word area (low opacity).
+3. BRING THE PHOTO CARD BACK. It vanished on mobile. Place the 4.9★ classroom
+   card BELOW the CTAs as a full-width hero card (radius 24px, big soft shadow,
+   legible dark scrim on the bottom caption) with 2–3 small props floating
+   around it. The social proof is too important to drop.
+4. SCROLL/GYRO MOMENT: on scroll, balloons drift upward and the rainbow draws
+   itself in; parallax driven by device orientation (gyro) so tilting the
+   phone moves the layers. This is the "intriguing" hook they want.
+5. BUBBLES rising along the bottom + the same scalloped wave divider.
+6. Performance: cap props at ~7, lower DPR, disable heavy postprocessing,
+   keep 60fps. Full prefers-reduced-motion fallback = static but still
+   populated (props visible, just not moving).
+
+## COMPOSITION RULES (so it stays premium, not cluttered)
+- Follow a loose diagonal flow: top-left balloons → center rainbow/rocket →
+  bottom-right bubbles. Guide the eye toward the card + CTAs.
+- Keep the immediate area around the H1 and paragraph calm (props only in
+  gutters/margins/negative space).
+- Vary prop sizes a lot (one hero-size cluster, several small accents) — even
+  sizing looks like clip-art; varied sizing looks designed.
+- Palette discipline: mostly soft pastels + warm gold, with red used sparingly
+  as a pop (1–2 red props max) so brand red still owns the CTA.
+
+## DELIVER
+Show me desktop @1440px AND mobile @390px, both with the scene fully populated
+and animating. Success = neither viewport has a large empty dead zone, mobile
+has a clear eye-catching hero moment, and text stays crisp.
