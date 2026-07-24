@@ -1,0 +1,172 @@
+Rainbow Preschools (rainbowpreschools.com) — SEO Implementation Brief for Replit Agent
+
+Paste this whole document into the Replit Agent for the Rainbow Preschool app.
+
+You are working on the Rainbow Preschools website (Thane, India — a play-based preschool chain since 2007 with 6 centres: Manpada, Hariniwas, Anand Nagar, Dhokali, Kalwa, Kasarvadavali). The site is well-built but gets almost zero organic search traffic. Your job is to fix the technical + on-page SEO so Google can find, crawl, index, and rank these pages. Work carefully, do not break existing design or routing, and report back on anything you can't do as written (with file paths) rather than silently skipping it.
+
+Do the work in the order below. Part 0 and Part 1 are the most important — do them first and tell me the answers before moving on.
+
+PART 0 — Confirm these facts before you code (answer each explicitly)
+
+Reply with answers to all of these first; they change how you implement everything else:
+
+Framework & router: What is this app built with? (Next.js App Router / Next.js Pages Router / Vite + React SPA / Remix / other?) Where is the <head> / metadata currently set (e.g. app/layout.tsx, react-helmet, index.html, a <Head> component)?
+Rendering mode (critical): When a page loads, is the HTML server-rendered / pre-rendered, or is it a client-only SPA where content is injected by JavaScript after load?
+Test: Build/preview the site, open a page, and view the raw HTML (right-click → View Page Source, or curl the URL). Does the raw source already contain the page's <title>, meta description, the main <h1>, and the body copy? Or is the <body> basically empty with just a <div id="root"> and script tags?
+Tell me: "raw HTML contains real content" or "raw HTML is empty / JS-injected." This is the #1 thing that determines whether RPS can rank.
+Route/page list: List all current routes/pages and the file for each.
+Existing SEO assets: Is there a robots.txt? A sitemap.xml (static or generated)? Any existing <meta> tags or JSON-LD? Any google-site-verification tag? Where do they live?
+Real business data in the code: Find and list the actual phone number(s), WhatsApp number, email, and each centre's street address already used on the site, so schema/NAP use real values (do not invent these).
+Reviews: Are there real, genuine parent reviews/testimonials with names in the code/CMS? (Needed to decide if Review/AggregateRating schema is allowed — we will not fabricate reviews.)
+PART 1 — Make pages indexable (fix rendering) — highest impact
+
+If Part 0.2 = "raw HTML contains real content" (SSR/SSG/Next.js): skip to confirming there is no accidental noindex, then go to Part 2.
+
+If Part 0.2 = "raw HTML is empty / JS-injected" (client-only SPA): this is the core reason RPS doesn't rank — Google sees blank pages. Fix it by making every route serve real HTML:
+
+If Next.js: ensure pages use SSR or SSG (generateStaticParams / server components / getStaticProps) so title, meta, H1 and body text are in the initial HTML.
+If Vite/CRA SPA: add build-time prerendering so each route outputs a static HTML file with full content. Implement one of: vite-plugin-ssr/vite-react-ssg, or react-snap (add "postbuild": "react-snap" and hydrate with hydrateRoot), or a prerender plugin. Pre-render every public route listed in Part 0.3. Verify by viewing raw source of 2–3 routes afterwards.
+Ensure react-helmet-async (or your head manager) actually renders tags into the prerendered/SSR HTML, not just client-side.
+
+Also check & fix regardless of stack:
+
+Remove any global <meta name="robots" content="noindex"> or X-Robots-Tag: noindex header that may be blocking indexing (a very common leftover on staging→prod).
+Ensure each page has exactly one <h1> containing its primary keyword (e.g. centre pages → "Preschool in Manpada, Thane").
+Confirm canonical tags: each page should output <link rel="canonical" href="https://www.rainbowpreschools.com/<path>"> (self-referencing, absolute, https, non-trailing-slash consistent with your URLs).
+
+Report back: which case applied, what you changed, and paste the raw-HTML <head> of the home page + one centre page after the fix.
+
+PART 2 — robots.txt & sitemap.xml
+
+robots.txt (served at /robots.txt). Make sure Google/Bing are fully allowed and the sitemap is referenced. Use this as the baseline (keep any genuinely-needed disallows for ad/landing/thank-you pages, but do not block real content or Googlebot):
+
+User-agent: *
+Allow: /
+Disallow: /thank-you
+Disallow: /*?utm_
+
+Sitemap: https://www.rainbowpreschools.com/sitemap.xml
+Remove any WordPress-era disallows (/wp-admin, /category/, /feed, etc.) if they no longer apply to this app, and any rule that blocks Googlebot or the centre/programme pages.
+If a CDN/Cloudflare layer is serving an older robots.txt, tell me — that must be updated at the CDN, not just in code.
+
+sitemap.xml (served at /sitemap.xml): generate it (build-time or a route) containing every public URL from Part 0.3 with <loc>, <lastmod>, and sensible <priority> (home/admissions/centre pages highest). No noindex or redirecting URLs in the sitemap. List every centre page, programme page, admissions, contact, blog index + posts, FAQs, testimonials, quiz, top-preschools, best-preschool-near-me.
+
+PART 3 — Google Search Console verification
+
+Add verification so we can monitor and submit the sitemap. Prefer the HTML meta tag in the global <head>:
+
+html
+<meta name="google-site-verification" content="REPLACE_WITH_TOKEN_FROM_SEARCH_CONSOLE" />
+Put a clearly-labelled placeholder REPLACE_WITH_TOKEN_FROM_SEARCH_CONSOLE and tell me exactly which file/line to paste the real token into. (I'll get the token from Search Console.)
+Alternatively/additionally support the file method: serve /public/googleXXXX.html if I provide that file.
+PART 4 — Unique per-page titles & meta descriptions
+
+Right now several pages appear to share the generic homepage title/description. Give every page a unique, keyword-led title (~50–60 chars) and meta description (~150–160 chars). Wire these through your head manager so they render in the raw HTML (see Part 1). Use exactly this copy (adjust only if a page's real content differs); also set matching Open Graph og:title/og:description/og:image and twitter:card:
+
+Route	<title>	Meta description
+/	Rainbow Preschools Thane | Playgroup, Nursery & KG	Thane's trusted preschool since 2007 — playgroup, nursery & kindergarten across 6 centres. Play-based learning. Admissions open for 2026–27 — book a free visit.
+/about	About Rainbow Preschools | Trusted Thane Preschool Since 2007	15+ years nurturing 1.5–5.5 year-olds across 6 Thane centres with a play-based, activity-first curriculum. Discover our story, values and approach.
+/programmes	Preschool Programmes in Thane | Playgroup, Nursery, KG	Explore Rainbow's play-based programmes for ages 1.5–5.5 — Playgroup, Nursery and Kindergarten in Thane. Structured early learning that builds school readiness.
+/playgroup	Playgroup in Thane (Ages 1.5–3) | Rainbow Preschools	A gentle first step into learning — Rainbow's Playgroup in Thane builds confidence, social skills and routine through play. 6 centres. Admissions open.
+/nursery	Nursery Admission in Thane | Rainbow Preschools	Nursery at Rainbow Preschools, Thane — play-based early learning for 3–4 year-olds across 6 centres. Admissions open for 2026–27. Enquire & book a tour.
+/kindergarten	Kindergarten in Thane (Jr & Sr KG) | Rainbow Preschools	Kindergarten that makes children school-ready — Rainbow's Jr & Sr KG in Thane blends play with early literacy & numeracy. 6 centres. Admissions open.
+/preschool-admissions	Preschool Admissions 2026–27 in Thane | Rainbow Preschools	Admissions open at Rainbow Preschools, Thane. Simple 3-step process for Playgroup, Nursery & KG across 6 centres. Enquire today & book a free campus visit.
+/contact	Find a Rainbow Preschool Near You in Thane | 6 Centres	Locate your nearest Rainbow Preschool in Thane — Manpada, Hariniwas, Anand Nagar, Dhokali, Kalwa & Kasarvadavali. Call, WhatsApp or book a visit.
+/blog	Parenting & Early-Learning Blog | Rainbow Preschools Thane	Tips on early childhood development, school readiness and parenting from Rainbow Preschools, Thane. Practical guidance for parents of 1.5–5.5 year-olds.
+/faqs	Preschool FAQs — Fees, Admission, Timings | Rainbow Thane	Answers to common questions about Rainbow Preschools Thane — admissions, fees, timings, age criteria, safety and curriculum. Everything parents ask.
+/testimonials	Parent Reviews & Testimonials | Rainbow Preschools Thane	Hear from Rainbow parents across Thane on our play-based learning, caring teachers and safe centres. See why families choose Rainbow Preschools.
+/preschool-readiness-quiz	Free Preschool Readiness Quiz | Is Your Child Ready?	Take Rainbow's free 2-minute preschool readiness quiz to see if your child is ready for playgroup or nursery — with tips to prepare. Thane preschool experts.
+/top-preschools-in-thane	Top Preschools in Thane (2026) — How to Choose | Rainbow	A parent's guide to the top preschools in Thane — what to look for in curriculum, safety and fees, and how Rainbow's 6 centres compare. Choose confidently.
+/best-preschool-near-me-in-thane	Best Preschool Near Me in Thane | Rainbow Preschools	Looking for the best preschool near you in Thane? Rainbow has 6 play-based centres close to home. Find your nearest — Manpada, Hariniwas, Dhokali & more.
+/preschool-in-manpada-thane	Preschool in Manpada, Thane | Rainbow (Playgroup–KG)	Rainbow Preschool in Manpada, Thane — playgroup, nursery & kindergarten with play-based learning. Trusted since 2007. Admissions open — book a free visit.
+/preschool-in-hariniwas-thane	Preschool in Hariniwas, Thane | Rainbow (Playgroup–KG)	Rainbow Preschool in Hariniwas, Thane West — safe, play-based playgroup, nursery & KG. Admissions open for 2026–27. Call, WhatsApp or book a visit today.
+/preschool-in-anand-nagar-thane	Preschool in Anand Nagar, Thane | Rainbow (Playgroup–KG)	Rainbow Preschool in Anand Nagar, Thane — nurturing playgroup, nursery & KG near you. Play-based curriculum, caring staff. Admissions open — enquire now.
+/preschool-in-dhokali-thane	Preschool in Dhokali, Thane | Rainbow (Playgroup–KG)	Rainbow Preschool in Dhokali, Thane — play-based early learning for 1.5–5.5 yrs. Trusted local preschool since 2007. Admissions open — book your free visit.
+/preschool-in-kalwa-thane	Preschool in Kalwa, Thane | Rainbow (Playgroup–KG)	Rainbow Preschool in Kalwa, Thane — safe, joyful playgroup, nursery & KG near you. Admissions open for 2026–27. Call or WhatsApp to book a centre tour.
+/preschool-in-kasarvadavali-thane	Preschool in Kasarvadavali, Thane | Rainbow (Playgroup–KG)	Rainbow Preschool in Kasarvadavali (Ghodbunder Rd), Thane — play-based playgroup, nursery & KG. Admissions open. Book a free visit to your nearest centre.
+
+If a route path differs from the table, map it to the closest match and tell me. Titles/descriptions must be set per route (not one global value).
+
+PART 5 — Structured data (JSON-LD)
+
+Add JSON-LD <script type="application/ld+json"> blocks. Use real data from Part 0.5 (do not invent phone/address/reviews).
+
+5a. Site-wide (in global head, once): an EducationalOrganization / Preschool for the brand.
+
+json
+{
+  "@context": "https://schema.org",
+  "@type": "Preschool",
+  "name": "Rainbow Preschools",
+  "url": "https://www.rainbowpreschools.com/",
+  "logo": "https://www.rainbowpreschools.com/<real-logo-path>",
+  "foundingDate": "2007",
+  "areaServed": "Thane, Maharashtra, India",
+  "telephone": "<REAL_PHONE>",
+  "sameAs": ["<real Facebook URL>", "<real Instagram URL>", "<real YouTube URL>"]
+}
+
+5b. Each centre page: a LocalBusiness/Preschool with real NAP + geo so it can rank in local/Map results.
+
+json
+{
+  "@context": "https://schema.org",
+  "@type": "Preschool",
+  "name": "Rainbow Preschool — <Area>, Thane",
+  "url": "https://www.rainbowpreschools.com/preschool-in-<area>-thane",
+  "image": "https://www.rainbowpreschools.com/<real-centre-photo>",
+  "telephone": "<REAL_CENTRE_PHONE>",
+  "priceRange": "₹₹",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "<REAL_STREET>",
+    "addressLocality": "<Area>, Thane",
+    "addressRegion": "Maharashtra",
+    "postalCode": "<REAL_PIN>",
+    "addressCountry": "IN"
+  },
+  "geo": { "@type": "GeoCoordinates", "latitude": "<REAL_LAT>", "longitude": "<REAL_LNG>" },
+  "areaServed": "<Area> and nearby Thane",
+  "parentOrganization": { "@type": "Preschool", "name": "Rainbow Preschools" },
+  "openingHours": "<REAL_HOURS e.g. Mo-Fr 09:00-13:00>"
+}
+
+If real lat/lng or address for a centre isn't in the code, leave a clearly-marked TODO and list which centres are missing data — don't guess.
+
+5c. FAQ page (/faqs): a FAQPage block built from the real Q&As already on that page (this can win FAQ rich results and lift CTR).
+
+5d. Breadcrumbs: add a BreadcrumbList JSON-LD on all non-home pages (Home › Section › Page) and, if there's a visible breadcrumb, keep them in sync.
+
+5e. Reviews (only if genuine): if Part 0.6 found real named reviews, add Review + AggregateRating on the brand and/or centre pages using only those real reviews. If there are no genuine reviews, skip this entirely — do not fabricate ratings.
+
+Validate every block against Google's Rich Results Test structure (no missing required fields).
+
+PART 6 — Centre pages: local signals + internal linking
+On each centre page, ensure visible, crawlable content includes: the H1 with area, the centre's address + embedded Google Map, phone/WhatsApp, programmes offered, timings, and 150+ words of unique local copy (not duplicated across centres).
+On /contact (Find a Centre) and the homepage, link to all six centre pages with descriptive anchor text (e.g. "Preschool in Dhokali, Thane"). Every centre page should be reachable within 1 click from the header/footer or the Find-a-Centre hub.
+Cross-link programme pages (/playgroup, /nursery, /kindergarten) from centre pages and vice-versa.
+Add a footer block listing all centres + key pages (helps crawl depth and internal link equity).
+PART 7 — (Optional, Phase 2) Lead capture — flag, don't block
+
+Only after Parts 1–6 are done and verified, and only if quick: on /preschool-admissions, the centre pages, and programme pages, add an above-the-fold short enquiry form (Parent name, Phone, Child's age/grade, Preferred centre) plus a sticky WhatsApp + click-to-call button. Keep it lightweight and don't harm page speed. If this is non-trivial, stop and tell me — we'll do it as a separate task.
+
+Acceptance criteria (verify and report)
+
+Before you say "done," confirm and show evidence for each:
+
+Raw HTML (View Source) of the homepage and one centre page contains the correct unique <title>, meta description, canonical, one <h1>, and visible body copy. Paste both <head> sections.
+/robots.txt loads, allows crawling, and references the sitemap.
+/sitemap.xml loads and lists every public URL (paste the URL count).
+Every route in Part 4 returns its unique title + description (not the homepage's).
+JSON-LD blocks are present and valid (site-wide, per centre, FAQ, breadcrumbs).
+No noindex remains anywhere (meta or header).
+Nothing visual/functional is broken; build passes.
+What to report back to me
+Answers to all of Part 0.
+Which rendering case applied (Part 1) and what you changed.
+Any place you had to use a TODO/placeholder (GSC token, missing centre address/geo, social URLs, reviews) — list them so I can supply real values.
+Anything you could not implement and why (with file paths), instead of skipping silently.
+Human tasks (I'll do these in Google — not code, but note them so nothing is missed)
+Verify the property in Google Search Console and paste the token where you flagged it; submit the sitemap.
+Link GA4 ⇄ Search Console for the RPS property (currently not linked — that's why we have no query data).
+Create/claim Google Business Profile for each centre and match the NAP to the schema above.
