@@ -1,0 +1,43 @@
+# ART DIRECTION — MASCOT IN THE RIGHT TILE, REMOVE THE PHOTO (/dummy)
+In the "Why Parents Choose" bento, make this exact swap. Do not change anything else.
+
+## DO THIS
+1. DELETE the classroom photo tile in the tall right-hand column completely
+   (the "Happy learners, every day" image). It should no longer appear anywhere
+   in this section.
+2. DELETE the small girl mascot currently sitting at the bottom-left under the
+   "Learn More About Us" button.
+3. In the now-empty TALL RIGHT COLUMN, place the ponytail girl mascot
+   (/public/characters/mascot-girl.png) as the hero element:
+   - She stands full-height and LARGE inside that tall slot, filling it.
+   - Behind her: a soft rounded "stage" backdrop (radius 20px) — a warm pastel /
+     rainbow-glow gradient — with a soft ground-shadow ellipse under her shoes so
+     she looks like she's standing in the card, not floating.
+   - Keep her fully visible: no cropping of her bows, head, or shoes.
+   - Small caption chip at the bottom of the stage (e.g. "Meet our little Rainbow
+     star"). Optional 4.9★ mini-badge can float on the stage corner.
+   - Idle life: gentle breathe + occasional wave, subtle tilt toward the cursor.
+
+## RESULT LAYOUT
+- Left column: heading → paragraphs → centre chips → "Learn More" button (nothing
+  below it now — no mascot there).
+- Right side: the 4 vivid stat tiles + the 4.9★ rating tile as the bento on the
+  left-of-right, and the GIRL MASCOT STAGE occupying the tall far-right column
+  (exactly where the photo used to be).
+- Keep stat tiles content-sized (no hollow tall boxes) and all edges aligned; the
+  mascot stage spans the full height of that stat block beside it.
+
+## MOBILE
+- Stack: heading + copy + chips + button → mascot stage (full-width, she stands
+  centered on her pastel backdrop) → stat tiles 2-col → 4.9★ tile full-width.
+  No photo anywhere. Mascot fully visible.
+
+## RULES / BRAND
+- Same template, smooth-motion (transform/opacity, 60fps), semantic markup,
+  reduced-motion fallback. RPS red #EC210F leads. Stats/centre names unchanged.
+  Mascot is an illustrated brand character.
+
+## DELIVER
+Show desktop @1440 + mobile @390. Success = NO classroom photo, NO bottom-left
+mascot; the girl mascot stands large in the tall right column where the photo
+was, on a soft pastel stage.

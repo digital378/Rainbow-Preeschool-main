@@ -65,7 +65,8 @@ const STYLES = `
   /* ── Bento about-section ─────────────────────────────────────── */
   @keyframes kb-zoom { from{transform:scale(1) translateZ(0)} to{transform:scale(1.08) translateZ(0)} }
   @keyframes mascot-breathe { 0%,100%{transform:translateY(0)} 60%{transform:translateY(-6px)} }
-  .mascot-char { animation:mascot-breathe 4s ease-in-out infinite; transform-origin:bottom center; }
+  @keyframes mascot-wave { 0%,82%,100%{transform:translateY(0) rotate(0deg)} 86%{transform:translateY(-4px) rotate(-9deg)} 91%{transform:translateY(-6px) rotate(9deg)} 96%{transform:translateY(-3px) rotate(-4deg)} }
+  .mascot-char { animation:mascot-wave 9s ease-in-out infinite; transform-origin:bottom center; }
   .bento-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
   .bento-photo { grid-column:1/3; min-height:220px; }
   .bento-trust { grid-column:1/3; align-self:start; }
@@ -1577,73 +1578,62 @@ function StatsSection() {
               </a>
             </div>
 
-            {/* Mascot — fills dead space, grounded at baseline */}
-            <div className="mascot-char hidden lg:flex items-end justify-start"
-              style={{ marginTop:"auto", paddingTop:28 }}>
-              <img
-                src="/characters/student-girl.png"
-                alt=""
-                aria-hidden="true"
-                style={{
-                  height:"clamp(130px,13vw,180px)",
-                  objectFit:"contain", objectPosition:"bottom center",
-                  filter:"drop-shadow(0 6px 20px rgba(33,27,46,.13))",
-                }}
-              />
-            </div>
-            {/* Mobile mascot — below button, smaller */}
-            <div className="mascot-char lg:hidden flex items-end justify-start"
-              style={{ marginTop:28 }}>
-              <img
-                src="/characters/student-girl.png"
-                alt=""
-                aria-hidden="true"
-                style={{
-                  height:100,
-                  objectFit:"contain", objectPosition:"bottom center",
-                  filter:"drop-shadow(0 4px 12px rgba(33,27,46,.12))",
-                }}
-              />
-            </div>
           </div>
 
           {/* ── RIGHT: asymmetric bento ── */}
           {/*
-            DOM order: photo → s0 → s1 → s2 → s3 → trust
-            Mobile (2-col): photo full-width · s0 s1 · s2 s3 · trust full-width
-            Desktop (3-col): s0 s1 [photo tall] / trust [photo] / s2 s3 [photo]
+            DOM order: mascot-stage → s0 → s1 → s2 → s3 → trust
+            Mobile (2-col): mascot-stage full-width · s0 s1 · s2 s3 · trust full-width
+            Desktop (3-col): s0 s1 [mascot tall] / trust [mascot] / s2 s3 [mascot]
           */}
           <div className="bento-grid">
 
-            {/* ① Feature photo tile — tall hero on desktop, full-width on mobile */}
+            {/* ① Mascot stage — girl character in tall right column */}
             <TiltCard
-              className="bento-photo stat-card du-fade"
-              style={{ borderRadius:20, border:"1px solid rgba(33,27,46,.07)",
-                boxShadow:"0 12px 36px rgba(33,27,46,.11)", overflow:"hidden",
-                transitionDelay:"80ms" }}
+              className="bento-photo du-fade"
+              style={{ borderRadius:20, overflow:"hidden",
+                border:"1px solid rgba(236,33,15,.08)",
+                boxShadow:"0 12px 36px rgba(236,33,15,.09), inset 0 1px 0 rgba(255,255,255,.55)",
+                transitionDelay:"80ms",
+                background:"linear-gradient(155deg,#FFF5F0 0%,#FFF0FB 40%,#EEF6FF 100%)",
+                display:"flex", flexDirection:"column", alignItems:"center",
+                position:"relative" }}
               intensity={4}
             >
-              <div style={{ position:"relative", width:"100%", height:"100%", minHeight:"inherit", overflow:"hidden" }}>
+              {/* Rainbow glow orb */}
+              <div aria-hidden style={{ position:"absolute", top:"8%", left:"50%",
+                transform:"translateX(-50%)", width:"130%", paddingBottom:"130%",
+                borderRadius:"50%", pointerEvents:"none",
+                background:"radial-gradient(circle,rgba(236,33,15,.06) 0%,rgba(251,191,36,.06) 35%,rgba(34,197,94,.04) 65%,transparent 100%)" }}/>
+              {/* Ground shadow ellipse */}
+              <div aria-hidden style={{ position:"absolute", bottom:46, left:"50%",
+                transform:"translateX(-50%)", width:"52%", height:18,
+                background:"radial-gradient(ellipse,rgba(33,27,46,.17) 0%,transparent 70%)",
+                borderRadius:"50%", pointerEvents:"none" }}/>
+              {/* Girl mascot — flex fills height, grounded at baseline */}
+              <div style={{ flex:1, display:"flex", alignItems:"flex-end",
+                justifyContent:"center", padding:"20px 12px 0",
+                width:"100%", minHeight:0, overflow:"hidden" }}>
                 <img
-                  src="/images/optimized/DSC00010.webp"
-                  alt="Happy children learning at Rainbow Preschool Thane"
-                  style={{ width:"100%", height:"100%", objectFit:"cover", objectPosition:"center",
-                    display:"block", animation:"kb-zoom 14s ease-in-out infinite alternate" }}
-                  loading="lazy"
+                  src="/characters/student-girl.png"
+                  alt=""
+                  aria-hidden="true"
+                  className="mascot-char"
+                  style={{ height:"100%", width:"auto", maxWidth:"88%",
+                    objectFit:"contain", objectPosition:"bottom center",
+                    display:"block",
+                    filter:"drop-shadow(0 8px 28px rgba(33,27,46,.16))" }}
                 />
-                {/* gradient overlay for legibility */}
-                <div aria-hidden style={{ position:"absolute", inset:0,
-                  background:"linear-gradient(to bottom,transparent 45%,rgba(24,18,42,.65) 100%)",
-                  pointerEvents:"none" }}/>
-                {/* Caption chip */}
-                <div style={{ position:"absolute", bottom:14, left:14,
-                  background:"rgba(255,255,255,.88)", backdropFilter:"blur(10px)",
-                  WebkitBackdropFilter:"blur(10px)", borderRadius:999,
-                  padding:"6px 14px", fontSize:"0.72rem", fontWeight:600,
-                  color:"#211B2E", display:"inline-flex", alignItems:"center", gap:6 }}>
-                  <span role="img" aria-label="happy">😊</span>
-                  Happy learners, every day
-                </div>
+              </div>
+              {/* Caption chip */}
+              <div style={{ margin:"0 0 16px", background:"rgba(255,255,255,.88)",
+                backdropFilter:"blur(12px)", WebkitBackdropFilter:"blur(12px)",
+                borderRadius:999, padding:"6px 16px", fontSize:"0.72rem",
+                fontWeight:600, color:"#211B2E",
+                display:"inline-flex", alignItems:"center", gap:6,
+                boxShadow:"0 2px 12px rgba(33,27,46,.09)", position:"relative", zIndex:1 }}>
+                <span aria-hidden>⭐</span>
+                Meet our little Rainbow star
               </div>
             </TiltCard>
 
