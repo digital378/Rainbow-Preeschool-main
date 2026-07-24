@@ -1581,7 +1581,7 @@ function StatsSection() {
             <div className="mascot-char hidden lg:flex items-end justify-start"
               style={{ marginTop:"auto", paddingTop:28 }}>
               <img
-                src="/characters/student-boy-2.png"
+                src="/characters/student-girl.png"
                 alt=""
                 aria-hidden="true"
                 style={{
@@ -1595,7 +1595,7 @@ function StatsSection() {
             <div className="mascot-char lg:hidden flex items-end justify-start"
               style={{ marginTop:28 }}>
               <img
-                src="/characters/student-boy-2.png"
+                src="/characters/student-girl.png"
                 alt=""
                 aria-hidden="true"
                 style={{
