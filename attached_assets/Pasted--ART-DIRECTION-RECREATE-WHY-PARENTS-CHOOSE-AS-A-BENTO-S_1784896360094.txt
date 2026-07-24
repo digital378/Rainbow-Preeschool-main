@@ -1,0 +1,61 @@
+# ART DIRECTION — RECREATE "WHY PARENTS CHOOSE" AS A BENTO SHOWCASE (/dummy)
+Keep the approved bits: display-font heading with rainbow underline, the centre
+chips (Manpada/Kalwa/Dhokali/Kasarvadavali), the copy, vivid stat cards + count-
+up. Upgrade the COMPOSITION and add warmth + creative elements.
+
+## PROBLEM
+The right side is a flat, uniform 2×2 grid floating in empty space; the left
+column has dead space at the bottom. Make it dynamic and characterful.
+
+## FIX 1 — TURN THE RIGHT SIDE INTO A BENTO GRID (asymmetric, modern)
+Replace the uniform 2×2 with a mixed-size bento (e.g. a 3-col grid with varied
+spans) that combines stats + a real photo + a trust tile:
+- FEATURE PHOTO TILE (spans 2 cols, tall): a REAL photo of happy Rainbow kids /
+  a bright classroom, rounded 20px, subtle slow ken-burns zoom, small caption
+  chip "Happy learners, every day". Real footage only — never AI/stock as real.
+- The 4 vivid stat cards (1,00,000+ · 18+ · 06 · 100%) as smaller bento tiles,
+  keeping their gradient icon chips + count-up.
+- A TRUST TILE: "4.9★ · Loved by parents" (reuse the rating from the hero) with
+  the A/B/C/D avatars — small, glass, gentle shimmer. Links to reviews.
+- Vary tile sizes for a real bento rhythm (one hero tile, several small). Tiles
+  share consistent radius, hairline, soft shadow; each stat tile keeps its hue.
+- Tiles stagger-reveal on scroll (back-out), tilt gently toward cursor, lift on
+  hover; the photo tile parallaxes at a different depth for dimension.
+
+## FIX 2 — ADD THE MASCOT (fill the dead space + brand character)
+- Place the waving student boy (/public/characters/student-full.png) at the
+  BOTTOM-LEFT of the text column, standing on the section baseline, grounded by
+  a soft contact shadow, subtly "presenting" toward the bento stats (slight lean
+  / gesture). Idle breathe + occasional greeting. Keep him modest in size so he
+  supports, not dominates. (If he crowds the copy, place him in the gutter
+  between the text and the bento instead.)
+- A couple of floating toy props (star, balloon) + the pastel aurora tie it to
+  the rest of the page.
+
+## FIX 3 — BALANCE & POLISH
+- Tighten the left column so text + chips + "Learn More" button + mascot form a
+  pleasing vertical flow with no big gap. Keep the "Learn More About Us" ghost
+  CTA (magnetic hover).
+- Add a faint rainbow-gradient glow behind the bento so it feels anchored, not
+  floating.
+
+## MOBILE
+- Bento collapses gracefully: heading + copy + chips + button, then a clean
+  vertical/2-col stack — feature photo first (full-width), then the 4 stat
+  tiles (2-col), then the trust tile. Mascot moves below the button, smaller.
+  Vibrant, spacious, count-up on scroll, 60fps.
+
+## RULES
+- Smooth-motion (transform/opacity, eased, 60fps, Lenis+GSAP), real semantic
+  headings/links, focus states, prefers-reduced-motion fallback (static, numbers
+  final, photo static).
+
+## BRAND (RPS)
+- Rainbow International Pre-School. Red #EC210F leads; other hues suggested.
+  Real photos only. Keep all stats/centre names exactly as given — no invented
+  numbers or claims. Mascot is an illustrated character, not a real named student.
+
+## DELIVER
+Show desktop @1440 + mobile @390 with a screen recording of the bento reveal,
+count-up, and mascot. Success = a dynamic bento (not a flat grid), warmed by the
+mascot, with no dead space, fully on-template.

@@ -62,6 +62,27 @@ const STYLES = `
   .about-cta:hover .about-arrow { transform:translateX(5px) !important; }
   .about-arrow { transition:transform 0.2s ease; }
 
+  /* ── Bento about-section ─────────────────────────────────────── */
+  @keyframes kb-zoom { from{transform:scale(1) translateZ(0)} to{transform:scale(1.08) translateZ(0)} }
+  @keyframes mascot-breathe { 0%,100%{transform:translateY(0)} 60%{transform:translateY(-6px)} }
+  .mascot-char { animation:mascot-breathe 4s ease-in-out infinite; transform-origin:bottom center; }
+  .bento-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .bento-photo { grid-column:1/3; min-height:220px; }
+  .bento-trust { grid-column:1/3; }
+  @media (min-width:1024px) {
+    .bento-grid { grid-template-columns:1fr 1fr 1fr; }
+    .bento-photo { grid-column:3/4 !important; grid-row:1/4 !important; min-height:0; height:100%; }
+    .bento-s1 { grid-column:1/2; grid-row:1/2; }
+    .bento-s2 { grid-column:2/3; grid-row:1/2; }
+    .bento-trust { grid-column:1/3 !important; grid-row:2/3; }
+    .bento-s3 { grid-column:1/2; grid-row:3/4; }
+    .bento-s4 { grid-column:2/3; grid-row:3/4; }
+  }
+  @media (prefers-reduced-motion:reduce) {
+    .mascot-char { animation:none !important; }
+    .bento-photo img { animation:none !important; }
+  }
+
   .d-float-a { animation: d-float-a 9s ease-in-out infinite; }
   .d-float-b { animation: d-float-b 12s ease-in-out infinite; }
   .d-float-c { animation: d-float-c 7s ease-in-out infinite reverse; }
@@ -1464,47 +1485,52 @@ function LearningEnvironmentSection() {
 ═══════════════════════════════════════════════════════════════════════════════ */
 function StatsSection() {
   const CENTRES = ["Manpada", "Kalwa", "Dhokali", "Kasarvadavali"];
+  const AVATARS = [
+    { bg:"#EC210F", l:"A" }, { bg:"#F59E0B", l:"B" },
+    { bg:"#1F7AF0", l:"C" }, { bg:"#06B463", l:"D" },
+  ];
+  /* Bento placement class per stat index */
+  const bentoCls = ["bento-s1","bento-s2","bento-s3","bento-s4"] as const;
+
   return (
     <section className="relative overflow-hidden"
-      style={{ background:"linear-gradient(170deg,#FFFBF5 0%,#FFF3EA 52%,#FFFBF5 100%)", padding:"88px 0 100px" }}>
+      style={{ background:"linear-gradient(170deg,#FFFBF5 0%,#FFF3EA 52%,#FFFBF5 100%)", padding:"88px 0 108px" }}>
 
       {/* Aurora blobs */}
-      <Orb cls="d-float-b w-[440px] h-[440px] -top-28 -right-20 opacity-40"
-        style={{ background:"radial-gradient(circle,rgba(251,191,36,.18) 0%,transparent 65%)", filter:"blur(52px)" }}/>
-      <Orb cls="d-float-c w-80 h-80 bottom-16 -left-16 opacity-35"
+      <Orb cls="d-float-b w-[500px] h-[500px] -top-28 right-[6%] opacity-35"
+        style={{ background:"radial-gradient(circle,rgba(251,191,36,.17) 0%,transparent 65%)", filter:"blur(56px)" }}/>
+      <Orb cls="d-float-c w-80 h-80 bottom-16 -left-16 opacity-30"
         style={{ background:"radial-gradient(circle,rgba(236,33,15,.09) 0%,transparent 65%)", filter:"blur(44px)" }}/>
-      <StarDot cls="d-tw2 text-amber-300/55 top-[14%] left-[40%] w-4 h-4"/>
-      <StarDot cls="d-tw3 text-amber-200/40 bottom-[20%] right-[16%] w-3 h-3"/>
-      {/* Floating balloon prop */}
-      <div className="d-float-a absolute top-[10%] right-[7%] pointer-events-none opacity-20" aria-hidden
-        style={{ width:28, height:36 }}>
-        <svg viewBox="0 0 28 36" fill="none"><ellipse cx="14" cy="13" rx="10" ry="12" fill="#EC210F"/>
-          <path d="M14 25 Q13 30 14 35" stroke="rgba(33,27,46,.5)" strokeWidth="1.5" strokeLinecap="round"/></svg>
-      </div>
+      <Orb cls="d-float-a w-60 h-60 top-[42%] left-[40%] opacity-20"
+        style={{ background:"radial-gradient(circle,rgba(31,122,240,.09) 0%,transparent 65%)", filter:"blur(38px)" }}/>
+      <StarDot cls="d-tw2 text-amber-300/55 top-[12%] left-[36%] w-4 h-4"/>
+      <StarDot cls="d-tw3 text-amber-200/40 bottom-[18%] right-[10%] w-3 h-3"/>
+      <StarDot cls="d-tw1 text-red-300/35 top-[58%] right-[22%] w-2.5 h-2.5"/>
 
       <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-16 items-start">
+        {/* Outer grid: text col (46%) | bento col */}
+        <div className="grid grid-cols-1 lg:grid-cols-[46%_1fr] items-stretch gap-12 lg:gap-14">
 
-          {/* ── Left: text column ─────────────────────────────────────── */}
-          <div className="du-fade">
-            {/* Eyebrow */}
+          {/* ── LEFT: copy + mascot fills bottom dead space ── */}
+          <div className="du-fade flex flex-col">
+
             <p style={{ fontSize:"0.63rem", fontWeight:700, letterSpacing:"0.22em",
               textTransform:"uppercase", color:"#EC210F", margin:"0 0 14px" }}>
               ABOUT US
             </p>
-            {/* Heading with gradient span */}
-            <h2 className="section-title" style={{ fontSize:"clamp(1.9rem,3.6vw,3rem)",
+
+            <h2 className="section-title" style={{ fontSize:"clamp(1.9rem,3.4vw,2.9rem)",
               margin:"0 0 4px", lineHeight:1.15 }}>
               Why Parents Choose{" "}
-              <span style={{
-                background:"linear-gradient(95deg,#F59E0B 0%,#EC210F 100%)",
-                WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent", backgroundClip:"text",
-              }}>Rainbow Preschool</span>
+              <span style={{ background:"linear-gradient(95deg,#F59E0B 0%,#EC210F 100%)",
+                WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent", backgroundClip:"text" }}>
+                Rainbow Preschool
+              </span>
             </h2>
-            {/* Rainbow swoosh underline */}
+
+            {/* Rainbow swoosh */}
             <div style={{ margin:"0 0 22px" }}>
-              <svg width="230" height="11" viewBox="0 0 230 11" fill="none"
-                xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <svg width="230" height="11" viewBox="0 0 230 11" fill="none" aria-hidden="true">
                 <path d="M4 8 Q57 2 115 5.5 Q173 9 226 3.5"
                   stroke="url(#ab-sw)" strokeWidth="3.5" strokeLinecap="round" fill="none"/>
                 <defs>
@@ -1531,68 +1557,181 @@ function StatsSection() {
               {CENTRES.map(name => (
                 <span key={name} style={{ display:"inline-flex", alignItems:"center", gap:5,
                   padding:"5px 13px 5px 10px", borderRadius:999, fontSize:"0.76rem", fontWeight:600,
-                  color:"#211B2E", background:"rgba(33,27,46,.05)",
-                  border:"1px solid rgba(33,27,46,.09)" }}>
+                  color:"#211B2E", background:"rgba(33,27,46,.05)", border:"1px solid rgba(33,27,46,.09)" }}>
                   <MapPin size={11} style={{ color:"#EC210F", flexShrink:0 }}/>
                   {name}
                 </span>
               ))}
             </div>
 
-            {/* Ghost CTA — brand-red on hover */}
-            <a href="/about" className="about-cta inline-flex items-center gap-2"
-              style={{ padding:"12px 26px", borderRadius:999, fontSize:"0.9rem", fontWeight:600,
-                border:"1.5px solid rgba(33,27,46,.20)", color:"#211B2E", background:"white",
-                transition:"all 0.22s ease", boxShadow:"0 2px 10px rgba(33,27,46,.06)",
-                textDecoration:"none", display:"inline-flex", alignItems:"center", gap:8 }}>
-              Learn More About Us
-              <ArrowRight size={16} className="about-arrow"/>
-            </a>
+            {/* Ghost CTA */}
+            <div>
+              <a href="/about" className="about-cta inline-flex items-center"
+                style={{ padding:"12px 26px", borderRadius:999, fontSize:"0.9rem", fontWeight:600,
+                  border:"1.5px solid rgba(33,27,46,.20)", color:"#211B2E", background:"white",
+                  transition:"all 0.22s ease", boxShadow:"0 2px 10px rgba(33,27,46,.06)",
+                  textDecoration:"none", gap:8 }}>
+                Learn More About Us
+                <ArrowRight size={16} className="about-arrow"/>
+              </a>
+            </div>
+
+            {/* Mascot — fills dead space, grounded at baseline */}
+            <div className="mascot-char hidden lg:flex items-end justify-start"
+              style={{ marginTop:"auto", paddingTop:28 }}>
+              <img
+                src="/characters/student-boy.png"
+                alt=""
+                aria-hidden="true"
+                style={{
+                  height:"clamp(130px,13vw,180px)",
+                  objectFit:"contain", objectPosition:"bottom center",
+                  filter:"drop-shadow(0 6px 20px rgba(33,27,46,.13))",
+                }}
+              />
+            </div>
+            {/* Mobile mascot — below button, smaller */}
+            <div className="mascot-char lg:hidden flex items-end justify-start"
+              style={{ marginTop:28 }}>
+              <img
+                src="/characters/student-boy.png"
+                alt=""
+                aria-hidden="true"
+                style={{
+                  height:100,
+                  objectFit:"contain", objectPosition:"bottom center",
+                  filter:"drop-shadow(0 4px 12px rgba(33,27,46,.12))",
+                }}
+              />
+            </div>
           </div>
 
-          {/* ── Right: 2×2 vivid stat grid ────────────────────────────── */}
-          <div className="grid grid-cols-2 gap-4 sm:gap-5">
+          {/* ── RIGHT: asymmetric bento ── */}
+          {/*
+            DOM order: photo → s0 → s1 → s2 → s3 → trust
+            Mobile (2-col): photo full-width · s0 s1 · s2 s3 · trust full-width
+            Desktop (3-col): s0 s1 [photo tall] / trust [photo] / s2 s3 [photo]
+          */}
+          <div className="bento-grid">
+
+            {/* ① Feature photo tile — tall hero on desktop, full-width on mobile */}
+            <TiltCard
+              className="bento-photo stat-card du-fade"
+              style={{ borderRadius:20, border:"1px solid rgba(33,27,46,.07)",
+                boxShadow:"0 12px 36px rgba(33,27,46,.11)", overflow:"hidden",
+                transitionDelay:"80ms" }}
+              intensity={4}
+            >
+              <div style={{ position:"relative", width:"100%", height:"100%", minHeight:"inherit", overflow:"hidden" }}>
+                <img
+                  src="/images/optimized/DSC00010.webp"
+                  alt="Happy children learning at Rainbow Preschool Thane"
+                  style={{ width:"100%", height:"100%", objectFit:"cover", objectPosition:"center",
+                    display:"block", animation:"kb-zoom 14s ease-in-out infinite alternate" }}
+                  loading="lazy"
+                />
+                {/* gradient overlay for legibility */}
+                <div aria-hidden style={{ position:"absolute", inset:0,
+                  background:"linear-gradient(to bottom,transparent 45%,rgba(24,18,42,.65) 100%)",
+                  pointerEvents:"none" }}/>
+                {/* Caption chip */}
+                <div style={{ position:"absolute", bottom:14, left:14,
+                  background:"rgba(255,255,255,.88)", backdropFilter:"blur(10px)",
+                  WebkitBackdropFilter:"blur(10px)", borderRadius:999,
+                  padding:"6px 14px", fontSize:"0.72rem", fontWeight:600,
+                  color:"#211B2E", display:"inline-flex", alignItems:"center", gap:6 }}>
+                  <span role="img" aria-label="happy">😊</span>
+                  Happy learners, every day
+                </div>
+              </div>
+            </TiltCard>
+
+            {/* ② – ⑤  Stat tiles (4) — index maps to bento-s1..s4 on desktop */}
             {stats.map(({ Icon, label, grad, glow, target, format }, i) => (
               <TiltCard
                 key={label}
-                className="stat-card du-fade h-full"
-                style={{
-                  borderRadius:20, background:"white",
+                className={cn("stat-card du-fade", bentoCls[i])}
+                style={{ borderRadius:20, background:"white",
                   border:"1px solid rgba(33,27,46,.07)",
-                  boxShadow:"0 10px 30px rgba(33,27,46,.09)",
-                  minHeight:164, transitionDelay:`${i * 80}ms`,
-                }}
-                intensity={7}
+                  boxShadow:"0 10px 28px rgba(33,27,46,.08)",
+                  minHeight:132, transitionDelay:`${(i + 1) * 70}ms` }}
+                intensity={9}
               >
-                <div style={{ padding:"20px 18px 22px", display:"flex", flexDirection:"column",
+                <div style={{ padding:"18px 16px 20px", display:"flex", flexDirection:"column",
                   height:"100%", position:"relative", overflow:"hidden" }}>
-                  {/* Vivid 3px top accent bar */}
+                  {/* Top accent bar */}
                   <div style={{ position:"absolute", top:0, left:0, right:0, height:3,
                     background:grad, borderRadius:"20px 20px 0 0" }}/>
-                  {/* Faint corner hue wash */}
-                  <div aria-hidden style={{ position:"absolute", top:-10, right:-10, width:90, height:90,
-                    borderRadius:"50%", background:`radial-gradient(circle,${glow.replace(".26",".10")} 0%,transparent 70%)`,
-                    pointerEvents:"none" }}/>
-                  {/* Vivid gradient icon chip */}
-                  <div className="stat-icon-box" style={{ width:48, height:48, borderRadius:13,
+                  {/* Hue wash */}
+                  <div aria-hidden style={{ position:"absolute", top:-8, right:-8, width:80, height:80,
+                    borderRadius:"50%", pointerEvents:"none",
+                    background:`radial-gradient(circle,${glow.replace(".26",".09")} 0%,transparent 70%)` }}/>
+                  {/* Vivid icon chip */}
+                  <div className="stat-icon-box" style={{ width:44, height:44, borderRadius:12,
                     background:grad, display:"flex", alignItems:"center", justifyContent:"center",
-                    marginBottom:14, flexShrink:0, boxShadow:`0 4px 14px ${glow}` }}>
-                    <Icon size={22} color="white" strokeWidth={2.1}/>
+                    marginBottom:12, flexShrink:0, boxShadow:`0 4px 14px ${glow}` }}>
+                    <Icon size={20} color="white" strokeWidth={2.1}/>
                   </div>
-                  {/* Animated number — Fredoka display font */}
-                  <p className="section-title" style={{ fontSize:"clamp(1.75rem,3vw,2.4rem)",
-                    letterSpacing:"-0.04em", margin:"0 0 5px", lineHeight:1, color:"#211B2E" }}>
+                  {/* Animated counter */}
+                  <p className="section-title" style={{ fontSize:"clamp(1.55rem,2.6vw,2.1rem)",
+                    letterSpacing:"-0.04em", margin:"0 0 4px", lineHeight:1, color:"#211B2E" }}>
                     <AnimatedCounter target={target} format={format}/>
                   </p>
-                  {/* Label */}
-                  <p style={{ fontSize:"0.8rem", color:"#55506A", fontWeight:500, margin:0, lineHeight:1.35 }}>
+                  <p style={{ fontSize:"0.75rem", color:"#55506A", fontWeight:500, margin:0, lineHeight:1.3 }}>
                     {label}
                   </p>
                 </div>
               </TiltCard>
             ))}
-          </div>
 
+            {/* ⑥  Trust tile — spans 2 cols on both breakpoints */}
+            <TiltCard
+              className="bento-trust stat-card du-fade"
+              style={{ borderRadius:20, background:"white",
+                border:"1px solid rgba(33,27,46,.07)",
+                boxShadow:"0 10px 28px rgba(33,27,46,.08)",
+                transitionDelay:"380ms" }}
+              intensity={5}
+            >
+              <div style={{ padding:"16px 20px 18px", position:"relative", overflow:"hidden" }}>
+                {/* Rainbow top accent */}
+                <div aria-hidden style={{ position:"absolute", top:0, left:0, right:0, height:3,
+                  background:"linear-gradient(90deg,#EC210F,#F59E0B,#22C55E,#1F7AF0,#8B5CF6)",
+                  borderRadius:"20px 20px 0 0" }}/>
+                <div style={{ display:"flex", alignItems:"center", gap:14, marginBottom:10, paddingTop:6 }}>
+                  {/* Stacked avatars */}
+                  <div style={{ display:"flex", flexShrink:0 }}>
+                    {AVATARS.map((av, i) => (
+                      <div key={i} style={{ width:30, height:30, borderRadius:"50%",
+                        background:av.bg, border:"2.5px solid white",
+                        marginLeft: i === 0 ? 0 : -9, position:"relative",
+                        zIndex:AVATARS.length - i, display:"flex", alignItems:"center",
+                        justifyContent:"center", fontSize:"0.64rem", fontWeight:700, color:"white" }}>
+                        {av.l}
+                      </div>
+                    ))}
+                  </div>
+                  {/* Star + number */}
+                  <div>
+                    <div style={{ display:"flex", alignItems:"center", gap:5, marginBottom:2 }}>
+                      <span style={{ color:"#F59E0B", letterSpacing:"1px", fontSize:"0.88rem" }}>★★★★★</span>
+                      <span style={{ fontWeight:700, fontSize:"0.9rem", color:"#211B2E" }}>4.9</span>
+                    </div>
+                    <p style={{ fontSize:"0.72rem", color:"#55506A", margin:0, fontWeight:500 }}>
+                      Loved by Thane parents
+                    </p>
+                  </div>
+                </div>
+                <a href="https://www.google.com/maps/search/Rainbow+Preschool+Thane"
+                  target="_blank" rel="noopener noreferrer"
+                  style={{ fontSize:"0.72rem", color:"#EC210F", textDecoration:"none",
+                    fontWeight:600, display:"inline-flex", alignItems:"center", gap:4 }}>
+                  Read parent reviews <ArrowRight size={11}/>
+                </a>
+              </div>
+            </TiltCard>
+
+          </div>{/* /bento-grid */}
         </div>
       </div>
     </section>
