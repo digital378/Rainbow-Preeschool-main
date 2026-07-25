@@ -1,0 +1,45 @@
+# UPDATE — "Awarded By" section only. /dummy PAGE ONLY.
+# Edit ONLY this section (heading "Awarded By:", its subtitle, and the logo row).
+# Do NOT touch the quick-select tiles above, the Quick Callback bar, or anything
+# else. If a change affects another section, revert it.
+
+## PRESERVE (do not invent or change)
+- Keep the heading "Awarded By:" and the subtitle "Recognised by leading national
+  and education platforms for excellence in early childhood education."
+- Keep the SAME 6 logos in the same order (India Today, the school crest, ScooNews,
+  World Education Summit Mumbai, ET, NSA National School Awards 2023), with their
+  existing alt text and any links. Do not add, remove, or rename any award.
+
+## FIX 1 — normalise the logos (the main tidiness issue)
+- Put each logo in an equal fixed-height box: height 52px on desktop (40px mobile),
+  width auto, object-fit:contain, with even horizontal padding (~28px) between logos.
+  Every logo reads at the same optical height regardless of its native size.
+- Render logos in a neutral state: grayscale(100%) + opacity 0.7 at rest.
+
+## FIX 2 — make it a seamless auto-scroll marquee (alive, premium)
+- Wrap the logo row in an overflow-hidden track; duplicate the logo list once
+  (mark the duplicate aria-hidden) and animate the track translateX 0 → -50%,
+  linear, infinite, ~30s, for a seamless loop.
+- Add a soft fade mask on both edges (mask-image linear-gradient, ~80px) so logos
+  fade in/out at the sides instead of hard-cutting.
+- On hover over a logo: it goes full colour (grayscale 0, opacity 1) and lifts
+  translateY(-3px); PAUSE the marquee while any logo is hovered.
+- Entrance: heading + subtitle + strip fade/rise in on scroll (stagger ~80ms).
+
+## SYNC WITH BUILD
+- Use the site heading font for "Awarded By:" (match the other section headings),
+  keep it centered with the subtitle. Optional eyebrow above it in the red
+  uppercase style used elsewhere: "RECOGNISED & AWARDED" (only if you want it).
+- Background stays clean white/cream; keep it airy.
+
+## MOBILE + ACCESSIBILITY + REDUCED MOTION
+- Mobile: marquee still scrolls (slightly faster is fine); logos at 40px height.
+- Logos keep real alt text; if linked, they stay keyboard-focusable with a visible
+  focus ring; the duplicated track is aria-hidden so screen readers read the set once.
+- prefers-reduced-motion: STOP the marquee — show the logos as a centered, wrapping
+  static row (normalised sizes, grayscale→colour on hover only).
+
+## DELIVER
+Show /dummy "Awarded By" at desktop 1440 + mobile 390 with a short recording of the
+marquee loop + a logo colouring on hover. Confirm nothing outside this section
+changed and all 6 logos/awards are unchanged.
