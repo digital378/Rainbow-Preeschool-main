@@ -128,25 +128,6 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
     });
   }
 
-  // AggregateRating for the school entity — emitted for ALL pages with lastModified,
-  // including blog posts (which have BlogPosting and skip the generic Article above).
-  // Decoupled from hasExistingArticle so blog pages also receive this node.
-  // Mirrors the node eeat-signals.tsx previously injected client-side.
-  if (seo.lastModified) {
-    allStructuredData.push({
-      "@context": "https://schema.org",
-      "@type": "Preschool",
-      name: "Rainbow Preschool International",
-      url: canonical,
-      aggregateRating: {
-        "@type": "AggregateRating",
-        ratingValue: VERIFIED_RATING.ratingValue.toFixed(1),
-        reviewCount: VERIFIED_RATING.reviewCount,
-        bestRating: "5",
-        worstRating: "1",
-      },
-    });
-  }
 
   const structuredDataScripts = allStructuredData
     .map((data) => `<script type="application/ld+json">${JSON.stringify(data)}</script>`)
@@ -271,7 +252,7 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
     <main>
       ${seo.breadcrumbs ? `<div class="breadcrumb">${seo.breadcrumbs.map((b) => `<a href="${BASE_URL}${b.url}">${escapeHtml(b.name)}</a>`).join(" › ")}</div>` : ""}
       <h1>${escapeHtml(seo.h1 || seo.title)}</h1>
-      ${seo.lastModified ? `<p style="font-size:0.875rem;color:#666;margin:8px 0 16px"><strong>Reviewed by Rainbow Preschool Curriculum Team</strong> — Last updated: <time datetime="${seo.lastModified}">${escapeHtml(seo.lastModifiedDisplay || seo.lastModified)}</time> · ★★★★★ 4.9/5 (487 parent reviews)</p>` : ""}
+      ${seo.lastModified ? `<p style="font-size:0.875rem;color:#666;margin:8px 0 16px"><strong>Reviewed by Rainbow Preschool Curriculum Team</strong> — Last updated: <time datetime="${seo.lastModified}">${escapeHtml(seo.lastModifiedDisplay || seo.lastModified)}</time></p>` : ""}
       ${seo.introText ? `<p>${escapeHtml(seo.introText)}</p>` : ""}
       ${contentHtml}
       ${internalLinksHtml ? `<nav aria-label="Related pages"><h2>Explore More</h2><ul>${internalLinksHtml}</ul></nav>` : ""}

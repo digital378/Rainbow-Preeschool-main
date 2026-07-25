@@ -1,0 +1,15 @@
+Make ONE narrowly-scoped cleanup: remove self-serving rating and self-authored review structured data from SSR output. Google's guidelines prohibit aggregateRating markup an organisation places on itself, and reviews authored by the organisation about its own programmes; these risk a structured-data manual action.
+
+Remove exactly these, wherever they are emitted for SSR (server/ssr-pages.ts and server/bot-ssr.ts):
+1. The aggregateRating property (4.9 / 487) inside the EducationalOrganization "#organization" JSON-LD node in server/ssr-pages.ts. Remove ONLY the aggregateRating property — keep the rest of that node (address, contactPoint, areaServed, foundingDate, etc.) intact.
+2. In server/bot-ssr.ts, the block that pushes the Preschool node with aggregateRating (from shared/verified-rating.ts) into allStructuredData.
+3. In server/bot-ssr.ts, in the lastModified byline paragraph, remove only the "· ★★★★★ 4.9/5 (487 parent reviews)" portion — keep "Reviewed by Rainbow Preschool Curriculum Team — Last updated: <time>…" as is.
+4. All JSON-LD Review nodes authored by "Rainbow Preschool Curriculum Team" reviewing our own programmes (the {"@type":"Review", author: Curriculum Team, itemReviewed: EducationalOccupationalProgram...} blocks in server/ssr-pages.ts). Remove these Review nodes entirely.
+
+Do NOT remove: FAQPage schema, BreadcrumbList, the per-centre Preschool/LocalBusiness nodes (addresses, geo, phones, hours — these are factual and fine), Article/BlogPosting schema, or the WebSite node.
+
+Also: search client/ and shared/ for any other place that renders or injects the 4.9/487 rating or aggregateRating JSON-LD (e.g. eeat-signals, verified-rating imports) and LIST them in your report — but do NOT modify client-side files.
+
+Hard constraints: modify ONLY server/ssr-pages.ts and server/bot-ssr.ts; keep shared/verified-rating.ts on disk; no new packages; change nothing else.
+
+Verification: npm run check; curl /playgroup with a Googlebot UA and confirm the JSON-LD contains no aggregateRating and no Curriculum-Team Review nodes, and the byline has no stars/counts. Report the diff and curl snippet.

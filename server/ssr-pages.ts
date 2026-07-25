@@ -259,48 +259,6 @@ export interface PageSEOData {
  * Slim EducationalOrganization schema for programme + commercial pages.
  * Org identity + AggregateRating only — no Person review authors.
  */
-/**
- * Build 3 Review nodes for a programme page. The author is the Curriculum
- * Team (an Organization, not a Person) and the publisher links to the
- * canonical org @id. This keeps schema parity with the locality pages while
- * staying inside the editorial rule that no individual person name may
- * appear as author/reviewer/contributor anywhere on the site. The review
- * bodies are summaries of aggregated parent feedback compiled by the
- * Curriculum Team.
- */
-function buildProgrammeReviews(programmeName: string): Array<Record<string, unknown>> {
-  const author = { "@type": "Organization", name: "Rainbow Preschool Curriculum Team" };
-  const publisher = { "@id": `${BASE_URL}/#organization` };
-  return [
-    {
-      "@type": "Review",
-      author,
-      publisher,
-      datePublished: "2026-03-12",
-      itemReviewed: { "@type": "EducationalOccupationalProgram", name: programmeName },
-      reviewBody: `Aggregated parent feedback for the ${programmeName} programme across all 6 Thane centres consistently highlights small batch sizes, ECE-qualified teachers, and a play-based curriculum that builds confidence and early skills. Parents report visible improvement in their child's social, language, and motor development within the first term.`,
-      reviewRating: { "@type": "Rating", ratingValue: "4.8", bestRating: "5" },
-    },
-    {
-      "@type": "Review",
-      author,
-      publisher,
-      datePublished: "2026-02-04",
-      itemReviewed: { "@type": "EducationalOccupationalProgram", name: programmeName },
-      reviewBody: `Curriculum-team review of ${programmeName} batches across all centres confirms strong adherence to the NEP-2020-aligned activity plan, daily parent communication, and consistent safety standards (CCTV, female-only staff, secure pickup). Termly internal audits placed every centre at "exceeds standard" on classroom quality.`,
-      reviewRating: { "@type": "Rating", ratingValue: "4.9", bestRating: "5" },
-    },
-    {
-      "@type": "Review",
-      author,
-      publisher,
-      datePublished: "2025-12-18",
-      itemReviewed: { "@type": "EducationalOccupationalProgram", name: programmeName },
-      reviewBody: `Year-end review of the ${programmeName} programme based on aggregated parent surveys and teacher progress reports across all 6 Thane centres. Parents rated the curriculum, teacher quality, safety, and communication consistently 4.7/5 or higher; over 95% indicated they would recommend Rainbow Preschool to other families in Thane.`,
-      reviewRating: { "@type": "Rating", ratingValue: "4.7", bestRating: "5" },
-    },
-  ];
-}
 
 const programmeOrgSchema = {
   "@context": "https://schema.org",
@@ -344,13 +302,6 @@ const programmeOrgSchema = {
     telephone: "+91-8291568972",
     contactType: "admissions",
     availableLanguage: ["English", "Hindi", "Marathi"],
-  },
-  aggregateRating: {
-    "@type": "AggregateRating",
-    ratingValue: String(VERIFIED_RATING.ratingValue),
-    bestRating: "5",
-    ratingCount: String(VERIFIED_RATING.reviewCount),
-    reviewCount: String(VERIFIED_RATING.reviewCount),
   },
 };
 
@@ -397,20 +348,6 @@ const organizationSchema = {
     contactType: "admissions",
     availableLanguage: ["English", "Hindi", "Marathi"],
   },
-  aggregateRating: {
-    "@type": "AggregateRating",
-    ratingValue: String(VERIFIED_RATING.ratingValue),
-    bestRating: "5",
-    ratingCount: String(VERIFIED_RATING.reviewCount),
-    reviewCount: String(VERIFIED_RATING.reviewCount),
-  },
-  // NOTE: per-Review nodes intentionally omitted. The editorial rule is that
-  // only "Rainbow Preschool International" / "Rainbow Preschool Curriculum
-  // Team" may appear as a byline / reviewer / contributor / schema author
-  // anywhere on the site, which rules out Person review authors here.
-  // AggregateRating above is sufficient for the star rich result; the
-  // /playgroup, /nursery, /kindergarten programme pages still emit 3
-  // Curriculum-Team-authored Review nodes via buildProgrammeReviews().
   sameAs: [
     "https://www.google.com/maps/place/?q=place_id:ChIJs8uL-1-5vjcRPWjKJYOMaA0",
     "https://www.facebook.com/rainbowpreschoolthane",
@@ -724,7 +661,7 @@ const staticPages: Record<string, PageSEOData> = {
         { "@type": "Question", name: "What are the playgroup timings at Rainbow Preschool Thane?", acceptedAnswer: { "@type": "Answer", text: "We offer two playgroup batches: Morning (8:30 AM – 11:30 AM) and Afternoon (12:30 PM – 3:30 PM), Monday to Friday. Parents can choose the batch that suits their daily routine." } },
         { "@type": "Question", name: "How do I enquire about playgroup admission?", acceptedAnswer: { "@type": "Answer", text: "Call +91-8291568972 or fill out the admission enquiry form on this page. Our admissions team will respond within 24 hours and arrange a free campus visit at any of our 6 Thane playgroup centres." } },
       ],
-    }, ...buildProgrammeReviews("Playgroup")],
+    }],
     contentSections: [
       { heading: "About Our Playgroup Programme", text: "Rainbow Preschool International's Playgroup programme is thoughtfully designed for toddlers aged 1.5 to 2.5 years — the most formative and sensitive period of early brain development. During these early years, children's brains are forming neural connections at an extraordinary pace, and the quality of their environment and interactions directly shapes their cognitive, social, emotional, and physical development. Our Playgroup provides a warm, secure, and richly stimulating environment where your child takes their very first steps into a world of exploration, creativity, and joyful learning. With small class sizes of 10–12 children and dedicated, ECE-qualified Early Childhood Educators, every toddler receives the individual attention, encouragement, and care they deserve during this precious phase." },
       { heading: "What Your Child Will Learn", items: ["Socialisation — learning to play alongside and with other children, building their first friendships in a warm, guided group setting", "Fine motor skills — threading beads, block building, clay modelling, and finger painting to develop essential hand strength and coordination", "Gross motor development — running, jumping, balancing, and creative movement play in our safe indoor and outdoor areas", "Language development — songs, nursery rhymes, stories, and picture books to build vocabulary, listening skills, and early literacy foundations", "Sensory exploration — sand, water, textured materials, sounds, and scents to stimulate all five senses and build sensory processing capacity", "Emotional regulation — learning to identify and express feelings appropriately, take turns, manage transitions, and build resilience", "Basic concepts — colours, shapes, sizes, numbers, and patterns introduced through hands-on play activities, not rote learning"] },
@@ -756,7 +693,7 @@ const staticPages: Record<string, PageSEOData> = {
         { "@type": "Question", name: "How does nursery prepare my child for kindergarten?", acceptedAnswer: { "@type": "Answer", text: "By the end of the nursery year, children can recognise letters and their sounds, count and identify numbers up to 20, hold a pencil correctly and trace basic shapes, follow classroom routines independently, and interact confidently with peers and teachers — ensuring kindergarten-readiness both academically and emotionally." } },
         { "@type": "Question", name: "How can I enquire about nursery admission in Thane?", acceptedAnswer: { "@type": "Answer", text: "Call +91-8291568972 or fill out the admission enquiry form on this page. Our admissions team will respond promptly and arrange a free campus visit at any of our 6 nursery centres across Thane — Manpada, Kalwa, Anand Nagar, Dhokali, Kasarvadavali, or Hariniwas." } },
       ],
-    }, ...buildProgrammeReviews("Nursery")],
+    }],
     contentSections: [
       { heading: "About Our Nursery Programme", text: "Rainbow Preschool International's Nursery programme is designed for children aged 2.5 to 3.5 years. Building on the foundation laid in Playgroup, the Nursery year introduces more structured learning while keeping play at its heart. Children explore early literacy, pre-numeracy concepts, science, art, and social studies through engaging, theme-based activities. Class sizes are kept small — 12 to 15 children — so teachers can give every child meaningful individual attention." },
       { heading: "What Children Learn in Nursery", items: ["Early literacy — letter recognition, phonics, pre-reading, and storytelling", "Pre-numeracy — counting, number recognition, patterns, and basic sorting", "Environmental awareness — plants, animals, seasons, and community helpers", "Creative arts — painting, collage, clay, music, and dance", "Social skills — cooperating, sharing, conflict resolution, and classroom etiquette", "Life skills — self-help skills, hygiene habits, and independence", "Language — Hindi and English vocabulary development, circle time discussions"] },
@@ -788,7 +725,7 @@ const staticPages: Record<string, PageSEOData> = {
         { "@type": "Question", name: "Is the kindergarten environment safe for my child?", acceptedAnswer: { "@type": "Answer", text: "Every Rainbow Preschool kindergarten centre in Thane has trained and experienced female teachers, CCTV-enabled classrooms, child-safe classrooms with age-appropriate furniture, regularly sanitised premises, and a secure entry-exit system. Every child is supervised at all times." } },
         { "@type": "Question", name: "How can I enquire about kindergarten admission in Thane?", acceptedAnswer: { "@type": "Answer", text: "Call +91-8291568972 or fill out the admission enquiry form on this page. Our admissions team will respond promptly and arrange a free campus visit at any of our 6 kindergarten centres across Thane — Manpada, Kalwa, Anand Nagar, Dhokali, Kasarvadavali, or Hariniwas." } },
       ],
-    }, ...buildProgrammeReviews("Kindergarten")],
+    }],
     contentSections: [
       { heading: "About Our Kindergarten Programme", text: "Rainbow Preschool International's Kindergarten programme is designed for children aged 3.5 to 5.5 years, preparing them thoroughly for the academic and social demands of primary school. The programme covers reading readiness, writing, mathematics, science, social studies, arts, and physical education — all delivered through hands-on, activity-based learning that keeps children engaged and confident. Kindergarten at Rainbow focuses equally on academic skills and character development, ensuring children leave with the knowledge, habits, and mindset to thrive in Class 1 and beyond." },
       { heading: "What Children Learn in Kindergarten", items: ["Reading & writing — phonics, sight words, handwriting, sentence formation, and creative expression", "Mathematics — number operations (up to 100), measurement, time, geometry, and problem-solving", "Environmental Science — living and non-living things, human body, weather, plants, animals", "Social Studies — community helpers, maps, transport, and festivals", "Computer basics — mouse skills, keyboard introduction at select centres", "Arts & Craft — advanced art techniques, model-making, drama, and creative projects", "Physical Education — structured games, yoga, and coordination activities"] },
