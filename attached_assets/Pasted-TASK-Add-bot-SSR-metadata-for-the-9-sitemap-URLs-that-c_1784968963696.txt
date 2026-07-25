@@ -1,0 +1,32 @@
+TASK: Add bot-SSR metadata for the 9 sitemap URLs that currently have none.
+
+Problem: these URLs are in SITEMAP_ENTRIES (shared/sitemap-entries.ts) but have no entry in getPageSEO (server/ssr-pages.ts), so Googlebot receives them without a title, meta description, canonical or structured data:
+  /national-symbols-of-india-for-kids
+  /sports-day-activities-for-kindergarten
+  /36-motivational-thoughts-of-the-day-for-kids
+  /body-parts-names-in-english-for-preschoolers
+  /rainy-season-activities-for-kindergarten
+  /diwali-activity-for-kindergarten
+  /best-indoor-games-for-kids-at-home
+  /explore-50-fruits-vegetables-english-hindi
+  /solitary-play-activities
+
+ANTI-FABRICATION CONSTRAINT (highest priority): do NOT write any new factual claim about Rainbow Preschool. No enrolment numbers, awards, ratios, batch sizes, timings, staff claims, ratings, or centre facts. Every word you write must be derived from content that already exists for that page.
+
+For each URL:
+1. Locate its existing content — check client/src/pages/, shared/legacy-pages-data.ts, and the route in client/src/App.tsx. Report where each page's content actually lives before writing anything.
+2. Create a getPageSEO entry containing ONLY:
+   - title: derived from the page's existing H1 plus a brand suffix, max 60 chars
+   - description: 140–160 chars summarising the page's OWN existing content — describe the article's subject only, never the school
+   - h1: the page's existing H1, copied verbatim
+   - canonical: https://www.rainbowpreschools.com + the path
+   - introText: the page's existing opening paragraph, or a faithful one-sentence condensation of it
+   - contentSections: derived from the page's existing section headings and content
+   - internalLinks: 2–3 links to /playgroup, /nursery, /kindergarten or /blog, chosen by age relevance per the rule in docs/seo-topic-url-map.md
+   - lastModified: LAST_UPDATED_ISO from shared/site-freshness.ts
+3. Do NOT add FAQ schema, Review schema, aggregateRating, award mentions, or any Organization-level claims to these entries.
+4. If a page's existing content is too thin to write a description from, STOP for that URL and report it rather than inventing content.
+
+Hard constraints: modify ONLY server/ssr-pages.ts. Do not change SITEMAP_ENTRIES, redirects, or any other file. No new packages.
+
+Verify: npm run check; npm run check:ssr; then curl each of the 9 URLs with a Googlebot UA and confirm each returns a unique <title>, an <h1>, and a canonical tag. Report the 9 titles and descriptions you generated, with the source line each was derived from, so I can confirm nothing was invented.
