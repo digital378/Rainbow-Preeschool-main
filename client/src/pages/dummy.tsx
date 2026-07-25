@@ -6,11 +6,11 @@
  * Hero: Three.js scene + GSAP + Lenis (self-contained in components/hero3d/).
  * Remaining sections: CSS 3D (TiltCard, ContainerScroll, Bento, etc.)
  */
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, lazy, Suspense } from "react";
 import { SEO } from "@/components/seo";
 import { cn } from "@/lib/utils";
 import Hero3D from "@/components/hero3d";
-import { programmes, testimonials } from "@shared/schema";
+import { programmes, testimonials, branches } from "@shared/schema";
 import { centres } from "@shared/centre-data";
 import {
   ArrowRight, Phone, Users, Star, MapPin, Shield, Award,
@@ -21,6 +21,20 @@ import {
 import { SiWhatsapp } from "react-icons/si";
 import { motion, useReducedMotion } from "framer-motion";
 import { ProgrammeCard } from "@/components/ui/programme-card";
+import { AwardedBySection } from "@/components/awarded-by-section";
+import { FindNearestCentre } from "@/components/find-nearest-centre";
+import { BranchCard } from "@/components/branch-card";
+import { EEATSignals } from "@/components/eeat-signals";
+import { ErrorBoundary } from "@/components/error-boundary";
+import { Card, CardContent } from "@/components/ui/card";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { LAST_UPDATED_DISPLAY, LAST_UPDATED_ISO } from "@shared/site-freshness";
+import { PLAYGROUP, NURSERY, KINDERGARTEN } from "@shared/programme-data";
+
+const MethodologySection = lazy(() => import("@/components/methodology-section").then(m => ({ default: m.MethodologySection })));
+const ClassroomGallery   = lazy(() => import("@/components/classroom-gallery").then(m => ({ default: m.ClassroomGallery })));
+const ContactForm        = lazy(() => import("@/components/contact-form").then(m => ({ default: m.ContactForm })));
+const Interactive3DMap   = lazy(() => import("@/components/interactive-3d-map").then(m => ({ default: m.Interactive3DMap })));
 
 /* ═══════════════════════════════════════════════════════════════════════════════
    SCOPED STYLES
@@ -2848,6 +2862,173 @@ function FooterPreview() {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════════
+   SECTION: CONTACT / GET IN TOUCH
+═══════════════════════════════════════════════════════════════════════════════ */
+function ContactSection() {
+  return (
+    <section className="py-16 md:py-20 lg:py-24 bg-card">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+          <div>
+            <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">Get In Touch</p>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Request A Callback</h2>
+            <p className="text-muted-foreground text-lg mb-8">
+              Submit your details and queries here. We'd be glad to help you out!
+            </p>
+            <div className="rounded-xl overflow-hidden shadow-md">
+              <video
+                src="/assets/RPS_Walkthrough_Video_-_Website_1_1766126796450.mp4"
+                poster="/assets/walkthrough-poster.webp"
+                autoPlay loop muted playsInline preload="none"
+                className="w-full h-auto" width={800} height={450}
+              >
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          </div>
+          <Card>
+            <CardContent className="pt-6">
+              <Suspense fallback={null}>
+                <ContactForm />
+              </Suspense>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   SECTION: FIND NEAREST CENTRE
+═══════════════════════════════════════════════════════════════════════════════ */
+function FindNearestCentreSection() {
+  return (
+    <section aria-label="Find your nearest Rainbow Preschool centre" className="py-12 md:py-16 bg-primary/5">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-8">
+          <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">Our Locations</p>
+          <h2 className="text-2xl md:text-3xl font-bold mb-2">Find Your Nearest Centre</h2>
+          <p className="text-muted-foreground max-w-2xl mx-auto">
+            Type your area or neighbourhood below — we'll show you which Rainbow Preschool centre is closest to you.
+          </p>
+        </div>
+        <FindNearestCentre />
+      </div>
+    </section>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   SECTION: HELPFUL GUIDES (SEO INTERLINKS)
+═══════════════════════════════════════════════════════════════════════════════ */
+function InterlinksBar() {
+  return (
+    <div className="py-6 bg-primary/5 border-t border-primary/10">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <p className="text-sm text-muted-foreground text-center leading-relaxed">
+          Helpful guides for Thane parents: compare options on our{" "}
+          <a href="/best-preschool-near-me-in-thane" className="text-primary hover:underline font-medium">best preschool guide</a>,{" "}
+          <a href="/play-school-near-me" className="text-primary hover:underline font-medium">find a centre near you</a>, or explore programme guides for{" "}
+          <a href="/playgroup" className="text-primary hover:underline font-medium">Playgroup</a>,{" "}
+          <a href="/nursery" className="text-primary hover:underline font-medium">Nursery</a>, and{" "}
+          <a href="/kindergarten" className="text-primary hover:underline font-medium">Kindergarten</a>.
+        </p>
+      </div>
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   SECTION: CENTRES (3D MAP + BRANCH CARDS)
+═══════════════════════════════════════════════════════════════════════════════ */
+function CentresSection() {
+  return (
+    <section id="centres" className="py-16 md:py-20 lg:py-24">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center max-w-3xl mx-auto mb-12">
+          <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">Our Locations</p>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Preschool Centres Across Thane</h2>
+          <p className="text-muted-foreground text-lg">
+            With six branches spread across Thane West, a Rainbow Preschool centre is always close to home.
+            Visit the centre nearest to you and experience our warm, welcoming classrooms firsthand.
+          </p>
+        </div>
+        <ErrorBoundary name="dummy-3d-map" silent>
+          <Suspense fallback={null}>
+            <Interactive3DMap />
+          </Suspense>
+        </ErrorBoundary>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+          {branches.map((branch) => (
+            <BranchCard key={branch.id} branch={branch} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   SECTION: FAQS
+═══════════════════════════════════════════════════════════════════════════════ */
+const DUMMY_FAQS = [
+  {
+    question: "What programmes does Rainbow Preschool offer and for which ages?",
+    answer: <>We offer three main programmes: <a href="/playgroup" className="text-primary hover:underline">Playgroup</a> for children aged {PLAYGROUP.ageRange}, <a href="/nursery" className="text-primary hover:underline">Nursery</a> for ages {NURSERY.ageRange}, and <a href="/kindergarten" className="text-primary hover:underline">Kindergarten</a> for ages {KINDERGARTEN.ageRange}. Each programme follows a play-based curriculum covering language, numbers, art, and social skills.</>,
+  },
+  {
+    question: "What are the school timings and working days?",
+    answer: <>Our centres are open Monday to Saturday, 8:00 AM to 6:00 PM. We offer both half-day and full-day options to suit your schedule. Extended care through our <a href="/happy-times" className="text-primary hover:underline">Happy Times</a> programme is also available for working parents.</>,
+  },
+  {
+    question: "What safety measures does Rainbow Preschool follow?",
+    answer: <>Every centre has 24/7 CCTV monitoring, 100% female teaching staff, a verified pickup system, and daily hygiene routines. Fire safety equipment and first-aid kits are maintained at all locations. <a href="/about" className="text-primary hover:underline">Read more about our safety practices</a>.</>,
+  },
+  {
+    question: "What qualifications do the teachers have?",
+    answer: <>Our teachers hold degrees or diplomas in Early Childhood Education (ECE), Montessori training, or equivalent qualifications. All staff undergo background checks and regular training in child development and first aid.</>,
+  },
+  {
+    question: "How can parents book a campus visit and get fee details?",
+    answer: <>Book a campus visit by contacting any of our six Thane centres. You can also <a href="/contact" className="text-primary hover:underline">fill in our contact form</a> or call 82915 68972. <a href="/preschool-admissions" className="text-primary hover:underline">View full admissions information</a>.</>,
+  },
+  {
+    question: "Where are Rainbow Preschool centres located in Thane?",
+    answer: <>We have six centres across Thane West: Manpada, Hariniwas (Naupada), Anand Nagar (Majiwada), Dhokali (Kolshet Road), Kalwa, and Kasarvadavali (Ghodbunder Road). <a href="/play-school-near-me" className="text-primary hover:underline">Find the centre nearest to you</a>.</>,
+  },
+  {
+    question: "What curriculum does Rainbow Preschool follow?",
+    answer: <>We follow a play-based, activity-driven curriculum including language and literacy, early maths, science awareness, creative arts, music, yoga, and physical activities. <a href="/programmes" className="text-primary hover:underline">Explore our curriculum</a>.</>,
+  },
+];
+
+function FAQSection() {
+  return (
+    <section className="py-16 md:py-20 lg:py-24 bg-card">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold">Frequently Asked Questions</h2>
+          <p className="text-muted-foreground mt-2">Common questions about Rainbow Preschool International</p>
+        </div>
+        <Accordion type="single" collapsible className="w-full">
+          {DUMMY_FAQS.map((faq, index) => (
+            <AccordionItem key={index} value={`item-${index}`}>
+              <AccordionTrigger className="text-left text-base font-medium hover:no-underline">
+                {faq.question}
+              </AccordionTrigger>
+              <AccordionContent className="text-muted-foreground">
+                {faq.answer}
+              </AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
+      </div>
+    </section>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
    PAGE ROOT
 ═══════════════════════════════════════════════════════════════════════════════ */
 export default function Dummy() {
@@ -2869,11 +3050,23 @@ export default function Dummy() {
         <a href="/" className="underline underline-offset-2 hover:text-amber-800 transition-colors">← Live site</a>
       </div>
 
+      {/* 1 — Hero */}
       <Hero3D />
-      <RainbowShelfSection />
+
+      {/* 2 — Quick navigation links */}
+      <QuickNavSection />
+
+      {/* 3 — Quick callback strip */}
       <CallbackSection />
-      <LearningEnvironmentSection />
+
+      {/* 4 — Awards / trust strip */}
+      <AwardedBySection />
+
+      {/* 5 — About (stats bento) */}
       <StatsSection />
+
+      {/* 6 — Learning environment / classroom gallery */}
+      <LearningEnvironmentSection />
 
       {/* Wave */}
       <div className="relative -mt-px overflow-hidden pointer-events-none" style={{ height: 64 }}>
@@ -2882,6 +3075,7 @@ export default function Dummy() {
         </svg>
       </div>
 
+      {/* 7 — Programmes */}
       <ProgrammesDummy />
 
       {/* Wave */}
@@ -2891,7 +3085,13 @@ export default function Dummy() {
         </svg>
       </div>
 
+      {/* 8 — Why Choose Us */}
       <WhyChooseSection />
+
+      {/* 9 — Methodology */}
+      <Suspense fallback={null}>
+        <MethodologySection />
+      </Suspense>
 
       {/* Wave */}
       <div className="relative -mt-px overflow-hidden pointer-events-none" style={{ height: 64 }}>
@@ -2900,8 +3100,41 @@ export default function Dummy() {
         </svg>
       </div>
 
+      {/* 10 — Testimonials */}
       <TestimonialsSection />
+
+      {/* 11 — Get In Touch (video + contact form) */}
+      <ContactSection />
+
+      {/* 12 — Find Nearest Centre */}
+      <FindNearestCentreSection />
+
+      {/* 13 — Helpful guides interlinks */}
+      <InterlinksBar />
+
+      {/* 14 — Centres (3D map + branch cards) */}
+      <CentresSection />
+
+      {/* 15 — FAQs */}
+      <FAQSection />
+
+      {/* 16 — E-E-A-T signals */}
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
+        <EEATSignals
+          pageUrl="/dummy"
+          pageName="Rainbow Preschool International — Homepage Prototype"
+          reviewedBy="Rainbow Preschool Curriculum Team"
+          reviewerRole="Curriculum Team, Rainbow Preschool International"
+          lastUpdated={LAST_UPDATED_DISPLAY}
+          lastUpdatedIso={LAST_UPDATED_ISO}
+          showRating={false}
+          schemaId="dummy-eeat"
+        />
+      </section>
+
+      {/* 17 — CTA */}
       <CtaSection />
+
       <FooterPreview />
     </>
   );
