@@ -1,0 +1,49 @@
+# REBUILD — "Our Methodology" orbit diagram. /dummy PAGE ONLY.
+# The current diagram is BROKEN: it renders TWO diagrams (a bunched label cluster
+# + a hub with loose dots). Replace it with ONE clean diagram per the spec below.
+# Edit ONLY this section's right-side diagram. Don't touch the left column copy,
+# chips, CTA, or any other section. Keep all labels/colours; invent nothing.
+
+## STRUCTURE — ONE self-contained square, no separate label layer
+- A single relative container: width min(480px, 100%), aspect-ratio 1/1, with ~40px
+  inner padding so edge labels never clip. Everything below lives inside it.
+- LINES: one absolutely-positioned <svg> filling the container, drawing 6 thin lines
+  from the exact center to each node's center. This sits BEHIND the nodes.
+- HUB: one element at the center (top:50%; left:50%; translate(-50%,-50%)): red
+  circle ~110px with the book icon and a soft static glow. RPS red #EC210F.
+- 6 NODES: each node is ONE element containing its coloured circle AND its label
+  STACKED TOGETHER (circle on top, label text directly under it, centered). The node
+  is absolutely positioned by its center point, translate(-50%,-50%). The label
+  travels WITH the circle — never a separate layer.
+
+## NODE POSITIONS — evenly every 60°, same radius (~150px from center)
+# top, then clockwise. Place each node's CENTER at these points (center = 50%,50%):
+#   Art Studio (orange)        → top            (0deg up)
+#   Maths & Science (blue)     → upper-right    (60deg)
+#   Sports & Movement (teal)   → lower-right    (120deg)
+#   Skill Development (green)   → bottom         (180deg)
+#   General Aptitude (purple)  → lower-left     (240deg)
+#   Bilingual Education (yellow)→ upper-left     (300deg)
+- Circles ~64px; labels small (13px), centered under each circle, no wrap.
+
+## MOTION — minimal and safe (NO rotation, NO counter-rotation)
+- Optional entrance: all nodes fade+scale in together once on scroll-in (0.4s). Skip
+  if it adds any risk.
+- Hover a node: it scales 1.08 and its connector line thickens/brightens in the
+  node's colour. That's it. Damped return. No idle spin, no orbit animation.
+- Hub may gently breathe (scale 1↔1.02, 4s) — optional; static glow is fine.
+
+## MOBILE (≤768px) — do NOT use the absolute orbit (it breaks); use a simple layout
+- Stack: the red hub (book) centered on top, then the 6 nodes as a 2-column grid of
+  (coloured circle + label) units below it. Even spacing, tap targets ≥44px. Clean.
+
+## ACCESSIBILITY / PERF
+- Labels are real text; svg has title/desc; nodes focusable with visible focus ring.
+- prefers-reduced-motion: no entrance, no breathe — fully static tidy orbit, hover
+  highlight only.
+
+## DELIVER
+Show /dummy "Our Methodology" at desktop 1440 + mobile 390. Success = exactly ONE
+diagram, hub centered, six evenly-spaced nodes each with its label sitting directly
+under its circle, six clean connector lines, nothing bunched or duplicated. Confirm
+no other section changed.
