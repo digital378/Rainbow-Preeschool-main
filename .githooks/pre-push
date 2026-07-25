@@ -182,6 +182,21 @@ if ! npx --no-install tsx scripts/check-shell-seo-sync.ts; then
   exit 1
 fi
 
+# Bot/human SSR parity guard. Verifies that Googlebot UAs receive fully-rendered
+# HTML (with <h1>, <title>, and JSON-LD) while real browser UAs receive the
+# React SPA shell. Exits 0 gracefully when no dev server is running so offline
+# pushes are not blocked.
+echo "[pre-push] Running 'tsx scripts/check-bot-ssr-parity.ts' ..."
+if ! npx --no-install tsx scripts/check-bot-ssr-parity.ts; then
+  echo "" >&2
+  echo "[pre-push] 'check-bot-ssr-parity' failed. Push aborted." >&2
+  echo "[pre-push] Bot/human SSR parity is broken — a bot UA received the SPA shell or a" >&2
+  echo "[pre-push] human UA received the bot-SSR page, or cf-cache-status was HIT on an" >&2
+  echo "[pre-push] HTML response (CDN caching HTML is forbidden). Fix server/bot-ssr.ts" >&2
+  echo "[pre-push] or server/ssr-pages.ts, or re-run with --no-verify to bypass." >&2
+  exit 1
+fi
+
 # Record success so a subsequent push on the same tree can skip.
 if [ -n "$HEAD_TREE" ]; then
   printf '%s' "$HEAD_TREE" > "$CACHE_FILE" 2>/dev/null || true

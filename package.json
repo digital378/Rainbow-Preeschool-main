@@ -8,6 +8,7 @@
     "build": "tsx script/build.ts",
     "start": "NODE_ENV=production node dist/index.cjs",
     "check": "tsx scripts/check-no-person-author.ts && tsc && vitest run",
+    "check:ssr": "tsx scripts/check-bot-ssr-parity.ts",
     "db:push": "drizzle-kit push"
   },
   "dependencies": {

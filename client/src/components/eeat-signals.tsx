@@ -21,7 +21,7 @@ interface EEATSignalsProps {
   lastUpdatedIso?: string;
   ratingValue?: number;
   reviewCount?: number;
-  /** When false, suppresses the star/rating display and the AggregateRating JSON-LD block. */
+  /** When false, suppresses the star/rating display. */
   showRating?: boolean;
   schemaId: string;
 }

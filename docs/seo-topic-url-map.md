@@ -43,7 +43,7 @@
 | kindergarten, kg programme | `/kindergarten` | `client/src/pages/kindergarten-landing.tsx` |
 | pre-kg age guide | `/pre-kg-age-guide` (legacy) | `shared/legacy-pages-data.ts` |
 | preschool admissions | `/preschool-admissions` | `client/src/pages/preschool-admissions.tsx` |
-| preschool readiness quiz | `/preschool-readiness-quiz` | `client/src/pages/preschool-readiness-quiz.tsx` |
+| preschool readiness quiz | `/preschool-readiness-quiz` | `client/src/pages/readiness-quiz.tsx` |
 
 ---
 

@@ -40,6 +40,13 @@ const BOT_USER_AGENTS = [
   "amazonbot",
   "duckassist",
   "youbot",
+  // SEO auditing tools — not in this list by default, so they receive the
+  // React shell and incorrectly report the site as having no content. This
+  // exact false alarm occurred in an external audit. Adding them here ensures
+  // auditing crawlers see the same fully-rendered HTML that Googlebot sees.
+  "screamingfrog",
+  "sitebulb",
+  "lighthouse",
 ];
 
 function isBot(userAgent: string): boolean {

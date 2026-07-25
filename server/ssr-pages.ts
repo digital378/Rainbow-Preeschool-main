@@ -299,7 +299,7 @@ const programmeOrgSchema = {
   },
   contactPoint: {
     "@type": "ContactPoint",
-    telephone: "+91-8291568972",
+    telephone: "+918291568972",
     contactType: "admissions",
     availableLanguage: ["English", "Hindi", "Marathi"],
   },
@@ -344,7 +344,7 @@ const organizationSchema = {
   },
   contactPoint: {
     "@type": "ContactPoint",
-    telephone: "+91-8291568972",
+    telephone: "+918291568972",
     contactType: "admissions",
     availableLanguage: ["English", "Hindi", "Marathi"],
   },
@@ -460,7 +460,7 @@ function playgroupSchema(locality: string, url: string) {
     name: `Rainbow Preschool International — Playgroup in ${locality}`,
     description: `Quality playgroup programme in ${locality}, Thane for toddlers aged 1.5 to 2.5 years. Play-based early learning with certified female teachers.`,
     url: `${BASE_URL}${url}`,
-    telephone: "+91-8291568972",
+    telephone: "+918291568972",
     address: {
       "@type": "PostalAddress",
       addressLocality: locality === "Thane" ? "Thane" : `${locality}, Thane`,
@@ -1531,12 +1531,12 @@ const staticPages: Record<string, PageSEOData> = {
 };
 
 const preschoolCentres: Record<string, { locality: string; address: string; phone: string; lat: string; lng: string }> = {
-  "/preschool-in-manpada-thane": { locality: "Manpada", address: "Aggarwal Arcade, Near Khewra Circle, Manpada, Thane (W)", phone: "+91-8291568972", lat: "19.2168", lng: "72.9815" },
-  "/preschool-in-hariniwas-thane": { locality: "Hariniwas", address: "M.V.Apartments, Bhakti Mandir Road, Opp. Thanawala Garage, Hariniwas Circle, Panchpakadi, Thane (W)", phone: "+91-8291568972", lat: "19.1958", lng: "72.9698" },
-  "/preschool-in-anand-nagar-thane": { locality: "Anand Nagar", address: "Kris Commercial Plaza, 1st Floor, Opp. Tropical Lagoon, Anand Nagar, Thane (W)", phone: "+91-8291568972", lat: "19.2239", lng: "72.9805" },
-  "/preschool-in-dhokali-thane": { locality: "Dhokali", address: "Kolshet Road, Dhokali Naka, Opp. Aban Park Society, Thane (W)", phone: "+91-8291568972", lat: "19.2305", lng: "72.9889" },
-  "/preschool-in-kalwa-thane": { locality: "Kalwa", address: "Harsh Prasad Co-op Hsg, Soc, Near Sayba Hall, Manisha Nagar, Gate No.1, Kalwa", phone: "+91-8291568972", lat: "19.2019", lng: "73.0229" },
-  "/preschool-in-kasarvadavali-thane": { locality: "Kasarvadavali", address: "Rosa Gardenia, Next to Parijat Gardens, Kasarvadavali, Behind Hypercity Mall, Thane (W)", phone: "+91-8291568972", lat: "19.2499", lng: "72.9721" },
+  "/preschool-in-manpada-thane": { locality: "Manpada", address: "Aggarwal Arcade, Near Khewra Circle, Manpada, Thane (W)", phone: "+918291568972", lat: "19.2168", lng: "72.9815" },
+  "/preschool-in-hariniwas-thane": { locality: "Hariniwas", address: "M.V.Apartments, Bhakti Mandir Road, Opp. Thanawala Garage, Hariniwas Circle, Panchpakadi, Thane (W)", phone: "+918291568972", lat: "19.1958", lng: "72.9698" },
+  "/preschool-in-anand-nagar-thane": { locality: "Anand Nagar", address: "Kris Commercial Plaza, 1st Floor, Opp. Tropical Lagoon, Anand Nagar, Thane (W)", phone: "+918291568972", lat: "19.2239", lng: "72.9805" },
+  "/preschool-in-dhokali-thane": { locality: "Dhokali", address: "Kolshet Road, Dhokali Naka, Opp. Aban Park Society, Thane (W)", phone: "+918291568972", lat: "19.2305", lng: "72.9889" },
+  "/preschool-in-kalwa-thane": { locality: "Kalwa", address: "Harsh Prasad Co-op Hsg, Soc, Near Sayba Hall, Manisha Nagar, Gate No.1, Kalwa", phone: "+918291568972", lat: "19.2019", lng: "73.0229" },
+  "/preschool-in-kasarvadavali-thane": { locality: "Kasarvadavali", address: "Rosa Gardenia, Next to Parijat Gardens, Kasarvadavali, Behind Hypercity Mall, Thane (W)", phone: "+918291568972", lat: "19.2499", lng: "72.9721" },
 };
 
 const playgroundPages: Record<string, { locality: string; h1: string }> = {

@@ -26,8 +26,8 @@ The application is a full-stack web application with a React-based frontend and 
 -   **Core Functions**: Manages contact form submissions, retrieves blog posts, serves static files, and provides bot-specific SSR for SEO.
 
 ### Bot SSR System
--   A dedicated system delivers pre-rendered HTML with comprehensive meta tags, structured data (JSON-LD), and semantic content to over 20 search engine bot user-agents. This improves SEO across all commercial pages, local SEO pages, blog posts, and ad landing pages.
--   **Homepage exception**: The homepage (`/`) is intentionally excluded from Bot SSR. Both bots and humans receive the same React SPA at `/`, so Googlebot executes JavaScript and indexes the live React page. All other routes retain Bot SSR. This is enforced in `server/bot-ssr.ts` (path `"/"` bypasses the middleware) and `server/ssr-pages.ts` (no `"/"` entry in `staticPages`).
+-   A dedicated system delivers pre-rendered HTML with comprehensive meta tags, structured data (JSON-LD), and semantic content to search engine bot user-agents and SEO auditing tools. This improves SEO across all commercial pages, local SEO pages, blog posts, and ad landing pages.
+-   The homepage (`/`) is included in Bot SSR — `server/ssr-pages.ts` has a `"/"` entry and `server/bot-ssr.ts` serves it to bot UAs. Both bots and humans receive fully-rendered content on the homepage; the client-side JSON-LD in `client/src/pages/home.tsx` provides structured data for JavaScript-rendered users while bot-SSR provides it for crawlers.
 
 ### Data Layer
 -   **Schema Definition**: Shared TypeScript schemas ensure consistency between frontend and backend.
@@ -83,4 +83,18 @@ The application is a full-stack web application with a React-based frontend and 
 -   **Bundler**: Vite for frontend assets and esbuild for backend code.
 -   **TypeScript**: Configured with strict mode and path aliases for enhanced developer experience and code quality.
 -   **Local Code Checks**: Pre-commit hooks (`.githooks/pre-commit`) ensure adherence to coding standards, including byline guidelines and type checking, before commits are finalized. Bypass once with `git commit --no-verify` or `SKIP_PRECOMMIT=1 git commit ...`.
--   **Pre-push Safety Net**: A pre-push hook (`.githooks/pre-push`) re-runs `npm run check` (plus the no-pink, title-cannibalisation, description-length, bot-ua-list, and h1-parity guards) before `git push`, so commits that slipped past pre-commit (e.g. via `--no-verify`) still can't reach the remote. It is auto-installed by `bash scripts/install-hooks.sh` and skips re-running if pre-commit just succeeded on the same tree. Bypass once with `git push --no-verify` or `SKIP_PREPUSH=1 git push ...`.
+-   **Pre-push Safety Net**: A pre-push hook (`.githooks/pre-push`) re-runs `npm run check` (plus the no-pink, title-cannibalisation, description-length, bot-ua-list, h1-parity, and bot-SSR-parity guards) before `git push`, so commits that slipped past pre-commit (e.g. via `--no-verify`) still can't reach the remote. It is auto-installed by `bash scripts/install-hooks.sh` and skips re-running if pre-commit just succeeded on the same tree. Bypass once with `git push --no-verify` or `SKIP_PREPUSH=1 git push ...`.
+
+## Dynamic rendering — read before auditing or changing SEO
+
+This site uses **dynamic rendering**: the Express server returns different HTML depending on the requester's `User-Agent`.
+
+- **`server/bot-ssr.ts`** intercepts any request whose `User-Agent` matches the `BOT_USER_AGENTS` array and returns fully-rendered HTML built from `server/ssr-pages.ts`. All other visitors receive the React SPA shell from `client/`. The list includes Google, Bing, Yandex, AI crawlers (GPTBot, ClaudeBot, Perplexity), and SEO auditing tools (Screaming Frog, Sitebulb, Lighthouse).
+
+- **SEO tool audit warning**: Any tool whose UA is *not* in `BOT_USER_AGENTS` will fetch the bare React shell — no content, no meta tags, no structured data — and will incorrectly report empty or duplicate pages. Always crawl with a Googlebot UA (or add the tool's UA string to the list before auditing). The `npm run check:ssr` command (`scripts/check-bot-ssr-parity.ts`) verifies parity automatically.
+
+- **HTML must never be cached at the CDN edge**: Cloudflare ignores the `Vary: User-Agent` header when a "Cache Everything" Page Rule is active, which means a cached bot SSR response can be served to a real user and vice versa. On **25 July 2026** a Cloudflare "Cache Everything" Page Rule with a 2-hour edge TTL caused exactly this in production — bot HTML was served to parents for ~2 hours. HTML is now served with `Cache-Control: no-store` plus the CF-specific `Cloudflare-CDN-Cache-Control: no-store` header (which overrides Page Rules). Static assets (JS, CSS, images) retain 1-year immutable caching and are unaffected.
+
+- **Cloudflare "Managed robots.txt"** must remain **OFF** in the Cloudflare dashboard. If switched on, Cloudflare overwrites `client/public/robots.txt` with its own AI-crawler block list, discarding the custom `User-agent` / `Allow` / `Disallow` rules in the repository.
+
+- **`scripts/check-bot-ssr-parity.ts`** guards all of the above invariants: it fetches `/`, `/playgroup`, and `/preschool-in-manpada-thane` with both a Googlebot UA and a Chrome UA and asserts that (a) bot responses have a non-empty `<h1>`, a page-specific `<title>`, and at least one JSON-LD block; (b) human responses have `<div id="root">` and no bot-SSR marker text; (c) no `cf-cache-status: HIT` header appears on any HTML response. Run it with `npm run check:ssr`.
