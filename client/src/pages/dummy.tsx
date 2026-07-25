@@ -364,12 +364,27 @@ const STYLES = `
   /* Mobile snap-scroll rail */
   @media (max-width:639px) {
     .programmes-grid {
-      display:flex; flex-direction:row; overflow-x:auto;
+      display:flex !important; flex-direction:row; overflow-x:auto;
       scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch;
-      gap:16px; padding:8px 24px 20px; scrollbar-width:none;
+      gap:14px; padding:24px 20px 32px; scrollbar-width:none;
+      /* overflow-y must be visible so card shadows/sticker breathe above/below the track */
+      overflow-y:visible;
     }
     .programmes-grid::-webkit-scrollbar { display:none; }
-    .prog-card { scroll-snap-align:start; min-width:280px; flex-shrink:0; }
+    /* Target the actual motion.div children — .prog-card never matched these */
+    .programmes-grid > * {
+      scroll-snap-align:start;
+      min-width:82vw; max-width:82vw;
+      flex-shrink:0;
+      overflow:visible;   /* let child shadows breathe */
+    }
+    /* Sticker: was top:-12 (above card → clipped by scroll-track). Force inside card. */
+    .pc-sticker { top:12px !important; left:12px !important; }
+    /* Age pill: shrink font so full "1.5 - 2.5 years" range fits on one line */
+    .pc-age-pill {
+      font-size:0.595rem !important; padding:3px 8px !important;
+      white-space:nowrap; max-width:calc(100% - 24px);
+    }
   }
   /* Reduced motion — static claymorphic, colour-shift hover only */
   @media (prefers-reduced-motion:reduce) {

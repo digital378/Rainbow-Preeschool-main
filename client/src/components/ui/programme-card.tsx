@@ -95,8 +95,8 @@ export function ProgrammeCard({
         <div className="absolute inset-x-0 bottom-0 h-1/3 pointer-events-none"
           style={{ background: `linear-gradient(to top, ${themeColor}33, transparent)` }} />
         <span
-          className="absolute right-3 top-3 rounded-full px-3 py-1 text-xs font-semibold text-white shadow-md"
-          style={{ background: themeColor }}>
+          className="pc-age-pill absolute right-3 top-3 rounded-full px-3 py-1 text-xs font-semibold text-white shadow-md"
+          style={{ background: themeColor, whiteSpace: "nowrap" }}>
           {ageLabel}
         </span>
       </>
@@ -149,7 +149,7 @@ export function ProgrammeCard({
           <Text asMotion={false} />
         </div>
         {iconSticker && (
-          <div aria-hidden style={{ position: "absolute", top: -12, left: 14, zIndex: 20 }}>
+          <div aria-hidden className="pc-sticker" style={{ position: "absolute", top: -12, left: 14, zIndex: 20 }}>
             {iconSticker}
           </div>
         )}
@@ -190,7 +190,7 @@ export function ProgrammeCard({
 
       {/* Icon sticker — pops above the photo corner in 3-D space */}
       {iconSticker && (
-        <div aria-hidden style={{
+        <div aria-hidden className="pc-sticker" style={{
           position: "absolute", top: -12, left: 14, zIndex: 20,
           transform: "translateZ(80px)",   // above inner panel's 50px
         }}>
