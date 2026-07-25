@@ -2542,83 +2542,328 @@ function WhyChooseSection() {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════════
-   SECTION: TESTIMONIALS — Staggered cards with 3D depth
+   SECTION: TESTIMONIALS — Seamless marquee + count-up trust bar
 ═══════════════════════════════════════════════════════════════════════════════ */
-function TestimonialsSection() {
+
+/**
+ * Individual testimonial card.
+ * Uses its own refs so hooks work correctly inside a mapped list.
+ * marginRight: 20px on the outer div (not flex gap) keeps the -50% marquee
+ * loop maths clean: total = N × (cardW + 20), so -50% = exactly N/2 laps.
+ */
+function TmCard({
+  t,
+  isExpanded = false,
+  onToggle,
+  isDuplicate = false,
+}: {
+  t: typeof testimonials[number];
+  isExpanded?: boolean;
+  onToggle?: () => void;
+  isDuplicate?: boolean;
+}) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const raf     = useRef<number>(0);
+  const initials = t.name.split(" ").map(n => n[0]).join("").slice(0, 2).toUpperCase();
+  const needsMore = t.text.length > 160;
+
+  const handleMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const el = cardRef.current;
+    if (!el) return;
+    const r  = el.getBoundingClientRect();
+    const cx = (e.clientX - r.left)  / r.width  - 0.5;
+    const cy = (e.clientY - r.top)   / r.height - 0.5;
+    cancelAnimationFrame(raf.current);
+    raf.current = requestAnimationFrame(() => {
+      el.style.transition  = "transform 0.08s linear, box-shadow 0.08s linear";
+      el.style.transform   = `translateY(-8px) perspective(800px) rotateX(${-cy * 7}deg) rotateY(${cx * 7}deg)`;
+      el.style.boxShadow   = "0 22px 48px rgba(0,0,0,0.14), 0 4px 12px rgba(0,0,0,0.06)";
+    });
+  };
+
+  const handleLeave = () => {
+    const el = cardRef.current;
+    if (!el) return;
+    cancelAnimationFrame(raf.current);
+    el.style.transition  = "transform 0.55s cubic-bezier(.22,1,.36,1), box-shadow 0.55s ease";
+    el.style.transform   = "translateY(0) perspective(800px) rotateX(0deg) rotateY(0deg)";
+    el.style.boxShadow   = "0 4px 24px rgba(0,0,0,0.07), 0 1px 4px rgba(0,0,0,0.04)";
+  };
+
   return (
-    <section className="relative py-20 md:py-32 overflow-hidden"
-      style={{ background: "linear-gradient(160deg,#fffbf5 0%,#fff9ef 55%,#fefcf5 100%)" }}>
+    <div
+      ref={cardRef}
+      aria-hidden={isDuplicate ? "true" : undefined}
+      onMouseMove={isDuplicate ? undefined : handleMove}
+      onMouseLeave={isDuplicate ? undefined : handleLeave}
+      style={{
+        /* marginRight (not flex gap) so -50% always equals exactly one lap */
+        width: "min(340px, 82vw)",
+        flexShrink: 0,
+        marginRight: 20,
+        background: "white",
+        borderRadius: 22,
+        overflow: "hidden",
+        display: "flex",
+        flexDirection: "column",
+        boxShadow: "0 4px 24px rgba(0,0,0,0.07), 0 1px 4px rgba(0,0,0,0.04)",
+      }}
+    >
+      {/* Gold gradient top accent */}
+      <div style={{ height: 3, flexShrink: 0, background: "linear-gradient(to right,#fbbf24,#fde68a,#fbbf24)" }} />
+
+      <div style={{ padding: "20px 24px 22px", flex: 1, display: "flex", flexDirection: "column", position: "relative" }}>
+        {/* Quote watermark */}
+        <div aria-hidden="true" style={{
+          position: "absolute", top: 8, right: 16,
+          fontFamily: "Georgia,serif", fontSize: 68, lineHeight: 1,
+          color: "rgba(251,191,36,0.22)", userSelect: "none", pointerEvents: "none",
+        }}>
+          &ldquo;
+        </div>
+
+        {/* Stars */}
+        <div style={{ display: "flex", gap: 2, marginBottom: 10 }}>
+          {Array.from({ length: 5 }).map((_, j) => (
+            <Star key={j} className={cn("w-[14px] h-[14px]", j < t.rating ? "fill-amber-400 text-amber-400" : "text-muted-foreground/25")} />
+          ))}
+        </div>
+
+        {/* Review text — 4-line clamp unless expanded */}
+        <blockquote
+          style={{
+            flex: 1,
+            fontSize: 14,
+            lineHeight: 1.65,
+            color: "rgba(0,0,0,0.72)",
+            marginBottom: 6,
+            position: "relative",
+            zIndex: 1,
+            ...(isExpanded
+              ? {}
+              : {
+                  display: "-webkit-box",
+                  WebkitBoxOrient: "vertical" as const,
+                  WebkitLineClamp: 4,
+                  overflow: "hidden",
+                }),
+          }}
+        >
+          "{t.text}"
+        </blockquote>
+
+        {/* Read more / less — real button, not rendered on duplicates */}
+        {!isDuplicate && needsMore && (
+          <button
+            onClick={(e) => { e.stopPropagation(); onToggle?.(); }}
+            aria-expanded={isExpanded}
+            style={{
+              alignSelf: "flex-start",
+              fontSize: 12, fontWeight: 700,
+              color: "#EC210F",
+              background: "none", border: "none",
+              cursor: "pointer",
+              padding: "4px 0",
+              marginBottom: 10,
+              borderRadius: 4,
+            }}
+          >
+            {isExpanded ? "Read less ↑" : "Read more ↓"}
+          </button>
+        )}
+        {(isDuplicate || !needsMore) && <div style={{ marginBottom: 10 }} />}
+
+        {/* Divider */}
+        <div style={{ height: 1, background: "rgba(251,191,36,0.35)", marginBottom: 14 }} />
+
+        {/* Avatar + attribution */}
+        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+          <div style={{
+            width: 36, height: 36, borderRadius: "50%", flexShrink: 0,
+            display: "flex", alignItems: "center", justifyContent: "center",
+            fontSize: 13, fontWeight: 700, color: "#EC210F",
+            background: "linear-gradient(145deg,rgba(220,38,38,0.10),rgba(220,38,38,0.06))",
+            boxShadow: "0 0 0 2px rgba(220,38,38,0.18)",
+          }}>
+            {initials}
+          </div>
+          <div>
+            <p style={{ fontSize: 13, fontWeight: 600, margin: 0 }}>{t.name}</p>
+            <p style={{ fontSize: 11, color: "#777", marginTop: 2 }}>Parent · {t.locality}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function TestimonialsSection() {
+  const [paused,     setPaused]     = useState(false);
+  const [expandedId, setExpandedId] = useState<string | null>(null);
+  const [isVisible,  setIsVisible]  = useState(false);
+  const prefersReduced = useReducedMotion();
+  const sectionRef     = useRef<HTMLElement>(null);
+
+  /* Scroll-in visibility */
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setIsVisible(true); obs.disconnect(); } },
+      { threshold: 0.1 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  /* Trust bar data — AnimatedCounter handles the count-up */
+  const TRUST = [
+    {
+      target: 49,
+      /* store ×10 so Math.round keeps one decimal place */
+      format: (n: number) => `${(n / 10).toFixed(1)}★`,
+      label: "Google Reviews",
+    },
+    {
+      target: 100000,
+      format: (n: number) => new Intl.NumberFormat("en-IN").format(n) + "+",
+      label: "Families Served",
+    },
+    {
+      target: 18,
+      format: (n: number) => `${n}+`,
+      label: "Years of Trust",
+    },
+  ] as const;
+
+  /* Shared heading block */
+  const Heading = (
+    <div
+      className="text-center max-w-2xl mx-auto px-5 sm:px-6 mb-12"
+      style={{
+        opacity:    isVisible ? 1 : 0,
+        transform:  isVisible ? "none" : "translateY(24px)",
+        transition: "opacity 0.65s ease, transform 0.65s ease",
+      }}
+    >
+      <p className="section-eyebrow">Testimonials</p>
+      <h2 className="text-headline mb-2">Parents from Thane Say…</h2>
+      <p className="text-muted-foreground mt-3 text-[16px]">Trusted by families across Thane since 2007.</p>
+    </div>
+  );
+
+  /* Shared trust bar */
+  const TrustBar = (
+    <div
+      className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8"
+      style={{
+        marginTop:  48,
+        paddingTop: 32,
+        borderTop:  "1px solid rgba(251,191,36,0.4)",
+        opacity:    isVisible ? 1 : 0,
+        transform:  isVisible ? "none" : "translateY(20px)",
+        transition: "opacity 0.65s ease 0.4s, transform 0.65s ease 0.4s",
+      }}
+    >
+      <div className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-12">
+        {TRUST.map(item => (
+          <div key={item.label} className="flex items-center gap-3">
+            <div className="w-1.5 h-1.5 rounded-full bg-amber-400 flex-shrink-0" />
+            <div>
+              <p className="text-xl font-bold text-foreground leading-none">
+                {prefersReduced
+                  ? item.format(item.target)
+                  : <AnimatedCounter target={item.target} format={item.format as (n: number) => string} />
+                }
+              </p>
+              <p className="text-xs text-muted-foreground mt-1">{item.label}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+
+  return (
+    <section
+      ref={sectionRef}
+      className="relative py-20 md:py-32 overflow-hidden"
+      style={{ background: "linear-gradient(160deg,#fffbf5 0%,#fff9ef 55%,#fefcf5 100%)" }}
+    >
+      {/* Large quote watermark — purely decorative, sits in centre behind everything */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden select-none" aria-hidden>
-        <span className="font-serif leading-none text-amber-200/12"
-          style={{ fontSize: "clamp(160px,22vw,320px)" }}>
+        <span className="font-serif leading-none text-amber-200/12" style={{ fontSize: "clamp(160px,22vw,320px)" }}>
           &ldquo;
         </span>
       </div>
-      <Orb cls="d-float-a w-64 h-64 top-[8%] right-[6%] opacity-55"
-        style={{ background: "radial-gradient(circle,rgba(251,191,36,0.20) 0%,transparent 62%)", filter: "blur(28px)" }} />
-      <StarDot cls="d-tw1 text-amber-400/60 top-[14%] left-[32%] w-4 h-4" />
-      <StarDot cls="d-tw2 text-amber-300/50 bottom-[24%] right-[18%] w-3 h-3" />
 
-      <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
-        <div className="du-fade text-center max-w-2xl mx-auto mb-14">
-          <p className="section-eyebrow">Testimonials</p>
-          <h2 className="text-headline mb-2">Parents from Thane Say…</h2>
-          <p className="text-muted-foreground mt-3 text-[16px]">Trusted by families across Thane since 2007.</p>
-        </div>
+      <div className="relative">
+        {Heading}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {testimonials.map((t, i) => {
-            const initials = t.name.split(" ").map(n => n[0]).join("").slice(0, 2).toUpperCase();
-            return (
-              <TiltCard
-                key={t.id}
-                className="du-fade h-full flex flex-col rounded-2xl bg-white border border-amber-100/60 overflow-hidden"
-                style={{
-                  boxShadow: "0 4px 20px rgba(0,0,0,0.06),0 1px 4px rgba(0,0,0,0.04)",
-                  transitionDelay: `${i * 70}ms`,
-                  minHeight: 260,
-                }}
-                intensity={6}
-              >
-                <div className="flex flex-col flex-1">
-                  <div className="h-[3px] flex-shrink-0 bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-400" />
-                  <div className="p-5 sm:p-6 flex flex-col flex-1">
-                    <div className="flex items-center gap-0.5 mb-4">
-                      {Array.from({ length: 5 }).map((_, j) => (
-                        <Star key={j} className={cn("w-[14px] h-[14px]", j < t.rating ? "fill-amber-400 text-amber-400" : "text-muted-foreground/25")} />
-                      ))}
-                    </div>
-                    <div className="font-serif text-[52px] leading-none text-primary/12 select-none -mb-1" aria-hidden>&ldquo;</div>
-                    <blockquote className="flex-1 text-sm text-foreground/76 leading-relaxed line-clamp-4 mb-5 mt-1.5">
-                      {t.text}
-                    </blockquote>
-                    <div className="w-full h-px bg-amber-100 mb-4" />
-                    <div className="flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-full flex-shrink-0 flex items-center justify-center text-[13px] font-bold text-primary ring-2 ring-offset-1 ring-primary/18"
-                        style={{ background: "linear-gradient(145deg,rgba(220,38,38,0.10),rgba(220,38,38,0.06))" }}>
-                        {initials}
-                      </div>
-                      <div>
-                        <p className="font-semibold text-[13px] text-foreground">{t.name}</p>
-                        <p className="text-[11px] text-muted-foreground mt-0.5">Parent · {t.locality}</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </TiltCard>
-            );
-          })}
-        </div>
-
-        {/* Trust footer */}
-        <div className="du-fade mt-14 pt-8 border-t border-amber-100/60 flex flex-col sm:flex-row items-center justify-center gap-6 text-sm text-muted-foreground">
-          {["4.9★ Google Reviews", "1,00,000+ Families Served", "18+ Years of Trust"].map(item => (
-            <div key={item} className="flex items-center gap-2">
-              <div className="w-1.5 h-1.5 rounded-full bg-amber-400" />
-              <span>{item}</span>
+        {prefersReduced ? (
+          /* ── Static 2-col grid (prefers-reduced-motion) ───────────────── */
+          <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {testimonials.map((t) => (
+                <TmCard
+                  key={t.id}
+                  t={t}
+                  isExpanded={expandedId === t.id}
+                  onToggle={() => setExpandedId(expandedId === t.id ? null : t.id)}
+                />
+              ))}
             </div>
-          ))}
-        </div>
+          </div>
+        ) : (
+          /* ── Seamless auto-scroll marquee ─────────────────────────────── */
+          <div
+            role="region"
+            aria-label="Parent testimonials"
+            /* Pause on any hover or keyboard focus inside the marquee */
+            onMouseEnter={() => setPaused(true)}
+            onMouseLeave={() => setPaused(false)}
+            onFocus={() => setPaused(true)}
+            onBlur={() => setPaused(false)}
+            style={{
+              /* Soft fade masks — section's overflow:hidden clips horizontal */
+              maskImage:
+                "linear-gradient(to right, transparent 0%, black 80px, black calc(100% - 80px), transparent 100%)",
+              WebkitMaskImage:
+                "linear-gradient(to right, transparent 0%, black 80px, black calc(100% - 80px), transparent 100%)",
+              /* Vertical padding lets card shadows breathe without overflow:hidden clipping them */
+              paddingTop: 12,
+              paddingBottom: 16,
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                /* No gap here — each TmCard carries its own marginRight:20px so
+                   totalWidth = N × (cardW + 20) and translateX(-50%) = exactly one lap */
+                width: "max-content",
+                animation: "le-filmstrip 40s linear infinite",
+                animationPlayState: paused ? "paused" : "running",
+                willChange: "transform",
+              }}
+            >
+              {/* Original cards — interactive, read by screen readers */}
+              {testimonials.map((t) => (
+                <TmCard
+                  key={`${t.id}-o`}
+                  t={t}
+                  isExpanded={expandedId === t.id}
+                  onToggle={() => setExpandedId(expandedId === t.id ? null : t.id)}
+                />
+              ))}
+              {/* Duplicate cards — aria-hidden, no Read-more buttons */}
+              {testimonials.map((t) => (
+                <TmCard key={`${t.id}-d`} t={t} isDuplicate />
+              ))}
+            </div>
+          </div>
+        )}
+
+        {TrustBar}
       </div>
     </section>
   );

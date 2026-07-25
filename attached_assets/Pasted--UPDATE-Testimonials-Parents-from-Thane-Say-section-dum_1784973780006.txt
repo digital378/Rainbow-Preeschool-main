@@ -1,0 +1,59 @@
+# UPDATE — Testimonials "Parents from Thane Say…" section. /dummy PAGE ONLY.
+# Edit ONLY this section (eyebrow, heading, subtitle, the review cards, the trust
+# bar). Don't touch other sections/nav/footer. Revert anything that spreads.
+# Reliability: each review card is ONE self-contained unit; for the loop, duplicate
+# the card track once (mark the copy aria-hidden). No separate overlay layers.
+
+## FIX FIRST — remove the glitch
+- There's a stray black/blue arc/scribble overlapping between the 2nd and 3rd cards
+  (a broken decorative element). Delete it. Keep the small star doodles only if they
+  sit in the section MARGINS (pointer-events:none, aria-hidden) — remove any that
+  overlap cards or the heading.
+
+## PRESERVE (invent nothing)
+- Keep the eyebrow "TESTIMONIALS", heading "Parents from Thane Say…", subtitle
+  "Trusted by families across Thane since 2007.", and every review's exact text,
+  star rating, attribution ("A Rainbow Parent · Parent · <location>"), and the trust
+  bar items (4.9★ Google Reviews · 1,00,000+ Families Served · 18+ Years of Trust).
+- Do not fabricate names, photos, or new reviews. RPS red #EC210F leads; gold stars stay.
+
+## MAKE IT ALIVE — seamless auto-scroll "wall of love"
+- Lay the review cards in a horizontal track that auto-scrolls continuously
+  (translateX 0 → -50% on a duplicated track, linear, ~40s, seamless loop).
+- Soft fade masks on both edges (mask-image, ~80px) so cards ease in/out at the sides.
+- PAUSE the scroll whenever any card is hovered/focused.
+- Card upgrade (keep current content): white card, radius 22px, soft shadow, a thin
+  gold gradient top-accent, the quote mark watermark, star row, review text, and the
+  avatar + name + location footer. On hover: card lifts translateY(-8px) + a subtle
+  3D tilt toward the cursor + shadow bloom.
+
+## FIX THE TRUNCATION — reveal full review on interaction
+- Clamp review text to 4 lines with a "Read more" link. On hover (desktop) the card
+  expands to show the full text; "Read more"/tap opens the full review (inline expand
+  or a small modal). Never leave a review permanently cut off with no way to read it.
+
+## TRUST BAR — animated count-up (interactive payoff)
+- When the trust bar scrolls into view, count-up animate the numbers: 4.9★ (to one
+  decimal), 1,00,000+ (Indian grouping), 18+. Each with its dot separator + a tiny
+  star/sparkle. Runs once per view.
+
+## ENTRANCE
+- Heading + subtitle fade/rise in; cards fade/rise with an 80ms stagger on scroll-in.
+
+## MOBILE (≤768px)
+- Swipeable carousel OR the same marquee showing ~1.1 cards (peek the next); tap a
+  card to expand/read full. Trust stats stack or wrap to 2 rows, still count-up.
+  Tap targets ≥44px. Smooth 60fps.
+
+## ACCESSIBILITY / PERF
+- Cards are readable/focusable; the duplicated marquee track is aria-hidden so
+  screen readers read each review once; "Read more" is a real button.
+- transform/opacity only; will-change on the track; content not lazy-hidden from crawlers.
+- prefers-reduced-motion: STOP the auto-scroll and count-up — show a static, tidy
+  grid/row of cards with hover reveal only, stats shown at final value.
+
+## DELIVER
+Show /dummy Testimonials at desktop 1440 + mobile 390 with a short recording of the
+marquee loop pausing on hover (full review revealed) and the trust stats counting up.
+Confirm the stray arc is gone, all review text/attributions are unchanged, and
+nothing outside this section changed.
