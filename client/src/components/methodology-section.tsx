@@ -281,8 +281,8 @@ export function MethodologySection() {
               })}
             </div>
 
-            {/* Detail card — always visible when something is highlighted */}
-            <div className="relative mb-6" style={{ height: 76 }} aria-live="off">
+            {/* Detail card — desktop only; mobile has its own below the grid */}
+            <div className="relative mb-6 hidden md:block" style={{ height: 76 }} aria-live="off">
               {highlightedData && (
                 <div
                   key={highlightedData.id}
@@ -305,12 +305,15 @@ export function MethodologySection() {
               )}
             </div>
 
-            <Link href="/programmes">
-              <Button size="lg" data-testid="button-methodology-programmes">
-                View Our Programmes
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </Link>
+            {/* CTA — desktop only; mobile CTA lives after the detail card below */}
+            <div className="hidden md:block">
+              <Link href="/programmes">
+                <Button size="lg" data-testid="button-methodology-programmes">
+                  View Our Programmes
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </Link>
+            </div>
           </div>
 
           {/* ══ RIGHT COLUMN: ORBIT ═══════════════════════════════════════ */}
@@ -750,168 +753,174 @@ export function MethodologySection() {
               </div>
             </div>
 
-            {/* ── Mobile layout: hub + 2-col pill grid (≤768px) ────────── */}
-            <div className="md:hidden w-full flex flex-col items-center gap-5">
+            {/* ── Mobile layout (≤768 px): chips already above in left col;
+                   here: hub+grid as one unit → single detail card → CTA ── */}
+            <div className="md:hidden w-full flex flex-col items-center gap-4">
 
-              {/* Mobile hub */}
-              <div
-                style={{ position: "relative", width: 80, height: 80 }}
-                aria-hidden="true"
-              >
-                {/* Aura ring */}
-                {!reduced && (
+              {/* Hub + 2-col grid — tight connected block, no whitespace gap */}
+              <div className="flex flex-col items-center w-full gap-3">
+
+                {/* Mobile hub */}
+                <div
+                  style={{ position: "relative", width: 80, height: 80 }}
+                  aria-hidden="true"
+                >
+                  {/* Aura ring */}
+                  {!reduced && (
+                    <div
+                      style={{
+                        position: "absolute",
+                        inset: -6,
+                        borderRadius: "50%",
+                        border: "2px solid rgba(236,33,15,0.4)",
+                        animation: "ms-hub-aura 2.5s ease-in-out infinite",
+                      }}
+                    />
+                  )}
+                  {/* Colour ring */}
                   <div
                     style={{
                       position: "absolute",
-                      inset: -6,
+                      inset: -3,
                       borderRadius: "50%",
-                      border: "2px solid rgba(236,33,15,0.4)",
-                      animation: "ms-hub-aura 2.5s ease-in-out infinite",
+                      border: `3px solid ${highlightedData?.fill ?? "transparent"}`,
+                      transition: "border-color 0.4s ease",
+                      pointerEvents: "none",
                     }}
                   />
-                )}
-                {/* Colour ring */}
-                <div
-                  style={{
-                    position: "absolute",
-                    inset: -3,
-                    borderRadius: "50%",
-                    border: `3px solid ${highlightedData?.fill ?? "transparent"}`,
-                    transition: "border-color 0.4s ease",
-                    pointerEvents: "none",
-                  }}
-                />
-                {/* Orb */}
-                <div
-                  style={{
-                    position: "absolute",
-                    inset: 0,
-                    borderRadius: "50%",
-                    background:
-                      "radial-gradient(circle at 38% 32%, #fc8181, #EC210F 55%, #991b1b)",
-                    boxShadow:
-                      "0 4px 0 0 #7f1d1d, 0 8px 20px -2px rgba(220,38,38,0.5)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    opacity: isVisible ? 1 : 0,
-                    transform: isVisible ? "scale(1)" : "scale(0.7)",
-                    transition: "opacity 0.45s ease, transform 0.45s cubic-bezier(0.34,1.2,0.64,1)",
-                  }}
-                >
-                  <BookOpen
-                    size={32}
-                    color="white"
-                    strokeWidth={1.5}
+                  {/* Orb */}
+                  <div
                     style={{
                       position: "absolute",
-                      opacity: highlightId ? 0 : 1,
-                      transition: "opacity 0.3s ease",
+                      inset: 0,
+                      borderRadius: "50%",
+                      background:
+                        "radial-gradient(circle at 38% 32%, #fc8181, #EC210F 55%, #991b1b)",
+                      boxShadow:
+                        "0 4px 0 0 #7f1d1d, 0 8px 20px -2px rgba(220,38,38,0.5)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      opacity: isVisible ? 1 : 0,
+                      transform: isVisible ? "scale(1)" : "scale(0.7)",
+                      transition: "opacity 0.45s ease, transform 0.45s cubic-bezier(0.34,1.2,0.64,1)",
                     }}
-                  />
-                  {AREAS.map((a) => {
-                    const MobIcon = a.Icon;
+                  >
+                    <BookOpen
+                      size={32}
+                      color="white"
+                      strokeWidth={1.5}
+                      style={{
+                        position: "absolute",
+                        opacity: highlightId ? 0 : 1,
+                        transition: "opacity 0.3s ease",
+                      }}
+                    />
+                    {AREAS.map((a) => {
+                      const MobIcon = a.Icon;
+                      return (
+                        <MobIcon
+                          key={a.id}
+                          size={32}
+                          color="white"
+                          strokeWidth={1.5}
+                          style={{
+                            position: "absolute",
+                            opacity: highlightId === a.id ? 1 : 0,
+                            transition: "opacity 0.3s ease",
+                          }}
+                        />
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* 2-col pill grid */}
+                <div
+                  className="grid grid-cols-2 gap-3 w-full"
+                  style={{ maxWidth: 360 }}
+                  role="group"
+                  aria-label="Curriculum areas"
+                >
+                  {AREAS.map((a, i) => {
+                    const PillIcon = a.Icon;
+                    const isHl = highlightId === a.id;
                     return (
-                      <MobIcon
+                      <button
                         key={a.id}
-                        size={32}
-                        color="white"
-                        strokeWidth={1.5}
-                        style={{
-                          position: "absolute",
-                          opacity: highlightId === a.id ? 1 : 0,
-                          transition: "opacity 0.3s ease",
+                        onClick={() => {
+                          markInteracted();
+                          setActiveArea(activeArea === a.id ? null : a.id);
                         }}
-                      />
+                        onFocus={() => {
+                          markInteracted();
+                          setHoveredChip(a.id);
+                        }}
+                        onBlur={() => setHoveredChip(null)}
+                        className="flex items-center gap-2.5 px-3 rounded-xl border-2 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
+                        style={{
+                          minHeight: 52,
+                          borderColor: isHl ? a.fill : "transparent",
+                          background: isHl ? a.glowDim : "var(--muted, #f3f4f6)",
+                          opacity: isVisible ? 1 : 0,
+                          transform: isVisible ? "translateY(0)" : "translateY(10px)",
+                          transition: [
+                            `opacity 0.4s ease ${180 + i * 60}ms`,
+                            `transform 0.4s ease ${180 + i * 60}ms`,
+                            "background 0.25s ease",
+                            "border-color 0.25s ease",
+                          ].join(", "),
+                        }}
+                        data-testid={`mob-area-${a.id}`}
+                        aria-pressed={activeArea === a.id}
+                        aria-label={`${a.label}: ${a.benefit}`}
+                      >
+                        <span
+                          style={{
+                            flexShrink: 0,
+                            width: 32,
+                            height: 32,
+                            borderRadius: "50%",
+                            background: `radial-gradient(circle at 36% 30%, color-mix(in srgb, ${a.fill} 60%, white) 0%, ${a.fill} 48%, ${a.shadow} 100%)`,
+                            boxShadow: `0 2px 0 0 ${a.shadow}`,
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            overflow: "hidden",
+                            position: "relative",
+                          }}
+                        >
+                          {/* Gloss on mobile orbs */}
+                          <span
+                            aria-hidden="true"
+                            style={{
+                              position: "absolute",
+                              top: 3,
+                              left: 5,
+                              width: 12,
+                              height: 7,
+                              borderRadius: "50%",
+                              background: "rgba(255,255,255,0.35)",
+                              filter: "blur(2px)",
+                              pointerEvents: "none",
+                            }}
+                          />
+                          <PillIcon size={16} color="white" strokeWidth={2} style={{ position: "relative", zIndex: 1 }} />
+                        </span>
+                        <span
+                          className="text-xs font-semibold text-left leading-tight"
+                          style={{ color: isHl ? a.fill : undefined }}
+                        >
+                          {a.label}
+                        </span>
+                      </button>
                     );
                   })}
                 </div>
-              </div>
 
-              {/* 2-col pill grid */}
-              <div
-                className="grid grid-cols-2 gap-3 w-full"
-                style={{ maxWidth: 360 }}
-                role="group"
-                aria-label="Curriculum areas"
-              >
-                {AREAS.map((a, i) => {
-                  const PillIcon = a.Icon;
-                  const isHl = highlightId === a.id;
-                  return (
-                    <button
-                      key={a.id}
-                      onClick={() => {
-                        markInteracted();
-                        setActiveArea(activeArea === a.id ? null : a.id);
-                      }}
-                      onFocus={() => {
-                        markInteracted();
-                        setHoveredChip(a.id);
-                      }}
-                      onBlur={() => setHoveredChip(null)}
-                      className="flex items-center gap-2.5 px-3 rounded-xl border-2 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
-                      style={{
-                        minHeight: 52,
-                        borderColor: isHl ? a.fill : "transparent",
-                        background: isHl ? a.glowDim : "var(--muted, #f3f4f6)",
-                        opacity: isVisible ? 1 : 0,
-                        transform: isVisible ? "translateY(0)" : "translateY(10px)",
-                        transition: [
-                          `opacity 0.4s ease ${180 + i * 60}ms`,
-                          `transform 0.4s ease ${180 + i * 60}ms`,
-                          "background 0.25s ease",
-                          "border-color 0.25s ease",
-                        ].join(", "),
-                      }}
-                      data-testid={`mob-area-${a.id}`}
-                      aria-pressed={activeArea === a.id}
-                      aria-label={`${a.label}: ${a.benefit}`}
-                    >
-                      <span
-                        style={{
-                          flexShrink: 0,
-                          width: 32,
-                          height: 32,
-                          borderRadius: "50%",
-                          background: `radial-gradient(circle at 36% 30%, color-mix(in srgb, ${a.fill} 60%, white) 0%, ${a.fill} 48%, ${a.shadow} 100%)`,
-                          boxShadow: `0 2px 0 0 ${a.shadow}`,
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          overflow: "hidden",
-                          position: "relative",
-                        }}
-                      >
-                        {/* Gloss on mobile orbs */}
-                        <span
-                          aria-hidden="true"
-                          style={{
-                            position: "absolute",
-                            top: 3,
-                            left: 5,
-                            width: 12,
-                            height: 7,
-                            borderRadius: "50%",
-                            background: "rgba(255,255,255,0.35)",
-                            filter: "blur(2px)",
-                            pointerEvents: "none",
-                          }}
-                        />
-                        <PillIcon size={16} color="white" strokeWidth={2} style={{ position: "relative", zIndex: 1 }} />
-                      </span>
-                      <span
-                        className="text-xs font-semibold text-left leading-tight"
-                        style={{ color: isHl ? a.fill : undefined }}
-                      >
-                        {a.label}
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
+              </div>{/* /hub+grid unit */}
 
-              {/* Mobile detail card */}
+              {/* SINGLE detail card — only instance visible on mobile */}
               <div className="relative w-full" style={{ height: 72, maxWidth: 360 }} aria-live="off">
                 {highlightedData && (
                   <div
@@ -931,6 +940,15 @@ export function MethodologySection() {
                   </div>
                 )}
               </div>
+
+              {/* CTA — mobile only; desktop version is in the left column */}
+              <Link href="/programmes">
+                <Button size="lg" data-testid="button-methodology-programmes">
+                  View Our Programmes
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </Link>
+
             </div>
           </div>
         </div>

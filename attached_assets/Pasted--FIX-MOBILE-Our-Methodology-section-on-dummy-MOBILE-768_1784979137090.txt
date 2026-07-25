@@ -1,0 +1,34 @@
+# FIX MOBILE — "Our Methodology" section on /dummy. MOBILE (≤768px) ONLY.
+# Do NOT change the desktop layout at all. Edit only this section. Preserve all copy,
+# the 6 areas, chips, and the CTA. The DESKTOP orbit stays exactly as it is.
+
+## BUG 1 — the detail card renders TWICE on mobile
+- The selection detail card ("<Area> — <one-line description>", e.g. "Maths &
+  Science — Logical thinking + curiosity") currently appears twice. Render it EXACTLY
+  ONCE on mobile. If there are separate desktop/mobile instances both showing, keep
+  only one visible per breakpoint. There must never be two of these cards at once.
+
+## BUG 2 — fix the mobile stacking order + the empty gap around the hub
+- Set this exact vertical order on mobile:
+   1. eyebrow "OUR METHODOLOGY"
+   2. heading "Research-Based Curriculum for Every Child"
+   3. the two paragraphs
+   4. the chips row (Art · STEM · Sports · Skills · Aptitude · Language)
+   5. THE CURRICULUM VISUAL as one tight unit: the red hub centered, then directly
+      below it the 6 areas as a 2-column grid (Art Studio, Maths & Science, Sports &
+      Movement, Skill Development, General Aptitude, Bilingual Education)
+   6. the SINGLE selection detail card (updates when a chip or area is tapped)
+   7. the "View Our Programmes" button
+- Remove the large empty vertical space around the standalone hub: the hub and the
+  2-column grid should read as one connected block with normal spacing, not a lone
+  circle floating in whitespace. Center the hub, modest margin, then the grid.
+
+## KEEP WORKING
+- Tapping a chip OR an area tile still highlights the matching area, morphs the hub
+  icon, and updates the ONE detail card. Areas/chips are ≥44px tap targets.
+- No horizontal overflow; everything fits the phone width.
+
+## DELIVER
+Show /dummy "Our Methodology" at mobile 390 (and confirm desktop 1440 is unchanged).
+Success = exactly ONE detail card, clean top-to-bottom order (chips → hub + 2-col
+grid → detail card → button), no big empty gap around the hub, no duplicates.
