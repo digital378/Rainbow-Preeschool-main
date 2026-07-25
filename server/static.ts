@@ -19,9 +19,7 @@ export function serveStatic(app: Express) {
     let html = fs.readFileSync(indexPath, "utf-8");
     html = injectHomepageFreshness("/", html);
     res.removeHeader("Set-Cookie");
-    res.setHeader("Cache-Control", "public, max-age=0, s-maxage=300, stale-while-revalidate=86400");
-    res.setHeader("CDN-Cache-Control", "public, max-age=3600, stale-while-revalidate=86400");
-    res.setHeader("Cloudflare-CDN-Cache-Control", "public, max-age=3600, stale-while-revalidate=86400");
+    res.setHeader("Cache-Control", "no-store");
     res.setHeader("Content-Type", "text/html; charset=utf-8");
     res.send(html);
   });
@@ -47,12 +45,7 @@ export function serveStatic(app: Express) {
         // SPA shell: drop any session cookies (e.g. GAESA) so CF cannot flip
         // public→private and so the edge keeps a cacheable copy.
         res.removeHeader("Set-Cookie");
-        // CF-specific directives override "Cache Everything" Page Rules; we
-        // explicitly want CF to honour the same s-maxage as standards-compliant
-        // CDNs. Browsers still revalidate via max-age=0.
-        res.setHeader("Cache-Control", "public, max-age=0, s-maxage=300, stale-while-revalidate=86400");
-        res.setHeader("CDN-Cache-Control", "public, max-age=3600, stale-while-revalidate=86400");
-        res.setHeader("Cloudflare-CDN-Cache-Control", "public, max-age=3600, stale-while-revalidate=86400");
+        res.setHeader("Cache-Control", "no-store");
       }
     },
   }));
@@ -60,9 +53,7 @@ export function serveStatic(app: Express) {
   // fall through to index.html for SPA routing
   app.use("*", (_req, res) => {
     res.removeHeader("Set-Cookie");
-    res.setHeader("Cache-Control", "public, max-age=0, s-maxage=300, stale-while-revalidate=86400");
-    res.setHeader("CDN-Cache-Control", "public, max-age=3600, stale-while-revalidate=86400");
-    res.setHeader("Cloudflare-CDN-Cache-Control", "public, max-age=3600, stale-while-revalidate=86400");
+    res.setHeader("Cache-Control", "no-store");
     res.sendFile(path.resolve(distPath, "index.html"));
   });
 }
