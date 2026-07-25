@@ -3618,10 +3618,10 @@ function ContactSection() {
 function FindNearestCentreSection() {
   const prefersReduced = useReducedMotion();
   const sectionRef     = useRef<HTMLElement>(null);
-  const [query,        setQuery]     = useState("");
-  const [activeTag,    setActiveTag] = useState<string | null>(null);
-  const [visible,      setVisible]   = useState(false);
+  const [query,        setQuery]       = useState("");
+  const [visible,      setVisible]     = useState(false);
   const [focusSearch,  setFocusSearch] = useState(false);
+  const [hovSugg,      setHovSugg]     = useState(-1);
 
   /* Scroll-in trigger */
   useEffect(() => {
@@ -3635,37 +3635,55 @@ function FindNearestCentreSection() {
     return () => obs.disconnect();
   }, [prefersReduced]);
 
-  /* All unique area tags across every centre */
-  const allTags = useMemo(() => {
+  /* Type-ahead suggestions: centre names → area tags → landmarks, deduped */
+  const suggestions = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    if (q.length < 2) return [] as string[];
+    const hits: string[] = [];
     const seen = new Set<string>();
-    centres.forEach(c => (c.areasServed ?? []).forEach(a => seen.add(a)));
-    return Array.from(seen).sort();
-  }, []);
+    const push = (s: string) => {
+      if (s.toLowerCase().includes(q) && !seen.has(s)) { seen.add(s); hits.push(s); }
+    };
+    centres.forEach(c => push(c.name));
+    centres.forEach(c => (c.areasServed ?? []).forEach(push));
+    centres.forEach(c => (c.landmarks   ?? []).forEach(push));
+    return hits.slice(0, 6);
+  }, [query]);
 
-  /* Filter: query + active tag */
+  /* Filter: query only */
   const filtered = useMemo(() => {
     const q = query.toLowerCase().trim();
     return centres.filter(c => {
+      if (!q) return true;
       const haystack = [
         c.name, c.localityName, c.address,
         ...(c.landmarks   ?? []),
         ...(c.areasServed ?? []),
       ].map(s => s.toLowerCase());
-      const matchQ   = !q         || haystack.some(h => h.includes(q));
-      const matchTag = !activeTag || (c.areasServed ?? []).includes(activeTag);
-      return matchQ && matchTag;
+      return haystack.some(h => h.includes(q));
     });
-  }, [query, activeTag]);
+  }, [query]);
 
-  const hasFilter  = !!query.trim() || !!activeTag;
-  const noResults  = filtered.length === 0;
-  const activeLabel = activeTag ?? query.trim();
+  const hasFilter   = !!query.trim();
+  const noResults   = filtered.length === 0;
+  const activeLabel = query.trim();
 
-  const handleTagClick = (tag: string) => {
-    setActiveTag(prev => (prev === tag ? null : tag));
-    setQuery("");
+  const selectSuggestion = (s: string) => { setQuery(s); setHovSugg(-1); };
+  const handleClear = () => { setQuery(""); setHovSugg(-1); };
+
+  /* Keyboard navigation for the dropdown */
+  const onSearchKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (!focusSearch || suggestions.length === 0) return;
+    if (e.key === "ArrowDown") {
+      e.preventDefault(); setHovSugg(i => Math.min(i + 1, suggestions.length - 1));
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault(); setHovSugg(i => Math.max(i - 1, -1));
+    } else if (e.key === "Enter" && hovSugg >= 0) {
+      e.preventDefault(); selectSuggestion(suggestions[hovSugg]);
+    } else if (e.key === "Escape") {
+      setHovSugg(-1); setFocusSearch(false);
+    }
   };
-  const handleClear = () => { setQuery(""); setActiveTag(null); };
 
   /* Shared entrance style for header elements */
   const entranceSt = (delay = 0): React.CSSProperties => ({
@@ -3720,9 +3738,13 @@ function FindNearestCentreSection() {
               id="loc-search"
               type="search"
               value={query}
-              onChange={e => { setQuery(e.target.value); setActiveTag(null); }}
+              onChange={e => { setQuery(e.target.value); setHovSugg(-1); }}
               onFocus={() => setFocusSearch(true)}
-              onBlur={() => setFocusSearch(false)}
+              onBlur={() => { setFocusSearch(false); setHovSugg(-1); }}
+              onKeyDown={onSearchKeyDown}
+              aria-autocomplete="list"
+              aria-controls="loc-suggestions"
+              aria-activedescendant={hovSugg >= 0 ? `loc-sugg-${hovSugg}` : undefined}
               placeholder="Type your area… e.g. Manpada, Naupada, Kolshet"
               aria-label="Search by area"
               autoComplete="off"
@@ -3749,6 +3771,48 @@ function FindNearestCentreSection() {
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
               </button>
             )}
+
+            {/* ── Type-ahead dropdown ─────────────────────────────────── */}
+            {focusSearch && suggestions.length > 0 && (
+              <ul
+                id="loc-suggestions"
+                role="listbox"
+                aria-label="Area suggestions"
+                style={{
+                  position:"absolute", top:"calc(100% + 6px)", left:0, right:0, zIndex:50,
+                  background:"white", borderRadius:12, margin:0, padding:0, listStyle:"none",
+                  boxShadow:"0 8px 32px rgba(33,27,46,0.13),0 2px 8px rgba(33,27,46,0.07)",
+                  border:"1px solid rgba(33,27,46,0.07)", overflow:"hidden",
+                }}
+              >
+                {suggestions.map((s, i) => (
+                  <li
+                    key={s}
+                    id={`loc-sugg-${i}`}
+                    role="option"
+                    aria-selected={hovSugg === i}
+                    /* mousedown fires before blur, so we preventDefault to keep input focused */
+                    onMouseDown={e => { e.preventDefault(); selectSuggestion(s); }}
+                    onMouseEnter={() => setHovSugg(i)}
+                    onMouseLeave={() => setHovSugg(-1)}
+                    style={{
+                      padding:"10px 16px 10px 46px", fontSize:14, cursor:"pointer",
+                      color: hovSugg === i ? "#EC210F" : "#374151",
+                      background: hovSugg === i ? "rgba(236,33,15,0.05)" : "transparent",
+                      fontWeight: hovSugg === i ? 600 : 400,
+                      borderBottom: i < suggestions.length - 1 ? "1px solid rgba(33,27,46,0.05)" : "none",
+                      transition:"background 0.1s,color 0.1s",
+                      display:"flex", alignItems:"center", gap:8,
+                    }}
+                  >
+                    <svg aria-hidden width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink:0, color: hovSugg === i ? "#EC210F" : "#9ca3af" }}>
+                      <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+                    </svg>
+                    {s}
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
 
           {/* Live count — aria-live so it's announced on change */}
@@ -3762,45 +3826,6 @@ function FindNearestCentreSection() {
               : <>Showing <strong style={{ color:"#211B2E" }}>{filtered.length}</strong> of {centres.length} centres.</>
             }
           </p>
-        </div>
-
-        {/* ── Tag bar ────────────────────────────────────────────────── */}
-        <div
-          role="group"
-          aria-label="Filter by area"
-          style={{ display:"flex", flexWrap:"wrap", gap:8, justifyContent:"center", marginBottom:32, ...entranceSt(0.28) }}
-        >
-          {allTags.map(tag => (
-            <button
-              key={tag}
-              onClick={() => handleTagClick(tag)}
-              aria-pressed={activeTag === tag}
-              className={`loc-tag-btn${activeTag === tag ? " loc-tag-active" : ""}`}
-              style={{
-                padding:"6px 14px", borderRadius:20, fontSize:12.5, fontWeight:600, cursor:"pointer",
-                border:`1.5px solid ${activeTag === tag ? "#EC210F" : "#e5e7eb"}`,
-                background: activeTag === tag ? "#EC210F" : "white",
-                color: activeTag === tag ? "white" : "#55506A",
-                minHeight:36,
-              }}
-            >
-              {tag}
-            </button>
-          ))}
-          {hasFilter && (
-            <button
-              onClick={handleClear}
-              aria-label="Clear all filters"
-              style={{
-                padding:"6px 14px", borderRadius:20, fontSize:12.5, fontWeight:600, cursor:"pointer",
-                border:"1.5px dashed #d1d5db", background:"transparent", color:"#9ca3af",
-                minHeight:36, display:"flex", alignItems:"center", gap:5,
-              }}
-            >
-              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
-              Clear
-            </button>
-          )}
         </div>
 
         {/* ── No-results state ───────────────────────────────────────── */}
@@ -3889,21 +3914,20 @@ function FindNearestCentreSection() {
                     </p>
                   )}
 
-                  {/* Area tags */}
+                  {/* Area tags — clicking fills the search box */}
                   {(centre.areasServed ?? []).length > 0 && (
                     <div style={{ display:"flex", flexWrap:"wrap", gap:5, paddingLeft:44, marginBottom:16 }}>
                       {(centre.areasServed ?? []).map(tag => (
                         <button
                           key={tag}
-                          onClick={() => handleTagClick(tag)}
-                          aria-pressed={activeTag === tag}
-                          className={`loc-tag-btn${activeTag === tag ? " loc-tag-active" : ""}`}
+                          onClick={() => selectSuggestion(tag)}
+                          className="loc-tag-btn"
                           style={{
                             padding:"3px 10px", borderRadius:14, fontSize:11.5, fontWeight:600,
                             cursor:"pointer", minHeight:26,
-                            border:`1.5px solid ${activeTag === tag ? "#EC210F" : "#e9e4ff"}`,
-                            background: activeTag === tag ? "#EC210F" : "rgba(139,92,246,0.06)",
-                            color: activeTag === tag ? "white" : "#6d4aff",
+                            border:"1.5px solid #e9e4ff",
+                            background:"rgba(139,92,246,0.06)",
+                            color:"#6d4aff",
                           }}
                         >
                           {tag}
