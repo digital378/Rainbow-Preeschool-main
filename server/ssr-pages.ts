@@ -539,7 +539,7 @@ function localBusinessSchema(locality: string, address: string, phone: string, u
 
 const staticPages: Record<string, PageSEOData> = {
   "/": {
-    title: "Rainbow Preschool | Playschool, Nursery & Kindergarten in Thane",
+    title: "Preschool in Thane | Rainbow Preschool International",
     description: "Trusted preschool chain in Thane since 2007 — Playgroup, Nursery & Kindergarten across 6 centres. Play-based learning. Admissions open.",
     canonical: "https://www.rainbowpreschools.com/",
     h1: "Trusted Preschool in Thane Since 2007",
