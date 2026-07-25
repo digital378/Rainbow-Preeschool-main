@@ -1,0 +1,64 @@
+# REVAMP — "Our Methodology" into an INTERACTIVE CURRICULUM EXPLORER. /dummy ONLY.
+# Build ON TOP OF the current working diagram (one hub + 6 node-units + lines).
+# Do NOT re-architect into separate label/node layers — that broke it before.
+# RELIABILITY RULES (keep):
+#   • Exactly ONE diagram. • Each node stays ONE element containing its circle AND
+#     its label together (they move as one). • No whole-system rotate/counter-rotate.
+# Edit ONLY this section. Preserve all copy, the 6 area labels + their existing
+# one-line descriptions (e.g. General Aptitude → "Critical thinking + focus"),
+# chips, and CTA. Invent nothing. RPS red #EC210F hub leads.
+
+## A) VISUAL RICHNESS (makes it feel premium even at rest)
+- Nodes: replace flat fills with soft radial gradients (lighter top-left → node
+  colour) + a glossy highlight + a coloured drop shadow, so they read as 3D orbs.
+- Connector lines: gradient stroke from hub-red → each node's colour, ~2px.
+- Hub: red orb with a soft pulsing aura ring + a slow-rotating conic-gradient glow
+  behind it (behind only — the hub content stays still and upright).
+- Background of the diagram area: faint drifting sparkle/particle dots (very low
+  opacity, pointer-events:none) for depth.
+
+## B) THE INTERACTION (this is the "wow")
+1. SELECT (hover OR click a node, OR hover its matching chip — keep the existing
+   chip map): 
+   - the node scales 1.15, brightens, lifts; its connector line ENERGIZES (a bright
+     gradient pulse travels hub→node);
+   - the HUB morphs: its book icon crossfades to the selected area's icon + a ring of
+     that area's colour appears around the hub;
+   - the left detail card crossfades to that area's title + its existing one-line
+     description, with that area's colour accent;
+   - the other 5 nodes dim to ~0.55 and desaturate slightly. On deselect, all reset.
+2. AUTO-TOUR: if the user hasn't interacted, auto-cycle the selection through the 6
+   areas every ~3s (same highlight + hub morph + card update), looping. The moment
+   the user hovers/clicks/focuses anything in the section, STOP the auto-tour and
+   hand control to them.
+3. Everything eased/damped, never snapping.
+
+## C) AMBIENT LIFE (subtle, reliable — per-node, not whole-system)
+- Each node gently bobs on a tiny path (translate ±4px, 4–5s sine, phase-varied).
+  The label rides with it (same element). No rotation of the constellation.
+- Energy dots travel along each connector hub→node on a slow loop, phase-varied.
+- CURSOR PARALLAX: the whole diagram shifts a few px toward the cursor (damped) for
+  a sense of depth. Disable on touch.
+- ENTRANCE (scroll-in): hub scales in first, then nodes fly out FROM the hub to
+  their positions (translate+scale), staggered 80ms, back-out ease; lines draw in.
+
+## D) MOBILE (≤768px)
+- Keep it simple + reliable: hub centered on top, the 6 nodes as a 2-col grid of
+  (orb + label) units below. Tap a node/chip to select (same highlight + detail card
+  + hub morph). Auto-tour still runs until first tap. Tap targets ≥44px. No cursor
+  parallax. Keep bob + entrance; drop energy-dots if perf dips.
+
+## E) ACCESSIBILITY / PERFORMANCE
+- Nodes and chips are real buttons, keyboard-operable (Enter/Space selects), visible
+  focus rings; selection updates an aria-live region with the area name + description.
+- transform/opacity only; will-change on animated layers; particles are cheap.
+- prefers-reduced-motion: NO auto-tour, bob, energy-dots, parallax, or fly-out —
+  static tidy orbit; selection via hover/click still updates the card + hub (instant,
+  no motion).
+
+## DELIVER
+Show /dummy "Our Methodology" at desktop 1440 + mobile 390, plus a screen RECORDING
+of: the fly-out entrance, the auto-tour cycling through areas (hub morphing + card
+updating), energy flowing along the lines, and a manual hover taking over. Confirm
+ONE diagram only, node labels still attached to their orbs, and nothing outside this
+section changed.
