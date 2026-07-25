@@ -1,41 +1,50 @@
 ---
-name: R3F package firewall + Three.js fallback
-description: @react-three/fiber and @react-three/drei are blocked by Replit's package firewall; use raw Three.js instead. Replit preview also has no WebGL GPU.
+name: R3F / Three.js in Replit
+description: How to safely use @react-three/fiber and raw Three.js in this project given Replit's no-GPU preview and React 18 constraints.
 ---
 
 ## Rule
-`@react-three/fiber` and `@react-three/drei` cannot be installed — Replit package firewall returns HTTP 403 for these packages. Use raw **Three.js** instead, which achieves identical results.
+`@react-three/fiber` v8 + `@react-three/drei` v9 are installed (React-18-compatible). They work in real browsers but crash in Replit's no-GPU preview environment.
 
-**Why:** Replit's sandboxed npm proxy blocks certain large WebGL ecosystem packages (likely due to native binary deps or security flags).
+**Why:** Replit's server/preview has no GPU. `THREE.WebGLRenderer` fails to create a context. Worse, R3F's reconciler calls `React.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.S` at **module init time** (before any component renders), which crashes the whole page if the module is eagerly imported.
 
-**How to apply:**
-- Install `three` + `@types/three` (these DO install successfully)
-- `gsap`, `lenis`, `framer-motion` all install fine
-- Build Three.js scenes inside `useEffect` with a canvas ref — same API the R3F Canvas wrapper calls internally
-- Wrap renderer creation in `try/catch` + add `isWebGLAvailable()` check first
+## How to apply
 
-## Replit preview has no WebGL
-The Replit in-editor preview (iframe) runs without a GPU — `new THREE.WebGLRenderer()` always throws "Error creating WebGL context". Must detect with:
+1. **Always lazy-import** any component that uses R3F:
+   ```ts
+   const ThaneMap3D = lazy(() => import("@/components/ThaneMap3D").then(m => ({ default: m.default })));
+   ```
+2. **Gate rendering behind a synchronous WebGL probe** (runs in `useState(() => ...)` initialiser — before first render):
+   ```ts
+   const [webglOk] = useState<boolean>(() => {
+     if (typeof window === "undefined") return false;
+     try {
+       const c = document.createElement("canvas");
+       const ctx = (c.getContext("webgl") || c.getContext("experimental-webgl")) as WebGLRenderingContext | null;
+       if (!ctx) return false;
+       ctx.getExtension("WEBGL_lose_context")?.loseContext();
+       return true;
+     } catch { return false; }
+   });
+   ```
+3. Only render the R3F component when `webglOk === true`. Provide a graceful fallback for `false`.
+4. If the component also has an internal `WebGLBoundary` error boundary (like `ThaneMap3D`), still keep the outer gate — React logs caught errors to console even when caught, which marks the Replit workflow as FAILED.
+
+## ID mapping quirk (ThaneMap3D ↔ shared centre-data)
+`ThaneMap3D`'s CENTRES use id `"anandnagar"` but `@shared/centre-data` uses `"anand-nagar"` (hyphenated). Bridge with:
 ```ts
-function isWebGLAvailable(): boolean {
-  try {
-    const c = document.createElement("canvas");
-    return !!(c.getContext("webgl") || c.getContext("experimental-webgl"));
-  } catch { return false; }
-}
+const toMapId  = (cardId: string) => cardId === "anand-nagar" ? "anandnagar" : cardId;
+const fromMapId = (mapId:  string) => mapId  === "anandnagar" ? "anand-nagar" : mapId;
 ```
-Show a CSS gradient fallback when `!isWebGLAvailable()`. Production browsers work fine.
 
-## GSAP ScrollTrigger import
-```ts
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-gsap.registerPlugin(ScrollTrigger);
+## Package install
+```bash
+npm i @react-three/fiber@8 @react-three/drei@9 --legacy-peer-deps
 ```
-This works with `gsap` v3.x (latest). Do NOT import from `gsap/dist/...`.
+v9.6.1 of R3F requires React >=19 and crashes with React 18. v8 + drei v9 work with React 18.3.x.
 
-## Lenis import (v1.x)
-```ts
-import Lenis from "lenis";  // default export
-```
-Package name is `lenis` (not `@studio-freight/lenis`). Pass `lerp: 0.07, smoothWheel: true` for smooth feel. Call `lenis.raf(timestamp)` inside the RAF loop. Destroy on unmount with `lenis.destroy()`.
+## raw Three.js (non-R3F components)
+`interactive-3d-map.tsx` uses raw Three.js v0.185.1.
+- `THREE.Clock` → use `performance.now()` directly (deprecated in r185).
+- `PCFSoftShadowMap` → use `PCFShadowMap` (deprecated in r185).
+- OrbitControls: import from `three/examples/jsm/controls/OrbitControls.js`.

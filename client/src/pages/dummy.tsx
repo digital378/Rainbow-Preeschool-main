@@ -27,6 +27,9 @@ import { FindNearestCentre } from "@/components/find-nearest-centre";
 import { BranchCard } from "@/components/branch-card";
 import { EEATSignals } from "@/components/eeat-signals";
 import { ErrorBoundary } from "@/components/error-boundary";
+// ThaneMap3D uses @react-three/fiber — lazy-loaded so R3F never initialises
+// unless webglOk confirms the browser has GPU support.
+const ThaneMap3D = lazy(() => import("@/components/ThaneMap3D").then(m => ({ default: m.default })));
 import { Card, CardContent } from "@/components/ui/card";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { LAST_UPDATED_DISPLAY, LAST_UPDATED_ISO } from "@shared/site-freshness";
@@ -3639,25 +3642,44 @@ function FindNearestCentreSection() {
   const [focusSearch,  setFocusSearch] = useState(false);
   const [hovSugg,      setHovSugg]     = useState(-1);
 
-  /* ── 3-D map ↔ card two-way sync ────────────────────────────────────── */
-  const [activeId, setActiveId] = useState<string | null>(null);  // hovered pin or card
-  const [flashId,  setFlashId]  = useState<string | null>(null);  // briefly outlined after pin click
+  /* ── ThaneMap3D ↔ card two-way sync ─────────────────────────────────── */
+  // `active` stores card ids (from @shared/centre-data).
+  // ThaneMap3D CENTRES use "anandnagar"; shared data uses "anand-nagar" — bridge below.
+  const [active,  setActive]  = useState<string | null>(null);
+  const [flashId, setFlashId] = useState<string | null>(null);
+
+  // Synchronous WebGL probe — runs before first render so ThaneMap3D is never mounted
+  // in environments without GPU (Replit preview, headless browsers). Prevents the
+  // THREE.WebGLRenderer console error that would mark the workflow as FAILED.
+  const [webglOk] = useState<boolean>(() => {
+    if (typeof window === "undefined") return false;
+    try {
+      const c = document.createElement("canvas");
+      const ctx = (c.getContext("webgl") || c.getContext("experimental-webgl")) as WebGLRenderingContext | null;
+      if (!ctx) return false;
+      ctx.getExtension("WEBGL_lose_context")?.loseContext();
+      return true;
+    } catch { return false; }
+  });
   const cardRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
-  // Pin click → smooth-scroll its card into view + brief red-outline flash
-  const handlePinSelect = useCallback((id: string) => {
-    setActiveId(id);
-    const el = cardRefs.current[id];
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "nearest" });
-      setFlashId(id);
-      setTimeout(() => setFlashId(null), 1700);
-    }
-  }, []);
+  // Bridge: one id differs between ThaneMap3D and shared centre-data
+  const toMapId  = (cardId: string) => cardId === "anand-nagar" ? "anandnagar" : cardId;
+  const fromMapId = (mapId:  string) => mapId  === "anandnagar" ? "anand-nagar" : mapId;
 
-  // Pin hover → highlight matching card (cards dim others)
-  const handlePinHover = useCallback((id: string | null) => {
-    setActiveId(id);
+  // Called by ThaneMap3D onActiveChange (pin click / toggle)
+  const handleActiveChange = useCallback((mapId: string | null) => {
+    const cardId = mapId ? fromMapId(mapId) : null;
+    setActive(cardId);
+    if (cardId) {
+      const el = cardRefs.current[cardId];
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        setFlashId(cardId);
+        setTimeout(() => setFlashId(null), 1700);
+      }
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   /* Scroll-in trigger */
@@ -3755,34 +3777,35 @@ function FindNearestCentreSection() {
           </p>
         </div>
 
-        {/* ── 3-D interactive map ────────────────────────────────────── */}
-        {/* aria-live announces active-centre changes for screen readers  */}
+        {/* ── ThaneMap3D — R3F interactive diorama ─────────────────── */}
         <p aria-live="polite" aria-atomic="true" className="sr-only">
-          {activeId ? `Selected centre: ${centres.find(c => c.id === activeId)?.name ?? ""}` : ""}
+          {active ? `Selected centre: ${centres.find(c => c.id === active)?.name ?? ""}` : ""}
         </p>
         <div style={{ marginBottom:32, ...entranceSt(0.14) }}>
-          <ErrorBoundary name="locator-3d-map" silent>
-            <Suspense fallback={
-              <div style={{
-                width:"100%", height:480, borderRadius:20,
-                background:"linear-gradient(135deg,#e8f5e9 0%,#f3e8d8 100%)",
-                display:"flex", alignItems:"center", justifyContent:"center", gap:8,
-              }}>
-                {[0,1,2].map(i => (
-                  <div key={i} style={{
-                    width:9, height:9, borderRadius:"50%", background:"#EC210F",
-                    animation:`mdot 1.1s ease-in-out ${i*.18}s infinite`,
-                  }}/>
-                ))}
-              </div>
-            }>
-              <Interactive3DMap
-                highlightedCentre={activeId}
-                onCentreSelect={handlePinSelect}
-                onCentreHover={handlePinHover}
-              />
-            </Suspense>
-          </ErrorBoundary>
+          {webglOk ? (
+            <ThaneMap3D
+              activeId={active ? toMapId(active) : null}
+              onActiveChange={handleActiveChange}
+              fallback={
+                <div style={{
+                  width:"100%", height:"clamp(360px,52vh,560px)", borderRadius:24,
+                  background:"linear-gradient(135deg,#e8f5e9 0%,#f3e8d8 100%)",
+                  display:"flex", alignItems:"center", justifyContent:"center",
+                }}>
+                  <span style={{ color:"#55506A", fontSize:14 }}>Map unavailable in this browser</span>
+                </div>
+              }
+            />
+          ) : (
+            <div style={{
+              width:"100%", height:"clamp(360px,52vh,560px)", borderRadius:24,
+              background:"linear-gradient(135deg,#e8f5e9 0%,#f3e8d8 100%)",
+              display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", gap:8,
+            }}>
+              <span style={{ fontSize:32 }}>🗺️</span>
+              <span style={{ color:"#55506A", fontSize:14 }}>Interactive 3D map — open in your browser</span>
+            </div>
+          )}
         </div>
 
         {/* ── Search box (sticky on mobile) ─────────────────────────── */}
@@ -3944,18 +3967,19 @@ function FindNearestCentreSection() {
                 ref={el => { cardRefs.current[centre.id] = el; }}
                 className="loc-card"
                 data-testid={`card-nearest-centre-${centre.id}`}
-                onMouseEnter={() => setActiveId(centre.id)}
-                onMouseLeave={() => setActiveId(prev => prev === centre.id ? null : prev)}
+                onMouseEnter={() => setActive(centre.id)}
+                onFocus={() => setActive(centre.id)}
+                onMouseLeave={() => setActive(prev => prev === centre.id ? null : prev)}
                 style={{
                   background:"white", borderRadius:18,
                   boxShadow: flashId === centre.id
                     ? "0 0 0 3px rgba(236,33,15,0.28), 0 6px 28px rgba(33,27,46,0.13)"
-                    : activeId === centre.id
+                    : active === centre.id
                       ? "0 0 0 2px rgba(236,33,15,0.16), 0 4px 18px rgba(33,27,46,0.10)"
                       : "0 4px 18px rgba(33,27,46,0.08),0 1px 4px rgba(33,27,46,0.05)",
                   border: flashId === centre.id
                     ? "1.5px solid rgba(236,33,15,0.40)"
-                    : activeId === centre.id
+                    : active === centre.id
                       ? "1px solid rgba(236,33,15,0.22)"
                       : "1px solid rgba(33,27,46,0.06)",
                   display:"flex", flexDirection:"column", height:"100%",
