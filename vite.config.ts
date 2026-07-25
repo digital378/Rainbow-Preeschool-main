@@ -34,6 +34,9 @@ export default defineConfig({
     // ES2020 + matching browser versions covers 97%+ of real-world traffic while
     // dropping class-helper polyfills and arrow-function transpilation.
     target: ["es2020", "chrome87", "firefox78", "safari14", "edge88"],
+    // Use esbuild for CSS minification (same as Vite 5 default) to preserve
+    // design-system pseudo-element patterns that Lightning CSS rejects.
+    cssMinify: "esbuild",
   },
   server: {
     fs: {
