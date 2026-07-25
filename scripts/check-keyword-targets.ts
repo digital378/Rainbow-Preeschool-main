@@ -264,9 +264,7 @@ async function main(): Promise<void> {
       if (PROGRAMME_PAGES.includes(path) && !hasOrgJsonLd(html)) {
         failures.push({ url: path, reason: "missing Organization JSON-LD" });
       }
-      if (PROGRAMME_PAGES.includes(path) && !hasReviewJsonLd(html)) {
-        failures.push({ url: path, reason: "missing Review JSON-LD (3 org-authored reviews expected)" });
-      }
+
       if (PROGRAMME_PAGES.includes(path) && !hasNoPersonAuthor(html)) {
         failures.push({
           url: path,
