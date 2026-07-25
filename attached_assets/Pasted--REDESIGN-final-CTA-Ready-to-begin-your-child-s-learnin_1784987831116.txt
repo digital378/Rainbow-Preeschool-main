@@ -1,0 +1,45 @@
+# REDESIGN — final CTA "Ready to begin your child's learning journey?". /dummy ONLY.
+# Switch the dark maroon theme to a BRIGHT, joyful, on-brand finale. Edit only this
+# section. PRESERVE all copy and the three buttons + their links. Invent nothing.
+# RPS red #EC210F leads.
+
+## BACKGROUND — warm & bright (replace the near-black)
+- Cream→peach gradient matching the rest of the site, with a soft pastel RAINBOW
+  aurora glow and 2–3 large blurred colour blobs (red/blue/green ~8%) drifting slowly.
+- A faint dotted polka pattern + a big soft translucent RAINBOW ARC behind the
+  headline. Airy and light — no dark background.
+- Keep a bright animated RAINBOW STRIP along the very bottom edge (level up the
+  existing rainbow line: smooth, slightly shimmering).
+
+## FLOATING PLAYFUL ELEMENTS (decorative; pointer-events:none, aria-hidden)
+- A few BALLOONS on strings that bob and drift gently upward, a couple of STARS/
+  sparkles, a soft CLOUD, and light CONFETTI bits — all phase-varied, gentle.
+- On scroll-in: a small tasteful CONFETTI burst behind the headline.
+
+## CONTENT (keep text EXACTLY)
+- Chip "✨ Free Campus Visits Available" → bright pill (white/soft glass, subtle
+  sparkle), keep text.
+- Heading "Ready to begin your child's learning journey?" → chunky rounded display
+  font, dark ink (readable on the light bg); optionally put "learning journey" in the
+  orange→red gradient used elsewhere.
+- Subtitle "Join 1,00,000+ young learners who began their early learning journey with
+  Rainbow Preschool. Schedule a free campus visit today." → keep exact, muted ink.
+
+## BUTTONS (keep links/actions; polish + animate)
+- "Request a Callback" → PRIMARY: solid red #EC210F pill, white text, arrow; hover =
+  lift + soft red glow + subtle shine sweep. ≥44px.
+- "WhatsApp" → green WhatsApp pill with icon; hover lift.
+- "Call Now" → outline pill (red border, red text) with phone icon; hover fills soft red.
+- Row on desktop; STACK full-width on mobile with comfortable spacing.
+
+## MOTION / A11y / MOBILE
+- Entrance: chip → heading → subtitle → buttons fade/rise with light stagger.
+- transform/opacity only. prefers-reduced-motion: freeze balloons/confetti/blobs/
+  shimmer — static bright layout, keep button hover only.
+- Buttons are real links with clear labels + visible focus rings; text/background
+  contrast ≥4.5:1 (dark text on light bg). Mobile: fewer floating elements, still bright.
+
+## DELIVER
+Show /dummy CTA at desktop 1440 + mobile 390 with a short recording of the entrance +
+confetti, balloons drifting, and a button hover. Confirm the heading, subtitle, chip,
+and all three button links are unchanged, and nothing outside this section changed.

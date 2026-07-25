@@ -585,6 +585,149 @@ const STYLES = `
     .faq-accent            { transition:none !important; }
     .faq-blob-a,.faq-blob-b { animation:none !important; }
   }
+
+  /* ══ Final CTA — bright joyful finale ══════════════════════════════════════ */
+  @keyframes cta-balloon-a {
+    0%,100% { transform:translateY(0) rotate(-4deg); }
+    50%     { transform:translateY(-20px) rotate(4deg); }
+  }
+  @keyframes cta-balloon-b {
+    0%,100% { transform:translateY(-4px) rotate(2deg); }
+    50%     { transform:translateY(-24px) rotate(-4deg); }
+  }
+  @keyframes cta-balloon-c {
+    0%,100% { transform:translateY(-2px) rotate(-1deg); }
+    40%     { transform:translateY(-14px) rotate(5deg); }
+  }
+  @keyframes cta-star-blink {
+    0%,100% { opacity:0; transform:scale(.4) rotate(0deg); }
+    50%     { opacity:1; transform:scale(1) rotate(22deg); }
+  }
+  @keyframes cta-cloud-drift {
+    0%,100% { transform:translateX(0) translateY(0); }
+    50%     { transform:translateX(14px) translateY(-6px); }
+  }
+  @keyframes cta-blob-drift-a {
+    0%,100% { transform:translate(0,0) scale(1); }
+    33%     { transform:translate(22px,-16px) scale(1.05); }
+    66%     { transform:translate(-12px,8px) scale(.96); }
+  }
+  @keyframes cta-blob-drift-b {
+    0%,100% { transform:translate(0,0) scale(1); }
+    40%     { transform:translate(-18px,12px) scale(1.04); }
+    70%     { transform:translate(10px,-8px) scale(.98); }
+  }
+  @keyframes cta-blob-drift-c {
+    0%,100% { transform:translate(0,0) scale(1.02); }
+    50%     { transform:translate(16px,-10px) scale(.97); }
+  }
+  @keyframes cta-rainbow-shimmer {
+    0%   { background-position:0% 50%; }
+    100% { background-position:200% 50%; }
+  }
+  @keyframes cta-confetti-burst {
+    0%   { transform:translate(0,0) rotate(0deg) scale(1); opacity:1; }
+    100% { transform:translate(var(--cx,0px),var(--cy,-60px)) rotate(var(--cr,120deg)) scale(.3); opacity:0; }
+  }
+  @keyframes cta-enter {
+    from { opacity:0; transform:translateY(26px); }
+    to   { opacity:1; transform:none; }
+  }
+  .cta-balloon-a { will-change:transform; animation:cta-balloon-a 5.5s ease-in-out infinite; }
+  .cta-balloon-b { will-change:transform; animation:cta-balloon-b 6.8s ease-in-out infinite; }
+  .cta-balloon-c { will-change:transform; animation:cta-balloon-c 4.9s ease-in-out infinite; }
+  .cta-star-blink { animation:cta-star-blink 2.4s ease-in-out infinite; }
+  .cta-star-1 { animation-duration:2.2s; }
+  .cta-star-2 { animation-duration:3.0s; animation-delay:0.7s; }
+  .cta-star-3 { animation-duration:2.6s; animation-delay:1.3s; }
+  .cta-star-4 { animation-duration:2.8s; animation-delay:0.4s; }
+  .cta-cloud-drift { will-change:transform; animation:cta-cloud-drift 8s ease-in-out infinite; }
+  .cta-blob-a { will-change:transform; animation:cta-blob-drift-a 20s ease-in-out 0s   infinite; }
+  .cta-blob-b { will-change:transform; animation:cta-blob-drift-b 26s ease-in-out 3s   infinite; }
+  .cta-blob-c { will-change:transform; animation:cta-blob-drift-c 23s ease-in-out 7s   infinite; }
+  .cta-confetti-burst {
+    position:absolute; pointer-events:none;
+    animation:cta-confetti-burst 1.4s cubic-bezier(.22,1,.36,1) both;
+  }
+  .cta-rainbow-strip {
+    height:6px; width:100%;
+    background:linear-gradient(90deg,#f43f5e,#f97316,#eab308,#22c55e,#3b82f6,#8b5cf6,#ec4899,#f43f5e);
+    background-size:200% 100%;
+    animation:cta-rainbow-shimmer 3s linear infinite;
+  }
+  /* Entrance stagger — triggered by .cta-vis on the content wrapper */
+  .cta-e0,.cta-e1,.cta-e2,.cta-e3 { opacity:0; }
+  .cta-vis .cta-e0 { animation:cta-enter 0.68s cubic-bezier(.22,1,.36,1) 0.00s both; }
+  .cta-vis .cta-e1 { animation:cta-enter 0.68s cubic-bezier(.22,1,.36,1) 0.12s both; }
+  .cta-vis .cta-e2 { animation:cta-enter 0.68s cubic-bezier(.22,1,.36,1) 0.26s both; }
+  .cta-vis .cta-e3 { animation:cta-enter 0.68s cubic-bezier(.22,1,.36,1) 0.42s both; }
+  /* Primary red button */
+  .cta-btn-red {
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    min-height:52px; padding:0 32px; border-radius:999px;
+    background:#EC210F; color:#fff; font-weight:700; font-size:1rem;
+    text-decoration:none; position:relative; overflow:hidden;
+    transition:transform 0.2s cubic-bezier(.22,1,.36,1),box-shadow 0.2s ease;
+    box-shadow:0 4px 18px rgba(236,33,15,.30);
+  }
+  .cta-btn-red::after {
+    content:''; position:absolute; inset:0; border-radius:inherit;
+    background:linear-gradient(118deg,transparent 25%,rgba(255,255,255,.36) 50%,transparent 75%);
+    background-size:260% 100%; background-position:-100% 0;
+    transition:background-position 0.5s ease; pointer-events:none;
+  }
+  .cta-btn-red:hover::after { background-position:200% 0; }
+  .cta-btn-red:hover {
+    transform:translateY(-3px);
+    box-shadow:0 12px 34px rgba(236,33,15,.50),0 4px 12px rgba(236,33,15,.22);
+  }
+  .cta-btn-red:active  { transform:scale(.97); }
+  .cta-btn-red:focus-visible { outline:3px solid #EC210F; outline-offset:3px; }
+  /* WhatsApp green button */
+  .cta-btn-wa {
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    min-height:52px; padding:0 28px; border-radius:999px;
+    background:#25D366; color:#fff; font-weight:600; font-size:1rem;
+    text-decoration:none;
+    transition:transform 0.2s cubic-bezier(.22,1,.36,1),box-shadow 0.2s ease;
+    box-shadow:0 4px 16px rgba(37,211,102,.28);
+  }
+  .cta-btn-wa:hover { transform:translateY(-3px); box-shadow:0 10px 30px rgba(37,211,102,.44); }
+  .cta-btn-wa:active  { transform:scale(.97); }
+  .cta-btn-wa:focus-visible { outline:3px solid #25D366; outline-offset:3px; }
+  /* Call Now outline button */
+  .cta-btn-call {
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    min-height:52px; padding:0 28px; border-radius:999px;
+    background:transparent; color:#EC210F; font-weight:600; font-size:1rem;
+    border:2px solid #EC210F; text-decoration:none;
+    transition:transform 0.2s cubic-bezier(.22,1,.36,1),background 0.2s ease,box-shadow 0.2s ease;
+  }
+  .cta-btn-call:hover {
+    background:rgba(236,33,15,.08); transform:translateY(-3px);
+    box-shadow:0 8px 26px rgba(236,33,15,.18);
+  }
+  .cta-btn-call:active  { transform:scale(.97); }
+  .cta-btn-call:focus-visible { outline:3px solid #EC210F; outline-offset:3px; }
+  /* Button row: stacked on mobile, inline row on sm+ */
+  .cta-btn-row { display:flex; flex-direction:column; gap:12px; align-items:stretch; }
+  @media (min-width:640px) {
+    .cta-btn-row { flex-direction:row; justify-content:center; align-items:center; gap:14px; }
+    .cta-btn-red,.cta-btn-wa,.cta-btn-call { width:auto; }
+  }
+  /* prefers-reduced-motion — freeze decorative motion, keep button hover */
+  @media (prefers-reduced-motion:reduce) {
+    .cta-balloon-a,.cta-balloon-b,.cta-balloon-c { animation:none !important; }
+    .cta-star-blink,.cta-star-1,.cta-star-2,.cta-star-3,.cta-star-4 { animation:none !important; opacity:.6; }
+    .cta-cloud-drift { animation:none !important; }
+    .cta-blob-a,.cta-blob-b,.cta-blob-c { animation:none !important; }
+    .cta-confetti-burst { display:none !important; }
+    .cta-rainbow-strip { animation:none !important; }
+    .cta-e0,.cta-e1,.cta-e2,.cta-e3 { opacity:1 !important; }
+    .cta-vis .cta-e0,.cta-vis .cta-e1,.cta-vis .cta-e2,.cta-vis .cta-e3 { animation:none !important; opacity:1 !important; }
+    .cta-btn-red:hover,.cta-btn-wa:hover,.cta-btn-call:hover { transform:none !important; }
+    .cta-btn-red:hover::after { background-position:-100% 0 !important; }
+  }
 `;
 
 /* ═══════════════════════════════════════════════════════════════════════════════
@@ -3117,65 +3260,200 @@ function CallbackSection() {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════════
-   SECTION: CTA — Gradient + sparkles + morphing blob
+   SECTION: CTA — Bright & joyful finale (rainbow, balloons, confetti, light bg)
 ═══════════════════════════════════════════════════════════════════════════════ */
 function CtaSection() {
+  const prefersReduced = useReducedMotion();
+  const sectionRef = useRef<HTMLElement>(null);
+  const [entered, setEntered] = useState(false);
+
+  useEffect(() => {
+    if (prefersReduced) { setEntered(true); return; }
+    const el = sectionRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) { setEntered(true); obs.disconnect(); }
+    }, { threshold: 0.08 });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [prefersReduced]);
+
+  /* Confetti pieces — fixed positions so no Math.random() / hydration mismatch */
+  const confetti = useMemo(() => [
+    { id:0,  color:"#EC210F", cx:"-88px",  cy:"-72px",  cr:"134deg",  left:"38%", top:"38%", w:9,  h:7,  r:"3px", delay:"0.00s" },
+    { id:1,  color:"#f97316", cx:"112px",  cy:"-58px",  cr:"-94deg",  left:"54%", top:"34%", w:7,  h:10, r:"50%", delay:"0.07s" },
+    { id:2,  color:"#eab308", cx:"-62px",  cy:"-90px",  cr:"210deg",  left:"44%", top:"42%", w:8,  h:6,  r:"2px", delay:"0.14s" },
+    { id:3,  color:"#22c55e", cx:"98px",   cy:"-65px",  cr:"-180deg", left:"60%", top:"36%", w:6,  h:9,  r:"50%", delay:"0.05s" },
+    { id:4,  color:"#3b82f6", cx:"-110px", cy:"-48px",  cr:"168deg",  left:"36%", top:"32%", w:10, h:6,  r:"2px", delay:"0.10s" },
+    { id:5,  color:"#8b5cf6", cx:"74px",   cy:"-82px",  cr:"-126deg", left:"52%", top:"40%", w:7,  h:7,  r:"50%", delay:"0.18s" },
+    { id:6,  color:"#ec4899", cx:"-76px",  cy:"-74px",  cr:"144deg",  left:"46%", top:"44%", w:8,  h:5,  r:"3px", delay:"0.03s" },
+    { id:7,  color:"#fbbf24", cx:"104px",  cy:"-54px",  cr:"-108deg", left:"56%", top:"30%", w:6,  h:8,  r:"2px", delay:"0.12s" },
+    { id:8,  color:"#f43f5e", cx:"-92px",  cy:"-68px",  cr:"190deg",  left:"42%", top:"46%", w:9,  h:6,  r:"50%", delay:"0.20s" },
+    { id:9,  color:"#06b6d4", cx:"88px",   cy:"-78px",  cr:"-152deg", left:"58%", top:"38%", w:7,  h:9,  r:"3px", delay:"0.08s" },
+    { id:10, color:"#EC210F", cx:"-68px",  cy:"-86px",  cr:"112deg",  left:"48%", top:"32%", w:5,  h:8,  r:"2px", delay:"0.16s" },
+    { id:11, color:"#f97316", cx:"82px",   cy:"-60px",  cr:"-78deg",  left:"40%", top:"48%", w:8,  h:5,  r:"50%", delay:"0.04s" },
+  ], []);
+
+  const stars = [
+    { cls:"cta-star-1", top:"15%", left:"20%",  right:"auto", bottom:"auto", size:15, color:"#f59e0b" },
+    { cls:"cta-star-2", top:"20%", left:"auto",  right:"22%",  bottom:"auto", size:13, color:"#ec4899" },
+    { cls:"cta-star-3", top:"auto",left:"28%",  right:"auto", bottom:"22%",  size:12, color:"#3b82f6" },
+    { cls:"cta-star-4", top:"50%", left:"auto",  right:"11%",  bottom:"auto", size:11, color:"#22c55e" },
+  ];
+
   return (
-    <section className="relative overflow-hidden py-2"
-      style={{ background: "linear-gradient(145deg,#1a0505 0%,#2d0808 35%,#1f0a0a 65%,#180606 100%)" }}>
+    <section ref={sectionRef} className="relative overflow-hidden"
+      style={{ background:"linear-gradient(155deg,#FFF9F0 0%,#FFF0E4 40%,#FFE8D8 70%,#FFF4F0 100%)" }}>
 
-      {/* Sparkle field */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <SparkleField count={30} colors={["#fbbf24", "#ef4444", "#ffffff", "#f59e0b"]} />
+      {/* Polka-dot pattern */}
+      <div aria-hidden className="absolute inset-0 pointer-events-none" style={{
+        backgroundImage:"radial-gradient(circle,rgba(236,33,15,.055) 1.5px,transparent 1.5px)",
+        backgroundSize:"26px 26px",
+      }} />
+
+      {/* Drifting colour blobs — red / blue / green ~8% opacity */}
+      <div aria-hidden className="cta-blob-a absolute pointer-events-none" style={{
+        top:"-10%", right:"-6%", width:440, height:440,
+        background:"radial-gradient(circle,rgba(236,33,15,.09) 0%,transparent 65%)",
+        filter:"blur(52px)",
+      }} />
+      <div aria-hidden className="cta-blob-b absolute pointer-events-none" style={{
+        bottom:"-8%", left:"-8%", width:380, height:380,
+        background:"radial-gradient(circle,rgba(79,140,255,.08) 0%,transparent 65%)",
+        filter:"blur(46px)",
+      }} />
+      <div aria-hidden className="cta-blob-c absolute pointer-events-none hidden sm:block" style={{
+        top:"35%", left:"8%", width:300, height:300,
+        background:"radial-gradient(circle,rgba(34,197,94,.07) 0%,transparent 65%)",
+        filter:"blur(40px)",
+      }} />
+
+      {/* Soft rainbow arc behind the heading area */}
+      <div aria-hidden className="absolute pointer-events-none" style={{
+        top:"4%", left:"50%", transform:"translateX(-50%)",
+        width:720, height:360, borderRadius:"50%",
+        background:"conic-gradient(from 180deg at 50% 100%,#f43f5e,#f97316,#eab308,#22c55e,#3b82f6,#8b5cf6,#ec4899,#f43f5e)",
+        opacity:0.07, filter:"blur(24px)",
+      }} />
+
+      {/* Balloon 1 — red, upper-left */}
+      <div aria-hidden className="cta-balloon-a absolute pointer-events-none" style={{ left:"5%", top:"10%", zIndex:1 }}>
+        <div style={{ width:38, height:46, borderRadius:"50% 50% 50% 50%/55% 55% 45% 45%",
+          background:"linear-gradient(135deg,#ff8080,#EC210F)",
+          boxShadow:"inset -5px -6px 12px rgba(0,0,0,.15),inset 4px 4px 8px rgba(255,255,255,.28)" }} />
+        <div style={{ width:1, height:38, background:"rgba(100,80,80,.30)", margin:"0 auto" }} />
       </div>
 
-      {/* Morphing blob */}
-      <div className="d-morph absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] pointer-events-none"
-        style={{ background: "radial-gradient(circle, rgba(220,38,38,0.15) 0%, transparent 65%)", filter: "blur(40px)" }} />
+      {/* Balloon 2 — blue, upper-right */}
+      <div aria-hidden className="cta-balloon-b absolute pointer-events-none" style={{ right:"7%", top:"6%", zIndex:1 }}>
+        <div style={{ width:44, height:52, borderRadius:"50% 50% 50% 50%/55% 55% 45% 45%",
+          background:"linear-gradient(135deg,#93c5fd,#2563eb)",
+          boxShadow:"inset -5px -6px 12px rgba(0,0,0,.12),inset 4px 4px 8px rgba(255,255,255,.32)" }} />
+        <div style={{ width:1, height:42, background:"rgba(80,80,120,.25)", margin:"0 auto" }} />
+      </div>
 
-      {/* Ambient orbs */}
-      <Orb cls="d-float-a d-pulse w-[380px] h-[380px] -top-24 -right-16 opacity-50"
-        style={{ background: "radial-gradient(circle,rgba(251,191,36,0.26) 0%,transparent 60%)", filter: "blur(40px)" }} />
-      <Orb cls="d-float-b w-72 h-72 -bottom-20 -left-16 opacity-40"
-        style={{ background: "radial-gradient(circle,rgba(251,191,36,0.18) 0%,transparent 60%)", filter: "blur(32px)" }} />
-      <div className="d-spin absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full border border-white/5 pointer-events-none" />
+      {/* Balloon 3 — yellow, lower-right (hidden on mobile) */}
+      <div aria-hidden className="cta-balloon-c absolute pointer-events-none hidden sm:block" style={{ right:"17%", bottom:"16%", zIndex:1 }}>
+        <div style={{ width:30, height:36, borderRadius:"50% 50% 50% 50%/55% 55% 45% 45%",
+          background:"linear-gradient(135deg,#fde68a,#f59e0b)",
+          boxShadow:"inset -4px -5px 8px rgba(0,0,0,.10),inset 3px 3px 6px rgba(255,255,255,.32)" }} />
+        <div style={{ width:1, height:28, background:"rgba(120,100,40,.22)", margin:"0 auto" }} />
+      </div>
 
-      <StarDot cls="d-tw1 text-yellow-300/65 top-[20%] left-[20%] w-4 h-4" />
-      <StarDot cls="d-tw2 text-yellow-200/55 top-[30%] right-[18%] w-3 h-3" />
-      <StarDot cls="d-tw3 text-white/40 bottom-[26%] left-[35%] w-3 h-3" />
-
-      <div className="du-fade relative z-10 py-20 md:py-28 max-w-3xl mx-auto px-5 sm:px-6 text-center">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/12 border border-white/20 text-xs font-semibold text-white/90 mb-7 backdrop-blur-sm">
-          <Sparkles className="w-3 h-3 text-yellow-300" />
-          Free Campus Visits Available
+      {/* Twinkling stars */}
+      {stars.map((s, i) => (
+        <div key={i} aria-hidden
+          className={`cta-star-blink ${s.cls} absolute pointer-events-none`}
+          style={{ top:s.top, left:s.left, right:s.right, bottom:s.bottom, zIndex:1 }}>
+          <Sparkles style={{ width:s.size, height:s.size, color:s.color }} />
         </div>
-        <h2 className="section-title mb-5"
-          style={{ fontSize: "clamp(1.65rem,3.8vw,2.7rem)", lineHeight: 1.14, color:"white" }}>
-          Ready to begin your child's<br className="hidden sm:block" /> learning journey?
+      ))}
+
+      {/* Soft cloud (hidden on mobile to reduce clutter) */}
+      <div aria-hidden className="cta-cloud-drift absolute pointer-events-none hidden sm:block"
+        style={{ top:"15%", right:"29%", fontSize:28, lineHeight:1, opacity:.32, zIndex:1 }}>
+        ☁️
+      </div>
+
+      {/* Confetti burst — rendered on scroll-in, CSS animates out after ~1.4s */}
+      {entered && !prefersReduced && confetti.map(p => (
+        <div key={p.id} aria-hidden className="cta-confetti-burst"
+          style={{
+            "--cx": p.cx, "--cy": p.cy, "--cr": p.cr,
+            left: p.left, top: p.top,
+            width: p.w, height: p.h,
+            borderRadius: p.r,
+            background: p.color,
+            animationDelay: p.delay,
+            zIndex: 1,
+          } as React.CSSProperties} />
+      ))}
+
+      {/* ── Content ─────────────────────────────────────────────────────────── */}
+      <div className={`relative z-10 max-w-3xl mx-auto px-5 sm:px-6 text-center py-20 sm:py-28${entered ? " cta-vis" : ""}`}>
+
+        {/* Chip */}
+        <div className="cta-e0" style={{ marginBottom:26 }}>
+          <span style={{
+            display:"inline-flex", alignItems:"center", gap:7,
+            padding:"8px 20px", borderRadius:999,
+            background:"rgba(255,255,255,.82)", backdropFilter:"blur(10px)",
+            WebkitBackdropFilter:"blur(10px)",
+            border:"1.5px solid rgba(255,255,255,.9)",
+            boxShadow:"0 2px 14px rgba(236,33,15,.10),0 1px 4px rgba(0,0,0,.04)",
+            fontSize:"0.79rem", fontWeight:700, color:"#1a1220", letterSpacing:"0.01em",
+          }}>
+            <Sparkles style={{ width:12, height:12, color:"#EC210F", flexShrink:0 }} />
+            ✨ Free Campus Visits Available
+          </span>
+        </div>
+
+        {/* Heading */}
+        <h2 className="cta-e1 section-title" style={{
+          fontSize:"clamp(1.8rem,4.2vw,2.85rem)", lineHeight:1.12,
+          color:"#1a1220", fontWeight:800, letterSpacing:"-0.025em", marginBottom:16,
+        }}>
+          Ready to begin your child's<br className="hidden sm:block" />{" "}
+          <span style={{
+            background:"linear-gradient(90deg,#f97316 0%,#EC210F 100%)",
+            WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent", backgroundClip:"text",
+          }}>
+            learning journey?
+          </span>
         </h2>
-        <p className="text-white/70 mb-11 max-w-lg mx-auto leading-[1.72] text-[16px]">
-          Join 1,00,000+ young learners who began their early learning journey with Rainbow Preschool. Schedule a free campus visit today.
+
+        {/* Subtitle */}
+        <p className="cta-e2" style={{
+          fontSize:16, lineHeight:1.72, color:"#6B6380",
+          maxWidth:490, margin:"0 auto 44px",
+        }}>
+          Join 1,00,000+ young learners who began their early learning journey with
+          Rainbow Preschool. Schedule a free campus visit today.
         </p>
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
-          <MagButton href="/contact"
-            className="inline-flex items-center justify-center gap-2 rounded-full px-10 font-semibold bg-white text-red-700 hover:bg-white/94 transition-all duration-200 active:scale-95 group"
-            style={{ height: 58, boxShadow: "0 8px 32px rgba(0,0,0,0.24),0 2px 8px rgba(0,0,0,0.14),inset 0 1px 0 rgba(255,255,255,.8)" }}>
+
+        {/* Buttons */}
+        <div className="cta-e3 cta-btn-row">
+          {/* Primary — solid red */}
+          <a href="/contact" className="cta-btn-red">
             Request a Callback
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </MagButton>
-          <a href="https://wa.me/918291568972?text=Hi%2C%20I%20would%20like%20to%20know%20more%20about%20Rainbow%20Preschool"
-            target="_blank" rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 rounded-full px-7 font-semibold text-white border border-white/22 bg-white/12 backdrop-blur-sm hover:bg-white/22 transition-all duration-200 hover:-translate-y-1 active:scale-95"
-            style={{ height: 58 }}>
-            <SiWhatsapp className="w-4 h-4" /> WhatsApp
+            <ArrowRight style={{ width:16, height:16, flexShrink:0 }} />
           </a>
-          <a href="tel:+918291568972"
-            className="inline-flex items-center justify-center gap-2 rounded-full px-7 font-semibold text-white border border-white/22 bg-white/12 backdrop-blur-sm hover:bg-white/22 transition-all duration-200 hover:-translate-y-1 active:scale-95"
-            style={{ height: 58 }}>
-            <Phone className="w-4 h-4" /> Call Now
+          {/* WhatsApp — green */}
+          <a href="https://wa.me/918291568972?text=Hi%2C%20I%20would%20like%20to%20know%20more%20about%20Rainbow%20Preschool"
+            target="_blank" rel="noopener noreferrer" className="cta-btn-wa">
+            <SiWhatsapp style={{ width:16, height:16, flexShrink:0 }} />
+            WhatsApp
+          </a>
+          {/* Call Now — outline */}
+          <a href="tel:+918291568972" className="cta-btn-call">
+            <Phone style={{ width:16, height:16, flexShrink:0 }} />
+            Call Now
           </a>
         </div>
       </div>
+
+      {/* Shimmering rainbow strip — bottom edge */}
+      <div aria-hidden className="cta-rainbow-strip" />
     </section>
   );
 }
