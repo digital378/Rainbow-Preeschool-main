@@ -3054,7 +3054,7 @@ export default function Dummy() {
       <Hero3D />
 
       {/* 2 — Quick navigation links */}
-      <QuickNavSection />
+      <RainbowShelfSection />
 
       {/* 3 — Quick callback strip */}
       <CallbackSection />
