@@ -391,6 +391,65 @@ const STYLES = `
     .pd-blob-1,.pd-blob-2,.pd-blob-3 { animation:none !important; }
     .pd-doodle-1,.pd-doodle-2,.pd-doodle-3,.pd-doodle-4,.pd-doodle-5 { animation:none !important; }
   }
+
+  /* ══ Why Choose Us — spotlight + 3D tilt + icon bob (Change: immersive 3D) ══ */
+  @keyframes wcu-icon-bob-0 { 0%,100%{transform:translateZ(32px) translateY(0)}   50%{transform:translateZ(32px) translateY(-5px)} }
+  @keyframes wcu-icon-bob-1 { 0%,100%{transform:translateZ(32px) translateY(-2px)} 50%{transform:translateZ(32px) translateY(-7px)} }
+  @keyframes wcu-icon-bob-2 { 0%,100%{transform:translateZ(32px) translateY(-1px)} 50%{transform:translateZ(32px) translateY(-6px)} }
+  @keyframes wcu-icon-bob-3 { 0%,100%{transform:translateZ(32px) translateY(-3px)} 50%{transform:translateZ(32px) translateY(-8px)} }
+  @keyframes wcu-icon-bob-4 { 0%,100%{transform:translateZ(32px) translateY(0)}   50%{transform:translateZ(32px) translateY(-5px)} }
+  @keyframes wcu-icon-bob-5 { 0%,100%{transform:translateZ(32px) translateY(-1px)} 50%{transform:translateZ(32px) translateY(-7px)} }
+  @keyframes wcu-hero-shine {
+    0%,74%   { background-position:-220% center; opacity:0; }
+    78%      { opacity:1; }
+    94%,100% { background-position:320% center; opacity:0; }
+  }
+  .wcu-tile {
+    position:relative; transform-style:preserve-3d;
+    transition:transform 0.18s cubic-bezier(.22,1,.36,1), box-shadow 0.28s ease;
+    will-change:transform;
+  }
+  .wcu-spotlight {
+    position:absolute; inset:0; border-radius:inherit; pointer-events:none; z-index:1;
+    background:radial-gradient(180px circle at var(--mx,50%) var(--my,50%), var(--spotlight-color,transparent), transparent 70%);
+    opacity:var(--spotlight-opacity,0);
+    transition:opacity 0.35s ease;
+  }
+  .wcu-icon-3d {
+    display:flex; align-items:center; justify-content:center;
+    transform:translateZ(32px);
+    filter:drop-shadow(0 6px 14px var(--icon-shadow,rgba(0,0,0,.22)));
+    transition:transform 0.32s cubic-bezier(.34,1.56,.64,1), filter 0.28s;
+  }
+  .wcu-icon-bob-0 { animation:wcu-icon-bob-0 4.0s ease-in-out 0.0s infinite; }
+  .wcu-icon-bob-1 { animation:wcu-icon-bob-1 4.4s ease-in-out 0.5s infinite; }
+  .wcu-icon-bob-2 { animation:wcu-icon-bob-2 3.8s ease-in-out 1.0s infinite; }
+  .wcu-icon-bob-3 { animation:wcu-icon-bob-3 4.2s ease-in-out 0.3s infinite; }
+  .wcu-icon-bob-4 { animation:wcu-icon-bob-4 4.6s ease-in-out 0.8s infinite; }
+  .wcu-icon-bob-5 { animation:wcu-icon-bob-5 4.1s ease-in-out 1.3s infinite; }
+  .wcu-tile:hover .wcu-icon-3d {
+    animation:none !important;
+    transform:translateZ(52px) translateY(-4px) rotate(8deg) !important;
+    filter:drop-shadow(0 12px 22px var(--icon-shadow,rgba(0,0,0,.3))) !important;
+  }
+  .wcu-hero-shine {
+    position:absolute; inset:0; border-radius:inherit; pointer-events:none; z-index:2;
+    background:linear-gradient(118deg,transparent 20%,rgba(255,255,255,.55) 50%,transparent 80%);
+    background-size:300% 100%;
+    animation:wcu-hero-shine 6s ease-in-out infinite;
+    mix-blend-mode:screen;
+  }
+  .wcu-tile:focus-visible { outline:3px solid #EC210F; outline-offset:3px; }
+  .wcu-doodles { pointer-events:none; }
+  @media (max-width:1023px) { .wcu-doodles { display:none; } }
+  @media (prefers-reduced-motion:reduce) {
+    .wcu-tile { transition:none !important; transform:none !important; }
+    .wcu-icon-3d { transform:none !important; }
+    .wcu-icon-bob-0,.wcu-icon-bob-1,.wcu-icon-bob-2,.wcu-icon-bob-3,.wcu-icon-bob-4,.wcu-icon-bob-5 { animation:none !important; }
+    .wcu-tile:hover .wcu-icon-3d { transform:none !important; animation:none !important; }
+    .wcu-hero-shine { animation:none !important; opacity:0 !important; }
+    .wcu-spotlight  { display:none !important; }
+  }
 `;
 
 /* ═══════════════════════════════════════════════════════════════════════════════
@@ -2173,24 +2232,284 @@ function ProgrammesSection() {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════════
-   SECTION: WHY CHOOSE US — Magnified Bento
-   Replicates 0xUrvish's Magnified Bento (id:10470) pattern
+   SECTION: WHY CHOOSE US — 3D SVG Icons (inline, gradient+shadow layered)
 ═══════════════════════════════════════════════════════════════════════════════ */
+
+/** Safety & CCTV — red shield with checkmark */
+function ShieldIcon3D() {
+  return (
+    <svg width="80" height="80" viewBox="0 0 80 80" fill="none" aria-hidden>
+      <defs>
+        <linearGradient id="wcu-sh-g" x1="25%" y1="10%" x2="75%" y2="90%">
+          <stop offset="0%" stopColor="#FF5252"/><stop offset="100%" stopColor="#B71C1C"/>
+        </linearGradient>
+        <filter id="wcu-sh-f"><feDropShadow dx="0" dy="5" stdDeviation="7" floodColor="#C81E0C" floodOpacity="0.42"/></filter>
+      </defs>
+      <ellipse cx="40" cy="75" rx="20" ry="4" fill="#B71C1C" opacity="0.15"/>
+      <path d="M40 9 L63 20 L63 42 Q63 61 40 72 Q17 61 17 42 L17 20 Z" fill="url(#wcu-sh-g)" filter="url(#wcu-sh-f)"/>
+      <path d="M40 13 L59 23" stroke="rgba(255,255,255,.55)" strokeWidth="3" strokeLinecap="round"/>
+      <path d="M29 41 L37 50 L53 31" stroke="white" strokeWidth="4.5" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+    </svg>
+  );
+}
+
+/** Certified Teachers — blue medal with star */
+function MedalIcon3D() {
+  return (
+    <svg width="80" height="80" viewBox="0 0 80 80" fill="none" aria-hidden>
+      <defs>
+        <radialGradient id="wcu-med-g" cx="38%" cy="32%" r="68%">
+          <stop offset="0%" stopColor="#60A5FA"/><stop offset="100%" stopColor="#1D4ED8"/>
+        </radialGradient>
+        <linearGradient id="wcu-med-r" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="#2563EB"/><stop offset="100%" stopColor="#1E3A8A"/>
+        </linearGradient>
+        <filter id="wcu-med-f"><feDropShadow dx="0" dy="5" stdDeviation="7" floodColor="#1D4ED8" floodOpacity="0.42"/></filter>
+      </defs>
+      <path d="M32 44 L26 68 L34 62 L40 68 L40 44" fill="url(#wcu-med-r)" opacity="0.9"/>
+      <path d="M48 44 L54 68 L46 62 L40 68 L40 44" fill="url(#wcu-med-r)" opacity="0.9"/>
+      <ellipse cx="40" cy="48" rx="18" ry="4" fill="#1D4ED8" opacity="0.18"/>
+      <circle cx="40" cy="30" r="20" fill="url(#wcu-med-g)" filter="url(#wcu-med-f)"/>
+      <path d="M40 19 L42.4 26.2 L50 26.2 L43.8 30.8 L46.2 38 L40 33.4 L33.8 38 L36.2 30.8 L30 26.2 L37.6 26.2 Z" fill="white" opacity="0.95"/>
+      <path d="M30 23 Q38 18 44 20" stroke="rgba(255,255,255,.55)" strokeWidth="2.5" strokeLinecap="round" fill="none"/>
+    </svg>
+  );
+}
+
+/** Hygiene First — green water drop with sparkle */
+function DropIcon3D() {
+  return (
+    <svg width="80" height="80" viewBox="0 0 80 80" fill="none" aria-hidden>
+      <defs>
+        <radialGradient id="wcu-dr-g" cx="40%" cy="28%" r="65%">
+          <stop offset="0%" stopColor="#6EE7B7"/><stop offset="100%" stopColor="#059669"/>
+        </radialGradient>
+        <filter id="wcu-dr-f"><feDropShadow dx="0" dy="5" stdDeviation="7" floodColor="#059669" floodOpacity="0.4"/></filter>
+      </defs>
+      <ellipse cx="40" cy="75" rx="18" ry="4" fill="#059669" opacity="0.14"/>
+      <path d="M40 10 Q58 32 58 50 Q58 66 40 70 Q22 66 22 50 Q22 32 40 10 Z" fill="url(#wcu-dr-g)" filter="url(#wcu-dr-f)"/>
+      <path d="M40 35 L41.2 39 L45 39 L42 41.5 L43.2 45.5 L40 43 L36.8 45.5 L38 41.5 L35 39 L38.8 39 Z" fill="white" opacity="0.82"/>
+      <path d="M32 30 Q36 22 38 18" stroke="rgba(255,255,255,.55)" strokeWidth="3.5" strokeLinecap="round" fill="none"/>
+    </svg>
+  );
+}
+
+/** 30:2 Student-Teacher — purple two silhouettes */
+function PeopleIcon3D() {
+  return (
+    <svg width="80" height="80" viewBox="0 0 80 80" fill="none" aria-hidden>
+      <defs>
+        <radialGradient id="wcu-pe-g1" cx="38%" cy="32%" r="65%">
+          <stop offset="0%" stopColor="#C4B5FD"/><stop offset="100%" stopColor="#6D28D9"/>
+        </radialGradient>
+        <radialGradient id="wcu-pe-g2" cx="38%" cy="32%" r="65%">
+          <stop offset="0%" stopColor="#DDD6FE"/><stop offset="100%" stopColor="#7C3AED"/>
+        </radialGradient>
+        <filter id="wcu-pe-f"><feDropShadow dx="0" dy="4" stdDeviation="6" floodColor="#6D28D9" floodOpacity="0.38"/></filter>
+      </defs>
+      <ellipse cx="40" cy="76" rx="26" ry="4" fill="#6D28D9" opacity="0.14"/>
+      <g filter="url(#wcu-pe-f)" opacity="0.82">
+        <circle cx="51" cy="24" r="12" fill="url(#wcu-pe-g2)"/>
+        <path d="M33 72 Q33 52 51 52 Q69 52 69 72 Z" fill="url(#wcu-pe-g2)"/>
+      </g>
+      <g filter="url(#wcu-pe-f)">
+        <circle cx="30" cy="26" r="13" fill="url(#wcu-pe-g1)"/>
+        <path d="M10 72 Q10 50 30 50 Q50 50 50 72 Z" fill="url(#wcu-pe-g1)"/>
+      </g>
+      <path d="M24 20 Q28 15 33 17" stroke="rgba(255,255,255,.58)" strokeWidth="2.5" strokeLinecap="round" fill="none"/>
+    </svg>
+  );
+}
+
+/** GPS Transport — amber bus with red location pin */
+function BusIcon3D() {
+  return (
+    <svg width="80" height="80" viewBox="0 0 80 80" fill="none" aria-hidden>
+      <defs>
+        <linearGradient id="wcu-bus-g" x1="20%" y1="10%" x2="80%" y2="90%">
+          <stop offset="0%" stopColor="#FCD34D"/><stop offset="100%" stopColor="#EA580C"/>
+        </linearGradient>
+        <filter id="wcu-bus-f"><feDropShadow dx="0" dy="5" stdDeviation="7" floodColor="#EA580C" floodOpacity="0.42"/></filter>
+      </defs>
+      <ellipse cx="40" cy="74" rx="26" ry="5" fill="#EA580C" opacity="0.16"/>
+      <rect x="11" y="20" width="58" height="38" rx="8" fill="url(#wcu-bus-g)" filter="url(#wcu-bus-f)"/>
+      <rect x="46" y="26" width="18" height="13" rx="3" fill="rgba(255,255,255,.6)"/>
+      <rect x="15" y="26" width="12" height="9" rx="2.5" fill="rgba(255,255,255,.55)"/>
+      <rect x="30" y="26" width="12" height="9" rx="2.5" fill="rgba(255,255,255,.55)"/>
+      <rect x="15" y="39" width="26" height="1.5" fill="rgba(255,255,255,.3)"/>
+      <circle cx="24" cy="62" r="8" fill="#1C1917"/>
+      <circle cx="56" cy="62" r="8" fill="#1C1917"/>
+      <circle cx="24" cy="62" r="4" fill="#6B7280"/>
+      <circle cx="56" cy="62" r="4" fill="#6B7280"/>
+      <circle cx="62" cy="13" r="8" fill="#EC210F"/>
+      <path d="M62 21 L59 15 L65 15 Z" fill="#EC210F"/>
+      <circle cx="62" cy="13" r="3.5" fill="white"/>
+    </svg>
+  );
+}
+
+/** Play-Based Learning — teal stacked building blocks */
+function BlocksIcon3D() {
+  return (
+    <svg width="80" height="80" viewBox="0 0 80 80" fill="none" aria-hidden>
+      <defs>
+        <linearGradient id="wcu-bl-g1" x1="20%" y1="10%" x2="80%" y2="90%">
+          <stop offset="0%" stopColor="#5EEAD4"/><stop offset="100%" stopColor="#0F766E"/>
+        </linearGradient>
+        <linearGradient id="wcu-bl-g2" x1="20%" y1="10%" x2="80%" y2="90%">
+          <stop offset="0%" stopColor="#A78BFA"/><stop offset="100%" stopColor="#6D28D9"/>
+        </linearGradient>
+        <linearGradient id="wcu-bl-g3" x1="20%" y1="10%" x2="80%" y2="90%">
+          <stop offset="0%" stopColor="#FCD34D"/><stop offset="100%" stopColor="#D97706"/>
+        </linearGradient>
+        <filter id="wcu-bl-f"><feDropShadow dx="0" dy="5" stdDeviation="7" floodColor="#0F766E" floodOpacity="0.42"/></filter>
+      </defs>
+      <ellipse cx="40" cy="76" rx="24" ry="4" fill="#0F766E" opacity="0.15"/>
+      <rect x="10" y="50" width="28" height="24" rx="5" fill="url(#wcu-bl-g3)" filter="url(#wcu-bl-f)"/>
+      <rect x="42" y="44" width="28" height="30" rx="5" fill="url(#wcu-bl-g2)" filter="url(#wcu-bl-f)"/>
+      <rect x="22" y="14" width="36" height="32" rx="6" fill="url(#wcu-bl-g1)" filter="url(#wcu-bl-f)"/>
+      <path d="M26 20 Q36 16 48 18" stroke="rgba(255,255,255,.52)" strokeWidth="2.5" strokeLinecap="round" fill="none"/>
+      <path d="M14 55 L22 52" stroke="rgba(255,255,255,.38)" strokeWidth="2" strokeLinecap="round"/>
+      <path d="M46 49 L54 46" stroke="rgba(255,255,255,.38)" strokeWidth="2" strokeLinecap="round"/>
+    </svg>
+  );
+}
+
+const WCU_ICONS = [ShieldIcon3D, MedalIcon3D, DropIcon3D, PeopleIcon3D, BusIcon3D, BlocksIcon3D];
+
+const wcuContainer = { hidden: {}, visible: { transition: { staggerChildren: 0.08 } } };
+const wcuItem = {
+  hidden:   { opacity: 0, y: 32, rotateX: 8 },
+  visible:  { opacity: 1, y: 0, rotateX: 0, transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] as number[] } },
+};
+
+interface WcuTileProps {
+  feature: typeof features[number];
+  idx: number;
+  isHero?: boolean;
+  className?: string;
+}
+function WcuTile({ feature, idx, isHero, className }: WcuTileProps) {
+  const tileRef = useRef<HTMLDivElement>(null);
+  const noMotion = useReducedMotion();
+  const Icon3D = WCU_ICONS[idx];
+
+  const onMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (noMotion || !tileRef.current) return;
+    const r = tileRef.current.getBoundingClientRect();
+    const x = e.clientX - r.left;
+    const y = e.clientY - r.top;
+    tileRef.current.style.setProperty("--mx", `${x}px`);
+    tileRef.current.style.setProperty("--my", `${y}px`);
+    tileRef.current.style.setProperty("--spotlight-opacity", "1");
+    const rx = ((y - r.height / 2) / (r.height / 2)) * -8;
+    const ry = ((x - r.width / 2) / (r.width / 2)) * 8;
+    tileRef.current.style.transform = `perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-6px)`;
+    tileRef.current.style.boxShadow = `0 28px 64px rgba(0,0,0,.11),0 8px 20px ${feature.accent}33`;
+  };
+  const onLeave = () => {
+    if (!tileRef.current) return;
+    tileRef.current.style.setProperty("--spotlight-opacity", "0");
+    tileRef.current.style.transform = "";
+    tileRef.current.style.boxShadow = "";
+  };
+
+  return (
+    <motion.div variants={wcuItem} style={{ transformStyle: "preserve-3d" }}>
+      <div
+        ref={tileRef}
+        className={cn("wcu-tile rounded-2xl border overflow-hidden", `bg-gradient-to-br ${feature.bg}`, feature.border, className)}
+        style={{
+          "--spotlight-color": feature.accent + "2d",
+          "--icon-shadow": feature.accent + "55",
+          boxShadow: "0 4px 24px rgba(0,0,0,.07)",
+          minHeight: isHero ? undefined : 160,
+        } as React.CSSProperties}
+        onPointerMove={onMove}
+        onPointerLeave={onLeave}
+        tabIndex={0}
+      >
+        {/* Cursor spotlight */}
+        <div className="wcu-spotlight" aria-hidden />
+        {/* Hero: slow diagonal shine sweep */}
+        {isHero && <div className="wcu-hero-shine" aria-hidden />}
+
+        <div className={cn("relative z-10 flex flex-col h-full", isHero ? "p-8 md:p-10" : "p-6")}>
+          {/* 3D icon — floats above tile surface via translateZ in CSS */}
+          <div
+            className={cn("wcu-icon-3d", `wcu-icon-bob-${idx}`)}
+            style={{ width: isHero ? 96 : 80, height: isHero ? 96 : 80, marginBottom: isHero ? 28 : 18 }}
+          >
+            <Icon3D />
+          </div>
+
+          <div>
+            <h3 className={cn("font-heading font-bold text-foreground",
+                isHero ? "text-2xl md:text-[1.75rem] mb-4" : "text-[15px] mb-2")}
+              style={{ letterSpacing: isHero ? "-0.025em" : "-0.01em" }}>
+              {feature.title}
+            </h3>
+            <p className={cn("text-muted-foreground leading-relaxed",
+                isHero ? "text-[16px] leading-[1.72] max-w-md" : "text-sm")}>
+              {feature.description}
+            </p>
+          </div>
+
+          {feature.highlight && (
+            <div className="mt-auto pt-6 border-t border-red-200/55">
+              <p className="text-sm font-semibold text-red-600">{feature.highlight}</p>
+            </div>
+          )}
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
 function WhyChooseSection() {
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [heroF, ...restF] = features;
 
   return (
     <section className="relative py-20 md:py-28 overflow-hidden"
-      style={{ background: "linear-gradient(170deg,#f9fafb 0%,#f3f4f6 60%,#f9fafb 100%)" }}>
-      <Orb cls="d-float-a d-pulse w-72 h-72 top-[4%] right-[3%] opacity-70"
-        style={{ background: "radial-gradient(circle,rgba(239,68,68,0.12) 0%,transparent 60%)", filter: "blur(30px)" }} />
-      <Orb cls="d-float-c w-56 h-56 bottom-[10%] left-[4%] opacity-60"
-        style={{ background: "radial-gradient(circle,rgba(59,130,246,0.10) 0%,transparent 60%)", filter: "blur(24px)" }} />
+      style={{
+        backgroundImage: [
+          "radial-gradient(circle,rgba(33,27,46,.038) 1px,transparent 1px)",
+          "linear-gradient(170deg,#f9fafb 0%,#f3f4f6 60%,#f9fafb 100%)",
+        ].join(","),
+        backgroundSize: "24px 24px, 100% 100%",
+      }}>
+
+      {/* ── Soft drifting colour blobs behind the grid ── */}
+      <div aria-hidden className="absolute inset-0 overflow-hidden pointer-events-none" style={{ zIndex: 0 }}>
+        <div className="pd-blob-1 absolute rounded-full"
+          style={{ width: 500, height: 500, top: "10%", left: "-9%",
+            background: "radial-gradient(circle,rgba(236,33,15,.07) 0%,transparent 70%)", filter: "blur(50px)" }}/>
+        <div className="pd-blob-2 absolute rounded-full"
+          style={{ width: 440, height: 440, top: "28%", right: "-7%",
+            background: "radial-gradient(circle,rgba(59,130,246,.07) 0%,transparent 70%)", filter: "blur(46px)" }}/>
+        <div className="pd-blob-3 absolute rounded-full"
+          style={{ width: 360, height: 360, bottom: "6%", left: "38%",
+            background: "radial-gradient(circle,rgba(16,185,129,.07) 0%,transparent 70%)", filter: "blur(42px)" }}/>
+      </div>
+
+      {/* ── Floating margin doodles (desktop only) ── */}
+      <div aria-hidden className="wcu-doodles absolute inset-0 overflow-hidden" style={{ zIndex: 1 }}>
+        <div className="pd-doodle-1 absolute" style={{ top: "9%", left: "1%" }}>
+          <StarDoodle color="rgba(236,33,15,.32)" />
+        </div>
+        <div className="pd-doodle-2 absolute" style={{ top: "7%", right: "1.5%" }}>
+          <CloudDoodle color="rgba(59,130,246,.22)" />
+        </div>
+        <div className="pd-doodle-4 absolute" style={{ bottom: "14%", right: "2%" }}>
+          <SquiggleDoodle color="rgba(16,185,129,.32)" />
+        </div>
+      </div>
+
       <StarDot cls="d-tw1 text-red-300/55 top-[8%] left-[30%] w-4 h-4" />
       <StarDot cls="d-tw3 text-amber-300/45 bottom-[15%] right-[26%] w-3 h-3" />
 
-      <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
+      <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
+        {/* Section header */}
         <div className="du-fade max-w-2xl mb-14">
           <p className="section-eyebrow">Why Choose Us</p>
           <h2 className="text-headline mb-3">A Trusted Early Learning Journey Since 2007</h2>
@@ -2199,86 +2518,30 @@ function WhyChooseSection() {
           </p>
         </div>
 
-        {/* Magnified bento — cards scale up on neighbor hover */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
-          {/* Hero safety tile */}
-          <TiltCard
-            className={cn(
-              "du-fade md:col-span-2 md:row-span-2 rounded-2xl border overflow-hidden min-h-[300px] md:min-h-[480px]",
-              `bg-gradient-to-br ${heroF.bg}`, heroF.border
-            )}
-            style={{
-              boxShadow: "0 4px 24px rgba(0,0,0,0.07)",
-              transition: "transform 0.4s cubic-bezier(.22,1,.36,1), opacity 0.4s",
-              opacity: hoveredIndex !== null && hoveredIndex !== 0 ? 0.7 : 1,
-            }}
-            intensity={5}
-          >
-            <div className="p-8 md:p-10 flex flex-col h-full relative"
-              onMouseEnter={() => setHoveredIndex(0)}
-              onMouseLeave={() => setHoveredIndex(null)}>
-              <div className="absolute top-0 right-0 w-52 h-52 rounded-full pointer-events-none"
-                style={{ background: "radial-gradient(circle at 70% 25%,rgba(239,68,68,0.14) 0%,transparent 65%)" }} />
-              <div className="d-spin absolute -bottom-20 -right-20 w-64 h-64 rounded-full border-2 border-dashed border-red-200/30 pointer-events-none" />
-              <div>
-                <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-7 bg-red-100"
-                  style={{ boxShadow: "0 4px 18px rgba(239,68,68,0.28)" }}>
-                  <heroF.Icon className="w-8 h-8 text-red-600" />
-                </div>
-                <h3 className="font-heading font-bold text-2xl md:text-[1.75rem] text-foreground mb-4"
-                  style={{ letterSpacing: "-0.025em" }}>
-                  {heroF.title}
-                </h3>
-                <p className="text-muted-foreground leading-[1.72] text-[16px] max-w-md">{heroF.description}</p>
-              </div>
-              {heroF.highlight && (
-                <div className="mt-auto pt-6 border-t border-red-200/55">
-                  <p className="text-sm font-semibold text-red-600">{heroF.highlight}</p>
-                </div>
-              )}
-            </div>
-          </TiltCard>
+        {/* ── Bento grid — perspective on container so all tiles share the same 3D space ── */}
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6"
+          style={{ perspective: "1000px" }}
+          variants={wcuContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.08 }}
+        >
+          {/* Hero tile — Safety & CCTV (spans 2 cols × 2 rows on desktop) */}
+          <WcuTile
+            feature={heroF} idx={0} isHero
+            className="md:col-span-2 md:row-span-2 min-h-[300px] md:min-h-[480px]"
+          />
 
-          {/* Small bento tiles */}
-          {restF.map((f, i) => (
-            <TiltCard
-              key={i}
-              className={cn(
-                "du-fade relative rounded-2xl border overflow-hidden",
-                `bg-gradient-to-br ${f.bg}`, f.border
-              )}
-              style={{
-                boxShadow: "0 2px 12px rgba(0,0,0,0.05)",
-                transitionDelay: `${i * 60}ms`,
-                transition: "transform 0.4s cubic-bezier(.22,1,.36,1), opacity 0.4s",
-                opacity: hoveredIndex !== null && hoveredIndex !== i + 1 ? 0.7 : 1,
-                minHeight: 140,
-              }}
-              intensity={7}
-            >
-              <div className="p-6 flex flex-col gap-4 h-full"
-                onMouseEnter={() => setHoveredIndex(i + 1)}
-                onMouseLeave={() => setHoveredIndex(null)}>
-                <div className="absolute top-0 right-0 w-24 h-24 rounded-full opacity-0 pointer-events-none"
-                  style={{
-                    background: `radial-gradient(circle at 80% 20%,${f.accent}20,transparent)`,
-                    opacity: hoveredIndex === i + 1 ? 1 : 0,
-                    transition: "opacity 0.3s",
-                  }} />
-                <div className={cn("w-11 h-11 flex items-center justify-center rounded-xl flex-shrink-0", f.iconBg)}>
-                  <f.Icon className={cn("w-5 h-5", f.iconColor)} />
-                </div>
-                <div>
-                  <h3 className="font-heading font-semibold text-[15px] text-foreground mb-2"
-                    style={{ letterSpacing: "-0.01em" }}>
-                    {f.title}
-                  </h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{f.description}</p>
-                </div>
-              </div>
-            </TiltCard>
-          ))}
-        </div>
+          {/* Right column */}
+          <WcuTile feature={restF[0]} idx={1} />
+          <WcuTile feature={restF[1]} idx={2} />
+
+          {/* Bottom row */}
+          <WcuTile feature={restF[2]} idx={3} />
+          <WcuTile feature={restF[3]} idx={4} />
+          <WcuTile feature={restF[4]} idx={5} />
+        </motion.div>
       </div>
     </section>
   );

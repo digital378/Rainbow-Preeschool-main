@@ -1,0 +1,64 @@
+# REVAMP — "Why Choose Us" bento ("A Trusted Early Learning Journey Since 2007")
+# /dummy PAGE ONLY. Keep layout + content; make it immersive 3D. If shared, edit a
+# /dummy-only copy. Don't touch nav, hero, programmes, About, footer. Revert spread.
+
+## USE THESE 21st.dev COMPONENTS (install via CLI; needs API_KEY_21ST in the Repl)
+# Base interaction — spotlight glow that follows the cursor:
+npx shadcn@latest add "https://21st.dev/r/berkcangumusisik/spotlight-card"
+# Optional real-3D tilt reference:
+npx shadcn@latest add "https://21st.dev/r/ruixen.ui/animated-feature-spotlight3d"
+# If the key isn't set, open those URLs and copy the source into components/ui/.
+
+## STEP 1 — Real 3D ICONS (this is what kills the "flat" look; no credits needed)
+- Download a matching set of 3D-rendered icons from a FREE CC0 pack — 3dicons.co
+  (or thiings.co) — and self-host in /public/icons3d/. Map per tile:
+    Safety & CCTV        → 3D shield (or CCTV camera)
+    Certified Teachers   → 3D medal / graduation cap
+    Hygiene First        → 3D water-drop / sparkle / soap
+    30:2 Student-Teacher → 3D people group
+    GPS Transport        → 3D bus
+    Play-Based Learning  → 3D building blocks / puzzle
+- Render each as an <img> ~72–96px, floating ABOVE the tile surface on a raised
+  layer (translateZ) with a soft blurred contact shadow on the card beneath it.
+  This alone reads as 3D even in a still screenshot.
+
+## STEP 2 — Keep the existing bento layout + exact copy
+- Hero card (Safety & CCTV, large, left) + right column (Certified Teachers,
+  Hygiene First) + bottom row (30:2 ratio, GPS Transport, Play-Based Learning).
+- Do NOT reword any title, description, or the "CCTV Monitored · Verified Pickup ·
+  100% Female Staff" line. These are verified RPS claims — keep them; invent nothing.
+- Per-tile theme colour (reuse existing tints): Safety red #EC210F (brand lead),
+  Certified Teachers blue, Hygiene green, Ratio purple, GPS amber, Play teal.
+  (Non-red = suggested supporting spectrum, pending brand approval.)
+
+## STEP 3 — IMMERSIVE INTERACTION (per tile; transform/opacity only, 60fps)
+Wrap all in: if (!matchMedia('(prefers-reduced-motion:reduce)').matches){…}
+1. SPOTLIGHT: on pointermove, update CSS vars --mx/--my to cursor position; paint a
+   radial-gradient glow in the tile's theme colour (~18% opacity, ~180px) that
+   follows the cursor. Fades out on pointerleave.
+2. 3D TILT: perspective:1000px on the grid; each tile transform-style:preserve-3d;
+   rotateX/rotateY ±8° driven by pointer position (spring/damped return). The 3D
+   icon sits on a higher translateZ so it pops toward the viewer as the tile tilts.
+3. ICON LIFE: icon bobs slowly at idle (translateY ±5px, 4s sine, phase-varied per
+   tile); on hover it does a small pop + 8° spin, and the tile lifts translateY(-6px)
+   with a theme-tinted shadow bloom.
+4. ENTRANCE: tiles fade + rise + slight 3D flip on scroll-in, staggered 80ms
+   (hero card first). Use the section container as the ScrollTrigger scope.
+
+## STEP 4 — VISIBLE-AT-REST creativity (so a screenshot looks special too)
+- Behind the grid: 2–3 soft drifting colour blobs (red/blue/green ~8%) + a faint
+  dotted pattern on the light background.
+- A few small floating doodles (star, cloud, squiggle) in the margins, gently
+  bobbing. pointer-events:none, aria-hidden.
+- Hero card gets a slow diagonal shine sweep every ~6s.
+
+## ACCESSIBILITY / PERF
+- Tiles stay semantic; keyboard focus rings visible; spotlight/tilt decorative,
+  never block clicks. Icons lazy-loaded, ~2x display res, compressed.
+- prefers-reduced-motion: no tilt/spotlight/bob/flip — static tiles with 3D icons,
+  theme accent, soft shadow, simple hover only.
+
+## DELIVER
+Show /dummy "Why Choose Us" at desktop 1440 + mobile 390, plus a screen RECORDING
+moving the cursor across tiles so the spotlight + 3D tilt + icon pop are visible.
+Confirm no other section/page changed and all copy is unchanged.
