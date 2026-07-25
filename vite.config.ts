@@ -20,10 +20,16 @@ export default defineConfig({
       : []),
   ],
   resolve: {
+    // Force a single copy of React across ALL packages (R3F, postprocessing, etc.)
+    // Without this, pre-bundled deps get their own React copy → "Invalid hook call".
+    dedupe: ["react", "react-dom", "react-dom/client"],
     alias: {
       "@": path.resolve(import.meta.dirname, "client", "src"),
       "@shared": path.resolve(import.meta.dirname, "shared"),
       "@assets": path.resolve(import.meta.dirname, "attached_assets"),
+      // Belt-and-suspenders: alias + dedupe together cover both transforms and pre-bundling
+      "react":     path.resolve(import.meta.dirname, "node_modules/react"),
+      "react-dom": path.resolve(import.meta.dirname, "node_modules/react-dom"),
     },
   },
   root: path.resolve(import.meta.dirname, "client"),

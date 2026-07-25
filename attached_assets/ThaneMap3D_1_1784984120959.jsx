@@ -19,6 +19,7 @@
 import React, { useRef, useState, useEffect, Suspense } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls, ContactShadows, RoundedBox, Html, Line, Float, Environment, SoftShadows } from "@react-three/drei";
+import { EffectComposer, Bloom, DepthOfField, Vignette } from "@react-three/postprocessing";
 
 export const CENTRES = [
   { id: "manpada",       name: "Aggarwal (Manpada)", pos: [-2.6, 0, -0.8] },
@@ -150,6 +151,11 @@ function Scene({ activeId, hoveredId, setActive, setHovered, reduced }) {
         minPolarAngle={0.5} maxPolarAngle={1.2}
         autoRotate={!reduced && !activeId && !hoveredId} autoRotateSpeed={0.45} enableDamping dampingFactor={0.08} />
 
+      <EffectComposer disableNormalPass>
+        <Bloom luminanceThreshold={0.85} mipmapBlur intensity={0.9} radius={0.7} />
+        <DepthOfField focusDistance={0.02} focalLength={0.04} bokehScale={3.5} />
+        <Vignette eskil={false} offset={0.2} darkness={0.55} />
+      </EffectComposer>
     </>
   );
 }

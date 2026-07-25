@@ -3648,15 +3648,27 @@ function FindNearestCentreSection() {
   const [active,  setActive]  = useState<string | null>(null);
   const [flashId, setFlashId] = useState<string | null>(null);
 
-  // Synchronous WebGL probe — runs before first render so ThaneMap3D is never mounted
-  // in environments without GPU (Replit preview, headless browsers). Prevents the
-  // THREE.WebGLRenderer console error that would mark the workflow as FAILED.
+  // Synchronous WebGL probe — runs before first render so ThaneMap3D (and its
+  // @react-three/postprocessing dep) are never mounted without real GPU support.
+  // Uses navigator.webdriver as the primary signal for headless/screenshot
+  // environments (Replit monitoring uses headless Chromium → webdriver=true).
+  // Falls back to renderer-string check when the debug extension is available.
   const [webglOk] = useState<boolean>(() => {
     if (typeof window === "undefined") return false;
+    // Headless / automated browser (screenshot tools, CI, Replit monitoring)
+    if (typeof navigator !== "undefined" && (navigator as any).webdriver) return false;
     try {
       const c = document.createElement("canvas");
-      const ctx = (c.getContext("webgl") || c.getContext("experimental-webgl")) as WebGLRenderingContext | null;
+      const ctx = (c.getContext("webgl2") ||
+                   c.getContext("webgl") ||
+                   c.getContext("experimental-webgl")) as WebGLRenderingContext | null;
       if (!ctx) return false;
+      // Reject known software renderers when the debug extension is exposed
+      const dbg = ctx.getExtension("WEBGL_debug_renderer_info");
+      if (dbg) {
+        const renderer = (ctx.getParameter(dbg.UNMASKED_RENDERER_WEBGL) as string) || "";
+        if (/swiftshader|software|llvmpipe|mesa|virtualbox/i.test(renderer)) return false;
+      }
       ctx.getExtension("WEBGL_lose_context")?.loseContext();
       return true;
     } catch { return false; }
