@@ -1,0 +1,36 @@
+# MERGE the two duplicate locator sections into ONE. /dummy PAGE ONLY.
+# The page currently has TWO near-identical centre sections. Keep the best of each:
+#   • KEEP the "Find Your Nearest Centre" section (its eyebrow/heading/subtitle, the
+#     search box, and the CINEMATIC floating-island 3D map with glowing pins).
+#   • Its card set is WRONG — replace it with the branch-profile cards described below.
+#   • DELETE the entire "Our Preschool Centres Across Thane" section (its FLAT isometric
+#     map AND that heading), but first move its cards over (below).
+# Preserve all centre data exactly (names, addresses, phones, links). Invent nothing.
+# Don't touch any other section on the page.
+
+## STEP 1 — In "Find Your Nearest Centre", replace the card set
+- REMOVE the current cards there (the ones with area-tag pills + "Centre Details" +
+  "Directions" only).
+- REPLACE them with the BRANCH-PROFILE cards from the other section — the version that
+  has: centre name, full address, the phone number(s), a red "View <Centre> Centre"
+  button, a green WhatsApp button, and a Directions button. Keep those cards exactly as
+  they look/behave.
+- Keep the SEARCH box and its "Showing X of 6 centres" count; it now filters THESE
+  branch-profile cards (match on name + address). Keep the type-ahead suggestions.
+
+## STEP 2 — Keep the cinematic 3D map (the one already in this section)
+- Keep the good floating-island 3D map with the glowing red pins (NOT the flat
+  isometric one). Keep its pin→Google-Business-Profile click and the map↔card
+  highlight sync — sync it to the branch-profile cards now in this section.
+
+## STEP 3 — Delete the duplicate section
+- DELETE the whole "Our Preschool Centres Across Thane" section, including its flat
+  isometric map and its (now-moved) cards and its heading/eyebrow. There must be only
+  ONE locator section and ONE heading left on the page.
+
+## VERIFY / DELIVER
+Show /dummy at desktop 1440 + mobile 390. Success = exactly ONE locator section:
+"Find Your Nearest Centre" eyebrow/heading + search + the cinematic 3D map + the
+branch-profile cards (phone/WhatsApp/View/Directions). No flat map, no duplicate
+heading, no tag/"Centre Details" cards. All data unchanged; nothing else on the page
+changed.

@@ -23,7 +23,6 @@ import { SiWhatsapp } from "react-icons/si";
 import { motion, useReducedMotion } from "framer-motion";
 import { ProgrammeCard } from "@/components/ui/programme-card";
 import { AwardedBySection } from "@/components/awarded-by-section";
-import { FindNearestCentre } from "@/components/find-nearest-centre";
 import { BranchCard } from "@/components/branch-card";
 import { EEATSignals } from "@/components/eeat-signals";
 import { ErrorBoundary } from "@/components/error-boundary";
@@ -38,7 +37,6 @@ import { PLAYGROUP, NURSERY, KINDERGARTEN } from "@shared/programme-data";
 const MethodologySection = lazy(() => import("@/components/methodology-section").then(m => ({ default: m.MethodologySection })));
 const ClassroomGallery   = lazy(() => import("@/components/classroom-gallery").then(m => ({ default: m.ClassroomGallery })));
 const ContactForm        = lazy(() => import("@/components/contact-form").then(m => ({ default: m.ContactForm })));
-const Interactive3DMap   = lazy(() => import("@/components/interactive-3d-map").then(m => ({ default: m.Interactive3DMap })));
 
 /* ═══════════════════════════════════════════════════════════════════════════════
    SCOPED STYLES
@@ -3968,124 +3966,43 @@ function FindNearestCentreSection() {
             </div>
           </div>
         ) : (
-          /* ── Centre cards grid ─────────────────────────────────────── */
+          /* ── Branch-profile cards grid ─────────────────────────────── */
           <div
             className="loc-grid"
             style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:24, alignItems:"stretch" }}
           >
-            {filtered.map((centre, i) => (
-              <div
-                key={centre.id}
-                ref={el => { cardRefs.current[centre.id] = el; }}
-                className="loc-card"
-                data-testid={`card-nearest-centre-${centre.id}`}
-                onMouseEnter={() => setActive(centre.id)}
-                onFocus={() => setActive(centre.id)}
-                onMouseLeave={() => setActive(prev => prev === centre.id ? null : prev)}
-                style={{
-                  background:"white", borderRadius:18,
-                  boxShadow: flashId === centre.id
-                    ? "0 0 0 3px rgba(236,33,15,0.28), 0 6px 28px rgba(33,27,46,0.13)"
-                    : active === centre.id
-                      ? "0 0 0 2px rgba(236,33,15,0.16), 0 4px 18px rgba(33,27,46,0.10)"
-                      : "0 4px 18px rgba(33,27,46,0.08),0 1px 4px rgba(33,27,46,0.05)",
-                  border: flashId === centre.id
-                    ? "1.5px solid rgba(236,33,15,0.40)"
-                    : active === centre.id
-                      ? "1px solid rgba(236,33,15,0.22)"
-                      : "1px solid rgba(33,27,46,0.06)",
-                  display:"flex", flexDirection:"column", height:"100%",
-                  transition:"box-shadow 0.22s ease, border-color 0.22s ease",
-                  ...cardEntrance(i),
-                }}
-              >
-                {/* Red top accent */}
-                <div aria-hidden style={{ height:3, borderRadius:"18px 18px 0 0", background:"linear-gradient(90deg,#EC210F,#FF6B35)" }} />
-
-                <div style={{ padding:"20px 22px 22px", display:"flex", flexDirection:"column", flex:1 }}>
-                  {/* Name + pin */}
-                  <div style={{ display:"flex", alignItems:"flex-start", gap:10, marginBottom:10 }}>
-                    <span className="loc-pin" aria-hidden style={{
-                      width:34, height:34, borderRadius:9, background:"rgba(236,33,15,0.09)",
-                      display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0,
-                    }}>
-                      <MapPin size={16} style={{ color:"#EC210F" }} />
-                    </span>
-                    <h3 style={{ fontSize:15, fontWeight:700, lineHeight:1.3, color:"#211B2E", paddingTop:3 }}>
-                      {centre.name}
-                    </h3>
-                  </div>
-
-                  {/* Address */}
-                  <p style={{ fontSize:13, color:"#7c7489", lineHeight:1.65, marginBottom:8, paddingLeft:44 }}>
-                    {centre.address}
-                  </p>
-
-                  {/* Near: landmarks */}
-                  {centre.landmarks && centre.landmarks.length > 0 && (
-                    <p style={{ fontSize:12.5, color:"#9ca3af", paddingLeft:44, marginBottom:10, lineHeight:1.6 }}>
-                      <span style={{ fontWeight:600, color:"#7c7489" }}>Near: </span>
-                      {centre.landmarks.join(" · ")}
-                    </p>
-                  )}
-
-                  {/* Area tags — clicking fills the search box */}
-                  {(centre.areasServed ?? []).length > 0 && (
-                    <div style={{ display:"flex", flexWrap:"wrap", gap:5, paddingLeft:44, marginBottom:16 }}>
-                      {(centre.areasServed ?? []).map(tag => (
-                        <button
-                          key={tag}
-                          onClick={() => selectSuggestion(tag)}
-                          className="loc-tag-btn"
-                          style={{
-                            padding:"3px 10px", borderRadius:14, fontSize:11.5, fontWeight:600,
-                            cursor:"pointer", minHeight:26,
-                            border:"1.5px solid #e9e4ff",
-                            background:"rgba(139,92,246,0.06)",
-                            color:"#6d4aff",
-                          }}
-                        >
-                          {tag}
-                        </button>
-                      ))}
-                    </div>
-                  )}
-
-                  {/* CTAs — pinned to bottom */}
-                  <div style={{ marginTop:"auto", display:"flex", flexDirection:"column", gap:10 }}>
-                    <a
-                      href={centre.preschoolLandingUrl}
-                      data-testid={`button-centre-details-${centre.id}`}
-                      style={{
-                        display:"flex", alignItems:"center", justifyContent:"center", gap:6,
-                        height:40, borderRadius:10, background:"#EC210F", color:"white",
-                        textDecoration:"none", fontSize:13.5, fontWeight:700,
-                        boxShadow:"0 3px 12px rgba(236,33,15,0.25)",
-                        transition:"opacity 0.15s",
-                      }}
-                    >
-                      Centre Details
-                      <span className="loc-arrow"><ArrowRight size={14} /></span>
-                    </a>
-                    <a
-                      href={centre.googleMapsDirectionsUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      data-testid={`link-centre-directions-${centre.id}`}
-                      style={{
-                        display:"flex", alignItems:"center", justifyContent:"center", gap:5,
-                        height:36, borderRadius:9, border:"1.5px solid #e5e7eb", background:"white",
-                        color:"#374151", textDecoration:"none", fontSize:13, fontWeight:600,
-                        transition:"border-color 0.15s",
-                      }}
-                    >
-                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-                      Directions
-                    </a>
-                  </div>
+            {filtered.map((centre, i) => {
+              // centre-data uses "manpada"; schema/branches uses "aggarwal"
+              const branchId = centre.id === "manpada" ? "aggarwal" : centre.id;
+              const branch = branches.find(b => b.id === branchId);
+              if (!branch) return null;
+              return (
+                <div
+                  key={centre.id}
+                  ref={el => { cardRefs.current[centre.id] = el; }}
+                  onMouseEnter={() => setActive(centre.id)}
+                  onFocus={() => setActive(centre.id)}
+                  onMouseLeave={() => setActive(prev => prev === centre.id ? null : prev)}
+                  style={{
+                    borderRadius: 18,
+                    outline: flashId === centre.id
+                      ? "3px solid rgba(236,33,15,0.40)"
+                      : active === centre.id
+                        ? "2px solid rgba(236,33,15,0.28)"
+                        : "2px solid transparent",
+                    boxShadow: flashId === centre.id
+                      ? "0 6px 28px rgba(33,27,46,0.13)"
+                      : active === centre.id
+                        ? "0 4px 18px rgba(33,27,46,0.10)"
+                        : undefined,
+                    transition: "outline 0.22s ease, box-shadow 0.22s ease",
+                    ...cardEntrance(i),
+                  }}
+                >
+                  <BranchCard branch={branch} />
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
 
@@ -4117,32 +4034,6 @@ function InterlinksBar() {
 /* ═══════════════════════════════════════════════════════════════════════════════
    SECTION: CENTRES (3D MAP + BRANCH CARDS)
 ═══════════════════════════════════════════════════════════════════════════════ */
-function CentresSection() {
-  return (
-    <section id="centres" className="py-16 md:py-20 lg:py-24">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">Our Locations</p>
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Preschool Centres Across Thane</h2>
-          <p className="text-muted-foreground text-lg">
-            With six branches spread across Thane West, a Rainbow Preschool centre is always close to home.
-            Visit the centre nearest to you and experience our warm, welcoming classrooms firsthand.
-          </p>
-        </div>
-        <ErrorBoundary name="dummy-3d-map" silent>
-          <Suspense fallback={null}>
-            <Interactive3DMap />
-          </Suspense>
-        </ErrorBoundary>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
-          {branches.map((branch) => (
-            <BranchCard key={branch.id} branch={branch} />
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
 
 /* ═══════════════════════════════════════════════════════════════════════════════
    SECTION: FAQS
@@ -4287,10 +4178,7 @@ export default function Dummy() {
       {/* 13 — Helpful guides interlinks */}
       <InterlinksBar />
 
-      {/* 14 — Centres (3D map + branch cards) */}
-      <CentresSection />
-
-      {/* 15 — FAQs */}
+      {/* 14 — FAQs */}
       <FAQSection />
 
       {/* 16 — E-E-A-T signals */}
