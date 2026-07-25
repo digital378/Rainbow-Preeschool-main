@@ -6,7 +6,7 @@
  * Hero: Three.js scene + GSAP + Lenis (self-contained in components/hero3d/).
  * Remaining sections: CSS 3D (TiltCard, ContainerScroll, Bento, etc.)
  */
-import { useState, useEffect, useRef, lazy, Suspense } from "react";
+import { useState, useEffect, useRef, useMemo, lazy, Suspense } from "react";
 import { SEO } from "@/components/seo";
 import { cn } from "@/lib/utils";
 import Hero3D from "@/components/hero3d";
@@ -72,6 +72,18 @@ const STYLES = `
   .ctc-btn-submit:active { transform:scale(0.98) !important; }
   .ctc-contact-btn:hover { transform:translateY(-2px) !important; }
   @media (max-width:768px) { .ctc-grid { grid-template-columns:1fr !important; gap:32px !important; } .ctc-form-grid { grid-template-columns:1fr !important; } .ctc-branch-col { grid-column:span 1 !important; } }
+  @keyframes loc-pin-bounce { 0%,100%{transform:translateY(0)} 35%{transform:translateY(-6px)} 65%{transform:translateY(-2px)} }
+  @keyframes loc-card-rise { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:translateY(0)} }
+  .loc-card { transition:transform 0.22s ease,box-shadow 0.22s ease; }
+  .loc-card:hover { transform:translateY(-6px) !important; box-shadow:0 22px 52px rgba(33,27,46,0.14),0 4px 14px rgba(33,27,46,0.08) !important; }
+  .loc-card:hover .loc-pin { animation:loc-pin-bounce 0.48s ease; }
+  .loc-card:hover .loc-arrow { transform:translateX(5px); }
+  .loc-arrow { display:inline-flex; transition:transform 0.18s ease; }
+  .loc-tag-btn { transition:background 0.15s,color 0.15s,border-color 0.15s; }
+  .loc-tag-btn:not(.loc-tag-active):hover { background:rgba(236,33,15,0.07) !important; border-color:rgba(236,33,15,0.35) !important; color:#EC210F !important; }
+  .loc-tag-active { background:#EC210F !important; color:white !important; border-color:#EC210F !important; }
+  @media (max-width:768px) { .loc-search-wrap { position:sticky; top:0; z-index:20; background:rgba(248,244,239,0.97); backdrop-filter:blur(8px); padding:12px 0 14px; margin:0 -4px 4px; padding-left:4px; padding-right:4px; } .loc-grid { grid-template-columns:1fr !important; } }
+  @media (prefers-reduced-motion:reduce) { .loc-card,.loc-arrow { transition:none !important; } .loc-card:hover { transform:none !important; } .loc-card:hover .loc-pin { animation:none !important; } .loc-card:hover .loc-arrow { transform:none !important; } }
   .le-chip    { transition:box-shadow 0.22s ease,transform 0.22s ease; }
   .le-chip:hover { transform:translateY(-4px) scale(1.02) !important; box-shadow:0 18px 44px rgba(33,27,46,.18) !important; }
   .le-chip:hover .le-icon-box { transform:scale(1.14) rotate(-6deg) !important; }
@@ -3601,20 +3613,343 @@ function ContactSection() {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════════
-   SECTION: FIND NEAREST CENTRE
+   SECTION: FIND NEAREST CENTRE — filterable, polished
 ═══════════════════════════════════════════════════════════════════════════════ */
 function FindNearestCentreSection() {
+  const prefersReduced = useReducedMotion();
+  const sectionRef     = useRef<HTMLElement>(null);
+  const [query,        setQuery]     = useState("");
+  const [activeTag,    setActiveTag] = useState<string | null>(null);
+  const [visible,      setVisible]   = useState(false);
+  const [focusSearch,  setFocusSearch] = useState(false);
+
+  /* Scroll-in trigger */
+  useEffect(() => {
+    if (prefersReduced) { setVisible(true); return; }
+    const el = sectionRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) { setVisible(true); obs.disconnect(); }
+    }, { threshold: 0.05 });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [prefersReduced]);
+
+  /* All unique area tags across every centre */
+  const allTags = useMemo(() => {
+    const seen = new Set<string>();
+    centres.forEach(c => (c.areasServed ?? []).forEach(a => seen.add(a)));
+    return Array.from(seen).sort();
+  }, []);
+
+  /* Filter: query + active tag */
+  const filtered = useMemo(() => {
+    const q = query.toLowerCase().trim();
+    return centres.filter(c => {
+      const haystack = [
+        c.name, c.localityName, c.address,
+        ...(c.landmarks   ?? []),
+        ...(c.areasServed ?? []),
+      ].map(s => s.toLowerCase());
+      const matchQ   = !q         || haystack.some(h => h.includes(q));
+      const matchTag = !activeTag || (c.areasServed ?? []).includes(activeTag);
+      return matchQ && matchTag;
+    });
+  }, [query, activeTag]);
+
+  const hasFilter  = !!query.trim() || !!activeTag;
+  const noResults  = filtered.length === 0;
+  const activeLabel = activeTag ?? query.trim();
+
+  const handleTagClick = (tag: string) => {
+    setActiveTag(prev => (prev === tag ? null : tag));
+    setQuery("");
+  };
+  const handleClear = () => { setQuery(""); setActiveTag(null); };
+
+  /* Shared entrance style for header elements */
+  const entranceSt = (delay = 0): React.CSSProperties => ({
+    opacity: visible ? 1 : 0,
+    transform: visible ? "none" : "translateY(20px)",
+    transition: prefersReduced ? "none" : `opacity 0.6s ease ${delay}s, transform 0.6s ease ${delay}s`,
+  });
+
+  /* Card entrance style — delay baked into the shorthand to avoid React's animation/animationDelay conflict warning */
+  const cardEntrance = (i: number): React.CSSProperties =>
+    prefersReduced ? {} : {
+      animation: visible ? `loc-card-rise 0.55s ease ${0.05 + i * 0.08}s both` : "none",
+    };
+
   return (
-    <section aria-label="Find your nearest Rainbow Preschool centre" className="py-12 md:py-16 bg-primary/5">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-8">
-          <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">Our Locations</p>
-          <h2 className="text-2xl md:text-3xl font-bold mb-2">Find Your Nearest Centre</h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Type your area or neighbourhood below — we'll show you which Rainbow Preschool centre is closest to you.
+    <section
+      ref={sectionRef}
+      id="find-nearest-centre"
+      aria-label="Find your nearest Rainbow Preschool centre"
+      style={{ padding:"72px 0 80px", background:"linear-gradient(160deg,#f9f5f0 0%,#fafafa 100%)", position:"relative" }}
+    >
+      <div style={{ maxWidth:1216, margin:"0 auto", padding:"0 24px" }}>
+
+        {/* ── Header ─────────────────────────────────────────────────── */}
+        <div style={{ textAlign:"center", marginBottom:32 }}>
+          <p className="section-eyebrow" style={entranceSt(0)}>Our Locations</p>
+          <h2 className="text-headline" style={{ ...entranceSt(0.08), marginBottom:8 }}>
+            Find Your Nearest Centre
+          </h2>
+          <p style={{ ...entranceSt(0.16), fontSize:16, color:"#55506A", maxWidth:540, margin:"0 auto" }}>
+            Type your area or neighbourhood below — we'll show you which Rainbow Preschool is closest to you.
           </p>
         </div>
-        <FindNearestCentre />
+
+        {/* ── Search box (sticky on mobile) ─────────────────────────── */}
+        <div className="loc-search-wrap" style={entranceSt(0.22)}>
+          <label htmlFor="loc-search" style={{ position:"absolute", width:1, height:1, overflow:"hidden", clip:"rect(0,0,0,0)", whiteSpace:"nowrap" }}>
+            Search by area, neighbourhood or landmark
+          </label>
+          <div style={{ position:"relative", maxWidth:560, margin:"0 auto" }}>
+            <span aria-hidden style={{
+              position:"absolute", left:16, top:"50%", transform:"translateY(-50%)",
+              color: focusSearch ? "#EC210F" : "#9ca3af", transition:"color 0.17s", pointerEvents:"none",
+              display:"flex",
+            }}>
+              {/* magnifier */}
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+              </svg>
+            </span>
+            <input
+              id="loc-search"
+              type="search"
+              value={query}
+              onChange={e => { setQuery(e.target.value); setActiveTag(null); }}
+              onFocus={() => setFocusSearch(true)}
+              onBlur={() => setFocusSearch(false)}
+              placeholder="Type your area… e.g. Manpada, Naupada, Kolshet"
+              aria-label="Search by area"
+              autoComplete="off"
+              style={{
+                width:"100%", height:52, borderRadius:14, border:"none", outline:"none",
+                padding:"0 20px 0 46px", fontSize:15, color:"#211B2E", background:"white",
+                boxShadow: focusSearch
+                  ? "0 0 0 2.5px #EC210F, 0 6px 24px rgba(236,33,15,0.10), 0 2px 8px rgba(33,27,46,0.06)"
+                  : "0 2px 12px rgba(33,27,46,0.08), 0 1px 3px rgba(33,27,46,0.04)",
+                transition:"box-shadow 0.18s ease",
+                boxSizing:"border-box",
+              }}
+            />
+            {query && (
+              <button
+                onClick={() => setQuery("")}
+                aria-label="Clear search"
+                style={{
+                  position:"absolute", right:14, top:"50%", transform:"translateY(-50%)",
+                  background:"none", border:"none", cursor:"pointer", padding:4,
+                  color:"#9ca3af", display:"flex", borderRadius:6,
+                }}
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+              </button>
+            )}
+          </div>
+
+          {/* Live count — aria-live so it's announced on change */}
+          <p
+            aria-live="polite"
+            aria-atomic="true"
+            style={{ textAlign:"center", marginTop:10, fontSize:13, color:"#7c7489", minHeight:20 }}
+          >
+            {noResults
+              ? null
+              : <>Showing <strong style={{ color:"#211B2E" }}>{filtered.length}</strong> of {centres.length} centres.</>
+            }
+          </p>
+        </div>
+
+        {/* ── Tag bar ────────────────────────────────────────────────── */}
+        <div
+          role="group"
+          aria-label="Filter by area"
+          style={{ display:"flex", flexWrap:"wrap", gap:8, justifyContent:"center", marginBottom:32, ...entranceSt(0.28) }}
+        >
+          {allTags.map(tag => (
+            <button
+              key={tag}
+              onClick={() => handleTagClick(tag)}
+              aria-pressed={activeTag === tag}
+              className={`loc-tag-btn${activeTag === tag ? " loc-tag-active" : ""}`}
+              style={{
+                padding:"6px 14px", borderRadius:20, fontSize:12.5, fontWeight:600, cursor:"pointer",
+                border:`1.5px solid ${activeTag === tag ? "#EC210F" : "#e5e7eb"}`,
+                background: activeTag === tag ? "#EC210F" : "white",
+                color: activeTag === tag ? "white" : "#55506A",
+                minHeight:36,
+              }}
+            >
+              {tag}
+            </button>
+          ))}
+          {hasFilter && (
+            <button
+              onClick={handleClear}
+              aria-label="Clear all filters"
+              style={{
+                padding:"6px 14px", borderRadius:20, fontSize:12.5, fontWeight:600, cursor:"pointer",
+                border:"1.5px dashed #d1d5db", background:"transparent", color:"#9ca3af",
+                minHeight:36, display:"flex", alignItems:"center", gap:5,
+              }}
+            >
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+              Clear
+            </button>
+          )}
+        </div>
+
+        {/* ── No-results state ───────────────────────────────────────── */}
+        {noResults ? (
+          <div
+            aria-live="polite"
+            style={{ textAlign:"center", padding:"48px 24px", background:"white", borderRadius:20,
+              boxShadow:"0 4px 16px rgba(33,27,46,0.07)", maxWidth:520, margin:"0 auto" }}
+          >
+            <div style={{ fontSize:40, marginBottom:12 }}>🔍</div>
+            <h3 style={{ fontSize:18, fontWeight:700, marginBottom:8, color:"#211B2E" }}>
+              No centres found for "{activeLabel}"
+            </h3>
+            <p style={{ fontSize:14, color:"#7c7489", marginBottom:24, lineHeight:1.65 }}>
+              We're in six areas across Thane West. Try a different neighbourhood, or browse all centres below.
+            </p>
+            <div style={{ display:"flex", gap:10, justifyContent:"center", flexWrap:"wrap" }}>
+              <button
+                onClick={handleClear}
+                style={{
+                  padding:"10px 22px", borderRadius:10, border:"none", cursor:"pointer",
+                  background:"#EC210F", color:"white", fontSize:14, fontWeight:700,
+                  boxShadow:"0 3px 12px rgba(236,33,15,0.30)",
+                }}
+              >
+                Show all centres
+              </button>
+              <a
+                href="#contact"
+                style={{
+                  padding:"10px 22px", borderRadius:10, border:"1.5px solid #e5e7eb",
+                  background:"white", color:"#374151", fontSize:14, fontWeight:600,
+                  textDecoration:"none", display:"inline-flex", alignItems:"center",
+                }}
+              >
+                Can't find your area? Talk to us
+              </a>
+            </div>
+          </div>
+        ) : (
+          /* ── Centre cards grid ─────────────────────────────────────── */
+          <div
+            className="loc-grid"
+            style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:24, alignItems:"stretch" }}
+          >
+            {filtered.map((centre, i) => (
+              <div
+                key={centre.id}
+                className="loc-card"
+                data-testid={`card-nearest-centre-${centre.id}`}
+                style={{
+                  background:"white", borderRadius:18,
+                  boxShadow:"0 4px 18px rgba(33,27,46,0.08),0 1px 4px rgba(33,27,46,0.05)",
+                  border:"1px solid rgba(33,27,46,0.06)",
+                  display:"flex", flexDirection:"column", height:"100%",
+                  ...cardEntrance(i),
+                }}
+              >
+                {/* Red top accent */}
+                <div aria-hidden style={{ height:3, borderRadius:"18px 18px 0 0", background:"linear-gradient(90deg,#EC210F,#FF6B35)" }} />
+
+                <div style={{ padding:"20px 22px 22px", display:"flex", flexDirection:"column", flex:1 }}>
+                  {/* Name + pin */}
+                  <div style={{ display:"flex", alignItems:"flex-start", gap:10, marginBottom:10 }}>
+                    <span className="loc-pin" aria-hidden style={{
+                      width:34, height:34, borderRadius:9, background:"rgba(236,33,15,0.09)",
+                      display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0,
+                    }}>
+                      <MapPin size={16} style={{ color:"#EC210F" }} />
+                    </span>
+                    <h3 style={{ fontSize:15, fontWeight:700, lineHeight:1.3, color:"#211B2E", paddingTop:3 }}>
+                      {centre.name}
+                    </h3>
+                  </div>
+
+                  {/* Address */}
+                  <p style={{ fontSize:13, color:"#7c7489", lineHeight:1.65, marginBottom:8, paddingLeft:44 }}>
+                    {centre.address}
+                  </p>
+
+                  {/* Near: landmarks */}
+                  {centre.landmarks && centre.landmarks.length > 0 && (
+                    <p style={{ fontSize:12.5, color:"#9ca3af", paddingLeft:44, marginBottom:10, lineHeight:1.6 }}>
+                      <span style={{ fontWeight:600, color:"#7c7489" }}>Near: </span>
+                      {centre.landmarks.join(" · ")}
+                    </p>
+                  )}
+
+                  {/* Area tags */}
+                  {(centre.areasServed ?? []).length > 0 && (
+                    <div style={{ display:"flex", flexWrap:"wrap", gap:5, paddingLeft:44, marginBottom:16 }}>
+                      {(centre.areasServed ?? []).map(tag => (
+                        <button
+                          key={tag}
+                          onClick={() => handleTagClick(tag)}
+                          aria-pressed={activeTag === tag}
+                          className={`loc-tag-btn${activeTag === tag ? " loc-tag-active" : ""}`}
+                          style={{
+                            padding:"3px 10px", borderRadius:14, fontSize:11.5, fontWeight:600,
+                            cursor:"pointer", minHeight:26,
+                            border:`1.5px solid ${activeTag === tag ? "#EC210F" : "#e9e4ff"}`,
+                            background: activeTag === tag ? "#EC210F" : "rgba(139,92,246,0.06)",
+                            color: activeTag === tag ? "white" : "#6d4aff",
+                          }}
+                        >
+                          {tag}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* CTAs — pinned to bottom */}
+                  <div style={{ marginTop:"auto", display:"flex", flexDirection:"column", gap:10 }}>
+                    <a
+                      href={centre.preschoolLandingUrl}
+                      data-testid={`button-centre-details-${centre.id}`}
+                      style={{
+                        display:"flex", alignItems:"center", justifyContent:"center", gap:6,
+                        height:40, borderRadius:10, background:"#EC210F", color:"white",
+                        textDecoration:"none", fontSize:13.5, fontWeight:700,
+                        boxShadow:"0 3px 12px rgba(236,33,15,0.25)",
+                        transition:"opacity 0.15s",
+                      }}
+                    >
+                      Centre Details
+                      <span className="loc-arrow"><ArrowRight size={14} /></span>
+                    </a>
+                    <a
+                      href={centre.googleMapsDirectionsUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      data-testid={`link-centre-directions-${centre.id}`}
+                      style={{
+                        display:"flex", alignItems:"center", justifyContent:"center", gap:5,
+                        height:36, borderRadius:9, border:"1.5px solid #e5e7eb", background:"white",
+                        color:"#374151", textDecoration:"none", fontSize:13, fontWeight:600,
+                        transition:"border-color 0.15s",
+                      }}
+                    >
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                      Directions
+                    </a>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
       </div>
     </section>
   );

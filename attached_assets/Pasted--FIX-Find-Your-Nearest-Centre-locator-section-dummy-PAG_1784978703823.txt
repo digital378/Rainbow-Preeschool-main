@@ -1,0 +1,47 @@
+# FIX — "Find Your Nearest Centre" locator section. /dummy PAGE ONLY.
+# Edit ONLY this section (eyebrow "OUR LOCATIONS", heading, subtitle, search box,
+# the centre cards, the guides link line). Don't touch other sections/nav/footer.
+# Preserve ALL centre data exactly — names, addresses, "Near:" lines, area tags,
+# "Centre Details" links, "Directions" links. Invent no centres, addresses, or areas.
+
+## FIX 1 (primary) — make the SEARCH actually filter
+- As the user types in "Type your area…", filter the centre cards in real time
+  (case-insensitive, partial match) against each centre's NAME + address + "Near:"
+  text + its area TAGS. Show matching cards, hide the rest, with a smooth fade/reflow.
+- Clicking an area tag (e.g. "Edenwoods") also filters to centres with that tag, and
+  visibly marks the active tag; provide a "Clear" affordance to reset.
+- Show a small live count: "Showing X of 6 centres."
+- NO-RESULTS state: if nothing matches, show a friendly message —
+  "We couldn't find a centre for '<area>'. Here are all our centres." + a reset,
+  OR a "Can't find your area? Talk to us" link to the callback/contact section.
+  Never leave the user staring at an empty section.
+
+## FIX 2 — card alignment (CTAs must line up across a row)
+- Grid: equal-height cards per row (grid-auto-rows:1fr; align-items:stretch), even gaps.
+- Inside each card use flex-direction:column; height:100%. Push the "Centre Details"
+  button + "Directions" link to the BOTTOM (wrap them and give margin-top:auto) so
+  they align across the row no matter how long the address or how many tags.
+- Consistent internal padding; tags wrap tidily with even spacing.
+
+## FIX 3 — tasteful polish (this is a utility section, keep it clean)
+- Card hover: lift translateY(-6px) + soft shadow bloom; the red location pin does a
+  small bounce; the "Centre Details" arrow slides right. Tags get a subtle hover tint.
+- Entrance: cards fade/rise in with an 80ms stagger on scroll-in.
+- Keep the search box prominent; on focus, red #EC210F border + soft glow.
+
+## MOBILE (≤768px)
+- 1 column; search full-width (optionally sticky at the top of the section while
+  scrolling the list); cards stack; tags wrap; tap targets ≥44px. "Directions" opens
+  maps in a new tab (rel="noopener").
+
+## ACCESSIBILITY / PERF
+- Search input has a real <label>; results count + no-results live in an aria-live
+  region so it's announced. Tags used as filters are real buttons (keyboard-operable).
+- transform/opacity only; prefers-reduced-motion: no hover lift/pin-bounce/entrance —
+  filtering + focus states still work (those are functional, keep them).
+
+## DELIVER
+Show /dummy locator at desktop 1440 + mobile 390 with a short recording of: typing an
+area and the list filtering down, clicking a tag to filter, and the no-results state.
+Confirm every centre's name/address/tags/links are unchanged and nothing outside this
+section changed.
