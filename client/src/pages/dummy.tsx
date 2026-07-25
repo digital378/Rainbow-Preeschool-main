@@ -2790,13 +2790,6 @@ function TestimonialsSection() {
       className="relative py-20 md:py-32 overflow-hidden"
       style={{ background: "linear-gradient(160deg,#fffbf5 0%,#fff9ef 55%,#fefcf5 100%)" }}
     >
-      {/* Large quote watermark — purely decorative, sits in centre behind everything */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden select-none" aria-hidden>
-        <span className="font-serif leading-none text-amber-200/12" style={{ fontSize: "clamp(160px,22vw,320px)" }}>
-          &ldquo;
-        </span>
-      </div>
-
       <div className="relative">
         {Heading}
 
