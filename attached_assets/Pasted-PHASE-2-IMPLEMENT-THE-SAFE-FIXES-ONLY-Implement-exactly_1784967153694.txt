@@ -1,0 +1,110 @@
+PHASE 2 — IMPLEMENT THE SAFE FIXES ONLY
+
+Implement exactly the six tasks below. The anti-fabrication constraint from Phase 1 remains in force: do not add, alter, or remove any factual claim about the school. Those are BLOCKED pending human answers and are explicitly out of scope for this phase.
+
+GLOBAL CONSTRAINTS
+  - No new npm packages. No dependency upgrades. Do not regenerate package-lock.json.
+  - Do not run prettier/eslint across the repo or reformat files you are not editing.
+  - Do not touch: server/static.ts (its cache headers were corrected today and are correct), server/ssr-pages.ts content sections, client/public/llms.txt, client/public/llms-full.txt, client/public/robots.txt, attached_assets/, or any visible React copy.
+  - Do not change the human-facing appearance of the site in any way.
+  - Make each task a separate logical edit so I can review them independently.
+
+──────────────────────────────
+TASK 1 — BOT/HUMAN PARITY SMOKE TEST
+──────────────────────────────
+Problem it prevents: today, a Cloudflare rule cached bot-SSR HTML and served it to real parents for hours, and could equally have served the React shell to Googlebot. It was invisible until manually curl-tested. This test makes that class of failure loud.
+
+Create scripts/check-bot-ssr-parity.ts following the conventions of the existing scripts in scripts/ (the repo already has check-no-person-author.ts wired into "npm run check", and .githooks/pre-commit and .githooks/pre-push exist).
+
+Requirements:
+  - Base URL from process.env.BASE_URL, defaulting to http://localhost:5000
+  - Test these paths: "/", "/playgroup", "/preschool-in-manpada-thane"
+  - Fetch each path twice, with these exact user-agent strings:
+      BOT:   Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)
+      HUMAN: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36
+  - Assertions, each failing with a clear, specific message naming the path and what was expected:
+      1. BOT response contains a non-empty <h1> element.
+      2. BOT response <title> differs from the SPA shell title in client/index.html ("Rainbow Preschool | Playschool, Nursery & Kindergarten").
+      3. BOT response <title> is unique across the three tested paths (no two identical).
+      4. BOT response contains at least one <script type="application/ld+json"> block.
+      5. HUMAN response contains <div id="root">.
+      6. HUMAN response does NOT contain the bot-SSR footer marker (choose a stable string present only in bot-SSR output, e.g. the "Our Network:" block from renderSSRHtml).
+      7. If a cf-cache-status response header is present on any HTML response, it must not equal "HIT".
+  - Exit code 0 on success, 1 on any failure, printing a summary table of pass/fail per assertion.
+  - Use native fetch (Node 20+). No new dependencies.
+
+Wire it in:
+  - Add "check:ssr": "tsx scripts/check-bot-ssr-parity.ts" to package.json scripts.
+  - Append its invocation to .githooks/pre-push WITHOUT removing or reordering anything already there. If the existing hook would make local pushes fail when no dev server is running, make the script skip gracefully (exit 0 with a printed notice) when the base URL is unreachable, so it only hard-fails when a server IS responding.
+
+Acceptance: `npm run check:ssr` passes against a running dev server, and fails if you temporarily comment out the "/" entry in ssr-pages.ts (test this, then restore it).
+
+──────────────────────────────
+TASK 2 — ADD AUDITING CRAWLERS TO THE BOT LIST
+──────────────────────────────
+In server/bot-ssr.ts, add exactly these three strings to the BOT_USER_AGENTS array: "screamingfrog", "sitebulb", "lighthouse".
+
+Rationale to preserve as a code comment above them: SEO auditing tools not on this list receive the React shell and incorrectly report the site as having no content — this exact false alarm occurred in an external audit.
+
+Change nothing else in this file. Do not alter isBot(), renderSSRHtml(), the response headers, the 404 handling, or the existing UA entries.
+
+──────────────────────────────
+TASK 3 — DOCUMENT THE RENDERING ARCHITECTURE
+──────────────────────────────
+In replit.md, add a section titled "Dynamic rendering — read before auditing or changing SEO" covering, in prose:
+  - server/bot-ssr.ts intercepts requests whose user-agent matches BOT_USER_AGENTS and returns fully-rendered HTML built from server/ssr-pages.ts; all other visitors receive the React SPA from client/.
+  - Any SEO tool whose UA is not in that list will report empty/duplicate pages. Crawl with a Googlebot UA instead.
+  - HTML responses must never be cached at the CDN edge: Cloudflare ignores Vary: User-Agent, so a cached bot response can be served to humans and vice versa. On 25 July 2026 a Cloudflare "Cache Everything" page rule with a 2-hour edge TTL caused exactly this in production. HTML is now served with Cache-Control: no-store; static assets keep their 1-year immutable caching.
+  - Cloudflare's "Managed robots.txt" feature must remain OFF, or it overwrites client/public/robots.txt with AI-crawler blocks.
+  - scripts/check-bot-ssr-parity.ts guards these invariants.
+
+Do not restructure or delete existing replit.md content.
+
+──────────────────────────────
+TASK 4 — REMOVE CLIENT-SIDE aggregateRating JSON-LD
+──────────────────────────────
+In client/src/components/eeat-signals.tsx, remove ONLY the injection of aggregateRating structured data (the JSON-LD script this component writes into the document).
+
+Preserve exactly: the visible star/rating display, every prop and its default values, all other behaviour, and every consuming page (playgroup-landing.tsx, nursery-landing.tsx, kindergarten-landing.tsx, play-school-near-me.tsx, preschool-admissions.tsx, the landing template, home.tsx). Do not edit those consumers.
+
+Rationale: self-serving aggregateRating markup on one's own organisation violates Google's structured-data policy. The equivalent markup was already removed from bot-SSR today; this closes the client-side path so it cannot reappear if SSR is ever bypassed. The visible rating text is a separate question pending human verification — leave it alone.
+
+──────────────────────────────
+TASK 5 — NORMALISE PHONE NUMBERS IN SCHEMA
+──────────────────────────────
+In JSON-LD "telephone" fields ONLY (server/ssr-pages.ts LocalBusiness/Preschool nodes and the Organization contactPoint), reformat existing numbers to E.164: +91XXXXXXXXXX, no spaces or hyphens.
+
+Absolute rule: preserve the exact digits present. Reformat only. If a number is ambiguous (for example a landline missing its STD code, or fewer digits than expected), DO NOT guess — leave it unchanged and list it in your report as needing human confirmation.
+
+Do not change any visible phone number displayed to users, and do not change tel: links in the React UI.
+
+──────────────────────────────
+TASK 6 — REMOVE DEAD CODE AND FIX DOC DRIFT
+──────────────────────────────
+Only if Phase 1 confirmed nothing imports them:
+  a. Delete REDIRECT_MAP and getRedirectTarget from shared/seo-config.ts.
+  b. Delete CORE_PAGES, PROGRAMME_PAGES, HIGH_INTENT_PAGES, LOCAL_PRESCHOOL_PAGES and LOCAL_PLAYGROUP_PAGES from shared/seo-config.ts, since shared/sitemap-entries.ts is the single source of truth. If ANY of these is imported anywhere, leave it and report instead.
+  c. Keep PREFERRED_DOMAIN, NOINDEX_SLUGS, shouldNoIndex, LOCATION_LINK_MAP and the freshness re-exports — these are live.
+  d. In docs/seo-topic-url-map.md, correct the file reference from client/src/pages/preschool-readiness-quiz.tsx to the actual filename.
+  e. Move RPI_Pages_Inventory.xlsx and rainbowpreschools-url-audit.xlsx to docs/archive/ and add docs/archive/README.md stating they are historical snapshots superseded by shared/sitemap-entries.ts.
+
+Do NOT add or remove any URL from SITEMAP_ENTRIES in this phase — the Brahmand and Vasant Vihar question is a human decision.
+
+──────────────────────────────
+PHASE 3 — VERIFY AND REPORT
+──────────────────────────────
+Run in order and report the output of each:
+  1. npm run check — four pre-existing TypeScript errors in client/src/components/hero3d/index.tsx are known and acceptable. Report any error beyond those four as a failure and fix it before finishing.
+  2. npm run check:ssr against the running dev server.
+  3. curl with a Googlebot UA against / and /playgroup — confirm unique titles, an <h1>, and JSON-LD present.
+  4. curl with a browser UA against / — confirm <div id="root"> and the React shell.
+  5. grep the built client bundle and the SSR output for "aggregateRating" — expect zero matches.
+
+Final report must include:
+  - The complete diff for every file changed, grouped by task.
+  - Confirmation that no file outside the authorised list was modified — list every changed file explicitly.
+  - Any phone number you declined to reformat and why.
+  - Any Task 6 item you skipped because something imported it.
+  - The BLOCKED list from Phase 1, restated, so I know exactly what still needs human answers.
+
+Suggested commit message: "SEO hardening: bot/human parity test, crawler list, docs, remove client aggregateRating, normalise schema phones, drop dead config"
