@@ -1,4 +1,5 @@
 #!/bin/bash
 set -e
-npm install
+
+npm install --legacy-peer-deps
 npm run db:push
