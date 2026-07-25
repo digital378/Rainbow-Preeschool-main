@@ -1,0 +1,48 @@
+# ADD the 3D "Rainbow Town" animated map to the locator. /dummy PAGE ONLY.
+# It replaces the current 3D map in the single "Find Your Nearest Centre" locator
+# section. Keep the branch-profile cards + search below it. Don't touch other sections.
+
+## INSTALL & PLACE
+1. npm i three @react-three/fiber @react-three/drei @react-three/postprocessing
+2. Add the provided file as components/SchoolTownMap3D.jsx (verbatim).
+3. In the locator section, swap the existing <ThaneMap3D/> (or current map) for:
+      const [active, setActive] = useState(null);
+      <SchoolTownMap3D activeId={active} onActiveChange={setActive} fallback={<YourIllustratedMap/>} />
+   Keep the search box + branch-profile cards (phone/WhatsApp/View/Directions) beneath it.
+
+## WHAT IT DOES (verify these behaviours)
+- A school bus tours the 6 branches ONE BY ONE on the ring road, then loops.
+- At each stop a TEACHER (tall, purple) leads 4 small colourful STUDENTS from the bus
+  to that school's door; they scale down at the door = "entering". Then the bus leaves.
+- Every school shows its BRANCH NAME on a floating card, always readable.
+- The branch the bus is currently visiting is reported via onActiveChange → use it to
+  highlight the matching branch-profile card (red ring) + optionally scroll it into view.
+- Clicking a school building opens that branch's Google Business Profile (see gmb below).
+
+## DATA / BRAND (real info only)
+- Paste each branch's real Google Business Profile link into the CENTRES/BRANCHES `gmb`
+  fields (open the Google listing → Share → Copy link). Don't guess them.
+- Keep branch names exactly. Roof colours are a suggested spectrum; RPS red #EC210F leads
+  (Manpada roof + bus stripe are brand red). Positions are stylised, not GPS-accurate.
+
+## MAKE IT LOOK BETTER (tuning — do these after it renders)
+- If motion feels fast/slow: change DRIVE_DUR and STOP_DUR at the top of the file.
+- If washed out by glow: raise Bloom luminanceThreshold toward 1.0; if dark: lower
+  Vignette darkness to ~0.35 or raise the directionalLight intensity.
+- Camera: tweak <Canvas camera={{ position, fov }}>; a slightly lower fov + higher
+  position reads more "diorama".
+- Optional polish: add a soft drop-shadow on the canvas wrapper so the island floats;
+  add 1–2 low-poly clouds; give roads dashed centre-lines.
+
+## PERFORMANCE / ACCESSIBILITY (already built in — keep)
+- dpr capped [1,2], soft shadows, single bus + 5 reusable people (no per-frame spawning).
+- prefers-reduced-motion: bus parks at branch 1, no driving/kids/among motion.
+- WebGL failure → the `fallback` (your illustrated map) renders instead of a blank canvas.
+- Buildings/labels are the visual layer; the branch-profile CARDS remain the accessible,
+  keyboard-usable way to reach every centre.
+
+## DELIVER
+Show /dummy locator at desktop 1440 + mobile 390 with a screen RECORDING of at least
+one full bus trip: driving to a branch, the teacher + students walking in, and it moving
+on to the next. Confirm branch names are visible, the visited branch highlights its card,
+clicking a school opens its Google profile, and nothing outside this section changed.

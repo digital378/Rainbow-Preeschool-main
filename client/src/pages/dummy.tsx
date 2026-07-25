@@ -26,9 +26,9 @@ import { AwardedBySection } from "@/components/awarded-by-section";
 import { BranchCard } from "@/components/branch-card";
 import { EEATSignals } from "@/components/eeat-signals";
 import { ErrorBoundary } from "@/components/error-boundary";
-// ThaneMap3D uses @react-three/fiber — lazy-loaded so R3F never initialises
+// SchoolTownMap3D uses @react-three/fiber — lazy-loaded so R3F never initialises
 // unless webglOk confirms the browser has GPU support.
-const ThaneMap3D = lazy(() => import("@/components/ThaneMap3D").then(m => ({ default: m.default })));
+const SchoolTownMap3D = lazy(() => import("@/components/SchoolTownMap3D"));
 import { Card, CardContent } from "@/components/ui/card";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { LAST_UPDATED_DISPLAY, LAST_UPDATED_ISO } from "@shared/site-freshness";
@@ -3793,27 +3793,29 @@ function FindNearestCentreSection() {
         </p>
         <div style={{ marginBottom:32, ...entranceSt(0.14) }}>
           {webglOk ? (
-            <ThaneMap3D
-              activeId={active ? toMapId(active) : null}
-              onActiveChange={handleActiveChange}
-              fallback={
-                <div style={{
-                  width:"100%", height:"clamp(360px,52vh,560px)", borderRadius:24,
-                  background:"linear-gradient(135deg,#e8f5e9 0%,#f3e8d8 100%)",
-                  display:"flex", alignItems:"center", justifyContent:"center",
-                }}>
-                  <span style={{ color:"#55506A", fontSize:14 }}>Map unavailable in this browser</span>
-                </div>
-              }
-            />
+            <Suspense fallback={null}>
+              <SchoolTownMap3D
+                activeId={active ? toMapId(active) : null}
+                onActiveChange={handleActiveChange}
+                fallback={
+                  <div style={{
+                    width:"100%", height:"clamp(420px,60vh,640px)", borderRadius:24,
+                    background:"linear-gradient(135deg,#e8f5e9 0%,#fdf3ea 100%)",
+                    display:"flex", alignItems:"center", justifyContent:"center",
+                  }}>
+                    <span style={{ color:"#55506A", fontSize:14 }}>Map unavailable in this browser</span>
+                  </div>
+                }
+              />
+            </Suspense>
           ) : (
             <div style={{
-              width:"100%", height:"clamp(360px,52vh,560px)", borderRadius:24,
-              background:"linear-gradient(135deg,#e8f5e9 0%,#f3e8d8 100%)",
+              width:"100%", height:"clamp(420px,60vh,640px)", borderRadius:24,
+              background:"linear-gradient(135deg,#e8f5e9 0%,#fdf3ea 100%)",
               display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", gap:8,
             }}>
               <span style={{ fontSize:32 }}>🗺️</span>
-              <span style={{ color:"#55506A", fontSize:14 }}>Interactive 3D map — open in your browser</span>
+              <span style={{ color:"#55506A", fontSize:14 }}>Rainbow Town — open in your browser to explore</span>
             </div>
           )}
         </div>

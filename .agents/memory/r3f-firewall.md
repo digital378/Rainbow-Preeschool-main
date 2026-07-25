@@ -95,3 +95,21 @@ R3F v9 requires React ≥19 and crashes with React 18. v8 + drei v9 + postproces
 - `THREE.Clock` → use `performance.now()` directly (deprecated in r185).
 - `PCFSoftShadowMap` → use `PCFShadowMap` (deprecated in r185; warning fires every frame in RAF loop if still set).
 - OrbitControls: import from `three/examples/jsm/controls/OrbitControls.js`.
+
+## PCFSoftShadowMap flood in R3F Canvas (Three.js r185 + R3F v8)
+**Problem:** R3F v8 hardcodes `gl.shadowMap.type = THREE.PCFSoftShadowMap` when `<Canvas shadows>` or `<Canvas shadows={true}>`. Three.js r185 fires the deprecation warning inside `WebGLShadowMap.render()` every time shadows are rendered. `onCreated` that sets `gl.shadowMap.type = THREE.PCFShadowMap` also doesn't fully stop it — R3F's reconciler resets the type on state changes.
+
+**Fix:** Use `shadows={false}` on Canvas to prevent R3F from touching the shadow map, then enable it correctly in `onCreated`:
+```jsx
+<Canvas
+  shadows={false}
+  onCreated={({ gl }) => {
+    gl.shadowMap.enabled = true;
+    gl.shadowMap.type = THREE.PCFShadowMap;  // r185-safe
+  }}
+>
+```
+This pattern is required for any new R3F component in this project (`SchoolTownMap3D`, etc.). Without it, the log monitor fills up with per-render warnings.
+
+## SchoolTownMap3D ID mapping (same as ThaneMap3D)
+`SchoolTownMap3D`'s BRANCHES use id `"anandnagar"` but `@shared/centre-data` uses `"anand-nagar"`. Same `toMapId`/`fromMapId` bridge applies.
