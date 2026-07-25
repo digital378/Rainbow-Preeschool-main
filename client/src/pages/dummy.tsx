@@ -6,7 +6,7 @@
  * Hero: Three.js scene + GSAP + Lenis (self-contained in components/hero3d/).
  * Remaining sections: CSS 3D (TiltCard, ContainerScroll, Bento, etc.)
  */
-import { useState, useEffect, useRef, useMemo, lazy, Suspense } from "react";
+import { useState, useEffect, useRef, useMemo, useCallback, lazy, Suspense } from "react";
 import { SEO } from "@/components/seo";
 import { cn } from "@/lib/utils";
 import Hero3D from "@/components/hero3d";
@@ -57,6 +57,7 @@ const STYLES = `
   @keyframes d-spin    { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
   @keyframes d-twinkle { 0%,100%{opacity:0;transform:scale(.4)} 50%{opacity:1;transform:scale(1)} }
   @keyframes d-bounce  { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+  @keyframes mdot      { 0%,80%,100%{transform:scale(0.5);opacity:.35} 40%{transform:scale(1);opacity:1} }
   @keyframes d-shimmer { 0%{background-position:-200% center} 100%{background-position:200% center} }
   @keyframes d-particle-rise { 0%{transform:translateY(0) translateX(0) scale(1);opacity:.8} 100%{transform:translateY(-80px) translateX(var(--dx,12px)) scale(0);opacity:0} }
   @keyframes d-pop-in  { 0%{transform:scale(0) rotate(-15deg);opacity:0} 70%{transform:scale(1.12) rotate(3deg)} 100%{transform:scale(1) rotate(0deg);opacity:1} }
@@ -3638,6 +3639,27 @@ function FindNearestCentreSection() {
   const [focusSearch,  setFocusSearch] = useState(false);
   const [hovSugg,      setHovSugg]     = useState(-1);
 
+  /* ── 3-D map ↔ card two-way sync ────────────────────────────────────── */
+  const [activeId, setActiveId] = useState<string | null>(null);  // hovered pin or card
+  const [flashId,  setFlashId]  = useState<string | null>(null);  // briefly outlined after pin click
+  const cardRefs = useRef<Record<string, HTMLDivElement | null>>({});
+
+  // Pin click → smooth-scroll its card into view + brief red-outline flash
+  const handlePinSelect = useCallback((id: string) => {
+    setActiveId(id);
+    const el = cardRefs.current[id];
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      setFlashId(id);
+      setTimeout(() => setFlashId(null), 1700);
+    }
+  }, []);
+
+  // Pin hover → highlight matching card (cards dim others)
+  const handlePinHover = useCallback((id: string | null) => {
+    setActiveId(id);
+  }, []);
+
   /* Scroll-in trigger */
   useEffect(() => {
     if (prefersReduced) { setVisible(true); return; }
@@ -3731,6 +3753,36 @@ function FindNearestCentreSection() {
           <p style={{ ...entranceSt(0.16), fontSize:16, color:"#55506A", maxWidth:540, margin:"0 auto" }}>
             Type your area or neighbourhood below — we'll show you which Rainbow Preschool is closest to you.
           </p>
+        </div>
+
+        {/* ── 3-D interactive map ────────────────────────────────────── */}
+        {/* aria-live announces active-centre changes for screen readers  */}
+        <p aria-live="polite" aria-atomic="true" className="sr-only">
+          {activeId ? `Selected centre: ${centres.find(c => c.id === activeId)?.name ?? ""}` : ""}
+        </p>
+        <div style={{ marginBottom:32, ...entranceSt(0.14) }}>
+          <ErrorBoundary name="locator-3d-map" silent>
+            <Suspense fallback={
+              <div style={{
+                width:"100%", height:480, borderRadius:20,
+                background:"linear-gradient(135deg,#e8f5e9 0%,#f3e8d8 100%)",
+                display:"flex", alignItems:"center", justifyContent:"center", gap:8,
+              }}>
+                {[0,1,2].map(i => (
+                  <div key={i} style={{
+                    width:9, height:9, borderRadius:"50%", background:"#EC210F",
+                    animation:`mdot 1.1s ease-in-out ${i*.18}s infinite`,
+                  }}/>
+                ))}
+              </div>
+            }>
+              <Interactive3DMap
+                highlightedCentre={activeId}
+                onCentreSelect={handlePinSelect}
+                onCentreHover={handlePinHover}
+              />
+            </Suspense>
+          </ErrorBoundary>
         </div>
 
         {/* ── Search box (sticky on mobile) ─────────────────────────── */}
@@ -3889,13 +3941,25 @@ function FindNearestCentreSection() {
             {filtered.map((centre, i) => (
               <div
                 key={centre.id}
+                ref={el => { cardRefs.current[centre.id] = el; }}
                 className="loc-card"
                 data-testid={`card-nearest-centre-${centre.id}`}
+                onMouseEnter={() => setActiveId(centre.id)}
+                onMouseLeave={() => setActiveId(prev => prev === centre.id ? null : prev)}
                 style={{
                   background:"white", borderRadius:18,
-                  boxShadow:"0 4px 18px rgba(33,27,46,0.08),0 1px 4px rgba(33,27,46,0.05)",
-                  border:"1px solid rgba(33,27,46,0.06)",
+                  boxShadow: flashId === centre.id
+                    ? "0 0 0 3px rgba(236,33,15,0.28), 0 6px 28px rgba(33,27,46,0.13)"
+                    : activeId === centre.id
+                      ? "0 0 0 2px rgba(236,33,15,0.16), 0 4px 18px rgba(33,27,46,0.10)"
+                      : "0 4px 18px rgba(33,27,46,0.08),0 1px 4px rgba(33,27,46,0.05)",
+                  border: flashId === centre.id
+                    ? "1.5px solid rgba(236,33,15,0.40)"
+                    : activeId === centre.id
+                      ? "1px solid rgba(236,33,15,0.22)"
+                      : "1px solid rgba(33,27,46,0.06)",
                   display:"flex", flexDirection:"column", height:"100%",
+                  transition:"box-shadow 0.22s ease, border-color 0.22s ease",
                   ...cardEntrance(i),
                 }}
               >

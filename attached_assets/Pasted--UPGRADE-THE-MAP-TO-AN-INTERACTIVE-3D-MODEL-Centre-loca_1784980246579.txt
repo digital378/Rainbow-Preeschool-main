@@ -1,0 +1,67 @@
+# UPGRADE THE MAP TO AN INTERACTIVE 3D MODEL — Centre locator. /dummy PAGE ONLY.
+# Replace the flat illustrated map with a stylized low-poly 3D diorama (React Three
+# Fiber). Keep it the SAME locator: synced to the centre cards, same data. Edit only
+# this section. Preserve every centre's name, address, phone numbers, and
+# Directions/WhatsApp/Call targets. Invent nothing.
+
+## STACK / SETUP
+- Use @react-three/fiber + @react-three/drei (install if missing). Optional: gsap for
+  eased marker tweens (import separately — never from three).
+- Render inside <Suspense fallback={<MapLoader/>}> and wrap the <Canvas> in an ERROR
+  BOUNDARY: if WebGL is unavailable or the scene throws, render the EXISTING illustrated
+  map as a graceful fallback. The section must never end up blank.
+
+## THE 3D SCENE (low-poly, playful, on-brand preschool)
+- A soft rounded ground plane (pastel green), a couple of low-poly roads (light grey
+  ribbons) and scattered low-poly trees/clouds — build procedurally from simple
+  geometry, OR use FREE CC0 low-poly assets (Poly Pizza / Quaternius / Kenney). Do NOT
+  use paid/generated assets. Keep total polys low.
+- 6 CENTRE MARKERS: a chunky 3D map-pin (or little house) for each centre, placed in
+  roughly the same relative layout as the current map (Anand Nagar, Kasarvadavali,
+  Manpada, Dhokali, Hariniwas, Kalwa). Red #EC210F pins (RPS brand).
+- Lighting: soft ambient + one directional light; drei <ContactShadows> under the
+  scene for grounding. Skip HDR environments (avoid heavy asset loads).
+- CAMERA: isometric-ish angle with drei <OrbitControls> — enableDamping, LIMIT
+  polar+azimuth so users tilt/rotate a little but can't flip under the ground or spin
+  wildly. No zoom-to-infinity (clamp min/max distance).
+
+## INTERACTIVITY (the point of going 3D)
+1. MARKER HOVER (onPointerOver/Out — R3F handles mouse AND touch): the pin lifts +
+   scales, and a drei <Html>/<Billboard> label shows the centre name.
+2. MARKER CLICK/TAP: opens a popup (drei <Html>) anchored to the pin with name, short
+   address, and three actions — Directions (Google Maps, new tab), WhatsApp, Call
+   (tel:) — reusing the exact numbers/links from the cards.
+3. TWO-WAY SYNC with the centre cards via ONE shared "active centre" state:
+   hover/click a card → its 3D pin lifts + highlights (others dim); click a pin →
+   highlight + smooth-scroll its card into view with a brief outline flash.
+
+## MOTION (gentle; stop on interaction)
+- Idle: very slow camera auto-rotate + each pin bobs (±small), phase-varied. Auto-
+  rotate STOPS while the user is dragging/hovering, resumes after idle.
+- prefers-reduced-motion: gate ALL auto-motion on a LIVE matchMedia value
+  (matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change', …)) — no
+  one-time snapshot. When reduced: static camera, no bob, no auto-rotate; hover/click
+  still work.
+
+## PERFORMANCE / RELIABILITY
+- <Canvas dpr={[1, 2]} > (cap DPR); low-poly geometry; if many trees, use InstancedMesh.
+- Lazy-load the whole 3D map (dynamic import) so it doesn't block first paint; show
+  MapLoader until ready. Dispose geometries/materials on unmount.
+- Touch: ensure OrbitControls + marker taps work on mobile (R3F pointer events cover
+  touch; test one-finger rotate).
+
+## MOBILE (≤768px)
+- Smaller canvas height that fits the screen; reduce tree/prop count; lower dpr; keep
+  tap-to-select markers + popups. Cards stack below as before. Keep it 60fps; if the
+  device is low-power or WebGL fails, use the illustrated-map fallback.
+
+## ACCESSIBILITY
+- Provide a non-3D equivalent: the centre cards remain fully usable and keyboard-
+  operable on their own (the 3D map is an enhancement, not the only way to reach a
+  centre). Active-centre changes announced via aria-live. Canvas has an aria-label.
+
+## DELIVER
+Show /dummy locator at desktop 1440 + mobile 390 with a recording of: orbiting the 3D
+map, hovering a pin (label), clicking a pin (popup + card scroll/flash), and hovering a
+card lifting its 3D pin. Confirm the WebGL-fail fallback renders the illustrated map,
+and all centre data is unchanged. Nothing outside this section changes.
