@@ -36,8 +36,8 @@ const N = BRANCHES.length;
 const scaleXZ = (p, k) => [p[0] * k, p[1] * k];
 const STOPS = BRANCHES.map((b) => scaleXZ(b.pos, 0.62)); // where bus parks (on ring road)
 const DOORS  = BRANCHES.map((b) => scaleXZ(b.pos, 0.84)); // school door (kids' destination)
-const lerp       = (a, b, t) => a + (b - a) * t;
-const easeInOut  = (t) => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
+const lerp      = (a, b, t) => a + (b - a) * t;
+const easeInOut = (t) => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
 
 function useReducedMotion() {
   const [r, setR] = useState(
@@ -50,6 +50,18 @@ function useReducedMotion() {
     return () => mq.removeEventListener("change", on);
   }, []);
   return r;
+}
+
+function useIsMobile() {
+  const [m, setM] = useState(
+    typeof window !== "undefined" && window.innerWidth < 768
+  );
+  useEffect(() => {
+    const on = () => setM(window.innerWidth < 768);
+    window.addEventListener("resize", on);
+    return () => window.removeEventListener("resize", on);
+  }, []);
+  return m;
 }
 
 function Tree({ position, s = 1 }) {
@@ -72,12 +84,12 @@ function Tree({ position, s = 1 }) {
 }
 
 const TREES = [
-  { p: [-6, 0,  0],   s: 1   },
-  { p: [ 6, 0,  0],   s: 1   },
-  { p: [-2, 0, -5.4], s: 0.9 },
-  { p: [ 2.2, 0, 5.4],s: 0.9 },
-  { p: [-5.6, 0, 4.6],s: 0.8 },
-  { p: [ 5.6, 0,-4.6],s: 0.8 },
+  { p: [-6, 0,  0],    s: 1   },
+  { p: [ 6, 0,  0],    s: 1   },
+  { p: [-2, 0, -5.4],  s: 0.9 },
+  { p: [ 2.2, 0, 5.4], s: 0.9 },
+  { p: [-5.6, 0, 4.6], s: 0.8 },
+  { p: [ 5.6, 0,-4.6], s: 0.8 },
 ];
 
 function School({ branch, active, onSelect, onHover }) {
@@ -122,16 +134,16 @@ function School({ branch, active, onSelect, onHover }) {
       <Float speed={2} rotationIntensity={0} floatIntensity={0.4}>
         <Html position={[0, 2.0, 0]} center distanceFactor={9} style={{ pointerEvents: "none" }}>
           <div style={{
-            background:    "#fff",
-            color:         "#211B2E",
-            borderRadius:  12,
-            padding:       "5px 12px",
-            font:          "700 14px 'Fredoka', system-ui, sans-serif",
-            whiteSpace:    "nowrap",
-            boxShadow:     "0 10px 24px rgba(33,27,46,.18)",
-            border:        `2px solid ${active ? branch.roof : "rgba(0,0,0,.06)"}`,
-            transform:     active ? "scale(1.08)" : "scale(1)",
-            transition:    "all .2s",
+            background:   "#fff",
+            color:        "#211B2E",
+            borderRadius: 12,
+            padding:      "5px 12px",
+            font:         "700 14px 'Fredoka', system-ui, sans-serif",
+            whiteSpace:   "nowrap",
+            boxShadow:    "0 10px 24px rgba(33,27,46,.18)",
+            border:       `2px solid ${active ? branch.roof : "rgba(0,0,0,.06)"}`,
+            transform:    active ? "scale(1.08)" : "scale(1)",
+            transition:   "all .2s",
           }}>
             <span style={{ color: branch.roof }}>🏫</span>&nbsp;{branch.name}
           </div>
@@ -209,7 +221,7 @@ function Person({ colProp, teacher, refCb }) {
 }
 const KID_COLORS = ["#EC210F", "#2E90FA", "#12B76A", "#FB6514"];
 
-function Scene({ setActive, activeId, hoveredId, setHovered, reduced }) {
+function Scene({ setActive, activeId, hoveredId, setHovered, reduced, isMobile }) {
   const bus    = useRef();
   const people = useRef([]);          // [teacher, kid0..3]
   const anim   = useRef({ phase: "drive", from: 0, to: 1, t: 0, stopT: 0, walk: 0 });
@@ -270,15 +282,18 @@ function Scene({ setActive, activeId, hoveredId, setHovered, reduced }) {
 
   return (
     <>
-      <ambientLight intensity={0.55} />
+      {/* Mobile: brighter ambient to compensate for no Environment IBL */}
+      <ambientLight intensity={isMobile ? 0.95 : 0.55} />
+      {/* Mobile: no cast shadows → shadow map stays inactive, no PCFSoftShadowMap risk */}
       <directionalLight
         position={[6, 11, 5]}
-        intensity={1.5}
-        castShadow
-        shadow-mapSize={[2048, 2048]}
+        intensity={isMobile ? 1.2 : 1.5}
+        castShadow={!isMobile}
+        shadow-mapSize={[1024, 1024]}
         shadow-bias={-0.0002}
       />
-      <Environment preset="park" />
+      {/* Skip expensive IBL on mobile */}
+      {!isMobile && <Environment preset="park" />}
 
       {/* floating island */}
       <RoundedBox args={[14, 1.4, 12]} radius={0.6} smoothness={6} position={[0, -0.7, 0]} receiveShadow castShadow>
@@ -296,7 +311,10 @@ function Scene({ setActive, activeId, hoveredId, setHovered, reduced }) {
         </mesh>
       ))}
 
-      {TREES.map((t, i) => <Tree key={i} position={t.p} s={t.s} />)}
+      {/* Fewer trees on mobile to save draw calls */}
+      {(isMobile ? TREES.slice(0, 3) : TREES).map((t, i) => (
+        <Tree key={i} position={t.p} s={t.s} />
+      ))}
 
       {BRANCHES.map((b) => (
         <School
@@ -316,12 +334,30 @@ function Scene({ setActive, activeId, hoveredId, setHovered, reduced }) {
         <Person key={i} colProp={c} refCb={(el) => (people.current[i + 1] = el)} />
       ))}
 
-      <ContactShadows position={[0, 0.005, 0]} opacity={0.4} scale={16} blur={2.4} far={4} />
-      <ContactShadows position={[0, -2.4, 0]} opacity={0.25} scale={24} blur={4} far={6} color="#3a5a2a" />
+      {/* Lower shadow resolution on mobile; skip second (island rim) shadow on mobile */}
+      <ContactShadows
+        position={[0, 0.005, 0]}
+        opacity={0.4}
+        scale={16}
+        blur={2.4}
+        far={4}
+        resolution={isMobile ? 256 : 512}
+      />
+      {!isMobile && (
+        <ContactShadows position={[0, -2.4, 0]} opacity={0.25} scale={24} blur={4} far={6} color="#3a5a2a" />
+      )}
 
+      {/*
+        Desktop: manual orbit + zoom.
+        Mobile:  disable rotate/zoom so the page can scroll normally;
+                 gentle auto-rotate gives life without blocking touches.
+      */}
       <OrbitControls
         enablePan={false}
-        enableZoom
+        enableZoom={!isMobile}
+        enableRotate={!isMobile}
+        autoRotate={isMobile && !reduced}
+        autoRotateSpeed={0.5}
         minDistance={9}
         maxDistance={18}
         minPolarAngle={0.5}
@@ -340,20 +376,32 @@ class WebGLBoundary extends React.Component {
 
 export default function SchoolTownMap3D({ activeId, onActiveChange, fallback = null }) {
   const reduced    = useReducedMotion();
+  const isMobile   = useIsMobile();
   const [hoveredId, setHovered] = useState(null);
   const setActive  = (id) => onActiveChange && onActiveChange(id);
 
   return (
     <WebGLBoundary fallback={fallback}>
-      <div style={{ position: "relative", width: "100%", height: "clamp(420px, 60vh, 640px)" }}>
+      <div style={{
+        position: "relative",
+        width: "100%",
+        // Shorter canvas on mobile: saves viewport, still shows the full diorama
+        height: isMobile ? "clamp(300px, 52vh, 420px)" : "clamp(420px, 60vh, 640px)",
+      }}>
         <Canvas
           shadows={false}
-          dpr={[1, 2]}
-          camera={{ position: [9, 8, 11], fov: 34 }}
-          gl={{ antialias: true }}
+          dpr={isMobile ? [1, 1.5] : [1, 2]}
+          camera={{
+            position: isMobile ? [10, 9, 12] : [9, 8, 11],
+            fov:      isMobile ? 40 : 34,
+          }}
+          gl={{ antialias: !isMobile, powerPreference: "high-performance" }}
+          // Allow vertical page scroll on mobile; block pointer events on desktop so
+          // orbit-drag doesn't accidentally scroll the page.
+          style={{ touchAction: isMobile ? "pan-y" : "none" }}
           onCreated={({ gl }) => {
-            // Enable shadows manually so R3F never sets the deprecated PCFSoftShadowMap type.
-            // Three.js r185 warns every render pass when type === PCFSoftShadowMap.
+            // Always set PCFShadowMap so if shadows ever activate on desktop,
+            // Three.js r185's per-render PCFSoftShadowMap deprecation flood never fires.
             gl.shadowMap.enabled = true;
             gl.shadowMap.type = THREE.PCFShadowMap;
           }}
@@ -366,6 +414,7 @@ export default function SchoolTownMap3D({ activeId, onActiveChange, fallback = n
               hoveredId={hoveredId}
               setHovered={setHovered}
               reduced={reduced}
+              isMobile={isMobile}
             />
           </Suspense>
         </Canvas>
@@ -373,22 +422,28 @@ export default function SchoolTownMap3D({ activeId, onActiveChange, fallback = n
         {/* Legend — top-left */}
         <div style={{
           position: "absolute", top: 16, left: 16,
-          background: "#fff", borderRadius: 14, padding: "8px 14px",
+          background: "#fff", borderRadius: 14,
+          padding: isMobile ? "6px 10px" : "8px 14px",
           boxShadow: "0 10px 26px rgba(33,27,46,.14)",
-          font: "500 12px system-ui",
+          font: `500 ${isMobile ? 11 : 12}px system-ui`,
         }}>
           <div style={{ color: BRAND, fontWeight: 800, letterSpacing: ".04em" }}>RAINBOW TOWN</div>
-          <div style={{ color: "#6b6675" }}>Our bus visits all 6 centres · Thane</div>
+          <div style={{ color: "#6b6675" }}>
+            {isMobile ? "6 centres · Thane" : "Our bus visits all 6 centres · Thane"}
+          </div>
         </div>
 
-        {/* Hint — top-right */}
+        {/* Hint — top-right (context-aware) */}
         <div style={{
           position: "absolute", top: 16, right: 16,
-          background: "#fff", borderRadius: 999, padding: "6px 12px",
+          background: "#fff", borderRadius: 999,
+          padding: "6px 12px",
           boxShadow: "0 10px 26px rgba(33,27,46,.14)",
-          font: "500 12px system-ui", color: "#6b6675",
+          font: `500 ${isMobile ? 11 : 12}px system-ui`,
+          color: "#6b6675",
         }}>
-          <span style={{ color: BRAND }}>●</span> Drag to explore · click a school
+          <span style={{ color: BRAND }}>●</span>{" "}
+          {isMobile ? "Auto-rotating · tap a school" : "Drag to explore · click a school"}
         </div>
       </div>
     </WebGLBoundary>
