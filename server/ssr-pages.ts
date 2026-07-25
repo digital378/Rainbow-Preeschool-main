@@ -601,9 +601,62 @@ function localBusinessSchema(locality: string, address: string, phone: string, u
 }
 
 const staticPages: Record<string, PageSEOData> = {
-  // "/" intentionally omitted — bots fall through to the React SPA for the
-  // homepage so users and crawlers see the same fully-rendered experience.
-  // All other commercial, local-SEO, and blog pages retain Bot SSR.
+  "/": {
+    title: "Rainbow Preschool | Playschool, Nursery & Kindergarten in Thane",
+    description: "Trusted preschool chain in Thane since 2007 — Playgroup, Nursery & Kindergarten across 6 centres. Play-based learning. Admissions open.",
+    canonical: "https://www.rainbowpreschools.com/",
+    h1: "Trusted Preschool in Thane Since 2007",
+    lastModified: LAST_UPDATED_ISO,
+    lastModifiedDisplay: LAST_UPDATED_DISPLAY,
+    structuredData: [organizationSchema, websiteSchema],
+    introText: "Rainbow Preschool International has been a trusted name in early childhood education across Thane since 2007. Serving over 1,00,000 families across 6 centres in Thane West, we offer play-based Playgroup, Nursery, and Kindergarten programmes for children aged 1.5 to 6 years.",
+    contentSections: [
+      {
+        heading: "Our Programmes",
+        items: [
+          "Playgroup (1.5–2.5 years) — play-based early learning and socialisation for toddlers",
+          "Nursery (2.5–3.5 years) — early literacy, numeracy, and confidence-building",
+          "Kindergarten (3.5–5.5 years) — comprehensive school-readiness programme",
+        ],
+      },
+      {
+        heading: "Why Parents Choose Rainbow Preschool",
+        items: [
+          "ECE-qualified and Montessori-trained female teachers with years of experience",
+          "Small class sizes — maximum 10–12 children per group for individual attention",
+          "CCTV-monitored, child-safe campuses with secure entry and exit",
+          "Activity-based curriculum aligned with NEP 2020 and global ECE best practices",
+          "Daily parent communication and monthly written progress updates",
+          "Trusted since 2007 — over 1,00,000 alumni across 6 Thane centres",
+        ],
+      },
+      {
+        heading: "Our 6 Centres Across Thane",
+        items: [
+          "Manpada — Near Khewra Circle, Thane West",
+          "Hariniwas — Naupada, Central Thane",
+          "Anand Nagar — Majiwada, Thane West",
+          "Dhokali — Kolshet Road, Thane",
+          "Kalwa — Eastern Thane",
+          "Kasarvadavali — Ghodbunder Road, Thane",
+        ],
+      },
+    ],
+    internalLinks: [
+      { text: "Playgroup (1.5–2.5 years)", url: "/playgroup" },
+      { text: "Nursery (2.5–3.5 years)", url: "/nursery" },
+      { text: "Kindergarten (3.5–5.5 years)", url: "/kindergarten" },
+      { text: "All Programmes", url: "/programmes" },
+      { text: "Preschool Admissions", url: "/preschool-admissions" },
+      { text: "Contact Us", url: "/contact" },
+      { text: "Preschool in Manpada", url: "/preschool-in-manpada-thane" },
+      { text: "Preschool in Hariniwas", url: "/preschool-in-hariniwas-thane" },
+      { text: "Preschool in Anand Nagar", url: "/preschool-in-anand-nagar-thane" },
+      { text: "Preschool in Dhokali", url: "/preschool-in-dhokali-thane" },
+      { text: "Preschool in Kalwa", url: "/preschool-in-kalwa-thane" },
+      { text: "Preschool in Kasarvadavali", url: "/preschool-in-kasarvadavali-thane" },
+    ],
+  },
   "/about": {
     title: "About Rainbow Preschool Thane | Since 2007",
     description: "Learn about Rainbow Preschool International — Thane's trusted preschool since 2007. 6 centres, play-based learning, 1,00,000+ alumni. Our story and values.",

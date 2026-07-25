@@ -307,7 +307,6 @@ export function setupBotSSR(app: Express) {
     const urlPath = req.path;
 
     if (
-      urlPath === "/" ||
       urlPath.startsWith("/api/") ||
       urlPath.startsWith("/assets/") ||
       urlPath.startsWith("/images/") ||

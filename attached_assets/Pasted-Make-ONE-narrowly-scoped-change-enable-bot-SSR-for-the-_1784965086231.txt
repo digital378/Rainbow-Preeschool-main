@@ -1,0 +1,21 @@
+Make ONE narrowly-scoped change: enable bot-SSR for the homepage ("/"), which is currently excluded.
+
+Context: server/bot-ssr.ts's setupBotSSR middleware early-returns when urlPath === "/", so bots receive the SPA shell for the homepage instead of the SSR HTML every other page gets via getPageSEO() in server/ssr-pages.ts.
+
+Required changes — and ONLY these:
+
+1. In server/ssr-pages.ts, add a homepage entry so getPageSEO("/") returns a complete PageSEOData object:
+   - title: "Rainbow Preschool | Playschool, Nursery & Kindergarten in Thane"
+   - description: exactly the current homepage meta description from client/index.html
+   - h1: "Trusted Preschool in Thane Since 2007"
+   - canonical: "https://www.rainbowpreschools.com/"
+   - introText and contentSections: derive ONLY from real content already in this codebase (home page React components and existing ssr-pages.ts entries): the three programmes with age ranges (Playgroup 1.5–2.5, Nursery 2.5–3.5, Kindergarten 3.5–5.5), the centre localities already listed in ssr-pages.ts, and why-parents-choose points already present in home page components. Do NOT invent any new facts, numbers, awards, ratios, or claims.
+   - internalLinks: /playgroup, /nursery, /kindergarten, /programmes, /preschool-admissions, /contact, plus the existing locality pages.
+   - structuredData: reuse the existing site-wide Organization/EducationalOrganization and WebSite nodes as other pages do — do not create new claims.
+   - lastModified: reuse LAST_UPDATED_ISO from shared/site-freshness.ts the same way other pages do.
+
+2. In server/bot-ssr.ts, remove ONLY the `urlPath === "/"` condition from the early-return check. Keep the /api/, /assets/, /images/ and file-extension exclusions and all response headers exactly as they are.
+
+Hard constraints: touch ONLY server/bot-ssr.ts and server/ssr-pages.ts; no other files; no new packages; do not change any existing page's SSR entry.
+
+Verification: run npm run check (the 4 pre-existing hero3d errors are known and acceptable); curl "/" with a Googlebot UA → new SSR HTML with unique h1; curl "/" with a normal browser UA → unchanged React shell. Report the diff and curl results.
