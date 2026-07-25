@@ -1,0 +1,45 @@
+# ART DIRECTION — RECOVER THE ABOUT BENTO (mascot blew up) (/dummy)
+The last change scaled the mascot to fill an unbounded stage, so she's now a
+giant cropped close-up and the section is many screens tall. RESET to a bounded,
+tidy layout. Follow these hard constraints exactly.
+
+## HARD RULE — CONSTRAIN THE MASCOT (this caused the break)
+- The mascot stage is a FIXED-HEIGHT box, NOT full-viewport. Its height = the
+  height of the stat-tile block beside it (roughly 480–560px on desktop). Give it
+  an explicit height / that it matches the left bento column — never height:auto
+  that grows with the image.
+- The mascot <img>: `max-height: 100%; max-width: 100%; width: auto;
+  object-fit: contain; object-position: bottom center;` inside that fixed box.
+  She must SCALE DOWN to fit the box and always show head-to-shoes, never crop,
+  never overflow. Remove any transform:scale() that enlarges her past the box.
+- Bottom-align her within the box (feet near the bottom), caption "Join Our
+  Family!" pinned at the very bottom. A small, even margin at top — no giant void,
+  no giant mascot. She should look like the earlier good version, just filling
+  the box nicely at a sensible size.
+
+## RESTORE THE BENTO GRID
+- The entire About section is ONE normal-height section (about 1 viewport tall on
+  desktop), NOT stretched. Reset any inflated heights/margins.
+- Right side = the stat block: top row [1,00,000+][18+], middle wide [4.9★
+  rating], bottom row [06][100%] — compact, content-sized tiles, even gaps, all
+  edges aligned. To the far right, the fixed-height mascot stage, SAME height as
+  this stat block.
+- Left column unchanged: heading, paragraphs, centre chips (all 6 on ONE line,
+  compact), "Learn More" button.
+- Everything aligns into two tidy balanced columns. No scattered tiles, no huge
+  empty bands, no page-long blank space.
+
+## MOBILE
+- Normal stacked section: heading + copy + chips(one scrollable row) + button →
+  mascot in a fixed-height box (object-fit contain, ~360–420px, fully visible) →
+  stat tiles 2-col → 4.9★ tile. No blown-up mascot, no giant gaps.
+
+## RULES / BRAND
+- Smooth-motion (transform/opacity, 60fps), semantic markup, reduced-motion
+  fallback. RPS red #EC210F leads. Real centre data only. Mascot is an illustrated
+  character — always shown whole (contain), never cropped or oversized.
+
+## DELIVER
+Show desktop @1440 + mobile @390. Success = a normal-height About section, tidy
+aligned bento, all 6 centre chips on one line, and the mascot shown whole at a
+sensible size inside a fixed box (no giant crop, no page-long stretch).

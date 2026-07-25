@@ -69,11 +69,20 @@ const STYLES = `
   @keyframes mascot-wave { 0%,82%,100%{transform:translateY(0) rotate(0deg)} 86%{transform:translateY(-4px) rotate(-9deg)} 91%{transform:translateY(-6px) rotate(9deg)} 96%{transform:translateY(-3px) rotate(-4deg)} }
   .mascot-char { animation:mascot-wave 9s ease-in-out infinite; transform-origin:bottom center; }
   .bento-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
-  .bento-photo { grid-column:1/3; min-height:220px; }
+  /* Mobile: fixed-height box so the mascot never blows up */
+  .bento-photo { grid-column:1/3; height:380px; min-height:0; overflow:hidden; }
   .bento-trust { grid-column:1/3; align-self:start; }
   .bento-s1,.bento-s2,.bento-s3,.bento-s4 { align-self:start; }
-  /* Mascot stage image — mobile: width-based; desktop: height-based (82% of card) */
-  .mascot-stage-img { display:block; width:78%; height:auto; margin:12px auto 0; }
+  /* Mascot img — contained within its box, bottom-aligned, always shows head-to-shoes */
+  .mascot-stage-img {
+    display:block;
+    max-height:calc(100% - 50px);
+    max-width:88%;
+    width:auto;
+    object-fit:contain;
+    object-position:bottom center;
+    margin:0 auto;
+  }
   /* Centre chip row — single horizontal line, no wrap, scroll if needed */
   .chip-row { display:flex; flex-wrap:nowrap; overflow-x:auto; gap:5px;
     scrollbar-width:none; -webkit-overflow-scrolling:touch; }
@@ -89,14 +98,25 @@ const STYLES = `
   .centre-chip:focus-visible { outline:2px solid #EC210F; outline-offset:2px; border-radius:999px; }
   @media (min-width:1024px) {
     .bento-grid { grid-template-columns:1fr 1fr 1.4fr; }
-    .bento-photo { grid-column:3/4 !important; grid-row:1/4 !important; min-height:0; height:100%; align-self:stretch; }
+    /* Mascot stage: fixed height so it never grows with the image — matches the stat-tile column */
+    .bento-photo {
+      grid-column:3/4 !important; grid-row:1/4 !important;
+      min-height:0; height:480px; align-self:stretch; overflow:hidden;
+    }
     .bento-s1 { grid-column:1/2; grid-row:1/2; }
     .bento-s2 { grid-column:2/3; grid-row:1/2; }
     .bento-trust { grid-column:1/3 !important; grid-row:2/3; }
     .bento-s3 { grid-column:1/2; grid-row:3/4; }
     .bento-s4 { grid-column:2/3; grid-row:3/4; }
-    /* height:82% of the grid-determined card height → ~338px; transparent PNG margins absorb the width clip */
-    .mascot-stage-img { height:82%; width:auto; margin:0; max-width:none; }
+    /* Desktop: constrain to box, never crop, always head-to-shoes */
+    .mascot-stage-img {
+      max-height:calc(100% - 50px);
+      max-width:100%;
+      width:auto;
+      object-fit:contain;
+      object-position:bottom center;
+      margin:0 auto;
+    }
   }
   @media (prefers-reduced-motion:reduce) {
     .mascot-char { animation:none !important; }
