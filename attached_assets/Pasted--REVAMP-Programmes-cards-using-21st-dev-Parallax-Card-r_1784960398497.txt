@@ -1,0 +1,103 @@
+# REVAMP — Programmes cards using 21st.dev "Parallax Card" (real framer-motion 3D)
+# /dummy PAGE ONLY. Source: 21st.dev @ravikatiyar162/parallax-card, adapted below.
+
+## SCOPE (obey exactly)
+- Apply ONLY to the /dummy route. If Programmes is a shared component, make a
+  /dummy-only copy (ProgrammesDummy) and leave the shared one untouched.
+- Touch ONLY this Programmes section — not nav, hero, learning-environment,
+  About, or footer. If a change affects anything else, STOP and revert.
+
+## DEPENDENCY
+- Requires framer-motion (likely already installed). If not: `npm i framer-motion`.
+- Alternative install of the base component (only if the 21st API key is set in
+  this Repl): npx shadcn@latest add "https://21st.dev/r/ravikatiyar162/parallax-card"
+  — otherwise just use the adapted file below (no key needed).
+
+## STEP 1 — Add this adapted component file: components/ui/programme-card.tsx
+# (adapted from 21st.dev "Parallax Card"; real preserve-3d + translateZ parallax)
+
+import * as React from "react";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+
+export interface ProgrammeCardProps {
+  title: string; ageLabel: string; description: string;
+  imageUrl: string; href: string; themeColor: string; // hex per card
+}
+
+export function ProgrammeCard({ title, ageLabel, description, imageUrl, href, themeColor }: ProgrammeCardProps) {
+  const x = useMotionValue(0), y = useMotionValue(0);
+  const xs = useSpring(x, { stiffness: 300, damping: 30 });
+  const ys = useSpring(y, { stiffness: 300, damping: 30 });
+  const rotateX = useTransform(ys, [-0.5, 0.5], ["10deg", "-10deg"]);
+  const rotateY = useTransform(xs, [-0.5, 0.5], ["-10deg", "10deg"]);
+  const zImg = useTransform(ys, [-0.5, 0.5], [-14, 14]);     // photo layer travel
+  const zTxt = useTransform(ys, [-0.5, 0.5], [14, -14]);     // text layer travel (opposite)
+
+  const onMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    const r = e.currentTarget.getBoundingClientRect();
+    x.set((e.clientX - r.left) / r.width - 0.5);
+    y.set((e.clientY - r.top) / r.height - 0.5);
+  };
+  const onLeave = () => { x.set(0); y.set(0); };
+
+  return (
+    <motion.a href={href} onMouseMove={onMove} onMouseLeave={onLeave}
+      style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+      className="group relative block h-[420px] w-full rounded-[24px]">
+      {/* themed soft base */}
+      <div className="absolute inset-0 rounded-[24px]"
+challenge        style={{ background: `linear-gradient(160deg, ${themeColor}22, ${themeColor}0d)` }} />
+      {/* raised inner panel */}
+      <div className="relative flex h-full flex-col overflow-hidden rounded-[22px] bg-white shadow-[0_18px_40px_rgba(33,27,46,0.14)]"
+        style={{ transform: "translateZ(50px)", transformStyle: "preserve-3d" }}>
+        {/* PHOTO layer (deepest travel) */}
+        <motion.div style={{ transform: "translateZ(30px)", translateY: zImg }}
+          className="relative h-[220px] w-full overflow-hidden">
+          <img src={imageUrl} alt={title} loading="lazy"
+            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.06]" />
+          <div className="absolute inset-x-0 bottom-0 h-1/3"
+            style={{ background: `linear-gradient(to top, ${themeColor}33, transparent)` }} />
+          <span className="absolute right-3 top-3 rounded-full px-3 py-1 text-xs font-semibold text-white shadow-md"
+            style={{ background: themeColor }}>{ageLabel}</span>
+        </motion.div>
+        {/* TEXT layer (opposite travel = parallax depth) */}
+        <motion.div style={{ transform: "translateZ(60px)", translateY: zTxt }}
+          className="flex flex-1 flex-col p-5">
+          <h3 className="text-lg font-bold" style={{ color: themeColor }}>{title}</h3>
+          <p className="mt-2 text-sm leading-relaxed text-neutral-600">{description}</p>
+          <span className="mt-auto inline-flex items-center gap-1 pt-4 text-sm font-semibold"
+            style={{ color: themeColor }}>
+            Learn More <span className="transition-transform group-hover:translate-x-1">→</span>
+          </span>
+        </motion.div>
+      </div>
+    </motion.a>
+  );
+}
+
+## STEP 2 — Render the grid with the EXISTING 4 programmes (do not retype/invent copy)
+# Reuse the current cards' exact title, age band, description, and Learn More href
+# from the existing Programmes data. Only the visual/card changes. Map theme colours:
+#   Playgroup #EC210F · Nursery #2E90FA · Kindergarten #12B76A · Happy Times #FB6514
+# (red leads — RPS brand; the other three are a SUGGESTED supporting spectrum,
+#  pending brand approval). Keep the eyebrow "OUR PROGRAMMES", the heading with
+# "Early Learning" in the orange gradient, the subtitle, and "View All Programmes".
+# Grid: 4 across desktop, 2 tablet, 1-per-row OR horizontal snap-scroll mobile.
+# Add `perspective: 1000px` on the grid container so the 3D reads.
+
+## STEP 3 — Section motion (keep it to this section)
+- Entrance: cards fade + rise + slight flip on scroll-in, staggered ~90ms
+  (framer whileInView with a staggered parent, or GSAP if already used).
+- Idle: very subtle float on each card wrapper (NOT on the tilting element, so it
+  doesn't fight the rotation), phase-varied.
+- Mobile: no mouse tilt; tap does a small lift/press; photos still parallax gently.
+  Tap targets ≥44px.
+- prefers-reduced-motion: disable tilt/parallax/float — render the card static
+  (photo, theme badge, title, description, Learn More, soft shadow) with only a
+  simple hover shadow.
+
+## VERIFY / DELIVER
+Show /dummy Programmes at desktop 1440 + mobile 390 with a recording of a card
+rotating under the cursor and its photo vs. text visibly shifting at different
+depths (that parallax offset = the proof it's truly 3D, not a flat hover).
+Confirm no other section or page changed and all 4 cards' text + links are unchanged.

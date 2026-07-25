@@ -19,9 +19,8 @@ import {
   Volume2, VolumeX, Puzzle, ShieldCheck, Sun,
 } from "lucide-react";
 import { SiWhatsapp } from "react-icons/si";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import confetti from "canvas-confetti";
+import { motion, useReducedMotion } from "framer-motion";
+import { ProgrammeCard } from "@/components/ui/programme-card";
 
 /* ═══════════════════════════════════════════════════════════════════════════════
    SCOPED STYLES
@@ -1835,172 +1834,48 @@ function StatsSection() {
    ─ ProgrammesSection below is UNCHANGED and still used on all other routes ─
 ═══════════════════════════════════════════════════════════════════════════════ */
 
-/** Per-card config — theme colour, icon, href */
+/** Per-card config — theme colour + href only (framer-motion card needs no icon/rgb) */
 const PD_CARDS = [
-  { id:"playgroup",    color:"#EC210F", rgb:"236,33,15",   Icon:Puzzle,        href:"/playgroup"    },
-  { id:"nursery",      color:"#2E90FA", rgb:"46,144,250",  Icon:Palette,       href:"/nursery"      },
-  { id:"kindergarten", color:"#12B76A", rgb:"18,183,106",  Icon:GraduationCap, href:"/kindergarten" },
-  { id:"happy-times",  color:"#FB6514", rgb:"251,101,20",  Icon:Sun,           href:"/happy-times"  },
+  { id:"playgroup",    color:"#EC210F", href:"/playgroup"    },
+  { id:"nursery",      color:"#2E90FA", href:"/nursery"      },
+  { id:"kindergarten", color:"#12B76A", href:"/kindergarten" },
+  { id:"happy-times",  color:"#FB6514", href:"/happy-times"  },
 ] as const;
 
-/**
- * Claymorphic Toy Card — 4 mandatory 3D mechanics:
- *  1) perspective:900px on outer (.prog-card)
- *  2) transform-style:preserve-3d on inner (.pc-inner)
- *  3) .layer children each initialised with translateZ(<depth>px) via GSAP
- *  4) rotateX/Y driven by live pointermove, not static hover
- */
-function PDBCard({ prog, color, rgb, Icon, href, idx }: {
-  prog: { name:string; ageRange:string; description:string; image:string };
-  color:string; rgb:string; Icon:React.ElementType; href:string; idx:number;
-}) {
-  const cardRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const card = cardRef.current;
-    if (!card) return;
-    if (matchMedia("(prefers-reduced-motion:reduce)").matches) return;
-
-    const inner  = card.querySelector<HTMLElement>(".pc-inner")!;
-    const layers = card.querySelectorAll<HTMLElement>(".layer");
-
-    /* ── Init Z depths via GSAP so x/y/scale compose cleanly ── */
-    layers.forEach(l => gsap.set(l, { z: +(l.dataset.depth ?? 0) }));
-    gsap.set(inner, { rotationX:0, rotationY:0 });
-
-    /* ── 1. Pointer-tracked tilt + intra-card parallax ── */
-    const rX = gsap.quickTo(inner, "rotationX", { duration:.4, ease:"power3.out" });
-    const rY = gsap.quickTo(inner, "rotationY", { duration:.4, ease:"power3.out" });
-
-    const onMove = (e: PointerEvent) => {
-      if (e.pointerType === "touch") return;           // no tilt on mobile touch
-      const r  = card.getBoundingClientRect();
-      const px = (e.clientX - r.left) / r.width  - .5;
-      const py = (e.clientY - r.top)  / r.height - .5;
-      rY(px * 16);
-      rX(-py * 16);
-      layers.forEach(l => gsap.to(l, {
-        x: px * +(l.dataset.depth ?? 0) * .5,
-        y: py * +(l.dataset.depth ?? 0) * .5,
-        duration:.4, ease:"power3.out", overwrite:"auto",
-      }));
-    };
-    const onLeave = () => {
-      rX(0); rY(0);
-      gsap.to(layers, { x:0, y:0, duration:.6, ease:"elastic.out(1,.4)", overwrite:"auto" });
-    };
-
-    /* ── 2. Jelly press ── */
-    const onDown = () => gsap.to(inner, { scale:.96, duration:.12, overwrite:"auto" });
-    const onUp   = () => gsap.to(inner, { scale:1,  duration:.5,  ease:"elastic.out(1,.4)", overwrite:"auto" });
-
-    /* ── 3. Confetti burst on click ── */
-    const onClick = () => {
-      const r = card.getBoundingClientRect();
-      confetti({
-        particleCount:40, spread:55, startVelocity:28, scalar:.8,
-        colors:[color],
-        origin:{ x:(r.left + r.width/2) / window.innerWidth,
-                 y:(r.top  + r.height/3) / window.innerHeight },
-      });
-    };
-
-    card.addEventListener("pointermove",  onMove);
-    card.addEventListener("pointerleave", onLeave);
-    card.addEventListener("pointerdown",  onDown);
-    card.addEventListener("pointerup",    onUp);
-    card.addEventListener("click",        onClick);
-    return () => {
-      card.removeEventListener("pointermove",  onMove);
-      card.removeEventListener("pointerleave", onLeave);
-      card.removeEventListener("pointerdown",  onDown);
-      card.removeEventListener("pointerup",    onUp);
-      card.removeEventListener("click",        onClick);
-    };
-  }, [color]);
-
+/** Wraps a card in a gentle idle float — skipped automatically for prefers-reduced-motion */
+function FloatWrapper({ idx, children }: { idx: number; children: React.ReactNode }) {
+  const noMotion = useReducedMotion();
+  if (noMotion) return <>{children}</>;
   return (
-    <div ref={cardRef} className="prog-card" data-theme={color} tabIndex={0}>
-      <div className="pc-inner" style={{ background:`rgba(${rgb},.04)` }}>
-
-        {/* ① Photo — depth 10 */}
-        <div className="pc-photo layer" data-depth="10">
-          <img className="pc-img" src={prog.image}
-            alt={`${prog.name} at Rainbow Preschool`} loading="lazy"/>
-          <div className="pc-scrim" aria-hidden
-            style={{ background:`linear-gradient(to top,rgba(${rgb},.20) 0%,transparent 40%)` }}/>
-        </div>
-
-        {/* ② Body — depth 35 */}
-        <div className="pc-body layer" data-depth="35">
-          <h3 style={{ color, fontFamily:"var(--font-heading,inherit)" }}>
-            {prog.name}
-          </h3>
-          <p>{prog.description}</p>
-          <a href={href} style={{ color }}>
-            Learn More
-            <ArrowRight size={13} className="pc-arrow"/>
-          </a>
-        </div>
-
-        {/* ③ Age pill — depth 60 */}
-        <span className="pc-age layer" data-depth="60"
-          style={{ background:color, boxShadow:`0 2px 8px rgba(${rgb},.45)` }}>
-          {prog.ageRange}
-        </span>
-
-        {/* ④ Icon badge — depth 75 */}
-        <div className="pc-icon layer" data-depth="75"
-          style={{ background:`rgba(${rgb},.16)`, border:`1px solid rgba(${rgb},.24)` }}>
-          <Icon size={17} style={{ color }} strokeWidth={2.2}/>
-        </div>
-
-        {/* Radial glow */}
-        <div className="pc-glow" aria-hidden
-          style={{ background:`radial-gradient(circle at 50% 50%,rgba(${rgb},.18) 0%,transparent 65%)` }}/>
-      </div>
-    </div>
+    <motion.div
+      animate={{ y: [0, -6, 0] }}
+      transition={{
+        duration: 3.5 + idx * 0.3,
+        repeat: Infinity,
+        ease: "easeInOut",
+        delay: idx * 0.4,
+      }}
+    >
+      {children}
+    </motion.div>
   );
 }
 
+/* Framer-motion stagger variants for the entrance animation */
+const pdContainerVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.09 } },
+};
+const pdItemVariants = {
+  hidden:   { opacity: 0, y: 40 },
+  visible:  { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as number[] } },
+};
+
 function ProgrammesDummy() {
-  const gridRef = useRef<HTMLDivElement>(null);
-
-  /* ── GSAP: entrance + idle float (skip for prefers-reduced-motion) ── */
-  useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);               // idempotent, safe to call again
-    const grid = gridRef.current;
-    if (!grid) return;
-    if (matchMedia("(prefers-reduced-motion:reduce)").matches) return;
-
-    const cards = Array.from(grid.querySelectorAll<HTMLElement>(".prog-card"));
-
-    /* ── 4. Scroll-in entrance — staggered 3D flip-up ── */
-    /* gsap.fromTo explicitly declares both ends so GSAP never guesses */
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        cards,
-        { opacity:0, y:40, rotationX:-18, transformOrigin:"50% 100%" },
-        {
-          opacity:1, y:0, rotationX:0,
-          duration:.6, stagger:.09, ease:"back.out(1.6)",
-          scrollTrigger:{ trigger:grid, start:"top 88%" },
-          onComplete() {
-            /* ── 5. Idle float — outer card only, never pc-inner ── */
-            cards.forEach((c, i) =>
-              gsap.to(c, { y:"-=6", duration:3.5 + i*.3, yoyo:true, repeat:-1, ease:"sine.inOut" })
-            );
-          },
-        }
-      );
-    }, grid);
-
-    return () => ctx.revert();
-  }, []);
-
   const progMap = Object.fromEntries(
-    programmes.filter(p => ["playgroup","nursery","kindergarten","happy-times"].includes(p.id))
-              .map(p => [p.id, p])
+    programmes
+      .filter(p => ["playgroup","nursery","kindergarten","happy-times"].includes(p.id))
+      .map(p => [p.id, p])
   );
 
   return (
@@ -2046,16 +1921,33 @@ function ProgrammesDummy() {
           </p>
         </div>
 
-        {/* ── 4-card grid ── */}
-        <div ref={gridRef}
-          className="programmes-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-5">
-          {PD_CARDS.map(({ id, color, rgb, Icon, href }, i) => (
-            <PDBCard key={id}
-              prog={progMap[id] as { name:string; ageRange:string; description:string; image:string }}
-              color={color} rgb={rgb} Icon={Icon} href={href} idx={i}
-            />
-          ))}
-        </div>
+        {/* ── 4-card grid: perspective on container, framer stagger entrance ── */}
+        <motion.div
+          className="programmes-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-5"
+          style={{ perspective: "1000px" }}
+          variants={pdContainerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+        >
+          {PD_CARDS.map(({ id, color, href }, i) => {
+            const prog = progMap[id] as { name:string; ageRange:string; description:string; image:string };
+            return (
+              <motion.div key={id} variants={pdItemVariants}>
+                <FloatWrapper idx={i}>
+                  <ProgrammeCard
+                    title={prog.name}
+                    ageLabel={prog.ageRange}
+                    description={prog.description}
+                    imageUrl={prog.image}
+                    href={href}
+                    themeColor={color}
+                  />
+                </FloatWrapper>
+              </motion.div>
+            );
+          })}
+        </motion.div>
 
         {/* ── "View All Programmes" button ── */}
         <div className="du-fade text-center" style={{ marginTop:52 }}>
