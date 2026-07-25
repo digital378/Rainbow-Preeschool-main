@@ -16,7 +16,7 @@ import {
   ArrowRight, Phone, Users, Star, MapPin, Shield, Award,
   Sparkles, Bus, Gamepad2, FileText, BookOpen, Palette,
   GraduationCap, Lock, Heart, Play, ChevronDown,
-  Volume2, VolumeX, Puzzle, ShieldCheck, Sun,
+  Volume2, VolumeX, Puzzle, ShieldCheck, Sun, Pencil,
 } from "lucide-react";
 import { SiWhatsapp } from "react-icons/si";
 import { motion, useReducedMotion } from "framer-motion";
@@ -344,6 +344,52 @@ const STYLES = `
     .prog-card:hover .pc-inner { box-shadow:0 14px 34px rgba(33,27,46,.18) !important; }
     .layer { transform:none !important; }
     .pc-body a .pc-arrow { transition:none !important; }
+  }
+
+  /* ══ Programmes section — Change 1: single-line heading + subtitle ═════════ */
+  .prog-heading {
+    white-space:nowrap;
+    font-size:clamp(1.9rem,3.4vw,3rem);
+    line-height:1.1;
+  }
+  .prog-subtitle { white-space:nowrap; max-width:none; }
+  @media (max-width:1023px) {
+    .prog-heading  { white-space:normal; }
+    .prog-subtitle { white-space:normal; }
+  }
+
+  /* ══ Programmes backdrop blobs ═══════════════════════════════════════════════ */
+  @keyframes pd-blob-drift {
+    0%,100% { transform:translate(0,0) scale(1); }
+    33%      { transform:translate(18px,-14px) scale(1.04); }
+    66%      { transform:translate(-10px,10px) scale(.97); }
+  }
+  .pd-blob-1 { will-change:transform; animation:pd-blob-drift 22s ease-in-out 0s   infinite; }
+  .pd-blob-2 { will-change:transform; animation:pd-blob-drift 28s ease-in-out 3s   infinite; }
+  .pd-blob-3 { will-change:transform; animation:pd-blob-drift 25s ease-in-out 7s   infinite; }
+
+  /* ══ Programmes doodles ══════════════════════════════════════════════════════ */
+  @keyframes pd-doodle-bob {
+    0%,100% { transform:translateY(0); }
+    50%     { transform:translateY(-6px); }
+  }
+  .pd-doodle-1 { will-change:transform; animation:pd-doodle-bob 4.2s ease-in-out 0s   infinite; }
+  .pd-doodle-2 { will-change:transform; animation:pd-doodle-bob 5.1s ease-in-out .7s  infinite; }
+  .pd-doodle-3 { will-change:transform; animation:pd-doodle-bob 4.7s ease-in-out 1.4s infinite; }
+  .pd-doodle-4 { will-change:transform; animation:pd-doodle-bob 5.4s ease-in-out .3s  infinite; }
+  .pd-doodle-5 { will-change:transform; animation:pd-doodle-bob 4.5s ease-in-out 1.1s infinite; }
+
+  /* ══ Alternating card offset — reset on mobile ═══════════════════════════════ */
+  .pd-card-offset { margin-top:20px; }
+  @media (max-width:1023px) {
+    .pd-card-offset { margin-top:0; }
+    .pd-doodles     { display:none; }   /* too cluttered on narrow screens */
+  }
+
+  /* Freeze blobs/doodles for prefers-reduced-motion */
+  @media (prefers-reduced-motion:reduce) {
+    .pd-blob-1,.pd-blob-2,.pd-blob-3 { animation:none !important; }
+    .pd-doodle-1,.pd-doodle-2,.pd-doodle-3,.pd-doodle-4,.pd-doodle-5 { animation:none !important; }
   }
 `;
 
@@ -1834,42 +1880,74 @@ function StatsSection() {
    ─ ProgrammesSection below is UNCHANGED and still used on all other routes ─
 ═══════════════════════════════════════════════════════════════════════════════ */
 
-/** Per-card config — theme colour + href only (framer-motion card needs no icon/rgb) */
-const PD_CARDS = [
-  { id:"playgroup",    color:"#EC210F", href:"/playgroup"    },
-  { id:"nursery",      color:"#2E90FA", href:"/nursery"      },
-  { id:"kindergarten", color:"#12B76A", href:"/kindergarten" },
-  { id:"happy-times",  color:"#FB6514", href:"/happy-times"  },
-] as const;
+/** Per-card config including the chunky icon sticker (Change 3c) */
+const PD_CARDS: Array<{
+  id: string; color: string; href: string;
+  StickerIcon: React.ElementType;
+}> = [
+  { id:"playgroup",    color:"#EC210F", href:"/playgroup",    StickerIcon: Puzzle   },
+  { id:"nursery",      color:"#2E90FA", href:"/nursery",      StickerIcon: Pencil   },
+  { id:"kindergarten", color:"#12B76A", href:"/kindergarten", StickerIcon: BookOpen },
+  { id:"happy-times",  color:"#FB6514", href:"/happy-times",  StickerIcon: Sun      },
+];
 
-/** Wraps a card in a gentle idle float — skipped automatically for prefers-reduced-motion */
+/** Wraps a card in a gentle idle float — skipped for prefers-reduced-motion */
 function FloatWrapper({ idx, children }: { idx: number; children: React.ReactNode }) {
   const noMotion = useReducedMotion();
   if (noMotion) return <>{children}</>;
   return (
     <motion.div
       animate={{ y: [0, -6, 0] }}
-      transition={{
-        duration: 3.5 + idx * 0.3,
-        repeat: Infinity,
-        ease: "easeInOut",
-        delay: idx * 0.4,
-      }}
+      transition={{ duration: 3.5 + idx * 0.3, repeat: Infinity, ease: "easeInOut", delay: idx * 0.4 }}
     >
       {children}
     </motion.div>
   );
 }
 
-/* Framer-motion stagger variants for the entrance animation */
+/* Framer-motion stagger variants */
 const pdContainerVariants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.09 } },
+  hidden:   {},
+  visible:  { transition: { staggerChildren: 0.09 } },
 };
 const pdItemVariants = {
   hidden:   { opacity: 0, y: 40 },
   visible:  { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as number[] } },
 };
+
+/* ── Doodle SVG shapes (Change 3b) ─────────────────────────────────────── */
+const StarDoodle = ({ color }: { color: string }) => (
+  <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden>
+    <polygon points="14,2 17,10.5 26.5,10.5 19.5,16.5 22,25 14,20 6,25 8.5,16.5 1.5,10.5 11,10.5"
+      fill={color} stroke="white" strokeWidth="1.5" strokeLinejoin="round"/>
+  </svg>
+);
+const CloudDoodle = ({ color }: { color: string }) => (
+  <svg width="48" height="32" viewBox="0 0 48 32" fill="none" aria-hidden>
+    <path d="M6 26 Q1 26 1 18 Q1 10 9 10 Q10 4 17 4 Q23 4 24 10 Q27 6 32 6 Q40 6 40 14 Q45 14 45 20 Q45 27 37 27 Z"
+      fill={color} stroke="white" strokeWidth="1.5" strokeLinejoin="round"/>
+  </svg>
+);
+const SquiggleDoodle = ({ color }: { color: string }) => (
+  <svg width="50" height="20" viewBox="0 0 50 20" fill="none" aria-hidden>
+    <path d="M2 10 Q8 1 14 10 Q20 19 26 10 Q32 1 38 10 Q44 17 48 10"
+      stroke={color} strokeWidth="3.5" strokeLinecap="round" fill="none"/>
+  </svg>
+);
+const BalloonDoodle = ({ color }: { color: string }) => (
+  <svg width="28" height="44" viewBox="0 0 28 44" fill="none" aria-hidden>
+    <ellipse cx="14" cy="14" rx="12" ry="13" fill={color} stroke="white" strokeWidth="1.5"/>
+    <path d="M14 27 Q10 33 13 39 Q14 41 15 39 Q18 33 14 27 Z" fill={color} stroke="white" strokeWidth="1"/>
+    <ellipse cx="9" cy="10" rx="2.5" ry="2" fill="white" opacity="0.3"/>
+  </svg>
+);
+const CrayonDoodle = ({ color }: { color: string }) => (
+  <svg width="18" height="44" viewBox="0 0 18 44" fill="none" aria-hidden>
+    <rect x="3" y="4" width="12" height="27" rx="3" fill={color} stroke="white" strokeWidth="1.5"/>
+    <polygon points="3,31 15,31 9,42" fill="#FFD700" stroke="white" strokeWidth="1.2" strokeLinejoin="round"/>
+    <rect x="3" y="4" width="12" height="8" rx="3" fill="white" opacity="0.25"/>
+  </svg>
+);
 
 function ProgrammesDummy() {
   const progMap = Object.fromEntries(
@@ -1880,7 +1958,14 @@ function ProgrammesDummy() {
 
   return (
     <section className="relative overflow-hidden"
-      style={{ background:"linear-gradient(170deg,#FFFBF5 0%,#FFF3EA 52%,#FFFBF5 100%)", padding:"100px 0 108px" }}>
+      style={{
+        backgroundImage: [
+          "radial-gradient(circle,rgba(33,27,46,.045) 1px,transparent 1px)",
+          "linear-gradient(170deg,#FFFBF5 0%,#FFF3EA 52%,#FFFBF5 100%)",
+        ].join(","),
+        backgroundSize: "24px 24px, 100% 100%",
+        padding: "100px 0 108px",
+      }}>
 
       {/* Cloud scallop top */}
       <div aria-hidden className="absolute top-0 inset-x-0 z-20 pointer-events-none">
@@ -1891,7 +1976,39 @@ function ProgrammesDummy() {
         </svg>
       </div>
 
-      {/* Aurora blobs */}
+      {/* ── Backdrop colour blobs — drift slowly behind the grid (Change 3a) ── */}
+      <div aria-hidden className="absolute inset-0 overflow-hidden pointer-events-none" style={{ zIndex:0 }}>
+        <div className="pd-blob-1 absolute rounded-full"
+          style={{ width:460, height:460, top:"26%", left:"-8%",
+            background:"radial-gradient(circle,rgba(236,33,15,.08) 0%,transparent 70%)", filter:"blur(44px)" }}/>
+        <div className="pd-blob-2 absolute rounded-full"
+          style={{ width:420, height:420, top:"16%", right:"-5%",
+            background:"radial-gradient(circle,rgba(46,144,250,.08) 0%,transparent 70%)", filter:"blur(42px)" }}/>
+        <div className="pd-blob-3 absolute rounded-full"
+          style={{ width:340, height:340, bottom:"10%", left:"40%",
+            background:"radial-gradient(circle,rgba(18,183,106,.08) 0%,transparent 70%)", filter:"blur(38px)" }}/>
+      </div>
+
+      {/* ── Floating doodles — visible in a still, bob gently (Change 3b) ── */}
+      <div aria-hidden className="pd-doodles absolute inset-0 overflow-hidden pointer-events-none" style={{ zIndex:1 }}>
+        <div className="pd-doodle-1 absolute" style={{ top:"13%", left:"2.5%" }}>
+          <StarDoodle color="#EC210F" />
+        </div>
+        <div className="pd-doodle-2 absolute" style={{ top:"11%", right:"2.5%" }}>
+          <CloudDoodle color="#2E90FA" />
+        </div>
+        <div className="pd-doodle-3 absolute" style={{ top:"35%", left:"49%", transform:"translateX(-50%)" }}>
+          <SquiggleDoodle color="#12B76A" />
+        </div>
+        <div className="pd-doodle-4 absolute" style={{ bottom:"18%", left:"5%" }}>
+          <BalloonDoodle color="#FB6514" />
+        </div>
+        <div className="pd-doodle-5 absolute" style={{ bottom:"22%", right:"3.5%" }}>
+          <CrayonDoodle color="#F59E0B" />
+        </div>
+      </div>
+
+      {/* Existing section aurora blobs */}
       <Orb cls="d-float-b w-[500px] h-[500px] -top-32 -right-16 opacity-30"
         style={{ background:"radial-gradient(circle,rgba(251,191,36,.18) 0%,transparent 65%)", filter:"blur(56px)" }}/>
       <Orb cls="d-float-c w-80 h-80 bottom-16 -left-16 opacity-25"
@@ -1899,15 +2016,16 @@ function ProgrammesDummy() {
       <StarDot cls="d-tw2 text-amber-300/50 top-[18%] left-[38%] w-3.5 h-3.5"/>
       <StarDot cls="d-tw3 text-amber-200/40 bottom-[22%] right-[12%] w-2.5 h-2.5"/>
 
+      {/* ── Inner container — full max-w-7xl so heading fits on one line ── */}
       <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
 
-        {/* ── Section header ── */}
-        <div className="du-fade text-center max-w-3xl mx-auto" style={{ marginBottom:56 }}>
+        {/* Section header — no max-width cap; .prog-heading handles font + nowrap */}
+        <div className="du-fade text-center" style={{ marginBottom:56 }}>
           <p style={{ fontSize:"0.63rem", fontWeight:700, letterSpacing:"0.22em",
             textTransform:"uppercase", color:"#EC210F", margin:"0 0 14px" }}>
             OUR PROGRAMMES
           </p>
-          <h2 className="section-title" style={{ fontSize:"clamp(1.9rem,3.4vw,2.9rem)", margin:"0 0 14px", lineHeight:1.15 }}>
+          <h2 className="prog-heading section-title" style={{ margin:"0 0 14px" }}>
             Programmes for Every Stage of{" "}
             <span style={{
               background:"linear-gradient(95deg,#F59E0B 0%,#EC210F 100%)",
@@ -1916,24 +2034,26 @@ function ProgrammesDummy() {
               Early Learning
             </span>
           </h2>
-          <p style={{ color:"#55506A", fontSize:"1.0625rem", lineHeight:1.72, margin:0 }}>
+          <p className="prog-subtitle" style={{ color:"#55506A", fontSize:"1.0625rem", lineHeight:1.72, margin:0 }}>
             Age-appropriate programmes designed to nurture your child's unique growth, curiosity, and confidence.
           </p>
         </div>
 
-        {/* ── 4-card grid: perspective on container, framer stagger entrance ── */}
+        {/* 4-card grid — perspective:1000px on container (required for 3D to read) */}
         <motion.div
-          className="programmes-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-5"
+          className="programmes-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8"
           style={{ perspective: "1000px" }}
           variants={pdContainerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.1 }}
         >
-          {PD_CARDS.map(({ id, color, href }, i) => {
+          {PD_CARDS.map(({ id, color, href, StickerIcon }, i) => {
             const prog = progMap[id] as { name:string; ageRange:string; description:string; image:string };
             return (
-              <motion.div key={id} variants={pdItemVariants}>
+              /* odd-index cards offset down ~20px (Change 3d); reset on mobile via .pd-card-offset */
+              <motion.div key={id} variants={pdItemVariants}
+                className={i % 2 === 1 ? "pd-card-offset" : ""}>
                 <FloatWrapper idx={i}>
                   <ProgrammeCard
                     title={prog.name}
@@ -1942,6 +2062,16 @@ function ProgrammesDummy() {
                     imageUrl={prog.image}
                     href={href}
                     themeColor={color}
+                    iconSticker={
+                      <div style={{
+                        width:40, height:40, borderRadius:"50%",
+                        background:color, border:"2.5px solid white",
+                        boxShadow:"0 3px 12px rgba(0,0,0,.26)",
+                        display:"flex", alignItems:"center", justifyContent:"center",
+                      }}>
+                        <StickerIcon size={18} color="white" strokeWidth={2.5}/>
+                      </div>
+                    }
                   />
                 </FloatWrapper>
               </motion.div>
@@ -1949,8 +2079,8 @@ function ProgrammesDummy() {
           })}
         </motion.div>
 
-        {/* ── "View All Programmes" button ── */}
-        <div className="du-fade text-center" style={{ marginTop:52 }}>
+        {/* "View All Programmes" button */}
+        <div className="du-fade text-center" style={{ marginTop:60 }}>
           <a href="/programmes"
             className="group inline-flex items-center gap-2.5 rounded-full px-9 py-3.5 text-sm font-semibold border border-border/80 bg-white hover:bg-muted transition-all duration-200 hover:-translate-y-0.5 shadow-sm"
             style={{ textDecoration:"none" }}>

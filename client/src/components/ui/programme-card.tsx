@@ -1,16 +1,20 @@
 /**
- * ProgrammeCard — framer-motion parallax card
- * Adapted from 21st.dev @ravikatiyar162/parallax-card
- * Used ONLY on /dummy. Does not affect any shared component.
+ * ProgrammeCard — framer-motion parallax card (21st.dev @ravikatiyar162/parallax-card, adapted)
+ * Used ONLY on /dummy. Does not touch any shared component.
  *
- * Visual mechanics:
- *  • perspective: 1000px on the grid container (set by the parent)
- *  • motion.a rotates on X/Y via useSpring-smoothed mouse position
- *  • Inner panel sits at translateZ(50px) — the "raised" clay surface
- *  • Photo   motion.div: z=30, translateY follows mouse Y (photo travel)
- *  • Text    motion.div: z=60, translateY moves OPPOSITE to photo → depth parallax
- *  • whileTap: scale(0.97) spring — works on both desktop click and mobile tap
- *  • prefers-reduced-motion: static claymorphic card, no tilt / parallax / float
+ * 3-D mechanics (Change 2 verification):
+ *  • perspective: 1000px set on the GRID container by the parent (ProgrammesDummy)
+ *  • motion.a   → rotateX/Y via useSpring (stiffness 300 / damping 30), ±10 deg
+ *  • inner panel  → translateZ(50px)  — raises the whole surface toward the viewer
+ *  • photo layer  → z:30 + translateY zImg  — follows mouse Y
+ *  • text layer   → z:60 + translateY zTxt  — opposite direction → depth separation
+ *  • whileTap: scale(0.97) spring — desktop click + mobile tap
+ *  • prefers-reduced-motion: static card with static accents/glow/sticker, no tilt/parallax
+ *
+ * Visible-at-rest creative layer (Change 3c):
+ *  • 3px colored top accent bar
+ *  • soft glow halo behind card (always faintly on, full on hover)
+ *  • iconSticker badge pinned top-left, slightly overlapping photo edge
  */
 
 import * as React from "react";
@@ -23,34 +27,34 @@ import {
 } from "framer-motion";
 
 export interface ProgrammeCardProps {
-  title:       string;
-  ageLabel:    string;
-  description: string;
-  imageUrl:    string;
-  href:        string;
-  themeColor:  string; // hex, e.g. "#EC210F"
+  title:        string;
+  ageLabel:     string;
+  description:  string;
+  imageUrl:     string;
+  href:         string;
+  themeColor:   string;            // hex e.g. "#EC210F"
+  iconSticker?: React.ReactNode;   // chunky badge pinned to top-left corner
 }
 
 export function ProgrammeCard({
-  title, ageLabel, description, imageUrl, href, themeColor,
+  title, ageLabel, description, imageUrl, href, themeColor, iconSticker,
 }: ProgrammeCardProps) {
   const shouldReduceMotion = useReducedMotion();
+  const [hovered, setHovered] = React.useState(false);
 
   /* ── Motion values ─────────────────────────────────────────────────────── */
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
-
-  // Spring smoothing — feels physical, not instant
   const xs = useSpring(mx, { stiffness: 300, damping: 30 });
   const ys = useSpring(my, { stiffness: 300, damping: 30 });
 
-  // Card tilt (outer shell)
+  // Card tilt — ±10 deg (subtle, premium feel)
   const rotateX = useTransform(ys, [-0.5, 0.5], ["10deg", "-10deg"]);
   const rotateY = useTransform(xs, [-0.5, 0.5], ["-10deg", "10deg"]);
 
   // Parallax travel — photo and text move in opposite directions on mouse Y
-  const zImg = useTransform(ys, [-0.5, 0.5], [-14, 14]);   // photo: follows mouse
-  const zTxt = useTransform(ys, [-0.5, 0.5], [14, -14]);   // text:  opposite → depth
+  const zImg = useTransform(ys, [-0.5, 0.5], [-14, 14]);  // follows mouse
+  const zTxt = useTransform(ys, [-0.5, 0.5], [14, -14]);  // opposite → depth
 
   const onMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (shouldReduceMotion) return;
@@ -58,9 +62,31 @@ export function ProgrammeCard({
     mx.set((e.clientX - r.left) / r.width  - 0.5);
     my.set((e.clientY - r.top)  / r.height - 0.5);
   };
-  const onLeave = () => { mx.set(0); my.set(0); };
+  const onLeave = () => { mx.set(0); my.set(0); setHovered(false); };
 
-  /* ── Shared inner content (same markup for both paths) ─────────────────── */
+  /* ── Reusable decorative sub-elements ─────────────────────────────────── */
+
+  // 3px top accent bar — clipped to card's rounded top corners by parent overflow:hidden
+  const AccentBar = () => (
+    <div aria-hidden style={{
+      position: "absolute", top: 0, left: 0, right: 0, height: 3,
+      background: themeColor, zIndex: 2, pointerEvents: "none",
+    }} />
+  );
+
+  // Soft glow halo — always faintly on, brightens on hover
+  const GlowHalo = ({ bright }: { bright: boolean }) => (
+    <div aria-hidden style={{
+      position: "absolute", inset: -8, borderRadius: 32,
+      background: `${themeColor}1e`,           // ~12% opacity
+      filter: "blur(22px)", zIndex: -1,
+      pointerEvents: "none", willChange: "opacity",
+      opacity: bright ? 1 : 0.55,
+      transition: "opacity 0.4s ease",
+    }} />
+  );
+
+  /* ── Shared photo / text block ─────────────────────────────────────────── */
   const Photo = ({ asMotion }: { asMotion: boolean }) => {
     const inner = (
       <>
@@ -108,18 +134,25 @@ export function ProgrammeCard({
     return <div className="flex flex-1 flex-col p-5">{inner}</div>;
   };
 
-  /* ── Reduced-motion static card ─────────────────────────────────────────── */
+  /* ── Reduced-motion: static card, all creative accents still visible ───── */
   if (shouldReduceMotion) {
     return (
       <a href={href} className="group relative block h-[420px] w-full rounded-[24px]"
         style={{ textDecoration: "none" }}>
+        <GlowHalo bright={false} />
         <div className="absolute inset-0 rounded-[24px]"
           style={{ background: `linear-gradient(160deg, ${themeColor}22, ${themeColor}0d)` }} />
         <div className="relative flex h-full flex-col overflow-hidden rounded-[22px] bg-white"
-          style={{ boxShadow: "0 8px 24px rgba(33,27,46,.12)", transition: "box-shadow .3s ease" }}>
+          style={{ boxShadow: "0 8px 24px rgba(33,27,46,.12)" }}>
+          <AccentBar />
           <Photo asMotion={false} />
           <Text asMotion={false} />
         </div>
+        {iconSticker && (
+          <div aria-hidden style={{ position: "absolute", top: -12, left: 14, zIndex: 20 }}>
+            {iconSticker}
+          </div>
+        )}
       </a>
     );
   }
@@ -129,27 +162,41 @@ export function ProgrammeCard({
     <motion.a
       href={href}
       onMouseMove={onMove}
+      onMouseEnter={() => setHovered(true)}
       onMouseLeave={onLeave}
       whileTap={{ scale: 0.97 }}
       style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
       className="group relative block h-[420px] w-full rounded-[24px] cursor-pointer"
       aria-label={`${title}: ${ageLabel}. ${description}. Learn more.`}
     >
-      {/* Soft theme-colour wash behind the raised panel */}
+      {/* Glow halo — faint at rest, full brightness on hover */}
+      <GlowHalo bright={hovered} />
+
+      {/* Soft theme-colour tint wash behind raised panel */}
       <div className="absolute inset-0 rounded-[24px]"
         style={{ background: `linear-gradient(160deg, ${themeColor}22, ${themeColor}0d)` }} />
 
-      {/* Raised inner panel — translateZ(50px) lifts it toward the viewer */}
+      {/* Raised inner panel — translateZ(50px) lifts the whole surface */}
       <div
         className="relative flex h-full flex-col overflow-hidden rounded-[22px] bg-white shadow-[0_18px_40px_rgba(33,27,46,0.14)]"
         style={{ transform: "translateZ(50px)", transformStyle: "preserve-3d" }}
       >
+        <AccentBar />
         {/* Photo layer — travels WITH mouse Y */}
         <Photo asMotion={true} />
-
-        {/* Text layer — travels AGAINST mouse Y → depth separation */}
+        {/* Text layer — travels AGAINST mouse Y → visible depth separation */}
         <Text asMotion={true} />
       </div>
+
+      {/* Icon sticker — pops above the photo corner in 3-D space */}
+      {iconSticker && (
+        <div aria-hidden style={{
+          position: "absolute", top: -12, left: 14, zIndex: 20,
+          transform: "translateZ(80px)",   // above inner panel's 50px
+        }}>
+          {iconSticker}
+        </div>
+      )}
     </motion.a>
   );
 }

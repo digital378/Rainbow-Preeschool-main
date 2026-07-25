@@ -1,0 +1,65 @@
+# PROGRAMMES /dummy — 3 precise changes. Edit ONLY this section on /dummy.
+# If Programmes is a shared component, edit the /dummy copy only. Do not touch
+# nav, hero, learning-environment, About, or footer. Revert anything that spreads.
+
+## CHANGE 1 — Heading + subtitle each on ONE line (desktop)
+- The heading "Programmes for Every Stage of Early Learning" currently wraps to two
+  lines. Remove any hard <br> between "Stage of" and "Early Learning" so it's one
+  inline string (keep "Early Learning" in the orange gradient span).
+- Desktop (≥1024px): force both onto a single line and scale to fit:
+    .prog-heading  { white-space: nowrap; font-size: clamp(1.9rem, 3.4vw, 3rem);
+                     line-height: 1.1; }
+    .prog-subtitle { white-space: nowrap; max-width: none; }
+  Widen the section's inner container if needed (max-width ~1200px) so neither
+  clips. 
+- Mobile (<1024px): set BOTH back to white-space: normal so they wrap normally and
+  never overflow the screen.
+
+## CHANGE 2 — VERIFY the 3D is actually running (do not skip)
+- The ProgrammeCard must visibly rotate on mousemove and its photo layer must slide
+  opposite the text layer (translateZ parallax). If it doesn't:
+  * confirm framer-motion is installed and imported;
+  * confirm the OUTER motion element has style transformStyle:'preserve-3d' and the
+    inner panel + photo + text each have their own translateZ;
+  * confirm perspective:1000px is set on the GRID container (without it, rotation
+    looks flat).
+- Reduce rotation to ±10deg (subtle, premium), spring stiffness 300 / damping 30.
+
+## CHANGE 3 — Add a VISIBLE creative layer (reads as playful even at rest)
+Add these as decorative, non-interactive elements BEHIND/AROUND the cards
+(pointer-events:none, aria-hidden), reusing the site's rainbow spectrum:
+a) BACKDROP: 2–3 large soft blurred colour blobs (red/blue/green at ~8% opacity)
+   drifting slowly behind the grid (20–30s ease-in-out loops), + a faint dotted
+   polka pattern on the cream background. Gives the section depth instead of flat cream.
+b) FLOATING DOODLES: small SVG shapes — a star, a cloud, a squiggle, a balloon,
+   a crayon — scattered in the margins and gaps between cards, each bobbing gently
+   (translateY ±6px, 4–6s, phase-varied). These are visible in a still and signal "fun."
+c) CARD IDENTITY (visible without hover): 
+   - give each card a 3px colored top accent bar in its theme colour;
+   - a soft colored glow behind each card (theme colour, ~14% , blurred) that's
+     always faintly on, brighter on hover;
+   - a small chunky ICON STICKER pinned to each card's top-left corner, slightly
+     overlapping the photo edge so it "pops out" of the frame (Playgroup→blocks,
+     Nursery→pencil, Kindergarten→book, Happy Times→sun).
+d) PLAYFUL LAYOUT: offset the 2nd and 4th cards downward by ~20px (alternating
+   heights) so the row feels hand-placed, not a rigid grid. Keep alignment tidy
+   on mobile (reset offsets to 0 below 1024px).
+
+## KEEP / BRAND
+- Do not change any card's title, age band, description, or Learn More link, the
+  eyebrow, or the "View All Programmes" button. Red #EC210F leads (RPS); the other
+  card colours are a suggested supporting spectrum. Decorative art only — invent no
+  new claims or copy.
+
+## MOTION HYGIENE
+- transform/opacity only; will-change:transform on animated layers; blobs/doodles
+  are cheap SVG/CSS, not heavy filters. prefers-reduced-motion: freeze blobs,
+  doodles, float, tilt, and parallax — show the static creative layer (accents,
+  glow, stickers, offsets) only.
+
+## DELIVER
+Show /dummy Programmes at desktop 1440 (confirm heading AND subtitle each render on
+ONE line) and mobile 390 (confirm both wrap cleanly). Include a short screen
+RECORDING moving the cursor across a card so the 3D tilt + photo/text parallax are
+visible — a static screenshot will not show them. Confirm nothing outside this
+section changed.
