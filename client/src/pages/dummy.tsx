@@ -1973,26 +1973,26 @@ function ProgrammesDummy() {
     if (!grid) return;
     if (matchMedia("(prefers-reduced-motion:reduce)").matches) return;
 
-    const cards = grid.querySelectorAll<HTMLElement>(".prog-card");
-
-    /* Start cards hidden so ScrollTrigger entrance reveals them */
-    gsap.set(cards, { opacity:0, y:40 });
+    const cards = Array.from(grid.querySelectorAll<HTMLElement>(".prog-card"));
 
     /* ── 4. Scroll-in entrance — staggered 3D flip-up ── */
+    /* gsap.fromTo explicitly declares both ends so GSAP never guesses */
     const ctx = gsap.context(() => {
-      gsap.from(cards, {
-        opacity:0, y:40, rotationX:-18,
-        transformOrigin:"50% 100%",
-        duration:.6, stagger:.09, ease:"back.out(1.6)",
-        immediateRender:false,
-        scrollTrigger:{ trigger:grid, start:"top 85%" },
-        onComplete() {
-          /* ── 5. Idle float — outer card only, never pc-inner ── */
-          cards.forEach((c, i) =>
-            gsap.to(c, { y:"-=6", duration:3.5 + i*.3, yoyo:true, repeat:-1, ease:"sine.inOut" })
-          );
-        },
-      });
+      gsap.fromTo(
+        cards,
+        { opacity:0, y:40, rotationX:-18, transformOrigin:"50% 100%" },
+        {
+          opacity:1, y:0, rotationX:0,
+          duration:.6, stagger:.09, ease:"back.out(1.6)",
+          scrollTrigger:{ trigger:grid, start:"top 88%" },
+          onComplete() {
+            /* ── 5. Idle float — outer card only, never pc-inner ── */
+            cards.forEach((c, i) =>
+              gsap.to(c, { y:"-=6", duration:3.5 + i*.3, yoyo:true, repeat:-1, ease:"sine.inOut" })
+            );
+          },
+        }
+      );
     }, grid);
 
     return () => ctx.revert();
