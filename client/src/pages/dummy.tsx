@@ -16,7 +16,7 @@ import {
   ArrowRight, Phone, Users, Star, MapPin, Shield, Award,
   Sparkles, Bus, Gamepad2, FileText, BookOpen, Palette,
   GraduationCap, Lock, Heart, Play, ChevronDown,
-  Volume2, VolumeX, Puzzle, ShieldCheck,
+  Volume2, VolumeX, Puzzle, ShieldCheck, Sun,
 } from "lucide-react";
 import { SiWhatsapp } from "react-icons/si";
 
@@ -280,6 +280,50 @@ const STYLES = `
     .rs-lift { transition:none !important; }
     .rs-pop { opacity:1 !important;transform:none !important;transition:none !important; }
     .rs-shine { transition:none !important; }
+  }
+
+  /* ══ Programme Dummy cards (PD) ════════════════════════════════════════════ */
+  @keyframes pd-float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-4px)} }
+
+  .pd-card {
+    position:relative; z-index:1;
+    border-radius:24px; overflow:hidden;
+    background:white;
+    border:1px solid rgba(33,27,46,.07);
+    box-shadow:0 4px 20px rgba(33,27,46,.07),0 1px 4px rgba(33,27,46,.04);
+    transition:box-shadow 0.35s ease;
+    will-change:transform;
+    display:flex; flex-direction:column;
+  }
+  /* Photo zoom */
+  .pd-img {
+    display:block; width:100%; height:240px;
+    object-fit:cover; object-position:center;
+    transition:transform 0.7s cubic-bezier(.22,1,.36,1);
+  }
+  /* Icon badge top-left */
+  .pd-icon-badge {
+    transition:transform 0.3s cubic-bezier(.34,1.56,.64,1);
+  }
+  /* Age pill top-right */
+  .pd-age-pill {
+    transition:transform 0.3s cubic-bezier(.34,1.56,.64,1);
+  }
+  /* CTA arrow */
+  .pd-arrow { transition:transform 0.25s cubic-bezier(.22,1,.36,1); flex-shrink:0; }
+
+  /* Hover child states — driven by data-hov attribute so they compose with JS tilt */
+  [data-hov="1"] .pd-img       { transform:scale(1.06); }
+  [data-hov="1"] .pd-icon-badge{ transform:scale(1.06); }
+  [data-hov="1"] .pd-age-pill  { transform:scale(1.06); }
+  [data-hov="1"] .pd-arrow     { transform:translateX(6px); }
+
+  @media (prefers-reduced-motion:reduce) {
+    .pd-card { will-change:auto; animation:none !important; }
+    [data-hov="1"] .pd-img,
+    [data-hov="1"] .pd-icon-badge,
+    [data-hov="1"] .pd-age-pill { transform:none !important; }
+    [data-hov="1"] .pd-arrow    { transform:none !important; }
   }
 `;
 
@@ -1766,6 +1810,213 @@ function StatsSection() {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════════
+   SECTION: PROGRAMMES DUMMY — Storybook Spotlight Cards (/dummy only)
+   ─ ProgrammesSection below is UNCHANGED and still used on all other routes ─
+═══════════════════════════════════════════════════════════════════════════════ */
+
+/** Per-card config for the dummy redesign */
+const PD_CARDS = [
+  { id:"playgroup",    color:"#EC210F", rgb:"236,33,15",   Icon:Puzzle,        href:"/playgroup",    floatDelay:0.0 },
+  { id:"nursery",      color:"#2E90FA", rgb:"46,144,250",  Icon:Palette,       href:"/nursery",      floatDelay:1.0 },
+  { id:"kindergarten", color:"#12B76A", rgb:"18,183,106",  Icon:GraduationCap, href:"/kindergarten", floatDelay:2.0 },
+  { id:"happy-times",  color:"#FB6514", rgb:"251,101,20",  Icon:Sun,           href:"/happy-times",  floatDelay:3.0 },
+] as const;
+
+/** Single Storybook Spotlight Card with custom tilt + glow */
+function PDBCard({ prog, color, rgb, Icon, href, floatDelay, entranceDelay }: {
+  prog: { name: string; ageRange: string; description: string; image: string };
+  color: string; rgb: string;
+  Icon: React.ElementType;
+  href: string; floatDelay: number; entranceDelay: number;
+}) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const raf     = useRef(0);
+  const [hov, setHov] = useState(false);
+
+  const onMove = (e: React.MouseEvent) => {
+    const el = cardRef.current;
+    if (!el) return;
+    const r  = el.getBoundingClientRect();
+    const cx = (e.clientX - r.left) / r.width  - 0.5;
+    const cy = (e.clientY - r.top)  / r.height - 0.5;
+    cancelAnimationFrame(raf.current);
+    raf.current = requestAnimationFrame(() => {
+      el.style.transform = `perspective(900px) rotateX(${-cy * 8}deg) rotateY(${cx * 8}deg) translateY(-10px) scale3d(1.02,1.02,1.02)`;
+      el.style.transition = "transform 0.08s linear";
+    });
+  };
+
+  const onLeave = () => {
+    const el = cardRef.current;
+    if (!el) return;
+    cancelAnimationFrame(raf.current);
+    el.style.transition = "transform 0.65s cubic-bezier(.22,1,.36,1)";
+    el.style.transform   = "";
+    setHov(false);
+  };
+
+  return (
+    /* du-fade on outermost so entrance stagger applies cleanly */
+    <div className="du-fade" style={{ transitionDelay:`${entranceDelay}ms`, position:"relative" }}>
+      {/* Radial glow — sits BEHIND card, blooms on hover */}
+      <div aria-hidden style={{
+        position:"absolute", inset:-16, borderRadius:36,
+        background:`radial-gradient(circle,rgba(${rgb},.13) 0%,transparent 65%)`,
+        opacity: hov ? 1 : 0.3,
+        transition:"opacity 0.4s ease",
+        pointerEvents:"none", zIndex:0,
+      }}/>
+      {/* Float wrapper — animates independently of the entrance / tilt */}
+      <div style={{ animation:`pd-float 4s ease-in-out ${floatDelay}s infinite`, position:"relative", zIndex:1 }}>
+        {/* Card */}
+        <div
+          ref={cardRef}
+          className="pd-card"
+          data-hov={hov ? "1" : "0"}
+          style={{
+            boxShadow: hov
+              ? `0 20px 52px rgba(${rgb},.18),0 4px 16px rgba(33,27,46,.06)`
+              : "0 4px 20px rgba(33,27,46,.07),0 1px 4px rgba(33,27,46,.04)",
+          }}
+          onMouseMove={onMove}
+          onMouseEnter={() => setHov(true)}
+          onMouseLeave={onLeave}
+        >
+          {/* ── Photo ── */}
+          <div style={{ position:"relative", height:240, overflow:"hidden", flexShrink:0 }}>
+            <img className="pd-img" src={prog.image}
+              alt={`${prog.name} at Rainbow Preschool`} loading="lazy"/>
+            {/* Colour scrim — bottom→top at ~18% opacity */}
+            <div aria-hidden style={{
+              position:"absolute", inset:0, pointerEvents:"none",
+              background:`linear-gradient(to top,rgba(${rgb},.18) 0%,transparent 40%)`,
+            }}/>
+            {/* Icon badge — top-left, rounded-square pastel tint */}
+            <div className="pd-icon-badge" style={{
+              position:"absolute", top:12, left:12,
+              width:38, height:38, borderRadius:11,
+              background:`rgba(${rgb},.16)`,
+              border:`1px solid rgba(${rgb},.22)`,
+              backdropFilter:"blur(8px)", WebkitBackdropFilter:"blur(8px)",
+              display:"flex", alignItems:"center", justifyContent:"center",
+            }}>
+              <Icon size={17} style={{ color }} strokeWidth={2.2}/>
+            </div>
+            {/* Age pill — top-right, theme fill */}
+            <span className="pd-age-pill" style={{
+              position:"absolute", top:12, right:12,
+              background: color, color:"white",
+              fontSize:"0.68rem", fontWeight:700, letterSpacing:"0.03em", lineHeight:1.4,
+              padding:"4px 10px", borderRadius:999,
+              boxShadow:`0 2px 8px rgba(${rgb},.40)`,
+            }}>
+              {prog.ageRange}
+            </span>
+          </div>
+
+          {/* ── Body ── */}
+          <div style={{ padding:"20px 22px 22px", display:"flex", flexDirection:"column", gap:8, flex:1 }}>
+            <h3 style={{
+              fontFamily:"var(--font-heading,inherit)", fontWeight:600,
+              fontSize:"1.05rem", color, margin:0, letterSpacing:"-0.01em",
+            }}>
+              {prog.name}
+            </h3>
+            <p style={{ fontSize:"0.875rem", color:"#55506A", lineHeight:1.65, margin:0, flex:1 }}>
+              {prog.description}
+            </p>
+            <a href={href} style={{
+              marginTop:6, display:"inline-flex", alignItems:"center", gap:6,
+              fontSize:"0.875rem", fontWeight:600, color, textDecoration:"none",
+            }}>
+              Learn More
+              <ArrowRight size={14} className="pd-arrow"/>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ProgrammesDummy() {
+  const progMap = Object.fromEntries(
+    programmes.filter(p => ["playgroup","nursery","kindergarten","happy-times"].includes(p.id))
+              .map(p => [p.id, p])
+  );
+
+  return (
+    <section className="relative overflow-hidden"
+      style={{ background:"linear-gradient(170deg,#FFFBF5 0%,#FFF3EA 52%,#FFFBF5 100%)", padding:"100px 0 108px" }}>
+
+      {/* Cloud scallop — top divider (same SVG as LearningEnvironmentSection) */}
+      <div aria-hidden className="absolute top-0 inset-x-0 z-20 pointer-events-none">
+        <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"
+          style={{ display:"block", width:"100%", height:80 }}>
+          <path d="M0,80 L0,42 Q60,4 120,42 Q180,80 240,42 Q300,4 360,42 Q420,80 480,42 Q540,4 600,42 Q660,80 720,42 Q780,4 840,42 Q900,80 960,42 Q1020,4 1080,42 Q1140,80 1200,42 Q1260,4 1320,42 Q1380,80 1440,42 L1440,0 L0,0 Z"
+            fill="white"/>
+        </svg>
+      </div>
+
+      {/* Aurora blobs */}
+      <Orb cls="d-float-b w-[500px] h-[500px] -top-32 -right-16 opacity-30"
+        style={{ background:"radial-gradient(circle,rgba(251,191,36,.18) 0%,transparent 65%)", filter:"blur(56px)" }}/>
+      <Orb cls="d-float-c w-80 h-80 bottom-16 -left-16 opacity-25"
+        style={{ background:"radial-gradient(circle,rgba(236,33,15,.10) 0%,transparent 65%)", filter:"blur(44px)" }}/>
+      <StarDot cls="d-tw2 text-amber-300/50 top-[18%] left-[38%] w-3.5 h-3.5"/>
+      <StarDot cls="d-tw3 text-amber-200/40 bottom-[22%] right-[12%] w-2.5 h-2.5"/>
+
+      <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
+
+        {/* ── Section header ── */}
+        <div className="du-fade text-center max-w-3xl mx-auto" style={{ marginBottom:56 }}>
+          <p style={{ fontSize:"0.63rem", fontWeight:700, letterSpacing:"0.22em",
+            textTransform:"uppercase", color:"#EC210F", margin:"0 0 14px" }}>
+            OUR PROGRAMMES
+          </p>
+          <h2 className="section-title" style={{ fontSize:"clamp(1.9rem,3.4vw,2.9rem)", margin:"0 0 14px", lineHeight:1.15 }}>
+            Programmes for Every Stage of{" "}
+            <span style={{
+              background:"linear-gradient(95deg,#F59E0B 0%,#EC210F 100%)",
+              WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent", backgroundClip:"text",
+            }}>
+              Early Learning
+            </span>
+          </h2>
+          <p style={{ color:"#55506A", fontSize:"1.0625rem", lineHeight:1.72, margin:0 }}>
+            Age-appropriate programmes designed to nurture your child's unique growth, curiosity, and confidence.
+          </p>
+        </div>
+
+        {/* ── 4-card grid ── */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-5">
+          {PD_CARDS.map(({ id, color, rgb, Icon, href, floatDelay }, i) => (
+            <PDBCard
+              key={id}
+              prog={progMap[id] as { name:string; ageRange:string; description:string; image:string }}
+              color={color} rgb={rgb} Icon={Icon} href={href}
+              floatDelay={floatDelay}
+              entranceDelay={i * 90}
+            />
+          ))}
+        </div>
+
+        {/* ── "View All Programmes" button ── */}
+        <div className="du-fade text-center" style={{ marginTop:52 }}>
+          <a href="/programmes"
+            className="group inline-flex items-center gap-2.5 rounded-full px-9 py-3.5 text-sm font-semibold border border-border/80 bg-white hover:bg-muted transition-all duration-200 hover:-translate-y-0.5 shadow-sm"
+            style={{ textDecoration:"none" }}>
+            View All Programmes
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-150"/>
+          </a>
+        </div>
+
+      </div>
+    </section>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
    SECTION: PROGRAMMES — 3D hover cards with image parallax
 ═══════════════════════════════════════════════════════════════════════════════ */
 function ProgrammesSection() {
@@ -2310,7 +2561,7 @@ export default function Dummy() {
         </svg>
       </div>
 
-      <ProgrammesSection />
+      <ProgrammesDummy />
 
       {/* Wave */}
       <div className="relative -mt-px overflow-hidden pointer-events-none" style={{ height: 64 }}>

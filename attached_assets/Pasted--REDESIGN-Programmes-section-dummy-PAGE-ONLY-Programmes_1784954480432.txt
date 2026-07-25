@@ -1,0 +1,101 @@
+# REDESIGN — Programmes section, /dummy PAGE ONLY
+# ("Programmes for Every Stage of Early Learning" — the 4 programme cards)
+
+## HARD SCOPE (read first, obey exactly)
+1. ALL changes apply ONLY to the /dummy route. Nothing you do may alter any other
+   page. If the Programmes section is a SHARED component used on other routes,
+   DO NOT edit the shared component in place — instead render a /dummy-scoped copy
+   (e.g. ProgrammesDummy) used only on /dummy, and leave the original untouched.
+2. Within /dummy, edit ONLY this Programmes section: its eyebrow "OUR PROGRAMMES",
+   the heading, the subtitle, the 4 programme cards, and the "View All Programmes"
+   button. Do NOT touch the nav, the "little explorers" learning-environment
+   section, the About/mascot section, or the footer.
+3. If any edit changes the height/layout of another section or another page, STOP
+   and revert it.
+
+## SYNC WITH THE EXISTING BUILD (do not invent new styling)
+- REUSE the site's existing design tokens — the same CSS variables / Tailwind
+  theme values / utility classes already used by the About stat-tiles and the
+  learning-environment feature chips. Do NOT hardcode new fonts, new greys, or a
+  new shadow scale. Specifically reuse:
+  * the heading font + the near-black ink colour used in other section headings;
+  * the eyebrow style (uppercase, letter-spaced, red #EC210F) already on
+    "ABOUT US" / "OUR LEARNING ENVIRONMENT";
+  * the card surface (white, radius ~24px, hairline border, the existing soft
+    shadow token);
+  * the rounded-square pastel ICON-BADGE style from the feature chips
+    (Play-Based Learning etc.);
+  * the cream aurora background and the cloud/scallop section divider.
+- Heading sync touch: keep the exact heading text, but render the last two words
+  "Early Learning" in the SAME orange→red gradient used on "little explorers"
+  and "Rainbow Preschool". Everything else in the heading stays ink.
+
+## PRESERVE EXACTLY (do not reword, translate, shorten, or invent)
+- 4 cards, this order, these exact titles + age badges + existing descriptions:
+    Playgroup     · "1.5 - 2.5 years"
+    Nursery       · "2.5 - 3.5 years"
+    Kindergarten  · "3.5 - 5.5 years"
+    Happy Times   · "2 - 10 years"
+- Each card's PHOTO, its "Learn More" link + destination, the subtitle
+  "Age-appropriate programmes designed to nurture your child's unique growth,
+  curiosity, and confidence.", and the "View All Programmes" button + destination.
+- Do NOT add stats, bullet lists, new age ranges, or new claims. Visual + motion only.
+
+## CONCEPT — "Storybook Spotlight Cards" (matches the build's card language)
+Keep the responsive grid (4 across desktop, 2-up tablet, 1-per-row or horizontal
+snap-scroll mobile). Upgrade each card with a per-programme colour identity drawn
+from the site's spectrum, real hover depth, and the build's icon-badge + pill
+language.
+
+### Per-card theme colour (one variable per card drives badge, glow, CTA, gradient)
+- Playgroup    → red    #EC210F  (brand lead)
+- Nursery      → blue   #2E90FA
+- Kindergarten → green  #12B76A
+- Happy Times  → orange #FB6514
+(Non-red colours are a suggested supporting spectrum pending brand approval.)
+
+### Card anatomy (exact)
+- Card: white, radius 24px, existing hairline + soft-shadow token, overflow:hidden.
+- Photo: top of card, FIXED height 240px (desktop), object-fit:cover,
+  object-position:center. Over the lower ~35% of the photo add a bottom→top
+  gradient scrim in the card's theme colour at ~18% opacity so the title blends in.
+- Age badge: keep top-right on the photo, as a glossy rounded pill — theme-colour
+  fill, white text, soft shadow (same pill radius/weight as the existing badges).
+- NEW small icon badge: top-LEFT on the photo, the rounded-square pastel badge
+  style from the feature chips, in the card's theme tint, holding a simple relevant
+  glyph (Playgroup→blocks, Nursery→pencil, Kindergarten→book, Happy Times→sun).
+  Icons only, no new text.
+- Body: title (heading font, 600, in theme colour) → existing description
+  (body font, muted ink) → "Learn More →" with the arrow in the theme colour.
+- A faint radial glow in the theme colour sits behind the card, very subtle at rest.
+
+## MOTION (one system; transform/opacity only, eased, 60fps; match site's smoothness)
+1. ENTRANCE on scroll-in: cards fade + rise (opacity 0→1, translateY 24px→0),
+   staggered 90ms left→right, ease cubic-bezier(.34,1.56,.64,1).
+2. IDLE: each card floats translateY 0→-4px, 4s sine, infinite, phase-varied so
+   they don't bob in lockstep.
+3. HOVER (desktop) / TAP (mobile):
+   - lift translateY(-10px) + tilt toward cursor (perspective 900px, rotateX/Y
+     max 8°), springy damped return;
+   - shadow grows and tints to the theme colour; theme glow blooms;
+   - photo scales to 1.06 (clipped by overflow:hidden);
+   - both badges pop scale 1.06; "Learn More" arrow slides translateX(6px).
+   Transitions 300–400ms, eased, never linear.
+
+## MOBILE (390)
+- 1-per-row OR a horizontal snap-scroll rail that peeks the next card; tap targets
+  ≥44px. Keep the entrance stagger, float, tap-to-lift, both badges, and theme glow.
+  Reduce shadow blur for perf. Smooth 60fps.
+
+## ACCESSIBILITY & PERFORMANCE
+- Cards stay real semantic links/buttons with visible keyboard focus rings; tilt
+  and glow are decorative and must never block clicks.
+- transform/opacity only, will-change on hover, photos lazy-loaded.
+- prefers-reduced-motion: no tilt, no float, no image zoom — keep only theme colour,
+  badges, and a simple hover shadow.
+
+## DELIVER
+Show the /dummy Programmes section at desktop 1440 and mobile 390 with a short
+recording of the entrance stagger + one card hover. Confirm in your summary that
+(a) no other section and no other page changed, and (b) all card text, age bands,
+and links are byte-for-byte the same as before.
