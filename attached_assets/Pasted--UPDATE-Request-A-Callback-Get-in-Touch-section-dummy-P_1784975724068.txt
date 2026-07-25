@@ -1,0 +1,57 @@
+# UPDATE — "Request A Callback / Get in Touch" section. /dummy PAGE ONLY.
+# Edit ONLY this section (left intro + image, right form card). Don't touch other
+# sections/nav/footer. Revert anything that spreads. This is a working lead form —
+# DO NOT change field names, the required (*) fields, the submit action/endpoint, or
+# the dropdown options. Keep it fully functional. Visual + UX polish only.
+
+## LAYOUT / ALIGNMENT
+- Two columns on desktop, equal height: the left column (heading + image + trust
+  cues) matches the height of the right form card — no short image leaving a gap.
+- Mobile (≤768px): stack — intro + image, then the form card full width.
+
+## LEFT COLUMN — elevate the image + add trust cues
+- Keep eyebrow "GET IN TOUCH", heading "Request A Callback", and the subtitle.
+- Reframe the photo: rounded 24px, soft shadow, a thin brand-tint gradient frame,
+  and a subtle decorative accent behind it (a soft rotated colour block OR dotted
+  pattern) for depth. Gentle float (translateY ±5px, 4s) + light cursor parallax
+  (desktop only). If the current image has a low-res "RAINBOW" watermark, swap it
+  for a clean version of the same photo if available (don't stretch/distort).
+- Under the image add a reassurance row (reuse existing copy if present):
+  "🔒 No spam · One call from our admissions team · Completely free".
+- Optional quick-contact buttons (only if you have verified numbers — otherwise use
+  a [verify number] placeholder, don't invent): "Call Now" and a green "WhatsApp".
+
+## RIGHT COLUMN — polish the form (keep it clean + accessible)
+- Keep ALL fields/labels/required markers/options exactly: Parent Name*, Phone
+  Number*, Email, Child's Name*, Child's Age* (select), Programme* (select),
+  Preferred Centre* (select), Message (Optional). Keep the "Request Callback" button.
+- Field styling: consistent rounded inputs (radius 12px), 1px border, subtle inner
+  shadow, comfortable padding, ≥44px tall. Add a small left icon per field for
+  warmth (person, phone, envelope, child, cake/age, book/programme, pin/centre,
+  chat/message). Selects get a custom chevron matching the set.
+- FOCUS state: border animates to RPS red #EC210F with a soft red glow ring; the
+  label highlights. Smooth 150–200ms, no jumpiness. Keep labels ALWAYS visible
+  (don't use placeholder-only labels).
+- INLINE VALIDATION: on blur, validate required fields + email format + phone
+  format; show a small red message directly under that field, and a green check when
+  valid. Errors appear next to their field (never only at the top).
+- SUBMIT: full-width red button, hover lift + subtle shine; on submit show a loading
+  spinner state, then a clear success message ("Thanks! Our admissions team will
+  call you shortly.") — a small confetti burst on success is a nice touch. Do NOT
+  change where/how the data is actually submitted.
+
+## MOTION / ENTRANCE
+- Section entrance: heading + image + form fields fade/rise in with a light stagger
+  on scroll-in. transform/opacity only. Keep it subtle — this is a form, not a toy.
+
+## ACCESSIBILITY / PERF
+- Every input has a <label for>/id; errors linked via aria-describedby; required
+  fields aria-required; visible focus rings; the success message in an aria-live
+  region. Fully keyboard-operable. prefers-reduced-motion: drop float/parallax/
+  entrance/confetti — keep focus, validation, and hover states (those aid usability).
+
+## DELIVER
+Show /dummy "Request A Callback" at desktop 1440 + mobile 390 with a short recording
+of: focusing a field (red glow), a validation error + fix, and the submit success
+state. Confirm all fields/options/submission are unchanged and nothing outside this
+section changed.
