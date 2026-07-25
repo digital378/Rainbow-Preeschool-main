@@ -3762,18 +3762,12 @@ function FindNearestCentreSection() {
   const toMapId  = (cardId: string) => cardId === "anand-nagar" ? "anandnagar" : cardId;
   const fromMapId = (mapId:  string) => mapId  === "anandnagar" ? "anand-nagar" : mapId;
 
-  // Called by ThaneMap3D onActiveChange (pin click / toggle)
+  // Called by SchoolTownMap3D onActiveChange — both auto-tour bus stops AND user clicks.
+  // ONLY update highlight state here. No scrollIntoView / scrollTo / hash change:
+  // the bus auto-tour must never move the page regardless of where the user is.
   const handleActiveChange = useCallback((mapId: string | null) => {
     const cardId = mapId ? fromMapId(mapId) : null;
     setActive(cardId);
-    if (cardId) {
-      const el = cardRefs.current[cardId];
-      if (el) {
-        el.scrollIntoView({ behavior: "smooth", block: "nearest" });
-        setFlashId(cardId);
-        setTimeout(() => setFlashId(null), 1700);
-      }
-    }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
