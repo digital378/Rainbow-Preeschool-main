@@ -2386,10 +2386,8 @@ const wcuItem = {
 interface WcuTileProps {
   feature: typeof features[number];
   idx: number;
-  isHero?: boolean;
-  className?: string;
 }
-function WcuTile({ feature, idx, isHero, className }: WcuTileProps) {
+function WcuTile({ feature, idx }: WcuTileProps) {
   const tileRef = useRef<HTMLDivElement>(null);
   const noMotion = useReducedMotion();
   const Icon3D = WCU_ICONS[idx];
@@ -2415,48 +2413,44 @@ function WcuTile({ feature, idx, isHero, className }: WcuTileProps) {
   };
 
   return (
-    <motion.div variants={wcuItem} style={{ transformStyle: "preserve-3d" }}>
+    <motion.div variants={wcuItem} style={{ transformStyle: "preserve-3d", height: "100%" }}>
       <div
         ref={tileRef}
-        className={cn("wcu-tile rounded-2xl border overflow-hidden", `bg-gradient-to-br ${feature.bg}`, feature.border, className)}
+        className={cn("wcu-tile rounded-2xl border overflow-hidden h-full", `bg-gradient-to-br ${feature.bg}`, feature.border)}
         style={{
           "--spotlight-color": feature.accent + "2d",
           "--icon-shadow": feature.accent + "55",
           boxShadow: "0 4px 24px rgba(0,0,0,.07)",
-          minHeight: isHero ? undefined : 160,
         } as React.CSSProperties}
         onPointerMove={onMove}
         onPointerLeave={onLeave}
         tabIndex={0}
       >
-        {/* Cursor spotlight */}
         <div className="wcu-spotlight" aria-hidden />
-        {/* Hero: slow diagonal shine sweep */}
-        {isHero && <div className="wcu-hero-shine" aria-hidden />}
 
-        <div className={cn("relative z-10 flex flex-col h-full", isHero ? "p-8 md:p-10" : "p-6")}>
-          {/* 3D icon — floats above tile surface via translateZ in CSS */}
+        {/* Identical top-aligned layout in every tile */}
+        <div className="relative z-10 flex flex-col h-full"
+          style={{ padding: 28, alignItems: "flex-start" }}>
+
+          {/* 3D icon — fixed 72px height, same in every tile */}
           <div
             className={cn("wcu-icon-3d", `wcu-icon-bob-${idx}`)}
-            style={{ width: isHero ? 96 : 80, height: isHero ? 96 : 80, marginBottom: isHero ? 28 : 18 }}
+            style={{ width: 72, height: 72, marginBottom: 16, flexShrink: 0 }}
           >
             <Icon3D />
           </div>
 
-          <div>
-            <h3 className={cn("font-heading font-bold text-foreground",
-                isHero ? "text-2xl md:text-[1.75rem] mb-4" : "text-[15px] mb-2")}
-              style={{ letterSpacing: isHero ? "-0.025em" : "-0.01em" }}>
-              {feature.title}
-            </h3>
-            <p className={cn("text-muted-foreground leading-relaxed",
-                isHero ? "text-[16px] leading-[1.72] max-w-md" : "text-sm")}>
-              {feature.description}
-            </p>
-          </div>
+          <h3 className="font-heading font-bold text-foreground text-[15px]"
+            style={{ letterSpacing: "-0.01em", marginBottom: 8 }}>
+            {feature.title}
+          </h3>
+          <p className="text-sm text-muted-foreground leading-relaxed">
+            {feature.description}
+          </p>
 
+          {/* Tagline pins to tile bottom via mt-auto; absent tiles simply end after description */}
           {feature.highlight && (
-            <div className="mt-auto pt-6 border-t border-red-200/55">
+            <div className="mt-auto pt-5 border-t border-red-200/55" style={{ width: "100%" }}>
               <p className="text-sm font-semibold text-red-600">{feature.highlight}</p>
             </div>
           )}
@@ -2505,9 +2499,6 @@ function WhyChooseSection() {
         </div>
       </div>
 
-      <StarDot cls="d-tw1 text-red-300/55 top-[8%] left-[30%] w-4 h-4" />
-      <StarDot cls="d-tw3 text-amber-300/45 bottom-[15%] right-[26%] w-3 h-3" />
-
       <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
         {/* Section header */}
         <div className="du-fade max-w-2xl mb-14">
@@ -2518,29 +2509,18 @@ function WhyChooseSection() {
           </p>
         </div>
 
-        {/* ── Bento grid — perspective on container so all tiles share the same 3D space ── */}
+        {/* ── Even 3×2 grid — all tiles equal width/height, no spans ── */}
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6"
-          style={{ perspective: "1000px" }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+          style={{ perspective: "1000px", gridAutoRows: "1fr" }}
           variants={wcuContainer}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.08 }}
         >
-          {/* Hero tile — Safety & CCTV (spans 2 cols × 2 rows on desktop) */}
-          <WcuTile
-            feature={heroF} idx={0} isHero
-            className="md:col-span-2 md:row-span-2 min-h-[300px] md:min-h-[480px]"
-          />
-
-          {/* Right column */}
-          <WcuTile feature={restF[0]} idx={1} />
-          <WcuTile feature={restF[1]} idx={2} />
-
-          {/* Bottom row */}
-          <WcuTile feature={restF[2]} idx={3} />
-          <WcuTile feature={restF[3]} idx={4} />
-          <WcuTile feature={restF[4]} idx={5} />
+          {features.map((f, i) => (
+            <WcuTile key={f.title} feature={f} idx={i} />
+          ))}
         </motion.div>
       </div>
     </section>

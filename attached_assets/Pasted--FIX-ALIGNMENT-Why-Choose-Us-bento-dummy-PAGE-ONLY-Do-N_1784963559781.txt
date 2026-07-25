@@ -1,0 +1,49 @@
+# FIX ALIGNMENT — "Why Choose Us" bento. /dummy PAGE ONLY.
+# Do NOT change any copy, colours, or the 3D icons — layout/alignment only.
+# Touch only this section. If a change affects anything else, revert it.
+
+## ROOT CAUSE (fix both)
+# 1) The Safety card spans taller than the two tiles beside it → big empty band.
+# 2) Inside tiles, the icon is top-pinned but text is vertically centered → rows
+#    don't line up. Make every tile use the SAME top-aligned internal layout.
+
+## GRID — one even 3×2 grid, all tiles equal height
+- Remove any row-span / col-span / "hero" sizing on the Safety card. All six tiles
+  are equal cells.
+- Desktop (≥1024px):
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 1fr;          /* equal row heights — kills the empty band */
+    align-items: stretch;
+    gap: 24px;
+- Order stays: Row1 = Safety & CCTV · Certified Teachers · Hygiene First;
+  Row2 = 30:2 Student-Teacher · GPS Transport · Play-Based Learning.
+- Tablet (640–1023px): grid-template-columns: repeat(2, 1fr);
+- Mobile (<640px): grid-template-columns: 1fr;  (single column, equal spacing)
+
+## INTERNAL TILE LAYOUT — apply IDENTICALLY to all six tiles
+- box: display:flex; flex-direction:column; height:100%; padding:28px;
+  text-align:left; align-items:flex-start;
+- 3D icon wrapper: fixed height 72px, margin-bottom:16px (same in every tile — do
+  NOT vertically center it).
+- title: directly under the icon, same font-size/weight across all tiles.
+- description: directly under the title, margin-top:8px.
+- Safety's tagline ("CCTV Monitored · Verified Pickup · 100% Female Staff"):
+  margin-top:auto so it pins to the tile bottom; tiles without a tagline just end
+  after the description. This keeps all tile bottoms even.
+- No vertical centering anywhere; everything flows top→down with equal gaps.
+
+## DECOR CLEANUP
+- Keep the floating doodles ONLY in the section's outer margins (pointer-events:
+  none, aria-hidden). Remove any doodle/sparkle that currently lands inside the grid
+  or in a gap between tiles (there's a stray sparkle floating in the middle now).
+
+## KEEP
+- All titles, descriptions, the tagline, tile colours, and the 3D icons exactly as
+  they are. Keep the spotlight/tilt hover behaviour. RPS red #EC210F leads.
+
+## DELIVER
+Show /dummy "Why Choose Us" at desktop 1440 + mobile 390. Success = six tiles in a
+clean even grid, all the same height per row, icons and titles aligned across every
+tile, no empty band on the right, no stray decor inside the grid. Confirm nothing
+else changed.
