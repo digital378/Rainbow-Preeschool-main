@@ -1,0 +1,62 @@
+# UPGRADE — "Our Methodology" section into a LIVING curriculum orbit. /dummy ONLY.
+# Edit ONLY this section (eyebrow "OUR METHODOLOGY", heading, the two paragraphs,
+# the chips, "View Our Programmes" CTA, and the right-side orbit diagram). Don't
+# touch nav, other sections, or the footer. If a change spreads, revert it.
+
+## PRESERVE (no copy changes, invent nothing)
+- Keep the eyebrow, heading "Research-Based Curriculum for Every Child", both
+  paragraphs, the CTA + its link, and the 6 chips (Art, STEM, Sports, Skills,
+  Aptitude, Language).
+- Keep the 6 orbit nodes with their exact labels, icons, and colours:
+  Art Studio (orange) · Maths & Science (blue) · Sports & Movement (teal) ·
+  Skill Development (green) · General Aptitude (purple) · Bilingual Education
+  (yellow) · central hub = red book. RPS red #EC210F leads; other colours are the
+  existing supporting spectrum.
+
+## FIX 1 — even, tidy orbit layout (current placement is uneven)
+- Place the 6 nodes evenly on ONE circle around the hub, 60° apart, at angles
+  -90°, -30°, 30°, 90°, 150°, 210° (top, then clockwise), all at the SAME radius.
+- Each node = coloured circle + icon; its LABEL sits just outside the node along
+  its radius: right-side nodes label to the right (text-anchor start), left-side to
+  the left (anchor end), top/bottom centered. Consistent gap between node and label
+  so nothing overlaps or looks ragged.
+- Build it as an SVG (or a relative square container with absolutely-positioned
+  nodes via trig) so it stays symmetric and scales cleanly.
+
+## FIX 2 — make it ALIVE (transform/opacity only, eased, 60fps)
+1. ENTRANCE (scroll-in): hub scales 0→1 first; then each node flies out FROM the
+   hub to its position (translate + scale 0→1), staggered 80ms, back-out ease; the
+   connector lines draw in (stroke-dasharray 0→full).
+2. HUB: gentle breathe (scale 1→1.03, 3.5s sine, infinite) with a soft pulsing glow ring.
+3. IDLE ORBIT: the whole constellation rotates ±3° very slowly (~14s, sine),
+   and COUNTER-ROTATE the node/label groups so text stays upright and readable.
+   (Keep it subtle — this is ambient life, not a spinner.)
+4. CONNECTOR PULSE: a small dot in each node's colour travels hub→node along its
+   line on a slow loop, phase-varied.
+5. HOVER a node: it scales 1.15 + lifts, its line thickens and glows in its colour,
+   its colour blooms; the other nodes dim to ~0.6. On leave, all reset (damped).
+
+## FIX 3 — link the chips to the orbit (meaningful + delightful)
+- The 6 chips map 1:1 to the nodes: Art→Art Studio, STEM→Maths & Science,
+  Sports→Sports & Movement, Skills→Skill Development, Aptitude→General Aptitude,
+  Language→Bilingual Education.
+- Hovering/focusing a chip highlights its matching node (same bloom + line glow),
+  and hovering a node highlights its chip. Keyboard-accessible both ways.
+
+## MOBILE (≤768px)
+- The orbit is too wide to keep 1:1. Scale the SVG down to fit the column OR switch
+  to: hub on top, then the 6 nodes as a 2-col grid of coloured pills (icon + label)
+  below it, tap-to-highlight (with its chip). Keep colours, icons, labels, entrance
+  stagger. No tiny tap targets (<44px). Keep it clean and centered.
+
+## ACCESSIBILITY / PERF
+- Nodes/chips are focusable with visible focus rings; motion is decorative and must
+  not block interaction. SVG has a title/desc; labels are real text, not image.
+- prefers-reduced-motion: no rotation, breathe, pulse, or fly-out — render the tidy
+  static orbit (even placement, lines drawn) with hover/chip highlight only.
+
+## DELIVER
+Show /dummy "Our Methodology" at desktop 1440 + mobile 390, plus a short recording
+of: the fly-out entrance, the gentle orbit + connector pulse, and a chip lighting up
+its matching node on hover. Confirm nothing outside this section changed and all
+copy/labels are unchanged.
