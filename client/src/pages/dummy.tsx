@@ -19,6 +19,9 @@ import {
   Volume2, VolumeX, Puzzle, ShieldCheck, Sun,
 } from "lucide-react";
 import { SiWhatsapp } from "react-icons/si";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import confetti from "canvas-confetti";
 
 /* ═══════════════════════════════════════════════════════════════════════════════
    SCOPED STYLES
@@ -282,48 +285,66 @@ const STYLES = `
     .rs-shine { transition:none !important; }
   }
 
-  /* ══ Programme Dummy cards (PD) ════════════════════════════════════════════ */
-  @keyframes pd-float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-4px)} }
-
-  .pd-card {
-    position:relative; z-index:1;
-    border-radius:24px; overflow:hidden;
-    background:white;
-    border:1px solid rgba(33,27,46,.07);
-    box-shadow:0 4px 20px rgba(33,27,46,.07),0 1px 4px rgba(33,27,46,.04);
-    transition:box-shadow 0.35s ease;
-    will-change:transform;
-    display:flex; flex-direction:column;
+  /* ══ Claymorphic Toy Cards (pc-*) ── /dummy only ══════════════════════════ */
+  .prog-card {
+    perspective:900px; border-radius:24px; overflow:hidden;
+    position:relative; cursor:pointer; height:400px;
+    user-select:none; -webkit-user-select:none;
   }
-  /* Photo zoom */
-  .pd-img {
-    display:block; width:100%; height:240px;
-    object-fit:cover; object-position:center;
-    transition:transform 0.7s cubic-bezier(.22,1,.36,1);
+  .pc-inner {
+    transform-style:preserve-3d; width:100%; height:100%;
+    position:relative; will-change:transform; border-radius:24px;
+    box-shadow:0 18px 40px rgba(33,27,46,.14),inset 0 -3px 6px rgba(0,0,0,.05);
   }
-  /* Icon badge top-left */
-  .pd-icon-badge {
-    transition:transform 0.3s cubic-bezier(.34,1.56,.64,1);
+  .layer { position:absolute; }
+  .pc-photo { top:0; left:0; right:0; height:220px; border-radius:18px 18px 0 0; overflow:hidden; }
+  .pc-img   { width:100%; height:100%; object-fit:cover; object-position:center; display:block; }
+  .pc-scrim { position:absolute; inset:0; pointer-events:none; }
+  .pc-body  {
+    top:220px; left:0; right:0; bottom:0; padding:16px 20px 18px;
+    display:flex; flex-direction:column; gap:7px; border-radius:0 0 24px 24px;
   }
-  /* Age pill top-right */
-  .pd-age-pill {
-    transition:transform 0.3s cubic-bezier(.34,1.56,.64,1);
+  .pc-body h3 {
+    font-weight:600; font-size:1.05rem; margin:0; letter-spacing:-0.01em; line-height:1.25;
   }
-  /* CTA arrow */
-  .pd-arrow { transition:transform 0.25s cubic-bezier(.22,1,.36,1); flex-shrink:0; }
-
-  /* Hover child states — driven by data-hov attribute so they compose with JS tilt */
-  [data-hov="1"] .pd-img       { transform:scale(1.06); }
-  [data-hov="1"] .pd-icon-badge{ transform:scale(1.06); }
-  [data-hov="1"] .pd-age-pill  { transform:scale(1.06); }
-  [data-hov="1"] .pd-arrow     { transform:translateX(6px); }
-
+  .pc-body p {
+    font-size:0.83rem; color:#55506A; line-height:1.6; margin:0; flex:1;
+    display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;
+  }
+  .pc-body a {
+    display:inline-flex; align-items:center; gap:5px;
+    font-size:0.83rem; font-weight:600; text-decoration:none; margin-top:4px;
+  }
+  .pc-body a .pc-arrow { flex-shrink:0; transition:transform 0.22s cubic-bezier(.22,1,.36,1); }
+  .prog-card:hover .pc-body a .pc-arrow { transform:translateX(4px); }
+  .pc-age {
+    top:12px; right:12px; font-size:0.68rem; font-weight:700; letter-spacing:0.03em;
+    line-height:1.4; padding:4px 10px; border-radius:999px; color:white; white-space:nowrap;
+  }
+  .pc-icon {
+    top:12px; left:12px; width:36px; height:36px; border-radius:10px;
+    display:flex; align-items:center; justify-content:center;
+    backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+  }
+  .pc-glow { position:absolute; inset:0; pointer-events:none; border-radius:inherit; transition:opacity 0.4s ease; }
+  /* Focus ring */
+  .prog-card:focus-visible { outline:3px solid; outline-offset:4px; }
+  /* Mobile snap-scroll rail */
+  @media (max-width:639px) {
+    .programmes-grid {
+      display:flex; flex-direction:row; overflow-x:auto;
+      scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch;
+      gap:16px; padding:8px 24px 20px; scrollbar-width:none;
+    }
+    .programmes-grid::-webkit-scrollbar { display:none; }
+    .prog-card { scroll-snap-align:start; min-width:280px; flex-shrink:0; }
+  }
+  /* Reduced motion — static claymorphic, colour-shift hover only */
   @media (prefers-reduced-motion:reduce) {
-    .pd-card { will-change:auto; animation:none !important; }
-    [data-hov="1"] .pd-img,
-    [data-hov="1"] .pd-icon-badge,
-    [data-hov="1"] .pd-age-pill { transform:none !important; }
-    [data-hov="1"] .pd-arrow    { transform:none !important; }
+    .pc-inner { box-shadow:0 8px 24px rgba(33,27,46,.12) !important; }
+    .prog-card:hover .pc-inner { box-shadow:0 14px 34px rgba(33,27,46,.18) !important; }
+    .layer { transform:none !important; }
+    .pc-body a .pc-arrow { transition:none !important; }
   }
 `;
 
@@ -1814,132 +1835,169 @@ function StatsSection() {
    ─ ProgrammesSection below is UNCHANGED and still used on all other routes ─
 ═══════════════════════════════════════════════════════════════════════════════ */
 
-/** Per-card config for the dummy redesign */
+/** Per-card config — theme colour, icon, href */
 const PD_CARDS = [
-  { id:"playgroup",    color:"#EC210F", rgb:"236,33,15",   Icon:Puzzle,        href:"/playgroup",    floatDelay:0.0 },
-  { id:"nursery",      color:"#2E90FA", rgb:"46,144,250",  Icon:Palette,       href:"/nursery",      floatDelay:1.0 },
-  { id:"kindergarten", color:"#12B76A", rgb:"18,183,106",  Icon:GraduationCap, href:"/kindergarten", floatDelay:2.0 },
-  { id:"happy-times",  color:"#FB6514", rgb:"251,101,20",  Icon:Sun,           href:"/happy-times",  floatDelay:3.0 },
+  { id:"playgroup",    color:"#EC210F", rgb:"236,33,15",   Icon:Puzzle,        href:"/playgroup"    },
+  { id:"nursery",      color:"#2E90FA", rgb:"46,144,250",  Icon:Palette,       href:"/nursery"      },
+  { id:"kindergarten", color:"#12B76A", rgb:"18,183,106",  Icon:GraduationCap, href:"/kindergarten" },
+  { id:"happy-times",  color:"#FB6514", rgb:"251,101,20",  Icon:Sun,           href:"/happy-times"  },
 ] as const;
 
-/** Single Storybook Spotlight Card with custom tilt + glow */
-function PDBCard({ prog, color, rgb, Icon, href, floatDelay, entranceDelay }: {
-  prog: { name: string; ageRange: string; description: string; image: string };
-  color: string; rgb: string;
-  Icon: React.ElementType;
-  href: string; floatDelay: number; entranceDelay: number;
+/**
+ * Claymorphic Toy Card — 4 mandatory 3D mechanics:
+ *  1) perspective:900px on outer (.prog-card)
+ *  2) transform-style:preserve-3d on inner (.pc-inner)
+ *  3) .layer children each initialised with translateZ(<depth>px) via GSAP
+ *  4) rotateX/Y driven by live pointermove, not static hover
+ */
+function PDBCard({ prog, color, rgb, Icon, href, idx }: {
+  prog: { name:string; ageRange:string; description:string; image:string };
+  color:string; rgb:string; Icon:React.ElementType; href:string; idx:number;
 }) {
   const cardRef = useRef<HTMLDivElement>(null);
-  const raf     = useRef(0);
-  const [hov, setHov] = useState(false);
 
-  const onMove = (e: React.MouseEvent) => {
-    const el = cardRef.current;
-    if (!el) return;
-    const r  = el.getBoundingClientRect();
-    const cx = (e.clientX - r.left) / r.width  - 0.5;
-    const cy = (e.clientY - r.top)  / r.height - 0.5;
-    cancelAnimationFrame(raf.current);
-    raf.current = requestAnimationFrame(() => {
-      el.style.transform = `perspective(900px) rotateX(${-cy * 8}deg) rotateY(${cx * 8}deg) translateY(-10px) scale3d(1.02,1.02,1.02)`;
-      el.style.transition = "transform 0.08s linear";
-    });
-  };
+  useEffect(() => {
+    const card = cardRef.current;
+    if (!card) return;
+    if (matchMedia("(prefers-reduced-motion:reduce)").matches) return;
 
-  const onLeave = () => {
-    const el = cardRef.current;
-    if (!el) return;
-    cancelAnimationFrame(raf.current);
-    el.style.transition = "transform 0.65s cubic-bezier(.22,1,.36,1)";
-    el.style.transform   = "";
-    setHov(false);
-  };
+    const inner  = card.querySelector<HTMLElement>(".pc-inner")!;
+    const layers = card.querySelectorAll<HTMLElement>(".layer");
+
+    /* ── Init Z depths via GSAP so x/y/scale compose cleanly ── */
+    layers.forEach(l => gsap.set(l, { z: +(l.dataset.depth ?? 0) }));
+    gsap.set(inner, { rotationX:0, rotationY:0 });
+
+    /* ── 1. Pointer-tracked tilt + intra-card parallax ── */
+    const rX = gsap.quickTo(inner, "rotationX", { duration:.4, ease:"power3.out" });
+    const rY = gsap.quickTo(inner, "rotationY", { duration:.4, ease:"power3.out" });
+
+    const onMove = (e: PointerEvent) => {
+      if (e.pointerType === "touch") return;           // no tilt on mobile touch
+      const r  = card.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width  - .5;
+      const py = (e.clientY - r.top)  / r.height - .5;
+      rY(px * 16);
+      rX(-py * 16);
+      layers.forEach(l => gsap.to(l, {
+        x: px * +(l.dataset.depth ?? 0) * .5,
+        y: py * +(l.dataset.depth ?? 0) * .5,
+        duration:.4, ease:"power3.out", overwrite:"auto",
+      }));
+    };
+    const onLeave = () => {
+      rX(0); rY(0);
+      gsap.to(layers, { x:0, y:0, duration:.6, ease:"elastic.out(1,.4)", overwrite:"auto" });
+    };
+
+    /* ── 2. Jelly press ── */
+    const onDown = () => gsap.to(inner, { scale:.96, duration:.12, overwrite:"auto" });
+    const onUp   = () => gsap.to(inner, { scale:1,  duration:.5,  ease:"elastic.out(1,.4)", overwrite:"auto" });
+
+    /* ── 3. Confetti burst on click ── */
+    const onClick = () => {
+      const r = card.getBoundingClientRect();
+      confetti({
+        particleCount:40, spread:55, startVelocity:28, scalar:.8,
+        colors:[color],
+        origin:{ x:(r.left + r.width/2) / window.innerWidth,
+                 y:(r.top  + r.height/3) / window.innerHeight },
+      });
+    };
+
+    card.addEventListener("pointermove",  onMove);
+    card.addEventListener("pointerleave", onLeave);
+    card.addEventListener("pointerdown",  onDown);
+    card.addEventListener("pointerup",    onUp);
+    card.addEventListener("click",        onClick);
+    return () => {
+      card.removeEventListener("pointermove",  onMove);
+      card.removeEventListener("pointerleave", onLeave);
+      card.removeEventListener("pointerdown",  onDown);
+      card.removeEventListener("pointerup",    onUp);
+      card.removeEventListener("click",        onClick);
+    };
+  }, [color]);
 
   return (
-    /* du-fade on outermost so entrance stagger applies cleanly */
-    <div className="du-fade" style={{ transitionDelay:`${entranceDelay}ms`, position:"relative" }}>
-      {/* Radial glow — sits BEHIND card, blooms on hover */}
-      <div aria-hidden style={{
-        position:"absolute", inset:-16, borderRadius:36,
-        background:`radial-gradient(circle,rgba(${rgb},.13) 0%,transparent 65%)`,
-        opacity: hov ? 1 : 0.3,
-        transition:"opacity 0.4s ease",
-        pointerEvents:"none", zIndex:0,
-      }}/>
-      {/* Float wrapper — animates independently of the entrance / tilt */}
-      <div style={{ animation:`pd-float 4s ease-in-out ${floatDelay}s infinite`, position:"relative", zIndex:1 }}>
-        {/* Card */}
-        <div
-          ref={cardRef}
-          className="pd-card"
-          data-hov={hov ? "1" : "0"}
-          style={{
-            boxShadow: hov
-              ? `0 20px 52px rgba(${rgb},.18),0 4px 16px rgba(33,27,46,.06)`
-              : "0 4px 20px rgba(33,27,46,.07),0 1px 4px rgba(33,27,46,.04)",
-          }}
-          onMouseMove={onMove}
-          onMouseEnter={() => setHov(true)}
-          onMouseLeave={onLeave}
-        >
-          {/* ── Photo ── */}
-          <div style={{ position:"relative", height:240, overflow:"hidden", flexShrink:0 }}>
-            <img className="pd-img" src={prog.image}
-              alt={`${prog.name} at Rainbow Preschool`} loading="lazy"/>
-            {/* Colour scrim — bottom→top at ~18% opacity */}
-            <div aria-hidden style={{
-              position:"absolute", inset:0, pointerEvents:"none",
-              background:`linear-gradient(to top,rgba(${rgb},.18) 0%,transparent 40%)`,
-            }}/>
-            {/* Icon badge — top-left, rounded-square pastel tint */}
-            <div className="pd-icon-badge" style={{
-              position:"absolute", top:12, left:12,
-              width:38, height:38, borderRadius:11,
-              background:`rgba(${rgb},.16)`,
-              border:`1px solid rgba(${rgb},.22)`,
-              backdropFilter:"blur(8px)", WebkitBackdropFilter:"blur(8px)",
-              display:"flex", alignItems:"center", justifyContent:"center",
-            }}>
-              <Icon size={17} style={{ color }} strokeWidth={2.2}/>
-            </div>
-            {/* Age pill — top-right, theme fill */}
-            <span className="pd-age-pill" style={{
-              position:"absolute", top:12, right:12,
-              background: color, color:"white",
-              fontSize:"0.68rem", fontWeight:700, letterSpacing:"0.03em", lineHeight:1.4,
-              padding:"4px 10px", borderRadius:999,
-              boxShadow:`0 2px 8px rgba(${rgb},.40)`,
-            }}>
-              {prog.ageRange}
-            </span>
-          </div>
+    <div ref={cardRef} className="prog-card" data-theme={color} tabIndex={0}>
+      <div className="pc-inner" style={{ background:`rgba(${rgb},.04)` }}>
 
-          {/* ── Body ── */}
-          <div style={{ padding:"20px 22px 22px", display:"flex", flexDirection:"column", gap:8, flex:1 }}>
-            <h3 style={{
-              fontFamily:"var(--font-heading,inherit)", fontWeight:600,
-              fontSize:"1.05rem", color, margin:0, letterSpacing:"-0.01em",
-            }}>
-              {prog.name}
-            </h3>
-            <p style={{ fontSize:"0.875rem", color:"#55506A", lineHeight:1.65, margin:0, flex:1 }}>
-              {prog.description}
-            </p>
-            <a href={href} style={{
-              marginTop:6, display:"inline-flex", alignItems:"center", gap:6,
-              fontSize:"0.875rem", fontWeight:600, color, textDecoration:"none",
-            }}>
-              Learn More
-              <ArrowRight size={14} className="pd-arrow"/>
-            </a>
-          </div>
+        {/* ① Photo — depth 10 */}
+        <div className="pc-photo layer" data-depth="10">
+          <img className="pc-img" src={prog.image}
+            alt={`${prog.name} at Rainbow Preschool`} loading="lazy"/>
+          <div className="pc-scrim" aria-hidden
+            style={{ background:`linear-gradient(to top,rgba(${rgb},.20) 0%,transparent 40%)` }}/>
         </div>
+
+        {/* ② Body — depth 35 */}
+        <div className="pc-body layer" data-depth="35">
+          <h3 style={{ color, fontFamily:"var(--font-heading,inherit)" }}>
+            {prog.name}
+          </h3>
+          <p>{prog.description}</p>
+          <a href={href} style={{ color }}>
+            Learn More
+            <ArrowRight size={13} className="pc-arrow"/>
+          </a>
+        </div>
+
+        {/* ③ Age pill — depth 60 */}
+        <span className="pc-age layer" data-depth="60"
+          style={{ background:color, boxShadow:`0 2px 8px rgba(${rgb},.45)` }}>
+          {prog.ageRange}
+        </span>
+
+        {/* ④ Icon badge — depth 75 */}
+        <div className="pc-icon layer" data-depth="75"
+          style={{ background:`rgba(${rgb},.16)`, border:`1px solid rgba(${rgb},.24)` }}>
+          <Icon size={17} style={{ color }} strokeWidth={2.2}/>
+        </div>
+
+        {/* Radial glow */}
+        <div className="pc-glow" aria-hidden
+          style={{ background:`radial-gradient(circle at 50% 50%,rgba(${rgb},.18) 0%,transparent 65%)` }}/>
       </div>
     </div>
   );
 }
 
 function ProgrammesDummy() {
+  const gridRef = useRef<HTMLDivElement>(null);
+
+  /* ── GSAP: entrance + idle float (skip for prefers-reduced-motion) ── */
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);               // idempotent, safe to call again
+    const grid = gridRef.current;
+    if (!grid) return;
+    if (matchMedia("(prefers-reduced-motion:reduce)").matches) return;
+
+    const cards = grid.querySelectorAll<HTMLElement>(".prog-card");
+
+    /* Start cards hidden so ScrollTrigger entrance reveals them */
+    gsap.set(cards, { opacity:0, y:40 });
+
+    /* ── 4. Scroll-in entrance — staggered 3D flip-up ── */
+    const ctx = gsap.context(() => {
+      gsap.from(cards, {
+        opacity:0, y:40, rotationX:-18,
+        transformOrigin:"50% 100%",
+        duration:.6, stagger:.09, ease:"back.out(1.6)",
+        immediateRender:false,
+        scrollTrigger:{ trigger:grid, start:"top 85%" },
+        onComplete() {
+          /* ── 5. Idle float — outer card only, never pc-inner ── */
+          cards.forEach((c, i) =>
+            gsap.to(c, { y:"-=6", duration:3.5 + i*.3, yoyo:true, repeat:-1, ease:"sine.inOut" })
+          );
+        },
+      });
+    }, grid);
+
+    return () => ctx.revert();
+  }, []);
+
   const progMap = Object.fromEntries(
     programmes.filter(p => ["playgroup","nursery","kindergarten","happy-times"].includes(p.id))
               .map(p => [p.id, p])
@@ -1949,7 +2007,7 @@ function ProgrammesDummy() {
     <section className="relative overflow-hidden"
       style={{ background:"linear-gradient(170deg,#FFFBF5 0%,#FFF3EA 52%,#FFFBF5 100%)", padding:"100px 0 108px" }}>
 
-      {/* Cloud scallop — top divider (same SVG as LearningEnvironmentSection) */}
+      {/* Cloud scallop top */}
       <div aria-hidden className="absolute top-0 inset-x-0 z-20 pointer-events-none">
         <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"
           style={{ display:"block", width:"100%", height:80 }}>
@@ -1989,14 +2047,12 @@ function ProgrammesDummy() {
         </div>
 
         {/* ── 4-card grid ── */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-5">
-          {PD_CARDS.map(({ id, color, rgb, Icon, href, floatDelay }, i) => (
-            <PDBCard
-              key={id}
+        <div ref={gridRef}
+          className="programmes-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-5">
+          {PD_CARDS.map(({ id, color, rgb, Icon, href }, i) => (
+            <PDBCard key={id}
               prog={progMap[id] as { name:string; ageRange:string; description:string; image:string }}
-              color={color} rgb={rgb} Icon={Icon} href={href}
-              floatDelay={floatDelay}
-              entranceDelay={i * 90}
+              color={color} rgb={rgb} Icon={Icon} href={href} idx={i}
             />
           ))}
         </div>

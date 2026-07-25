@@ -1,0 +1,127 @@
+# REVAMP — Programmes cards into REAL interactive 3D "Claymorphic Toy Cards"
+# /dummy PAGE ONLY. This replaces the flat card treatment currently there.
+
+## WHY THE LAST VERSION WAS FLAT — these 4 mechanics are MANDATORY, not optional:
+#   1. perspective: 900px on each card's OUTER wrapper.
+#   2. transform-style: preserve-3d on the card's INNER element.
+#   3. Inner layers (photo, badges, icon, text) each pushed to a different
+#      translateZ so they physically stack in depth.
+#   4. rotateX/rotateY driven by LIVE pointer position (mousemove), not a static
+#      hover state.
+# If any of these four is missing, the card is NOT done. A hover-lift alone is a fail.
+
+## HARD SCOPE
+- Apply ONLY to the /dummy route. If the Programmes section is a shared component,
+  render a /dummy-only copy (e.g. ProgrammesDummy) and leave the shared one
+  untouched. Do NOT edit the nav, hero, learning-environment, About, or footer.
+- If a change affects any other section or page, STOP and revert.
+
+## PRESERVE EXACTLY (visual/motion only — no content edits)
+- 4 cards, this order, exact titles + age badges + existing descriptions:
+    Playgroup "1.5 - 2.5 years" · Nursery "2.5 - 3.5 years"
+    Kindergarten "3.5 - 5.5 years" · Happy Times "2 - 10 years"
+- Keep every photo, each "Learn More" link + destination, the eyebrow
+  "OUR PROGRAMMES", the heading (keep "Early Learning" in the orange gradient),
+  the subtitle, and the "View All Programmes" button. Invent nothing.
+
+## SYNC WITH THE BUILD
+- Reuse existing tokens: cream aurora bg, the heading/eyebrow styles, the site's
+  card radius + shadow variables, and the pastel rounded-square icon-badge style
+  from the learning-environment feature chips. Do not introduce new fonts/greys.
+
+## PER-CARD THEME (one variable per card drives tint, glow, badge, CTA, confetti)
+- Playgroup red #EC210F (brand lead) · Nursery blue #2E90FA
+- Kindergarten green #12B76A · Happy Times orange #FB6514
+  (non-red = suggested supporting spectrum, pending brand approval)
+
+## CLAYMORPHIC CARD SURFACE (exact)
+- radius 24px; soft DOUBLE shadow (outer + subtle inner), no hard lines:
+  box-shadow: 0 18px 40px rgba(33,27,46,.14), inset 0 -3px 6px rgba(0,0,0,.05);
+- card background: very light tint of the theme colour (~6%) over white.
+- Photo layer: top, fixed 220px, object-fit:cover, radius 18px, with a
+  bottom→top theme-colour scrim at ~18% over its lower third.
+- Age badge: top-right glossy pill (theme fill, white text).
+- Icon badge: top-left rounded-square pastel badge (theme tint) with a simple
+  glyph: Playgroup→blocks, Nursery→pencil, Kindergarten→book, Happy Times→sun.
+- Body: title (heading font 600, theme colour) → existing description →
+  "Learn More →" (arrow in theme colour).
+
+## REQUIRED DOM (so layers can hold different depths)
+<article class="prog-card" data-theme="...">        /* perspective:900px */
+  <div class="pc-inner">                            /* transform-style:preserve-3d */
+    <div class="pc-photo layer"  data-depth="10">…</div>
+    <div class="pc-body  layer"  data-depth="35">…</div>
+    <span class="pc-age  layer"  data-depth="60">…</span>
+    <span class="pc-icon layer"  data-depth="75">…</span>
+    <div class="pc-glow"></div>                      /* theme radial glow */
+  </div>
+</article>
+/* init: each .layer gets transform: translateZ(<data-depth>px); higher depth =
+   pops further toward the viewer. This is what sells the 3D. */
+
+## MOTION — use GSAP + ScrollTrigger (reuse if already on the site) + canvas-confetti.
+## Wrap ALL of this in: if (!matchMedia('(prefers-reduced-motion:reduce)').matches){…}
+## transform/opacity only; will-change:transform on .pc-inner.
+
+// 1) POINTER-TRACKED 3D TILT + intra-card parallax (the core effect)
+gsap.utils.toArray('.prog-card').forEach(card => {
+  const inner  = card.querySelector('.pc-inner');
+  const layers = card.querySelectorAll('.layer');
+  const rX = gsap.quickTo(inner, 'rotationX', {duration:.4, ease:'power3.out'});
+  const rY = gsap.quickTo(inner, 'rotationY', {duration:.4, ease:'power3.out'});
+  card.addEventListener('pointermove', e => {
+    const r = card.getBoundingClientRect();
+    const px = (e.clientX - r.left)/r.width  - .5;   // -0.5..0.5
+    const py = (e.clientY - r.top )/r.height - .5;
+    rY(px * 16);            // up to ~8° each way
+    rX(-py * 16);
+    layers.forEach(l => gsap.to(l, {                 // deeper layers travel more
+      x: px * (+l.dataset.depth) * .5,
+      y: py * (+l.dataset.depth) * .5,
+      duration:.4, ease:'power3.out'}));
+  });
+  card.addEventListener('pointerleave', () => {
+    rX(0); rY(0);
+    gsap.to(layers, {x:0, y:0, duration:.6, ease:'elastic.out(1,.4)'});
+  });
+});
+
+// 2) JELLY PRESS (tactile) — pointerdown squish, release bounces back
+card.addEventListener('pointerdown', () => gsap.to(inner,{scale:.96,duration:.12}));
+card.addEventListener('pointerup',   () => gsap.to(inner,{scale:1,duration:.5,ease:'elastic.out(1,.4)'}));
+
+// 3) CONFETTI burst in the card's theme colour on click/tap (canvas-confetti)
+card.addEventListener('click', e => {
+  const r = card.getBoundingClientRect();
+  confetti({ particleCount:40, spread:55, startVelocity:28, scalar:.8,
+    colors:[themeColour], origin:{ x:(r.left+r.width/2)/innerWidth,
+                                   y:(r.top +r.height/3)/innerHeight }});
+});
+
+// 4) SCROLL-IN entrance (staggered, 3D flip-up)
+gsap.from('.prog-card', { opacity:0, y:40, rotationX:-18, transformOrigin:'50% 100%',
+  duration:.6, stagger:.09, ease:'back.out(1.6)',
+  scrollTrigger:{ trigger:'.programmes-grid', start:'top 85%' }});
+
+// 5) IDLE FLOAT — on the OUTER card (never on .pc-inner, so it won't fight the tilt)
+gsap.utils.toArray('.prog-card').forEach((c,i) =>
+  gsap.to(c, { y:'-=6', duration:3.5 + i*.3, yoyo:true, repeat:-1, ease:'sine.inOut' }));
+
+## MOBILE (390)
+- 1-per-row OR horizontal snap-scroll peeking the next card; tap targets ≥44px.
+- No pointer tilt on touch; instead: tap = jelly press + confetti + a small pop,
+  and let the intra-card layers parallax gently on scroll. Optional gyro tilt if
+  permission granted. Keep the entrance stagger and idle float. 60fps.
+
+## ACCESSIBILITY & PERF
+- Cards stay semantic links/buttons with visible focus rings; 3D/glow decorative,
+  must not block clicks. Photos lazy-loaded. Clamp confetti to click only.
+- prefers-reduced-motion: skip ALL of the above — show static claymorphic cards
+  (theme tint, badges, soft shadow) with a plain colour-shift on hover. No tilt,
+  float, confetti, or flip.
+
+## DELIVER
+Show /dummy Programmes at desktop 1440 and mobile 390 with a screen recording of:
+the scroll-in stagger, a card tilting/parallaxing under the cursor, and a tap
+confetti burst. Success = cards visibly rotate in 3D and their contents pop at
+different depths — NOT a flat hover-lift. Confirm no other section/page changed.
