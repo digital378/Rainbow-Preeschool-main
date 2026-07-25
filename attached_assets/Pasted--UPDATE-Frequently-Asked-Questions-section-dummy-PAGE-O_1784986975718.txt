@@ -1,0 +1,53 @@
+# UPDATE — "Frequently Asked Questions" section. /dummy PAGE ONLY.
+# Add a search bar + make the accordion creative and on-brand. Edit only this section
+# (eyebrow/heading, subtitle, the FAQ items, the "Reviewed By" card). Don't touch other
+# sections. PRESERVE every question and answer EXACTLY — do not reword or invent Q&A.
+# RPS red #EC210F leads.
+
+## ADD — a search bar (top of the FAQ list)
+- A rounded search input (magnifier icon, red focus glow) placeholder:
+  "Search questions… e.g. timings, safety, fees".
+- As the user types, filter the FAQ items live (case-insensitive) matching the QUESTION
+  text AND the answer text. Show only matches; smooth fade/reflow.
+- HIGHLIGHT the matched term inside the visible question (wrap matches in a soft
+  yellow/brand highlight).
+- Show a small count: "Showing X of 7". 
+- NO-RESULTS state: "No matches for '<term>'. Try another word — or ask us directly."
+  with a link to the callback/contact section (or a WhatsApp link). Never leave it blank.
+
+## REDESIGN — creative card accordion (replace the flat divider rows)
+- Each FAQ is a rounded CARD (radius 16px, white, hairline border, soft shadow), stacked
+  with a small gap — not flat lines.
+- Left of each question: a small brand-tinted round icon (e.g. a question-mark or a
+  relevant glyph). Right: a chevron that rotates 180° when open.
+- OPEN state: the card lifts slightly, gets a 2px red left-accent bar (or red ring), and
+  the answer expands with a smooth height + fade (measure content height / use
+  grid-rows or max-height transition). One open at a time is fine (accordion), or allow
+  multiple — pick one and keep it consistent.
+- Hover: subtle lift + the icon/chevron tint to red. Keyboard focus ring visible.
+- Section entrance: cards fade/rise in with an ~70ms stagger on scroll-in.
+- Keep the "Reviewed By — Rainbow Preschool Curriculum Team / Last updated…" card at the
+  bottom, restyled to match (rounded, soft). Keep its text exactly.
+
+## PLAYFUL TOUCHES (subtle, on-brand)
+- Faint decorative accents behind the section (a couple of soft colour blobs + a large
+  translucent "?" watermark), pointer-events:none, aria-hidden.
+- Optional: a friendly "Still have questions?" mini-CTA under the list linking to
+  Book Visit / WhatsApp (reuse existing links; invent no numbers).
+
+## SEO BONUS (optional, only with the real Q&A)
+- Emit FAQPage JSON-LD structured data for these questions/answers so they can qualify
+  for Google's FAQ rich results. Use the EXACT on-page text; add nothing not shown.
+
+## ACCESSIBILITY / MOTION / MOBILE
+- Use real <button> toggles with aria-expanded + aria-controls (or <details>/<summary>);
+  search input has a <label>; results count in an aria-live region.
+- transform/opacity + height only; prefers-reduced-motion: instant expand/collapse, no
+  stagger/lift (search + filtering still work).
+- Mobile: full-width cards, comfortable padding, ≥44px tap targets, search full width.
+
+## DELIVER
+Show /dummy FAQ at desktop 1440 + mobile 390 with a short recording of: typing in the
+search to filter + highlight, the no-results state, and opening/closing a card. Confirm
+all questions/answers and the "Reviewed By" text are unchanged, and nothing outside this
+section changed.

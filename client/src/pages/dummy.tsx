@@ -14,7 +14,7 @@ import { programmes, testimonials, branches } from "@shared/schema";
 import { centres } from "@shared/centre-data";
 import {
   ArrowRight, Phone, Users, Star, MapPin, Shield, Award,
-  Sparkles, Bus, Gamepad2, FileText, BookOpen, Palette,
+  Sparkles, Bus, Gamepad2, FileText, BookOpen, Palette, Search,
   GraduationCap, Lock, Heart, Play, ChevronDown,
   Volume2, VolumeX, Puzzle, ShieldCheck, Sun, Pencil,
   Mail, User, Calendar, MessageSquare, CheckCircle, AlertCircle, Smile,
@@ -30,7 +30,7 @@ import { ErrorBoundary } from "@/components/error-boundary";
 // unless webglOk confirms the browser has GPU support.
 const SchoolTownMap3D = lazy(() => import("@/components/SchoolTownMap3D"));
 import { Card, CardContent } from "@/components/ui/card";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+// Accordion removed — FAQSection now uses a bespoke card accordion
 import { LAST_UPDATED_DISPLAY, LAST_UPDATED_ISO } from "@shared/site-freshness";
 import { PLAYGROUP, NURSERY, KINDERGARTEN } from "@shared/programme-data";
 
@@ -499,6 +499,91 @@ const STYLES = `
     .wcu-tile:hover .wcu-icon-3d { transform:none !important; animation:none !important; }
     .wcu-hero-shine { animation:none !important; opacity:0 !important; }
     .wcu-spotlight  { display:none !important; }
+  }
+
+  /* ══ FAQ Section — card accordion + search ══════════════════════════════════ */
+  @keyframes faq-rise {
+    from { opacity:0; transform:translateY(26px); }
+    to   { opacity:1; transform:none; }
+  }
+  .faq-card { opacity:0; }
+  .faq-card.faq-entered { animation:faq-rise 0.52s cubic-bezier(.22,1,.36,1) both; }
+  .faq-card-inner {
+    border-radius:16px; background:#fff;
+    border:1px solid rgba(33,27,46,.08);
+    box-shadow:0 2px 10px rgba(33,27,46,.05);
+    overflow:hidden; position:relative;
+    transition:box-shadow 0.22s ease, transform 0.22s ease, border-color 0.22s ease;
+  }
+  .faq-card-inner:hover {
+    transform:translateY(-3px);
+    box-shadow:0 10px 32px rgba(33,27,46,.12), 0 2px 8px rgba(33,27,46,.05);
+  }
+  .faq-card-inner:hover .faq-icon-wrap { color:#EC210F !important; background:rgba(236,33,15,.13) !important; }
+  .faq-card-inner:hover .faq-chevron   { color:#EC210F !important; }
+  /* Red left-accent bar — scales in on open */
+  .faq-accent {
+    position:absolute; left:0; top:0; bottom:0; width:3px;
+    background:#EC210F; border-radius:3px 0 0 3px;
+    transform:scaleY(0); transform-origin:top;
+    transition:transform 0.28s cubic-bezier(.22,1,.36,1);
+  }
+  .faq-card-inner.faq-open .faq-accent { transform:scaleY(1); }
+  .faq-card-inner.faq-open {
+    border-color:rgba(236,33,15,.2);
+    box-shadow:0 12px 36px rgba(33,27,46,.13), 0 2px 8px rgba(33,27,46,.05);
+    transform:translateY(-2px);
+  }
+  /* Smooth height — CSS grid trick; also fades in */
+  .faq-body-wrap {
+    display:grid; grid-template-rows:0fr;
+    transition:grid-template-rows 0.32s cubic-bezier(.22,1,.36,1), opacity 0.26s ease;
+    opacity:0;
+  }
+  .faq-body-wrap.faq-open { grid-template-rows:1fr; opacity:1; }
+  .faq-body-inner { overflow:hidden; }
+  /* Chevron rotation */
+  .faq-chevron { transition:transform 0.28s cubic-bezier(.22,1,.36,1), color 0.18s ease; }
+  .faq-card-inner.faq-open .faq-chevron { transform:rotate(180deg); }
+  /* Search highlight */
+  .faq-hl { background:rgba(251,191,36,.42); border-radius:3px; padding:0 2px; font-style:normal; }
+  /* Search input — red focus glow */
+  .faq-search:focus {
+    border-color:#EC210F !important;
+    box-shadow:0 0 0 3px rgba(236,33,15,.14) !important;
+    outline:none !important;
+  }
+  /* Decorative blobs */
+  @keyframes faq-blob {
+    0%,100% { transform:translate(0,0) scale(1); }
+    50%      { transform:translate(16px,-12px) scale(1.06); }
+  }
+  .faq-blob-a { will-change:transform; animation:faq-blob 22s ease-in-out 0s   infinite; }
+  .faq-blob-b { will-change:transform; animation:faq-blob 28s ease-in-out 5s   infinite reverse; }
+  /* Reviewed-by card */
+  .faq-reviewed-card {
+    border-radius:14px; background:#fff;
+    border:1px solid rgba(33,27,46,.07);
+    box-shadow:0 2px 12px rgba(33,27,46,.05);
+    padding:14px 18px;
+    display:flex; align-items:center; gap:12px;
+  }
+  /* Mobile */
+  @media (max-width:640px) {
+    .faq-card-inner  { border-radius:14px; }
+    .faq-reviewed-card { border-radius:12px; flex-direction:column; align-items:flex-start; gap:8px; }
+  }
+  /* Reduced-motion — instant expand, no stagger, no lift */
+  @media (prefers-reduced-motion:reduce) {
+    .faq-card              { opacity:1 !important; }
+    .faq-card.faq-entered  { animation:none !important; }
+    .faq-card-inner        { transition:none !important; transform:none !important; }
+    .faq-card-inner:hover  { transform:none !important; }
+    .faq-card-inner.faq-open { transform:none !important; }
+    .faq-body-wrap         { transition:none !important; }
+    .faq-chevron           { transition:none !important; }
+    .faq-accent            { transition:none !important; }
+    .faq-blob-a,.faq-blob-b { animation:none !important; }
   }
 `;
 
@@ -4040,57 +4125,392 @@ function InterlinksBar() {
 /* ═══════════════════════════════════════════════════════════════════════════════
    SECTION: FAQS
 ═══════════════════════════════════════════════════════════════════════════════ */
-const DUMMY_FAQS = [
+const DUMMY_FAQS: Array<{
+  question: string;
+  searchText: string;
+  answerText: string;
+  answer: React.ReactNode;
+}> = [
   {
     question: "What programmes does Rainbow Preschool offer and for which ages?",
+    searchText: "playgroup nursery kindergarten ages curriculum language numbers art social skills",
+    answerText: `We offer three main programmes: Playgroup for children aged ${PLAYGROUP.ageRange}, Nursery for ages ${NURSERY.ageRange}, and Kindergarten for ages ${KINDERGARTEN.ageRange}. Each programme follows a play-based curriculum covering language, numbers, art, and social skills.`,
     answer: <>We offer three main programmes: <a href="/playgroup" className="text-primary hover:underline">Playgroup</a> for children aged {PLAYGROUP.ageRange}, <a href="/nursery" className="text-primary hover:underline">Nursery</a> for ages {NURSERY.ageRange}, and <a href="/kindergarten" className="text-primary hover:underline">Kindergarten</a> for ages {KINDERGARTEN.ageRange}. Each programme follows a play-based curriculum covering language, numbers, art, and social skills.</>,
   },
   {
     question: "What are the school timings and working days?",
+    searchText: "monday saturday 8am 6pm half-day full-day happy times working parents timings hours",
+    answerText: "Our centres are open Monday to Saturday, 8:00 AM to 6:00 PM. We offer both half-day and full-day options to suit your schedule. Extended care through our Happy Times programme is also available for working parents.",
     answer: <>Our centres are open Monday to Saturday, 8:00 AM to 6:00 PM. We offer both half-day and full-day options to suit your schedule. Extended care through our <a href="/happy-times" className="text-primary hover:underline">Happy Times</a> programme is also available for working parents.</>,
   },
   {
     question: "What safety measures does Rainbow Preschool follow?",
+    searchText: "cctv 24/7 female staff pickup hygiene fire safety first-aid secure monitored",
+    answerText: "Every centre has 24/7 CCTV monitoring, 100% female teaching staff, a verified pickup system, and daily hygiene routines. Fire safety equipment and first-aid kits are maintained at all locations.",
     answer: <>Every centre has 24/7 CCTV monitoring, 100% female teaching staff, a verified pickup system, and daily hygiene routines. Fire safety equipment and first-aid kits are maintained at all locations. <a href="/about" className="text-primary hover:underline">Read more about our safety practices</a>.</>,
   },
   {
     question: "What qualifications do the teachers have?",
+    searchText: "ECE montessori early childhood education degree diploma background check training first aid qualified",
+    answerText: "Our teachers hold degrees or diplomas in Early Childhood Education (ECE), Montessori training, or equivalent qualifications. All staff undergo background checks and regular training in child development and first aid.",
     answer: <>Our teachers hold degrees or diplomas in Early Childhood Education (ECE), Montessori training, or equivalent qualifications. All staff undergo background checks and regular training in child development and first aid.</>,
   },
   {
     question: "How can parents book a campus visit and get fee details?",
+    searchText: "book visit campus fees admission contact form call phone 82915 68972 enquiry",
+    answerText: "Book a campus visit by contacting any of our six Thane centres. You can also fill in our contact form or call 82915 68972. View full admissions information at our admissions page.",
     answer: <>Book a campus visit by contacting any of our six Thane centres. You can also <a href="/contact" className="text-primary hover:underline">fill in our contact form</a> or call 82915 68972. <a href="/preschool-admissions" className="text-primary hover:underline">View full admissions information</a>.</>,
   },
   {
     question: "Where are Rainbow Preschool centres located in Thane?",
+    searchText: "manpada hariniwas naupada anand nagar majiwada dhokali kolshet kalwa kasarvadavali ghodbunder thane west location address",
+    answerText: "We have six centres across Thane West: Manpada, Hariniwas (Naupada), Anand Nagar (Majiwada), Dhokali (Kolshet Road), Kalwa, and Kasarvadavali (Ghodbunder Road).",
     answer: <>We have six centres across Thane West: Manpada, Hariniwas (Naupada), Anand Nagar (Majiwada), Dhokali (Kolshet Road), Kalwa, and Kasarvadavali (Ghodbunder Road). <a href="/play-school-near-me" className="text-primary hover:underline">Find the centre nearest to you</a>.</>,
   },
   {
     question: "What curriculum does Rainbow Preschool follow?",
+    searchText: "curriculum play-based activity literacy maths science arts music yoga physical activities learning",
+    answerText: "We follow a play-based, activity-driven curriculum including language and literacy, early maths, science awareness, creative arts, music, yoga, and physical activities.",
     answer: <>We follow a play-based, activity-driven curriculum including language and literacy, early maths, science awareness, creative arts, music, yoga, and physical activities. <a href="/programmes" className="text-primary hover:underline">Explore our curriculum</a>.</>,
   },
 ];
 
+const FAQ_ICONS = [BookOpen, Calendar, Shield, GraduationCap, Phone, MapPin, Puzzle] as const;
+
+function highlightText(text: string, q: string): React.ReactNode {
+  if (!q) return text;
+  const parts: React.ReactNode[] = [];
+  const lower = text.toLowerCase();
+  let lastIdx = 0;
+  let idx = lower.indexOf(q, lastIdx);
+  while (idx !== -1) {
+    if (idx > lastIdx) parts.push(text.slice(lastIdx, idx));
+    parts.push(<mark key={idx} className="faq-hl">{text.slice(idx, idx + q.length)}</mark>);
+    lastIdx = idx + q.length;
+    idx = lower.indexOf(q, lastIdx);
+  }
+  if (lastIdx < text.length) parts.push(text.slice(lastIdx));
+  return parts.length === 1 ? parts[0] : <>{parts}</>;
+}
+
 function FAQSection() {
+  const [query,     setQuery]     = useState("");
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [entered,   setEntered]   = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  // Stagger-entrance trigger — fires once when section scrolls into view
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setEntered(true); obs.disconnect(); } },
+      { threshold: 0.07 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  const q = query.trim().toLowerCase();
+
+  const filtered = useMemo(() =>
+    DUMMY_FAQS.map((f, i) => ({ ...f, origIndex: i }))
+      .filter(f => !q || f.question.toLowerCase().includes(q) || f.searchText.toLowerCase().includes(q)),
+  [q]);
+
+  const toggle = (origIndex: number) =>
+    setOpenIndex(prev => (prev === origIndex ? null : origIndex));
+
+  // FAQPage JSON-LD (emitted once; uses answerText for plain-text compliance)
+  const jsonLd = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: DUMMY_FAQS.map(f => ({
+      "@type": "Question",
+      name: f.question,
+      acceptedAnswer: { "@type": "Answer", text: f.answerText },
+    })),
+  });
+
   return (
-    <section className="py-16 md:py-20 lg:py-24 bg-card">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold">Frequently Asked Questions</h2>
-          <p className="text-muted-foreground mt-2">Common questions about Rainbow Preschool International</p>
+    <section
+      ref={sectionRef}
+      aria-labelledby="faq-heading"
+      style={{ position: "relative", overflow: "hidden", background: "#f8f4ef" }}
+      className="py-16 md:py-24"
+    >
+      {/* FAQPage structured data */}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd }} />
+
+      {/* Decorative blobs + watermark — pointer-events:none, aria-hidden */}
+      <div aria-hidden="true" style={{ position: "absolute", inset: 0, pointerEvents: "none", overflow: "hidden" }}>
+        <div className="faq-blob-a" style={{
+          position: "absolute", top: "-8%", right: "-5%",
+          width: 380, height: 380,
+          borderRadius: "60% 40% 50% 60% / 55% 65% 35% 45%",
+          background: "rgba(236,33,15,.05)",
+        }} />
+        <div className="faq-blob-b" style={{
+          position: "absolute", bottom: "-10%", left: "-7%",
+          width: 320, height: 320,
+          borderRadius: "45% 55% 60% 40% / 60% 40% 60% 40%",
+          background: "rgba(46,144,250,.05)",
+        }} />
+        {/* Large "?" watermark */}
+        <div style={{
+          position: "absolute", right: "4%", top: "50%", transform: "translateY(-50%)",
+          fontSize: "clamp(160px,20vw,280px)", fontWeight: 900, lineHeight: 1,
+          color: "rgba(33,27,46,.035)", userSelect: "none", fontFamily: "system-ui,sans-serif",
+        }}>?</div>
+      </div>
+
+      <div className="max-w-3xl mx-auto px-4 sm:px-6" style={{ position: "relative", zIndex: 1 }}>
+
+        {/* ── Header ─────────────────────────────────────────────────────── */}
+        <div className="text-center du-fade" style={{ marginBottom: 36 }}>
+          <div style={{
+            display: "inline-flex", alignItems: "center", gap: 8,
+            background: "rgba(236,33,15,.09)", borderRadius: 999,
+            padding: "5px 16px", marginBottom: 14,
+          }}>
+            <span style={{ color: "#EC210F", fontWeight: 700, fontSize: "0.76rem", letterSpacing: "0.07em", textTransform: "uppercase" }}>
+              FAQ
+            </span>
+          </div>
+          <h2
+            id="faq-heading"
+            style={{
+              fontSize: "clamp(1.8rem,4vw,2.6rem)", fontWeight: 800,
+              lineHeight: 1.15, letterSpacing: "-0.02em",
+              color: "#211B2E", marginBottom: 10,
+            }}
+          >
+            Frequently Asked Questions
+          </h2>
+          <p style={{ color: "#6b6675", fontSize: "1.05rem" }}>
+            Common questions about Rainbow Preschool International
+          </p>
         </div>
-        <Accordion type="single" collapsible className="w-full">
-          {DUMMY_FAQS.map((faq, index) => (
-            <AccordionItem key={index} value={`item-${index}`}>
-              <AccordionTrigger className="text-left text-base font-medium hover:no-underline">
-                {faq.question}
-              </AccordionTrigger>
-              <AccordionContent className="text-muted-foreground">
-                {faq.answer}
-              </AccordionContent>
-            </AccordionItem>
-          ))}
-        </Accordion>
+
+        {/* ── Search bar ─────────────────────────────────────────────────── */}
+        <div className="du-fade" style={{ marginBottom: 8 }}>
+          <label htmlFor="faq-search" style={{
+            position: "absolute", width: 1, height: 1,
+            overflow: "hidden", clip: "rect(0,0,0,0)", whiteSpace: "nowrap",
+          }}>
+            Search frequently asked questions
+          </label>
+          <div style={{ position: "relative" }}>
+            <Search style={{
+              position: "absolute", left: 15, top: "50%", transform: "translateY(-50%)",
+              width: 17, height: 17, color: "#a89eb8", pointerEvents: "none",
+            }} />
+            <input
+              id="faq-search"
+              type="search"
+              className="faq-search"
+              value={query}
+              onChange={e => { setQuery(e.target.value); setOpenIndex(null); }}
+              placeholder="Search questions… e.g. timings, safety, fees"
+              style={{
+                width: "100%", padding: "13px 16px 13px 44px",
+                borderRadius: 14, border: "1.5px solid rgba(33,27,46,.12)",
+                background: "#fff", fontSize: "0.94rem", color: "#211B2E",
+                boxSizing: "border-box",
+              }}
+            />
+          </div>
+          {/* Live count — aria-live region */}
+          <div
+            role="status"
+            aria-live="polite"
+            aria-atomic="true"
+            style={{ marginTop: 8, fontSize: "0.79rem", color: "#a89eb8", paddingLeft: 4, minHeight: 20 }}
+          >
+            {q
+              ? `Showing ${filtered.length} of ${DUMMY_FAQS.length}`
+              : `${DUMMY_FAQS.length} questions`}
+          </div>
+        </div>
+
+        {/* ── Card list ──────────────────────────────────────────────────── */}
+        <div style={{ display: "flex", flexDirection: "column", gap: 10, marginTop: 4 }}>
+          {filtered.length === 0 ? (
+            /* No-results state */
+            <div style={{
+              textAlign: "center", padding: "48px 24px",
+              background: "#fff", borderRadius: 16,
+              border: "1px solid rgba(33,27,46,.07)",
+              color: "#6b6675",
+            }}>
+              <div style={{ fontSize: "2.2rem", marginBottom: 10 }}>🔍</div>
+              <p style={{ fontWeight: 700, color: "#211B2E", marginBottom: 6 }}>
+                No matches for &ldquo;{query}&rdquo;
+              </p>
+              <p style={{ fontSize: "0.9rem", marginBottom: 20 }}>
+                Try another word — or ask us directly.
+              </p>
+              <div style={{ display: "flex", justifyContent: "center", gap: 10, flexWrap: "wrap" }}>
+                <a href="/contact" style={{
+                  display: "inline-flex", alignItems: "center", gap: 6,
+                  padding: "10px 20px", borderRadius: 999,
+                  background: "#EC210F", color: "#fff",
+                  fontSize: "0.85rem", fontWeight: 600, textDecoration: "none",
+                }}>
+                  Contact us
+                </a>
+                <a
+                  href="https://wa.me/918291568972?text=Hi%2C%20I%20have%20a%20question%20about%20Rainbow%20Preschool"
+                  target="_blank" rel="noopener noreferrer"
+                  style={{
+                    display: "inline-flex", alignItems: "center", gap: 6,
+                    padding: "10px 20px", borderRadius: 999,
+                    background: "#25D366", color: "#fff",
+                    fontSize: "0.85rem", fontWeight: 600, textDecoration: "none",
+                  }}
+                >
+                  <SiWhatsapp style={{ width: 14, height: 14 }} /> WhatsApp
+                </a>
+              </div>
+            </div>
+          ) : filtered.map((faq, visIdx) => {
+            const Icon   = FAQ_ICONS[faq.origIndex % FAQ_ICONS.length];
+            const isOpen = openIndex === faq.origIndex;
+            const bodyId = `faq-body-${faq.origIndex}`;
+            const btnId  = `faq-btn-${faq.origIndex}`;
+            return (
+              <div
+                key={faq.origIndex}
+                className={`faq-card${entered ? " faq-entered" : ""}`}
+                style={entered ? { animationDelay: `${visIdx * 65}ms` } : undefined}
+              >
+                <div className={`faq-card-inner${isOpen ? " faq-open" : ""}`}>
+                  {/* Red left-accent bar */}
+                  <div className="faq-accent" aria-hidden="true" />
+
+                  {/* Trigger button */}
+                  <button
+                    id={btnId}
+                    aria-expanded={isOpen}
+                    aria-controls={bodyId}
+                    onClick={() => toggle(faq.origIndex)}
+                    style={{
+                      display: "flex", alignItems: "center", gap: 13,
+                      width: "100%", textAlign: "left",
+                      padding: "16px 18px 16px 20px",
+                      background: "none", border: "none",
+                      cursor: "pointer", minHeight: 52,
+                    }}
+                  >
+                    {/* Icon bubble */}
+                    <span
+                      className="faq-icon-wrap"
+                      aria-hidden="true"
+                      style={{
+                        flexShrink: 0, width: 34, height: 34, borderRadius: 10,
+                        background: isOpen ? "rgba(236,33,15,.13)" : "rgba(236,33,15,.08)",
+                        display: "flex", alignItems: "center", justifyContent: "center",
+                        color: isOpen ? "#EC210F" : "#c06050",
+                        transition: "color 0.18s, background 0.18s",
+                      }}
+                    >
+                      <Icon style={{ width: 15, height: 15 }} />
+                    </span>
+
+                    {/* Question + highlight */}
+                    <span style={{
+                      flex: 1, fontSize: "0.96rem", fontWeight: 600,
+                      color: "#211B2E", lineHeight: 1.4,
+                    }}>
+                      {highlightText(faq.question, q)}
+                    </span>
+
+                    {/* Rotating chevron */}
+                    <ChevronDown
+                      className="faq-chevron"
+                      aria-hidden="true"
+                      style={{
+                        flexShrink: 0, width: 18, height: 18,
+                        color: isOpen ? "#EC210F" : "#a89eb8",
+                      }}
+                    />
+                  </button>
+
+                  {/* Expandable body — grid-rows height trick */}
+                  <div
+                    id={bodyId}
+                    role="region"
+                    aria-labelledby={btnId}
+                    className={`faq-body-wrap${isOpen ? " faq-open" : ""}`}
+                  >
+                    <div className="faq-body-inner">
+                      <div style={{
+                        padding: "0 20px 20px 67px",
+                        fontSize: "0.9rem", color: "#55506a", lineHeight: 1.75,
+                      }}>
+                        {faq.answer}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* ── "Still have questions?" mini-CTA ───────────────────────────── */}
+        {filtered.length > 0 && (
+          <div className="du-fade" style={{
+            marginTop: 24, textAlign: "center",
+            background: "#fff", borderRadius: 16,
+            border: "1px dashed rgba(236,33,15,.22)",
+            padding: "20px 24px",
+          }}>
+            <p style={{ fontSize: "0.88rem", color: "#6b6675", marginBottom: 12, fontWeight: 500 }}>
+              Still have questions?
+            </p>
+            <div style={{ display: "flex", justifyContent: "center", gap: 10, flexWrap: "wrap" }}>
+              <a href="/contact" style={{
+                display: "inline-flex", alignItems: "center", gap: 6,
+                padding: "9px 20px", borderRadius: 999,
+                background: "#EC210F", color: "#fff",
+                fontSize: "0.84rem", fontWeight: 600, textDecoration: "none",
+              }}>
+                Book a visit
+              </a>
+              <a
+                href="https://wa.me/918291568972?text=Hi%2C%20I%20have%20a%20question%20about%20Rainbow%20Preschool"
+                target="_blank" rel="noopener noreferrer"
+                style={{
+                  display: "inline-flex", alignItems: "center", gap: 6,
+                  padding: "9px 20px", borderRadius: 999,
+                  background: "#f0fdf4", color: "#16a34a",
+                  border: "1px solid rgba(22,163,74,.22)",
+                  fontSize: "0.84rem", fontWeight: 600, textDecoration: "none",
+                }}
+              >
+                <SiWhatsapp style={{ width: 14, height: 14 }} /> Chat on WhatsApp
+              </a>
+            </div>
+          </div>
+        )}
+
+        {/* ── Reviewed By card ───────────────────────────────────────────── */}
+        <div className="faq-reviewed-card du-fade" style={{ marginTop: 16 }}>
+          <div style={{
+            flexShrink: 0, width: 34, height: 34, borderRadius: 9,
+            background: "rgba(236,33,15,.08)",
+            display: "flex", alignItems: "center", justifyContent: "center",
+          }}>
+            <ShieldCheck style={{ width: 16, height: 16, color: "#EC210F" }} />
+          </div>
+          <div style={{ fontSize: "0.79rem", color: "#6b6675", lineHeight: 1.55 }}>
+            <span style={{ fontWeight: 700, color: "#211B2E" }}>Reviewed By</span>
+            {" — "}Rainbow Preschool Curriculum Team
+            {" · "}Last updated: {LAST_UPDATED_DISPLAY}
+          </div>
+        </div>
+
       </div>
     </section>
   );
