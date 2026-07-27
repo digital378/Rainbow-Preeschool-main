@@ -6,8 +6,8 @@ import { useEffect, useRef, useState } from "react";
 ───────────────────────────────────────────────────────────────────────────── */
 
 const COLORS = ['#7F77DD','#1D9E75','#D85A30','#D4537E','#378ADD','#EF9F27','#639922'];
-const RES    = 240;
-const BRUSH  = 14;
+const RES = 220;
+const BRUSH = 11;
 const THRESHOLD = 0.55;
 
 interface Particle {
@@ -97,84 +97,72 @@ function makeEngine(canvas: HTMLCanvasElement): Engine {
 
 /* ── Scoped CSS ─────────────────────────────────────────────────────────── */
 const STYLES = `
-  @keyframes rlp-floaty     { 0%,100%{ transform:translateY(0) } 50%{ transform:translateY(-9px) } }
-  @keyframes rlp-floatySlow { 0%,100%{ transform:translateY(0) rotate(0deg) } 50%{ transform:translateY(-11px) rotate(5deg) } }
-  @keyframes rlp-twinkle    { 0%,100%{ opacity:.35;transform:scale(.82) } 50%{ opacity:1;transform:scale(1.18) } }
-  @keyframes rlp-popIn      { 0%{ opacity:0;transform:scale(.55) translateY(16px) } 70%{ transform:scale(1.07) translateY(-2px) } 100%{ opacity:1;transform:scale(1) translateY(0) } }
-  @keyframes rlp-slideUp    { from{ opacity:0;transform:translateY(26px) } to{ opacity:1;transform:translateY(0) } }
-  @keyframes rlp-wiggle     { 0%,100%{ transform:rotate(-7deg) } 50%{ transform:rotate(7deg) } }
-  @keyframes rlp-shimmer    { 0%{ left:-60% } 100%{ left:130% } }
-  @keyframes rlp-glowPulse  { 0%,100%{ box-shadow:0 0 0 0 rgba(93,202,165,.45) } 50%{ box-shadow:0 0 0 9px rgba(93,202,165,0) } }
-  @keyframes rlp-rotateSlow { from{ transform:rotate(0deg) } to{ transform:rotate(360deg) } }
-  @keyframes rlp-stampIn    { 0%{ transform:scale(0) rotate(-15deg);opacity:0 } 60%{ transform:scale(1.14) rotate(5deg);opacity:1 } 100%{ transform:scale(1) rotate(0deg);opacity:1 } }
-  @keyframes rlp-breathe    { 0%,100%{ transform:scale(1) } 50%{ transform:scale(1.035) } }
-  @keyframes rlp-bob        { 0%,100%{ transform:translateY(0) } 50%{ transform:translateY(-5px) } }
-  @keyframes rlp-hintFade   { 0%{ opacity:1 } 100%{ opacity:0;pointer-events:none } }
-  @keyframes rlp-ringPulse  { 0%,100%{ opacity:.6 } 50%{ opacity:1 } }
-  @keyframes rlp-orbit      { from{ transform:rotate(0deg) translateX(115px) } to{ transform:rotate(360deg) translateX(115px) } }
+  @keyframes rlp-floaty      { 0%,100%{ transform:translateY(0) } 50%{ transform:translateY(-8px) } }
+  @keyframes rlp-floatySlow  { 0%,100%{ transform:translateY(0) rotate(0deg) } 50%{ transform:translateY(-10px) rotate(6deg) } }
+  @keyframes rlp-twinkle     { 0%,100%{ opacity:.5;transform:scale(.85) } 50%{ opacity:1;transform:scale(1.15) } }
+  @keyframes rlp-popIn       { 0%{ opacity:0;transform:scale(.6) translateY(14px) } 70%{ transform:scale(1.06) translateY(-2px) } 100%{ opacity:1;transform:scale(1) translateY(0) } }
+  @keyframes rlp-slideUp     { from{ opacity:0;transform:translateY(24px) } to{ opacity:1;transform:translateY(0) } }
+  @keyframes rlp-wiggle      { 0%,100%{ transform:rotate(-6deg) } 50%{ transform:rotate(6deg) } }
+  @keyframes rlp-pulseRing   { 0%,100%{ box-shadow:0 0 0 6px rgba(127,119,221,.28),0 0 0 6px rgba(127,119,221,.28) } 50%{ box-shadow:0 0 0 6px rgba(127,119,221,.28),0 0 0 14px rgba(127,119,221,.08) } }
+  @keyframes rlp-shimmer     { 0%{ left:-60% } 100%{ left:130% } }
+  @keyframes rlp-glowPulse   { 0%,100%{ box-shadow:0 0 0 0 rgba(93,202,165,.5) } 50%{ box-shadow:0 0 0 8px rgba(93,202,165,0) } }
+  @keyframes rlp-rotateSlow  { from{ transform:rotate(0deg) } to{ transform:rotate(360deg) } }
+  @keyframes rlp-stampIn     { 0%{ transform:scale(0) rotate(-15deg);opacity:0 } 60%{ transform:scale(1.15) rotate(6deg);opacity:1 } 100%{ transform:scale(1) rotate(0deg);opacity:1 } }
+  @keyframes rlp-teddyMove   { 0%{ transform:translate(-40px,0) rotate(-8deg) } 25%{ transform:translate(-12px,-12px) rotate(0deg) } 50%{ transform:translate(40px,0) rotate(8deg) } 75%{ transform:translate(12px,-12px) rotate(0deg) } 100%{ transform:translate(-40px,0) rotate(-8deg) } }
 
-  .rlp-root { width:100%;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
-
-  /* shimmer sweep */
+  .rlp-root { width:100%; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+  .rlp-sunburst { position:absolute;top:50%;left:50%;width:240px;height:240px;margin:-120px 0 0 -120px;background:conic-gradient(from 0deg,rgba(255,215,140,.4) 0deg 12deg,transparent 12deg 30deg);border-radius:50%;animation:rlp-rotateSlow 14s linear infinite;z-index:0;pointer-events:none; }
   .rlp-shine { position:relative;overflow:hidden; }
-  .rlp-shine::after { content:'';position:absolute;top:0;left:-60%;width:35%;height:100%;
-    background:linear-gradient(120deg,rgba(255,255,255,0) 0%,rgba(255,255,255,.6) 50%,rgba(255,255,255,0) 100%);
-    transform:skewX(-20deg);animation:rlp-shimmer 2.8s ease-in-out infinite;pointer-events:none; }
-
-  /* sunburst behind offer card */
-  .rlp-sunburst { position:absolute;top:50%;left:50%;width:260px;height:260px;margin:-130px 0 0 -130px;
-    background:conic-gradient(from 0deg,rgba(255,215,140,.3) 0deg 10deg,transparent 10deg 30deg);
-    border-radius:50%;animation:rlp-rotateSlow 16s linear infinite;z-index:0;pointer-events:none; }
-
-  /* button states */
-  .rlp-refer-btn { transition:transform .2s ease,box-shadow .2s ease;cursor:pointer; }
-  .rlp-refer-btn:hover { transform:translateY(-4px) scale(1.05);box-shadow:0 14px 28px rgba(127,119,221,.4); }
-  .rlp-refer-btn:active { transform:scale(.94); }
+  .rlp-shine::after { content:'';position:absolute;top:0;left:-60%;width:35%;height:100%;background:linear-gradient(120deg,rgba(255,255,255,0) 0%,rgba(255,255,255,.55) 50%,rgba(255,255,255,0) 100%);transform:skewX(-20deg);animation:rlp-shimmer 2.6s ease-in-out infinite;pointer-events:none; }
+  .rlp-form-btn { transition:transform .2s ease,box-shadow .2s ease;cursor:pointer; }
+  .rlp-form-btn:hover { transform:scale(1.08) rotate(-1deg);box-shadow:0 10px 22px rgba(68,68,65,.4); }
+  .rlp-form-btn:active { transform:scale(.93); }
   .rlp-vbtn { transition:transform .2s ease,box-shadow .2s ease;cursor:pointer; }
-  .rlp-vbtn:hover { transform:translateY(-5px) scale(1.06); }
-  .rlp-vbtn:active { transform:scale(.93) translateY(0); }
-  .rlp-vbtn[data-school="preschool"]:hover  { box-shadow:0 12px 24px rgba(237,147,177,.45); }
-  .rlp-vbtn[data-school="international"]:hover { box-shadow:0 12px 24px rgba(175,169,236,.45); }
-  .rlp-benefit { transition:transform .18s ease,box-shadow .18s ease;cursor:default; }
-  .rlp-benefit:hover { transform:translateY(-3px);box-shadow:0 8px 20px rgba(0,0,0,.1); }
+  .rlp-vbtn:hover { transform:translateY(-5px) scale(1.07); }
+  .rlp-vbtn:active { transform:scale(.92) translateY(0); }
+  .rlp-vbtn[data-school="preschool"]:hover { box-shadow:0 12px 22px rgba(237,147,177,.5); }
+  .rlp-vbtn[data-school="international"]:hover { box-shadow:0 12px 22px rgba(175,169,236,.5); }
+  .rlp-benefit { transition:transform .15s ease;cursor:default; }
+  .rlp-benefit:active { transform:scale(.96); }
   .rlp-dodge { cursor:default; }
 `;
 
 export default function ReferralPage() {
   const [screen,     setScreen]     = useState<'scratch'|'reveal'>('scratch');
-  const [scratchPct, setScratchPct] = useState(0);
-  const [hinting,    setHinting]    = useState(true);
   const [videoModal, setVideoModal] = useState<null|'preschool'|'international'>(null);
   const [badgeDelta, setBadgeDelta] = useState({x:0,y:0});
 
-  const scratchRef = useRef<HTMLCanvasElement>(null);
-  const fx1Ref     = useRef<HTMLCanvasElement>(null);
-  const fxRef      = useRef<HTMLCanvasElement>(null);
-  const screen1Ref = useRef<HTMLDivElement>(null);
-  const screen2Ref = useRef<HTMLDivElement>(null);
-  const referBtnRef= useRef<HTMLAnchorElement>(null);
-  const badgeRef   = useRef<HTMLDivElement>(null);
-  const eng1       = useRef<Engine|null>(null);
-  const eng2       = useRef<Engine|null>(null);
-  const revealed   = useRef(false);
-  const scratching = useRef(false);
-  const lastPos    = useRef<{x:number;y:number}|null>(null);
+  const scratchRef  = useRef<HTMLCanvasElement>(null);
+  const fx1Ref      = useRef<HTMLCanvasElement>(null);
+  const fxRef       = useRef<HTMLCanvasElement>(null);
+  const screen1Ref  = useRef<HTMLDivElement>(null);
+  const screen2Ref  = useRef<HTMLDivElement>(null);
+  const referBtnRef = useRef<HTMLAnchorElement>(null);
+  const teddyRef    = useRef<HTMLSpanElement>(null);
+  const badgeRef    = useRef<HTMLDivElement>(null);
+  const eng1        = useRef<Engine|null>(null);
+  const eng2        = useRef<Engine|null>(null);
+  const revealed    = useRef(false);
+  const scratching  = useRef(false);
+  const lastPos     = useRef<{x:number;y:number}|null>(null);
 
-  /* ── Load tabler icons ──────────────────────────────────────────────── */
+  /* ── Load tabler icons from CDN ─────────────────────────────────────── */
   useEffect(() => {
     const id = 'tabler-icons-css';
     if (document.getElementById(id)) return;
     const link = document.createElement('link');
-    link.id = id; link.rel = 'stylesheet';
+    link.id = id;
+    link.rel = 'stylesheet';
     link.href = 'https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.47.0/dist/tabler-icons.min.css';
     document.head.appendChild(link);
     return () => { document.getElementById(id)?.remove(); };
   }, []);
 
-  /* ── Noindex meta ───────────────────────────────────────────────────── */
+  /* ── Add noindex meta tag ───────────────────────────────────────────── */
   useEffect(() => {
     const meta = document.createElement('meta');
-    meta.name = 'robots'; meta.content = 'noindex, nofollow';
+    meta.name = 'robots';
+    meta.content = 'noindex, nofollow';
     document.head.appendChild(meta);
     return () => meta.remove();
   }, []);
@@ -187,31 +175,18 @@ export default function ReferralPage() {
     ctx.clearRect(0,0,RES,RES);
     ctx.save();
     ctx.beginPath(); ctx.arc(RES/2,RES/2,RES/2,0,Math.PI*2); ctx.clip();
-
-    // layered gradient
     const g = ctx.createLinearGradient(0,0,RES,RES);
-    g.addColorStop(0,'#E8A8F0'); g.addColorStop(.2,'#A8C4F0');
-    g.addColorStop(.45,'#A8E8C8'); g.addColorStop(.7,'#F0D8A8'); g.addColorStop(1,'#F0A8B8');
+    g.addColorStop(0,'#F0997B'); g.addColorStop(.25,'#FAC775');
+    g.addColorStop(.5,'#97C459'); g.addColorStop(.75,'#85B7EB'); g.addColorStop(1,'#AFA9EC');
     ctx.fillStyle=g; ctx.fillRect(0,0,RES,RES);
-
-    // subtle texture lines
-    for (let i=0;i<280;i++) {
-      ctx.strokeStyle=`rgba(255,255,255,${Math.random()*.14})`;
-      ctx.lineWidth=Math.random()*1.5+.5;
+    for (let i=0;i<220;i++) {
+      ctx.strokeStyle=`rgba(255,255,255,${Math.random()*.12})`;
       ctx.beginPath(); ctx.moveTo(Math.random()*RES,Math.random()*RES);
       ctx.lineTo(Math.random()*RES,Math.random()*RES); ctx.stroke();
     }
-    // inner glow ring
-    const rg = ctx.createRadialGradient(RES/2,RES/2,60,RES/2,RES/2,RES/2);
-    rg.addColorStop(0,'rgba(255,255,255,.08)'); rg.addColorStop(1,'rgba(0,0,0,.12)');
-    ctx.fillStyle=rg; ctx.fillRect(0,0,RES,RES);
-
     ctx.restore();
-    ctx.fillStyle='rgba(30,25,80,0.78)';
-    ctx.font='700 15px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif';
-    ctx.textAlign='center';
-    ctx.fillText('SCRATCH',RES/2,RES/2-9);
-    ctx.fillText('& WIN',RES/2,RES/2+14);
+    ctx.fillStyle='rgba(38,33,92,0.85)'; ctx.font='600 16px sans-serif'; ctx.textAlign='center';
+    ctx.fillText('SCRATCH',RES/2,RES/2-8); ctx.fillText('& WIN!',RES/2,RES/2+16);
   }, []);
 
   /* ── Confetti engine 1 (scratch screen) ────────────────────────────── */
@@ -229,11 +204,11 @@ export default function ReferralPage() {
     if (!canvas) return;
     const e = makeEngine(canvas);
     eng2.current = e;
-    e.resize(); e.spawnFall(180); e.ensureRunning();
+    e.resize(); e.spawnFall(160); e.ensureRunning();
     return () => { e.destroy(); eng2.current=null; };
   }, [screen]);
 
-  /* ── Scratch event listeners ────────────────────────────────────────── */
+  /* ── Scratch card event listeners ───────────────────────────────────── */
   useEffect(() => {
     const canvas = scratchRef.current;
     if (!canvas) return;
@@ -258,14 +233,10 @@ export default function ReferralPage() {
       const data=canvas.getContext('2d')!.getImageData(0,0,RES,RES).data;
       let cleared=0, total=0;
       for (let i=3;i<data.length;i+=4*6) { total++; if (data[i]<40) cleared++; }
-      const pct=cleared/total;
-      setScratchPct(Math.min(1,pct));
-      if (pct>THRESHOLD) { revealed.current=true; setTimeout(()=>setScreen('reveal'),380); }
+      if (cleared/total>THRESHOLD) { revealed.current=true; setTimeout(()=>setScreen('reveal'),350); }
     };
     const onDown = (e:MouseEvent|TouchEvent) => {
-      scratching.current=true;
-      setHinting(false);
-      const p=getPos(e); lastPos.current=p; dot(p.x,p.y); e.preventDefault();
+      scratching.current=true; const p=getPos(e); lastPos.current=p; dot(p.x,p.y); e.preventDefault();
     };
     const onMove = (e:MouseEvent|TouchEvent) => {
       if (!scratching.current||revealed.current) return;
@@ -289,18 +260,18 @@ export default function ReferralPage() {
     };
   }, []);
 
-  /* ── Resize confetti on window resize ──────────────────────────────── */
+  /* ── Resize confetti canvases on window resize ──────────────────────── */
   useEffect(() => {
     const onResize = () => { eng1.current?.resize(); eng2.current?.resize(); };
     window.addEventListener('resize', onResize);
     return () => window.removeEventListener('resize', onResize);
   }, []);
 
-  /* ── Dodge helpers ──────────────────────────────────────────────────── */
+  /* ── Dodge interaction for decorative icons ─────────────────────────── */
   const dodgeEnter = (e: React.MouseEvent<HTMLElement>) => {
     const el=e.currentTarget;
-    const dx=(Math.random()>.5?1:-1)*(18+Math.random()*28);
-    const dy=(Math.random()>.5?1:-1)*(18+Math.random()*28);
+    const dx=(Math.random()>.5?1:-1)*(18+Math.random()*26);
+    const dy=(Math.random()>.5?1:-1)*(18+Math.random()*26);
     el.style.transition='transform .35s ease'; el.style.animationPlayState='paused';
     el.style.transform=`translate(${dx}px,${dy}px)`;
   };
@@ -311,8 +282,8 @@ export default function ReferralPage() {
   };
 
   const nudgeBadge = () => {
-    const dx=(Math.random()>.5?1:-1)*(32+Math.random()*38);
-    const dy=(Math.random()>.5?1:-1)*(22+Math.random()*32);
+    const dx=(Math.random()>.5?1:-1)*(30+Math.random()*35);
+    const dy=(Math.random()>.5?1:-1)*(20+Math.random()*30);
     setBadgeDelta({x:dx,y:dy});
     setTimeout(()=>setBadgeDelta({x:0,y:0}), 500);
   };
@@ -322,7 +293,7 @@ export default function ReferralPage() {
     if (b&&s) {
       const bR=b.getBoundingClientRect(), cR=s.getBoundingClientRect();
       eng1.current?.resize();
-      eng1.current?.spawnBurst(bR.left+bR.width/2-cR.left, bR.top+bR.height/2-cR.top, 48);
+      eng1.current?.spawnBurst(bR.left+bR.width/2-cR.left, bR.top+bR.height/2-cR.top, 40);
       eng1.current?.ensureRunning();
     }
     nudgeBadge();
@@ -330,7 +301,11 @@ export default function ReferralPage() {
 
   const handleRefer = () => {
     const s=screen2Ref.current, b=referBtnRef.current;
-    if (s&&b) eng2.current?.burstAt(s,b,35);
+    if (s&&b) eng2.current?.burstAt(s,b,30);
+  };
+  const handleTeddy = () => {
+    const s=screen2Ref.current, t=teddyRef.current;
+    if (s&&t) eng2.current?.burstAt(s,t,28);
   };
   const openVideo = (school:'preschool'|'international', e:React.MouseEvent) => {
     const s=screen2Ref.current, btn=e.currentTarget as HTMLElement;
@@ -338,428 +313,296 @@ export default function ReferralPage() {
     setVideoModal(school);
   };
 
-  /* ── SVG progress ring ──────────────────────────────────────────────── */
-  const RING_R = 126; // radius around the 240px canvas (padded inside wrapper)
-  const RING_C = 2 * Math.PI * RING_R;
-  const ringOffset = RING_C * (1 - scratchPct);
-
-  /* ── Decorative icon shorthand ──────────────────────────────────────── */
-  const D = ({cls,style}:{cls:string;style:React.CSSProperties}) => (
-    <i className={`ti ${cls} rlp-dodge`} onMouseEnter={dodgeEnter} onMouseLeave={dodgeLeave}
-       style={style} aria-hidden="true" />
-  );
-
   /* ─────────────────────────────────────────────────────────────────────
-     BENEFITS config
+     Reusable decorative icon shorthand
   ───────────────────────────────────────────────────────────────────── */
-  const BENEFITS = [
-    {icon:'ti-coin',       bg:'#FFF0E8', accent:'#D85A30', fg:'#5A2210', label:'Earn loyalty points'},
-    {icon:'ti-ticket',     bg:'#EEF7E2', accent:'#639922', fg:'#263B0A', label:'Gift vouchers'},
-    {icon:'ti-gift',       bg:'#EEF0FE', accent:'#7F77DD', fg:'#26215C', label:'Assured goodies'},
-    {icon:'ti-star-filled',bg:'#E8F4FF', accent:'#378ADD', fg:'#0A2B50', label:'Surprise gift on 500 pts'},
-    {icon:'ti-confetti',   bg:'#FDE8F2', accent:'#D4537E', fg:'#4B1528', label:'Loyalty party invite'},
-  ];
+  const D = ({cls,style}:{cls:string;style:React.CSSProperties}) => (
+    <i className={`ti ${cls} rlp-dodge`} onMouseEnter={dodgeEnter} onMouseLeave={dodgeLeave} style={style} aria-hidden="true" />
+  );
 
   /* ── RENDER ─────────────────────────────────────────────────────────── */
   return (
     <>
       <style>{STYLES}</style>
+
       <div className="rlp-root">
 
-        {/* ════════════════ SCREEN 1 — Scratch ════════════════ */}
+        {/* ════════════════════════════════════════════════════════════════
+            SCREEN 1 — Scratch card
+        ════════════════════════════════════════════════════════════════ */}
         {screen === 'scratch' && (
           <div
             ref={screen1Ref}
             style={{
               position:'relative', minHeight:'100vh', display:'flex', flexDirection:'column',
-              alignItems:'center', justifyContent:'center', padding:'6vw 5vw',
-              background:'linear-gradient(145deg,#F8F5FF 0%,#FFF2F9 50%,#F2F8FF 100%)',
-              overflow:'hidden',
+              justifyContent:'center', padding:'7vw 6vw',
+              background:'linear-gradient(160deg,#FEF7E6 0%,#FDEAF2 55%,#F1E7FE 100%)',
+              textAlign:'center', overflow:'hidden',
             }}
           >
             {/* confetti canvas */}
             <canvas ref={fx1Ref} style={{position:'absolute',top:0,left:0,width:'100%',height:'100%',pointerEvents:'none',zIndex:6}} />
 
-            {/* floating icon decorations — tabler, no emojis */}
-            <D cls="ti-star-filled"    style={{position:'absolute',top:22,  left:20,  fontSize:20, color:'#FAC775', animation:'rlp-twinkle 2.4s ease-in-out infinite'}} />
-            <D cls="ti-heart-filled"   style={{position:'absolute',top:18,  right:26, fontSize:17, color:'#ED93B1', animation:'rlp-floatySlow 3.6s ease-in-out infinite'}} />
-            <D cls="ti-sparkles"       style={{position:'absolute',top:72,  left:28,  fontSize:15, color:'#85B7EB', animation:'rlp-twinkle 2.2s ease-in-out infinite .7s'}} />
-            <D cls="ti-star-filled"    style={{position:'absolute',top:120, right:22, fontSize:15, color:'#97C459', animation:'rlp-twinkle 2.7s ease-in-out infinite .2s'}} />
-            <D cls="ti-gift"           style={{position:'absolute',bottom:28,left:22, fontSize:22, color:'#D85A30', animation:'rlp-floatySlow 4.2s ease-in-out infinite .4s'}} />
-            <D cls="ti-balloon-filled" style={{position:'absolute',bottom:40,right:18,fontSize:28, color:'#AFA9EC', animation:'rlp-floaty 3.8s ease-in-out infinite .6s'}} />
-            <D cls="ti-diamond-filled" style={{position:'absolute',top:'50%',left:14, fontSize:14, color:'#F0A8B8', animation:'rlp-twinkle 3s ease-in-out infinite 1s'}} />
-            <D cls="ti-diamond-filled" style={{position:'absolute',top:'40%',right:16,fontSize:12, color:'#A8C4F0', animation:'rlp-twinkle 3.2s ease-in-out infinite .5s'}} />
+            {/* floating decorations */}
+            <D cls="ti-star-filled"    style={{position:'absolute',top:18, left:16,  fontSize:22, color:'#FAC775', animation:'rlp-twinkle 2.4s ease-in-out infinite'}} />
+            <D cls="ti-heart-filled"   style={{position:'absolute',top:14, right:24, fontSize:18, color:'#ED93B1', animation:'rlp-floatySlow 3.4s ease-in-out infinite'}} />
+            <D cls="ti-sparkles"       style={{position:'absolute',top:70, left:24,  fontSize:16, color:'#85B7EB', animation:'rlp-twinkle 2.2s ease-in-out infinite .8s'}} />
+            <D cls="ti-star-filled"    style={{position:'absolute',top:130,right:18, fontSize:16, color:'#97C459', animation:'rlp-twinkle 2.6s ease-in-out infinite .2s'}} />
+            <D cls="ti-confetti"       style={{position:'absolute',bottom:20,left:20,fontSize:20, color:'#D85A30', animation:'rlp-floatySlow 4s ease-in-out infinite .3s'}} />
+            <D cls="ti-balloon-filled" style={{position:'absolute',bottom:34,right:16,fontSize:26,color:'#AFA9EC', animation:'rlp-floaty 3.8s ease-in-out infinite .6s'}} />
 
-            <div style={{position:'relative',width:'100%',maxWidth:400,textAlign:'center'}}>
+            <div style={{position:'relative',maxWidth:420,margin:'0 auto'}}>
 
-              {/* headline */}
-              <div style={{marginBottom:6}}>
-                <span style={{display:'inline-block',background:'linear-gradient(90deg,#7F77DD,#D4537E)',
-                  borderRadius:20,padding:'3px 14px',fontSize:11,fontWeight:600,
-                  color:'#fff',letterSpacing:'.6px',marginBottom:12,
-                  animation:'rlp-slideUp .4s ease-out both'}}>
-                  EXCLUSIVE REWARD
-                </span>
+              <div style={{fontSize:'clamp(22px,6vw,28px)',fontWeight:500,color:'#26215C',lineHeight:1.25}}>
+                A surprise<br /><span style={{color:'#D4537E'}}>awaits!</span>
               </div>
-              <div style={{fontSize:'clamp(22px,6vw,30px)',fontWeight:600,color:'#1E1950',
-                lineHeight:1.22,animation:'rlp-slideUp .45s ease-out .1s both'}}>
-                A surprise<br />
-                <span style={{background:'linear-gradient(90deg,#7F77DD,#D4537E)',
-                  WebkitBackgroundClip:'text',backgroundClip:'text',WebkitTextFillColor:'transparent'}}>
-                  awaits you
-                </span>
-              </div>
-              <div style={{fontSize:13.5,color:'#6B6A8A',marginTop:8,marginBottom:28,
-                animation:'rlp-slideUp .45s ease-out .2s both'}}>
-                Scratch the circle below to reveal your reward
+              <div style={{fontSize:14,color:'#5F5E5A',marginTop:8,marginBottom:22}}>
+                Scratch below to get your<br /><span style={{color:'#7F77DD',fontWeight:500}}>exclusive</span> reward
               </div>
 
-              {/* scratch card with progress ring */}
-              <div style={{position:'relative',width:260,height:260,margin:'0 auto',
-                display:'flex',alignItems:'center',justifyContent:'center',
-                animation:'rlp-slideUp .5s ease-out .25s both'}}>
-
-                {/* SVG progress ring */}
-                <svg
-                  viewBox="0 0 280 280" width="260" height="260"
-                  style={{position:'absolute',inset:0,pointerEvents:'none',zIndex:3}}
-                >
-                  {/* track */}
-                  <circle cx="140" cy="140" r={RING_R} fill="none"
-                    stroke="rgba(127,119,221,.15)" strokeWidth="3" />
-                  {/* fill */}
-                  <circle cx="140" cy="140" r={RING_R} fill="none"
-                    stroke="url(#ringGrad)" strokeWidth="4"
-                    strokeLinecap="round"
-                    strokeDasharray={RING_C}
-                    strokeDashoffset={ringOffset}
-                    style={{transformOrigin:'center',transform:'rotate(-90deg)',
-                      transition:'stroke-dashoffset .1s linear',
-                      animation:'rlp-ringPulse 2s ease-in-out infinite'}}
-                  />
-                  <defs>
-                    <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                      <stop offset="0%"   stopColor="#7F77DD" />
-                      <stop offset="100%" stopColor="#D4537E" />
-                    </linearGradient>
-                  </defs>
-                </svg>
-
-                {/* canvas */}
+              {/* scratch circle */}
+              <div style={{position:'relative',width:'clamp(160px,45vw,220px)',height:'clamp(160px,45vw,220px)',margin:'0 auto'}}>
+                <div style={{position:'absolute',inset:0,borderRadius:'50%',animation:'rlp-pulseRing 2s ease-in-out infinite'}} />
                 <canvas
                   ref={scratchRef} width={RES} height={RES}
-                  style={{width:220,height:220,borderRadius:'50%',
-                    touchAction:'none',cursor:'crosshair',display:'block',zIndex:2,
-                    boxShadow:'0 8px 28px rgba(127,119,221,.28), 0 2px 8px rgba(0,0,0,.08)'}}
+                  style={{position:'relative',width:'100%',height:'100%',borderRadius:'50%',touchAction:'none',cursor:'pointer',display:'block'}}
                 />
-
-                {/* animated hint overlay (disappears once scratching starts) */}
-                {hinting && (
-                  <div style={{position:'absolute',inset:0,borderRadius:'50%',
-                    display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',
-                    pointerEvents:'none',zIndex:4,animation:'rlp-breathe 1.8s ease-in-out infinite'}}>
-                    <i className="ti ti-hand-move" aria-hidden="true"
-                      style={{fontSize:30,color:'rgba(30,25,80,.55)'}} />
-                    <span style={{fontSize:10,fontWeight:600,color:'rgba(30,25,80,.45)',
-                      letterSpacing:'.5px',marginTop:4}}>SCRATCH</span>
-                  </div>
-                )}
-
-                {/* wiggle hint icon at bottom-right of circle */}
                 <i className="ti ti-hand-click" aria-hidden="true"
-                  style={{position:'absolute',bottom:2,right:2,fontSize:24,color:'#26215C',
-                    background:'#fff',borderRadius:'50%',padding:6,zIndex:5,
-                    boxShadow:'0 4px 10px rgba(0,0,0,.15)',
-                    animation:'rlp-wiggle 1.7s ease-in-out infinite'}} />
+                  style={{position:'absolute',bottom:-6,right:-6,fontSize:26,color:'#26215C',
+                    background:'#fff',borderRadius:'50%',padding:6,zIndex:4,
+                    animation:'rlp-wiggle 1.6s ease-in-out infinite'}} />
 
                 {/* rainbow badge — dodges on hover/click */}
                 <div
                   ref={badgeRef}
                   onClick={handleBadgeClick}
                   onMouseEnter={nudgeBadge}
-                  style={{position:'absolute',top:-12,left:-10,zIndex:5,cursor:'pointer',
-                    transition:'transform .35s cubic-bezier(.34,1.56,.64,1)',
+                  style={{position:'absolute',top:-14,left:-16,zIndex:4,cursor:'pointer',
+                    transition:'transform .35s ease-out',
                     transform:`translate(${badgeDelta.x}px,${badgeDelta.y}px)`}}
                 >
-                  {/* shadow blob */}
-                  <div style={{position:'absolute',width:52,height:52,background:'#F8C98A',
-                    borderRadius:16,transform:'rotate(20deg)',top:8,left:6,opacity:.85}} />
+                  <div style={{position:'absolute',width:52,height:52,background:'#FDC98B',
+                    borderRadius:16,transform:'rotate(18deg)',top:8,left:6,opacity:.9}} />
                   <div style={{position:'relative',width:50,height:50,borderRadius:'50%',
-                    background:'linear-gradient(135deg,#7F77DD,#534AB7)',
-                    display:'flex',alignItems:'center',justifyContent:'center',
-                    boxShadow:'0 6px 16px rgba(83,74,183,.45)',animation:'rlp-floaty 3.2s ease-in-out infinite'}}>
+                    background:'linear-gradient(135deg,#7F77DD,#534AB7)',display:'flex',
+                    alignItems:'center',justifyContent:'center',
+                    boxShadow:'0 6px 14px rgba(83,74,183,.4)',animation:'rlp-floaty 3s ease-in-out infinite'}}>
                     <svg width="26" height="15" viewBox="0 0 40 22" aria-hidden="true">
-                      <path d="M2 20 A18 18 0 0 1 38 20" fill="none" stroke="#fff"     strokeWidth="3.5" strokeLinecap="round"/>
-                      <path d="M7 20 A13 13 0 0 1 33 20" fill="none" stroke="#FAC775" strokeWidth="3.5" strokeLinecap="round"/>
-                      <path d="M12 20 A8 8 0 0 1 28 20" fill="none" stroke="#97C459" strokeWidth="3.5" strokeLinecap="round"/>
+                      <path d="M2 20 A18 18 0 0 1 38 20" fill="none" stroke="#fff"     strokeWidth="3" strokeLinecap="round" opacity=".95"/>
+                      <path d="M7 20 A13 13 0 0 1 33 20" fill="none" stroke="#FAC775" strokeWidth="3" strokeLinecap="round" opacity=".95"/>
+                      <path d="M12 20 A8 8 0 0 1 28 20" fill="none" stroke="#97C459" strokeWidth="3" strokeLinecap="round" opacity=".95"/>
                     </svg>
                   </div>
                 </div>
               </div>
-
-              {/* progress text + hint */}
-              <div style={{marginTop:20,animation:'rlp-slideUp .5s ease-out .35s both'}}>
-                {scratchPct > 0.05 ? (
-                  <div style={{fontSize:12,color:'#7F77DD',fontWeight:600,
-                    letterSpacing:'.3px',transition:'opacity .3s ease'}}>
-                    {Math.round(scratchPct*100)}% revealed — keep going!
-                  </div>
-                ) : (
-                  <div style={{fontSize:12,color:'#9B9AAC',fontStyle:'italic'}}>
-                    Try catching the little rainbow badge too!
-                  </div>
-                )}
+              <div style={{fontSize:12,color:'#888780',marginTop:16}}>
+                Scratch the circle — and try catching the little rainbow badge that's floating!
               </div>
             </div>
           </div>
         )}
 
-        {/* ════════════════ SCREEN 2 — Reveal ════════════════ */}
+        {/* ════════════════════════════════════════════════════════════════
+            SCREEN 2 — Reveal
+        ════════════════════════════════════════════════════════════════ */}
         {screen === 'reveal' && (
           <div
             ref={screen2Ref}
             style={{
               position:'relative', minHeight:'100vh', display:'flex', flexDirection:'column',
-              alignItems:'center', justifyContent:'center', padding:'7vw 5vw 10vw',
-              background:'linear-gradient(145deg,#FDE8F5 0%,#EAE4FF 50%,#E4F1FF 100%)',
-              overflow:'hidden',
+              justifyContent:'center', padding:'8vw 6vw',
+              background:'linear-gradient(160deg,#FDE2EC 0%,#E4D6FA 45%,#FFE9C4 100%)',
+              textAlign:'center', overflow:'hidden',
             }}
           >
             <canvas ref={fxRef} style={{position:'absolute',top:0,left:0,width:'100%',height:'100%',pointerEvents:'none',zIndex:5}} />
+            <div style={{position:'absolute',top:-70,left:'50%',transform:'translateX(-50%)',width:300,height:300,
+              background:'radial-gradient(circle,rgba(255,255,255,.55) 0%,rgba(255,255,255,0) 70%)',pointerEvents:'none'}} />
 
             {/* floating decorations */}
-            <D cls="ti-balloon-filled" style={{position:'absolute',top:18,  left:14,  fontSize:34,color:'#AFA9EC',animation:'rlp-floaty 3.4s ease-in-out infinite'}} />
-            <D cls="ti-balloon-filled" style={{position:'absolute',top:12,  right:16, fontSize:30,color:'#ED93B1',animation:'rlp-floaty 3.8s ease-in-out infinite .5s'}} />
-            <D cls="ti-star-filled"    style={{position:'absolute',top:80,  left:32,  fontSize:14,color:'#FAC775',animation:'rlp-twinkle 2.5s ease-in-out infinite'}} />
-            <D cls="ti-star-filled"    style={{position:'absolute',top:64,  right:64, fontSize:14,color:'#FAC775',animation:'rlp-twinkle 2.3s ease-in-out infinite .6s'}} />
-            <D cls="ti-sparkles"       style={{position:'absolute',top:120, right:22, fontSize:16,color:'#85B7EB',animation:'rlp-twinkle 2.7s ease-in-out infinite .3s'}} />
-            <D cls="ti-diamond-filled" style={{position:'absolute',bottom:60,left:18, fontSize:14,color:'#D4537E',animation:'rlp-twinkle 3.1s ease-in-out infinite .8s'}} />
-            <D cls="ti-diamond-filled" style={{position:'absolute',bottom:40,right:20,fontSize:12,color:'#97C459',animation:'rlp-twinkle 2.9s ease-in-out infinite 1.2s'}} />
+            <D cls="ti-balloon-filled" style={{position:'absolute',top:20,  left:12,  fontSize:34,color:'#AFA9EC',animation:'rlp-floaty 3.2s ease-in-out infinite'}} />
+            <D cls="ti-balloon-filled" style={{position:'absolute',top:14,  right:14, fontSize:30,color:'#ED93B1',animation:'rlp-floaty 3.6s ease-in-out infinite .5s'}} />
+            <D cls="ti-star-filled"    style={{position:'absolute',top:76,  left:30,  fontSize:14,color:'#FAC775',animation:'rlp-twinkle 2.4s ease-in-out infinite'}} />
+            <D cls="ti-star-filled"    style={{position:'absolute',top:60,  right:60, fontSize:14,color:'#FAC775',animation:'rlp-twinkle 2.2s ease-in-out infinite .6s'}} />
+            <D cls="ti-sparkles"       style={{position:'absolute',top:110, right:24, fontSize:16,color:'#85B7EB',animation:'rlp-twinkle 2.6s ease-in-out infinite .3s'}} />
 
-            <div style={{position:'relative',zIndex:2,width:'100%',maxWidth:420,textAlign:'center'}}>
-
-              {/* congratulations header */}
-              <div style={{animation:'rlp-popIn .5s ease-out both'}}>
-                <i className="ti ti-trophy" aria-hidden="true"
-                  style={{fontSize:38,color:'#D4A017',display:'block',marginBottom:6,
-                    animation:'rlp-wiggle 2s ease-in-out infinite'}} />
-                <div style={{fontSize:'clamp(24px,7vw,30px)',fontWeight:700,color:'#1E1950',letterSpacing:'-.3px'}}>
-                  Congratulations!
-                </div>
-                <div style={{fontSize:13.5,color:'#534AB7',marginTop:4,fontWeight:500}}>
-                  You've earned something special
-                </div>
+            <div style={{position:'relative',zIndex:2,maxWidth:440,margin:'0 auto'}}>
+              <i className="ti ti-confetti" aria-hidden="true"
+                style={{fontSize:30,color:'#712B13',display:'block',marginBottom:4,animation:'rlp-wiggle 1.8s ease-in-out infinite'}} />
+              <div style={{fontSize:'clamp(22px,6vw,26px)',fontWeight:500,color:'#26215C',
+                animation:'rlp-popIn .5s ease-out forwards'}}>
+                Congratulations!
+              </div>
+              <div style={{fontSize:14,color:'#4B1528',marginTop:6,display:'flex',alignItems:'center',justifyContent:'center',gap:6}}>
+                <i className="ti ti-heart-filled" aria-hidden="true" style={{fontSize:12,color:'#D4537E',animation:'rlp-twinkle 1.6s ease-in-out infinite'}} />
+                You won a
+                <i className="ti ti-heart-filled" aria-hidden="true" style={{fontSize:12,color:'#D4537E',animation:'rlp-twinkle 1.6s ease-in-out infinite .3s'}} />
               </div>
 
-              {/* ── Offer card ───────────────────────────────── */}
+              {/* ── Offer card ─────────────────────────────────────────── */}
               <div className="rlp-shine"
-                style={{marginTop:22,background:'linear-gradient(150deg,#FFFFFF 0%,#FDEAF7 45%,#EEF0FE 100%)',
-                  borderRadius:22,padding:'26px 20px 22px',
-                  boxShadow:'0 12px 32px rgba(83,74,183,.18),0 2px 8px rgba(0,0,0,.06)',
-                  border:'2px solid rgba(255,255,255,.75)',
-                  position:'relative',overflow:'hidden',
-                  animation:'rlp-slideUp .5s ease-out .15s both'}}>
+                style={{marginTop:16,background:'linear-gradient(145deg,#FFFFFF 0%,#FDEAF7 45%,#F1ECFE 100%)',
+                  borderRadius:18,padding:'22px 16px',boxShadow:'0 10px 28px rgba(83,74,183,.2)',
+                  border:'2px solid rgba(255,255,255,.7)',position:'relative',overflow:'hidden',
+                  animation:'rlp-slideUp .5s ease-out .2s both'}}>
                 <div className="rlp-sunburst" />
                 <div style={{position:'relative',zIndex:1}}>
-                  <div style={{fontSize:11,fontWeight:700,color:'#B45309',letterSpacing:'.5px',marginBottom:6,
-                    animation:'rlp-stampIn .6s ease-out .2s both'}}>
-                    YOU WON FREE
-                  </div>
-                  <i className="ti ti-award" aria-hidden="true"
-                    style={{fontSize:28,color:'#534AB7',display:'block',marginBottom:6,
-                      animation:'rlp-wiggle 2.2s ease-in-out infinite'}} />
-                  <div style={{fontSize:44,fontWeight:800,letterSpacing:'-1px',lineHeight:1,
+                  <div style={{fontSize:13,fontWeight:700,color:'#B45309',letterSpacing:'.3px',marginBottom:2,
+                    animation:'rlp-stampIn .6s ease-out .3s both'}}>YOU WON!</div>
+                  <i className="ti ti-gift" aria-hidden="true"
+                    style={{fontSize:24,color:'#534AB7',display:'block',marginBottom:4,animation:'rlp-wiggle 2s ease-in-out infinite'}} />
+                  <div style={{fontSize:34,fontWeight:700,
                     background:'linear-gradient(90deg,#D4537E,#7F77DD,#378ADD)',
                     WebkitBackgroundClip:'text',backgroundClip:'text',WebkitTextFillColor:'transparent',
-                    animation:'rlp-stampIn .6s ease-out .3s both'}}>
-                    FREE
-                  </div>
-                  <div style={{display:'inline-block',margin:'8px 0 12px',background:'#5DCAA5',
-                    color:'#04342C',fontSize:10.5,fontWeight:700,letterSpacing:'.7px',
-                    padding:'4px 16px',borderRadius:20,
-                    animation:'rlp-glowPulse 2s ease-in-out infinite'}}>
-                    EXCLUSIVE MEMBERSHIP
-                  </div>
-                  <div style={{fontSize:18,fontWeight:600,color:'#1E1950',lineHeight:1.3}}>
-                    Rainbow Loyalty<br />
-                    <span style={{background:'linear-gradient(90deg,#D4537E,#7F77DD)',
-                      WebkitBackgroundClip:'text',backgroundClip:'text',WebkitTextFillColor:'transparent'}}>
-                      Programme
-                    </span>
+                    animation:'rlp-stampIn .6s ease-out .4s both'}}>FREE</div>
+                  <div style={{display:'inline-block',margin:'6px 0 10px',background:'#5DCAA5',color:'#04342C',
+                    fontSize:11,fontWeight:600,letterSpacing:'.5px',padding:'4px 14px',borderRadius:20,
+                    animation:'rlp-glowPulse 1.8s ease-in-out infinite'}}>EXCLUSIVE</div>
+                  <div style={{fontSize:18,fontWeight:500,color:'#26215C',lineHeight:1.3}}>
+                    Rainbow Loyalty<br />Programme <span style={{color:'#D4537E'}}>Membership!</span>
                   </div>
                 </div>
               </div>
 
-              {/* ── Benefits grid ──────────────────────────── */}
-              <div style={{marginTop:18,animation:'rlp-slideUp .5s ease-out .3s both'}}>
-                <div style={{fontSize:11,fontWeight:600,color:'#6B6A8A',letterSpacing:'.5px',
-                  marginBottom:12,textTransform:'uppercase'}}>Member Benefits</div>
-                <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10,marginBottom:10}}>
-                  {BENEFITS.slice(0,4).map(({icon,bg,accent,fg,label},i) => (
-                    <div key={i} className="rlp-benefit"
-                      style={{background:bg,borderRadius:14,padding:'14px 10px',
-                        display:'flex',flexDirection:'column',alignItems:'center',gap:8,
-                        boxShadow:'0 2px 10px rgba(0,0,0,.06)',
-                        animation:`rlp-popIn .4s ease-out ${.45+i*.07}s both`}}>
-                      <div style={{width:38,height:38,borderRadius:12,
-                        background:`linear-gradient(135deg,${accent}22,${accent}44)`,
-                        display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0,
-                        border:`1.5px solid ${accent}33`}}>
-                        <i className={`ti ${icon}`} aria-hidden="true"
-                          style={{fontSize:18,color:accent}} />
+              {/* ── Benefits row ───────────────────────────────────────── */}
+              <div style={{marginTop:16,background:'linear-gradient(160deg,#FFFDF8 0%,#FDF3FA 100%)',
+                borderRadius:16,padding:'14px 8px',boxShadow:'0 4px 16px rgba(0,0,0,.06)',
+                animation:'rlp-slideUp .5s ease-out .38s both'}}>
+                <div style={{textAlign:'center',marginBottom:12}}>
+                  <span style={{background:'#AFA9EC',color:'#26215C',fontSize:11,fontWeight:500,
+                    letterSpacing:'.5px',padding:'4px 14px',borderRadius:20}}>MEMBER BENEFITS</span>
+                </div>
+                <div style={{display:'flex',justifyContent:'space-between',gap:4}}>
+                  {[
+                    {n:1,bg:'#F0997B',fg:'#4A1B0C',label:'Earn loyalty points'},
+                    {n:2,bg:'#97C459',fg:'#1B3609',label:'Gift vouchers'},
+                    {n:3,bg:'#AFA9EC',fg:'#26215C',label:'Assured goodies'},
+                    {n:4,bg:'#85B7EB',fg:'#0C2B4A',label:'Surprise gift on 500 points'},
+                    {n:5,bg:'#D4537E',fg:'#fff',   label:'Invite to loyalty party'},
+                  ].map(({n,bg,fg,label},i) => (
+                    <div key={n} className="rlp-benefit"
+                      style={{display:'flex',flexDirection:'column',alignItems:'center',textAlign:'center',
+                        flex:1,gap:5,animation:`rlp-popIn .4s ease-out ${1+i*.06}s both`}}>
+                      <div style={{width:28,height:28,borderRadius:'50%',background:bg,color:fg,
+                        fontSize:13,fontWeight:600,display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}>
+                        {n}
                       </div>
-                      <div style={{fontSize:11.5,fontWeight:600,color:fg,lineHeight:1.25,textAlign:'center'}}>
-                        {label}
-                      </div>
+                      <div style={{fontSize:10,fontWeight:500,color:'#26215C',lineHeight:1.15}}>{label}</div>
                     </div>
                   ))}
                 </div>
-                {/* 5th benefit full-width */}
-                <div className="rlp-benefit"
-                  style={{background:BENEFITS[4].bg,borderRadius:14,padding:'12px 16px',
-                    display:'flex',alignItems:'center',gap:12,
-                    boxShadow:'0 2px 10px rgba(0,0,0,.06)',
-                    animation:'rlp-popIn .4s ease-out .73s both'}}>
-                  <div style={{width:38,height:38,borderRadius:12,flexShrink:0,
-                    background:`linear-gradient(135deg,${BENEFITS[4].accent}22,${BENEFITS[4].accent}44)`,
-                    display:'flex',alignItems:'center',justifyContent:'center',
-                    border:`1.5px solid ${BENEFITS[4].accent}33`}}>
-                    <i className={`ti ${BENEFITS[4].icon}`} aria-hidden="true"
-                      style={{fontSize:18,color:BENEFITS[4].accent}} />
-                  </div>
-                  <div style={{fontSize:12,fontWeight:600,color:BENEFITS[4].fg,textAlign:'left'}}>
-                    {BENEFITS[4].label}
-                  </div>
-                  <div style={{marginLeft:'auto',fontSize:10,fontWeight:600,color:BENEFITS[4].accent,
-                    background:`${BENEFITS[4].accent}18`,padding:'3px 10px',borderRadius:20}}>
-                    SPECIAL
-                  </div>
-                </div>
               </div>
 
-              {/* ── Refer button ──────────────────────────── */}
-              <div style={{marginTop:22,animation:'rlp-slideUp .5s ease-out .5s both'}}>
+              {/* ── Actions — shown directly (no JOIN NOW gate) ─────────── */}
+              <div style={{marginTop:18,animation:'rlp-slideUp .5s ease-out .56s both'}}>
+                <div style={{fontSize:12,color:'#5F5E5A',marginBottom:14}}>
+                  Contact your nearest Rainbow school office
+                </div>
+
+                {/* Refer button */}
                 <a
                   ref={referBtnRef}
                   href="https://docs.google.com/forms/d/e/1FAIpQLSe0Q636C3vAiwQyBxXHHGb3PSIlttZbHeRtVQyLWMKCPS8Z1w/viewform"
                   target="_blank" rel="noopener noreferrer"
                   onClick={handleRefer}
-                  className="rlp-refer-btn rlp-shine"
-                  style={{display:'inline-flex',alignItems:'center',gap:10,
+                  className="rlp-form-btn rlp-shine"
+                  style={{display:'inline-block',
                     background:'linear-gradient(90deg,#7F77DD,#D4537E)',
-                    color:'#fff',textDecoration:'none',borderRadius:50,
-                    padding:'14px 36px',fontSize:15,fontWeight:600,
-                    boxShadow:'0 10px 24px rgba(127,119,221,.38)',
-                    position:'relative',overflow:'hidden',letterSpacing:'.2px'}}
+                    color:'#fff',textDecoration:'none',borderRadius:24,
+                    padding:'12px 30px',fontSize:14,fontWeight:600,
+                    boxShadow:'0 8px 20px rgba(127,119,221,.35)',
+                    position:'relative',overflow:'hidden'}}
                 >
-                  <i className="ti ti-user-plus" aria-hidden="true" style={{fontSize:18}} />
-                  Refer a Friend
+                  🎁 Refer a Friend
                 </a>
-                <div style={{fontSize:12,color:'#8A89A6',marginTop:10,
-                  display:'flex',alignItems:'center',justifyContent:'center',gap:5}}>
-                  <i className="ti ti-school" aria-hidden="true" style={{fontSize:13}} />
-                  Contact your nearest Rainbow school office
+
+                <div style={{marginTop:14,fontSize:13,fontWeight:600,color:'#26215C',
+                  background:'rgba(255,255,255,.6)',padding:'6px 16px',borderRadius:20,
+                  animation:'rlp-floaty 2.2s ease-in-out infinite'}}>
+                  🤔 Got more questions? <span style={{color:'#D4537E'}}>Take a sneak peek</span> 👀
+                </div>
+
+                {/* Teddy */}
+                <div style={{width:'100%',display:'flex',justifyContent:'center',marginTop:8}}>
+                  <span ref={teddyRef} onClick={handleTeddy}
+                    style={{display:'inline-block',fontSize:34,cursor:'pointer',
+                      animation:'rlp-teddyMove 4s ease-in-out infinite'}}>🧸</span>
+                </div>
+
+                {/* Video buttons */}
+                <div style={{display:'flex',gap:12,flexWrap:'wrap',justifyContent:'center',marginTop:8}}>
+                  <button
+                    className="rlp-vbtn"
+                    data-school="preschool"
+                    onClick={(e)=>openVideo('preschool',e)}
+                    style={{width:130,background:'linear-gradient(160deg,#FDEAF2,#FBD4E4)',border:'none',
+                      borderRadius:16,padding:'14px 8px',display:'flex',flexDirection:'column',
+                      alignItems:'center',gap:4}}
+                  >
+                    <i className="ti ti-school" aria-hidden="true"
+                      style={{fontSize:26,color:'#D4537E',animation:'rlp-floaty 2.4s ease-in-out infinite'}} />
+                    <span style={{fontSize:12,fontWeight:600,color:'#993556',lineHeight:1.2}}>Rainbow Preschool</span>
+                    <span style={{fontSize:10,color:'#B15C7A',display:'flex',alignItems:'center',gap:3}}>
+                      <i className="ti ti-player-play-filled" aria-hidden="true" style={{fontSize:10}} /> Watch
+                    </span>
+                  </button>
+                  <button
+                    className="rlp-vbtn"
+                    data-school="international"
+                    onClick={(e)=>openVideo('international',e)}
+                    style={{width:130,background:'linear-gradient(160deg,#EEEDFE,#DCD8FB)',border:'none',
+                      borderRadius:16,padding:'14px 8px',display:'flex',flexDirection:'column',
+                      alignItems:'center',gap:4}}
+                  >
+                    <i className="ti ti-building-community" aria-hidden="true"
+                      style={{fontSize:26,color:'#7F77DD',animation:'rlp-floaty 2.4s ease-in-out infinite .3s'}} />
+                    <span style={{fontSize:12,fontWeight:600,color:'#3B3593',lineHeight:1.2}}>Rainbow International School</span>
+                    <span style={{fontSize:10,color:'#5951B5',display:'flex',alignItems:'center',gap:3}}>
+                      <i className="ti ti-player-play-filled" aria-hidden="true" style={{fontSize:10}} /> Watch
+                    </span>
+                  </button>
                 </div>
               </div>
 
-              {/* ── Video buttons ─────────────────────────── */}
-              <div style={{marginTop:18,display:'flex',gap:12,justifyContent:'center',flexWrap:'wrap',
-                animation:'rlp-slideUp .5s ease-out .62s both'}}>
-                <button
-                  className="rlp-vbtn"
-                  data-school="preschool"
-                  onClick={(e)=>openVideo('preschool',e)}
-                  style={{flex:'0 1 170px',background:'linear-gradient(150deg,#FDEAF2,#FBD4E4)',
-                    border:'none',borderRadius:16,padding:'16px 12px',
-                    display:'flex',flexDirection:'column',alignItems:'center',gap:6}}
-                >
-                  <div style={{width:40,height:40,borderRadius:12,background:'rgba(209,83,126,.15)',
-                    display:'flex',alignItems:'center',justifyContent:'center',marginBottom:2,
-                    animation:'rlp-floaty 2.6s ease-in-out infinite'}}>
-                    <i className="ti ti-school" aria-hidden="true" style={{fontSize:20,color:'#D4537E'}} />
-                  </div>
-                  <span style={{fontSize:12.5,fontWeight:700,color:'#993556',lineHeight:1.2}}>Rainbow Preschool</span>
-                  <span style={{fontSize:11,color:'#B15C7A',display:'flex',alignItems:'center',gap:4,
-                    fontWeight:500}}>
-                    <i className="ti ti-player-play-filled" aria-hidden="true" style={{fontSize:11}} />
-                    Watch video
-                  </span>
-                </button>
-
-                <button
-                  className="rlp-vbtn"
-                  data-school="international"
-                  onClick={(e)=>openVideo('international',e)}
-                  style={{flex:'0 1 170px',background:'linear-gradient(150deg,#EEEDFE,#DCD8FB)',
-                    border:'none',borderRadius:16,padding:'16px 12px',
-                    display:'flex',flexDirection:'column',alignItems:'center',gap:6}}
-                >
-                  <div style={{width:40,height:40,borderRadius:12,background:'rgba(127,119,221,.15)',
-                    display:'flex',alignItems:'center',justifyContent:'center',marginBottom:2,
-                    animation:'rlp-floaty 2.6s ease-in-out infinite .3s'}}>
-                    <i className="ti ti-building-community" aria-hidden="true" style={{fontSize:20,color:'#7F77DD'}} />
-                  </div>
-                  <span style={{fontSize:12.5,fontWeight:700,color:'#3B3593',lineHeight:1.2}}>Rainbow International</span>
-                  <span style={{fontSize:11,color:'#5951B5',display:'flex',alignItems:'center',gap:4,
-                    fontWeight:500}}>
-                    <i className="ti ti-player-play-filled" aria-hidden="true" style={{fontSize:11}} />
-                    Watch video
-                  </span>
-                </button>
-              </div>
-
               {/* Welcome line */}
-              <div style={{marginTop:20,fontSize:13.5,fontWeight:600,
-                background:'linear-gradient(90deg,#7F77DD,#D4537E)',
-                WebkitBackgroundClip:'text',backgroundClip:'text',WebkitTextFillColor:'transparent',
+              <div style={{marginTop:14,fontSize:14,fontWeight:500,color:'#534AB7',
                 animation:'rlp-slideUp .5s ease-out .74s both'}}>
-                Welcome to the Rainbow family
-                <i className="ti ti-rainbow" aria-hidden="true"
-                  style={{fontSize:15,marginLeft:5,verticalAlign:'-3px',
-                    WebkitTextFillColor:'initial',color:'#7F77DD'}} />
+                Welcome to the Rainbow family!{' '}
+                <i className="ti ti-rainbow" aria-hidden="true" style={{fontSize:16,verticalAlign:'-3px'}} />
               </div>
             </div>
           </div>
         )}
 
-        {/* ════════════════ VIDEO MODAL ════════════════ */}
+        {/* ════════════════════════════════════════════════════════════════
+            VIDEO MODAL
+        ════════════════════════════════════════════════════════════════ */}
         {videoModal && (
           <div
             onClick={(e)=>{ if (e.target===e.currentTarget) setVideoModal(null); }}
-            style={{position:'fixed',inset:0,background:'rgba(15,10,35,.88)',zIndex:9999,
+            style={{position:'fixed',inset:0,background:'rgba(20,15,40,.85)',zIndex:9999,
               display:'flex',alignItems:'center',justifyContent:'center',padding:24}}
           >
-            <div style={{position:'relative',width:'100%',maxWidth:660}}>
+            <div style={{position:'relative',width:'100%',maxWidth:640}}>
               <button
                 onClick={()=>setVideoModal(null)}
-                style={{position:'absolute',top:-46,right:0,background:'rgba(255,255,255,.15)',
-                  border:'1px solid rgba(255,255,255,.25)',borderRadius:'50%',
-                  width:36,height:36,fontSize:15,cursor:'pointer',color:'#fff',
-                  display:'flex',alignItems:'center',justifyContent:'center',
-                  backdropFilter:'blur(6px)',transition:'background .2s ease'}}
-                onMouseEnter={e=>(e.currentTarget.style.background='rgba(255,255,255,.28)')}
-                onMouseLeave={e=>(e.currentTarget.style.background='rgba(255,255,255,.15)')}
-              >
-                <i className="ti ti-x" aria-hidden="true" style={{fontSize:16}} />
-              </button>
-              <div style={{fontSize:13,color:'rgba(255,255,255,.7)',textAlign:'center',
-                marginBottom:10,fontWeight:500}}>
-                {videoModal==='preschool' ? 'Rainbow Preschool' : 'Rainbow International School'}
-              </div>
+                style={{position:'absolute',top:-42,right:0,background:'#fff',border:'none',
+                  borderRadius:'50%',width:34,height:34,fontSize:16,cursor:'pointer',
+                  boxShadow:'0 4px 10px rgba(0,0,0,.3)'}}
+              >✕</button>
               <div style={{position:'relative',width:'100%',paddingTop:'56.25%',
-                borderRadius:16,overflow:'hidden',
-                boxShadow:'0 16px 48px rgba(0,0,0,.6)'}}>
+                borderRadius:14,overflow:'hidden',
+                boxShadow:'0 12px 40px rgba(0,0,0,.5)',background:'#000'}}>
                 <video
                   key={videoModal}
                   src={videoModal==='preschool' ? '/videos/rps-loyalty.mp4' : '/videos/ris-loyalty.mp4'}
                   controls autoPlay playsInline
-                  style={{position:'absolute',top:0,left:0,width:'100%',height:'100%',border:0,background:'#000'}}
+                  style={{position:'absolute',top:0,left:0,width:'100%',height:'100%',border:0}}
                 />
               </div>
             </div>
           </div>
         )}
-
       </div>
     </>
   );
