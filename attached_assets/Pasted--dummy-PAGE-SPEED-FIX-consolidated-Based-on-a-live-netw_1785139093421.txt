@@ -1,0 +1,117 @@
+# /dummy PAGE-SPEED FIX — consolidated. Based on a live network trace of
+# https://www.rainbowpreschools.com/dummy (108 requests). Root causes confirmed:
+# (A) the full tag/analytics stack loads on page-load, (B) Three.js (three.module,
+# hero3d, SchoolTownMap3D) loads on page-load instead of on-scroll, (C) the /dummy
+# walkthrough video 503s and still fetches on load. Fix all four below.
+# Note: items A affect the whole site (tags are global); B/C/D are the /dummy route
+# and the components it renders. Don't change visible design/content.
+
+## FIX A — DEFER THE ENTIRE TAG STACK UNTIL FIRST INTERACTION OR IDLE  ← biggest win
+# Confirmed loading eagerly on /dummy: GTM (GT-55BFZCQT / gtag/js), Microsoft Clarity
+# (clarity.ms/tag/m20xf4ffec + clarity.js), Google Ads (AW-17472125337, ccm/collect),
+# Google Call-Tracking (gstatic call-tracking_9.js), TWO Meta Pixels (553160708799731,
+# 876471444795481), a CAPI param-builder bundle (capi-automation.s3…clientParamBuilder),
+# and server-side GTM /xrdb/. Many 503 + retry.
+- Remove the GTM snippet from the initial/synchronous HTML load and inject it only on
+  the first user interaction OR after idle, whichever is first. Use exactly:
+
+    (function () {
+      var loaded = false;
+      function loadGTM() {
+        if (loaded) return; loaded = true;
+        (function (w, d, s, l, i) {
+          w[l] = w[l] || []; w[l].push({ 'gtm.start': Date.now(), event: 'gtm.js' });
+          var f = d.getElementsByTagName(s)[0], j = d.createElement(s);
+          j.async = true; j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i;
+          f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GT-55BFZCQT');
+      }
+      ['scroll','mousemove','touchstart','keydown','click'].forEach(function (e) {
+        window.addEventListener(e, loadGTM, { once: true, passive: true });
+      });
+      if ('requestIdleCallback' in window) requestIdleCallback(loadGTM, { timeout: 5000 });
+      else setTimeout(loadGTM, 5000);
+    })();
+
+- CRITICAL: make sure Clarity, Google Ads, Call-Tracking, BOTH Meta Pixels, and the CAPI
+  builder are fired THROUGH GTM (or the same deferred gate). If any of them are hard-coded
+  as their own <script> tags in index.html (Meta Pixel + Clarity usually are), move them
+  behind the SAME gate or fire them from GTM — nothing may self-inject on load.
+- Remove the DUPLICATE Meta Pixel: only ONE of 553160708799731 / 876471444795481 should
+  load (console warns "Duplicate Pixel ID"). If both come from GTM that's a GTM change —
+  flag it, don't guess which to drop.
+- Do NOT change the 503 endpoints (/xrdb server container, *.run.app CAPI, ccm/collect) —
+  those are server-side GTM config, not code. Deferring just stops them blocking load.
+
+## FIX B — TRULY GATE THE 3D (IntersectionObserver + skip on mobile)
+# Confirmed loading on initial load: three.module-*.js (~725 kB), hero3d-*.js,
+# SchoolTownMap3D-*.js, rainbow-sparkle-trail-*.js. "lazy()" alone isn't gating them.
+# Add this reusable wrapper:
+
+    // components/LazyVisible.tsx — mount children only when near viewport, once
+    import { useState, useRef, useEffect } from "react";
+    export function LazyVisible({ children, placeholder = null, rootMargin = "300px", minWidth = 0 }) {
+      const ref = useRef(null); const [show, setShow] = useState(false);
+      useEffect(() => {
+        if (minWidth && window.innerWidth < minWidth) return; // never mount below minWidth
+        const el = ref.current; if (!el) return;
+        const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setShow(true); io.disconnect(); } }, { rootMargin });
+        io.observe(el); return () => io.disconnect();
+      }, [rootMargin, minWidth]);
+      return <div ref={ref}>{show ? children : placeholder}</div>;
+    }
+
+- SchoolTownMap3D (the bus town): wrap it so three.module + SchoolTownMap3D-*.js download
+  ONLY when the section nears the viewport, and NEVER on mobile:
+    <LazyVisible minWidth={768} placeholder={<IllustratedMapFallback />}>
+      <Suspense fallback={<img src="/assets/walkthrough-poster.webp" alt="" width={1200} height={640} />}>
+        <SchoolTownMap3D … />
+      </Suspense>
+    </LazyVisible>
+  On mobile (<768px) it shows the illustrated/poster fallback and Three.js never loads.
+
+- Hero3D is ABOVE the fold, so IntersectionObserver won't defer it — instead:
+  * Render the STATIC hero image (/images/optimized/hero-banner-1.webp) immediately as the
+    LCP element (with explicit width/height).
+  * Only upgrade to <Hero3D/> after idle AND on desktop; never block first paint:
+        const [hero3d, setHero3d] = useState(false);
+        useEffect(() => {
+          if (window.innerWidth < 1024) return;              // desktop only
+          const cb = () => setHero3d(true);
+          const id = 'requestIdleCallback' in window ? requestIdleCallback(cb,{timeout:2500}) : setTimeout(cb,2000);
+          return () => { if ('cancelIdleCallback' in window) cancelIdleCallback(id); };
+        }, []);
+    Render Hero3D (in <Suspense>) layered over the static image only when hero3d===true.
+- rainbow-sparkle-trail: gate the same way or disable on mobile — it's a decorative
+  animation loop, not worth loading up front.
+
+## FIX C — /dummy WALKTHROUGH VIDEO (503 + eager fetch)
+# RPS_Walkthrough_Video_-_Website_1_1766126796450.mp4 returns 503 on /dummy and fetches
+# twice on load. The poster (walkthrough-poster.webp) already 200s.
+- Apply the SAME VideoWithFallback pattern you added to home.tsx to the /dummy video
+  component: <video preload="none" poster="/assets/walkthrough-poster.webp"> that only
+  loads on play or when scrolled into view, with an onError that swaps to the poster <img>
+  so a 503 leaves a clean image, not an empty player.
+- ALSO investigate the 503 itself: that mp4 is served from your own /assets on the deploy
+  host and shouldn't 503 — confirm the file is actually deployed and served (check its size
+  / that a direct GET returns 200). If it's a large file failing range requests, consider
+  hosting it on a CDN or compressing it.
+
+## FIX D — small wins from the trace
+- /characters/student-boy.png is still a PNG — convert to WebP like the others.
+- ~20 separate tiny Lucide-icon JS chunks load (calendar, gamepad-2, mail, smile, brain,
+  flask-conical, lightbulb, etc.). Import icons from a single module / avoid per-icon code
+  splitting so they bundle into fewer requests.
+- CLS: give the hero, each 3D/poster box, and lazy sections explicit reserved height so
+  nothing reflows; add width/height to every <img>.
+- Fonts: TWO Google Fonts requests load (Fredoka/Inter/Poppins AND Fredoka/Plus Jakarta
+  Sans). Consolidate to ONE request with only families/weights used above the fold; add
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>; keep display=swap.
+
+## VERIFY (I will re-run this exact trace after you publish)
+- Reload /dummy with the Network tab open. On INITIAL load, these must NOT appear until
+  after you interact/scroll: gtag/js, clarity.js, fbevents.js, three.module-*.js,
+  hero3d-*.js, SchoolTownMap3D-*.js. They should load only on first interaction (tags) or
+  when their section scrolls into view (3D).
+- The video request should not fire on load; the poster should show.
+- Re-run PageSpeed Insights (mobile) on the deployed URL and report Performance + TBT/LCP/CLS.

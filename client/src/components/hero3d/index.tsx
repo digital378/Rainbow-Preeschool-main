@@ -54,7 +54,7 @@ const T = {
    - Only transform + opacity are animated — never filter, top, left, shadow
 ───────────────────────────────────────────────────────────────────────── */
 const HERO3D_STYLES = `
-  @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600&display=swap');
 
   /* ── Float bob animations (varied for organic feel) ── */
   @keyframes h3d-f1 { 0%,100%{transform:translateY(0px)}   50%{transform:translateY(-9px)}  }
@@ -856,7 +856,7 @@ function StudentCharacter({ charH="80vh", maxH=700 }:
         <div className="h3d-student">
           <div className="h3d-student-body">
             <img
-              src="/characters/student-boy.png"
+              src="/characters/student-boy.webp"
               alt="Rainbow Preschool student mascot"
               className="h3d-student-img"
               style={{ height:charH, maxHeight:maxH }}

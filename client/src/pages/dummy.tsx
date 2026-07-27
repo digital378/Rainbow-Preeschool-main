@@ -34,6 +34,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { LAST_UPDATED_DISPLAY, LAST_UPDATED_ISO } from "@shared/site-freshness";
 import { PLAYGROUP, NURSERY, KINDERGARTEN } from "@shared/programme-data";
 
+import { LazyVisible } from "@/components/LazyVisible";
 const MethodologySection = lazy(() => import("@/components/methodology-section").then(m => ({ default: m.MethodologySection })));
 const ClassroomGallery   = lazy(() => import("@/components/classroom-gallery").then(m => ({ default: m.ClassroomGallery })));
 const ContactForm        = lazy(() => import("@/components/contact-form").then(m => ({ default: m.ContactForm })));
@@ -1689,6 +1690,7 @@ function LearningEnvironmentSection() {
   const [winIn,       setWinIn]       = useState(false);
   const [chipsIn,     setChipsIn]     = useState(false);
   const [stripPaused, setStripPaused] = useState(false);
+  const [videoError,  setVideoError]  = useState(false);
 
   useEffect(() => {
     const el = sectionRef.current;
@@ -1845,21 +1847,26 @@ function LearningEnvironmentSection() {
               willChange:"opacity,transform",
             }}>
               <div className="relative aspect-video">
-                <video ref={videoRef}
-                  src="/assets/RPS_Walkthrough_Video_-_Website_1_1766126796450.mp4"
-                  poster="/images/optimized/classroom-rainbow-preschool.webp"
-                  autoPlay muted loop playsInline
-                  aria-label="Campus walkthrough of Rainbow Preschool — classrooms, activity areas, outdoor spaces"
-                  style={{ display:"block", width:"100%", height:"100%", objectFit:"cover" }}
-                />
-                <button onClick={toggleSound} data-testid="button-video-sound-toggle"
-                  className="absolute bottom-3 right-3 flex items-center gap-1.5 rounded-full text-white text-xs font-semibold"
-                  style={{ padding:"6px 12px", background:"rgba(0,0,0,.42)", backdropFilter:"blur(8px)",
-                    border:"1px solid rgba(255,255,255,.22)", cursor:"pointer" }}
-                  aria-label={muted ? "Unmute video" : "Mute video"}>
-                  {muted ? <VolumeX size={13}/> : <Volume2 size={13}/>}
-                  {muted ? "Sound off" : "Sound on"}
-                </button>
+                {videoError ? (
+                  <img src="/images/optimized/classroom-rainbow-preschool.webp" alt="Rainbow Preschool campus" style={{ display:"block", width:"100%", height:"100%", objectFit:"cover" }} />
+                ) : (<>
+                  <video ref={videoRef}
+                    src="/assets/RPS_Walkthrough_Video_-_Website_1_1766126796450.mp4"
+                    poster="/images/optimized/classroom-rainbow-preschool.webp"
+                    autoPlay muted loop playsInline preload="none"
+                    aria-label="Campus walkthrough of Rainbow Preschool — classrooms, activity areas, outdoor spaces"
+                    style={{ display:"block", width:"100%", height:"100%", objectFit:"cover" }}
+                    onError={() => setVideoError(true)}
+                  />
+                  <button onClick={toggleSound} data-testid="button-video-sound-toggle"
+                    className="absolute bottom-3 right-3 flex items-center gap-1.5 rounded-full text-white text-xs font-semibold"
+                    style={{ padding:"6px 12px", background:"rgba(0,0,0,.42)", backdropFilter:"blur(8px)",
+                      border:"1px solid rgba(255,255,255,.22)", cursor:"pointer" }}
+                    aria-label={muted ? "Unmute video" : "Mute video"}>
+                    {muted ? <VolumeX size={13}/> : <Volume2 size={13}/>}
+                    {muted ? "Sound off" : "Sound on"}
+                  </button>
+                </>)}
               </div>
             </div>
           </div>
@@ -1909,20 +1916,25 @@ function LearningEnvironmentSection() {
           <div style={{ borderRadius:22, overflow:"hidden", marginBottom:18,
             boxShadow:"0 24px 60px rgba(33,27,46,.15), 0 0 0 5px rgba(255,255,255,.88), 0 0 0 6px rgba(33,27,46,.05)" }}>
             <div className="relative aspect-video">
-              <video
-                src="/assets/RPS_Walkthrough_Video_-_Website_1_1766126796450.mp4"
-                poster="/images/optimized/classroom-rainbow-preschool.webp"
-                autoPlay muted loop playsInline
-                aria-label="Campus walkthrough of Rainbow Preschool"
-                style={{ display:"block", width:"100%", height:"100%", objectFit:"cover" }}
-              />
-              <button onClick={toggleSound} data-testid="button-video-sound-toggle-mobile"
-                className="absolute bottom-3 right-3 flex items-center rounded-full text-white"
-                style={{ padding:"5px 10px", gap:5, fontSize:"0.7rem", fontWeight:600, cursor:"pointer",
-                  background:"rgba(0,0,0,.42)", backdropFilter:"blur(8px)", border:"1px solid rgba(255,255,255,.2)" }}
-                aria-label={muted ? "Unmute" : "Mute"}>
-                {muted ? <VolumeX size={12}/> : <Volume2 size={12}/>}
-              </button>
+              {videoError ? (
+                <img src="/images/optimized/classroom-rainbow-preschool.webp" alt="Rainbow Preschool campus" style={{ display:"block", width:"100%", height:"100%", objectFit:"cover" }} />
+              ) : (<>
+                <video
+                  src="/assets/RPS_Walkthrough_Video_-_Website_1_1766126796450.mp4"
+                  poster="/images/optimized/classroom-rainbow-preschool.webp"
+                  autoPlay muted loop playsInline preload="none"
+                  aria-label="Campus walkthrough of Rainbow Preschool"
+                  style={{ display:"block", width:"100%", height:"100%", objectFit:"cover" }}
+                  onError={() => setVideoError(true)}
+                />
+                <button onClick={toggleSound} data-testid="button-video-sound-toggle-mobile"
+                  className="absolute bottom-3 right-3 flex items-center rounded-full text-white"
+                  style={{ padding:"5px 10px", gap:5, fontSize:"0.7rem", fontWeight:600, cursor:"pointer",
+                    background:"rgba(0,0,0,.42)", backdropFilter:"blur(8px)", border:"1px solid rgba(255,255,255,.2)" }}
+                  aria-label={muted ? "Unmute" : "Mute"}>
+                  {muted ? <VolumeX size={12}/> : <Volume2 size={12}/>}
+                </button>
+              </>)}
             </div>
           </div>
 
@@ -3604,6 +3616,7 @@ function ContactSection() {
   const [submitting,    setSubmitting]    = useState(false);
   const [submitted,     setSubmitted]     = useState(false);
   const [submitErr,     setSubmitErr]     = useState("");
+  const [videoError,    setVideoError]    = useState(false);
 
   /* Scroll-in */
   useEffect(() => {
@@ -3754,15 +3767,20 @@ function ContactSection() {
               <div style={{ animation: prefersReduced ? "none" : "ctc-float 4s ease-in-out infinite", position:"relative", zIndex:2 }}>
                 {/* Parallax wrapper (JS transform) */}
                 <div ref={floatRef} style={{ borderRadius:24, overflow:"hidden", boxShadow:"0 20px 56px rgba(33,27,46,0.16),0 4px 14px rgba(33,27,46,0.08)", transition:"transform 0.12s ease-out" }}>
+                  {videoError ? (
+                    <img src="/assets/walkthrough-poster.webp" alt="Rainbow Preschool campus" width={800} height={450} style={{ width:"100%", height:"auto", display:"block" }} />
+                  ) : (
                   <video
                     src="/assets/RPS_Walkthrough_Video_-_Website_1_1766126796450.mp4"
                     poster="/assets/walkthrough-poster.webp"
                     autoPlay loop muted playsInline preload="none"
                     style={{ width:"100%", height:"auto", display:"block" }}
                     width={800} height={450}
+                    onError={() => setVideoError(true)}
                   >
                     Your browser does not support the video tag.
                   </video>
+                  )}
                 </div>
               </div>
             </div>
@@ -4146,32 +4164,53 @@ function FindNearestCentreSection() {
           {active ? `Selected centre: ${centres.find(c => c.id === active)?.name ?? ""}` : ""}
         </p>
         <div style={{ marginBottom:32, ...entranceSt(0.14) }}>
-          {webglOk ? (
-            <Suspense fallback={null}>
-              <SchoolTownMap3D
-                activeId={active ? toMapId(active) : null}
-                onActiveChange={handleActiveChange}
-                fallback={
-                  <div style={{
-                    width:"100%", height:"clamp(420px,60vh,640px)", borderRadius:24,
-                    background:"linear-gradient(135deg,#e8f5e9 0%,#fdf3ea 100%)",
-                    display:"flex", alignItems:"center", justifyContent:"center",
-                  }}>
-                    <span style={{ color:"#55506A", fontSize:14 }}>Map unavailable in this browser</span>
-                  </div>
-                }
-              />
-            </Suspense>
-          ) : (
-            <div style={{
-              width:"100%", height:"clamp(420px,60vh,640px)", borderRadius:24,
-              background:"linear-gradient(135deg,#e8f5e9 0%,#fdf3ea 100%)",
-              display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", gap:8,
-            }}>
-              <span style={{ fontSize:32 }}>🗺️</span>
-              <span style={{ color:"#55506A", fontSize:14 }}>Rainbow Town — open in your browser to explore</span>
-            </div>
-          )}
+          {/* LazyVisible: three.module + SchoolTownMap3D only download when this section
+              nears the viewport, and NEVER on mobile (<768px) — Three.js stays off-thread. */}
+          <LazyVisible
+            minWidth={768}
+            rootMargin="300px"
+            placeholder={
+              <div style={{ width:"100%", height:"clamp(420px,60vh,640px)", borderRadius:24,
+                background:"linear-gradient(135deg,#e8f5e9 0%,#fdf3ea 100%)",
+                display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", gap:8 }}>
+                <span style={{ fontSize:32 }}>🗺️</span>
+                <span style={{ color:"#55506A", fontSize:14 }}>Loading Rainbow Town…</span>
+              </div>
+            }
+          >
+            {webglOk ? (
+              <Suspense fallback={
+                <div style={{ width:"100%", height:"clamp(420px,60vh,640px)", borderRadius:24,
+                  background:"linear-gradient(135deg,#e8f5e9 0%,#fdf3ea 100%)",
+                  display:"flex", alignItems:"center", justifyContent:"center" }}>
+                  <span style={{ color:"#55506A", fontSize:14 }}>Loading…</span>
+                </div>
+              }>
+                <SchoolTownMap3D
+                  activeId={active ? toMapId(active) : null}
+                  onActiveChange={handleActiveChange}
+                  fallback={
+                    <div style={{
+                      width:"100%", height:"clamp(420px,60vh,640px)", borderRadius:24,
+                      background:"linear-gradient(135deg,#e8f5e9 0%,#fdf3ea 100%)",
+                      display:"flex", alignItems:"center", justifyContent:"center",
+                    }}>
+                      <span style={{ color:"#55506A", fontSize:14 }}>Map unavailable in this browser</span>
+                    </div>
+                  }
+                />
+              </Suspense>
+            ) : (
+              <div style={{
+                width:"100%", height:"clamp(420px,60vh,640px)", borderRadius:24,
+                background:"linear-gradient(135deg,#e8f5e9 0%,#fdf3ea 100%)",
+                display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", gap:8,
+              }}>
+                <span style={{ fontSize:32 }}>🗺️</span>
+                <span style={{ color:"#55506A", fontSize:14 }}>Rainbow Town — open in your browser to explore</span>
+              </div>
+            )}
+          </LazyVisible>
         </div>
 
         {/* ── Search box (sticky on mobile) ─────────────────────────── */}
@@ -4791,6 +4830,35 @@ function FAQSection() {
 export default function Dummy() {
   useFadeObserver();
 
+  // Gate Hero3D: show static image immediately as LCP; upgrade to Three.js only
+  // after the browser is idle AND the viewport is ≥1024px (desktop). On mobile
+  // hero3dReady stays false for the entire session — Three.js never downloads.
+  const [hero3dReady, setHero3dReady] = useState(false);
+  useEffect(() => {
+    if (window.innerWidth < 1024) return;
+    const cb = () => setHero3dReady(true);
+    const id = 'requestIdleCallback' in window
+      ? (window as any).requestIdleCallback(cb, { timeout: 2500 })
+      : setTimeout(cb, 2000);
+    return () => {
+      if ('cancelIdleCallback' in window) (window as any).cancelIdleCallback(id);
+      else clearTimeout(id as ReturnType<typeof setTimeout>);
+    };
+  }, []);
+
+  const STATIC_HERO = (
+    <div style={{ position: 'relative', minHeight: 560, maxHeight: 900, overflow: 'hidden', background: '#1a1a2e' }}>
+      <img
+        src="/images/optimized/hero-banner-1.webp"
+        alt=""
+        width={1200}
+        height={675}
+        fetchPriority="high"
+        style={{ display: 'block', width: '100%', height: '100%', objectFit: 'cover' }}
+      />
+    </div>
+  );
+
   return (
     <>
       <style>{STYLES}</style>
@@ -4807,10 +4875,12 @@ export default function Dummy() {
         <a href="/" className="underline underline-offset-2 hover:text-amber-800 transition-colors">← Live site</a>
       </div>
 
-      {/* 1 — Hero */}
-      <Suspense fallback={null}>
-        <Hero3D />
-      </Suspense>
+      {/* 1 — Hero: static LCP image paints immediately; Three.js upgrades in after idle (desktop only) */}
+      {!hero3dReady ? STATIC_HERO : (
+        <Suspense fallback={STATIC_HERO}>
+          <Hero3D />
+        </Suspense>
+      )}
 
       {/* 2 — Quick navigation links */}
       <RainbowShelfSection />
