@@ -1303,7 +1303,7 @@ function HeroSection() {
 function QuickNavSection() {
   return (
     <nav className="relative py-8 overflow-hidden border-b"
-      style={{ background: "linear-gradient(135deg,#fff8f6 0%,#fffef2 40%,#f5fffb 80%,#f0f8ff 100%)" }}>
+      style={{ background: "linear-gradient(135deg,#FFF3F2 0%,#FFF9F5 50%,#FFF3F2 100%)" }}>
       <Orb cls="w-48 h-48 -top-14 -right-12 opacity-40"
         style={{ background: "radial-gradient(circle,rgba(251,191,36,0.20) 0%,transparent 70%)" }} />
       <div className="relative max-w-7xl mx-auto px-4">
@@ -1582,7 +1582,7 @@ function RainbowShelfSection() {
 
   return (
     <section ref={sectionRef} style={{
-      background:"linear-gradient(180deg,#FFFBF5 0%,#FFF6EE 55%,#FFFBF5 100%)",
+      background:"linear-gradient(180deg,#FFF4F3 0%,#FFF6EE 55%,#FFF4F3 100%)",
       padding:"72px 0 72px",overflow:"hidden",
     }}>
 
@@ -1730,14 +1730,14 @@ function LearningEnvironmentSection() {
 
   return (
     <section ref={sectionRef} className="relative overflow-hidden"
-      style={{ background:"linear-gradient(170deg,#FFFBF5 0%,#FFF3EA 52%,#FFFBF5 100%)" }}>
+      style={{ background:"linear-gradient(170deg,#FFF4F3 0%,#FFF3EA 52%,#FFF4F3 100%)" }}>
 
       {/* ── Cloud scallop — top ── */}
       <div aria-hidden className="absolute top-0 inset-x-0 z-20 pointer-events-none">
         <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"
           style={{ display:"block", width:"100%", height:80 }}>
           <path d="M0,80 L0,42 Q60,4 120,42 Q180,80 240,42 Q300,4 360,42 Q420,80 480,42 Q540,4 600,42 Q660,80 720,42 Q780,4 840,42 Q900,80 960,42 Q1020,4 1080,42 Q1140,80 1200,42 Q1260,4 1320,42 Q1380,80 1440,42 L1440,0 L0,0 Z"
-            fill="#FFFBF5"/>
+            fill="#FFF4F3"/>
         </svg>
       </div>
 
@@ -1960,7 +1960,7 @@ function LearningEnvironmentSection() {
         <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"
           style={{ display:"block", width:"100%", height:80 }}>
           <path d="M0,0 L0,38 Q60,76 120,38 Q180,0 240,38 Q300,76 360,38 Q420,0 480,38 Q540,76 600,38 Q660,0 720,38 Q780,76 840,38 Q900,0 960,38 Q1020,76 1080,38 Q1140,0 1200,38 Q1260,76 1320,38 Q1380,0 1440,38 L1440,80 L0,80 Z"
-            fill="#FFFBF5"/>
+            fill="#FFF4F3"/>
         </svg>
       </div>
     </section>
@@ -1981,7 +1981,7 @@ function StatsSection() {
 
   return (
     <section className="relative overflow-hidden"
-      style={{ background:"linear-gradient(170deg,#FFFBF5 0%,#FFF3EA 52%,#FFFBF5 100%)", padding:"88px 0 108px" }}>
+      style={{ background:"linear-gradient(170deg,#FFF4F3 0%,#FFF0E8 52%,#FFF4F3 100%)", padding:"88px 0 108px" }}>
 
       {/* Aurora blobs */}
       <Orb cls="d-float-b w-[500px] h-[500px] -top-28 right-[6%] opacity-35"
@@ -2438,7 +2438,7 @@ function ProgrammesSection() {
   const filteredProgs = programmes.filter(p => !["kids-activity-club", "summer-camp"].includes(p.id));
 
   return (
-    <section className="relative py-20 md:py-28 bg-white overflow-hidden">
+    <section className="relative py-20 md:py-28 overflow-hidden" style={{ background:"linear-gradient(160deg,#FFF4F3 0%,#FFFFFF 45%,#FFF4F3 100%)" }}>
       <Orb cls="d-float-b w-[440px] h-[440px] -top-28 -left-28 opacity-25"
         style={{ background: "radial-gradient(circle,rgba(251,191,36,0.16) 0%,transparent 60%)", filter: "blur(44px)" }} />
 
@@ -2745,8 +2745,8 @@ function WhyChooseSection() {
     <section className="relative py-20 md:py-28 overflow-hidden"
       style={{
         backgroundImage: [
-          "radial-gradient(circle,rgba(33,27,46,.038) 1px,transparent 1px)",
-          "linear-gradient(170deg,#f9fafb 0%,#f3f4f6 60%,#f9fafb 100%)",
+          "radial-gradient(circle,rgba(236,33,15,.04) 1px,transparent 1px)",
+          "linear-gradient(170deg,#FEF3F2 0%,#FAF0EF 60%,#FEF3F2 100%)",
         ].join(","),
         backgroundSize: "24px 24px, 100% 100%",
       }}>
@@ -3052,7 +3052,7 @@ function TestimonialsSection() {
     <section
       ref={sectionRef}
       className="relative py-20 md:py-32 overflow-hidden"
-      style={{ background: "linear-gradient(160deg,#fffbf5 0%,#fff9ef 55%,#fefcf5 100%)" }}
+      style={{ background: "linear-gradient(160deg,#FFF4F3 0%,#FFF8EE 55%,#FFF4F3 100%)" }}
     >
       <div className="relative">
         {Heading}
@@ -3133,9 +3133,9 @@ function CallbackSection() {
   return (
     <>
       {/* ── MOBILE: premium branded card ─────────────────────────────── */}
-      <div className="md:hidden relative bg-white border-b overflow-hidden">
+      <div className="md:hidden relative border-b overflow-hidden" style={{ background:"linear-gradient(150deg,#FFF3F2 0%,#FFF8F2 60%,#FFF3F2 100%)" }}>
         <div className="absolute inset-0 pointer-events-none"
-          style={{ background:"linear-gradient(150deg,rgba(236,33,15,.04) 0%,rgba(251,191,36,.06) 60%,rgba(236,33,15,.02) 100%)" }}/>
+          style={{ background:"linear-gradient(150deg,rgba(236,33,15,.06) 0%,rgba(251,191,36,.07) 60%,rgba(236,33,15,.03) 100%)" }}/>
         {/* Floating star */}
         <div aria-hidden style={{ position:"absolute", top:18, right:26, width:16, height:16,
           color:"rgba(251,191,36,.55)", pointerEvents:"none", animation:"d-twinkle 3.5s ease-in-out 0.8s infinite" }}>
@@ -3208,9 +3208,9 @@ function CallbackSection() {
       </div>
 
       {/* ── DESKTOP: polished horizontal bar ─────────────────────────── */}
-      <div className="hidden md:block py-5 relative overflow-hidden border-b bg-white">
+      <div className="hidden md:block py-5 relative overflow-hidden border-b" style={{ background:"linear-gradient(135deg,#FFF3F2 0%,#FFF9F4 50%,#FFF3F2 100%)" }}>
         <div className="absolute inset-0 pointer-events-none"
-          style={{ background:"linear-gradient(135deg,rgba(236,33,15,.04) 0%,rgba(251,191,36,.06) 50%,rgba(236,33,15,.02) 100%)" }}/>
+          style={{ background:"linear-gradient(135deg,rgba(236,33,15,.06) 0%,rgba(251,191,36,.07) 50%,rgba(236,33,15,.03) 100%)" }}/>
         <div className="du-fade relative max-w-7xl mx-auto px-6 lg:px-8">
           <div style={{ display:"flex", alignItems:"center", gap:20 }}>
             <div style={{ flexShrink:0 }}>
@@ -3463,7 +3463,7 @@ function CtaSection() {
 ═══════════════════════════════════════════════════════════════════════════════ */
 function FooterPreview() {
   return (
-    <div className="bg-white border-t border-gray-100">
+    <div className="border-t border-gray-100" style={{ background:"linear-gradient(160deg,#FFF5F4 0%,#FFFFFF 50%,#FFF5F4 100%)" }}>
       <div className="h-1 rainbow-gradient" />
       <div className="max-w-7xl mx-auto px-5 sm:px-6 py-12">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-5">
@@ -3723,7 +3723,7 @@ function ContactSection() {
       ref={sectionRef}
       id="contact"
       aria-label="Request A Callback"
-      style={{ padding:"80px 0 96px", background:"linear-gradient(160deg,#fafafa 0%,#f9f5f0 55%,#fafafa 100%)", position:"relative" }}
+      style={{ padding:"80px 0 96px", background:"linear-gradient(160deg,#FFF3F2 0%,#FBF1EE 55%,#FFF3F2 100%)", position:"relative" }}
     >
       {/* Confetti portal — fixed overlay, clipped to viewport */}
       <div ref={confettiPortal} aria-hidden style={{ position:"fixed", inset:0, pointerEvents:"none", zIndex:9999, overflow:"hidden" }} />
@@ -4129,7 +4129,7 @@ function FindNearestCentreSection() {
       ref={sectionRef}
       id="find-nearest-centre"
       aria-label="Find your nearest Rainbow Preschool centre"
-      style={{ padding:"72px 0 80px", background:"linear-gradient(160deg,#f9f5f0 0%,#fafafa 100%)", position:"relative" }}
+      style={{ padding:"72px 0 80px", background:"linear-gradient(160deg,#FFF3F2 0%,#FBF0EF 100%)", position:"relative" }}
     >
       <div style={{ maxWidth:1216, margin:"0 auto", padding:"0 24px" }}>
 
@@ -4508,7 +4508,7 @@ function FAQSection() {
     <section
       ref={sectionRef}
       aria-labelledby="faq-heading"
-      style={{ position: "relative", overflow: "hidden", background: "#f8f4ef" }}
+      style={{ position: "relative", overflow: "hidden", background: "linear-gradient(160deg,#FFF0EE 0%,#FBF0EC 60%,#FFF0EE 100%)" }}
       className="py-16 md:py-24"
     >
       {/* FAQPage structured data */}
