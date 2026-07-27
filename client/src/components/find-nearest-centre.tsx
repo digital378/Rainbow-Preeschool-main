@@ -9,33 +9,28 @@ import { centres } from "@shared/centre-data";
 import type { CentreData } from "@shared/centre-data";
 
 function CentreMapThumbnail({ centre }: { centre: CentreData }) {
-  const [imgError, setImgError] = useState(false);
-
-  const staticMapUrl =
-    `https://staticmap.openstreetmap.de/staticmap.php` +
-    `?center=${centre.latitude},${centre.longitude}` +
-    `&zoom=15&size=320x120` +
-    `&markers=${centre.latitude},${centre.longitude},lightblue1`;
-
-  if (imgError) return null;
-
+  // openstreetmap.de static map service is unreliable (frequent 503s).
+  // Use a self-contained styled placeholder that links directly to Google Maps —
+  // zero external dependency, always renders, visually intentional.
   return (
     <a
       href={centre.googleMapsDirectionsUrl}
       target="_blank"
       rel="noopener noreferrer"
-      className="block w-full overflow-hidden rounded-md border border-border/40 mb-1"
+      className="flex items-center justify-between w-full h-[80px] rounded-md border border-border/40 mb-1 px-3 bg-blue-50/60 dark:bg-blue-950/20 hover:bg-blue-100/70 dark:hover:bg-blue-900/30 transition-colors duration-150 group"
       aria-label={`Open Google Maps directions to ${centre.name}`}
       data-testid={`link-map-thumbnail-${centre.id}`}
     >
-      <img
-        src={staticMapUrl}
-        alt={`Map showing location of ${centre.name}`}
-        className="w-full h-[120px] object-cover hover:opacity-90 transition-opacity duration-150"
-        loading="lazy"
-        onError={() => setImgError(true)}
-        data-testid={`img-map-thumbnail-${centre.id}`}
-      />
+      <div className="flex items-center gap-2.5">
+        <div className="flex-shrink-0 w-9 h-9 rounded-full bg-blue-600/10 dark:bg-blue-400/10 flex items-center justify-center">
+          <MapPin className="w-4.5 h-4.5 text-blue-600 dark:text-blue-400" />
+        </div>
+        <div>
+          <p className="text-xs font-semibold text-blue-700 dark:text-blue-300 leading-tight">{centre.localityName}</p>
+          <p className="text-[10px] text-blue-500/80 dark:text-blue-400/70 mt-0.5">Tap to open in Google Maps</p>
+        </div>
+      </div>
+      <ExternalLink className="w-3.5 h-3.5 text-blue-400 group-hover:text-blue-600 dark:group-hover:text-blue-300 transition-colors flex-shrink-0" />
     </a>
   );
 }

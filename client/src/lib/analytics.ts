@@ -20,7 +20,13 @@ declare global {
 // GA4 INITIALIZATION
 // ============================================
 
+// Module-level guard — prevents double-init from React StrictMode or fast remounts
+let gaInitialized = false;
+
 export const initGA = () => {
+  if (gaInitialized) return;
+  gaInitialized = true;
+
   const measurementId = import.meta.env.VITE_GA_MEASUREMENT_ID;
 
   if (!measurementId) {
@@ -28,7 +34,7 @@ export const initGA = () => {
     return;
   }
 
-  // Ensure gtag function is available immediately for trackPageView retries
+  // Ensure gtag function is available immediately for trackPageView retries.
   // index.html already loads the gtag script and configures all GA4/Ads properties
   // with send_page_view: false. We only need to ensure window.gtag exists early
   // so React's trackPageView doesn't fail while index.html's deferred script loads.
@@ -607,12 +613,16 @@ export const pushToDataLayer = (event: Record<string, any>) => {
 // Track page views with retry for initial page load
 const DEFAULT_TITLE = 'Rainbow Preschool International - Thane';
 
+// Dedup: track the last URL that was actually sent so rapid re-renders of the
+// same route (StrictMode, concurrent mode) don't fire duplicate pageviews.
+let lastTrackedUrl = '';
+
 export const trackPageView = (url: string, retryCount = 0) => {
   if (typeof window === 'undefined') return;
   
   const measurementId = import.meta.env.VITE_GA_MEASUREMENT_ID;
   if (!measurementId) return;
-  
+
   // Reset form tracking on page navigation (SPA support)
   resetFormTracking();
   
@@ -626,16 +636,19 @@ export const trackPageView = (url: string, retryCount = 0) => {
     return;
   }
   
-  // Wait for React SEO component to set the correct page title
-  // send_page_view:false is set in index.html, so this is the ONLY page_view source
+  // Wait for React SEO component to set the correct page title.
+  // send_page_view:false is set in index.html, so this is the ONLY page_view source.
   const sendPageView = (attempt: number) => {
     const title = document.title;
     // If title is still the default and we haven't exceeded attempts,
-    // wait longer for SEO component to set the correct title
+    // wait longer for SEO component to set the correct title.
     if (title === DEFAULT_TITLE && attempt < 5 && url !== '/') {
       setTimeout(() => sendPageView(attempt + 1), 200);
       return;
     }
+    // Final dedup: bail if this URL was already sent (covers StrictMode double-effect).
+    if (url === lastTrackedUrl) return;
+    lastTrackedUrl = url;
     window.gtag('event', 'page_view', {
       page_path: url,
       page_title: title,
@@ -644,7 +657,7 @@ export const trackPageView = (url: string, retryCount = 0) => {
     console.debug('[GA4] Pageview tracked:', url, title);
   };
   
-  // Initial delay to allow React useEffect to fire
+  // Initial delay to allow React useEffect to fire.
   setTimeout(() => sendPageView(0), 100);
 };
 
