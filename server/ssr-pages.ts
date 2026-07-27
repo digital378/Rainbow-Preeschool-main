@@ -1567,7 +1567,7 @@ const playgroundPages: Record<string, { locality: string; h1: string }> = {
 //                       the route handler is the fastest deindex signal.
 //   /gsc, /GSC        — Internal Google Search Console data explorer; not a
 //                       public page.
-const noIndexPages = ["/ad", "/ad-google", "/flyer", "/RIS", "/ris", "/ris-11th", "/gsc", "/GSC"];
+const noIndexPages = ["/ad", "/ad-google", "/flyer", "/RIS", "/ris", "/ris-11th", "/gsc", "/GSC", "/referral"];
 
 /**
  * Per-blog-post SEO metadata. Lifted to module scope so the /sitemap.xml

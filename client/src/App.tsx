@@ -34,6 +34,7 @@ const NotFound = lazy(() => import("@/pages/not-found"));
 const AdLanding = lazy(() => import("@/pages/ad-landing"));
 const AdGoogleLanding = lazy(() => import("@/pages/ad-google-landing"));
 const FlyerLanding = lazy(() => import("@/pages/flyer-landing"));
+const ReferralPage = lazy(() => import("@/pages/referral"));
 const RISLanding = lazy(() => import("@/pages/ris-landing"));
 const RIS11thLanding = lazy(() => import("@/pages/ris-11th-landing"));
 const GscDashboard = lazy(() => import("@/pages/gsc-dashboard"));
@@ -156,6 +157,7 @@ const STANDALONE_LANDING_PATHS = [
   "/flyer",
   "/RIS",
   "/ris-11th",
+  "/referral",
   ...legacySlugs.map(slug => slug.replace(/\/$/, '')),
   "/author/rainbowpreschools",
   "/author/rainbow-preschools",
@@ -222,6 +224,7 @@ function Router() {
         <Route path="/play-school-near-majiwada" component={PlaySchoolNearMajiwada} />
         <Route path="/play-school-near-naupada" component={PlaySchoolNearNaupada} />
         
+        <Route path="/referral" component={ReferralPage} />
         <Route path="/ad" component={AdLanding} />
         <Route path="/ad-google" component={AdGoogleLanding} />
         <Route path="/flyer" component={FlyerLanding} />

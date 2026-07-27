@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rainbow Loyalty Programme</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.47.0/dist/tabler-icons.min.css">
+<style>
+:root { --surface-2: #ffffff; --border: #e5e5e0; }
+* { box-sizing: border-box; }
+html, body { margin:0; padding:0; height:100%; background: linear-gradient(160deg,#FEF7E6 0%,#FDEAF2 55%,#F1E7FE 100%); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+@keyframes floaty { 0%,100%{ transform: translateY(0); } 50%{ transform: translateY(-8px); } }
+@keyframes floatySlow { 0%,100%{ transform: translateY(0) rotate(0deg); } 50%{ transform: translateY(-10px) rotate(6deg); } }
+@keyframes twinkle { 0%,100%{ opacity:0.5; transform:scale(0.85);} 50%{ opacity:1; transform:scale(1.15);} }
+@keyframes popIn { 0%{ opacity:0; transform:scale(0.6) translateY(14px);} 70%{ transform:scale(1.06) translateY(-2px);} 100%{ opacity:1; transform:scale(1) translateY(0);} }
+@keyframes slideUp { 0%{ opacity:0; transform:translateY(24px);} 100%{ opacity:1; transform:translateY(0);} }
+@keyframes wiggle { 0%,100%{ transform: rotate(-6deg);} 50%{ transform: rotate(6deg);} }
+@keyframes pulseRing { 0%,100%{ box-shadow:0 0 0 6px rgba(127,119,221,0.28), 0 0 0 6px rgba(127,119,221,0.28);} 50%{ box-shadow:0 0 0 6px rgba(127,119,221,0.28), 0 0 0 14px rgba(127,119,221,0.08);} }
+@keyframes pulseBtn { 0%,100%{ transform:scale(1); } 50%{ transform:scale(1.05); } }
+@keyframes bob { 0%,100%{ transform: translateY(0);} 50%{ transform: translateY(-5px);} }
+@keyframes shimmer { 0%{ left:-60%; } 100%{ left:130%; } }
+@keyframes glowPulse { 0%,100%{ box-shadow:0 0 0 0 rgba(93,202,165,0.5);} 50%{ box-shadow:0 0 0 8px rgba(93,202,165,0);} }
+@keyframes rotateSlow { from{ transform:rotate(0deg);} to{ transform:rotate(360deg);} }
+@keyframes stampIn { 0%{ transform:scale(0) rotate(-15deg); opacity:0;} 60%{ transform:scale(1.15) rotate(6deg); opacity:1;} 100%{ transform:scale(1) rotate(0deg); opacity:1;} }
+@keyframes teddyMove { 0%{ transform: translate(-40px,0) rotate(-8deg);} 25%{ transform: translate(-12px,-12px) rotate(0deg);} 50%{ transform: translate(40px,0) rotate(8deg);} 75%{ transform: translate(12px,-12px) rotate(0deg);} 100%{ transform: translate(-40px,0) rotate(-8deg);} }
+@keyframes driftAcross { 0%{ transform: translateX(-10vw);} 100%{ transform: translateX(120vw);} }
+.sunburst { position:absolute; top:50%; left:50%; width:240px; height:240px; margin:-120px 0 0 -120px; background:conic-gradient(from 0deg, rgba(255,215,140,0.4) 0deg 12deg, transparent 12deg 30deg); border-radius:50%; animation: rotateSlow 14s linear infinite; z-index:0; pointer-events:none; }
+#rlp-root { width:100%; height:100%; display:flex; flex-direction:column; }
+#screen1, #screen2 { flex:1; min-height:100vh; width:100%; display:flex; flex-direction:column; justify-content:center; }
+.shine-sweep { position:relative; overflow:hidden; }
+.shine-sweep::after { content:''; position:absolute; top:0; left:-60%; width:35%; height:100%; background:linear-gradient(120deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.55) 50%, rgba(255,255,255,0) 100%); transform:skewX(-20deg); animation: shimmer 2.6s ease-in-out infinite; pointer-events:none; }
+#joinBtn, .formBtn { transition: transform 0.2s ease, box-shadow 0.2s ease; cursor:pointer; }
+#joinBtn:hover, .formBtn:hover { transform: scale(1.08) rotate(-1deg); box-shadow: 0 10px 22px rgba(68,68,65,0.4); }
+#joinBtn:active, .formBtn:active { transform: scale(0.93); }
+.videoBtn { transition: transform 0.2s ease, box-shadow 0.2s ease; cursor:pointer; }
+.videoBtn:hover { transform: translateY(-5px) scale(1.07); }
+.videoBtn:active { transform: scale(0.92) translateY(0); }
+.videoBtn[data-school="preschool"]:hover { box-shadow: 0 12px 22px rgba(237,147,177,0.5); }
+.videoBtn[data-school="international"]:hover { box-shadow: 0 12px 22px rgba(175,169,236,0.5); }
+.videoBtn:hover span:first-child { animation: wiggle 0.4s ease; }
+.benefit { transition: transform 0.15s ease; }
+.benefit:active { transform: scale(0.96); }
+#rainbowBadge { cursor:pointer; }
+#teddy { display:inline-block; font-size:34px; cursor:pointer; animation: teddyMove 4s ease-in-out infinite; }
+.dodge { cursor:default; }
+</style>
+</head>
+<body>
+
+<div id="rlp-root" role="img" aria-label="Rainbow Loyalty Programme scratch card that reveals member benefits with confetti">
+
+<div id="screen1" style="position:relative; padding:7vw 6vw; background:linear-gradient(160deg,#FEF7E6 0%,#FDEAF2 55%,#F1E7FE 100%); text-align:center; overflow:hidden;">
+  <canvas id="fx1" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:6;"></canvas>
+
+  <i class="ti ti-star-filled dodge" style="position:absolute; top:18px; left:16px; font-size:22px; color:#FAC775; animation:twinkle 2.4s ease-in-out infinite;" aria-hidden="true"></i>
+  <i class="ti ti-heart-filled dodge" style="position:absolute; top:14px; right:24px; font-size:18px; color:#ED93B1; animation:floatySlow 3.4s ease-in-out infinite;" aria-hidden="true"></i>
+  <i class="ti ti-sparkles dodge" style="position:absolute; top:70px; left:24px; font-size:16px; color:#85B7EB; animation:twinkle 2.2s ease-in-out infinite 0.8s;" aria-hidden="true"></i>
+  <i class="ti ti-star-filled dodge" style="position:absolute; top:130px; right:18px; font-size:16px; color:#97C459; animation:twinkle 2.6s ease-in-out infinite 0.2s;" aria-hidden="true"></i>
+  <i class="ti ti-confetti dodge" style="position:absolute; bottom:20px; left:20px; font-size:20px; color:#D85A30; animation:floatySlow 4s ease-in-out infinite 0.3s;" aria-hidden="true"></i>
+  <i class="ti ti-balloon-filled dodge" style="position:absolute; bottom:34px; right:16px; font-size:26px; color:#AFA9EC; animation:floaty 3.8s ease-in-out infinite 0.6s;" aria-hidden="true"></i>
+  <span style="position:absolute; top:50px; left:-30px; font-size:22px; opacity:0.5; animation: driftAcross 24s linear infinite; pointer-events:none;">☁️</span>
+  <span style="position:absolute; bottom:70px; left:-30px; font-size:16px; opacity:0.4; animation: driftAcross 30s linear infinite 6s; pointer-events:none;">☁️</span>
+
+  <div id="cardContent" style="position:relative; max-width:420px; margin:0 auto;">
+    <div style="display:flex; justify-content:center; align-items:center; gap:10px; margin-bottom:16px; font-size:30px; line-height:1;">
+      <span class="dodge" style="display:inline-block; animation:floaty 2.6s ease-in-out infinite;">🎁</span>
+      <span class="dodge" style="display:inline-block; animation:floaty 2.4s ease-in-out infinite 0.3s;">⭐</span>
+      <span class="dodge" style="display:inline-block; font-size:36px; animation:floatySlow 3.4s ease-in-out infinite 0.5s;">🌈</span>
+      <span class="dodge" style="display:inline-block; animation:floaty 2.4s ease-in-out infinite 0.7s;">⭐</span>
+      <span class="dodge" style="display:inline-block; animation:floaty 2.6s ease-in-out infinite 1s;">🎁</span>
+    </div>
+
+    <div style="font-size:clamp(22px,6vw,28px); font-weight:500; color:#26215C; line-height:1.25;">A surprise<br><span style="color:#D4537E;">awaits!</span></div>
+    <div style="font-size:14px; color:#5F5E5A; margin-top:8px; margin-bottom:22px;">Scratch below to get your<br><span style="color:#7F77DD; font-weight:500;">exclusive</span> reward</div>
+
+    <div style="position:relative; width:clamp(160px,45vw,220px); height:clamp(160px,45vw,220px); margin:0 auto;">
+      <div style="position:absolute; inset:0; border-radius:50%; animation:pulseRing 2s ease-in-out infinite;"></div>
+      <canvas id="scratch" width="220" height="220" style="position:relative; width:100%; height:100%; border-radius:50%; touch-action:none; cursor:pointer; display:block;"></canvas>
+      <i class="ti ti-hand-click" style="position:absolute; bottom:-6px; right:-6px; font-size:26px; color:#26215C; background:#fff; border-radius:50%; padding:6px; animation:wiggle 1.6s ease-in-out infinite; z-index:4;" aria-hidden="true"></i>
+      <div id="rainbowBadge" style="position:absolute; top:-14px; left:-16px; z-index:4;">
+        <div style="position:absolute; width:52px; height:52px; background:#FDC98B; border-radius:16px; transform:rotate(18deg); top:8px; left:6px; opacity:0.9;"></div>
+        <div style="position:relative; width:50px; height:50px; border-radius:50%; background:linear-gradient(135deg,#7F77DD,#534AB7); display:flex; align-items:center; justify-content:center; box-shadow:0 6px 14px rgba(83,74,183,0.4); animation: floaty 3s ease-in-out infinite;">
+          <svg width="26" height="15" viewBox="0 0 40 22" aria-hidden="true">
+            <path d="M2 20 A18 18 0 0 1 38 20" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity="0.95"/>
+            <path d="M7 20 A13 13 0 0 1 33 20" fill="none" stroke="#FAC775" stroke-width="3" stroke-linecap="round" opacity="0.95"/>
+            <path d="M12 20 A8 8 0 0 1 28 20" fill="none" stroke="#97C459" stroke-width="3" stroke-linecap="round" opacity="0.95"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div id="hint1" style="font-size:12px; color:#888780; margin-top:16px;">Scratch the circle — and try catching the little rainbow badge that's floating!</div>
+  </div>
+</div>
+
+<div id="screen2" style="display:none; position:relative; padding:8vw 6vw; background:linear-gradient(160deg,#FDE2EC 0%,#E4D6FA 45%,#FFE9C4 100%); text-align:center; overflow:hidden;">
+  <canvas id="fx" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:5;"></canvas>
+  <div style="position:absolute; top:-70px; left:50%; transform:translateX(-50%); width:300px; height:300px; background:radial-gradient(circle, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0) 70%); pointer-events:none;"></div>
+
+  <i class="ti ti-balloon-filled dodge" style="position:absolute; top:20px; left:12px; font-size:34px; color:#AFA9EC; animation:floaty 3.2s ease-in-out infinite;" aria-hidden="true"></i>
+  <i class="ti ti-balloon-filled dodge" style="position:absolute; top:14px; right:14px; font-size:30px; color:#ED93B1; animation:floaty 3.6s ease-in-out infinite 0.5s;" aria-hidden="true"></i>
+  <i class="ti ti-star-filled dodge" style="position:absolute; top:76px; left:30px; font-size:14px; color:#FAC775; animation:twinkle 2.4s ease-in-out infinite;" aria-hidden="true"></i>
+  <i class="ti ti-star-filled dodge" style="position:absolute; top:60px; right:60px; font-size:14px; color:#FAC775; animation:twinkle 2.2s ease-in-out infinite 0.6s;" aria-hidden="true"></i>
+  <i class="ti ti-sparkles dodge" style="position:absolute; top:110px; right:24px; font-size:16px; color:#85B7EB; animation:twinkle 2.6s ease-in-out infinite 0.3s;" aria-hidden="true"></i>
+  <span style="position:absolute; top:90px; left:-30px; font-size:20px; opacity:0.5; animation: driftAcross 20s linear infinite; pointer-events:none;">☁️</span>
+  <span style="position:absolute; top:220px; left:-30px; font-size:15px; opacity:0.4; animation: driftAcross 26s linear infinite 5s; pointer-events:none;">☁️</span>
+  <span style="position:absolute; bottom:30px; left:-30px; font-size:16px; opacity:0.45; animation: driftAcross 23s linear infinite 10s; pointer-events:none;">✨</span>
+
+  <div style="position:relative; z-index:2; max-width:440px; margin:0 auto;">
+    <i class="ti ti-confetti" style="font-size:30px; color:#712B13; display:block; margin-bottom:4px; animation:wiggle 1.8s ease-in-out infinite;" aria-hidden="true"></i>
+    <div style="font-size:clamp(22px,6vw,26px); font-weight:500; color:#26215C; opacity:0;" id="congratsText">Congratulations!</div>
+    <div style="font-size:14px; color:#4B1528; margin-top:6px; display:flex; align-items:center; justify-content:center; gap:6px;">
+      <i class="ti ti-heart-filled" style="font-size:12px; color:#D4537E; animation:twinkle 1.6s ease-in-out infinite;" aria-hidden="true"></i>
+      You won a
+      <i class="ti ti-heart-filled" style="font-size:12px; color:#D4537E; animation:twinkle 1.6s ease-in-out infinite 0.3s;" aria-hidden="true"></i>
+    </div>
+
+    <div id="offerCard" class="shine-sweep" style="opacity:0; margin-top:16px; background:linear-gradient(145deg,#FFFFFF 0%,#FDEAF7 45%,#F1ECFE 100%); border-radius:18px; padding:22px 16px; box-shadow:0 10px 28px rgba(83,74,183,0.2); border:2px solid rgba(255,255,255,0.7); position:relative; overflow:hidden;">
+      <div class="sunburst"></div>
+      <span style="position:absolute; top:10px; left:14px; font-size:14px; animation:twinkle 2s ease-in-out infinite; z-index:1;">✨</span>
+      <span style="position:absolute; top:14px; right:16px; font-size:12px; animation:twinkle 2.4s ease-in-out infinite 0.4s; z-index:1;">✨</span>
+      <div style="position:relative; z-index:1;">
+        <div style="font-size:13px; font-weight:700; color:#B45309; letter-spacing:0.3px; margin-bottom:2px; animation: stampIn 0.6s ease-out 0.3s both;">🎉 YOU WON! 🎉</div>
+        <i class="ti ti-gift" style="font-size:24px; color:#534AB7; display:block; margin-bottom:4px; animation:wiggle 2s ease-in-out infinite;" aria-hidden="true"></i>
+        <div style="font-size:34px; font-weight:700; background:linear-gradient(90deg,#D4537E,#7F77DD,#378ADD); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; animation: stampIn 0.6s ease-out 0.4s both;">FREE</div>
+        <div style="display:inline-block; margin:6px 0 10px; background:#5DCAA5; color:#04342C; font-size:11px; font-weight:600; letter-spacing:0.5px; padding:4px 14px; border-radius:20px; animation:glowPulse 1.8s ease-in-out infinite;">EXCLUSIVE</div>
+        <div style="font-size:18px; font-weight:500; color:#26215C; line-height:1.3;">Rainbow Loyalty<br>Programme <span style="color:#D4537E;">Membership!</span></div>
+      </div>
+    </div>
+
+    <div id="benefitsCard" style="opacity:0; margin-top:16px; background:linear-gradient(160deg,#FFFDF8 0%,#FDF3FA 100%); border-radius:16px; padding:14px 8px; box-shadow:0 4px 16px rgba(0,0,0,0.06);">
+      <div style="text-align:center; margin-bottom:12px;">
+        <span style="background:#AFA9EC; color:#26215C; font-size:11px; font-weight:500; letter-spacing:0.5px; padding:4px 14px; border-radius:20px;">MEMBER BENEFITS</span>
+      </div>
+      <div style="display:flex; justify-content:space-between; gap:4px;">
+        <div class="benefit" style="display:flex; flex-direction:column; align-items:center; text-align:center; flex:1; gap:5px;">
+          <div class="num-circle" style="width:28px; height:28px; border-radius:50%; background:#F0997B; color:#4A1B0C; font-size:13px; font-weight:600; display:flex; align-items:center; justify-content:center; flex-shrink:0;">1</div>
+          <div style="font-size:10px; font-weight:500; color:#26215C; line-height:1.15;">Earn loyalty points</div>
+        </div>
+        <div class="benefit" style="display:flex; flex-direction:column; align-items:center; text-align:center; flex:1; gap:5px;">
+          <div class="num-circle" style="width:28px; height:28px; border-radius:50%; background:#97C459; color:#1B3609; font-size:13px; font-weight:600; display:flex; align-items:center; justify-content:center; flex-shrink:0;">2</div>
+          <div style="font-size:10px; font-weight:500; color:#26215C; line-height:1.15;">Gift vouchers</div>
+        </div>
+        <div class="benefit" style="display:flex; flex-direction:column; align-items:center; text-align:center; flex:1; gap:5px;">
+          <div class="num-circle" style="width:28px; height:28px; border-radius:50%; background:#AFA9EC; color:#26215C; font-size:13px; font-weight:600; display:flex; align-items:center; justify-content:center; flex-shrink:0;">3</div>
+          <div style="font-size:10px; font-weight:500; color:#26215C; line-height:1.15;">Assured goodies</div>
+        </div>
+        <div class="benefit" style="display:flex; flex-direction:column; align-items:center; text-align:center; flex:1; gap:5px;">
+          <div class="num-circle" style="width:28px; height:28px; border-radius:50%; background:#85B7EB; color:#0C2B4A; font-size:13px; font-weight:600; display:flex; align-items:center; justify-content:center; flex-shrink:0;">4</div>
+          <div style="font-size:10px; font-weight:500; color:#26215C; line-height:1.15;">Surprise gift on 500 points</div>
+        </div>
+        <div class="benefit" style="display:flex; flex-direction:column; align-items:center; text-align:center; flex:1; gap:5px;">
+          <div class="num-circle" style="width:28px; height:28px; border-radius:50%; background:#D4537E; color:#fff; font-size:13px; font-weight:600; display:flex; align-items:center; justify-content:center; flex-shrink:0;">5</div>
+          <div style="font-size:10px; font-weight:500; color:#26215C; line-height:1.15;">Invite to loyalty party</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="joinCard" style="opacity:0; margin-top:18px;">
+      <button id="joinBtn" class="shine-sweep" style="background:#444441; color:#fff; border:none; border-radius:24px; padding:12px 40px; font-size:14px; font-weight:500; letter-spacing:0.5px; animation:pulseBtn 1.8s ease-in-out infinite;">👀 JOIN NOW</button>
+      <div style="font-size:12px; color:#5F5E5A; margin-top:12px;">Contact your nearest Rainbow school office</div>
+
+      <div id="joinExtra" style="display:none; margin-top:20px; flex-direction:column; align-items:center; gap:8px;">
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSe0Q636C3vAiwQyBxXHHGb3PSIlttZbHeRtVQyLWMKCPS8Z1w/viewform" target="_blank" rel="noopener" id="referBtn" class="formBtn shine-sweep" style="display:inline-block; background:linear-gradient(90deg,#7F77DD,#D4537E); color:#fff; text-decoration:none; border-radius:24px; padding:12px 30px; font-size:14px; font-weight:600; box-shadow:0 8px 20px rgba(127,119,221,0.35);">🎁 Refer a Friend</a>
+
+        <div style="margin-top:14px; font-size:13px; font-weight:600; color:#26215C; background:rgba(255,255,255,0.6); padding:6px 16px; border-radius:20px; animation: bob 2.2s ease-in-out infinite;">🤔 Got more questions? <span style="color:#D4537E;">Take a sneak peek</span> 👀</div>
+
+        <div style="width:100%; display:flex; justify-content:center; margin-top:2px;">
+          <span id="teddy">🧸</span>
+        </div>
+
+        <div style="display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top:2px;">
+          <button class="videoBtn" data-school="preschool" style="width:130px; background:linear-gradient(160deg,#FDEAF2,#FBD4E4); border:none; border-radius:16px; padding:14px 8px; display:flex; flex-direction:column; align-items:center; gap:4px;">
+            <span style="font-size:26px; display:inline-block; animation:floaty 2.4s ease-in-out infinite;">🎈</span>
+            <span style="font-size:12px; font-weight:600; color:#993556; line-height:1.2;">Rainbow Preschool</span>
+            <span style="font-size:10px; color:#B15C7A; display:flex; align-items:center; gap:3px;"><i class="ti ti-player-play-filled" style="font-size:10px;" aria-hidden="true"></i> Watch</span>
+          </button>
+          <button class="videoBtn" data-school="international" style="width:130px; background:linear-gradient(160deg,#EEEDFE,#DCD8FB); border:none; border-radius:16px; padding:14px 8px; display:flex; flex-direction:column; align-items:center; gap:4px;">
+            <span style="font-size:26px; display:inline-block; animation:floaty 2.4s ease-in-out infinite 0.3s;">🎓</span>
+            <span style="font-size:12px; font-weight:600; color:#3B3593; line-height:1.2;">Rainbow International School</span>
+            <span style="font-size:10px; color:#5951B5; display:flex; align-items:center; gap:3px;"><i class="ti ti-player-play-filled" style="font-size:10px;" aria-hidden="true"></i> Watch</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="welcomeText" style="opacity:0; margin-top:14px; font-size:14px; font-weight:500; color:#534AB7;">Welcome to the Rainbow family! <i class="ti ti-rainbow" style="font-size:16px; vertical-align:-3px;" aria-hidden="true"></i></div>
+  </div>
+</div>
+
+</div>
+
+<div id="videoModal" style="display:none; position:fixed; inset:0; background:rgba(20,15,40,0.85); z-index:9999; align-items:center; justify-content:center; padding:24px;">
+  <div style="position:relative; width:100%; max-width:640px;">
+    <button id="closeModal" style="position:absolute; top:-42px; right:0; background:#fff; border:none; border-radius:50%; width:34px; height:34px; font-size:16px; cursor:pointer; box-shadow:0 4px 10px rgba(0,0,0,0.3);">✕</button>
+    <div style="position:relative; width:100%; padding-top:56.25%; border-radius:14px; overflow:hidden; box-shadow:0 12px 40px rgba(0,0,0,0.5); background:#000;">
+      <iframe id="videoFrame" src="" allow="autoplay" style="position:absolute; top:0; left:0; width:100%; height:100%; border:0;"></iframe>
+    </div>
+  </div>
+</div>
+
+<script>
+const canvas = document.getElementById('scratch');
+const ctx = canvas.getContext('2d');
+const screen1 = document.getElementById('screen1');
+const screen2 = document.getElementById('screen2');
+const hint1 = document.getElementById('hint1');
+const RES = 220;
+
+function paintScratchSurface() {
+  ctx.clearRect(0, 0, RES, RES);
+  ctx.save();
+  ctx.beginPath();
+  ctx.arc(RES / 2, RES / 2, RES / 2, 0, Math.PI * 2);
+  ctx.clip();
+  const grad = ctx.createLinearGradient(0, 0, RES, RES);
+  grad.addColorStop(0, '#F0997B');
+  grad.addColorStop(0.25, '#FAC775');
+  grad.addColorStop(0.5, '#97C459');
+  grad.addColorStop(0.75, '#85B7EB');
+  grad.addColorStop(1, '#AFA9EC');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, RES, RES);
+  for (let i = 0; i < 220; i++) {
+    ctx.strokeStyle = 'rgba(255,255,255,' + (Math.random() * 0.12) + ')';
+    ctx.beginPath();
+    ctx.moveTo(Math.random() * RES, Math.random() * RES);
+    ctx.lineTo(Math.random() * RES, Math.random() * RES);
+    ctx.stroke();
+  }
+  ctx.restore();
+  ctx.fillStyle = 'rgba(38,33,92,0.85)';
+  ctx.font = '600 16px sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('SCRATCH', RES / 2, RES / 2 - 8);
+  ctx.fillText('& WIN!', RES / 2, RES / 2 + 16);
+}
+paintScratchSurface();
+
+let scratching = false;
+let revealed = false;
+let lastPos = null;
+const BRUSH_RADIUS = 11;
+const REVEAL_THRESHOLD = 0.55;
+
+function getPos(e) {
+  const rect = canvas.getBoundingClientRect();
+  const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+  const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+  return { x: (clientX - rect.left) * (RES / rect.width), y: (clientY - rect.top) * (RES / rect.height) };
+}
+
+function scratchDot(x, y) {
+  ctx.globalCompositeOperation = 'destination-out';
+  ctx.beginPath();
+  ctx.arc(x, y, BRUSH_RADIUS, 0, Math.PI * 2);
+  ctx.fill();
+}
+
+function scratchLine(p0, p1) {
+  const dist = Math.hypot(p1.x - p0.x, p1.y - p0.y);
+  const steps = Math.max(1, Math.floor(dist / 4));
+  for (let i = 0; i <= steps; i++) {
+    const t = i / steps;
+    scratchDot(p0.x + (p1.x - p0.x) * t, p0.y + (p1.y - p0.y) * t);
+  }
+}
+
+function checkProgress() {
+  const data = ctx.getImageData(0, 0, RES, RES).data;
+  let cleared = 0;
+  let total = 0;
+  for (let i = 3; i < data.length; i += 4 * 6) {
+    total++;
+    if (data[i] < 40) cleared++;
+  }
+  const pct = cleared / total;
+  if (pct > REVEAL_THRESHOLD && !revealed) {
+    revealed = true;
+    hint1.textContent = 'Revealing your surprise...';
+    setTimeout(showScreen2, 350);
+  }
+}
+
+function start(e) { scratching = true; const p = getPos(e); lastPos = p; scratchDot(p.x, p.y); e.preventDefault(); }
+function move(e) {
+  if (!scratching || revealed) return;
+  const p = getPos(e);
+  scratchLine(lastPos || p, p);
+  lastPos = p;
+  checkProgress();
+  e.preventDefault();
+}
+function stop() { scratching = false; lastPos = null; }
+
+canvas.addEventListener('mousedown', start);
+canvas.addEventListener('mousemove', move);
+window.addEventListener('mouseup', stop);
+canvas.addEventListener('touchstart', start, { passive: false });
+canvas.addEventListener('touchmove', move, { passive: false });
+canvas.addEventListener('touchend', stop);
+
+/* ---------- confetti engine ---------- */
+const colors = ['#7F77DD', '#1D9E75', '#D85A30', '#D4537E', '#378ADD', '#EF9F27', '#639922'];
+
+function makeEngine(canvasEl) {
+  const c = canvasEl.getContext('2d');
+  let particles = [];
+  let running = false;
+
+  function resize() {
+    const r = canvasEl.getBoundingClientRect();
+    canvasEl.width = Math.max(1, Math.round(r.width));
+    canvasEl.height = Math.max(1, Math.round(r.height));
+  }
+
+  function spawnFall(count) {
+    const w = canvasEl.width, h = canvasEl.height;
+    for (let i = 0; i < count; i++) {
+      particles.push({
+        x: Math.random() * w, y: -20 - Math.random() * 200,
+        vx: (Math.random() - 0.5) * 2, vy: Math.random() * 2 + 2,
+        size: Math.random() * 6 + 4, color: colors[Math.floor(Math.random() * colors.length)],
+        rot: Math.random() * Math.PI, vr: (Math.random() - 0.5) * 0.25,
+        gravity: 0.03, life: 0, maxLife: 320, fade: false
+      });
+    }
+  }
+
+  function spawnBurst(x, y, count) {
+    for (let i = 0; i < count; i++) {
+      const angle = Math.random() * Math.PI * 2;
+      const speed = Math.random() * 4 + 2;
+      particles.push({
+        x, y,
+        vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed - 2,
+        size: Math.random() * 5 + 3, color: colors[Math.floor(Math.random() * colors.length)],
+        rot: Math.random() * Math.PI, vr: (Math.random() - 0.5) * 0.3,
+        gravity: 0.12, life: 0, maxLife: 55, fade: true
+      });
+    }
+  }
+
+  function loop() {
+    const w = canvasEl.width, h = canvasEl.height;
+    c.clearRect(0, 0, w, h);
+    let alive = false;
+    particles = particles.filter(p => p.life < p.maxLife);
+    for (const p of particles) {
+      p.vy += p.gravity;
+      p.x += p.vx;
+      p.y += p.vy;
+      p.rot += p.vr;
+      p.life++;
+      if (p.y < h + 30 && p.life < p.maxLife) alive = true;
+      c.save();
+      c.globalAlpha = p.fade ? Math.max(0, 1 - p.life / p.maxLife) : 1;
+      c.translate(p.x, p.y);
+      c.rotate(p.rot);
+      c.fillStyle = p.color;
+      c.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.6);
+      c.restore();
+    }
+    if (alive) {
+      requestAnimationFrame(loop);
+    } else {
+      running = false;
+      c.clearRect(0, 0, w, h);
+    }
+  }
+
+  function ensureRunning() {
+    if (!running) { running = true; requestAnimationFrame(loop); }
+  }
+
+  return { resize, spawnFall, spawnBurst, ensureRunning, canvasEl };
+}
+
+const engine1 = makeEngine(document.getElementById('fx1'));
+const engine2 = makeEngine(document.getElementById('fx'));
+
+function burstOnElement(engine, containerEl, targetEl, count) {
+  engine.resize();
+  const cRect = containerEl.getBoundingClientRect();
+  const tRect = targetEl.getBoundingClientRect();
+  const x = (tRect.left + tRect.width / 2) - cRect.left;
+  const y = (tRect.top + tRect.height / 2) - cRect.top;
+  engine.spawnBurst(x, y, count);
+  engine.ensureRunning();
+}
+
+/* ---------- small dodge for background decoration ---------- */
+document.querySelectorAll('.dodge').forEach(function (el) {
+  el.addEventListener('mouseenter', function () {
+    const dx = (Math.random() > 0.5 ? 1 : -1) * (18 + Math.random() * 26);
+    const dy = (Math.random() > 0.5 ? 1 : -1) * (18 + Math.random() * 26);
+    this.style.transition = 'transform 0.35s ease';
+    this.style.animationPlayState = 'paused';
+    this.style.transform = 'translate(' + dx + 'px,' + dy + 'px)';
+  });
+  el.addEventListener('mouseleave', function () {
+    const self = this;
+    this.style.transition = 'transform 0.5s ease';
+    this.style.transform = '';
+    setTimeout(function () { self.style.animationPlayState = 'running'; }, 500);
+  });
+});
+
+/* ---------- rainbow badge: light nudge-away tease ---------- */
+const badge = document.getElementById('rainbowBadge');
+function badgeNudge() {
+  const dx = (Math.random() > 0.5 ? 1 : -1) * (30 + Math.random() * 35);
+  const dy = (Math.random() > 0.5 ? 1 : -1) * (20 + Math.random() * 30);
+  badge.style.transition = 'transform 0.35s ease-out';
+  badge.style.transform = 'translate(' + dx + 'px,' + dy + 'px)';
+}
+badge.addEventListener('mouseenter', badgeNudge);
+badge.addEventListener('click', function (e) {
+  e.stopPropagation();
+  const rect = badge.getBoundingClientRect();
+  const cRect = screen1.getBoundingClientRect();
+  const x = rect.left + rect.width / 2 - cRect.left;
+  const y = rect.top + rect.height / 2 - cRect.top;
+  engine1.resize();
+  engine1.spawnBurst(x, y, 40);
+  engine1.ensureRunning();
+  badgeNudge();
+});
+
+/* ---------- teddy: simple decorative bounce with a confetti tap ---------- */
+const teddy = document.getElementById('teddy');
+teddy.addEventListener('click', function () {
+  const rect = teddy.getBoundingClientRect();
+  const cRect = screen2.getBoundingClientRect();
+  const x = rect.left + rect.width / 2 - cRect.left;
+  const y = rect.top + rect.height / 2 - cRect.top;
+  engine2.resize();
+  engine2.spawnBurst(x, y, 28);
+  engine2.ensureRunning();
+});
+
+/* ---------- screen transition ---------- */
+function showScreen2() {
+  screen1.style.display = 'none';
+  screen2.style.display = 'flex';
+  document.body.style.background = 'linear-gradient(160deg,#FDE2EC 0%,#E4D6FA 45%,#FFE9C4 100%)';
+  document.getElementById('congratsText').style.animation = 'popIn 0.5s ease-out forwards';
+  const cards = ['offerCard', 'benefitsCard', 'joinCard', 'welcomeText'];
+  cards.forEach((id, i) => {
+    const el = document.getElementById(id);
+    el.style.animation = 'slideUp 0.5s ease-out forwards';
+    el.style.animationDelay = (0.2 + i * 0.18) + 's';
+  });
+  const benefitEls = document.querySelectorAll('.benefit');
+  benefitEls.forEach((el, i) => {
+    el.style.opacity = '0';
+    el.style.animation = 'popIn 0.4s ease-out forwards';
+    el.style.animationDelay = (1.0 + i * 0.06) + 's';
+  });
+  engine2.resize();
+  engine2.spawnFall(160);
+  engine2.ensureRunning();
+}
+
+document.getElementById('joinBtn').addEventListener('click', function () {
+  const je = document.getElementById('joinExtra');
+  je.style.display = 'flex';
+  je.style.animation = 'slideUp 0.4s ease-out forwards';
+  burstOnElement(engine2, screen2, this, 30);
+});
+
+document.getElementById('referBtn').addEventListener('click', function () {
+  burstOnElement(engine2, screen2, this, 30);
+});
+
+const videoUrls = {
+  preschool: 'https://drive.google.com/file/d/1ZwlZwug1KnQcuNjJIrx288RA8KgMi4eZ/preview',
+  international: 'https://drive.google.com/file/d/11aK4QTO6iHBaoro48bHbEIBDqdFde4h2/preview'
+};
+const videoModal = document.getElementById('videoModal');
+const videoFrame = document.getElementById('videoFrame');
+
+document.querySelectorAll('.videoBtn').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    burstOnElement(engine2, screen2, btn, 30);
+    const school = btn.getAttribute('data-school');
+    videoFrame.src = videoUrls[school];
+    videoModal.style.display = 'flex';
+  });
+});
+
+function closeVideoModal() {
+  videoModal.style.display = 'none';
+  videoFrame.src = '';
+}
+document.getElementById('closeModal').addEventListener('click', closeVideoModal);
+videoModal.addEventListener('click', function (e) { if (e.target === videoModal) closeVideoModal(); });
+
+window.addEventListener('resize', function () { engine1.resize(); engine2.resize(); });
+</script>
+
+</body>
+</html>
