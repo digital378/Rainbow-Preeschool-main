@@ -108,7 +108,7 @@ const STYLES = `
   @keyframes rlp-glowPulse   { 0%,100%{ box-shadow:0 0 0 0 rgba(93,202,165,.5) } 50%{ box-shadow:0 0 0 8px rgba(93,202,165,0) } }
   @keyframes rlp-rotateSlow  { from{ transform:rotate(0deg) } to{ transform:rotate(360deg) } }
   @keyframes rlp-stampIn     { 0%{ transform:scale(0) rotate(-15deg);opacity:0 } 60%{ transform:scale(1.15) rotate(6deg);opacity:1 } 100%{ transform:scale(1) rotate(0deg);opacity:1 } }
-  @keyframes rlp-teddyWander { 0%{top:63%;left:44%} 8%{top:71%;left:60%} 16%{top:59%;left:72%} 24%{top:77%;left:53%} 32%{top:64%;left:27%} 40%{top:82%;left:46%} 48%{top:61%;left:66%} 56%{top:74%;left:34%} 64%{top:57%;left:50%} 72%{top:79%;left:63%} 80%{top:68%;left:38%} 90%{top:75%;left:56%} 100%{top:63%;left:44%} }
+  @keyframes rlp-teddyBetween { 0%,8%{ transform:translateX(-81px) rotate(-10deg) } 42%,58%{ transform:translateX(81px) rotate(10deg) } 92%,100%{ transform:translateX(-81px) rotate(-10deg) } }
   @keyframes rlp-playPulse   { 0%,100%{ box-shadow:0 0 0 0 rgba(255,255,255,.6) } 50%{ box-shadow:0 0 0 10px rgba(255,255,255,0) } }
 
   .rlp-root { width:100%; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
@@ -516,8 +516,24 @@ export default function ReferralPage() {
                   🤔 Got more questions? <span style={{color:'#D4537E'}}>Take a sneak peek</span> 👀
                 </div>
 
-                {/* Video thumbnail cards */}
-                <div style={{display:'flex',gap:14,flexWrap:'wrap',justifyContent:'center',marginTop:8}}>
+                {/* Video thumbnail cards — teddy lives here, orbits between play circles */}
+                <div style={{position:'relative',display:'flex',gap:14,flexWrap:'wrap',
+                  justifyContent:'center',marginTop:8,paddingTop:28}}>
+
+                  {/* Teddy — absolute, oscillates between the two play-circle centres */}
+                  <span
+                    ref={teddyRef}
+                    onClick={handleTeddy}
+                    title="Click me!"
+                    style={{position:'absolute',top:-4,left:'50%',marginLeft:'-18px',
+                      fontSize:36,cursor:'pointer',zIndex:10,
+                      animation:'rlp-teddyBetween 4s ease-in-out infinite',
+                      filter:'drop-shadow(0 3px 8px rgba(0,0,0,.22))',
+                      userSelect:'none',transition:'filter .15s ease'}}
+                    onMouseEnter={e=>(e.currentTarget.style.filter='drop-shadow(0 3px 8px rgba(0,0,0,.22)) brightness(1.15)')}
+                    onMouseLeave={e=>(e.currentTarget.style.filter='drop-shadow(0 3px 8px rgba(0,0,0,.22))')}
+                  >🧸</span>
+
                   {/* Preschool video card */}
                   <button
                     className="rlp-vbtn"
@@ -602,23 +618,6 @@ export default function ReferralPage() {
           </div>
         )}
 
-        {/* ════════════════════════════════════════════════════════════════
-            FLOATING TEDDY — wanders near buttons on reveal screen
-        ════════════════════════════════════════════════════════════════ */}
-        {screen === 'reveal' && (
-          <span
-            ref={teddyRef}
-            onClick={handleTeddy}
-            title="Click me!"
-            style={{position:'fixed',fontSize:38,cursor:'pointer',zIndex:20,
-              animation:'rlp-teddyWander 20s ease-in-out infinite',
-              filter:'drop-shadow(0 4px 10px rgba(0,0,0,.18))',
-              userSelect:'none',pointerEvents:'auto',
-              transition:'transform .15s ease'}}
-            onMouseEnter={e=>(e.currentTarget.style.transform='scale(1.25) rotate(-8deg)')}
-            onMouseLeave={e=>(e.currentTarget.style.transform='')}
-          >🧸</span>
-        )}
 
         {/* ════════════════════════════════════════════════════════════════
             VIDEO MODAL
