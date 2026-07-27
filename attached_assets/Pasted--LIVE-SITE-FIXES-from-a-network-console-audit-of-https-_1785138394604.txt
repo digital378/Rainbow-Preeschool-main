@@ -1,0 +1,34 @@
+# LIVE SITE FIXES — from a network/console audit of https://www.rainbowpreschools.com/
+# Apply to the production app. Don't change layout/content beyond what's described.
+
+## 1. GA4 is initializing + firing pageviews MULTIPLE times (fix the duplicate tracking)
+- Console shows "[GA4] Initialized with measurement ID: G-G1MX1N0M05" and
+  "[GA4] Pageview tracked" firing 3× per load, from the app bundle (index-*.js).
+- Initialize GA4 EXACTLY ONCE for the app lifetime: move the init out of any component
+  that re-renders / out of a per-route effect, and guard it (e.g. a module-level
+  `let gaInit = false` flag, or window.__gaInit) so it can't run twice.
+- Fire ONE pageview per actual route change (dedupe repeated fires of the same path).
+- If a Meta Pixel is hard-coded in the app in addition to GTM, remove the hard-coded one
+  so only a single pixel loads (the live/dummy pages show a "Duplicate Pixel ID" warning).
+
+## 2. The "find a centre" map is BROKEN (returns 503)
+- The site requests a static map from staticmap.openstreetmap.de/staticmap.php — that
+  free community service returns 503 (rate-limited/unreliable), so the map is often blank.
+- Replace it with a reliable source. Preferred, zero-dependency option: use a
+  SELF-HOSTED static map image (a pre-generated PNG/WebP of the Thane area with the 6
+  centre pins) served from /images, so it can never rate-limit.
+- If you need a live/interactive map, use a keyed provider instead (Google Static Maps
+  or Mapbox Static Images API) with the API key in an env var — NOT openstreetmap.de.
+- Either way, add an onError fallback so if the map image fails, it shows a tidy
+  placeholder (e.g. the centre list / a "View on Google Maps" link) instead of a blank box.
+
+## 3. Walkthrough video — make it resilient + lighter
+- RPS_Walkthrough_Video…mp4 returned 503 at least once. Add <video preload="none"> with
+  a poster image, and an onError fallback (hide the player / show the poster) so a failed
+  load never leaves an empty/broken block. Only load/play it on interaction or when
+  scrolled into view.
+
+## VERIFY
+- Reload the live site: console should show GA4 initialized ONCE and one pageview per
+  route; the centre map should render (or show its fallback); the video should show its
+  poster and play on demand. Report console output after the fix.

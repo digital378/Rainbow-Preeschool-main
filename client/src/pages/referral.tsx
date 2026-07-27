@@ -552,9 +552,7 @@ export default function ReferralPage() {
                         display:'flex',alignItems:'center',justifyContent:'center',
                         boxShadow:'0 4px 18px rgba(0,0,0,.25)',zIndex:1,
                         animation:'rlp-playPulse 2s ease-in-out infinite'}}>
-                        <svg width="20" height="22" viewBox="0 0 20 22" aria-hidden="true">
-                          <polygon points="2,1 19,11 2,21" fill="#D4537E" />
-                        </svg>
+                        <i className="ti ti-player-play-filled" aria-hidden="true" style={{fontSize:22,color:'#D4537E'}} />
                       </div>
                       <div style={{position:'absolute',top:7,right:8,background:'rgba(212,83,126,.88)',
                         color:'#fff',fontSize:8,fontWeight:700,letterSpacing:'.6px',
@@ -589,9 +587,7 @@ export default function ReferralPage() {
                         display:'flex',alignItems:'center',justifyContent:'center',
                         boxShadow:'0 4px 18px rgba(0,0,0,.25)',zIndex:1,
                         animation:'rlp-playPulse 2s ease-in-out infinite .4s'}}>
-                        <svg width="20" height="22" viewBox="0 0 20 22" aria-hidden="true">
-                          <polygon points="2,1 19,11 2,21" fill="#7F77DD" />
-                        </svg>
+                        <i className="ti ti-player-play-filled" aria-hidden="true" style={{fontSize:22,color:'#7F77DD'}} />
                       </div>
                       <div style={{position:'absolute',top:7,right:8,background:'rgba(127,119,221,.88)',
                         color:'#fff',fontSize:8,fontWeight:700,letterSpacing:'.6px',
