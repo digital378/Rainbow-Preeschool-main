@@ -15,7 +15,7 @@ import React, { useRef, useState, useEffect, useMemo, Suspense } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import {
   OrbitControls, ContactShadows, RoundedBox,
-  Html, Float, Environment,
+  Html, Float,
 } from "@react-three/drei";
 import * as THREE from "three";
 
@@ -283,7 +283,7 @@ function Scene({ setActive, activeId, hoveredId, setHovered, reduced, isMobile }
   return (
     <>
       {/* Mobile: brighter ambient to compensate for no Environment IBL */}
-      <ambientLight intensity={isMobile ? 0.95 : 0.55} />
+      <ambientLight intensity={isMobile ? 0.95 : 0.85} />
       {/* Mobile: no cast shadows → shadow map stays inactive, no PCFSoftShadowMap risk */}
       <directionalLight
         position={[6, 11, 5]}
@@ -292,8 +292,7 @@ function Scene({ setActive, activeId, hoveredId, setHovered, reduced, isMobile }
         shadow-mapSize={[1024, 1024]}
         shadow-bias={-0.0002}
       />
-      {/* Skip expensive IBL on mobile */}
-      {!isMobile && <Environment preset="park" />}
+      {/* Environment IBL removed — use plain lights for performance */}
 
       {/* floating island */}
       <RoundedBox args={[14, 1.4, 12]} radius={0.6} smoothness={6} position={[0, -0.7, 0]} receiveShadow castShadow>
@@ -390,7 +389,7 @@ export default function SchoolTownMap3D({ activeId, onActiveChange, fallback = n
       }}>
         <Canvas
           shadows={false}
-          dpr={isMobile ? [1, 1.5] : [1, 2]}
+          dpr={[1, 1.5]}
           camera={{
             position: isMobile ? [10, 9, 12] : [9, 8, 11],
             fov:      isMobile ? 40 : 34,

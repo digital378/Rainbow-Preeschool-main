@@ -9,7 +9,7 @@
 import { useState, useEffect, useRef, useMemo, useCallback, lazy, Suspense } from "react";
 import { SEO } from "@/components/seo";
 import { cn } from "@/lib/utils";
-import Hero3D from "@/components/hero3d";
+const Hero3D = lazy(() => import("@/components/hero3d"));
 import { programmes, testimonials, branches } from "@shared/schema";
 import { centres } from "@shared/centre-data";
 import {
@@ -20,7 +20,7 @@ import {
   Mail, User, Calendar, MessageSquare, CheckCircle, AlertCircle, Smile,
 } from "lucide-react";
 import { SiWhatsapp } from "react-icons/si";
-import { motion, useReducedMotion } from "framer-motion";
+// framer-motion removed — replaced with CSS keyframes + usePrefersReducedMotion
 import { ProgrammeCard } from "@/components/ui/programme-card";
 import { AwardedBySection } from "@/components/awarded-by-section";
 import { BranchCard } from "@/components/branch-card";
@@ -37,6 +37,19 @@ import { PLAYGROUP, NURSERY, KINDERGARTEN } from "@shared/programme-data";
 const MethodologySection = lazy(() => import("@/components/methodology-section").then(m => ({ default: m.MethodologySection })));
 const ClassroomGallery   = lazy(() => import("@/components/classroom-gallery").then(m => ({ default: m.ClassroomGallery })));
 const ContactForm        = lazy(() => import("@/components/contact-form").then(m => ({ default: m.ContactForm })));
+
+/** Tiny replacement for framer-motion's useReducedMotion — no runtime dependency */
+function usePrefersReducedMotion() {
+  const [reduced, setReduced] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setReduced(mq.matches);
+    const h = (e: MediaQueryListEvent) => setReduced(e.matches);
+    mq.addEventListener("change", h);
+    return () => mq.removeEventListener("change", h);
+  }, []);
+  return reduced;
+}
 
 /* ═══════════════════════════════════════════════════════════════════════════════
    SCOPED STYLES
@@ -58,6 +71,9 @@ const STYLES = `
   @keyframes d-spin    { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
   @keyframes d-twinkle { 0%,100%{opacity:0;transform:scale(.4)} 50%{opacity:1;transform:scale(1)} }
   @keyframes d-bounce  { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+  @keyframes pd-float  { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+  @keyframes pd-rise   { from{opacity:0;transform:translateY(40px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes wcu-rise  { from{opacity:0;transform:translateY(32px)} to{opacity:1;transform:translateY(0)} }
   @keyframes mdot      { 0%,80%,100%{transform:scale(0.5);opacity:.35} 40%{transform:scale(1);opacity:1} }
   @keyframes d-shimmer { 0%{background-position:-200% center} 100%{background-position:200% center} }
   @keyframes d-particle-rise { 0%{transform:translateY(0) translateX(0) scale(1);opacity:.8} 100%{transform:translateY(-80px) translateX(var(--dx,12px)) scale(0);opacity:0} }
@@ -2104,7 +2120,7 @@ function StatsSection() {
                 borderRadius:"50%", pointerEvents:"none" }}/>
               {/* Girl mascot — in-flow, width:100% desktop (1.4fr col) / 78% mobile */}
               <img
-                src="/characters/student-girl.png"
+                src="/characters/student-girl.webp"
                 alt=""
                 aria-hidden="true"
                 className="mascot-char mascot-stage-img"
@@ -2232,27 +2248,16 @@ const PD_CARDS: Array<{
 
 /** Wraps a card in a gentle idle float — skipped for prefers-reduced-motion */
 function FloatWrapper({ idx, children }: { idx: number; children: React.ReactNode }) {
-  const noMotion = useReducedMotion();
+  const noMotion = usePrefersReducedMotion();
   if (noMotion) return <>{children}</>;
   return (
-    <motion.div
-      animate={{ y: [0, -6, 0] }}
-      transition={{ duration: 3.5 + idx * 0.3, repeat: Infinity, ease: "easeInOut", delay: idx * 0.4 }}
-    >
+    <div style={{ animation: `pd-float ${3.5 + idx * 0.3}s ease-in-out ${idx * 0.4}s infinite` }}>
       {children}
-    </motion.div>
+    </div>
   );
 }
 
-/* Framer-motion stagger variants */
-const pdContainerVariants = {
-  hidden:   {},
-  visible:  { transition: { staggerChildren: 0.09 } },
-};
-const pdItemVariants = {
-  hidden:   { opacity: 0, y: 40 },
-  visible:  { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as number[] } },
-};
+// Programme item entrance — CSS animation; delay set inline per-card
 
 /* ── Doodle SVG shapes (Change 3b) ─────────────────────────────────────── */
 const StarDoodle = ({ color }: { color: string }) => (
@@ -2379,20 +2384,17 @@ function ProgrammesDummy() {
         </div>
 
         {/* 4-card grid — perspective:1000px on container (required for 3D to read) */}
-        <motion.div
+        <div
           className="programmes-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8"
           style={{ perspective: "1000px" }}
-          variants={pdContainerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.1 }}
         >
           {PD_CARDS.map(({ id, color, href, StickerIcon }, i) => {
             const prog = progMap[id] as { name:string; ageRange:string; description:string; image:string };
             return (
               /* odd-index cards offset down ~20px (Change 3d); reset on mobile via .pd-card-offset */
-              <motion.div key={id} variants={pdItemVariants}
-                className={i % 2 === 1 ? "pd-card-offset" : ""}>
+              <div key={id}
+                className={i % 2 === 1 ? "pd-card-offset" : ""}
+                style={{ animation: `pd-rise 0.6s cubic-bezier(.22,1,.36,1) ${i * 0.09}s both` }}>
                 <FloatWrapper idx={i}>
                   <ProgrammeCard
                     title={prog.name}
@@ -2413,10 +2415,10 @@ function ProgrammesDummy() {
                     }
                   />
                 </FloatWrapper>
-              </motion.div>
+              </div>
             );
           })}
-        </motion.div>
+        </div>
 
         {/* "View All Programmes" button */}
         <div className="du-fade text-center" style={{ marginTop:60 }}>
@@ -2657,11 +2659,7 @@ function BlocksIcon3D() {
 
 const WCU_ICONS = [ShieldIcon3D, MedalIcon3D, DropIcon3D, PeopleIcon3D, BusIcon3D, BlocksIcon3D];
 
-const wcuContainer = { hidden: {}, visible: { transition: { staggerChildren: 0.08 } } };
-const wcuItem = {
-  hidden:   { opacity: 0, y: 32, rotateX: 8 },
-  visible:  { opacity: 1, y: 0, rotateX: 0, transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] as number[] } },
-};
+// WcuTile entrance — CSS animation; delay set inline per-tile via idx prop
 
 interface WcuTileProps {
   feature: typeof features[number];
@@ -2669,7 +2667,7 @@ interface WcuTileProps {
 }
 function WcuTile({ feature, idx }: WcuTileProps) {
   const tileRef = useRef<HTMLDivElement>(null);
-  const noMotion = useReducedMotion();
+  const noMotion = usePrefersReducedMotion();
   const Icon3D = WCU_ICONS[idx];
 
   const onMove = (e: React.PointerEvent<HTMLDivElement>) => {
@@ -2693,7 +2691,8 @@ function WcuTile({ feature, idx }: WcuTileProps) {
   };
 
   return (
-    <motion.div variants={wcuItem} style={{ transformStyle: "preserve-3d", height: "100%" }}>
+    <div style={{ transformStyle: "preserve-3d", height: "100%",
+      animation: `wcu-rise 0.65s cubic-bezier(.22,1,.36,1) ${idx * 0.08}s both` }}>
       <div
         ref={tileRef}
         className={cn("wcu-tile rounded-2xl border overflow-hidden h-full", `bg-gradient-to-br ${feature.bg}`, feature.border)}
@@ -2736,7 +2735,7 @@ function WcuTile({ feature, idx }: WcuTileProps) {
           )}
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }
 
@@ -2790,18 +2789,14 @@ function WhyChooseSection() {
         </div>
 
         {/* ── Even 3×2 grid — all tiles equal width/height, no spans ── */}
-        <motion.div
+        <div
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
           style={{ perspective: "1000px", gridAutoRows: "1fr" }}
-          variants={wcuContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.08 }}
         >
           {features.map((f, i) => (
             <WcuTile key={f.title} feature={f} idx={i} />
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );
@@ -2967,7 +2962,7 @@ function TestimonialsSection() {
   const [paused,     setPaused]     = useState(false);
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [isVisible,  setIsVisible]  = useState(false);
-  const prefersReduced = useReducedMotion();
+  const prefersReduced = usePrefersReducedMotion();
   const sectionRef     = useRef<HTMLElement>(null);
 
   /* Scroll-in visibility */
@@ -3265,7 +3260,7 @@ function CallbackSection() {
    SECTION: CTA — Bright & joyful finale (rainbow, balloons, confetti, light bg)
 ═══════════════════════════════════════════════════════════════════════════════ */
 function CtaSection() {
-  const prefersReduced = useReducedMotion();
+  const prefersReduced = usePrefersReducedMotion();
   const sectionRef = useRef<HTMLElement>(null);
   const [entered, setEntered] = useState(false);
 
@@ -3597,7 +3592,7 @@ function CtcField({
 }
 
 function ContactSection() {
-  const prefersReduced  = useReducedMotion();
+  const prefersReduced  = usePrefersReducedMotion();
   const sectionRef      = useRef<HTMLElement>(null);
   const confettiPortal  = useRef<HTMLDivElement>(null);
   const floatRef        = useRef<HTMLDivElement>(null);   // parallax target
@@ -3998,7 +3993,7 @@ function ContactSection() {
    SECTION: FIND NEAREST CENTRE — filterable, polished
 ═══════════════════════════════════════════════════════════════════════════════ */
 function FindNearestCentreSection() {
-  const prefersReduced = useReducedMotion();
+  const prefersReduced = usePrefersReducedMotion();
   const sectionRef     = useRef<HTMLElement>(null);
   const [query,        setQuery]       = useState("");
   const [visible,      setVisible]     = useState(false);
@@ -4813,7 +4808,9 @@ export default function Dummy() {
       </div>
 
       {/* 1 — Hero */}
-      <Hero3D />
+      <Suspense fallback={null}>
+        <Hero3D />
+      </Suspense>
 
       {/* 2 — Quick navigation links */}
       <RainbowShelfSection />

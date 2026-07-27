@@ -1,0 +1,45 @@
+# PERFORMANCE FIX — /dummy. Biggest wins first. Don't change visuals/content unless noted.
+
+## 0. MEASURE RIGHT
+- Test the PRODUCTION build (deployed URL) with PageSpeed Insights (mobile), not the
+  dev preview. Use that as the baseline.
+
+## 1. THE 3D TOWN MAP IS THE #1 COST — defer it hard
+- Do NOT load the 3D map (three / @react-three/*) in the initial bundle. Dynamic-import
+  it (React.lazy + Suspense) and MOUNT it only when its section scrolls into view
+  (IntersectionObserver) — never on page load.
+- Until it mounts, show a lightweight POSTER (a static image or the illustrated map).
+- STRONGLY RECOMMENDED: on mobile (and optionally all devices), replace the live WebGL
+  town with a pre-rendered short LOOPING VIDEO (mp4/webm) or the illustrated map. A
+  video loop looks the same but costs a fraction of live Three.js. Keep live 3D only on
+  desktop, lazy-mounted.
+- On the live 3D: set <Canvas frameloop="demand"> (or pause its rAF when offscreen),
+  drop the postprocessing Bloom + HDRI <Environment> (use plain lights), lower shadow
+  map size / disable shadows, cap dpr [1,1.5].
+
+## 2. CODE-SPLIT the heavy libraries
+- three, @react-three/fiber, @react-three/drei, @react-three/postprocessing,
+  gsap, framer-motion, canvas-confetti, lenis — none should be in the initial JS
+  chunk. Import them per-section, lazily, so they only download when that section is
+  reached. Run a bundle analyzer and confirm the initial JS drops sharply.
+
+## 3. PAUSE OFFSCREEN ANIMATIONS
+- Every continuous animation (testimonial marquee, orbit, bus, particles, blobs,
+  confetti loops) must PAUSE when its section is not in the viewport
+  (IntersectionObserver) and when prefers-reduced-motion is set. Nothing should animate
+  off-screen. Multiple simultaneous rAF loops are a major CPU cost.
+
+## 4. IMAGES (LCP + payload)
+- Convert all photos/logos to WebP/AVIF, resize to real display size (~2x max),
+  compress. Add explicit width/height to every <img> (fixes layout shift / CLS).
+- Lazy-load all below-the-fold images (loading="lazy"); PRELOAD only the hero LCP image.
+- The mascot/greeter and classroom photos are prime targets — cap them well under ~200KB.
+
+## 5. FONTS
+- Self-host + subset Fredoka / Baloo / Plus Jakarta Sans; use font-display:swap;
+  preload only the weight used in the above-the-fold heading. Drop any unused weights.
+
+## 6. VERIFY
+- Re-run PageSpeed (mobile) on the deployed URL. Target: Performance 60+ after these
+  (a marketing page with one lazy 3D scene can hit 70–90). Report the before/after and
+  the new LCP / Total Blocking Time / CLS.
