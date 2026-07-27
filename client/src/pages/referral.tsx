@@ -108,7 +108,8 @@ const STYLES = `
   @keyframes rlp-glowPulse   { 0%,100%{ box-shadow:0 0 0 0 rgba(93,202,165,.5) } 50%{ box-shadow:0 0 0 8px rgba(93,202,165,0) } }
   @keyframes rlp-rotateSlow  { from{ transform:rotate(0deg) } to{ transform:rotate(360deg) } }
   @keyframes rlp-stampIn     { 0%{ transform:scale(0) rotate(-15deg);opacity:0 } 60%{ transform:scale(1.15) rotate(6deg);opacity:1 } 100%{ transform:scale(1) rotate(0deg);opacity:1 } }
-  @keyframes rlp-teddyMove   { 0%{ transform:translate(-40px,0) rotate(-8deg) } 25%{ transform:translate(-12px,-12px) rotate(0deg) } 50%{ transform:translate(40px,0) rotate(8deg) } 75%{ transform:translate(12px,-12px) rotate(0deg) } 100%{ transform:translate(-40px,0) rotate(-8deg) } }
+  @keyframes rlp-teddyWander { 0%{top:63%;left:44%} 8%{top:71%;left:60%} 16%{top:59%;left:72%} 24%{top:77%;left:53%} 32%{top:64%;left:27%} 40%{top:82%;left:46%} 48%{top:61%;left:66%} 56%{top:74%;left:34%} 64%{top:57%;left:50%} 72%{top:79%;left:63%} 80%{top:68%;left:38%} 90%{top:75%;left:56%} 100%{top:63%;left:44%} }
+  @keyframes rlp-playPulse   { 0%,100%{ box-shadow:0 0 0 0 rgba(255,255,255,.6) } 50%{ box-shadow:0 0 0 10px rgba(255,255,255,0) } }
 
   .rlp-root { width:100%; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
   .rlp-sunburst { position:absolute;top:50%;left:50%;width:240px;height:240px;margin:-120px 0 0 -120px;background:conic-gradient(from 0deg,rgba(255,215,140,.4) 0deg 12deg,transparent 12deg 30deg);border-radius:50%;animation:rlp-rotateSlow 14s linear infinite;z-index:0;pointer-events:none; }
@@ -433,12 +434,6 @@ export default function ReferralPage() {
                 animation:'rlp-popIn .5s ease-out forwards'}}>
                 Congratulations!
               </div>
-              <div style={{fontSize:14,color:'#4B1528',marginTop:6,display:'flex',alignItems:'center',justifyContent:'center',gap:6}}>
-                <i className="ti ti-heart-filled" aria-hidden="true" style={{fontSize:12,color:'#D4537E',animation:'rlp-twinkle 1.6s ease-in-out infinite'}} />
-                You won a
-                <i className="ti ti-heart-filled" aria-hidden="true" style={{fontSize:12,color:'#D4537E',animation:'rlp-twinkle 1.6s ease-in-out infinite .3s'}} />
-              </div>
-
               {/* ── Offer card ─────────────────────────────────────────── */}
               <div className="rlp-shine"
                 style={{marginTop:16,background:'linear-gradient(145deg,#FFFFFF 0%,#FDEAF7 45%,#F1ECFE 100%)',
@@ -478,7 +473,6 @@ export default function ReferralPage() {
                     {n:2,bg:'#97C459',fg:'#1B3609',label:'Gift vouchers'},
                     {n:3,bg:'#AFA9EC',fg:'#26215C',label:'Assured goodies'},
                     {n:4,bg:'#85B7EB',fg:'#0C2B4A',label:'Surprise gift on 500 points'},
-                    {n:5,bg:'#D4537E',fg:'#fff',   label:'Invite to loyalty party'},
                   ].map(({n,bg,fg,label},i) => (
                     <div key={n} className="rlp-benefit"
                       style={{display:'flex',flexDirection:'column',alignItems:'center',textAlign:'center',
@@ -522,44 +516,78 @@ export default function ReferralPage() {
                   🤔 Got more questions? <span style={{color:'#D4537E'}}>Take a sneak peek</span> 👀
                 </div>
 
-                {/* Teddy */}
-                <div style={{width:'100%',display:'flex',justifyContent:'center',marginTop:8}}>
-                  <span ref={teddyRef} onClick={handleTeddy}
-                    style={{display:'inline-block',fontSize:34,cursor:'pointer',
-                      animation:'rlp-teddyMove 4s ease-in-out infinite'}}>🧸</span>
-                </div>
-
-                {/* Video buttons */}
-                <div style={{display:'flex',gap:12,flexWrap:'wrap',justifyContent:'center',marginTop:8}}>
+                {/* Video thumbnail cards */}
+                <div style={{display:'flex',gap:14,flexWrap:'wrap',justifyContent:'center',marginTop:8}}>
+                  {/* Preschool video card */}
                   <button
                     className="rlp-vbtn"
                     data-school="preschool"
                     onClick={(e)=>openVideo('preschool',e)}
-                    style={{width:130,background:'linear-gradient(160deg,#FDEAF2,#FBD4E4)',border:'none',
-                      borderRadius:16,padding:'14px 8px',display:'flex',flexDirection:'column',
-                      alignItems:'center',gap:4}}
+                    style={{flex:'0 1 148px',border:'none',borderRadius:16,padding:0,
+                      overflow:'hidden',cursor:'pointer',background:'transparent',
+                      boxShadow:'0 6px 20px rgba(209,83,126,.28)'}}
                   >
-                    <i className="ti ti-school" aria-hidden="true"
-                      style={{fontSize:26,color:'#D4537E',animation:'rlp-floaty 2.4s ease-in-out infinite'}} />
-                    <span style={{fontSize:12,fontWeight:600,color:'#993556',lineHeight:1.2}}>Rainbow Preschool</span>
-                    <span style={{fontSize:10,color:'#B15C7A',display:'flex',alignItems:'center',gap:3}}>
-                      <i className="ti ti-player-play-filled" aria-hidden="true" style={{fontSize:10}} /> Watch
-                    </span>
+                    <div style={{position:'relative',background:'linear-gradient(135deg,#FDEAF2,#F8A8C5,#F07099)',
+                      height:88,display:'flex',alignItems:'center',justifyContent:'center'}}>
+                      <i className="ti ti-school" aria-hidden="true"
+                        style={{position:'absolute',fontSize:50,color:'rgba(153,53,86,.18)'}} />
+                      <div style={{width:46,height:46,borderRadius:'50%',
+                        background:'rgba(255,255,255,.95)',
+                        display:'flex',alignItems:'center',justifyContent:'center',
+                        boxShadow:'0 4px 16px rgba(0,0,0,.22)',zIndex:1,
+                        animation:'rlp-playPulse 2s ease-in-out infinite'}}>
+                        <i className="ti ti-player-play-filled" aria-hidden="true"
+                          style={{fontSize:20,color:'#D4537E',marginLeft:3}} />
+                      </div>
+                      <div style={{position:'absolute',top:7,right:8,background:'rgba(212,83,126,.88)',
+                        color:'#fff',fontSize:8,fontWeight:700,letterSpacing:'.6px',
+                        padding:'2px 7px',borderRadius:10}}>VIDEO</div>
+                    </div>
+                    <div style={{background:'#fff',padding:'8px 10px',textAlign:'center',
+                      borderTop:'1px solid rgba(212,83,126,.12)'}}>
+                      <div style={{fontSize:11.5,fontWeight:700,color:'#993556'}}>Rainbow Preschool</div>
+                      <div style={{fontSize:10,color:'#B15C7A',marginTop:2,
+                        display:'flex',alignItems:'center',justifyContent:'center',gap:3}}>
+                        <i className="ti ti-player-play-filled" aria-hidden="true" style={{fontSize:9}} />
+                        Tap to watch
+                      </div>
+                    </div>
                   </button>
+
+                  {/* International video card */}
                   <button
                     className="rlp-vbtn"
                     data-school="international"
                     onClick={(e)=>openVideo('international',e)}
-                    style={{width:130,background:'linear-gradient(160deg,#EEEDFE,#DCD8FB)',border:'none',
-                      borderRadius:16,padding:'14px 8px',display:'flex',flexDirection:'column',
-                      alignItems:'center',gap:4}}
+                    style={{flex:'0 1 148px',border:'none',borderRadius:16,padding:0,
+                      overflow:'hidden',cursor:'pointer',background:'transparent',
+                      boxShadow:'0 6px 20px rgba(127,119,221,.28)'}}
                   >
-                    <i className="ti ti-building-community" aria-hidden="true"
-                      style={{fontSize:26,color:'#7F77DD',animation:'rlp-floaty 2.4s ease-in-out infinite .3s'}} />
-                    <span style={{fontSize:12,fontWeight:600,color:'#3B3593',lineHeight:1.2}}>Rainbow International School</span>
-                    <span style={{fontSize:10,color:'#5951B5',display:'flex',alignItems:'center',gap:3}}>
-                      <i className="ti ti-player-play-filled" aria-hidden="true" style={{fontSize:10}} /> Watch
-                    </span>
+                    <div style={{position:'relative',background:'linear-gradient(135deg,#EEEDFE,#C8C4F5,#9F98EC)',
+                      height:88,display:'flex',alignItems:'center',justifyContent:'center'}}>
+                      <i className="ti ti-building-community" aria-hidden="true"
+                        style={{position:'absolute',fontSize:50,color:'rgba(59,53,147,.18)'}} />
+                      <div style={{width:46,height:46,borderRadius:'50%',
+                        background:'rgba(255,255,255,.95)',
+                        display:'flex',alignItems:'center',justifyContent:'center',
+                        boxShadow:'0 4px 16px rgba(0,0,0,.22)',zIndex:1,
+                        animation:'rlp-playPulse 2s ease-in-out infinite .4s'}}>
+                        <i className="ti ti-player-play-filled" aria-hidden="true"
+                          style={{fontSize:20,color:'#7F77DD',marginLeft:3}} />
+                      </div>
+                      <div style={{position:'absolute',top:7,right:8,background:'rgba(127,119,221,.88)',
+                        color:'#fff',fontSize:8,fontWeight:700,letterSpacing:'.6px',
+                        padding:'2px 7px',borderRadius:10}}>VIDEO</div>
+                    </div>
+                    <div style={{background:'#fff',padding:'8px 10px',textAlign:'center',
+                      borderTop:'1px solid rgba(127,119,221,.12)'}}>
+                      <div style={{fontSize:11.5,fontWeight:700,color:'#3B3593'}}>Rainbow International</div>
+                      <div style={{fontSize:10,color:'#5951B5',marginTop:2,
+                        display:'flex',alignItems:'center',justifyContent:'center',gap:3}}>
+                        <i className="ti ti-player-play-filled" aria-hidden="true" style={{fontSize:9}} />
+                        Tap to watch
+                      </div>
+                    </div>
                   </button>
                 </div>
               </div>
@@ -572,6 +600,24 @@ export default function ReferralPage() {
               </div>
             </div>
           </div>
+        )}
+
+        {/* ════════════════════════════════════════════════════════════════
+            FLOATING TEDDY — wanders near buttons on reveal screen
+        ════════════════════════════════════════════════════════════════ */}
+        {screen === 'reveal' && (
+          <span
+            ref={teddyRef}
+            onClick={handleTeddy}
+            title="Click me!"
+            style={{position:'fixed',fontSize:38,cursor:'pointer',zIndex:20,
+              animation:'rlp-teddyWander 20s ease-in-out infinite',
+              filter:'drop-shadow(0 4px 10px rgba(0,0,0,.18))',
+              userSelect:'none',pointerEvents:'auto',
+              transition:'transform .15s ease'}}
+            onMouseEnter={e=>(e.currentTarget.style.transform='scale(1.25) rotate(-8deg)')}
+            onMouseLeave={e=>(e.currentTarget.style.transform='')}
+          >🧸</span>
         )}
 
         {/* ════════════════════════════════════════════════════════════════
