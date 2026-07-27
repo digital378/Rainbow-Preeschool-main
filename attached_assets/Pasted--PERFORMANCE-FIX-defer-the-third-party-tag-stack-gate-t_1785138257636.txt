@@ -1,0 +1,68 @@
+# PERFORMANCE FIX — defer the third-party tag stack + gate the 3D. Apply to the whole
+# app (these load site-wide, not just /dummy). Don't change any visuals/content.
+# Root cause confirmed by network trace: GTM + GA4 + Google Ads + Call-Tracking +
+# TWO Meta Pixels + Microsoft Clarity all load on initial page load and jam the mobile
+# main thread (TBT 2,170 ms). Fix in this order.
+
+## 1. LOAD GTM (and everything it fires) ONLY AFTER FIRST INTERACTION / IDLE  ← biggest win
+- Find where the Google Tag Manager container (GT-55BFZCQT) is injected in index.html /
+  the app entry. Remove it from the initial/synchronous load.
+- Replace with a deferred loader that injects GTM on the first user interaction OR after
+  idle, whichever comes first. Use exactly this pattern:
+
+    (function () {
+      var loaded = false;
+      function loadGTM() {
+        if (loaded) return; loaded = true;
+        (function (w, d, s, l, i) {
+          w[l] = w[l] || []; w[l].push({ 'gtm.start': Date.now(), event: 'gtm.js' });
+          var f = d.getElementsByTagName(s)[0], j = d.createElement(s);
+          j.async = true; j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i;
+          f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GT-55BFZCQT');
+      }
+      var evts = ['scroll', 'mousemove', 'touchstart', 'keydown', 'click'];
+      evts.forEach(function (e) { window.addEventListener(e, loadGTM, { once: true, passive: true }); });
+      // fallback so tags still fire if the user never interacts:
+      if ('requestIdleCallback' in window) requestIdleCallback(loadGTM, { timeout: 5000 });
+      else setTimeout(loadGTM, 5000);
+    })();
+
+- Ensure GA4, Google Ads, Call-Tracking, Meta Pixel(s), and Clarity are all fired
+  THROUGH GTM (or the same deferred trigger) — nothing should self-inject on load.
+- If any of these are hard-coded as separate <script> tags in the HTML (Meta Pixel and
+  Clarity often are), move them behind the SAME deferred loader, or remove them from the
+  page and fire them from GTM instead.
+
+## 2. REMOVE the duplicate Meta Pixel (code-side if hard-coded)
+- Two pixels fire: 553160708799731 and 876471444795481 (console warns "Duplicate Pixel
+  ID"). If either is hard-coded in the app, remove it so only ONE remains. (If both come
+  from GTM, that's a GTM change — flag it, don't guess which to keep.)
+
+## 3. VIEWPORT-GATE the 3D and SKIP WebGL on mobile
+- Network shows three.module.js (~725 kB), hero3d.js, and SchoolTownMap3D.js ALL
+  downloading on initial load. They must load ONLY when their section scrolls into view.
+- Wrap each 3D section in an IntersectionObserver gate: render a lightweight poster
+  (walkthrough-poster.webp / the illustrated map) until the section is near the viewport,
+  THEN dynamic-import and mount the 3D component.
+- On mobile (<768px): do NOT load Three.js at all — keep the poster/illustrated map.
+- The Hero3D on load is the worst offender since it blocks LCP — make sure the hero's
+  first paint is the static hero-banner-1.webp, and Hero3D upgrades in AFTER load.
+
+## 4. VIDEO — stop preloading
+- The walkthrough .mp4 is fetching on load (206 partials). Set <video preload="none">
+  with a poster image; only load it on play or when scrolled into view.
+
+## 5. FONTS
+- Two separate Google Fonts requests load (Fredoka/Inter/Poppins AND
+  Fredoka/Plus Jakarta Sans). Consolidate to ONE request with only the families/weights
+  actually used above the fold. Add <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  and preload only the hero heading weight. Keep display=swap.
+
+## 6. CLS (0.5 → target <0.1)
+- Reserve explicit height for: the hero, each 3D canvas/poster box, and lazy sections,
+  so nothing reflows as it loads. Add width/height to every <img> (already WebP — good).
+
+## VERIFY
+- Re-run PageSpeed Insights (mobile) on the deployed URL after publishing.
+- Report new Performance score + TBT, LCP, CLS. Expect the biggest jump from step 1.
