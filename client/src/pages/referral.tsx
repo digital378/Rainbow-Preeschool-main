@@ -547,13 +547,14 @@ export default function ReferralPage() {
                       height:88,display:'flex',alignItems:'center',justifyContent:'center'}}>
                       <i className="ti ti-school" aria-hidden="true"
                         style={{position:'absolute',fontSize:50,color:'rgba(153,53,86,.18)'}} />
-                      <div style={{width:46,height:46,borderRadius:'50%',
-                        background:'rgba(255,255,255,.95)',
+                      <div style={{width:50,height:50,borderRadius:'50%',
+                        background:'rgba(255,255,255,.96)',
                         display:'flex',alignItems:'center',justifyContent:'center',
-                        boxShadow:'0 4px 16px rgba(0,0,0,.22)',zIndex:1,
+                        boxShadow:'0 4px 18px rgba(0,0,0,.25)',zIndex:1,
                         animation:'rlp-playPulse 2s ease-in-out infinite'}}>
-                        <i className="ti ti-player-play-filled" aria-hidden="true"
-                          style={{fontSize:20,color:'#D4537E',marginLeft:3}} />
+                        <svg width="20" height="22" viewBox="0 0 20 22" aria-hidden="true">
+                          <polygon points="2,1 19,11 2,21" fill="#D4537E" />
+                        </svg>
                       </div>
                       <div style={{position:'absolute',top:7,right:8,background:'rgba(212,83,126,.88)',
                         color:'#fff',fontSize:8,fontWeight:700,letterSpacing:'.6px',
@@ -583,13 +584,14 @@ export default function ReferralPage() {
                       height:88,display:'flex',alignItems:'center',justifyContent:'center'}}>
                       <i className="ti ti-building-community" aria-hidden="true"
                         style={{position:'absolute',fontSize:50,color:'rgba(59,53,147,.18)'}} />
-                      <div style={{width:46,height:46,borderRadius:'50%',
-                        background:'rgba(255,255,255,.95)',
+                      <div style={{width:50,height:50,borderRadius:'50%',
+                        background:'rgba(255,255,255,.96)',
                         display:'flex',alignItems:'center',justifyContent:'center',
-                        boxShadow:'0 4px 16px rgba(0,0,0,.22)',zIndex:1,
+                        boxShadow:'0 4px 18px rgba(0,0,0,.25)',zIndex:1,
                         animation:'rlp-playPulse 2s ease-in-out infinite .4s'}}>
-                        <i className="ti ti-player-play-filled" aria-hidden="true"
-                          style={{fontSize:20,color:'#7F77DD',marginLeft:3}} />
+                        <svg width="20" height="22" viewBox="0 0 20 22" aria-hidden="true">
+                          <polygon points="2,1 19,11 2,21" fill="#7F77DD" />
+                        </svg>
                       </div>
                       <div style={{position:'absolute',top:7,right:8,background:'rgba(127,119,221,.88)',
                         color:'#fff',fontSize:8,fontWeight:700,letterSpacing:'.6px',
