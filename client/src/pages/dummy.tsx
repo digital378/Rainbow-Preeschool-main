@@ -651,7 +651,7 @@ const STYLES = `
   }
   .cta-rainbow-strip {
     height:6px; width:100%;
-    background:linear-gradient(90deg,#f43f5e,#f97316,#eab308,#22c55e,#3b82f6,#8b5cf6,#ec4899,#f43f5e);
+    background:linear-gradient(90deg,#ef4444,#f97316,#eab308,#22c55e,#3b82f6,#8b5cf6,#a855f7,#ef4444);
     background-size:200% 100%;
     animation:cta-rainbow-shimmer 3s linear infinite;
   }
@@ -3288,9 +3288,9 @@ function CtaSection() {
     { id:3,  color:"#22c55e", cx:"98px",   cy:"-65px",  cr:"-180deg", left:"60%", top:"36%", w:6,  h:9,  r:"50%", delay:"0.05s" },
     { id:4,  color:"#3b82f6", cx:"-110px", cy:"-48px",  cr:"168deg",  left:"36%", top:"32%", w:10, h:6,  r:"2px", delay:"0.10s" },
     { id:5,  color:"#8b5cf6", cx:"74px",   cy:"-82px",  cr:"-126deg", left:"52%", top:"40%", w:7,  h:7,  r:"50%", delay:"0.18s" },
-    { id:6,  color:"#ec4899", cx:"-76px",  cy:"-74px",  cr:"144deg",  left:"46%", top:"44%", w:8,  h:5,  r:"3px", delay:"0.03s" },
+    { id:6,  color:"#a855f7", cx:"-76px",  cy:"-74px",  cr:"144deg",  left:"46%", top:"44%", w:8,  h:5,  r:"3px", delay:"0.03s" },
     { id:7,  color:"#fbbf24", cx:"104px",  cy:"-54px",  cr:"-108deg", left:"56%", top:"30%", w:6,  h:8,  r:"2px", delay:"0.12s" },
-    { id:8,  color:"#f43f5e", cx:"-92px",  cy:"-68px",  cr:"190deg",  left:"42%", top:"46%", w:9,  h:6,  r:"50%", delay:"0.20s" },
+    { id:8,  color:"#ef4444", cx:"-92px",  cy:"-68px",  cr:"190deg",  left:"42%", top:"46%", w:9,  h:6,  r:"50%", delay:"0.20s" },
     { id:9,  color:"#06b6d4", cx:"88px",   cy:"-78px",  cr:"-152deg", left:"58%", top:"38%", w:7,  h:9,  r:"3px", delay:"0.08s" },
     { id:10, color:"#EC210F", cx:"-68px",  cy:"-86px",  cr:"112deg",  left:"48%", top:"32%", w:5,  h:8,  r:"2px", delay:"0.16s" },
     { id:11, color:"#f97316", cx:"82px",   cy:"-60px",  cr:"-78deg",  left:"40%", top:"48%", w:8,  h:5,  r:"50%", delay:"0.04s" },
@@ -3298,7 +3298,7 @@ function CtaSection() {
 
   const stars = [
     { cls:"cta-star-1", top:"15%", left:"20%",  right:"auto", bottom:"auto", size:15, color:"#f59e0b" },
-    { cls:"cta-star-2", top:"20%", left:"auto",  right:"22%",  bottom:"auto", size:13, color:"#ec4899" },
+    { cls:"cta-star-2", top:"20%", left:"auto",  right:"22%",  bottom:"auto", size:13, color:"#a855f7" },
     { cls:"cta-star-3", top:"auto",left:"28%",  right:"auto", bottom:"22%",  size:12, color:"#3b82f6" },
     { cls:"cta-star-4", top:"50%", left:"auto",  right:"11%",  bottom:"auto", size:11, color:"#22c55e" },
   ];
@@ -3334,7 +3334,7 @@ function CtaSection() {
       <div aria-hidden className="absolute pointer-events-none" style={{
         top:"4%", left:"50%", transform:"translateX(-50%)",
         width:720, height:360, borderRadius:"50%",
-        background:"conic-gradient(from 180deg at 50% 100%,#f43f5e,#f97316,#eab308,#22c55e,#3b82f6,#8b5cf6,#ec4899,#f43f5e)",
+        background:"conic-gradient(from 180deg at 50% 100%,#ef4444,#f97316,#eab308,#22c55e,#3b82f6,#8b5cf6,#a855f7,#ef4444)",
         opacity:0.07, filter:"blur(24px)",
       }} />
 
