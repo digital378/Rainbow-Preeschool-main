@@ -1073,7 +1073,7 @@ function HeroSection() {
   }, []);
 
   return (
-    <section ref={containerRef} className="relative flex items-center overflow-hidden" style={{ minHeight: "100svh" }}>
+    <section ref={containerRef} className="relative flex items-center overflow-hidden" style={{ minHeight: "100svh", background: "#FFE8E4" }}>
 
       {/* ── Atmosphere stack ── */}
       <div className="absolute inset-0 overflow-hidden">
@@ -1092,9 +1092,11 @@ function HeroSection() {
         <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-transparent" />
         {/* Brand warmth */}
         <div className="absolute inset-0 pointer-events-none"
-          style={{ background: "radial-gradient(ellipse at -5% 62%, rgba(220,38,38,0.32) 0%, transparent 52%)" }} />
+          style={{ background: "radial-gradient(ellipse at -5% 62%, rgba(220,38,38,0.38) 0%, transparent 52%)" }} />
         <div className="absolute inset-0 pointer-events-none"
-          style={{ background: "radial-gradient(ellipse at 90% 38%, rgba(251,191,36,0.10) 0%, transparent 40%)" }} />
+          style={{ background: "radial-gradient(ellipse at 78% 50%, rgba(220,38,38,0.18) 0%, transparent 55%)" }} />
+        <div className="absolute inset-0 pointer-events-none"
+          style={{ background: "radial-gradient(ellipse at 90% 20%, rgba(236,80,40,0.14) 0%, transparent 42%)" }} />
       </div>
 
       {/* ── Sparkle particles (mid layer) ── */}
@@ -1106,17 +1108,17 @@ function HeroSection() {
       <div ref={layerNearRef} className="absolute inset-0 will-change-transform pointer-events-none">
         <Orb cls="d-float-a d-pulse"
           style={{
-            width: "clamp(300px,40vw,520px)", height: "clamp(300px,40vw,520px)",
-            top: "-12%", right: "-8%",
-            background: "radial-gradient(circle, rgba(251,191,36,0.28) 0%, transparent 62%)",
-            filter: "blur(52px)",
+            width: "clamp(300px,40vw,560px)", height: "clamp(300px,40vw,560px)",
+            top: "-14%", right: "-10%",
+            background: "radial-gradient(circle, rgba(236,60,30,0.38) 0%, rgba(236,100,40,0.20) 45%, transparent 70%)",
+            filter: "blur(56px)",
           }} />
         <Orb cls="d-float-b"
           style={{
-            width: 240, height: 240,
-            bottom: "20%", right: "18%",
-            background: "radial-gradient(circle, rgba(220,38,38,0.18) 0%, transparent 65%)",
-            filter: "blur(30px)",
+            width: 360, height: 360,
+            bottom: "8%", right: "10%",
+            background: "radial-gradient(circle, rgba(220,38,38,0.32) 0%, transparent 65%)",
+            filter: "blur(42px)",
           }} />
         <Orb cls="d-float-c"
           style={{
