@@ -1,0 +1,59 @@
+# LIVE HOMEPAGE SPEED FIX — https://www.rainbowpreschools.com/
+# Analyzed via live network trace (76 requests). The page is otherwise healthy
+# (GA4 fires once, no JS errors, no Three.js, WebP images, video deferred). The ONLY
+# major drag is the third-party tag/ads stack loading eagerly on page load — ~40 of
+# 76 requests are tracking, ~15 return 503 + retry. Fix that and the score jumps.
+# Don't change visible design/content.
+
+## FIX 1 — DEFER THE ENTIRE TAG STACK TO FIRST INTERACTION / IDLE  ← THE win
+# Loading eagerly on load: GTM (GT-55BFZCQT / gtag/js), server-side GTM /xrdb/
+# (G-G1MX1N0M05), Google Ads AW-17472125337 (ccm/collect, viewthroughconversion,
+# rmkt/collect, 1p-user-list, 1p-conversion, googleadservices, doubleclick),
+# Google Call-Tracking (call-tracking_9.js), Microsoft Clarity (m20xf4ffec),
+# TWO Meta Pixels (553160708799731 + 876471444795481) + CAPI param-builder.
+- Remove the GTM container from the initial synchronous HTML load. Inject it only on
+  the first user interaction OR after idle, whichever comes first:
+
+    (function () {
+      var loaded = false;
+      function loadGTM() {
+        if (loaded) return; loaded = true;
+        (function (w, d, s, l, i) {
+          w[l] = w[l] || []; w[l].push({ 'gtm.start': Date.now(), event: 'gtm.js' });
+          var f = d.getElementsByTagName(s)[0], j = d.createElement(s);
+          j.async = true; j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i;
+          f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GT-55BFZCQT');
+      }
+      ['scroll','mousemove','touchstart','keydown','click'].forEach(function (e) {
+        window.addEventListener(e, loadGTM, { once: true, passive: true });
+      });
+      if ('requestIdleCallback' in window) requestIdleCallback(loadGTM, { timeout: 5000 });
+      else setTimeout(loadGTM, 5000);
+    })();
+
+- Make sure Clarity, both Meta Pixels, Google Ads, Call-Tracking, and the CAPI builder
+  all fire THROUGH GTM (or the same gate). If any are hard-coded as their own <script>
+  tags in index.html (Meta Pixel + Clarity often are), move them behind the SAME gate —
+  nothing may self-inject on load.
+- NOTE: GA4 is already deduped and firing once — leave that as-is.
+
+## FIX 2 — DEFER the decorative sparkle animation
+- rainbow-sparkle-trail-*.js loads on initial load. It's a decorative pointer/scroll
+  effect — load it lazily (after idle / on first interaction), and skip it on mobile.
+
+## FIX 3 — FONTS
+- Two Google Fonts families load (Fredoka + Inter + Poppins). Consolidate to ONE
+  <link> request with only the families/weights used above the fold; add
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>; preload only
+  the hero heading weight; keep display=swap.
+
+## FIX 4 — CLS
+- Add explicit width/height to every <img> (logos, centre images, gallery) and reserve
+  min-height on the hero and any lazy sections so nothing reflows on load.
+
+## VERIFY (I'll re-run this exact trace after publish)
+- Reload the homepage with Network open. On INITIAL load these must NOT appear until
+  after you interact/scroll: gtag/js, fbevents.js, clarity.js, ccm/collect,
+  doubleclick, /xrdb/ tag hits. They should fire only on first interaction.
+- Re-run PageSpeed Insights (mobile + desktop) and report Performance + TBT/LCP/CLS.

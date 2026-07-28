@@ -373,8 +373,21 @@ function DeferredSparkleTrail() {
   useEffect(() => {
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
     if (isMobile) return;
-    const id = setTimeout(() => setShow(true), 6000);
-    return () => clearTimeout(id);
+    let fired = false;
+    const load = () => { if (fired) return; fired = true; setShow(true); };
+    const events = ['pointerdown', 'keydown', 'touchstart', 'scroll'] as const;
+    events.forEach(e => window.addEventListener(e, load, { once: true, passive: true }));
+    let cancelHandle: number;
+    if ('requestIdleCallback' in window) {
+      cancelHandle = requestIdleCallback(load, { timeout: 6000 });
+    } else {
+      cancelHandle = window.setTimeout(load, 6000);
+    }
+    return () => {
+      events.forEach(e => window.removeEventListener(e, load));
+      if ('requestIdleCallback' in window) cancelIdleCallback(cancelHandle);
+      else clearTimeout(cancelHandle);
+    };
   }, []);
   if (!show) return null;
   return (
