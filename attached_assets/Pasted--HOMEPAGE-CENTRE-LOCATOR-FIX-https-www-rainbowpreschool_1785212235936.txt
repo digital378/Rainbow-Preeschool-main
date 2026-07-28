@@ -1,0 +1,42 @@
+# HOMEPAGE CENTRE-LOCATOR FIX — https://www.rainbowpreschools.com/ (home page, not /dummy)
+# Two fixes: (1) the 3D map reverted to the wrong old version, (2) there are TWO
+# "find your nearest centre" sections — keep only the one with contact numbers.
+# Preserve all centre data (names, addresses, phones, links). Don't touch /dummy or
+# other sections.
+
+## FIX 1 — Use the CORRECT 3D map (the named bus-town, not the bare pins)
+- The homepage centre section currently renders an OLD 3D map: bare red lollipop pins
+  on a plain green plane, NO branch-name labels, NO school bus. This is the wrong
+  component.
+- Replace it with the SAME map component used on /dummy — the low-poly "Rainbow Town"
+  (SchoolTownMap3D): named school buildings for each branch + the school bus that tours
+  them. REUSE that existing component (import it; do not duplicate or rebuild it).
+- Pass the homepage's 6 centres to it (same names/positions/gmb links as /dummy so
+  they match). Remove/retire the old bare-pins map component from the homepage.
+- KEEP IT PERFORMANCE-SAFE (this is the live homepage — we just optimised it):
+  wrap the map in the existing lazy gate exactly like /dummy —
+    <LazyVisible minWidth={768} rootMargin="300px" placeholder={<illustrated/poster fallback>}>
+      <Suspense fallback={<img src="/assets/walkthrough-poster.webp" width={1200} height={640} alt="" />}>
+        <SchoolTownMap3D … />
+      </Suspense>
+    </LazyVisible>
+  So three.module + the map chunk load ONLY when the section scrolls into view, and
+  NEVER on mobile (< 768px shows the illustrated/poster fallback). Do not let it load
+  on initial page load.
+
+## FIX 2 — Remove the DUPLICATE locator section; keep the one WITH phone numbers
+- The homepage has TWO "find your nearest centre" sections. KEEP ONLY the one whose
+  cards show the CONTACT NUMBERS — the branch-profile cards with centre name, address,
+  phone number(s), "View <Centre> Centre", WhatsApp, and Directions
+  (e.g. "Aggarwal Centre (Manpada) · 022-47762019 · 93218 39367").
+- DELETE the other locator section entirely — its heading, its map, and its cards — so
+  only ONE centre section and ONE heading remain on the homepage.
+- The surviving section shows the correct bus-town 3D map (from Fix 1) above the
+  branch-profile cards, with the pin↔card highlight sync working, all data unchanged.
+
+## VERIFY
+- Homepage has exactly ONE centre section: the correct named/bus 3D map (labels +
+  school bus, NOT bare pins) + the branch-profile cards with phone numbers. No
+  duplicate section, no duplicate heading.
+- On mobile the map shows the lightweight fallback; three.module does NOT load on
+  initial page load (only when the section scrolls into view, desktop only).
