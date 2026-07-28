@@ -1,0 +1,34 @@
+# FIX — homepage centre map stuck on "Loading Rainbow Town…". Homepage only.
+# Diagnosed live: the 3D map DOES render (canvas mounts, no errors, no failed/pending
+# requests) — but the heavy scene takes several seconds to compile, and the loader has
+# no timeout, so it looks permanently stuck. Make init fast + add a fallback.
+
+## 1. Use the LIGHT version of the map on the homepage (fast init)
+- The slow-to-compile parts are the cinematic effects. On the homepage's SchoolTownMap3D,
+  DISABLE: the EffectComposer/Bloom pass, SoftShadows, and any drei <Environment> preset.
+  Use plain lighting only (ambientLight + one directionalLight). Keep the town, named
+  schools, and bus — just drop the post-processing/soft-shadows/HDRI. This makes first
+  paint near-instant instead of multi-second.
+
+## 2. Add a HARD TIMEOUT + fallback so the loader can never hang
+- Wrap the map so that if the 3D canvas hasn't mounted within ~6 seconds, OR WebGL/asset
+  loading errors, it swaps the loader for a STATIC fallback (the illustrated map or the
+  walkthrough-poster.webp) instead of sitting on "Loading Rainbow Town…" forever.
+- Ensure the existing WebGLBoundary/error boundary wraps the Canvas so any failure shows
+  the static fallback, not a perpetual loader.
+- Fire a state flag when the R3F Canvas's onCreated runs (canvas ready) to hide the loader.
+
+## 3. Make the loading placeholder a POSTER, not bare text
+- Replace the plain "Loading Rainbow Town…" text with the walkthrough-poster.webp (or a
+  static map thumbnail) as the placeholder, so even mid-load it looks intentional, with a
+  small "Loading interactive map…" caption. The poster is the SAME image used for the
+  LazyVisible placeholder and the <Suspense> fallback; once the canvas mounts, remove it.
+
+## 4. Keep the guards that already work
+- Keep the LazyVisible viewport-gate (load only when scrolled near) and the mobile
+  fallback (no WebGL on <768px). Don't change those.
+
+## VERIFY
+- Scroll to the centre section on the homepage: the map should paint within ~1–2s now.
+  If anything stalls past ~6s, the static poster/illustrated map must show instead — the
+  "Loading Rainbow Town…" text must never persist.

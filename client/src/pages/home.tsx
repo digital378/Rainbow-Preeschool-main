@@ -692,20 +692,24 @@ export default function Home() {
               >
                 {webglOk ? (
                   <Suspense fallback={
-                    <div style={{ width:"100%", height:"clamp(420px,55vh,600px)", borderRadius:16,
-                      background:"linear-gradient(135deg,#e8f5e9 0%,#fdf3ea 100%)",
-                      display:"flex", alignItems:"center", justifyContent:"center" }}>
-                      <span style={{ color:"#55506A", fontSize:14 }}>Loading Rainbow Town…</span>
+                    <div style={{ width:"100%", height:"clamp(420px,55vh,600px)", borderRadius:16, overflow:"hidden", position:"relative",
+                      display:"flex", alignItems:"flex-end", justifyContent:"center", paddingBottom:20 }}>
+                      <img src="/assets/walkthrough-poster.webp" alt="" width={1200} height={640}
+                        style={{ position:"absolute", inset:0, width:"100%", height:"100%", objectFit:"cover" }} />
+                      <div style={{ position:"relative", background:"rgba(255,255,255,0.88)", borderRadius:999,
+                        padding:"6px 16px", fontSize:13, color:"#55506A" }}>
+                        Loading interactive map…
+                      </div>
                     </div>
                   }>
                     <SchoolTownMap3D
                       activeId={active ? toMapId(active) : null}
                       onActiveChange={handleActiveChange}
+                      lite={true}
                       fallback={
-                        <div style={{ width:"100%", height:"clamp(420px,55vh,600px)", borderRadius:16,
-                          background:"linear-gradient(135deg,#e8f5e9 0%,#fdf3ea 100%)",
-                          display:"flex", alignItems:"center", justifyContent:"center" }}>
-                          <span style={{ color:"#55506A", fontSize:14 }}>Map unavailable in this browser</span>
+                        <div style={{ width:"100%", height:"clamp(420px,55vh,600px)", borderRadius:16, overflow:"hidden", position:"relative" }}>
+                          <img src="/assets/walkthrough-poster.webp" alt="Rainbow Preschool campuses" width={1200} height={640}
+                            style={{ width:"100%", height:"100%", objectFit:"cover" }} />
                         </div>
                       }
                     />

@@ -11,7 +11,7 @@
 //
 // TUNING KNOBS: DRIVE_DUR, STOP_DUR, BRANCHES positions, camera at the bottom.
 
-import React, { useRef, useState, useEffect, useMemo, Suspense } from "react";
+import React, { useRef, useState, useEffect, useMemo, Suspense, useCallback } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import {
   OrbitControls, ContactShadows, RoundedBox,
@@ -221,7 +221,11 @@ function Person({ colProp, teacher, refCb }) {
 }
 const KID_COLORS = ["#EC210F", "#2E90FA", "#12B76A", "#FB6514"];
 
-function Scene({ setActive, activeId, hoveredId, setHovered, reduced, isMobile }) {
+function Scene({ setActive, activeId, hoveredId, setHovered, reduced, isMobile, lite, onFirstFrame }) {
+  const firstFrameFired = useRef(false);
+  useFrame(() => {
+    if (!firstFrameFired.current) { firstFrameFired.current = true; onFirstFrame && onFirstFrame(); }
+  });
   const bus    = useRef();
   const people = useRef([]);          // [teacher, kid0..3]
   const anim   = useRef({ phase: "drive", from: 0, to: 1, t: 0, stopT: 0, walk: 0 });
@@ -333,17 +337,21 @@ function Scene({ setActive, activeId, hoveredId, setHovered, reduced, isMobile }
         <Person key={i} colProp={c} refCb={(el) => (people.current[i + 1] = el)} />
       ))}
 
-      {/* Lower shadow resolution on mobile; skip second (island rim) shadow on mobile */}
-      <ContactShadows
-        position={[0, 0.005, 0]}
-        opacity={0.4}
-        scale={16}
-        blur={2.4}
-        far={4}
-        resolution={isMobile ? 256 : 512}
-      />
-      {!isMobile && (
-        <ContactShadows position={[0, -2.4, 0]} opacity={0.25} scale={24} blur={4} far={6} color="#3a5a2a" />
+      {/* ContactShadows skipped in lite mode (homepage) — render-target too slow for first paint */}
+      {!lite && (
+        <>
+          <ContactShadows
+            position={[0, 0.005, 0]}
+            opacity={0.4}
+            scale={16}
+            blur={2.4}
+            far={4}
+            resolution={isMobile ? 256 : 512}
+          />
+          {!isMobile && (
+            <ContactShadows position={[0, -2.4, 0]} opacity={0.25} scale={24} blur={4} far={6} color="#3a5a2a" />
+          )}
+        </>
       )}
 
       {/*
@@ -373,20 +381,57 @@ class WebGLBoundary extends React.Component {
   render() { return this.state.err ? this.props.fallback : this.props.children; }
 }
 
-export default function SchoolTownMap3D({ activeId, onActiveChange, fallback = null }) {
+const POSTER = "/assets/walkthrough-poster.webp";
+
+export default function SchoolTownMap3D({ activeId, onActiveChange, fallback = null, lite = false }) {
   const reduced    = useReducedMotion();
   const isMobile   = useIsMobile();
-  const [hoveredId, setHovered] = useState(null);
+  const [hoveredId, setHovered]   = useState(null);
+  const [canvasReady, setReady]   = useState(false);
+  const [timedOut,   setTimedOut] = useState(false);
   const setActive  = (id) => onActiveChange && onActiveChange(id);
+
+  // Hard 6 s timeout — if canvas never fires its first frame, show the static fallback
+  useEffect(() => {
+    const id = setTimeout(() => { if (!canvasReady) setTimedOut(true); }, 6000);
+    return () => clearTimeout(id);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleFirstFrame = useCallback(() => setReady(true), []);
+
+  if (timedOut) return fallback;
+
+  const h = isMobile ? "clamp(300px, 52vh, 420px)" : "clamp(420px, 60vh, 640px)";
 
   return (
     <WebGLBoundary fallback={fallback}>
-      <div style={{
-        position: "relative",
-        width: "100%",
-        // Shorter canvas on mobile: saves viewport, still shows the full diorama
-        height: isMobile ? "clamp(300px, 52vh, 420px)" : "clamp(420px, 60vh, 640px)",
-      }}>
+      <div style={{ position: "relative", width: "100%", height: h }}>
+
+        {/* Poster overlay — shown until first frame renders; fades out then unmounts */}
+        {!canvasReady && (
+          <div style={{
+            position: "absolute", inset: 0, zIndex: 10, borderRadius: 16, overflow: "hidden",
+            display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "flex-end",
+            paddingBottom: 20,
+          }}>
+            <img
+              src={POSTER}
+              alt=""
+              width={1200}
+              height={640}
+              style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
+            />
+            <div style={{
+              position: "relative", zIndex: 1,
+              background: "rgba(255,255,255,0.88)", borderRadius: 999,
+              padding: "6px 16px", fontSize: 13, color: "#55506A",
+            }}>
+              Loading interactive map…
+            </div>
+          </div>
+        )}
+
         <Canvas
           shadows={false}
           dpr={[1, 1.5]}
@@ -395,12 +440,8 @@ export default function SchoolTownMap3D({ activeId, onActiveChange, fallback = n
             fov:      isMobile ? 40 : 34,
           }}
           gl={{ antialias: !isMobile, powerPreference: "high-performance" }}
-          // Allow vertical page scroll on mobile; block pointer events on desktop so
-          // orbit-drag doesn't accidentally scroll the page.
           style={{ touchAction: isMobile ? "pan-y" : "none" }}
           onCreated={({ gl }) => {
-            // Always set PCFShadowMap so if shadows ever activate on desktop,
-            // Three.js r185's per-render PCFSoftShadowMap deprecation flood never fires.
             gl.shadowMap.enabled = true;
             gl.shadowMap.type = THREE.PCFShadowMap;
           }}
@@ -414,6 +455,8 @@ export default function SchoolTownMap3D({ activeId, onActiveChange, fallback = n
               setHovered={setHovered}
               reduced={reduced}
               isMobile={isMobile}
+              lite={lite}
+              onFirstFrame={handleFirstFrame}
             />
           </Suspense>
         </Canvas>
