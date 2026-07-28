@@ -1,0 +1,45 @@
+# LIVE SITE — Agentic Browsing → 3/3 + a code-side analytics check.
+
+## AGENTIC BROWSING (3 achievable checks: llms.txt, agent-accessibility, CLS)
+## 1. Discoverability — add /llms.txt at the domain root (near-guaranteed point)
+- Create public/llms.txt so GET https://www.rainbowpreschools.com/llms.txt returns 200 as
+  plain text/markdown (REAL info only). Template:
+
+    # Rainbow Preschool International
+    > Preschool in Thane since 2007 — Playgroup, Nursery & Kindergarten for ages 1.5–6.
+    > 6 centres across Thane West. Admissions open for 2026–27.
+    ## Key pages
+    - [Home](https://www.rainbowpreschools.com/)
+    - [About Us](https://www.rainbowpreschools.com/about)
+    - [Programmes](https://www.rainbowpreschools.com/programmes) — Playgroup, Nursery, Kindergarten
+    - [Gallery](https://www.rainbowpreschools.com/gallery)
+    - [Blogs](https://www.rainbowpreschools.com/blogs)
+    - [Contact / Book a Visit](https://www.rainbowpreschools.com/contact)
+    ## Centres (Thane West)
+    - Aggarwal Centre (Manpada) · Hariniwas · Anand Nagar · Dhokali · Kalwa · Kasarvadavali
+  Use ACTUAL route paths. Serve it as a STATIC file — make sure the SPA catch-all route
+  does NOT return index.html for /llms.txt. Verify a direct GET returns the text.
+
+## 2. Agent-Centric Accessibility — names, roles, tree integrity (also fixes Accessibility 89)
+- Every interactive control needs an accessible NAME + correct ROLE, present in the a11y
+  tree. Add aria-label to icon-only controls: dark-mode toggle, hamburger menu, chat
+  bubble, WhatsApp/phone icon buttons, map pins, carousel arrows.
+- Real semantic landmarks (<header><nav><main><footer>); real <button>/<a> (not divs with
+  onClick); decorative icons/SVGs get aria-hidden="true".
+
+## 3. Stability — CLS < 0.1
+- Explicit width/height (or aspect-ratio) on EVERY <img>/media/canvas box; reserve
+  min-height for the hero, the lazy 3D map box, and lazy/animated sections; font-display:
+  swap + size-adjusted fallback + preload the hero heading font. No content injected above
+  existing content without reserved space.
+# (Skip WebMCP — it needs an experimental origin trial, not worth it for a marketing site.)
+
+## CODE-SIDE ANALYTICS CHECK (helps Best Practices if the /xrdb routing is in code)
+- In the app's analytics init (analytics.ts / index.html / gtag config), check for a
+  transport_url / server_container_url / first_party_collection pointing at "/xrdb".
+  If present in CODE → remove it so GA4/Ads send directly to Google (kills the /xrdb 404s).
+  If NOT in code → it's configured in GTM; leave code alone (see the GTM brief).
+
+## VERIFY
+- GET /llms.txt = 200 text. Re-run Lighthouse: Agentic Browsing 3/3, Accessibility back up,
+  CLS < 0.1. Console has no /xrdb errors (if the routing was code-side).

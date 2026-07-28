@@ -509,7 +509,7 @@ export default function Home() {
               <Link href="/about">
                 <Button variant="outline" data-testid="button-learn-more">
                   Learn More About Us
-                  <ArrowRight className="ml-2 h-4 w-4" />
+                  <ArrowRight aria-hidden="true" className="ml-2 h-4 w-4" />
                 </Button>
               </Link>
             </div>
@@ -585,7 +585,7 @@ export default function Home() {
               <Link href="/programmes">
                 <Button variant="outline" size="lg" data-testid="button-view-programmes">
                   View All Programmes
-                  <ArrowRight className="ml-2 h-4 w-4" />
+                  <ArrowRight aria-hidden="true" className="ml-2 h-4 w-4" />
                 </Button>
               </Link>
             </div>
@@ -674,7 +674,7 @@ export default function Home() {
             </div>
 
             {/* SchoolTownMap3D — lazy-loaded only when section nears viewport, never on mobile */}
-            <div className="mb-8">
+            <div className="mb-8" role="region" aria-label="Interactive map of Rainbow Preschool centres across Thane">
               <p aria-live="polite" aria-atomic="true" className="sr-only">
                 {active ? `Selected centre: ${branches.find(b => b.id === active)?.name ?? ""}` : ""}
               </p>
