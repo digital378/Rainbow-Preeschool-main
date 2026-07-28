@@ -157,8 +157,19 @@ app.get("/ad-google.html", (req, res) => {
 app.use(express.static(path.join(process.cwd(), "public"), {
   etag: true,
   setHeaders: (res, filePath) => {
+    // Video files: bypass CDN cache entirely so every Range request reaches
+    // origin and gets a proper 206 Partial Content response. If Cloudflare
+    // caches a full 200 response (even briefly), it may serve that 200 for
+    // subsequent Range requests — Safari and mobile Chrome refuse to play on
+    // a 200 response to a Range request. Also set Accept-Ranges explicitly
+    // so the header survives any proxy layer.
+    if (filePath.endsWith('.mp4') || filePath.endsWith('.webm')) {
+      res.setHeader('Cache-Control', 'public, max-age=3600');
+      res.setHeader('CDN-Cache-Control', 'no-store');
+      res.setHeader('Cloudflare-CDN-Cache-Control', 'no-store');
+      res.setHeader('Accept-Ranges', 'bytes');
     // Long cache for immutable assets (images, fonts)
-    if (filePath.endsWith('.webp') || filePath.endsWith('.jpg') || filePath.endsWith('.png') || filePath.endsWith('.woff2') || filePath.endsWith('.mp4')) {
+    } else if (filePath.endsWith('.webp') || filePath.endsWith('.jpg') || filePath.endsWith('.png') || filePath.endsWith('.woff2')) {
       res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
     } else if (filePath.endsWith('.js') || filePath.endsWith('.css')) {
       // Long cache for JS/CSS (versioned by bundler)
