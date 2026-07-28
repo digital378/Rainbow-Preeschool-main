@@ -19,15 +19,13 @@ import { createAllBranchLocalBusinessSchemas } from "@shared/centre-data";
 import { PLAYGROUP, NURSERY, KINDERGARTEN } from "@shared/programme-data";
 import { ProgrammeCard } from "@/components/programme-card";
 import { BranchCard } from "@/components/branch-card";
-import { LazyVisible } from "@/components/LazyVisible";
 import { TestimonialCard } from "@/components/testimonial-card";
 import { CountUp } from "@/components/count-up";
 import { SEO, createBreadcrumbSchema } from "@/components/seo";
 import { programmes, branches, testimonials } from "@shared/schema";
 import { ArrowRight, Star, Users, MapPin, Shield, Lock, Phone, Award, FileText, Palette, BookOpen, GraduationCap } from "lucide-react";
-import { useState, useEffect, lazy, Suspense, useRef, useCallback } from "react";
+import { useState, useEffect, lazy, Suspense, useRef } from "react";
 
-const SchoolTownMap3D = lazy(() => import("@/components/SchoolTownMap3D"));
 const WhyChooseUs = lazy(() => import("@/components/why-choose-us").then(m => ({ default: m.WhyChooseUs })));
 const MethodologySection = lazy(() => import("@/components/methodology-section").then(m => ({ default: m.MethodologySection })));
 const ClassroomGallery = lazy(() => import("@/components/classroom-gallery").then(m => ({ default: m.ClassroomGallery })));
@@ -374,24 +372,6 @@ function QuickCallbackStrip() {
 }
 
 export default function Home() {
-  // Map pin ↔ branch-card highlight sync
-  const [active, setActive] = useState<string | null>(null);
-  const toMapId   = (id: string) => id === "anand-nagar" ? "anandnagar" : id;
-  const fromMapId = (id: string) => id === "anandnagar"  ? "anand-nagar" : id;
-  const handleActiveChange = useCallback((mapId: string | null) => {
-    setActive(mapId ? fromMapId(mapId) : null);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  // WebGL check — lazy-init so it never runs during SSR
-  const [webglOk] = useState<boolean>(() => {
-    if (typeof window === "undefined") return false;
-    try {
-      const c = document.createElement("canvas");
-      return !!(c.getContext("webgl2") || c.getContext("webgl") || c.getContext("experimental-webgl"));
-    } catch { return false; }
-  });
-
   // Inject all schemas after paint so they don't block the main thread (bots get
   // them via server-side bot-ssr.ts instead).
   useEffect(() => {
@@ -673,66 +653,9 @@ export default function Home() {
               </p>
             </div>
 
-            {/* SchoolTownMap3D — lazy-loaded only when section nears viewport, never on mobile */}
-            <div className="mb-8" role="region" aria-label="Interactive map of Rainbow Preschool centres across Thane">
-              <p aria-live="polite" aria-atomic="true" className="sr-only">
-                {active ? `Selected centre: ${branches.find(b => b.id === active)?.name ?? ""}` : ""}
-              </p>
-              <LazyVisible
-                minWidth={768}
-                rootMargin="300px"
-                placeholder={
-                  <div style={{ width:"100%", height:"clamp(420px,55vh,600px)", borderRadius:16,
-                    background:"linear-gradient(135deg,#e8f5e9 0%,#fdf3ea 100%)",
-                    display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", gap:8 }}>
-                    <span style={{ fontSize:32 }}>🗺️</span>
-                    <span style={{ color:"#55506A", fontSize:14 }}>Explore Rainbow Town</span>
-                  </div>
-                }
-              >
-                {webglOk ? (
-                  <Suspense fallback={
-                    <div style={{ width:"100%", height:"clamp(420px,55vh,600px)", borderRadius:16, overflow:"hidden", position:"relative",
-                      display:"flex", alignItems:"flex-end", justifyContent:"center", paddingBottom:20 }}>
-                      <img src="/assets/walkthrough-poster.webp" alt="" width={1200} height={640}
-                        style={{ position:"absolute", inset:0, width:"100%", height:"100%", objectFit:"cover" }} />
-                      <div style={{ position:"relative", background:"rgba(255,255,255,0.88)", borderRadius:999,
-                        padding:"6px 16px", fontSize:13, color:"#55506A" }}>
-                        Loading interactive map…
-                      </div>
-                    </div>
-                  }>
-                    <SchoolTownMap3D
-                      activeId={active ? toMapId(active) : null}
-                      onActiveChange={handleActiveChange}
-                      lite={true}
-                      fallback={
-                        <div style={{ width:"100%", height:"clamp(420px,55vh,600px)", borderRadius:16, overflow:"hidden", position:"relative" }}>
-                          <img src="/assets/walkthrough-poster.webp" alt="Rainbow Preschool campuses" width={1200} height={640}
-                            style={{ width:"100%", height:"100%", objectFit:"cover" }} />
-                        </div>
-                      }
-                    />
-                  </Suspense>
-                ) : (
-                  <div style={{ width:"100%", height:"clamp(420px,55vh,600px)", borderRadius:16,
-                    background:"linear-gradient(135deg,#e8f5e9 0%,#fdf3ea 100%)",
-                    display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", gap:8 }}>
-                    <span style={{ fontSize:32 }}>🗺️</span>
-                    <span style={{ color:"#55506A", fontSize:14 }}>Rainbow Town — our six centres across Thane</span>
-                  </div>
-                )}
-              </LazyVisible>
-            </div>
-
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {branches.map((branch) => (
-                <div
-                  key={branch.id}
-                  className={`rounded-xl transition-all duration-200 ${active === branch.id ? "ring-2 ring-primary ring-offset-2 shadow-lg" : ""}`}
-                >
-                  <BranchCard branch={branch} />
-                </div>
+                <BranchCard key={branch.id} branch={branch} />
               ))}
             </div>
           </div>
