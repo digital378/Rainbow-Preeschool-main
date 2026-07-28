@@ -325,8 +325,21 @@ function Router() {
 function DeferredChatWidget() {
   const [show, setShow] = useState(false);
   useEffect(() => {
-    const id = setTimeout(() => setShow(true), 4000);
-    return () => clearTimeout(id);
+    let fired = false;
+    const load = () => { if (fired) return; fired = true; setShow(true); };
+    const events = ['pointerdown', 'keydown', 'touchstart', 'scroll'] as const;
+    events.forEach(e => window.addEventListener(e, load, { once: true, passive: true }));
+    let cancelHandle: number;
+    if ('requestIdleCallback' in window) {
+      cancelHandle = requestIdleCallback(load, { timeout: 5000 });
+    } else {
+      cancelHandle = window.setTimeout(load, 5000);
+    }
+    return () => {
+      events.forEach(e => window.removeEventListener(e, load));
+      if ('requestIdleCallback' in window) cancelIdleCallback(cancelHandle);
+      else clearTimeout(cancelHandle);
+    };
   }, []);
   if (!show) return null;
   return (

@@ -110,25 +110,21 @@
       }
       
       function loadAnalytics() {
-        // Google Analytics + Google Ads
-        var gs = document.createElement('script');
-        gs.src = 'https://www.googletagmanager.com/gtag/js?id=GT-55BFZCQT';
-        gs.async = true;
-        document.head.appendChild(gs);
-        gs.onload = function() {
-          gtag('js', new Date());
-          gtag('config', 'GT-55BFZCQT', { send_page_view: false });
-          // GA4 Measurement ID - disable auto page_view, let React handle it with correct titles
-          gtag('config', 'G-G1MX1N0M05', { send_page_view: false });
-          // Google Ads phone call conversion
-          gtag('config', 'AW-1747212533/a68zCIykmPsbEJnzrYtB', {
-            'phone_conversion_number': '82915 68972'
-          });
-                  };
-        
-        // Facebook Pixel is loaded on-demand after cookie consent
-        // See client/src/lib/cookie-consent.ts → initPixelIfConsented()
-        
+        // Pre-configure GA4 so GTM's GA4 tag never fires an automatic page_view.
+        // React SPA calls trackPageView() with the correct title after each navigation.
+        gtag('config', 'G-G1MX1N0M05', { send_page_view: false });
+
+        // Load the GTM container — it fires Clarity, Google Ads, Call-Tracking,
+        // Meta Pixels, and the CAPI builder through their GTM tags.
+        // Nothing else may self-inject on load (Clarity removed from inline code).
+        // Facebook Pixel remains consent-gated: cookie-consent.ts → initPixelIfConsented()
+        (function(w,d,s,l,i){
+          w[l]=w[l]||[]; w[l].push({'gtm.start':Date.now(),event:'gtm.js'});
+          var f=d.getElementsByTagName(s)[0],j=d.createElement(s);
+          j.async=true; j.src='https://www.googletagmanager.com/gtm.js?id='+i;
+          f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GT-55BFZCQT');
+
         // Fredoka font — decorative/below-fold, load after idle so it never blocks LCP
         (function() {
           var fl = document.createElement('link');
@@ -136,13 +132,6 @@
           fl.href = 'https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&display=swap';
           document.head.appendChild(fl);
         })();
-        
-        // Microsoft Clarity
-        (function(c,l,a,r,i,t,y){
-          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-        })(window, document, "clarity", "script", "m20xf4ffec");
       }
     </script>
     <!-- End Analytics Code -->

@@ -1,0 +1,59 @@
+# GOAL: mobile Performance ≥75 and Best Practices ≥90. https://www.rainbowpreschools.com/
+# Verified live (fresh load, no interaction): the whole tag/ads stack loads on page
+# load; ~15 tag requests return 503. This caps both scores. Fix Performance in code
+# (Part 1); Best Practices needs BOTH a code bit and a GTM fix (Part 2).
+
+## PART 1 — PERFORMANCE (mobile ≥75) — code, biggest lever
+1. DEFER THE TAG STACK FOR REAL. It is currently eager (confirmed). Remove the GTM
+   container (GT-55BFZCQT) from the initial/synchronous load and inject it only on the
+   first user interaction OR after idle:
+
+     (function () {
+       var loaded = false;
+       function loadGTM() {
+         if (loaded) return; loaded = true;
+         (function (w,d,s,l,i){ w[l]=w[l]||[]; w[l].push({'gtm.start':Date.now(),event:'gtm.js'});
+           var f=d.getElementsByTagName(s)[0], j=d.createElement(s);
+           j.async=true; j.src='https://www.googletagmanager.com/gtm.js?id='+i;
+           f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GT-55BFZCQT');
+       }
+       ['scroll','mousemove','touchstart','keydown','click'].forEach(function(e){
+         window.addEventListener(e, loadGTM, { once:true, passive:true }); });
+       if ('requestIdleCallback' in window) requestIdleCallback(loadGTM,{timeout:6000});
+       else setTimeout(loadGTM, 6000);
+     })();
+
+   Ensure Clarity, BOTH Meta Pixels, Google Ads, Call-Tracking, and the CAPI builder
+   all fire THROUGH GTM (or the same gate). If any are hard-coded <script> tags in
+   index.html, move them behind the SAME gate — NOTHING may self-inject on load.
+   VERIFY: reload with Network open and DON'T touch the page — none of gtag/js,
+   fbevents.js, clarity.js, ccm/collect, doubleclick should appear until you scroll/click.
+
+2. DEFER other eager non-critical scripts: rainbow-sparkle-trail-*.js (decorative) and
+   chat-widget-*.js — load them on idle/first-interaction, not on initial load. Skip the
+   sparkle trail on mobile entirely.
+3. LCP + render-blocking: keep hero-banner-1.webp as the LCP with explicit width/height
+   and fetchpriority="high"; inline critical above-the-fold CSS and defer the rest;
+   preconnect to fonts.gstatic.com; preload only the hero heading font weight.
+4. Caching: serve /assets/* and /images/* with long immutable cache headers + brotli/gzip.
+
+## PART 2 — BEST PRACTICES (≥90)
+# The Best Practices score is dragged down by "Browser errors were logged to the
+# console" — caused by the failing tag endpoints: /xrdb/ (your server-side GTM
+# container), google.com/ccm/collect, google/rmkt, doubleclick ccm, and the
+# *.run.app/events CAPI — ALL returning 503 (your earlier screenshot showed /xrdb 404).
+# These are NOT app code. To clear them you MUST fix them in GTM / the server container:
+#   (a) properly deploy the server-side GTM container so /xrdb returns 200, OR
+#   (b) DISABLE the first-party/custom collection domain in GTM so GA4 + Google Ads
+#       send DIRECTLY to Google's endpoints (which return 200/204) — removing /xrdb
+#       and the 503s entirely. Option (b) is simplest if there's no real server container.
+# Until these stop erroring, Best Practices cannot reach 90.
+# CODE-side Best Practices items Replit CAN do:
+5. Remove the duplicate Meta Pixel if hard-coded (only one of 553160708799731 /
+   876471444795481 should load).
+6. Add explicit width/height to every <img> (fixes "image aspect ratio" + CLS).
+7. Ensure no deprecated APIs (e.g. THREE.Clock) execute on the audited page.
+
+## VERIFY
+- Mobile PageSpeed Insights: Performance ≥75, Best Practices ≥90.
+- Console must be error-free on load (no 503/404 tag requests). Report both scores.
