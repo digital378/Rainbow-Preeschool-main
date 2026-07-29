@@ -54,11 +54,39 @@ async function appendToSheet(
   }
 }
 
+/** Format a Date in IST (Asia/Kolkata, UTC+5:30) using Intl — server timezone-agnostic */
+function formatIST(date: Date, pattern: "date" | "month" | "time"): string {
+  const opts: Intl.DateTimeFormatOptions = { timeZone: "Asia/Kolkata" };
+  if (pattern === "date") {
+    // e.g. "29-Jul-26"
+    const p = new Intl.DateTimeFormat("en-GB", {
+      ...opts, day: "numeric", month: "short", year: "2-digit",
+    }).formatToParts(date);
+    const day   = p.find(x => x.type === "day")!.value;
+    const mon   = p.find(x => x.type === "month")!.value;
+    const yr    = p.find(x => x.type === "year")!.value;
+    return `${day}-${mon}-${yr}`;
+  }
+  if (pattern === "month") {
+    // e.g. "Jul-26"
+    const p = new Intl.DateTimeFormat("en-GB", {
+      ...opts, month: "short", year: "2-digit",
+    }).formatToParts(date);
+    const mon = p.find(x => x.type === "month")!.value;
+    const yr  = p.find(x => x.type === "year")!.value;
+    return `${mon}-${yr}`;
+  }
+  // time — e.g. "3:45 PM"
+  return new Intl.DateTimeFormat("en-IN", {
+    ...opts, hour: "numeric", minute: "2-digit", hour12: true,
+  }).format(date).toUpperCase().replace(/\s/g, " ");
+}
+
 export async function appendEnquiryRow(data: EnquiryRowData): Promise<void> {
   const now = new Date();
-  const enquiryDate = format(now, "d-MMM-yy");
-  const enquiryTime = format(now, "h:mm a");
-  const month = format(now, "MMM-yy");
+  const enquiryDate = formatIST(now, "date");
+  const enquiryTime = formatIST(now, "time");
+  const month       = formatIST(now, "month");
   const source = detectSource(data.leadSource, data.leadMedium);
 
   // Row for DM tracker: Date | Month | Parent | Child | Phone | Programme | Branch | Status | Remark | Owner | Source
