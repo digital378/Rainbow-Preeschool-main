@@ -1,4 +1,4 @@
-import { google } from "googleapis";
+import { ReplitConnectors } from "@replit/connectors-sdk";
 import { format } from "date-fns";
 
 const SPREADSHEET_ID = "1t1_2SPI6--W-nCWc-lHHE-D4ee38WGFxiBsB5txI-CM";
@@ -27,27 +27,6 @@ function detectSource(leadSource?: string, leadMedium?: string): string {
   return "Google";
 }
 
-function getSheetsClient() {
-  const keyJson = process.env.GSC_SERVICE_ACCOUNT_KEY;
-  if (!keyJson) {
-    throw new Error("GSC_SERVICE_ACCOUNT_KEY is not set — cannot sync to Google Sheets");
-  }
-
-  let credentials: Record<string, unknown>;
-  try {
-    credentials = JSON.parse(keyJson);
-  } catch {
-    throw new Error("GSC_SERVICE_ACCOUNT_KEY is not valid JSON");
-  }
-
-  const auth = new google.auth.GoogleAuth({
-    credentials,
-    scopes: ["https://www.googleapis.com/auth/spreadsheets"],
-  });
-
-  return google.sheets({ version: "v4", auth });
-}
-
 export async function appendEnquiryRow(data: EnquiryRowData): Promise<void> {
   const now = new Date();
   const enquiryDate = format(now, "d-MMM-yy");
@@ -68,16 +47,24 @@ export async function appendEnquiryRow(data: EnquiryRowData): Promise<void> {
     source,
   ];
 
-  const sheets = getSheetsClient();
-  await sheets.spreadsheets.values.append({
-    spreadsheetId: SPREADSHEET_ID,
-    range: `${SHEET_TAB}!A:K`,
-    valueInputOption: "USER_ENTERED",
-    insertDataOption: "INSERT_ROWS",
-    requestBody: { values: [row] },
+  const range = `${SHEET_TAB}!A:K`;
+  const encodedRange = encodeURIComponent(range);
+  const path = `/v4/spreadsheets/${SPREADSHEET_ID}/values/${encodedRange}:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS`;
+
+  const connectors = new ReplitConnectors();
+  const response = await connectors.proxy("google-sheet", path, {
+    method: "POST",
+    body: JSON.stringify({ values: [row] }),
+    headers: { "Content-Type": "application/json" },
   });
+
+  if (!response.ok) {
+    const errText = await response.text();
+    throw new Error(`Sheets API error ${response.status}: ${errText}`);
+  }
 }
 
 export function isSheetsConfigured(): boolean {
-  return !!process.env.GSC_SERVICE_ACCOUNT_KEY;
+  // Connector is always available once attached to the repl
+  return true;
 }
