@@ -6,10 +6,10 @@
  * Hero: Three.js scene + GSAP + Lenis (self-contained in components/hero3d/).
  * Remaining sections: CSS 3D (TiltCard, ContainerScroll, Bento, etc.)
  */
-import { useState, useEffect, useRef, useMemo, useCallback, lazy, Suspense } from "react";
+import { useState, useEffect, useRef, useMemo, useCallback, Suspense } from "react";
 import { SEO } from "@/components/seo";
 import { cn } from "@/lib/utils";
-const Hero3D = lazy(() => import("@/components/hero3d"));
+import Hero3D from "@/components/hero3d";
 import { programmes, testimonials, branches } from "@shared/schema";
 import { centres } from "@shared/centre-data";
 import {
@@ -26,18 +26,17 @@ import { AwardedBySection } from "@/components/awarded-by-section";
 import { BranchCard } from "@/components/branch-card";
 import { EEATSignals } from "@/components/eeat-signals";
 import { ErrorBoundary } from "@/components/error-boundary";
-// SchoolTownMap3D uses @react-three/fiber — lazy-loaded so R3F never initialises
-// unless webglOk confirms the browser has GPU support.
-const SchoolTownMap3D = lazy(() => import("@/components/SchoolTownMap3D"));
+// SchoolTownMap3D uses Three.js — directly imported
+import SchoolTownMap3D from "@/components/SchoolTownMap3D";
 import { Card, CardContent } from "@/components/ui/card";
 // Accordion removed — FAQSection now uses a bespoke card accordion
 import { LAST_UPDATED_DISPLAY, LAST_UPDATED_ISO } from "@shared/site-freshness";
 import { PLAYGROUP, NURSERY, KINDERGARTEN } from "@shared/programme-data";
 
 import { LazyVisible } from "@/components/LazyVisible";
-const MethodologySection = lazy(() => import("@/components/methodology-section").then(m => ({ default: m.MethodologySection })));
-const ClassroomGallery   = lazy(() => import("@/components/classroom-gallery").then(m => ({ default: m.ClassroomGallery })));
-const ContactForm        = lazy(() => import("@/components/contact-form").then(m => ({ default: m.ContactForm })));
+import { MethodologySection } from "@/components/methodology-section";
+import { ClassroomGallery } from "@/components/classroom-gallery";
+import { ContactForm } from "@/components/contact-form";
 
 /** Tiny replacement for framer-motion's useReducedMotion — no runtime dependency */
 function usePrefersReducedMotion() {
@@ -4853,7 +4852,7 @@ export default function Dummy() {
         alt=""
         width={1200}
         height={675}
-        fetchPriority="high"
+        fetchpriority="high"
         style={{ display: 'block', width: '100%', height: '100%', objectFit: 'cover' }}
       />
     </div>
