@@ -481,6 +481,10 @@ export async function registerRoutes(
   let lastAutoSync: Date | null = null;
   let autoSyncError: string | null = null;
   let lastPrune: { at: Date; deleted: number; cutoffDate: string } | null = null;
+  // Set to true when we detect an unrecoverable auth error (invalid_grant / bad key).
+  // When true, scheduled auto-syncs are skipped to avoid repeated log spam.
+  // A server restart (e.g. after updating GSC_SERVICE_ACCOUNT_KEY) resets this.
+  let gscCredentialsInvalid = false;
 
   // Retention window for auto-generated GSC snapshot rows. Anything older than
   // this is removed by `runPrune` after each successful sync (and on startup).
@@ -513,8 +517,13 @@ export async function registerRoutes(
     }
   }
 
+  function isInvalidGrantError(msg: string): boolean {
+    return /invalid_grant|invalid.jwt.signature|jwt.*signature/i.test(msg);
+  }
+
   async function runAutoSync() {
     if (!isGscConfigured()) return;
+    if (gscCredentialsInvalid) return; // key is known-bad; skip silently until restart
     try {
       console.log("[GSC] Auto-sync starting…");
       const result = await syncGscData(90);
@@ -524,11 +533,31 @@ export async function registerRoutes(
         console.log(`[GSC] Auto-sync complete: ${result.synced} keywords synced`);
       } else {
         autoSyncError = result.error || "Unknown error";
-        console.error("[GSC] Auto-sync failed:", autoSyncError);
+        if (isInvalidGrantError(autoSyncError)) {
+          gscCredentialsInvalid = true;
+          console.error(
+            "[GSC] Auth failed (invalid_grant / bad JWT signature). " +
+            "The GSC_SERVICE_ACCOUNT_KEY secret is from the wrong GCP project or has been revoked. " +
+            "Generate a new key from the correct GCP project, update the GSC_SERVICE_ACCOUNT_KEY secret, " +
+            "then restart the server. Auto-sync will not retry until then.",
+          );
+        } else {
+          console.error("[GSC] Auto-sync failed:", autoSyncError);
+        }
       }
     } catch (err: any) {
       autoSyncError = err?.message || "Unknown error";
-      console.error("[GSC] Auto-sync exception:", autoSyncError);
+      if (isInvalidGrantError(autoSyncError ?? "")) {
+        gscCredentialsInvalid = true;
+        console.error(
+          "[GSC] Auth failed (invalid_grant / bad JWT signature). " +
+          "The GSC_SERVICE_ACCOUNT_KEY secret is from the wrong GCP project or has been revoked. " +
+          "Generate a new key from the correct GCP project, update the GSC_SERVICE_ACCOUNT_KEY secret, " +
+          "then restart the server. Auto-sync will not retry until then.",
+        );
+      } else {
+        console.error("[GSC] Auto-sync exception:", autoSyncError);
+      }
     }
     // Always attempt a prune, even if the sync itself failed — we still want
     // the table bounded if the API is temporarily unhappy.
@@ -546,8 +575,20 @@ export async function registerRoutes(
   setInterval(runPrune, 24 * 60 * 60 * 1000);
 
   app.get("/api/gsc/sync/status", (_req, res) => {
+    const configured = isGscConfigured();
+    let message: string;
+    if (!configured) {
+      message = "GSC_SERVICE_ACCOUNT_KEY is not set. Add it as a secret to enable auto-sync.";
+    } else if (gscCredentialsInvalid) {
+      message =
+        "GSC_SERVICE_ACCOUNT_KEY is set but authentication is failing (invalid_grant). " +
+        "Generate a new service account key from the correct GCP project, update the secret, and restart the server.";
+    } else {
+      message = "GSC service account key is configured. Auto-sync runs on startup and every 6 hours.";
+    }
     res.json({
-      configured: isGscConfigured(),
+      configured,
+      credentialsInvalid: gscCredentialsInvalid,
       lastAutoSync: lastAutoSync ? lastAutoSync.toISOString() : null,
       autoSyncError,
       retentionDays: RETENTION_DAYS,
@@ -558,9 +599,7 @@ export async function registerRoutes(
             cutoffDate: lastPrune.cutoffDate,
           }
         : null,
-      message: isGscConfigured()
-        ? "GSC service account key is configured. Auto-sync runs on startup and every 6 hours."
-        : "GSC_SERVICE_ACCOUNT_KEY is not set. Add it as a secret to enable auto-sync.",
+      message,
     });
   });
 
@@ -572,9 +611,22 @@ export async function registerRoutes(
       });
       return;
     }
+    if (gscCredentialsInvalid) {
+      res.status(502).json({
+        success: false,
+        error:
+          "GSC authentication is failing (invalid_grant). " +
+          "Update the GSC_SERVICE_ACCOUNT_KEY secret with a fresh key from the correct GCP project, then restart the server.",
+      });
+      return;
+    }
     try {
       const result = await syncGscData(90);
       if (!result.success) {
+        if (result.error && isInvalidGrantError(result.error)) {
+          gscCredentialsInvalid = true;
+          autoSyncError = result.error;
+        }
         res.status(502).json(result);
         return;
       }
