@@ -3,7 +3,7 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertContactSchema } from "@shared/schema";
 import { z } from "zod";
-import { sendLeadNotificationEmail } from "./gmail";
+import { sendLeadNotificationEmail, sendSheetsFailureAlertEmail } from "./gmail";
 import { sendLeadToMCB, getBranchID } from "./mcb";
 import { syncGscData, isGscConfigured } from "./gsc-sync";
 import { appendEnquiryRow } from "./sheets-sync";
@@ -339,7 +339,17 @@ export async function registerRoutes(
           });
           console.log(`[Contact] Sheets sync success for ${validatedData.parentName}`);
         } catch (err) {
-          console.error("[Contact] Sheets sync error:", err);
+          console.error("[Contact] Sheets sync FAILED — sending alert email:", err);
+          // Alert the team so the lead can be added manually
+          await sendSheetsFailureAlertEmail(
+            {
+              parentName: validatedData.parentName,
+              phone: validatedData.phone,
+              programme: validatedData.programme,
+              branch: validatedData.branch,
+            },
+            err,
+          );
         }
       })();
     } catch (error) {
