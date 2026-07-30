@@ -902,6 +902,9 @@
      Zero light-mode changes — only additive dark: overrides.
   ══════════════════════════════════════════════════════════════════════ */
 
+  /* General token — .section-title has color:#211B2E hardcoded in its definition */
+  .dark .section-title { color: #f9fafb !important; }
+
   /* Cloud scallop SVG fills — CSS fill overrides SVG fill attribute */
   .dark .cloud-scallop { fill: #111827 !important; }
 
