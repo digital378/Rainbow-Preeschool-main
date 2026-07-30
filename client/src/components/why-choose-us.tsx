@@ -277,7 +277,7 @@ export function WhyChooseUs() {
   return (
     <section
       ref={sectionRef}
-      className="relative py-20 md:py-28 overflow-hidden"
+      className="section-wcu relative py-20 md:py-28 overflow-hidden"
       style={{
         backgroundImage: [
           "radial-gradient(circle,rgba(236,33,15,.04) 1px,transparent 1px)",

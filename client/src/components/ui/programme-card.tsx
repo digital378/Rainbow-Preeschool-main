@@ -116,7 +116,7 @@ export function ProgrammeCard({
     const inner = (
       <>
         <h3 className="text-lg font-bold leading-tight" style={{ color: themeColor }}>{title}</h3>
-        <p className="mt-2 flex-1 text-sm leading-relaxed text-neutral-600 line-clamp-3">{description}</p>
+        <p className="mt-2 flex-1 text-sm leading-relaxed text-neutral-600 dark:text-gray-300 line-clamp-3">{description}</p>
         <span className="mt-auto inline-flex items-center gap-1 pt-4 text-sm font-semibold"
           style={{ color: themeColor }}>
           Learn More{" "}
@@ -142,7 +142,7 @@ export function ProgrammeCard({
         <GlowHalo bright={false} />
         <div className="absolute inset-0 rounded-[24px]"
           style={{ background: `linear-gradient(160deg, ${themeColor}22, ${themeColor}0d)` }} />
-        <div className="relative flex h-full flex-col overflow-hidden rounded-[22px] bg-white"
+        <div className="relative flex h-full flex-col overflow-hidden rounded-[22px] bg-white dark:bg-gray-800"
           style={{ boxShadow: "0 8px 24px rgba(33,27,46,.12)" }}>
           <AccentBar />
           <Photo asMotion={false} />
@@ -178,7 +178,7 @@ export function ProgrammeCard({
 
       {/* Raised inner panel — translateZ(50px) lifts the whole surface */}
       <div
-        className="relative flex h-full flex-col overflow-hidden rounded-[22px] bg-white shadow-[0_18px_40px_rgba(33,27,46,0.14)]"
+        className="relative flex h-full flex-col overflow-hidden rounded-[22px] bg-white dark:bg-gray-800 shadow-[0_18px_40px_rgba(33,27,46,0.14)]"
         style={{ transform: "translateZ(50px)", transformStyle: "preserve-3d" }}
       >
         <AccentBar />

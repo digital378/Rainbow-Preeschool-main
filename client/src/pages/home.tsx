@@ -497,7 +497,7 @@ function StatsSection() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative overflow-hidden"
+    <section ref={sectionRef} className="section-stats relative overflow-hidden"
       style={{ background:"linear-gradient(170deg,#FFF4F3 0%,#FFF0E8 52%,#FFF4F3 100%)", padding:"88px 0 108px" }}>
 
       {/* Aurora blobs */}
@@ -547,10 +547,10 @@ function StatsSection() {
               </svg>
             </div>
 
-            <p style={{ color:"#55506A", fontSize:"1.0625rem", lineHeight:1.78, margin:"0 0 16px", maxWidth:"34rem" }}>
+            <p className="dm-body" style={{ color:"#55506A", fontSize:"1.0625rem", lineHeight:1.78, margin:"0 0 16px", maxWidth:"34rem" }}>
               Since 2007, Rainbow Preschool International has helped over 1,00,000 young learners learn, play, and grow across Thane. Our centres follow a play-based curriculum that builds reading, writing, and number skills through hands-on activities, stories, art, and outdoor play.
             </p>
-            <p style={{ color:"#55506A", lineHeight:1.72, margin:"0 0 24px", maxWidth:"34rem" }}>
+            <p className="dm-body" style={{ color:"#55506A", lineHeight:1.72, margin:"0 0 24px", maxWidth:"34rem" }}>
               All six centres are in Thane West — a Rainbow Preschool is always close to home.
             </p>
 
@@ -614,7 +614,7 @@ function StatsSection() {
                 className="mascot-char mascot-stage-img"
                 style={{ filter:"drop-shadow(0 8px 28px rgba(33,27,46,.16))" }}
               />
-              <div style={{ margin:"0 0 14px", background:"rgba(255,255,255,.88)",
+              <div className="dm-badge-pill" style={{ margin:"0 0 14px", background:"rgba(255,255,255,.88)",
                 backdropFilter:"blur(12px)", WebkitBackdropFilter:"blur(12px)",
                 borderRadius:999, padding:"6px 16px", fontSize:"0.72rem",
                 fontWeight:600, color:"#211B2E",
@@ -652,7 +652,7 @@ function StatsSection() {
                     letterSpacing:"-0.04em", margin:"0 0 4px", lineHeight:1, color:"#211B2E" }}>
                     <AnimatedCounterStat target={target} format={format}/>
                   </p>
-                  <p style={{ fontSize:"0.75rem", color:"#55506A", fontWeight:500, margin:0, lineHeight:1.3 }}>
+                  <p className="dm-stat-label" style={{ fontSize:"0.75rem", color:"#55506A", fontWeight:500, margin:0, lineHeight:1.3 }}>
                     {label}
                   </p>
                 </div>
@@ -687,9 +687,9 @@ function StatsSection() {
                   <div>
                     <div style={{ display:"flex", alignItems:"center", gap:5, marginBottom:2 }}>
                       <span style={{ color:"#F59E0B", letterSpacing:"1px", fontSize:"0.88rem" }}>★★★★★</span>
-                      <span style={{ fontWeight:700, fontSize:"0.9rem", color:"#211B2E" }}>4.9</span>
+                      <span className="dm-dark-text" style={{ fontWeight:700, fontSize:"0.9rem", color:"#211B2E" }}>4.9</span>
                     </div>
-                    <p style={{ fontSize:"0.72rem", color:"#55506A", margin:0, fontWeight:500 }}>
+                    <p className="dm-stat-label" style={{ fontSize:"0.72rem", color:"#55506A", margin:0, fontWeight:500 }}>
                       Loved by Thane parents
                     </p>
                   </div>
@@ -924,7 +924,7 @@ function RainbowShelfSection() {
   );
 
   return (
-    <section ref={sectionRef} style={{
+    <section ref={sectionRef} className="section-shelf" style={{
       background:"linear-gradient(180deg,#FFF4F3 0%,#FFF6EE 55%,#FFF4F3 100%)",
       padding:"72px 0 72px",overflow:"hidden",
     }}>
@@ -1059,7 +1059,7 @@ function LearningEnvironmentSection() {
   };
 
   return (
-    <section ref={sectionRef} className="relative overflow-hidden"
+    <section ref={sectionRef} className="section-le relative overflow-hidden"
       style={{ background:"#ffffff" }}>
 
       {/* Cloud scallop top */}
@@ -1067,7 +1067,7 @@ function LearningEnvironmentSection() {
         <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"
           style={{ display:"block", width:"100%", height:80 }}>
           <path d="M0,80 L0,42 Q60,4 120,42 Q180,80 240,42 Q300,4 360,42 Q420,80 480,42 Q540,4 600,42 Q660,80 720,42 Q780,4 840,42 Q900,80 960,42 Q1020,4 1080,42 Q1140,80 1200,42 Q1260,4 1320,42 Q1380,80 1440,42 L1440,0 L0,0 Z"
-            fill="#ffffff"/>
+            className="cloud-scallop" fill="#ffffff"/>
         </svg>
       </div>
 
@@ -1101,7 +1101,7 @@ function LearningEnvironmentSection() {
               WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent", backgroundClip:"text",
             }}>little explorers</span>
           </h2>
-          <p style={{ color:"#55506A", fontSize:"1rem", maxWidth:440, margin:"0 auto", lineHeight:1.65 }}>
+          <p className="dm-body" style={{ color:"#55506A", fontSize:"1rem", maxWidth:440, margin:"0 auto", lineHeight:1.65 }}>
             Peek inside a real day at Rainbow Preschool
           </p>
         </div>
@@ -1130,7 +1130,7 @@ function LearningEnvironmentSection() {
                       boxShadow:`0 4px 14px ${glow}` }}>
                       <Icon size={21} color="white" strokeWidth={2.2}/>
                     </div>
-                    <span style={{ fontSize:"0.8rem", fontWeight:700, color:"#211B2E", lineHeight:1.25 }}>{label}</span>
+                    <span className="dm-chip-label" style={{ fontSize:"0.8rem", fontWeight:700, color:"#211B2E", lineHeight:1.25 }}>{label}</span>
                   </div>
                   {/* Connector line */}
                   <div style={{ position:"relative", width:40, height:2, marginLeft:4, flexShrink:0, overflow:"visible" }}>
@@ -1214,7 +1214,7 @@ function LearningEnvironmentSection() {
                       boxShadow:`0 4px 14px ${glow}` }}>
                       <Icon size={21} color="white" strokeWidth={2.2}/>
                     </div>
-                    <span style={{ fontSize:"0.8rem", fontWeight:700, color:"#211B2E", lineHeight:1.25 }}>{label}</span>
+                    <span className="dm-chip-label" style={{ fontSize:"0.8rem", fontWeight:700, color:"#211B2E", lineHeight:1.25 }}>{label}</span>
                   </div>
                 </div>
               );
@@ -1251,7 +1251,7 @@ function LearningEnvironmentSection() {
           </div>
           <div className="grid grid-cols-2 gap-3 mb-2">
             {LE_CHIPS.map(({ Icon, label, grad, glow }, i) => (
-              <div key={label} style={{
+              <div key={label} className="le-chip-mobile" style={{
                 display:"flex", alignItems:"center", gap:11, padding:"11px 12px", borderRadius:16,
                 background:"rgba(255,255,255,.97)", border:"1px solid rgba(33,27,46,.07)",
                 boxShadow:"0 6px 20px rgba(33,27,46,.08)",
@@ -1264,7 +1264,7 @@ function LearningEnvironmentSection() {
                   boxShadow:`0 3px 10px ${glow}` }}>
                   <Icon size={17} color="white" strokeWidth={2.2}/>
                 </div>
-                <span style={{ fontSize:"0.73rem", fontWeight:700, color:"#211B2E", lineHeight:1.3 }}>{label}</span>
+                <span className="dm-chip-label" style={{ fontSize:"0.73rem", fontWeight:700, color:"#211B2E", lineHeight:1.3 }}>{label}</span>
               </div>
             ))}
           </div>
@@ -1276,7 +1276,7 @@ function LearningEnvironmentSection() {
           opacity: winIn ? 1 : 0,
           transition: "opacity 0.7s ease 0.3s",
         }}>
-          <p style={{ textAlign:"center", fontSize:"0.62rem", fontWeight:700, letterSpacing:"0.2em",
+          <p className="dm-subtle" style={{ textAlign:"center", fontSize:"0.62rem", fontWeight:700, letterSpacing:"0.2em",
             textTransform:"uppercase", color:"#9A8FA8", margin:"0 0 16px" }}>
             REAL CLASSROOMS · REAL MOMENTS
           </p>
@@ -1304,7 +1304,7 @@ function LearningEnvironmentSection() {
         <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"
           style={{ display:"block", width:"100%", height:80 }}>
           <path d="M0,0 L0,38 Q60,76 120,38 Q180,0 240,38 Q300,76 360,38 Q420,0 480,38 Q540,76 600,38 Q660,0 720,38 Q780,76 840,38 Q900,0 960,38 Q1020,76 1080,38 Q1140,0 1200,38 Q1260,76 1320,38 Q1380,0 1440,38 L1440,80 L0,80 Z"
-            fill="#ffffff"/>
+            className="cloud-scallop" fill="#ffffff"/>
         </svg>
       </div>
     </section>
@@ -1394,7 +1394,7 @@ function ProgrammesDummyHome() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative overflow-hidden"
+    <section ref={sectionRef} className="section-prog relative overflow-hidden"
       style={{
         backgroundImage: [
           "radial-gradient(circle,rgba(33,27,46,.045) 1px,transparent 1px)",
@@ -1409,7 +1409,7 @@ function ProgrammesDummyHome() {
         <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"
           style={{ display:"block", width:"100%", height:80 }}>
           <path d="M0,80 L0,42 Q60,4 120,42 Q180,80 240,42 Q300,4 360,42 Q420,80 480,42 Q540,4 600,42 Q660,80 720,42 Q780,4 840,42 Q900,80 960,42 Q1020,4 1080,42 Q1140,80 1200,42 Q1260,4 1320,42 Q1380,80 1440,42 L1440,0 L0,0 Z"
-            fill="white"/>
+            className="cloud-scallop" fill="white"/>
         </svg>
       </div>
 
@@ -1510,7 +1510,7 @@ function ProgrammesDummyHome() {
           transition: "opacity 0.7s ease 0.3s",
         }}>
           <a href="/programmes"
-            className="group inline-flex items-center gap-2.5 rounded-full px-9 py-3.5 text-sm font-semibold border border-border/80 bg-white hover:bg-muted transition-all duration-200 hover:-translate-y-0.5 shadow-sm"
+            className="group inline-flex items-center gap-2.5 rounded-full px-9 py-3.5 text-sm font-semibold border border-border/80 bg-white dark:bg-gray-800 dark:text-white dark:border-gray-600 hover:bg-muted dark:hover:bg-gray-700 transition-all duration-200 hover:-translate-y-0.5 shadow-sm"
             style={{ textDecoration:"none" }}>
             View All Programmes
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-150"/>
@@ -1750,7 +1750,7 @@ function ContactSection() {
           <div style={fade(0)}>
             <p className="section-eyebrow">Get In Touch</p>
             <h2 className="text-headline" style={{ marginBottom:12 }}>Request A Callback</h2>
-            <p style={{ fontSize:16, color:"#55506A", lineHeight:1.65, marginBottom:32 }}>
+            <p className="dm-body" style={{ fontSize:16, color:"#55506A", lineHeight:1.65, marginBottom:32 }}>
               Submit your details and queries here. We'd be glad to help you out!
             </p>
 
@@ -1787,7 +1787,7 @@ function ContactSection() {
             </div>
 
             {/* Reassurance badge */}
-            <div style={{
+            <div className="ctc-trust-badge" style={{
               display:"flex", alignItems:"center", gap:8, marginBottom:20,
               padding:"10px 16px", borderRadius:10,
               background:"rgba(16,185,129,0.07)", border:"1px solid rgba(16,185,129,0.20)",
@@ -1800,7 +1800,7 @@ function ContactSection() {
 
             {/* Quick-contact buttons */}
             <div style={{ display:"flex", gap:10, flexWrap:"wrap" }}>
-              <a href="tel:+918828195788" className="ctc-contact-btn" style={{
+              <a href="tel:+918828195788" className="ctc-contact-btn ctc-call-btn" style={{
                 display:"inline-flex", alignItems:"center", gap:7,
                 padding:"10px 20px", borderRadius:10, fontSize:13, fontWeight:700,
                 background:"#211B2E", color:"white", textDecoration:"none",
@@ -1822,7 +1822,7 @@ function ContactSection() {
           </div>
 
           {/* ══ RIGHT COLUMN — form card ═══════════════════════════════════ */}
-          <div style={{
+          <div className="ctc-form-card" style={{
             ...fade(0.13),
             background:"white", borderRadius:22, position:"relative", overflow:"hidden",
             boxShadow:"0 10px 44px rgba(33,27,46,0.10),0 2px 8px rgba(33,27,46,0.06)",

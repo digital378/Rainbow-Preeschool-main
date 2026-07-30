@@ -896,4 +896,74 @@
     .wcu-hero-shine { animation:none !important; opacity:0 !important; }
     .wcu-spotlight  { display:none !important; }
   }
+
+  /* ══ DARK MODE — Homepage Section Overrides ═══════════════════════════
+     All !important needed to override inline React styles.
+     Zero light-mode changes — only additive dark: overrides.
+  ══════════════════════════════════════════════════════════════════════ */
+
+  /* Cloud scallop SVG fills — CSS fill overrides SVG fill attribute */
+  .dark .cloud-scallop { fill: #111827 !important; }
+
+  /* ── Sec 1: Start Exploring ────────────────────────────────────── */
+  .dark .section-shelf { background: #111827 !important; }
+  .dark .section-shelf p.rs-pop { color: #9ca3af !important; }
+  .dark .rs-inner-card { background: #1f2937 !important; border-color: rgba(255,255,255,0.08) !important; }
+  .dark .rs-row-tile   { background: #1f2937 !important; border-color: rgba(255,255,255,0.08) !important; }
+
+  /* ── Sec 2: Why Parents Choose ─────────────────────────────────── */
+  .dark .section-stats { background: #111827 !important; }
+  .dark .section-stats .stat-card { background: #1f2937 !important; border-color: rgba(255,255,255,0.08) !important; }
+  .dark .section-stats .stat-card .section-title { color: #f9fafb !important; }
+  .dark .section-stats .dm-stat-label  { color: #9ca3af !important; }
+  .dark .section-stats .dm-dark-text   { color: #f9fafb !important; }
+  .dark .section-stats .dm-body        { color: #d1d5db !important; }
+  .dark .section-stats .dm-badge-pill  { background: rgba(30,27,46,0.90) !important; color: #f9fafb !important; }
+  .dark .section-stats .bento-photo    { background: linear-gradient(155deg,#1e1b2e 0%,#1a1428 40%,#111827 100%) !important; }
+  .dark .section-stats .bento-trust    { background: #1f2937 !important; border-color: rgba(255,255,255,0.08) !important; }
+  .dark .section-stats .centre-chip    { background: rgba(255,255,255,0.07) !important; border-color: rgba(255,255,255,0.12) !important; color: #d1d5db !important; }
+  .dark .section-stats .about-cta      { background: #1f2937 !important; border-color: rgba(255,255,255,0.18) !important; color: #f9fafb !important; }
+
+  /* ── Sec 3: Our Learning Environment ──────────────────────────── */
+  .dark .section-le { background: #030712 !important; }
+  .dark .section-le .dm-body   { color: #9ca3af !important; }
+  .dark .section-le .dm-subtle { color: #6b7280 !important; }
+  .dark .le-chip              { background: rgba(255,255,255,0.05) !important; border-color: rgba(255,255,255,0.10) !important; }
+  .dark .le-chip .dm-chip-label        { color: #f1f5f9 !important; }
+  .dark .le-chip-mobile                { background: rgba(255,255,255,0.05) !important; border-color: rgba(255,255,255,0.10) !important; }
+  .dark .le-chip-mobile .dm-chip-label { color: #f1f5f9 !important; }
+
+  /* ── Sec 4: Our Programmes ─────────────────────────────────────── */
+  .dark .section-prog { background: #111827 !important; }
+  .dark .section-prog .prog-subtitle { color: #9ca3af !important; }
+
+  /* ── Sec 5: Why Choose Us ──────────────────────────────────────── */
+  .dark .section-wcu { background: #030712 !important; }
+  .dark .wcu-tile { background: #1f2937 !important; border-color: rgba(255,255,255,0.10) !important; }
+  .dark .section-wcu .grid > div:nth-child(1) .wcu-tile { background: rgba(127,29,29,0.30)  !important; border-color: rgba(239,68,68,0.25)   !important; }
+  .dark .section-wcu .grid > div:nth-child(2) .wcu-tile { background: rgba(30,58,138,0.30)   !important; border-color: rgba(59,130,246,0.25)  !important; }
+  .dark .section-wcu .grid > div:nth-child(3) .wcu-tile { background: rgba(6,78,59,0.30)     !important; border-color: rgba(16,185,129,0.25) !important; }
+  .dark .section-wcu .grid > div:nth-child(4) .wcu-tile { background: rgba(76,29,149,0.30)   !important; border-color: rgba(139,92,246,0.25) !important; }
+  .dark .section-wcu .grid > div:nth-child(5) .wcu-tile { background: rgba(124,45,18,0.30)   !important; border-color: rgba(249,115,22,0.25) !important; }
+  .dark .section-wcu .grid > div:nth-child(6) .wcu-tile { background: rgba(19,78,74,0.30)    !important; border-color: rgba(20,184,166,0.25) !important; }
+  .dark .wcu-tile .border-t { border-color: rgba(239,68,68,0.28) !important; }
+
+  /* ── Sec 6: Contact / Request A Callback ──────────────────────── */
+  .dark #contact { background: #111827 !important; }
+  .dark #contact .dm-body { color: #d1d5db !important; }
+  .dark .ctc-trust-badge { background: rgba(16,185,129,0.12) !important; border-color: rgba(16,185,129,0.30) !important; }
+  .dark .ctc-call-btn { background: #374151 !important; color: #f9fafb !important; }
+  .dark .ctc-form-card { background: #1f2937 !important; border-color: rgba(255,255,255,0.08) !important; }
+  .dark .ctc-form-card label { color: #d1d5db !important; }
+  .dark .ctc-form-card input,
+  .dark .ctc-form-card select,
+  .dark .ctc-form-card textarea {
+    background: #374151 !important;
+    color: #f9fafb !important;
+    border-color: #4b5563 !important;
+    color-scheme: dark;
+  }
+  .dark .ctc-form-card h3 { color: #f9fafb !important; }
+  .dark .ctc-form-card p:not([role="alert"]) { color: #9ca3af !important; }
+  .dark .ctc-form-card button:not(.ctc-btn-submit) { background: #374151 !important; color: #f9fafb !important; border-color: #4b5563 !important; }
 }
