@@ -54,11 +54,12 @@ export function HeroSection() {
 
           {/* H1 — "Rainbow" white / "Preschool" red, each on own line, dummy scale */}
           <h1
-            className="font-heading font-black text-white mb-5 animate-in fade-in slide-in-from-bottom-4 duration-700"
+            className="font-black text-white mb-5 animate-in fade-in slide-in-from-bottom-4 duration-700"
             style={{
+              fontFamily: "'Fredoka One','Baloo 2',system-ui,sans-serif",
               fontSize: "clamp(2.7rem, 6vw, 5.2rem)",
               lineHeight: 1.02,
-              letterSpacing: "-0.04em",
+              letterSpacing: "-0.01em",
               animationFillMode: "both",
               animationDelay: "150ms",
             }}
