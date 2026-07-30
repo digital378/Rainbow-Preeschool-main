@@ -1,0 +1,114 @@
+The homepage has a dark mode toggle. When dark mode is activated, several sections are NOT adapting — they remain with light backgrounds and dark text, making them look broken and inconsistent. Fix dark mode across ALL homepage sections systematically.
+
+How dark mode works in this project:
+Dark mode is toggled via a class (likely dark on the <html> or <body> tag, using Tailwind's dark: prefix or a CSS [data-theme="dark"] / .dark class). Every fix below must use the same dark mode class system already used in this project — check how the navbar and footer handle dark mode and follow the exact same pattern.
+
+SECTION 1 — Start Exploring
+
+Current problem: The entire section has a light pink/cream background in dark mode. Cards remain white. Text is dark on light background.
+
+Fix:
+
+Section background: dark mode → bg-gray-900 or bg-zinc-900 (deep dark)
+"WHERE TO NEXT?" label: dark mode → light/muted color (e.g. dark:text-gray-400)
+"Start Exploring" heading: dark mode → white (dark:text-white)
+"QUICK LINKS" and "OUR PROGRAMMES" labels: dark mode → dark:text-gray-400
+Each icon card: dark mode → dark:bg-gray-800 background, dark:border-gray-700 border
+Card label text (Why Us, Find Centre, etc.): already colored (red, green, blue) — keep the colors, they work on dark too
+
+SECTION 2 — Why Parents Choose Rainbow Preschool
+
+Current problem: White/cream background, dark text, and stat cards stay light in dark mode.
+
+Fix:
+
+Section background: dark mode → dark:bg-gray-900
+"ABOUT US" label: dark mode → dark:text-orange-400
+Main heading ("Why Parents Choose Rainbow Preschool"): dark mode → dark:text-white
+Body text/paragraphs: dark mode → dark:text-gray-300
+Location pill tags: dark mode → dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600
+"Learn More About Us →" button: dark mode → dark:border-gray-500 dark:text-white
+Stat cards (1,00,000+ / 18+ / 06 / 100%): dark mode → dark:bg-gray-800 background, stat numbers → dark:text-white, stat labels → dark:text-gray-400
+Rating card: dark mode → dark:bg-gray-800, rating text → dark:text-white, "Read parent reviews" link stays orange
+
+SECTION 3 — OUR LEARNING ENVIRONMENT
+
+Current problem: Light background, heading text invisible or washed out in dark mode.
+
+Fix:
+
+Section background: dark mode → dark:bg-gray-950 or dark:bg-zinc-900
+"OUR LEARNING ENVIRONMENT" label: dark mode → dark:text-orange-400
+"A world built for little explorers" heading: dark mode → "A world built for" → dark:text-white, "little explorers" stays orange
+Subtitle text: dark mode → dark:text-gray-400
+Feature cards (Play-Based Learning, Expert Teachers, CCTV-Safe Campuses, Small Batches): dark mode → dark:bg-gray-800 dark:text-white dark:border-gray-700
+Dashed connector lines: dark mode → dark:border-gray-600
+Video container: dark mode → dark:bg-gray-800 wrapper background
+"REAL CLASSROOMS · REAL MOMENTS" label: dark mode → dark:text-gray-500
+Filmstrip images: no change needed (photos are fine on any background)
+
+SECTION 4 — OUR PROGRAMMES
+
+Current problem: Light section background, programme cards stay white in dark mode.
+
+Fix:
+
+Section background: dark mode → dark:bg-gray-900
+"OUR PROGRAMMES" label: dark mode → dark:text-orange-400
+Heading "Programmes for Every Stage of Early Learning": "Programmes for Every Stage of" → dark:text-white, "Early Learning" stays orange
+Subtitle: dark mode → dark:text-gray-400
+Programme cards: dark mode → dark:bg-gray-800 dark:border-gray-700
+Card description text: dark mode → dark:text-gray-300
+Card titles (Playgroup, Nursery, etc.): keep their respective colors (red, blue, green, orange) — they work on dark
+"Learn More →" links: keep their respective colors
+Age badge pills: keep their background colors — they work on dark too
+
+SECTION 5 — WHY CHOOSE US
+
+Current problem: White/light background and card backgrounds don't adapt to dark mode.
+
+Fix:
+
+Section background: dark mode → dark:bg-gray-950
+"WHY CHOOSE US" label: dark mode → dark:text-orange-400
+Main heading: dark mode → dark:text-white
+Subtitle: dark mode → dark:text-gray-400
+Card 1 (Safety & CCTV, pink background): dark mode → dark:bg-red-950 or dark:bg-rose-900/30
+Card 2 (Certified Teachers, blue background): dark mode → dark:bg-blue-950 or dark:bg-blue-900/30
+Card 3 (Hygiene First, green background): dark mode → dark:bg-green-950 or dark:bg-green-900/30
+All card title text: dark mode → dark:text-white
+All card description text: dark mode → dark:text-gray-300
+Red tags on Card 1 ("CCTV Monitored · Verified Pickup · 100% Female Staff"): keep red color — it works on dark
+
+SECTION 6 — Request A Callback
+
+Current problem: White form card and light section background don't adapt.
+
+Fix:
+
+Section background: dark mode → dark:bg-gray-900
+"GET IN TOUCH" label: dark mode → dark:text-orange-400
+Main heading: dark mode → dark:text-white
+Subtitle: dark mode → dark:text-gray-400
+Form card wrapper: dark mode → dark:bg-gray-800 dark:border-gray-700
+Form field labels: dark mode → dark:text-gray-300
+Input fields: dark mode → dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400
+Dropdown selects: dark mode → same as input fields
+Textarea: dark mode → same as input fields
+"Request Callback" button: stays red — no change needed
+Trust badge ("No spam · One call..."): dark mode → dark:bg-green-900/30 dark:text-green-400
+"Call Now" button: dark mode → dark:bg-gray-700 dark:text-white
+"WhatsApp" button: stays green — no change needed
+
+Implementation rules:
+
+Use the SAME dark mode class mechanism already used in this project (check navbar/footer for the pattern — do not introduce a new system)
+Apply dark: prefixed Tailwind classes directly on the elements, OR add CSS rules under the .dark selector — whichever pattern the project already uses
+Do NOT change any light mode styling — only ADD the dark mode overrides
+Do NOT touch the dummy page, routing, scripts, or analytics
+
+After changes:
+
+List every file and component changed
+Confirm light mode appearance is unchanged
+Confirm dark mode toggle works correctly for all 6 sections

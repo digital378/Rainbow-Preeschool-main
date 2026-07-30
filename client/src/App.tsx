@@ -386,7 +386,7 @@ function DeferredSparkleTrail() {
     if (isMobile) return;
     let fired = false;
     const load = () => { if (fired) return; fired = true; setShow(true); };
-    const events = ['pointerdown', 'keydown', 'touchstart', 'scroll'] as const;
+    const events = ['mousemove', 'pointerdown', 'keydown', 'touchstart', 'scroll'] as const;
     events.forEach(e => window.addEventListener(e, load, { once: true, passive: true }));
     let cancelHandle: number;
     if ('requestIdleCallback' in window) {
