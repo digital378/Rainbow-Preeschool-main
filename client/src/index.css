@@ -298,6 +298,66 @@
     color: #211B2E;
   }
 
+  /* ═══ Learning Environment section (le-*) ═══════════════════════════ */
+  @keyframes le-bob-a    { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+  @keyframes le-bob-b    { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+  @keyframes le-filmstrip{ 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+
+  .le-chip { transition:box-shadow 0.22s ease,transform 0.22s ease; }
+  .le-chip:hover { transform:translateY(-4px) scale(1.02) !important; box-shadow:0 18px 44px rgba(33,27,46,.18) !important; }
+  .le-chip:hover .le-icon-box { transform:scale(1.14) rotate(-6deg) !important; }
+  .le-icon-box { transition:transform 0.28s cubic-bezier(.34,1.56,.64,1),box-shadow 0.25s ease; }
+  @media (prefers-reduced-motion:reduce) {
+    .le-chip { transition:none !important; }
+    .le-chip:hover { transform:none !important; box-shadow:inherit !important; }
+    .le-chip:hover .le-icon-box { transform:none !important; }
+  }
+
+  /* ═══ Programmes section (pd-*, prog-*, pc-*) ════════════════════════ */
+  @keyframes pd-rise       { from{opacity:0;transform:translateY(40px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes pd-float      { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+  @keyframes pd-blob-drift { 0%,100%{transform:translate(0,0) scale(1)} 33%{transform:translate(18px,-14px) scale(1.04)} 66%{transform:translate(-10px,10px) scale(.97)} }
+  @keyframes pd-doodle-bob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+
+  .pd-blob-1 { will-change:transform; animation:pd-blob-drift 22s ease-in-out 0s   infinite; }
+  .pd-blob-2 { will-change:transform; animation:pd-blob-drift 28s ease-in-out 3s   infinite; }
+  .pd-blob-3 { will-change:transform; animation:pd-blob-drift 25s ease-in-out 7s   infinite; }
+  .pd-doodle-1 { will-change:transform; animation:pd-doodle-bob 4.2s ease-in-out 0s   infinite; }
+  .pd-doodle-2 { will-change:transform; animation:pd-doodle-bob 5.1s ease-in-out .7s  infinite; }
+  .pd-doodle-3 { will-change:transform; animation:pd-doodle-bob 4.7s ease-in-out 1.4s infinite; }
+  .pd-doodle-4 { will-change:transform; animation:pd-doodle-bob 5.4s ease-in-out .3s  infinite; }
+  .pd-doodle-5 { will-change:transform; animation:pd-doodle-bob 4.5s ease-in-out 1.1s infinite; }
+
+  .pd-card-offset { margin-top:20px; }
+  @media (max-width:1023px) {
+    .pd-card-offset { margin-top:0; }
+    .pd-doodles { display:none; }
+  }
+  .prog-heading  { white-space:nowrap; font-size:clamp(1.9rem,3.4vw,3rem); line-height:1.1; }
+  .prog-subtitle { white-space:nowrap; max-width:none; }
+  @media (max-width:1023px) {
+    .prog-heading  { white-space:normal; }
+    .prog-subtitle { white-space:normal; }
+  }
+  @media (max-width:639px) {
+    .programmes-grid {
+      display:flex !important; flex-direction:row; overflow-x:auto;
+      scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch;
+      gap:14px; padding:24px 20px 32px; scrollbar-width:none; overflow-y:visible;
+    }
+    .programmes-grid::-webkit-scrollbar { display:none; }
+    .programmes-grid > * {
+      scroll-snap-align:start; min-width:82vw; max-width:82vw;
+      flex-shrink:0; overflow:visible;
+    }
+    .pc-sticker   { top:12px !important; left:12px !important; }
+    .pc-age-pill  { font-size:0.595rem !important; padding:3px 8px !important; white-space:nowrap; max-width:calc(100% - 24px); }
+  }
+  @media (prefers-reduced-motion:reduce) {
+    .pd-blob-1,.pd-blob-2,.pd-blob-3 { animation:none !important; }
+    .pd-doodle-1,.pd-doodle-2,.pd-doodle-3,.pd-doodle-4,.pd-doodle-5 { animation:none !important; }
+  }
+
   /* ═══ Bento About section (du-*, stat-*, bento-*, mascot-*, chip-*) ══ */
   @keyframes d-float-a  { 0%,100%{transform:translateY(0)rotate(0deg)} 50%{transform:translateY(-22px)rotate(5deg)} }
   @keyframes d-float-b  { 0%,100%{transform:translateY(0)} 33%{transform:translateY(-14px)rotate(-4deg)} 66%{transform:translateY(-7px)} }

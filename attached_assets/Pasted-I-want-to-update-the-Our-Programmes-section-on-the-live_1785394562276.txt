@@ -1,0 +1,54 @@
+I want to update the "Our Programmes" section on the live homepage to exactly match the design already built on the /dummy page. Do not redesign — just copy what already works on /dummy.
+
+Target design (from /dummy page):
+
+Small label: "OUR PROGRAMMES" — uppercase, letter-spaced, in orange/red color
+Heading: "Programmes for Every Stage of Early Learning" — "Early Learning" in orange/coral color, rest in dark bold black
+Subtitle: "Age-appropriate programmes designed to nurture your child's unique growth, curiosity, and confidence."
+4 programme cards in a horizontal row, each with:
+A photo at the top with a colored age badge (pill shape, top right of image) and a colored icon (top left corner)
+Coloured programme name heading below the image
+Short description text
+"Learn More →" link in matching color
+
+The 4 cards are:
+
+Playgroup — red theme, age badge "1.5 - 2.5 years", puzzle/activity icon
+Nursery — blue theme, age badge "2.5 - 3.5 years", pencil icon
+Kindergarten — green theme, age badge "3.5 - 5.5 years", book icon
+Happy Times — orange theme, age badge "2 - 10 years", sun icon
+
+Step 1 — Find the source (dummy page):
+Open the /dummy page file and locate the "OUR PROGRAMMES" section. Copy the complete HTML structure including the label, heading, subtitle, and all 4 programme cards with their icons, age badges, images, headings, descriptions, and "Learn More →" links.
+
+Step 2 — Find the destination (live homepage):
+Open the homepage file and locate the existing Programmes section (it may be labelled "Our Programmes", "Programmes", or similar). Note its exact position in the page flow.
+
+Step 3 — Replace safely:
+Replace ONLY the Programmes section in the homepage with the version from the dummy page. Do not touch the section above it (OUR LEARNING ENVIRONMENT) or below it.
+
+Step 4 — Handle images:
+Check if the programme card images used in the dummy page already exist in the project's assets/images folder. If they do, use the same image paths. Do not change or move any image files.
+
+Step 5 — Handle icons:
+The coloured icons (puzzle, pencil, book, sun) on each card may be SVG icons or an icon library. Make sure the same icons and their colors are applied correctly in the homepage version.
+
+Step 6 — Handle age badges:
+Each card has a colored pill badge showing the age range positioned over the photo. Make sure the badge positioning (absolute/overlay) and colors are copied correctly from the dummy page CSS.
+
+Step 7 — Handle CSS:
+Check if all CSS classes from the dummy page version of this section already exist in the shared stylesheet. If any are defined only in the dummy page's CSS file, copy those styles into the shared stylesheet. Do not duplicate styles that already exist globally.
+
+Step 8 — Handle "Learn More" links:
+Make sure each "Learn More →" link points to the correct programme page (same URLs as currently used in the live homepage's existing programme cards). Do not change any URLs.
+
+Step 9 — Do NOT touch:
+
+The "OUR LEARNING ENVIRONMENT" section above
+Any section below the programmes section
+Navbar, footer, or any other page
+The dummy page itself
+Any routing, URL structure, or link hrefs beyond what's needed
+
+Step 10 — After changes:
+Show me a summary of every file changed and what exactly was modified so I can review before running the project.

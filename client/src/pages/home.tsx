@@ -18,18 +18,17 @@ import { LAST_UPDATED_DISPLAY, LAST_UPDATED_ISO } from "@shared/site-freshness";
 import { createAllBranchLocalBusinessSchemas, centres } from "@shared/centre-data";
 import { cn } from "@/lib/utils";
 import { PLAYGROUP, NURSERY, KINDERGARTEN } from "@shared/programme-data";
-import { ProgrammeCard } from "@/components/programme-card";
 import { BranchCard } from "@/components/branch-card";
 import { TestimonialCard } from "@/components/testimonial-card";
 import { CountUp } from "@/components/count-up";
 import { SEO, createBreadcrumbSchema } from "@/components/seo";
 import { programmes, branches, testimonials } from "@shared/schema";
-import { ArrowRight, Star, Users, MapPin, Shield, Lock, Phone, Award, FileText, Palette, BookOpen, GraduationCap } from "lucide-react";
+import { ArrowRight, Star, Users, MapPin, Shield, Lock, Phone, Award, FileText, Palette, BookOpen, GraduationCap, Puzzle, ShieldCheck, Volume2, VolumeX, Pencil, Sun } from "lucide-react";
+import { ProgrammeCard as BentoProgrammeCard } from "@/components/ui/programme-card";
 import { useState, useEffect, lazy, Suspense, useRef } from "react";
 
 const WhyChooseUs = lazy(() => import("@/components/why-choose-us").then(m => ({ default: m.WhyChooseUs })));
 const MethodologySection = lazy(() => import("@/components/methodology-section").then(m => ({ default: m.MethodologySection })));
-const ClassroomGallery = lazy(() => import("@/components/classroom-gallery").then(m => ({ default: m.ClassroomGallery })));
 const CTASection = lazy(() => import("@/components/cta-section").then(m => ({ default: m.CTASection })));
 const ContactForm = lazy(() => import("@/components/contact-form").then(m => ({ default: m.ContactForm })));
 
@@ -989,6 +988,516 @@ function RainbowShelfSection() {
   );
 }
 
+/* ═══════════════════════════════════════════════════════════════════════════
+   LEARNING ENVIRONMENT SECTION — "OUR LEARNING ENVIRONMENT"
+   Ported from /dummy. Self-contained.
+═══════════════════════════════════════════════════════════════════════════ */
+const LE_CHIPS = [
+  { Icon: Puzzle,        label: "Play-Based Learning", grad:"linear-gradient(135deg,#FB6112 0%,#FF8A3D 100%)", glow:"rgba(251,97,18,.32)",  side:"left"  as const, bob:"le-bob-a 5.0s ease-in-out 0.0s infinite" },
+  { Icon: ShieldCheck,   label: "CCTV-Safe Campuses",  grad:"linear-gradient(135deg,#06B463 0%,#22D67E 100%)", glow:"rgba(6,180,99,.28)",   side:"right" as const, bob:"le-bob-b 5.5s ease-in-out 0.4s infinite" },
+  { Icon: GraduationCap, label: "Expert Teachers",     grad:"linear-gradient(135deg,#1F7AF0 0%,#48A0FF 100%)", glow:"rgba(31,122,240,.28)", side:"left"  as const, bob:"le-bob-a 4.5s ease-in-out 0.8s infinite" },
+  { Icon: Users,         label: "Small Batches",       grad:"linear-gradient(135deg,#7C4DFF 0%,#A06BFF 100%)", glow:"rgba(124,77,255,.28)", side:"right" as const, bob:"le-bob-b 6.0s ease-in-out 0.2s infinite" },
+];
+const LE_FILMSTRIP = [
+  "rainbow-preschool-classroom-activity-01.webp",
+  "rainbow-preschool-classroom-learning-01.webp",
+  "rainbow-preschool-activity-room-01.webp",
+  "rainbow-preschool-learning-through-play-01.webp",
+  "rainbow-preschool-classroom-activity-02.webp",
+  "rainbow-preschool-classroom-learning-02.webp",
+  "rainbow-preschool-activity-room-02.webp",
+  "rainbow-preschool-learning-through-play-02.webp",
+];
+
+function LearningEnvironmentSection() {
+  const sectionRef  = useRef<HTMLElement>(null);
+  const tiltRef     = useRef<HTMLDivElement>(null);
+  const videoRef    = useRef<HTMLVideoElement>(null);
+  const [muted,       setMuted]       = useState(true);
+  const [winIn,       setWinIn]       = useState(false);
+  const [chipsIn,     setChipsIn]     = useState(false);
+  const [stripPaused, setStripPaused] = useState(false);
+  const [videoError,  setVideoError]  = useState(false);
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) {
+        setWinIn(true);
+        setTimeout(() => setChipsIn(true), 420);
+        videoRef.current?.play().catch(() => {});
+      } else {
+        videoRef.current?.pause();
+      }
+    }, { threshold: 0.2 });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const el = tiltRef.current;
+    if (!el) return;
+    const onMove = (e: MouseEvent) => {
+      const r  = el.getBoundingClientRect();
+      const rx = ((e.clientX - r.left) / r.width  - 0.5) * 10;
+      const ry = ((e.clientY - r.top)  / r.height - 0.5) * 7;
+      el.style.transform = `perspective(900px) rotateY(${rx}deg) rotateX(${-ry}deg)`;
+    };
+    const onLeave = () => { el.style.transform = ""; };
+    el.addEventListener("mousemove", onMove);
+    el.addEventListener("mouseleave", onLeave);
+    return () => { el.removeEventListener("mousemove", onMove); el.removeEventListener("mouseleave", onLeave); };
+  }, []);
+
+  const toggleSound = () => {
+    const v = videoRef.current;
+    if (!v) return;
+    v.muted = !v.muted;
+    setMuted(v.muted);
+  };
+
+  return (
+    <section ref={sectionRef} className="relative overflow-hidden"
+      style={{ background:"linear-gradient(170deg,#FFF4F3 0%,#FFF3EA 52%,#FFF4F3 100%)" }}>
+
+      {/* Cloud scallop top */}
+      <div aria-hidden className="absolute top-0 inset-x-0 z-20 pointer-events-none">
+        <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"
+          style={{ display:"block", width:"100%", height:80 }}>
+          <path d="M0,80 L0,42 Q60,4 120,42 Q180,80 240,42 Q300,4 360,42 Q420,80 480,42 Q540,4 600,42 Q660,80 720,42 Q780,4 840,42 Q900,80 960,42 Q1020,4 1080,42 Q1140,80 1200,42 Q1260,4 1320,42 Q1380,80 1440,42 L1440,0 L0,0 Z"
+            fill="#FFF4F3"/>
+        </svg>
+      </div>
+
+      {/* Aurora blobs */}
+      <BentoOrb cls="d-float-a d-pulse w-[500px] h-[500px] -top-32 -left-24 opacity-50"
+        style={{ background:"radial-gradient(circle,rgba(251,191,36,.20) 0%,transparent 65%)", filter:"blur(50px)" }}/>
+      <BentoOrb cls="d-float-b w-96 h-96 bottom-20 -right-20 opacity-40"
+        style={{ background:"radial-gradient(circle,rgba(236,33,15,.11) 0%,transparent 65%)", filter:"blur(42px)" }}/>
+      <BentoOrb cls="d-float-c w-64 h-64 top-1/3 right-[12%] opacity-30"
+        style={{ background:"radial-gradient(circle,rgba(139,92,246,.13) 0%,transparent 65%)", filter:"blur(36px)" }}/>
+      <BentoStar cls="d-tw2 text-amber-300/60 top-[16%] left-[43%] w-3.5 h-3.5"/>
+      <BentoStar cls="d-tw3 text-amber-200/40 bottom-[26%] right-[36%] w-2.5 h-2.5"/>
+
+      <div className="relative z-10" style={{ padding:"100px 0 80px" }}>
+
+        {/* Heading */}
+        <div className="text-center du-fade" style={{ marginBottom:52, padding:"0 20px" }}>
+          <p style={{ fontSize:"0.63rem", fontWeight:700, letterSpacing:"0.22em",
+            textTransform:"uppercase", color:"#EC210F", margin:"0 0 12px" }}>
+            OUR LEARNING ENVIRONMENT
+          </p>
+          <h2 className="section-title" style={{ fontSize:"clamp(2rem,4.5vw,3.4rem)", margin:"0 0 14px" }}>
+            A world built for{" "}
+            <span style={{
+              background:"linear-gradient(95deg,#F59E0B 0%,#EF4444 100%)",
+              WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent", backgroundClip:"text",
+            }}>little explorers</span>
+          </h2>
+          <p style={{ color:"#55506A", fontSize:"1rem", maxWidth:440, margin:"0 auto", lineHeight:1.65 }}>
+            Peek inside a real day at Rainbow Preschool
+          </p>
+        </div>
+
+        {/* Desktop: 3-col (left chips | video | right chips) */}
+        <div className="hidden md:grid mx-auto"
+          style={{ maxWidth:1080, padding:"0 40px",
+            gridTemplateColumns:"200px 1fr 200px", gap:"0 16px", alignItems:"center" }}>
+
+          {/* Left chips */}
+          <div style={{ display:"flex", flexDirection:"column", gap:18, alignItems:"flex-end" }}>
+            {LE_CHIPS.filter(c => c.side === "left").map(({ Icon, label, grad, glow, bob }, i) => {
+              const delay = i * 140;
+              return (
+                <div key={label} style={{ display:"flex", alignItems:"center", flexDirection:"row",
+                  animation: chipsIn ? bob : "none" }}>
+                  <div className="le-chip" style={{ display:"flex", alignItems:"center", gap:12,
+                    padding:"10px 16px 10px 10px", borderRadius:16, width:210, flexShrink:0, cursor:"default",
+                    background:"rgba(255,255,255,0.97)", backdropFilter:"blur(16px)", WebkitBackdropFilter:"blur(16px)",
+                    border:"1px solid rgba(33,27,46,.08)", boxShadow:"0 10px 30px rgba(33,27,46,.10)",
+                    opacity: chipsIn ? 1 : 0,
+                    transform: chipsIn ? "none" : "translateX(-24px) scale(0.88)",
+                    transition:`opacity 0.55s cubic-bezier(.34,1.56,.64,1) ${delay}ms, transform 0.55s cubic-bezier(.34,1.56,.64,1) ${delay}ms` }}>
+                    <div className="le-icon-box" style={{ width:46, height:46, borderRadius:12, background:grad,
+                      flexShrink:0, display:"flex", alignItems:"center", justifyContent:"center",
+                      boxShadow:`0 4px 14px ${glow}` }}>
+                      <Icon size={21} color="white" strokeWidth={2.2}/>
+                    </div>
+                    <span style={{ fontSize:"0.8rem", fontWeight:700, color:"#211B2E", lineHeight:1.25 }}>{label}</span>
+                  </div>
+                  {/* Connector line */}
+                  <div style={{ position:"relative", width:40, height:2, marginLeft:4, flexShrink:0, overflow:"visible" }}>
+                    <div style={{ position:"absolute", inset:0,
+                      background:"repeating-linear-gradient(90deg,rgba(33,27,46,.28) 0,rgba(33,27,46,.28) 4px,transparent 4px,transparent 9px)",
+                      transformOrigin:"left center",
+                      transform: chipsIn ? "scaleX(1)" : "scaleX(0)",
+                      transition:`transform 0.5s ease ${delay + 350}ms` }}/>
+                    <div style={{ position:"absolute", right:-1, top:"50%", transform:"translateY(-50%)",
+                      width:7, height:7, borderRadius:"50%", background:"rgba(33,27,46,.28)",
+                      opacity: chipsIn ? 1 : 0,
+                      transition:`opacity 0.3s ease ${delay + 820}ms` }}/>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Video window */}
+          <div ref={tiltRef} style={{ transition:"transform 0.3s ease", willChange:"transform" }}>
+            <div style={{
+              borderRadius:28, overflow:"hidden",
+              opacity: winIn ? 1 : 0,
+              transform: winIn ? "none" : "scale(0.9) translateY(28px)",
+              transition:"opacity 0.75s ease, transform 0.75s cubic-bezier(.22,1,.36,1)",
+              boxShadow:"0 40px 80px rgba(33,27,46,.20), 0 0 0 6px rgba(255,255,255,.95), 0 0 0 7.5px rgba(33,27,46,.05)",
+            }}>
+              <div className="relative aspect-video">
+                {videoError ? (
+                  <img src="/images/optimized/classroom-rainbow-preschool.webp" alt="Rainbow Preschool campus"
+                    style={{ display:"block", width:"100%", height:"100%", objectFit:"cover" }} />
+                ) : (<>
+                  <video ref={videoRef}
+                    src="/assets/RPS_Walkthrough_Video_-_Website_1_1766126796450.mp4"
+                    poster="/images/optimized/classroom-rainbow-preschool.webp"
+                    autoPlay muted loop playsInline preload="none"
+                    aria-label="Campus walkthrough of Rainbow Preschool — classrooms, activity areas, outdoor spaces"
+                    style={{ display:"block", width:"100%", height:"100%", objectFit:"cover" }}
+                    onError={() => setVideoError(true)}
+                  />
+                  <button onClick={toggleSound} data-testid="button-video-sound-toggle"
+                    className="absolute bottom-3 right-3 flex items-center gap-1.5 rounded-full text-white text-xs font-semibold"
+                    style={{ padding:"6px 12px", background:"rgba(0,0,0,.42)", backdropFilter:"blur(8px)",
+                      border:"1px solid rgba(255,255,255,.22)", cursor:"pointer" }}
+                    aria-label={muted ? "Unmute video" : "Mute video"}>
+                    {muted ? <VolumeX size={13}/> : <Volume2 size={13}/>}
+                    {muted ? "Sound off" : "Sound on"}
+                  </button>
+                </>)}
+              </div>
+            </div>
+          </div>
+
+          {/* Right chips */}
+          <div style={{ display:"flex", flexDirection:"column", gap:18, alignItems:"flex-start" }}>
+            {LE_CHIPS.filter(c => c.side === "right").map(({ Icon, label, grad, glow, bob }, i) => {
+              const delay = (i + 2) * 140;
+              return (
+                <div key={label} style={{ display:"flex", alignItems:"center", flexDirection:"row",
+                  animation: chipsIn ? bob : "none" }}>
+                  <div style={{ position:"relative", width:40, height:2, marginRight:4, flexShrink:0, overflow:"visible" }}>
+                    <div style={{ position:"absolute", inset:0,
+                      background:"repeating-linear-gradient(90deg,rgba(33,27,46,.28) 0,rgba(33,27,46,.28) 4px,transparent 4px,transparent 9px)",
+                      transformOrigin:"right center",
+                      transform: chipsIn ? "scaleX(1)" : "scaleX(0)",
+                      transition:`transform 0.5s ease ${delay + 350}ms` }}/>
+                    <div style={{ position:"absolute", left:-1, top:"50%", transform:"translateY(-50%)",
+                      width:7, height:7, borderRadius:"50%", background:"rgba(33,27,46,.28)",
+                      opacity: chipsIn ? 1 : 0,
+                      transition:`opacity 0.3s ease ${delay + 820}ms` }}/>
+                  </div>
+                  <div className="le-chip" style={{ display:"flex", alignItems:"center", gap:12,
+                    padding:"10px 16px 10px 10px", borderRadius:16, width:210, flexShrink:0, cursor:"default",
+                    background:"rgba(255,255,255,0.97)", backdropFilter:"blur(16px)", WebkitBackdropFilter:"blur(16px)",
+                    border:"1px solid rgba(33,27,46,.08)", boxShadow:"0 10px 30px rgba(33,27,46,.10)",
+                    opacity: chipsIn ? 1 : 0,
+                    transform: chipsIn ? "none" : "translateX(24px) scale(0.88)",
+                    transition:`opacity 0.55s cubic-bezier(.34,1.56,.64,1) ${delay}ms, transform 0.55s cubic-bezier(.34,1.56,.64,1) ${delay}ms` }}>
+                    <div className="le-icon-box" style={{ width:46, height:46, borderRadius:12, background:grad,
+                      flexShrink:0, display:"flex", alignItems:"center", justifyContent:"center",
+                      boxShadow:`0 4px 14px ${glow}` }}>
+                      <Icon size={21} color="white" strokeWidth={2.2}/>
+                    </div>
+                    <span style={{ fontSize:"0.8rem", fontWeight:700, color:"#211B2E", lineHeight:1.25 }}>{label}</span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Mobile: full-width video + 2×2 chips below */}
+        <div className="md:hidden px-4">
+          <div style={{ borderRadius:22, overflow:"hidden", marginBottom:18,
+            boxShadow:"0 24px 60px rgba(33,27,46,.15), 0 0 0 5px rgba(255,255,255,.88), 0 0 0 6px rgba(33,27,46,.05)" }}>
+            <div className="relative aspect-video">
+              {videoError ? (
+                <img src="/images/optimized/classroom-rainbow-preschool.webp" alt="Rainbow Preschool campus"
+                  style={{ display:"block", width:"100%", height:"100%", objectFit:"cover" }} />
+              ) : (<>
+                <video
+                  src="/assets/RPS_Walkthrough_Video_-_Website_1_1766126796450.mp4"
+                  poster="/images/optimized/classroom-rainbow-preschool.webp"
+                  autoPlay muted loop playsInline preload="none"
+                  aria-label="Campus walkthrough of Rainbow Preschool"
+                  style={{ display:"block", width:"100%", height:"100%", objectFit:"cover" }}
+                  onError={() => setVideoError(true)}
+                />
+                <button onClick={toggleSound} data-testid="button-video-sound-toggle-mobile"
+                  className="absolute bottom-3 right-3 flex items-center rounded-full text-white"
+                  style={{ padding:"5px 10px", gap:5, fontSize:"0.7rem", fontWeight:600, cursor:"pointer",
+                    background:"rgba(0,0,0,.42)", backdropFilter:"blur(8px)", border:"1px solid rgba(255,255,255,.2)" }}
+                  aria-label={muted ? "Unmute" : "Mute"}>
+                  {muted ? <VolumeX size={12}/> : <Volume2 size={12}/>}
+                </button>
+              </>)}
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-3 mb-2">
+            {LE_CHIPS.map(({ Icon, label, grad, glow }, i) => (
+              <div key={label} style={{
+                display:"flex", alignItems:"center", gap:11, padding:"11px 12px", borderRadius:16,
+                background:"rgba(255,255,255,.97)", border:"1px solid rgba(33,27,46,.07)",
+                boxShadow:"0 6px 20px rgba(33,27,46,.08)",
+                opacity: chipsIn ? 1 : 0,
+                transform: chipsIn ? "none" : "scale(0.88) translateY(10px)",
+                transition:`opacity 0.45s ease ${i*85}ms, transform 0.45s ease ${i*85}ms`,
+              }}>
+                <div style={{ width:38, height:38, borderRadius:10, background:grad, flexShrink:0,
+                  display:"flex", alignItems:"center", justifyContent:"center",
+                  boxShadow:`0 3px 10px ${glow}` }}>
+                  <Icon size={17} color="white" strokeWidth={2.2}/>
+                </div>
+                <span style={{ fontSize:"0.73rem", fontWeight:700, color:"#211B2E", lineHeight:1.3 }}>{label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Filmstrip */}
+        <div className="du-fade" style={{ marginTop:52, overflow:"hidden" }}>
+          <p style={{ textAlign:"center", fontSize:"0.62rem", fontWeight:700, letterSpacing:"0.2em",
+            textTransform:"uppercase", color:"#9A8FA8", margin:"0 0 16px" }}>
+            REAL CLASSROOMS · REAL MOMENTS
+          </p>
+          <div style={{ display:"flex", gap:12, width:"max-content",
+            animation:"le-filmstrip 40s linear infinite",
+            animationPlayState: stripPaused ? "paused" : "running" }}
+            onMouseEnter={() => setStripPaused(true)}
+            onMouseLeave={() => setStripPaused(false)}>
+            {[...LE_FILMSTRIP, ...LE_FILMSTRIP].map((src, i) => (
+              <div key={i} style={{ flexShrink:0, width:240, height:152, borderRadius:16, overflow:"hidden",
+                boxShadow:"0 4px 18px rgba(33,27,46,.10)" }}>
+                <img src={`/images/gallery/${src}`}
+                  alt="Rainbow Preschool classroom moment"
+                  loading="lazy"
+                  style={{ display:"block", width:"100%", height:"100%", objectFit:"cover" }}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Cloud scallop bottom */}
+      <div aria-hidden className="absolute bottom-0 inset-x-0 z-20 pointer-events-none">
+        <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"
+          style={{ display:"block", width:"100%", height:80 }}>
+          <path d="M0,0 L0,38 Q60,76 120,38 Q180,0 240,38 Q300,76 360,38 Q420,0 480,38 Q540,76 600,38 Q660,0 720,38 Q780,76 840,38 Q900,0 960,38 Q1020,76 1080,38 Q1140,0 1200,38 Q1260,76 1320,38 Q1380,0 1440,38 L1440,80 L0,80 Z"
+            fill="#FFF4F3"/>
+        </svg>
+      </div>
+    </section>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   PROGRAMMES SECTION — "OUR PROGRAMMES"
+   Ported from /dummy ProgrammesDummy. Self-contained.
+═══════════════════════════════════════════════════════════════════════════ */
+function usePrefersReducedMotion() {
+  const [reduced, setReduced] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setReduced(mq.matches);
+    const h = (e: MediaQueryListEvent) => setReduced(e.matches);
+    mq.addEventListener("change", h);
+    return () => mq.removeEventListener("change", h);
+  }, []);
+  return reduced;
+}
+
+function FloatWrapperProg({ idx, children }: { idx: number; children: React.ReactNode }) {
+  const noMotion = usePrefersReducedMotion();
+  if (noMotion) return <>{children}</>;
+  return (
+    <div style={{ animation: `pd-float ${3.5 + idx * 0.3}s ease-in-out ${idx * 0.4}s infinite` }}>
+      {children}
+    </div>
+  );
+}
+
+const StarDoodleProg = ({ color }: { color: string }) => (
+  <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden>
+    <polygon points="14,2 17,10.5 26.5,10.5 19.5,16.5 22,25 14,20 6,25 8.5,16.5 1.5,10.5 11,10.5"
+      fill={color} stroke="white" strokeWidth="1.5" strokeLinejoin="round"/>
+  </svg>
+);
+const CloudDoodleProg = ({ color }: { color: string }) => (
+  <svg width="48" height="32" viewBox="0 0 48 32" fill="none" aria-hidden>
+    <path d="M6 26 Q1 26 1 18 Q1 10 9 10 Q10 4 17 4 Q23 4 24 10 Q27 6 32 6 Q40 6 40 14 Q45 14 45 20 Q45 27 37 27 Z"
+      fill={color} stroke="white" strokeWidth="1.5" strokeLinejoin="round"/>
+  </svg>
+);
+const SquiggleDoodleProg = ({ color }: { color: string }) => (
+  <svg width="50" height="20" viewBox="0 0 50 20" fill="none" aria-hidden>
+    <path d="M2 10 Q8 1 14 10 Q20 19 26 10 Q32 1 38 10 Q44 17 48 10"
+      stroke={color} strokeWidth="3.5" strokeLinecap="round" fill="none"/>
+  </svg>
+);
+const BalloonDoodleProg = ({ color }: { color: string }) => (
+  <svg width="28" height="44" viewBox="0 0 28 44" fill="none" aria-hidden>
+    <ellipse cx="14" cy="14" rx="12" ry="13" fill={color} stroke="white" strokeWidth="1.5"/>
+    <path d="M14 27 Q10 33 13 39 Q14 41 15 39 Q18 33 14 27 Z" fill={color} stroke="white" strokeWidth="1"/>
+    <ellipse cx="9" cy="10" rx="2.5" ry="2" fill="white" opacity="0.3"/>
+  </svg>
+);
+const CrayonDoodleProg = ({ color }: { color: string }) => (
+  <svg width="18" height="44" viewBox="0 0 18 44" fill="none" aria-hidden>
+    <rect x="3" y="4" width="12" height="27" rx="3" fill={color} stroke="white" strokeWidth="1.5"/>
+    <polygon points="3,31 15,31 9,42" fill="#FFD700" stroke="white" strokeWidth="1.2" strokeLinejoin="round"/>
+    <rect x="3" y="4" width="12" height="8" rx="3" fill="white" opacity="0.25"/>
+  </svg>
+);
+
+const PD_CARDS_HOME = [
+  { id:"playgroup",    color:"#EC210F", href:"/playgroup",    StickerIcon: Puzzle    },
+  { id:"nursery",      color:"#2E90FA", href:"/nursery",      StickerIcon: Pencil    },
+  { id:"kindergarten", color:"#12B76A", href:"/kindergarten", StickerIcon: BookOpen  },
+  { id:"happy-times",  color:"#FB6514", href:"/happy-times",  StickerIcon: Sun       },
+] as const;
+
+function ProgrammesDummyHome() {
+  const progMap = Object.fromEntries(
+    programmes
+      .filter(p => ["playgroup","nursery","kindergarten","happy-times"].includes(p.id))
+      .map(p => [p.id, p])
+  );
+
+  return (
+    <section className="relative overflow-hidden"
+      style={{
+        backgroundImage: [
+          "radial-gradient(circle,rgba(33,27,46,.045) 1px,transparent 1px)",
+          "linear-gradient(170deg,#FFFBF5 0%,#FFF3EA 52%,#FFFBF5 100%)",
+        ].join(","),
+        backgroundSize: "24px 24px, 100% 100%",
+        padding: "100px 0 108px",
+      }}>
+
+      {/* Cloud scallop top */}
+      <div aria-hidden className="absolute top-0 inset-x-0 z-20 pointer-events-none">
+        <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"
+          style={{ display:"block", width:"100%", height:80 }}>
+          <path d="M0,80 L0,42 Q60,4 120,42 Q180,80 240,42 Q300,4 360,42 Q420,80 480,42 Q540,4 600,42 Q660,80 720,42 Q780,4 840,42 Q900,80 960,42 Q1020,4 1080,42 Q1140,80 1200,42 Q1260,4 1320,42 Q1380,80 1440,42 L1440,0 L0,0 Z"
+            fill="white"/>
+        </svg>
+      </div>
+
+      {/* Backdrop colour blobs */}
+      <div aria-hidden className="absolute inset-0 overflow-hidden pointer-events-none" style={{ zIndex:0 }}>
+        <div className="pd-blob-1 absolute rounded-full"
+          style={{ width:460, height:460, top:"26%", left:"-8%",
+            background:"radial-gradient(circle,rgba(236,33,15,.08) 0%,transparent 70%)", filter:"blur(44px)" }}/>
+        <div className="pd-blob-2 absolute rounded-full"
+          style={{ width:420, height:420, top:"16%", right:"-5%",
+            background:"radial-gradient(circle,rgba(46,144,250,.08) 0%,transparent 70%)", filter:"blur(42px)" }}/>
+        <div className="pd-blob-3 absolute rounded-full"
+          style={{ width:340, height:340, bottom:"10%", left:"40%",
+            background:"radial-gradient(circle,rgba(18,183,106,.08) 0%,transparent 70%)", filter:"blur(38px)" }}/>
+      </div>
+
+      {/* Floating doodles */}
+      <div aria-hidden className="pd-doodles absolute inset-0 overflow-hidden pointer-events-none" style={{ zIndex:1 }}>
+        <div className="pd-doodle-1 absolute" style={{ top:"13%", left:"2.5%" }}><StarDoodleProg color="#EC210F"/></div>
+        <div className="pd-doodle-2 absolute" style={{ top:"11%", right:"2.5%" }}><CloudDoodleProg color="#2E90FA"/></div>
+        <div className="pd-doodle-3 absolute" style={{ top:"35%", left:"49%", transform:"translateX(-50%)" }}><SquiggleDoodleProg color="#12B76A"/></div>
+        <div className="pd-doodle-4 absolute" style={{ bottom:"18%", left:"5%" }}><BalloonDoodleProg color="#FB6514"/></div>
+        <div className="pd-doodle-5 absolute" style={{ bottom:"22%", right:"3.5%" }}><CrayonDoodleProg color="#F59E0B"/></div>
+      </div>
+
+      {/* Aurora blobs */}
+      <BentoOrb cls="d-float-b w-[500px] h-[500px] -top-32 -right-16 opacity-30"
+        style={{ background:"radial-gradient(circle,rgba(251,191,36,.18) 0%,transparent 65%)", filter:"blur(56px)" }}/>
+      <BentoOrb cls="d-float-c w-80 h-80 bottom-16 -left-16 opacity-25"
+        style={{ background:"radial-gradient(circle,rgba(236,33,15,.10) 0%,transparent 65%)", filter:"blur(44px)" }}/>
+      <BentoStar cls="d-tw2 text-amber-300/50 top-[18%] left-[38%] w-3.5 h-3.5"/>
+      <BentoStar cls="d-tw3 text-amber-200/40 bottom-[22%] right-[12%] w-2.5 h-2.5"/>
+
+      <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
+
+        {/* Section header */}
+        <div className="du-fade text-center" style={{ marginBottom:56 }}>
+          <p style={{ fontSize:"0.63rem", fontWeight:700, letterSpacing:"0.22em",
+            textTransform:"uppercase", color:"#EC210F", margin:"0 0 14px" }}>
+            OUR PROGRAMMES
+          </p>
+          <h2 className="prog-heading section-title" style={{ margin:"0 0 14px" }}>
+            Programmes for Every Stage of{" "}
+            <span style={{
+              background:"linear-gradient(95deg,#F59E0B 0%,#EC210F 100%)",
+              WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent", backgroundClip:"text",
+            }}>
+              Early Learning
+            </span>
+          </h2>
+          <p className="prog-subtitle" style={{ color:"#55506A", fontSize:"1.0625rem", lineHeight:1.72, margin:0 }}>
+            Age-appropriate programmes designed to nurture your child's unique growth, curiosity, and confidence.
+          </p>
+        </div>
+
+        {/* 4-card grid */}
+        <div
+          className="programmes-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8"
+          style={{ perspective: "1000px" }}
+        >
+          {PD_CARDS_HOME.map(({ id, color, href, StickerIcon }, i) => {
+            const prog = progMap[id] as { name:string; ageRange:string; description:string; image:string } | undefined;
+            if (!prog) return null;
+            return (
+              <div key={id}
+                className={i % 2 === 1 ? "pd-card-offset" : ""}
+                style={{ animation: `pd-rise 0.6s cubic-bezier(.22,1,.36,1) ${i * 0.09}s both` }}>
+                <FloatWrapperProg idx={i}>
+                  <BentoProgrammeCard
+                    title={prog.name}
+                    ageLabel={prog.ageRange}
+                    description={prog.description}
+                    imageUrl={prog.image}
+                    href={href}
+                    themeColor={color}
+                    iconSticker={
+                      <div style={{
+                        width:40, height:40, borderRadius:"50%",
+                        background:color, border:"2.5px solid white",
+                        boxShadow:"0 3px 12px rgba(0,0,0,.26)",
+                        display:"flex", alignItems:"center", justifyContent:"center",
+                      }}>
+                        <StickerIcon size={18} color="white" strokeWidth={2.5}/>
+                      </div>
+                    }
+                  />
+                </FloatWrapperProg>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* View All Programmes button */}
+        <div className="du-fade text-center" style={{ marginTop:60 }}>
+          <a href="/programmes"
+            className="group inline-flex items-center gap-2.5 rounded-full px-9 py-3.5 text-sm font-semibold border border-border/80 bg-white hover:bg-muted transition-all duration-200 hover:-translate-y-0.5 shadow-sm"
+            style={{ textDecoration:"none" }}>
+            View All Programmes
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-150"/>
+          </a>
+        </div>
+
+      </div>
+    </section>
+  );
+}
+
 export default function Home() {
   // Inject all schemas after paint so they don't block the main thread (bots get
   // them via server-side bot-ssr.ts instead).
@@ -1046,35 +1555,7 @@ export default function Home() {
 
       <StatsSection />
 
-      <LazySection minHeight={480} rootMargin="300px">
-        {/* Programmes Section - SEO Cluster Hub */}
-        <section className="py-16 md:py-20 lg:py-24 bg-card cv-auto">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center max-w-3xl mx-auto mb-12" data-reveal="float">
-              <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">Our Programmes</p>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4" data-sparkle>Programmes Designed for Every Stage of Early Learning</h2>
-              <p className="text-muted-foreground text-lg">
-                Explore our age-appropriate programmes designed to support your child's development at every stage.
-              </p>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {programmes
-                .filter(p => !['kids-activity-club', 'summer-camp'].includes(p.id))
-                .map((programme, index) => (
-                  <ProgrammeCard key={programme.id} programme={programme} index={index} />
-                ))}
-            </div>
-            <div className="text-center mt-8">
-              <Link href="/programmes">
-                <Button variant="outline" size="lg" data-testid="button-view-programmes">
-                  View All Programmes
-                  <ArrowRight aria-hidden="true" className="ml-2 h-4 w-4" />
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </section>
-      </LazySection>
+      <ProgrammesDummyHome />
 
       <LazySection minHeight={500}>
         <Suspense fallback={null}>
@@ -1086,11 +1567,7 @@ export default function Home() {
           <MethodologySection />
         </Suspense>
       </LazySection>
-      <LazySection minHeight={400}>
-        <Suspense fallback={null}>
-          <ClassroomGallery />
-        </Suspense>
-      </LazySection>
+      <LearningEnvironmentSection />
 
       <LazySection minHeight={440} rootMargin="300px">
         {/* Testimonials Section - Local SEO Enhanced */}
