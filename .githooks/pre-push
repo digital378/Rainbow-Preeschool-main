@@ -169,6 +169,19 @@ if ! npx --no-install tsx scripts/check-eeat-show-rating.ts; then
   exit 1
 fi
 
+# FAQPage SSR coverage guard. Every createFAQSchema() call in client/src/pages/
+# must have a matching FAQPage entry in server/ssr-pages.ts structuredData so
+# Google's bot-SSR path sees the same FAQPage schema without executing JavaScript.
+echo "[pre-push] Running 'tsx scripts/check-faq-ssr-coverage.ts' ..."
+if ! npx --no-install tsx scripts/check-faq-ssr-coverage.ts; then
+  echo "" >&2
+  echo "[pre-push] 'check-faq-ssr-coverage' failed. Push aborted." >&2
+  echo "[pre-push] A createFAQSchema() call in client/src/pages/ has no matching FAQPage" >&2
+  echo "[pre-push] entry in server/ssr-pages.ts. Add the FAQPage schema to the structuredData" >&2
+  echo "[pre-push] array for the page's canonical path, or re-run with --no-verify to bypass." >&2
+  exit 1
+fi
+
 # Shell ↔ React SEO sync guard. Verifies that the title, description, og:title,
 # og:description, twitter:title, and twitter:description in client/index.html
 # match the <SEO> component props in client/src/pages/home.tsx. Social scrapers
