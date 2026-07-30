@@ -1,0 +1,44 @@
+There are still two unfixed issues on the live homepage. Please fix both precisely.
+
+ISSUE 1 — "OUR LEARNING ENVIRONMENT" section is missing its entire heading block
+
+The section currently shows only the video with feature cards and the filmstrip gallery below — but the top heading block is completely missing. The section jumps straight to the video without any title.
+
+What must appear at the TOP of this section, above the video and feature cards:
+
+Line 1: "OUR LEARNING ENVIRONMENT" — small, uppercase, letter-spaced, in orange/red color, centered
+Line 2: "A world built for little explorers" — large bold heading, centered, with "A world built for" in dark/black and "little explorers" in orange/coral color
+Line 3: "Peek inside a real day at Rainbow Preschool" — smaller subtitle, grey/muted color, centered
+
+Fix steps:
+
+Open the /dummy page and copy the exact heading block HTML/JSX from the top of the "OUR LEARNING ENVIRONMENT" section
+Open the homepage file, find the LearningEnvironmentSection component (or equivalent), and check if the heading block exists inside it
+If the heading block is missing from the component file, add it at the very top of the section, before the video+cards row
+If the component itself is fine but the heading is hidden by CSS (display:none, opacity:0, visibility:hidden), remove that hiding rule
+
+ISSUE 2 — Filmstrip/gallery images below "REAL CLASSROOMS · REAL MOMENTS" not loading
+
+Below the video and feature cards there is a "REAL CLASSROOMS · REAL MOMENTS" label followed by a horizontal scrolling filmstrip of classroom and children photos. These images are either broken or not displaying.
+
+Fix steps:
+
+Find the filmstrip image list in the component — each image has a src path pointing to a file in the assets folder
+Check which specific image files are missing or have incorrect paths
+Go to the /dummy page and note the exact image paths used in the same filmstrip
+Search the project assets folder for the actual filenames (look for .jpg, .png, .webp files related to classrooms or "learning-through-play" or similar names)
+Correct the broken src paths in the homepage component to match the correct file locations
+If any image files are genuinely missing from the assets folder (not just wrong path), flag those specific filenames so they can be re-uploaded — do not invent or substitute different images
+
+Do NOT touch:
+
+The Hero section, Start Exploring, Why Parents Choose, OUR PROGRAMMES, or Request A Callback sections
+The video itself (it is now loading correctly)
+The dummy page
+Any scripts, analytics, or routing
+
+After fixes:
+
+Confirm the heading block is visible above the video
+List which image paths were broken and what they were corrected to
+List every file changed

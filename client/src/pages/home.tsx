@@ -1271,7 +1271,11 @@ function LearningEnvironmentSection() {
         </div>
 
         {/* Filmstrip */}
-        <div className="du-fade" style={{ marginTop:52, overflow:"hidden" }}>
+        <div style={{
+          marginTop:52, overflow:"hidden",
+          opacity: winIn ? 1 : 0,
+          transition: "opacity 0.7s ease 0.3s",
+        }}>
           <p style={{ textAlign:"center", fontSize:"0.62rem", fontWeight:700, letterSpacing:"0.2em",
             textTransform:"uppercase", color:"#9A8FA8", margin:"0 0 16px" }}>
             REAL CLASSROOMS · REAL MOMENTS
