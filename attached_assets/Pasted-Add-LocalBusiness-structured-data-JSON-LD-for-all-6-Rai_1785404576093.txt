@@ -1,0 +1,59 @@
+Add LocalBusiness structured data (JSON-LD) for all 6 Rainbow Preschool centre locations.
+
+In `client/src/lib/seo.tsx`, add this function:
+
+export function createLocalBusinessSchema(centre: {
+  name: string;
+  url: string;
+  telephone: string;
+  address: {
+    street: string;
+    city: string;
+    state: string;
+    postalCode: string;
+  };
+  geo: { lat: number; lng: number };
+  image: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Preschool",
+    "name": centre.name,
+    "url": centre.url,
+    "telephone": centre.telephone,
+    "image": centre.image,
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": centre.address.street,
+      "addressLocality": centre.address.city,
+      "addressRegion": centre.address.state,
+      "postalCode": centre.address.postalCode,
+      "addressCountry": "IN"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": centre.geo.lat,
+      "longitude": centre.geo.lng
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+        "opens": "08:00",
+        "closes": "13:00"
+      }
+    ],
+    "priceRange": "₹₹",
+    "servesCuisine": null,
+    "sameAs": [
+      "https://www.facebook.com/rainbowpreschools",
+      "https://www.instagram.com/rainbowpreschools"
+    ]
+  };
+}
+
+Then in each individual centre page under `client/src/pages/centres/` (or wherever centre detail pages live), import `createLocalBusinessSchema` and inject the JSON-LD into the page's <head> using the same pattern as other schema injections in the codebase.
+
+Fill in the real name, phone, address, and coordinates for each of the 6 centres from the existing centre data already in the codebase or the centres page. Use @type "Preschool" (which extends LocalBusiness and ChildCare — it's the most specific and correct type for a preschool).
+
+Do not hardcode centre data in seo.tsx — pass it as a parameter from each centre's page component.

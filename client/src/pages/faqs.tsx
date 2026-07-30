@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "wouter";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { SEO, createBreadcrumbSchema } from "@/components/seo";
+import { SEO, createBreadcrumbSchema, createFAQSchema } from "@/components/seo";
 import { CTASection } from "@/components/cta-section";
 import { BlogInternalLinks } from "@/components/blog-internal-links";
 import { EEATSignals } from "@/components/eeat-signals";
@@ -210,6 +210,11 @@ const faqCategories: FAQCategory[] = [
 
 const allFAQs = faqCategories.flatMap(cat => cat.faqs);
 
+// Pre-computed FAQPage JSON-LD — built once at module load, not on every render.
+const _faqPageSchema = createFAQSchema(
+  allFAQs.map(f => ({ question: f.question, answer: f.answer }))
+);
+
 function FAQItem({ faq, isOpen, onToggle, id }: { faq: FAQ; isOpen: boolean; onToggle: () => void; id: string }) {
   const panelId = `faq-panel-${id}`;
   const buttonId = `faq-btn-${id}`;
@@ -271,10 +276,13 @@ export default function FAQs() {
         description="Get answers about Rainbow Preschool — admissions, fees, safety, curriculum, timings, and transport. Complete FAQ for parents in Thane."
         keywords="rainbow preschool faq, preschool questions thane, preschool admission faq, preschool fees thane, preschool safety questions, preschool curriculum questions"
         canonical="https://www.rainbowpreschools.com/faqs"
-        structuredData={createBreadcrumbSchema([
-          { name: "Home", url: "/" },
-          { name: "FAQs", url: "/faqs" },
-        ])}
+        structuredData={[
+          _faqPageSchema,
+          createBreadcrumbSchema([
+            { name: "Home", url: "/" },
+            { name: "FAQs", url: "/faqs" },
+          ]),
+        ]}
       />
 
       <section className="max-w-4xl mx-auto px-4 py-12 sm:py-16">
