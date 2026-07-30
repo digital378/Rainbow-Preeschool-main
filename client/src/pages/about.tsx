@@ -1,7 +1,7 @@
 import { Link } from "wouter";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { SEO } from "@/components/seo";
+import { SEO, createBreadcrumbSchema } from "@/components/seo";
 import { CountUp } from "@/components/count-up";
 import { CTASection } from "@/components/cta-section";
 import { EEATSignals } from "@/components/eeat-signals";
@@ -144,6 +144,10 @@ export default function About() {
         description="Learn about Rainbow Preschool International — Thane's trusted preschool since 2007. 6 centres, play-based learning, 1,00,000+ alumni. Our story and values."
         keywords="rainbow preschool thane, about rainbow preschool, rainbow preschool international, rainbow school thane, preschool thane history, trusted preschool thane, early childhood education thane"
         canonical="/about"
+        structuredData={createBreadcrumbSchema([
+          { name: "Home", url: "/" },
+          { name: "About", url: "/about" },
+        ])}
       />
 
       {/* SECTION A - Hero */}

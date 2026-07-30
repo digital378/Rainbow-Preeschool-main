@@ -26,7 +26,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Textarea } from "@/components/ui/textarea";
-import { SEO } from "@/components/seo";
+import { SEO, createBreadcrumbSchema } from "@/components/seo";
 import { ContactForm } from "@/components/contact-form";
 import { CountUp } from "@/components/count-up";
 import { BranchCard } from "@/components/branch-card";
@@ -384,6 +384,10 @@ export default function NurseryLanding() {
         description="Looking for nursery near me in Thane? Rainbow Preschool's Nursery (2.5–3.5 yrs) builds phonics, numeracy & social skills across 6 centres. Enquire now."
         keywords="nursery school in thane, nursery school near me, best nursery school, nursery school admission near me, nursery school admission enquiry, nursery class for kids, play based nursery school, nursery education program, top nursery school in thane"
         canonical="https://www.rainbowpreschools.com/nursery"
+        structuredData={createBreadcrumbSchema([
+          { name: "Home", url: "/" },
+          { name: "Nursery", url: "/nursery" },
+        ])}
       />
 
       {/* Hero Section with Inline Callback Form */}

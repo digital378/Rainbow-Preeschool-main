@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import { SEO } from "@/components/seo";
+import { SEO, createBreadcrumbSchema } from "@/components/seo";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -41,6 +41,11 @@ export default function PlaySchoolNearMajiwada() {
         description={PAGE_DESCRIPTION}
         canonical={PAGE_CANONICAL}
         ogType="website"
+        structuredData={createBreadcrumbSchema([
+          { name: "Home", url: "/" },
+          { name: "Play School Near Me", url: "/play-school-near-me" },
+          { name: "Play School Near Majiwada", url: "/play-school-near-majiwada" },
+        ])}
       />
 
       {/* Hero */}

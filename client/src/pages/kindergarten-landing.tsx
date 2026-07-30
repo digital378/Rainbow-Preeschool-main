@@ -25,7 +25,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { SEO } from "@/components/seo";
+import { SEO, createBreadcrumbSchema } from "@/components/seo";
 import { ContactForm } from "@/components/contact-form";
 import { CountUp } from "@/components/count-up";
 import { BranchCard } from "@/components/branch-card";
@@ -374,6 +374,10 @@ export default function KindergartenLanding() {
         description="Kindergarten in Thane (Jr. KG & Sr. KG) for ages 3.5–5.5 — school-readiness covering literacy, numeracy, and life skills. Enquire for 2026-27."
         keywords="kindergarten school in thane, kindergarten near me, best kindergarten school, kindergarten admission near me, lkg admission near me, ukg admission near me, kindergarten curriculum, school readiness program, kindergarten for kids"
         canonical="https://www.rainbowpreschools.com/kindergarten"
+        structuredData={createBreadcrumbSchema([
+          { name: "Home", url: "/" },
+          { name: "Kindergarten", url: "/kindergarten" },
+        ])}
       />
 
       {/* Hero Section with Inline Callback Form */}

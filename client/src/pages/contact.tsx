@@ -3,7 +3,7 @@ import { Link } from "wouter";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { ContactForm } from "@/components/contact-form";
 import { BranchCard } from "@/components/branch-card";
-import { SEO } from "@/components/seo";
+import { SEO, createBreadcrumbSchema } from "@/components/seo";
 import { EEATSignals } from "@/components/eeat-signals";
 import { LAST_UPDATED_DISPLAY, LAST_UPDATED_ISO } from "@shared/site-freshness";
 import { branches } from "@shared/schema";
@@ -34,6 +34,10 @@ export default function Contact() {
         description="Contact Rainbow Preschool International for admissions, school tours & enquiries. 6 centres in Thane West — call 82915 68972 or visit today."
         keywords="contact rainbow preschool, preschool admissions thane, preschool enquiry, nursery admissions thane, school admission 2025, nursery school fees, preschool registration, preschool admission form, rainbow preschool enquiry thane"
         canonical="https://www.rainbowpreschools.com/contact"
+        structuredData={createBreadcrumbSchema([
+          { name: "Home", url: "/" },
+          { name: "Contact", url: "/contact" },
+        ])}
       />
       {/* Hero Section */}
       <section className="py-24 md:py-32 lg:py-40 bg-gradient-to-br from-primary/5 via-accent/5 to-secondary/5 flex items-center justify-center">

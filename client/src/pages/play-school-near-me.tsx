@@ -25,7 +25,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { SEO } from "@/components/seo";
+import { SEO, createBreadcrumbSchema } from "@/components/seo";
 import { ContactForm } from "@/components/contact-form";
 import { CountUp } from "@/components/count-up";
 import { BranchCard } from "@/components/branch-card";
@@ -527,6 +527,10 @@ export default function PlaySchoolNearMe() {
         description="Find the best play school & preschool near you in Thane — Rainbow Preschool, 6 centres across Thane West, safe play-based learning since 2007."
         keywords="play school near me, preschool near me, playschool near me, play school in thane, preschool in thane, early learning centre near me, Rainbow Preschools"
         canonical="https://www.rainbowpreschools.com/play-school-near-me"
+        structuredData={createBreadcrumbSchema([
+          { name: "Home", url: "/" },
+          { name: "Play School Near Me", url: "/play-school-near-me" },
+        ])}
       />
 
       {/* Hero Section */}

@@ -26,7 +26,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Textarea } from "@/components/ui/textarea";
-import { SEO } from "@/components/seo";
+import { SEO, createBreadcrumbSchema } from "@/components/seo";
 import { ContactForm } from "@/components/contact-form";
 import { CountUp } from "@/components/count-up";
 import { BranchCard } from "@/components/branch-card";
@@ -384,6 +384,10 @@ export default function PlaygroupLanding() {
         description="Enroll your toddler in our Playgroup (1.5–2.5 yrs) — play-based learning and gentle socialisation across Rainbow Preschool's 6 Thane West centres."
         keywords="playgroup in thane, playgroup near me, best playgroup, playgroup admission near me, playgroup for toddlers, playgroup school in thane, early learning playgroup, play based playgroup, best playgroup in thane"
         canonical="https://www.rainbowpreschools.com/playgroup"
+        structuredData={createBreadcrumbSchema([
+          { name: "Home", url: "/" },
+          { name: "Playgroup", url: "/playgroup" },
+        ])}
       />
 
       {/* Hero Section with Inline Callback Form */}

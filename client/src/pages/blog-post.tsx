@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { CTASection } from "@/components/cta-section";
-import { SEO } from "@/components/seo";
+import { SEO, createBreadcrumbSchema } from "@/components/seo";
 import { BlogInternalLinks } from "@/components/blog-internal-links";
 import { EEATSignals } from "@/components/eeat-signals";
 import {
@@ -1237,6 +1237,11 @@ export default function BlogPost() {
         keywords={post.seoKeywords}
         canonical={`https://www.rainbowpreschools.com/blog/${post.slug}`}
         ogType="article"
+        structuredData={createBreadcrumbSchema([
+          { name: "Home", url: "/" },
+          { name: "Blog", url: "/blog" },
+          { name: post.title, url: `/blog/${post.slug}` },
+        ])}
       />
       <article className="py-12 md:py-16 lg:py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
