@@ -1059,14 +1059,14 @@ function LearningEnvironmentSection() {
 
   return (
     <section ref={sectionRef} className="relative overflow-hidden"
-      style={{ background:"linear-gradient(170deg,#FFF4F3 0%,#FFF3EA 52%,#FFF4F3 100%)" }}>
+      style={{ background:"#ffffff" }}>
 
       {/* Cloud scallop top */}
       <div aria-hidden className="absolute top-0 inset-x-0 z-20 pointer-events-none">
         <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"
           style={{ display:"block", width:"100%", height:80 }}>
           <path d="M0,80 L0,42 Q60,4 120,42 Q180,80 240,42 Q300,4 360,42 Q420,80 480,42 Q540,4 600,42 Q660,80 720,42 Q780,4 840,42 Q900,80 960,42 Q1020,4 1080,42 Q1140,80 1200,42 Q1260,4 1320,42 Q1380,80 1440,42 L1440,0 L0,0 Z"
-            fill="#FFF4F3"/>
+            fill="#ffffff"/>
         </svg>
       </div>
 
@@ -1299,7 +1299,7 @@ function LearningEnvironmentSection() {
         <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"
           style={{ display:"block", width:"100%", height:80 }}>
           <path d="M0,0 L0,38 Q60,76 120,38 Q180,0 240,38 Q300,76 360,38 Q420,0 480,38 Q540,76 600,38 Q660,0 720,38 Q780,76 840,38 Q900,0 960,38 Q1020,76 1080,38 Q1140,0 1200,38 Q1260,76 1320,38 Q1380,0 1440,38 L1440,80 L0,80 Z"
-            fill="#FFF4F3"/>
+            fill="#ffffff"/>
         </svg>
       </div>
     </section>

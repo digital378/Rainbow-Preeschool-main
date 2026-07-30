@@ -1,0 +1,60 @@
+I want to update the "Request A Callback" section on the live homepage to exactly match the design on the /dummy page. Do not redesign — copy what already works on /dummy.
+
+Target design (from /dummy page):
+
+Left side:
+
+Small label: "GET IN TOUCH" — uppercase, letter-spaced, red/orange color
+Heading: "Request A Callback" — large, bold, dark black, with a rainbow-colored underline beneath it (multicolor gradient line, same style as "Why Parents Choose Rainbow Preschool" heading)
+Subtitle: "Submit your details and queries here. We'd be glad to help you out!" — grey/muted color
+Image of a teacher sitting with a child (not the boys-with-blocks image currently on live) — rounded corners
+Below the image: a green trust badge with lock icon: "No spam · One call from our admissions team · Completely free"
+Below the badge: two buttons side by side — "Call Now" (dark/black pill button with phone icon) and "WhatsApp" (green pill button with WhatsApp icon)
+
+Right side:
+
+A rounded card/box (white background, border/shadow) containing the form
+Form fields in a 2-column grid:
+Row 1: "Parent Name *" | "Phone Number *"
+Row 2: "Email" | "Child's Name *"
+Row 3: "Child's Age *" (dropdown) | "Programme *" (dropdown)
+Row 4: "Preferred Centre *" (full width dropdown)
+Row 5: "Message (Optional)" (full width textarea)
+Each field has an icon inside the input (person icon, phone icon, email icon, etc.)
+A full-width red "Request Callback" button at the bottom of the form
+
+Step 1 — Find the source (dummy page):
+Open the /dummy page and locate the "GET IN TOUCH / Request A Callback" section. Copy the complete HTML/JSX including both columns — the left side (label, heading with rainbow underline, subtitle, image, trust badge, Call Now + WhatsApp buttons) and the right side (the form card with all fields and the submit button).
+
+Step 2 — Find the destination (live homepage):
+Open the homepage file and locate the existing "Request A Callback" section.
+
+Step 3 — Replace safely:
+Replace ONLY this section with the dummy page version. Do not touch any section above or below it.
+
+Step 4 — Handle the image:
+The left side uses a specific image (teacher with child). Check if this image exists in the project assets folder. Use the same image path as the dummy page. Do not change or delete any other images.
+
+Step 5 — Handle the rainbow underline:
+The heading uses a rainbow/multicolor gradient underline. This is likely a CSS class already used for other headings on the page (like "Why Parents Choose Rainbow Preschool"). Apply the same class to this heading — do not create a duplicate style.
+
+Step 6 — Handle the Call Now and WhatsApp buttons:
+These buttons may have href="tel:..." and href="https://wa.me/..." links. Make sure the same phone number and WhatsApp link used in the dummy page version are preserved correctly.
+
+Step 7 — Handle form functionality:
+The form fields, dropdowns, and submit button must remain fully functional. Do not change any form submission logic, API calls, or validation — only update the visual styling and layout to match the dummy page.
+
+Step 8 — Handle CSS:
+Copy any CSS classes used exclusively in this section from the dummy page stylesheet into the shared stylesheet if they don't already exist globally.
+
+Step 9 — Do NOT touch:
+
+The "OUR PROGRAMMES" section above
+The footer below
+Navbar or any other page
+The dummy page itself
+Form submission logic, API endpoints, or validation code
+Google Analytics or any scripts
+
+Step 10 — After changes:
+List every file changed and what was modified so I can review before running.
