@@ -1,0 +1,50 @@
+Thought process
+Thought process
+Here's the verification prompt to paste into Replit AI:
+
+I need you to do a full audit check against the SEO improvements that were planned. Go through each item below and tell me clearly whether it is Done ✅, Partially Done ⚠️, or Not Done ❌ — with the exact file and line reference for each.
+
+CHECK 1 — Title Tag
+Open the main HTML file (likely client/index.html or the Head component). Does the <title> tag now include the word "Thane"? What is the exact current title tag text?
+
+CHECK 2 — Meta Description
+In the same file, what is the exact current meta description content? Is it between 150–160 characters? Does it include "Thane" and a call to action?
+
+CHECK 3 — Noindex on /dummy page
+Open the dummy page file. Does it have <meta name="robots" content="noindex"> or equivalent? Show me the exact line.
+
+CHECK 4 — AggregateRating Schema
+Search the codebase for AggregateRating or aggregateRating. Where exactly is this schema defined? Show me the full JSON-LD block. Does it include: ratingValue, reviewCount, bestRating?
+
+CHECK 5 — LocalBusiness Schema
+Search for LocalBusiness or EducationalOrganization in the codebase. Is there a JSON-LD schema block for the business with name, address, telephone, geo coordinates, and opening hours? If not, this is still missing.
+
+CHECK 6 — BreadcrumbList Schema
+Search for BreadcrumbList in the codebase. Which pages have this implemented? List all the files where it appears.
+
+CHECK 7 — Image Alt Text
+Search for <img tags across all homepage component files. Are there any <img tags that are missing an alt attribute, or have an empty alt=""? List them.
+
+CHECK 8 — Video Lazy Loading / Defer
+Find the campus walkthrough video element in the codebase. Does it now use IntersectionObserver or a similar technique to defer loading? Is autoplay only triggered when the section is in the viewport? Show me the relevant code.
+
+CHECK 9 — Image Lazy Loading
+Search for <img tags below the hero section in homepage components. Do they have loading="lazy" attribute? List any that are missing it.
+
+CHECK 10 — Hero Image Preload
+In client/index.html or the Head component, is there a <link rel="preload" as="image"> tag for the hero banner image?
+
+CHECK 11 — FAQ Schema
+Search for FAQPage in the codebase. Is there FAQ schema markup on the /faqs page?
+
+CHECK 12 — Canonical Tags on Inner Pages
+Pick 3 inner pages (e.g. /kindergarten, /playgroup, /contact). Do these pages set a self-referencing canonical tag dynamically? How is it implemented?
+
+After checking all 12 items:
+Give me a summary table like this:
+
+#	SEO Item	Status	File / Notes
+1	Title tag includes "Thane"	✅/⚠️/❌	...
+2	Meta description optimized	✅/⚠️/❌	...
+...	...	...	...
+Then tell me which items still need to be implemented and suggest the exact next steps for each.

@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { PLAYGROUP, KINDERGARTEN, HAPPY_TIMES } from "@shared/programme-data";
+import { VERIFIED_RATING } from "@shared/verified-rating";
 
 interface SEOProps {
   title: string;
@@ -291,3 +292,35 @@ export function createServiceSchema(service: {
     url: `${BASE_URL}${service.url}`,
   };
 }
+
+/**
+ * Creates a standalone AggregateRating object for embedding in a parent schema.
+ * Does NOT include @context — intended to be nested inside a parent entity.
+ */
+export function createAggregateRatingSchema(opts: {
+  ratingValue: number;
+  reviewCount: number;
+  bestRating?: number;
+}) {
+  return {
+    "@type": "AggregateRating",
+    ratingValue: String(opts.ratingValue),
+    reviewCount: String(opts.reviewCount),
+    bestRating: String(opts.bestRating ?? 5),
+    worstRating: "1",
+  };
+}
+
+/**
+ * EducationalOrganization with embedded AggregateRating — use on the homepage
+ * and programme pages to enable gold star ratings in Google SERP snippets.
+ * Uses the centrally verified rating from @shared/verified-rating.
+ */
+export const educationalOrgWithRatingSchema = {
+  ...organizationSchema,
+  "@type": "EducationalOrganization" as const,
+  aggregateRating: createAggregateRatingSchema({
+    ratingValue: VERIFIED_RATING.ratingValue,
+    reviewCount: VERIFIED_RATING.reviewCount,
+  }),
+};

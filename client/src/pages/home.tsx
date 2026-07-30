@@ -18,6 +18,7 @@ import { LAST_UPDATED_DISPLAY, LAST_UPDATED_ISO } from "@shared/site-freshness";
 import { createAllBranchLocalBusinessSchemas, centres } from "@shared/centre-data";
 import { cn } from "@/lib/utils";
 import { PLAYGROUP, NURSERY, KINDERGARTEN } from "@shared/programme-data";
+import { VERIFIED_RATING } from "@shared/verified-rating";
 import { BranchCard } from "@/components/branch-card";
 import { TestimonialCard } from "@/components/testimonial-card";
 import { CountUp } from "@/components/count-up";
@@ -195,7 +196,14 @@ const _organizationSchema = {
     "addressRegion": "Maharashtra",
     "postalCode": "400610",
     "addressCountry": "IN"
-  }
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": String(VERIFIED_RATING.ratingValue),
+    "reviewCount": String(VERIFIED_RATING.reviewCount),
+    "bestRating": "5",
+    "worstRating": "1",
+  },
 };
 
 const _websiteSchema = {

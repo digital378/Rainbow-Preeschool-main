@@ -367,6 +367,13 @@ const organizationSchema = {
     "Montessori Education",
     "Child Development",
   ],
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: String(VERIFIED_RATING.ratingValue),
+    reviewCount: String(VERIFIED_RATING.reviewCount),
+    bestRating: "5",
+    worstRating: "1",
+  },
 };
 
 const websiteSchema = {
