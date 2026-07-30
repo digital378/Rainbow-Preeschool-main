@@ -291,6 +291,31 @@ async function main(): Promise<void> {
     }
   }
 
+  // 2b: /faqs must emit FAQPage JSON-LD in raw HTML (no JS required)
+  // This was historically broken because the SPA catch-all called
+  // injectPageSchemas with req.path which Express silently rewrote to "/"
+  // for app.use("*", fn) handlers — causing all pages to receive the homepage
+  // schemas instead of their own. Guard here so the regression can't recur.
+  try {
+    const { status, html } = await fetchHtml("/faqs");
+    if (status === 200) {
+      reachableCount++;
+      if (!hasFaqPageJsonLd(html)) {
+        failures.push({
+          url: "/faqs",
+          reason: "missing FAQPage JSON-LD in raw HTML (required for Google rich results without JS)",
+        });
+      }
+    } else {
+      failures.push({ url: "/faqs", reason: `status=${status}` });
+    }
+  } catch (err) {
+    failures.push({
+      url: "/faqs",
+      reason: `fetch failed: ${(err as Error).message}`,
+    });
+  }
+
   // 3: deep-content pages have ≥ DEEP_CONTENT_MIN_WORDS in <main>
   for (const path of DEEP_CONTENT_PAGES) {
     try {

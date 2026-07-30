@@ -51,7 +51,10 @@ function injectPageSchemas(urlPath: string, html: string): string {
   }
 
   if (scripts.length === 0 || !html.includes("</head>")) return html;
-  return html.replace("</head>", `    ${scripts.join("\n    ")}\n</head>`);
+  // Use a replacer function so '$' characters in schema JSON are never
+  // interpreted as special replacement patterns by String.prototype.replace.
+  const injection = `    ${scripts.join("\n    ")}\n</head>`;
+  return html.replace("</head>", () => injection);
 }
 
 export function serveStatic(app: Express) {
@@ -105,13 +108,19 @@ export function serveStatic(app: Express) {
   // For known pages (those in staticPages / getPageSEO), inject their
   // structured-data JSON-LD into the shell so Google, curl, and social
   // preview crawlers see the schemas in raw HTML — no JS execution required.
-  app.use("*", (req: Request, res: Response) => {
+  // NOTE: do NOT pass a path argument to app.use here.
+  // Express strips the matched path from req.url inside the handler, so
+  // app.use("*", fn) would always see req.path === "/" for every route.
+  // Without a path arg, req.originalUrl always contains the real URL.
+  app.use((req: Request, res: Response) => {
     res.removeHeader("Set-Cookie");
     res.setHeader("Cache-Control", "no-store");
     res.setHeader("Content-Type", "text/html; charset=utf-8");
     const indexPath = path.resolve(distPath, "index.html");
     let html = fs.readFileSync(indexPath, "utf-8");
-    html = injectPageSchemas(req.path, html);
+    // Use originalUrl (strip query string) to get the real page path.
+    const urlPath = req.originalUrl.split("?")[0];
+    html = injectPageSchemas(urlPath, html);
     res.send(html);
   });
 }
