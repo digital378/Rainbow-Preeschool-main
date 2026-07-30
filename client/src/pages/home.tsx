@@ -1428,11 +1428,7 @@ function ProgrammesDummyHome() {
 
       {/* Floating doodles */}
       <div aria-hidden className="pd-doodles absolute inset-0 overflow-hidden pointer-events-none" style={{ zIndex:1 }}>
-        <div className="pd-doodle-1 absolute" style={{ top:"13%", left:"2.5%" }}><StarDoodleProg color="#EC210F"/></div>
-        <div className="pd-doodle-2 absolute" style={{ top:"11%", right:"2.5%" }}><CloudDoodleProg color="#2E90FA"/></div>
         <div className="pd-doodle-3 absolute" style={{ top:"35%", left:"49%", transform:"translateX(-50%)" }}><SquiggleDoodleProg color="#12B76A"/></div>
-        <div className="pd-doodle-4 absolute" style={{ bottom:"18%", left:"5%" }}><BalloonDoodleProg color="#FB6514"/></div>
-        <div className="pd-doodle-5 absolute" style={{ bottom:"22%", right:"3.5%" }}><CrayonDoodleProg color="#F59E0B"/></div>
       </div>
 
       {/* Aurora blobs */}
