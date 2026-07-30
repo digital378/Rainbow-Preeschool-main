@@ -1083,7 +1083,12 @@ function LearningEnvironmentSection() {
       <div className="relative z-10" style={{ padding:"100px 0 80px" }}>
 
         {/* Heading */}
-        <div className="text-center du-fade" style={{ marginBottom:52, padding:"0 20px" }}>
+        <div className="text-center" style={{
+          marginBottom:52, padding:"0 20px",
+          opacity: winIn ? 1 : 0,
+          transform: winIn ? "none" : "translateY(24px)",
+          transition: "opacity 0.6s ease, transform 0.6s cubic-bezier(.22,1,.36,1)",
+        }}>
           <p style={{ fontSize:"0.63rem", fontWeight:700, letterSpacing:"0.22em",
             textTransform:"uppercase", color:"#EC210F", margin:"0 0 12px" }}>
             OUR LEARNING ENVIRONMENT
@@ -1555,6 +1560,8 @@ export default function Home() {
 
       <StatsSection />
 
+      <LearningEnvironmentSection />
+
       <ProgrammesDummyHome />
 
       <LazySection minHeight={500}>
@@ -1567,7 +1574,6 @@ export default function Home() {
           <MethodologySection />
         </Suspense>
       </LazySection>
-      <LearningEnvironmentSection />
 
       <LazySection minHeight={440} rootMargin="300px">
         {/* Testimonials Section - Local SEO Enhanced */}
