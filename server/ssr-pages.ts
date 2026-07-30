@@ -24,6 +24,7 @@ import {
 import { legacyPagesData } from "@shared/legacy-pages-data";
 import { shouldNoIndex } from "@shared/seo-config";
 import { VERIFIED_RATING } from "@shared/verified-rating";
+import { FAQ_SCHEMA_ITEMS } from "@shared/faq-data";
 
 // Pre-compute the per-branch LocalBusiness JSON-LD array once at module load
 // so commercial-page SSR can splat it into structuredData without per-request work.
@@ -1521,14 +1522,12 @@ const staticPages: Record<string, PageSEOData> = {
     structuredData: [{
       "@context": "https://schema.org",
       "@type": "FAQPage",
-      mainEntity: [
-        { "@type": "Question", name: "What is the admission process at Rainbow Preschool?", acceptedAnswer: { "@type": "Answer", text: "Admissions are open year-round. Select your preferred programme and centre, schedule a campus visit, fill out the admission form, submit required documents, and complete enrollment. Call 82915 68972 to start." } },
-        { "@type": "Question", name: "What age groups do you accept?", acceptedAnswer: { "@type": "Answer", text: "We accept children aged 1.5 to 6 years. Programmes: Playgroup (1.5-2.5 years), Nursery (2.5-3.5 years), and Kindergarten (3.5-5.5 years). Happy Times extended care for ages 2-10." } },
-        { "@type": "Question", name: "What safety measures are in place?", acceptedAnswer: { "@type": "Answer", text: "24/7 CCTV surveillance, controlled entry/exit, verified pickup system, 100% female teaching staff, first-aid trained staff, fire safety equipment, and child-proofed facilities." } },
-        { "@type": "Question", name: "What curriculum does Rainbow Preschool follow?", acceptedAnswer: { "@type": "Answer", text: "A play-based, activity-driven curriculum covering cognitive, social, emotional, physical, and language development. Teachers are ECE and Montessori certified." } },
-        { "@type": "Question", name: "What are the school timings?", acceptedAnswer: { "@type": "Answer", text: "All centres operate Monday to Saturday, 8:00 AM to 6:00 PM. Both half-day and full-day options are available." } },
-        { "@type": "Question", name: "How many centres does Rainbow Preschool have?", acceptedAnswer: { "@type": "Answer", text: "6 centres across Thane: Manpada, Hariniwas (Naupada), Anand Nagar (Majiwada), Dhokali (Kolshet Road), Kalwa, and Kasarvadavali (Ghodbunder Road)." } },
-      ],
+      // All 30 questions from shared/faq-data.ts — single source of truth shared with the client page.
+      mainEntity: FAQ_SCHEMA_ITEMS.map(f => ({
+        "@type": "Question",
+        name: f.question,
+        acceptedAnswer: { "@type": "Answer", text: f.answer },
+      })),
     }],
     contentSections: [
       { heading: "FAQ Categories", items: ["Admissions & Registration — Process, documents, age groups, mid-year enrollment", "Fees & Payments — Fee structure, instalments, what's included", "Safety & Security — CCTV, pickup protocols, medical emergencies, staff verification", "Curriculum & Learning — Play-based approach, languages, assessments", "Daily Routine & Timings — School hours, typical day, what to bring", "Transport — Availability, safety features", "Settling In — Adjustment tips, separation anxiety, parent involvement", "Centres & Locations — 6 centres across Thane, visiting, quality consistency"] },
