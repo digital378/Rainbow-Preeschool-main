@@ -1,3 +1,4 @@
+- [Express catch-all path stripping](express-catch-all-path-stripping.md) — app.use("*", fn) sets req.path to "/" for every route; use app.use(fn) + req.originalUrl instead.
 - [H1 sync pattern](h1-sync.md) — SSR h1: field in ssr-pages.ts must equal client <h1> text exactly; guard checks parity.
 - [Title cannibalisation guard](title-guard.md) — scripts/check-no-title-cannibalisation.ts; wired in pre-commit, pre-push, predeploy; NOT in npm run check (cannot edit package.json).
 - [Predeploy smoke-test suite](predeploy-smoke-tests.md) — 4 checks run against production build; homepage SPA exception; API truncates logs to ~75 lines (use Replit UI for full output).
