@@ -647,6 +647,41 @@ const staticPages: Record<string, PageSEOData> = {
     lastModifiedDisplay: LAST_UPDATED_DISPLAY,
     h1: "Preschool Programmes in Thane",
     breadcrumbs: [{ name: "Home", url: "/" }, { name: "Programmes", url: "/programmes" }],
+    structuredData: [
+      programmeOrgSchema,
+      websiteSchema,
+      {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        name: "Preschool Programmes at Rainbow Preschool International",
+        description: "Overview of all three age-aligned preschool programmes offered by Rainbow Preschool International in Thane.",
+        url: `${BASE_URL}/programmes`,
+        numberOfItems: 3,
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Playgroup (1.5–2.5 years)",
+            url: `${BASE_URL}/playgroup`,
+            description: "Play-based early learning and socialisation for toddlers aged 1.5 to 2.5 years.",
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Nursery (2.5–3.5 years)",
+            url: `${BASE_URL}/nursery`,
+            description: "Early literacy, numeracy, and confidence-building for children aged 2.5 to 3.5 years.",
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: "Kindergarten (3.5–5.5 years)",
+            url: `${BASE_URL}/kindergarten`,
+            description: "Comprehensive school-readiness programme covering reading, writing, maths, and life skills.",
+          },
+        ],
+      },
+    ],
     contentSections: [
       { heading: "Playgroup (1.5–2.5 years)", text: "A gentle introduction to the world of learning through play, sensory exploration, and social interaction. Perfect for toddlers taking their first steps into structured education." },
       { heading: "Nursery (2.5–3.5 years)", text: "Building strong foundations in literacy, numeracy, and social skills through engaging activities, storytelling, and creative expression." },
@@ -757,6 +792,19 @@ const staticPages: Record<string, PageSEOData> = {
     lastModifiedDisplay: LAST_UPDATED_DISPLAY,
     h1: "Rainbow Preschool Photos",
     breadcrumbs: [{ name: "Home", url: "/" }, { name: "Gallery", url: "/gallery" }],
+    structuredData: [
+      organizationSchema,
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "@id": `${BASE_URL}/gallery`,
+        name: "Rainbow Preschool Photo Gallery",
+        description: "Photos of classrooms, activities, events, and centres at Rainbow Preschool International, Thane.",
+        url: `${BASE_URL}/gallery`,
+        isPartOf: { "@id": `${BASE_URL}/#website` },
+        about: { "@id": `${BASE_URL}/#organization` },
+      },
+    ],
     contentSections: [
       { heading: "Our Gallery Categories", items: ["Classrooms — Bright, child-friendly learning spaces", "Activities — Creative arts, music, and hands-on learning", "Events & Celebrations — Annual days, festivals, and special events", "Happy Times — Joyful moments from school life", "Infrastructure — Modern facilities and safe premises", "Centres in Thane — Our 6 locations across Thane West"] },
     ],
@@ -771,6 +819,19 @@ const staticPages: Record<string, PageSEOData> = {
     lastModifiedDisplay: LAST_UPDATED_DISPLAY,
     h1: "Contact Us — Rainbow Preschool International",
     breadcrumbs: [{ name: "Home", url: "/" }, { name: "Contact", url: "/contact" }],
+    structuredData: [
+      organizationSchema,
+      {
+        "@context": "https://schema.org",
+        "@type": "ContactPage",
+        "@id": `${BASE_URL}/contact`,
+        name: "Contact Rainbow Preschool International",
+        description: "Contact page for Rainbow Preschool International — admissions enquiries, campus visits, and general questions.",
+        url: `${BASE_URL}/contact`,
+        isPartOf: { "@id": `${BASE_URL}/#website` },
+        about: { "@id": `${BASE_URL}/#organization` },
+      },
+    ],
     contentSections: [
       { heading: "Get in Touch", text: "We'd love to hear from you! Contact us for admissions enquiries, to schedule a visit, or for any questions about our programmes." },
       { heading: "Contact Details", items: ["Phone: 82915 68972", "Landline: 022 6114 7114", "Email: admin@rainbowpreschools.com", "Office Hours: Mon - Sat, 9 AM - 6 PM", "Head Office: 2nd Floor, Chestnut Plaza, Opp. Edenwoods, Manpada, Thane (W), 400610"] },
@@ -786,6 +847,20 @@ const staticPages: Record<string, PageSEOData> = {
     lastModifiedDisplay: LAST_UPDATED_DISPLAY,
     h1: "Rainbow Preschool Blog",
     breadcrumbs: [{ name: "Home", url: "/" }, { name: "Blog", url: "/blog" }],
+    structuredData: [
+      organizationSchema,
+      {
+        "@context": "https://schema.org",
+        "@type": "Blog",
+        "@id": `${BASE_URL}/blog`,
+        name: "Rainbow Preschool Blog",
+        description: "Parenting tips, early childhood education articles, and child development insights from Rainbow Preschool International, Thane.",
+        url: `${BASE_URL}/blog`,
+        publisher: { "@id": `${BASE_URL}/#organization` },
+        isPartOf: { "@id": `${BASE_URL}/#website` },
+        inLanguage: "en-IN",
+      },
+    ],
     contentSections: [
       { heading: "Latest Articles", items: [
         "50 Fun Learning Activities for Preschoolers at Home",
