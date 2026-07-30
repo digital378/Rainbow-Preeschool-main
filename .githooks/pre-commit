@@ -92,6 +92,19 @@ if ! npx --no-install tsx scripts/check-admissions-howto-sync.ts; then
   exit 1
 fi
 
+# FAQ SSR coverage guard. Verifies that every createFAQSchema() call site in
+# client/src/pages/ has a matching FAQPage entry in server/ssr-pages.ts.
+# Google's crawler needs the schema in the bot-SSR HTML — a client-only
+# useEffect injection is invisible to it.
+echo "[pre-commit] Running 'tsx scripts/check-faq-ssr-coverage.ts' ..."
+if ! npx --no-install tsx scripts/check-faq-ssr-coverage.ts; then
+  echo "" >&2
+  echo "[pre-commit] 'check-faq-ssr-coverage' failed. Commit aborted." >&2
+  echo "[pre-commit] Add the FAQPage schema to the matching structuredData array in" >&2
+  echo "[pre-commit] server/ssr-pages.ts, or re-run with --no-verify to bypass." >&2
+  exit 1
+fi
+
 # H1 parity guard. Verifies that the h1: field in server/ssr-pages.ts
 # staticPages matches the <h1> rendered by the corresponding client page
 # component. Googlebot indexes the SSR h1; users see the React h1 — drift
