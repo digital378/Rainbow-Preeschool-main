@@ -144,6 +144,18 @@ if ! npx --no-install tsx scripts/check-body-copy-cannibalisation.ts; then
   exit 1
 fi
 
+# Admissions HowTo schema sync guard. Mirrors pre-commit — catches the
+# regression even if the commit hook was bypassed with --no-verify.
+echo "[pre-push] Running 'tsx scripts/check-admissions-howto-sync.ts' ..."
+if ! npx --no-install tsx scripts/check-admissions-howto-sync.ts; then
+  echo "" >&2
+  echo "[pre-push] 'check-admissions-howto-sync' failed. Push aborted." >&2
+  echo "[pre-push] Both server/ssr-pages.ts and client/src/pages/preschool-admissions.tsx" >&2
+  echo "[pre-push] must import admissionHowToSchema from @shared/admissions-howto-data." >&2
+  echo "[pre-push] Fix the issues above, or re-run with --no-verify to bypass." >&2
+  exit 1
+fi
+
 # EEATSignals showRating guard. Every <EEATSignals> call in client/src/pages/
 # must pass showRating={false} explicitly. The prop defaults to true, which
 # emits star-rating rich-result markup — publishing unverified ratings violates

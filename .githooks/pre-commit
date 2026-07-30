@@ -79,6 +79,19 @@ if ! npx --no-install tsx scripts/check-description-length.ts; then
   exit 1
 fi
 
+# Admissions HowTo schema sync guard. Verifies that both server/ssr-pages.ts
+# and client/src/pages/preschool-admissions.tsx import admissionHowToSchema
+# from @shared/admissions-howto-data and neither defines a local HowTo override.
+echo "[pre-commit] Running 'tsx scripts/check-admissions-howto-sync.ts' ..."
+if ! npx --no-install tsx scripts/check-admissions-howto-sync.ts; then
+  echo "" >&2
+  echo "[pre-commit] 'check-admissions-howto-sync' failed. Commit aborted." >&2
+  echo "[pre-commit] Both server/ssr-pages.ts and client/src/pages/preschool-admissions.tsx" >&2
+  echo "[pre-commit] must import admissionHowToSchema from @shared/admissions-howto-data." >&2
+  echo "[pre-commit] Fix the issues above, or re-run with --no-verify to bypass." >&2
+  exit 1
+fi
+
 # H1 parity guard. Verifies that the h1: field in server/ssr-pages.ts
 # staticPages matches the <h1> rendered by the corresponding client page
 # component. Googlebot indexes the SSR h1; users see the React h1 — drift
