@@ -1,18 +1,18 @@
-import { Link } from "wouter";
-import { Button } from "@/components/ui/button";
 import { ArrowRight, Phone, Users, Star, MapPin, Shield } from "lucide-react";
 import { trackCTAClick } from "@/lib/analytics";
 
 const trustBadges = [
-  { icon: Users, label: "1,00,000+ Young Learners" },
-  { icon: Star, label: "18+ Years of Excellence" },
-  { icon: MapPin, label: "6 Centres Across Thane" },
-  { icon: Shield, label: "100% Female Staff" },
+  { Icon: Users,  label: "1,00,000+ Young Learners" },
+  { Icon: Star,   label: "18+ Years of Excellence" },
+  { Icon: MapPin, label: "6 Centres Across Thane" },
+  { Icon: Shield, label: "100% Female Staff" },
 ];
 
 export function HeroSection() {
   return (
     <section className="relative min-h-[80vh] flex items-center overflow-hidden">
+
+      {/* ── Background: photo + dark overlays — unchanged ── */}
       <div className="absolute inset-0">
         <img
           src="/images/optimized/hero-banner-1.webp"
@@ -32,84 +32,133 @@ export function HeroSection() {
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32 w-full">
         <div className="max-w-2xl">
 
-          <Link href="/contact" data-testid="link-admissions-badge">
+          {/* Admissions badge — kept exactly */}
+          <a href="/contact" data-testid="link-admissions-badge">
             <div
-              className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/12 backdrop-blur-md border border-white/25 mb-7 cursor-pointer hover:bg-white/22 transition-all duration-300 hover:scale-105 animate-in fade-in slide-in-from-bottom-3 duration-700"
-              style={{ animationFillMode: "both" }}
+              className="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-full mb-8 cursor-pointer hover:bg-white/15 transition-all duration-300 hover:scale-105 animate-in fade-in slide-in-from-bottom-3 duration-700"
+              style={{
+                background: "rgba(255,255,255,0.10)",
+                backdropFilter: "blur(16px)",
+                border: "1px solid rgba(255,255,255,0.24)",
+                boxShadow: "0 2px 14px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.14)",
+                animationFillMode: "both",
+              }}
             >
-              <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse shadow-[0_0_6px_2px_rgba(74,222,128,0.6)]" />
+              <span
+                className="w-2 h-2 rounded-full bg-green-400 flex-shrink-0"
+                style={{ boxShadow: "0 0 0 4px rgba(74,222,128,0.28)", animation: "pulse 2s ease-in-out infinite" }}
+              />
               <span className="text-sm font-semibold text-white/95 tracking-wide">Admissions Open · 2026–27</span>
             </div>
-          </Link>
+          </a>
 
+          {/* H1 — "Rainbow" white / "Preschool" red, each on own line, dummy scale */}
           <h1
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-5 text-white leading-[1.08] animate-in fade-in slide-in-from-bottom-4 duration-700"
-            style={{ animationFillMode: "both", animationDelay: "150ms" }}
+            className="font-heading font-black text-white mb-5 animate-in fade-in slide-in-from-bottom-4 duration-700"
+            style={{
+              fontSize: "clamp(2.7rem, 6vw, 5.2rem)",
+              lineHeight: 1.02,
+              letterSpacing: "-0.04em",
+              animationFillMode: "both",
+              animationDelay: "150ms",
+            }}
           >
-            Rainbow{" "}
-            <span className="text-yellow-400 drop-shadow-[0_2px_8px_rgba(250,204,21,0.4)]">
+            Rainbow
+            <span
+              className="block"
+              style={{ color: "#EC210F", textShadow: "0 4px 24px rgba(236,33,15,0.45)" }}
+            >
               Preschool
             </span>
-            <span className="block mt-3 text-xl sm:text-2xl md:text-3xl font-semibold tracking-normal text-white/90">
-              Playschool, Nursery &amp; Kindergarten
+            {/* Subtitle — dot separators, lighter weight */}
+            <span
+              className="block font-semibold text-white/80 mt-3"
+              style={{ fontSize: "clamp(1.1rem, 2.4vw, 1.85rem)", letterSpacing: "-0.012em", lineHeight: 1.34 }}
+            >
+              Playschool · Nursery · Kindergarten
             </span>
           </h1>
 
+          {/* Description */}
           <p
-            className="text-lg md:text-xl text-white/85 max-w-xl mb-9 leading-relaxed animate-in fade-in slide-in-from-bottom-4 duration-700"
+            className="text-[1.05rem] md:text-[1.15rem] text-white/70 max-w-[500px] mb-9 leading-[1.76] animate-in fade-in slide-in-from-bottom-4 duration-700"
             style={{ animationFillMode: "both", animationDelay: "300ms" }}
           >
             Thane's trusted preschool since 2007 — where every child's first steps into learning are joyful, safe, and full of wonder.
           </p>
 
+          {/* Trust pills — cleaner dummy style */}
           <div
-            className="flex flex-wrap items-center gap-2.5 mb-9 animate-in fade-in slide-in-from-bottom-4 duration-700"
+            className="flex flex-wrap gap-2 mb-9 animate-in fade-in slide-in-from-bottom-4 duration-700"
             style={{ animationFillMode: "both", animationDelay: "450ms" }}
           >
-            {trustBadges.map((badge, index) => (
+            {trustBadges.map(({ Icon, label }, i) => (
               <div
-                key={index}
-                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/18 transition-colors"
+                key={i}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full cursor-default select-none transition-all duration-200 hover:scale-105 hover:bg-white/16"
+                style={{
+                  background: "rgba(255,255,255,0.08)",
+                  backdropFilter: "blur(10px)",
+                  border: "1px solid rgba(255,255,255,0.16)",
+                }}
               >
-                <badge.icon className="w-3.5 h-3.5 text-yellow-400" />
-                <span className="text-xs font-semibold text-white/90">{badge.label}</span>
+                <Icon className="w-3.5 h-3.5 text-yellow-400 flex-shrink-0" />
+                <span className="text-[11px] font-semibold text-white/88 tracking-wide whitespace-nowrap">{label}</span>
               </div>
             ))}
           </div>
 
+          {/* CTAs — pill shape matching dummy */}
           <div
-            className="flex flex-col sm:flex-row items-start gap-3 animate-in fade-in slide-in-from-bottom-4 duration-700"
+            className="flex flex-col sm:flex-row items-start gap-3.5 animate-in fade-in slide-in-from-bottom-4 duration-700"
             style={{ animationFillMode: "both", animationDelay: "600ms" }}
           >
-            <Button
-              size="lg"
-              className="text-base px-8 h-12 bg-primary hover:bg-primary/90 shadow-[0_4px_20px_rgba(239,68,68,0.4)] hover:shadow-[0_6px_24px_rgba(239,68,68,0.5)] transition-all duration-300 hover:-translate-y-0.5 font-semibold"
-              onClick={() => {
-                trackCTAClick("request_callback", "hero");
-                window.location.href = "/contact";
-              }}
+            {/* Primary — solid red pill */}
+            <a
+              href="/contact"
               data-testid="button-hero-callback"
-            >
-              <Phone className="mr-2 h-4.5 w-4.5" />
-              Request a Callback
-            </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              className="text-base px-8 h-12 border-white/35 text-white bg-white/10 backdrop-blur-sm hover:bg-white/22 hover:-translate-y-0.5 transition-all duration-300 font-semibold"
-              onClick={() => {
-                trackCTAClick("explore_programmes", "hero");
-                window.location.href = "/programmes";
+              className="inline-flex items-center justify-center gap-2.5 rounded-full font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:scale-[1.03]"
+              style={{
+                height: 60,
+                paddingLeft: "2.4rem",
+                paddingRight: "2.4rem",
+                fontSize: "1rem",
+                background: "hsl(var(--primary))",
+                boxShadow: "0 10px 40px rgba(220,38,38,0.48), 0 4px 18px rgba(220,38,38,0.30), inset 0 1px 0 rgba(255,255,255,0.22)",
+                textDecoration: "none",
               }}
+              onClick={() => trackCTAClick("request_callback", "hero")}
+            >
+              <Phone className="w-4 h-4 flex-shrink-0" />
+              Request a Callback
+            </a>
+
+            {/* Ghost — frosted pill */}
+            <a
+              href="/programmes"
               data-testid="button-hero-programmes"
+              className="inline-flex items-center justify-center gap-2.5 rounded-full font-semibold text-white group transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/18"
+              style={{
+                height: 60,
+                paddingLeft: "2.4rem",
+                paddingRight: "2.4rem",
+                fontSize: "1rem",
+                background: "rgba(255,255,255,0.11)",
+                backdropFilter: "blur(14px)",
+                border: "1px solid rgba(255,255,255,0.30)",
+                textDecoration: "none",
+              }}
+              onClick={() => trackCTAClick("explore_programmes", "hero")}
             >
               Explore Programmes
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
+              <ArrowRight className="w-4 h-4 flex-shrink-0 transition-transform duration-200 group-hover:translate-x-1.5" />
+            </a>
           </div>
+
         </div>
       </div>
 
+      {/* Bottom wave — unchanged */}
       <div className="absolute -bottom-1 left-0 right-0">
         <svg viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto block" preserveAspectRatio="none">
           <path d="M0 80L60 72C120 64 240 48 360 44C480 40 600 48 720 52C840 56 960 56 1080 54C1200 52 1320 44 1380 40L1440 36V80H1380C1320 80 1200 80 1080 80C960 80 840 80 720 80C600 80 480 80 360 80C240 80 120 80 60 80H0Z" className="fill-background" />

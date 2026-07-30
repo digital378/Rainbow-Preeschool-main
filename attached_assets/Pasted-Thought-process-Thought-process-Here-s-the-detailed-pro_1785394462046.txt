@@ -1,0 +1,52 @@
+Thought process
+Thought process
+Here's the detailed prompt for this section update:
+
+I want to replace the "Life at Rainbow / Glimpses of Joy at Our Preschool" section on the live homepage with the "OUR LEARNING ENVIRONMENT / A world built for little explorers" section from the /dummy page. This updated section should appear directly below the "Why Parents Choose Rainbow Preschool" section on the live homepage.
+
+Current section to REMOVE from live homepage:
+The section with:
+
+Label: "LIFE AT RAINBOW"
+Heading: "Glimpses of Joy at Our Preschool"
+Subtitle: "See our little learners explore, play, and grow..."
+A photo gallery grid (large image left, two smaller images right)
+Remove this entire section including its HTML, and any CSS classes used exclusively by it.
+New section to ADD (copy from /dummy page):
+The section with:
+
+Small label: "OUR LEARNING ENVIRONMENT" (letter-spaced, uppercase, red/orange color)
+Heading: "A world built for little explorers" — where "little explorers" is in orange/coral color, rest in dark/black bold
+Subtitle: "Peek inside a real day at Rainbow Preschool"
+A center video/image of a child in the classroom with a "Sound off" toggle button
+Left side feature cards (connected with dashed lines to center): "Play-Based Learning" (orange icon) and "Expert Teachers" (blue icon)
+Right side feature cards (connected with dashed lines to center): "CCTV-Safe Campuses" (green icon) and "Small Batches" (purple icon)
+Below the video: "REAL CLASSROOMS · REAL MOMENTS" label
+Step 1 — Find the source (dummy page):
+Open the /dummy page file and copy the complete HTML for the "OUR LEARNING ENVIRONMENT" section — including the heading, subtitle, center video block with sound toggle, all 4 feature cards, dashed connector lines, and the bottom label.
+
+Step 2 — Find the destination (live homepage):
+Open the homepage file, find the "Life at Rainbow / Glimpses of Joy" section, and note its exact position (it should be after the "Why Parents Choose Rainbow Preschool" section).
+
+Step 3 — Replace:
+Delete the "Glimpses of Joy" section entirely and insert the new "OUR LEARNING ENVIRONMENT" section in its exact place — directly after "Why Parents Choose Rainbow Preschool."
+
+Step 4 — Handle the video/media:
+Check what video or image file is used in the center of the dummy page's version of this section. Make sure the same media file path is referenced correctly in the homepage. If it's a video, ensure autoplay, muted, and loop attributes are set correctly.
+
+Step 5 — Handle CSS:
+Check if all CSS classes for this section already exist in the shared stylesheet. If any are defined only in the dummy page's CSS, copy them to the shared stylesheet. Do not duplicate existing styles.
+
+Step 6 — Handle dashed connector lines:
+The dashed lines connecting the feature cards to the center video may be CSS borders or SVG elements. Make sure these are copied accurately and display correctly on the homepage.
+
+Step 7 — Do NOT touch:
+
+The "Why Parents Choose Rainbow Preschool" section above
+Any section below this one
+Navbar, footer, or any other page sections
+The dummy page itself
+Google Analytics or any other scripts
+Step 8 — After changes:
+List every file changed and exactly what was modified so I can review before running.
+
