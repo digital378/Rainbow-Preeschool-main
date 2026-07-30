@@ -1,0 +1,48 @@
+I want to update the "WHY CHOOSE US" section on the live homepage to exactly match the design on the /dummy page. Do not redesign — copy what already works on /dummy.
+
+Current live version (to replace):
+
+6 plain icon items in a 3×2 grid (Safety & CCTV, Certified Teachers, Hygiene & Cleanliness, Ideal Student-Teacher Ratio, Transport Facility, Play-Based Learning)
+Simple circular outline icons with no card backgrounds
+Centered layout
+
+Target design (from /dummy page):
+
+Label: "WHY CHOOSE US" — small, uppercase, red/orange color, left-aligned
+Heading: "A Trusted Early Learning Journey Since 2007" — large, bold, dark, left-aligned
+Subtitle: "Every element of our centres is designed with your child's safety, happiness, and growth in mind." — grey/muted, left-aligned
+3 feature cards side by side, each with a soft colored background, large 3D illustrated icon, bold title, description text:
+Card 1 — soft pink/red background, 3D red shield-with-checkmark icon, title: "Safety & CCTV", description about CCTV and female staff, with red tag links below: "CCTV Monitored · Verified Pickup · 100% Female Staff"
+Card 2 — soft blue background, 3D blue certificate/badge icon, title: "Certified Teachers", description about ECCEd certified teachers
+Card 3 — soft green/teal background, 3D green water drop icon, title: "Hygiene First", description about daily sanitisation
+
+Step 1 — Find the source (dummy page):
+Open the /dummy page and locate the "WHY CHOOSE US" section. Copy the complete HTML/JSX including the label, heading, subtitle, and all 3 feature cards with their background colors, 3D icons, titles, descriptions, and the red tag row on card 1.
+
+Step 2 — Find the destination (live homepage):
+Open the homepage file and locate the existing "WHY CHOOSE US" section (the 6-item grid version).
+
+Step 3 — Replace safely:
+Replace ONLY the WHY CHOOSE US section in the homepage with the dummy page version. Do not touch any section above or below it.
+
+Step 4 — Handle the 3D icons:
+The 3 cards use large 3D-style illustrated icons (shield, certificate/badge, water drop). These may be image files (.png, .webp) or emoji rendered large. Check the dummy page to find what exactly is used and ensure the same icons are referenced correctly in the homepage version.
+
+Step 5 — Handle card background colors:
+Each card has a distinct soft background color (pink-red, light blue, light green). These are likely CSS background-color or Tailwind color classes. Make sure they are applied correctly — do not use plain white backgrounds.
+
+Step 6 — Handle the red tag row on Card 1:
+The first card has a row of red text tags at the bottom: "CCTV Monitored · Verified Pickup · 100% Female Staff". These must be included exactly as shown.
+
+Step 7 — Handle CSS:
+Check if all CSS classes for this section's card layout and colors already exist in the shared stylesheet. If any are only defined in the dummy page's CSS, copy them to the shared stylesheet. Do not duplicate existing styles.
+
+Step 8 — Do NOT touch:
+
+Any section above (OUR LEARNING ENVIRONMENT) or below (OUR PROGRAMMES)
+Navbar, footer, or any other page
+The dummy page itself
+Any scripts or analytics
+
+Step 9 — After changes:
+List every file changed and what was modified so I can review before running.

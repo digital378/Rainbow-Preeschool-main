@@ -836,4 +836,64 @@
     content-visibility: auto;
     contain-intrinsic-size: auto 600px;
   }
+
+  /* ══ WHY CHOOSE US — 3D tile cards ══════════════════════════════════ */
+  @keyframes wcu-rise  { from{opacity:0;transform:translateY(32px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes wcu-icon-bob-0 { 0%,100%{transform:translateZ(32px) translateY(0)}   50%{transform:translateZ(32px) translateY(-5px)} }
+  @keyframes wcu-icon-bob-1 { 0%,100%{transform:translateZ(32px) translateY(-2px)} 50%{transform:translateZ(32px) translateY(-7px)} }
+  @keyframes wcu-icon-bob-2 { 0%,100%{transform:translateZ(32px) translateY(-1px)} 50%{transform:translateZ(32px) translateY(-6px)} }
+  @keyframes wcu-icon-bob-3 { 0%,100%{transform:translateZ(32px) translateY(-3px)} 50%{transform:translateZ(32px) translateY(-8px)} }
+  @keyframes wcu-icon-bob-4 { 0%,100%{transform:translateZ(32px) translateY(0)}   50%{transform:translateZ(32px) translateY(-5px)} }
+  @keyframes wcu-icon-bob-5 { 0%,100%{transform:translateZ(32px) translateY(-1px)} 50%{transform:translateZ(32px) translateY(-7px)} }
+  @keyframes wcu-hero-shine {
+    0%,74%   { background-position:-220% center; opacity:0; }
+    78%      { opacity:1; }
+    94%,100% { background-position:320% center; opacity:0; }
+  }
+  .wcu-tile {
+    position:relative; transform-style:preserve-3d;
+    transition:transform 0.18s cubic-bezier(.22,1,.36,1), box-shadow 0.28s ease;
+    will-change:transform;
+  }
+  .wcu-spotlight {
+    position:absolute; inset:0; border-radius:inherit; pointer-events:none; z-index:1;
+    background:radial-gradient(180px circle at var(--mx,50%) var(--my,50%), var(--spotlight-color,transparent), transparent 70%);
+    opacity:var(--spotlight-opacity,0);
+    transition:opacity 0.35s ease;
+  }
+  .wcu-icon-3d {
+    display:flex; align-items:center; justify-content:center;
+    transform:translateZ(32px);
+    filter:drop-shadow(0 6px 14px var(--icon-shadow,rgba(0,0,0,.22)));
+    transition:transform 0.32s cubic-bezier(.34,1.56,.64,1), filter 0.28s;
+  }
+  .wcu-icon-bob-0 { animation:wcu-icon-bob-0 4.0s ease-in-out 0.0s infinite; }
+  .wcu-icon-bob-1 { animation:wcu-icon-bob-1 4.4s ease-in-out 0.5s infinite; }
+  .wcu-icon-bob-2 { animation:wcu-icon-bob-2 3.8s ease-in-out 1.0s infinite; }
+  .wcu-icon-bob-3 { animation:wcu-icon-bob-3 4.2s ease-in-out 0.3s infinite; }
+  .wcu-icon-bob-4 { animation:wcu-icon-bob-4 4.6s ease-in-out 0.8s infinite; }
+  .wcu-icon-bob-5 { animation:wcu-icon-bob-5 4.1s ease-in-out 1.3s infinite; }
+  .wcu-tile:hover .wcu-icon-3d {
+    animation:none !important;
+    transform:translateZ(52px) translateY(-4px) rotate(8deg) !important;
+    filter:drop-shadow(0 12px 22px var(--icon-shadow,rgba(0,0,0,.3))) !important;
+  }
+  .wcu-hero-shine {
+    position:absolute; inset:0; border-radius:inherit; pointer-events:none; z-index:2;
+    background:linear-gradient(118deg,transparent 20%,rgba(255,255,255,.55) 50%,transparent 80%);
+    background-size:300% 100%;
+    animation:wcu-hero-shine 6s ease-in-out infinite;
+    mix-blend-mode:screen;
+  }
+  .wcu-tile:focus-visible { outline:3px solid #EC210F; outline-offset:3px; }
+  .wcu-doodles { pointer-events:none; }
+  @media (max-width:1023px) { .wcu-doodles { display:none; } }
+  @media (prefers-reduced-motion:reduce) {
+    .wcu-tile { transition:none !important; transform:none !important; }
+    .wcu-icon-3d { transform:none !important; }
+    .wcu-icon-bob-0,.wcu-icon-bob-1,.wcu-icon-bob-2,.wcu-icon-bob-3,.wcu-icon-bob-4,.wcu-icon-bob-5 { animation:none !important; }
+    .wcu-tile:hover .wcu-icon-3d { transform:none !important; animation:none !important; }
+    .wcu-hero-shine { animation:none !important; opacity:0 !important; }
+    .wcu-spotlight  { display:none !important; }
+  }
 }
