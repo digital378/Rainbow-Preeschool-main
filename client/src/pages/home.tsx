@@ -34,42 +34,6 @@ const MethodologySection = lazy(() => import("@/components/methodology-section")
 const CTASection = lazy(() => import("@/components/cta-section").then(m => ({ default: m.CTASection })));
 const ContactForm = lazy(() => import("@/components/contact-form").then(m => ({ default: m.ContactForm })));
 
-function VideoWithFallback() {
-  const [errored, setErrored] = useState(false);
-  if (errored) {
-    return (
-      <div className="rounded-xl overflow-hidden shadow-md w-full" style={{ aspectRatio: '16/9' }}>
-        <img
-          src="/assets/walkthrough-poster.webp"
-          alt="Rainbow Preschool campus walkthrough"
-          className="w-full h-full object-cover"
-          loading="lazy"
-          width={800}
-          height={450}
-        />
-      </div>
-    );
-  }
-  return (
-    <div className="rounded-xl overflow-hidden shadow-md" data-testid="callback-video">
-      <video
-        src="/assets/RPS_Walkthrough_Video_-_Website_1_1766126796450.mp4"
-        poster="/assets/walkthrough-poster.webp"
-        autoPlay
-        loop
-        muted
-        playsInline
-        preload="none"
-        className="w-full h-auto"
-        width={800}
-        height={450}
-        onError={() => setErrored(true)}
-      >
-        Your browser does not support the video tag.
-      </video>
-    </div>
-  );
-}
 
 function LazySection({ children, rootMargin = "200px", minHeight = 400 }: { children: React.ReactNode; rootMargin?: string; minHeight?: number }) {
   const ref = useRef<HTMLDivElement>(null);
