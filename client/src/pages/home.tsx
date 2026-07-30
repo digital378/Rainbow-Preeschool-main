@@ -43,6 +43,7 @@ function VideoWithFallback() {
           src="/assets/walkthrough-poster.webp"
           alt="Rainbow Preschool campus walkthrough"
           className="w-full h-full object-cover"
+          loading="lazy"
           width={800}
           height={450}
         />
@@ -620,6 +621,7 @@ function StatsSection() {
                 alt=""
                 aria-hidden={true}
                 className="mascot-char mascot-stage-img"
+                loading="lazy"
                 style={{ filter:"drop-shadow(0 8px 28px rgba(33,27,46,.16))" }}
               />
               <div className="dm-badge-pill" style={{ margin:"0 0 14px", background:"rgba(255,255,255,.88)",
@@ -1021,7 +1023,8 @@ const LE_FILMSTRIP = [
 function LearningEnvironmentSection() {
   const sectionRef  = useRef<HTMLElement>(null);
   const tiltRef     = useRef<HTMLDivElement>(null);
-  const videoRef    = useRef<HTMLVideoElement>(null);
+  const videoRef       = useRef<HTMLVideoElement>(null);
+  const mobileVideoRef = useRef<HTMLVideoElement>(null);
   const [muted,       setMuted]       = useState(true);
   const [winIn,       setWinIn]       = useState(false);
   const [chipsIn,     setChipsIn]     = useState(false);
@@ -1036,8 +1039,10 @@ function LearningEnvironmentSection() {
         setWinIn(true);
         setTimeout(() => setChipsIn(true), 420);
         videoRef.current?.play().catch(() => {});
+        mobileVideoRef.current?.play().catch(() => {});
       } else {
         videoRef.current?.pause();
+        mobileVideoRef.current?.pause();
       }
     }, { threshold: 0.2 });
     obs.observe(el);
@@ -1169,12 +1174,13 @@ function LearningEnvironmentSection() {
               <div className="relative aspect-video">
                 {videoError ? (
                   <img src="/images/optimized/classroom-rainbow-preschool.webp" alt="Rainbow Preschool campus"
+                    loading="lazy"
                     style={{ display:"block", width:"100%", height:"100%", objectFit:"cover" }} />
                 ) : (<>
                   <video ref={videoRef}
                     src="/assets/RPS_Walkthrough_Video_-_Website_1_1766126796450.mp4"
                     poster="/assets/walkthrough-poster.webp"
-                    autoPlay muted loop playsInline preload="metadata"
+                    muted loop playsInline preload="none"
                     aria-label="Campus walkthrough of Rainbow Preschool — classrooms, activity areas, outdoor spaces"
                     style={{ display:"block", width:"100%", height:"100%", objectFit:"cover" }}
                     onError={() => setVideoError(true)}
@@ -1237,12 +1243,13 @@ function LearningEnvironmentSection() {
             <div className="relative aspect-video">
               {videoError ? (
                 <img src="/images/optimized/classroom-rainbow-preschool.webp" alt="Rainbow Preschool campus"
+                  loading="lazy"
                   style={{ display:"block", width:"100%", height:"100%", objectFit:"cover" }} />
               ) : (<>
-                <video
+                <video ref={mobileVideoRef}
                   src="/assets/RPS_Walkthrough_Video_-_Website_1_1766126796450.mp4"
                   poster="/assets/walkthrough-poster.webp"
-                  autoPlay muted loop playsInline preload="metadata"
+                  muted loop playsInline preload="none"
                   aria-label="Campus walkthrough of Rainbow Preschool"
                   style={{ display:"block", width:"100%", height:"100%", objectFit:"cover" }}
                   onError={() => setVideoError(true)}
@@ -1627,6 +1634,7 @@ function ContactSection() {
   const sectionRef      = useRef<HTMLElement>(null);
   const confettiPortal  = useRef<HTMLDivElement>(null);
   const floatRef        = useRef<HTMLDivElement>(null);
+  const contactVideoRef = useRef<HTMLVideoElement>(null);
   const [visible,    setVisible]    = useState(false);
   const [values,     setValues]     = useState<Record<string,string>>(CTC_INIT);
   const [errors,     setErrors]     = useState<Record<string,string>>({});
@@ -1644,6 +1652,12 @@ function ContactSection() {
     obs.observe(el);
     return () => obs.disconnect();
   }, []);
+
+  useEffect(() => {
+    if (visible && contactVideoRef.current) {
+      contactVideoRef.current.play().catch(() => {});
+    }
+  }, [visible]);
 
   const onVideoMove = (e: React.MouseEvent) => {
     if (prefersReduced || !floatRef.current) return;
@@ -1777,12 +1791,12 @@ function ContactSection() {
               <div style={{ animation: prefersReduced ? "none" : "ctc-float 4s ease-in-out infinite", position:"relative", zIndex:2 }}>
                 <div ref={floatRef} style={{ borderRadius:24, overflow:"hidden", boxShadow:"0 20px 56px rgba(33,27,46,0.16),0 4px 14px rgba(33,27,46,0.08)", transition:"transform 0.12s ease-out" }}>
                   {videoError ? (
-                    <img src="/assets/walkthrough-poster.webp" alt="Rainbow Preschool campus" width={800} height={450} style={{ width:"100%", height:"auto", display:"block" }} />
+                    <img src="/assets/walkthrough-poster.webp" alt="Rainbow Preschool campus" width={800} height={450} loading="lazy" style={{ width:"100%", height:"auto", display:"block" }} />
                   ) : (
-                    <video
+                    <video ref={contactVideoRef}
                       src="/assets/RPS_Walkthrough_Video_-_Website_1_1766126796450.mp4"
                       poster="/assets/walkthrough-poster.webp"
-                      autoPlay loop muted playsInline preload="metadata"
+                      loop muted playsInline preload="none"
                       style={{ width:"100%", height:"auto", display:"block" }}
                       width={800} height={450}
                       onError={() => setVideoError(true)}
