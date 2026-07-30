@@ -1,0 +1,38 @@
+I need to safely remove the cookie consent banner from my website. The banner currently displays the message: "We use cookies and analytics (including the Facebook Pixel) to understand how parents find us and improve our website. By continuing, you agree to our Privacy Policy. (India DPDP Act 2023)" with Decline and Accept buttons.
+
+Please do the following carefully:
+
+1. Find all related code:
+Search across all files (HTML, JS, CSS, and any component files) for keywords like: cookie, Cookie, cookieconsent, facebook pixel, fbq, FacebookPixel, DPDP, Privacy Policy banner, cookie-banner, cookie_banner, cookieBanner, accept, decline — but only in the context of the cookie banner, not general usage.
+
+2. Remove the banner UI:
+Delete the HTML element that renders the cookie consent banner. This may be a <div>, a <section>, or a component. Remove it completely along with its child elements (the message text, the Decline button, and the Accept button).
+
+3. Remove the banner's CSS:
+Find and delete any CSS classes or IDs that style only the cookie banner (e.g. .cookie-banner, #cookie-consent, .consent-box or similar). Do NOT remove any shared CSS classes that are also used by other elements on the site.
+
+4. Remove the banner's JavaScript logic:
+Find and delete the JavaScript that controls the banner — this typically includes: showing/hiding the banner, reading/writing a cookie or localStorage value on Accept or Decline, and any event listeners attached to the Accept/Decline buttons. Be careful NOT to delete unrelated localStorage or cookie logic used elsewhere on the site.
+
+5. Remove the Facebook Pixel:
+Find the Facebook Pixel script. It usually looks like this and is inside a <script> tag in the HTML <head> or in a separate JS file:
+
+!function(f,b,e,v,n,t,s){...}(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', 'YOUR_PIXEL_ID');
+fbq('track', 'PageView');
+
+Remove this entire script block including any <noscript> fallback tag that follows it. Also remove any other fbq(...) calls found anywhere else in the codebase.
+
+6. Do NOT touch:
+
+The Privacy Policy page itself (only remove the banner that links to it)
+Google Analytics or Google Tag Manager code (if present)
+Any other cookie/localStorage usage unrelated to the consent banner
+Navigation, footer, header, or any other UI components
+Any other third-party scripts not related to Facebook Pixel or the cookie banner
+
+7. After making changes:
+
+Show me a summary of every file that was changed and exactly what was removed
+Confirm that no shared code or unrelated functionality was affected
+Check if there are any remaining references to fbq or the banner anywhere in the codebase and flag them

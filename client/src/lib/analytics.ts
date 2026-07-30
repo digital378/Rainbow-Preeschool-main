@@ -1,5 +1,3 @@
-import { hasPixelConsent } from "@/lib/cookie-consent";
-
 // Google Analytics 4 Integration for Rainbow Preschool
 // Clean, non-duplicated form submission tracking using gtag/dataLayer
 // 
@@ -266,37 +264,6 @@ export const trackAdLead = (params: AdLeadParams = {}) => {
     console.log(`[GA4] Event pushed to dataLayer: ${eventName}`);
   }
   
-  // Also fire Meta Pixel Lead event for Meta Ads tracking with user data for better matching
-  if (hasPixelConsent() && (window as any).fbq) {
-    // Split parent name into first and last name for Meta matching
-    const nameParts = (params.parentName || '').trim().split(' ');
-    const firstName = nameParts[0] || '';
-    const lastName = nameParts.slice(1).join(' ') || '';
-    
-    // Format phone number (remove +91, spaces, etc.)
-    const cleanPhone = (params.phone || '').replace(/[\s\-\+]/g, '').replace(/^91/, '');
-    
-    // Fire Lead event with user data for improved match quality
-    (window as any).fbq('track', 'Lead', {
-      value: 0,
-      currency: 'INR',
-      content_name: 'Ad Landing Lead',
-      content_category: 'meta_ads_conversion',
-    }, {
-      eventID: `ad_lead_${Date.now()}`,
-    });
-    
-    // Update user data for advanced matching (improves Event Match Quality)
-    if (firstName || cleanPhone) {
-      (window as any).fbq('init', '876471444795481', {
-        fn: firstName.toLowerCase(),
-        ln: lastName.toLowerCase(),
-        ph: cleanPhone,
-      });
-    }
-    
-    console.log('[Meta Pixel] Lead event fired for /ad page with user data');
-  }
 };
 
 /**
@@ -419,37 +386,6 @@ export const trackGoogleAdsLead = (params: AdLeadParams = {}) => {
     console.log(`[GA4] Event pushed to dataLayer: ${eventName}`);
   }
   
-  // Also fire Meta Pixel Lead event for Meta Ads tracking with user data for better matching
-  if (hasPixelConsent() && (window as any).fbq) {
-    // Split parent name into first and last name for Meta matching
-    const nameParts = (params.parentName || '').trim().split(' ');
-    const firstName = nameParts[0] || '';
-    const lastName = nameParts.slice(1).join(' ') || '';
-    
-    // Format phone number (remove +91, spaces, etc.)
-    const cleanPhone = (params.phone || '').replace(/[\s\-\+]/g, '').replace(/^91/, '');
-    
-    // Fire Lead event with user data for improved match quality
-    (window as any).fbq('track', 'Lead', {
-      value: 0,
-      currency: 'INR',
-      content_name: 'Google Ads Landing Lead',
-      content_category: 'google_ads_conversion',
-    }, {
-      eventID: `google_ad_lead_${Date.now()}`,
-    });
-    
-    // Update user data for advanced matching (improves Event Match Quality)
-    if (firstName || cleanPhone) {
-      (window as any).fbq('init', '876471444795481', {
-        fn: firstName.toLowerCase(),
-        ln: lastName.toLowerCase(),
-        ph: cleanPhone,
-      });
-    }
-    
-    console.log('[Meta Pixel] Lead event fired for /ad-google page with user data');
-  }
 };
 
 /**

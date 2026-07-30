@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "wouter";
 import { centres } from "@shared/centre-data";
-import { hasPixelConsent } from "@/lib/cookie-consent";
-
 // ─── EDITABLE CONFIG ─────────────────────────────────────────────────────────
 const CONFIG = {
   phone: "+918291568972",
@@ -152,7 +150,6 @@ const CONFIG = {
 // ─────────────────────────────────────────────────────────────────────────────
 
 const GA4_ID = "G-G1MX1N0M05";
-const META_PIXEL_ID = "876471444795481";
 
 function getUtmParams() {
   const params = new URLSearchParams(window.location.search);
@@ -289,16 +286,6 @@ export default function AdLanding() {
       (window as any).gtag("config", "AW-1747212533/a68zCIykmPsbEJnzrYtB", { phone_conversion_number: "82915 68972" });
     }
 
-    if (hasPixelConsent()) {
-      if (!(window as any).fbq) {
-        const fbScript = document.createElement("script");
-        fbScript.innerHTML = `!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','${META_PIXEL_ID}');fbq('track','PageView');`;
-        document.head.appendChild(fbScript);
-      } else {
-        (window as any).fbq("track", "PageView");
-      }
-    }
-
     if (!(window as any).clarity) {
       const clarityScript = document.createElement("script");
       clarityScript.innerHTML = `(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","m20xf4ffec");`;
@@ -346,9 +333,6 @@ export default function AdLanding() {
         if ((window as any).gtag) {
           (window as any).gtag("event", "ad_leads", { parent_name: formData.parentName, phone: formData.phone, lead_source: utmData.leadSource });
           (window as any).gtag("event", "ad_form_submit", { form_location: "hero" });
-        }
-        if ((window as any).fbq) {
-          (window as any).fbq("track", "Lead", { content_name: "Ad Landing Form", lead_source: utmData.leadSource });
         }
         setIsSubmitted(true);
       }

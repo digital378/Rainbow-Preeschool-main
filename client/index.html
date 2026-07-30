@@ -117,7 +117,6 @@
         // Load the GTM container — it fires Clarity, Google Ads, Call-Tracking,
         // Meta Pixels, and the CAPI builder through their GTM tags.
         // Nothing else may self-inject on load (Clarity removed from inline code).
-        // Facebook Pixel remains consent-gated: cookie-consent.ts → initPixelIfConsented()
         (function(w,d,s,l,i){
           w[l]=w[l]||[]; w[l].push({'gtm.start':Date.now(),event:'gtm.js'});
           var f=d.getElementsByTagName(s)[0],j=d.createElement(s);
@@ -138,7 +137,6 @@
   </head>
   <body>
     <!-- GTM noscript removed -->
-    <!-- Meta Pixel noscript removed — Pixel is consent-gated (DPDP Act 2023) -->
     <!-- Static LCP hero — pre-rendered before React mounts. Painted as soon as
          HTML + image bytes arrive (no JS execution required). Stays in DOM for
          the home page after React mounts, positioned absolutely behind React
