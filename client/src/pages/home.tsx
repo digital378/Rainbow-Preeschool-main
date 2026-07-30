@@ -23,7 +23,8 @@ import { TestimonialCard } from "@/components/testimonial-card";
 import { CountUp } from "@/components/count-up";
 import { SEO, createBreadcrumbSchema } from "@/components/seo";
 import { programmes, branches, testimonials } from "@shared/schema";
-import { ArrowRight, Star, Users, MapPin, Shield, Lock, Phone, Award, FileText, Palette, BookOpen, GraduationCap, Puzzle, ShieldCheck, Volume2, VolumeX, Pencil, Sun } from "lucide-react";
+import { ArrowRight, Star, Users, MapPin, Shield, Lock, Phone, Award, FileText, Palette, BookOpen, GraduationCap, Puzzle, ShieldCheck, Volume2, VolumeX, Pencil, Sun, User, Mail, Smile, Calendar, MessageSquare, AlertCircle, CheckCircle } from "lucide-react";
+import { SiWhatsapp } from "react-icons/si";
 import { ProgrammeCard as BentoProgrammeCard } from "@/components/ui/programme-card";
 import { useState, useEffect, lazy, Suspense, useRef } from "react";
 
@@ -1164,8 +1165,8 @@ function LearningEnvironmentSection() {
                 ) : (<>
                   <video ref={videoRef}
                     src="/assets/RPS_Walkthrough_Video_-_Website_1_1766126796450.mp4"
-                    poster="/images/optimized/classroom-rainbow-preschool.webp"
-                    autoPlay muted loop playsInline preload="none"
+                    poster="/assets/walkthrough-poster.webp"
+                    autoPlay muted loop playsInline preload="metadata"
                     aria-label="Campus walkthrough of Rainbow Preschool — classrooms, activity areas, outdoor spaces"
                     style={{ display:"block", width:"100%", height:"100%", objectFit:"cover" }}
                     onError={() => setVideoError(true)}
@@ -1232,8 +1233,8 @@ function LearningEnvironmentSection() {
               ) : (<>
                 <video
                   src="/assets/RPS_Walkthrough_Video_-_Website_1_1766126796450.mp4"
-                  poster="/images/optimized/classroom-rainbow-preschool.webp"
-                  autoPlay muted loop playsInline preload="none"
+                  poster="/assets/walkthrough-poster.webp"
+                  autoPlay muted loop playsInline preload="metadata"
                   aria-label="Campus walkthrough of Rainbow Preschool"
                   style={{ display:"block", width:"100%", height:"100%", objectFit:"cover" }}
                   onError={() => setVideoError(true)}
@@ -1503,6 +1504,468 @@ function ProgrammesDummyHome() {
   );
 }
 
+/* ═══════════════════════════════════════════════════════════════════════════
+   CONTACT SECTION — "GET IN TOUCH / Request A Callback"
+   Ported from /dummy ContactSection. Self-contained.
+═══════════════════════════════════════════════════════════════════════════ */
+const CTC_AGE_OPTIONS = [
+  "Below 1.5 years","1.5 - 2 years","2 - 2.5 years","2.5 - 3 years",
+  "3 - 3.5 years","3.5 - 4 years","4 - 5 years","5 - 6 years","Above 6 years",
+];
+const CTC_REQUIRED = new Set(["parentName","phone","childName","childAge","programme","branch"]);
+const CTC_INIT = { parentName:"",phone:"",email:"",childName:"",childAge:"",programme:"",branch:"",message:"" };
+
+function ctcValidate(name: string, value: string): string {
+  if (name === "parentName") return value.trim().length >= 2 ? "" : "Name must be at least 2 characters";
+  if (name === "phone")      return /^\+?[\d\s\-()\u2013]{10,}$/.test(value.trim()) ? "" : "Please enter a valid phone number";
+  if (name === "email")      return !value.trim() || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) ? "" : "Please enter a valid email";
+  if (name === "childName")  return value.trim().length >= 2 ? "" : "Child's name must be at least 2 characters";
+  if (name === "childAge")   return value ? "" : "Please select child's age";
+  if (name === "programme")  return value ? "" : "Please select a programme";
+  if (name === "branch")     return value ? "" : "Please select a branch";
+  return "";
+}
+
+function spawnCtcConfetti(container: HTMLDivElement | null) {
+  if (!container) return;
+  const palette = ["#EC210F","#fbbf24","#10b981","#3b82f6","#8b5cf6","#f43f5e","#fb923c"];
+  for (let i = 0; i < 72; i++) {
+    const el = document.createElement("div");
+    const size = 5 + Math.random() * 9;
+    el.style.cssText = `
+      position:absolute;width:${size}px;height:${size}px;
+      background:${palette[Math.floor(Math.random()*palette.length)]};
+      border-radius:${Math.random()>.5?"50%":"3px"};
+      left:50%;top:40%;pointer-events:none;
+      --cx:${(Math.random()-.5)*500}px;--cy:${-(60+Math.random()*280)}px;
+      --cr:${Math.random()*720-360}deg;
+      animation:ctc-confetti ${0.7+Math.random()*.5}s ease-out ${Math.random()*.35}s both;
+    `;
+    container.appendChild(el);
+    setTimeout(() => el.remove(), 1400);
+  }
+}
+
+function CtcField({
+  id, label, required, icon: Icon, error, isValid, colSpan, multiline, children,
+}: {
+  id: string; label: string; required?: boolean;
+  icon: React.ElementType; error?: string; isValid?: boolean;
+  colSpan?: boolean; multiline?: boolean; children: React.ReactNode;
+}) {
+  return (
+    <div style={colSpan ? { gridColumn:"span 2" } : {}}>
+      <label htmlFor={id} style={{
+        display:"block", fontSize:13, fontWeight:600, marginBottom:6,
+        color: error ? "#DC2626" : isValid ? "#059669" : "#374151",
+        transition:"color 0.15s",
+      }}>
+        {label}{required && <span style={{ color:"#DC2626", marginLeft:2 }}>*</span>}
+      </label>
+      <div style={{ position:"relative" }}>
+        <span aria-hidden style={{
+          position:"absolute", left:13, zIndex:1, pointerEvents:"none",
+          top: multiline ? 13 : "50%",
+          transform: multiline ? "none" : "translateY(-50%)",
+          color: error ? "#DC2626" : isValid ? "#059669" : "#9ca3af",
+          transition:"color 0.15s", display:"flex",
+        }}>
+          <Icon size={15} />
+        </span>
+        {children}
+        {(error || isValid) && (
+          <span aria-hidden style={{
+            position:"absolute", right:13, pointerEvents:"none",
+            top: multiline ? 13 : "50%",
+            transform: multiline ? "none" : "translateY(-50%)",
+            color: error ? "#DC2626" : "#059669", display:"flex",
+          }}>
+            {error ? <AlertCircle size={14} /> : <CheckCircle size={14} />}
+          </span>
+        )}
+      </div>
+      {error && (
+        <p id={`${id}-err`} role="alert" style={{
+          marginTop:4, fontSize:12, color:"#DC2626",
+          display:"flex", alignItems:"center", gap:3,
+        }}>
+          <AlertCircle size={11} /> {error}
+        </p>
+      )}
+    </div>
+  );
+}
+
+function ContactSection() {
+  const prefersReduced  = usePrefersReducedMotion();
+  const sectionRef      = useRef<HTMLElement>(null);
+  const confettiPortal  = useRef<HTMLDivElement>(null);
+  const floatRef        = useRef<HTMLDivElement>(null);
+  const [visible,    setVisible]    = useState(false);
+  const [values,     setValues]     = useState<Record<string,string>>(CTC_INIT);
+  const [errors,     setErrors]     = useState<Record<string,string>>({});
+  const [validF,     setValidF]     = useState<Record<string,boolean>>({});
+  const [focused,    setFocused]    = useState<string|null>(null);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitted,  setSubmitted]  = useState(false);
+  const [submitErr,  setSubmitErr]  = useState("");
+  const [videoError, setVideoError] = useState(false);
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setVisible(true); obs.disconnect(); } }, { threshold:0.06 });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  const onVideoMove = (e: React.MouseEvent) => {
+    if (prefersReduced || !floatRef.current) return;
+    const r = floatRef.current.getBoundingClientRect();
+    const cx = ((e.clientX-r.left)/r.width-.5)*12;
+    const cy = ((e.clientY-r.top)/r.height-.5)*7;
+    floatRef.current.style.transform = `perspective(900px) rotateY(${cx}deg) rotateX(${-cy}deg)`;
+  };
+  const onVideoLeave = () => { if (floatRef.current) floatRef.current.style.transform="perspective(900px) rotateX(0) rotateY(0)"; };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement|HTMLSelectElement|HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setValues(v => ({ ...v, [name]:value }));
+    if (errors[name]) {
+      const err = ctcValidate(name, value);
+      setErrors(p => ({ ...p, [name]:err }));
+      if (!err) setValidF(p => ({ ...p, [name]:!!value || !CTC_REQUIRED.has(name) }));
+    }
+  };
+
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement|HTMLSelectElement|HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFocused(null);
+    if (!CTC_REQUIRED.has(name) && !value.trim()) {
+      setErrors(p => ({ ...p, [name]:"" }));
+      setValidF(p => ({ ...p, [name]:false }));
+      return;
+    }
+    const err = ctcValidate(name, value);
+    setErrors(p => ({ ...p, [name]:err }));
+    setValidF(p => ({ ...p, [name]:!err && (CTC_REQUIRED.has(name) ? !!value : true) }));
+  };
+
+  const handleSelectChange = (name: string, value: string) => {
+    setValues(v => ({ ...v, [name]:value }));
+    const err = ctcValidate(name, value);
+    setErrors(p => ({ ...p, [name]:err }));
+    setValidF(p => ({ ...p, [name]:!err && !!value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const newErr: Record<string,string> = {};
+    const newVal: Record<string,boolean> = {};
+    let bad = false;
+    for (const k of Object.keys(values)) {
+      const err = (CTC_REQUIRED.has(k) || values[k]) ? ctcValidate(k, values[k]) : "";
+      newErr[k] = err;
+      if (err) bad = true;
+      newVal[k] = !err && (CTC_REQUIRED.has(k) ? !!values[k] : !!values[k]);
+    }
+    setErrors(newErr);
+    setValidF(newVal);
+    if (bad) return;
+    setSubmitting(true);
+    setSubmitErr("");
+    try {
+      const res = await fetch("/api/contact", {
+        method:"POST",
+        headers:{ "Content-Type":"application/json" },
+        body:JSON.stringify(values),
+      });
+      if (!res.ok) throw new Error("Network error");
+      setSubmitted(true);
+      if (!prefersReduced) spawnCtcConfetti(confettiPortal.current);
+    } catch {
+      setSubmitErr("Something went wrong. Please try again or call us directly.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const inputSt = (name: string, extra?: React.CSSProperties): React.CSSProperties => ({
+    width:"100%", height:48, borderRadius:12, outline:"none", boxSizing:"border-box",
+    padding:"0 38px 0 40px", fontSize:14, color:"#211B2E", background:"#fafafa",
+    border:`1.5px solid ${errors[name] ? "#DC2626" : validF[name] ? "#10b981" : focused===name ? "#EC210F" : "#e5e7eb"}`,
+    boxShadow: focused===name ? "0 0 0 3px rgba(236,33,15,0.13), inset 0 1px 2px rgba(0,0,0,0.04)" : "inset 0 1px 2px rgba(0,0,0,0.04)",
+    transition:"border-color 0.17s ease, box-shadow 0.17s ease",
+    ...extra,
+  });
+
+  const selectSt = (name: string): React.CSSProperties => ({
+    ...inputSt(name),
+    cursor:"pointer", appearance:"none",
+    backgroundImage:`url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%23EC210F' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='4 6 8 10 12 6'/%3E%3C/svg%3E")`,
+    backgroundRepeat:"no-repeat", backgroundPosition:"right 12px center", backgroundSize:"16px",
+  });
+
+  const texSt = (name: string): React.CSSProperties => ({
+    ...inputSt(name, { height:"auto", padding:"12px 14px 12px 40px", minHeight:96, resize:"none" }),
+  });
+
+  const fade = (d = 0): React.CSSProperties => ({
+    opacity: visible ? 1 : 0,
+    transform: visible ? "none" : "translateY(28px)",
+    transition: prefersReduced ? "none" : `opacity 0.7s ease ${d}s, transform 0.7s ease ${d}s`,
+  });
+
+  return (
+    <section
+      ref={sectionRef}
+      id="contact"
+      aria-label="Request A Callback"
+      style={{ padding:"80px 0 96px", background:"linear-gradient(160deg,#FFF3F2 0%,#FBF1EE 55%,#FFF3F2 100%)", position:"relative" }}
+    >
+      <div ref={confettiPortal} aria-hidden style={{ position:"fixed", inset:0, pointerEvents:"none", zIndex:9999, overflow:"hidden" }} />
+
+      <div style={{ maxWidth:1216, margin:"0 auto", padding:"0 24px" }}>
+        <div className="ctc-grid" style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:52, alignItems:"start" }}>
+
+          {/* ══ LEFT COLUMN ════════════════════════════════════════════════ */}
+          <div style={fade(0)}>
+            <p className="section-eyebrow">Get In Touch</p>
+            <h2 className="text-headline" style={{ marginBottom:12 }}>Request A Callback</h2>
+            <p style={{ fontSize:16, color:"#55506A", lineHeight:1.65, marginBottom:32 }}>
+              Submit your details and queries here. We'd be glad to help you out!
+            </p>
+
+            {/* Video with decorative accent + float + parallax */}
+            <div style={{ position:"relative", marginBottom:24 }}
+              onMouseMove={onVideoMove} onMouseLeave={onVideoLeave}>
+              <div aria-hidden style={{
+                position:"absolute", inset:-10, borderRadius:30,
+                background:"linear-gradient(135deg,rgba(236,33,15,0.09) 0%,rgba(251,191,36,0.13) 100%)",
+                transform:"rotate(-2.5deg)", zIndex:0,
+              }} />
+              <div aria-hidden style={{
+                position:"absolute", inset:-2.5, borderRadius:27, zIndex:1,
+                background:"linear-gradient(135deg,rgba(236,33,15,0.28),rgba(251,191,36,0.32))",
+              }} />
+              <div style={{ animation: prefersReduced ? "none" : "ctc-float 4s ease-in-out infinite", position:"relative", zIndex:2 }}>
+                <div ref={floatRef} style={{ borderRadius:24, overflow:"hidden", boxShadow:"0 20px 56px rgba(33,27,46,0.16),0 4px 14px rgba(33,27,46,0.08)", transition:"transform 0.12s ease-out" }}>
+                  {videoError ? (
+                    <img src="/assets/walkthrough-poster.webp" alt="Rainbow Preschool campus" width={800} height={450} style={{ width:"100%", height:"auto", display:"block" }} />
+                  ) : (
+                    <video
+                      src="/assets/RPS_Walkthrough_Video_-_Website_1_1766126796450.mp4"
+                      poster="/assets/walkthrough-poster.webp"
+                      autoPlay loop muted playsInline preload="metadata"
+                      style={{ width:"100%", height:"auto", display:"block" }}
+                      width={800} height={450}
+                      onError={() => setVideoError(true)}
+                    >
+                      Your browser does not support the video tag.
+                    </video>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Reassurance badge */}
+            <div style={{
+              display:"flex", alignItems:"center", gap:8, marginBottom:20,
+              padding:"10px 16px", borderRadius:10,
+              background:"rgba(16,185,129,0.07)", border:"1px solid rgba(16,185,129,0.20)",
+            }}>
+              <Lock size={13} style={{ color:"#059669", flexShrink:0 }} />
+              <span style={{ fontSize:13, color:"#059669", fontWeight:500 }}>
+                No spam &nbsp;·&nbsp; One call from our admissions team &nbsp;·&nbsp; Completely free
+              </span>
+            </div>
+
+            {/* Quick-contact buttons */}
+            <div style={{ display:"flex", gap:10, flexWrap:"wrap" }}>
+              <a href="tel:+918828195788" className="ctc-contact-btn" style={{
+                display:"inline-flex", alignItems:"center", gap:7,
+                padding:"10px 20px", borderRadius:10, fontSize:13, fontWeight:700,
+                background:"#211B2E", color:"white", textDecoration:"none",
+                boxShadow:"0 3px 10px rgba(33,27,46,0.22)",
+                transition:"transform 0.18s ease, box-shadow 0.18s ease",
+              }}>
+                <Phone size={13} /> Call Now
+              </a>
+              <a href="https://wa.me/918828195788" target="_blank" rel="noopener noreferrer" className="ctc-contact-btn" style={{
+                display:"inline-flex", alignItems:"center", gap:7,
+                padding:"10px 20px", borderRadius:10, fontSize:13, fontWeight:700,
+                background:"#22c55e", color:"white", textDecoration:"none",
+                boxShadow:"0 3px 10px rgba(34,197,94,0.30)",
+                transition:"transform 0.18s ease, box-shadow 0.18s ease",
+              }}>
+                <SiWhatsapp size={13} /> WhatsApp
+              </a>
+            </div>
+          </div>
+
+          {/* ══ RIGHT COLUMN — form card ═══════════════════════════════════ */}
+          <div style={{
+            ...fade(0.13),
+            background:"white", borderRadius:22, position:"relative", overflow:"hidden",
+            boxShadow:"0 10px 44px rgba(33,27,46,0.10),0 2px 8px rgba(33,27,46,0.06)",
+            border:"1px solid rgba(33,27,46,0.06)",
+          }}>
+            <div aria-hidden style={{ height:3, background:"linear-gradient(90deg,#EC210F 0%,#FF6B35 50%,#fbbf24 100%)" }} />
+
+            <div style={{ padding:"32px 30px 36px" }}>
+              {submitted ? (
+                <div aria-live="polite" aria-atomic="true" style={{ textAlign:"center", padding:"20px 0" }}>
+                  <div style={{
+                    width:64, height:64, borderRadius:"50%", background:"rgba(16,185,129,0.12)",
+                    display:"flex", alignItems:"center", justifyContent:"center",
+                    margin:"0 auto 16px",
+                    animation: prefersReduced ? "none" : "d-pop-in 0.5s cubic-bezier(.34,1.56,.64,1) both",
+                  }}>
+                    <CheckCircle size={30} style={{ color:"#059669" }} />
+                  </div>
+                  <h3 style={{ fontSize:22, fontWeight:700, marginBottom:8 }}>Thanks! 🎉</h3>
+                  <p style={{ color:"#55506A", fontSize:15, lineHeight:1.65, marginBottom:28 }}>
+                    Our admissions team will call you shortly.
+                  </p>
+                  <button
+                    onClick={() => { setSubmitted(false); setValues(CTC_INIT); setErrors({}); setValidF({}); }}
+                    style={{
+                      padding:"10px 24px", borderRadius:10, border:"1.5px solid #e5e7eb",
+                      background:"white", cursor:"pointer", fontSize:14, fontWeight:600, color:"#374151",
+                      transition:"border-color 0.15s",
+                    }}
+                  >
+                    Submit Another Request
+                  </button>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} noValidate aria-label="Request a callback form">
+                  <div className="ctc-form-grid" style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:"16px 18px" }}>
+
+                    <CtcField id="ctc-parentName" label="Parent Name" required icon={User} error={errors.parentName} isValid={validF.parentName}>
+                      <input id="ctc-parentName" name="parentName" type="text" placeholder="Enter your name"
+                        value={values.parentName} onChange={handleChange}
+                        onFocus={() => setFocused("parentName")} onBlur={handleBlur}
+                        aria-required="true" data-testid="input-parent-name" style={inputSt("parentName")} />
+                    </CtcField>
+
+                    <CtcField id="ctc-phone" label="Phone Number" required icon={Phone} error={errors.phone} isValid={validF.phone}>
+                      <input id="ctc-phone" name="phone" type="tel" placeholder="Enter phone number"
+                        value={values.phone} onChange={handleChange}
+                        onFocus={() => setFocused("phone")} onBlur={handleBlur}
+                        aria-required="true" data-testid="input-phone" style={inputSt("phone")} />
+                    </CtcField>
+
+                    <CtcField id="ctc-email" label="Email" icon={Mail} error={errors.email} isValid={validF.email}>
+                      <input id="ctc-email" name="email" type="email" placeholder="Enter email address"
+                        value={values.email} onChange={handleChange}
+                        onFocus={() => setFocused("email")} onBlur={handleBlur}
+                        data-testid="input-email" style={inputSt("email")} />
+                    </CtcField>
+
+                    <CtcField id="ctc-childName" label="Child's Name" required icon={Smile} error={errors.childName} isValid={validF.childName}>
+                      <input id="ctc-childName" name="childName" type="text" placeholder="Enter child's name"
+                        value={values.childName} onChange={handleChange}
+                        onFocus={() => setFocused("childName")} onBlur={handleBlur}
+                        aria-required="true" data-testid="input-child-name" style={inputSt("childName")} />
+                    </CtcField>
+
+                    <CtcField id="ctc-childAge" label="Child's Age" required icon={Calendar} error={errors.childAge} isValid={validF.childAge}>
+                      <select id="ctc-childAge" name="childAge"
+                        value={values.childAge}
+                        onChange={e => handleSelectChange("childAge", e.target.value)}
+                        onFocus={() => setFocused("childAge")}
+                        onBlur={e => { setFocused(null); handleBlur(e as React.FocusEvent<HTMLSelectElement>); }}
+                        aria-required="true" data-testid="select-child-age" style={selectSt("childAge")}>
+                        <option value="">Select age</option>
+                        {CTC_AGE_OPTIONS.map(a => <option key={a} value={a}>{a}</option>)}
+                      </select>
+                    </CtcField>
+
+                    <CtcField id="ctc-programme" label="Programme" required icon={BookOpen} error={errors.programme} isValid={validF.programme}>
+                      <select id="ctc-programme" name="programme"
+                        value={values.programme}
+                        onChange={e => handleSelectChange("programme", e.target.value)}
+                        onFocus={() => setFocused("programme")}
+                        onBlur={e => { setFocused(null); handleBlur(e as React.FocusEvent<HTMLSelectElement>); }}
+                        aria-required="true" data-testid="select-programme" style={selectSt("programme")}>
+                        <option value="">Select programme</option>
+                        {programmes.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}
+                      </select>
+                    </CtcField>
+
+                    <CtcField id="ctc-branch" label="Preferred Centre" required icon={MapPin} error={errors.branch} isValid={validF.branch} colSpan>
+                      <select id="ctc-branch" name="branch"
+                        value={values.branch}
+                        onChange={e => handleSelectChange("branch", e.target.value)}
+                        onFocus={() => setFocused("branch")}
+                        onBlur={e => { setFocused(null); handleBlur(e as React.FocusEvent<HTMLSelectElement>); }}
+                        aria-required="true" data-testid="select-centre" style={selectSt("branch")}>
+                        <option value="">Select centre</option>
+                        {branches.map(b => <option key={b.id} value={b.id}>{b.name}</option>)}
+                      </select>
+                    </CtcField>
+
+                  </div>
+
+                  <div style={{ marginTop:16 }}>
+                    <CtcField id="ctc-message" label="Message (Optional)" icon={MessageSquare} multiline error={errors.message} isValid={false}>
+                      <textarea id="ctc-message" name="message" rows={3}
+                        placeholder="Any questions or specific requirements?"
+                        value={values.message} onChange={handleChange}
+                        onFocus={() => setFocused("message")} onBlur={handleBlur}
+                        data-testid="textarea-message" style={texSt("message")} />
+                    </CtcField>
+                  </div>
+
+                  {submitErr && (
+                    <p role="alert" style={{ marginTop:12, fontSize:13, color:"#DC2626", display:"flex", alignItems:"center", gap:5 }}>
+                      <AlertCircle size={13} /> {submitErr}
+                    </p>
+                  )}
+
+                  <button
+                    type="submit" disabled={submitting}
+                    className="ctc-btn-submit"
+                    data-testid="button-submit-contact"
+                    style={{
+                      width:"100%", marginTop:22, height:52, borderRadius:12,
+                      background:"#EC210F", color:"white", border:"none",
+                      cursor: submitting ? "not-allowed" : "pointer", opacity: submitting ? 0.85 : 1,
+                      fontSize:15, fontWeight:700, letterSpacing:"0.01em",
+                      display:"flex", alignItems:"center", justifyContent:"center", gap:8,
+                      boxShadow:"0 4px 18px rgba(236,33,15,0.38)",
+                      transition:"transform 0.18s ease, box-shadow 0.18s ease, opacity 0.15s",
+                      position:"relative", overflow:"hidden",
+                    }}
+                  >
+                    <span aria-hidden className="ctc-btn-shine" style={{
+                      position:"absolute", inset:0, borderRadius:12,
+                      background:"linear-gradient(105deg,transparent 35%,rgba(255,255,255,0.18) 50%,transparent 65%)",
+                      backgroundSize:"250% 100%", backgroundPosition:"200% 0",
+                      transition:"background-position 0.6s ease",
+                    }} />
+                    {submitting ? (
+                      <>
+                        <svg aria-hidden className="animate-spin" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                          <circle cx="12" cy="12" r="10" strokeOpacity="0.3" />
+                          <path d="M12 2a10 10 0 0 1 10 10" />
+                        </svg>
+                        Submitting…
+                      </>
+                    ) : "Request Callback"}
+                  </button>
+                </form>
+              )}
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export default function Home() {
   // Inject all schemas after paint so they don't block the main thread (bots get
   // them via server-side bot-ssr.ts instead).
@@ -1596,27 +2059,7 @@ export default function Home() {
         </section>
       </LazySection>
 
-      <section className="py-16 md:py-20 lg:py-24 bg-card" style={{ contentVisibility: 'auto', containIntrinsicSize: 'auto 800px' }}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
-            <div data-reveal="slide" data-direction="left">
-              <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">Get In Touch</p>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4" data-sparkle>Request A Callback</h2>
-              <p className="text-muted-foreground text-lg mb-8">
-                Submit your details and queries here. We'd be glad to help you out!
-              </p>
-              <VideoWithFallback />
-            </div>
-            <Card data-reveal="slide" data-direction="right">
-              <CardContent className="pt-6">
-                <Suspense fallback={null}>
-                  <ContactForm />
-                </Suspense>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
+      <ContactSection />
 
 
       <div className="py-6 bg-primary/5">

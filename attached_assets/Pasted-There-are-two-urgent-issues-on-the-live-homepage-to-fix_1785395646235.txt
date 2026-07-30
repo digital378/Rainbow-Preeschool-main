@@ -1,0 +1,54 @@
+There are two urgent issues on the live homepage to fix together. Please diagnose and fix both.
+
+ISSUE 1 — Multiple sections missing above "OUR LEARNING ENVIRONMENT"
+
+The homepage is currently showing "OUR LEARNING ENVIRONMENT" as the very first section right after the navbar. All sections above it are completely invisible/missing:
+
+Hero section (children photo background, Rainbow Preschool heading)
+Start Exploring section
+Why Parents Choose Rainbow Preschool section
+
+Diagnose and fix:
+
+Open the homepage file and check if the Hero, StartExploring, and WhyChooseUs components are still imported at the top of the file
+Check if they are still present in the JSX/render output in the correct order
+Check for any conditional rendering (&&, ternary, if) that may be hiding them
+Check for any CSS on their wrappers: display: none, height: 0, overflow: hidden, visibility: hidden, or opacity: 0
+Check the browser console for any import errors or component crashes that would silently break rendering
+Restore all missing sections in the correct order:
+Hero
+Start Exploring
+Why Parents Choose Rainbow Preschool
+OUR LEARNING ENVIRONMENT
+OUR PROGRAMMES
+Request A Callback
+Footer
+
+ISSUE 2 — Video not loading in "OUR LEARNING ENVIRONMENT" section
+
+The center video in the "OUR LEARNING ENVIRONMENT" section is broken — it is showing only the Rainbow Preschool logo (a fallback/poster image) instead of the actual campus walkthrough video. The "Sound off" button is visible but the video itself is not playing.
+
+Diagnose and fix:
+
+Find the <video> tag in the OUR LEARNING ENVIRONMENT section
+Check the src attribute — the video file path is likely incorrect or broken
+Go to the /dummy page and find the same video tag — note the exact file path/URL used there
+Check if the video file actually exists at that path in the project's assets folder (search for .mp4 or .webm files in the assets directory)
+If the file exists but the path is wrong, correct the src path in the homepage version to match the dummy page
+If the video file is missing from the assets folder, identify its filename and flag this — do not create or invent a file path
+Make sure the video tag has: autoPlay, muted, loop, and playsInline attributes set (required for autoplay to work in browsers)
+Also check if there is a poster attribute pointing to a fallback image — if the video fails, this should show a relevant classroom image, not the Rainbow logo
+
+Do NOT touch:
+
+Any other section's content or styling
+Form logic, API calls, or validation
+The dummy page
+Google Analytics or any scripts
+Footer
+
+After fixes:
+
+Confirm all sections are rendering in the correct order
+Confirm the video is loading and autoplaying correctly
+List every file changed and what was modified

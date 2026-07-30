@@ -298,6 +298,19 @@
     color: #211B2E;
   }
 
+  /* ═══ Contact / CTA section (ctc-*) ═════════════════════════════════ */
+  @keyframes ctc-float    { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+  @keyframes ctc-confetti { to { transform:translate(var(--cx),var(--cy)) rotate(var(--cr)) scale(0); opacity:0; } }
+  .ctc-btn-submit:hover   { transform:translateY(-2px) !important; box-shadow:0 10px 30px rgba(236,33,15,.50) !important; }
+  .ctc-btn-submit:active  { transform:scale(0.98) !important; }
+  .ctc-contact-btn:hover  { transform:translateY(-2px) !important; }
+  .ctc-btn-shine:hover    { background-position:-100% 0 !important; }
+  @media (max-width:768px) {
+    .ctc-grid        { grid-template-columns:1fr !important; gap:32px !important; }
+    .ctc-form-grid   { grid-template-columns:1fr !important; }
+    .ctc-branch-col  { grid-column:span 1 !important; }
+  }
+
   /* ═══ Learning Environment section (le-*) ═══════════════════════════ */
   @keyframes le-bob-a    { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
   @keyframes le-bob-b    { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }

@@ -1,0 +1,49 @@
+There is a critical issue on the live homepage — the Hero section (top banner) is not rendering. There is a large blank white space at the top of the page where the hero should appear. The navbar shows correctly but everything below it until the Programmes section is either blank or missing. Fix this urgently without touching any other sections.
+
+What the hero section should show:
+
+Dark background with children's photo and olive/dark overlay
+"Admissions Open · 2026–27" badge
+Large heading: "Rainbow" (white, bold) and "Preschool" (red/orange, bold) on separate lines
+Subtitle: "Playschool · Nursery · Kindergarten"
+Description text
+Stat pills: 1,00,000+ Learners, 18+ Years, 6 Centres, 100% Female Staff
+Two buttons: "Request a Callback" (red) and "Explore Programmes →" (outlined)
+
+Step 1 — Diagnose the blank space:
+Open the homepage file and check:
+
+Is the Hero component imported correctly at the top of the file?
+Is the Hero component actually included in the JSX/render output?
+Is there a conditional render (if, ternary, or &&) that might be hiding it?
+Is there a CSS issue like display: none, visibility: hidden, height: 0, or opacity: 0 on the hero wrapper?
+Are there any console errors related to the hero component or its child elements?
+
+Step 2 — Check recent changes:
+Look at what was changed in the last few edits to the homepage file. The hero section was working before — identify if a recent edit accidentally removed the Hero component from the JSX, broke its import, or added a wrapper that collapses it.
+
+Step 3 — Fix the import if broken:
+If the Hero component import is missing or incorrect at the top of the homepage file, restore it. The import should reference the same Hero component file that was there before the recent edits.
+
+Step 4 — Fix the JSX order if missing:
+If the Hero component tag is missing from the page JSX, re-add it as the FIRST section inside the page wrapper — before Start Exploring, before Why Parents Choose, before everything. The correct page order must be:
+
+Hero ← first
+Start Exploring
+Why Parents Choose Rainbow Preschool
+OUR LEARNING ENVIRONMENT
+OUR PROGRAMMES
+Request A Callback
+Footer
+
+Step 5 — Fix any CSS collapse:
+If the hero wrapper has lost its height or background styling due to a recent CSS change, restore the original height and background styles.
+
+Step 6 — Do NOT touch:
+
+Any other section's content or styling
+The dummy page
+Form logic, analytics scripts, or routing
+
+Step 7 — After fix:
+Confirm the Hero section is visible and rendering correctly in the preview. List exactly what was broken and what was changed to fix it.
