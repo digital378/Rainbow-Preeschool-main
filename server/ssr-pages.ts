@@ -26,6 +26,7 @@ import { shouldNoIndex } from "@shared/seo-config";
 import { VERIFIED_RATING } from "@shared/verified-rating";
 import { FAQ_SCHEMA_ITEMS } from "@shared/faq-data";
 import { ADMISSIONS_FAQ_SCHEMA_ITEMS } from "@shared/admissions-faq-data";
+import { admissionHowToSchema } from "@shared/admissions-howto-data";
 
 // Pre-compute the per-branch LocalBusiness JSON-LD array once at module load
 // so commercial-page SSR can splat it into structuredData without per-request work.
@@ -821,64 +822,7 @@ const staticPages: Record<string, PageSEOData> = {
         name: item.question,
         acceptedAnswer: { "@type": "Answer", text: item.answer },
       })),
-    }, {
-      "@context": "https://schema.org",
-      "@type": "HowTo",
-      name: "How to Apply for Preschool Admission at Rainbow Preschool Thane",
-      description: "Complete your child's preschool admission at Rainbow Preschool International in 6 simple steps — from first enquiry to your child's first day.",
-      image: { "@type": "ImageObject", url: `${BASE_URL}/og-image.jpg`, width: "1200", height: "630" },
-      totalTime: "P5D",
-      step: [
-        {
-          "@type": "HowToStep",
-          position: "1",
-          name: "Submit an Enquiry",
-          text: "Fill the online enquiry form on this page, call 82915 68972, or walk into any of the 6 Rainbow Preschool centres in Thane, Monday to Saturday, 9 AM to 6 PM.",
-          url: `${BASE_URL}/preschool-admissions`,
-          image: { "@type": "ImageObject", url: `${BASE_URL}/images/gallery/rainbow-preschool-admin-office.webp` },
-        },
-        {
-          "@type": "HowToStep",
-          position: "2",
-          name: "Schedule a Free Campus Visit",
-          text: "Our admissions team will arrange a guided tour of your preferred centre, covering classrooms, play areas, and safety installations so you can experience the Rainbow environment firsthand.",
-          url: `${BASE_URL}/preschool-admissions`,
-          image: { "@type": "ImageObject", url: `${BASE_URL}/images/gallery/rainbow-preschool-entrance-area.webp` },
-        },
-        {
-          "@type": "HowToStep",
-          position: "3",
-          name: "Speak with the Admissions Team",
-          text: "Discuss your child's age, preferred programme (Playgroup, Nursery, or KG), batch timing preferences, transport requirements, and any questions about the curriculum or fees.",
-          url: `${BASE_URL}/preschool-admissions`,
-          image: { "@type": "ImageObject", url: `${BASE_URL}/images/gallery/rainbow-preschool-100-percent-female-staff.webp` },
-        },
-        {
-          "@type": "HowToStep",
-          position: "4",
-          name: "Complete the Registration Form",
-          text: "Fill the formal admission registration form at the centre and submit it to reserve your child's seat. Forms are available at all 6 Rainbow Preschool centres across Thane West.",
-          url: `${BASE_URL}/preschool-admissions`,
-          image: { "@type": "ImageObject", url: `${BASE_URL}/images/campus/campus-lobby.webp` },
-        },
-        {
-          "@type": "HowToStep",
-          position: "5",
-          name: "Submit Required Documents",
-          text: "Provide the necessary documents — child's birth certificate, parent ID proof, photographs, address proof, and vaccination card — to complete your child's admission file.",
-          url: `${BASE_URL}/preschool-admissions`,
-          image: { "@type": "ImageObject", url: `${BASE_URL}/images/campus/campus-building.webp` },
-        },
-        {
-          "@type": "HowToStep",
-          position: "6",
-          name: "Confirm Admission and Attend Orientation",
-          text: "Pay the admission fee to confirm the seat. Attend our parent orientation session before your child's first day to meet teachers and understand the daily routine.",
-          url: `${BASE_URL}/preschool-admissions`,
-          image: { "@type": "ImageObject", url: `${BASE_URL}/images/campus/campus-classroom-1.webp` },
-        },
-      ],
-    }],
+    }, admissionHowToSchema],
     contentSections: [
       {
         heading: "About Preschool Admissions at Rainbow Preschool International",
