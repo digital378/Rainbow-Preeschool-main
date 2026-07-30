@@ -1427,16 +1427,20 @@ const staticPages: Record<string, PageSEOData> = {
     h1: "Frequently Asked Questions",
     introText: "Everything you need to know about Rainbow Preschool International. Find answers about admissions, fees, safety, curriculum, timings, transport, and more.",
     breadcrumbs: [{ name: "Home", url: "/" }, { name: "FAQs", url: "/faqs" }],
-    structuredData: [{
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      // All 30 questions from shared/faq-data.ts — single source of truth shared with the client page.
-      mainEntity: FAQ_SCHEMA_ITEMS.map(f => ({
-        "@type": "Question",
-        name: f.question,
-        acceptedAnswer: { "@type": "Answer", text: f.answer },
-      })),
-    }],
+    structuredData: [
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        // All 30 questions from shared/faq-data.ts — single source of truth shared with the client page.
+        mainEntity: FAQ_SCHEMA_ITEMS.map(f => ({
+          "@type": "Question",
+          name: f.question,
+          acceptedAnswer: { "@type": "Answer", text: f.answer },
+        })),
+      },
+      organizationSchema,
+      websiteSchema,
+    ],
     contentSections: [
       { heading: "FAQ Categories", items: ["Admissions & Registration — Process, documents, age groups, mid-year enrollment", "Fees & Payments — Fee structure, instalments, what's included", "Safety & Security — CCTV, pickup protocols, medical emergencies, staff verification", "Curriculum & Learning — Play-based approach, languages, assessments", "Daily Routine & Timings — School hours, typical day, what to bring", "Transport — Availability, safety features", "Settling In — Adjustment tips, separation anxiety, parent involvement", "Centres & Locations — 6 centres across Thane, visiting, quality consistency"] },
     ],
