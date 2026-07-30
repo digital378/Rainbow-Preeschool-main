@@ -1,0 +1,41 @@
+I want to update the "Why Parents Choose Rainbow Preschool" section on the live homepage to exactly match the design already built on the /dummy page. The design already works on /dummy — I just need it replicated on the homepage. Do not redesign anything.
+
+What the dummy page version looks like (target design):
+
+Left side: "ABOUT US" label, heading "Why Parents Choose Rainbow Preschool" with a rainbow-colored underline, descriptive paragraphs, location pill tags (Manpada, Hariniwas, Anand Nagar, Dhokali, Kalwa, Kasarvadavali), and a "Learn More About Us →" button
+Center: 4 stat cards in a 2×2 grid — "1,00,000+ Young Learners", "18+ Years of Excellence", "06 Centres in Thane", "100% Female Staff" — each with a colored icon and soft gradient blob background
+Center also has a rating card: "★★★★★ 4.9 — Loved by Thane parents" with coloured avatar circles (A, B, C, D) and a "Read parent reviews →" link
+Right side: A 3D cartoon girl character image with a floating "⭐ Join Our Family!" badge below her
+
+What the current homepage version looks like (needs replacing):
+The homepage version is missing the 3D girl character, the rating card, and the stat card styling/layout differs from the dummy page version.
+
+Step 1 — Find the source (dummy page):
+Open the /dummy page file and locate the "Why Parents Choose Rainbow Preschool" section. Copy the complete HTML structure, all class names, and any inline styles. Note every element including the stat cards, rating card, girl image, and badge.
+
+Step 2 — Find the destination (live homepage):
+Open the homepage file and locate the existing "Why Parents Choose Rainbow Preschool" / "About Us" section.
+
+Step 3 — Replace safely:
+Replace ONLY this section in the homepage with the version from the dummy page. Do not touch the section above it or below it.
+
+Step 4 — Handle the 3D girl image:
+Check if the girl character image used in the dummy page is already in the project's assets/images folder. If yes, use the same image path. If it is referenced differently, make sure the correct path is used in the homepage version.
+
+Step 5 — Handle CSS:
+Check if all CSS classes from the dummy page version of this section already exist in the shared stylesheet. If any styles are only defined locally in the dummy page's CSS, copy them into the shared stylesheet. Do not duplicate existing styles.
+
+Step 6 — Handle any animations or JS:
+If the stat cards, rating card, or girl image have any hover effects, scroll animations, or counter animations (e.g. numbers counting up), make sure that JavaScript is also present in the homepage. Copy it over if it only exists in the dummy page.
+
+Step 7 — Do NOT change:
+
+The navbar/header
+The "Start Exploring" section
+The "Quick Callback" form
+Any other homepage sections
+The dummy page itself
+Google Analytics, GTM, or any other scripts
+
+Step 8 — After changes:
+Show me a list of every file changed and exactly what was modified, so I can review before running the project.

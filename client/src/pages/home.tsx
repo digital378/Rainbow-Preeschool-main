@@ -15,7 +15,8 @@ import { ErrorBoundary } from "@/components/error-boundary";
 import { AwardedBySection } from "@/components/awarded-by-section";
 import { EEATSignals } from "@/components/eeat-signals";
 import { LAST_UPDATED_DISPLAY, LAST_UPDATED_ISO } from "@shared/site-freshness";
-import { createAllBranchLocalBusinessSchemas } from "@shared/centre-data";
+import { createAllBranchLocalBusinessSchemas, centres } from "@shared/centre-data";
+import { cn } from "@/lib/utils";
 import { PLAYGROUP, NURSERY, KINDERGARTEN } from "@shared/programme-data";
 import { ProgrammeCard } from "@/components/programme-card";
 import { BranchCard } from "@/components/branch-card";
@@ -372,6 +373,344 @@ function QuickCallbackStrip() {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
+   BENTO ABOUT — "Why Parents Choose Rainbow Preschool"
+   Ported from /dummy page. Self-contained: helpers + data + section.
+═══════════════════════════════════════════════════════════════════════════ */
+function AnimatedCounterStat({ target, format }: { target: number; format: (n: number) => string }) {
+  const [val, setVal] = useState(0);
+  const spanRef = useRef<HTMLSpanElement>(null);
+  const started = useRef(false);
+  useEffect(() => {
+    const el = spanRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting || started.current) return;
+      started.current = true;
+      obs.disconnect();
+      const DURATION = 2000;
+      const begin = performance.now();
+      const tick = (now: number) => {
+        const p = Math.min((now - begin) / DURATION, 1);
+        const eased = 1 - Math.pow(1 - p, 4);
+        setVal(Math.round(eased * target));
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    }, { threshold: 0.5 });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [target]);
+  return <span ref={spanRef}>{format(val)}</span>;
+}
+
+function BentoTiltCard({ children, className, style, intensity = 14 }: {
+  children: React.ReactNode; className?: string; style?: React.CSSProperties; intensity?: number;
+}) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const shineRef = useRef<HTMLDivElement>(null);
+  const raf = useRef<number>(0);
+  return (
+    <div
+      ref={cardRef}
+      className={cn("relative overflow-hidden", className)}
+      style={{ perspective: "900px", ...style }}
+      onMouseMove={(e) => {
+        const el = cardRef.current;
+        if (!el) return;
+        const r = el.getBoundingClientRect();
+        const cx = (e.clientX - r.left) / r.width - 0.5;
+        const cy = (e.clientY - r.top) / r.height - 0.5;
+        cancelAnimationFrame(raf.current);
+        raf.current = requestAnimationFrame(() => {
+          el.style.transform = `perspective(900px) rotateX(${-cy * intensity}deg) rotateY(${cx * intensity}deg) scale3d(1.03,1.03,1.03)`;
+          el.style.transition = "transform 0.08s linear";
+          if (shineRef.current) {
+            shineRef.current.style.backgroundPosition = `${(cx + 0.5) * 100}% ${(cy + 0.5) * 100}%`;
+            shineRef.current.style.opacity = "1";
+          }
+        });
+      }}
+      onMouseLeave={() => {
+        const el = cardRef.current;
+        if (!el) return;
+        cancelAnimationFrame(raf.current);
+        el.style.transition = "transform 0.65s cubic-bezier(.22,1,.36,1)";
+        el.style.transform = "perspective(900px) rotateX(0deg) rotateY(0deg) scale3d(1,1,1)";
+        if (shineRef.current) shineRef.current.style.opacity = "0";
+      }}
+    >
+      {children}
+      <div
+        ref={shineRef}
+        aria-hidden
+        className="pointer-events-none absolute inset-0 rounded-[inherit]"
+        style={{
+          opacity: 0, transition: "opacity 0.15s",
+          background: "radial-gradient(ellipse at 50% 50%, rgba(255,255,255,0.20) 0%, transparent 65%)",
+          mixBlendMode: "screen",
+        }}
+      />
+    </div>
+  );
+}
+
+function BentoOrb({ cls, style }: { cls?: string; style?: React.CSSProperties }) {
+  return <div aria-hidden className={cn("absolute rounded-full pointer-events-none", cls)} style={style} />;
+}
+function BentoStar({ cls }: { cls?: string }) {
+  return (
+    <svg aria-hidden className={cn("absolute pointer-events-none", cls)} width="14" height="14" viewBox="0 0 14 14">
+      <path d="M7 0 L8.2 5 L13 5.5 L9.5 8.5 L10.6 13.5 L7 11 L3.4 13.5 L4.5 8.5 L1 5.5 L5.8 5 Z" fill="currentColor" />
+    </svg>
+  );
+}
+
+const ABOUT_STATS = [
+  { Icon: Users,  label: "Young Learners",      grad:"linear-gradient(135deg,#F5320C 0%,#FF5A3C 100%)", glow:"rgba(245,50,12,.28)",
+    target: 100000, format: (n: number) => `${n >= 100000 ? "1,00,000" : n.toLocaleString("en-IN")}+` },
+  { Icon: Star,   label: "Years of Excellence", grad:"linear-gradient(135deg,#FFB020 0%,#FF7A00 100%)", glow:"rgba(255,122,0,.26)",
+    target: 18, format: (n: number) => `${n}+` },
+  { Icon: MapPin, label: "Centres in Thane",    grad:"linear-gradient(135deg,#1F7AF0 0%,#48A0FF 100%)", glow:"rgba(31,122,240,.26)",
+    target: 6, format: (n: number) => String(n).padStart(2, "0") },
+  { Icon: Shield, label: "Female Staff",        grad:"linear-gradient(135deg,#06B463 0%,#22D67E 100%)", glow:"rgba(6,180,99,.26)",
+    target: 100, format: (n: number) => `${n}%` },
+];
+
+const ABOUT_AVATARS = [
+  { bg:"#EC210F", l:"A" }, { bg:"#F59E0B", l:"B" },
+  { bg:"#1F7AF0", l:"C" }, { bg:"#06B463", l:"D" },
+];
+const BENTO_CLS = ["bento-s1","bento-s2","bento-s3","bento-s4"] as const;
+
+function StatsSection() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const sec = sectionRef.current;
+    if (!sec) return;
+    const obs = new IntersectionObserver(
+      entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add("du-vis"); }),
+      { threshold: 0.08 }
+    );
+    sec.querySelectorAll<HTMLElement>(".du-fade").forEach(el => obs.observe(el));
+    return () => obs.disconnect();
+  }, []);
+
+  return (
+    <section ref={sectionRef} className="relative overflow-hidden"
+      style={{ background:"linear-gradient(170deg,#FFF4F3 0%,#FFF0E8 52%,#FFF4F3 100%)", padding:"88px 0 108px" }}>
+
+      {/* Aurora blobs */}
+      <BentoOrb cls="d-float-b w-[500px] h-[500px] -top-28 right-[6%] opacity-35"
+        style={{ background:"radial-gradient(circle,rgba(251,191,36,.17) 0%,transparent 65%)", filter:"blur(56px)" }}/>
+      <BentoOrb cls="d-float-c w-80 h-80 bottom-16 -left-16 opacity-30"
+        style={{ background:"radial-gradient(circle,rgba(236,33,15,.09) 0%,transparent 65%)", filter:"blur(44px)" }}/>
+      <BentoOrb cls="d-float-a w-60 h-60 top-[42%] left-[40%] opacity-20"
+        style={{ background:"radial-gradient(circle,rgba(31,122,240,.09) 0%,transparent 65%)", filter:"blur(38px)" }}/>
+      <BentoStar cls="d-tw2 text-amber-300/55 top-[12%] left-[36%] w-4 h-4"/>
+      <BentoStar cls="d-tw3 text-amber-200/40 bottom-[18%] right-[10%] w-3 h-3"/>
+      <BentoStar cls="d-tw1 text-red-300/35 top-[58%] right-[22%] w-2.5 h-2.5"/>
+
+      <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-[46%_1fr] items-stretch gap-12 lg:gap-14">
+
+          {/* ── LEFT: copy ── */}
+          <div className="du-fade flex flex-col">
+
+            <p style={{ fontSize:"0.63rem", fontWeight:700, letterSpacing:"0.22em",
+              textTransform:"uppercase", color:"#EC210F", margin:"0 0 14px" }}>
+              ABOUT US
+            </p>
+
+            <h2 className="section-title" style={{ fontSize:"clamp(1.9rem,3.4vw,2.9rem)", margin:"0 0 4px", lineHeight:1.15 }}>
+              Why Parents Choose{" "}
+              <span style={{ background:"linear-gradient(95deg,#F59E0B 0%,#EC210F 100%)",
+                WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent", backgroundClip:"text" }}>
+                Rainbow Preschool
+              </span>
+            </h2>
+
+            {/* Rainbow swoosh underline */}
+            <div style={{ margin:"0 0 22px" }}>
+              <svg width="230" height="11" viewBox="0 0 230 11" fill="none" aria-hidden="true">
+                <path d="M4 8 Q57 2 115 5.5 Q173 9 226 3.5"
+                  stroke="url(#ab-sw)" strokeWidth="3.5" strokeLinecap="round" fill="none"/>
+                <defs>
+                  <linearGradient id="ab-sw" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stopColor="#EF4444"/>
+                    <stop offset="28%" stopColor="#F59E0B"/>
+                    <stop offset="54%" stopColor="#22C55E"/>
+                    <stop offset="78%" stopColor="#3B82F6"/>
+                    <stop offset="100%" stopColor="#8B5CF6"/>
+                  </linearGradient>
+                </defs>
+              </svg>
+            </div>
+
+            <p style={{ color:"#55506A", fontSize:"1.0625rem", lineHeight:1.78, margin:"0 0 16px", maxWidth:"34rem" }}>
+              Since 2007, Rainbow Preschool International has helped over 1,00,000 young learners learn, play, and grow across Thane. Our centres follow a play-based curriculum that builds reading, writing, and number skills through hands-on activities, stories, art, and outdoor play.
+            </p>
+            <p style={{ color:"#55506A", lineHeight:1.72, margin:"0 0 24px", maxWidth:"34rem" }}>
+              All six centres are in Thane West — a Rainbow Preschool is always close to home.
+            </p>
+
+            {/* Centre chips */}
+            <div className="chip-row" style={{ margin:"0 0 32px" }}>
+              {centres.map(c => (
+                <a key={c.id} href={c.preschoolLandingUrl}
+                  className="centre-chip"
+                  aria-label={`Visit our ${c.localityName} centre`}
+                  style={{ display:"inline-flex", alignItems:"center", gap:3,
+                    padding:"4px 8px 4px 7px", borderRadius:999, fontSize:"0.70rem", fontWeight:600,
+                    color:"#211B2E", background:"rgba(33,27,46,.05)", border:"1px solid rgba(33,27,46,.09)",
+                    whiteSpace:"nowrap" }}>
+                  <MapPin size={10} className="centre-pin" style={{ color:"#EC210F", flexShrink:0 }}/>
+                  {c.localityName}
+                </a>
+              ))}
+            </div>
+
+            {/* Ghost CTA */}
+            <div>
+              <a href="/about" className="about-cta inline-flex items-center"
+                style={{ padding:"12px 26px", borderRadius:999, fontSize:"0.9rem", fontWeight:600,
+                  border:"1.5px solid rgba(33,27,46,.20)", color:"#211B2E", background:"white",
+                  transition:"all 0.22s ease", boxShadow:"0 2px 10px rgba(33,27,46,.06)",
+                  textDecoration:"none", gap:8 }}>
+                Learn More About Us
+                <ArrowRight size={16} className="about-arrow"/>
+              </a>
+            </div>
+
+          </div>
+
+          {/* ── RIGHT: asymmetric bento ── */}
+          <div className="bento-grid">
+
+            {/* ① Mascot stage */}
+            <BentoTiltCard
+              className="bento-photo du-fade"
+              style={{ borderRadius:20, overflow:"hidden",
+                border:"1px solid rgba(236,33,15,.08)",
+                boxShadow:"0 12px 36px rgba(236,33,15,.09), inset 0 1px 0 rgba(255,255,255,.55)",
+                transitionDelay:"80ms",
+                background:"linear-gradient(155deg,#FFF5F0 0%,#FFF0FB 40%,#EEF6FF 100%)",
+                display:"flex", flexDirection:"column", alignItems:"center",
+                justifyContent:"flex-end", position:"relative" }}
+              intensity={4}
+            >
+              <div aria-hidden style={{ position:"absolute", top:"8%", left:"50%",
+                transform:"translateX(-50%)", width:"130%", paddingBottom:"130%",
+                borderRadius:"50%", pointerEvents:"none",
+                background:"radial-gradient(circle,rgba(236,33,15,.06) 0%,rgba(251,191,36,.06) 35%,rgba(34,197,94,.04) 65%,transparent 100%)" }}/>
+              <div aria-hidden style={{ position:"absolute", bottom:44, left:"50%",
+                transform:"translateX(-50%)", width:"52%", height:18,
+                background:"radial-gradient(ellipse,rgba(33,27,46,.17) 0%,transparent 70%)",
+                borderRadius:"50%", pointerEvents:"none" }}/>
+              <img
+                src="/characters/student-girl.webp"
+                alt=""
+                aria-hidden={true}
+                className="mascot-char mascot-stage-img"
+                style={{ filter:"drop-shadow(0 8px 28px rgba(33,27,46,.16))" }}
+              />
+              <div style={{ margin:"0 0 14px", background:"rgba(255,255,255,.88)",
+                backdropFilter:"blur(12px)", WebkitBackdropFilter:"blur(12px)",
+                borderRadius:999, padding:"6px 16px", fontSize:"0.72rem",
+                fontWeight:600, color:"#211B2E",
+                display:"inline-flex", alignItems:"center", gap:6,
+                boxShadow:"0 2px 12px rgba(33,27,46,.09)", position:"relative", zIndex:1 }}>
+                <span aria-hidden>⭐</span>
+                Join Our Family!
+              </div>
+            </BentoTiltCard>
+
+            {/* ② – ⑤ Stat tiles */}
+            {ABOUT_STATS.map(({ Icon, label, grad, glow, target, format }, i) => (
+              <BentoTiltCard
+                key={label}
+                className={cn("stat-card du-fade", BENTO_CLS[i])}
+                style={{ borderRadius:20, background:"white",
+                  border:"1px solid rgba(33,27,46,.07)",
+                  boxShadow:"0 10px 28px rgba(33,27,46,.08)",
+                  minHeight:132, transitionDelay:`${(i + 1) * 70}ms` }}
+                intensity={9}
+              >
+                <div style={{ padding:"18px 16px 20px", display:"flex", flexDirection:"column",
+                  position:"relative", overflow:"hidden" }}>
+                  <div style={{ position:"absolute", top:0, left:0, right:0, height:3,
+                    background:grad, borderRadius:"20px 20px 0 0" }}/>
+                  <div aria-hidden style={{ position:"absolute", top:-8, right:-8, width:80, height:80,
+                    borderRadius:"50%", pointerEvents:"none",
+                    background:`radial-gradient(circle,${glow.replace(".26",".09")} 0%,transparent 70%)` }}/>
+                  <div className="stat-icon-box" style={{ width:44, height:44, borderRadius:12,
+                    background:grad, display:"flex", alignItems:"center", justifyContent:"center",
+                    marginBottom:12, flexShrink:0, boxShadow:`0 4px 14px ${glow}` }}>
+                    <Icon size={20} color="white" strokeWidth={2.1}/>
+                  </div>
+                  <p className="section-title" style={{ fontSize:"clamp(1.55rem,2.6vw,2.1rem)",
+                    letterSpacing:"-0.04em", margin:"0 0 4px", lineHeight:1, color:"#211B2E" }}>
+                    <AnimatedCounterStat target={target} format={format}/>
+                  </p>
+                  <p style={{ fontSize:"0.75rem", color:"#55506A", fontWeight:500, margin:0, lineHeight:1.3 }}>
+                    {label}
+                  </p>
+                </div>
+              </BentoTiltCard>
+            ))}
+
+            {/* ⑥ Trust / rating tile */}
+            <BentoTiltCard
+              className="bento-trust stat-card du-fade"
+              style={{ borderRadius:20, background:"white",
+                border:"1px solid rgba(33,27,46,.07)",
+                boxShadow:"0 10px 28px rgba(33,27,46,.08)",
+                transitionDelay:"380ms" }}
+              intensity={5}
+            >
+              <div style={{ padding:"16px 20px 18px", position:"relative", overflow:"hidden" }}>
+                <div aria-hidden style={{ position:"absolute", top:0, left:0, right:0, height:3,
+                  background:"linear-gradient(90deg,#EC210F,#F59E0B,#22C55E,#1F7AF0,#8B5CF6)",
+                  borderRadius:"20px 20px 0 0" }}/>
+                <div style={{ display:"flex", alignItems:"center", gap:14, marginBottom:10, paddingTop:6 }}>
+                  <div style={{ display:"flex", flexShrink:0 }}>
+                    {ABOUT_AVATARS.map((av, i) => (
+                      <div key={i} style={{ width:30, height:30, borderRadius:"50%",
+                        background:av.bg, border:"2.5px solid white",
+                        marginLeft: i === 0 ? 0 : -9, position:"relative",
+                        zIndex:ABOUT_AVATARS.length - i, display:"flex", alignItems:"center",
+                        justifyContent:"center", fontSize:"0.64rem", fontWeight:700, color:"white" }}>
+                        {av.l}
+                      </div>
+                    ))}
+                  </div>
+                  <div>
+                    <div style={{ display:"flex", alignItems:"center", gap:5, marginBottom:2 }}>
+                      <span style={{ color:"#F59E0B", letterSpacing:"1px", fontSize:"0.88rem" }}>★★★★★</span>
+                      <span style={{ fontWeight:700, fontSize:"0.9rem", color:"#211B2E" }}>4.9</span>
+                    </div>
+                    <p style={{ fontSize:"0.72rem", color:"#55506A", margin:0, fontWeight:500 }}>
+                      Loved by Thane parents
+                    </p>
+                  </div>
+                </div>
+                <a href="https://www.google.com/maps/search/Rainbow+Preschool+Thane"
+                  target="_blank" rel="noopener noreferrer"
+                  style={{ fontSize:"0.72rem", color:"#EC210F", textDecoration:"none",
+                    fontWeight:600, display:"inline-flex", alignItems:"center", gap:4 }}>
+                  Read parent reviews <ArrowRight size={11}/>
+                </a>
+              </div>
+            </BentoTiltCard>
+
+          </div>{/* /bento-grid */}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
    RAINBOW SHELF — "Start Exploring" section
    Copied from /dummy page. Self-contained: data + sub-components + section.
 ═══════════════════════════════════════════════════════════════════════════ */
@@ -705,82 +1044,7 @@ export default function Home() {
       <QuickCallbackStrip />
       <AwardedBySection />
 
-      {/* About Section - SEO Enhanced */}
-      <article className="py-16 md:py-20 lg:py-24 relative overflow-hidden cv-auto">
-        <div className="absolute inset-0 pointer-events-none hidden md:block" style={{ backgroundImage: 'url(/images/centres/manpada.webp)', backgroundSize: 'cover', backgroundPosition: 'center', opacity: 0.06 }} />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-            <div data-reveal="float">
-              <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">About Us</p>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6" data-sparkle>Why Parents Choose Rainbow Preschool</h2>
-              <p className="text-muted-foreground text-lg leading-relaxed mb-6">
-                Since 2007, Rainbow Preschool International has helped over 1,00,000 young learners learn, play, and grow across Thane. Our centres follow a play-based curriculum that builds reading, writing, and number skills through hands-on activities, stories, art, and outdoor play.
-              </p>
-              <p className="text-muted-foreground leading-relaxed mb-4">
-                Each child learns in small batches of 10–12, guided by trained female teachers. Our classrooms are CCTV-monitored, and every centre follows strict hygiene and safety routines. We are open Monday to Saturday, 8 AM to 6 PM, and offer half-day and full-day options for all age groups.
-              </p>
-              <p className="text-muted-foreground leading-relaxed mb-4">
-                Our curriculum covers language, maths, science awareness, creative arts, and social skills. Children also participate in yoga, dance, and special activities like field trips and celebrations. Fees vary by programme and centre — contact us for the latest fee structure.
-              </p>
-              <p className="text-muted-foreground leading-relaxed mb-8">
-                All six centres are in Thane West, close to residential areas and main roads. Whether you are in Manpada, Kalwa, Dhokali, or Kasarvadavali, families can find a <Link href="/play-school-near-me" className="text-primary hover:underline">Rainbow Preschool centre close to their neighbourhood</Link>.
-              </p>
-              <Link href="/about">
-                <Button variant="outline" data-testid="button-learn-more">
-                  Learn More About Us
-                  <ArrowRight aria-hidden="true" className="ml-2 h-4 w-4" />
-                </Button>
-              </Link>
-            </div>
-            <div className="grid grid-cols-2 gap-3 sm:gap-4" data-stagger="children">
-              {/* Happy Students */}
-              <Link href="#testimonials" data-reveal="pop">
-                <div className="relative rounded-2xl overflow-hidden p-4 sm:p-5 cursor-pointer group hover:-translate-y-1 transition-all duration-300 bg-gradient-to-br from-primary/10 via-primary/5 to-transparent border border-primary/20 hover:border-primary/40 hover:shadow-lg dark:border-primary/30">
-                  <div className="absolute -top-5 -right-5 w-20 h-20 bg-primary/10 rounded-full" />
-                  <Users className="w-6 h-6 sm:w-8 sm:h-8 text-primary mb-2 sm:mb-3 relative z-10" />
-                  <p className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-foreground mb-0.5 relative z-10 whitespace-nowrap">
-                    <CountUp end={100000} duration={2000} delay={0} suffix="+" />
-                  </p>
-                  <p className="text-xs sm:text-sm text-muted-foreground font-medium relative z-10">Young Learners</p>
-                </div>
-              </Link>
-              {/* Years */}
-              <Link href="/about" data-reveal="pop">
-                <div className="relative rounded-2xl overflow-hidden p-4 sm:p-5 cursor-pointer group hover:-translate-y-1 transition-all duration-300 bg-gradient-to-br from-amber-50 via-yellow-50 to-transparent dark:from-amber-950/30 dark:via-yellow-950/20 dark:to-transparent border border-amber-200 dark:border-amber-800/40 hover:border-amber-400 hover:shadow-lg">
-                  <div className="absolute -top-5 -right-5 w-20 h-20 bg-amber-200/40 dark:bg-amber-700/20 rounded-full" />
-                  <Star className="w-6 h-6 sm:w-8 sm:h-8 text-amber-500 fill-amber-400 mb-2 sm:mb-3 relative z-10" />
-                  <p className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-foreground mb-0.5 relative z-10 whitespace-nowrap">
-                    <CountUp end={18} duration={1500} delay={200} suffix="+" />
-                  </p>
-                  <p className="text-xs sm:text-sm text-muted-foreground font-medium relative z-10">Years of Excellence</p>
-                </div>
-              </Link>
-              {/* Centres */}
-              <Link href="#centres" data-reveal="pop">
-                <div className="relative rounded-2xl overflow-hidden p-4 sm:p-5 cursor-pointer group hover:-translate-y-1 transition-all duration-300 bg-gradient-to-br from-sky-50 via-blue-50 to-transparent dark:from-sky-950/30 dark:via-blue-950/20 dark:to-transparent border border-sky-200 dark:border-sky-800/40 hover:border-sky-400 hover:shadow-lg">
-                  <div className="absolute -top-5 -right-5 w-20 h-20 bg-sky-200/40 dark:bg-sky-700/20 rounded-full" />
-                  <MapPin className="w-6 h-6 sm:w-8 sm:h-8 text-sky-500 mb-2 sm:mb-3 relative z-10" />
-                  <p className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-foreground mb-0.5 relative z-10 whitespace-nowrap">
-                    <CountUp end={6} duration={1500} delay={400} prefix="0" />
-                  </p>
-                  <p className="text-xs sm:text-sm text-muted-foreground font-medium relative z-10">Centres in Thane</p>
-                </div>
-              </Link>
-              {/* Female Staff */}
-              <div data-reveal="pop">
-                <div className="relative rounded-2xl overflow-hidden p-4 sm:p-5 bg-gradient-to-br from-green-50 via-emerald-50 to-transparent dark:from-green-950/30 dark:via-emerald-950/20 dark:to-transparent border border-green-200 dark:border-green-800/40">
-                  <div className="absolute -top-5 -right-5 w-20 h-20 bg-green-200/40 dark:bg-green-700/20 rounded-full" />
-                  <Shield className="w-6 h-6 sm:w-8 sm:h-8 text-green-500 mb-2 sm:mb-3 relative z-10" />
-                  <p className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-foreground mb-0.5 relative z-10 whitespace-nowrap">
-                    <CountUp end={100} duration={1500} delay={600} suffix="%" />
-                  </p>
-                  <p className="text-xs sm:text-sm text-muted-foreground font-medium relative z-10">Female Staff</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </article>
+      <StatsSection />
 
       <LazySection minHeight={480} rootMargin="300px">
         {/* Programmes Section - SEO Cluster Hub */}

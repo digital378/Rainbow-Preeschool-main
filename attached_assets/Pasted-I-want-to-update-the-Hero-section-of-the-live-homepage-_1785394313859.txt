@@ -1,0 +1,46 @@
+I want to update the Hero section of the live homepage. The goal is to apply the font style and typography from the /dummy page hero while keeping the existing dark photo background of the live homepage (the children's image with dark olive/yellow-green overlay).
+
+Target font style (from /dummy page hero):
+
+"Rainbow" — very large, extra-bold, rounded font, displayed on its own line
+"Preschool" — same large size, extra-bold, in red/orange color (the same red used in the dummy page), on its own line
+Subtitle: "Playschool · Nursery · Kindergarten" — bold, medium size, with dot separators
+Description text — clean, readable, lighter font weight
+Stat pills — clean pill/badge style with icon + number + label, same as dummy page layout
+Buttons — "Request a Callback" (solid red) and "Explore Programmes →" (outlined/ghost style), same shape and weight as dummy
+
+What to keep from the live homepage:
+
+The dark background with the children's photo and the olive/dark overlay — do not change this
+The "Admissions Open · 2026–27" badge at the top left
+The overall layout structure and positioning of elements
+The navbar above it
+
+Important colour adjustment:
+Since the background is dark (photo with dark overlay), "Rainbow" should remain white for readability. "Preschool" should use the same red/orange as in the dummy page — this will still pop well on the dark background. Do not use dark/black text anywhere in this hero since the background is dark.
+
+Step 1 — Locate dummy hero:
+Open the /dummy page and find the hero section. Note the exact font sizes, font weights, line heights, letter spacing, and CSS classes used for the heading, subtitle, description, stat pills, and buttons.
+
+Step 2 — Locate live homepage hero:
+Open the homepage file and find the existing hero section with the photo background.
+
+Step 3 — Apply typography changes only:
+Update the following in the homepage hero — do NOT change layout or background:
+
+Increase font size of "Rainbow" and "Preschool" to match dummy page scale
+Apply extra-bold / black font weight to both
+Set "Preschool" color to the red/orange from the dummy page
+Update subtitle to use dot-separator style: "Playschool · Nursery · Kindergarten"
+Update stat pills to match the cleaner pill style from the dummy
+Update button styles (shape, padding, weight) to match dummy
+
+Step 4 — Do NOT touch:
+
+The background image or overlay
+Any section below the hero
+Navbar, footer, or any other page
+The dummy page itself
+
+Step 5 — After changes:
+Show me a summary of every file and line changed so I can review before running.

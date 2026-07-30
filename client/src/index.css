@@ -298,6 +298,65 @@
     color: #211B2E;
   }
 
+  /* ═══ Bento About section (du-*, stat-*, bento-*, mascot-*, chip-*) ══ */
+  @keyframes d-float-a  { 0%,100%{transform:translateY(0)rotate(0deg)} 50%{transform:translateY(-22px)rotate(5deg)} }
+  @keyframes d-float-b  { 0%,100%{transform:translateY(0)} 33%{transform:translateY(-14px)rotate(-4deg)} 66%{transform:translateY(-7px)} }
+  @keyframes d-float-c  { 0%,100%{transform:translateY(0)translateX(0)} 50%{transform:translateY(-12px)translateX(8px)} }
+  @keyframes d-twinkle  { 0%,100%{opacity:0;transform:scale(.4)} 50%{opacity:1;transform:scale(1)} }
+  @keyframes mascot-wave{ 0%,82%,100%{transform:translateY(0) rotate(0deg)} 86%{transform:translateY(-4px) rotate(-9deg)} 91%{transform:translateY(-6px) rotate(9deg)} 96%{transform:translateY(-3px) rotate(-4deg)} }
+
+  .d-float-a { animation:d-float-a 9s  ease-in-out infinite; }
+  .d-float-b { animation:d-float-b 12s ease-in-out infinite; }
+  .d-float-c { animation:d-float-c 7s  ease-in-out infinite reverse; }
+  .d-tw1 { animation:d-twinkle 2.4s ease-in-out infinite; }
+  .d-tw2 { animation:d-twinkle 3.1s ease-in-out infinite 0.8s; }
+  .d-tw3 { animation:d-twinkle 2.8s ease-in-out infinite 1.6s; }
+
+  .du-fade { opacity:0; transform:translateY(36px); transition:opacity 0.80s cubic-bezier(.22,1,.36,1),transform 0.80s cubic-bezier(.22,1,.36,1); will-change:opacity,transform; }
+  .du-fade.du-vis { opacity:1; transform:none; }
+
+  .stat-card { transition:box-shadow 0.25s; }
+  .stat-card:hover { box-shadow:0 24px 56px rgba(33,27,46,.16) !important; }
+  .stat-icon-box { transition:transform 0.28s cubic-bezier(.34,1.56,.64,1); }
+  .stat-card:hover .stat-icon-box { transform:scale(1.12) rotate(-5deg) !important; }
+
+  .about-cta:hover { border-color:#EC210F !important; color:#EC210F !important; box-shadow:0 4px 20px rgba(236,33,15,.14) !important; }
+  .about-cta:hover .about-arrow { transform:translateX(5px) !important; }
+  .about-arrow { transition:transform 0.2s ease; }
+
+  .mascot-char { animation:mascot-wave 9s ease-in-out infinite; transform-origin:bottom center; }
+  .bento-grid  { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .bento-photo { grid-column:1/3; height:380px; min-height:0; overflow:hidden; }
+  .bento-trust { grid-column:1/3; align-self:start; }
+  .bento-s1,.bento-s2,.bento-s3,.bento-s4 { align-self:start; }
+  .mascot-stage-img { display:block; max-height:calc(100% - 50px); max-width:88%; width:auto; object-fit:contain; object-position:bottom center; margin:0 auto; }
+
+  .chip-row { display:flex; flex-wrap:nowrap; overflow-x:auto; gap:5px; scrollbar-width:none; -webkit-overflow-scrolling:touch; }
+  .chip-row::-webkit-scrollbar { display:none; }
+  .chip-row .centre-chip { flex-shrink:0; }
+  @media (max-width:1023px) { .chip-row .centre-chip { min-height:44px; } }
+  .centre-chip { transition:all 0.18s ease; cursor:pointer; text-decoration:none; }
+  .centre-chip:hover { border-color:#EC210F !important; color:#EC210F !important; box-shadow:0 3px 14px rgba(236,33,15,.15); transform:translateY(-2px); }
+  .centre-chip:hover .centre-pin { color:#EC210F !important; }
+  .centre-chip:focus-visible { outline:2px solid #EC210F; outline-offset:2px; border-radius:999px; }
+
+  @media (min-width:1024px) {
+    .bento-grid  { grid-template-columns:1fr 1fr 1.4fr; }
+    .bento-photo { grid-column:3/4 !important; grid-row:1/4 !important; min-height:0; height:480px; align-self:stretch; overflow:hidden; }
+    .bento-s1    { grid-column:1/2; grid-row:1/2; }
+    .bento-s2    { grid-column:2/3; grid-row:1/2; }
+    .bento-trust { grid-column:1/3 !important; grid-row:2/3; }
+    .bento-s3    { grid-column:1/2; grid-row:3/4; }
+    .bento-s4    { grid-column:2/3; grid-row:3/4; }
+    .mascot-stage-img { max-height:calc(100% - 50px); max-width:100%; width:auto; object-fit:contain; object-position:bottom center; margin:0 auto; }
+  }
+  @media (prefers-reduced-motion:reduce) {
+    .mascot-char { animation:none !important; }
+    .bento-photo img { animation:none !important; }
+    .d-float-a,.d-float-b,.d-float-c,.d-tw1,.d-tw2,.d-tw3 { animation:none !important; }
+    .du-fade { opacity:1 !important; transform:none !important; transition:none !important; }
+  }
+
   /* ═══ Rainbow Shelf (rs-*) — Start Exploring section ════════════════ */
   @keyframes rs-bob-1 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-7px)} }
   @keyframes rs-bob-2 { 0%,100%{transform:translateY(-3px)} 50%{transform:translateY(-10px)} }
