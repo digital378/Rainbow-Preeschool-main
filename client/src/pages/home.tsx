@@ -1383,9 +1383,18 @@ function ProgrammesDummyHome() {
       .filter(p => ["playgroup","nursery","kindergarten","happy-times"].includes(p.id))
       .map(p => [p.id, p])
   );
+  const sectionRef = useRef<HTMLElement>(null);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setVisible(true); obs.disconnect(); } }, { threshold: 0.1 });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
 
   return (
-    <section className="relative overflow-hidden"
+    <section ref={sectionRef} className="relative overflow-hidden"
       style={{
         backgroundImage: [
           "radial-gradient(circle,rgba(33,27,46,.045) 1px,transparent 1px)",
@@ -1437,7 +1446,12 @@ function ProgrammesDummyHome() {
       <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
 
         {/* Section header */}
-        <div className="du-fade text-center" style={{ marginBottom:56 }}>
+        <div className="text-center" style={{
+          marginBottom:56,
+          opacity: visible ? 1 : 0,
+          transform: visible ? "none" : "translateY(24px)",
+          transition: "opacity 0.7s ease, transform 0.7s cubic-bezier(.22,1,.36,1)",
+        }}>
           <p style={{ fontSize:"0.63rem", fontWeight:700, letterSpacing:"0.22em",
             textTransform:"uppercase", color:"#EC210F", margin:"0 0 14px" }}>
             OUR PROGRAMMES
@@ -1494,7 +1508,11 @@ function ProgrammesDummyHome() {
         </div>
 
         {/* View All Programmes button */}
-        <div className="du-fade text-center" style={{ marginTop:60 }}>
+        <div className="text-center" style={{
+          marginTop:60,
+          opacity: visible ? 1 : 0,
+          transition: "opacity 0.7s ease 0.3s",
+        }}>
           <a href="/programmes"
             className="group inline-flex items-center gap-2.5 rounded-full px-9 py-3.5 text-sm font-semibold border border-border/80 bg-white hover:bg-muted transition-all duration-200 hover:-translate-y-0.5 shadow-sm"
             style={{ textDecoration:"none" }}>
