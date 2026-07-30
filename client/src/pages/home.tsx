@@ -371,6 +371,285 @@ function QuickCallbackStrip() {
   );
 }
 
+/* ═══════════════════════════════════════════════════════════════════════════
+   RAINBOW SHELF — "Start Exploring" section
+   Copied from /dummy page. Self-contained: data + sub-components + section.
+═══════════════════════════════════════════════════════════════════════════ */
+const SHELF_ITEMS = [
+  { href:"/best-preschool-near-me-in-thane", label:"Why Us",       Icon:Award,
+    color:"#F5320C", gradient:"linear-gradient(145deg,#FF5A3C,#F5320C)",
+    group:"A" as const, sigAnim:"rs-sig-medal" },
+  { href:"/play-school-near-me",             label:"Find Centre",  Icon:MapPin,
+    color:"#06B463", gradient:"linear-gradient(145deg,#22D67E,#06B463)",
+    group:"A" as const, sigAnim:"rs-sig-pin" },
+  { href:"/preschool-admissions",            label:"Book Visit",   Icon:FileText,
+    color:"#1F7AF0", gradient:"linear-gradient(145deg,#48A0FF,#1F7AF0)",
+    group:"A" as const, sigAnim:"rs-sig-cal" },
+  { href:"/playgroup",                       label:"Playgroup",    Icon:Palette,
+    color:"#FB6112", gradient:"linear-gradient(145deg,#FF8A3D,#FB6112)",
+    group:"B" as const, sigAnim:"rs-sig-pal" },
+  { href:"/nursery",                         label:"Nursery",      Icon:BookOpen,
+    color:"#7C4DFF", gradient:"linear-gradient(145deg,#A06BFF,#7C4DFF)",
+    group:"B" as const, sigAnim:"rs-sig-book" },
+  { href:"/kindergarten",                    label:"Kindergarten", Icon:GraduationCap,
+    color:"#06B6A4", gradient:"linear-gradient(145deg,#2CD8C4,#06B6A4)",
+    group:"B" as const, sigAnim:"rs-sig-grad" },
+];
+type ShelfItem = typeof SHELF_ITEMS[number];
+
+function ShelfCard({ item, globalIdx, isActive, onActivate }: {
+  item: ShelfItem; globalIdx: number; isActive: boolean; onActivate: (i: number) => void;
+}) {
+  const innerRef    = useRef<HTMLDivElement>(null);
+  const parallaxRef = useRef<HTMLDivElement>(null);
+  const mouseT      = useRef({ x: 0, y: 0 });
+  const smoothed    = useRef({ x: 0, y: 0 });
+
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion:reduce)").matches) return;
+    let raf: number;
+    const tick = () => {
+      const lp = 0.09;
+      smoothed.current.x += (mouseT.current.x - smoothed.current.x) * lp;
+      smoothed.current.y += (mouseT.current.y - smoothed.current.y) * lp;
+      const { x, y } = smoothed.current;
+      if (innerRef.current) {
+        innerRef.current.style.transform =
+          `perspective(800px) rotateY(${(x*10).toFixed(3)}deg) rotateX(${(-y*10).toFixed(3)}deg)`;
+      }
+      if (parallaxRef.current) {
+        parallaxRef.current.style.transform =
+          `translateX(${(-x*6).toFixed(2)}px) translateY(${(-y*4).toFixed(2)}px)`;
+      }
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, []);
+
+  function onMouseMove(e: React.MouseEvent<HTMLDivElement>) {
+    const r = innerRef.current?.getBoundingClientRect();
+    if (!r) return;
+    mouseT.current.x = (e.clientX - r.left) / r.width  - 0.5;
+    mouseT.current.y = (e.clientY - r.top)  / r.height - 0.5;
+  }
+  function onMouseLeave() { mouseT.current = { x: 0, y: 0 }; }
+
+  function handleClick(e: React.MouseEvent<HTMLAnchorElement>) {
+    e.preventDefault();
+    onActivate(globalIdx);
+    const r = innerRef.current?.getBoundingClientRect();
+    if (!r) return;
+    const cx = e.clientX - r.left, cy = e.clientY - r.top;
+    for (let i = 0; i < 12; i++) {
+      const el = document.createElement("div");
+      const angle = (i / 12) * Math.PI * 2;
+      const dist  = 36 + Math.random() * 32;
+      const size  = 5 + Math.random() * 5;
+      el.setAttribute("style",
+        `position:absolute;left:${cx}px;top:${cy}px;width:${size}px;height:${size}px;` +
+        `border-radius:50%;background:${item.color};pointer-events:none;z-index:50;` +
+        `animation:rs-confetti 0.65s cubic-bezier(.22,1,.36,1) ${i*28}ms forwards;`);
+      el.style.setProperty("--cx", `${(Math.cos(angle)*dist).toFixed(1)}px`);
+      el.style.setProperty("--cy", `${(Math.sin(angle)*dist).toFixed(1)}px`);
+      el.style.setProperty("--cr", `${((Math.random()-.5)*360).toFixed(0)}deg`);
+      innerRef.current?.appendChild(el);
+      setTimeout(() => el.remove(), 900 + i * 28);
+    }
+    // Navigate after confetti
+    setTimeout(() => { window.location.href = item.href; }, 120);
+  }
+
+  const bobClass = ["rs-bob-1","rs-bob-2","rs-bob-3"][globalIdx % 3];
+
+  return (
+    <div className="rs-card rs-pop" onMouseMove={onMouseMove} onMouseLeave={onMouseLeave}
+      style={{ transitionDelay:`${globalIdx * 65}ms` }}>
+      <a href={item.href} onClick={handleClick} aria-label={item.label}
+        className="block rounded-[22px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+        style={{ "--tw-ring-color": item.color } as React.CSSProperties}>
+        <div className="rs-lift">
+          <div ref={innerRef} className="rs-inner-card"
+            style={{
+              borderRadius:22, background:"white",
+              border: isActive ? `2px solid ${item.color}` : "1px solid rgba(33,27,46,.06)",
+              boxShadow: isActive
+                ? `0 0 0 4px ${item.color}22,0 16px 40px ${item.color}30`
+                : `0 10px 30px ${item.color}1A,0 4px 12px rgba(33,27,46,.05)`,
+              padding:"22px 14px 16px", position:"relative", overflow:"hidden",
+              transformStyle:"preserve-3d", willChange:"transform",
+              transition:"box-shadow 0.3s,border-color 0.25s",
+              "--card-shadow": `${item.color}40`,
+            } as React.CSSProperties}>
+            <div style={{ position:"absolute",top:0,left:0,right:0,height:3,
+              background:item.gradient,borderRadius:"22px 22px 0 0" }}/>
+            <div style={{ position:"absolute",bottom:0,left:0,right:0,height:"45%",
+              background:`linear-gradient(to top,${item.color}0D 0%,transparent 100%)`,
+              pointerEvents:"none",borderRadius:"0 0 22px 22px" }}/>
+            <div style={{ position:"absolute",top:8,left:"50%",transform:"translateX(-50%)",
+              width:90,height:90,borderRadius:"50%",
+              background:`radial-gradient(circle,${item.color}35 0%,transparent 68%)`,
+              filter:"blur(14px)" }}/>
+            <div className="flex justify-center" style={{ marginBottom:12,marginTop:4 }}>
+              <div ref={parallaxRef} style={{ willChange:"transform" }}>
+                <div className={`${bobClass} ${item.sigAnim}`}
+                  style={{ width:62,height:62,borderRadius:18,background:item.gradient,
+                    display:"flex",alignItems:"center",justifyContent:"center",
+                    boxShadow:`0 10px 28px ${item.color}55`,willChange:"transform" }}>
+                  <item.Icon style={{ width:26,height:26,color:"white" }}/>
+                </div>
+              </div>
+            </div>
+            <p style={{ textAlign:"center",fontWeight:700,fontSize:"0.795rem",
+              color:item.color,margin:0,lineHeight:1.3,
+              fontFamily:"'Fredoka One','Baloo 2',system-ui,sans-serif",
+              letterSpacing:"-0.01em" }}>{item.label}</p>
+            <div className="rs-arrow" style={{ display:"flex",justifyContent:"center",marginTop:5 }}>
+              <span style={{ color:item.color,fontSize:13,fontWeight:700 }}>→</span>
+            </div>
+            <div className="rs-shine"/>
+          </div>
+        </div>
+      </a>
+    </div>
+  );
+}
+
+function MobileRowTile({ item, globalIdx, isActive, onActivate }: {
+  item: ShelfItem; globalIdx: number; isActive: boolean; onActivate: () => void;
+}) {
+  const [tapped, setTapped] = useState(false);
+  function handleClick(e: React.MouseEvent<HTMLAnchorElement>) {
+    e.preventDefault();
+    onActivate();
+    setTapped(true);
+    setTimeout(() => setTapped(false), 380);
+    setTimeout(() => { window.location.href = item.href; }, 120);
+  }
+  return (
+    <a href={item.href} onClick={handleClick} aria-label={item.label}
+      className="rs-pop rs-row-tile"
+      style={{
+        transitionDelay:`${globalIdx * 60}ms`,
+        transform: tapped ? "scale(0.975)" : "none",
+        boxShadow: isActive
+          ? `inset 0 0 0 2px ${item.color},0 8px 24px ${item.color}30`
+          : tapped
+          ? `0 8px 24px ${item.color}30,0 4px 12px rgba(33,27,46,.08)`
+          : "0 4px 16px rgba(33,27,46,.06)",
+      } as React.CSSProperties}>
+      <div style={{ position:"absolute",left:0,top:0,bottom:0,width:4,
+        background:item.gradient,borderRadius:"18px 0 0 18px",flexShrink:0 }}/>
+      <div className={tapped ? item.sigAnim : ""}
+        style={{ width:44,height:44,borderRadius:12,flexShrink:0,background:item.gradient,
+          display:"flex",alignItems:"center",justifyContent:"center",
+          boxShadow:`0 6px 16px ${item.color}55` }}>
+        <item.Icon style={{ width:20,height:20,color:"white" }}/>
+      </div>
+      <span style={{ flex:1,fontWeight:700,fontSize:"0.9rem",color:item.color,
+        fontFamily:"'Fredoka One','Baloo 2',system-ui,sans-serif",
+        letterSpacing:"-0.01em" }}>{item.label}</span>
+      <span style={{ color:item.color,fontSize:16,fontWeight:700,flexShrink:0,marginRight:2 }}>→</span>
+    </a>
+  );
+}
+
+function RainbowShelfSection() {
+  const [activeIdx, setActiveIdx] = useState<number | null>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const sec = sectionRef.current;
+    if (!sec) return;
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        sec.querySelectorAll<HTMLElement>(".rs-pop").forEach((el, i) => {
+          setTimeout(() => el.classList.add("rs-visible"), i * 65);
+        });
+        obs.unobserve(sec);
+      });
+    }, { threshold: 0.12 });
+    obs.observe(sec);
+    return () => obs.disconnect();
+  }, []);
+
+  const groupA = SHELF_ITEMS.filter(x => x.group === "A");
+  const groupB = SHELF_ITEMS.filter(x => x.group === "B");
+  const grpLabel = (txt: string, centered?: boolean) => (
+    <p className="rs-pop" style={{
+      fontSize:"0.68rem",fontWeight:700,letterSpacing:"0.15em",textTransform:"uppercase",
+      color:"#55506A",margin:"0 0 14px 2px",whiteSpace:"nowrap",
+      textAlign: centered ? "center" : "left",
+    }}>{txt}</p>
+  );
+
+  return (
+    <section ref={sectionRef} style={{
+      background:"linear-gradient(180deg,#FFF4F3 0%,#FFF6EE 55%,#FFF4F3 100%)",
+      padding:"72px 0 72px",overflow:"hidden",
+    }}>
+      <div className="rs-pop text-center" style={{ marginBottom:40 }}>
+        <p style={{ fontSize:"0.63rem",fontWeight:700,letterSpacing:"0.2em",
+          textTransform:"uppercase",color:"#55506A",margin:"0 0 8px" }}>
+          WHERE TO NEXT?
+        </p>
+        <h2 className="section-title" style={{ fontSize:"clamp(2rem,4vw,3rem)",margin:0 }}>
+          Start Exploring
+        </h2>
+      </div>
+      {/* Desktop */}
+      <div className="hidden md:block" style={{ maxWidth:1120,margin:"0 auto",padding:"0 40px" }}>
+        <div style={{ display:"flex",justifyContent:"center",alignItems:"flex-start",gap:52 }}>
+          <div>
+            {grpLabel("Quick Links", true)}
+            <div style={{ display:"flex",gap:16 }}>
+              {groupA.map((item,i) => (
+                <div key={item.href} style={{ width:160,flexShrink:0 }}>
+                  <ShelfCard item={item} globalIdx={i}
+                    isActive={activeIdx===i} onActivate={setActiveIdx}/>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div>
+            {grpLabel("Our Programmes", true)}
+            <div style={{ display:"flex",gap:16 }}>
+              {groupB.map((item,i) => (
+                <div key={item.href} style={{ width:160,flexShrink:0 }}>
+                  <ShelfCard item={item} globalIdx={i+3}
+                    isActive={activeIdx===i+3} onActivate={setActiveIdx}/>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* Mobile */}
+      <div className="md:hidden" style={{ maxWidth:440,margin:"0 auto",padding:"0 20px" }}>
+        <div style={{ marginBottom:28 }}>
+          {grpLabel("Quick Links")}
+          <div style={{ display:"flex",flexDirection:"column",gap:12 }}>
+            {groupA.map((item,i) => (
+              <MobileRowTile key={item.href} item={item} globalIdx={i}
+                isActive={activeIdx===i} onActivate={() => setActiveIdx(i)}/>
+            ))}
+          </div>
+        </div>
+        <div>
+          {grpLabel("Our Programmes")}
+          <div style={{ display:"flex",flexDirection:"column",gap:12 }}>
+            {groupB.map((item,i) => (
+              <MobileRowTile key={item.href} item={item} globalIdx={i+3}
+                isActive={activeIdx===i+3} onActivate={() => setActiveIdx(i+3)}/>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export default function Home() {
   // Inject all schemas after paint so they don't block the main thread (bots get
   // them via server-side bot-ssr.ts instead).
@@ -422,47 +701,7 @@ export default function Home() {
       />
       <HeroSection />
       
-      {/* Quick Navigation Links for SEO - Crawlable anchor tags */}
-      <nav aria-label="Quick links" className="py-5 sm:py-6 bg-gradient-to-br from-red-50 via-yellow-50 to-orange-50 dark:from-red-950/20 dark:to-yellow-950/20 border-y border-red-100 dark:border-red-900/30">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-6 gap-2 sm:gap-3">
-            {[
-              { href: "/best-preschool-near-me-in-thane", label: "Why Choose Us", shortLabel: "Why Choose Us", Icon: Award, color: "#ef4444", testid: "link-best-preschool" },
-              { href: "/play-school-near-me", label: "Find a Centre", shortLabel: "Find a Centre", Icon: MapPin, color: "#10b981", testid: "link-preschool-near-me" },
-              { href: "/preschool-admissions", label: "Book a Visit", shortLabel: "Book a Visit", Icon: FileText, color: "#3b82f6", testid: "link-preschool-admissions" },
-              { href: "/playgroup", label: "Playgroup", shortLabel: "Playgroup", Icon: Palette, color: "#f97316", testid: "link-playgroup" },
-              { href: "/nursery", label: "Nursery", shortLabel: "Nursery", Icon: BookOpen, color: "#8b5cf6", testid: "link-nursery" },
-              { href: "/kindergarten", label: "Kindergarten", shortLabel: "KG", Icon: GraduationCap, color: "#14b8a6", testid: "link-kindergarten" },
-            ].map(({ href, label, shortLabel, Icon, color, testid }) => (
-              <a
-                key={testid}
-                href={href}
-                data-testid={testid}
-                className="group flex flex-col items-center gap-1.5 sm:gap-2 p-2.5 sm:p-3 rounded-2xl text-center transition-all duration-200 hover:-translate-y-1 min-h-[72px] justify-center"
-                style={{
-                  background: `radial-gradient(circle at 40% 30%, ${color}18, ${color}08)`,
-                  border: `1px solid ${color}30`,
-                  boxShadow: `0 4px 14px ${color}18, 0 1px 3px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.85)`,
-                }}
-              >
-                <div
-                  className="w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-full flex-shrink-0"
-                  style={{
-                    background: `radial-gradient(circle at 35% 35%, ${color}dd, ${color})`,
-                    boxShadow: `0 3px 8px ${color}80, inset 0 1px 0 rgba(255,255,255,0.4), inset 0 -1px 0 rgba(0,0,0,0.15)`,
-                  }}
-                >
-                  <Icon style={{ width: 16, height: 16, color: "white" }} />
-                </div>
-                <span className="text-[10px] sm:text-xs font-semibold leading-tight line-clamp-2" style={{ color: color }}>
-                  <span className="hidden sm:inline">{label}</span>
-                  <span className="sm:hidden">{shortLabel}</span>
-                </span>
-              </a>
-            ))}
-          </div>
-        </div>
-      </nav>
+      <RainbowShelfSection />
       <QuickCallbackStrip />
       <AwardedBySection />
 

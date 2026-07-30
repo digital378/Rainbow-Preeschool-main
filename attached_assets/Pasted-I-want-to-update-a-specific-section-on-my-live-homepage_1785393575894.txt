@@ -1,0 +1,36 @@
+I want to update a specific section on my live homepage to match the design already built on my /dummy page (design testing page). I am NOT redesigning anything — the design already exists and works on /dummy. I just need it copied/applied to the live homepage correctly.
+
+The section to update:
+The "Start Exploring" section on the homepage. It contains:
+
+A subtitle: "WHERE TO NEXT?"
+A heading: "Start Exploring"
+Two groups of icon cards: "QUICK LINKS" (Why Us, Find Centre, Book Visit) and "OUR PROGRAMMES" (Playgroup, Nursery, Kindergarten)
+
+What I need you to do:
+
+Step 1 — Find the source (dummy page):
+Open the /dummy page file and locate the "Start Exploring" section. Copy the exact HTML structure, CSS classes, and any inline styles used for this section. Note down every class name used.
+
+Step 2 — Find the destination (live homepage):
+Open the homepage file (likely index.html, index.jsx, index.tsx, Home.jsx, or Home.tsx depending on the framework). Locate the existing "Start Exploring" section in the homepage code.
+
+Step 3 — Replace safely:
+Replace ONLY the "Start Exploring" section HTML in the homepage with the version from the dummy page. Do not touch anything above it (navbar/header) or below it (Quick Callback form, footer, or any other section).
+
+Step 4 — Handle CSS:
+Check if the CSS classes used in the dummy page's version of this section already exist in the shared stylesheet. If any classes are defined locally/separately in the dummy page's CSS file, copy those styles into the shared stylesheet so the homepage can use them. Do not duplicate styles that already exist.
+
+Step 5 — Handle any JS or data:
+If the section uses any JavaScript (e.g. for animations, hover effects, or dynamic card rendering) or pulls data from a list/array, make sure that logic is also present and accessible in the homepage file. Copy it over if it only exists in the dummy page.
+
+Step 6 — Do NOT change:
+
+The navbar/header
+The "Quick Callback" form below this section
+Any other homepage sections
+The dummy page itself (leave it as-is)
+Any routing or page structure files
+
+Step 7 — After changes:
+Show me a summary of which files were changed and what exactly was modified in each file, so I can review before running the project.
