@@ -66,7 +66,7 @@ export function HeroSection() {
             Rainbow
             <span
               className="block"
-              style={{ color: "#EC210F", textShadow: "0 4px 24px rgba(236,33,15,0.45)" }}
+              style={{ color: "#FBBF24", textShadow: "0 4px 24px rgba(251,191,36,0.55)" }}
             >
               Preschool
             </span>
@@ -95,15 +95,14 @@ export function HeroSection() {
             {trustBadges.map(({ Icon, label }, i) => (
               <div
                 key={i}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full cursor-default select-none transition-all duration-200 hover:scale-105 hover:bg-white/16"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full cursor-default select-none transition-all duration-200 hover:scale-105"
                 style={{
-                  background: "rgba(255,255,255,0.08)",
-                  backdropFilter: "blur(10px)",
-                  border: "1px solid rgba(255,255,255,0.16)",
+                  background: "rgba(255,255,255,0.93)",
+                  border: "1px solid rgba(255,255,255,0.6)",
                 }}
               >
-                <Icon className="w-3.5 h-3.5 text-yellow-400 flex-shrink-0" />
-                <span className="text-[11px] font-semibold text-white/88 tracking-wide whitespace-nowrap">{label}</span>
+                <Icon className="w-3.5 h-3.5 text-yellow-500 flex-shrink-0" />
+                <span className="text-[11px] font-semibold tracking-wide whitespace-nowrap" style={{ color: "#211B2E" }}>{label}</span>
               </div>
             ))}
           </div>
