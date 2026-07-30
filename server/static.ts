@@ -89,6 +89,28 @@ function makeAsyncCSS(html: string): string {
   );
 }
 
+// ---------------------------------------------------------------------------
+// Module-level caches — populated on the first request after server start.
+//
+// baseIndexHtml: the raw dist/public/index.html with makeAsyncCSS already
+//   applied.  Eliminates the fs.readFileSync + regex rewrite on every hit.
+//
+// pageCache: maps URL path → fully-processed SPA shell (base HTML +
+//   injectPageSchemas output).  Each unique path is computed once; all
+//   subsequent hits are served directly from memory.
+//   The homepage is excluded because injectHomepageFreshness adds content
+//   that changes over time and must not be frozen.
+// ---------------------------------------------------------------------------
+let baseIndexHtml: string | null = null;
+const pageCache = new Map<string, string>();
+
+function getBaseHtml(indexPath: string): string {
+  if (!baseIndexHtml) {
+    baseIndexHtml = makeAsyncCSS(fs.readFileSync(indexPath, "utf-8"));
+  }
+  return baseIndexHtml;
+}
+
 export function serveStatic(app: Express) {
   const distPath = path.resolve(__dirname, "public");
   if (!fs.existsSync(distPath)) {
@@ -97,14 +119,15 @@ export function serveStatic(app: Express) {
     );
   }
 
+  const indexPath = path.resolve(distPath, "index.html");
+
   // Homepage: inject freshness signals into the SPA shell before serving.
   // MUST be registered before express.static so it wins over the static
   // middleware's automatic index.html serving for "/".
+  // NOT cached — injectHomepageFreshness adds dynamic content.
   app.get("/", (_req, res) => {
-    const indexPath = path.resolve(distPath, "index.html");
-    let html = fs.readFileSync(indexPath, "utf-8");
+    let html = getBaseHtml(indexPath);
     html = injectHomepageFreshness("/", html);
-    html = makeAsyncCSS(html);
     res.removeHeader("Set-Cookie");
     res.setHeader("Cache-Control", "no-store");
     res.setHeader("Content-Type", "text/html; charset=utf-8");
@@ -149,12 +172,15 @@ export function serveStatic(app: Express) {
     res.removeHeader("Set-Cookie");
     res.setHeader("Cache-Control", "no-store");
     res.setHeader("Content-Type", "text/html; charset=utf-8");
-    const indexPath = path.resolve(distPath, "index.html");
-    let html = fs.readFileSync(indexPath, "utf-8");
     // Use originalUrl (strip query string) to get the real page path.
     const urlPath = req.originalUrl.split("?")[0];
-    html = injectPageSchemas(urlPath, html);
-    html = makeAsyncCSS(html);
+    const cached = pageCache.get(urlPath);
+    if (cached) {
+      return res.send(cached);
+    }
+    // First request for this URL: compute and cache.
+    const html = injectPageSchemas(urlPath, getBaseHtml(indexPath));
+    pageCache.set(urlPath, html);
     res.send(html);
   });
 }
