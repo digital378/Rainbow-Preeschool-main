@@ -57,6 +57,38 @@ function injectPageSchemas(urlPath: string, html: string): string {
   return html.replace("</head>", () => injection);
 }
 
+/**
+ * Rewrites the Vite-generated main stylesheet link from render-blocking to
+ * async so the browser can paint immediately while CSS loads in the background.
+ *
+ * Before:
+ *   <link rel="stylesheet" crossorigin href="/assets/index-HASH.css">
+ *
+ * After:
+ *   <link rel="stylesheet" crossorigin href="/assets/index-HASH.css"
+ *         media="print" onload="this.media='all'">
+ *   <noscript><link rel="stylesheet" crossorigin href="/assets/index-HASH.css"></noscript>
+ *
+ * The browser's preload scanner still discovers and fetches the CSS early;
+ * the media="print" attribute just prevents it from blocking the first paint.
+ * A <noscript> fallback ensures styles load normally when JS is disabled.
+ *
+ * If no matching link is found the HTML is returned unchanged (safe no-op).
+ */
+function makeAsyncCSS(html: string): string {
+  // Match the Vite main stylesheet link. The filename hash changes every build
+  // so we match by pattern (/assets/*.css). Replacer function avoids '$' in
+  // href being misinterpreted as a String.replace back-reference.
+  // Match the exact format Vite emits: attribute order is stable across builds;
+  // only the hash in the filename changes. No \b word-boundary assertions —
+  // \b fails after the closing " because both adjacent characters are non-word.
+  return html.replace(
+    /<link rel="stylesheet" crossorigin href="(\/assets\/[^"]+\.css)">/,
+    (_match, href) =>
+      `<link rel="stylesheet" crossorigin href="${href}" media="print" onload="this.media='all'">\n    <noscript><link rel="stylesheet" crossorigin href="${href}"></noscript>`,
+  );
+}
+
 export function serveStatic(app: Express) {
   const distPath = path.resolve(__dirname, "public");
   if (!fs.existsSync(distPath)) {
@@ -72,6 +104,7 @@ export function serveStatic(app: Express) {
     const indexPath = path.resolve(distPath, "index.html");
     let html = fs.readFileSync(indexPath, "utf-8");
     html = injectHomepageFreshness("/", html);
+    html = makeAsyncCSS(html);
     res.removeHeader("Set-Cookie");
     res.setHeader("Cache-Control", "no-store");
     res.setHeader("Content-Type", "text/html; charset=utf-8");
@@ -121,6 +154,7 @@ export function serveStatic(app: Express) {
     // Use originalUrl (strip query string) to get the real page path.
     const urlPath = req.originalUrl.split("?")[0];
     html = injectPageSchemas(urlPath, html);
+    html = makeAsyncCSS(html);
     res.send(html);
   });
 }
