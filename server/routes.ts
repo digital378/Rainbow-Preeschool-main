@@ -229,6 +229,13 @@ export async function registerRoutes(
     res.sendFile(path.join(process.cwd(), "public", "daycare-fast.html"));
   });
   
+  // Silence GTM /xrdb beacon requests — GTM tags fire requests to paths like
+  // /xrdb/kqs1G4o_H/... and /xrdb/?id=G-... which have no server handler,
+  // generating 404 console errors that drag the Lighthouse Best Practices score.
+  // Respond 200 with an empty body so the browser console stays clean.
+  app.get("/xrdb/*", (_req, res) => res.status(200).send(""));
+  app.get("/xrdb", (_req, res) => res.status(200).send(""));
+
   // Apply SEO redirect middleware for old WordPress URLs
   app.use(seoRedirectMiddleware);
 
