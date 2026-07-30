@@ -217,6 +217,7 @@ export function RainbowSparkleTrail({ enabled = true, intensity = 1 }: RainbowSp
         if (lastPosRef.current.x > 0 || lastPosRef.current.y > 0) {
           const count = 2;
           emitParticles(lastPosRef.current.x, lastPosRef.current.y, count, true);
+          startAnimationIfNeeded();
         }
         
         setTimeout(() => {
