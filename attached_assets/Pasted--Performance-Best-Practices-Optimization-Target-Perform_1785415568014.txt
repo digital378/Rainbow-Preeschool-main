@@ -1,0 +1,195 @@
+## Performance & Best Practices Optimization — Target: Performance 80+, Best Practices 90+
+
+Current Lighthouse scores (mobile, homepage):
+- Performance: 43 | FCP: 4.2s | LCP: 11.2s | TBT: 820ms | Speed Index: 5.5s | CLS: 0
+- Best Practices: 73 (dragged down by console 404 errors)
+- SEO: 92 | Accessibility: 96
+
+Before starting, read and report back:
+1. What is the hero/banner image filename and path on the homepage?
+2. What does the GTM snippet look like in index.html or the SSR template?
+3. What is the total size of the JavaScript bundle? Run: ls -lh dist/assets/*.js
+4. Which components are currently NOT lazy-loaded? (Check client/src/App.tsx or router file)
+5. Are images served as .webp already, or still .jpg/.png?
+
+---
+
+### FIX 1 — Resolve Console 404 Errors (Best Practices: 73 → 90+)
+
+Two 404 errors appear on every page load for URLs like:
+  /xrdb/kqs1G4o_H/xJdI-YEbn30UO69NNjjaFcG...
+  /xrdb/?id=G-G1MX1N0M05&cx=c&gtm=4e67s1...
+
+These are GTM firing broken tag requests. Fix in two places:
+
+a) In server/routes.ts (or wherever Express routes are defined), add:
+   app.get('/xrdb/*', (req, res) => res.status(200).send(''));
+   app.get('/xrdb', (req, res) => res.status(200).send(''));
+   Add these BEFORE the catch-all static handler.
+
+b) Also check the GTM container for a broken tag — the /xrdb path 
+   suggests a Clarity or Hotjar-like heatmap tag that is misconfigured. 
+   If you can see the GTM snippet, check which tag is generating these 
+   requests and disable or fix it.
+
+---
+
+### FIX 2 — Preload the LCP Hero Image (biggest single impact on Performance)
+
+LCP is 11.2s. The hero image is almost certainly the LCP element.
+
+a) In server/static.ts or wherever the HTML shell is built, find where 
+   </head> is injected and add a preload link for the hero image:
+   <link rel="preload" as="image" href="/images/optimized/hero.webp" 
+         fetchpriority="high" type="image/webp">
+   (Replace hero.webp with the actual hero image filename you found above.)
+
+b) On the hero <img> element in the React component, add:
+   fetchPriority="high"
+   loading="eager"   ← explicitly NOT lazy
+   Do NOT add loading="lazy" to any image that is visible in the first 
+   viewport on mobile (typically the first 600px of the page).
+
+c) If the hero image is larger than 200KB, compress it with:
+   npx sharp-cli --input public/images/hero.jpg --output public/images/optimized/hero.webp --format webp --quality 80
+   A properly compressed WebP hero should be under 80KB.
+
+---
+
+### FIX 3 — Defer GTM and Analytics to Reduce TBT (820ms → target <200ms)
+
+TBT of 820ms means GTM and GA are loading synchronously and blocking the 
+main thread. 
+
+a) Find the GTM script in index.html or the SSR template. It currently 
+   looks like:
+   <script>(function(w,d,s,l,i){...})(window,...)</script>
+
+   Replace with a deferred loader:
+   <script>
+     window.addEventListener('load', function() {
+       setTimeout(function() {
+         var s = document.createElement('script');
+         s.src = 'https://www.googletagmanager.com/gtm.js?id=GTM-XXXXXXX';
+         s.async = true;
+         document.head.appendChild(s);
+       }, 3000);
+     });
+   </script>
+   
+   This delays GTM by 3 seconds after page load — Google still tracks 
+   >95% of user interactions this way, but TBT drops significantly.
+
+b) Also defer the Google Analytics (gtag.js) script similarly. Do NOT 
+   put analytics in the <head> at all — move to end of <body> with async 
+   attribute, or use the deferred loader pattern above.
+
+c) If there is a Facebook Pixel, Hotjar, Clarity, or any other third-party 
+   tracking script, apply the same deferred load pattern to each one.
+
+---
+
+### FIX 4 — Lazy Load All Below-the-Fold React Components
+
+TBT is high because the entire React app (all routes + components) loads 
+upfront. 
+
+a) In client/src/App.tsx (or the router file), convert all page-level 
+   imports to lazy:
+   
+   BEFORE:
+   import AboutPage from './pages/about'
+   import CentresPage from './pages/centres'
+   import FAQsPage from './pages/faqs'
+   
+   AFTER:
+   const AboutPage = React.lazy(() => import('./pages/about'))
+   const CentresPage = React.lazy(() => import('./pages/centres'))
+   const FAQsPage = React.lazy(() => import('./pages/faqs'))
+   
+   Wrap the router in:
+   <React.Suspense fallback={<div style={{minHeight:'100vh'}} />}>
+     {routes}
+   </React.Suspense>
+
+   Keep the HomePage import as a direct import (NOT lazy) since it's the 
+   entry point.
+
+b) For heavy components within the homepage (testimonials carousel, 
+   gallery, map, centre cards section), use dynamic import with 
+   Intersection Observer — only load them when they scroll into view:
+   
+   import { lazy, Suspense } from 'react'
+   const TestimonialsSection = lazy(() => import('./components/TestimonialsSection'))
+   
+   Wrap with Suspense where used.
+
+---
+
+### FIX 5 — Add Image Lazy Loading to All Off-Screen Images
+
+a) In every component, ensure all images that are NOT in the first 
+   viewport have:
+   loading="lazy"
+   decoding="async"
+
+b) Every <img> should also have explicit width and height attributes 
+   to prevent layout shift (CLS is already 0 — keep it that way).
+
+c) Check: do the centre card images, staff photos, gallery images, and 
+   testimonial avatars all have loading="lazy"? If not, add it.
+
+---
+
+### FIX 6 — Inline Critical CSS to Eliminate Render-Blocking
+
+FCP is 4.2s — this means the browser is waiting for CSS to download 
+before painting anything.
+
+a) Identify what CSS is render-blocking: run the production build and 
+   look in dist/ for CSS files larger than 20KB.
+
+b) In the SSR template / index.html, inline the critical above-the-fold 
+   CSS directly in a <style> tag in <head>. Critical CSS = styles for 
+   the header, hero section, and navigation only. Everything else loads 
+   via <link rel="stylesheet"> with media="print" onload trick:
+   
+   <link rel="stylesheet" href="/assets/main.css" 
+         media="print" onload="this.media='all'">
+   <noscript><link rel="stylesheet" href="/assets/main.css"></noscript>
+
+c) If using Tailwind, ensure PurgeCSS/content config is correct so 
+   unused utility classes are stripped from the production build.
+
+---
+
+### FIX 7 — Add Resource Hints for Critical Third-Party Origins
+
+In the <head>, add preconnect for every third-party domain the page 
+calls immediately:
+
+<link rel="preconnect" href="https://www.googletagmanager.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://www.google-analytics.com">
+
+Check which third-party domains are actually used and add only those.
+
+---
+
+### Execution Order (do in this sequence):
+
+1. Fix 1 (404 errors) — 5 minutes, immediate Best Practices improvement
+2. Fix 2 (hero image preload + compression) — biggest LCP win
+3. Fix 3 (defer GTM/analytics) — biggest TBT win  
+4. Fix 4 (React lazy loading) — reduces initial JS parse time
+5. Fix 5 (image lazy loading) — reduces bandwidth on load
+6. Fix 6 (critical CSS) — improves FCP
+7. Fix 7 (preconnect hints) — small but free win
+
+After each fix group (1+2+3 together, then 4+5+6+7 together):
+- Run: rm -rf dist && npm run build
+- Test locally before deploying
+
+After deploying, re-run Lighthouse in Chrome DevTools → Lighthouse tab 
+with Mobile + Performance checked. Target: FCP <2s, LCP <4s, TBT <200ms.
