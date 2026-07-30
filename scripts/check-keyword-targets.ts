@@ -42,6 +42,8 @@
 
 const BASE = (process.argv[2] || "http://localhost:5000").replace(/\/$/, "");
 const UA = "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)";
+const BROWSER_UA =
+  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36";
 const FETCH_TIMEOUT_MS = 15_000;
 
 const SITE_BASE_URL = "https://www.rainbowpreschools.com";
@@ -148,12 +150,15 @@ const REDIRECTS: Array<{ from: string; to: string }> = REDIRECT_BASE.flatMap(
 
 type Failure = { url: string; reason: string };
 
-async function fetchHtml(path: string): Promise<{ status: number; html: string }> {
+async function fetchHtml(
+  path: string,
+  ua: string = UA,
+): Promise<{ status: number; html: string }> {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
   try {
     const res = await fetch(`${BASE}${path}`, {
-      headers: { "User-Agent": UA },
+      headers: { "User-Agent": ua },
       signal: controller.signal,
       redirect: "manual",
     });
@@ -316,6 +321,74 @@ async function main(): Promise<void> {
     });
   }
 
+  // 2c: injectPageSchemas path — verify key SPA pages serve their correct
+  // schema via the regular-visitor code path (server/static.ts), NOT just via
+  // the Googlebot bot-ssr.ts path.  The historical bug (every SPA page getting
+  // homepage schemas) was invisible to the Googlebot checks above because those
+  // go through bot-ssr.ts.  These checks use a plain browser UA so they hit
+  // static.ts → injectPageSchemas() exclusively.
+  //
+  // Pages + expected @type assertions:
+  //   /faqs               → FAQPage  (the schema most at risk from the orig bug)
+  //   /preschool-admissions → FAQPage + EducationalOrganization
+  //   /about              → EducationalOrganization + FAQPage
+  //   /playgroup          → EducationalOrganization
+  const BROWSER_UA_SCHEMA_CHECKS: Array<{
+    path: string;
+    assertions: Array<{ label: string; test: (html: string) => boolean }>;
+  }> = [
+    {
+      path: "/faqs",
+      assertions: [
+        { label: "FAQPage JSON-LD", test: hasFaqPageJsonLd },
+      ],
+    },
+    {
+      path: "/preschool-admissions",
+      assertions: [
+        { label: "FAQPage JSON-LD", test: hasFaqPageJsonLd },
+        { label: "EducationalOrganization JSON-LD", test: hasOrgJsonLd },
+      ],
+    },
+    {
+      path: "/about",
+      assertions: [
+        { label: "EducationalOrganization JSON-LD", test: hasOrgJsonLd },
+        { label: "FAQPage JSON-LD", test: hasFaqPageJsonLd },
+      ],
+    },
+    {
+      path: "/playgroup",
+      assertions: [
+        { label: "EducationalOrganization JSON-LD", test: hasOrgJsonLd },
+      ],
+    },
+  ];
+
+  for (const check of BROWSER_UA_SCHEMA_CHECKS) {
+    try {
+      const { status, html } = await fetchHtml(check.path, BROWSER_UA);
+      if (status === 200) {
+        reachableCount++;
+        for (const assertion of check.assertions) {
+          if (!assertion.test(html)) {
+            failures.push({
+              url: check.path,
+              reason: `[browser UA] missing ${assertion.label} in raw HTML — injectPageSchemas not firing correctly`,
+            });
+          }
+        }
+      } else {
+        failures.push({ url: check.path, reason: `[browser UA] status=${status}` });
+      }
+    } catch (err) {
+      failures.push({
+        url: check.path,
+        reason: `[browser UA] fetch failed: ${(err as Error).message}`,
+      });
+    }
+  }
+
   // 3: deep-content pages have ≥ DEEP_CONTENT_MIN_WORDS in <main>
   for (const path of DEEP_CONTENT_PAGES) {
     try {
@@ -390,7 +463,7 @@ async function main(): Promise<void> {
   }
 
   console.log(
-    `\n[check-keyword-targets] PASSED — ${COMMERCIAL_PAGES.length} commercial pages have full schema + self-canonical + curriculum-team byline, ${DEEP_CONTENT_PAGES.length} deep-content pages meet word target, ${REDIRECTS.length} ghost slugs 301 correctly. (Homepage anchor check skipped — SPA-served to all visitors; Googlebot executes JS.)`
+    `\n[check-keyword-targets] PASSED — ${COMMERCIAL_PAGES.length} commercial pages have full schema + self-canonical + curriculum-team byline, ${DEEP_CONTENT_PAGES.length} deep-content pages meet word target, ${REDIRECTS.length} ghost slugs 301 correctly, ${BROWSER_UA_SCHEMA_CHECKS.length} SPA pages verified with browser UA (injectPageSchemas path). (Homepage anchor check skipped — SPA-served to all visitors; Googlebot executes JS.)`
   );
   process.exit(0);
 }
