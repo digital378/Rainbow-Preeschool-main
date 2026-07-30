@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   Rainbow Loyalty Programme — Scratch-card referral experience
-   Route: /referral  |  noindex (server-side + meta)
+   Rainbow Loyalty Program — Scratch-card referral experience
+   Route: /join-now  |  noindex (server-side + meta)
 ───────────────────────────────────────────────────────────────────────────── */
 
 const COLORS = ['#7F77DD','#1D9E75','#D85A30','#D4537E','#378ADD','#EF9F27','#639922'];
@@ -454,7 +454,7 @@ export default function ReferralPage() {
                     fontSize:11,fontWeight:600,letterSpacing:'.5px',padding:'4px 14px',borderRadius:20,
                     animation:'rlp-glowPulse 1.8s ease-in-out infinite'}}>EXCLUSIVE</div>
                   <div style={{fontSize:18,fontWeight:500,color:'#26215C',lineHeight:1.3}}>
-                    Rainbow Loyalty<br />Programme <span style={{color:'#D4537E'}}>Membership!</span>
+                    Rainbow Loyalty<br />Program <span style={{color:'#D4537E'}}>Membership!</span>
                   </div>
                 </div>
               </div>

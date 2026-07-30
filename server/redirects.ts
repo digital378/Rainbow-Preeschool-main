@@ -162,6 +162,8 @@ export const redirectMap: Record<string, string> = {
   "/be-secret-santa/": "/",
   "/midterm-playgroup-test": "/playgroup",
   "/midterm-playgroup-test/": "/playgroup",
+  "/referral": "/join-now",
+  "/referral/": "/join-now",
   "/meta-enquiry-2025-26": "/ad",
   "/meta-enquiry-2025-26/": "/ad",
   "/meta-admissions-2025-26-form-submission": "/",
