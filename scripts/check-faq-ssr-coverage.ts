@@ -40,12 +40,22 @@ import { resolve, relative, join } from "node:path";
 
 const ROOT = process.cwd();
 const PAGES_DIR = resolve(ROOT, "client/src/pages");
+const COMPONENTS_DIR = resolve(ROOT, "client/src/components");
 const SSR_PAGES_FILE = resolve(ROOT, "server/ssr-pages.ts");
 
 const PREFIX = "[check-faq-ssr-coverage]";
 
+/**
+ * Files that *define* createFAQSchema (rather than calling it) — exclude
+ * these from the call-site scan to avoid false positives.
+ */
+const ALLOWLIST = new Set([
+  "client/src/components/seo.tsx",
+]);
+
 // ---------------------------------------------------------------------------
-// 1. Walk client/src/pages/ for .tsx files that call createFAQSchema(
+// 1. Walk client/src/pages/ and client/src/components/ for .tsx files that
+//    call createFAQSchema(
 // ---------------------------------------------------------------------------
 
 function walkTsx(dir: string): string[] {
@@ -71,11 +81,16 @@ interface CallSite {
 
 const callSites: CallSite[] = [];
 
-for (const abs of walkTsx(PAGES_DIR)) {
+const allFiles = [...walkTsx(PAGES_DIR), ...walkTsx(COMPONENTS_DIR)];
+
+for (const abs of allFiles) {
+  const rel = relative(ROOT, abs).replace(/\\/g, "/");
+
+  // Skip files that declare the function rather than call it.
+  if (ALLOWLIST.has(rel)) continue;
+
   const source = readFileSync(abs, "utf8");
   if (!source.includes(FAQ_SCHEMA_CALL)) continue;
-
-  const rel = relative(ROOT, abs).replace(/\\/g, "/");
 
   // Extract the canonical prop from the <SEO component.
   // Match:  canonical="/some-path"  or  canonical={"/some-path"}
@@ -92,7 +107,7 @@ for (const abs of walkTsx(PAGES_DIR)) {
 
 if (callSites.length === 0) {
   console.log(
-    `${PREFIX} OK — no createFAQSchema() call sites found in client/src/pages/.`
+    `${PREFIX} OK — no createFAQSchema() call sites found in client/src/pages/ or client/src/components/.`
   );
   process.exit(0);
 }
