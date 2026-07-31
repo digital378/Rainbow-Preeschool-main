@@ -14,12 +14,41 @@
  *                           `"@type": "HowTo"` literal that is NOT inside
  *                           an import statement.
  *
+ * Additionally, every .tsx/.ts file under client/src/components/ is scanned
+ * for rogue HowTo definitions (check 2 only). Files listed in
+ * COMPONENTS_ALLOWLIST are skipped (e.g. seo.tsx which declares schema
+ * helpers and is the canonical declarer, not a rogue call site).
+ *
  * Exit 0 = clean, exit 1 = regression (file:line printed).
  */
-import { readFileSync } from "node:fs";
-import { join } from "node:path";
+import { readFileSync, readdirSync, statSync } from "node:fs";
+import { join, resolve, relative } from "node:path";
 
 const ROOT = process.cwd();
+const COMPONENTS_DIR = resolve(ROOT, "client/src/components");
+
+/**
+ * Files under client/src/components/ that are permanently permitted to
+ * contain HowTo-related identifiers because they *declare* schema helpers
+ * rather than introducing a rogue local copy.
+ */
+const COMPONENTS_ALLOWLIST = new Set([
+  "client/src/components/seo.tsx",
+]);
+
+function walkTsx(dir: string): string[] {
+  const results: string[] = [];
+  for (const entry of readdirSync(dir)) {
+    const full = join(dir, entry);
+    const stat = statSync(full);
+    if (stat.isDirectory()) {
+      results.push(...walkTsx(full));
+    } else if (entry.endsWith(".tsx") || entry.endsWith(".ts")) {
+      results.push(full);
+    }
+  }
+  return results;
+}
 
 /** Files that MUST import admissionHowToSchema from the shared module. */
 const REQUIRED_IMPORT_FILES = [
@@ -119,17 +148,77 @@ function check(relPath: string): Failure[] {
   return failures;
 }
 
+/**
+ * Scans every .tsx/.ts file under client/src/components/ for rogue HowTo
+ * definitions (check 2 only — no import requirement). Files in
+ * COMPONENTS_ALLOWLIST are skipped.
+ */
+function checkComponents(): Failure[] {
+  const failures: Failure[] = [];
+  for (const abs of walkTsx(COMPONENTS_DIR)) {
+    const rel = relative(ROOT, abs).replace(/\\/g, "/");
+    if (COMPONENTS_ALLOWLIST.has(rel)) continue;
+
+    let src: string;
+    try {
+      src = readFileSync(abs, "utf-8");
+    } catch {
+      continue; // unreadable files are not a HowTo violation
+    }
+
+    // Quick skip — no HowTo-related content at all
+    if (
+      !LOCAL_CONST_NAME_RE.test(src) &&
+      !INLINE_HOWTO_TYPE_RE.test(src)
+    ) {
+      continue;
+    }
+
+    const lines = src.split(/\r?\n/);
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+      if (/^\s*import\s/.test(line)) continue;
+
+      if (LOCAL_CONST_NAME_RE.test(line)) {
+        failures.push({
+          file: rel,
+          line: i + 1,
+          message:
+            `Local HowTo const detected: '${line.trim()}'. ` +
+            `Import admissionHowToSchema from @shared/admissions-howto-data instead.`,
+        });
+      }
+
+      if (INLINE_HOWTO_TYPE_RE.test(line)) {
+        failures.push({
+          file: rel,
+          line: i + 1,
+          message:
+            `Inline "@type":"HowTo" literal detected: '${line.trim()}'. ` +
+            `Remove it and import admissionHowToSchema from @shared/admissions-howto-data.`,
+        });
+      }
+    }
+  }
+  return failures;
+}
+
 function main(): void {
   const allFailures: Failure[] = [];
 
+  // Check 1+2: required import files (SSR + client page)
   for (const relPath of REQUIRED_IMPORT_FILES) {
     allFailures.push(...check(relPath));
   }
 
+  // Check 2 only: scan components/ for rogue HowTo definitions
+  allFailures.push(...checkComponents());
+
   if (allFailures.length === 0) {
     console.log(
       `[check-admissions-howto-sync] PASSED — both SSR and client import ` +
-        `admissionHowToSchema from @shared/admissions-howto-data; no local overrides found.`,
+        `admissionHowToSchema from @shared/admissions-howto-data; no local overrides found ` +
+        `in pages/ or components/.`,
     );
     process.exit(0);
   }
@@ -144,7 +233,9 @@ function main(): void {
   console.error(
     `\nFix: ensure both server/ssr-pages.ts and client/src/pages/preschool-admissions.tsx\n` +
       `import admissionHowToSchema from @shared/admissions-howto-data and do NOT define\n` +
-      `a local HowTo const or inline "@type":"HowTo" object.`,
+      `a local HowTo const or inline "@type":"HowTo" object. Do not introduce HowTo\n` +
+      `schema in client/src/components/ — add to the COMPONENTS_ALLOWLIST only if\n` +
+      `the component is a legitimate schema declarer, not a call site.`,
   );
   process.exit(1);
 }
