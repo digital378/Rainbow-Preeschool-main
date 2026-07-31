@@ -2,7 +2,7 @@ import express, { type Express, type Request, type Response } from "express";
 import fs from "fs";
 import path from "path";
 import { injectHomepageFreshness } from "./homepage-freshness";
-import { getPageSEO } from "./ssr-pages";
+import { getPageSEO, getStaticPagePaths } from "./ssr-pages";
 
 const BASE_URL = "https://www.rainbowpreschools.com";
 
@@ -111,6 +111,23 @@ function getBaseHtml(indexPath: string): string {
   return baseIndexHtml;
 }
 
+/**
+ * Pre-warm the page cache for every known static page so the very first
+ * visitor (or Googlebot's first crawl) after a deploy is also served from
+ * cache.  The homepage "/" is intentionally skipped because
+ * injectHomepageFreshness adds dynamic content that must not be frozen.
+ */
+function prewarmPageCache(indexPath: string): void {
+  const baseHtml = getBaseHtml(indexPath);
+  const paths = getStaticPagePaths().filter((p) => p !== "/");
+  for (const urlPath of paths) {
+    if (!pageCache.has(urlPath)) {
+      pageCache.set(urlPath, injectPageSchemas(urlPath, baseHtml));
+    }
+  }
+  console.log(`[static] page cache pre-warmed for ${paths.length} paths`);
+}
+
 export function serveStatic(app: Express) {
   const distPath = path.resolve(__dirname, "public");
   if (!fs.existsSync(distPath)) {
@@ -120,6 +137,9 @@ export function serveStatic(app: Express) {
   }
 
   const indexPath = path.resolve(distPath, "index.html");
+
+  // Pre-warm the page cache so the first request to every known URL is fast.
+  prewarmPageCache(indexPath);
 
   // Homepage: inject freshness signals into the SPA shell before serving.
   // MUST be registered before express.static so it wins over the static

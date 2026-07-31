@@ -1770,6 +1770,15 @@ export function getBlogPostLastModified(slug: string): string | undefined {
   return BLOG_POST_SEO_DATA[slug]?.lastModified;
 }
 
+/**
+ * Returns every URL path that has a staticPages entry.
+ * Used by server/static.ts to pre-warm the page cache on startup so the
+ * first visitor after a deploy is served from cache, not the cold path.
+ */
+export function getStaticPagePaths(): string[] {
+  return Object.keys(staticPages);
+}
+
 export function getPageSEO(urlPath: string): PageSEOData | null {
   const cleanPath = urlPath.replace(/\/$/, "") || "/";
 
