@@ -37,12 +37,20 @@
 #       showRating={false} (or, for verified-rating pages, is missing the
 #       import from client/src/lib/verified-rating.ts). Emitting star-rating
 #       rich-result markup without a verified source violates Google policy.
-#   9.  npm run build — production build.
-#   10. Boot the production server on $PREDEPLOY_URL for the HTTP smoke-tests.
-#   11. scripts/check-freshness-signal.ts — asserts the visible "Last updated"
+#   9.  scripts/check-sitemap-blog-slugs.ts — static scan that fails if any
+#       "critical" blog slug (i.e. a post served by a dedicated Express route
+#       AND expected in /sitemap.xml) has been accidentally removed from
+#       server/seed-blog-posts.ts → seoRecoveryBlogPosts. Because the sitemap
+#       is built dynamically from storage.getBlogPosts() (which reads the seed),
+#       removing a slug from the seed silently drops it from the sitemap with
+#       no HTTP error. This guard makes that invisible removal visible before
+#       the build step.
+#   10. npm run build — production build.
+#   11. Boot the production server on $PREDEPLOY_URL for the HTTP smoke-tests.
+#   12. scripts/check-freshness-signal.ts — asserts the visible "Last updated"
 #       byline + Article JSON-LD dateModified across the 18 commercial +
 #       locality URLs.
-#   12. scripts/check-keyword-targets.ts — asserts the 15 priority commercial
+#   13. scripts/check-keyword-targets.ts — asserts the 15 priority commercial
 #       keyword guarantees: FAQPage JSON-LD on the 5 commercial pages,
 #       Organization JSON-LD on /playgroup, /nursery, /kindergarten, ≥ 1,200
 #       visible words inside <main> on /play-school-near-me and
@@ -51,19 +59,19 @@
 #       canonical page (32 redirect assertions including trailing-slash forms),
 #       and /preschool-near-me 301-redirecting to
 #       /best-preschool-near-me-in-thane.
-#   13. scripts/check-sitemap-200.ts — fetches /sitemap.xml and asserts every
+#   14. scripts/check-sitemap-200.ts — fetches /sitemap.xml and asserts every
 #       <loc> entry returns 200 OK. Catches any sitemap row that has been
 #       301-redirected (which would surface the "URL is in sitemap but
 #       redirects" warning in Google Search Console).
-#   14. scripts/check-bot-detection.ts — asserts that social-app in-app browser
+#   15. scripts/check-bot-detection.ts — asserts that social-app in-app browser
 #       UAs receive the React shell (not the SSR page).
-#   15. Lighthouse performance guard — simulated-mobile Lighthouse audit against
+#   16. Lighthouse performance guard — simulated-mobile Lighthouse audit against
 #       home + priority landing page. Skippable with SKIP_PERF_GUARD=1.
-#   16. Purge Cloudflare edge cache — runs last so it only fires after every
+#   17. Purge Cloudflare edge cache — runs last so it only fires after every
 #       other guard has passed. Non-blocking: if the purge fails we log a
 #       warning and let the deploy succeed.
 #
-# The HTTP-based checks (11–14) run against the SAME booted server so we only
+# The HTTP-based checks (12–15) run against the SAME booted server so we only
 # pay the build-and-boot cost once. The deploy is blocked (non-zero exit)
 # if ANY check fails — the HTTP checks are run regardless of each other's
 # result so a single deploy attempt surfaces every regression at once instead
@@ -108,35 +116,35 @@ cleanup() {
 }
 trap cleanup EXIT INT TERM
 
-log "step 1/16 — tsx scripts/check-no-person-author.ts (editorial-byline guard)"
+log "step 1/17 — tsx scripts/check-no-person-author.ts (editorial-byline guard)"
 if ! npx --no-install tsx scripts/check-no-person-author.ts; then
   log "FAIL — editorial-byline guard found a Person author/reviewer/contributor entry. See file:line above."
   log "blocking deploy."
   exit 1
 fi
 
-log "step 2/16 — tsx scripts/check-no-title-cannibalisation.ts (title de-cannibalisation guard)"
+log "step 2/17 — tsx scripts/check-no-title-cannibalisation.ts (title de-cannibalisation guard)"
 if ! npx --no-install tsx scripts/check-no-title-cannibalisation.ts; then
   log "FAIL — title de-cannibalisation guard rejected a title (banned soft-word and/or keyword poaching). See file:line above."
   log "blocking deploy."
   exit 1
 fi
 
-log "step 3/16 — tsx scripts/check-description-length.ts (meta-description ≤155 chars)"
+log "step 3/17 — tsx scripts/check-description-length.ts (meta-description ≤155 chars)"
 if ! npx --no-install tsx scripts/check-description-length.ts; then
   log "FAIL — meta-description length guard rejected a description >155 chars. See file:line above."
   log "blocking deploy."
   exit 1
 fi
 
-log "step 4/16 — tsx scripts/check-bot-ua-list.ts (no social-app in-app browser UAs in BOT_USER_AGENTS)"
+log "step 4/17 — tsx scripts/check-bot-ua-list.ts (no social-app in-app browser UAs in BOT_USER_AGENTS)"
 if ! npx --no-install tsx scripts/check-bot-ua-list.ts; then
   log "FAIL — check-bot-ua-list found a social-app in-app browser UA in BOT_USER_AGENTS. See file:line above."
   log "blocking deploy."
   exit 1
 fi
 
-log "step 5/16 — tsx scripts/check-h1-parity.ts (SSR h1 vs client <h1> parity)"
+log "step 5/17 — tsx scripts/check-h1-parity.ts (SSR h1 vs client <h1> parity)"
 if ! npx --no-install tsx scripts/check-h1-parity.ts; then
   log "FAIL — H1 parity guard found a mismatch between server/ssr-pages.ts h1: and client <h1>. See file:line above."
   log "blocking deploy."
@@ -146,30 +154,38 @@ fi
 # Non-blocking sibling of the title guard. Scans body copy for the same
 # banned soft-marketing word list and prints warnings (exit 0). Surfaces
 # hype-language drift to PR reviewers without gating the deploy.
-log "step 6/16 — tsx scripts/check-soft-marketing-words.ts (body-copy soft-marketing warning, non-blocking)"
+log "step 6/17 — tsx scripts/check-soft-marketing-words.ts (body-copy soft-marketing warning, non-blocking)"
 npx --no-install tsx scripts/check-soft-marketing-words.ts || true
 
-log "step 7/16 — tsx scripts/check-no-pink.ts (no-pink brand-colour guard)"
+log "step 7/17 — tsx scripts/check-no-pink.ts (no-pink brand-colour guard)"
 if ! npx --no-install tsx scripts/check-no-pink.ts; then
   log "FAIL — no-pink guard found a pink utility class, hex literal, or named colour. See file:line above."
   log "blocking deploy."
   exit 1
 fi
 
-log "step 8/16 — tsx scripts/check-eeat-show-rating.ts (EEATSignals showRating guard)"
+log "step 8/17 — tsx scripts/check-eeat-show-rating.ts (EEATSignals showRating guard)"
 if ! npx --no-install tsx scripts/check-eeat-show-rating.ts; then
   log "FAIL — EEATSignals showRating guard found a <EEATSignals> call missing showRating={false} (or a verified-rating page missing its import). See file:line above."
   log "blocking deploy."
   exit 1
 fi
 
-log "step 9/16 — npm run build"
+log "step 9/17 — tsx scripts/check-sitemap-blog-slugs.ts (critical blog-slug sitemap guard)"
+if ! npx --no-install tsx scripts/check-sitemap-blog-slugs.ts; then
+  log "FAIL — sitemap blog-slug guard: a required slug is missing from server/seed-blog-posts.ts and will not appear in /sitemap.xml. See slug list above."
+  log "Fix: add the missing slug back to seoRecoveryBlogPosts in server/seed-blog-posts.ts."
+  log "blocking deploy."
+  exit 1
+fi
+
+log "step 10/17 — npm run build"
 if ! npm run build; then
   log "FAIL — production build failed; aborting deploy"
   exit 1
 fi
 
-log "step 10/16 — booting production server on ${PREDEPLOY_URL} for the SEO smoke-tests"
+log "step 11/17 — booting production server on ${PREDEPLOY_URL} for the SEO smoke-tests"
 NODE_ENV=production PORT="${PREDEPLOY_PORT}" node dist/index.cjs >"${SERVER_LOG}" 2>&1 &
 SERVER_PID=$!
 
@@ -193,25 +209,25 @@ while :; do
 done
 log "server is up; proceeding to SEO smoke-tests"
 
-log "step 11/16 — tsx scripts/check-freshness-signal.ts ${PREDEPLOY_URL}"
+log "step 12/17 — tsx scripts/check-freshness-signal.ts ${PREDEPLOY_URL}"
 set +e
 npx --no-install tsx scripts/check-freshness-signal.ts "${PREDEPLOY_URL}"
 FRESHNESS_EXIT=$?
 set -e
 
-log "step 12/16 — tsx scripts/check-keyword-targets.ts ${PREDEPLOY_URL}"
+log "step 13/17 — tsx scripts/check-keyword-targets.ts ${PREDEPLOY_URL}"
 set +e
 npx --no-install tsx scripts/check-keyword-targets.ts "${PREDEPLOY_URL}"
 KEYWORD_EXIT=$?
 set -e
 
-log "step 13/16 — tsx scripts/check-sitemap-200.ts ${PREDEPLOY_URL}"
+log "step 14/17 — tsx scripts/check-sitemap-200.ts ${PREDEPLOY_URL}"
 set +e
 npx --no-install tsx scripts/check-sitemap-200.ts "${PREDEPLOY_URL}"
 SITEMAP_EXIT=$?
 set -e
 
-log "step 14/16 — tsx scripts/check-bot-detection.ts ${PREDEPLOY_URL}"
+log "step 15/17 — tsx scripts/check-bot-detection.ts ${PREDEPLOY_URL}"
 set +e
 npx --no-install tsx scripts/check-bot-detection.ts "${PREDEPLOY_URL}"
 BOT_DETECTION_EXIT=$?
@@ -227,7 +243,7 @@ set -e
 # just catastrophic failures. See scripts/predeploy-lighthouse-guard.mjs.
 PERF_EXIT=0
 if [ "${SKIP_PERF_GUARD:-0}" != "1" ]; then
-  log "step 15/16 — Lighthouse performance guard (BASE_URL=${PREDEPLOY_URL})"
+  log "step 16/17 — Lighthouse performance guard (BASE_URL=${PREDEPLOY_URL})"
   set +e
   BASE_URL="${PREDEPLOY_URL}" \
     LH_MIN_PERF="${LH_MIN_PERF:-60}" \
@@ -238,7 +254,7 @@ if [ "${SKIP_PERF_GUARD:-0}" != "1" ]; then
   PERF_EXIT=$?
   set -e
 else
-  log "step 15/16 — Lighthouse performance guard SKIPPED (SKIP_PERF_GUARD=1)"
+  log "step 16/17 — Lighthouse performance guard SKIPPED (SKIP_PERF_GUARD=1)"
 fi
 # ─────────────────────────────────────────────────────────────────────────────
 
@@ -293,7 +309,7 @@ fi
 # either secret is missing so local dev runs of predeploy.sh stay quiet.
 # ─────────────────────────────────────────────────────────────────────────────
 if [ -n "$CF_ZONE_ID" ] && [ -n "$CF_API_TOKEN" ]; then
-  log "step 16/16 — Purging Cloudflare edge cache ..."
+  log "step 17/17 — Purging Cloudflare edge cache ..."
   PURGE_RESPONSE=$(curl -sX POST \
     "https://api.cloudflare.com/client/v4/zones/$CF_ZONE_ID/purge_cache" \
     -H "Authorization: Bearer $CF_API_TOKEN" \
@@ -306,8 +322,8 @@ if [ -n "$CF_ZONE_ID" ] && [ -n "$CF_API_TOKEN" ]; then
     log "Continuing anyway; old cached responses will expire within max-age."
   fi
 else
-  log "step 16/16 — SKIPPED Cloudflare cache purge (CF_ZONE_ID or CF_API_TOKEN not set)."
+  log "step 17/17 — SKIPPED Cloudflare cache purge (CF_ZONE_ID or CF_API_TOKEN not set)."
 fi
 
-log "PASS — byline guard + title-cannibalisation + description-length + bot-ua-list + h1-parity + no-pink guard + eeat-show-rating guard + build + freshness + keyword-targets + sitemap-200 + bot-detection + Lighthouse perf guard all succeeded; deploy may proceed."
+log "PASS — byline guard + title-cannibalisation + description-length + bot-ua-list + h1-parity + no-pink guard + eeat-show-rating guard + sitemap-blog-slugs guard + build + freshness + keyword-targets + sitemap-200 + bot-detection + Lighthouse perf guard all succeeded; deploy may proceed."
 exit 0

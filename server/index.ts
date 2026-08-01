@@ -70,6 +70,15 @@ app.get("/sitemap.xml", async (_req, res) => {
       if (Number.isNaN(parsed.getTime())) return undefined;
       return parsed.toISOString().slice(0, 10);
     };
+    // Every slug in `server/seed-blog-posts.ts` → `seoRecoveryBlogPosts` is
+    // seeded into MemStorage on boot (see `server/storage.ts`), so it will
+    // appear in `posts` here and therefore in the sitemap automatically —
+    // no hand-edit of `shared/sitemap-entries.ts` is needed for any new blog
+    // post added to that seed array.
+    //
+    // Example: `independence-day-for-kids` (slug) → `/blog/independence-day-for-kids`
+    // was confirmed present in the seed on 2026-08-01. Any future seed entry
+    // is picked up on the next server boot without further changes.
     const blogEntries = posts.map((post) => {
       const curated = getBlogPostLastModified(post.slug);
       const updatedIso = toIsoDate(post.updatedAt);
