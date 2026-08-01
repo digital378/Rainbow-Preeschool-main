@@ -22,6 +22,7 @@
  */
 
 import { seoRecoveryBlogPosts } from "../server/seed-blog-posts";
+import { STANDALONE_BLOG_SLUGS } from "../shared/standalone-blog-slugs";
 import * as fs from "fs";
 import * as path from "path";
 import { fileURLToPath } from "url";
@@ -30,15 +31,9 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // ── Slugs that MUST be present in seoRecoveryBlogPosts ─────────────────────
-// Each entry here corresponds to a URL that:
-//   (a) has a dedicated Express GET route in server/routes.ts, AND
-//   (b) must appear in /sitemap.xml (via storage.getBlogPosts()).
-//
-// independence-day-for-kids confirmed present 2026-08-01; route registered at
-// /blog/independence-day-for-kids in server/routes.ts.
-const REQUIRED_SLUGS: string[] = [
-  "independence-day-for-kids",
-];
+// Imported from shared/standalone-blog-slugs.ts — the single source of truth
+// shared with scripts/check-sitemap-200.ts. Edit that file to add/remove slugs.
+const REQUIRED_SLUGS: string[] = STANDALONE_BLOG_SLUGS;
 
 // ── Part 1: verify every REQUIRED_SLUG is present in the seed ───────────────
 const seededSlugs = new Set(seoRecoveryBlogPosts.map((p) => p.slug));

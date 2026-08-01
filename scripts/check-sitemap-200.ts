@@ -16,6 +16,7 @@
 
 import { SITEMAP_ENTRIES } from "../shared/sitemap-entries";
 import { redirectMap } from "../server/redirects";
+import { STANDALONE_BLOG_SLUGS } from "../shared/standalone-blog-slugs";
 
 const BASE = (process.argv[2] ?? "http://127.0.0.1:5000").replace(/\/+$/, "");
 const UA = "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)";
@@ -23,16 +24,12 @@ const TIMEOUT_MS = 10_000;
 const CONCURRENCY = 8;
 
 // ── Standalone routes to check explicitly ───────────────────────────────────
-// These are Express routes that serve static HTML files directly (not via the
-// React SPA). They must return 200 OK with Googlebot UA. Checked in addition
-// to the sitemap fan-out so a misconfigured file path or missing route is
-// caught even if the slug is accidentally absent from the sitemap.
-//
-// Keep this list in sync with the Express GET routes in server/routes.ts and
-// with the REQUIRED_SLUGS list in scripts/check-sitemap-blog-slugs.ts.
-const STANDALONE_ROUTES: string[] = [
-  "/blog/independence-day-for-kids",
-];
+// Derived from shared/standalone-blog-slugs.ts — the single source of truth
+// shared with scripts/check-sitemap-blog-slugs.ts. Edit that file to
+// add/remove slugs; both guards stay in sync automatically.
+const STANDALONE_ROUTES: string[] = STANDALONE_BLOG_SLUGS.map(
+  (slug) => `/blog/${slug}`,
+);
 
 console.log(`[check-sitemap-200] BASE=${BASE}`);
 
