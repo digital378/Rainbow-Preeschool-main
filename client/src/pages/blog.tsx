@@ -49,6 +49,13 @@ const ACCENT_BORDERS = [
 // `category` value yet, so the card still renders with a coloured pill.
 const DEFAULT_BLOG_CATEGORY = "Education";
 
+// Slugs that are served as standalone HTML files by Express (not React SPA).
+// Clicking their card must trigger a full page load, not a wouter client-side
+// navigation, so Express can intercept and serve the HTML file.
+const STANDALONE_BLOG_SLUGS = new Set([
+  "independence-day-for-kids",
+]);
+
 function blogPostToEntry(post: BlogPost): BlogEntry {
   return {
     title: post.title,
@@ -74,8 +81,21 @@ function BlogCard({ post, index }: { post: BlogEntry; index: number }) {
   const colors = CATEGORY_COLORS[post.category] || DEFAULT_CATEGORY_COLOR;
   const accentBorder = ACCENT_BORDERS[index % ACCENT_BORDERS.length];
 
+  // Standalone HTML pages must use a plain <a> so the browser performs a full
+  // page load and Express can intercept the request.  Wouter's <Link> would
+  // handle the navigation client-side and render blog-post.tsx instead.
+  const slug = post.url.replace(/^\/blog\//, "");
+  const isStandalone = STANDALONE_BLOG_SLUGS.has(slug);
+  const Wrapper = isStandalone
+    ? ({ children }: { children: React.ReactNode }) => (
+        <a href={post.url}>{children}</a>
+      )
+    : ({ children }: { children: React.ReactNode }) => (
+        <Link href={post.url}>{children}</Link>
+      );
+
   return (
-    <Link href={post.url}>
+    <Wrapper>
       <article
         className={`group h-full bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border-l-4 ${accentBorder} cursor-pointer`}
         data-testid={`blog-card-${index}`}
@@ -101,7 +121,7 @@ function BlogCard({ post, index }: { post: BlogEntry; index: number }) {
           </div>
         </div>
       </article>
-    </Link>
+    </Wrapper>
   );
 }
 
