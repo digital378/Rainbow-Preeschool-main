@@ -1,0 +1,917 @@
+# REPLIT PROMPT — RPS Independence Day Blog
+# Rainbow International Pre-School | Blog: /independence-day-for-kids
+# Independence Day 2026 — 80th Year of Freedom
+
+---
+
+## MASTER REPLIT PROMPT (paste this entire block into Replit AI)
+
+---
+
+Create a complete, standalone HTML blog page for **Rainbow International Pre-School (RPS)** about Independence Day 2026 for kids. This page must be added to the existing RPS Replit website project.
+
+---
+
+## PART 1 — FILE STRUCTURE
+
+Create the following files:
+
+```
+blog-pages/
+  independence-day-for-kids/
+    index.html          ← The complete blog page (all HTML, CSS, JS inline)
+
+public/
+  blog-assets/
+    independence-day-for-kids/
+      img-01-80th-independence-day-badge-dp-2026.jpg
+      img-02-80-years-freedom-mandala-dp-2026.jpg
+      img-03-independence-day-red-fort-proudly-indian-2026.jpg
+      img-04-independence-day-papercut-flag-dp-2026.jpg
+      img-05-independence-day-ashoka-chakra-tricolor-dp-2026.jpg
+      img-06-independence-day-kites-celebrating-freedom-2026.jpg
+      img-07-independence-day-soldier-salute-freedom-2026.jpg
+      img-08-independence-day-children-flags-unity-dp-2026.jpg
+      img-09-independence-day-india-gate-dp-2026.jpg
+      img-10-proud-to-be-indian-india-map-dp-2026.jpg
+```
+
+**CRITICAL — IMAGE ROUTING:** The user will upload 10 images. Rename them exactly as listed above and place them in `public/blog-assets/independence-day-for-kids/`. DO NOT place images inside `blog-pages/` or any path under `/blog/` — those paths go through the blog router and will redirect to /blogs instead of serving the image file. All image `src` attributes and CSS `background-image` values must use the absolute path `/blog-assets/independence-day-for-kids/filename.jpg`. This is essential to prevent a "Page Not Loading" / broken image issue after publishing.
+
+**BLOG CARD POSITIONING:** This blog must appear as the FIRST card on the `/blog` listing page. Update the blog registry / posts array / whatever data source drives the blog listing to ensure this post has the most recent date (2026-08-01) and appears first. The post metadata to register:
+- title: "Independence Day for Kids 2026 — Activities, Speeches, Stories & Free Downloads"  
+- slug: `independence-day-for-kids`
+- date: `2026-08-01`
+- excerpt: "Celebrate India's 80th Independence Day with your little one! Fun activities, easy speeches, stories, a quiz, and free patriotic image downloads — all made for preschool kids."
+- category: "Festivals & Events"
+- readTime: "8 min read"
+- image: `/blog-assets/independence-day-for-kids/img-08-independence-day-children-flags-unity-dp-2026.jpg`
+
+---
+
+## PART 2 — DESIGN SYSTEM (RPS Brand)
+
+### Brand Identity
+- **School:** Rainbow International Pre-School
+- **Tagline:** The Future Begins Here
+- **Audience:** Parents of preschool children (ages 1.5–5.5 years)
+- **Tone:** Warm, Playful, Joyful, Caring, Reassuring
+
+### Colors
+```css
+--rps-red: #EC210F;          /* RPS primary brand red */
+--rps-gold: #F0A820;         /* Secondary golden yellow */
+--saffron: #FF9933;          /* Indian tricolor saffron */
+--white: #FFFFFF;
+--india-green: #138808;      /* Indian tricolor green */
+--india-navy: #1A237E;       /* Ashoka Chakra navy blue */
+--soft-bg: #FFF8F0;          /* Warm off-white page background */
+--card-bg: #FFFDF5;          /* Card background */
+--text-dark: #1A1A2E;        /* Primary text */
+--text-muted: #5A5A7A;       /* Secondary text */
+```
+
+### Typography — Google Fonts
+Load these fonts in `<head>`:
+```html
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Baloo+2:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=Open+Sans:wght@400;600&family=Noto+Sans+Devanagari:wght@400;700&display=swap" rel="stylesheet">
+```
+
+```css
+--font-heading: 'Fredoka One', 'Baloo 2', cursive;
+--font-subheading: 'Baloo 2', cursive;
+--font-body: 'Inter', 'Open Sans', sans-serif;
+--font-devanagari: 'Noto Sans Devanagari', sans-serif;
+```
+
+### Lucide Icons
+Load Lucide via CDN:
+```html
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+```
+Use `<i data-lucide="icon-name"></i>` for icons, then call `lucide.createIcons()` at end of body.
+
+Icons to use:
+- Star, Heart, Sparkles → decorative / section dividers
+- Flag → Indian tricolor sections (use three stacked colored bars: saffron, white, green — drawn in CSS, not an emoji)
+- Download → download button
+- Copy → copy slogan button
+- ChevronDown / ChevronUp → FAQ accordion
+- Trophy → quiz score
+- BookOpen → essay sections
+- Music → Jana Gana Mana
+- CheckCircle → quiz correct answer indicator
+- XCircle → quiz wrong answer indicator
+- RefreshCw → retake quiz
+- Leaf → nature/organic feel for activities
+- Zap → fun facts
+
+**Tricolor Indian Flag (CSS, no emoji):** Build the flag as a CSS div — three horizontal stripes (saffron `#FF9933` / white `#FFFFFF` / green `#138808`) with a navy Ashoka Chakra circle drawn using `border-radius` and a subtle 24-spoke `background` radial gradient or SVG inline. Use this wherever an Indian flag visual is needed. Do NOT use a flag emoji.
+
+---
+
+## PART 3 — CURSOR ANIMATION (Patriotic Star-Sparkle Trail)
+
+Add a custom cursor animation: a trail of tiny saffron, white, and green glitter stars that appear at the cursor position and fade out over 800ms. This suits the playful, joyful preschool brand perfectly.
+
+```javascript
+// PATRIOTIC STAR-SPARKLE CURSOR TRAIL
+(function() {
+  const colors = ['#FF9933', '#FFFFFF', '#138808', '#F0A820', '#EC210F'];
+  const stars = ['★', '✦', '✧', '✶', '·'];
+
+  document.addEventListener('mousemove', function(e) {
+    const sparkle = document.createElement('span');
+    sparkle.className = 'cursor-sparkle';
+    sparkle.textContent = stars[Math.floor(Math.random() * stars.length)];
+    sparkle.style.cssText = `
+      position: fixed;
+      left: ${e.clientX}px;
+      top: ${e.clientY}px;
+      pointer-events: none;
+      z-index: 9999;
+      font-size: ${10 + Math.random() * 14}px;
+      color: ${colors[Math.floor(Math.random() * colors.length)]};
+      transform: translate(-50%, -50%);
+      animation: sparkle-fade 0.8s ease-out forwards;
+      text-shadow: 0 0 4px currentColor;
+    `;
+    document.body.appendChild(sparkle);
+    setTimeout(() => sparkle.remove(), 800);
+  });
+})();
+```
+
+Add this CSS keyframe:
+```css
+@keyframes sparkle-fade {
+  0%   { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(0deg); }
+  50%  { opacity: 0.7; transform: translate(-50%, -120%) scale(1.3) rotate(20deg); }
+  100% { opacity: 0; transform: translate(-50%, -200%) scale(0.3) rotate(45deg); }
+}
+```
+
+Also add `cursor: none;` on `body` and create a custom cursor dot:
+```css
+body { cursor: none; }
+.custom-cursor {
+  width: 18px; height: 18px;
+  background: var(--rps-red);
+  border: 2px solid var(--saffron);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 10000;
+  transition: transform 0.1s ease;
+}
+```
+Track cursor position with JS and move the `.custom-cursor` div accordingly. On mobile (touch device), disable both cursor effects.
+
+---
+
+## PART 4 — PAGE HEADER / NAVIGATION
+
+The blog page must share the same header and footer as the rest of the RPS website. Use whatever header/footer component or include system the existing project uses to maintain brand consistency (logo, nav links, footer). If there is no shared component system, hard-code the RPS header that matches the main site exactly — same nav links, same logo at `assets/RPS-logo.png`, same background color.
+
+**Hero Section** (full-width, below header):
+```
+Background: /blog-assets/independence-day-for-kids/img-08-independence-day-children-flags-unity-dp-2026.jpg (cover, center)
+Overlay: linear-gradient(135deg, rgba(26,35,126,0.82) 0%, rgba(236,33,15,0.65) 60%, rgba(19,136,8,0.5) 100%)
+Height: 520px on desktop, 380px on mobile
+```
+
+Hero content (centered, text-white):
+- Category badge: `Festivals & Events` (pill, saffron background)
+- H1: **Independence Day for Kids 2026**  
+  Subline: *Celebrate India's 80th Year of Freedom*
+- Meta row: calendar icon + "August 15, 2026" · clock icon + "8 min read" · user icon + "Rainbow Preschools"
+- Tricolor Indian flag (CSS) centered below meta
+- Scroll-down indicator: bouncing chevron-down icon
+
+---
+
+## PART 5 — FULL PAGE CONTENT
+
+The file `blog-pages/independence-day-for-kids/index.html` must be a COMPLETE, STANDALONE HTML file with all CSS and JS inline (inside `<style>` and `<script>` tags). Write ALL content below word-for-word — do not summarize, truncate, or leave placeholders. Replit must not generate any of the text content itself.
+
+---
+
+### SECTION 1 — Intro: What Is Independence Day?
+
+**Section heading:** What Is Independence Day? (with flag icon)
+
+**Content:**
+> Every year on 15th August, India celebrates Independence Day — one of the most important days in our country's history. On this day in 1947, India became free from British rule after many years of struggle. Brave freedom fighters gave their everything so that we could live freely, learn freely, and dream freely.
+>
+> In 2026, we celebrate India's **80th Independence Day** — a very special milestone! Our nation is 80 years young and stronger than ever. 🇮🇳
+>
+> For little ones in playgroup, nursery, and kindergarten, Independence Day is the perfect time to learn about our beautiful country through songs, crafts, stories, and play!
+
+---
+
+### SECTION 2 — Why 2026 Is Special (Animated Counter Card)
+
+**Section heading:** India Turns 80! (with sparkles icon)
+
+Add an animated card with a large number counter that counts up from 0 to **80** when scrolled into view (Intersection Observer). Style with saffron-to-red gradient background, white text.
+
+**Content:**
+> This year — **2026** — marks **80 glorious years** of India's independence. 
+>
+> Our country was born on **15th August 1947**. Since then, India has become a world leader in science, education, art, music, sport, and technology. Today, India is home to **140 crore people** — one of the largest families on Earth!
+>
+> Our children are the future of this great nation. Every preschooler who learns about freedom, kindness, respect, and courage today is helping shape India's next 80 years of greatness.
+
+Sub-card trio (three cards in a row, animated on scroll):
+- Card 1: **1947** — Year India became free · Saffron
+- Card 2: **80** — Years of independence in 2026 · RPS Red  
+- Card 3: **15th Aug** — Independence Day · India Green
+
+---
+
+### SECTION 3 — Fun Activities for Kids
+
+**Section heading:** 6 Fun Independence Day Activities for Preschoolers (with leaf icon)
+
+Display as colorful activity cards in a 2×3 grid (responsive: 1-col mobile, 2-col tablet, 3-col desktop). Each card has an icon, title, and description.
+
+**Activity 1 — Fly a Kite** (Icon: Wind / Zap)
+> Kite flying on Independence Day is a beloved Indian tradition! Help your child colour a paper kite in saffron, white, and green. Go to an open ground or terrace and let the kite soar high — just like our nation's dreams!
+
+**Activity 2 — Make a Paper Flag** (Icon: Flag)
+> Cut three strips of saffron, white, and green paper. Glue them one below the other on a popsicle stick. Draw the Ashoka Chakra in the centre with a blue crayon. Your child now has their very own tricolor flag — made with love!
+
+**Activity 3 — Fancy Dress as a Freedom Fighter** (Icon: Star)
+> Dress your little one as Mahatma Gandhi, Rani Lakshmibai, Bhagat Singh, or Subhas Chandra Bose! Simple costumes made at home teach big lessons about courage and sacrifice. Perfect for school celebrations!
+
+**Activity 4 — Sing "Jana Gana Mana"** (Icon: Music)
+> Our national anthem is a beautiful song that fills every heart with pride. Sing it with your child every morning this week. Teach them to stand straight and tall — respectful, proud, and full of love for India.
+
+**Activity 5 — Draw India's Map** (Icon: Leaf)
+> Give your child an outline of India's map and let them fill it in with crayons. Name some states, show them where your city is, and talk about the diverse landscapes — deserts, mountains, rivers, and forests. Geography made fun!
+
+**Activity 6 — Storytelling Time** (Icon: BookOpen)
+> Sit together and tell the story of how India became free — in simple words your child can understand. "Long ago, some very brave people loved India so much that they fought peacefully to make our country free..." Make it magical!
+
+---
+
+### SECTION 4 — Fun Facts Flip Cards
+
+**Section heading:** 10 Fun Facts About India (with Zap icon)
+
+**Layout:** Horizontal scroll row of flip cards (or 2×5 grid on desktop). Each card is a 3D flip card — front shows question + fun icon; back shows answer. Add a "Tap to flip!" hint. Use CSS `transform-style: preserve-3d` + `rotateY(180deg)` on hover/tap.
+
+**Card 1 Front:** What colour is India's flag? / **Back:** The Indian flag has three colours: Saffron (top), White (middle), and Green (bottom) — with a blue Ashoka Chakra in the centre!
+
+**Card 2 Front:** What is India's national bird? / **Back:** The Peacock! With its beautiful colourful feathers, the peacock is found all across India. 🦚
+
+**Card 3 Front:** How many states does India have? / **Back:** India has 28 states and 8 Union Territories. That's a LOT of places to explore!
+
+**Card 4 Front:** What is India's national animal? / **Back:** The Bengal Tiger! Strong, beautiful, and rare — just like India! India has more tigers than any other country in the world.
+
+**Card 5 Front:** What is India's national flower? / **Back:** The Lotus! It blooms beautifully even in muddy water — reminding us that beauty and goodness can grow anywhere.
+
+**Card 6 Front:** What is India's national fruit? / **Back:** The Mango! Juicy, sweet, and loved by everyone. India grows more than 1,000 types of mangoes!
+
+**Card 7 Front:** What language do most Indians speak? / **Back:** Hindi is the most widely spoken language. But India has over 19,500 languages and dialects — making it the most linguistically diverse country in the world!
+
+**Card 8 Front:** What is India's national anthem called? / **Back:** "Jana Gana Mana" — written by Nobel Prize winner Rabindranath Tagore. It takes exactly 52 seconds to sing!
+
+**Card 9 Front:** Where does the Prime Minister hoist the flag on Independence Day? / **Back:** At the Red Fort (Lal Qila) in Delhi! It is one of India's most famous landmarks.
+
+**Card 10 Front:** What does the Ashoka Chakra represent? / **Back:** The Ashoka Chakra has 24 spokes — representing 24 hours in a day, reminding us that progress never stops!
+
+---
+
+### SECTION 5 — Easy Speeches for Kids
+
+**Section heading:** Independence Day Speeches for Kids (with BookOpen icon)
+
+Use tabbed layout — 4 tabs: "5 Lines (English)" · "Short (English)" · "हिंदी" · "मराठी"
+
+**Tab 1 — 5 Lines (English):**
+```
+Good morning everyone.
+Today we celebrate India's 80th Independence Day.
+On 15th August 1947, our country became free because of brave freedom fighters.
+I am proud to be Indian.
+Jai Hind!
+```
+
+**Tab 2 — Short Speech (English):**
+```
+Respected teachers and dear friends,
+
+A very warm good morning to all of you!
+
+Today, on 15th August 2026, we stand together to celebrate India's 80th Independence Day — 80 glorious years of freedom, unity, and progress!
+
+On this day in 1947, after years of struggle and sacrifice by our brave freedom fighters — Mahatma Gandhi, Jawaharlal Nehru, Subhas Chandra Bose, Rani Lakshmibai, and countless others — India finally breathed the air of independence.
+
+We must remember their sacrifices and honour them by being good, honest, and hardworking citizens of India.
+
+Let us pledge today: to love our country, to respect each other, and to make India proud!
+
+Vande Mataram! Jai Hind!
+```
+
+**Tab 3 — Hindi (हिंदी):**
+```
+आदरणीय शिक्षकगण और प्यारे दोस्तों,
+
+आप सभी को स्वतंत्रता दिवस की हार्दिक शुभकामनाएं!
+
+आज हम भारत का 80वां स्वतंत्रता दिवस मना रहे हैं।
+
+15 अगस्त 1947 को हमारा देश आज़ाद हुआ था। इसके लिए महात्मा गांधी, भगत सिंह, रानी लक्ष्मीबाई जैसे वीरों ने अपना सब कुछ बलिदान किया।
+
+हम उनके बलिदान को कभी नहीं भूलेंगे।
+
+आओ मिलकर कहें — भारत माता की जय! जय हिंद!
+```
+*(Apply `font-family: var(--font-devanagari)` to Hindi/Marathi text)*
+
+**Tab 4 — Marathi (मराठी):**
+```
+आदरणीय शिक्षक आणि प्रिय मित्रांनो,
+
+सर्वांना स्वातंत्र्य दिनाच्या हार्दिक शुभेच्छा!
+
+आज आपण भारताचा ८०वा स्वातंत्र्य दिन साजरा करत आहोत.
+
+१५ ऑगस्ट १९४७ रोजी आपला भारत देश स्वतंत्र झाला. महात्मा गांधी, लोकमान्य टिळक, राणी लक्ष्मीबाई यांसारख्या थोर नेत्यांनी या स्वातंत्र्यासाठी आपले जीव अर्पण केले.
+
+आपण त्यांचे ऋणी आहोत. आपण प्रतिज्ञा करूया की आपल्या देशाला सदैव अभिमानास्पद वाटेल असे वर्तन करू.
+
+भारत माता की जय! जय हिंद!
+```
+
+Each tab has a **"Copy Speech"** button (copy icon + "Copied! ✓" confirmation state).
+
+---
+
+### SECTION 6 — Essays for Kids
+
+**Section heading:** Independence Day Essays for Students (with BookOpen icon)
+
+**Layout:** Accordion-style — click heading to expand. Four essay lengths.
+
+**Essay 1 — 5 Lines on Independence Day:**
+```
+1. India celebrates Independence Day on 15th August every year.
+2. On this day in 1947, India became free from British rule.
+3. Great leaders like Mahatma Gandhi and Jawaharlal Nehru led our freedom struggle.
+4. We hoist the national flag and sing Jana Gana Mana on this day.
+5. We must always love and respect our great nation.
+```
+
+**Essay 2 — 10 Lines on Independence Day:**
+```
+1. Independence Day is celebrated on 15th August every year in India.
+2. In 2026, we celebrate India's 80th Independence Day.
+3. On 15th August 1947, India gained independence from British rule.
+4. This day marks the end of nearly 200 years of British colonial rule.
+5. Our great freedom fighters like Mahatma Gandhi, Subhas Chandra Bose, Bhagat Singh, and Rani Lakshmibai sacrificed their lives for our freedom.
+6. The Prime Minister hoists the national flag at the Red Fort in New Delhi.
+7. The national flag — the tricolor — is made of saffron, white, and green with the Ashoka Chakra.
+8. Schools, colleges, offices, and government buildings celebrate the day with flag hoisting, speeches, and cultural programmes.
+9. We must honour the sacrifices of our freedom fighters by becoming responsible and hardworking citizens.
+10. Independence Day fills every Indian heart with pride, gratitude, and patriotism.
+```
+
+**Essay 3 — 20 Lines on Independence Day:**
+```
+1. India celebrates Independence Day on 15th August every year with great pride and enthusiasm.
+2. This year, 2026, marks India's 80th Independence Day — a landmark occasion for every citizen.
+3. On 15th August 1947, India finally became free after nearly 200 years under British colonial rule.
+4. The freedom struggle was long and difficult, requiring immense courage, sacrifice, and determination.
+5. Mahatma Gandhi led India's independence movement through the path of non-violence and civil disobedience.
+6. Leaders like Jawaharlal Nehru, Sardar Vallabhbhai Patel, Subhas Chandra Bose, Bhagat Singh, Rani Lakshmibai, and Bal Gangadhar Tilak are among the many heroes who gave everything for our freedom.
+7. The famous "Quit India Movement" of 1942 was a turning point in our independence struggle.
+8. Jawaharlal Nehru's "Tryst with Destiny" speech at midnight on 14th August 1947 announced India's freedom to the world.
+9. India's national flag — the tricolor — was officially adopted on 22nd July 1947.
+10. The three colours of the flag represent courage and sacrifice (saffron), peace and truth (white), and faith and chivalry (green).
+11. The Ashoka Chakra in the centre of the flag represents the law of dharma and the wheel of progress.
+12. Every year on Independence Day, the Prime Minister hoists the national flag at the Red Fort in New Delhi.
+13. The day is marked with cultural programmes, parades, flag hoisting ceremonies, and patriotic songs across the country.
+14. Schools and colleges organise special events where children participate in speeches, debates, dances, and fancy dress competitions.
+15. Independence Day teaches us to value freedom, unity, and diversity.
+16. India is one of the most diverse countries in the world, with hundreds of languages, cultures, religions, and traditions living in harmony.
+17. In 80 years, India has made remarkable progress in science, technology, education, space exploration, sports, and agriculture.
+18. We must remember that freedom is precious and must be preserved through responsibility, respect, and love for our nation.
+19. Every citizen has a duty to contribute to India's growth — through education, innovation, kindness, and integrity.
+20. On this Independence Day, let us pledge to make our India — the India of our freedom fighters' dreams — even stronger, kinder, and more prosperous.
+```
+
+**Essay 4 — 100 Words Essay:**
+```
+Independence Day is one of the most important national celebrations in India, observed on 15th August every year. On this day in 1947, India achieved independence from British rule after a long and courageous freedom struggle led by Mahatma Gandhi, Jawaharlal Nehru, Subhas Chandra Bose, and many other brave patriots.
+
+In 2026, we celebrate India's 80th Independence Day — 80 years of freedom, progress, and unity.
+
+The national flag is hoisted at the Red Fort in New Delhi by the Prime Minister, and the entire nation echoes with the sound of "Jana Gana Mana" and "Jai Hind!"
+
+Independence Day reminds us to honour the sacrifices of our freedom fighters and to always love, respect, and serve our great nation.
+```
+
+Each essay section has a **"Copy Essay"** button.
+
+---
+
+### SECTION 7 — Independence Day Slogans for Kids
+
+**Section heading:** 12 Independence Day Slogans for Kids (with Star icon)
+
+**Layout:** Masonry-style cards or 3-column grid. Each slogan card has:
+- Large quotation marks (decorative, saffron/red)
+- Slogan text (Fredoka One font)
+- A small copy icon button that shows "Copied!" on click
+- Alternating card backgrounds (saffron tint / red tint / green tint)
+
+**Slogans:**
+1. "Proud to be Indian, proud to be free — Jai Hind, Jai Bharat, Jai you and me!"
+2. "Our flag flies high, our hearts soar free — Happy Independence Day to you and me!"
+3. "Seventy-seven years of freedom and cheer — India's spirit grows stronger each year!"
+4. "In saffron, white, and green we trust — one nation, one dream, this is a must!"
+5. "From little hands to great big dreams — India shines and proudly gleams!"
+6. "Freedom is precious, freedom is bright — let's honour our heroes with all our might!"
+7. "The Chakra spins, the flag waves high — for India's glory we'll always try!"
+8. "Let's learn, let's grow, let's shine each day — we are India's future, hip hip hooray!"
+9. "Brave hearts, kind minds, and hands held together — India stands strong through every weather!"
+10. "Jai Hind! India's freedom is our pride — with love for our nation we will guide!"
+11. "Little patriots, big dreams, united we stand — let's build a better, brighter land!"
+12. "Freedom's flame burns in every heart — young and old, we all play a part!"
+
+---
+
+### SECTION 8 — National Symbols of India
+
+**Section heading:** India's National Symbols (with Star icon)
+
+**Layout:** 2×3 grid of symbol cards (responsive). Each card: icon/illustration (CSS or Lucide), symbol category, symbol name, and one-line description.
+
+**Symbol 1 — National Flag**
+Tricolor CSS flag visual · *Tiranga*
+"Three bold colours — saffron, white, and green — with the Ashoka Chakra spinning in the centre."
+
+**Symbol 2 — National Bird**
+Lucide: `feather` icon (saffron) · *Indian Peacock (Pavo cristatus)*
+"The peacock dances in the rain with its magical tail fanned out like a rainbow!"
+
+**Symbol 3 — National Animal**
+Lucide: `shield` icon (orange) · *Bengal Tiger*
+"Powerful, majestic, and rare — the Bengal Tiger roams India's forests with grace."
+
+**Symbol 4 — National Flower**
+Lucide: `flower-2` icon (pink/red) · *Lotus (Nelumbo nucifera)*
+"The lotus blooms beautifully in muddy water — a symbol of purity and rising above challenges."
+
+**Symbol 5 — National Anthem**
+Lucide: `music` icon (navy) · *Jana Gana Mana*
+"Written by Rabindranath Tagore and sung in exactly 52 seconds — it fills every heart with pride!"
+
+**Symbol 6 — National Fruit**
+Lucide: `leaf` icon (green) · *Mango (Aam)*
+"Sweet, golden, and beloved — India grows over 1,000 varieties of the king of fruits!"
+
+---
+
+### SECTION 9 — Independence Day Quiz (Interactive MCQ)
+
+**Section heading:** Independence Day Quiz for Kids! (with Trophy icon)
+
+**Layout and UX:**
+- A friendly quiz container with saffron/white/green confetti header
+- Progress bar at top (e.g. "Question 3 of 10")
+- One question displayed at a time (not all at once — slide to next)
+- 3 option buttons per question (A/B/C)
+- On click: green highlight ✓ for correct, red highlight ✗ for wrong, show "Did you know?" fun fact
+- "Next Question" button (arrow-right icon) appears after answering
+- After all 10: Score card with trophy icon
+  - 8–10: "Quiz Champion! 🏆 You're a true patriot!"
+  - 5–7: "Great job! Keep learning about India! 🌟"
+  - 0–4: "Don't worry! Read our fun facts and try again! 😊"
+- "Retake Quiz" button (refresh-cw icon)
+
+**Quiz Questions and Answers (mark correct answer with * and provide the fun fact):**
+
+**Q1:** What date is India's Independence Day celebrated?
+A) 26th January · B) 15th August* · C) 2nd October
+*Fun fact: 26th January is Republic Day — the day India's Constitution came into force in 1950!*
+
+**Q2:** How many years of independence does India celebrate in 2026?
+A) 75 years · B) 79 years · C) 80 years*
+*Fun fact: India celebrated its "Azadi Ka Amrit Mahotsav" (75 years) in 2022. 2026 is the 80th anniversary!*
+
+**Q3:** What are the three colours of the Indian national flag?
+A) Red, White, Blue · B) Saffron, White, Green* · C) Orange, Yellow, Green
+*Fun fact: Saffron stands for courage, White for peace and truth, and Green for faith and prosperity!*
+
+**Q4:** Where does the Prime Minister hoist the flag on Independence Day?
+A) India Gate, Delhi · B) Rashtrapati Bhavan · C) Red Fort, Delhi*
+*Fun fact: The Red Fort was built in the 17th century by Mughal Emperor Shah Jahan — the same emperor who built the Taj Mahal!*
+
+**Q5:** Who is known as the "Father of the Nation"?
+A) Jawaharlal Nehru · B) Mahatma Gandhi* · C) Sardar Patel
+*Fun fact: Mahatma Gandhi was called "Mahatma" meaning "great soul" — a title given to him by the famous poet Rabindranath Tagore!*
+
+**Q6:** What does the Ashoka Chakra have?
+A) 12 spokes · B) 20 spokes · C) 24 spokes*
+*Fun fact: Each of the 24 spokes represents one hour of the day — symbolising that the wheel of progress never stops!*
+
+**Q7:** What is India's national anthem called?
+A) Vande Mataram · B) Jana Gana Mana* · C) Saare Jahan Se Achha
+*Fun fact: Jana Gana Mana was written by Nobel Prize winner Rabindranath Tagore and was adopted as India's national anthem on 24th January 1950!*
+
+**Q8:** What is India's national animal?
+A) Asian Elephant · B) Lion · C) Bengal Tiger*
+*Fun fact: India is home to more than 70% of the world's wild tigers. Project Tiger, started in 1973, has helped save this magnificent animal from extinction!*
+
+**Q9:** India became independent from whose rule in 1947?
+A) French rule · B) Mughal rule · C) British rule*
+*Fun fact: India was under British rule for almost 200 years, from around 1757 to 1947. The last British Governor-General of India was Lord Mountbatten.*
+
+**Q10:** What is India's national flower?
+A) Rose · B) Sunflower · C) Lotus*
+*Fun fact: The lotus grows in muddy water but its petals stay clean and beautiful — it is a symbol of purity and enlightenment in Indian culture!*
+
+---
+
+### SECTION 10 — Download Free Patriotic Images
+
+**Section heading:** Free Patriotic Images for Download (with Download icon)
+
+**Intro paragraph:**
+> Celebrate India's 80th Independence Day with these beautiful, high-quality patriotic images — perfect for WhatsApp DPs, Instagram posts, Facebook covers, and family sharing! All images are completely **free to download**. No watermarks. Just love for India. 🇮🇳
+
+**Layout:** Responsive 2-column (mobile) / 3-column (desktop) image gallery grid. Each image card:
+- Thumbnail (object-fit: cover, aspect-ratio: 1/1 or 4/3)
+- Image title
+- Download button (download icon + "Download Free")
+- On download click: trigger `<a download>` link — do NOT open in new tab
+
+**Images — 10 cards, titles and filenames:**
+
+| # | File | Title |
+|---|------|-------|
+| 1 | img-01-80th-independence-day-badge-dp-2026.jpg | "80th Independence Day Badge" |
+| 2 | img-02-80-years-freedom-mandala-dp-2026.jpg | "80 Years of Freedom — Mandala DP" |
+| 3 | img-03-independence-day-red-fort-proudly-indian-2026.jpg | "Red Fort — Proudly Indian" |
+| 4 | img-04-independence-day-papercut-flag-dp-2026.jpg | "Papercut Tricolor Flag DP" |
+| 5 | img-05-independence-day-ashoka-chakra-tricolor-dp-2026.jpg | "Ashoka Chakra Tricolor DP" |
+| 6 | img-06-independence-day-kites-celebrating-freedom-2026.jpg | "Kites Celebrating Freedom" |
+| 7 | img-07-independence-day-soldier-salute-freedom-2026.jpg | "Soldier Salute — Jai Hind" |
+| 8 | img-08-independence-day-children-flags-unity-dp-2026.jpg | "Children & Flags — Unity DP" |
+| 9 | img-09-independence-day-india-gate-dp-2026.jpg | "India Gate Independence Day" |
+| 10 | img-10-proud-to-be-indian-india-map-dp-2026.jpg | "Proud to Be Indian — India Map" |
+
+Each download button:
+```html
+<a href="/blog-assets/independence-day-for-kids/img-XX-filename.jpg" download="img-XX-filename.jpg" class="download-btn">
+  <i data-lucide="download"></i> Download Free
+</a>
+```
+
+---
+
+### SECTION 11 — FAQ Section
+
+**Section heading:** Parents Ask — We Answer (with ChevronDown icon)
+
+**Layout:** Accordion FAQ. Each FAQ item: click to expand, smooth CSS transition, chevron rotates 180° when open.
+
+**FAQ 1 — How do I explain Independence Day to a 3-year-old?**
+Tell your child: "Long ago, India was ruled by people from a faraway country called Britain. Some very brave and kind people in India — like Gandhiji — wanted everyone to be free. They worked very hard and never gave up. And one beautiful morning, India became free! Now every 15th August, we celebrate that day because freedom is one of the most precious gifts in the world." Keep it simple, positive, and full of love.
+
+**FAQ 2 — What is a good Independence Day activity for preschoolers at home?**
+Some easy, joyful activities include: making a paper tricolor flag together, drawing India's map and colouring it, watching a short animated video about freedom fighters, singing the national anthem, or doing a simple fancy dress as a farmer, soldier, doctor, or teacher to represent different people who serve India.
+
+**FAQ 3 — Why does Independence Day fall on 15th August?**
+On 15th August 1947, at the stroke of midnight, India officially became a free and independent nation. The British handed over control to Indian leaders, and Jawaharlal Nehru — India's first Prime Minister — gave his famous "Tryst with Destiny" speech. This is why 15th August is celebrated as Independence Day every year.
+
+**FAQ 4 — What is the difference between Independence Day and Republic Day?**
+Independence Day (15th August) celebrates the day India became free from British rule in 1947. Republic Day (26th January) celebrates the day India's own Constitution came into effect in 1950 — the day India became a fully self-governing democratic republic. Both are national holidays celebrated with flag hoisting, parades, and patriotic events.
+
+**FAQ 5 — Who were India's most important freedom fighters?**
+India had thousands of freedom fighters! Some of the most well-known include: Mahatma Gandhi (non-violence and civil disobedience), Jawaharlal Nehru (first PM), Rani Lakshmibai (warrior queen of Jhansi), Bhagat Singh (revolutionary martyr), Subhas Chandra Bose (INA leader), Dr. B.R. Ambedkar (Constitution's architect), Sardar Vallabhbhai Patel (unified India), and Bal Gangadhar Tilak. There were millions of ordinary Indians who participated in the struggle too.
+
+**FAQ 6 — How should preschools celebrate Independence Day?**
+Schools can make it meaningful and fun through: flag hoisting ceremonies with age-appropriate explanations, patriotic songs and rhymes, simple fancy dress events, colouring sheets of the national flag or map, short storytelling about freedom fighters, making paper flags or crafts, and a special snack in tricolor (saffron ladoo / white coconut / green chutney!).
+
+**FAQ 7 — Is Rainbow International Pre-School admitting students for 2026?**
+Yes! Rainbow International Pre-School welcomes little learners for Playgroup, Nursery, and Kindergarten. Our caring team of experienced early-years educators creates a safe, joyful, and stimulating environment where your child's first school experience is one they'll love. [Schedule a Campus Visit](https://www.rainbowpreschools.com/admissions) to meet our team and see our school.
+
+**FAQ 8 — What age group is Rainbow International Pre-School for?**
+Rainbow International Pre-School (RPS) welcomes children from approximately **1.5 to 5.5 years** of age — from Playgroup through to Kindergarten. Our experienced and caring 100% female staff understand the unique developmental needs of young children and nurture each little one with patience, warmth, and joy.
+
+---
+
+### SECTION 12 — Interlinking Section
+
+**Section heading:** Explore More at Rainbow Schools (with Star icon)
+
+**Layout:** Two visually distinct cards side by side (responsive: stacked on mobile):
+
+**Card A — Rainbow International Pre-School (RPS)**
+Background: `#EC210F` (RPS red) · White text
+Logo: `assets/RPS-logo.png`
+Tagline: "The Future Begins Here"
+Text: "Give your little one the most joyful start to their learning journey. Our preschool is a safe, caring, and fun-filled world where curiosity is celebrated every day."
+Links (3 pills):
+- [Home](https://www.rainbowpreschools.com/) 
+- [Admissions](https://www.rainbowpreschools.com/admissions)
+- [About Us](https://www.rainbowpreschools.com/about)
+
+**Card B — Rainbow International School (RIS)**
+Background: `#10174F` (RIS navy) · White text
+Logo: `assets/RIS-logo.png` (if available on site; otherwise text "RIS")
+Tagline: "Passion for Excellence"
+Text: "From playschool to senior secondary — Rainbow International School (CBSE, K–12) nurtures academic excellence, holistic development, and every child's unique potential."
+Links (3 pills):
+- [Visit RIS](https://rainbowinternationalschool.in/)
+- [Admissions](https://rainbowinternationalschool.in/admissions)
+- [Independence Day Blog](https://rainbowinternationalschool.in/blog/independence-day-2026)
+
+---
+
+### SECTION 13 — CTA Section
+
+**Layout:** Full-width section, saffron-to-red gradient background, white text, centered.
+
+**Heading:** Your Child's First Steps Matter Most
+
+**Subtext:**
+> At Rainbow International Pre-School, your little one will learn, play, discover, and grow — surrounded by warmth, care, and joy. Admissions are open for 2026–27. Come see our school!
+
+**CTA Buttons (two, side by side):**
+- Primary: "Enquire Now" (white button, red text) → `https://www.rainbowpreschools.com/admissions`
+- Secondary: "Schedule a Campus Visit" (outline white button) → `https://www.rainbowpreschools.com/admissions`
+
+---
+
+## PART 6 — SEO & STRUCTURED DATA
+
+### Meta Tags (inside `<head>`)
+
+```html
+<title>Independence Day for Kids 2026 — Activities, Speeches & Free Downloads | Rainbow Preschools</title>
+<meta name="description" content="Celebrate India's 80th Independence Day with your little one! Easy speeches, fun activities, a patriotic quiz, national symbols, essays, slogans, and 10 free downloadable patriotic images — all made for preschool kids.">
+<meta name="keywords" content="independence day for kids 2026, independence day activities for preschoolers, independence day speech for kids, independence day essay for kids, 80th independence day, independence day quiz for children, patriotic images download 2026, rainbow preschool independence day">
+<meta name="author" content="Rainbow Preschools">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://www.rainbowpreschools.com/blog/independence-day-for-kids">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Independence Day for Kids 2026 — Activities, Speeches & Free Downloads">
+<meta property="og:description" content="Celebrate India's 80th Independence Day with your little one! Easy speeches, fun activities, patriotic quiz, and 10 free downloadable patriotic images.">
+<meta property="og:image" content="https://www.rainbowpreschools.com/blog-assets/independence-day-for-kids/img-08-independence-day-children-flags-unity-dp-2026.jpg">
+<meta property="og:url" content="https://www.rainbowpreschools.com/blog/independence-day-for-kids">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Rainbow International Pre-School">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Independence Day for Kids 2026 — Activities, Speeches & Free Downloads">
+<meta name="twitter:description" content="Celebrate India's 80th Independence Day with your little one! Easy speeches, activities, quiz, and free patriotic images.">
+<meta name="twitter:image" content="https://www.rainbowpreschools.com/blog-assets/independence-day-for-kids/img-08-independence-day-children-flags-unity-dp-2026.jpg">
+```
+
+### JSON-LD Structured Data
+
+**CRITICAL: Do NOT use `@type: "Event"` anywhere in the JSON-LD — not even in nested objects. Use `@type: "Thing"` for the "about" field. Only use Article, FAQPage, and BreadcrumbList schemas.**
+
+Place this in the `<head>` section:
+
+```html
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Independence Day for Kids 2026 — Activities, Speeches, Stories & Free Downloads",
+    "description": "Celebrate India's 80th Independence Day with your little one! Easy speeches, fun activities, a patriotic quiz, national symbols, essays, slogans, and 10 free downloadable patriotic images — all made for preschool kids.",
+    "image": "https://www.rainbowpreschools.com/blog-assets/independence-day-for-kids/img-08-independence-day-children-flags-unity-dp-2026.jpg",
+    "author": {
+      "@type": "Organization",
+      "name": "Rainbow Preschools",
+      "url": "https://www.rainbowpreschools.com"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Rainbow International Pre-School",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://www.rainbowpreschools.com/assets/RPS-logo.png"
+      }
+    },
+    "datePublished": "2026-08-01",
+    "dateModified": "2026-08-01",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://www.rainbowpreschools.com/blog/independence-day-for-kids"
+    },
+    "about": {
+      "@type": "Thing",
+      "name": "India's 80th Independence Day"
+    },
+    "keywords": "independence day for kids, independence day 2026, preschool independence day, independence day activities, independence day speech for kids"
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do I explain Independence Day to a 3-year-old?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Tell your child: Long ago, India was ruled by people from a faraway country called Britain. Some very brave and kind people in India — like Gandhiji — wanted everyone to be free. They worked very hard and never gave up. And one beautiful morning, India became free! Now every 15th August, we celebrate that day because freedom is one of the most precious gifts in the world."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is a good Independence Day activity for preschoolers at home?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Some easy, joyful activities include: making a paper tricolor flag together, drawing India's map and colouring it, watching a short animated video about freedom fighters, singing the national anthem, or doing a simple fancy dress."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why does Independence Day fall on 15th August?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "On 15th August 1947, at the stroke of midnight, India officially became a free and independent nation. Jawaharlal Nehru gave his famous Tryst with Destiny speech. This is why 15th August is celebrated as Independence Day every year."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the difference between Independence Day and Republic Day?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Independence Day (15th August) celebrates the day India became free from British rule in 1947. Republic Day (26th January) celebrates the day India's Constitution came into effect in 1950."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How should preschools celebrate Independence Day?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Schools can celebrate through flag hoisting ceremonies with age-appropriate explanations, patriotic songs and rhymes, simple fancy dress events, colouring sheets, short storytelling about freedom fighters, making paper flags or crafts, and a special patriotic snack."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What age group is Rainbow International Pre-School for?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Rainbow International Pre-School (RPS) welcomes children from approximately 1.5 to 5.5 years of age — from Playgroup through to Kindergarten. Our experienced and caring 100% female staff nurture each child with patience, warmth, and joy."
+        }
+      }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://www.rainbowpreschools.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Blog",
+        "item": "https://www.rainbowpreschools.com/blog"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Independence Day for Kids 2026",
+        "item": "https://www.rainbowpreschools.com/blog/independence-day-for-kids"
+      }
+    ]
+  }
+]
+</script>
+```
+
+---
+
+## PART 7 — TECHNICAL CHECKLIST
+
+Before finalising the code, verify all of the following:
+
+1. **Image paths:** ALL images use `/blog-assets/independence-day-for-kids/filename.jpg` — absolute path, no relative paths. Confirm no image is served from `/blog/` or `blog-pages/`.
+
+2. **No broken links:** Every `<a href>` points to a real URL. Internal links use relative paths correctly. External links open in `target="_blank" rel="noopener noreferrer"`.
+
+3. **Download buttons:** All 10 download buttons use `<a href="..." download="...">`. They must trigger download, not navigate. Test the `download` attribute is present.
+
+4. **Mobile responsiveness:** The page must work at 320px (small mobile), 375px, 768px (tablet), and 1024px+ (desktop). Use CSS Grid and Flexbox with `@media` breakpoints. No horizontal scroll on mobile.
+
+5. **No jQuery/Bootstrap/React:** Use only vanilla HTML, CSS, and JavaScript.
+
+6. **Lucide icons:** Load via `<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>`. Call `lucide.createIcons()` at the end of `<body>` (after all icon elements are in the DOM). Ensure icons are styled with `width` and `height` or CSS `size` via `.lucide { width: 20px; height: 20px; }`.
+
+7. **Google Fonts:** Ensure fonts load correctly. All fallback fonts are set in CSS custom properties.
+
+8. **Quiz state management:** All quiz state (current question, score, answers) managed in vanilla JS. No external quiz library.
+
+9. **Cursor animation:** On touch devices, detect with `window.matchMedia('(hover: none)')` and skip cursor effects entirely. The cursor sparkle spawns elements at mousemove — ensure they are cleaned up (removed after 800ms) to prevent DOM bloat.
+
+10. **JSON-LD:** Only three schema types — Article, FAQPage, BreadcrumbList. No @type Event anywhere. Validate at https://search.google.com/test/rich-results after publishing.
+
+11. **Canonical URL:** `<link rel="canonical" href="https://www.rainbowpreschools.com/blog/independence-day-for-kids">` must be in `<head>`.
+
+12. **Blog listing order:** Verify the blog listing page shows this post FIRST (date: 2026-08-01).
+
+13. **No console errors:** Open browser devtools after deployment. Zero JS errors should appear on page load.
+
+14. **Flip cards accessibility:** Add `tabindex="0"` and keyboard event listeners (`Enter`/`Space`) to flip card containers so they work without a mouse.
+
+15. **Image alt text:** Every `<img>` tag must have a meaningful `alt` attribute describing the image content.
+
+---
+
+## PART 8 — SAMPLE IMAGE ALT TEXTS
+
+Use these exact alt texts on the corresponding images:
+
+```
+img-01: "80th Independence Day badge DP 2026 — free download"
+img-02: "80 years of freedom mandala Independence Day DP 2026 — free download"
+img-03: "Red Fort Independence Day 2026 — Proudly Indian patriotic image"
+img-04: "Independence Day papercut tricolor flag DP 2026 — free download"
+img-05: "Independence Day Ashoka Chakra tricolor DP 2026 — free download"
+img-06: "Independence Day kites celebrating freedom 2026 — free download"
+img-07: "Independence Day soldier salute freedom 2026 — Jai Hind"
+img-08: "Children holding Indian flags on Independence Day 2026 — unity DP"
+img-09: "India Gate Independence Day 2026 — free patriotic image download"
+img-10: "Proud to be Indian — India map Independence Day DP 2026 — free download"
+```
+
+---
+
+## PART 9 — COLOUR & SPACING TOKENS (for CSS :root)
+
+```css
+:root {
+  --rps-red: #EC210F;
+  --rps-gold: #F0A820;
+  --saffron: #FF9933;
+  --white: #FFFFFF;
+  --india-green: #138808;
+  --india-navy: #1A237E;
+  --soft-bg: #FFF8F0;
+  --card-bg: #FFFDF5;
+  --text-dark: #1A1A2E;
+  --text-muted: #5A5A7A;
+  --border-radius-sm: 8px;
+  --border-radius-md: 16px;
+  --border-radius-lg: 24px;
+  --border-radius-pill: 100px;
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+  --shadow-md: 0 6px 24px rgba(0,0,0,0.12);
+  --shadow-lg: 0 12px 48px rgba(0,0,0,0.15);
+  --spacing-xs: 8px;
+  --spacing-sm: 16px;
+  --spacing-md: 32px;
+  --spacing-lg: 64px;
+  --font-heading: 'Fredoka One', 'Baloo 2', cursive;
+  --font-subheading: 'Baloo 2', cursive;
+  --font-body: 'Inter', 'Open Sans', sans-serif;
+  --font-devanagari: 'Noto Sans Devanagari', sans-serif;
+}
+```
+
+---
+
+## PART 10 — FINAL INSTRUCTION TO REPLIT
+
+Once the blog page HTML file is created:
+
+1. **Rename and upload the 10 images** provided by the user to `public/blog-assets/independence-day-for-kids/` with the filenames listed in Part 1.
+
+2. **Register the blog post** in whatever posts/blog data structure the existing RPS website uses. Set the date to `2026-08-01` so it appears first on the `/blog` listing page.
+
+3. **Test the following before marking as done:**
+   - Navigate to `/blog/independence-day-for-kids` — page loads correctly, no redirect
+   - Navigate directly to `/blog-assets/independence-day-for-kids/img-01-80th-independence-day-badge-dp-2026.jpg` — image must serve directly, not redirect to `/blogs`
+   - Click all 10 download buttons — file download must trigger
+   - Take the quiz — all 10 questions work, score appears at end
+   - Flip all 10 fun fact cards — flip animation works
+   - Open on mobile screen (375px width) — no horizontal scroll, all content readable
+   - Check browser console — zero JS errors
+
+4. **Do NOT use any `@type: "Event"` in any JSON-LD block anywhere on this page.**
+
+5. After deploying, go to Google Search Console → URL Inspection → enter `https://www.rainbowpreschools.com/blog/independence-day-for-kids` → click "Request Indexing" to submit the page to Google.
+
+---
+
+*End of Replit Prompt — Rainbow International Pre-School | Independence Day for Kids Blog | /independence-day-for-kids*

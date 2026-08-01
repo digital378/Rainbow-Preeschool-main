@@ -2,6 +2,69 @@ import { type BlogPost } from "@shared/schema";
 import { randomUUID } from "crypto";
 
 export const seoRecoveryBlogPosts: BlogPost[] = [
+  // ─── Independence Day 2026 — most recent post, appears first in listing ───
+  {
+    id: randomUUID(),
+    title: "Independence Day for Kids 2026 — Activities, Speeches, Stories & Free Downloads",
+    slug: "independence-day-for-kids",
+    excerpt: "Celebrate India's 80th Independence Day with your little one! Fun activities, easy speeches, stories, a quiz, and free patriotic image downloads — all made for preschool kids.",
+    content: `Every year on **15th August**, India celebrates Independence Day — one of the most important days in our country's history. On this day in 1947, India became free from British rule after many years of struggle. In 2026, we celebrate India's **80th Independence Day** — a very special milestone!
+
+## Why 2026 Is Special
+
+This year marks **80 glorious years** of India's independence. Our country was born on 15th August 1947. Since then, India has become a world leader in science, education, art, music, sport, and technology.
+
+## 6 Fun Independence Day Activities for Preschoolers
+
+1. **Fly a Kite** — Kite flying on Independence Day is a beloved Indian tradition! Help your child colour a paper kite in saffron, white, and green.
+2. **Make a Paper Flag** — Cut three strips of saffron, white, and green paper. Glue them on a popsicle stick. Draw the Ashoka Chakra with a blue crayon.
+3. **Fancy Dress as a Freedom Fighter** — Dress your little one as Mahatma Gandhi, Rani Lakshmibai, Bhagat Singh, or Subhas Chandra Bose!
+4. **Sing "Jana Gana Mana"** — Teach your child to stand straight and tall, respectful, proud, and full of love for India.
+5. **Draw India's Map** — Give your child an outline and let them fill it in with crayons. Name some states!
+6. **Storytelling Time** — Tell the story of how India became free in simple words your child can understand.
+
+## Independence Day Speech for Kids (5 Lines)
+
+Good morning everyone. Today we celebrate India's 80th Independence Day. On 15th August 1947, our country became free because of brave freedom fighters. I am proud to be Indian. Jai Hind!
+
+## Short Speech (English)
+
+Respected teachers and dear friends, a very warm good morning to all of you! Today, on 15th August 2026, we stand together to celebrate India's 80th Independence Day — 80 glorious years of freedom, unity, and progress! We must remember the sacrifices of our freedom fighters and honour them by being good, honest, and hardworking citizens. Vande Mataram! Jai Hind!
+
+## National Symbols of India
+
+- **National Flag:** Tiranga — saffron, white, and green with the Ashoka Chakra
+- **National Bird:** Indian Peacock
+- **National Animal:** Bengal Tiger
+- **National Flower:** Lotus
+- **National Anthem:** Jana Gana Mana (52 seconds)
+- **National Fruit:** Mango
+
+## 10 Fun Facts About India
+
+1. India has 28 states and 8 Union Territories
+2. Jana Gana Mana takes exactly 52 seconds to sing
+3. The Ashoka Chakra has 24 spokes — one for each hour of the day
+4. India grows over 1,000 types of mangoes
+5. India has over 19,500 languages and dialects
+6. The Bengal Tiger is India's national animal and India has 70% of the world's wild tigers
+7. The Red Fort was built by Mughal Emperor Shah Jahan
+8. Mahatma Gandhi was called "Mahatma" (great soul) by Rabindranath Tagore
+9. India's Constitution came into force on 26th January 1950
+10. India's tricolor was officially adopted on 22nd July 1947
+
+## Free Patriotic Image Downloads
+
+Visit the [full Independence Day blog page](/blog/independence-day-for-kids) for 10 free downloadable patriotic images perfect for WhatsApp DPs, Instagram posts, and Facebook covers. No watermarks!
+
+EXPLORE_MORE: [Explore Our Playgroup Programme](/playgroup)|[Schedule a Campus Visit](/preschool-admissions)|[Read More on Our Blog](/blog)`,
+    imageUrl: "/blog-assets/independence-day-for-kids/img-08-independence-day-children-flags-unity-dp-2026.jpg",
+    category: "Festivals & Events",
+    publishedAt: new Date("2026-08-01"),
+    updatedAt: new Date("2026-08-01"),
+    isPublished: true,
+  },
+  // ─────────────────────────────────────────────────────────────────────────
   {
     id: randomUUID(),
     title: "Screen Time Guidelines for Indian Preschoolers (2026 Parent Guide)",

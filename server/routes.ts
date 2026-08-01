@@ -228,6 +228,13 @@ export async function registerRoutes(
   app.get("/daycare-fast", (req, res) => {
     res.sendFile(path.join(process.cwd(), "public", "daycare-fast.html"));
   });
+
+  // Independence Day standalone blog page — served directly as a static HTML
+  // file so the interactive features (quiz, flip cards, download buttons) work
+  // without React.  Must be registered BEFORE the SPA catch-all in serveStatic.
+  app.get("/blog/independence-day-for-kids", (req, res) => {
+    res.sendFile(path.join(process.cwd(), "blog-pages", "independence-day-for-kids", "index.html"));
+  });
   
   // Silence GTM /xrdb beacon requests — GTM tags fire requests to paths like
   // /xrdb/kqs1G4o_H/... and /xrdb/?id=G-... which have no server handler,
