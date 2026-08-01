@@ -62,7 +62,11 @@
 #   14. scripts/check-sitemap-200.ts — fetches /sitemap.xml and asserts every
 #       <loc> entry returns 200 OK. Catches any sitemap row that has been
 #       301-redirected (which would surface the "URL is in sitemap but
-#       redirects" warning in Google Search Console).
+#       redirects" warning in Google Search Console). Also explicitly checks
+#       the STANDALONE_ROUTES list (e.g. /blog/independence-day-for-kids) with
+#       Googlebot UA independent of the sitemap, so a misconfigured static-HTML
+#       Express route is caught even if the slug is temporarily absent from the
+#       sitemap.
 #   15. scripts/check-bot-detection.ts — asserts that social-app in-app browser
 #       UAs receive the React shell (not the SSR page).
 #   16. Lighthouse performance guard — simulated-mobile Lighthouse audit against

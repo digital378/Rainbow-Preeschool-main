@@ -22,6 +22,18 @@ const UA = "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.h
 const TIMEOUT_MS = 10_000;
 const CONCURRENCY = 8;
 
+// ── Standalone routes to check explicitly ───────────────────────────────────
+// These are Express routes that serve static HTML files directly (not via the
+// React SPA). They must return 200 OK with Googlebot UA. Checked in addition
+// to the sitemap fan-out so a misconfigured file path or missing route is
+// caught even if the slug is accidentally absent from the sitemap.
+//
+// Keep this list in sync with the Express GET routes in server/routes.ts and
+// with the REQUIRED_SLUGS list in scripts/check-sitemap-blog-slugs.ts.
+const STANDALONE_ROUTES: string[] = [
+  "/blog/independence-day-for-kids",
+];
+
 console.log(`[check-sitemap-200] BASE=${BASE}`);
 
 // ── Static pre-check ────────────────────────────────────────────────────────
@@ -150,7 +162,7 @@ async function pool<T, R>(
   // 3. Fan out the GETs.
   const results = await pool(targets, fetchHead);
 
-  // 4. Categorise.
+  // 4. Categorise sitemap results.
   const offenders: UrlStatus[] = [];
   for (const r of results) {
     if (r.status === 200) continue;
@@ -175,4 +187,36 @@ async function pool<T, R>(
   console.log(
     `\n[check-sitemap-200] PASSED — all ${results.length} sitemap URLs return 200 OK.`,
   );
+
+  // 5. Explicit standalone-route check (Googlebot UA, independent of sitemap).
+  //    These Express routes serve static HTML files directly and must return
+  //    200 even if they're temporarily absent from the sitemap.
+  if (STANDALONE_ROUTES.length > 0) {
+    console.log(
+      `\n[check-sitemap-200] Checking ${STANDALONE_ROUTES.length} standalone route(s) explicitly …`,
+    );
+    const standaloneTargets = STANDALONE_ROUTES.map((r) => BASE + r);
+    const standaloneResults = await pool(standaloneTargets, fetchHead);
+    const standaloneOffenders = standaloneResults.filter((r) => r.status !== 200);
+    if (standaloneOffenders.length > 0) {
+      console.error(
+        `\n[check-sitemap-200] FAIL — ${standaloneOffenders.length} standalone route(s) do NOT return 200:`,
+      );
+      for (const o of standaloneOffenders) {
+        const loc = o.location ? ` → ${o.location}` : "";
+        const err = o.error ? ` (${o.error})` : "";
+        console.error(`  [BAD] ${o.status} ${o.url}${loc}${err}`);
+      }
+      console.error(
+        "\nFix: check that the Express GET route in server/routes.ts is registered and points to the correct static HTML file.",
+      );
+      process.exit(1);
+    }
+    for (const r of standaloneResults) {
+      console.log(`  [OK] 200 ${r.url}`);
+    }
+    console.log(
+      `[check-sitemap-200] PASSED — all ${standaloneResults.length} standalone route(s) return 200 OK.`,
+    );
+  }
 })();
