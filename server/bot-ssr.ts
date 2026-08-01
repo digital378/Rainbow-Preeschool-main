@@ -3,6 +3,7 @@ import fs from "fs";
 import path from "path";
 import { getPageSEO, type PageSEOData } from "./ssr-pages";
 import { VERIFIED_RATING } from "../shared/verified-rating";
+import { STANDALONE_BLOG_SLUGS } from "../shared/standalone-blog-slugs";
 
 // Inclusion rule: only add UA strings that appear EXCLUSIVELY in automated
 // crawlers / bots and NEVER in any human-operated browser or in-app browser.
@@ -306,6 +307,13 @@ export function setupBotSSR(app: Express) {
     const seo = getPageSEO(urlPath);
 
     if (!seo) {
+      // Standalone blog pages are self-contained HTML files with their own
+      // JSON-LD and meta tags. Pass through to the Express route registered
+      // in routes.ts so Googlebot receives the actual page content.
+      if (STANDALONE_BLOG_SLUGS.some((slug) => urlPath === `/blog/${slug}`)) {
+        return next();
+      }
+
       // Unknown URL — serve a proper noindex 404 SSR page so bots don't
       // fall through to the SPA shell that defaults to "index, follow".
       // A soft 404 (200 + indexable) would let Googlebot try to crawl and
