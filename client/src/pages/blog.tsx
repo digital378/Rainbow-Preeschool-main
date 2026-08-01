@@ -23,6 +23,7 @@ const CATEGORY_COLORS: Record<string, { bg: string; text: string; border: string
   "Admissions": { bg: "bg-amber-50", text: "text-amber-700", border: "border-amber-200" },
   "Child Development": { bg: "bg-purple-50", text: "text-purple-700", border: "border-purple-200" },
   "School Events": { bg: "bg-orange-50", text: "text-orange-700", border: "border-orange-200" },
+  "Festivals & Events": { bg: "bg-amber-50", text: "text-amber-700", border: "border-amber-200" },
   "About": { bg: "bg-teal-50", text: "text-teal-700", border: "border-teal-200" },
 };
 
