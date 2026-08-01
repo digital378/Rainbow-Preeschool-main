@@ -233,15 +233,34 @@ export async function registerRoutes(
   // file so the interactive features (quiz, flip cards, download buttons) work
   // without React.  Must be registered BEFORE the SPA catch-all in serveStatic.
   //
-  // Path resolution: the build step (script/build.ts) copies blog-pages/ into
-  // dist/blog-assets/ so the files are co-located with the compiled server
-  // bundle and are always reachable regardless of the runtime working directory.
-  // In development (no build artefact) we fall back to blog-pages/ directly.
-  const blogAssetsBase = fs.existsSync(path.join(process.cwd(), "dist", "blog-assets"))
-    ? path.join(process.cwd(), "dist", "blog-assets")
-    : path.join(process.cwd(), "blog-pages");
+  // We load the file into memory at startup rather than using sendFile(), which
+  // avoids any process.cwd() path-resolution ambiguity in the build container.
+  // The build step (script/build.ts) copies blog-pages/ → dist/blog-assets/ so
+  // the production path is always present; development falls back to blog-pages/.
+  const _independenceDayCandidates = [
+    path.join(process.cwd(), "dist", "blog-assets", "independence-day-for-kids", "index.html"),
+    path.join(process.cwd(), "blog-pages", "independence-day-for-kids", "index.html"),
+  ];
+  let _independenceDayHtml: Buffer | null = null;
+  for (const p of _independenceDayCandidates) {
+    if (fs.existsSync(p)) {
+      _independenceDayHtml = fs.readFileSync(p);
+      console.log(`[blog-page] independence-day loaded from: ${p}`);
+      break;
+    }
+  }
+  if (!_independenceDayHtml) {
+    console.error(
+      `[blog-page] independence-day NOT FOUND — tried: ${_independenceDayCandidates.join(", ")} | cwd=${process.cwd()}`
+    );
+  }
   app.get("/blog/independence-day-for-kids", (req, res) => {
-    res.sendFile(path.join(blogAssetsBase, "independence-day-for-kids", "index.html"));
+    if (!_independenceDayHtml) {
+      return res.status(404).send("Page not found");
+    }
+    res.setHeader("Content-Type", "text/html; charset=utf-8");
+    res.setHeader("Cache-Control", "public, max-age=3600");
+    res.send(_independenceDayHtml);
   });
   
   // Silence GTM /xrdb beacon requests — GTM tags fire requests to paths like
