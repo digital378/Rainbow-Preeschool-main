@@ -111,6 +111,52 @@ if (missingRoute.length > 0) {
   process.exit(1);
 }
 
+// ── Part 4: verify the static HTML file exists on disk for every slug ────────
+// For routes that call res.sendFile(…, "blog-pages/<slug>/index.html"), the
+// Express route can exist while the directory was accidentally deleted or never
+// created.  That produces a runtime 500/404 only visible in production.
+//
+// Detection strategy: look for every occurrence of
+//   "blog-pages", "<slug>", "index.html"
+// inside a res.sendFile call in server/routes.ts, then assert the resolved
+// file exists on disk.
+//
+// This pattern matches path.join(process.cwd(), "blog-pages", "<slug>", "index.html")
+// as written in routes.ts.
+const sendFileRegex =
+  /["'`]blog-pages["'`]\s*,\s*["'`]([a-zA-Z0-9_-]+)["'`]\s*,\s*["'`]index\.html["'`]/g;
+
+const blogPageSlugs: string[] = [];
+let sfMatch: RegExpExecArray | null;
+while ((sfMatch = sendFileRegex.exec(routesSource)) !== null) {
+  blogPageSlugs.push(sfMatch[1]);
+}
+
+const root = path.resolve(__dirname, "..");
+const missingFiles: string[] = [];
+
+for (const slug of blogPageSlugs) {
+  const filePath = path.join(root, "blog-pages", slug, "index.html");
+  if (!fs.existsSync(filePath)) {
+    missingFiles.push(slug);
+  }
+}
+
+if (missingFiles.length > 0) {
+  console.error(
+    `\n[check-sitemap-blog-slugs] FAIL — ${missingFiles.length} blog-page static file(s) referenced in server/routes.ts do not exist on disk:\n`,
+  );
+  for (const slug of missingFiles) {
+    console.error(
+      `  FILE NOT FOUND: blog-pages/${slug}/index.html  (served at /blog/${slug})`,
+    );
+  }
+  console.error(
+    "\nFix: create the missing directory and index.html file(s), or remove the route from server/routes.ts if the page no longer exists.",
+  );
+  process.exit(1);
+}
+
 console.log(
   `[check-sitemap-blog-slugs] PASSED — all ${REQUIRED_SLUGS.length} required blog slug(s) are present in the seed and will appear in /sitemap.xml.`,
 );
@@ -122,3 +168,8 @@ if (routeSlugs.length > 0) {
 console.log(
   `[check-sitemap-blog-slugs] PASSED — all ${REQUIRED_SLUGS.length} REQUIRED_SLUGS have a matching Express route in server/routes.ts.`,
 );
+if (blogPageSlugs.length > 0) {
+  console.log(
+    `[check-sitemap-blog-slugs] PASSED — all ${blogPageSlugs.length} blog-page static file(s) exist on disk.`,
+  );
+}
