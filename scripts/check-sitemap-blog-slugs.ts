@@ -84,7 +84,7 @@ if (untracked.length > 0) {
     console.error(`  UNTRACKED ROUTE: /blog/${slug}`);
   }
   console.error(
-    `\nFix: add each slug above to the REQUIRED_SLUGS array in scripts/check-sitemap-blog-slugs.ts.\n` +
+    `\nFix: add each slug above to the STANDALONE_BLOG_SLUGS array in shared/standalone-blog-slugs.ts.\n` +
     `This ensures the slug is also present in seoRecoveryBlogPosts and will appear in /sitemap.xml.`,
   );
   process.exit(1);
