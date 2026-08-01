@@ -199,6 +199,20 @@ if ! npx --no-install tsx scripts/check-shell-seo-sync.ts; then
   exit 1
 fi
 
+# Standalone blog-page SEO guard. Parses every .html file under blog-pages/
+# and verifies it has JSON-LD, a canonical tag, a meta description ≥ 100 chars,
+# and a title ≤ 65 chars. These pages are served directly by Express and are
+# not covered by any of the SPA-pipeline guards above.
+echo "[pre-commit] Running 'tsx scripts/check-standalone-blog-pages.ts' ..."
+if ! npx --no-install tsx scripts/check-standalone-blog-pages.ts; then
+  echo "" >&2
+  echo "[pre-commit] 'check-standalone-blog-pages' failed. Commit aborted." >&2
+  echo "[pre-commit] Ensure every file under blog-pages/ has JSON-LD, a canonical" >&2
+  echo "[pre-commit] tag, a meta description ≥ 100 chars, and a title ≤ 65 chars." >&2
+  echo "[pre-commit] Fix the issues above, or re-run with --no-verify to bypass." >&2
+  exit 1
+fi
+
 # Record success so the pre-push hook can skip a redundant re-run on
 # the same tree. Best-effort only — never fail the commit on this.
 REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || true)"
