@@ -232,8 +232,16 @@ export async function registerRoutes(
   // Independence Day standalone blog page — served directly as a static HTML
   // file so the interactive features (quiz, flip cards, download buttons) work
   // without React.  Must be registered BEFORE the SPA catch-all in serveStatic.
+  //
+  // Path resolution: the build step (script/build.ts) copies blog-pages/ into
+  // dist/blog-assets/ so the files are co-located with the compiled server
+  // bundle and are always reachable regardless of the runtime working directory.
+  // In development (no build artefact) we fall back to blog-pages/ directly.
+  const blogAssetsBase = fs.existsSync(path.join(process.cwd(), "dist", "blog-assets"))
+    ? path.join(process.cwd(), "dist", "blog-assets")
+    : path.join(process.cwd(), "blog-pages");
   app.get("/blog/independence-day-for-kids", (req, res) => {
-    res.sendFile(path.join(process.cwd(), "blog-pages", "independence-day-for-kids", "index.html"));
+    res.sendFile(path.join(blogAssetsBase, "independence-day-for-kids", "index.html"));
   });
   
   // Silence GTM /xrdb beacon requests — GTM tags fire requests to paths like

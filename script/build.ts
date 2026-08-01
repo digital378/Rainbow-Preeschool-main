@@ -1,6 +1,8 @@
 import { build as esbuild } from "esbuild";
 import { build as viteBuild } from "vite";
-import { rm, readFile } from "fs/promises";
+import { rm, readFile, cp } from "fs/promises";
+import { existsSync } from "fs";
+import { resolve } from "path";
 
 // server deps to bundle to reduce openat(2) syscalls
 // which helps cold start times
@@ -58,6 +60,17 @@ async function buildAll() {
     external: externals,
     logLevel: "info",
   });
+
+  // Copy standalone HTML blog pages into dist/blog-assets/ so they are
+  // co-located with the compiled server bundle and are reachable regardless
+  // of the runtime working directory (process.cwd() can differ between the
+  // build container and the production Cloud Run container).
+  const blogPagesDir = resolve("blog-pages");
+  if (existsSync(blogPagesDir)) {
+    console.log("copying blog-pages → dist/blog-assets ...");
+    await cp(blogPagesDir, resolve("dist", "blog-assets"), { recursive: true });
+    console.log("done.");
+  }
 }
 
 buildAll().catch((err) => {
