@@ -90,6 +90,27 @@ if (untracked.length > 0) {
   process.exit(1);
 }
 
+// ── Part 3: verify every REQUIRED_SLUG has a matching Express route ──────────
+// The inverse of Part 2: a slug could be added to REQUIRED_SLUGS but its
+// corresponding app.get("/blog/<slug>", …) route forgotten in server/routes.ts,
+// producing a dead sitemap entry that 404s when visited.
+const routeSlugSet = new Set(routeSlugs);
+const missingRoute = REQUIRED_SLUGS.filter((slug) => !routeSlugSet.has(slug));
+
+if (missingRoute.length > 0) {
+  console.error(
+    `\n[check-sitemap-blog-slugs] FAIL — ${missingRoute.length} slug(s) in REQUIRED_SLUGS have no matching Express route in server/routes.ts:\n`,
+  );
+  for (const slug of missingRoute) {
+    console.error(`  MISSING ROUTE: /blog/${slug}`);
+  }
+  console.error(
+    `\nFix: add  app.get("/blog/${missingRoute[0]}", …)  (and equivalents) to server/routes.ts,\n` +
+    `or remove the slug from shared/standalone-blog-slugs.ts if the page no longer exists.`,
+  );
+  process.exit(1);
+}
+
 console.log(
   `[check-sitemap-blog-slugs] PASSED — all ${REQUIRED_SLUGS.length} required blog slug(s) are present in the seed and will appear in /sitemap.xml.`,
 );
@@ -98,3 +119,6 @@ if (routeSlugs.length > 0) {
     `[check-sitemap-blog-slugs] PASSED — all ${routeSlugs.length} Express /blog/* route(s) in server/routes.ts are tracked in REQUIRED_SLUGS.`,
   );
 }
+console.log(
+  `[check-sitemap-blog-slugs] PASSED — all ${REQUIRED_SLUGS.length} REQUIRED_SLUGS have a matching Express route in server/routes.ts.`,
+);
