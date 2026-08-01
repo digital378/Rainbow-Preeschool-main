@@ -222,6 +222,21 @@ if ! npx --no-install tsx scripts/check-bot-ssr-parity.ts; then
   exit 1
 fi
 
+# Standalone HTML blog page SEO guard. Checks that every .html file under
+# blog-pages/ has JSON-LD, a canonical tag, a description ≥ 100 chars, and a
+# title ≤ 65 chars. These pages bypass the SPA pipeline so no other guard
+# audits them.
+echo "[pre-push] Running 'tsx scripts/check-standalone-blog-pages.ts' ..."
+if ! npx --no-install tsx scripts/check-standalone-blog-pages.ts; then
+  echo "" >&2
+  echo "[pre-push] 'check-standalone-blog-pages' failed. Push aborted." >&2
+  echo "[pre-push] A standalone HTML page under blog-pages/ is missing required SEO tags." >&2
+  echo "[pre-push] Every page needs: <script type=\"application/ld+json\">, <link rel=\"canonical\">," >&2
+  echo "[pre-push] <meta name=\"description\"> (≥ 100 chars), and <title> (≤ 65 chars)." >&2
+  echo "[pre-push] Fix the issues above, or re-run with --no-verify to bypass." >&2
+  exit 1
+fi
+
 # Record success so a subsequent push on the same tree can skip.
 if [ -n "$HEAD_TREE" ]; then
   printf '%s' "$HEAD_TREE" > "$CACHE_FILE" 2>/dev/null || true
