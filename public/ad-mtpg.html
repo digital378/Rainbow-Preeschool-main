@@ -546,10 +546,10 @@
             var s2 = document.createElement('script');
             s2.src = 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js';
             s2.onload = function(){ resolve(); };
-            s2.onerror = reject;
+            s2.onerror = function(){ reject(new Error('firebase-auth-sdk-load-failed')); };
             document.head.appendChild(s2);
           };
-          s1.onerror = reject;
+          s1.onerror = function(){ reject(new Error('firebase-app-sdk-load-failed')); };
           document.head.appendChild(s1);
         });
       }
@@ -626,7 +626,10 @@
       });
     }
     function otpSendErrorMessage(err){
-      if (!err || !err.code) return 'Could not send OTP. Please try again.';
+      if (!err || !err.code) {
+        var detail = err && err.message ? String(err.message).slice(0, 120) : '';
+        return 'Could not send OTP' + (detail ? ' — ' + detail : '') + '. Please try again.';
+      }
       switch (err.code) {
         case 'auth/invalid-phone-number': return 'This phone number looks invalid. Please check and try again.';
         case 'auth/too-many-requests': return 'Too many attempts. Please wait a while and try again.';
