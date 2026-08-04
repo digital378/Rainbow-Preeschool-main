@@ -62,7 +62,7 @@ const labelClasses = "block text-label mb-1.5";
 export default function AdMtpgLanding() {
   const [step, setStep] = useState<OtpStep>('form');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [formData, setFormData] = useState({ parentName: '', phone: '', childAge: '', area: '' });
+  const [formData, setFormData] = useState({ parentName: '', childName: '', phone: '', childAge: '', area: '' });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [otp, setOtp] = useState('');
   const [otpError, setOtpError] = useState('');
@@ -122,6 +122,7 @@ export default function AdMtpgLanding() {
   const validate = () => {
     const e: Record<string, string> = {};
     if (!formData.parentName || formData.parentName.length < 2) e.parentName = 'Please enter your name';
+    if (!formData.childName || formData.childName.length < 2) e.childName = "Please enter child's name";
     if (!formData.phone || formData.phone.length < 10) e.phone = 'Please enter valid phone';
     if (!formData.childAge) e.childAge = 'Please select age';
     if (!formData.area) e.area = 'Please select area';
@@ -189,7 +190,7 @@ export default function AdMtpgLanding() {
         body: JSON.stringify({
           parentName: formData.parentName,
           phone: formData.phone,
-          childName: 'Not provided',
+          childName: formData.childName,
           childAge: formData.childAge,
           programme: 'Playgroup (Mid-Term Admission)',
           branch: formData.area,
@@ -424,6 +425,18 @@ export default function AdMtpgLanding() {
                     {errors.parentName && <p className="text-destructive text-xs mt-1.5">{errors.parentName}</p>}
                   </div>
                   <div>
+                    <label className={labelClasses}>Child's Name</label>
+                    <input
+                      type="text"
+                      value={formData.childName}
+                      onChange={(e) => setFormData({...formData, childName: e.target.value})}
+                      className={inputClasses}
+                      placeholder="Enter child's name"
+                      data-testid="input-ad-mtpg-child-name"
+                    />
+                    {errors.childName && <p className="text-destructive text-xs mt-1.5">{errors.childName}</p>}
+                  </div>
+                  <div>
                     <label className={labelClasses}>Phone Number</label>
                     <input
                       type="tel"
@@ -523,6 +536,39 @@ export default function AdMtpgLanding() {
                   <p className="text-body text-muted-foreground mt-1">{item.desc}</p>
                 </div>
               </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Inside our playgroup — gallery */}
+      <section className="bg-surface-warm">
+        <div className="max-w-5xl mx-auto px-4 section-py-sm">
+          <p className="section-eyebrow">A Peek Inside</p>
+          <h2 className="text-headline text-foreground mb-3">What Your Child's Day Looks Like</h2>
+          <p className="text-body-lg text-muted-foreground mb-6 max-w-3xl">
+            Real moments from our classrooms — stacking, sorting, painting and playing their way to confidence.
+          </p>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {[
+              { src: '/images/optimized/child-stacking-rings-playgroup.webp', alt: 'Toddler stacking colourful rings during playgroup at Rainbow Preschool', caption: 'Fine Motor Play' },
+              { src: '/images/optimized/classroom-kids-playing.webp', alt: 'Children playing together in a Rainbow Preschool classroom', caption: 'Free Play Time' },
+              { src: '/images/optimized/creative-art-activity-preschool.webp', alt: 'Preschool child enjoying a creative art activity', caption: 'Art & Craft' },
+              { src: '/images/optimized/children-learning-colorful-toys-preschool.webp', alt: 'Children learning with colourful toys at Rainbow Preschool', caption: 'Learning Through Play' },
+            ].map((img) => (
+              <figure key={img.src} className="card-bento bg-white overflow-hidden">
+                <div className="aspect-[4/3] overflow-hidden">
+                  <img
+                    src={img.src}
+                    alt={img.alt}
+                    loading="lazy"
+                    className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                  />
+                </div>
+                <figcaption className="px-3 py-2.5 text-sm font-medium text-foreground text-center">
+                  {img.caption}
+                </figcaption>
+              </figure>
             ))}
           </div>
         </div>
