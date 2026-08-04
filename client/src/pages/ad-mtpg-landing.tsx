@@ -553,8 +553,8 @@ export default function AdMtpgLanding() {
             {[
               { src: '/images/optimized/child-stacking-rings-playgroup.webp', alt: 'Toddler stacking colourful rings during playgroup at Rainbow Preschool', caption: 'Fine Motor Play' },
               { src: '/images/gallery/rainbow-preschool-classroom-learning-01.webp', alt: 'Children engaged in play-based learning during free play at Rainbow Preschool', caption: 'Free Play Time' },
-              { src: '/images/optimized/teacher-teaching-children-classroom.webp', alt: 'Teacher guiding a small group of children in a Rainbow Preschool classroom', caption: 'Teacher Time' },
-              { src: '/images/gallery/rainbow-preschool-classroom-activity-04.webp', alt: 'Children in a collaborative group learning activity at Rainbow Preschool', caption: 'Group Activities' },
+              { src: '/images/gallery/rainbow-preschool-classroom-activity-01.webp', alt: 'Teacher guiding toddlers through a creative hands-on activity at Rainbow Preschool', caption: 'Teacher Time' },
+              { src: '/images/gallery/rainbow-preschool-happy-times-01.webp', alt: 'Toddlers playing together during group time at Rainbow Preschool', caption: 'Group Activities' },
             ].map((img) => (
               <figure key={img.src} className="card-bento bg-white overflow-hidden">
                 <div className="aspect-[4/3] overflow-hidden">

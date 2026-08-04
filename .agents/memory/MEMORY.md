@@ -8,3 +8,4 @@
 - [Hero3D body style specificity](hero3d-body-style-specificity.md) — inline `<style>` in body beats Tailwind head stylesheet; use `style={{ height }}` prop (inline) instead of Tailwind class when a CSS rule exists for same property.
 - [Canonical noindex list](noindex-canonical-list.md) — NOINDEX_SLUGS in shared/seo-config.ts is the only noindex list; ssr-pages derives from it; robots sync guard enforces parity.
 - [Bot-SSR blocks standalone blog pages](bot-ssr-standalone-passthrough.md) — check-sitemap-200 uses Googlebot UA; bot-ssr intercepts before registerRoutes; pages not in ssr-pages.ts get hard 404. Fix: passthrough via STANDALONE_BLOG_SLUGS.
+- [Gallery image selection](gallery-image-selection.md) — source photos from gallery-config.ts (curated captions), not /images/optimized (has duplicates, rotations, wrong-age classrooms).
