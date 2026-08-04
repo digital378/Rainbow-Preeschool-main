@@ -553,7 +553,7 @@ export default function AdMtpgLanding() {
             {[
               { src: '/images/optimized/child-stacking-rings-playgroup.webp', alt: 'Toddler stacking colourful rings during playgroup at Rainbow Preschool' },
               { src: '/images/gallery/rainbow-preschool-classroom-learning-01.webp', alt: 'Children engaged in play-based learning during free play at Rainbow Preschool' },
-              { src: '/images/gallery/rainbow-preschool-make-your-own-sandwich-activity.webp', alt: 'Teacher helping toddlers make their own sandwiches in a life-skills activity at Rainbow Preschool' },
+              { src: '/images/gallery/rainbow-preschool-happy-times-02.webp', alt: 'Toddlers playing together with toys on the classroom floor at Rainbow Preschool' },
               { src: '/images/gallery/rainbow-preschool-splashy-fun-day-activity.webp', alt: 'Children enjoying supervised water play on Splashy Fun Day at Rainbow Preschool' },
             ].map((img) => (
               <figure key={img.src} className="card-bento bg-white overflow-hidden">
