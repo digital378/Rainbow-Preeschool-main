@@ -71,6 +71,15 @@ async function buildAll() {
     await cp(blogPagesDir, resolve("dist", "blog-assets"), { recursive: true });
     console.log("done.");
   }
+
+  // Copy standalone ad landing HTML into dist/ad-assets/ for the same reason:
+  // server/index.ts resolves it relative to the compiled bundle first.
+  const adMtpgHtml = resolve("public", "ad-mtpg.html");
+  if (existsSync(adMtpgHtml)) {
+    console.log("copying ad-mtpg.html → dist/ad-assets ...");
+    await cp(adMtpgHtml, resolve("dist", "ad-assets", "ad-mtpg.html"));
+    console.log("done.");
+  }
 }
 
 buildAll().catch((err) => {

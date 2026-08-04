@@ -145,6 +145,40 @@ app.get("/robots.txt", (req, res) => {
   }
 });
 
+// Serve /ad-mtpg as a static HTML page (no SPA bundle) with Firebase config
+// injected — ad landing pages need the fastest possible first load. The HTML
+// is cached in memory after the first read. Registered before bot-SSR so bots
+// also receive the full page (it carries its own noindex meta).
+let _adMtpgHtml: string | null = null;
+app.get("/ad-mtpg", (req, res) => {
+  const candidates = [
+    path.join(process.cwd(), "dist", "ad-assets", "ad-mtpg.html"),
+    path.join(process.cwd(), "public", "ad-mtpg.html"),
+  ];
+  try {
+    if (!_adMtpgHtml) {
+      for (const p of candidates) {
+        if (fs.existsSync(p)) {
+          _adMtpgHtml = fs.readFileSync(p, "utf-8");
+          console.log(`[ad-page] ad-mtpg loaded from: ${p}`);
+          break;
+        }
+      }
+      if (!_adMtpgHtml) throw new Error("ad-mtpg.html not found");
+    }
+    const html = _adMtpgHtml
+      .replace("FIREBASE_API_KEY", process.env.VITE_FIREBASE_API_KEY || "")
+      .replace("FIREBASE_AUTH_DOMAIN", process.env.VITE_FIREBASE_AUTH_DOMAIN || "")
+      .replace("FIREBASE_PROJECT_ID", process.env.VITE_FIREBASE_PROJECT_ID || "")
+      .replace("FIREBASE_APP_ID", process.env.VITE_FIREBASE_APP_ID || "");
+    res.setHeader("Content-Type", "text/html; charset=utf-8");
+    res.setHeader("Cache-Control", "no-cache");
+    res.send(html);
+  } catch {
+    res.status(404).send("Page not found");
+  }
+});
+
 // Serve ad-google.html with Firebase config injected
 app.get("/ad-google.html", (req, res) => {
   const htmlPath = path.join(process.cwd(), "public", "ad-google.html");

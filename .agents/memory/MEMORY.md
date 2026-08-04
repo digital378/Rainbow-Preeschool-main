@@ -9,3 +9,4 @@
 - [Canonical noindex list](noindex-canonical-list.md) — NOINDEX_SLUGS in shared/seo-config.ts is the only noindex list; ssr-pages derives from it; robots sync guard enforces parity.
 - [Bot-SSR blocks standalone blog pages](bot-ssr-standalone-passthrough.md) — check-sitemap-200 uses Googlebot UA; bot-ssr intercepts before registerRoutes; pages not in ssr-pages.ts get hard 404. Fix: passthrough via STANDALONE_BLOG_SLUGS.
 - [Gallery image selection](gallery-image-selection.md) — source photos from gallery-config.ts (curated captions), not /images/optimized (has duplicates, rotations, wrong-age classrooms).
+- [Static ad landing pages](static-ad-pages.md) — ad pages are static HTML in public/ + dist/ad-assets build copy, not React; assets must exist under client/public (Vite root) or they 404 in prod.

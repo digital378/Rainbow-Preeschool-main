@@ -31,7 +31,6 @@ const BlogPost = lazy(() => import("@/pages/blog-post"));
 const NotFound = lazy(() => import("@/pages/not-found"));
 const AdLanding = lazy(() => import("@/pages/ad-landing"));
 const AdGoogleLanding = lazy(() => import("@/pages/ad-google-landing"));
-const AdMtpgLanding = lazy(() => import("@/pages/ad-mtpg-landing"));
 const FlyerLanding = lazy(() => import("@/pages/flyer-landing"));
 const ReferralPage = lazy(() => import("@/pages/referral"));
 const RISLanding = lazy(() => import("@/pages/ris-landing"));
@@ -153,7 +152,6 @@ const STANDALONE_LANDING_PATHS = [
   "/preschool-in-kasarvadavali-thane",
   "/ad",
   "/ad-google",
-  "/ad-mtpg",
   "/flyer",
   "/RIS",
   "/ris-11th",
@@ -227,7 +225,6 @@ function Router() {
         <Route path="/join-now" component={ReferralPage} />
         <Route path="/ad" component={AdLanding} />
         <Route path="/ad-google" component={AdGoogleLanding} />
-        <Route path="/ad-mtpg" component={AdMtpgLanding} />
         <Route path="/flyer" component={FlyerLanding} />
         <Route path="/GSC" component={GscDashboardWithBoundary} />
         <Route path="/gsc" component={GscDashboardWithBoundary} />
