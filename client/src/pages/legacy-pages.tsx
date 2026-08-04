@@ -14,7 +14,6 @@ function createLegacyPage(slug: string) {
 export const MotivationalThoughtsForKids = createLegacyPage("/36-motivational-thoughts-of-the-day-for-kids/");
 export const FruitsVegetablesEnglishHindi = createLegacyPage("/explore-50-fruits-vegetables-english-hindi/");
 export const MidTermPlaygroupBenefits = createLegacyPage("/mid-term-playgroup-admissions-benefits/");
-export const NationalSymbolsOfIndia = createLegacyPage("/national-symbols-of-india-for-kids/");
 export const SolitaryPlayActivities = createLegacyPage("/solitary-play-activities/");
 export const PreKgAgeGuide = createLegacyPage("/pre-kg-age-guide/");
 export const SpringGardeningActivities = createLegacyPage("/10-spring-gardening-activitie-for-preschoolers/");

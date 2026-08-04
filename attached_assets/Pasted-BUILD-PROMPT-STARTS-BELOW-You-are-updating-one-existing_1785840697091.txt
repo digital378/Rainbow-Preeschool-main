@@ -1,0 +1,379 @@
+BUILD PROMPT STARTS BELOW
+
+You are updating one existing page on this Next.js/React site: the blog post currently live at the route for /national-symbols-of-india-for-kids. Find that page's existing file(s) in this codebase (component, content/MDX/CMS source, and any route config) and rebuild its content and UI in place. Do not change the URL/slug.
+
+BEFORE YOU WRITE ANY CODE: open the existing blog pages for /blog/independence-day-for-kids and /blog/republic-day-2026 in this codebase and study how they are implemented — routing pattern, content source (hardcoded JSX, MDX, or CMS-driven), component library, styling system (Tailwind/CSS Modules/styled-components — whichever this repo actually uses), animation libraries already installed (Framer Motion, GSAP, etc.), and how they register SEO metadata and JSON-LD schema. Match this project's existing conventions and tech stack.
+
+IMPORTANT — DO NOT copy those two pages' design or component structure. They exist in this codebase only to prove the site supports rich interactive blog pages; they are not a template for this page. This page must use the original "India's Symbol Trail" concept specified below — a different metaphor, different components, different interactions from Independence Day / Republic Day. Reuse only what's necessary for stack consistency (e.g. the same accordion primitive, the same animation library import) — never their layout, copy, or visual identity.
+
+NON-NEGOTIABLE CONSTRAINTS
+Keep the existing URL unchanged: /national-symbols-of-india-for-kids
+Update the page's title tag, meta description, H1, and canonical tag (self-referencing — must NOT point at the Independence Day or Republic Day URLs).
+Brand = Rainbow International Pre-School (RPS) only. Primary accent colour: 
+#EC210F. Do not introduce Rainbow International School (RIS) branding, colours, or logo anywhere on the page EXCEPT inside the single sanctioned dual-brand closing block defined in Section 4.12 below.
+CTAs must use ONLY this exact wording: "Enquire Now", "Schedule a Campus Visit", "Explore Programmes". Do not invent urgency language ("limited seats," "closing soon," etc.).
+Use ONLY the facts provided in this prompt. Do not invent any Rainbow-specific facts, numbers, awards, or claims not given here.
+Every interactive component (Field Guide card toggle, riddle reveal, matching game, FAQ accordion, passport strip navigation) must be fully keyboard-operable and screen-reader labelled (proper aria attributes, focus states, semantic elements — not div-soup).
+Respect prefers-reduced-motion: disable the cursor trail/stamp animation, scroll-reveal, and passport-fill animation for users who request reduced motion — show the equivalent end-state instantly instead.
+Mobile-first responsive layout — assume most readers are on a phone. Cursor-follow effects (Section 4.13) must be disabled entirely on touch devices; replace with a tap "thump" feedback instead.
+Lazy-load below-the-fold images; ship the hero image pre-sized to avoid layout shift. Keep any new JS for animation small and non-blocking (defer/async).
+Do not break any existing site-wide header/footer/nav — only the blog post body content changes.
+THE CONCEPT: "INDIA'S SYMBOL TRAIL"
+
+The page casts the reader's child as a "Junior Explorer" working through a field guide and filling a Passport as they discover India's 17 widely-recognised national symbols. This is a nature-trail / museum-exhibit metaphor — deliberately different from Independence Day's "celebration guide" framing and Republic Day's "parade & civics guide" framing.
+
+Symbols are grouped into three "trail zones" instead of one flat list:
+
+Zone 1 — The Nation's Identity (civic/man-made symbols): Flag, Emblem, Anthem, Song, Pledge, Currency Symbol, Calendar (7 symbols)
+Zone 2 — The Wild Trail (wildlife symbols): Animal (Tiger), Bird (Peacock), Aquatic Animal (River Dolphin), Reptile (King Cobra), Heritage Animal (Elephant) (5 symbols)
+Zone 3 — The Nature Garden (flora/geography symbols): Flower (Lotus), Fruit (Mango), Tree (Banyan), Vegetable (Pumpkin), River (Ganga) (5 symbols)
+PAGE STRUCTURE (build in this order)
+Hero
+Passport Progress Strip (persistent component, appears after hero and stays accessible while scrolling)
+Intro — "Why We Collect These Symbols"
+Zone 1 section (7 Field Guide cards)
+Zone 2 section (5 Field Guide cards)
+Zone 3 section (5 Field Guide cards)
+"Did You Know?" myth-bust callout
+Symbol Riddles (tap-to-reveal deck)
+Match the Symbol (tap-to-pair game)
+Craft Trail (grouped by zone)
+Download & Print — Symbol Passport booklet
+Symbols Through the Year (internal cross-links)
+FAQ accordion
+Dual-brand closing block
+Closing CTA banner
+COMPONENT SPECS + FULL COPY (use this text verbatim; do not paraphrase)
+4.1 Hero
+Eyebrow badge: "LEARNING ACTIVITIES · Meet All 17 Symbols"
+H1: "India's Symbol Trail: 17 National Symbols of India for Kids"
+Subhead: "An interactive field guide, passport and playtime adventure for little explorers."
+Meta line: "[Month] 2026 · 12 min read · Ages 1.5–6" (use current publish date)
+Background: an original trail/map-textured or illustrated background in warm, playful tones built around RPS red (
+#EC210F) as the primary accent — NOT a flat festival-red gradient like Independence Day's hero. Use a compass icon (not a chevron) as the scroll cue, labelled "Begin the Trail ↓".
+CTA buttons: "Enquire Now" (primary) · "Explore Programmes" (secondary)
+4.2 Passport Progress Strip
+
+A persistent UI element (floating corner widget on desktop; slim horizontal bar on mobile) styled like a passport booklet. It has 17 stamp icons, one per symbol, organised into their 3 zones. As the reader scrolls a symbol's Field Guide card into view, that stamp visually "fills in" (colour + subtle bounce). Tapping/clicking any stamp smooth-scrolls to that symbol's card. This single component replaces the idea of both a sticky text nav AND a stat counter — it is this page's own original navigation + progress mechanic. Label above it: "17 Symbols to Collect · 3 Explorer Zones". Zone chips read: "Zone 1 · Nation's Identity (7)", "Zone 2 · Wild Trail (5)", "Zone 3 · Nature Garden (5)". Reduced-motion behaviour: stamps still fill in based on scroll position, but with no bounce animation — instant opacity change instead.
+
+4.3 Intro — "Why We Collect These Symbols"
+
+Paragraph 1: "Long before a child can read a map, they can spot a peacock's feather, point to a tiger in a picture book, or notice the tricolour fluttering outside a building and ask, "What is that?" That curiosity is the beginning of belonging. At Rainbow Preschool International, we believe a child's love for their country doesn't start with a history lesson — it starts with noticing the world around them, one small discovery at a time."
+
+Paragraph 2: "India has 17 widely recognised national symbols — from the Tiranga flag to the gentle Ganges river dolphin — each one a small window into the country's culture, wildlife and identity. This guide turns all 17 into a playful trail: sort them into three explorer zones, meet each one through a simple field-guide card, solve a few riddles, play a matching game, and even fill your own printable Symbol Passport along the way."
+
+Pull-quote (styled distinctly, e.g. bordered blockquote): "A child who can name the peacock, the banyan tree and the tricolour flag is already falling in love with India — one small discovery at a time." — Rainbow Preschool International
+
+4.4–4.6 Field Guide Cards (Zones 1–3)
+
+Each of the 17 symbols is a "Field Guide card" — styled like a nature field-guide / museum specimen placard (NOT a flip-card quiz tile like Independence Day uses). Each card contains, in this order:
+
+Symbol name + Hindi name (where given) in the header
+If marked "unofficial" below: a small amber/gold badge reading "POPULARLY RECOGNISED — NOT OFFICIALLY GAZETTED"
+"Spotted in:" — one line of context
+"Explorer Fact:" — one vivid, specific fact
+A depth toggle control with two states: "Explain it to my toddler" / "Explain it to my preschooler" — switches the description text shown (both variants are provided below; do not write new copy)
+"Try This:" — one line linking to the matching Craft Trail activity (Section 4.8) or, for the Flag card, to the Independence Day blog
+
+Build the depth toggle as a simple two-state switch/tab local to each card (not a page-level tab bar) — e.g. a small pill toggle with "Toddler" / "Preschooler" labels, defaulting to "Preschooler".
+
+Use exactly this data (represent as a data array in code, one object per symbol, in this exact zone order):
+
+ZONE 1 — THE NATION'S IDENTITY Zone intro copy: "These are the symbols India chose for itself — a flag, a song, a promise, a sign on every coin. They tell the story of who we are as one country made of many people."
+
+name: "National Flag — Tiranga", hindi: "तिरंगा", unofficial: false spotted: "Outside schools and government buildings, and everywhere on 15 August and 26 January." fact: "The flag has three colours and a wheel with 24 spokes called the Ashoka Chakra — adopted on 22 July 1947." toddler: "Our flag has three colours — orange, white and green — and a little blue wheel in the middle. We wave it because we love India!" preschooler: "Saffron stands for courage, white stands for peace and truth, and green stands for growth and land. The blue wheel in the middle is called the Ashoka Chakra — it has 24 spokes, like the hours in a day, and reminds us that India keeps moving forward." tryThis: "Want to make your own Tiranga? We've put a full step-by-step flag craft in our Independence Day guide — hop over after you finish the trail!" (link to /blog/independence-day-for-kids)
+name: "National Emblem", hindi: "राष्ट्रीय चिन्ह", unofficial: false spotted: "Indian coins, passports, currency notes and government letters." fact: "The emblem shows four lions standing back-to-back, though only three are ever visible at once. It was adopted on 26 January 1950 and comes from a stone pillar built by Emperor Ashoka over 2,000 years ago." toddler: "Look for the little lion picture on a coin — that's our country's special stamp!" preschooler: "Our national emblem has four lions standing back-to-back, though we can only see three at a time. Underneath is written "Satyameva Jayate," which means "Truth Alone Triumphs." It comes from a very old stone pillar built by an emperor named Ashoka." tryThis: "Try a coin rubbing — place a coin under paper and gently rub a crayon over it to reveal the lions." (link to Craft Trail: Lion Coin Rubbing)
+name: "National Anthem — Jana Gana Mana", hindi: "राष्ट्रगान", unofficial: false spotted: "Morning assembly, Republic Day, Independence Day, and before films in some cinemas." fact: "Jana Gana Mana was written by the poet Rabindranath Tagore and takes about 52 seconds to sing from start to end." toddler: "We stand up tall and quiet when this special song plays." preschooler: "Our national anthem was written by a poet named Rabindranath Tagore. It takes almost exactly 52 seconds to sing — try timing it next time!" tryThis: "Practise standing tall and still for 52 seconds — see if you can do it without wiggling!"
+name: "National Song — Vande Mataram", hindi: "राष्ट्रगीत", unofficial: false spotted: "Independence Day and Republic Day celebrations, alongside the national anthem." fact: "Vande Mataram means "I bow to thee, Mother" and comes from a novel called Anandamath, written by Bankim Chandra Chattopadhyay in 1882." toddler: "This is another special song about loving our country, like a big hug for India." preschooler: "Vande Mataram was written inside a story-book almost 150 years ago! In 1950, it was declared just as special as our national anthem." tryThis: "Ask a grandparent if they remember singing this at school — a lovely way to start a conversation."
+name: "National Pledge", hindi: null, unofficial: false spotted: "Recited by children every morning at school assembly across India." fact: "The pledge begins, "India is my country and all Indians are my brothers and sisters." It was written by Pydimarri Venkata Subba Rao and has been recited in schools since 1965." toddler: "Every morning, children across India say the same kind promise together." preschooler: "The pledge is a promise about loving our country and being kind to every Indian, like one big family. Children have been saying it every morning since 1965!" tryThis: "Make up your own two-line "kindness pledge" together — what would your child promise to do for their friends?"
+name: "National Currency Symbol — ₹", hindi: "रुपया चिन्ह", unofficial: false spotted: "On every rupee note and coin, and on price tags." fact: "The ₹ symbol was designed by D. Udaya Kumar and was officially chosen in 2010. It blends the Devanagari letter "र" with a horizontal line." toddler: "This little sign means "rupee" — it's on all our money!" preschooler: "This symbol was designed by a real design student and chosen especially for India in 2010, so our money would have its own special sign — just like the $ for dollars." tryThis: "Go on a "symbol hunt" through your coin jar or wallet together and spot the ₹ sign." (link to Craft Trail: ₹ Symbol Stamp Card)
+name: "National Calendar — Saka Calendar", hindi: "शक संवत्", unofficial: false spotted: "Printed at the top of the Gazette of India and used in All India Radio broadcasts." fact: "Alongside the regular calendar on our walls, the Indian government also uses a special calendar called the Saka calendar, adopted in 1957, for official work." toddler: "Our country's government has a second special calendar, just for important papers!" preschooler: "Most of us use the regular calendar with January, February and so on. But India's government also keeps a second calendar, called the Saka calendar, that started a very long time ago and is still used today." tryThis: null (omit the "Try This" row for this card only)
+
+ZONE 2 — THE WILD TRAIL Zone intro copy: "India shares its land with some extraordinary animals. These five were chosen to represent the country's wild beauty — spot them at the zoo, in a book, or even on your next holiday."
+
+name: "National Animal — Royal Bengal Tiger", hindi: "बाघ", unofficial: false spotted: "Ranthambore, Sundarbans, and other tiger reserves across India." fact: "India is home to roughly 3 out of every 4 wild tigers left on Earth (about 70–75% of the world's population). The tiger became our national animal in 1972." toddler: "The tiger is big, orange and stripy, and India takes very good care of them." preschooler: "More wild tigers live in India than in any other country in the world. That's why keeping their forests safe is so important for the whole planet." tryThis: "Paint orange and black stripes on a paper plate to make your own tiger mask." (link to Craft Trail: Stripy Tiger Mask)
+name: "National Bird — Indian Peacock", hindi: "मोर", unofficial: false spotted: "Gardens, forests and farmland across India." fact: "Only the male peacock has the giant, colourful tail — he fans it out and dances to impress a peahen! It was declared our national bird in 1963." toddler: "The peacock has beautiful blue and green feathers and loves to dance." preschooler: "Did you know only boy peacocks have the giant colourful tail? He spreads it open like a fan and dances, especially when rain is on the way." tryThis: "Trace your hand and turn the fingers into peacock feathers with paint." (link to Craft Trail: Handprint Peacock)
+name: "National Aquatic Animal — Ganges River Dolphin", hindi: null, unofficial: false spotted: "The Ganga and a few other rivers of northern India." fact: "This gentle dolphin is almost blind — it finds its way and its food using sound, like a whisper-quiet radar. It was declared our national aquatic animal in 2010." toddler: "There's a special dolphin that lives in our rivers, not the sea!" preschooler: "This dolphin can barely see with its eyes, but it "sees" with sound instead — it sends out clicks and listens for them to bounce back, a bit like how bats find their way in the dark." tryThis: "Play an echolocation game — close your eyes and try to find a clapping friend by sound alone!"
+name: "National Reptile — King Cobra", hindi: "नागराज", unofficial: true spotted: "The forests of the Western Ghats and Northeast India." fact: "The King Cobra is the longest venomous snake in the world — and despite its fearsome reputation, it usually avoids people and only defends itself if threatened. It's popularly known as India's national reptile, though — unlike the flag or the tiger — this isn't an official government title." toddler: "Snakes are wild animals we watch from a safe distance and never touch." preschooler: "The King Cobra is famous for being the longest venomous snake on Earth. Like most wild animals, it would rather hide from us than meet us — we admire it from books and glass enclosures at the zoo, not up close." tryThis: "Draw a long, winding snake path on paper and see how far you can make it stretch!"
+name: "National Heritage Animal — Indian Elephant", hindi: "हाथी", unofficial: false spotted: "Southern and northeastern Indian forests, and in many temple traditions." fact: "Elephants have excellent memories and live in caring family herds led by the oldest female. The elephant was declared our National Heritage Animal in 2010." toddler: "The elephant is big, gentle and never forgets its family." preschooler: "Elephant herds are led by the oldest, wisest female, called the matriarch, and the whole family helps look after the babies together — a bit like a big, caring family." tryThis: "Make an elephant handprint — palm as the head, fingers spread out as the trunk and ears!" (link to Craft Trail: Elephant Handprint)
+
+ZONE 3 — THE NATURE GARDEN Zone intro copy: "From a flower that blooms in mud to a mighty tree with a thousand roots, these symbols come from India's gardens, orchards and riverbanks."
+
+name: "National Flower — Lotus", hindi: "कमल", unofficial: true spotted: "Ponds and lakes across India, and on the cover of the Indian passport." fact: "Even though almost everyone believes the lotus is India's official national flower, the government has confirmed in Parliament that no such official notification has ever been issued. It's the country's much-loved, traditionally recognised flower — just not a formal title." toddler: "The lotus is a pretty pink flower that grows in muddy water." preschooler: "The lotus grows up through muddy water and still opens into a perfectly clean, beautiful flower — which is why people say it reminds us that we can rise above anything messy or difficult." tryThis: "Make a lotus stamp print using a cut potato dipped in pink and white paint." (link to Craft Trail: Potato-Print Lotus)
+name: "National Fruit — Mango", hindi: "आम", unofficial: true spotted: "Orchards across India, especially in summer — and probably your own fridge!" fact: "India grows more mangoes than any other country — over 1,000 different varieties. It's traditionally called the "king of fruits," though, like the lotus, it has no official government title." toddler: "Mango is sweet, golden, and one of our favourite summer fruits." preschooler: "India grows over a thousand kinds of mangoes — imagine tasting a different one every day for years! That's why it's lovingly called the "king of fruits."" tryThis: "Try a mango taste-test at home and see if you can guess the variety by smell alone. (Peek at our tiffin box ideas for more mango recipes!)" (link to the existing "50 Healthy Tiffin Box Ideas" blog post)
+name: "National Tree — Banyan", hindi: "बरगद", unofficial: true spotted: "Village squares, temple courtyards and old city streets across India." fact: "A banyan tree grows new roots down from its own branches, and those roots grow into new trunks — so one banyan tree can eventually look like an entire forest. It's traditionally, though not officially, recognised as India's national tree." toddler: "This giant tree gives lots of shade for people to rest under." preschooler: "A banyan tree keeps growing new roots from its branches down to the ground, and those roots turn into new trunks — one single tree can spread out and look like a whole grove!" tryThis: "Take a leaf rubbing — place a leaf under paper and rub gently with a crayon to reveal its veins." (link to Craft Trail: Banyan Leaf Rubbing)
+name: "National Vegetable — Pumpkin", hindi: "कद्दू", unofficial: true spotted: "Kitchen gardens and markets across India." fact: "Pumpkin has no official government title either, but it's a much-loved, popularly recognised symbol thanks to how common, colourful and useful it is in Indian kitchens." toddler: "Pumpkin is round, orange, and yummy in soup!" preschooler: "Pumpkins are full of seeds — hundreds of them inside just one pumpkin! One single plant can grow enough to help feed a whole family." tryThis: "Scoop, count and wash pumpkin seeds together — a wonderfully messy sensory activity." (link to Craft Trail: Pumpkin Seed Sensory Bin)
+name: "National River — Ganga", hindi: "गंगा", unofficial: false spotted: "Flowing through the northern Indian plains, from the Himalayas to the Bay of Bengal." fact: "The Ganga was officially declared India's National River in November 2008. Millions of people depend on it every day for water, farming and daily life." toddler: "The Ganga is a very big, very important river." preschooler: "The Ganga begins high up in the snowy Himalayas and travels a very long way before reaching the sea, giving water to millions of people, plants and animals along the way. That's why we try to keep it clean." tryThis: "Talk about one simple way your family can save water at home this week."
+4.7 "Did You Know?" Myth-Bust Callout
+
+Place this directly after Zone 3, styled as a distinct highlighted callout box (cream background, red left border or similar — consistent with the site's existing callout/notice styling if one exists). Title: "Explorer's Secret" Body: "Most people think the lotus is India's official national flower — even some grown-ups! But the government has clarified that it was never formally notified. The same is true for the mango, the banyan tree, the pumpkin and the king cobra — they're all much-loved, traditionally recognised symbols, but not official government titles like the flag, the anthem or the tiger. We think that makes them even more fun to learn about — loving a symbol doesn't need an official stamp!"
+
+4.8 Symbol Riddles
+
+Heading: "Guess the Symbol!" Subhead: "Read the riddle aloud, let your little explorer guess, then tap to reveal the answer." Build as 8 tap/click-to-reveal cards (not a scored quiz — no right/wrong scoring UI, just reveal). On reveal, trigger the ink-stamp cursor effect (Section 4.13) if the pointer/click position is available.
+
+"I have a hundred eyes on my tail, but I cannot see. I dance when it starts to rain. What am I?" → "The Peacock!"
+"I am orange, white and green, and I wave high above school gates. What am I?" → "The National Flag!"
+"I grow in muddy water but come out perfectly clean. What am I?" → "The Lotus!"
+"I am huge, grey and gentle, and I never forget a face. What am I?" → "The Elephant!"
+"I am golden and sweet, and India grows more of me than anyone else in the world. What am I?" → "The Mango!"
+"I live in the river, not the sea, and I "see" with sound instead of my eyes. What am I?" → "The Ganges River Dolphin!"
+"I have four lions, but you can only ever see three of me at once. What am I?" → "The National Emblem!"
+"I am orange and black, and there are more of my kind in India than anywhere else on Earth. What am I?" → "The Tiger!"
+4.9 Match the Symbol
+
+Heading: "Match the Symbol" Subhead: "Illustration on one side, name on the other — designed for children who can't read yet, ages 1.5–3 especially." Build as a tap-to-pair board (illustration tiles on one side, label tiles on the other; tapping a correct pair locks them together with a gentle animation; incorrect taps just deselect, no penalty/scoring). Pairs (illustration ↔ label):
+
+Flag ↔ "Tiranga"
+Emblem ↔ "Four Lions"
+Tiger ↔ "National Animal"
+Peacock ↔ "National Bird"
+Lotus ↔ "National Flower"
+Mango ↔ "National Fruit"
+Banyan Leaf ↔ "National Tree"
+Elephant ↔ "National Heritage Animal"
+River Dolphin ↔ "National Aquatic Animal"
+King Cobra ↔ "National Reptile"
+Pumpkin ↔ "National Vegetable"
+₹ Symbol ↔ "National Currency"
+4.10 Craft Trail
+
+Heading: "Craft Trail: Make a Symbol With Your Hands" Intro note (small, italic): "Note: the flag craft isn't repeated here — it already has a full step-by-step guide on our Independence Day blog; this trail links to it instead." Group into three subsections matching the zones, each as a small card grid:
+
+Zone 1 crafts — The Nation's Identity
+
+"Lion Coin Rubbing (Emblem)" — "Place a coin under a sheet of paper and gently rub a crayon over it until the lions appear." · 10 mins · Ages 3–6
+"₹ Symbol Stamp Card (Currency)" — "Cut a sponge into the ₹ shape, dip in paint, and stamp it onto a handmade greeting card." · 15 mins · Ages 2–5
+
+Zone 2 crafts — The Wild Trail
+
+"Stripy Tiger Mask" — "Paint orange and black stripes on a paper plate, cut eye-holes, and attach elastic string." · 20 mins · Ages 3–6
+"Handprint Peacock" — "Paint a handprint in blues and greens, then add a peacock body and googly eye." · 15 mins · Ages 2–5
+"Elephant Handprint" — "Grey paint on the palm (head) with spread fingers (trunk and ears)." · 15 mins · Ages 1.5–4
+
+Zone 3 crafts — The Nature Garden
+
+"Potato-Print Lotus" — "Carve a potato half into a petal shape, dip in pink and white paint, and print a blooming lotus." · 20 mins · Ages 3–6
+"Banyan Leaf Rubbing" — "Place a real leaf under paper and rub gently with a crayon to reveal its veins." · 10 mins · Ages 2–6
+"Pumpkin Seed Sensory Bin" — "Scoop, count and wash real pumpkin seeds in a bowl with small cups and spoons." · 20 mins · Ages 1.5–4
+4.11 Download & Print — Symbol Passport
+
+Heading: "Free Printable: Your Symbol Passport" Body: "Turn this whole trail into a keepsake! Download our free Symbol Passport — a foldable, printable booklet with a stamp box for all 17 symbols. After your child learns about a symbol, let them colour in its stamp box. By the end, they'll have a passport full of proud little stamps — and a wonderful record of everything they've discovered about India." Instruction line: "Print on A4, fold along the marked lines, and staple once down the spine to make a mini booklet." CTA button: "Download the Free Symbol Passport (PDF)" Note for the agent: if no PDF asset exists yet, wire the button to a placeholder route/asset slot named /downloads/symbol-passport.pdf and flag it clearly (e.g. a TODO comment) so the design/content team can drop in the real file — do not block the rest of the build on this asset.
+
+4.12 Dual-Brand Closing Block (SANCTIONED — use this structure exactly, matching the pattern already used on Independence Day / Republic Day, but with this fresh copy)
+
+Section heading: "Our Rainbow Family — Explore More at Rainbow Schools" Left panel (RPS): Eyebrow: "AGES 1.5–5.5 YEARS · THANE" Heading: "Rainbow Preschool International" Body: "Give your little explorer the most joyful start to their learning journey. Experienced, caring early-years faculty, smart classrooms, CCTV-enabled safety, and a warm atmosphere where curiosity is always welcome." Links: "Home" · "Admissions" · "About Us" · "Programmes" Right panel (RIS): Eyebrow: "NURSERY TO GRADE 12 · CBSE" Heading: "Rainbow International School" Body: "Looking ahead to primary and secondary education? Our sister institution, Rainbow International School, offers a seamless CBSE-affiliated K–12 pathway from Nursery to Class 12 in Thane West." Links: "Visit RIS" · "Admissions"
+
+Closing CTA banner
+
+Heading: "Happy Exploring from Rainbow Preschool International!" Body: "Every symbol your child learns is a small step toward loving the country they call home. Come see how we bring India — and the whole world — to life in our classrooms." CTA buttons: "Enquire Now" · "Schedule a Campus Visit"
+
+4.13 Cursor Animation & Micro-Interactions
+
+Primary effect — "Explorer's Lens" hover + ink-stamp click (desktop/pointer devices only):
+
+Default cursor on this page becomes a small magnifying-glass icon (custom cursor image or SVG-based cursor).
+Hovering a Field Guide card shows a soft circular "inspection ripple" that follows the cursor within the card bounds.
+On completing a stamp-worthy action (revealing a riddle answer, completing a matching pair, or expanding a Field Guide card for the first time), show a small ink-stamp graphic that appears at the cursor/tap position with a quick scale/bounce-in, holds briefly, then fades out over ~1.5s — and triggers the corresponding stamp in the Passport Progress Strip (Section 4.2) to fill in.
+
+Reference implementation sketch (adapt to this project's actual framework/animation library):
+
+js
+function stampAt(x, y, symbolId) {
+  const stamp = document.createElement('img');
+  stamp.src = '/stamps/' + symbolId + '.svg';
+  stamp.className = 'ink-stamp';
+  stamp.style.left = x + 'px';
+  stamp.style.top = y + 'px';
+  document.body.appendChild(stamp);
+  requestAnimationFrame(() => stamp.classList.add('thump'));
+  setTimeout(() => stamp.classList.add('fade'), 900);
+  setTimeout(() => stamp.remove(), 1500);
+  passportStrip.markCollected(symbolId); // fills the passport strip
+}
+css
+.symbol-trail-page { cursor: url('/cursors/lens.svg') 14 14, auto; }
+.symbol-trail-page .field-card:hover { cursor: url('/cursors/lens-active.svg') 14 14, pointer; }
+
+Fallback effect — low-power devices or when the lens cursor is impractical: a few small leaf/feather shapes drift gently away from the cursor as it moves through the Zone sections (nature-themed, NOT tricolour confetti — keep it visually distinct from anything on the Independence Day page).
+
+Mobile: no persistent custom cursor. On tap of a stamp-worthy action, play the same ink-stamp animation anchored to the tap point.
+
+Guardrails (must implement):
+
+Respect prefers-reduced-motion: disable the lens ripple, drifting particles, and stamp bounce — show the stamp appearing instantly with no animation.
+Cap concurrent particles/effects; animate only via CSS transform/opacity.
+Confine all cursor/particle effects to the hero and the Field Guide card sections — never over FAQ or body-copy-heavy areas.
+Scroll-reveal: sections/cards fade and rise ~16px into place as they enter the viewport (one-time trigger, ease-out, ~400ms).
+SEO / METADATA / STRUCTURED DATA
+
+Set/update on this page:
+
+Title tag: "17 National Symbols of India for Kids (2026) | Flag, Tiger, Peacock & More — Rainbow Preschool"
+Meta description: "Explore all 17 national symbols of India with your preschooler — flag, emblem, tiger, peacock, lotus, mango and more. Fun riddles, a matching game, craft ideas and a free printable Symbol Passport from Rainbow Preschool International, Thane."
+H1: "India's Symbol Trail: 17 National Symbols of India for Kids"
+Canonical URL: self-referencing, the page's own URL — verify it does NOT inherit a shared/default canonical from a template.
+Category tag: "Learning Activities"
+Byline: "By Rainbow Preschool Curriculum Team · Reviewed: [Month] 2026 · 12 min read · Ages 1.5–6"
+Image alt text pattern for every symbol illustration, the hero art, and the 3 zone icons: "[Symbol name], India's national [category], illustration for kids" — e.g. "Ganges river dolphin, India's national aquatic animal, illustration for kids."
+
+Add these JSON-LD blocks to the page <head> (fill in real dates/URLs at build time; keep all text fields exactly as given):
+
+json
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "India's Symbol Trail: 17 National Symbols of India for Kids",
+  "description": "Explore all 17 national symbols of India with your preschooler — flag, emblem, tiger, peacock, lotus, mango and more. Fun riddles, a matching game, craft ideas and a free printable Symbol Passport from Rainbow Preschool International, Thane.",
+  "author": { "@type": "Organization", "name": "Rainbow Preschool Curriculum Team" },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Rainbow Preschool International",
+    "logo": { "@type": "ImageObject", "url": "https://www.rainbowpreschools.com/logo.png" }
+  },
+  "datePublished": "FILL_IN_PUBLISH_DATE",
+  "dateModified": "FILL_IN_MODIFIED_DATE",
+  "mainEntityOfPage": "https://www.rainbowpreschools.com/national-symbols-of-india-for-kids"
+}
+json
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.rainbowpreschools.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Learning Activities", "item": "https://www.rainbowpreschools.com/blog" },
+    { "@type": "ListItem", "position": 3, "name": "National Symbols of India for Kids", "item": "https://www.rainbowpreschools.com/national-symbols-of-india-for-kids" }
+  ]
+}
+json
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "17 National Symbols of India",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "National Flag — Tiranga" },
+    { "@type": "ListItem", "position": 2, "name": "National Emblem" },
+    { "@type": "ListItem", "position": 3, "name": "National Anthem — Jana Gana Mana" },
+    { "@type": "ListItem", "position": 4, "name": "National Song — Vande Mataram" },
+    { "@type": "ListItem", "position": 5, "name": "National Pledge" },
+    { "@type": "ListItem", "position": 6, "name": "National Currency Symbol" },
+    { "@type": "ListItem", "position": 7, "name": "National Calendar — Saka Calendar" },
+    { "@type": "ListItem", "position": 8, "name": "National Animal — Royal Bengal Tiger" },
+    { "@type": "ListItem", "position": 9, "name": "National Bird — Indian Peacock" },
+    { "@type": "ListItem", "position": 10, "name": "National Aquatic Animal — Ganges River Dolphin" },
+    { "@type": "ListItem", "position": 11, "name": "National Reptile — King Cobra" },
+    { "@type": "ListItem", "position": 12, "name": "National Heritage Animal — Indian Elephant" },
+    { "@type": "ListItem", "position": 13, "name": "National Flower — Lotus" },
+    { "@type": "ListItem", "position": 14, "name": "National Fruit — Mango" },
+    { "@type": "ListItem", "position": 15, "name": "National Tree — Banyan" },
+    { "@type": "ListItem", "position": 16, "name": "National Vegetable — Pumpkin" },
+    { "@type": "ListItem", "position": 17, "name": "National River — Ganga" }
+  ]
+}
+json
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What are the 17 national symbols of India?",
+      "acceptedAnswer": { "@type": "Answer", "text": "India is widely recognised to have 17 national symbols, covering everything from the flag and anthem to wildlife and nature: the National Flag, Emblem, Anthem, Song, Pledge, Currency Symbol, Calendar, Animal (Tiger), Bird (Peacock), Aquatic Animal (River Dolphin), Reptile (King Cobra), Heritage Animal (Elephant), Flower (Lotus), Fruit (Mango), Tree (Banyan), Vegetable (Pumpkin) and River (Ganga). A few of these, like the lotus and mango, are traditionally recognised rather than formally gazetted by the government — we've marked those clearly throughout this guide." }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the national symbol of India for kids to learn first?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Most preschools start with the National Flag, since children usually see it first — outside school, at assemblies, or on 15 August and 26 January. Its three simple colours and one shape (the Ashoka Chakra) make it an easy, visual starting point before moving on to the wildlife and nature symbols." }
+    },
+    {
+      "@type": "Question",
+      "name": "What is India's national flower, fruit, animal and bird?",
+      "acceptedAnswer": { "@type": "Answer", "text": "India's national animal is the Royal Bengal Tiger and its national bird is the Indian Peacock — both official government designations. The lotus (flower) and mango (fruit) are the country's traditionally loved choices, though neither has ever been formally notified by the government." }
+    },
+    {
+      "@type": "Question",
+      "name": "Why is the Lion Capital of Ashoka India's national emblem?",
+      "acceptedAnswer": { "@type": "Answer", "text": "The Lion Capital of Ashoka was chosen as India's national emblem on 26 January 1950 because it once crowned a stone pillar built by Emperor Ashoka over 2,000 years ago, and its motto, 'Satyameva Jayate' ('Truth Alone Triumphs'), reflected the values of the newly independent nation." }
+    },
+    {
+      "@type": "Question",
+      "name": "What do the colours of the Indian flag mean?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Saffron represents courage and sacrifice, white represents peace and truth, and green represents growth and the land. The navy-blue wheel in the centre, the Ashoka Chakra, has 24 spokes and represents continuous progress." }
+    },
+    {
+      "@type": "Question",
+      "name": "How long does it take to sing the Indian national anthem?",
+      "acceptedAnswer": { "@type": "Answer", "text": "The full version of Jana Gana Mana takes approximately 52 seconds to sing. A shorter version, using only the first and last lines, takes about 20 seconds and is sometimes used at shorter events." }
+    },
+    {
+      "@type": "Question",
+      "name": "At what age should children start learning national symbols?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Children can start recognising simple symbols like the flag and the peacock from around age 2–3, through pictures, colours and songs. Around age 4–5, they can begin to understand the 'why' behind a few symbols, such as the meaning of the flag's colours, in very simple words." }
+    },
+    {
+      "@type": "Question",
+      "name": "What is a simple way to explain the national emblem to a toddler?",
+      "acceptedAnswer": { "@type": "Answer", "text": "You can say, 'It's our country's special stamp with lions on it — you can find it on coins!' That's enough for a toddler; the fuller story (Ashoka's pillar, the motto) can wait until they're a little older." }
+    },
+    {
+      "@type": "Question",
+      "name": "What craft activities help kids remember national symbols?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Hands-on crafts tied to a specific symbol work best — a coin rubbing for the emblem, a handprint peacock, a potato-print lotus, or a leaf rubbing for the banyan tree. Making something with their hands helps a symbol stick in a child's memory far better than just being told about it." } 
+    },
+    {
+      "@type": "Question",
+      "name": "Is Hindi India's national language?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No — this is one of the most common myths. India's Constitution does not declare any single national language; Hindi and English are the two official languages used by the central government, alongside 22 other scheduled languages recognised across the country." }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the difference between a national symbol and a national festival?",
+      "acceptedAnswer": { "@type": "Answer", "text": "A national symbol (like the flag, the tiger or the lotus) is a lasting emblem that represents the country all year round, while a national festival (like Independence Day or Republic Day) is a specific date on which the country celebrates a historic event. Many symbols, like the flag, appear especially prominently during festivals." }
+    },
+    {
+      "@type": "Question",
+      "name": "Does Rainbow Preschool teach national symbols as part of its curriculum?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes — age-appropriate learning about India, including its flag, festivals and natural symbols, is woven into our play-based curriculum through stories, craft, songs and classroom display. Schedule a Campus Visit at any of our centres across Thane to see it in action." }
+    }
+  ]
+}
+
+Additionally: implement HowTo schema for each of the 8 Craft Trail activities (Section 4.10), using each activity's name as the name, its one-line instruction as a single step, and its stated time/age as supplementary text — follow this project's existing pattern for multi-item schema generation (loop over a data array) rather than hand-writing 8 separate blocks.
+
+INTERNAL LINKING — implement all of these
+Anchor text	Links to	Placement
+"our Kindergarten programme"	Kindergarten programme page	Zone 1 area or intro, where age-appropriate depth is discussed
+"Our Nursery curriculum"	Nursery programme page	Near early symbol-recognition content
+"Playgroup programme"	Playgroup programme page	Match the Symbol section (youngest age group)
+"our full Independence Day flag-craft guide"	/blog/independence-day-for-kids	Zone 1's Flag card (Try This)
+"our Republic Day guide"	/blog/republic-day-2026	"Symbols Through the Year" section
+"50 healthy tiffin box ideas"	existing tiffin-box blog post	Zone 3's Mango card (Try This)
+"Our centres across Thane"	Centres page	Dual-brand / closing block area
+"About Rainbow Preschool"	About Us page	Intro section
+"Schedule a Campus Visit" (CTA)	Admissions/contact	Hero + closing CTA banner
+"Rainbow International School"	RIS site	Dual-brand closing block ONLY
+
+"Symbols Through the Year" section copy (place after Download & Print, before FAQ): Heading: "Where to Explore Next" Body: "This trail is just one part of how we bring India to life at Rainbow Preschool International. If you're getting ready for a festival, here's where to go next:"
+
+"Preparing for 15 August? Visit our full Independence Day 2026 guide for speeches, rhymes, craft ideas and more." (link to /blog/independence-day-for-kids)
+"Preparing for 26 January? Visit our Republic Day 2026 guide for the parade, simple speeches and family activities." (link to /blog/republic-day-2026) Closing line (italic): "This Symbol Trail, though, is designed to be read any day of the year — it's less about one date, and more about getting to know India, one symbol at a time."
+QA / ACCEPTANCE CHECKLIST (verify all before considering this done)
+ URL unchanged; title/meta description/H1/canonical all updated as specified
+ All 17 symbols present, correctly grouped into their 3 zones, each with both toddler and preschooler copy and correct "unofficial" badges (King Cobra, Lotus, Mango, Banyan, Pumpkin only)
+ Passport Progress Strip fills in per symbol as the reader scrolls, and its stamps are clickable to jump to that section
+ Riddles reveal on tap, no scored right/wrong UI
+ Matching game pairs work, no penalty on incorrect taps
+ Craft Trail shows 8 activities grouped correctly by zone; flag craft is a link, not a repeated activity
+ FAQ accordion shows all 12 Q&As, matches the FAQPage JSON-LD verbatim
+ Dual-brand block shows RPS and RIS side by side, correctly separated, nowhere else on the page mixes RIS branding into RPS content
+ All CTAs use only the three approved phrases
+ JSON-LD blocks present and valid (test with a schema validator)
+ All internal links from Section 6 are wired up and working
+ prefers-reduced-motion disables cursor lens, ink-stamp bounce, drifting particles, and scroll-reveal animation (content still fully visible/functional)
+ Cursor-follow effects are desktop/pointer-only; mobile gets tap feedback instead, no custom cursor
+ Page is keyboard-navigable end to end; all interactive elements have visible focus states and appropriate aria labels
+ Mobile layout checked at common breakpoints (360px, 390px, 768px)
+ No console errors; new JS/CSS for animation is deferred/non-blocking; hero image is pre-sized to avoid layout shift
+ Nothing outside this blog post's body content (site header/footer/nav) was modified
+
+END OF PROMPT

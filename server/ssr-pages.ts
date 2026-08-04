@@ -27,6 +27,8 @@ import { VERIFIED_RATING } from "@shared/verified-rating";
 import { FAQ_SCHEMA_ITEMS } from "@shared/faq-data";
 import { ADMISSIONS_FAQ_SCHEMA_ITEMS } from "@shared/admissions-faq-data";
 import { BEST_PRESCHOOL_FAQ_SCHEMA_ITEMS } from "@shared/best-preschool-faq-data";
+import { NATIONAL_SYMBOLS_FAQ_SCHEMA_ITEMS } from "@shared/national-symbols-faq-data";
+import { NATIONAL_SYMBOLS_CRAFTS } from "@shared/national-symbols-craft-data";
 import { PLAY_SCHOOL_FAQ_SCHEMA_ITEMS } from "@shared/play-school-faq-data";
 import { admissionHowToSchema } from "@shared/admissions-howto-data";
 
@@ -1467,6 +1469,90 @@ const staticPages: Record<string, PageSEOData> = {
         "author": { "@type": "Organization", "name": "Rainbow Preschool International", "url": BASE_URL },
         "publisher": { "@type": "Organization", "name": "Rainbow Preschool International", "url": BASE_URL, "logo": { "@type": "ImageObject", "url": `${BASE_URL}/images/optimized/rainbow-logo.webp` } },
       },
+    ],
+    internalLinks: commonInternalLinks,
+  },
+  "/national-symbols-of-india-for-kids": {
+    title: "17 National Symbols of India for Kids (2026) | Flag, Tiger, Peacock & More — Rainbow Preschool",
+    description: "Explore all 17 national symbols of India with your preschooler — flag, emblem, tiger, peacock, lotus, mango and more. Fun riddles, a matching game, craft ideas and a free printable Symbol Passport from Rainbow Preschool International, Thane.",
+    keywords: "national symbols of india, 17 national symbols of india, national symbols for kids, national flag for kids, national animal of india tiger, national bird peacock, national flower lotus, india symbols preschool, symbol passport printable",
+    canonical: `${BASE_URL}/national-symbols-of-india-for-kids`,
+    ogType: "article",
+    ogImage: `${BASE_URL}/images/symbol-trail-hero.webp`,
+    lastModified: "2026-08-04",
+    lastModifiedDisplay: "August 4, 2026",
+    h1: "India's Symbol Trail: 17 National Symbols of India for Kids",
+    introText: "India has 17 widely recognised national symbols — from the Tiranga flag to the gentle Ganges river dolphin. This interactive field guide turns all 17 into a playful trail: three explorer zones, field-guide cards, riddles, a matching game, crafts and a printable Symbol Passport.",
+    breadcrumbs: [
+      { name: "Home", url: "/" },
+      { name: "Learning Activities", url: "/blog" },
+      { name: "National Symbols of India for Kids", url: "/national-symbols-of-india-for-kids" },
+    ],
+    structuredData: [
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "India's Symbol Trail: 17 National Symbols of India for Kids",
+        "description": "Explore all 17 national symbols of India with your preschooler — flag, emblem, tiger, peacock, lotus, mango and more. Fun riddles, a matching game, craft ideas and a free printable Symbol Passport from Rainbow Preschool International, Thane.",
+        "author": { "@type": "Organization", "name": "Rainbow Preschool Curriculum Team" },
+        "publisher": { "@type": "Organization", "name": "Rainbow Preschool International", "logo": { "@type": "ImageObject", "url": "https://www.rainbowpreschools.com/logo.png" } },
+        "datePublished": "2026-08-04",
+        "dateModified": "2026-08-04",
+        "mainEntityOfPage": `${BASE_URL}/national-symbols-of-india-for-kids`,
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": BASE_URL },
+          { "@type": "ListItem", "position": 2, "name": "Learning Activities", "item": `${BASE_URL}/blog` },
+          { "@type": "ListItem", "position": 3, "name": "National Symbols of India for Kids", "item": `${BASE_URL}/national-symbols-of-india-for-kids` },
+        ],
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "name": "17 National Symbols of India",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "National Flag — Tiranga" },
+          { "@type": "ListItem", "position": 2, "name": "National Emblem" },
+          { "@type": "ListItem", "position": 3, "name": "National Anthem — Jana Gana Mana" },
+          { "@type": "ListItem", "position": 4, "name": "National Song — Vande Mataram" },
+          { "@type": "ListItem", "position": 5, "name": "National Pledge" },
+          { "@type": "ListItem", "position": 6, "name": "National Currency Symbol" },
+          { "@type": "ListItem", "position": 7, "name": "National Calendar — Saka Calendar" },
+          { "@type": "ListItem", "position": 8, "name": "National Animal — Royal Bengal Tiger" },
+          { "@type": "ListItem", "position": 9, "name": "National Bird — Indian Peacock" },
+          { "@type": "ListItem", "position": 10, "name": "National Aquatic Animal — Ganges River Dolphin" },
+          { "@type": "ListItem", "position": 11, "name": "National Reptile — King Cobra" },
+          { "@type": "ListItem", "position": 12, "name": "National Heritage Animal — Indian Elephant" },
+          { "@type": "ListItem", "position": 13, "name": "National Flower — Lotus" },
+          { "@type": "ListItem", "position": 14, "name": "National Fruit — Mango" },
+          { "@type": "ListItem", "position": 15, "name": "National Tree — Banyan" },
+          { "@type": "ListItem", "position": 16, "name": "National Vegetable — Pumpkin" },
+          { "@type": "ListItem", "position": 17, "name": "National River — Ganga" },
+        ],
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        // Mirrored from shared/national-symbols-faq-data.ts — single source of
+        // truth shared with the client page, so visible FAQs and schema can't drift.
+        "mainEntity": NATIONAL_SYMBOLS_FAQ_SCHEMA_ITEMS.map(f => ({
+          "@type": "Question",
+          name: f.question,
+          acceptedAnswer: { "@type": "Answer", text: f.answer },
+        })),
+      },
+      // HowTo schema for the 8 Craft Trail activities — from
+      // shared/national-symbols-craft-data.ts (single source of truth).
+      ...NATIONAL_SYMBOLS_CRAFTS.map(c => ({
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": c.name,
+        "description": `${c.time} · ${c.ages}`,
+        "step": [{ "@type": "HowToStep", "text": c.instruction }],
+      })),
     ],
     internalLinks: commonInternalLinks,
   },

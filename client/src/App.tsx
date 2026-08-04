@@ -79,7 +79,7 @@ const LazyPreschoolInKasarvadavali = lazy(() => import("@/pages/preschool-locati
 
 const LazyMotivationalThoughtsForKids = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.MotivationalThoughtsForKids })));
 const LazyFruitsVegetablesEnglishHindi = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.FruitsVegetablesEnglishHindi })));
-const LazyNationalSymbolsOfIndia = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.NationalSymbolsOfIndia })));
+const LazyNationalSymbolsOfIndia = lazy(() => import("@/pages/national-symbols-of-india"));
 const LazySolitaryPlayActivities = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.SolitaryPlayActivities })));
 const LazyPreKgAgeGuide = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.PreKgAgeGuide })));
 const LazySpringGardeningActivities = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.SpringGardeningActivities })));

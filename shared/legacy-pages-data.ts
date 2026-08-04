@@ -187,66 +187,6 @@ export const legacyPagesData: Record<string, LegacyPageData> = {
     category: "Admissions"
   },
 
-  "/national-symbols-of-india-for-kids/": {
-    slug: "/national-symbols-of-india-for-kids/",
-    title: "National Symbols of India for Kids | Rainbow Preschool Thane",
-    metaDescription: "All 17 national symbols of India explained simply for kids — flag, emblem, anthem, tiger, peacock, lotus & more. Fun stories + activities for ages 3–8.",
-    h1: "National Symbols of India for Kids",
-    intro: "Teaching children about national symbols instills pride in their heritage and helps them understand their country's identity. Here's a child-friendly guide to India's national symbols, perfect for preschoolers in Thane. At <a href=\"/about\">Rainbow Preschool International</a>, we make learning about our nation fun and memorable.",
-    sections: [
-      {
-        heading: "Important National Symbols",
-        content: "India has several official national symbols that represent our country's heritage, culture, and natural wealth:",
-        bulletPoints: [
-          "National Flag - Tiranga (Tricolor with saffron, white, green, and the Ashoka Chakra)",
-          "National Emblem - Lion Capital of Ashoka (Satyameva Jayate - Truth Alone Triumphs)",
-          "National Anthem - Jana Gana Mana (written by Rabindranath Tagore)",
-          "National Song - Vande Mataram (from the novel Anandamath)",
-          "National Animal - Bengal Tiger (Royal Bengal Tiger)",
-          "National Bird - Peacock (Mayura)",
-          "National Flower - Lotus (Kamal)",
-          "National Fruit - Mango (Aam)",
-          "National Tree - Banyan Tree (Bargad)"
-        ]
-      },
-      {
-        heading: "Teaching the National Flag to Preschoolers",
-        content: "The Indian tricolor is often the first national symbol children learn. At <a href=\"/about\">Rainbow Preschool</a>, we teach the meaning of each color in our <a href=\"/kindergarten\">Kindergarten</a> and <a href=\"/nursery\">Nursery</a> programmes:\n\nSaffron (top) - Represents courage and sacrifice\nWhite (middle) - Represents peace and truth, with the Ashoka Chakra showing the wheel of dharma\nGreen (bottom) - Represents fertility, growth, and the land\n\nSimple craft activities like making paper flags help children remember these meanings while developing fine motor skills.",
-        bulletPoints: []
-      },
-      {
-        heading: "Fun Learning Activities",
-        content: "Make learning about national symbols engaging with these activities:",
-        bulletPoints: [
-          "Color the national flag with correct colors",
-          "Draw and decorate a peacock",
-          "Plant lotus seeds and watch them grow",
-          "Learn to sing the national anthem",
-          "Create a collage of national symbols",
-          "Visit a zoo to see the Bengal tiger"
-        ]
-      },
-      {
-        heading: "When We Celebrate",
-        content: "National symbols become especially relevant during patriotic celebrations. At <a href=\"/about\">Rainbow Preschool</a>, we have special activities on Independence Day (15th August), Republic Day (26th January), and Gandhi Jayanti (2nd October) at all our centres including <a href=\"/preschool-in-manpada-thane\">Manpada</a>, <a href=\"/preschool-in-kalwa-thane\">Kalwa</a>, and <a href=\"/preschool-in-dhokali-thane\">Dhokali</a>.\n\nChildren dress up, participate in cultural programs, and learn about these symbols through stories, songs, and art activities. <a href=\"/contact\">Contact us</a> to know more about our celebration activities.",
-        bulletPoints: []
-      }
-    ],
-    faqs: [
-      { question: "At what age should children learn national symbols?", answer: "Children can start learning basic symbols like the flag from age 2-3. More detailed understanding develops by ages 4-5. We introduce these concepts progressively at Rainbow Preschool." },
-      { question: "How can I teach my child the national anthem?", answer: "Start with simple phrases and gradually build up. Play the anthem regularly at home. Many children learn it naturally through repeated exposure during school assemblies." },
-      { question: "Why is it important for preschoolers to learn about national symbols?", answer: "It builds a sense of identity, belonging, and pride in their country. It also helps children understand cultural diversity and respect for national heritage." },
-      { question: "Does Rainbow Preschool celebrate national days?", answer: "Yes! We have special programs on Independence Day and Republic Day with age-appropriate activities, cultural performances, and lessons about our national heritage." }
-    ],
-    relatedLinks: [
-      { title: "Kindergarten Programme", url: "/kindergarten", description: "School readiness curriculum" },
-      { title: "About Us", url: "/about", description: "Our values and approach" },
-      { title: "Our Programmes", url: "/programmes", description: "All early childhood programmes" }
-    ],
-    internalLinks: commonInternalLinks,
-    category: "Learning Activities"
-  },
-
   "/solitary-play-activities/": {
     slug: "/solitary-play-activities/",
     title: "Solitary Play Activities for Toddlers | Rainbow Preschool",

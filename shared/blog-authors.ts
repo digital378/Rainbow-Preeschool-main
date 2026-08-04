@@ -68,6 +68,7 @@ export const BLOG_AUTHORSHIP: Record<string, BlogAuthorship> = {
   "role-of-parents-early-education": DEFAULT_BLOG_AUTHORSHIP,
   "creating-safe-nurturing-learning-environment": DEFAULT_BLOG_AUTHORSHIP,
   "republic-day-2026": DEFAULT_BLOG_AUTHORSHIP,
+  "national-symbols-of-india-for-kids": DEFAULT_BLOG_AUTHORSHIP,
   "signs-of-good-preschool-thane": DEFAULT_BLOG_AUTHORSHIP,
   "preschool-vs-daycare-difference": DEFAULT_BLOG_AUTHORSHIP,
   "what-age-start-play-school": DEFAULT_BLOG_AUTHORSHIP,
