@@ -75,6 +75,11 @@
 #       sitemap.
 #   16. scripts/check-bot-detection.ts — asserts that social-app in-app browser
 #       UAs receive the React shell (not the SSR page).
+#   16b. scripts/check-ad-pages.ts — standalone ad landing-page guard:
+#       asserts the ad HTML build artifact exists in dist/ad-assets/ and
+#       matches its source, every local asset it references exists in
+#       dist/public, the route returns 200 for normal + Googlebot UAs, and
+#       the served HTML has no unresolved/empty FIREBASE_* config values.
 #   17. Lighthouse performance guard — simulated-mobile Lighthouse audit against
 #       home + priority landing page. Skippable with SKIP_PERF_GUARD=1.
 #   18. Purge Cloudflare edge cache — runs last so it only fires after every
@@ -257,6 +262,16 @@ npx --no-install tsx scripts/check-bot-detection.ts "${PREDEPLOY_URL}"
 BOT_DETECTION_EXIT=$?
 set -e
 
+# Standalone ad landing-page guard. Asserts the ad HTML artifact exists in
+# dist/ad-assets/, every referenced local asset is present in dist/public,
+# the route returns 200 for both normal and Googlebot UAs, and the served
+# HTML has no unresolved (or empty) FIREBASE_* config values.
+log "step 16b/18 — tsx scripts/check-ad-pages.ts ${PREDEPLOY_URL}"
+set +e
+npx --no-install tsx scripts/check-ad-pages.ts "${PREDEPLOY_URL}"
+AD_PAGES_EXIT=$?
+set -e
+
 # ── step 15 — Lighthouse performance guard ───────────────────────────────────
 # Runs a simulated-mobile Lighthouse audit against home + priority landing page.
 # Skippable during initial threshold calibration: SKIP_PERF_GUARD=1 bash predeploy.sh
@@ -282,7 +297,7 @@ else
 fi
 # ─────────────────────────────────────────────────────────────────────────────
 
-if [ "${FRESHNESS_EXIT}" -ne 0 ] || [ "${KEYWORD_EXIT}" -ne 0 ] || [ "${SITEMAP_EXIT}" -ne 0 ] || [ "${BOT_DETECTION_EXIT}" -ne 0 ] || [ "${PERF_EXIT}" -ne 0 ]; then
+if [ "${FRESHNESS_EXIT}" -ne 0 ] || [ "${KEYWORD_EXIT}" -ne 0 ] || [ "${SITEMAP_EXIT}" -ne 0 ] || [ "${BOT_DETECTION_EXIT}" -ne 0 ] || [ "${AD_PAGES_EXIT}" -ne 0 ] || [ "${PERF_EXIT}" -ne 0 ]; then
   if [ "${FRESHNESS_EXIT}" -ne 0 ]; then
     log "FAIL — freshness smoke-test exited ${FRESHNESS_EXIT}. See offending URLs above."
   fi
@@ -295,6 +310,9 @@ if [ "${FRESHNESS_EXIT}" -ne 0 ] || [ "${KEYWORD_EXIT}" -ne 0 ] || [ "${SITEMAP_
   if [ "${BOT_DETECTION_EXIT}" -ne 0 ]; then
     log "FAIL — bot-detection smoke-test exited ${BOT_DETECTION_EXIT}. A social-app in-app browser UA may have been added to BOT_USER_AGENTS."
     log "       Real users (WhatsApp, Pinterest, Instagram) must receive the React shell, not the SSR page."
+  fi
+  if [ "${AD_PAGES_EXIT}" -ne 0 ]; then
+    log "FAIL — standalone ad-page guard exited ${AD_PAGES_EXIT}. Missing dist artifact/asset, non-200 response, or uninjected Firebase config. See details above."
   fi
   if [ "${PERF_EXIT}" -ne 0 ]; then
     log "FAIL — Lighthouse performance guard exited ${PERF_EXIT}. See per-page results above."
@@ -315,6 +333,9 @@ if [ "${FRESHNESS_EXIT}" -ne 0 ] || [ "${KEYWORD_EXIT}" -ne 0 ] || [ "${SITEMAP_
   fi
   if [ "${BOT_DETECTION_EXIT}" -ne 0 ]; then
     exit "${BOT_DETECTION_EXIT}"
+  fi
+  if [ "${AD_PAGES_EXIT}" -ne 0 ]; then
+    exit "${AD_PAGES_EXIT}"
   fi
   exit "${PERF_EXIT}"
 fi
