@@ -552,9 +552,9 @@ export default function AdMtpgLanding() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
               { src: '/images/optimized/child-stacking-rings-playgroup.webp', alt: 'Toddler stacking colourful rings during playgroup at Rainbow Preschool', caption: 'Fine Motor Play' },
-              { src: '/images/optimized/children-learning-rainbow-preschool.webp', alt: 'Children exploring colourful learning materials during free play at Rainbow Preschool', caption: 'Free Play Time' },
+              { src: '/images/gallery/rainbow-preschool-classroom-learning-01.webp', alt: 'Children engaged in play-based learning during free play at Rainbow Preschool', caption: 'Free Play Time' },
               { src: '/images/optimized/teacher-teaching-children-classroom.webp', alt: 'Teacher guiding a small group of children in a Rainbow Preschool classroom', caption: 'Teacher Time' },
-              { src: '/images/optimized/DSC00010.webp', alt: 'Children enjoying a group activity together at Rainbow Preschool', caption: 'Group Activities' },
+              { src: '/images/gallery/rainbow-preschool-classroom-activity-04.webp', alt: 'Children in a collaborative group learning activity at Rainbow Preschool', caption: 'Group Activities' },
             ].map((img) => (
               <figure key={img.src} className="card-bento bg-white overflow-hidden">
                 <div className="aspect-[4/3] overflow-hidden">
