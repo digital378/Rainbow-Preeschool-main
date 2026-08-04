@@ -562,12 +562,14 @@
       return firebase.auth();
     }
     var recaptchaReady = null;
+    var recaptchaWidgetId = null;
     var sendInFlight = false;
     function initRecaptcha(forceRecreate){
       if (recaptchaReady && !forceRecreate) return recaptchaReady;
       var oldVerifier = recaptchaVerifier;
       recaptchaVerifier = null;
       recaptchaReady = null;
+      recaptchaWidgetId = null;
       if (oldVerifier) { try { oldVerifier.clear(); } catch(e){} }
       // Remove any orphaned widget DOM from a previous failed render.
       document.getElementById('recaptcha-container').innerHTML = '';
@@ -591,7 +593,8 @@
       // Resolves to THIS verifier (not the global) so senders never race a
       // later recreation. Cleanup only runs while we are still current —
       // a stale failure can never wipe a newer verifier's widget.
-      recaptchaReady = Promise.resolve(renderResult).then(function(){
+      recaptchaReady = Promise.resolve(renderResult).then(function(widgetId){
+        recaptchaWidgetId = widgetId;
         return verifier;
       }).catch(function(err){
         if (recaptchaVerifier === verifier) {
@@ -599,10 +602,27 @@
           document.getElementById('recaptcha-container').innerHTML = '';
           recaptchaVerifier = null;
           recaptchaReady = null;
+          recaptchaWidgetId = null;
         }
         throw err;
       });
       return recaptchaReady;
+    }
+    // Recovery after a failed send: prefer resetting the EXISTING widget —
+    // wiping container HTML does NOT unregister it with grecaptcha, so
+    // re-rendering the same element throws "reCAPTCHA has already been
+    // rendered in this element". Full recreation is only a fallback, on a
+    // brand-new container element (grecaptcha tags the element itself).
+    function resetRecaptcha(){
+      if (recaptchaWidgetId != null && window.grecaptcha && grecaptcha.reset) {
+        try { grecaptcha.reset(recaptchaWidgetId); return; } catch(e){}
+      }
+      var old = document.getElementById('recaptcha-container');
+      if (old && old.parentNode) {
+        var fresh = old.cloneNode(false);
+        old.parentNode.replaceChild(fresh, old);
+      }
+      initRecaptcha(true).catch(function(){});
     }
     // Warm the SDK + pre-render reCAPTCHA as soon as the visitor starts
     // filling the form, so submit is instant and config errors surface early.
@@ -671,8 +691,8 @@
       }).catch(function(err){
         console.error('[ad-mtpg] OTP send error:', err && err.code || err, err && err.message || '');
         setFormError(otpSendErrorMessage(err));
-        // Fresh reCAPTCHA for the next attempt.
-        initRecaptcha(true).catch(function(){});
+        // Reset reCAPTCHA so the next attempt gets a fresh token.
+        resetRecaptcha();
       }).finally(function(){
         sendInFlight = false;
         btn.disabled = false; btn.textContent = 'Check Mid-Term Seat Availability';
@@ -742,8 +762,8 @@
         console.error('[ad-mtpg] OTP resend error:', err && err.code || err, err && err.message || '');
         setOtpError(otpSendErrorMessage(err));
         btn.disabled = false;
-        // Fresh reCAPTCHA for the next attempt (never throws synchronously).
-        initRecaptcha(true).catch(function(){});
+        // Reset reCAPTCHA so the next attempt gets a fresh token.
+        resetRecaptcha();
       });
     }
 
