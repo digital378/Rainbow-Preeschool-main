@@ -74,6 +74,31 @@
     .btn-primary:hover{opacity:.92}.btn-primary:active{transform:scale(.98)}.btn-primary:disabled{opacity:.5;cursor:not-allowed}
     .btn-secondary{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:#fff;border:1px solid var(--border);border-radius:9999px;font-weight:600;font-size:.875rem;padding:10px 16px;cursor:pointer;text-decoration:none;box-shadow:0 1px 4px rgba(28,25,23,.06);transition:box-shadow .2s}
     .btn-secondary:hover{box-shadow:var(--shadow-card)}
+    /* Gradient CTAs: call = blue, WhatsApp = green */
+    .btn-call-grad{background:linear-gradient(135deg,#1F7AF0 0%,#48A0FF 100%);color:#fff;border:none;box-shadow:0 4px 14px rgba(31,122,240,.28)}
+    .btn-call-grad:hover{box-shadow:0 8px 22px rgba(31,122,240,.38)}
+    .btn-wa-grad{background:linear-gradient(135deg,#06B463 0%,#22D67E 100%);color:#fff;border:none;box-shadow:0 4px 14px rgba(6,180,99,.28)}
+    .btn-wa-grad:hover{box-shadow:0 8px 22px rgba(6,180,99,.38)}
+    /* Learning environment section */
+    .le-grad-text{background:linear-gradient(95deg,#F59E0B 0%,#EF4444 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+    .le-container{text-align:center}
+    .le-grid{display:grid;grid-template-columns:220px 1fr 220px;gap:0 16px;align-items:center;max-width:1080px;margin:44px auto 0;text-align:left}
+    .le-chips{display:flex;flex-direction:column;gap:18px}
+    .le-chips-left{align-items:flex-end}
+    .le-chips-right{align-items:flex-start}
+    .le-chip{display:flex;align-items:center;gap:12px;padding:10px 16px 10px 10px;border-radius:16px;background:#fff;border:1px solid rgba(33,27,46,.08);box-shadow:0 10px 30px rgba(33,27,46,.10);width:210px}
+    .le-chip span{font-size:.8rem;font-weight:700;color:#211B2E;line-height:1.25}
+    .le-icon{width:46px;height:46px;border-radius:12px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+    .le-video{position:relative;border-radius:28px;overflow:hidden;box-shadow:0 40px 80px rgba(33,27,46,.20),0 0 0 6px rgba(255,255,255,.95),0 0 0 7.5px rgba(33,27,46,.05)}
+    .le-video video{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;background:#1a1a1a}
+    .le-sound{position:absolute;bottom:12px;right:12px;display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:9999px;background:rgba(0,0,0,.42);color:#fff;font-size:.75rem;font-weight:600;border:1px solid rgba(255,255,255,.22);cursor:pointer;backdrop-filter:blur(8px)}
+    .le-note{font-size:.63rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:rgba(33,27,46,.4);margin:28px 0 0;text-align:center}
+    @media(max-width:860px){
+      .le-grid{grid-template-columns:1fr;gap:24px}
+      .le-video{order:-1}
+      .le-chips{flex-direction:row;flex-wrap:wrap;justify-content:center;align-items:center}
+      .le-chip{width:auto}
+    }
     .icon-box{display:flex;align-items:center;justify-content:center;border-radius:14px;background:rgba(220,38,38,.09);color:var(--primary);flex-shrink:0}
     .icon-md{width:44px;height:44px}.icon-sm{width:34px;height:34px;border-radius:10px}
     .icon-box svg{width:20px;height:20px}.icon-sm svg{width:16px;height:16px}
@@ -172,7 +197,7 @@
     .cta-wrap{margin-top:32px;text-align:center}
 
     /* Sticky WhatsApp */
-    .sticky-wa{position:fixed;bottom:24px;right:24px;z-index:50;width:56px;height:56px;background:#10b981;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(16,185,129,.4);transition:transform .2s}
+    .sticky-wa{position:fixed;bottom:24px;right:24px;z-index:50;width:56px;height:56px;background:linear-gradient(135deg,#06B463 0%,#22D67E 100%);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(6,180,99,.4);transition:transform .2s}
     .sticky-wa:hover{transform:scale(1.08)}
     .sticky-wa svg{width:26px;height:26px}
 
@@ -202,7 +227,7 @@
         <img src="/images/optimized/rainbow-logo.webp" alt="Rainbow Preschool" class="logo-img" width="40" height="40">
         <span class="logo-text">Rainbow Preschool</span>
       </a>
-      <a href="tel:+918291568972" onclick="return trackCall(event)" class="btn-primary header-call" data-testid="link-ad-mtpg-call">
+      <a href="tel:+918291568972" onclick="return trackCall(event)" class="btn-primary btn-call-grad header-call" data-testid="link-ad-mtpg-call">
         <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
         <span class="hide-mobile">+91 82915 68972</span><span class="show-mobile">Call</span>
       </a>
@@ -311,10 +336,10 @@
               <p class="form-error" id="formError"></p>
               <button type="submit" class="btn-primary submit-btn" id="submitBtn" data-testid="button-ad-mtpg-submit">Check Mid-Term Seat Availability</button>
               <div class="form-alt">
-                <a href="tel:+918291568972" onclick="return trackCall(event)" class="btn-secondary" style="color:var(--primary)" data-testid="link-ad-mtpg-form-call">
+                <a href="tel:+918291568972" onclick="return trackCall(event)" class="btn-secondary btn-call-grad" data-testid="link-ad-mtpg-form-call">
                   <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> Call
                 </a>
-                <a href="https://wa.me/918291568972?text=Hi, I'm interested in mid-term playgroup admission at Rainbow Preschool" onclick="return trackWhatsApp(event)" target="_blank" rel="noopener noreferrer" class="btn-secondary text-emerald" data-testid="link-ad-mtpg-form-whatsapp">
+                <a href="https://wa.me/918291568972?text=Hi, I'm interested in mid-term playgroup admission at Rainbow Preschool" onclick="return trackWhatsApp(event)" target="_blank" rel="noopener noreferrer" class="btn-secondary btn-wa-grad" data-testid="link-ad-mtpg-form-whatsapp">
                   <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg> WhatsApp
                 </a>
               </div>
@@ -322,6 +347,50 @@
           </div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- Learning environment -->
+  <section class="section bg-cream" id="learning-environment">
+    <div class="container le-container">
+      <span class="eyebrow">Our Learning Environment</span>
+      <h2 class="headline">A world built for <span class="le-grad-text">little explorers</span></h2>
+      <p class="body-lg">Peek inside a real day at Rainbow Preschool</p>
+      <div class="le-grid">
+        <div class="le-chips le-chips-left">
+          <div class="le-chip">
+            <div class="le-icon" style="background:linear-gradient(135deg,#FB6112 0%,#FF8A3D 100%);box-shadow:0 4px 14px rgba(251,97,18,.32)">
+              <svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
+            <span>Play-Based Learning</span>
+          </div>
+          <div class="le-chip">
+            <div class="le-icon" style="background:linear-gradient(135deg,#1F7AF0 0%,#48A0FF 100%);box-shadow:0 4px 14px rgba(31,122,240,.28)">
+              <svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10L12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+            </div>
+            <span>Expert Teachers</span>
+          </div>
+        </div>
+        <div class="le-video">
+          <video id="le-video" data-src="/assets/RPS_Walkthrough_Video_-_Website_1_1766126796450.mp4" poster="/images/optimized/classroom-rainbow-preschool.webp" autoplay muted loop playsinline preload="auto" aria-label="Campus walkthrough of Rainbow Preschool — classrooms, activity areas, outdoor spaces"></video>
+          <button type="button" id="le-sound" class="le-sound" data-testid="button-ad-mtpg-video-sound" aria-label="Unmute video"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg> Sound off</button>
+        </div>
+        <div class="le-chips le-chips-right">
+          <div class="le-chip">
+            <div class="le-icon" style="background:linear-gradient(135deg,#06B463 0%,#22D67E 100%);box-shadow:0 4px 14px rgba(6,180,99,.28)">
+              <svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+            </div>
+            <span>CCTV-Safe Campuses</span>
+          </div>
+          <div class="le-chip">
+            <div class="le-icon" style="background:linear-gradient(135deg,#7C4DFF 0%,#A06BFF 100%);box-shadow:0 4px 14px rgba(124,77,255,.28)">
+              <svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <span>Small Batches</span>
+          </div>
+        </div>
+      </div>
+      <p class="le-note">Real Classrooms · Real Moments</p>
     </div>
   </section>
 
@@ -777,6 +846,71 @@
     document.getElementById('otp').addEventListener('input', function(){
       this.value = this.value.replace(/\D/g, '');
     });
+
+    // ── Learning environment video: lazy-load near viewport + sound toggle ─
+    var leVideo = document.getElementById('le-video');
+    var leSoundBtn = document.getElementById('le-sound');
+    var LE_VOL_OFF = '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>';
+    var LE_VOL_ON = '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>';
+    if (leVideo) {
+      // Swap the video for its poster image (unsupported codec, decode error,
+      // or stalled load) — mirrors the homepage section's fallback.
+      var leFallbackDone = false;
+      var leShowImageFallback = function(){
+        if (leFallbackDone) return;
+        leFallbackDone = true;
+        var img = document.createElement('img');
+        img.src = leVideo.poster;
+        img.alt = leVideo.getAttribute('aria-label') || 'Rainbow Preschool campus';
+        img.style.cssText = 'display:block;width:100%;aspect-ratio:16/9;object-fit:cover';
+        leVideo.replaceWith(img);
+        if (leSoundBtn) leSoundBtn.style.display = 'none';
+      };
+      leVideo.addEventListener('error', leShowImageFallback);
+      // Codec pre-check: browsers without H.264 (e.g. some embedded/headless
+      // builds) get the poster image and never download the 13MB file.
+      var leH264 = leVideo.canPlayType ? leVideo.canPlayType('video/mp4; codecs="avc1.42E01E"') : '';
+      var loadLeVideo = function(){
+        if (leFallbackDone || leVideo.getAttribute('src')) return;
+        if (!leH264) { leShowImageFallback(); return; }
+        leVideo.src = leVideo.dataset.src;
+        var tryPlay = function(){
+          var p = leVideo.play();
+          if (p && p.catch) p.catch(function(){});
+        };
+        tryPlay();
+        // Retry once data actually arrives — play() right after setting
+        // src can fire before the browser has buffered anything.
+        leVideo.addEventListener('loadeddata', tryPlay, { once: true });
+        leVideo.addEventListener('canplay', tryPlay, { once: true });
+        // If nothing decoded after 8s (stall/unsupported), fall back to image.
+        setTimeout(function(){
+          if (!leFallbackDone && leVideo.isConnected && leVideo.readyState === 0) leShowImageFallback();
+        }, 8000);
+      };
+      // Tap-to-play fallback if autoplay is blocked.
+      leVideo.addEventListener('click', function(){
+        if (leVideo.paused) {
+          var p = leVideo.play();
+          if (p && p.catch) p.catch(function(){});
+        }
+      });
+      if ('IntersectionObserver' in window) {
+        var leObs = new IntersectionObserver(function(entries){
+          if (entries[0].isIntersecting) { loadLeVideo(); leObs.disconnect(); }
+        }, { rootMargin: '100px' });
+        leObs.observe(leVideo);
+      } else {
+        loadLeVideo();
+      }
+    }
+    if (leSoundBtn && leVideo) {
+      leSoundBtn.addEventListener('click', function(){
+        leVideo.muted = !leVideo.muted;
+        leSoundBtn.innerHTML = (leVideo.muted ? LE_VOL_OFF + ' Sound off' : LE_VOL_ON + ' Sound on');
+        leSoundBtn.setAttribute('aria-label', leVideo.muted ? 'Unmute video' : 'Mute video');
+      });
+    }
   </script>
 </body>
 </html>
