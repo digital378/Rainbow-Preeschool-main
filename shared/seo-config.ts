@@ -26,6 +26,7 @@ export const NOINDEX_SLUGS: string[] = [
   // Ad landing pages
   "/ad",
   "/ad-google",
+  "/ad-mtpg",
   "/flyer",
   "/RIS",
   

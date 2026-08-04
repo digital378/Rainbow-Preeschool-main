@@ -7,6 +7,7 @@ Allow: /
 # ── Ad landing pages (noindex, don't crawl) ───────────────────────────────────
 Disallow: /ad
 Disallow: /ad-google
+Disallow: /ad-mtpg
 Disallow: /RIS
 Disallow: /ris
 Disallow: /ris-11th
