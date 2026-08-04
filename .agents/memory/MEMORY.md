@@ -6,4 +6,5 @@
 - [Premium Design System v2.0](design-system-v2.md) — all tokens, component classes, shadow/radius/surface/animation vars; shadows were all 0 before; /dummy is the visual reference page.
 - [R3F firewall + Three.js fallback](r3f-firewall.md) — @react-three/fiber/@react-three/drei blocked by Replit firewall; use raw Three.js. Replit preview has no GPU so need isWebGLAvailable() + CSS fallback.
 - [Hero3D body style specificity](hero3d-body-style-specificity.md) — inline `<style>` in body beats Tailwind head stylesheet; use `style={{ height }}` prop (inline) instead of Tailwind class when a CSS rule exists for same property.
+- [Canonical noindex list](noindex-canonical-list.md) — NOINDEX_SLUGS in shared/seo-config.ts is the only noindex list; ssr-pages derives from it; robots sync guard enforces parity.
 - [Bot-SSR blocks standalone blog pages](bot-ssr-standalone-passthrough.md) — check-sitemap-200 uses Googlebot UA; bot-ssr intercepts before registerRoutes; pages not in ssr-pages.ts get hard 404. Fix: passthrough via STANDALONE_BLOG_SLUGS.

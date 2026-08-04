@@ -213,6 +213,21 @@ if ! npx --no-install tsx scripts/check-standalone-blog-pages.ts; then
   exit 1
 fi
 
+# Robots ↔ noindex sync guard. NOINDEX_SLUGS in shared/seo-config.ts is the
+# single source of truth for noindex URLs; this verifies robots.txt Disallow
+# rules match it 1:1 and that server/ssr-pages.ts derives (not re-declares)
+# its noIndexPages list. Prevents the /ad-mtpg-style drift where a paid
+# landing page was missing from one of the three declaration layers.
+echo "[pre-commit] Running 'tsx scripts/check-robots-noindex-sync.ts' ..."
+if ! npx --no-install tsx scripts/check-robots-noindex-sync.ts; then
+  echo "" >&2
+  echo "[pre-commit] 'check-robots-noindex-sync' failed. Commit aborted." >&2
+  echo "[pre-commit] NOINDEX_SLUGS (shared/seo-config.ts) and robots.txt Disallow" >&2
+  echo "[pre-commit] rules have drifted. Fix the issues above, or re-run with" >&2
+  echo "[pre-commit] --no-verify to bypass." >&2
+  exit 1
+fi
+
 # Record success so the pre-push hook can skip a redundant re-run on
 # the same tree. Best-effort only — never fail the commit on this.
 REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || true)"

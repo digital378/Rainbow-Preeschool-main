@@ -196,6 +196,13 @@ if ! npx --no-install tsx scripts/check-standalone-blog-pages.ts; then
   exit 1
 fi
 
+log "step 10b/18 — tsx scripts/check-robots-noindex-sync.ts (robots ↔ noindex sync guard)"
+if ! npx --no-install tsx scripts/check-robots-noindex-sync.ts; then
+  log "FAIL — NOINDEX_SLUGS (shared/seo-config.ts) and robots.txt Disallow rules have drifted, or ssr-pages re-declares its noindex list. See details above."
+  log "blocking deploy."
+  exit 1
+fi
+
 log "step 11/18 — npm run build"
 if ! npm run build; then
   log "FAIL — production build failed; aborting deploy"

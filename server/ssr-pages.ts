@@ -22,7 +22,7 @@ import {
   createAllBranchLocalBusinessSchemas,
 } from "@shared/centre-data";
 import { legacyPagesData } from "@shared/legacy-pages-data";
-import { shouldNoIndex } from "@shared/seo-config";
+import { shouldNoIndex, NOINDEX_SLUGS } from "@shared/seo-config";
 import { VERIFIED_RATING } from "@shared/verified-rating";
 import { FAQ_SCHEMA_ITEMS } from "@shared/faq-data";
 import { ADMISSIONS_FAQ_SCHEMA_ITEMS } from "@shared/admissions-faq-data";
@@ -1520,25 +1520,11 @@ const playgroundPages: Record<string, { locality: string; h1: string }> = {
 };
 
 // ── Pages intentionally excluded from indexing ──────────────────────────────
-// All paths below are served with `noIndex: true` by the SSR middleware AND
-// are blocked in `client/public/robots.txt` with a matching `Disallow:` rule.
-// Both layers must stay in sync. Decision rationale per path:
-//
-//   /ad, /ad-google   — Google Ads conversion landing pages; noindex prevents
-//                       organic traffic diluting paid campaign quality scores.
-//   /flyer            — Print/WhatsApp flyer landing page; internal use only.
-//   /RIS, /ris        — Rainbow International School (Grade 9-10) campaign
-//                       pages; separate school entity, should never surface in
-//                       preschool search results.
-//   /ris-11th         — Grade 11 CBSE admissions campaign for Rainbow
-//                       International School (Science / Commerce / Humanities).
-//                       Same reasoning as /ris above. Robots.txt Disallow
-//                       already present (added Jun 2026). GSC should confirm
-//                       deindexed — if still indexed, a 410 Gone response from
-//                       the route handler is the fastest deindex signal.
-//   /gsc, /GSC        — Internal Google Search Console data explorer; not a
-//                       public page.
-const noIndexPages = ["/ad", "/ad-google", "/ad-mtpg", "/flyer", "/RIS", "/ris", "/ris-11th", "/gsc", "/GSC", "/join-now"];
+// Derived from the canonical NOINDEX_SLUGS list in shared/seo-config.ts —
+// do NOT add paths here. To noindex a new page, add it to NOINDEX_SLUGS and
+// add a matching robots.txt Disallow rule (scripts/check-robots-noindex-sync.ts
+// enforces the pairing). Rationale per path lives next to the canonical list.
+const noIndexPages = NOINDEX_SLUGS;
 
 /**
  * Per-blog-post SEO metadata. Lifted to module scope so the /sitemap.xml

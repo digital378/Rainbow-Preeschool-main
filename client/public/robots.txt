@@ -12,6 +12,13 @@ Disallow: /RIS
 Disallow: /ris
 Disallow: /ris-11th
 Disallow: /flyer
+Disallow: /join-now
+
+# ── Thin/campaign pages (noindex, don't crawl) ────────────────────────────────
+Disallow: /author/rainbow-preschools
+Disallow: /author/rainbowpreschools
+Disallow: /kids-activity-club
+Disallow: /summer-camp
 
 # ── Internal tools (noindex, don't crawl) ─────────────────────────────────────
 Disallow: /gsc

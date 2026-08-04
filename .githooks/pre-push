@@ -237,6 +237,19 @@ if ! npx --no-install tsx scripts/check-standalone-blog-pages.ts; then
   exit 1
 fi
 
+# Robots ↔ noindex sync guard. NOINDEX_SLUGS in shared/seo-config.ts is the
+# single source of truth for noindex URLs; robots.txt Disallow rules must
+# match it 1:1 and server/ssr-pages.ts must derive noIndexPages from it.
+echo "[pre-push] Running 'tsx scripts/check-robots-noindex-sync.ts' ..."
+if ! npx --no-install tsx scripts/check-robots-noindex-sync.ts; then
+  echo "" >&2
+  echo "[pre-push] 'check-robots-noindex-sync' failed. Push aborted." >&2
+  echo "[pre-push] NOINDEX_SLUGS (shared/seo-config.ts) and robots.txt Disallow rules" >&2
+  echo "[pre-push] have drifted, or server/ssr-pages.ts re-declares its own noindex list." >&2
+  echo "[pre-push] Fix the issues above, or re-run with --no-verify to bypass." >&2
+  exit 1
+fi
+
 # Record success so a subsequent push on the same tree can skip.
 if [ -n "$HEAD_TREE" ]; then
   printf '%s' "$HEAD_TREE" > "$CACHE_FILE" 2>/dev/null || true
