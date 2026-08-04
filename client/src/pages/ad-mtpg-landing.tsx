@@ -1,5 +1,24 @@
 import { useState, useEffect, useRef } from "react";
 import { ErrorBoundary } from "@/components/error-boundary";
+import {
+  Phone,
+  ShieldCheck,
+  Bus,
+  Users,
+  Target,
+  Sparkles,
+  MessageCircle,
+  Music,
+  Activity,
+  Video,
+  CheckCircle2,
+  HeartHandshake,
+  CalendarCheck2,
+  TrendingUp,
+  Baby,
+  ChevronDown,
+} from "lucide-react";
+import { SiWhatsapp } from "react-icons/si";
 
 // Google Ads landing page — Mid-Term Playgroup admissions (OTP verified)
 const areas = ["Manpada", "Hariniwas", "Anand Nagar", "Dhokali", "Kalwa", "Kasarvadavali"];
@@ -24,25 +43,6 @@ function getUtmParams() {
   return { leadSource, leadMedium };
 }
 
-// Minimal SVG icons
-const PhoneIcon = () => (
-  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-  </svg>
-);
-
-const CheckIcon = () => (
-  <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-  </svg>
-);
-
-const WhatsAppIcon = () => (
-  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-  </svg>
-);
-
 // Lazy load Firebase
 let firebaseModule: any = null;
 async function loadFirebase() {
@@ -53,6 +53,11 @@ async function loadFirebase() {
 }
 
 type OtpStep = 'form' | 'otp' | 'submitting' | 'success';
+
+const inputClasses =
+  "w-full px-4 py-3 border border-border rounded-md bg-white text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary transition-shadow";
+
+const labelClasses = "block text-label mb-1.5";
 
 export default function AdMtpgLanding() {
   const [step, setStep] = useState<OtpStep>('form');
@@ -255,59 +260,64 @@ export default function AdMtpgLanding() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-red-50 to-white" style={{ colorScheme: 'light' }}>
+    <div className="min-h-screen bg-surface-warm" style={{ colorScheme: 'light' }}>
       {/* Header */}
-      <header className="bg-white shadow-sm py-3 px-4 sticky top-0 z-50">
-        <div className="max-w-4xl mx-auto flex items-center justify-between">
-          <a href="/" className="flex items-center gap-2">
+      <header className="card-glass sticky top-0 z-50 border-b border-white/40">
+        <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
+          <a href="/" className="flex items-center gap-2.5">
             <img src="/images/optimized/rainbow-logo.webp" alt="Rainbow Preschool" className="h-10 w-auto" width="40" height="40" />
-            <span className="font-bold text-red-600 text-lg">Rainbow Preschool</span>
+            <span className="font-heading font-bold text-primary text-lg tracking-tight">Rainbow Preschool</span>
           </a>
           <a
             href="tel:+918291568972"
             onClick={trackCall}
-            className="flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded-full text-sm font-semibold"
+            className="btn-primary-premium inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold"
             data-testid="link-ad-mtpg-call"
           >
-            <PhoneIcon /> <span className="hidden sm:inline">+91 82915 68972</span><span className="sm:hidden">Call</span>
+            <Phone className="w-4 h-4" />
+            <span className="hidden sm:inline">+91 82915 68972</span><span className="sm:hidden">Call</span>
           </a>
         </div>
       </header>
 
-      <main className="max-w-4xl mx-auto px-4 py-6">
-        <div className="grid md:grid-cols-2 gap-6">
+      {/* Hero + Form */}
+      <section className="max-w-5xl mx-auto px-4 section-py-sm">
+        <div className="grid md:grid-cols-2 gap-8 items-start">
           {/* Left Column */}
-          <div className="space-y-4">
-            <div className="inline-flex items-center gap-2 bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-semibold">
-              <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+          <div className="space-y-5">
+            <div className="inline-flex items-center gap-2 bg-emerald-50 text-emerald-700 px-4 py-1.5 rounded-full text-sm font-semibold border border-emerald-200">
+              <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
               Mid-Term Admissions Open — Limited Seats
             </div>
-            <h1 className="text-3xl md:text-4xl font-bold leading-tight text-gray-900">
-              Mid-Term <span className="text-red-600">Playgroup Admission</span> in Thane — Start Now, Don't Wait for June
-            </h1>
-            <p className="text-gray-600">
-              Your toddler doesn't have to wait for the next academic year. Join our Playgroup <strong>mid-session</strong> with a gentle settling-in plan designed for late joiners. Branches in Manpada, Kalwa, Dhokali, Kasarvadavali, Anand Nagar & Hariniwas.
+            <div>
+              <p className="section-eyebrow">Playgroup · Ages 1.5–2.5 Years</p>
+              <h1 className="text-display text-foreground">
+                Mid-Term <span className="text-gradient-brand">Playgroup Admission</span> in Thane
+              </h1>
+            </div>
+            <p className="text-body-lg text-muted-foreground">
+              Your toddler doesn't have to wait for the next academic year. Join our Playgroup <strong className="text-foreground">mid-session</strong> with a gentle settling-in plan designed for late joiners. Branches in Manpada, Kalwa, Dhokali, Kasarvadavali, Anand Nagar &amp; Hariniwas.
             </p>
             <div className="flex flex-wrap gap-2">
-              <span className="inline-flex items-center gap-1 text-sm bg-green-50 text-green-700 px-3 py-1 rounded-full border border-green-200">
-                <CheckIcon /> Ages 1.5–2.5 yrs
-              </span>
-              <span className="inline-flex items-center gap-1 text-sm bg-green-50 text-green-700 px-3 py-1 rounded-full border border-green-200">
-                <CheckIcon /> Gentle Settling-In
-              </span>
-              <span className="inline-flex items-center gap-1 text-sm bg-green-50 text-green-700 px-3 py-1 rounded-full border border-green-200">
-                <CheckIcon /> CCTV & Female Staff
-              </span>
+              {[
+                { icon: Baby, label: 'Ages 1.5–2.5 yrs' },
+                { icon: HeartHandshake, label: 'Gentle Settling-In' },
+                { icon: ShieldCheck, label: 'CCTV & Female Staff' },
+              ].map((chip) => (
+                <span key={chip.label} className="inline-flex items-center gap-1.5 text-sm bg-white text-foreground px-3.5 py-1.5 rounded-full border border-border shadow-xs">
+                  <chip.icon className="w-4 h-4 text-emerald-600" /> {chip.label}
+                </span>
+              ))}
             </div>
 
-            <div className="grid grid-cols-2 gap-3 pt-4">
-              <div className="bg-white p-4 rounded-lg border border-gray-200 text-center">
-                <div className="font-bold text-xl text-gray-900">1,00,000+</div>
-                <div className="text-xs text-gray-500">Students</div>
+            <div className="grid grid-cols-2 gap-4 pt-2">
+              <div className="card-premium p-5 text-center">
+                <div className="font-heading font-bold text-2xl text-foreground">1,00,000+</div>
+                <div className="text-sm text-muted-foreground mt-0.5">Students</div>
               </div>
-              <div className="bg-white p-4 rounded-lg border border-gray-200 text-center">
-                <div className="font-bold text-xl text-gray-900">18+ Years</div>
-                <div className="text-xs text-gray-500">Experience</div>
+              <div className="card-premium p-5 text-center">
+                <div className="font-heading font-bold text-2xl text-foreground">18+ Years</div>
+                <div className="text-sm text-muted-foreground mt-0.5">Experience</div>
               </div>
             </div>
           </div>
@@ -316,13 +326,12 @@ export default function AdMtpgLanding() {
           <ErrorBoundary
             name="ad-mtpg-otp-form"
             fallback={
-              <div className="bg-white rounded-xl shadow-xl border border-gray-200 p-6 text-center space-y-3" data-testid="error-otp-form-fallback">
-                <h3 className="text-lg font-bold text-red-600">We couldn't load the enquiry form</h3>
-                <p className="text-sm text-gray-700">Please call us directly and we'll book your visit right away.</p>
+              <div className="card-elevated p-6 text-center space-y-3" data-testid="error-otp-form-fallback">
+                <h3 className="text-title text-primary">We couldn't load the enquiry form</h3>
+                <p className="text-body text-muted-foreground">Please call us directly and we'll book your visit right away.</p>
                 <a
                   href="tel:+918291568972"
-                  style={{ backgroundColor: "#dc2626" }}
-                  className="inline-flex items-center justify-center rounded-md px-5 py-2.5 text-sm font-semibold text-white hover:opacity-90"
+                  className="btn-primary-premium inline-flex items-center justify-center px-6 py-3 text-sm font-semibold"
                   data-testid="link-otp-fallback-call"
                 >
                   Call +91 82915 68972
@@ -330,49 +339,49 @@ export default function AdMtpgLanding() {
               </div>
             }
           >
-          <div className="bg-white rounded-xl shadow-xl border border-gray-200 p-5" id="enquiry-form">
+          <div className="card-elevated p-6" id="enquiry-form">
             <div id="recaptcha-container" ref={recaptchaRef}></div>
 
             {step === 'success' ? (
-              <div className="text-center py-8 space-y-4">
-                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto">
-                  <CheckIcon />
+              <div className="text-center py-10 space-y-4">
+                <div className="icon-xl bg-emerald-50 text-emerald-600 mx-auto">
+                  <CheckCircle2 className="w-8 h-8" />
                 </div>
-                <h3 className="text-xl font-bold text-gray-900">Thank You!</h3>
-                <p className="text-gray-600">We'll call you within 24 hours to plan your mid-term playgroup visit.</p>
-                <a href="tel:+918291568972" className="inline-flex items-center gap-2 text-red-600 font-semibold">
-                  <PhoneIcon /> Call Now: +91 82915 68972
+                <h3 className="text-title text-foreground">Thank You!</h3>
+                <p className="text-body text-muted-foreground">We'll call you within 24 hours to plan your mid-term playgroup visit.</p>
+                <a href="tel:+918291568972" className="inline-flex items-center gap-2 text-primary font-semibold">
+                  <Phone className="w-4 h-4" /> Call Now: +91 82915 68972
                 </a>
               </div>
             ) : step === 'submitting' ? (
-              <div className="text-center py-8">
-                <div className="animate-spin w-8 h-8 border-4 border-red-500 border-t-transparent rounded-full mx-auto mb-4"></div>
-                <p className="text-gray-700">Submitting your enquiry...</p>
+              <div className="text-center py-10">
+                <div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full mx-auto mb-4"></div>
+                <p className="text-body text-muted-foreground">Submitting your enquiry...</p>
               </div>
             ) : step === 'otp' ? (
               <div className="space-y-4">
                 <div className="text-center">
-                  <h2 className="text-lg font-bold text-red-600">Verify OTP</h2>
-                  <p className="text-sm text-gray-500">Sent to +91 {formData.phone}</p>
+                  <h2 className="text-title text-foreground">Verify OTP</h2>
+                  <p className="text-sm text-muted-foreground mt-1">Sent to +91 {formData.phone}</p>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-1 text-gray-700">Enter 6-digit OTP</label>
+                  <label className={labelClasses}>Enter 6-digit OTP</label>
                   <input
                     type="text"
                     inputMode="numeric"
                     maxLength={6}
                     value={otp}
                     onChange={(e) => setOtp(e.target.value.replace(/\D/g, ''))}
-                    className="w-full px-3 py-3 border border-gray-300 rounded-lg text-center text-2xl tracking-widest focus:ring-2 focus:ring-red-500 bg-white text-gray-900"
+                    className={`${inputClasses} text-center text-2xl tracking-widest`}
                     placeholder="------"
                     data-testid="input-ad-mtpg-otp"
                   />
-                  {otpError && <p className="text-red-500 text-xs mt-1 text-center">{otpError}</p>}
+                  {otpError && <p className="text-destructive text-xs mt-1.5 text-center">{otpError}</p>}
                 </div>
                 <button
                   onClick={verifyOtp}
                   disabled={isSubmitting || otp.length < 6}
-                  className="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-full font-semibold disabled:opacity-50"
+                  className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3.5 rounded-full font-semibold shadow-card hover:shadow-card-hover transition-all disabled:opacity-50"
                   data-testid="button-ad-mtpg-verify"
                 >
                   {isSubmitting ? 'Verifying...' : 'Verify & Submit'}
@@ -380,7 +389,7 @@ export default function AdMtpgLanding() {
                 <div className="flex justify-between text-sm">
                   <button
                     onClick={() => { setStep('form'); setOtp(''); setOtpError(''); }}
-                    className="text-gray-500 hover:text-gray-700"
+                    className="text-muted-foreground hover:text-foreground transition-colors"
                     data-testid="button-back-to-form-mtpg"
                   >
                     Change Number
@@ -388,7 +397,7 @@ export default function AdMtpgLanding() {
                   <button
                     onClick={resendOtp}
                     disabled={countdown > 0 || isSubmitting}
-                    className={countdown > 0 ? 'text-gray-400' : 'text-red-600 hover:text-red-700'}
+                    className={countdown > 0 ? 'text-muted-foreground/60' : 'text-primary hover:text-primary/80 transition-colors'}
                     data-testid="button-resend-otp-mtpg"
                   >
                     {countdown > 0 ? `Resend in ${countdown}s` : 'Resend OTP'}
@@ -397,90 +406,92 @@ export default function AdMtpgLanding() {
               </div>
             ) : (
               <>
-                <div className="text-center mb-4">
-                  <h2 className="text-lg font-bold text-red-600">Enquire for Mid-Term Playgroup Seat</h2>
-                  <p className="text-sm text-gray-500">Get callback within 30 mins</p>
+                <div className="text-center mb-5">
+                  <h2 className="text-title text-foreground">Enquire for a Mid-Term Seat</h2>
+                  <p className="text-sm text-muted-foreground mt-1">Get a callback within 30 minutes</p>
                 </div>
-                <form onSubmit={(e) => { e.preventDefault(); sendOtp(); }} className="space-y-3">
+                <form onSubmit={(e) => { e.preventDefault(); sendOtp(); }} className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium mb-1 text-gray-700">Parent's Name</label>
+                    <label className={labelClasses}>Parent's Name</label>
                     <input
                       type="text"
                       value={formData.parentName}
                       onChange={(e) => setFormData({...formData, parentName: e.target.value})}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 bg-white text-gray-900"
+                      className={inputClasses}
                       placeholder="Enter your name"
                       data-testid="input-ad-mtpg-name"
                     />
-                    {errors.parentName && <p className="text-red-500 text-xs mt-1">{errors.parentName}</p>}
+                    {errors.parentName && <p className="text-destructive text-xs mt-1.5">{errors.parentName}</p>}
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-1 text-gray-700">Phone Number</label>
+                    <label className={labelClasses}>Phone Number</label>
                     <input
                       type="tel"
                       value={formData.phone}
                       onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 bg-white text-gray-900"
+                      className={inputClasses}
                       placeholder="10-digit number"
                       data-testid="input-ad-mtpg-phone"
                     />
-                    {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone}</p>}
+                    {errors.phone && <p className="text-destructive text-xs mt-1.5">{errors.phone}</p>}
                   </div>
-                  <div>
-                    <label className="block text-sm font-medium mb-1 text-gray-700">Child's Age</label>
-                    <select
-                      value={formData.childAge}
-                      onChange={(e) => setFormData({...formData, childAge: e.target.value})}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 bg-white text-gray-900"
-                      data-testid="select-ad-mtpg-age"
-                    >
-                      <option value="">Select age</option>
-                      <option value="1.5-2">1.5 - 2 years</option>
-                      <option value="2-2.5">2 - 2.5 years</option>
-                      <option value="2.5+">2.5+ years</option>
-                    </select>
-                    {errors.childAge && <p className="text-red-500 text-xs mt-1">{errors.childAge}</p>}
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className={labelClasses}>Child's Age</label>
+                      <select
+                        value={formData.childAge}
+                        onChange={(e) => setFormData({...formData, childAge: e.target.value})}
+                        className={inputClasses}
+                        data-testid="select-ad-mtpg-age"
+                      >
+                        <option value="">Select age</option>
+                        <option value="1.5-2">1.5 - 2 years</option>
+                        <option value="2-2.5">2 - 2.5 years</option>
+                        <option value="2.5+">2.5+ years</option>
+                      </select>
+                      {errors.childAge && <p className="text-destructive text-xs mt-1.5">{errors.childAge}</p>}
+                    </div>
+                    <div>
+                      <label className={labelClasses}>Your Area</label>
+                      <select
+                        value={formData.area}
+                        onChange={(e) => setFormData({...formData, area: e.target.value})}
+                        className={inputClasses}
+                        data-testid="select-ad-mtpg-area"
+                      >
+                        <option value="">Select area</option>
+                        {areas.map((a) => <option key={a} value={a}>{a}</option>)}
+                      </select>
+                      {errors.area && <p className="text-destructive text-xs mt-1.5">{errors.area}</p>}
+                    </div>
                   </div>
-                  <div>
-                    <label className="block text-sm font-medium mb-1 text-gray-700">Your Area</label>
-                    <select
-                      value={formData.area}
-                      onChange={(e) => setFormData({...formData, area: e.target.value})}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 bg-white text-gray-900"
-                      data-testid="select-ad-mtpg-area"
-                    >
-                      <option value="">Select area</option>
-                      {areas.map((a) => <option key={a} value={a}>{a}</option>)}
-                    </select>
-                    {errors.area && <p className="text-red-500 text-xs mt-1">{errors.area}</p>}
-                  </div>
-                  {otpError && <p className="text-red-500 text-sm text-center">{otpError}</p>}
+                  {otpError && <p className="text-destructive text-sm text-center">{otpError}</p>}
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-full font-semibold text-lg disabled:opacity-50"
+                    className="btn-primary-premium w-full py-3.5 font-semibold text-base disabled:opacity-50"
                     data-testid="button-ad-mtpg-submit"
                   >
                     {isSubmitting ? 'Sending OTP...' : 'Check Mid-Term Seat Availability'}
                   </button>
-                  <div className="flex gap-2 pt-2">
+                  <div className="flex gap-3 pt-1">
                     <a
                       href="tel:+918291568972"
                       onClick={trackCall}
-                      className="flex-1 flex items-center justify-center gap-2 border border-red-500 text-red-600 py-2 rounded-full font-medium text-sm hover:bg-red-50"
+                      className="btn-secondary-premium flex-1 flex items-center justify-center gap-2 py-2.5 text-sm font-semibold text-primary"
                       data-testid="link-ad-mtpg-form-call"
                     >
-                      <PhoneIcon /> Call
+                      <Phone className="w-4 h-4" /> Call
                     </a>
                     <a
                       href="https://wa.me/918291568972?text=Hi, I'm interested in mid-term playgroup admission at Rainbow Preschool"
                       onClick={trackWhatsApp}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex-1 flex items-center justify-center gap-2 border border-green-500 text-green-600 py-2 rounded-full font-medium text-sm hover:bg-green-50"
+                      className="btn-secondary-premium flex-1 flex items-center justify-center gap-2 py-2.5 text-sm font-semibold text-emerald-600"
                       data-testid="link-ad-mtpg-form-whatsapp"
                     >
-                      <WhatsAppIcon /> WhatsApp
+                      <SiWhatsapp className="w-4 h-4" /> WhatsApp
                     </a>
                   </div>
                 </form>
@@ -489,59 +500,70 @@ export default function AdMtpgLanding() {
           </div>
           </ErrorBoundary>
         </div>
+      </section>
 
-        {/* Why mid-term works */}
-        <div className="mt-8 space-y-3">
-          <h2 className="font-semibold text-lg text-gray-900">Why Mid-Term Admission Works at Rainbow</h2>
-          <div className="grid sm:grid-cols-2 gap-3">
+      {/* Why mid-term works */}
+      <section className="bg-white">
+        <div className="max-w-5xl mx-auto px-4 section-py-sm">
+          <p className="section-eyebrow">Mid-Session Joiners</p>
+          <h2 className="text-headline text-foreground mb-6">Why Mid-Term Admission Works at Rainbow</h2>
+          <div className="grid sm:grid-cols-2 gap-4">
             {[
-              { title: 'No "Catching Up" Needed', desc: 'Playgroup is play-based, not syllabus-driven — toddlers join activities from day one without any academic backlog.' },
-              { title: 'One-on-One Settling Support', desc: 'Late joiners get a dedicated settling-in plan: shorter initial hours, gradual separation, and extra teacher attention.' },
-              { title: 'Same Batch, Same Friends', desc: 'Your child joins the current batch and grows with the same group into Nursery next year — no disruption.' },
-              { title: 'Don\'t Lose a Year of Development', desc: 'The 1.5–2.5 age window is critical for speech, social skills and motor development. Waiting for June means losing months.' },
+              { icon: Target, title: 'No "Catching Up" Needed', desc: 'Playgroup is play-based, not syllabus-driven — toddlers join activities from day one without any academic backlog.' },
+              { icon: HeartHandshake, title: 'One-on-One Settling Support', desc: 'Late joiners get a dedicated settling-in plan: shorter initial hours, gradual separation, and extra teacher attention.' },
+              { icon: Users, title: 'Same Batch, Same Friends', desc: 'Your child joins the current batch and grows with the same group into Nursery next year — no disruption.' },
+              { icon: TrendingUp, title: "Don't Lose a Year of Development", desc: 'The 1.5–2.5 age window is critical for speech, social skills and motor development. Waiting for June means losing months.' },
             ].map((item) => (
-              <div key={item.title} className="bg-white rounded-lg border border-gray-200 p-4">
-                <div className="flex items-start gap-2">
-                  <CheckIcon />
-                  <div>
-                    <h3 className="font-medium text-gray-900 text-sm">{item.title}</h3>
-                    <p className="text-gray-600 text-sm mt-1">{item.desc}</p>
-                  </div>
+              <div key={item.title} className="card-premium p-5 flex items-start gap-4">
+                <div className="icon-md bg-primary/10 text-primary shrink-0">
+                  <item.icon className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="font-heading font-semibold text-foreground">{item.title}</h3>
+                  <p className="text-body text-muted-foreground mt-1">{item.desc}</p>
                 </div>
               </div>
             ))}
           </div>
         </div>
+      </section>
 
-        {/* Playgroup programme detail */}
-        <div className="mt-8 bg-white rounded-xl border border-gray-200 p-5">
-          <h2 className="font-semibold text-lg text-gray-900 mb-1">Playgroup Programme (1.5–2.5 years)</h2>
-          <p className="text-gray-600 text-sm mb-4">
-            Our Playgroup programme helps toddlers develop social skills, motor coordination, speech and early curiosity through play-based learning. Our trained female staff create a safe, nurturing environment where your child can explore and grow — with CCTV access for parents and transport available.
+      {/* Playgroup programme detail */}
+      <section className="bg-surface-cream">
+        <div className="max-w-5xl mx-auto px-4 section-py-sm">
+          <p className="section-eyebrow">The Programme</p>
+          <h2 className="text-headline text-foreground mb-3">Playgroup (1.5–2.5 years)</h2>
+          <p className="text-body-lg text-muted-foreground mb-6 max-w-3xl">
+            Our Playgroup programme helps toddlers develop social skills, motor coordination, speech and early curiosity through play-based learning. Trained female staff create a safe, nurturing environment — with CCTV access for parents and transport available.
           </p>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             {[
-              { name: 'Play-Based Learning', icon: '🎯' },
-              { name: 'Sensory Activities', icon: '👤' },
-              { name: 'Speech & Social Skills', icon: '👥' },
-              { name: 'Safe Environment', icon: '🛡️' },
-              { name: 'Music & Movement', icon: '🎵' },
-              { name: 'Motor Development', icon: '🏃' },
-              { name: 'CCTV Access', icon: '📹' },
-              { name: 'Transport Available', icon: '🚌' },
+              { name: 'Play-Based Learning', icon: Target },
+              { name: 'Sensory Activities', icon: Sparkles },
+              { name: 'Speech & Social Skills', icon: MessageCircle },
+              { name: 'Safe Environment', icon: ShieldCheck },
+              { name: 'Music & Movement', icon: Music },
+              { name: 'Motor Development', icon: Activity },
+              { name: 'CCTV Access', icon: Video },
+              { name: 'Transport Available', icon: Bus },
             ].map((feature) => (
-              <div key={feature.name} className="flex items-center gap-2 text-sm text-gray-700 bg-red-50 px-3 py-2 rounded-lg">
-                <span>{feature.icon}</span>
-                <span>{feature.name}</span>
+              <div key={feature.name} className="card-bento bg-white p-4 flex items-center gap-3">
+                <div className="icon-sm bg-primary/10 text-primary shrink-0">
+                  <feature.icon className="w-4 h-4" />
+                </div>
+                <span className="text-sm font-medium text-foreground">{feature.name}</span>
               </div>
             ))}
           </div>
         </div>
+      </section>
 
-        {/* Mid-term FAQs */}
-        <div className="mt-8 space-y-3">
-          <h2 className="font-semibold text-lg text-gray-900">Mid-Term Admission FAQs</h2>
-          <div className="grid gap-2">
+      {/* Mid-term FAQs */}
+      <section className="bg-white">
+        <div className="max-w-3xl mx-auto px-4 section-py-sm">
+          <p className="section-eyebrow">Common Questions</p>
+          <h2 className="text-headline text-foreground mb-6">Mid-Term Admission FAQs</h2>
+          <div className="space-y-3">
             {[
               {
                 id: 'eligibility',
@@ -564,58 +586,57 @@ export default function AdMtpgLanding() {
                 a: 'Yes, fees are pro-rated for mid-term joiners. Fill in the enquiry form above or call us and we will share the exact fee structure for your branch.',
               },
             ].map((f) => (
-              <div key={f.id} className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+              <div key={f.id} className="card-premium overflow-hidden">
                 <button
                   onClick={() => setExpandedFaq(expandedFaq === f.id ? null : f.id)}
-                  className="w-full flex items-center justify-between p-4 hover:bg-gray-50 text-left"
+                  className="w-full flex items-center justify-between gap-3 p-5 text-left"
                   data-testid={`button-ad-mtpg-faq-${f.id}`}
                 >
-                  <span className="font-medium text-gray-900 text-sm">{f.q}</span>
-                  <svg
-                    className={`w-5 h-5 text-gray-400 transition-transform shrink-0 ml-2 ${expandedFaq === f.id ? 'rotate-180' : ''}`}
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
+                  <span className="font-heading font-semibold text-foreground text-sm sm:text-base">{f.q}</span>
+                  <ChevronDown className={`w-5 h-5 text-muted-foreground shrink-0 transition-transform duration-200 ${expandedFaq === f.id ? 'rotate-180' : ''}`} />
                 </button>
                 {expandedFaq === f.id && (
-                  <div className="px-4 pb-4 pt-2 border-t border-gray-100">
-                    <p className="text-gray-600 text-sm">{f.a}</p>
+                  <div className="px-5 pb-5 pt-1 border-t border-border">
+                    <p className="text-body text-muted-foreground pt-3">{f.a}</p>
                   </div>
                 )}
               </div>
             ))}
           </div>
         </div>
+      </section>
 
-        {/* Why parents choose Rainbow */}
-        <div className="mt-8">
-          <h2 className="font-semibold text-lg text-gray-900 mb-1">Why Parents in Thane Choose Rainbow Preschool</h2>
-          <p className="text-sm text-gray-500 mb-4">6 centres across Thane, 18+ years of trusted early education</p>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+      {/* Why parents choose Rainbow */}
+      <section className="bg-surface-warm">
+        <div className="max-w-5xl mx-auto px-4 section-py-sm">
+          <p className="section-eyebrow">Trusted Since 2007</p>
+          <h2 className="text-headline text-foreground mb-1">Why Parents in Thane Choose Rainbow</h2>
+          <p className="text-body text-muted-foreground mb-6">6 centres across Thane, 18+ years of trusted early education</p>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             {[
-              { stat: '6 Centres', label: 'Across Thane' },
-              { stat: 'Since 2007', label: '18+ Years' },
-              { stat: 'CCTV', label: 'Parent Access' },
-              { stat: 'Female Staff', label: 'Trained Teachers' },
+              { icon: CalendarCheck2, stat: '6 Centres', label: 'Across Thane' },
+              { icon: TrendingUp, stat: 'Since 2007', label: '18+ Years' },
+              { icon: Video, stat: 'CCTV', label: 'Parent Access' },
+              { icon: Users, stat: 'Female Staff', label: 'Trained Teachers' },
             ].map((item) => (
-              <div key={item.stat} className="bg-white p-4 rounded-lg border border-gray-200 text-center">
-                <div className="font-bold text-lg text-gray-900">{item.stat}</div>
-                <div className="text-xs text-gray-500">{item.label}</div>
+              <div key={item.stat} className="card-premium p-5 text-center">
+                <div className="icon-md bg-primary/10 text-primary mx-auto mb-3">
+                  <item.icon className="w-5 h-5" />
+                </div>
+                <div className="font-heading font-bold text-lg text-foreground">{item.stat}</div>
+                <div className="text-xs text-muted-foreground mt-0.5">{item.label}</div>
               </div>
             ))}
           </div>
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="mt-4 w-full bg-red-600 hover:bg-red-700 text-white py-2.5 rounded-full font-semibold text-sm"
+            className="btn-primary-premium mt-8 w-full sm:w-auto sm:mx-auto sm:flex sm:items-center sm:justify-center px-8 py-3.5 font-semibold"
             data-testid="button-mtpg-cta"
           >
-            Check Mid-Term Seat Availability →
+            Check Mid-Term Seat Availability
           </button>
         </div>
-      </main>
+      </section>
 
       {/* Sticky WhatsApp */}
       <a
@@ -623,27 +644,28 @@ export default function AdMtpgLanding() {
         onClick={trackWhatsApp}
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 z-50 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-lg"
+        className="fixed bottom-6 right-6 z-50 bg-emerald-500 hover:bg-emerald-600 text-white p-4 rounded-full shadow-primary-glow transition-all hover:scale-105"
         data-testid="link-ad-mtpg-whatsapp"
+        aria-label="Chat on WhatsApp"
       >
-        <WhatsAppIcon />
+        <SiWhatsapp className="w-6 h-6" />
       </a>
 
       {/* Footer */}
-      <footer className="bg-gray-100 py-6 px-4 mt-8 text-center text-sm text-gray-600">
-        <p className="font-medium text-gray-900">Rainbow Preschool International</p>
-        <p>Thane's #1 Preschool Since 2007</p>
-        <div className="mt-3 flex items-center justify-center gap-4">
-          <a href="tel:+918291568972" className="text-red-600 font-medium" data-testid="link-ad-mtpg-footer-call">
-            +91 82915 68972
+      <footer className="bg-white border-t border-border py-8 px-4 text-center">
+        <p className="font-heading font-semibold text-foreground">Rainbow Preschool International</p>
+        <p className="text-sm text-muted-foreground mt-1">Thane's trusted preschool since 2007</p>
+        <div className="mt-4 flex items-center justify-center gap-6">
+          <a href="tel:+918291568972" className="inline-flex items-center gap-2 text-primary font-semibold text-sm" data-testid="link-ad-mtpg-footer-call">
+            <Phone className="w-4 h-4" /> +91 82915 68972
           </a>
           <a
             href="https://wa.me/918291568972"
             onClick={trackWhatsApp}
-            className="text-green-600 font-medium"
+            className="inline-flex items-center gap-2 text-emerald-600 font-semibold text-sm"
             data-testid="link-ad-mtpg-footer-whatsapp"
           >
-            WhatsApp
+            <SiWhatsapp className="w-4 h-4" /> WhatsApp
           </a>
         </div>
       </footer>
