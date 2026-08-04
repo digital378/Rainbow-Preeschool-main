@@ -551,10 +551,10 @@ export default function AdMtpgLanding() {
           </p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
-              { src: '/images/optimized/child-stacking-rings-playgroup.webp', alt: 'Toddler stacking colourful rings during playgroup at Rainbow Preschool', caption: 'Fine Motor Play' },
-              { src: '/images/gallery/rainbow-preschool-classroom-learning-01.webp', alt: 'Children engaged in play-based learning during free play at Rainbow Preschool', caption: 'Free Play Time' },
-              { src: '/images/gallery/rainbow-preschool-make-your-own-sandwich-activity.webp', alt: 'Teacher helping toddlers make their own sandwiches in a life-skills activity at Rainbow Preschool', caption: 'Hands-On Activities' },
-              { src: '/images/gallery/rainbow-preschool-splashy-fun-day-activity.webp', alt: 'Children enjoying supervised water play on Splashy Fun Day at Rainbow Preschool', caption: 'Splash Day Fun' },
+              { src: '/images/optimized/child-stacking-rings-playgroup.webp', alt: 'Toddler stacking colourful rings during playgroup at Rainbow Preschool' },
+              { src: '/images/gallery/rainbow-preschool-classroom-learning-01.webp', alt: 'Children engaged in play-based learning during free play at Rainbow Preschool' },
+              { src: '/images/gallery/rainbow-preschool-make-your-own-sandwich-activity.webp', alt: 'Teacher helping toddlers make their own sandwiches in a life-skills activity at Rainbow Preschool' },
+              { src: '/images/gallery/rainbow-preschool-splashy-fun-day-activity.webp', alt: 'Children enjoying supervised water play on Splashy Fun Day at Rainbow Preschool' },
             ].map((img) => (
               <figure key={img.src} className="card-bento bg-white overflow-hidden">
                 <div className="aspect-[4/3] overflow-hidden">
@@ -565,9 +565,6 @@ export default function AdMtpgLanding() {
                     className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
                   />
                 </div>
-                <figcaption className="px-3 py-2.5 text-sm font-medium text-foreground text-center">
-                  {img.caption}
-                </figcaption>
               </figure>
             ))}
           </div>
