@@ -555,34 +555,93 @@
       }
       return firebaseReady;
     }
-    // Warm the SDK as soon as the visitor starts filling the form so it is
-    // ready by the time they hit submit.
-    document.querySelectorAll('#form-view input, #form-view select').forEach(function(el){
-      el.addEventListener('focus', function(){ loadFirebase(); }, { once: true });
-    });
-
+    // ── reCAPTCHA + send ────────────────────────────────────────────────
     var recaptchaVerifier = null;
     function getAuth(){
       if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
       return firebase.auth();
     }
-    function initRecaptcha(){
-      if (recaptchaVerifier) { try { recaptchaVerifier.clear(); } catch(e){} recaptchaVerifier = null; }
-      recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', { size: 'invisible' }, getAuth().app);
-      return recaptchaVerifier.render();
+    var recaptchaReady = null;
+    var sendInFlight = false;
+    function initRecaptcha(forceRecreate){
+      if (recaptchaReady && !forceRecreate) return recaptchaReady;
+      var oldVerifier = recaptchaVerifier;
+      recaptchaVerifier = null;
+      recaptchaReady = null;
+      if (oldVerifier) { try { oldVerifier.clear(); } catch(e){} }
+      // Remove any orphaned widget DOM from a previous failed render.
+      document.getElementById('recaptcha-container').innerHTML = '';
+      var verifier;
+      try {
+        verifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', { size: 'invisible' }, getAuth().app);
+      } catch (e) {
+        document.getElementById('recaptcha-container').innerHTML = '';
+        return Promise.reject(e);
+      }
+      recaptchaVerifier = verifier;
+      var renderResult;
+      try {
+        renderResult = verifier.render();
+      } catch (e) {
+        try { verifier.clear(); } catch(ignore){}
+        if (recaptchaVerifier === verifier) recaptchaVerifier = null;
+        document.getElementById('recaptcha-container').innerHTML = '';
+        return Promise.reject(e);
+      }
+      // Resolves to THIS verifier (not the global) so senders never race a
+      // later recreation. Cleanup only runs while we are still current —
+      // a stale failure can never wipe a newer verifier's widget.
+      recaptchaReady = Promise.resolve(renderResult).then(function(){
+        return verifier;
+      }).catch(function(err){
+        if (recaptchaVerifier === verifier) {
+          try { verifier.clear(); } catch(e){}
+          document.getElementById('recaptcha-container').innerHTML = '';
+          recaptchaVerifier = null;
+          recaptchaReady = null;
+        }
+        throw err;
+      });
+      return recaptchaReady;
     }
+    // Warm the SDK + pre-render reCAPTCHA as soon as the visitor starts
+    // filling the form, so submit is instant and config errors surface early.
+    function warmupFirebase(){
+      loadFirebase().then(function(){
+        return initRecaptcha(false);
+      }).catch(function(err){
+        console.error('[ad-mtpg] Firebase warmup error:', err.code || err, err.message || '');
+      });
+    }
+    document.querySelectorAll('#form-view input, #form-view select').forEach(function(el){
+      el.addEventListener('focus', warmupFirebase, { once: true });
+    });
+
     function sendOtpTo(phone){
       var formatted = phone.indexOf('+91') === 0 ? phone : '+91' + phone.replace(/^0+/, '');
       return loadFirebase().then(function(){
-        return initRecaptcha();
-      }).then(function(){
-        return getAuth().signInWithPhoneNumber(formatted, recaptchaVerifier);
+        return initRecaptcha(false);
+      }).then(function(verifier){
+        return getAuth().signInWithPhoneNumber(formatted, verifier);
       });
+    }
+    function otpSendErrorMessage(err){
+      if (!err || !err.code) return 'Could not send OTP. Please try again.';
+      switch (err.code) {
+        case 'auth/invalid-phone-number': return 'This phone number looks invalid. Please check and try again.';
+        case 'auth/too-many-requests': return 'Too many attempts. Please wait a while and try again.';
+        case 'auth/quota-exceeded': return 'SMS quota exceeded. Please try again later.';
+        case 'auth/unauthorized-domain': return 'OTP is not enabled on this domain yet. Please test on the live website.';
+        case 'auth/captcha-check-failed': return 'Security check failed. Please try again.';
+        case 'auth/network-request-failed': return 'Network error. Please check your connection and try again.';
+        default: return 'Could not send OTP (' + err.code + '). Please try again.';
+      }
     }
 
     // ── Form submit ────────────────────────────────────────────────────
     function handleSubmit(e){
       e.preventDefault();
+      if (sendInFlight) return false;
       var n = document.getElementById('parentName').value.trim();
       var cn = document.getElementById('childName').value.trim();
       var ph = document.getElementById('phone').value.trim();
@@ -599,6 +658,7 @@
       if (!valid) return false;
 
       var btn = document.getElementById('submitBtn');
+      sendInFlight = true;
       btn.disabled = true; btn.textContent = 'Sending OTP...';
       sendOtpTo(ph).then(function(result){
         confirmationResult = result;
@@ -606,11 +666,12 @@
         showView('otp-view');
         startCountdown();
       }).catch(function(err){
-        console.error(err);
-        if (err && err.code === 'auth/too-many-requests') setFormError('Too many attempts. Try later.');
-        else if (err && err.code === 'auth/invalid-phone-number') setFormError('Invalid phone number.');
-        else setFormError('Failed to send OTP. Please try again.');
+        console.error('[ad-mtpg] OTP send error:', err && err.code || err, err && err.message || '');
+        setFormError(otpSendErrorMessage(err));
+        // Fresh reCAPTCHA for the next attempt.
+        initRecaptcha(true).catch(function(){});
       }).finally(function(){
+        sendInFlight = false;
         btn.disabled = false; btn.textContent = 'Check Mid-Term Seat Availability';
       });
       return false;
@@ -675,9 +736,11 @@
         document.getElementById('otp').value = '';
         startCountdown();
       }).catch(function(err){
-        console.error(err);
-        setOtpError('Failed to resend OTP.');
+        console.error('[ad-mtpg] OTP resend error:', err && err.code || err, err && err.message || '');
+        setOtpError(otpSendErrorMessage(err));
         btn.disabled = false;
+        // Fresh reCAPTCHA for the next attempt (never throws synchronously).
+        initRecaptcha(true).catch(function(){});
       });
     }
 
