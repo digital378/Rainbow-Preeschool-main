@@ -651,6 +651,11 @@
     var recaptchaReady = null;
     var recaptchaWidgetId = null;
     var sendInFlight = false;
+    // Set once the backend confirms capture — blocks any duplicate lead POST.
+    var leadSubmitted = false;
+    // Stable id for this form fill: survives OTP resends/retries so the server
+    // can dedupe (it replays the original response instead of double-capturing).
+    var leadSubmissionId = null;
     function initRecaptcha(forceRecreate){
       if (recaptchaReady && !forceRecreate) return recaptchaReady;
       var oldVerifier = recaptchaVerifier;
@@ -767,6 +772,10 @@
       if (!ar) { document.getElementById('areaError').classList.add('show'); valid = false; }
       if (!valid) return false;
 
+      if (leadSubmitted) { showView('success-view'); return false; }
+      if (!leadSubmissionId) {
+        leadSubmissionId = 'mtpg-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 10);
+      }
       var btn = document.getElementById('submitBtn');
       sendInFlight = true;
       btn.disabled = true; btn.textContent = 'Sending OTP...';
@@ -805,7 +814,13 @@
     }
 
     function submitLead(){
+      if (leadSubmitted) { showView('success-view'); return Promise.resolve(); }
+      // Mint here too (not only in handleSubmit) so the id exists however we arrive.
+      if (!leadSubmissionId) {
+        leadSubmissionId = 'mtpg-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 10);
+      }
       var payload = {
+        submissionId: leadSubmissionId,
         parentName: document.getElementById('parentName').value.trim(),
         phone: document.getElementById('phone').value.trim(),
         childName: document.getElementById('childName').value.trim(),
@@ -828,7 +843,13 @@
           showView('otp-view');
           return;
         }
+        leadSubmitted = true;
         sendGA4Event('google_ads_leads', { page_path: '/ad-mtpg' });
+        // GA4 key event: fires ONLY when the lead is fully captured end-to-end —
+        // backend 201 (DB row) + notification email sent + Google Sheet row appended.
+        if (res.data.emailSent && res.data.sheetAppended) {
+          sendGA4Event('mtpg_form_submit', { page_path: '/ad-mtpg' });
+        }
         showView('success-view');
       }).catch(function(err){
         console.error(err);

@@ -305,15 +305,67 @@ export async function registerRoutes(
     });
   });
 
+  // Idempotency for form submissions: the first request with a given
+  // client-generated submissionId reserves the key with an in-flight promise
+  // BEFORE any processing; concurrent or later duplicates await and replay that
+  // exact result (status + body) instead of re-processing. Entries live 15 min.
+  const SUBMISSION_TTL_MS = 15 * 60 * 1000;
+  const recentSubmissions = new Map<
+    string,
+    { promise: Promise<{ status: number; body: unknown }>; at: number; settled: boolean }
+  >();
+
   // Contact form submission
   app.post("/api/contact", async (req, res) => {
+    let submissionKey: string | null = null;
+    let finishJob: ((result: { status: number; body: unknown }) => void) | null = null;
     try {
-      const { recaptchaToken, ...formData } = req.body;
+      const { recaptchaToken, submissionId, ...formData } = req.body;
+      submissionKey =
+        typeof submissionId === "string" && submissionId.length > 0 && submissionId.length <= 64
+          ? submissionId
+          : null;
+      if (submissionKey) {
+        const prior = recentSubmissions.get(submissionKey);
+        // Replay in-flight reservations regardless of age (never evict pending
+        // work); settled entries only within the TTL.
+        if (prior && (!prior.settled || Date.now() - prior.at < SUBMISSION_TTL_MS)) {
+          const replay = await prior.promise;
+          res.status(replay.status).json(replay.body);
+          return;
+        }
+        recentSubmissions.delete(submissionKey);
+        // Reserve the key with an in-flight promise before any async work, so
+        // overlapping same-id requests await and replay rather than duplicate.
+        const cutoff = Date.now() - SUBMISSION_TTL_MS;
+        for (const [key, entry] of recentSubmissions) {
+          if (entry.settled && entry.at < cutoff) recentSubmissions.delete(key);
+        }
+        recentSubmissions.set(submissionKey, {
+          promise: new Promise((resolve) => {
+            finishJob = (result) => {
+              const entry = recentSubmissions.get(submissionKey);
+              if (entry) {
+                entry.settled = true;
+                entry.at = Date.now(); // TTL runs from settlement
+              }
+              resolve(result);
+            };
+          }),
+          at: Date.now(),
+          settled: false,
+        });
+      }
 
       if (RECAPTCHA_SECRET_KEY && recaptchaToken) {
         const recaptchaResult = await verifyRecaptcha(recaptchaToken);
         if (!recaptchaResult.success || (recaptchaResult.score !== undefined && recaptchaResult.score < 0.5)) {
-          res.status(400).json({ error: "reCAPTCHA verification failed. Please try again." });
+          const body = { error: "reCAPTCHA verification failed. Please try again." };
+          // Settle + release the idempotency reservation so waiters replay this
+          // failure instead of hanging, and later retries can re-process.
+          if (submissionKey) recentSubmissions.delete(submissionKey);
+          if (finishJob) finishJob({ status: 400, body });
+          res.status(400).json(body);
           return;
         }
       }
@@ -344,8 +396,44 @@ export async function registerRoutes(
         emailSent = false;
       }
       
-      // Return success with email status
-      res.status(201).json({ success: true, id: contact.id, emailSent });
+      // Append to Google Sheet synchronously so the response can confirm it
+      // (ad landing pages gate their GA4 conversion event on this flag).
+      let sheetAppended = false;
+      try {
+        await appendEnquiryRow({
+          parentName: validatedData.parentName,
+          childName: validatedData.childName,
+          phone: validatedData.phone,
+          programme: validatedData.programme,
+          branch: validatedData.branch,
+          leadSource: formData.leadSource,
+          leadMedium: formData.leadMedium,
+        });
+        sheetAppended = true;
+        console.log(`[Contact] Sheets sync success for ${validatedData.parentName}`);
+      } catch (err) {
+        console.error("[Contact] Sheets sync FAILED — sending alert email:", err);
+        // Alert the team so the lead can be added manually
+        try {
+          await sendSheetsFailureAlertEmail(
+            {
+              parentName: validatedData.parentName,
+              phone: validatedData.phone,
+              programme: validatedData.programme,
+              branch: validatedData.branch,
+            },
+            err,
+          );
+        } catch (alertErr) {
+          console.error("[Contact] Sheets failure alert email also failed:", alertErr);
+        }
+      }
+
+      // Return success with delivery status (also resolves the idempotency
+      // reservation so duplicate requests replay this exact response).
+      const responseBody = { success: true, id: contact.id, emailSent, sheetAppended };
+      if (finishJob) finishJob({ status: 201, body: responseBody });
+      res.status(201).json(responseBody);
       
       // Send to MCB CRM in background (non-blocking)
       (async () => {
@@ -366,39 +454,19 @@ export async function registerRoutes(
         }
       })();
 
-      // Append to Google Sheet in background (non-blocking)
-      (async () => {
-        try {
-          await appendEnquiryRow({
-            parentName: validatedData.parentName,
-            childName: validatedData.childName,
-            phone: validatedData.phone,
-            programme: validatedData.programme,
-            branch: validatedData.branch,
-            leadSource: formData.leadSource,
-            leadMedium: formData.leadMedium,
-          });
-          console.log(`[Contact] Sheets sync success for ${validatedData.parentName}`);
-        } catch (err) {
-          console.error("[Contact] Sheets sync FAILED — sending alert email:", err);
-          // Alert the team so the lead can be added manually
-          await sendSheetsFailureAlertEmail(
-            {
-              parentName: validatedData.parentName,
-              phone: validatedData.phone,
-              programme: validatedData.programme,
-              branch: validatedData.branch,
-            },
-            err,
-          );
-        }
-      })();
     } catch (error) {
+      // Failed attempts release the reservation so a genuine later retry can
+      // re-process; requests already awaiting it replay the same failure.
+      if (submissionKey) recentSubmissions.delete(submissionKey);
       if (error instanceof z.ZodError) {
-        res.status(400).json({ error: "Invalid form data", details: error.errors });
+        const body = { error: "Invalid form data", details: error.errors };
+        if (finishJob) finishJob({ status: 400, body });
+        res.status(400).json(body);
       } else {
         console.error("Contact submission error:", error);
-        res.status(500).json({ error: "Failed to submit contact form" });
+        const body = { error: "Failed to submit contact form" };
+        if (finishJob) finishJob({ status: 500, body });
+        res.status(500).json(body);
       }
     }
   });
