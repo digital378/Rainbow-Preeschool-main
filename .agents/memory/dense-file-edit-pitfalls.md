@@ -14,3 +14,5 @@ Two related pitfalls hit while landing a subagent-built page whose JSX was dense
 **How to apply:** when delegating UI fixes on generated/dense components, put explicit grep-verifiable acceptance criteria in the followup; when editing such files yourself, one operation per file per batch, then verify with targeted greps.
 
 Related: when e2e-verifying scroll-into-view behavior, sample scrollY over time from a distant start position — smooth-scroll journeys look like "no scroll" if measured once mid-flight or while already at the target.
+
+Also learned (brand migration round): after any "restyle to design system" rewrite, run a class-orphan scan — extract every className token from the JSX and confirm each resolves to Tailwind, index.css, or the page's own style block. Subagent migrations repeatedly left ~20 undefined classes (silently unstyled sections) while claiming completion. And when deleting a scoped CSS rule with sed, the scoping prefix (e.g. `.page-root `) stays behind as an orphaned selector — delete the whole line, not just the rule body.
