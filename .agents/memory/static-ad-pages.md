@@ -14,3 +14,4 @@ Ad landing pages (e.g. /ad-mtpg) are standalone static HTML files in `public/`, 
 - Every asset the HTML references must exist under `client/public/` (Vite's publish root → dist/public). A file existing only in the source-root `public/` works in dev but is not guaranteed in the production artifact — this bit the logo once.
 - Keep the path in `NOINDEX_SLUGS` (shared/seo-config.ts) and robots.txt Disallow; the HTML must also carry its own `<meta name="robots" content="noindex, nofollow">`.
 - Bot-SSR is not a problem: the route is registered before it, so bots get the full static page (200).
+- Dev gotcha: once `dist/ad-assets/ad-mtpg.html` exists, it shadows `public/ad-mtpg.html` in dev too (dist-first candidates) AND the route caches the HTML in memory — after editing the file, re-copy to dist AND restart the workflow, or you'll test a stale version.

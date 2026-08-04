@@ -10,10 +10,12 @@
   <link rel="preload" as="image" href="/images/optimized/rainbow-logo.webp">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- Fonts: non-blocking load (print-media trick), swap in when ready -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600&display=swap">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"></noscript>
 
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=GT-55BFZCQT"></script>
+  <!-- GA/GTM: shim immediately (free), load the actual scripts on idle -->
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
@@ -24,14 +26,23 @@
       'phone_conversion_number': '82915 68972'
     });
   </script>
-
-  <!-- Microsoft Clarity -->
-  <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "m20xf4ffec");
+  <script>
+    function _loadDeferredAnalytics(){
+      var g = document.createElement('script');
+      g.async = true;
+      g.src = 'https://www.googletagmanager.com/gtag/js?id=GT-55BFZCQT';
+      document.head.appendChild(g);
+      (function(c,l,a,r,i,t,y){
+          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", "m20xf4ffec");
+    }
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(_loadDeferredAnalytics, { timeout: 3000 });
+    } else {
+      window.addEventListener('load', function(){ setTimeout(_loadDeferredAnalytics, 500); });
+    }
   </script>
 
   <style>
@@ -437,9 +448,7 @@
 
   <style>@media(max-width:639px){.hide-mobile{display:none}.show-mobile{display:inline}}@media(min-width:640px){.show-mobile{display:none}}</style>
 
-  <!-- Firebase (compat SDK, deferred) -->
-  <script defer src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-  <script defer src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <!-- Firebase is loaded on demand (first form interaction), not on page load -->
 
   <script>
     // ── Config (injected server-side) ──────────────────────────────────
@@ -526,7 +535,32 @@
       }, 1000);
     }
 
-    // ── Firebase OTP ───────────────────────────────────────────────────
+    // ── Firebase OTP (SDK loaded on demand to keep initial TBT low) ────
+    var firebaseReady = null;
+    function loadFirebase(){
+      if (!firebaseReady) {
+        firebaseReady = new Promise(function(resolve, reject){
+          var s1 = document.createElement('script');
+          s1.src = 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js';
+          s1.onload = function(){
+            var s2 = document.createElement('script');
+            s2.src = 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js';
+            s2.onload = function(){ resolve(); };
+            s2.onerror = reject;
+            document.head.appendChild(s2);
+          };
+          s1.onerror = reject;
+          document.head.appendChild(s1);
+        });
+      }
+      return firebaseReady;
+    }
+    // Warm the SDK as soon as the visitor starts filling the form so it is
+    // ready by the time they hit submit.
+    document.querySelectorAll('#form-view input, #form-view select').forEach(function(el){
+      el.addEventListener('focus', function(){ loadFirebase(); }, { once: true });
+    });
+
     var recaptchaVerifier = null;
     function getAuth(){
       if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
@@ -539,7 +573,9 @@
     }
     function sendOtpTo(phone){
       var formatted = phone.indexOf('+91') === 0 ? phone : '+91' + phone.replace(/^0+/, '');
-      return initRecaptcha().then(function(){
+      return loadFirebase().then(function(){
+        return initRecaptcha();
+      }).then(function(){
         return getAuth().signInWithPhoneNumber(formatted, recaptchaVerifier);
       });
     }
