@@ -1,0 +1,110 @@
+I inspected the live preview of this page directly — pulled computed CSS from the DOM, measured actual on-screen text volume, and tested the interactive components by hand. Everything below is backed by what I actually found, not a guess. Ground-truth design tokens, pulled from this site's live pages:
+
+--primary: 0 85% 50%        /* red — matches brand red #EC210F, this site's dominant/workhorse colour */
+--secondary: 45 90% 55%     /* amber/gold — used sparingly, e.g. for the "unofficial" badge */
+--accent: 200 75% 50%       /* a blue — used sparingly, not as a per-item colour-coding system */
+--muted: 220 14% 96%        /* light neutral background */
+--background: 0 0% 100%
+--foreground: 220 20% 12%
+--border: 220 13% 91%
+--radius: 1.25rem           /* card corner radius convention used site-wide */
+
+Container convention used across this site's other blog pages: content is centred in a max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 wrapper with modest, consistent section padding (not large empty gaps between sections).
+
+GUIDING PRINCIPLE — read this before touching anything
+
+"Immersive" for this page means interaction and motion: the cursor/stamp effect, tap-to-reveal Field Guide cards, the riddle flip, the matching-game feedback, the passport-fill-on-scroll. It does NOT mean a different colour palette, different typography, or a different layout system per section. Every fix below — including the new card-reveal interaction in FIX 5 — must still render using this site's existing colour tokens, spacing scale, and container width. If a fix ever seems to require a new colour or a one-off layout pattern, stop and reuse an existing site component/token instead.
+
+FIX 1 — Icon/colour system
+
+Problem: every Field Guide card's SVG icon currently uses its own hardcoded, arbitrary hex colour — for example fill="#f7ead2" stroke="#87643c" on the Emblem icon, stroke="#345b87" on the Anthem icon, stroke="#a54d36" on the Song icon, stroke="#a06b43" on the Pledge icon, and more unique hex values across the other 13 symbols. This creates a scattered, off-brand "rainbow" look.
+
+Fix: find every inline SVG icon on this page (search for hardcoded hex values like 
+#87643c, 
+#345b87, 
+#a54d36, 
+#a06b43, and similar) and replace so that:
+
+Every icon's stroke/accent colour uses the site's actual --primary red token (
+#EC210F), applied identically to all 17 icons — do not vary it per symbol or zone.
+Every icon's fill/background uses one shared light neutral (either the --muted token or the existing cream 
+#f7ead2 — pick whichever this codebase's other components already use, applied uniformly).
+The only permitted secondary colour on this page is the real --secondary amber token, and only for the "POPULARLY RECOGNISED — NOT OFFICIALLY GAZETTED" badge (verify it uses the token, not a separately hardcoded amber hex).
+Do not introduce --accent blue anywhere on this page.
+Zone differentiation (Zone 1/2/3) must not be expressed through different icon hues — use a subtle icon shape/motif difference or a restrained background-tint variation on the --muted scale instead.
+FIX 2 — Match the Symbol game shows literal "Illustration" text
+
+Problem: the Match the Symbol section renders the literal word "Illustration" as a visible text label on all 12 illustration tiles, next to the icon. Confirmed by direct inspection: the tiles do have real icons and correct aria-label="Illustration tile: flag" attributes underneath, but the visible on-screen text "Illustration" is still printed alongside each icon, which reads as an unfinished placeholder.
+
+Fix: remove the literal visible "Illustration" text node from all 12 tiles. Keep the real icon (already correct, reuse the same icon used in that symbol's Field Guide card) and keep the aria-label for accessibility — just stop rendering "Illustration" as visible on-page text.
+
+FIX 3 — Dual-brand closing block: RIS panel uses the wrong colour
+
+Problem: computed styles confirm the "NURSERY TO GRADE 12 · CBSE" eyebrow text on the Rainbow International School panel renders as rgb(244, 192, 37) (amber) — the exact same colour as the "AGES 1.5–5.5 YEARS · THANE" eyebrow on the Rainbow Preschool International panel next to it. RIS and RPS must never share the same colour treatment.
+
+Fix: the RIS panel's eyebrow, and any other accent text/border unique to that panel, must use RIS navy 
+#10174F, visibly distinct from the RPS panel (which keeps the red/amber system). Check for an existing RIS colour token/variable first (it likely already exists from how other pages implement this block) and reuse it. If this page built its own one-off version of the dual-brand block instead of reusing the shared component, switch it to reuse whatever shared dual-brand component the Independence Day/Republic Day pages already use for this exact section — that version is already correct.
+
+FIX 4 — Layout spacing and container width
+
+Problem: large, empty vertical gaps between sections (e.g. a big dead space between the hero and the Passport Progress Strip) that don't match this site's actual rhythm, and the page doesn't consistently sit inside the same content-width container the rest of the site uses.
+
+Fix:
+
+Wrap the page's content sections in the same container convention used elsewhere on this site: centred, max-w-4xl (or this project's equivalent container component/class), with consistent horizontal padding (px-4 sm:px-6 lg:px-8) — match how Independence Day/Republic Day implement their containers rather than inventing a new pattern.
+Normalize vertical spacing between sections to a consistent, modest scale (this site's sections use padding in the ~32px range, not large empty bands) — remove oversized gaps, particularly right after the hero.
+Confirm card corner radius across all components (Field Guide cards, riddle cards, craft cards, matching tiles) matches the site's --radius: 1.25rem convention, not a mix of radii.
+FIX 5 — Field Guide section reads as a wall of text (the main "too cluttered" cause)
+
+Problem, measured directly on the live page: each Field Guide card currently shows ALL of the following simultaneously, with no progressive disclosure — name, Hindi name, "Spotted In" line, "Explorer Fact" line, the full toddler-or-preschooler description paragraph, and the "Try This" line — averaging ~650 characters of always-visible body text per card. Across all 17 cards that's roughly 11,000 characters of copy rendered on-screen at once in this one section alone, which is over half of the entire page's total text. This is the concrete cause of the "too much text / cluttered" impression — nothing about the copy itself is wrong, it's that all of it is forced open at once for all 17 symbols simultaneously.
+
+Fix — add a collapsed/expanded state to each Field Guide card, in keeping with the field-guide/passport metaphor already established elsewhere on the page:
+
+Collapsed (default) state shows only: the icon, the symbol name + Hindi name, the "unofficial" badge if applicable, and ONE short teaser line (reuse the existing "Spotted In" line as the teaser — it's already short). Nothing else is visible by default.
+Add a clear, on-brand tap target to expand the card — label it something in the established explorer voice, e.g. "Open Field Notes" or "Peek Inside" (pick one and use it consistently across all 17 cards). Style this control using the same --primary red + --radius token conventions as the rest of the page, not a new pattern.
+Expanding a card reveals the Explorer Fact, the toddler/preschooler toggle and its description text, and the "Try This" line — i.e. everything that's already approved copy, now revealed on demand instead of forced open. Do not delete or shorten any of this text — it all still exists, just behind the expand action.
+Keep the existing toddler/preschooler toggle mechanism exactly as built (it already works correctly) — it just now lives inside the expanded state.
+Collapsing/expanding one card must not affect any other card's state (independent per-card state, not an accordion that closes others).
+This should noticeably reduce the amount of text visible on first scroll through this section while keeping 100% of the approved content reachable in one tap.
+
+Also fix, in the same section: the Field Guide grid currently uses a hardcoded fixed-pixel layout — grid-template-columns: 400px 400px 400px — instead of a responsive grid. Replace this with a responsive grid (e.g. Tailwind grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 or this project's equivalent), matching whatever responsive grid pattern the rest of the site's card sections already use. Fixed pixel columns don't fit a mobile viewport and force overflow/squeezing.
+
+FIX 6 — Matching game: no visible "selected" state
+
+Problem: clicking a tile in the Match the Symbol game produces only a faint particle-dot animation with no persistent visual indication that a tile is currently selected and waiting for its pair.
+
+Fix: on first click, give the selected tile a clear, persistent selected state — a --primary red border/ring plus a slight scale-up or background tint — that stays visible until the second tile is clicked and the pair is confirmed as correct or incorrect. Use the same visual language (colour, radius) as the rest of the page's interactive elements, not a new style.
+
+FIX 7 — Riddle reveal replaces the question instead of showing both
+
+Problem: tapping a riddle card to reveal the answer currently replaces the riddle question text entirely with the answer, so the child/parent can no longer see the riddle that was just solved.
+
+Fix: on reveal, keep the riddle question visible and show the answer alongside or beneath it (e.g. the question stays in place, with the answer appearing as an additional line/element below it, clearly marked as the answer). Don't swap one for the other.
+
+FIX 8 — Full mobile pass
+
+Test the entire page at a 375–414px mobile width, section by section: hero, Passport Progress Strip, Field Guide grid (see FIX 5's grid fix), riddles, Match the Symbol, Craft Trail, Download & Print, Symbols Through the Year, FAQ, and the dual-brand closing block. Fix any horizontal overflow, any remaining hardcoded fixed-pixel widths, cramped or overlapping text, and any tap targets that are too small or too close together for a touchscreen. Everything must fit the viewport width with no horizontal scroll anywhere on the page.
+
+WHAT NOT TO CHANGE
+Do not alter, shorten, or reword any copy/text content — all 17 Field Guide cards, riddles, matching pairs, craft trail text, FAQ, and dual-brand copy are already approved and correct as written. FIX 5 changes how/when this text is revealed, never what it says.
+Do not change section order or remove/add sections/components.
+Do not change interaction logic beyond what's specified above (depth toggle mechanism, matching-game pairing logic, passport-fill-on-scroll, cursor/stamp effects) — only their visual styling and, for Field Guide cards, the added collapse/expand wrapper.
+Do not touch any other page on this site.
+QA CHECKLIST — verify before considering this done
+ All 17 Field Guide card icons use one consistent stroke colour (real --primary red) and one consistent fill/neutral — no arbitrary per-symbol hex colours remain
+ The "unofficial" badge uses the real --secondary amber token, not a separately hardcoded hex
+ Match the Symbol section shows 12 real icons, zero visible "Illustration" text
+ Matching tiles show a clear, persistent selected state (red ring/border) between first and second click
+ Riddle cards show the question AND the answer together after reveal, not answer-only
+ RIS panel in the dual-brand block renders in RIS navy 
+#10174F, visibly different from the RPS panel
+ Page content sits inside the same max-width/padding container convention as the rest of the site
+ No oversized empty gaps between sections; spacing rhythm matches the rest of the site
+ Card corner radius is consistent everywhere and matches the site's --radius token
+ Field Guide cards default to a collapsed state (icon, name, Hindi name, one teaser line, badge if applicable) and expand on tap to reveal Explorer Fact, the toddler/preschooler description, and Try This — with zero copy deleted or reworded
+ Field Guide grid uses a responsive column layout, not fixed 400px 400px 400px pixel columns
+ Full page tested at 375–414px width, section by section, with no horizontal overflow and no cramped touch targets anywhere
+ Nothing else on the page (copy, structure, other interactions, other pages) was modified
+ Take a fresh screenshot of the full page (desktop and mobile) after the fix and confirm it now reads as organised and scannable — one consistent red/cream/neutral colour system, short/collapsed cards by default, no wall-of-text impression
+
+END OF PROMPT
