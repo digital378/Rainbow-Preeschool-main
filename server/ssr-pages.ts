@@ -1473,8 +1473,8 @@ const staticPages: Record<string, PageSEOData> = {
     internalLinks: commonInternalLinks,
   },
   "/national-symbols-of-india-for-kids": {
-    title: "17 National Symbols of India for Kids (2026) | Flag, Tiger, Peacock & More — Rainbow Preschool",
-    description: "Explore all 17 national symbols of India with your preschooler — flag, emblem, tiger, peacock, lotus, mango and more. Fun riddles, a matching game, craft ideas and a free printable Symbol Passport from Rainbow Preschool International, Thane.",
+    title: "17 National Symbols of India for Kids (2026) | Rainbow Preschool",
+    description: "Explore all 17 national symbols of India with your preschooler — flag, tiger, peacock, lotus & more. Riddles, games and a free printable Symbol Passport.",
     keywords: "national symbols of india, 17 national symbols of india, national symbols for kids, national flag for kids, national animal of india tiger, national bird peacock, national flower lotus, india symbols preschool, symbol passport printable",
     canonical: `${BASE_URL}/national-symbols-of-india-for-kids`,
     ogType: "article",
