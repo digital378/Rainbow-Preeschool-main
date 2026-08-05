@@ -12,3 +12,4 @@
 - [Static ad landing pages](static-ad-pages.md) — ad pages are static HTML in public/ + dist/ad-assets build copy, not React; assets must exist under client/public (Vite root) or they 404 in prod.
 - [Dense-file edit pitfalls](dense-file-edit-pitfalls.md) — never mix Edit + sed line-range deletes on one file in a batch; demand grep-verifiable evidence for subagent fix claims; sample scrollY over time when testing smooth scroll.
 - [Tester container-width false positives](tester-scrollwidth-false-positive.md) — a tester checking "is content narrower/centered" via document.body.scrollWidth measures page overflow, not the container; ask it to getBoundingClientRect() the actual container div instead.
+- [Tester lazy-image false positive](tester-lazy-image-false-positive.md) — `loading="lazy"` icons can read as "broken" (naturalWidth 0) if checked without scrolling into view first; verify with curl before assuming a real bug.
