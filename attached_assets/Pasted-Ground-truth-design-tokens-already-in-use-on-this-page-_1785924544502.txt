@@ -1,0 +1,93 @@
+Ground-truth design tokens (already in use on this page — keep using them, do not introduce new colours):
+
+--primary: 0 85% 50%        /* red — #EC210F */
+--secondary: 45 90% 55%     /* amber — badge only */
+--muted: 220 14% 96%
+--background: 0 0% 100%
+--foreground: 220 20% 12%
+--border: 220 13% 91%
+--radius: 1.25rem
+
+Container: max-w-4xl mx-auto px-4 sm:px-6 lg:px-8.
+
+TASK 1 — Replace all icons with Lucide
+
+Install lucide-react if it isn't already a dependency. Replace every hand-drawn inline SVG icon on this page — all 17 Field Guide card icons and all 12 Match the Symbol tile icons — with the following Lucide components. Keep the existing uniform styling rule: every icon renders in --primary red stroke, on a shared cream/--muted circular background, same size and stroke weight across all 17 — this doesn't change, only the icon shapes themselves change.
+
+Exact/strong matches:
+
+National Flag — Tiranga → Flag
+National Currency Symbol — ₹ → IndianRupee
+National Calendar — Saka Calendar → CalendarDays
+National Anthem — Jana Gana Mana → Music2
+National Song — Vande Mataram → Music
+National Flower — Lotus → Flower2
+National Tree — Banyan → TreeDeciduous
+National River — Ganga → Waves
+National Fruit — Mango → Citrus
+National Vegetable — Pumpkin → Sprout
+
+Near-miss placeholders (client knows these are approximate and will supply custom icons later — use these Lucide icons for now, don't leave anything blank or unstyled):
+
+National Emblem → Landmark
+National Pledge → ScrollText
+National Animal — Tiger → PawPrint
+National Bird — Peacock → Bird
+National Aquatic Animal — River Dolphin → Fish
+National Heritage Animal — Elephant → Footprints
+National Reptile — King Cobra → Route
+
+In the Match the Symbol section, each illustration tile must use the exact same Lucide icon as that symbol's Field Guide card (same component, same styling) — keep them visually paired.
+
+TASK 2 — Match the Symbol: two-column layout at every breakpoint
+
+Problem: on mobile this section currently stacks all 12 icon tiles in one full-width block, then all 12 name tiles in a second block below — forces scrolling up and down to compare, unplayable on a phone.
+
+Fix:
+
+Two columns, side by side, at ALL screen widths — icon tiles in the left column, name tiles in the right column. Never stack into two separate vertical blocks, on any breakpoint.
+On narrow/mobile widths, shrink tile padding and width (not text below a readable minimum) so both columns fit comfortably side by side within the page's standard container padding — roughly 45%/45% column widths with a small central gap.
+Keep row heights consistent and modest; wrap long text gracefully rather than growing a tile — no tile should overlap or push into a neighbouring row at any width.
+Keep generous vertical gap between rows (same spacing scale as the rest of the page) so adjacent rows never risk a mis-tap on a small screen.
+Keep the existing selected-tile state (red ring/border + slight scale on first click, persists until the pair resolves) — do not change this logic, only the surrounding layout.
+Both columns must scroll together as a single unit — never independently — so they can't drift out of alignment with each other.
+TASK 3 — Header redesign
+
+Current header is headline + subhead + two buttons + one text link on a flat field — no visual anchor. Add:
+
+A light decorative band across the hero using 4–5 flagship Lucide icons (Flag, Bird, Flower2, TreeDeciduous) arranged loosely along a thin dotted line rendered in --primary red at low opacity (roughly 15–25% opacity) — this is the page's first visual cue that it's a "trail," visible before any scrolling.
+The existing "Begin the Trail" compass icon gets a slow, subtle rotation (a few degrees back and forth on a multi-second loop, or on hover if a constant loop feels too busy) — should read as "alive," not distracting. Respect prefers-reduced-motion — disable the rotation for users with that setting.
+Convert the "12 min read · Ages 1.5–6" text line into small pill-style stat chips, reusing the exact same pill styling already used for the "unofficial" badge elsewhere on the page (cream fill, thin border, small-caps label) rather than plain grey text.
+No new colours, no new container width — this task is icon placement, one thin dotted line, one subtle animation, and reused pill styling only.
+TASK 4 — Motion details across the page
+Trail line through zones: add a thin --primary-red dotted line that visually threads through the three "Zone 1/2/3" headers, animating in progressively as the user scrolls to each zone (simple fade/draw-in, not a heavy effect).
+Scroll-linked passport fill: confirm the "17/17 collected" numbered strip fills in (outline → solid red) as the user scrolls past each corresponding Field Guide card, not only on direct click/tap interaction. If it's currently click-only, wire it to scroll position (e.g. an IntersectionObserver per card) so it also progresses passively while reading.
+Card hover/tap lift: add a small, consistent lift on hover/tap (slight shadow increase + 2–4px translateY) to Field Guide cards, riddle cards, and matching tiles — same duration/easing across all three so it reads as one consistent system, not three different effects.
+Cursor stamp effect: leave the existing Explorer's Lens / ink-stamp cursor effect exactly as built — just confirm it only ever renders in --primary red (no leftover off-brand colour from earlier iterations).
+TASK 5 — Compact the "17 Symbols to Collect · 3 Explorer Zones" strip
+
+Problem: this is currently its own full-width horizontal-scroll section right under the hero, requiring left/right arrow buttons on desktop to see all 17 circles — reads as a second, competing header.
+
+Fix:
+
+Remove the standalone horizontal-scroll strip section entirely.
+Add a compact stat chip near the header's CTA row (styled like the pills from Task 3) summarizing the count, e.g. "17 Symbols · 3 Zones" — this replaces the old strip's introductory role.
+Move the actual progress-tracking mechanic (the scroll-linked fill from Task 4) to a slim vertical rail on desktop (a thin bar alongside the content that fills red as the user scrolls through zones) or a slim horizontal bar (not 17 individual circles) on mobile — no arrows, no independent horizontal-scroll container anywhere on the page.
+WHAT NOT TO CHANGE
+Do not alter any approved copy — Field Guide card text, riddles, matching pairs, craft trail, FAQ, dual-brand block all stay exactly as written.
+Do not touch the already-correct colour system, RIS navy panel, collapsed/expand Field Guide card behaviour, or the responsive Field Guide grid from the last fix round — this prompt only adds the 5 tasks above.
+Do not change section order or remove/add sections beyond what's specified (the "17 Symbols" strip is being restyled/relocated, not deleted as a concept — its progress-tracking role must survive in the new compact form).
+Do not touch any other page on this site.
+QA CHECKLIST
+ All 17 Field Guide icons and all 12 matching-game icons are Lucide components (no hand-drawn SVGs remain), styled uniformly in --primary red on a shared neutral background
+ Icon mapping matches the list in Task 1 exactly, including the 7 near-miss placeholders
+ Match the Symbol section is two columns side-by-side at both desktop and mobile widths — no stacking, no overlap, no independent column scrolling
+ Selected-tile highlight still works correctly within the new layout
+ Header shows the icon/dotted-trail band, the compass has a subtle animation (and respects prefers-reduced-motion), and the read-time/age stats render as pill chips
+ Dotted trail line threads through the three zone headers and animates in on scroll
+ Passport progress strip fills based on scroll position through each card, not just clicks
+ Field Guide cards, riddle cards, and matching tiles all share the same hover/tap lift effect
+ Cursor stamp effect still works and is red-only
+ The old horizontal-scroll "17 Symbols" strip is gone, replaced by a compact header chip plus a slim scroll-linked progress rail — no arrows, no horizontal-scroll container
+ All approved copy, section order, and other interaction logic is unchanged
+ Full page re-screenshotted at both desktop and mobile widths and visually confirmed against this spec
