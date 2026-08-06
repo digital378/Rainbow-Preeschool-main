@@ -109,6 +109,98 @@ Please check the Google Sheets integration and the Replit server logs.
   }
 }
 
+export async function sendEmailFailureAlertEmail(
+  lead: { parentName: string; phone: string; programme: string; branch: string },
+  error: unknown,
+): Promise<void> {
+  const gmailUser = process.env.GMAIL_USER;
+  const gmailPass = process.env.GMAIL_APP_PASSWORD;
+
+  if (!gmailUser || !gmailPass) {
+    console.error('[EmailAlert] Gmail credentials not configured — cannot send email failure alert');
+    return;
+  }
+
+  const errorMessage = error instanceof Error ? error.message : String(error);
+
+  const htmlBody = `
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+    .alert-box { background: #f8d7da; border: 2px solid #dc3545; border-radius: 6px; padding: 16px; margin: 16px 0; }
+    .alert-title { color: #58151c; font-size: 18px; font-weight: bold; margin: 0 0 8px; }
+    table { border-collapse: collapse; width: 100%; max-width: 600px; margin: 16px 0; }
+    th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+    th { background-color: #f5f5f5; font-weight: bold; width: 180px; }
+    .error-box { background: #f8d7da; border: 1px solid #f5c2c7; border-radius: 4px; padding: 12px; font-family: monospace; font-size: 13px; color: #842029; }
+  </style>
+</head>
+<body>
+  <div class="alert-box">
+    <p class="alert-title">🚨 ACTION REQUIRED — Lead notification EMAIL failed to send</p>
+    <p>A new enquiry was received and saved, but the notification email could not be delivered. The lead is safely recorded in the database — check there or in Google Sheets if this row also appears.</p>
+  </div>
+
+  <p><strong>Lead details:</strong></p>
+  <table>
+    <tr><th>Field</th><th>Value</th></tr>
+    <tr><td>Parent Name</td><td>${lead.parentName}</td></tr>
+    <tr><td>Mobile No</td><td>${lead.phone}</td></tr>
+    <tr><td>Programme</td><td>${lead.programme}</td></tr>
+    <tr><td>Preferred Centre</td><td>${lead.branch}</td></tr>
+  </table>
+
+  <p><strong>Error detail:</strong></p>
+  <div class="error-box">${errorMessage}</div>
+
+  <p>Please check the Gmail credentials/quota and the Replit server logs for more details.</p>
+  <p>Best regards,<br>Rainbow Preschools Website (automated alert)</p>
+</body>
+</html>
+  `.trim();
+
+  const textBody = `
+🚨 ACTION REQUIRED — Lead notification EMAIL failed to send
+
+A new enquiry was received and saved, but the notification email could not
+be delivered. The lead is safely recorded in the database — check there or
+in Google Sheets if this row also appears.
+
+Lead details:
+  Parent Name      : ${lead.parentName}
+  Mobile No        : ${lead.phone}
+  Programme        : ${lead.programme}
+  Preferred Centre : ${lead.branch}
+
+Error:
+  ${errorMessage}
+
+Please check the Gmail credentials/quota and the Replit server logs.
+  `.trim();
+
+  try {
+    // Retry with a fresh transporter — the failure may have been a transient
+    // issue with the shared module-level transporter, not the credentials.
+    await nodemailer.createTransport({
+      service: 'gmail',
+      auth: { user: gmailUser, pass: gmailPass },
+    }).sendMail({
+      from: gmailUser,
+      to: gmailUser,
+      subject: `🚨 Notification email FAILED for ${lead.parentName} — check the lead manually`,
+      text: textBody,
+      html: htmlBody,
+    });
+    console.log('[EmailAlert] Failure alert email sent successfully');
+  } catch (alertErr) {
+    // Last resort: this is the only remaining signal, so make sure it's loud
+    // in the logs even though we can't email about it.
+    console.error('[EmailAlert] Could not send email-failure alert (both the original email and this alert failed):', alertErr);
+  }
+}
+
 export async function sendLeadNotificationEmail(data: ContactFormData): Promise<boolean> {
   const gmailUser = process.env.GMAIL_USER;
   const gmailPass = process.env.GMAIL_APP_PASSWORD;

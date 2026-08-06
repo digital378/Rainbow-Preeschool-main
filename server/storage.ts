@@ -1,7 +1,7 @@
-import { type User, type InsertUser, type Contact, type InsertContact, type BlogPost, type InsertBlogPost, type GscSnapshot, type InsertGscSnapshot, gscSnapshots } from "@shared/schema";
+import { type User, type InsertUser, type Contact, type InsertContact, type BlogPost, type InsertBlogPost, type GscSnapshot, type InsertGscSnapshot, gscSnapshots, contactSubmissions } from "@shared/schema";
 import { randomUUID } from "crypto";
 import { seoRecoveryBlogPosts, legacyMigratedBlogPosts, ssrOnlyBlogPosts } from "./seed-blog-posts";
-import { and, asc, between, eq, like, lt, or, sql } from "drizzle-orm";
+import { and, asc, between, desc, eq, like, lt, or, sql } from "drizzle-orm";
 import { getDb, hasDatabase } from "./db";
 
 export interface IStorage {
@@ -498,6 +498,51 @@ export class DbBackedStorage extends MemStorage {
       .returning({ id: gscSnapshots.id });
 
     return { deleted: deletedRows.length, cutoffDate };
+  }
+
+  // Contacts (leads): persisted to Postgres so they survive autoscale's
+  // multi-instance, scale-to-zero restarts instead of living only in the
+  // notification email / Google Sheets. The parent MemStorage implementation
+  // used to be inherited un-overridden here, which meant every lead was
+  // silently kept only in a single instance's in-memory Map and lost on the
+  // next restart or on any request served by a different instance.
+  async createContact(insertContact: InsertContact): Promise<Contact> {
+    await this.ensureSeeded();
+    const db = getDb();
+    const [inserted] = await db
+      .insert(contactSubmissions)
+      .values({
+        parentName: insertContact.parentName,
+        phone: insertContact.phone,
+        email: insertContact.email ?? null,
+        childName: insertContact.childName,
+        childAge: insertContact.childAge,
+        programme: insertContact.programme,
+        branch: insertContact.branch,
+        message: insertContact.message ?? null,
+        leadSource: insertContact.leadSource ?? null,
+        leadMedium: insertContact.leadMedium ?? null,
+      })
+      .returning();
+    return inserted;
+  }
+
+  async getContacts(): Promise<Contact[]> {
+    await this.ensureSeeded();
+    const db = getDb();
+    return await db
+      .select()
+      .from(contactSubmissions)
+      .orderBy(desc(contactSubmissions.createdAt));
+  }
+
+  async markContactRead(id: string): Promise<void> {
+    await this.ensureSeeded();
+    const db = getDb();
+    await db
+      .update(contactSubmissions)
+      .set({ isRead: true })
+      .where(eq(contactSubmissions.id, id));
   }
 }
 

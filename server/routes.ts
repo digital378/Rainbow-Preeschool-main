@@ -3,7 +3,7 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertContactSchema } from "@shared/schema";
 import { z } from "zod";
-import { sendLeadNotificationEmail, sendSheetsFailureAlertEmail } from "./gmail";
+import { sendLeadNotificationEmail, sendSheetsFailureAlertEmail, sendEmailFailureAlertEmail } from "./gmail";
 import { sendLeadToMCB, getBranchID } from "./mcb";
 import { syncGscData, isGscConfigured } from "./gsc-sync";
 import { appendEnquiryRow } from "./sheets-sync";
@@ -391,9 +391,37 @@ export async function registerRoutes(
           leadMedium: formData.leadMedium || undefined
         });
         console.log(`[Contact] Email ${emailSent ? 'sent successfully' : 'FAILED'} for ${validatedData.parentName}`);
+        if (!emailSent) {
+          try {
+            await sendEmailFailureAlertEmail(
+              {
+                parentName: validatedData.parentName,
+                phone: validatedData.phone,
+                programme: validatedData.programme,
+                branch: validatedData.branch,
+              },
+              new Error("sendLeadNotificationEmail returned false"),
+            );
+          } catch (alertErr) {
+            console.error("[Contact] Email failure alert also failed:", alertErr);
+          }
+        }
       } catch (err) {
         console.error("[Contact] Email error:", err);
         emailSent = false;
+        try {
+          await sendEmailFailureAlertEmail(
+            {
+              parentName: validatedData.parentName,
+              phone: validatedData.phone,
+              programme: validatedData.programme,
+              branch: validatedData.branch,
+            },
+            err,
+          );
+        } catch (alertErr) {
+          console.error("[Contact] Email failure alert also failed:", alertErr);
+        }
       }
       
       // Append to Google Sheet synchronously so the response can confirm it
