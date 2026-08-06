@@ -197,8 +197,10 @@
   <script>
     function trackCall(){if(window.gtag)gtag('event','Nursery_Call');}
     function trackWhatsApp(){if(window.gtag)gtag('event','Nursery_Whatsapp');}
+    var leadSubmitted=false, leadSubmissionId=null, sendInFlight=false;
     function handleSubmit(e){
       e.preventDefault();
+      if(sendInFlight||leadSubmitted)return false;
       var n=document.getElementById('parentName').value.trim();
       var ph=document.getElementById('phone').value.trim();
       var ar=document.getElementById('area').value;
@@ -208,17 +210,29 @@
       if(ph.length<10){document.getElementById('phoneError').style.display='block';valid=false;}
       if(!ar){document.getElementById('areaError').style.display='block';valid=false;}
       if(!valid)return false;
+      if(!leadSubmissionId)leadSubmissionId='nu-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,10);
       var btn=document.getElementById('submitBtn');
+      sendInFlight=true;
       btn.disabled=true;btn.textContent='Submitting...';
       fetch('/api/contact',{
         method:'POST',
         headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({parentName:n,phone:ph,childName:'Not provided',childAge:'2.5-3.5',programme:'Nursery',branch:ar,message:'Nursery Fast Page - Area: '+ar,leadSource:'Website',leadMedium:'Nursery Landing'})
-      }).then(function(r){return r.json();}).then(function(d){
-        if(d.emailSent&&window.gtag)gtag('event','Nursery_Form_Submit',{parent_name:n,phone:ph,centre:ar});
+        body:JSON.stringify({submissionId:leadSubmissionId,parentName:n,phone:ph,childName:'Not provided',childAge:'2.5-3.5',programme:'Nursery',branch:ar,message:'Nursery Fast Page - Area: '+ar,leadSource:'Website',leadMedium:'Nursery Landing'})
+      }).then(function(r){return r.json().then(function(d){return {ok:r.ok,data:d};});}).then(function(res){
+        sendInFlight=false;
+        // Only counted as a real lead once the backend has actually saved it
+        // AND both delivery channels (email + Sheets) confirm receipt — not
+        // just because the form was clicked/submitted.
+        if(!res.ok||!res.data.success){
+          btn.disabled=false;btn.textContent='Book Free Visit Now';
+          alert('Failed to submit. Please try again.');
+          return;
+        }
+        leadSubmitted=true;
+        if(res.data.emailSent&&res.data.sheetAppended&&window.gtag)gtag('event','Nursery_Form_Submit',{parent_name:n,phone:ph,centre:ar});
         document.getElementById('form-view').classList.add('hidden');
         document.getElementById('success-view').classList.remove('hidden');
-      }).catch(function(){btn.disabled=false;btn.textContent='Book Free Visit Now';alert('Error submitting. Please try again.');});
+      }).catch(function(){sendInFlight=false;btn.disabled=false;btn.textContent='Book Free Visit Now';alert('Error submitting. Please try again.');});
       return false;
     }
   </script>

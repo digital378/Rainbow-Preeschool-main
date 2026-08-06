@@ -393,8 +393,10 @@
       return true;
     }
     function toggleProg(el){el.parentElement.classList.toggle('open');}
+    var leadSubmitted=false, leadSubmissionId=null, sendInFlight=false;
     function handleSubmit(e){
       e.preventDefault();
+      if(sendInFlight||leadSubmitted)return false;
       var n=document.getElementById('parentName').value.trim();
       var ph=document.getElementById('phone').value.trim();
       var age=document.getElementById('childAge').value;
@@ -406,27 +408,34 @@
       if(!age){document.getElementById('ageError').style.display='block';valid=false;}
       if(!ar){document.getElementById('areaError').style.display='block';valid=false;}
       if(!valid)return false;
+      if(!leadSubmissionId)leadSubmissionId='ag-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,10);
       var btn=document.getElementById('submitBtn');
+      sendInFlight=true;
       btn.disabled=true;btn.textContent='Submitting...';
       fetch('/api/contact',{
         method:'POST',
         headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({parentName:n,phone:ph,childName:'Not provided',childAge:age,programme:'General Enquiry',branch:ar,message:'Ad Landing - Area: '+ar,leadSource:utm.leadSource,leadMedium:utm.leadMedium})
-      }).then(function(r){return r.json();}).then(function(d){
-        console.log('Form response:', d);
-        if(d.success){
-          console.log('Firing google_ads_leads event');
-          sendGA4Event('google_ads_leads', {
-            'page_path': '/ad-google',
-            'page_title': 'Google Ads Landing Page',
-            'parent_name': n,
-            'child_age': age,
-            'branch': ar
-          });
+        body:JSON.stringify({submissionId:leadSubmissionId,parentName:n,phone:ph,childName:'Not provided',childAge:age,programme:'General Enquiry',branch:ar,message:'Ad Landing - Area: '+ar,leadSource:utm.leadSource,leadMedium:utm.leadMedium})
+      }).then(function(r){return r.json().then(function(d){return {ok:r.ok,data:d};});}).then(function(res){
+        sendInFlight=false;
+        console.log('Form response:', res.data);
+        if(!res.ok||!res.data.success){
+          btn.disabled=false;btn.textContent='Book Free Visit Now';
+          alert('Failed to submit. Please try again.');
+          return;
         }
+        leadSubmitted=true;
+        console.log('Firing google_ads_leads event');
+        sendGA4Event('google_ads_leads', {
+          'page_path': '/ad-google',
+          'page_title': 'Google Ads Landing Page',
+          'parent_name': n,
+          'child_age': age,
+          'branch': ar
+        });
         document.getElementById('form-view').classList.add('hidden');
         document.getElementById('success-view').classList.remove('hidden');
-      }).catch(function(e){console.error('Form error:',e);btn.disabled=false;btn.textContent='Book Free Visit Now';alert('Error submitting. Please try again.');});
+      }).catch(function(e){sendInFlight=false;console.error('Form error:',e);btn.disabled=false;btn.textContent='Book Free Visit Now';alert('Error submitting. Please try again.');});
       return false;
     }
   </script>
