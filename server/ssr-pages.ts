@@ -1554,6 +1554,59 @@ const staticPages: Record<string, PageSEOData> = {
         "step": [{ "@type": "HowToStep", "text": c.instruction }],
       })),
     ],
+    // Explore Zone field-guide content, mirrored from the client page's
+    // `symbols` data (client/src/pages/national-symbols-of-india.tsx) so the
+    // full field-notes text — not just the teaser — is present in the
+    // server-rendered HTML search engines and other bots receive.
+    contentSections: [
+      {
+        heading: "Zone 1 — The Nation's Identity",
+        text: "These are the symbols India chose for itself — a flag, a song, a promise, a sign on every coin. They tell the story of who we are as one country made of many people.",
+        items: [
+          "National Flag — Tiranga: The flag has three colours and a wheel with 24 spokes called the Ashoka Chakra — adopted on 22 July 1947.",
+          "National Emblem: The emblem shows four lions standing back-to-back, though only three are ever visible at once. It was adopted on 26 January 1950 and comes from a stone pillar built by Emperor Ashoka over 2,000 years ago.",
+          "National Anthem — Jana Gana Mana: Written by the poet Rabindranath Tagore, it takes about 52 seconds to sing from start to end.",
+          "National Song — Vande Mataram: Means \"I bow to thee, Mother\" and comes from a novel called Anandamath, written by Bankim Chandra Chattopadhyay in 1882.",
+          "National Pledge: Begins \"India is my country and all Indians are my brothers and sisters.\" Written by Pydimarri Venkata Subba Rao and recited in schools since 1965.",
+          "National Currency Symbol — ₹: Designed by D. Udaya Kumar and officially chosen in 2010, blending the Devanagari letter \"र\" with a horizontal line.",
+          "National Calendar — Saka Calendar: Alongside the regular calendar, the Indian government also uses the Saka calendar, adopted in 1957, for official work.",
+        ],
+      },
+      {
+        heading: "Zone 2 — The Wild Trail",
+        text: "India shares its land with some extraordinary animals. These five were chosen to represent the country's wild beauty — spot them at the zoo, in a book, or even on your next holiday.",
+        items: [
+          "National Animal — Royal Bengal Tiger: India is home to roughly 3 out of every 4 wild tigers left on Earth. The tiger became our national animal in 1972.",
+          "National Bird — Indian Peacock: Only the male peacock has the giant, colourful tail — he fans it out and dances to impress a peahen. Declared our national bird in 1963.",
+          "National Aquatic Animal — Ganges River Dolphin: This gentle, almost-blind dolphin finds its way and its food using sound. Declared our national aquatic animal in 2010.",
+          "National Reptile — King Cobra: The longest venomous snake in the world; popularly known as India's national reptile, though — unlike the flag or the tiger — this isn't an official government title.",
+          "National Heritage Animal — Indian Elephant: Elephants have excellent memories and live in caring family herds led by the oldest female. Declared our National Heritage Animal in 2010.",
+        ],
+      },
+      {
+        heading: "Zone 3 — The Nature Garden",
+        text: "From a flower that blooms in mud to a mighty tree with a thousand roots, these symbols come from India's gardens, orchards and riverbanks.",
+        items: [
+          "National Flower — Lotus: Popularly recognised as India's national flower, though the government has confirmed in Parliament that no official notification has ever been issued.",
+          "National Fruit — Mango: India grows more mangoes than any other country — over 1,000 different varieties. Traditionally called the \"king of fruits.\"",
+          "National Tree — Banyan: A banyan tree grows new roots down from its own branches, which grow into new trunks, so one tree can eventually look like an entire forest.",
+          "National Vegetable — Pumpkin: Has no official government title, but is a much-loved, popularly recognised symbol thanks to how common and useful it is in Indian kitchens.",
+          "National River — Ganga: Officially declared India's National River in November 2008. Millions of people depend on it every day for water, farming and daily life.",
+        ],
+      },
+      {
+        heading: "Match the Symbol",
+        text: "Tap an illustration and then match it with the correct national symbol name. Complete all the pairs to test how well you know India's national symbols. Designed for children who can't read yet, ages 1.5–3 especially.",
+      },
+      {
+        heading: "Craft Trail: Make a Symbol With Your Hands",
+        items: NATIONAL_SYMBOLS_CRAFTS.map(c => `${c.name}: ${c.instruction} (${c.time} · ${c.ages})`),
+      },
+      {
+        heading: "Free Printable: Your Symbol Passport",
+        text: "Download our free Symbol Passport — a foldable, printable booklet with a stamp box for all 17 symbols. After your child learns about a symbol, let them colour in its stamp box.",
+      },
+    ],
     internalLinks: commonInternalLinks,
   },
   "/faqs": {
