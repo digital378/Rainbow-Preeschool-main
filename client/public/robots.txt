@@ -39,5 +39,6 @@ Disallow: /*?utm_
 # ── Sitemap ───────────────────────────────────────────────────────────────────
 Sitemap: https://www.rainbowpreschools.com/sitemap.xml
 
-LLMs-txt: https://www.rainbowpreschools.com/llms.txt
-LLMs-full-txt: https://www.rainbowpreschools.com/llms-full.txt
+# AI/LLM discovery (informational only — non-standard fields removed)
+# LLMs.txt: https://www.rainbowpreschools.com/llms.txt
+# LLMs-Full.txt: https://www.rainbowpreschools.com/llms-full.txt
