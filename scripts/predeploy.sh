@@ -80,6 +80,14 @@
 #       matches its source, every local asset it references exists in
 #       dist/public, the route returns 200 for normal + Googlebot UAs, and
 #       the served HTML has no unresolved/empty FIREBASE_* config values.
+#   16c. scripts/check-crawler-metadata.ts — crawler-metadata regression
+#       check: enumerates every sitemap URL + client-router route and, for a
+#       spoofed Googlebot UA, asserts title/description/canonical are
+#       present, self-referencing, and distinct from both the raw SPA-shell
+#       values and the homepage's — the failure signature of a route that's
+#       missing its server/ssr-pages.ts entry. Also spot-checks Claude-User
+#       and Perplexity-User (answer-engine fetchers) on a few routes to
+#       confirm they're recognized by BOT_USER_AGENTS in server/bot-ssr.ts.
 #   17. Lighthouse performance guard — simulated-mobile Lighthouse audit against
 #       home + priority landing page. Skippable with SKIP_PERF_GUARD=1.
 #   18. Purge Cloudflare edge cache — runs last so it only fires after every
@@ -272,6 +280,17 @@ npx --no-install tsx scripts/check-ad-pages.ts "${PREDEPLOY_URL}"
 AD_PAGES_EXIT=$?
 set -e
 
+# Crawler-metadata regression check. Enumerates every sitemap URL + client-
+# router route and asserts, for a spoofed Googlebot UA (plus Claude-User /
+# Perplexity-User spot-checks), that title/description/canonical are present
+# and self-referencing — not the raw SPA shell and not the homepage's, which
+# is what a route missing its server/ssr-pages.ts entry would return.
+log "step 16c/18 — tsx scripts/check-crawler-metadata.ts ${PREDEPLOY_URL}"
+set +e
+npx --no-install tsx scripts/check-crawler-metadata.ts "${PREDEPLOY_URL}"
+CRAWLER_METADATA_EXIT=$?
+set -e
+
 # ── step 15 — Lighthouse performance guard ───────────────────────────────────
 # Runs a simulated-mobile Lighthouse audit against home + priority landing page.
 # Skippable during initial threshold calibration: SKIP_PERF_GUARD=1 bash predeploy.sh
@@ -297,7 +316,7 @@ else
 fi
 # ─────────────────────────────────────────────────────────────────────────────
 
-if [ "${FRESHNESS_EXIT}" -ne 0 ] || [ "${KEYWORD_EXIT}" -ne 0 ] || [ "${SITEMAP_EXIT}" -ne 0 ] || [ "${BOT_DETECTION_EXIT}" -ne 0 ] || [ "${AD_PAGES_EXIT}" -ne 0 ] || [ "${PERF_EXIT}" -ne 0 ]; then
+if [ "${FRESHNESS_EXIT}" -ne 0 ] || [ "${KEYWORD_EXIT}" -ne 0 ] || [ "${SITEMAP_EXIT}" -ne 0 ] || [ "${BOT_DETECTION_EXIT}" -ne 0 ] || [ "${AD_PAGES_EXIT}" -ne 0 ] || [ "${CRAWLER_METADATA_EXIT}" -ne 0 ] || [ "${PERF_EXIT}" -ne 0 ]; then
   if [ "${FRESHNESS_EXIT}" -ne 0 ]; then
     log "FAIL — freshness smoke-test exited ${FRESHNESS_EXIT}. See offending URLs above."
   fi
@@ -314,6 +333,9 @@ if [ "${FRESHNESS_EXIT}" -ne 0 ] || [ "${KEYWORD_EXIT}" -ne 0 ] || [ "${SITEMAP_
   if [ "${AD_PAGES_EXIT}" -ne 0 ]; then
     log "FAIL — standalone ad-page guard exited ${AD_PAGES_EXIT}. Missing dist artifact/asset, non-200 response, or uninjected Firebase config. See details above."
   fi
+  if [ "${CRAWLER_METADATA_EXIT}" -ne 0 ]; then
+    log "FAIL — crawler-metadata regression check exited ${CRAWLER_METADATA_EXIT}. A route is missing self-referencing title/description/canonical for recognized bots, or an answer-engine UA isn't reaching bot-SSR content. See per-route details above."
+  fi
   if [ "${PERF_EXIT}" -ne 0 ]; then
     log "FAIL — Lighthouse performance guard exited ${PERF_EXIT}. See per-page results above."
     log "To bypass during threshold calibration: SKIP_PERF_GUARD=1 bash scripts/predeploy.sh"
@@ -321,7 +343,7 @@ if [ "${FRESHNESS_EXIT}" -ne 0 ] || [ "${KEYWORD_EXIT}" -ne 0 ] || [ "${SITEMAP_
   log "tail of booted server log (last 80 lines of ${SERVER_LOG}):"
   tail -n 80 "${SERVER_LOG}" >&2 || true
   log "blocking deploy."
-  # Surface whichever HTTP check failed first (freshness → keyword → sitemap → bot-detection → perf).
+  # Surface whichever HTTP check failed first (freshness → keyword → sitemap → bot-detection → crawler-metadata → perf).
   if [ "${FRESHNESS_EXIT}" -ne 0 ]; then
     exit "${FRESHNESS_EXIT}"
   fi
@@ -336,6 +358,9 @@ if [ "${FRESHNESS_EXIT}" -ne 0 ] || [ "${KEYWORD_EXIT}" -ne 0 ] || [ "${SITEMAP_
   fi
   if [ "${AD_PAGES_EXIT}" -ne 0 ]; then
     exit "${AD_PAGES_EXIT}"
+  fi
+  if [ "${CRAWLER_METADATA_EXIT}" -ne 0 ]; then
+    exit "${CRAWLER_METADATA_EXIT}"
   fi
   exit "${PERF_EXIT}"
 fi
@@ -370,5 +395,5 @@ else
   log "step 18/18 — SKIPPED Cloudflare cache purge (CF_ZONE_ID or CF_API_TOKEN not set)."
 fi
 
-log "PASS — byline guard + title-cannibalisation + description-length + bot-ua-list + h1-parity + no-pink guard + eeat-show-rating guard + sitemap-blog-slugs guard + standalone-blog-pages SEO guard + build + freshness + keyword-targets + sitemap-200 + bot-detection + Lighthouse perf guard all succeeded; deploy may proceed."
+log "PASS — byline guard + title-cannibalisation + description-length + bot-ua-list + h1-parity + no-pink guard + eeat-show-rating guard + sitemap-blog-slugs guard + standalone-blog-pages SEO guard + build + freshness + keyword-targets + sitemap-200 + bot-detection + ad-pages + crawler-metadata + Lighthouse perf guard all succeeded; deploy may proceed."
 exit 0

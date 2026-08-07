@@ -1665,6 +1665,166 @@ const playgroundPages: Record<string, { locality: string; h1: string }> = {
 // enforces the pairing). Rationale per path lives next to the canonical list.
 const noIndexPages = NOINDEX_SLUGS;
 
+// ── Rainbow International School (RIS) campaign landing pages ──────────────
+// /RIS, /ris both render `client/src/pages/ris-landing.tsx`; /ris-11th
+// renders `client/src/pages/ris-11th-landing.tsx`. Both stay `noIndex: true`
+// (they're paid-campaign pages for a separate K-12 school entity — see
+// NOINDEX_SLUGS in shared/seo-config.ts) but must still return real,
+// route-specific content to a recognized bot instead of the generic
+// "Rainbow Preschool International | Thane" fallback: a noindex page that
+// answer-engine crawlers (Claude-User, Perplexity-User, GPTBot) fetch to
+// cite in a live response still needs its actual content, not boilerplate.
+// Title/description here are copied verbatim from the client-side
+// `document.title` / meta-description set in each page's useEffect so a
+// bot and a hydrated browser see matching values.
+const risSharedFaq = [
+  {
+    q: "How does Rainbow International School compare to schools in Thane like Orchids International School, CP Goenka International School, Podar International School, or Smt. Sulochanadevi Singhania School?",
+    a: "Rainbow International School offers a balanced approach combining strong academics with overall development, focusing on building confidence, communication, and real-world skills. While those schools provide well-established K–12 education, Rainbow focuses on a structured CBSE curriculum along with personalized attention and a holistic learning environment, with a seamless journey from early years to Grade 12.",
+  },
+  {
+    q: "What curriculum does Rainbow International School follow?",
+    a: "Rainbow International School follows the CBSE curriculum, designed to provide strong academic foundations along with conceptual understanding and practical learning.",
+  },
+  {
+    q: "What are the admission criteria for different grades?",
+    a: "Admissions are based on age criteria and interaction or assessment depending on the grade level. Please contact the admission counsellor for grade-specific requirements.",
+  },
+  {
+    q: "How do you ensure safety and security?",
+    a: "The school provides a secure campus with CCTV surveillance, trained staff, and child-friendly infrastructure to ensure the safety of every student.",
+  },
+  {
+    q: "Can my child continue from preschool to higher grades here?",
+    a: "Yes, Rainbow offers a complete learning journey from preschool to Grade 12, ensuring continuity and stability in a child's education.",
+  },
+];
+
+const risLandingSEO: PageSEOData = {
+  title: "Rainbow International School Thane — Admissions 2026–27",
+  description: "Limited seats at Rainbow International School Thane. CBSE school Nursery to Grade 12. Admissions open 2026–27. Reserve your seat now.",
+  canonical: `${BASE_URL}/ris`,
+  noIndex: true,
+  h1: "Rainbow International School Thane",
+  introText: "Rainbow International School, Thane is a CBSE school in Brahmand focused on academics, confidence, leadership, and holistic development from Nursery to Grade 12. Admissions for 2026–27 are open and processed on a first-come, first-served basis; several grades have limited seats remaining.",
+  breadcrumbs: [{ name: "Home", url: "/" }, { name: "Rainbow International School", url: "/ris" }],
+  contentSections: [
+    {
+      heading: "Why Rainbow International School?",
+      items: [
+        "CBSE Affiliated — strong academic foundation aligned with national standards",
+        "Smart Classrooms — digital learning tools that support better understanding and engagement",
+        "Experienced Faculty — qualified educators focused on academic and personal growth",
+        "Safe Campus — secure infrastructure with CCTV and monitored access",
+        "Transport — reliable bus service covering key nearby areas",
+        "Co-Curricular — sports, arts, music, and activities for holistic development",
+      ],
+    },
+    {
+      heading: "A Complete Learning Journey from Nursery to Grade 12",
+      text: "Rainbow International School supports students through every stage of their academic journey with consistency, care, and a strong focus on overall development.",
+      items: [
+        "Strong Academic Foundation — CBSE-aligned curriculum that builds conceptual understanding from the earliest years",
+        "Confidence and Communication — structured activities that help every student find their voice and speak with clarity",
+        "Leadership and Life Skills — programmes that develop decision-making, teamwork, and responsibility",
+        "Holistic Growth Through Activities — sports, arts, music, and co-curricular involvement for well-rounded development",
+      ],
+    },
+    {
+      heading: "Frequently Asked Questions",
+      items: risSharedFaq.map((f) => `${f.q} — ${f.a}`),
+    },
+  ],
+  structuredData: [
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: risSharedFaq.map((f) => ({
+        "@type": "Question",
+        name: f.q,
+        acceptedAnswer: { "@type": "Answer", text: f.a },
+      })),
+    },
+  ],
+  internalLinks: [
+    { text: "11th Grade Admissions at Rainbow International School", url: "/ris-11th" },
+    { text: "Rainbow Preschool International — Home", url: "/" },
+  ],
+};
+
+const ris11thLandingSEO: PageSEOData = {
+  title: "11th Grade Admission in Thane | Science, Commerce, Humanities | Rainbow International School",
+  description: "Apply for Grade 11 admission at Rainbow International School, Thane. Admissions open for Science, Commerce, and Humanities in a structured academic environment.",
+  canonical: `${BASE_URL}/ris-11th`,
+  noIndex: true,
+  h1: "CBSE 11th Grade Admissions Open at Rainbow International School, Brahmand Thane",
+  introText: "Rainbow International School, Thane offers structured Grade 11 admissions across Science, Commerce, and Humanities for the 2026–27 academic year. Limited seats are available across select streams.",
+  breadcrumbs: [{ name: "Home", url: "/" }, { name: "Rainbow International School", url: "/ris" }, { name: "11th Grade Admissions", url: "/ris-11th" }],
+  contentSections: [
+    {
+      heading: "Choose the Right Stream for Your Future",
+      text: "Rainbow International School offers structured Grade 11 education across key academic pathways.",
+      items: [
+        "Science — strong academic support for future pathways in engineering, medicine, research, technology, and related fields. Subjects: Physics, Chemistry, Biology / Maths, English, Optional Subject",
+        "Commerce — a balanced foundation for students interested in business, finance, economics, management, entrepreneurship, and professional careers. Subjects: Accountancy, Business Studies, Economics, English, Optional Subject",
+        "Humanities — a broad pathway for students interested in psychology, media, law, design, social sciences, liberal arts, and civil services-related futures. Subjects: History / Political Science, Psychology / Economics, Sociology, English, Optional Subject",
+      ],
+    },
+    {
+      heading: "Why Students and Parents Choose RIS for Grade 11",
+      items: [
+        "Structured Academic Environment — a focused school environment that supports serious study during the critical Grade 11–12 years",
+        "Experienced Subject Faculty — qualified teachers with deep subject knowledge across Science, Commerce, and Humanities",
+        "Focus on Board Preparation — academic planning and classroom practice aligned with CBSE board standards and expectations",
+        "All Streams Under One Campus — Science, Commerce, and Humanities available in one school",
+        "Safe and Supportive Environment — CCTV campus, trained staff, and a culture where students feel comfortable and supported",
+        "Holistic Development Beyond Academics — sports, arts, co-curricular activities and life skills alongside academic rigour",
+      ],
+    },
+    {
+      heading: "Frequently Asked Questions",
+      items: [
+        "Which streams are available for 11th grade admission at Rainbow International School? — Rainbow International School offers Grade 11 admissions in Science, Commerce, and Humanities, subject to seat availability and eligibility criteria.",
+        "Is this page for regular 11th school admissions? — Yes, this page is specifically for regular Grade 11 school admissions at Rainbow International School. Parents and students can enquire for Science, Commerce, or Humanities stream admission guidance and seat availability.",
+        "How can I know which stream is right for my child? — The admission team can guide parents and students based on academic background, interests, and future goals to help them understand the available stream options.",
+        "What is the admission process for Grade 11? — The admission process usually includes enquiry submission, eligibility review, interaction or counselling, and confirmation based on stream availability and school admission requirements.",
+        "Does Rainbow International School offer Science, Commerce, and Humanities under one campus? — Yes, Rainbow International School offers multiple Grade 11 stream options under one campus, making it easier for families looking for a structured senior secondary school environment.",
+        "How does Rainbow International School compare to other schools in Thane for Grade 11 admissions? — Rainbow International School provides a balanced senior secondary environment with regular school academics, experienced faculty, and a focus on student growth.",
+      ],
+    },
+  ],
+  structuredData: [
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: "Which streams are available for 11th grade admission at Rainbow International School?",
+          acceptedAnswer: { "@type": "Answer", text: "Rainbow International School offers Grade 11 admissions in Science, Commerce, and Humanities, subject to seat availability and eligibility criteria." },
+        },
+        {
+          "@type": "Question",
+          name: "What is the admission process for Grade 11?",
+          acceptedAnswer: { "@type": "Answer", text: "The admission process usually includes enquiry submission, eligibility review, interaction or counselling, and confirmation based on stream availability and school admission requirements." },
+        },
+      ],
+    },
+  ],
+  internalLinks: [
+    { text: "Rainbow International School — Admissions Home", url: "/ris" },
+    { text: "Rainbow Preschool International — Home", url: "/" },
+  ],
+};
+
+// Registered into `staticPages` (rather than inline in its literal above)
+// because these consts are defined after it in file order — `staticPages`
+// is checked first in `getPageSEO()`, so this still takes priority over the
+// generic `noIndexPages` fallback for these three exact paths.
+staticPages["/RIS"] = risLandingSEO;
+staticPages["/ris"] = risLandingSEO;
+staticPages["/ris-11th"] = ris11thLandingSEO;
+
 /**
  * Per-blog-post SEO metadata. Lifted to module scope so the /sitemap.xml
  * route in `server/index.ts` can read each post's `lastModified` directly

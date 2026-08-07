@@ -41,6 +41,16 @@ const BOT_USER_AGENTS = [
   "amazonbot",
   "duckassist",
   "youbot",
+  // Answer-engine / LLM-citation fetchers seen live on production access logs.
+  // Distinct from the crawler-style bots above (claudebot, perplexitybot):
+  // these fire when a real person asks ChatGPT/Claude/Perplexity a question
+  // and the assistant fetches the page live to answer/cite it. Missing them
+  // means those live, high-intent answers were built from the empty SPA
+  // shell instead of real page content.
+  "claude-user",
+  "perplexity-user",
+  "ccbot",
+  "google-extended",
   // SEO auditing tools — not in this list by default, so they receive the
   // React shell and incorrectly report the site as having no content. This
   // exact false alarm occurred in an external audit. Adding them here ensures
