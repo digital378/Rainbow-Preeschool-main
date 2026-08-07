@@ -1,0 +1,33 @@
+This site returns HTTP 200 for URLs that do not exist. Confirm with:
+  curl -o /dev/null -w "%{http_code}" https://www.rainbowpreschools.com/zzz-does-not-exist-test
+It returns 200. It must return 404.
+
+The Express catch-all is serving index.html for every unmatched path. Fix it so that:
+- Paths matching a known React route -> 200 + index.html (unchanged)
+- Paths under /blog/<slug> where the slug exists in the blog data -> 200
+- Everything else -> HTTP status 404, still rendering a branded "page not found" React page with links to /, /programmes and /preschool-admissions
+
+The status code is the part that matters — a helpful 404 PAGE with a 404 STATUS, not a 200.
+
+Keep the existing 301 redirects working (/preschool-near-me, /playgroup-in-thane, /admission, /mid-term-playgroup-admission). Those must still 301, not 404.
+
+Verify all three cases:
+  curl -o /dev/null -w "%{http_code}\n" https://www.rainbowpreschools.com/zzz-does-not-exist-test   # expect 404
+  curl -o /dev/null -w "%{http_code}\n" https://www.rainbowpreschools.com/playgroup                 # expect 200
+  curl -o /dev/null -w "%{http_code}\n" https://www.rainbowpreschools.com/preschool-near-me          # expect 301
+Fix 5 · P0-3 · RPS
+Remove the sitemap entry that has no route
+
+Copy
+sitemap.xml lists https://www.rainbowpreschools.com/8-reasons-cooking-is-important-for-kids but there is no route for it — it returns 200 serving the homepage shell, so Google is indexing a blank page we are actively advertising.
+
+Pick ONE:
+(a) If the article content still exists, restore it as a real page at /blog/8-reasons-cooking-is-important-for-kids and 301 the old flat URL to it, then update the sitemap entry.
+(b) If it is gone, remove the entry from sitemap.xml and 301 the URL to /blog.
+
+Then audit the whole sitemap the same way: every <loc> must return HTTP 200 and have a matching route. Print any that do not.
+
+Verify:
+  for u in $(curl -s https://www.rainbowpreschools.com/sitemap.xml | grep -oE '<loc>[^<]+' | sed 's/<loc>//'); do
+    echo "$(curl -o /dev/null -s -w '%{http_code}' $u) $u"; done | grep -v '^200'
+Should print nothing.
