@@ -396,6 +396,10 @@
     var leadSubmitted=false, leadSubmissionId=null, sendInFlight=false;
     function handleSubmit(e){
       e.preventDefault();
+      // Stop the native submit event from bubbling to document-level auto-trackers
+      // (GA4 Enhanced Measurement / GTM Form Submission trigger) so a raw click
+      // can't be miscounted as a lead before validation/backend confirmation runs.
+      e.stopPropagation();
       if(sendInFlight||leadSubmitted)return false;
       var n=document.getElementById('parentName').value.trim();
       var ph=document.getElementById('phone').value.trim();
