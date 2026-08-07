@@ -208,6 +208,8 @@ export const redirectMap: Record<string, string> = {
   "/how-mid-term-admission-open-for-playgroup-supports-social-and-emotional-development/": "/playgroup",
   "/questions-ask-school-visit-mid-term-playgroup-admissions": "/blog/what-to-ask-during-a-tour-of-a-preschool-in-thane",
   "/questions-ask-school-visit-mid-term-playgroup-admissions/": "/blog/what-to-ask-during-a-tour-of-a-preschool-in-thane",
+  "/advantages-of-mid-term-admission-open-for-playgroup": "/preschool-admissions",
+  "/advantages-of-mid-term-admission-open-for-playgroup/": "/preschool-admissions",
 
   // ── Near-me page consolidation (Phase 1 SEO) ─────────────────────────────
   "/play-school-in-thane": "/play-school-near-me",
@@ -386,6 +388,8 @@ export const redirectMap: Record<string, string> = {
   "/solitary-play-activities-for-preschoolers-types-and-benefits/": "/blog/how-play-based-learning-shapes-young-minds",
   "/christmas-celebration-at-aarna-foundation": "/blog",
   "/christmas-celebration-at-aarna-foundation/": "/blog",
+  "/christmas-celebration-in-preschool-rainbow-preschools-festive-fun": "/blog",
+  "/christmas-celebration-in-preschool-rainbow-preschools-festive-fun/": "/blog",
   "/rainbow-family-wins-cleanest-school-thane/feed": "/blog",
   "/category/uncategorized/feed": "/blog",
   "/impact-of-parent-teacher-communication-on-student-success/feed": "/blog",
