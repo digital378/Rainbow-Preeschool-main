@@ -47,6 +47,7 @@ export const COMMERCIAL_PAGES_LAST_UPDATED_DISPLAY = LAST_UPDATED_DISPLAY;
 //   Programme landing     — /kids-activity-club, /summer-camp: campaign landing
 //                           pages not intended for organic indexing.
 //   /gsc, /GSC            — Internal Google Search Console data explorer.
+//   /dummy                — Internal design-system reference/preview page.
 export const NOINDEX_SLUGS: string[] = [
   // Ad landing pages
   "/ad",
@@ -69,6 +70,7 @@ export const NOINDEX_SLUGS: string[] = [
   // Internal admin tools
   "/GSC",
   "/gsc",
+  "/dummy",
 ];
 
 // Helper to check if a path should be noindex

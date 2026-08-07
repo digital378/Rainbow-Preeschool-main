@@ -22,6 +22,7 @@ import {
   createAllBranchLocalBusinessSchemas,
 } from "@shared/centre-data";
 import { legacyPagesData } from "@shared/legacy-pages-data";
+import { isNonSeoServerRoute } from "./non-seo-routes";
 import { shouldNoIndex, NOINDEX_SLUGS } from "@shared/seo-config";
 import { VERIFIED_RATING } from "@shared/verified-rating";
 import { FAQ_SCHEMA_ITEMS } from "@shared/faq-data";
@@ -2062,6 +2063,25 @@ export function getBlogPostLastModified(slug: string): string | undefined {
  */
 export function getStaticPagePaths(): string[] {
   return Object.keys(staticPages);
+}
+
+/**
+ * Whether a real page exists at this path — independent of who (or what)
+ * is asking. This is the single source of truth used to decide HTTP status
+ * (200 vs 404) for both bot-SSR responses (server/bot-ssr.ts) and the plain
+ * SPA shell (server/static.ts, server/vite.ts), so a request for an unknown
+ * URL gets a genuine 404 no matter what User-Agent sent it — not just when
+ * the requester happens to be on the bot allow-list.
+ *
+ * Backed by `getPageSEO`, which covers every real *indexable* route: static
+ * pages, centre/locality landing pages, blog posts, noindex utility pages
+ * (ad/GSC/RIS/etc — see NOINDEX_SLUGS), and legacy WordPress-era pages. Also
+ * checks `isNonSeoServerRoute` for the handful of real routes that
+ * intentionally have no SEO entry (fast-loading ad HTML files, the GTM
+ * beacon endpoint) — see server/non-seo-routes.ts for why those exist.
+ */
+export function isKnownRoute(urlPath: string): boolean {
+  return getPageSEO(urlPath) !== null || isNonSeoServerRoute(urlPath);
 }
 
 export function getPageSEO(urlPath: string): PageSEOData | null {

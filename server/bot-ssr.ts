@@ -4,6 +4,7 @@ import path from "path";
 import { getPageSEO, type PageSEOData } from "./ssr-pages";
 import { VERIFIED_RATING } from "../shared/verified-rating";
 import { STANDALONE_BLOG_SLUGS } from "../shared/standalone-blog-slugs";
+import { isNonSeoServerRoute } from "./non-seo-routes";
 
 // Inclusion rule: only add UA strings that appear EXCLUSIVELY in automated
 // crawlers / bots and NEVER in any human-operated browser or in-app browser.
@@ -63,6 +64,63 @@ const BOT_USER_AGENTS = [
 function isBot(userAgent: string): boolean {
   const ua = userAgent.toLowerCase();
   return BOT_USER_AGENTS.some((bot) => ua.includes(bot));
+}
+
+// Signatures that appear in real, JS-executing browser engines (including
+// in-app browsers built on those engines, e.g. WhatsApp/Instagram/Facebook's
+// iOS/Android webviews, which embed "Safari"/"Chrome" tokens). Also covers
+// headless-browser test tooling (Playwright/Puppeteer's default UA strings
+// contain "HeadlessChrome"/"Chrome"/"Safari"), so automated UI testing and
+// screenshot tools keep seeing the real hydrated React app, not this HTML.
+const REAL_BROWSER_SIGNATURES = [
+  "chrome/",
+  "chromium/",
+  "crios/",
+  "firefox/",
+  "fxios/",
+  "safari/",
+  "edg/",
+  "edga/",
+  "edgios/",
+  "opr/",
+  "opera",
+  "ucbrowser",
+  "samsungbrowser",
+  "miuibrowser",
+  "huaweibrowser",
+  "yabrowser",
+  "vivaldi",
+  "brave",
+  "silk/",
+];
+
+function looksLikeRealBrowser(userAgent: string): boolean {
+  const ua = userAgent.toLowerCase();
+  return REAL_BROWSER_SIGNATURES.some((sig) => ua.includes(sig));
+}
+
+/**
+ * Whether this request should receive the plain server-rendered HTML
+ * (real per-page title/description/canonical/h1/body) instead of the bare
+ * React SPA shell.
+ *
+ * Historically this only fired for user agents on the explicit
+ * `BOT_USER_AGENTS` allow-list, so every other non-JS-executing client —
+ * generic SEO audit tools, uncommon/newer crawlers, plain HTTP clients with
+ * no UA at all — fell through to the SPA shell and saw the homepage's
+ * title/description/canonical on every URL (Google Search Console and an
+ * external audit both flagged this: sitemap URLs "canonicalising" to the
+ * homepage, and 200s served for URLs that don't exist).
+ *
+ * Fix: default to serving real content unless the UA is recognisable as an
+ * actual browser engine. This keeps the experience for real users (and
+ * automated browser-based testing/screenshot tools) completely unchanged,
+ * while any client that isn't a real browser — known bot or not — now gets
+ * accurate metadata and correct 404s.
+ */
+function shouldServeSSR(userAgent: string): boolean {
+  if (isBot(userAgent)) return true;
+  return !looksLikeRealBrowser(userAgent);
 }
 
 const BASE_URL = "https://www.rainbowpreschools.com";
@@ -299,7 +357,7 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
 export function setupBotSSR(app: Express) {
   app.use((req: Request, res: Response, next: NextFunction) => {
     const userAgent = req.headers["user-agent"] || "";
-    if (!isBot(userAgent)) {
+    if (!shouldServeSSR(userAgent)) {
       return next();
     }
 
@@ -321,6 +379,13 @@ export function setupBotSSR(app: Express) {
       // JSON-LD and meta tags. Pass through to the Express route registered
       // in routes.ts so Googlebot receives the actual page content.
       if (STANDALONE_BLOG_SLUGS.some((slug) => urlPath === `/blog/${slug}`)) {
+        return next();
+      }
+
+      // Real routes with no ssr-pages.ts entry (fast-loading ad HTML files,
+      // GTM beacon endpoint) — see server/non-seo-routes.ts. Pass through to
+      // their registered handler in routes.ts instead of a synthetic 404.
+      if (isNonSeoServerRoute(urlPath)) {
         return next();
       }
 

@@ -2,7 +2,7 @@ import express, { type Express, type Request, type Response } from "express";
 import fs from "fs";
 import path from "path";
 import { injectHomepageFreshness } from "./homepage-freshness";
-import { getPageSEO, getStaticPagePaths } from "./ssr-pages";
+import { getPageSEO, getStaticPagePaths, isKnownRoute } from "./ssr-pages";
 
 const BASE_URL = "https://www.rainbowpreschools.com";
 
@@ -194,13 +194,23 @@ export function serveStatic(app: Express) {
     res.setHeader("Content-Type", "text/html; charset=utf-8");
     // Use originalUrl (strip query string) to get the real page path.
     const urlPath = req.originalUrl.split("?")[0];
+
+    // HTTP status must reflect whether the route actually exists,
+    // independent of who's asking. Without this, ANY client whose
+    // User-Agent looks like a real browser (including spoofed/audit-tool
+    // UAs and real search-engine crawlers that render JS) gets HTTP 200 +
+    // homepage-shell metadata for a URL that doesn't exist — a classic
+    // "soft 404". The SPA still renders its own not-found UI client-side;
+    // only the status code changes here.
+    const status = isKnownRoute(urlPath) ? 200 : 404;
+
     const cached = pageCache.get(urlPath);
     if (cached) {
-      return res.send(cached);
+      return res.status(status).send(cached);
     }
     // First request for this URL: compute and cache.
     const html = injectPageSchemas(urlPath, getBaseHtml(indexPath));
     pageCache.set(urlPath, html);
-    res.send(html);
+    res.status(status).send(html);
   });
 }

@@ -23,6 +23,7 @@ Disallow: /summer-camp
 # ── Internal tools (noindex, don't crawl) ─────────────────────────────────────
 Disallow: /gsc
 Disallow: /GSC
+Disallow: /dummy
 
 # ── Old city / franchise pages no longer active ──────────────────────────────
 Disallow: /navi-mumbai/

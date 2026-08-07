@@ -34,6 +34,9 @@ const BOT_SSR_MARKER = "Our Network:";
 
 const PATHS = ["/", "/playgroup", "/preschool-in-manpada-thane"] as const;
 
+// A path guaranteed to never be a real route (used to verify true 404s).
+const UNKNOWN_PATH = "/this-page-does-not-exist-regression-check";
+
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 interface FetchResult {
@@ -112,6 +115,52 @@ async function main(): Promise<void> {
   }
 
   const results: AssertionResult[] = [];
+
+  // ── True-404 regression: an unknown URL must 404 for EVERY UA ─────────────
+  // This guards the fix in server/bot-ssr.ts / server/static.ts / server/vite.ts
+  // that made 404 status depend on whether the route actually exists, not on
+  // whether the requester happens to look like a known bot. Without this
+  // check, a future change could silently regress back to "soft 404s" for
+  // any client whose User-Agent looks like a real browser (including spoofed
+  // audit tools and search-engine crawlers that render JS).
+  const unknownUAs: Array<[string, string]> = [
+    ["known bot UA (Googlebot)", BOT_UA],
+    ["real browser UA (Chrome)", HUMAN_UA],
+    ["generic/unrecognized UA", "Mozilla/5.0 (compatible; AuditBot/1.0)"],
+  ];
+  for (const [label, ua] of unknownUAs) {
+    const res = await fetchHtml(UNKNOWN_PATH, ua);
+    const pass = res.status === 404;
+    results.push({
+      path: UNKNOWN_PATH,
+      assertion: `404 for unknown URL — ${label}`,
+      pass,
+      detail: pass
+        ? "OK"
+        : `Expected HTTP 404 for a nonexistent URL with ${label}, got ${res.status} — soft-404 regression`,
+    });
+  }
+
+  // ── Non-SEO server routes must stay 200 for every UA ───────────────────────
+  // These routes (server/non-seo-routes.ts) are real Express handlers
+  // registered AFTER bot-SSR runs, with no server/ssr-pages.ts entry. The
+  // true-404 fix must not mistake "no SEO entry" for "doesn't exist" and
+  // shadow them with a synthetic 404 before they ever reach their handler.
+  const NON_SEO_PATHS = ["/playgroup-fast", "/nursery-fast", "/kindergarten-fast", "/daycare-fast", "/xrdb"];
+  for (const path of NON_SEO_PATHS) {
+    for (const [label, ua] of unknownUAs) {
+      const res = await fetchHtml(path, ua);
+      const pass = res.status === 200;
+      results.push({
+        path,
+        assertion: `200 for non-SEO server route — ${label}`,
+        pass,
+        detail: pass
+          ? "OK"
+          : `Expected HTTP 200 for ${path} with ${label}, got ${res.status} — bot-SSR is shadowing a real route`,
+      });
+    }
+  }
 
   // ── Per-path BOT assertions ───────────────────────────────────────────────
 
