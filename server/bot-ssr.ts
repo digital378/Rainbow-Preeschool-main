@@ -92,6 +92,23 @@ const REAL_BROWSER_SIGNATURES = [
   "vivaldi",
   "brave",
   "silk/",
+  // Social-app in-app browsers whose UA strings don't always carry a
+  // "Safari/"-style engine token (e.g. Instagram's iOS webview UA ends in
+  // "Instagram 303.0.0.30.107" with no trailing "Safari/x.y"), so they'd
+  // otherwise fail the engine-signature check above and get misclassified
+  // as non-browser clients — sending real users the bot-SSR HTML instead of
+  // the interactive React app. Caught by scripts/check-bot-detection.ts.
+  "instagram",
+  "fbav/",
+  "fban/",
+  "fb_iab",
+  "twitter",
+  "line/",
+  "micromessenger",
+  "snapchat",
+  "tiktok",
+  "linkedinapp",
+  "pinterest",
 ];
 
 function looksLikeRealBrowser(userAgent: string): boolean {
