@@ -120,8 +120,22 @@
     .badge-dot{width:8px;height:8px;background:#10b981;border-radius:50%;animation:pulse 2s infinite}
     @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
     .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
-    .chip{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--border);border-radius:9999px;padding:7px 14px;font-size:.875rem;box-shadow:0 1px 3px rgba(28,25,23,.05)}
-    .chip svg{width:16px;height:16px;color:var(--emerald)}
+    .chip{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--border);border-radius:9999px;padding:7px 14px;font-size:.875rem;box-shadow:0 1px 3px rgba(28,25,23,.05)}
+    .chip-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+    .chip-dot-orange{background:#f59e0b}
+    .chip-dot-red{background:#ef4444}
+    .chip-dot-teal{background:#14b8a6}
+
+    /* Hero background: soft gradient + dot texture + decorative shapes (behind content) */
+    .hero-section{position:relative;overflow:hidden;background:linear-gradient(135deg,#fbe4e2 0%,#fdf3ea 45%,#fce2c9 100%)}
+    .hero-section::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(28,25,23,.06) 1px,transparent 1px);background-size:18px 18px;pointer-events:none}
+    .hero-section>.container{position:relative;z-index:1}
+    .hero-shape{position:absolute;z-index:0;pointer-events:none}
+    .hero-shape-circle{width:170px;height:170px;top:-50px;right:6%;border:2px dashed rgba(220,38,38,.28);border-radius:50%}
+    .hero-shape-blue{width:64px;height:64px;top:8px;right:34%;background:rgba(147,181,253,.55);border-radius:20px;transform:rotate(14deg)}
+    .hero-shape-blue-sm{width:52px;height:52px;bottom:26px;left:3%;background:rgba(165,180,252,.5);border-radius:18px;transform:rotate(-10deg)}
+    .hero-shape-orange{width:56px;height:56px;bottom:-14px;right:16%;background:rgba(251,191,110,.4);border-radius:50%}
+    @media(max-width:768px){.hero-shape-circle{right:-40px}.hero-shape-blue{right:8%}}
     .hero-stats{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px}
     .stat-card{padding:20px;text-align:center}
     .stat-num{font-family:'Poppins',sans-serif;font-weight:700;font-size:1.4rem}
@@ -242,7 +256,11 @@
   </header>
 
   <!-- Hero + Form -->
-  <section class="section bg-warm">
+  <section class="section hero-section">
+    <div class="hero-shape hero-shape-circle" aria-hidden="true"></div>
+    <div class="hero-shape hero-shape-blue" aria-hidden="true"></div>
+    <div class="hero-shape hero-shape-blue-sm" aria-hidden="true"></div>
+    <div class="hero-shape hero-shape-orange" aria-hidden="true"></div>
     <div class="container">
       <div class="hero-grid">
         <div class="hero-copy">
@@ -251,9 +269,9 @@
           <h1 class="display">Mid-Term <span class="gradient-text">Playgroup Admission</span> in Thane</h1>
           <p class="body-lg lead">Your toddler doesn't have to wait for the next academic year. Join our Playgroup <strong style="color:var(--ink)">mid-session</strong> with a gentle settling-in plan designed for late joiners. Branches in Manpada, Kalwa, Dhokali, Kasarvadavali, Anand Nagar &amp; Hariniwas.</p>
           <div class="chips">
-            <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12h.01M15 12h.01M10 16c.5.3 1.2.5 2 .5s1.5-.2 2-.5M19 6.3a9 9 0 0 1 1.8 3.9 2 2 0 0 1 0 3.6 9 9 0 0 1-17.8 3.6 2 2 0 0 1 0-3.6A9 9 0 0 1 12 3c2 0 3.5 1.1 3.5 2.5s-.9 2.5-2 2.5c-.8 0-1.5-.4-1.5-1"/></svg> Ages 1.5–2.5 yrs</span>
-            <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg> Gentle Settling-In</span>
-            <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1 1 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg> CCTV &amp; Female Staff</span>
+            <span class="chip"><span class="chip-dot chip-dot-orange" aria-hidden="true"></span> Ages 1.5–2.5 yrs</span>
+            <span class="chip"><span class="chip-dot chip-dot-red" aria-hidden="true"></span> Gentle Settling-In</span>
+            <span class="chip"><span class="chip-dot chip-dot-teal" aria-hidden="true"></span> CCTV &amp; Female Staff</span>
           </div>
           <div class="hero-stats">
             <div class="card stat-card"><div class="stat-num">1,00,000+</div><div class="stat-label">Students</div></div>
