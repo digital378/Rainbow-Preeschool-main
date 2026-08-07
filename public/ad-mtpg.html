@@ -761,6 +761,15 @@
     // ── Form submit ────────────────────────────────────────────────────
     function handleSubmit(e){
       e.preventDefault();
+      // Stop the native "submit" DOM event from bubbling to document-level
+      // auto-trackers (GA4 Enhanced Measurement / GTM's built-in Form
+      // Submission trigger). Those fire on ANY click of a submit button —
+      // valid data or not, backend success or not — which is how an empty,
+      // unvalidated click was getting counted as a lead. The only signal
+      // that should count as "mtpg_form_submit" is our own explicit
+      // sendGA4Event() call below, fired after OTP verification + backend
+      // confirms the lead was captured (DB row + email + sheet row).
+      e.stopPropagation();
       if (sendInFlight) return false;
       var n = document.getElementById('parentName').value.trim();
       var cn = document.getElementById('childName').value.trim();
