@@ -216,6 +216,13 @@ if ! npx --no-install tsx scripts/check-robots-noindex-sync.ts; then
   exit 1
 fi
 
+log "step 10c/18 — tsx scripts/check-robots-txt-valid.ts (robots.txt directive-syntax guard)"
+if ! npx --no-install tsx scripts/check-robots-txt-valid.ts; then
+  log "FAIL — robots.txt contains non-standard directives that will fail strict validators. Convert informational lines to comments (# prefix)."
+  log "blocking deploy."
+  exit 1
+fi
+
 log "step 11/18 — npm run build"
 if ! npm run build; then
   log "FAIL — production build failed; aborting deploy"
