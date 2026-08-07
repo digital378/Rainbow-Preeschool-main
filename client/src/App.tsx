@@ -100,6 +100,7 @@ const LazyForgetManners = lazy(() => import("@/pages/legacy-pages").then(m => ({
 const LazyTrendsEarlyChildhood = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.TrendsEarlyChildhood })));
 const LazyHealthyPreschoolMeals = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.HealthyPreschoolMeals })));
 const LazyEducationalToys = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.EducationalToys })));
+const LazyCookingForKids = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.CookingForKids })));
 
 // Homepage supporting posts
 
@@ -269,6 +270,7 @@ function Router() {
         <Route path="/trends-in-early-childhood-education" component={LazyTrendsEarlyChildhood} />
         <Route path="/healthy-preschool-meals-for-bright-minds-and-bodies" component={LazyHealthyPreschoolMeals} />
         <Route path="/boost-early-childhood-development-with-educational-toys" component={LazyEducationalToys} />
+        <Route path="/8-reasons-cooking-is-important-for-kids" component={LazyCookingForKids} />
         
         
         {/* Homepage supporting blog posts */}

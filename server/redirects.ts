@@ -425,8 +425,8 @@ export const redirectMap: Record<string, string> = {
   "/immunity-boosting-foods-for-kids/": "/blog",
   "/10-easy-ways-to-help-kids-learn-colours-and-shapes-better": "/blog",
   "/10-easy-ways-to-help-kids-learn-colours-and-shapes-better/": "/blog",
-  "/8-amazing-reasons-why-cooking-is-important-for-kids": "/8-reasons-cooking-is-important-for-kids/",
-  "/8-amazing-reasons-why-cooking-is-important-for-kids/": "/8-reasons-cooking-is-important-for-kids/",
+  "/8-amazing-reasons-why-cooking-is-important-for-kids": "/8-reasons-cooking-is-important-for-kids",
+  "/8-amazing-reasons-why-cooking-is-important-for-kids/": "/8-reasons-cooking-is-important-for-kids",
   "/6-quick-tips-to-help-children-learn-writing": "/blog",
   "/6-quick-tips-to-help-children-learn-writing/": "/blog",
   "/fun-games-teach-even-odd-numbers": "/blog",
@@ -722,6 +722,7 @@ export function setupRedirects(app: Express) {
     // redirectMap would cause `getLiveLegacySitemapEntries()` to skip it.
     const trailingSlashCanonicals = new Set<string>([
       "/pre-kg-age-guide/",
+      "/8-reasons-cooking-is-important-for-kids/",
     ]);
     if (trailingSlashCanonicals.has(lowerPath)) {
       return res.redirect(301, lowerPath.slice(0, -1) + qs);
