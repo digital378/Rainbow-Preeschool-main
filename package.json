@@ -86,7 +86,7 @@
     "sharp": "^0.35.3",
     "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7",
-    "three": "^0.185.1",
+    "three": "github:mrdoob/three.js#dev",
     "tw-animate-css": "^1.2.5",
     "vaul": "^1.1.2",
     "wouter": "^3.3.5",
