@@ -1,0 +1,63 @@
+Build a single-file HTML blog page for Rainbow Preschool International (a preschool brand, color 
+#EC210F). The page is titled "Raksha Bandhan 2026 for Kids: Stories, Essays, Speeches, Slogans & More" and targets parents of children aged 1.5–5.5 years.
+
+Tech stack: Pure HTML/CSS/JS in one file. No frameworks. Use Google Fonts (Baloo 2 + Nunito) and Lucide icons via CDN (https://unpkg.com/lucide@latest). Call lucide.createIcons() at the end of the script. No emojis — use Lucide icons throughout.
+
+Brand:
+
+School name: Rainbow Preschool International
+Tagline: "The Future Begins Here"
+Brand color: 
+#EC210F (red)
+Website: https://www.rainbowpreschoolinternational.com
+Partner school: Rainbow International School → https://www.rainbowinternationalschool.in
+
+Design requirements:
+
+Sticky nav with school logo placeholder (white box, red text), school name, and a "Book a School Tour" CTA button in red
+Animated particle background in the hero (small floating dots/hearts using canvas or CSS)
+Hero section: gradient red background, animated floating SVG decorations, a clickable badge <a href="RPS homepage">📍 Rainbow Preschool International, Thane</a> (use map-pin Lucide icon), H1 title, subtitle, meta tags (date Aug 2026, read time, author), hero image placeholder
+Reading progress bar at top of page
+Back-to-top button (appears on scroll)
+Scroll-reveal animation: sections fade in as user scrolls (IntersectionObserver). Important: sections must be visible by default (opacity:1) as a fallback — only animate when JS fires
+3D card hover effect on cards (subtle tilt/shadow on hover)
+Red accent color throughout, peach/cream backgrounds for section alternation
+Language switcher tabs (English / हिंदी / मराठी) for key content sections — clicking a tab shows that language's content panel
+
+Include ALL 22 sections in this order:
+
+Table of Contents — anchor links to all sections
+History & Origin of Raksha Bandhan — ancient roots, Vedic references, historical stories
+Significance & Meaning — what the festival means spiritually and emotionally
+How to Celebrate Raksha Bandhan — step-by-step family guide
+Activity Ideas for Kids — crafts, games, preschool activities (with 3D cards)
+Short Essay on Raksha Bandhan — 150-word essay (English / Hindi / Marathi tabs)
+10 Lines on Raksha Bandhan — bullet list for kids (English / Hindi / Marathi tabs)
+Story for Kids — short illustrated story about a sibling pair (English / Hindi / Marathi tabs)
+Speech for Kids — short stage speech (English / Hindi / Marathi tabs)
+Poem / Kavita — short poem (English / Hindi / Marathi tabs)
+Slogans — 10 creative slogans for Raksha Bandhan (card grid)
+Drawing Ideas — 8 drawing prompts for kids in cards
+Rakhi Making Craft — step-by-step DIY rakhi instructions with materials list
+Fancy Dress Ideas — costume ideas related to the festival
+Raksha Bandhan Wishes — 10 wishes/messages for WhatsApp (copyable cards)
+WhatsApp DP Ideas — descriptions of DP themes for kids and families
+Instagram Captions — 10 captions in card grid
+Quiz — interactive 5-question multiple-choice quiz with score at end (JS state machine, no localStorage)
+FAQ — 8 FAQs in accordion expand/collapse style
+Conclusion — warm closing paragraph
+Related Posts — 2 internal link cards: one to RIS website, one to RPS website, styled as blog cards with red accent
+Footer — school name, tagline, links to RIS and RPS websites, copyright 2026
+
+SEO/AEO/GEO requirements:
+
+JSON-LD @graph in <head> with: Article, FAQPage (from FAQ section), BreadcrumbList
+All meta tags: title, description, keywords, og:title, og:description, og:image, og:type, twitter:card
+Canonical URL tag
+Semantic HTML: <article>, <section>, <nav>, <footer>, proper H1→H2→H3 hierarchy
+Alt text on all images
+Schema datePublished: "2026-08-12", dateModified: "2026-08-12"
+
+Content tone: Warm, playful, parent-friendly. Avoid superlatives like "best" or "No. 1". No fake urgency. CTAs: "Book a School Tour", "Enquire Now", "Explore Our Campus".
+
+Output a single complete index.html file that works when opened directly in a browser with no build step.
