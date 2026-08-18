@@ -2,7 +2,68 @@ import { type BlogPost } from "@shared/schema";
 import { randomUUID } from "crypto";
 
 export const seoRecoveryBlogPosts: BlogPost[] = [
-  // ─── Independence Day 2026 — most recent post, appears first in listing ───
+  // ─── Raksha Bandhan 2026 — most recent post, appears first in listing ───
+  {
+    id: randomUUID(),
+    title: "Raksha Bandhan 2026 for Kids: Stories, Essays, Speeches, Slogans & More",
+    slug: "raksha-bandhan-2026-for-kids",
+    excerpt: "Everything parents and little ones need for Raksha Bandhan 2026 — age-appropriate stories, simple essays in English/Hindi/Marathi, slogans, quotes, DIY craft activities, a kids' quiz & FAQs. From Rainbow Preschool International, Thane.",
+    content: `Raksha Bandhan 2026 falls on **Friday, 28th August 2026** — a joyful festival that celebrates the loving bond between brothers and sisters. For little ones, it's the perfect chance to talk about love, protection, and family through simple stories, crafts, and songs.
+
+## The Story Behind Raksha Bandhan
+
+Raksha Bandhan means "the bond of protection." A sister ties a sacred thread, called a *rakhi*, around her brother's wrist, and in return he promises to protect and care for her for life. The festival isn't only about blood siblings — it celebrates any bond built on love, trust, and protection, including cousins, friends, and even trees and soldiers in some traditions.
+
+## A Simple Raksha Bandhan Essay for Kids (5 Lines)
+
+Raksha Bandhan is a special festival for brothers and sisters. On this day, sisters tie a rakhi on their brother's wrist. Brothers promise to always protect and take care of their sisters. We eat sweets and give gifts to each other. It is a day full of love and happiness.
+
+## A Short Speech for Preschoolers
+
+Respected teachers and dear friends, good morning! Today we celebrate Raksha Bandhan, the beautiful festival of siblings. "Raksha" means protection and "Bandhan" means a bond. Sisters tie a rakhi to show their love, and brothers promise to protect them always. Let us celebrate this day by loving and caring for our brothers and sisters. Thank you!
+
+## 10 Fun Raksha Bandhan Slogans for Kids
+
+1. Rakhi ka pyaar, bhai behen ka tyohaar!
+2. A thread of love, tied with care.
+3. Rakhi binds hearts, not just wrists.
+4. Behen ka pyaar, Rakhi ka tyohaar.
+5. Protection and love, tied together.
+6. One thread, a lifetime of love.
+7. Rakhi — the festival of promises.
+8. Bhai behen ka rishta, sabse pyaara rishta.
+9. Tie a rakhi, spread some love.
+10. Raksha Bandhan — celebrating forever bonds.
+
+## Easy Raksha Bandhan Craft Ideas for Preschoolers
+
+1. **Paper Plate Rakhi** — cut a circle from a paper plate and decorate with sequins and ribbon.
+2. **Bead Rakhi** — thread colourful beads onto elastic string for little fingers to manage.
+3. **Handprint Card** — trace your child's hand onto card paper to make a rakhi-giving card.
+4. **Pom-Pom Rakhi** — glue a fluffy pom-pom onto a decorated band.
+5. **Thumbprint Flower Rakhi** — use paint thumbprints to form a flower design on the rakhi.
+
+## Fun Facts About Raksha Bandhan
+
+- Raksha Bandhan is celebrated on the full moon day (Purnima) of the Hindu month of Shravan.
+- It is also known as Rakhi Purnima.
+- In some regions, rakhis are also tied to trees and rivers as a mark of protection.
+- The festival is celebrated by many communities across India and Nepal, not just one religion.
+- In 2027, Raksha Bandhan falls on Monday, 16th August.
+
+## Visit the Full Raksha Bandhan Page
+
+Visit the [full Raksha Bandhan blog page](/blog/raksha-bandhan-2026-for-kids) for stories, essays, and speeches in English, Hindi, and Marathi, a kids' quiz, printable slogans, wishes you can copy and share, and more craft ideas — all designed for children aged 1.5–5.5 years.
+
+EXPLORE_MORE: [Explore Our Playgroup Programme](/playgroup)|[Schedule a Campus Visit](/preschool-admissions)|[Read More on Our Blog](/blog)`,
+    imageUrl: "/images/optimized/kids-playing-ball-pit-rainbow-preschool.webp",
+    category: "Festivals & Events",
+    publishedAt: new Date("2026-08-18"),
+    updatedAt: new Date("2026-08-18"),
+    isPublished: true,
+  },
+  // ─────────────────────────────────────────────────────────────────────────
+  // ─── Independence Day 2026 ───
   {
     id: randomUUID(),
     title: "Independence Day for Kids 2026 — Activities, Speeches, Stories & Free Downloads",

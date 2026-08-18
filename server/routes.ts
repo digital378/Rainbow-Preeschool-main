@@ -262,6 +262,36 @@ export async function registerRoutes(
     res.setHeader("Cache-Control", "public, max-age=3600");
     res.send(_independenceDayHtml);
   });
+
+  // Raksha Bandhan 2026 standalone blog page — same pattern as the
+  // Independence Day page above: static HTML with its own interactive
+  // features (language tabs, quiz, accordion FAQ) served directly so it
+  // works without React. Registered BEFORE the SPA catch-all.
+  const _rakshaBandhanCandidates = [
+    path.join(process.cwd(), "dist", "blog-assets", "raksha-bandhan-2026-for-kids", "index.html"),
+    path.join(process.cwd(), "blog-pages", "raksha-bandhan-2026-for-kids", "index.html"),
+  ];
+  let _rakshaBandhanHtml: Buffer | null = null;
+  for (const p of _rakshaBandhanCandidates) {
+    if (fs.existsSync(p)) {
+      _rakshaBandhanHtml = fs.readFileSync(p);
+      console.log(`[blog-page] raksha-bandhan-2026 loaded from: ${p}`);
+      break;
+    }
+  }
+  if (!_rakshaBandhanHtml) {
+    console.error(
+      `[blog-page] raksha-bandhan-2026 NOT FOUND — tried: ${_rakshaBandhanCandidates.join(", ")} | cwd=${process.cwd()}`
+    );
+  }
+  app.get("/blog/raksha-bandhan-2026-for-kids", (req, res) => {
+    if (!_rakshaBandhanHtml) {
+      return res.status(404).send("Page not found");
+    }
+    res.setHeader("Content-Type", "text/html; charset=utf-8");
+    res.setHeader("Cache-Control", "public, max-age=3600");
+    res.send(_rakshaBandhanHtml);
+  });
   
   // Silence GTM /xrdb beacon requests — GTM tags fire requests to paths like
   // /xrdb/kqs1G4o_H/... and /xrdb/?id=G-... which have no server handler,

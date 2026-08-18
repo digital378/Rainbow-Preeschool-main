@@ -54,6 +54,7 @@ const DEFAULT_BLOG_CATEGORY = "Education";
 // navigation, so Express can intercept and serve the HTML file.
 const STANDALONE_BLOG_SLUGS = new Set([
   "independence-day-for-kids",
+  "raksha-bandhan-2026-for-kids",
 ]);
 
 function blogPostToEntry(post: BlogPost): BlogEntry {
