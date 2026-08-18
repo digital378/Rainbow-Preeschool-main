@@ -289,7 +289,12 @@ export async function registerRoutes(
       return res.status(404).send("Page not found");
     }
     res.setHeader("Content-Type", "text/html; charset=utf-8");
-    res.setHeader("Cache-Control", "public, max-age=3600");
+    // No caching in development so edits show up immediately on reload;
+    // production keeps the 1hr cache for performance.
+    res.setHeader(
+      "Cache-Control",
+      process.env.NODE_ENV === "production" ? "public, max-age=3600" : "no-store"
+    );
     res.send(_rakshaBandhanHtml);
   });
   
