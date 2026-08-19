@@ -16,6 +16,8 @@ export function HeroSection() {
       <div className="absolute inset-0">
         <img
           src="/images/optimized/hero-banner-1.webp"
+          srcSet="/images/optimized/hero-banner-1-480w.webp 480w, /images/optimized/hero-banner-1-640w.webp 640w, /images/optimized/hero-banner-1-828w.webp 828w, /images/optimized/hero-banner-1.webp 1200w"
+          sizes="100vw"
           alt="Preschool classroom in Thane - Rainbow Preschool"
           className="w-full h-full object-cover"
           width={1200}

@@ -52,8 +52,12 @@
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@600;700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@600;700;800&display=swap"></noscript>
     
-    <!-- Preload hero image for fast LCP -->
-    <link rel="preload" as="image" href="/images/optimized/hero-banner-1.webp" fetchpriority="high">
+    <!-- Preload hero image for fast LCP. imagesrcset/imagesizes mirror the
+         <img> srcset below so the browser preloads the exact responsive
+         variant it will paint — smaller download on mobile, same on desktop. -->
+    <link rel="preload" as="image" href="/images/optimized/hero-banner-1.webp" fetchpriority="high"
+          imagesrcset="/images/optimized/hero-banner-1-480w.webp 480w, /images/optimized/hero-banner-1-640w.webp 640w, /images/optimized/hero-banner-1-828w.webp 828w, /images/optimized/hero-banner-1.webp 1200w"
+          imagesizes="100vw">
     
     <!-- Inline critical CSS for instant first paint + static LCP hero -->
     <style>
@@ -145,7 +149,10 @@
          fires and LCP timestamp stays at the early static-paint time. For
          non-home pages, removed by main.tsx before React renders. -->
     <div id="static-lcp-hero" aria-hidden="true">
-      <img src="/images/optimized/hero-banner-1.webp" alt="" width="1200" height="675" fetchpriority="high" decoding="async" />
+      <img src="/images/optimized/hero-banner-1.webp"
+           srcset="/images/optimized/hero-banner-1-480w.webp 480w, /images/optimized/hero-banner-1-640w.webp 640w, /images/optimized/hero-banner-1-828w.webp 828w, /images/optimized/hero-banner-1.webp 1200w"
+           sizes="100vw"
+           alt="" width="1200" height="675" fetchpriority="high" decoding="async" />
       <div class="ov1"></div>
       <div class="ov2"></div>
     </div>
