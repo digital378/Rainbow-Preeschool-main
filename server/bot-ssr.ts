@@ -59,6 +59,13 @@ const BOT_USER_AGENTS = [
   "screamingfrog",
   "sitebulb",
   "lighthouse",
+  // getveritas.io's "Site Audit" tool — same false-alarm pattern (reported
+  // missing H1, orphan pages, and missing Organization schema, all because
+  // it read the pre-hydration SPA shell instead of rendered content).
+  // Exact crawler UA string wasn't confirmed at time of writing; matching on
+  // "veritas" as a best-effort substring since that's unlikely to appear in
+  // any real browser or in-app browser UA.
+  "veritas",
 ];
 
 function isBot(userAgent: string): boolean {
