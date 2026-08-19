@@ -1,0 +1,41 @@
+{
+  "_readme": "Durable log of per-page GSC query-alignment data pulled from page-audit tools (e.g. getveritas.io Page Audit). See seo-audits/keyword-overlap-playbook.md for the recording format, how scripts/check-keyword-overlap.ts consumes this file, and what to do when it flags a genuine overlap. Do not hand-edit position/impressions after the fact — append a new audit entry instead so history is preserved.",
+  "pages": [
+    {
+      "url": "/",
+      "canonicalOwnerNote": "Home page — bare 'preschool in thane' keyword owner per scripts/check-no-title-cannibalisation.ts, but must avoid the literal phrase in its own title/H1 (uses 'Preschool Chain in Thane' instead).",
+      "audits": [
+        {
+          "date": "2026-08-19",
+          "source": "getveritas.io Page Audit — Query alignment panel (queries ranking in reach but absent from title/H1)",
+          "queries": [
+            { "query": "rainbow pre school thane", "position": 6.5, "impressions": 4, "excludeFromOverlap": true, "excludeReason": "brand-qualified navigational query, not a competable generic keyword" },
+            { "query": "rainbow school", "position": 7.3, "impressions": 4, "excludeFromOverlap": true, "excludeReason": "brand navigational query" },
+            { "query": "vimlesh sindhu", "position": 3.0, "impressions": 4, "excludeFromOverlap": true, "excludeReason": "person name — coincidental match, not a real keyword" },
+            { "query": "pre school near me", "position": 17.0, "impressions": 1, "excludeFromOverlap": false },
+            { "query": "rain painting preschool", "position": 12.0, "impressions": 1, "excludeFromOverlap": true, "excludeReason": "mis-tokenized one-off query (likely a rain-painting activity search), not a real recurring keyword" },
+            { "query": "rainbow activity preschool", "position": 10.0, "impressions": 1, "excludeFromOverlap": true, "excludeReason": "brand navigational query" },
+            { "query": "rainbow for school project", "position": 12.0, "impressions": 1, "excludeFromOverlap": true, "excludeReason": "mis-tokenized one-off query (likely a school-project topic search for 'rainbow'), not about the preschool brand" },
+            { "query": "rainbow kids preschool", "position": 8.0, "impressions": 1, "excludeFromOverlap": true, "excludeReason": "brand navigational query" },
+            { "query": "rainbow school near me", "position": 9.0, "impressions": 1, "excludeFromOverlap": true, "excludeReason": "brand-qualified navigational query" }
+          ]
+        },
+        {
+          "date": "2026-08-19",
+          "source": "getveritas.io Page Audit — Search queries panel (top queries by opportunity, last 28 days)",
+          "queries": [
+            { "query": "preschool in thane", "position": 126.7, "impressions": 7, "excludeFromOverlap": false },
+            { "query": "rainbow", "position": 6.4, "impressions": 5, "excludeFromOverlap": true, "excludeReason": "bare brand name" },
+            { "query": "perschool near kalwa, thane with phone number", "position": 96.0, "impressions": 4, "excludeFromOverlap": false },
+            { "query": "rainbow preschool", "position": 8.3, "impressions": 3, "excludeFromOverlap": true, "excludeReason": "bare brand name" },
+            { "query": "rainbow school badlapur", "position": 1.0, "impressions": 3, "excludeFromOverlap": true, "excludeReason": "brand navigational query, and Badlapur is outside the 6 Thane centres served" },
+            { "query": "kindergarten in thane", "position": 61.0, "impressions": 2, "excludeFromOverlap": false },
+            { "query": "pre primary schools in west thane with phone number", "position": 111.0, "impressions": 1, "excludeFromOverlap": false },
+            { "query": "pre school in thane", "position": 141.0, "impressions": 1, "excludeFromOverlap": false },
+            { "query": "preschool in thane west", "position": 141.0, "impressions": 1, "excludeFromOverlap": false }
+          ]
+        }
+      ]
+    }
+  ]
+}
