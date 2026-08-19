@@ -304,6 +304,7 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
     <meta property="og:title" content="${escapeHtml(seo.title)}" />
     <meta property="og:description" content="${escapeHtml(seo.description)}" />
     <meta property="og:image" content="${ogImage}" />
+    <meta property="og:image:alt" content="Three preschoolers in red uniforms playing on a bright yellow background with colorful toy blocks" />
     <meta property="og:site_name" content="Rainbow Preschool International" />
     <meta property="og:locale" content="en_IN" />
 
@@ -311,6 +312,7 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
     <meta name="twitter:title" content="${escapeHtml(seo.title)}" />
     <meta name="twitter:description" content="${escapeHtml(seo.description)}" />
     <meta name="twitter:image" content="${ogImage}" />
+    <meta name="twitter:image:alt" content="Three preschoolers in red uniforms playing on a bright yellow background with colorful toy blocks" />
 
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="icon" type="image/png" sizes="256x256" href="/favicon.png" />
