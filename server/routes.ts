@@ -7,6 +7,8 @@ import { sendLeadNotificationEmail, sendSheetsFailureAlertEmail, sendEmailFailur
 import { sendLeadToMCB, getBranchID } from "./mcb";
 import { syncGscData, isGscConfigured } from "./gsc-sync";
 import { appendEnquiryRow } from "./sheets-sync";
+import { registerIndraApiRoutes } from "./indra-api";
+import { pushIndraEvent } from "./indra-webhook";
 import path from "path";
 import fs from "fs";
 
@@ -353,6 +355,8 @@ export async function registerRoutes(
   // Apply SEO redirect middleware for old WordPress URLs
   app.use(seoRedirectMiddleware);
 
+  registerIndraApiRoutes(app);
+
   app.get("/api/rps/export", (req, res) => {
     res.setHeader("Cache-Control", "no-store, private, max-age=0");
 
@@ -454,6 +458,11 @@ export async function registerRoutes(
       const contact = await storage.createContact(validatedData);
       
       console.log(`[Contact] New lead received: ${validatedData.parentName}, ${validatedData.phone}, ${validatedData.programme}`);
+
+      // Notify Indra Intelligence of the new lead. Fire-and-forget: this
+      // helper never throws (it logs and gives up after one retry), so it
+      // can never delay or fail the parent's form submission.
+      void pushIndraEvent("lead.created", contact);
       
       // Send email synchronously so we know if it succeeds
       let emailSent = false;
