@@ -1,8 +1,7 @@
 /**
  * Server-registered routes that serve real content but intentionally have
- * no entry in `server/ssr-pages.ts` — they aren't indexable pages with their
- * own SEO metadata. Currently: fast-loading ad-campaign HTML files served
- * directly from `public/`, and a GTM beacon-silencer endpoint.
+ * no entry in `server/ssr-pages.ts`. This includes fast-loading ad-campaign
+ * HTML and standalone pages that carry their own complete SEO metadata.
  *
  * Why this file exists: `server/bot-ssr.ts` intercepts requests BEFORE
  * `registerRoutes()` (server/routes.ts) registers these handlers. Any
@@ -23,6 +22,8 @@ export const NON_SEO_SERVER_ROUTES: string[] = [
   "/nursery-fast",
   "/kindergarten-fast",
   "/daycare-fast",
+  "/raksha-bandhan-redesign",
+  "/raksha-bandhan-redesign/",
 ];
 
 /**

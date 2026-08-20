@@ -1,6 +1,6 @@
 import { build as esbuild } from "esbuild";
 import { build as viteBuild } from "vite";
-import { rm, readFile, cp } from "fs/promises";
+import { rm, readFile, cp, readdir, mkdir } from "fs/promises";
 import { existsSync } from "fs";
 import { resolve } from "path";
 
@@ -79,6 +79,22 @@ async function buildAll() {
     console.log("copying ad-mtpg.html → dist/ad-assets ...");
     await cp(adMtpgHtml, resolve("dist", "ad-assets", "ad-mtpg.html"));
     console.log("done.");
+  }
+
+  // The Rakhi Trail is served directly by server/routes.ts, so carry only its
+  // HTML and WebP artwork into the production bundle. The authoring PNGs are
+  // intentionally excluded: they are far larger than the responsive assets.
+  const rakhiTrailDir = resolve("public", "raksha-bandhan-redesign");
+  if (existsSync(rakhiTrailDir)) {
+    const outputDir = resolve("dist", "raksha-bandhan-redesign");
+    await mkdir(outputDir, { recursive: true });
+    const trailFiles = await readdir(rakhiTrailDir);
+    for (const fileName of trailFiles) {
+      if (fileName === "index.html" || fileName.endsWith(".webp")) {
+        await cp(resolve(rakhiTrailDir, fileName), resolve(outputDir, fileName));
+      }
+    }
+    console.log("copied Rakhi Trail HTML + WebP assets.");
   }
 }
 

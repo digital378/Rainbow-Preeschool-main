@@ -1,4 +1,4 @@
-import type { Express, Request, Response, NextFunction } from "express";
+import express, { type Express, type Request, type Response, type NextFunction } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertContactSchema } from "@shared/schema";
@@ -296,6 +296,51 @@ export async function registerRoutes(
       process.env.NODE_ENV === "production" ? "public, max-age=3600" : "no-store"
     );
     res.send(_rakshaBandhanHtml);
+  });
+
+  // The Rakhi Trail is an independent, static RPS experience. It needs an
+  // explicit directory route because the production static middleware disables
+  // automatic index.html resolution to protect the SPA homepage handler.
+  const _rakhiTrailCandidates = [
+    path.join(process.cwd(), "dist", "raksha-bandhan-redesign", "index.html"),
+    path.join(process.cwd(), "public", "raksha-bandhan-redesign", "index.html"),
+  ];
+  let _rakhiTrailIndexPath: string | null = null;
+  for (const candidate of _rakhiTrailCandidates) {
+    if (fs.existsSync(candidate)) {
+      _rakhiTrailIndexPath = candidate;
+      console.log(`[rakhi-trail] loaded from: ${candidate}`);
+      break;
+    }
+  }
+  if (!_rakhiTrailIndexPath) {
+    console.error(
+      `[rakhi-trail] NOT FOUND — tried: ${_rakhiTrailCandidates.join(", ")} | cwd=${process.cwd()}`
+    );
+  } else {
+    const _rakhiTrailAssetDir = path.dirname(_rakhiTrailIndexPath);
+    app.use(
+      "/raksha-bandhan-redesign",
+      express.static(_rakhiTrailAssetDir, {
+        index: false,
+        setHeaders(res, filePath) {
+          if (filePath.endsWith(".webp")) {
+            res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
+          }
+        },
+      })
+    );
+  }
+  app.get("/raksha-bandhan-redesign", (_req, res) => {
+    res.redirect(308, "/raksha-bandhan-redesign/");
+  });
+  app.get("/raksha-bandhan-redesign/", (_req, res) => {
+    if (!_rakhiTrailIndexPath) {
+      return res.status(404).send("Page not found");
+    }
+    res.setHeader("Content-Type", "text/html; charset=utf-8");
+    res.setHeader("Cache-Control", "no-store");
+    res.sendFile(_rakhiTrailIndexPath);
   });
   
   // Silence GTM /xrdb beacon requests — GTM tags fire requests to paths like
