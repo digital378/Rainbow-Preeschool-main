@@ -1,0 +1,107 @@
+<style>
+  :root{
+    --ink:#3d2d2a;
+    --paper:#fffaf3;
+    --burgundy:#55131c;
+    --plum:#26102b;
+    --gold:#f7c744;
+    --red:#e64132;
+    --muted:#806f69;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:#f2ece8;color:var(--ink);font-family:Arial,sans-serif}
+  .preview{max-width:1180px;margin:0 auto;padding:20px}
+  .intro{margin:0 0 18px}
+  .intro h2{margin:0 0 6px;font-size:26px}
+  .intro p{margin:0;color:var(--muted);font-size:14px}
+  .option{cursor:pointer}
+  .option.selected{outline:3px solid var(--gold);outline-offset:4px}
+  .label{font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:#b54c43;font-weight:700;margin-bottom:8px}
+  .hero{
+    min-height:330px;border-radius:22px;padding:42px 24px 32px;position:relative;overflow:hidden;text-align:center;
+    color:#fff8ed;background:
+      radial-gradient(circle at 18% 24%,rgba(247,199,68,.28) 0 3px,transparent 4px),
+      radial-gradient(circle at 24% 19%,rgba(255,248,237,.6) 0 2px,transparent 3px),
+      radial-gradient(circle at 84% 24%,rgba(247,199,68,.55) 0 2px,transparent 3px),
+      radial-gradient(circle at 79% 31%,rgba(255,248,237,.55) 0 3px,transparent 4px),
+      radial-gradient(circle at 90% 16%,rgba(247,199,68,.35) 0 2px,transparent 3px),
+      linear-gradient(135deg,var(--burgundy),#761c25 48%,var(--plum));
+  }
+  .hero .pill{display:inline-block;padding:7px 13px;border:1px solid rgba(255,226,161,.4);border-radius:999px;color:#ffe2a1;font-size:10px;letter-spacing:.1em}
+  .hero h1{max-width:650px;margin:20px auto 12px;font-size:43px;line-height:1.04;font-weight:500}
+  .hero p{max-width:620px;margin:0 auto;color:rgba(255,248,237,.76);font-size:14px;line-height:1.55}
+  .hero .buttons{display:flex;justify-content:center;gap:10px;margin-top:22px}
+  .hero button{border-radius:999px;padding:10px 17px;font-weight:700;border:1px solid rgba(255,248,237,.6);background:transparent;color:#fff8ed}
+  .hero button:first-child{background:var(--gold);border-color:var(--gold);color:#3d0d18}
+  .trail{
+    margin-top:26px;min-height:360px;border-radius:22px;padding:26px 28px;position:relative;overflow:hidden;background:linear-gradient(#fffaf3,#fff4e9)
+  }
+  .trail .trail-label{text-align:center;color:var(--red);font-size:11px;font-weight:700;letter-spacing:.12em}
+  .trail .line{position:absolute;top:56px;bottom:28px;left:50%;width:5px;transform:translateX(-50%);border-radius:9px;background:linear-gradient(var(--red),#f4b33c,#55a8ca,#78b873)}
+  .trail .copy{position:absolute;left:42px;top:100px;width:285px;border-radius:18px;padding:20px;background:#fff;box-shadow:0 10px 0 rgba(72,44,34,.08),0 18px 28px rgba(72,44,34,.08)}
+  .trail .copy b{display:block;color:#e78c42;font-size:10px;letter-spacing:.12em}
+  .trail .copy h3{font-size:24px;line-height:1.05;margin:8px 0}
+  .trail .copy p{color:var(--muted);font-size:12px;line-height:1.45;margin:0}
+  .kids{position:absolute;right:9%;bottom:20px;width:340px;height:250px}
+  .kid{position:absolute;bottom:0;width:145px;height:210px;border-radius:48% 48% 30% 30%;background:#e64132;box-shadow:0 12px 0 rgba(72,44,34,.12)}
+  .kid:before{content:'';position:absolute;left:25px;top:-34px;width:95px;height:95px;border-radius:50%;background:#b9784f;box-shadow:0 -12px 0 8px #282426}
+  .kid:after{content:'';position:absolute;left:44px;top:4px;width:11px;height:7px;border-radius:50%;background:#2b2020;box-shadow:43px 0 #2b2020}
+  .kid.girl{left:26px;transform:rotate(-4deg)}
+  .kid.boy{right:26px;transform:rotate(4deg);background:#dc352c}
+  .kid.boy:before{background:#c58b62;box-shadow:0 -12px 0 8px #241f20}
+  .kid.girl:after{box-shadow:43px 0 #2b2020,21px -10px 0 -3px var(--gold)}
+  .links{margin-top:26px;padding:28px;border-radius:22px;background:var(--paper)}
+  .links h2{margin:0 0 18px;font-size:28px;font-weight:500}
+  .group-title{grid-column:1/-1;margin:18px 0 0;padding-top:18px;border-top:1px solid rgba(230,65,50,.16);color:var(--red);font-size:16px;font-weight:700}
+  .group-title:first-child{margin-top:0;padding-top:0;border-top:0}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .card{min-height:112px;border-radius:16px;padding:16px;background:#fff;box-shadow:0 8px 0 rgba(72,44,34,.08),0 14px 22px rgba(72,44,34,.06)}
+  .card small{color:var(--red);font-weight:700;font-size:10px;letter-spacing:.08em}
+  .card h3{margin:8px 0 5px;font-size:16px;font-weight:500}
+  .card p{margin:0;color:var(--muted);font-size:11px;line-height:1.4}
+  @media (max-width:760px){
+    .preview{padding:12px}.hero h1{font-size:31px}.grid{grid-template-columns:1fr 1fr}
+    .trail .copy{left:18px;width:42%;padding:14px}.trail .copy h3{font-size:18px}.kids{right:0;transform:scale(.72);transform-origin:bottom right}
+  }
+</style>
+
+<div class="preview">
+  <div class="intro">
+    <h2>Raksha Bandhan refresh — proposed visual direction</h2>
+    <p>Minimal sparkle hero, larger desktop Trail characters, and clearly separated school links. Click the preview to select this direction.</p>
+  </div>
+
+  <div class="option" data-choice="premium-refresh" onclick="toggleSelect(this)">
+    <div class="label">01 · Premium hero</div>
+    <section class="hero">
+      <span class="pill">RAINBOW PRESCHOOL INTERNATIONAL, THANE</span>
+      <h1>Raksha Bandhan 2026 for Kids: Stories, Essays, Speeches, Slogans &amp; More</h1>
+      <p>A warm, playful guide for parents of little ones aged 1.5–5.5 years — with a calmer, more premium finish.</p>
+      <div class="buttons"><button>Enquire Now</button><button>Take the Quiz</button></div>
+    </section>
+
+    <div class="label" style="margin-top:26px">02 · Welcome to the Rakhi Trail</div>
+    <section class="trail">
+      <div class="trail-label">● WELCOME TO THE RAKHI TRAIL</div>
+      <div class="line"></div>
+      <div class="copy"><b>SHARE SOME SWEETNESS</b><h3>One ladoo, two happy smiles.</h3><p>Festivals feel extra lovely when we share sweets, stories and space at the family table.</p></div>
+      <div class="kids"><div class="kid girl"></div><div class="kid boy"></div></div>
+    </section>
+
+    <div class="label" style="margin-top:26px">03 · Explore More</div>
+    <section class="links">
+      <h2>Primary Pages Worth Exploring</h2>
+      <div class="grid">
+        <h3 class="group-title">Rainbow Preschool International</h3>
+        <div class="card"><small>RPS · HOME</small><h3>Rainbow Preschool International</h3><p>Early learning, centres and community.</p></div>
+        <div class="card"><small>RPS · PROGRAMMES</small><h3>Our Programmes</h3><p>Playgroup through Kindergarten.</p></div>
+        <div class="card"><small>RPS · ADMISSIONS</small><h3>Preschool Admissions</h3><p>Find the right next step.</p></div>
+        <div class="card"><small>RPS · GALLERY</small><h3>RPS Gallery</h3><p>Classrooms and celebrations.</p></div>
+        <h3 class="group-title">Rainbow International School</h3>
+        <div class="card"><small>RIS · HOME</small><h3>Rainbow International School</h3><p>Continue beyond preschool.</p></div>
+        <div class="card"><small>RIS · CURRICULUM</small><h3>RIS Curriculum</h3><p>Academic foundation and approach.</p></div>
+        <div class="card"><small>RIS · ADMISSIONS</small><h3>RIS Admissions</h3><p>Information for the K–12 journey.</p></div>
+      </div>
+    </section>
+  </div>
+</div>
