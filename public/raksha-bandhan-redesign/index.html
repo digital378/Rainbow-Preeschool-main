@@ -698,7 +698,7 @@ article.container>section .scene-bg,article.container>section .story-character{d
   opacity:0;pointer-events:none;will-change:transform,opacity
 }
 .rb-trail-character-fallback{opacity:1}
-.rb-trail-character-fallback img,.rb-trail-tying img{
+.rb-trail-character-fallback img,.rb-trail-seated img,.rb-trail-tying img{
   width:auto;height:100%;max-width:100%;object-fit:contain;
   filter:drop-shadow(0 18px 16px rgba(72,44,34,.18))
 }
@@ -713,7 +713,7 @@ article.container>section .scene-bg,article.container>section .story-character{d
 }
 .rb-trail-kneeling .rb-trail-kneeling-sister{left:2%}
 .rb-trail-kneeling .rb-trail-kneeling-brother{right:2%}
-.rb-trail-tying{transform-origin:50% 100%}
+.rb-trail-seated,.rb-trail-tying{transform-origin:50% 100%}
 .rb-trail-characters.has-fallback .rb-trail-character-layer{display:none}
 .rb-trail-step[data-trail-step="0"] .rb-trail-visual{right:10%}
 .rb-trail-step[data-trail-step="1"] .rb-trail-visual{left:9%}
@@ -903,7 +903,10 @@ article.container>section.is-visible{opacity:1;transform:none}
         </div>
         <div class="rb-trail-character-layer rb-trail-kneeling" id="rb-trail-kneeling" aria-hidden="true">
           <div class="rb-trail-kneeling-sister"><img id="rb-trail-sister-kneel" src="girl-kneeling-1.webp" alt="" width="400" height="600"></div>
-          <div class="rb-trail-kneeling-brother"><img src="boy-front.webp" alt="" width="400" height="600"></div>
+          <div class="rb-trail-kneeling-brother"><img src="boy-kneeling.webp" alt="" width="1024" height="1024"></div>
+        </div>
+        <div class="rb-trail-character-layer rb-trail-seated" id="rb-trail-seated" aria-hidden="true">
+          <img id="rb-trail-seated-frame" src="rakhi-sitting-1.webp" alt="" width="1024" height="1024">
         </div>
         <div class="rb-trail-character-layer rb-trail-tying" id="rb-trail-tying" aria-hidden="true">
           <img id="rb-trail-tying-frame" src="rakhi-tying-1.webp" alt="" width="1024" height="1024">
@@ -2043,10 +2046,12 @@ article.container>section.is-visible{opacity:1;transform:none}
   var characterStory = document.getElementById('rb-trail-characters');
   var walkingLayer = document.getElementById('rb-trail-walking');
   var kneelingLayer = document.getElementById('rb-trail-kneeling');
+  var seatedLayer = document.getElementById('rb-trail-seated');
   var tyingLayer = document.getElementById('rb-trail-tying');
   var sisterWalk = document.getElementById('rb-trail-sister-walk');
   var brotherWalk = document.getElementById('rb-trail-brother-walk');
   var sisterKneel = document.getElementById('rb-trail-sister-kneel');
+  var seatedFrame = document.getElementById('rb-trail-seated-frame');
   var tyingFrame = document.getElementById('rb-trail-tying-frame');
   var active = true;
   var lastIndex = -1;
@@ -2054,13 +2059,14 @@ article.container>section.is-visible{opacity:1;transform:none}
   var assetFailure = false;
   var walkingFrames = ['girl-walk-1.webp','girl-walk-2.webp','girl-walk-3.webp'];
   var brotherFrames = ['boy-walk-1.webp','boy-walk-2.webp','boy-walk-3.webp'];
-  var tyingFrames = ['rakhi-tying-1.webp','rakhi-tying-2.webp','rakhi-tying-3.webp'];
+  var seatedFrames = ['rakhi-sitting-1.webp','rakhi-sitting-2.webp'];
+  var tyingFrames = ['rakhi-seated-tying-1.webp','rakhi-seated-tying-2.webp','rakhi-seated-tying-3.webp'];
   var requiredFrames = walkingFrames.concat(brotherFrames, [
     'girl-kneeling-1.webp',
     'girl-kneeling-2.webp',
-    'boy-front.webp',
+    'boy-kneeling.webp',
     'pair-rakhi.webp' /* reduced-motion and load-failure fallback only */
-  ]).concat(tyingFrames);
+  ]).concat(seatedFrames, tyingFrames);
 
   function clamp(value, min, max){ return Math.max(min, Math.min(max, value)); }
   function smooth(value){ return value * value * (3 - 2 * value); }
@@ -2114,11 +2120,9 @@ article.container>section.is-visible{opacity:1;transform:none}
     walkingLayer.querySelector('.brother').style.transform =
       'translate3d(' + walkOffset.toFixed(1) + 'px,' + walkBob.toFixed(1) + 'px,0)';
 
-    /* 0.28–0.45: a separate kneeling stage. The walking layer has completely
-       left before this layer appears, so standing and kneeling poses never
-       stack over one another. */
-    var kneelProgress = easeRange(progress, .32, .45);
-    var kneelOpacity = easeRange(progress, .32, .36) * (1 - easeRange(progress, .42, .45));
+    /* 0.27–0.43: both children use their actual kneeling poses. */
+    var kneelProgress = easeRange(progress, .30, .43);
+    var kneelOpacity = easeRange(progress, .30, .34) * (1 - easeRange(progress, .40, .43));
     sisterKneel.src = kneelProgress < .55 ? 'girl-kneeling-1.webp' : 'girl-kneeling-2.webp';
     kneelingLayer.style.opacity = kneelOpacity.toFixed(3);
     kneelingLayer.querySelector('.rb-trail-kneeling-sister').style.transform =
@@ -2126,18 +2130,27 @@ article.container>section.is-visible{opacity:1;transform:none}
     kneelingLayer.querySelector('.rb-trail-kneeling-brother').style.transform =
       'translate3d(' + (10 - kneelProgress * 10).toFixed(1) + 'px,' + (10 + kneelProgress * 28).toFixed(1) + 'px,0) scale(' + (1 - kneelProgress * .12).toFixed(3) + ',' + (1 - kneelProgress * .18).toFixed(3) + ')';
 
-    /* 0.45–0.72: a scroll-selected sitting-and-tying sequence — rakhi in
-       hand → wrapping the wrist → completed knot. 0.72–1.00 holds the
-       completed-knot frame. The fallback illustration is never live here. */
-    var tyingIn = easeRange(progress, .45, .52);
-    var tyingProgress = easeRange(progress, .45, .72);
+    /* 0.43–0.57: the children settle into a distinct seated stage before
+       the sister begins tying the rakhi. */
+    var seatedProgress = easeRange(progress, .43, .57);
+    var seatedIndex = Math.min(1, Math.floor(seatedProgress * 2));
+    seatedFrame.src = seatedFrames[seatedIndex];
+    var seatedOpacity = easeRange(progress, .43, .47) * (1 - easeRange(progress, .54, .57));
+    seatedLayer.style.opacity = seatedOpacity.toFixed(3);
+    seatedLayer.style.transform =
+      'translate3d(0,' + ((1 - seatedProgress) * 12).toFixed(1) + 'px,0) scale(' + (.97 + seatedProgress * .03).toFixed(3) + ')';
+
+    /* 0.57–0.78: actual seated tying frames show rakhi in hand → wrapping
+       the wrist → completed knot. 0.78–1.00 holds the completed knot. */
+    var tyingIn = easeRange(progress, .57, .61);
+    var tyingProgress = easeRange(progress, .57, .78);
     var tyingIndex = Math.min(2, Math.floor(tyingProgress * 3));
     tyingFrame.src = tyingFrames[tyingIndex];
     tyingLayer.style.opacity = tyingIn.toFixed(3);
     tyingLayer.style.transform =
       'translate3d(0,' + ((1 - tyingIn) * 16).toFixed(1) + 'px,0) scale(' + (.96 + tyingIn * .04).toFixed(3) + ')';
 
-    characterStory.dataset.stage = progress < .28 ? 'walking' : progress < .45 ? 'kneeling' : progress < .72 ? 'tying-rakhi' : 'final-hold';
+    characterStory.dataset.stage = progress < .27 ? 'walking' : progress < .43 ? 'kneeling' : progress < .57 ? 'sitting' : progress < .78 ? 'tying-rakhi' : 'final-hold';
   }
   function updateTrail(){
     if (reduced || !active) return;
@@ -2179,7 +2192,7 @@ article.container>section.is-visible{opacity:1;transform:none}
       active = entries[0].isIntersecting;
     }, { rootMargin:'20% 0px' }).observe(trail);
   }
-  preloadCharacterFrames();
+  if (!reduced) preloadCharacterFrames();
   revealArticleSections();
   window.addEventListener('scroll', updateTrail, { passive:true });
   window.addEventListener('resize', updateTrail, { passive:true });
