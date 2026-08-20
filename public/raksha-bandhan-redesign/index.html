@@ -683,6 +683,38 @@ article.container>section .scene-bg,article.container>section .story-character{d
   position:absolute;z-index:4;bottom:8%;width:min(430px,36vw);height:min(470px,57vh);
   display:flex;align-items:flex-end;justify-content:center
 }
+.rb-trail-step .rb-trail-visual{display:none}
+
+/* One scroll-driven character stage shared by every Rakhi Trail caption.
+   Keeping it in this sticky scene prevents a second competing scroll system. */
+.rb-trail-characters{
+  position:absolute;z-index:4;bottom:7%;width:min(470px,40vw);height:min(430px,52vh);
+  right:7%;pointer-events:none;user-select:none;will-change:left,right;
+  transition:left .32s ease,right .32s ease
+}
+.rb-trail-characters.is-on-left{left:7%;right:auto}
+.rb-trail-character-layer,.rb-trail-character-fallback{
+  position:absolute;inset:0;display:flex;align-items:flex-end;justify-content:center;
+  opacity:0;pointer-events:none;will-change:transform,opacity
+}
+.rb-trail-character-fallback{opacity:1}
+.rb-trail-character-fallback img,.rb-trail-tying img{
+  width:auto;height:100%;max-width:100%;object-fit:contain;
+  filter:drop-shadow(0 18px 16px rgba(72,44,34,.18))
+}
+.rb-trail-characters.is-ready .rb-trail-character-fallback{opacity:0}
+.rb-trail-walking .rb-trail-actor{position:absolute;bottom:0;width:49%;will-change:transform,opacity}
+.rb-trail-walking .sister{left:2%}.rb-trail-walking .brother{right:2%}
+.rb-trail-walking img,.rb-trail-kneeling img{
+  display:block;width:100%;height:auto;filter:drop-shadow(0 18px 16px rgba(72,44,34,.18))
+}
+.rb-trail-kneeling .rb-trail-kneeling-sister,.rb-trail-kneeling .rb-trail-kneeling-brother{
+  position:absolute;bottom:0;width:48%;will-change:transform,opacity
+}
+.rb-trail-kneeling .rb-trail-kneeling-sister{left:2%}
+.rb-trail-kneeling .rb-trail-kneeling-brother{right:2%}
+.rb-trail-tying{transform-origin:50% 100%}
+.rb-trail-characters.has-fallback .rb-trail-character-layer{display:none}
 .rb-trail-step[data-trail-step="0"] .rb-trail-visual{right:10%}
 .rb-trail-step[data-trail-step="1"] .rb-trail-visual{left:9%}
 .rb-trail-step[data-trail-step="2"] .rb-trail-visual{right:9%}
@@ -743,11 +775,52 @@ article.container>section.is-visible{opacity:1;transform:none}
     width:280px;height:235px
   }
   .rb-trail-visual img{height:230px}
+  .rb-trail-characters,.rb-trail-characters.is-on-left{
+    top:13%;bottom:auto;left:50%!important;right:auto!important;transform:translateX(-50%);
+    width:280px;height:235px
+  }
+  .rb-trail-walking .rb-trail-actor{width:51%}
+  .rb-trail-kneeling .rb-trail-kneeling-sister,.rb-trail-kneeling .rb-trail-kneeling-brother{width:50%}
   .trail-halo{width:170px;height:170px}
   .trail-paper{width:75px;height:58px}
   .trail-rainbow{width:130px;height:65px;border-width:7px}
   .trail-rainbow::after{inset:11px -7px 0;border-width:7px}
   article.container>section{padding:68px 22px}
+}
+/* Short landscape viewports (phones in landscape and compact laptops) cannot
+   honour the normal 560/620px scene minimum without cropping the artwork.
+   Keep the same sticky scene, but fit its characters and caption inside the
+   actual viewport. */
+@media (orientation:landscape) and (max-height:600px){
+  .rb-trail-sticky{height:calc(100vh - 70px);min-height:0}
+  .rb-trail-intro{top:5%}
+  .rb-trail-counter{top:5%}
+  .rb-trail-hint{display:none}
+  .rb-trail-line{top:13%;bottom:7%}
+}
+@media (orientation:landscape) and (max-height:600px) and (min-width:761px){
+  .rb-trail-copy{
+    top:16%;width:min(270px,28vw);padding:15px 17px;border-radius:20px
+  }
+  .rb-trail-number{width:31px;height:31px;font-size:.9rem}
+  .rb-trail-label{margin:8px 0 3px;font-size:.59rem}
+  .rb-trail-copy h2{font-size:clamp(1.2rem,2.5vw,1.75rem);margin-bottom:6px}
+  .rb-trail-copy>p:last-child{font-size:.76rem;line-height:1.45}
+  .rb-trail-characters{
+    bottom:3%;width:min(360px,34vw);height:min(67vh,340px)
+  }
+}
+@media (orientation:landscape) and (max-height:600px) and (max-width:760px){
+  .rb-trail-copy{
+    bottom:4%;left:46px!important;right:12px!important;padding:11px 14px 10px;border-radius:16px
+  }
+  .rb-trail-number{width:25px;height:25px;font-size:.75rem}
+  .rb-trail-label{margin:5px 0 2px;font-size:.5rem}
+  .rb-trail-copy h2{font-size:1.15rem;margin-bottom:3px}
+  .rb-trail-copy>p:last-child{font-size:.65rem;line-height:1.36}
+  .rb-trail-characters,.rb-trail-characters.is-on-left{
+    top:6%;width:190px;height:36vh
+  }
 }
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
@@ -819,6 +892,23 @@ article.container>section.is-visible{opacity:1;transform:none}
     <div class="rb-trail-stage">
       <p class="rb-trail-intro"><span class="rb-spark"></span>Welcome to The Rakhi Trail</p>
       <p class="rb-trail-counter" id="rb-trail-counter">01 / 05</p>
+      <!-- The fallback remains visible until every required frame preloads. -->
+      <div class="rb-trail-characters" id="rb-trail-characters" data-stage="fallback" aria-label="A sister and brother share a Raksha Bandhan moment">
+        <div class="rb-trail-character-fallback" aria-hidden="true">
+          <img src="pair-rakhi.webp" alt="" width="800" height="1000">
+        </div>
+        <div class="rb-trail-character-layer rb-trail-walking" id="rb-trail-walking" aria-hidden="true">
+          <div class="rb-trail-actor sister"><img id="rb-trail-sister-walk" src="girl-walk-1.webp" alt="" width="400" height="600"></div>
+          <div class="rb-trail-actor brother"><img id="rb-trail-brother-walk" src="boy-walk-1.webp" alt="" width="400" height="600"></div>
+        </div>
+        <div class="rb-trail-character-layer rb-trail-kneeling" id="rb-trail-kneeling" aria-hidden="true">
+          <div class="rb-trail-kneeling-sister"><img id="rb-trail-sister-kneel" src="girl-kneeling-1.webp" alt="" width="400" height="600"></div>
+          <div class="rb-trail-kneeling-brother"><img src="boy-front.webp" alt="" width="400" height="600"></div>
+        </div>
+        <div class="rb-trail-character-layer rb-trail-tying" id="rb-trail-tying" aria-hidden="true">
+          <img id="rb-trail-tying-frame" src="rakhi-tying-1.webp" alt="" width="1024" height="1024">
+        </div>
+      </div>
 
       <article class="rb-trail-step is-current" data-trail-step="0">
         <div class="rb-trail-copy">
@@ -829,7 +919,7 @@ article.container>section.is-visible{opacity:1;transform:none}
         </div>
         <div class="rb-trail-visual visual-rakhi">
           <span class="trail-halo"></span><span class="trail-rakhi-dot dot-red"></span><span class="trail-rakhi-dot dot-blue"></span>
-          <img src="pair-rakhi.webp" fetchpriority="high" alt="Two preschool children smiling as a rakhi is tied" width="800" height="1000">
+          <img src="rakhi-tying-3.webp" fetchpriority="high" alt="Two preschool children smiling after a rakhi is tied" width="1024" height="1024">
         </div>
       </article>
 
@@ -842,7 +932,7 @@ article.container>section.is-visible{opacity:1;transform:none}
         </div>
         <div class="rb-trail-visual visual-promise">
           <span class="trail-heart heart-one">♥</span><span class="trail-heart heart-two">♥</span>
-          <img src="pair-rakhi.webp" loading="lazy" alt="Sister tying a colourful rakhi for her brother" width="800" height="1000">
+          <img src="rakhi-tying-2.webp" loading="lazy" alt="Sister tying a colourful rakhi for her brother" width="1024" height="1024">
         </div>
       </article>
 
@@ -1950,10 +2040,53 @@ article.container>section.is-visible{opacity:1;transform:none}
   var fill = document.getElementById('rb-trail-fill');
   var knot = document.getElementById('rb-trail-knot');
   var counter = document.getElementById('rb-trail-counter');
+  var characterStory = document.getElementById('rb-trail-characters');
+  var walkingLayer = document.getElementById('rb-trail-walking');
+  var kneelingLayer = document.getElementById('rb-trail-kneeling');
+  var tyingLayer = document.getElementById('rb-trail-tying');
+  var sisterWalk = document.getElementById('rb-trail-sister-walk');
+  var brotherWalk = document.getElementById('rb-trail-brother-walk');
+  var sisterKneel = document.getElementById('rb-trail-sister-kneel');
+  var tyingFrame = document.getElementById('rb-trail-tying-frame');
   var active = true;
   var lastIndex = -1;
+  var assetsReady = false;
+  var assetFailure = false;
+  var walkingFrames = ['girl-walk-1.webp','girl-walk-2.webp','girl-walk-3.webp'];
+  var brotherFrames = ['boy-walk-1.webp','boy-walk-2.webp','boy-walk-3.webp'];
+  var tyingFrames = ['rakhi-tying-1.webp','rakhi-tying-2.webp','rakhi-tying-3.webp'];
+  var requiredFrames = walkingFrames.concat(brotherFrames, [
+    'girl-kneeling-1.webp',
+    'girl-kneeling-2.webp',
+    'boy-front.webp',
+    'pair-rakhi.webp' /* reduced-motion and load-failure fallback only */
+  ]).concat(tyingFrames);
 
   function clamp(value, min, max){ return Math.max(min, Math.min(max, value)); }
+  function smooth(value){ return value * value * (3 - 2 * value); }
+  function easeRange(value, start, end){
+    return smooth(clamp((value - start) / (end - start), 0, 1));
+  }
+  function preloadCharacterFrames(){
+    var pending = requiredFrames.length;
+    function complete(){
+      pending -= 1;
+      if (pending) return;
+      if (assetFailure) {
+        characterStory.classList.add('has-fallback');
+        characterStory.dataset.stage = 'fallback';
+        return;
+      }
+      assetsReady = true;
+      characterStory.classList.add('is-ready');
+    }
+    requiredFrames.forEach(function(source){
+      var image = new Image();
+      image.onload = complete;
+      image.onerror = function(){ assetFailure = true; complete(); };
+      image.src = source;
+    });
+  }
   function setStep(index){
     if (index === lastIndex) return;
     lastIndex = index;
@@ -1961,7 +2094,50 @@ article.container>section.is-visible{opacity:1;transform:none}
       step.classList.toggle('is-current', stepIndex === index);
       step.setAttribute('aria-hidden', stepIndex === index ? 'false' : 'true');
     });
+    characterStory.classList.toggle('is-on-left', index % 2 === 1);
     if (counter) counter.textContent = ('0' + (index + 1)).slice(-2) + ' / 05';
+  }
+  function updateCharacters(progress){
+    if (!assetsReady || reduced || !characterStory) return;
+
+    /* 0.00–0.28: travel determines the walk frames, so reverse scroll moves
+       through the exact same sequence in reverse. */
+    var approach = easeRange(progress, 0, .28);
+    var walkFrame = Math.min(2, Math.floor(approach * 3));
+    var walkOffset = 130 - approach * 105;
+    var walkBob = -Math.abs(Math.sin(approach * Math.PI * 3)) * 7;
+    sisterWalk.src = walkingFrames[walkFrame];
+    brotherWalk.src = brotherFrames[walkFrame];
+    walkingLayer.style.opacity = (1 - easeRange(progress, .28, .32)).toFixed(3);
+    walkingLayer.querySelector('.sister').style.transform =
+      'translate3d(' + (-walkOffset).toFixed(1) + 'px,' + walkBob.toFixed(1) + 'px,0)';
+    walkingLayer.querySelector('.brother').style.transform =
+      'translate3d(' + walkOffset.toFixed(1) + 'px,' + walkBob.toFixed(1) + 'px,0)';
+
+    /* 0.28–0.45: a separate kneeling stage. The walking layer has completely
+       left before this layer appears, so standing and kneeling poses never
+       stack over one another. */
+    var kneelProgress = easeRange(progress, .32, .45);
+    var kneelOpacity = easeRange(progress, .32, .36) * (1 - easeRange(progress, .42, .45));
+    sisterKneel.src = kneelProgress < .55 ? 'girl-kneeling-1.webp' : 'girl-kneeling-2.webp';
+    kneelingLayer.style.opacity = kneelOpacity.toFixed(3);
+    kneelingLayer.querySelector('.rb-trail-kneeling-sister').style.transform =
+      'translate3d(' + (-12 + kneelProgress * 12).toFixed(1) + 'px,' + (16 - kneelProgress * 16).toFixed(1) + 'px,0)';
+    kneelingLayer.querySelector('.rb-trail-kneeling-brother').style.transform =
+      'translate3d(' + (10 - kneelProgress * 10).toFixed(1) + 'px,' + (10 + kneelProgress * 28).toFixed(1) + 'px,0) scale(' + (1 - kneelProgress * .12).toFixed(3) + ',' + (1 - kneelProgress * .18).toFixed(3) + ')';
+
+    /* 0.45–0.72: a scroll-selected sitting-and-tying sequence — rakhi in
+       hand → wrapping the wrist → completed knot. 0.72–1.00 holds the
+       completed-knot frame. The fallback illustration is never live here. */
+    var tyingIn = easeRange(progress, .45, .52);
+    var tyingProgress = easeRange(progress, .45, .72);
+    var tyingIndex = Math.min(2, Math.floor(tyingProgress * 3));
+    tyingFrame.src = tyingFrames[tyingIndex];
+    tyingLayer.style.opacity = tyingIn.toFixed(3);
+    tyingLayer.style.transform =
+      'translate3d(0,' + ((1 - tyingIn) * 16).toFixed(1) + 'px,0) scale(' + (.96 + tyingIn * .04).toFixed(3) + ')';
+
+    characterStory.dataset.stage = progress < .28 ? 'walking' : progress < .45 ? 'kneeling' : progress < .72 ? 'tying-rakhi' : 'final-hold';
   }
   function updateTrail(){
     if (reduced || !active) return;
@@ -1970,6 +2146,7 @@ article.container>section.is-visible{opacity:1;transform:none}
     var progress = distance > 0 ? clamp(-rect.top / distance, 0, 1) : 0;
     var index = Math.min(steps.length - 1, Math.floor(progress * steps.length));
     setStep(index);
+    updateCharacters(progress);
     if (fill) fill.style.height = (progress * 100) + '%';
     if (knot) knot.style.top = (progress * 100) + '%';
   }
@@ -1996,11 +2173,13 @@ article.container>section.is-visible{opacity:1;transform:none}
 
   if (reduced) {
     setStep(0);
+    characterStory.dataset.stage = 'reduced-motion-fallback';
   } else if ('IntersectionObserver' in window) {
     new IntersectionObserver(function(entries){
       active = entries[0].isIntersecting;
     }, { rootMargin:'20% 0px' }).observe(trail);
   }
+  preloadCharacterFrames();
   revealArticleSections();
   window.addEventListener('scroll', updateTrail, { passive:true });
   window.addEventListener('resize', updateTrail, { passive:true });
