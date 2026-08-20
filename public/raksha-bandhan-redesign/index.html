@@ -525,14 +525,14 @@ body{
   color:var(--rps-ink);background:var(--rps-paper);
   font-family:'Nunito Sans',sans-serif
 }
-h1,h2,h3,h4{font-family:'Fredoka',sans-serif;letter-spacing:-.02em}
+h1,h2,h3,h4{font-family:'Fredoka',sans-serif;font-weight:500;letter-spacing:-.02em}
 p{line-height:1.72}
 .rb-topbar{background:var(--rps-red);color:#fff;font-size:11px;font-weight:700}
 .site-nav{
   background:rgba(255,255,255,.94);border-bottom:3px solid var(--rps-yellow);
   box-shadow:0 5px 20px rgba(72,44,34,.07)
 }
-.nav-brand{font-family:'Fredoka',sans-serif;color:var(--rps-red);font-size:1rem}
+.nav-brand{font-family:'Nunito Sans',sans-serif;color:var(--rps-red);font-size:1rem}
 .nav-brand .dot{background:var(--rps-yellow)}
 .nav-logo-tile{
   width:48px;height:48px;display:grid;place-items:center;flex:0 0 auto;padding:4px;
@@ -550,45 +550,45 @@ p{line-height:1.72}
 .hero{
   min-height:calc(100vh - 105px);padding:12vh 24px 11vh;
   background:
-    radial-gradient(ellipse at 10% 16%,rgba(247,199,68,.38),transparent 24%),
-    radial-gradient(ellipse at 92% 77%,rgba(75,158,216,.2),transparent 24%),
-    linear-gradient(180deg,#fffaf3 0%,#fff7ed 100%);
-  color:var(--rps-ink)
+    radial-gradient(ellipse at 82% 12%,rgba(247,199,68,.22),transparent 25%),
+    radial-gradient(ellipse at 12% 88%,rgba(245,140,66,.18),transparent 28%),
+    linear-gradient(135deg,#3d0d18 0%,#761c25 48%,#24102b 100%);
+  color:#fff8ed
 }
 .hero::before{
-  opacity:1;inset:auto 0 0;height:145px;
+  opacity:.9;inset:auto 0 0;height:145px;
   background:
-    radial-gradient(90px 35px at 12% 100%,rgba(114,182,107,.3),transparent 70%),
-    radial-gradient(120px 45px at 80% 100%,rgba(75,158,216,.25),transparent 70%);
+    radial-gradient(120px 42px at 12% 100%,rgba(247,199,68,.18),transparent 70%),
+    radial-gradient(160px 52px at 80% 100%,rgba(245,140,66,.2),transparent 70%);
   border-radius:50% 50% 0 0/35% 35% 0 0
 }
 .hero::after{
   content:'';position:absolute;right:6%;top:16%;width:160px;height:100px;opacity:.7;
-  border:7px solid var(--rps-orange);border-bottom:0;border-radius:180px 180px 0 0;
+  border:7px solid rgba(247,199,68,.8);border-bottom:0;border-radius:180px 180px 0 0;
   transform:rotate(12deg);pointer-events:none
 }
 .hero-decor,.hero .petals,.hero > .story-character{display:none}
 .hero-inner{max-width:790px}
 .hero-badge{
-  padding:8px 15px;background:#fff;border:2px solid rgba(230,65,50,.15);border-radius:999px;
-  color:var(--rps-red);font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
-  box-shadow:0 5px 0 rgba(230,65,50,.08)
+  padding:8px 15px;background:rgba(255,248,237,.1);border:1px solid rgba(255,226,161,.38);border-radius:999px;
+  color:#ffe2a1;font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+  box-shadow:0 8px 24px rgba(0,0,0,.16);backdrop-filter:blur(10px)
 }
-.hero-badge svg{color:var(--rps-orange)}
+.hero-badge svg{color:var(--rps-yellow)}
 .hero h1{
-  max-width:19ch;margin:24px auto 22px;color:var(--rps-red);font-size:clamp(2.5rem,6vw,5rem);
-  line-height:1.02;text-shadow:none;-webkit-text-fill-color:initial;background:none;animation:none
+  max-width:19ch;margin:24px auto 22px;color:#fff8ed;font-size:clamp(2.5rem,6vw,5rem);
+  line-height:1.02;font-weight:500;text-shadow:0 8px 32px rgba(0,0,0,.28);-webkit-text-fill-color:initial;background:none;animation:none
 }
 .hero .subtitle{
-  max-width:59ch;color:#6b5750;font-size:clamp(1rem,1.6vw,1.18rem);font-weight:600
+  max-width:59ch;color:rgba(255,248,237,.78);font-size:clamp(1rem,1.6vw,1.18rem);font-weight:400
 }
-.hero-meta{color:#6b5750;font-weight:700}
+.hero-meta{color:#ffe2a1;font-weight:700}
 .cta-row{display:flex}
 .btn-primary,.btn-secondary{border-radius:999px;padding:13px 22px}
-.btn-primary{background:var(--rps-red);color:#fff;box-shadow:0 6px 0 var(--rps-red-dark)}
-.btn-primary:hover{background:var(--rps-red-dark);transform:translateY(-2px)}
-.btn-secondary{color:var(--rps-red);border:2px solid var(--rps-red);background:#fff}
-.btn-secondary:hover{background:#fff2ee;color:var(--rps-red-dark)}
+.btn-primary{background:var(--rps-yellow);color:#3d0d18;box-shadow:0 6px 0 #c68d1a}
+.btn-primary:hover{background:#ffda62;transform:translateY(-2px)}
+.btn-secondary{color:#fff8ed;border:2px solid rgba(255,248,237,.65);background:rgba(255,248,237,.08)}
+.btn-secondary:hover{background:rgba(255,248,237,.16);color:#fff}
 #progress-bar{background:var(--rps-red)}
 .rb-thread-track{display:none}
 main{background:var(--rps-paper)}
@@ -834,6 +834,18 @@ article.container>section.is-visible{opacity:1;transform:none}
   .rb-trail-characters,.rb-trail-characters.is-on-left{
     top:6%;width:190px;height:36vh
   }
+}
+@media (orientation:landscape) and (min-width:761px){
+  /* Match the seated artwork's scale while preserving the portrait/mobile
+     layout. The transparent character art needs a measured overlap to read
+     as a close sibling moment. */
+  .rb-trail-walking .rb-trail-actor,
+  .rb-trail-kneeling .rb-trail-kneeling-sister,
+  .rb-trail-kneeling .rb-trail-kneeling-brother{width:66%}
+  .rb-trail-walking .sister,
+  .rb-trail-kneeling .rb-trail-kneeling-sister{left:-4%}
+  .rb-trail-walking .brother,
+  .rb-trail-kneeling .rb-trail-kneeling-brother{right:-4%}
 }
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
@@ -1557,22 +1569,130 @@ article.container>section.is-visible{opacity:1;transform:none}
     </div>
   </section>
 
-  <!-- 21. Related Posts -->
+  <!-- 21. Explore More -->
   <section class="light fade-from-dark" id="related">
     <span class="eyebrow"><i data-lucide="external-link" style="width:14px;height:14px"></i> Explore More</span>
-    <h2>Related Posts</h2>
+    <h2>Primary Pages Worth Exploring</h2>
     <div class="related-grid">
-      <a class="related-card" href="https://rainbowinternationalschool.in" target="_blank" rel="noopener">
-        <span class="eyebrow">K12 | CBSE</span>
-        <h3>Rainbow International School</h3>
-        <p style="color:var(--muted);font-size:.92rem;margin:0">Continuing the journey beyond preschool — explore our partner K-12 school.</p>
-        <span class="go">Explore Our Campus <i data-lucide="arrow-right" style="width:16px;height:16px"></i></span>
+      <a class="related-card" href="https://www.rainbowpreschools.com/" target="_blank" rel="noopener">
+        <span class="eyebrow">RPS | Home</span>
+        <h3>Rainbow Preschool International</h3>
+        <p style="color:var(--muted);font-size:.92rem;margin:0">Discover our early-learning approach, centres and school community.</p>
+        <span class="go">Visit RPS <i data-lucide="arrow-right" style="width:16px;height:16px"></i></span>
       </a>
-      <a class="related-card" href="https://www.rainbowpreschools.com" target="_blank" rel="noopener">
-        <span class="eyebrow">Preschool</span>
-        <h3>Rainbow Preschool International, Thane</h3>
-        <p style="color:var(--muted);font-size:.92rem;margin:0">Playgroup to Kindergarten for ages 1.5–5.5 years. The Future Begins Here.</p>
-        <span class="go">Book a School Tour <i data-lucide="arrow-right" style="width:16px;height:16px"></i></span>
+      <a class="related-card" href="https://www.rainbowpreschools.com/about" target="_blank" rel="noopener">
+        <span class="eyebrow">RPS | About</span>
+        <h3>About Rainbow Preschool</h3>
+        <p style="color:var(--muted);font-size:.92rem;margin:0">Meet the people, values and play-based philosophy behind RPS.</p>
+        <span class="go">Learn About RPS <i data-lucide="arrow-right" style="width:16px;height:16px"></i></span>
+      </a>
+      <a class="related-card" href="https://www.rainbowpreschools.com/programmes" target="_blank" rel="noopener">
+        <span class="eyebrow">RPS | Programmes</span>
+        <h3>Our Programmes</h3>
+        <p style="color:var(--muted);font-size:.92rem;margin:0">Explore the early-years journey from Playgroup through Kindergarten.</p>
+        <span class="go">See Programmes <i data-lucide="arrow-right" style="width:16px;height:16px"></i></span>
+      </a>
+      <a class="related-card" href="https://www.rainbowpreschools.com/playgroup" target="_blank" rel="noopener">
+        <span class="eyebrow">RPS | Playgroup</span>
+        <h3>Playgroup</h3>
+        <p style="color:var(--muted);font-size:.92rem;margin:0">A joyful first step into routines, friendships and discovery.</p>
+        <span class="go">Explore Playgroup <i data-lucide="arrow-right" style="width:16px;height:16px"></i></span>
+      </a>
+      <a class="related-card" href="https://www.rainbowpreschools.com/nursery" target="_blank" rel="noopener">
+        <span class="eyebrow">RPS | Nursery</span>
+        <h3>Nursery</h3>
+        <p style="color:var(--muted);font-size:.92rem;margin:0">See how curiosity, language and independence grow through play.</p>
+        <span class="go">Explore Nursery <i data-lucide="arrow-right" style="width:16px;height:16px"></i></span>
+      </a>
+      <a class="related-card" href="https://www.rainbowpreschools.com/kindergarten" target="_blank" rel="noopener">
+        <span class="eyebrow">RPS | Kindergarten</span>
+        <h3>Kindergarten</h3>
+        <p style="color:var(--muted);font-size:.92rem;margin:0">Build confidence and school readiness for the next big step.</p>
+        <span class="go">Explore Kindergarten <i data-lucide="arrow-right" style="width:16px;height:16px"></i></span>
+      </a>
+      <a class="related-card" href="https://www.rainbowpreschools.com/preschool-admissions" target="_blank" rel="noopener">
+        <span class="eyebrow">RPS | Admissions</span>
+        <h3>Preschool Admissions</h3>
+        <p style="color:var(--muted);font-size:.92rem;margin:0">Find the right programme and take the next step with our team.</p>
+        <span class="go">View Admissions <i data-lucide="arrow-right" style="width:16px;height:16px"></i></span>
+      </a>
+      <a class="related-card" href="https://www.rainbowpreschools.com/contact" target="_blank" rel="noopener">
+        <span class="eyebrow">RPS | Contact</span>
+        <h3>Contact RPS</h3>
+        <p style="color:var(--muted);font-size:.92rem;margin:0">Ask a question or book a school tour in Thane.</p>
+        <span class="go">Get in Touch <i data-lucide="arrow-right" style="width:16px;height:16px"></i></span>
+      </a>
+      <a class="related-card" href="https://www.rainbowpreschools.com/gallery" target="_blank" rel="noopener">
+        <span class="eyebrow">RPS | Gallery</span>
+        <h3>RPS Gallery</h3>
+        <p style="color:var(--muted);font-size:.92rem;margin:0">Take a peek at joyful classrooms, activities and celebrations.</p>
+        <span class="go">View Gallery <i data-lucide="arrow-right" style="width:16px;height:16px"></i></span>
+      </a>
+      <a class="related-card" href="https://www.rainbowpreschools.com/happy-times" target="_blank" rel="noopener">
+        <span class="eyebrow">RPS | Happy Times</span>
+        <h3>Happy Times</h3>
+        <p style="color:var(--muted);font-size:.92rem;margin:0">Explore extended care and enriching after-school experiences.</p>
+        <span class="go">Discover Happy Times <i data-lucide="arrow-right" style="width:16px;height:16px"></i></span>
+      </a>
+      <a class="related-card" href="https://www.rainbowpreschools.com/blog" target="_blank" rel="noopener">
+        <span class="eyebrow">RPS | Blog</span>
+        <h3>RPS Blog</h3>
+        <p style="color:var(--muted);font-size:.92rem;margin:0">Find parent-friendly learning ideas, stories and guides.</p>
+        <span class="go">Read RPS Blogs <i data-lucide="arrow-right" style="width:16px;height:16px"></i></span>
+      </a>
+      <a class="related-card" href="https://rainbowinternationalschool.in/" target="_blank" rel="noopener">
+        <span class="eyebrow">RIS | Home</span>
+        <h3>Rainbow International School</h3>
+        <p style="color:var(--muted);font-size:.92rem;margin:0">Continue the journey beyond preschool at our CBSE K–12 school.</p>
+        <span class="go">Visit RIS <i data-lucide="arrow-right" style="width:16px;height:16px"></i></span>
+      </a>
+      <a class="related-card" href="https://rainbowinternationalschool.in/about-rainbow-international-school" target="_blank" rel="noopener">
+        <span class="eyebrow">RIS | About</span>
+        <h3>About RIS</h3>
+        <p style="color:var(--muted);font-size:.92rem;margin:0">Learn about the school’s community, vision and learning culture.</p>
+        <span class="go">Learn About RIS <i data-lucide="arrow-right" style="width:16px;height:16px"></i></span>
+      </a>
+      <a class="related-card" href="https://rainbowinternationalschool.in/pre-primary-school-thane" target="_blank" rel="noopener">
+        <span class="eyebrow">RIS | Pre-Primary</span>
+        <h3>RIS Pre-Primary</h3>
+        <p style="color:var(--muted);font-size:.92rem;margin:0">See the early-years experience at Rainbow International School.</p>
+        <span class="go">Explore Pre-Primary <i data-lucide="arrow-right" style="width:16px;height:16px"></i></span>
+      </a>
+      <a class="related-card" href="https://rainbowinternationalschool.in/curriculum" target="_blank" rel="noopener">
+        <span class="eyebrow">RIS | Curriculum</span>
+        <h3>RIS Curriculum</h3>
+        <p style="color:var(--muted);font-size:.92rem;margin:0">Explore the academic foundation and curriculum approach.</p>
+        <span class="go">View Curriculum <i data-lucide="arrow-right" style="width:16px;height:16px"></i></span>
+      </a>
+      <a class="related-card" href="https://rainbowinternationalschool.in/admissions" target="_blank" rel="noopener">
+        <span class="eyebrow">RIS | Admissions</span>
+        <h3>RIS Admissions</h3>
+        <p style="color:var(--muted);font-size:.92rem;margin:0">Find admission information for the K–12 journey.</p>
+        <span class="go">View Admissions <i data-lucide="arrow-right" style="width:16px;height:16px"></i></span>
+      </a>
+      <a class="related-card" href="https://rainbowinternationalschool.in/primary-section" target="_blank" rel="noopener">
+        <span class="eyebrow">RIS | Primary</span>
+        <h3>Primary School</h3>
+        <p style="color:var(--muted);font-size:.92rem;margin:0">See how learning develops through the primary years.</p>
+        <span class="go">Explore Primary <i data-lucide="arrow-right" style="width:16px;height:16px"></i></span>
+      </a>
+      <a class="related-card" href="https://rainbowinternationalschool.in/photo-gallery" target="_blank" rel="noopener">
+        <span class="eyebrow">RIS | Gallery</span>
+        <h3>RIS Photo Gallery</h3>
+        <p style="color:var(--muted);font-size:.92rem;margin:0">Take a visual tour of campus life and school activities.</p>
+        <span class="go">View Gallery <i data-lucide="arrow-right" style="width:16px;height:16px"></i></span>
+      </a>
+      <a class="related-card" href="https://rainbowinternationalschool.in/contact-us" target="_blank" rel="noopener">
+        <span class="eyebrow">RIS | Contact</span>
+        <h3>Contact RIS</h3>
+        <p style="color:var(--muted);font-size:.92rem;margin:0">Connect with the Rainbow International School team.</p>
+        <span class="go">Get in Touch <i data-lucide="arrow-right" style="width:16px;height:16px"></i></span>
+      </a>
+      <a class="related-card" href="https://rainbowinternationalschool.in/blogs" target="_blank" rel="noopener">
+        <span class="eyebrow">RIS | Blogs</span>
+        <h3>RIS Blogs</h3>
+        <p style="color:var(--muted);font-size:.92rem;margin:0">Read more stories about learning, school life and children.</p>
+        <span class="go">Read RIS Blogs <i data-lucide="arrow-right" style="width:16px;height:16px"></i></span>
       </a>
     </div>
   </section>
