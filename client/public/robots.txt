@@ -25,9 +25,6 @@ Disallow: /gsc
 Disallow: /GSC
 Disallow: /dummy
 
-# ── Standalone design preview (duplicates the indexed blog article) ───────────
-Disallow: /raksha-bandhan-redesign
-
 # ── Old city / franchise pages no longer active ──────────────────────────────
 Disallow: /navi-mumbai/
 Disallow: /mumbai/

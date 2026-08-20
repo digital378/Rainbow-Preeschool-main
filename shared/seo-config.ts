@@ -72,11 +72,6 @@ export const NOINDEX_SLUGS: string[] = [
   "/gsc",
   "/dummy",
 
-  // Standalone design preview — duplicates the indexable
-  // /blog/raksha-bandhan-2026-for-kids article; kept out of search so the
-  // two pages never compete for the same query.
-  "/raksha-bandhan-redesign",
-  "/raksha-bandhan-redesign/",
 ];
 
 // Helper to check if a path should be noindex

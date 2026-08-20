@@ -81,9 +81,9 @@ async function buildAll() {
     console.log("done.");
   }
 
-  // The Rakhi Trail is served directly by server/routes.ts, so carry only its
-  // HTML and WebP artwork into the production bundle. The authoring PNGs are
-  // intentionally excluded: they are far larger than the responsive assets.
+  // The Raksha Bandhan article is served directly by server/routes.ts, so carry
+  // only its HTML and WebP artwork into the production bundle. The authoring
+  // PNGs are intentionally excluded: they are far larger than the responsive assets.
   const rakhiTrailDir = resolve("public", "raksha-bandhan-redesign");
   if (existsSync(rakhiTrailDir)) {
     const outputDir = resolve("dist", "raksha-bandhan-redesign");
@@ -94,7 +94,7 @@ async function buildAll() {
         await cp(resolve(rakhiTrailDir, fileName), resolve(outputDir, fileName));
       }
     }
-    console.log("copied Rakhi Trail HTML + WebP assets.");
+    console.log("copied Raksha Bandhan article HTML + WebP assets.");
   }
 }
 

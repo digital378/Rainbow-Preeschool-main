@@ -265,44 +265,9 @@ export async function registerRoutes(
     res.send(_independenceDayHtml);
   });
 
-  // Raksha Bandhan 2026 standalone blog page — same pattern as the
-  // Independence Day page above: static HTML with its own interactive
-  // features (language tabs, quiz, accordion FAQ) served directly so it
-  // works without React. Registered BEFORE the SPA catch-all.
-  const _rakshaBandhanCandidates = [
-    path.join(process.cwd(), "dist", "blog-assets", "raksha-bandhan-2026-for-kids", "index.html"),
-    path.join(process.cwd(), "blog-pages", "raksha-bandhan-2026-for-kids", "index.html"),
-  ];
-  let _rakshaBandhanHtml: Buffer | null = null;
-  for (const p of _rakshaBandhanCandidates) {
-    if (fs.existsSync(p)) {
-      _rakshaBandhanHtml = fs.readFileSync(p);
-      console.log(`[blog-page] raksha-bandhan-2026 loaded from: ${p}`);
-      break;
-    }
-  }
-  if (!_rakshaBandhanHtml) {
-    console.error(
-      `[blog-page] raksha-bandhan-2026 NOT FOUND — tried: ${_rakshaBandhanCandidates.join(", ")} | cwd=${process.cwd()}`
-    );
-  }
-  app.get("/blog/raksha-bandhan-2026-for-kids", (req, res) => {
-    if (!_rakshaBandhanHtml) {
-      return res.status(404).send("Page not found");
-    }
-    res.setHeader("Content-Type", "text/html; charset=utf-8");
-    // No caching in development so edits show up immediately on reload;
-    // production keeps the 1hr cache for performance.
-    res.setHeader(
-      "Cache-Control",
-      process.env.NODE_ENV === "production" ? "public, max-age=3600" : "no-store"
-    );
-    res.send(_rakshaBandhanHtml);
-  });
-
-  // The Rakhi Trail is an independent, static RPS experience. It needs an
-  // explicit directory route because the production static middleware disables
-  // automatic index.html resolution to protect the SPA homepage handler.
+  // Raksha Bandhan 2026 is an independent static RPS article. Its relative
+  // artwork URLs resolve from the canonical article's /blog/ parent, so mount
+  // the asset directory there while allowing all other blog routes to continue.
   const _rakhiTrailCandidates = [
     path.join(process.cwd(), "dist", "raksha-bandhan-redesign", "index.html"),
     path.join(process.cwd(), "public", "raksha-bandhan-redesign", "index.html"),
@@ -322,9 +287,10 @@ export async function registerRoutes(
   } else {
     const _rakhiTrailAssetDir = path.dirname(_rakhiTrailIndexPath);
     app.use(
-      "/raksha-bandhan-redesign",
+      "/blog",
       express.static(_rakhiTrailAssetDir, {
         index: false,
+        redirect: false,
         setHeaders(res, filePath) {
           if (filePath.endsWith(".webp")) {
             res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
@@ -333,16 +299,22 @@ export async function registerRoutes(
       })
     );
   }
-  app.get("/raksha-bandhan-redesign", (_req, res) => {
-    res.redirect(308, "/raksha-bandhan-redesign/");
-  });
-  app.get("/raksha-bandhan-redesign/", (_req, res) => {
+  app.get("/blog/raksha-bandhan-2026-for-kids", (_req, res) => {
     if (!_rakhiTrailIndexPath) {
       return res.status(404).send("Page not found");
     }
     res.setHeader("Content-Type", "text/html; charset=utf-8");
-    res.setHeader("Cache-Control", "no-store");
+    res.setHeader(
+      "Cache-Control",
+      process.env.NODE_ENV === "production" ? "public, max-age=3600" : "no-store"
+    );
     res.sendFile(_rakhiTrailIndexPath);
+  });
+  app.get("/raksha-bandhan-redesign", (_req, res) => {
+    res.redirect(308, "/blog/raksha-bandhan-2026-for-kids");
+  });
+  app.get("/raksha-bandhan-redesign/", (_req, res) => {
+    res.redirect(308, "/blog/raksha-bandhan-2026-for-kids");
   });
   
   // Silence GTM /xrdb beacon requests — GTM tags fire requests to paths like

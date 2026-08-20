@@ -196,6 +196,13 @@ app.get("/ad-google.html", (req, res) => {
   }
 });
 
+// The Raksha Bandhan design-preview directory lives under public/, so this
+// redirect must be registered before the public static middleware can serve
+// its legacy index.html.
+app.get(["/raksha-bandhan-redesign", "/raksha-bandhan-redesign/"], (_req, res) => {
+  res.redirect(308, "/blog/raksha-bandhan-2026-for-kids");
+});
+
 // Serve static files from public folder with appropriate caching headers
 app.use(express.static(path.join(process.cwd(), "public"), {
   etag: true,
