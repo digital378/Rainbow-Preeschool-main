@@ -310,6 +310,52 @@ export async function registerRoutes(
     );
     res.sendFile(_rakhiTrailIndexPath);
   });
+
+  // Janmashtami 2026 is a self-contained RPS article. Keep its HTML and
+  // generated artwork under the /blog URL space so relative download links
+  // resolve without exposing a second public route.
+  const _janmashtamiCandidates = [
+    path.join(process.cwd(), "dist", "janmashtami-for-kids", "index.html"),
+    path.join(process.cwd(), "public", "janmashtami-for-kids", "index.html"),
+  ];
+  let _janmashtamiIndexPath: string | null = null;
+  for (const candidate of _janmashtamiCandidates) {
+    if (fs.existsSync(candidate)) {
+      _janmashtamiIndexPath = candidate;
+      console.log(`[janmashtami] loaded from: ${candidate}`);
+      break;
+    }
+  }
+  if (!_janmashtamiIndexPath) {
+    console.error(
+      `[janmashtami] NOT FOUND — tried: ${_janmashtamiCandidates.join(", ")} | cwd=${process.cwd()}`
+    );
+  } else {
+    const _janmashtamiAssetDir = path.dirname(_janmashtamiIndexPath);
+    app.use(
+      "/blog",
+      express.static(_janmashtamiAssetDir, {
+        index: false,
+        redirect: false,
+        setHeaders(res, filePath) {
+          if (/\.(webp|jpg|svg|pdf)$/.test(filePath)) {
+            res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
+          }
+        },
+      })
+    );
+  }
+  app.get("/blog/janmashtami-for-kids", (_req, res) => {
+    if (!_janmashtamiIndexPath) {
+      return res.status(404).send("Page not found");
+    }
+    res.setHeader("Content-Type", "text/html; charset=utf-8");
+    res.setHeader(
+      "Cache-Control",
+      process.env.NODE_ENV === "production" ? "public, max-age=3600" : "no-store"
+    );
+    res.sendFile(_janmashtamiIndexPath);
+  });
   app.get("/raksha-bandhan-redesign", (_req, res) => {
     res.redirect(308, "/blog/raksha-bandhan-2026-for-kids");
   });

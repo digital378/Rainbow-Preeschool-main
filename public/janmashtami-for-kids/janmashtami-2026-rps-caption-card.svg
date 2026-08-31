@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" viewBox="0 0 1080 1080">
+    <rect width="1080" height="1080" fill="#9E2C2B"/>
+    <circle cx="140" cy="135" r="90" fill="#FFF8EE" opacity=".25"/>
+    <circle cx="940" cy="880" r="150" fill="#FFF8EE" opacity=".18"/>
+    <path d="M80 855 Q280 740 490 855 T1000 855" fill="none" stroke="#FFF8EE" stroke-width="5" opacity=".6"/>
+    <rect x="250" y="320" width="580" height="420" rx="28" fill="#FFF8EE"/><path d="M335 450 H745 M335 535 H690 M335 620 H610" stroke="#9E2C2B" stroke-width="22" stroke-linecap="round"/><circle cx="735" cy="675" r="32" fill="#F2B84B"/>
+    <text x="540" y="130" text-anchor="middle" fill="#FFF8EE" font-family="Verdana, sans-serif" font-size="42" font-weight="700">[Insert caption]</text>
+    <text x="540" y="925" text-anchor="middle" fill="#FFF8EE" font-family="Verdana, sans-serif" font-size="25">A joyful Janmashtami memory</text>
+    <text x="945" y="1015" text-anchor="end" fill="#FFF8EE" font-family="Verdana, sans-serif" font-size="18" font-weight="700">RAINBOW PRESCHOOLS</text>
+  </svg>

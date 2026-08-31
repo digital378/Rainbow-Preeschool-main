@@ -393,7 +393,7 @@ export function setupBotSSR(app: Express) {
       urlPath.startsWith("/api/") ||
       urlPath.startsWith("/assets/") ||
       urlPath.startsWith("/images/") ||
-      urlPath.match(/\.(js|css|png|jpg|webp|svg|ico|woff2?|ttf|map|json|xml|txt)$/)
+      urlPath.match(/\.(js|css|png|jpe?g|webp|svg|pdf|ico|woff2?|ttf|map|json|xml|txt)$/)
     ) {
       return next();
     }

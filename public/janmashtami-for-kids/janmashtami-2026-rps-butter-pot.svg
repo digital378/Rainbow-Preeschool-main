@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" viewBox="0 0 1080 1080">
+    <rect width="1080" height="1080" fill="#E87927"/>
+    <circle cx="140" cy="135" r="90" fill="#FFF2C7" opacity=".25"/>
+    <circle cx="940" cy="880" r="150" fill="#FFF2C7" opacity=".18"/>
+    <path d="M80 855 Q280 740 490 855 T1000 855" fill="none" stroke="#FFF2C7" stroke-width="5" opacity=".6"/>
+    <path d="M325 390 Q540 330 755 390 L700 700 Q540 820 380 700Z" fill="#FFF2C7"/><path d="M325 390 Q540 330 755 390 L748 450 Q540 510 332 450Z" fill="#B87548"/><path d="M390 360 Q540 310 690 360" fill="none" stroke="#FFF8EE" stroke-width="28"/><circle cx="540" cy="550" r="34" fill="#EC210F"/><path d="M425 705 Q540 790 655 705" fill="none" stroke="#EC210F" stroke-width="18"/>
+    <text x="540" y="130" text-anchor="middle" fill="#FFF8EE" font-family="Verdana, sans-serif" font-size="42" font-weight="700">Govinda Ala Re!</text>
+    <text x="540" y="925" text-anchor="middle" fill="#FFF8EE" font-family="Verdana, sans-serif" font-size="25">Butter, giggles, and friends</text>
+    <text x="945" y="1015" text-anchor="end" fill="#FFF8EE" font-family="Verdana, sans-serif" font-size="18" font-weight="700">RAINBOW PRESCHOOLS</text>
+  </svg>

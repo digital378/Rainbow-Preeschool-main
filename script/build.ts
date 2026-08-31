@@ -96,6 +96,17 @@ async function buildAll() {
     }
     console.log("copied Raksha Bandhan article HTML + WebP assets.");
   }
+
+  // Copy the Janmashtami standalone article and its generated artwork into
+  // the production bundle. The source directory also contains JPG/SVG
+  // fallbacks and the printable colouring-page PDF.
+  const janmashtamiDir = resolve("public", "janmashtami-for-kids");
+  if (existsSync(janmashtamiDir)) {
+    await cp(janmashtamiDir, resolve("dist", "janmashtami-for-kids"), {
+      recursive: true,
+    });
+    console.log("copied Janmashtami article HTML + artwork.");
+  }
 }
 
 buildAll().catch((err) => {

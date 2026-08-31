@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" viewBox="0 0 1080 1080">
+    <rect width="1080" height="1080" fill="#0D788C"/>
+    <circle cx="140" cy="135" r="90" fill="#FFE29A" opacity=".25"/>
+    <circle cx="940" cy="880" r="150" fill="#FFE29A" opacity=".18"/>
+    <path d="M80 855 Q280 740 490 855 T1000 855" fill="none" stroke="#FFE29A" stroke-width="5" opacity=".6"/>
+    <path d="M540 720 C310 590 390 250 650 230 C785 220 850 330 770 465 C700 580 610 635 540 720Z" fill="#FFE29A" opacity=".9"/><path d="M540 720 C555 520 590 335 700 260" fill="none" stroke="#0D788C" stroke-width="18"/><ellipse cx="675" cy="360" rx="50" ry="85" fill="#23788C"/><ellipse cx="675" cy="360" rx="27" ry="49" fill="#3F559C"/><circle cx="675" cy="360" r="13" fill="#F1C34C"/>
+    <text x="540" y="130" text-anchor="middle" fill="#FFF8EE" font-family="Verdana, sans-serif" font-size="42" font-weight="700">Little Gopal's Birthday!</text>
+    <text x="540" y="925" text-anchor="middle" fill="#FFF8EE" font-family="Verdana, sans-serif" font-size="25">Colour, wonder, and joy</text>
+    <text x="945" y="1015" text-anchor="end" fill="#FFF8EE" font-family="Verdana, sans-serif" font-size="18" font-weight="700">RAINBOW PRESCHOOLS</text>
+  </svg>

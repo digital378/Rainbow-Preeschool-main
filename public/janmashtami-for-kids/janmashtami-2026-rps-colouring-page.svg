@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" viewBox="0 0 1080 1080">
+    <rect width="1080" height="1080" fill="#FFF8EE"/>
+    <circle cx="140" cy="135" r="90" fill="#EC210F" opacity=".25"/>
+    <circle cx="940" cy="880" r="150" fill="#EC210F" opacity=".18"/>
+    <path d="M80 855 Q280 740 490 855 T1000 855" fill="none" stroke="#EC210F" stroke-width="5" opacity=".6"/>
+    <path d="M300 720 L335 350 L440 500 L540 280 L640 500 L745 350 L780 720Z" fill="none" stroke="#EC210F" stroke-width="22" stroke-linejoin="round"/><circle cx="540" cy="280" r="20" fill="#EC210F"/><path d="M410 650 Q540 700 670 650" fill="none" stroke="#EC210F" stroke-width="18"/>
+    <text x="540" y="130" text-anchor="middle" fill="#7E1D1D" font-family="Verdana, sans-serif" font-size="42" font-weight="700">My Krishna Coloring Page</text>
+    <text x="540" y="925" text-anchor="middle" fill="#7E1D1D" font-family="Verdana, sans-serif" font-size="25">Colour with love and joy</text>
+    <text x="945" y="1015" text-anchor="end" fill="#7E1D1D" font-family="Verdana, sans-serif" font-size="18" font-weight="700">RAINBOW PRESCHOOLS</text>
+  </svg>

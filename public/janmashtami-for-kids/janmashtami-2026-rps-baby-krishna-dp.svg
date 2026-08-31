@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" viewBox="0 0 1080 1080">
+    <rect width="1080" height="1080" fill="#EC210F"/>
+    <circle cx="140" cy="135" r="90" fill="#FFD166" opacity=".25"/>
+    <circle cx="940" cy="880" r="150" fill="#FFD166" opacity=".18"/>
+    <path d="M80 855 Q280 740 490 855 T1000 855" fill="none" stroke="#FFD166" stroke-width="5" opacity=".6"/>
+    <circle cx="540" cy="470" r="155" fill="#5A2E4C"/><circle cx="540" cy="510" r="120" fill="#4C9FC0"/><circle cx="495" cy="475" r="14" fill="#27191A"/><circle cx="585" cy="475" r="14" fill="#27191A"/><path d="M490 550 Q540 585 590 550" fill="none" stroke="#27191A" stroke-width="12" stroke-linecap="round"/><path d="M575 325 Q700 210 730 345 Q650 330 575 380Z" fill="#FFD166"/><path d="M700 235 Q650 280 620 360" fill="none" stroke="#0D788C" stroke-width="18"/><rect x="325" y="635" width="430" height="28" rx="14" fill="#FFD166" transform="rotate(-12 540 649)"/><circle cx="540" cy="665" r="17" fill="#EC210F"/>
+    <text x="540" y="130" text-anchor="middle" fill="#FFF8EE" font-family="Verdana, sans-serif" font-size="42" font-weight="700">Happy Janmashtami 2026!</text>
+    <text x="540" y="925" text-anchor="middle" fill="#FFF8EE" font-family="Verdana, sans-serif" font-size="25">Little Gopal's birthday</text>
+    <text x="945" y="1015" text-anchor="end" fill="#FFF8EE" font-family="Verdana, sans-serif" font-size="18" font-weight="700">RAINBOW PRESCHOOLS</text>
+  </svg>

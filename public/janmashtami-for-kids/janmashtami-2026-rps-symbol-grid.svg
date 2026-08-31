@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" viewBox="0 0 1080 1080">
+    <rect width="1080" height="1080" fill="#2E5FA7"/>
+    <circle cx="140" cy="135" r="90" fill="#FFD166" opacity=".25"/>
+    <circle cx="940" cy="880" r="150" fill="#FFD166" opacity=".18"/>
+    <path d="M80 855 Q280 740 490 855 T1000 855" fill="none" stroke="#FFD166" stroke-width="5" opacity=".6"/>
+    <circle cx="390" cy="430" r="112" fill="#FFD166"/><circle cx="690" cy="430" r="112" fill="#B7E5E9"/><circle cx="390" cy="700" r="112" fill="#FFD7D0"/><circle cx="690" cy="700" r="112" fill="#FFF8EE"/><path d="M335 430 Q390 370 450 430" fill="none" stroke="#2E5FA7" stroke-width="18"/><path d="M630 500 Q690 350 750 500" fill="none" stroke="#0D788C" stroke-width="22"/><circle cx="390" cy="700" r="40" fill="#B87548"/><path d="M650 700 Q690 650 730 700" fill="none" stroke="#7E1D1D" stroke-width="18"/>
+    <text x="540" y="130" text-anchor="middle" fill="#FFF8EE" font-family="Verdana, sans-serif" font-size="42" font-weight="700">Krishna's Favourite Things</text>
+    <text x="540" y="925" text-anchor="middle" fill="#FFF8EE" font-family="Verdana, sans-serif" font-size="25">Flute · Feather · Butter · Cow</text>
+    <text x="945" y="1015" text-anchor="end" fill="#FFF8EE" font-family="Verdana, sans-serif" font-size="18" font-weight="700">RAINBOW PRESCHOOLS</text>
+  </svg>

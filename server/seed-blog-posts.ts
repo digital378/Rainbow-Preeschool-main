@@ -2,6 +2,63 @@ import { type BlogPost } from "@shared/schema";
 import { randomUUID } from "crypto";
 
 export const seoRecoveryBlogPosts: BlogPost[] = [
+  // ─── Janmashtami 2026 — standalone interactive RPS guide ────────────────
+  {
+    id: randomUUID(),
+    title: "Janmashtami 2026 for Kids | Rainbow Preschools",
+    slug: "janmashtami-for-kids",
+    excerpt: "Make Janmashtami 2026 joyful for your little one! Simple stories, speeches, crafts, rhymes & festive images for preschoolers. By Rainbow Preschools, Thane.",
+    content: `Janmashtami is baby Krishna's birthday — and everyone celebrates with songs, sweets, and dancing!
+
+At Rainbow Preschools, we believe festivals are one of the sweetest ways for tiny hearts to learn about love, sharing, and joy. This guide is made for parents and teachers of toddlers and preschoolers, with simple stories, tiny speeches, easy crafts, and sweet songs.
+
+## When Is Janmashtami 2026?
+
+Janmashtami 2026 is celebrated on Friday, September 4, with Dahi Handi celebrations on Saturday, September 5.
+
+## Fun & Easy Janmashtami Crafts for Preschoolers
+
+Make a peacock feather crown, a matki craft, a handprint peacock, a paper flute, or a Bal Gopal finger puppet together.
+
+## Stories for Little Ones — Baby Krishna's Adventures
+
+Read four gentle stories about the basket in the storm, Makhan Chor, Krishna and the river snake, and the great big umbrella.
+
+## 10 Fun Facts About Krishna for Little Ones
+
+Discover Krishna's flute, peacock feather, love of butter, yellow clothes, cows, friends, and joyful village life.
+
+## Janmashtami Speeches for Kids 2026
+
+Choose ready-to-use speeches for Nursery, Junior KG, Senior KG, or Class 1–2 in Hindi and Marathi.
+
+## Janmashtami Essays for Young Students
+
+Choose from 5-line, 10-line, and 100-word versions written for young students.
+
+## Festive Rhymes & Songs for Little Ones
+
+Sing along in English, Hindi, and Marathi with simple lyrics made for little voices.
+
+## Bal Gopal Quiz — 10 Fun Questions!
+
+Try a friendly, retakeable quiz about Krishna's flute, butter, family, peacock feather, cows, and Dahi Handi.
+
+## Parents Ask — We Answer
+
+Find simple answers to common parent questions about explaining Janmashtami, preschool activities, speeches, essays, costumes, and admissions.
+
+## Visit the Full Janmashtami Guide
+
+Visit the [full Janmashtami 2026 guide](/blog/janmashtami-for-kids) for the complete approved stories, speeches, essays, rhymes, slogans, quiz, FAQs, and 10 free festive downloads.
+
+EXPLORE_MORE: [Explore Our Programmes](/programmes)|[Schedule a Campus Visit](/preschool-admissions)|[Read More on Our Blog](/blog)`,
+    imageUrl: "/blog/janmashtami-2026-rps-baby-krishna-dp.webp",
+    category: "Festivals & Events",
+    publishedAt: new Date("2026-08-31"),
+    updatedAt: new Date("2026-08-31"),
+    isPublished: true,
+  },
   // ─── Raksha Bandhan 2026 — most recent post, appears first in listing ───
   {
     id: randomUUID(),

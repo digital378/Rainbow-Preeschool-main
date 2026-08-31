@@ -19,4 +19,5 @@
 export const STANDALONE_BLOG_SLUGS: string[] = [
   "independence-day-for-kids",
   "raksha-bandhan-2026-for-kids",
+  "janmashtami-for-kids",
 ];
