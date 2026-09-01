@@ -117,8 +117,9 @@
     .hero-grid{grid-template-columns:minmax(0,1fr) minmax(360px,.82fr);gap:72px}
     .hero-copy{max-width:680px}
     .hero .eyebrow{font-size:.72rem;letter-spacing:.16em}
-    .hero h1{max-width:650px;font-size:clamp(3.05rem,5.3vw,5.8rem);line-height:.98;letter-spacing:-.055em;text-wrap:balance;font-weight:500}
-    .hero h1 span{display:block;color:#ffe0a4}
+     .hero h1{max-width:650px;font-size:clamp(3.05rem,5.3vw,5.8rem);line-height:.98;letter-spacing:-.055em;text-wrap:balance;font-weight:500}
+     .hero h1 .hero-title-main{display:block;color:#fff;font-size:clamp(2.8rem,4.5vw,5.15rem)}
+     .hero h1 .hero-title-sub{display:block;color:#ffe0a4;font-size:clamp(2.35rem,3.6vw,4.15rem)}
     .hero p{max-width:590px;font-size:clamp(1.08rem,1.55vw,1.24rem);line-height:1.55;color:#fff9f0}
     .byline{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:.82rem;color:#ffe9ca;margin:25px 0 27px}
     .hero-actions{gap:14px}
@@ -190,7 +191,7 @@
     @media(max-width:900px){.site-nav{gap:14px}.site-nav a{font-size:.82rem}.hero-grid{gap:40px}.hero h1{font-size:clamp(2.8rem,7vw,4.6rem)}}
     @media(max-width:700px){
       .wrap{padding-left:20px;padding-right:20px}.topbar-inner{min-height:60px;gap:10px}.brand img{width:82px}.site-nav{display:none}.mobile-menu{display:block}.top-cta{display:inline-flex;min-height:40px;padding:9px 14px;font-size:.78rem}.top-cta::after{content:none}
-       .hero{padding:58px 0 76px}.hero-grid{grid-template-columns:1fr;gap:34px}.hero-copy{max-width:none}.hero h1{font-size:clamp(2.75rem,13vw,4.4rem)}.hero p{font-size:1.05rem}.hero-art{min-height:330px;order:-1}.hero-art-image{width:min(92vw,420px)}.hero-art::before{right:0;bottom:0;font-size:.57rem}.sparkle.s1{left:2%}.sparkle.s2{right:1%}
+       .hero{padding:58px 0 76px}.hero-grid{grid-template-columns:1fr;gap:34px}.hero-copy{max-width:none}.hero h1{font-size:clamp(2.75rem,13vw,4.4rem)}.hero h1 .hero-title-main{font-size:clamp(2.45rem,10.5vw,4rem)}.hero h1 .hero-title-sub{font-size:clamp(1.9rem,9.2vw,3.6rem)}.hero p{font-size:1.05rem}.hero-art{min-height:330px;order:-1}.hero-art-image{width:min(92vw,420px)}.hero-art::before{right:0;bottom:0;font-size:.57rem}.sparkle.s1{left:2%}.sparkle.s2{right:1%}
       .section{padding-top:72px}.section:nth-of-type(even)::before{inset:28px 0 0}.section-head h2{font-size:clamp(1.95rem,9vw,2.7rem)}
       .toc-shell{margin-top:-30px}.toc summary{padding:17px 18px}.toc-list{padding:15px 18px 19px;grid-template-columns:1fr}.paper,.craft-card,.rhyme,.symbol,.school-card,.guide{padding:22px}.tabs{overflow-x:auto;justify-content:flex-start}.tab{white-space:nowrap}.faq-question{padding:17px 18px}.quiz{padding:16px}.quiz-top{padding:23px}
     }
@@ -212,7 +213,7 @@
     <div class="wrap hero-grid">
       <div class="hero-copy">
         <span class="eyebrow" style="color:#ffe3a1">Rainbow Preschools · Festival guide</span>
-        <h1>Janmashtami 2026 for Little Ones! <span>A Fun, Parent-Friendly Celebration Guide for Tiny Gopals</span></h1>
+        <h1><span class="hero-title-main">Janmashtami 2026 for Little Ones!</span><span class="hero-title-sub">A Fun, Parent-Friendly Celebration Guide for Tiny Gopals</span></h1>
         <p>Simple Stories, Songs, Crafts &amp; Speeches to Help Your Little One Celebrate Bal Krishna's Birthday</p>
         <div class="byline">Rainbow Preschools, Thane | Published: August 31, 2026 | ~12 min read</div>
         <div class="hero-actions"><a class="button light" href="#sec-crafts">Start exploring</a><a class="button" href="#sec-gallery" style="background:transparent;border-color:#fff">Free festive images</a></div>
