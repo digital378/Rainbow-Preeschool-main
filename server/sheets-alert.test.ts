@@ -220,4 +220,44 @@ describe("Sheets failure path — background block pattern (routes.ts)", () => {
     // No failure → no alert
     expect(mockSendMail).not.toHaveBeenCalled();
   });
+
+  it("keeps CRM values aligned when the Alternate Number column is present", async () => {
+    mockProxy.mockResolvedValue({
+      ok: true,
+      status: 200,
+      text: async () => JSON.stringify({ updates: { updatedRows: 1 } }),
+    });
+
+    await appendEnquiryRow({
+      parentName: "Neha Shah",
+      childName: "Aarav Shah",
+      phone: "9988776655",
+      programme: "Playgroup",
+      branch: "Manpada",
+      leadSource: "google",
+    });
+
+    const crmCall = mockProxy.mock.calls.find(([, path]) =>
+      String(path).includes("1cai6w40yIbCcAn6KvjrQomgu4BpBVh_yB00UqKaHEXA"),
+    );
+    expect(crmCall).toBeDefined();
+
+    const [, path, options] = crmCall!;
+    const row = JSON.parse(options.body).values[0];
+
+    expect(String(path)).toContain("A%3AL");
+    expect(row).toHaveLength(12);
+    expect(row.slice(2)).toEqual([
+      "Neha Shah",
+      "Aarav Shah",
+      "9988776655",
+      "",
+      "Playgroup",
+      "Manpada",
+      "OPEN",
+      "",
+      "Head Office",
+      "Google",
+    ]);
+  });
 });

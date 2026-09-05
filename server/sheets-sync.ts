@@ -32,13 +32,26 @@ function detectSource(leadSource?: string, leadMedium?: string): string {
   return "Google";
 }
 
+function columnLabel(columnNumber: number): string {
+  let label = "";
+  let current = columnNumber;
+
+  while (current > 0) {
+    const remainder = (current - 1) % 26;
+    label = String.fromCharCode(65 + remainder) + label;
+    current = Math.floor((current - 1) / 26);
+  }
+
+  return label;
+}
+
 async function appendToSheet(
   spreadsheetId: string,
   tab: string,
   row: unknown[],
 ): Promise<void> {
   const connectors = new ReplitConnectors();
-  const range = `${tab}!A:K`;
+  const range = `${tab}!A:${columnLabel(row.length)}`;
   const encodedRange = encodeURIComponent(range);
   const path = `/v4/spreadsheets/${spreadsheetId}/values/${encodedRange}:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS`;
 
@@ -104,13 +117,14 @@ export async function appendEnquiryRow(data: EnquiryRowData): Promise<void> {
     source,
   ];
 
-  // Row for CRM tracker: Date | Time | Parent | Child | Phone | Programme | Centre | Status | Remark | Owner | Source
+  // Row for CRM tracker: Date | Time | Parent | Child | Phone | Alternate Number | Programme | Centre | Status | Remark | Owner | Source
   const crmRow = [
     enquiryDate,
     enquiryTime,
     data.parentName,
     data.childName || "Not Provided",
     data.phone,
+    "",
     data.programme,
     data.branch,
     "OPEN",
