@@ -1,7 +1,7 @@
 import express, { type Express, type Request, type Response, type NextFunction } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { branches, insertContactSchema } from "@shared/schema";
+import { insertContactSchema, joinNowBranchNames } from "@shared/schema";
 import { z } from "zod";
 import { sendLeadNotificationEmail, sendSheetsFailureAlertEmail, sendEmailFailureAlertEmail } from "./gmail";
 import { sendLeadToMCB, getBranchID } from "./mcb";
@@ -420,7 +420,7 @@ export async function registerRoutes(
   const joinNowSchema = z.object({
     name: z.string().trim().min(2, "Please enter your name").max(100),
     branch: z.string().refine(
-      (value) => branches.some((branch) => branch.name === value),
+      (value) => joinNowBranchNames.includes(value as typeof joinNowBranchNames[number]),
       "Please select a valid branch",
     ),
     submissionId: z.string().min(1).max(64),

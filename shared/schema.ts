@@ -187,6 +187,13 @@ export const branches = [
 
 export type Branch = typeof branches[number];
 
+// The loyalty programme also serves the Rainbow International School branch,
+// which should not appear in RPS-only centre listings elsewhere on the site.
+export const joinNowBranchNames = [
+  ...branches.map((branch) => branch.name),
+  "Bhramhand (RIS)",
+] as const;
+
 // Testimonials. `name` must stay as the generic "A Rainbow Parent"
 // label per the org-only attribution rule.
 export const testimonials = [

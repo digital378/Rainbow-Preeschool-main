@@ -284,4 +284,13 @@ describe("appendJoinNowRow()", () => {
       values: [["Priya Sharma", "Dhokali Centre"]],
     });
   });
+
+  it("supports the Bhramhand RIS branch label", async () => {
+    await appendJoinNowRow("Aarav Parent", "Bhramhand (RIS)");
+
+    const [, , options] = mockProxy.mock.calls[0];
+    expect(JSON.parse(options.body)).toEqual({
+      values: [["Aarav Parent", "Bhramhand (RIS)"]],
+    });
+  });
 });

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { branches } from "@shared/schema";
+import { joinNowBranchNames } from "@shared/schema";
 
 /* ─────────────────────────────────────────────────────────────────────────────
    Rainbow Loyalty Program — Scratch-card referral experience
@@ -438,8 +438,8 @@ export default function ReferralPage() {
                   required
                 >
                   <option value="">Select a branch</option>
-                  {branches.map((item)=>(
-                    <option key={item.id} value={item.name}>{item.name}</option>
+                  {joinNowBranchNames.map((branchName)=>(
+                    <option key={branchName} value={branchName}>{branchName}</option>
                   ))}
                 </select>
                 {formError && (
