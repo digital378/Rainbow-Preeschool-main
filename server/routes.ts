@@ -1,12 +1,12 @@
 import express, { type Express, type Request, type Response, type NextFunction } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertContactSchema } from "@shared/schema";
+import { branches, insertContactSchema } from "@shared/schema";
 import { z } from "zod";
 import { sendLeadNotificationEmail, sendSheetsFailureAlertEmail, sendEmailFailureAlertEmail } from "./gmail";
 import { sendLeadToMCB, getBranchID } from "./mcb";
 import { syncGscData, isGscConfigured } from "./gsc-sync";
-import { appendEnquiryRow } from "./sheets-sync";
+import { appendEnquiryRow, appendJoinNowRow } from "./sheets-sync";
 import { registerIndraApiRoutes } from "./indra-api";
 import { pushIndraEvent } from "./indra-webhook";
 import path from "path";
@@ -416,6 +416,56 @@ export async function registerRoutes(
     string,
     { promise: Promise<{ status: number; body: unknown }>; at: number; settled: boolean }
   >();
+
+  const joinNowSchema = z.object({
+    name: z.string().trim().min(2, "Please enter your name").max(100),
+    branch: z.string().refine(
+      (value) => branches.some((branch) => branch.name === value),
+      "Please select a valid branch",
+    ),
+    submissionId: z.string().min(1).max(64),
+  });
+  const joinNowSubmissions = new Map<string, { promise: Promise<void>; at: number }>();
+
+  app.post("/api/join-now", async (req, res) => {
+    try {
+      const data = joinNowSchema.parse(req.body);
+      const cutoff = Date.now() - SUBMISSION_TTL_MS;
+      for (const [key, entry] of joinNowSubmissions) {
+        if (entry.at < cutoff) joinNowSubmissions.delete(key);
+      }
+
+      const prior = joinNowSubmissions.get(data.submissionId);
+      if (prior) {
+        await prior.promise;
+        res.status(201).json({ success: true });
+        return;
+      }
+
+      const appendPromise = appendJoinNowRow(data.name, data.branch);
+      joinNowSubmissions.set(data.submissionId, {
+        promise: appendPromise,
+        at: Date.now(),
+      });
+
+      try {
+        await appendPromise;
+      } catch (error) {
+        joinNowSubmissions.delete(data.submissionId);
+        throw error;
+      }
+
+      console.log(`[Join Now] Participant recorded: ${data.name}, ${data.branch}`);
+      res.status(201).json({ success: true });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        res.status(400).json({ error: "Invalid form data", details: error.errors });
+        return;
+      }
+      console.error("[Join Now] Sheets sync failed:", error);
+      res.status(502).json({ error: "Unable to save your details. Please try again." });
+    }
+  });
 
   // Contact form submission
   app.post("/api/contact", async (req, res) => {

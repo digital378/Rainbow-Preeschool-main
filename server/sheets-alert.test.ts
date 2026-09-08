@@ -40,7 +40,7 @@ vi.mock("date-fns", () => ({
 
 // Imports come after vi.mock() declarations (vitest hoists vi.mock calls)
 import { sendSheetsFailureAlertEmail } from "./gmail";
-import { appendEnquiryRow } from "./sheets-sync";
+import { appendEnquiryRow, appendJoinNowRow } from "./sheets-sync";
 
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -259,5 +259,29 @@ describe("Sheets failure path — background block pattern (routes.ts)", () => {
       "Head Office",
       "Google",
     ]);
+  });
+});
+
+describe("appendJoinNowRow()", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    mockProxy.mockResolvedValue({
+      ok: true,
+      status: 200,
+      text: async () => JSON.stringify({ updates: { updatedRows: 1 } }),
+    });
+  });
+
+  it("appends the parent name and branch to the dedicated A:B tracker", async () => {
+    await appendJoinNowRow("Priya Sharma", "Dhokali Centre");
+
+    expect(mockProxy).toHaveBeenCalledOnce();
+    const [connector, path, options] = mockProxy.mock.calls[0];
+    expect(connector).toBe("google-sheet");
+    expect(path).toContain("1D49ewmWMKRd4aQZiC2ikotp7RyVKnxTEyyTzbXcyAso");
+    expect(decodeURIComponent(path)).toContain("Sheet1!A:B");
+    expect(JSON.parse(options.body)).toEqual({
+      values: [["Priya Sharma", "Dhokali Centre"]],
+    });
   });
 });

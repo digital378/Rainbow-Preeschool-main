@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { branches } from "@shared/schema";
 
 /* ─────────────────────────────────────────────────────────────────────────────
    Rainbow Loyalty Program — Scratch-card referral experience
@@ -118,6 +119,12 @@ const STYLES = `
   .rlp-form-btn { transition:transform .2s ease,box-shadow .2s ease;cursor:pointer; }
   .rlp-form-btn:hover { transform:scale(1.08) rotate(-1deg);box-shadow:0 10px 22px rgba(68,68,65,.4); }
   .rlp-form-btn:active { transform:scale(.93); }
+  .rlp-entry-field { width:100%;box-sizing:border-box;border:1.5px solid rgba(127,119,221,.28);border-radius:12px;background:rgba(255,255,255,.92);color:#26215C;font:inherit;font-size:14px;padding:11px 12px;outline:none;transition:border-color .2s ease,box-shadow .2s ease; }
+  .rlp-entry-field:focus { border-color:#7F77DD;box-shadow:0 0 0 3px rgba(127,119,221,.14); }
+  .rlp-entry-field:disabled { opacity:.7;cursor:not-allowed; }
+  .rlp-submit-btn { width:100%;border:0;border-radius:14px;background:linear-gradient(90deg,#7F77DD,#D4537E);color:#fff;font:inherit;font-size:14px;font-weight:700;padding:12px 18px;cursor:pointer;box-shadow:0 7px 18px rgba(127,119,221,.28);transition:transform .2s ease,opacity .2s ease; }
+  .rlp-submit-btn:hover:not(:disabled) { transform:translateY(-2px); }
+  .rlp-submit-btn:disabled { opacity:.65;cursor:not-allowed; }
   .rlp-vbtn { transition:transform .2s ease,box-shadow .2s ease;cursor:pointer; }
   .rlp-vbtn:hover { transform:translateY(-5px) scale(1.07); }
   .rlp-vbtn:active { transform:scale(.92) translateY(0); }
@@ -132,6 +139,12 @@ export default function ReferralPage() {
   const [screen,     setScreen]     = useState<'scratch'|'reveal'>('scratch');
   const [videoModal, setVideoModal] = useState<null|'preschool'|'international'>(null);
   const [badgeDelta, setBadgeDelta] = useState({x:0,y:0});
+  const [name, setName] = useState('');
+  const [branch, setBranch] = useState('');
+  const [isUnlocked, setIsUnlocked] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formError, setFormError] = useState('');
+  const submissionId = useRef(crypto.randomUUID());
 
   const scratchRef  = useRef<HTMLCanvasElement>(null);
   const fx1Ref      = useRef<HTMLCanvasElement>(null);
@@ -237,6 +250,7 @@ export default function ReferralPage() {
       if (cleared/total>THRESHOLD) { revealed.current=true; setTimeout(()=>setScreen('reveal'),350); }
     };
     const onDown = (e:MouseEvent|TouchEvent) => {
+      if (!isUnlocked) return;
       scratching.current=true; const p=getPos(e); lastPos.current=p; dot(p.x,p.y); e.preventDefault();
     };
     const onMove = (e:MouseEvent|TouchEvent) => {
@@ -259,7 +273,7 @@ export default function ReferralPage() {
       canvas.removeEventListener('touchmove',  onMove);
       canvas.removeEventListener('touchend',   onUp);
     };
-  }, []);
+  }, [isUnlocked]);
 
   /* ── Resize confetti canvases on window resize ──────────────────────── */
   useEffect(() => {
@@ -314,6 +328,36 @@ export default function ReferralPage() {
     setVideoModal(school);
   };
 
+  const handleEntrySubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const cleanName = name.trim();
+    if (cleanName.length < 2) {
+      setFormError('Please enter your name.');
+      return;
+    }
+    if (!branch) {
+      setFormError('Please select your preferred branch.');
+      return;
+    }
+
+    setIsSubmitting(true);
+    setFormError('');
+    try {
+      const response = await fetch('/api/join-now', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({name:cleanName, branch, submissionId:submissionId.current}),
+      });
+      if (!response.ok) throw new Error('Submission failed');
+      setName(cleanName);
+      setIsUnlocked(true);
+    } catch {
+      setFormError('We could not save your details. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   /* ─────────────────────────────────────────────────────────────────────
      Reusable decorative icon shorthand
   ───────────────────────────────────────────────────────────────────── */
@@ -358,15 +402,67 @@ export default function ReferralPage() {
                 A surprise<br /><span style={{color:'#D4537E'}}>awaits!</span>
               </div>
               <div style={{fontSize:14,color:'#5F5E5A',marginTop:8,marginBottom:22}}>
-                Scratch below to get your<br /><span style={{color:'#7F77DD',fontWeight:500}}>exclusive</span> reward
+                Enter your details to unlock your<br /><span style={{color:'#7F77DD',fontWeight:500}}>exclusive</span> reward
               </div>
 
+              <form
+                onSubmit={handleEntrySubmit}
+                style={{maxWidth:330,margin:'0 auto 24px',padding:16,borderRadius:18,
+                  background:'rgba(255,255,255,.72)',boxShadow:'0 8px 24px rgba(83,74,183,.1)',
+                  border:'1px solid rgba(255,255,255,.9)',textAlign:'left'}}
+              >
+                <label htmlFor="rlp-parent-name" style={{display:'block',fontSize:12,fontWeight:700,color:'#26215C',marginBottom:6}}>
+                  Parent Name
+                </label>
+                <input
+                  id="rlp-parent-name"
+                  className="rlp-entry-field"
+                  type="text"
+                  value={name}
+                  onChange={(event)=>setName(event.target.value)}
+                  disabled={isUnlocked || isSubmitting}
+                  autoComplete="name"
+                  maxLength={100}
+                  required
+                  placeholder="Enter your name"
+                />
+                <label htmlFor="rlp-branch" style={{display:'block',fontSize:12,fontWeight:700,color:'#26215C',margin:'12px 0 6px'}}>
+                  Preferred Branch
+                </label>
+                <select
+                  id="rlp-branch"
+                  className="rlp-entry-field"
+                  value={branch}
+                  onChange={(event)=>setBranch(event.target.value)}
+                  disabled={isUnlocked || isSubmitting}
+                  required
+                >
+                  <option value="">Select a branch</option>
+                  {branches.map((item)=>(
+                    <option key={item.id} value={item.name}>{item.name}</option>
+                  ))}
+                </select>
+                {formError && (
+                  <div role="alert" style={{fontSize:12,color:'#A12828',marginTop:9,lineHeight:1.35}}>
+                    {formError}
+                  </div>
+                )}
+                <button className="rlp-submit-btn" type="submit" disabled={isUnlocked || isSubmitting} style={{marginTop:13}}>
+                  {isUnlocked ? 'Scratch card unlocked!' : isSubmitting ? 'Unlocking…' : 'Unlock Scratch Card'}
+                </button>
+              </form>
+
               {/* scratch circle */}
-              <div style={{position:'relative',width:'clamp(160px,45vw,220px)',height:'clamp(160px,45vw,220px)',margin:'0 auto'}}>
+              <div
+                aria-disabled={!isUnlocked}
+                style={{position:'relative',width:'clamp(160px,45vw,220px)',height:'clamp(160px,45vw,220px)',margin:'0 auto',
+                  opacity:isUnlocked?1:.48,filter:isUnlocked?'none':'grayscale(.35)',transition:'opacity .3s ease,filter .3s ease'}}
+              >
                 <div style={{position:'absolute',inset:0,borderRadius:'50%',animation:'rlp-pulseRing 2s ease-in-out infinite'}} />
                 <canvas
                   ref={scratchRef} width={RES} height={RES}
-                  style={{position:'relative',width:'100%',height:'100%',borderRadius:'50%',touchAction:'none',cursor:'pointer',display:'block'}}
+                  style={{position:'relative',width:'100%',height:'100%',borderRadius:'50%',touchAction:'none',cursor:isUnlocked?'pointer':'not-allowed',display:'block'}}
+                  aria-label={isUnlocked ? 'Scratch to reveal your reward' : 'Submit your details to unlock the scratch card'}
                 />
                 <i className="ti ti-hand-click" aria-hidden="true"
                   style={{position:'absolute',bottom:-6,right:-6,fontSize:26,color:'#26215C',
@@ -397,7 +493,9 @@ export default function ReferralPage() {
                 </div>
               </div>
               <div style={{fontSize:12,color:'#888780',marginTop:16}}>
-                Scratch the circle — and try catching the little rainbow badge that's floating!
+                {isUnlocked
+                  ? "Scratch the circle — and try catching the little rainbow badge that's floating!"
+                  : 'Submit your name and preferred branch to start scratching.'}
               </div>
             </div>
           </div>

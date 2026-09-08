@@ -9,6 +9,10 @@ const DM_SHEET_TAB = "DM 2026-27";
 const CRM_SPREADSHEET_ID = "1cai6w40yIbCcAn6KvjrQomgu4BpBVh_yB00UqKaHEXA";
 const CRM_SHEET_TAB = "CRM Leads Tracker";
 
+// Loyalty scratch-card participant tracker
+const JOIN_NOW_SPREADSHEET_ID = "1D49ewmWMKRd4aQZiC2ikotp7RyVKnxTEyyTzbXcyAso";
+const JOIN_NOW_SHEET_TAB = "Sheet1";
+
 export interface EnquiryRowData {
   parentName: string;
   childName: string;
@@ -147,6 +151,10 @@ export async function appendEnquiryRow(data: EnquiryRowData): Promise<void> {
   if (errors.length > 0) {
     throw new Error(errors.join(" | "));
   }
+}
+
+export async function appendJoinNowRow(name: string, branch: string): Promise<void> {
+  await appendToSheet(JOIN_NOW_SPREADSHEET_ID, JOIN_NOW_SHEET_TAB, [name, branch]);
 }
 
 export function isSheetsConfigured(): boolean {
