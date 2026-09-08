@@ -139,7 +139,7 @@ export default function ReferralPage() {
   const [screen,     setScreen]     = useState<'scratch'|'reveal'>('scratch');
   const [videoModal, setVideoModal] = useState<null|'preschool'|'international'>(null);
   const [badgeDelta, setBadgeDelta] = useState({x:0,y:0});
-  const [name, setName] = useState('');
+  const [childName, setChildName] = useState('');
   const [branch, setBranch] = useState('');
   const [isUnlocked, setIsUnlocked] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -330,9 +330,9 @@ export default function ReferralPage() {
 
   const handleEntrySubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const cleanName = name.trim();
+    const cleanName = childName.trim();
     if (cleanName.length < 2) {
-      setFormError('Please enter your name.');
+      setFormError("Please enter the child's name.");
       return;
     }
     if (!branch) {
@@ -346,10 +346,10 @@ export default function ReferralPage() {
       const response = await fetch('/api/join-now', {
         method: 'POST',
         headers: {'Content-Type':'application/json'},
-        body: JSON.stringify({name:cleanName, branch, submissionId:submissionId.current}),
+        body: JSON.stringify({childName:cleanName, branch, submissionId:submissionId.current}),
       });
       if (!response.ok) throw new Error('Submission failed');
-      setName(cleanName);
+      setChildName(cleanName);
       setIsUnlocked(true);
     } catch {
       setFormError('We could not save your details. Please try again.');
@@ -411,20 +411,20 @@ export default function ReferralPage() {
                   background:'rgba(255,255,255,.72)',boxShadow:'0 8px 24px rgba(83,74,183,.1)',
                   border:'1px solid rgba(255,255,255,.9)',textAlign:'left'}}
               >
-                <label htmlFor="rlp-parent-name" style={{display:'block',fontSize:12,fontWeight:700,color:'#26215C',marginBottom:6}}>
-                  Parent Name
+                <label htmlFor="rlp-child-name" style={{display:'block',fontSize:12,fontWeight:700,color:'#26215C',marginBottom:6}}>
+                  Child's Name
                 </label>
                 <input
-                  id="rlp-parent-name"
+                  id="rlp-child-name"
                   className="rlp-entry-field"
                   type="text"
-                  value={name}
-                  onChange={(event)=>setName(event.target.value)}
+                  value={childName}
+                  onChange={(event)=>setChildName(event.target.value)}
                   disabled={isUnlocked || isSubmitting}
                   autoComplete="name"
                   maxLength={100}
                   required
-                  placeholder="Enter your name"
+                  placeholder="Enter child's name"
                 />
                 <label htmlFor="rlp-branch" style={{display:'block',fontSize:12,fontWeight:700,color:'#26215C',margin:'12px 0 6px'}}>
                   Preferred Branch
@@ -495,7 +495,7 @@ export default function ReferralPage() {
               <div style={{fontSize:12,color:'#888780',marginTop:16}}>
                 {isUnlocked
                   ? "Scratch the circle — and try catching the little rainbow badge that's floating!"
-                  : 'Submit your name and preferred branch to start scratching.'}
+                  : "Submit your child's name and preferred branch to start scratching."}
               </div>
             </div>
           </div>

@@ -153,8 +153,14 @@ export async function appendEnquiryRow(data: EnquiryRowData): Promise<void> {
   }
 }
 
-export async function appendJoinNowRow(name: string, branch: string): Promise<void> {
-  await appendToSheet(JOIN_NOW_SPREADSHEET_ID, JOIN_NOW_SHEET_TAB, [name, branch]);
+export async function appendJoinNowRow(childName: string, branch: string): Promise<void> {
+  const now = new Date();
+  await appendToSheet(JOIN_NOW_SPREADSHEET_ID, JOIN_NOW_SHEET_TAB, [
+    childName,
+    branch,
+    formatIST(now, "date"),
+    formatIST(now, "time"),
+  ]);
 }
 
 export function isSheetsConfigured(): boolean {

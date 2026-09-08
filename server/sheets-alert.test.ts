@@ -272,25 +272,27 @@ describe("appendJoinNowRow()", () => {
     });
   });
 
-  it("appends the parent name and branch to the dedicated A:B tracker", async () => {
-    await appendJoinNowRow("Priya Sharma", "Dhokali Centre");
+  it("appends child name, branch, date, and time to the dedicated A:D tracker", async () => {
+    await appendJoinNowRow("Aarav Sharma", "Dhokali Centre");
 
     expect(mockProxy).toHaveBeenCalledOnce();
     const [connector, path, options] = mockProxy.mock.calls[0];
     expect(connector).toBe("google-sheet");
     expect(path).toContain("1D49ewmWMKRd4aQZiC2ikotp7RyVKnxTEyyTzbXcyAso");
-    expect(decodeURIComponent(path)).toContain("Sheet1!A:B");
-    expect(JSON.parse(options.body)).toEqual({
-      values: [["Priya Sharma", "Dhokali Centre"]],
-    });
+    expect(decodeURIComponent(path)).toContain("Sheet1!A:D");
+    const [row] = JSON.parse(options.body).values;
+    expect(row[0]).toBe("Aarav Sharma");
+    expect(row[1]).toBe("Dhokali Centre");
+    expect(row[2]).toMatch(/^\d{1,2}-[A-Z][a-z]{2,3}-\d{2}$/);
+    expect(row[3]).toMatch(/^\d{1,2}:\d{2} [AP]M$/);
   });
 
   it("supports the Bhramhand RIS branch label", async () => {
     await appendJoinNowRow("Aarav Parent", "Bhramhand (RIS)");
 
     const [, , options] = mockProxy.mock.calls[0];
-    expect(JSON.parse(options.body)).toEqual({
-      values: [["Aarav Parent", "Bhramhand (RIS)"]],
-    });
+    const [row] = JSON.parse(options.body).values;
+    expect(row.slice(0, 2)).toEqual(["Aarav Parent", "Bhramhand (RIS)"]);
+    expect(row).toHaveLength(4);
   });
 });

@@ -418,7 +418,7 @@ export async function registerRoutes(
   >();
 
   const joinNowSchema = z.object({
-    name: z.string().trim().min(2, "Please enter your name").max(100),
+    childName: z.string().trim().min(2, "Please enter the child's name").max(100),
     branch: z.string().refine(
       (value) => joinNowBranchNames.includes(value as typeof joinNowBranchNames[number]),
       "Please select a valid branch",
@@ -442,7 +442,7 @@ export async function registerRoutes(
         return;
       }
 
-      const appendPromise = appendJoinNowRow(data.name, data.branch);
+      const appendPromise = appendJoinNowRow(data.childName, data.branch);
       joinNowSubmissions.set(data.submissionId, {
         promise: appendPromise,
         at: Date.now(),
@@ -455,7 +455,7 @@ export async function registerRoutes(
         throw error;
       }
 
-      console.log(`[Join Now] Participant recorded: ${data.name}, ${data.branch}`);
+      console.log(`[Join Now] Participant recorded: ${data.childName}, ${data.branch}`);
       res.status(201).json({ success: true });
     } catch (error) {
       if (error instanceof z.ZodError) {
