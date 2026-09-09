@@ -6,21 +6,25 @@ id = "C0LJ5VrinRIktBMNT06Ni"
 uri = "file://seo-report.md"
 type = "text"
 title = "Rainbow Preschool — Full SEO Report"
+logical_id = "76b80307-a07a-455b-a787-58a07ff815be"
 
 [[outputs]]
 id = "Wkz4DDeUUznZIREINzYae"
 uri = "file://rpi_pages_inventory.csv"
 type = "table"
 title = "RPI Pages Inventory — URLs, Meta Titles & H1s"
+logical_id = "2ee2357a-1b3a-401f-bcd2-8fcf1c849602"
 
 [[outputs]]
 id = "zjkmMfF_qtVWsPATUbZVg"
 uri = "file://RPI_Pages_Inventory.xlsx"
 type = "table"
 title = "RPI Pages Inventory — URLs, Meta Titles & H1s"
+logical_id = "e131e967-1672-46f3-98cf-84a801439701"
 
 [[outputs]]
 id = "BvtwfctiWmd668zfZVq3g"
 uri = "file://rainbowpreschools-url-audit.xlsx"
 type = "table"
 title = "Rainbow Preschools — Full URL Audit"
+logical_id = "ac2ab1d2-bcb5-4e00-8cfa-85758c44fec5"
