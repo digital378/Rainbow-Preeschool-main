@@ -265,6 +265,37 @@ export async function registerRoutes(
     res.send(_independenceDayHtml);
   });
 
+  // Ganesh Chaturthi 2026 standalone interactive RPS guide. Keep the supplied
+  // static HTML intact so bots and visitors receive the same complete content.
+  const _ganeshChaturthiCandidates = [
+    path.join(process.cwd(), "dist", "blog-assets", "ganesh-chaturthi-for-kids", "index.html"),
+    path.join(process.cwd(), "blog-pages", "ganesh-chaturthi-for-kids", "index.html"),
+  ];
+  let _ganeshChaturthiHtml: Buffer | null = null;
+  for (const candidate of _ganeshChaturthiCandidates) {
+    if (fs.existsSync(candidate)) {
+      _ganeshChaturthiHtml = fs.readFileSync(candidate);
+      console.log(`[blog-page] ganesh-chaturthi loaded from: ${candidate}`);
+      break;
+    }
+  }
+  if (!_ganeshChaturthiHtml) {
+    console.error(
+      `[blog-page] ganesh-chaturthi NOT FOUND — tried: ${_ganeshChaturthiCandidates.join(", ")} | cwd=${process.cwd()}`
+    );
+  }
+  app.get("/blog/ganesh-chaturthi-for-kids", (_req, res) => {
+    if (!_ganeshChaturthiHtml) {
+      return res.status(404).send("Page not found");
+    }
+    res.setHeader("Content-Type", "text/html; charset=utf-8");
+    res.setHeader(
+      "Cache-Control",
+      process.env.NODE_ENV === "production" ? "public, max-age=3600" : "no-store"
+    );
+    res.send(_ganeshChaturthiHtml);
+  });
+
   // Raksha Bandhan 2026 is an independent static RPS article. Its relative
   // artwork URLs resolve from the canonical article's /blog/ parent, so mount
   // the asset directory there while allowing all other blog routes to continue.

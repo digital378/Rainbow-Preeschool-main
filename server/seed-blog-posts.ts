@@ -2,6 +2,49 @@ import { type BlogPost } from "@shared/schema";
 import { randomUUID } from "crypto";
 
 export const seoRecoveryBlogPosts: BlogPost[] = [
+  // ─── Ganesh Chaturthi 2026 — standalone interactive RPS guide ───────────
+  {
+    id: randomUUID(),
+    title: "Ganesh Chaturthi 2026 for Kids | Rainbow Preschools",
+    slug: "ganesh-chaturthi-for-kids",
+    excerpt: "Make Ganesh Chaturthi 2026 magical for your toddler! Simple stories, rhymes, crafts, speeches and playful activities for little ones from Rainbow Preschools, Thane.",
+    content: `Ganesh Chaturthi is a joyful ten-day festival filled with colours, music, modaks, stories, and family traditions. This preschool-friendly guide helps parents introduce Ganpati Bappa through gentle, age-appropriate activities.
+
+## Ganesh Chaturthi 2026
+
+Ganesh Sthapana is on Monday, 14 September 2026, and Anant Chaturdashi Visarjan is on Friday, 25 September 2026.
+
+## Stories and Fun Facts for Little Ones
+
+Share a simple story of how Ganpati Bappa was born, explore more short bedtime stories, and discover child-friendly facts about Ganesha's big ears, curved trunk, mouse companion, and love of modaks.
+
+## Crafts, Sensory Play, and a Simple Modak Recipe
+
+Try safe festival activities for toddlers and preschoolers, including paper crafts, sensory play, decorations, and a simple modak activity families can enjoy together.
+
+## Speeches, Essays, Rhymes, and Slogans
+
+Choose ready-to-use content in English, Hindi, and Marathi for classroom celebrations, show-and-tell, and family festivities.
+
+## Quiz, FAQs, and Parent Guidance
+
+Test little learners with a friendly reveal-answer quiz and find practical advice about toddler participation, noise sensitivity, eco-friendly celebrations, immersion safety, and festival preparation.
+
+## Make a Ganpati Wish Card
+
+Create and download a personalised 1080 × 1080 festive greeting card directly in the browser.
+
+## Visit the Full Ganesh Chaturthi Guide
+
+Visit the [full Ganesh Chaturthi 2026 guide](/blog/ganesh-chaturthi-for-kids) for the complete stories, activities, speeches, essays, rhymes, slogans, quiz, FAQs, countdowns, and wish-card creator.
+
+EXPLORE_MORE: [Explore Our Programmes](/programmes)|[Schedule a Campus Visit](/preschool-admissions)|[Read More on Our Blog](/blog)`,
+    imageUrl: "/images/gallery/rainbow-preschool-ganesh-chaturthi-celebration.webp",
+    category: "Festivals & Events",
+    publishedAt: new Date("2026-09-07"),
+    updatedAt: new Date("2026-09-07"),
+    isPublished: true,
+  },
   // ─── Janmashtami 2026 — standalone interactive RPS guide ────────────────
   {
     id: randomUUID(),
