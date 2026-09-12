@@ -196,16 +196,35 @@
   .trail-imgwrap img.show{opacity:1}
   .trail-track{margin-top:18px; width:6px; height:220px; background:#f0dcc8; border-radius:99px; position:relative; overflow:hidden}
   .trail-track-fill{position:absolute; top:0; left:0; width:100%; height:20%; background:linear-gradient(180deg,var(--amber),var(--red)); border-radius:99px; transition:height .4s ease}
-  @media (max-width:900px){ .trail-grid{grid-template-columns:1fr} .trail-visual{position:static; margin-bottom:10px} .trail-track{display:none} }
+  .trail-mobile-img{display:none}
+  @media (max-width:900px){
+    .trail-grid{grid-template-columns:1fr; gap:22px}
+    .trail-visual{display:none}
+    .trail-track{display:none}
+    .trail-mobile-img{
+      display:block;
+      width:100%;
+      aspect-ratio:3/4;
+      object-fit:cover;
+      border-radius:20px;
+      margin-bottom:22px;
+      background:linear-gradient(160deg,#FFE9CE,#FFD9AE);
+      box-shadow:0 12px 28px rgba(74,20,8,.14);
+    }
+  }
 
   .trail-steps{display:flex; flex-direction:column; gap:190px; padding:40px 0 640px}
-  @media (max-width:900px){ .trail-steps{gap:26px; padding:10px 0} }
   .trail-step{background:#fff; border-radius:var(--radius); padding:30px; box-shadow:var(--shadow); max-width:460px; opacity:.45; transform:translateY(14px); transition:opacity .4s, transform .4s}
   .trail-step.active{opacity:1; transform:translateY(0); box-shadow:var(--shadow-lg)}
   .trail-step .num{display:inline-flex; align-items:center; justify-content:center; width:34px; height:34px; border-radius:50%; background:var(--red); color:#fff; font-weight:800; font-family:'Baloo 2',cursive; margin-bottom:14px}
   .trail-step .tag{color:var(--red); font-weight:800; font-size:12.5px; letter-spacing:.05em; text-transform:uppercase; display:block; margin-bottom:6px}
   .trail-step h3{font-size:23px}
   .trail-step p{color:var(--ink-soft); margin:0}
+  @media (max-width:900px){
+    .trail-steps{gap:28px; padding:10px 0}
+    .trail-step,
+    .trail-step.active{max-width:none; width:100%; opacity:1; transform:none; padding:18px}
+  }
 
   /* ---------- Story collection ---------- */
   #storyAccordion{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px}
@@ -523,30 +542,35 @@
       </div>
       <div class="trail-steps" id="trailSteps">
         <div class="trail-step" data-step="1">
+          <img class="trail-mobile-img" src="/blog/ganesh-chaturthi-for-kids/assets/trail-1-arrival.webp" alt="Baby Ganesha and Mushak arriving with marigold petals" loading="lazy">
           <span class="num">1</span>
           <span class="tag">Bappa Arrives</span>
           <h3>"Hello, little friend!"</h3>
           <p>Bappa waves hello as he arrives home for the very first time, with Mushak trotting proudly beside him and marigold petals drifting through the air.</p>
         </div>
         <div class="trail-step" data-step="2">
+          <img class="trail-mobile-img" src="/blog/ganesh-chaturthi-for-kids/assets/trail-2-welcome.webp" alt="Baby Ganesha welcomed home with a diya and marigold garland" loading="lazy">
           <span class="num">2</span>
           <span class="tag">We Welcome Him Home</span>
           <h3>A garland, a lamp, a namaste</h3>
           <p>We light a small diya, place a marigold garland around Bappa, and press our palms together in a gentle namaste to welcome him with love.</p>
         </div>
         <div class="trail-step" data-step="3">
+          <img class="trail-mobile-img" src="/blog/ganesh-chaturthi-for-kids/assets/trail-3-modak.webp" alt="Baby Ganesha and Mushak sharing a modak" loading="lazy">
           <span class="num">3</span>
           <span class="tag">We Share Modak Together</span>
           <h3>The sweetest treat of all</h3>
           <p>Bappa's favourite sweet, the modak, is shared with joy — and Mushak always gets a tiny one of his very own too!</p>
         </div>
         <div class="trail-step" data-step="4">
+          <img class="trail-mobile-img" src="/blog/ganesh-chaturthi-for-kids/assets/trail-4-dance.webp" alt="Baby Ganesha and Mushak dancing during the aarti" loading="lazy">
           <span class="num">4</span>
           <span class="tag">We Dance at the Aarti</span>
           <h3>Dhol beats and happy feet</h3>
           <p>Every evening, we sing the aarti together and dance along to the happy dhol-tasha beats, arms up, hearts full.</p>
         </div>
         <div class="trail-step" data-step="5" id="trail-step-5">
+          <img class="trail-mobile-img" src="/blog/ganesh-chaturthi-for-kids/assets/trail-5-farewell.webp" alt="Baby Ganesha waving goodbye beside softly rippling water" loading="lazy">
           <span class="num">5</span>
           <span class="tag">We Say Goodbye — For Now</span>
           <h3>"Pudhchya Varshi Lawkar Ya!"</h3>
