@@ -8,7 +8,9 @@ import { resolve } from "path";
 // which helps cold start times
 const allowlist = [
   "@google/generative-ai",
+  "@replit/connectors-sdk",
   "axios",
+  "compression",
   "connect-pg-simple",
   "cors",
   "date-fns",
@@ -17,6 +19,7 @@ const allowlist = [
   "express",
   "express-rate-limit",
   "express-session",
+  "googleapis",
   "jsonwebtoken",
   "memorystore",
   "multer",

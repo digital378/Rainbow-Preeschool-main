@@ -14,7 +14,8 @@ artifacts/
 screenshots/
 seo-audits/
 
-# Dependencies are restored by Replit's dependency layer.
+# Build-time dependencies are available during publishing; runtime server
+# dependencies are bundled into dist/index.cjs by script/build.ts.
 node_modules/
 
 # Local editor/build residue
