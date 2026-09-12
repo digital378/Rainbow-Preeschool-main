@@ -70,13 +70,40 @@
       linear-gradient(160deg, var(--maroon-deep) 0%, var(--maroon) 45%, var(--red-dark) 100%);
     padding:64px 0 74px;
   }
+  .hero .wrap{position:relative; z-index:2}
+  .hero-layout{
+    display:grid;
+    grid-template-columns:minmax(0,1.45fr) minmax(310px,.75fr);
+    grid-template-areas:"copy character" "actions character";
+    column-gap:42px;
+    align-items:center;
+  }
+  .hero-copy{grid-area:copy}
+  .hero-actions{grid-area:actions; align-self:start}
+  .hero-character{
+    grid-area:character;
+    align-self:end;
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+    min-width:0;
+  }
+  .hero-character img{
+    width:min(100%,430px);
+    max-height:510px;
+    object-fit:contain;
+    object-position:center bottom;
+    filter:drop-shadow(0 24px 34px rgba(45,0,8,.28));
+  }
   .hero .petal{position:absolute; border-radius:50% 0 50% 50%; background:var(--amber); opacity:.5; animation:drift 9s ease-in-out infinite}
   @keyframes drift{0%,100%{transform:translateY(0) rotate(0deg)} 50%{transform:translateY(-22px) rotate(25deg)}}
-  .eyebrow-pill{display:inline-flex; align-items:center; gap:8px; background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.25); padding:7px 16px; border-radius:99px; font-weight:700; font-size:13px; letter-spacing:.02em; margin-bottom:22px}
-  .hero h1{color:#fff; font-size:clamp(32px,5vw,54px); max-width:820px}
+  .eyebrow-pill{display:inline-flex; align-items:center; gap:9px; background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.25); padding:7px 16px; border-radius:99px; font-weight:700; font-size:13px; letter-spacing:.02em; margin-bottom:22px}
+  .eyebrow-pill::before{content:""; width:7px; height:7px; border-radius:50%; background:var(--amber); box-shadow:0 0 0 4px rgba(251,191,36,.16)}
+  .hero h1{color:#fff; font-size:clamp(32px,3.8vw,48px); max-width:780px}
   .hero .sub{color:rgba(255,255,255,.86); font-size:18px; max-width:640px; margin-bottom:26px}
   .meta-row{display:flex; gap:22px; flex-wrap:wrap; color:rgba(255,255,255,.78); font-size:14px; font-weight:700; margin-bottom:30px}
   .meta-row span{display:inline-flex; align-items:center; gap:6px}
+  .meta-row span::before{content:""; width:6px; height:6px; border-radius:50%; background:var(--amber)}
   .cta-row{display:flex; gap:14px; flex-wrap:wrap}
   .btn{display:inline-flex; align-items:center; gap:8px; padding:14px 26px; border-radius:99px; font-weight:800; font-size:15px; cursor:pointer; border:2px solid transparent; text-decoration:none; transition:transform .15s, box-shadow .15s}
   .btn:hover{transform:translateY(-2px)}
@@ -84,6 +111,20 @@
   .btn--outline{background:transparent; border-color:rgba(255,255,255,.55); color:#fff}
   .btn--outline:hover{background:rgba(255,255,255,.12)}
   .btn--red{background:var(--red); color:#fff; box-shadow:0 10px 24px rgba(236,33,15,.3)}
+  @media (max-width:780px){
+    .hero{padding:46px 0 54px}
+    .hero-layout{
+      grid-template-columns:1fr;
+      grid-template-areas:"copy" "character" "actions";
+      row-gap:22px;
+    }
+    .hero-copy{text-align:left}
+    .hero .sub{margin-bottom:0}
+    .hero-character{align-self:center}
+    .hero-character img{width:min(82vw,360px); max-height:370px}
+    .hero-actions{width:100%}
+    .meta-row{justify-content:flex-start; margin-bottom:22px}
+  }
 
   /* ---------- Countdown ribbon ---------- */
   .countdown{background:linear-gradient(90deg,var(--red-dark),var(--red)); color:#fff; padding:18px 0}
@@ -157,7 +198,7 @@
   .trail-track-fill{position:absolute; top:0; left:0; width:100%; height:20%; background:linear-gradient(180deg,var(--amber),var(--red)); border-radius:99px; transition:height .4s ease}
   @media (max-width:900px){ .trail-grid{grid-template-columns:1fr} .trail-visual{position:static; margin-bottom:10px} .trail-track{display:none} }
 
-  .trail-steps{display:flex; flex-direction:column; gap:190px; padding:40px 0}
+  .trail-steps{display:flex; flex-direction:column; gap:190px; padding:40px 0 640px}
   @media (max-width:900px){ .trail-steps{gap:26px; padding:10px 0} }
   .trail-step{background:#fff; border-radius:var(--radius); padding:30px; box-shadow:var(--shadow); max-width:460px; opacity:.45; transform:translateY(14px); transition:opacity .4s, transform .4s}
   .trail-step.active{opacity:1; transform:translateY(0); box-shadow:var(--shadow-lg)}
@@ -166,15 +207,20 @@
   .trail-step h3{font-size:23px}
   .trail-step p{color:var(--ink-soft); margin:0}
 
-  /* ---------- Story accordion ---------- */
-  .story-item{background:#fff; border-radius:var(--radius-sm); box-shadow:var(--shadow); margin-bottom:14px; overflow:hidden}
-  .story-head{display:flex; align-items:center; justify-content:space-between; padding:20px 24px; cursor:pointer; gap:14px}
-  .story-head h3{font-size:18px; margin:0}
-  .story-head .chev{transition:transform .25s; font-size:18px; color:var(--red); flex-shrink:0}
-  .story-item.open .chev{transform:rotate(180deg)}
-  .story-body{max-height:0; overflow:hidden; transition:max-height .35s ease}
-  .story-item.open .story-body{max-height:600px}
-  .story-body-inner{padding:0 24px 22px; color:var(--ink-soft); font-size:15px}
+  /* ---------- Story collection ---------- */
+  #storyAccordion{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px}
+  .story-item{background:#fff; border-radius:var(--radius-sm); box-shadow:var(--shadow); overflow:hidden; border-top:4px solid var(--marigold)}
+  .story-item:last-child{grid-column:1/-1}
+  .story-head{display:block; padding:24px 24px 10px}
+  .story-head h3{display:flex; align-items:center; gap:12px; font-size:18px; margin:0}
+  .story-index{display:inline-flex; align-items:center; justify-content:center; width:34px; height:34px; border-radius:50%; flex:0 0 34px; background:var(--cream-2); color:var(--red-dark); font:800 12px/1 'Nunito',sans-serif}
+  .story-head .chev{display:none}
+  .story-body{max-height:none; overflow:visible}
+  .story-body-inner{padding:0 24px 24px; color:var(--ink-soft); font-size:15px}
+  @media(max-width:760px){
+    #storyAccordion{grid-template-columns:1fr}
+    .story-item:last-child{grid-column:auto}
+  }
 
   /* ---------- Flip cards ---------- */
   .flip-grid{display:grid; grid-template-columns:repeat(5,1fr); gap:16px}
@@ -205,11 +251,14 @@
   .lang-panel{display:none}
   .lang-panel.active{display:block}
   .speech-card{background:#fff; border-radius:var(--radius); padding:28px; box-shadow:var(--shadow); position:relative}
+  .speech-panels .lang-panel.active{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; width:100%}
+  .speech-panels .lang-panel.active .speech-card:only-child{grid-column:1/-1; width:100%; max-width:780px; margin:0 auto}
   .speech-card .age-badge{display:inline-block; background:var(--cream-2); color:var(--red-dark); font-weight:800; font-size:12px; padding:5px 12px; border-radius:99px; margin-bottom:14px; text-transform:uppercase; letter-spacing:.03em}
   .speech-card .quote-text{font-size:17px; line-height:1.7; font-style:italic; color:var(--ink)}
   .copy-btn{display:inline-flex; align-items:center; gap:6px; background:var(--cream-2); border:none; color:var(--red-dark); font-weight:800; font-size:13px; padding:8px 16px; border-radius:99px; cursor:pointer; margin-top:14px}
   .copy-btn:hover{background:#f5d9c4}
   .copy-btn.copied{background:var(--green-soft); color:var(--green)}
+  @media(max-width:760px){.speech-panels .lang-panel.active{grid-template-columns:1fr}}
 
   /* ---------- Essay accordion (numbered lines list) ---------- */
   .essay-list{list-style:none; margin:0; padding:0; counter-reset:essay}
@@ -310,7 +359,7 @@
 <body>
 
 <div class="progress-bar" id="progressBar"></div>
-<div class="utility-bar">🐘 Rainbow Preschools, Thane <span>&nbsp;·&nbsp; Early Learning · Ages 1.5–5.5</span></div>
+<div class="utility-bar">Rainbow Preschools, Thane <span>&nbsp;·&nbsp; Early Learning · Ages 1.5–5.5</span></div>
 
 <nav class="dotnav" id="dotnav">
   <a href="#about" data-label="About"></a>
@@ -334,17 +383,26 @@
   <div class="petal" style="width:14px;height:14px; top:30%; right:10%; animation-delay:1s"></div>
   <div class="petal" style="width:9px;height:9px; top:75%; right:16%; animation-delay:3s"></div>
   <div class="wrap">
-    <div class="eyebrow-pill">📍 Rainbow Preschools, Thane</div>
-    <h1>Ganesh Chaturthi 2026 for Kids: Stories, Activities, Speeches &amp; Fun for Little Ones</h1>
-    <p class="sub">A warm, playful companion for parents of little ones aged 1.5–5.5 years — stories, simple speeches, craft ideas, rhymes and a joyful journey with Bappa, in English, Hindi and Marathi.</p>
-    <div class="meta-row">
-      <span>📅 September 2026</span>
-      <span>⏱️ 10 min read</span>
-      <span>🧒 Ages 1.5–5.5</span>
-    </div>
-    <div class="cta-row">
-      <a href="https://www.rainbowpreschools.com/contact" class="btn btn--gold">💛 Enquire Now</a>
-      <a href="#quiz" class="btn btn--outline">🏆 Take the Quiz</a>
+    <div class="hero-layout">
+      <div class="hero-copy">
+        <div class="eyebrow-pill">Rainbow Preschools, Thane</div>
+        <h1>Ganesh Chaturthi 2026 for Kids: Stories, Activities, Speeches &amp; Fun for Little Ones</h1>
+        <p class="sub">A warm, playful companion for parents of little ones aged 1.5–5.5 years — stories, simple speeches, craft ideas, rhymes and a joyful journey with Bappa, in English, Hindi and Marathi.</p>
+      </div>
+      <div class="hero-character">
+        <img src="/blog/ganesh-chaturthi-for-kids/assets/hero-bappa.png" alt="Baby Ganpati Bappa with folded hands, accompanied by Mushak and a glowing diya" width="1180" height="1333" fetchpriority="high">
+      </div>
+      <div class="hero-actions">
+        <div class="meta-row">
+          <span>September 2026</span>
+          <span>10 min read</span>
+          <span>Ages 1.5–5.5</span>
+        </div>
+        <div class="cta-row">
+          <a href="https://www.rainbowpreschools.com/contact" class="btn btn--gold">Enquire Now</a>
+          <a href="#quiz" class="btn btn--outline">Take the Quiz</a>
+        </div>
+      </div>
     </div>
   </div>
 </header>
@@ -488,7 +546,7 @@
           <h3>Dhol beats and happy feet</h3>
           <p>Every evening, we sing the aarti together and dance along to the happy dhol-tasha beats, arms up, hearts full.</p>
         </div>
-        <div class="trail-step" data-step="5">
+        <div class="trail-step" data-step="5" id="trail-step-5">
           <span class="num">5</span>
           <span class="tag">We Say Goodbye — For Now</span>
           <h3>"Pudhchya Varshi Lawkar Ya!"</h3>
@@ -518,23 +576,23 @@
     </div>
     <div id="storyAccordion">
       <div class="story-item">
-        <div class="story-head"><h3>🐭 Ganesha and His Tiny Best Friend, the Mouse</h3><span class="chev">⌄</span></div>
+        <div class="story-head"><h3><span class="story-index">01</span>Ganesha and His Tiny Best Friend, the Mouse</h3></div>
         <div class="story-body"><div class="story-body-inner">Ganpati Bappa may be big, but his very best friend is tiny — a little mouse named Mushak! One day, Mushak was scurrying about so fast that he bumped into things and made a big mess. Ganesha smiled and said, "Slow down, my friend. Even the smallest of us can do the biggest things — but only with a calm heart." From that day on, wherever Ganesha travels, gentle little Mushak carries him with pride.</div></div>
       </div>
       <div class="story-item">
-        <div class="story-head"><h3>🍬 Why Ganesha Loves Modaks So Much</h3><span class="chev">⌄</span></div>
+        <div class="story-head"><h3><span class="story-index">02</span>Why Ganesha Loves Modaks So Much</h3></div>
         <div class="story-body"><div class="story-body-inner">Once, Ganesha's mother Parvati made a plate of sweet modaks and told her sons, "Whoever is the most thoughtful may have the sweetest one." Kartikeya rushed off to do a brave task. Ganesha simply sat beside his mother, gave her a warm hug, and said, "Amma, you are the sweetest thing in my life." Parvati laughed with joy and gave him the sweetest modak of all — because kindness is always the tastiest thing.</div></div>
       </div>
       <div class="story-item">
-        <div class="story-head"><h3>🌙 Ganesha and the Moon Who Learned to Say Sorry</h3><span class="chev">⌄</span></div>
+        <div class="story-head"><h3><span class="story-index">03</span>Ganesha and the Moon Who Learned to Say Sorry</h3></div>
         <div class="story-body"><div class="story-body-inner">One night, after enjoying a few too many modaks, Ganesha took a little tumble. Up in the sky, the Moon laughed and laughed. Ganesha, a little sad, gently said, "It's alright to laugh, but it's not alright to be unkind." The Moon felt sorry and asked for forgiveness, and Ganesha forgave him at once.</div></div>
       </div>
       <div class="story-item">
-        <div class="story-head"><h3>🏆 The Story of the Race Around the World</h3><span class="chev">⌄</span></div>
+        <div class="story-head"><h3><span class="story-index">04</span>The Story of the Race Around the World</h3></div>
         <div class="story-body"><div class="story-body-inner">Shiva and Parvati told their sons, "Whoever travels around the world three times first wins a special prize!" Kartikeya zoomed off on his peacock. Clever Ganesha simply walked around his mother and father three times and said, "For me, you two are my whole world." He was declared the winner — not for being fastest, but for being wisest and most loving.</div></div>
       </div>
       <div class="story-item">
-        <div class="story-head"><h3>✍️ Ganesha and the Broken Tusk</h3><span class="chev">⌄</span></div>
+        <div class="story-head"><h3><span class="story-index">05</span>Ganesha and the Broken Tusk</h3></div>
         <div class="story-body"><div class="story-body-inner">A wise sage named Vyasa needed someone to write down a very long story as fast as he could tell it. Ganesha happily agreed — but his pen broke! Quick-thinking Ganesha snapped off a piece of his own tusk to keep writing, so the important story would never be interrupted.</div></div>
       </div>
     </div>
@@ -550,16 +608,16 @@
       <p>Tap each card to discover something wonderful about our favourite friend!</p>
     </div>
     <div class="flip-grid" id="flipGrid">
-      <div class="flip-card"><div class="flip-inner"><div class="flip-face flip-front">👂 Big Ears</div><div class="flip-face flip-back">Perfect for listening carefully to everyone he loves!</div></div></div>
-      <div class="flip-card"><div class="flip-inner"><div class="flip-face flip-front">🐭 Mushak</div><div class="flip-face flip-back">His best friend is a tiny mouse he rides everywhere!</div></div></div>
-      <div class="flip-card"><div class="flip-inner"><div class="flip-face flip-front">🍬 Modak</div><div class="flip-face flip-back">A soft, sweet dumpling — Bappa's favourite treat!</div></div></div>
-      <div class="flip-card"><div class="flip-inner"><div class="flip-face flip-front">🥇 Always First</div><div class="flip-face flip-back">Ganesha is welcomed first before any happy occasion begins.</div></div></div>
-      <div class="flip-card"><div class="flip-inner"><div class="flip-face flip-front">👨‍👩‍👦 Family</div><div class="flip-face flip-back">Parvati &amp; Shiva are his parents, Kartikeya his brother.</div></div></div>
-      <div class="flip-card"><div class="flip-inner"><div class="flip-face flip-front">🎉 Morya!</div><div class="flip-face flip-back">"Ganpati Bappa Morya!" is how we say hello and celebrate.</div></div></div>
-      <div class="flip-card"><div class="flip-inner"><div class="flip-face flip-front">🥁 Dhol-Tasha</div><div class="flip-face flip-back">In Thane, drummers play big happy beats to welcome Bappa.</div></div></div>
-      <div class="flip-card"><div class="flip-inner"><div class="flip-face flip-front">🌱 Eco Bappa</div><div class="flip-face flip-back">Eco-friendly clay Bappas melt gently, keeping rivers clean.</div></div></div>
-      <div class="flip-card"><div class="flip-inner"><div class="flip-face flip-front">🎨 Colours</div><div class="flip-face flip-back">Bappa loves being decorated in orange, yellow and red!</div></div></div>
-      <div class="flip-card"><div class="flip-inner"><div class="flip-face flip-front">👋 Goodbye</div><div class="flip-face flip-back">"Pudhchya Varshi Lawkar Ya" — come back soon next year!</div></div></div>
+      <div class="flip-card"><div class="flip-inner"><div class="flip-face flip-front">Big Ears</div><div class="flip-face flip-back">Perfect for listening carefully to everyone he loves!</div></div></div>
+      <div class="flip-card"><div class="flip-inner"><div class="flip-face flip-front">Mushak</div><div class="flip-face flip-back">His best friend is a tiny mouse he rides everywhere!</div></div></div>
+      <div class="flip-card"><div class="flip-inner"><div class="flip-face flip-front">Modak</div><div class="flip-face flip-back">A soft, sweet dumpling — Bappa's favourite treat!</div></div></div>
+      <div class="flip-card"><div class="flip-inner"><div class="flip-face flip-front">Always First</div><div class="flip-face flip-back">Ganesha is welcomed first before any happy occasion begins.</div></div></div>
+      <div class="flip-card"><div class="flip-inner"><div class="flip-face flip-front">Family</div><div class="flip-face flip-back">Parvati &amp; Shiva are his parents, Kartikeya his brother.</div></div></div>
+      <div class="flip-card"><div class="flip-inner"><div class="flip-face flip-front">Morya!</div><div class="flip-face flip-back">"Ganpati Bappa Morya!" is how we say hello and celebrate.</div></div></div>
+      <div class="flip-card"><div class="flip-inner"><div class="flip-face flip-front">Dhol-Tasha</div><div class="flip-face flip-back">In Thane, drummers play big happy beats to welcome Bappa.</div></div></div>
+      <div class="flip-card"><div class="flip-inner"><div class="flip-face flip-front">Eco Bappa</div><div class="flip-face flip-back">Eco-friendly clay Bappas melt gently, keeping rivers clean.</div></div></div>
+      <div class="flip-card"><div class="flip-inner"><div class="flip-face flip-front">Colours</div><div class="flip-face flip-back">Bappa loves being decorated in orange, yellow and red!</div></div></div>
+      <div class="flip-card"><div class="flip-inner"><div class="flip-face flip-front">Goodbye</div><div class="flip-face flip-back">"Pudhchya Varshi Lawkar Ya" — come back soon next year!</div></div></div>
     </div>
   </div>
 </section>
@@ -618,9 +676,9 @@
       <button class="lang-tab" data-lang="hi">हिंदी</button>
       <button class="lang-tab" data-lang="mr">मराठी</button>
     </div>
-    <div class="grid grid-2">
+    <div class="speech-panels">
       <div class="lang-panel active" data-group="speech" data-lang="en">
-        <div class="speech-card" style="margin-bottom:18px">
+        <div class="speech-card">
           <span class="age-badge">Nursery / Junior KG</span>
           <p class="quote-text">"Ganpati Bappa Morya! Bappa has big ears and a happy tummy. Bappa loves modaks. I love Bappa too! Ganpati Bappa Morya!"</p>
           <button class="copy-btn" data-copy="Ganpati Bappa Morya! Bappa has big ears and a happy tummy. Bappa loves modaks. I love Bappa too! Ganpati Bappa Morya!">📋 Copy Speech</button>
@@ -973,11 +1031,6 @@ function updateDots(){
   dotLinks.forEach((a,i) => a.classList.toggle('active', i===idx));
 }
 window.addEventListener('scroll', updateDots); updateDots();
-
-// ---------- Story accordion ----------
-document.querySelectorAll('.story-head').forEach(h => {
-  h.addEventListener('click', () => h.parentElement.classList.toggle('open'));
-});
 
 // ---------- Flip cards ----------
 document.querySelectorAll('.flip-card').forEach(c => {
