@@ -1,0 +1,23 @@
+# Workspace and version-control metadata
+.git/
+.agents/
+.local/
+.cache/
+.superpowers/
+
+# Uploaded source originals are not runtime assets.
+# Optimized images used by the app live under public/, client/, or blog-pages/.
+attached_assets/
+
+# Design-only previews and local verification output
+artifacts/
+screenshots/
+seo-audits/
+
+# Dependencies are restored by Replit's dependency layer.
+node_modules/
+
+# Local editor/build residue
+*.log
+*.tmp
+*.tsbuildinfo
