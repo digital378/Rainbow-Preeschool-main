@@ -284,6 +284,26 @@ export async function registerRoutes(
       `[blog-page] ganesh-chaturthi NOT FOUND — tried: ${_ganeshChaturthiCandidates.join(", ")} | cwd=${process.cwd()}`
     );
   }
+  const _ganeshChaturthiAssetCandidates = [
+    path.join(process.cwd(), "dist", "blog-assets", "ganesh-chaturthi-for-kids", "assets"),
+    path.join(process.cwd(), "blog-pages", "ganesh-chaturthi-for-kids", "assets"),
+  ];
+  const _ganeshChaturthiAssetDir = _ganeshChaturthiAssetCandidates.find((candidate) =>
+    fs.existsSync(candidate)
+  );
+  if (_ganeshChaturthiAssetDir) {
+    app.use(
+      "/blog/ganesh-chaturthi-for-kids/assets",
+      express.static(_ganeshChaturthiAssetDir, {
+        immutable: process.env.NODE_ENV === "production",
+        maxAge: process.env.NODE_ENV === "production" ? "1y" : 0,
+      })
+    );
+  } else {
+    console.error(
+      `[blog-page] ganesh-chaturthi assets NOT FOUND — tried: ${_ganeshChaturthiAssetCandidates.join(", ")}`
+    );
+  }
   app.get("/blog/ganesh-chaturthi-for-kids", (_req, res) => {
     if (!_ganeshChaturthiHtml) {
       return res.status(404).send("Page not found");
