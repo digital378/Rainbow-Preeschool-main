@@ -17,23 +17,32 @@
     @font-face{font-family:'Inter';font-style:normal;font-weight:400 600;font-display:swap;src:url('/fonts/inter-var.woff2') format('woff2')}
   </style>
 
-  <!-- GA/GTM: shim immediately (free), load the actual scripts on idle -->
+  <!-- GA4: queue one complete browser page view before the non-blocking tag loads. -->
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config', 'GT-55BFZCQT');
-    gtag('config', 'G-G1MX1N0M05');
+    gtag('config', 'G-G1MX1N0M05', { 'send_page_view': false });
     gtag('config', 'AW-1747212533/a68zCIykmPsbEJnzrYtB', {
       'phone_conversion_number': '82915 68972'
+    });
+    gtag('event', 'page_view', {
+      send_to: 'G-G1MX1N0M05',
+      page_path: '/ad-mtpg',
+      page_title: 'Mid Term Playgroup Landing Page',
+      page_location: window.location.href
     });
   </script>
   <script>
     function _loadDeferredAnalytics(){
       var g = document.createElement('script');
       g.async = true;
-      g.src = 'https://www.googletagmanager.com/gtag/js?id=GT-55BFZCQT';
+      g.src = 'https://www.googletagmanager.com/gtag/js?id=G-G1MX1N0M05';
       document.head.appendChild(g);
+    }
+    _loadDeferredAnalytics();
+
+    function _loadDeferredClarity(){
       (function(c,l,a,r,i,t,y){
           c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
           t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
@@ -41,9 +50,9 @@
       })(window, document, "clarity", "script", "m20xf4ffec");
     }
     if ('requestIdleCallback' in window) {
-      requestIdleCallback(_loadDeferredAnalytics, { timeout: 3000 });
+      requestIdleCallback(_loadDeferredClarity, { timeout: 3000 });
     } else {
-      window.addEventListener('load', function(){ setTimeout(_loadDeferredAnalytics, 500); });
+      window.addEventListener('load', function(){ setTimeout(_loadDeferredClarity, 500); });
     }
   </script>
 
@@ -561,24 +570,18 @@
       return { leadSource: leadSource, leadMedium: leadMedium };
     })();
 
-    // ── GA4 direct tracking (sendBeacon, no render blocking) ──────────
-    function gaCid(){
-      var cid = localStorage.getItem('ga_cid');
-      if (!cid) { cid = Math.random().toString(36).substr(2, 9) + '.' + Date.now(); localStorage.setItem('ga_cid', cid); }
-      return cid;
-    }
+    // ── GA4 conversion tracking ────────────────────────────────────────
+    // Events use the Google tag initialized in the page head. This preserves
+    // the browser session and engagement context required for active users.
     function sendGA4Event(eventName, params){
       try {
-        var url = 'https://www.google-analytics.com/g/collect?v=2&tid=G-G1MX1N0M05&cid=' + gaCid() + '&en=' + eventName + '&ep.page_path=' + encodeURIComponent((params && params.page_path) || '/ad-mtpg') + '&dl=' + encodeURIComponent(window.location.href);
-        navigator.sendBeacon(url);
+        gtag('event', eventName, {
+          send_to: 'G-G1MX1N0M05',
+          page_path: (params && params.page_path) || '/ad-mtpg',
+          page_location: window.location.href
+        });
       } catch(err) {}
     }
-    (function(){
-      try {
-        var url = 'https://www.google-analytics.com/g/collect?v=2&tid=G-G1MX1N0M05&cid=' + gaCid() + '&en=page_view&ep.page_path=/ad-mtpg&ep.page_title=Mid%20Term%20Playgroup%20Landing%20Page&dl=' + encodeURIComponent(window.location.href) + '&dt=Mid-Term%20Playgroup%20Admission%20in%20Thane';
-        navigator.sendBeacon(url);
-      } catch(err) {}
-    })();
 
     function trackCall(e){
       sendGA4Event('google_ads_call', {page_path:'/ad-mtpg'});
