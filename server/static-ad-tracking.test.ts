@@ -2,6 +2,7 @@ import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import {
   validateStaticAdTracking,
+  validateStaticAdTrackingCoverage,
   type StaticAdTrackingRequirements,
 } from "../scripts/static-ad-tracking";
 
@@ -10,6 +11,11 @@ const requirements: StaticAdTrackingRequirements = {
   pagePath: "/ad-test",
   measurementId: "G-TEST",
   pageViewConfigIds: ["GT-TEST", "G-TEST"],
+  conversionEvents: [
+    "google_ads_leads",
+    "google_ads_call",
+    "google_ads_whatsapp",
+  ],
 };
 
 const validHtml = `
@@ -47,12 +53,22 @@ describe("static ad tracking guard", () => {
         pagePath: "/ad-mtpg",
         measurementId: "G-G1MX1N0M05",
         pageViewConfigIds: ["G-G1MX1N0M05"],
+        conversionEvents: [
+          "google_ads_leads",
+          "google_ads_call",
+          "google_ads_whatsapp",
+        ],
       },
       {
         file: "public/ad-google.html",
         pagePath: "/ad-google",
         measurementId: "G-G1MX1N0M05",
         pageViewConfigIds: ["GT-55BFZCQT", "G-G1MX1N0M05"],
+        conversionEvents: [
+          "google_ads_leads",
+          "google_ads_call",
+          "google_ads_whatsapp",
+        ],
       },
     ];
     for (const page of pages) {
@@ -60,6 +76,24 @@ describe("static ad tracking guard", () => {
         validateStaticAdTracking(readFileSync(page.file, "utf8"), page),
       ).not.toThrow();
     }
+  });
+
+  it("rejects a discovered static ad page without registered requirements", () => {
+    expect(() =>
+      validateStaticAdTrackingCoverage(
+        ["public/ad-test.html", "public/ad-future.html"],
+        [{ ...requirements, file: "public/ad-test.html" }],
+      ),
+    ).toThrow(/public\/ad-future\.html/);
+  });
+
+  it("rejects requirements for a static ad page that no longer exists", () => {
+    expect(() =>
+      validateStaticAdTrackingCoverage(
+        [],
+        [{ ...requirements, file: "public/ad-test.html" }],
+      ),
+    ).toThrow(/public\/ad-test\.html/);
   });
 
   it.each([

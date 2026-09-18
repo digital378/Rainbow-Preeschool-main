@@ -5,8 +5,15 @@ import { existsSync } from "fs";
 import { resolve } from "path";
 import {
   validateStaticAdTracking,
+  validateStaticAdTrackingCoverage,
   type StaticAdTrackingRequirements,
 } from "../scripts/static-ad-tracking";
+
+const staticAdConversionEvents = [
+  "google_ads_leads",
+  "google_ads_call",
+  "google_ads_whatsapp",
+];
 
 const staticAdPages: StaticAdTrackingRequirements[] = [
   {
@@ -14,16 +21,24 @@ const staticAdPages: StaticAdTrackingRequirements[] = [
     pagePath: "/ad-mtpg",
     measurementId: "G-G1MX1N0M05",
     pageViewConfigIds: ["G-G1MX1N0M05"],
+    conversionEvents: staticAdConversionEvents,
   },
   {
     file: "public/ad-google.html",
     pagePath: "/ad-google",
     measurementId: "G-G1MX1N0M05",
     pageViewConfigIds: ["GT-55BFZCQT", "G-G1MX1N0M05"],
+    conversionEvents: staticAdConversionEvents,
   },
 ];
 
 async function checkStaticAdTracking() {
+  const discoveredFiles = (await readdir("public"))
+    .filter((file) => /^ad-.+\.html$/.test(file))
+    .map((file) => `public/${file}`)
+    .sort();
+  validateStaticAdTrackingCoverage(discoveredFiles, staticAdPages);
+
   for (const page of staticAdPages) {
     const html = await readFile(page.file, "utf-8");
     validateStaticAdTracking(html, page);

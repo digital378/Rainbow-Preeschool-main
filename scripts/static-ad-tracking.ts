@@ -3,7 +3,32 @@ export type StaticAdTrackingRequirements = {
   pagePath: string;
   measurementId: string;
   pageViewConfigIds: string[];
+  conversionEvents: string[];
 };
+
+export function validateStaticAdTrackingCoverage(
+  discoveredFiles: string[],
+  requirements: StaticAdTrackingRequirements[],
+) {
+  const registeredFiles = requirements.map(({ file }) => file);
+  const unregisteredFiles = discoveredFiles.filter(
+    (file) => !registeredFiles.includes(file),
+  );
+  const missingFiles = registeredFiles.filter(
+    (file) => !discoveredFiles.includes(file),
+  );
+
+  if (unregisteredFiles.length > 0) {
+    throw new Error(
+      `Static ad pages must register campaign tracking requirements: ${unregisteredFiles.join(", ")}.`,
+    );
+  }
+  if (missingFiles.length > 0) {
+    throw new Error(
+      `Static ad tracking requirements reference missing pages: ${missingFiles.join(", ")}.`,
+    );
+  }
+}
 
 function escapeRegExp(value: string) {
   return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -13,7 +38,13 @@ export function validateStaticAdTracking(
   html: string,
   requirements: StaticAdTrackingRequirements,
 ) {
-  const { file, pagePath, measurementId, pageViewConfigIds } = requirements;
+  const {
+    file,
+    pagePath,
+    measurementId,
+    pageViewConfigIds,
+    conversionEvents,
+  } = requirements;
   const pageViews =
     html.match(
       /gtag\(\s*['"]event['"]\s*,\s*['"]page_view['"]\s*,\s*\{[\s\S]*?\}\s*\)/g,
@@ -76,12 +107,7 @@ export function validateStaticAdTracking(
     );
   }
 
-  const dispatches = [
-    "google_ads_leads",
-    "google_ads_call",
-    "google_ads_whatsapp",
-  ];
-  for (const eventName of dispatches) {
+  for (const eventName of conversionEvents) {
     if (
       !new RegExp(
         `sendGA4Event\\(\\s*['"]${eventName}['"]\\s*,\\s*\\{`,
