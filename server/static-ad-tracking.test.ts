@@ -1,4 +1,5 @@
-import { readFileSync } from "node:fs";
+import { spawnSync } from "node:child_process";
+import { readFileSync, rmSync, writeFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import {
   validateStaticAdTracking,
@@ -86,6 +87,46 @@ describe("static ad tracking guard", () => {
       ),
     ).toThrow(/public\/ad-future\.html/);
   });
+
+  it("stops the production build when a discovered campaign page is unregistered", () => {
+    const unregisteredFile = "public/ad-unregistered-build-test.html";
+    writeFileSync(unregisteredFile, "<!doctype html><title>Unregistered campaign</title>");
+
+    try {
+      const result = spawnSync("npm", ["run", "build"], {
+        cwd: process.cwd(),
+        encoding: "utf8",
+        env: { ...process.env, NODE_ENV: "production" },
+        timeout: 120_000,
+      });
+      const output = `${result.stdout || ""}\n${result.stderr || ""}`;
+
+      expect(result.status).not.toBe(0);
+      expect(output).toContain(
+        "Static ad pages must register campaign tracking requirements",
+      );
+      expect(output).toContain(unregisteredFile);
+      expect(output).not.toContain("building client...");
+    } finally {
+      rmSync(unregisteredFile, { force: true });
+    }
+  }, 130_000);
+
+  it("allows the production build to proceed with all campaign pages registered", () => {
+    const result = spawnSync("npm", ["run", "build"], {
+      cwd: process.cwd(),
+      encoding: "utf8",
+      env: { ...process.env, NODE_ENV: "production" },
+      timeout: 120_000,
+    });
+    const output = `${result.stdout || ""}\n${result.stderr || ""}`;
+
+    expect(output).toContain("static ad tracking check passed.");
+    expect(output).toContain("building client...");
+    expect(output).not.toContain(
+      "Static ad pages must register campaign tracking requirements",
+    );
+  }, 130_000);
 
   it("rejects requirements for a static ad page that no longer exists", () => {
     expect(() =>
