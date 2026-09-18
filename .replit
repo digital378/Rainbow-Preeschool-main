@@ -116,4 +116,4 @@ SKIP_PERF_GUARD = "1"
 
 [postMerge]
 path = "scripts/post-merge.sh"
-timeoutMs = 20000
+timeoutMs = 180000
