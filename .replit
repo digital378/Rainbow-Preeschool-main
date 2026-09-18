@@ -8,7 +8,7 @@ packages = ["imagemagick", "libwebp"]
 
 [deployment]
 deploymentTarget = "autoscale"
-build = ["bash", "scripts/predeploy.sh"]
+build = ["bash", "scripts/deploy-build.sh"]
 run = ["npm", "run", "start"]
 
 [[ports]]
