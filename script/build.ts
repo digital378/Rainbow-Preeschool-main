@@ -3,6 +3,33 @@ import { build as viteBuild } from "vite";
 import { rm, readFile, cp, readdir, mkdir } from "fs/promises";
 import { existsSync } from "fs";
 import { resolve } from "path";
+import {
+  validateStaticAdTracking,
+  type StaticAdTrackingRequirements,
+} from "../scripts/static-ad-tracking";
+
+const staticAdPages: StaticAdTrackingRequirements[] = [
+  {
+    file: "public/ad-mtpg.html",
+    pagePath: "/ad-mtpg",
+    measurementId: "G-G1MX1N0M05",
+    pageViewConfigIds: ["G-G1MX1N0M05"],
+  },
+  {
+    file: "public/ad-google.html",
+    pagePath: "/ad-google",
+    measurementId: "G-G1MX1N0M05",
+    pageViewConfigIds: ["GT-55BFZCQT", "G-G1MX1N0M05"],
+  },
+];
+
+async function checkStaticAdTracking() {
+  for (const page of staticAdPages) {
+    const html = await readFile(page.file, "utf-8");
+    validateStaticAdTracking(html, page);
+  }
+  console.log("static ad tracking check passed.");
+}
 
 // server deps to bundle to reduce openat(2) syscalls
 // which helps cold start times
@@ -37,6 +64,7 @@ const allowlist = [
 ];
 
 async function buildAll() {
+  await checkStaticAdTracking();
   await rm("dist", { recursive: true, force: true });
 
   console.log("building client...");

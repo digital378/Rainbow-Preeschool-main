@@ -13,10 +13,16 @@
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config', 'GT-55BFZCQT');
-    gtag('config', 'G-G1MX1N0M05');
+    gtag('config', 'GT-55BFZCQT', { 'send_page_view': false });
+    gtag('config', 'G-G1MX1N0M05', { 'send_page_view': false });
     gtag('config', 'AW-1747212533/a68zCIykmPsbEJnzrYtB', {
       'phone_conversion_number': '82915 68972'
+    });
+    gtag('event', 'page_view', {
+      send_to: 'G-G1MX1N0M05',
+      page_path: '/ad-google',
+      page_title: 'Google Ads Landing Page',
+      page_location: window.location.href
     });
   </script>
   
@@ -27,18 +33,6 @@
         t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
         y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
     })(window, document, "clarity", "script", "m20xf4ffec");
-  </script>
-  
-  <!-- GA4 Direct Tracking -->
-  <script>
-    // Send page_view directly to GA4 via sendBeacon
-    (function(){
-      var cid = localStorage.getItem('ga_cid') || (Math.random().toString(36).substr(2, 9) + '.' + Date.now());
-      localStorage.setItem('ga_cid', cid);
-      var url = 'https://www.google-analytics.com/g/collect?v=2&tid=G-G1MX1N0M05&cid=' + cid + '&en=page_view&ep.page_path=/ad-google&ep.page_title=Google%20Ads%20Landing%20Page&dl=' + encodeURIComponent(window.location.href) + '&dt=Google%20Ads%20Landing%20Page';
-      navigator.sendBeacon(url);
-      console.log('[GA4] page_view sent for /ad-google');
-    })();
   </script>
   
   <style>
@@ -345,32 +339,10 @@
       return{leadSource:src,leadMedium:med};
     }
     var utm=getUtmParams();
-    // Fire page_view on load for GA4 tracking
-    (function(){
-      window.dataLayer = window.dataLayer || [];
-      dataLayer.push({
-        'event': 'page_view',
-        'page_title': 'Google Ads Landing Page',
-        'page_location': window.location.href,
-        'page_path': '/ad-google'
-      });
-      // Send directly to GA4 via Measurement Protocol
-      try {
-        var cid = localStorage.getItem('ga_cid') || (Math.random().toString(36).substr(2, 9) + '.' + Date.now());
-        localStorage.setItem('ga_cid', cid);
-        var url = 'https://www.google-analytics.com/g/collect?v=2&tid=G-G1MX1N0M05&cid=' + cid + '&en=page_view&ep.page_path=/ad-google&ep.page_title=Google%20Ads%20Landing%20Page&dl=' + encodeURIComponent(window.location.href) + '&dt=Google%20Ads%20Landing%20Page';
-        navigator.sendBeacon(url);
-        console.log('[GA4] page_view sent for /ad-google');
-      } catch(err) { console.log('Page view beacon error:', err); }
-    })();
     function sendGA4Event(eventName, params) {
       try {
-        var cid = localStorage.getItem('ga_cid') || (Math.random().toString(36).substr(2, 9) + '.' + Date.now());
-        localStorage.setItem('ga_cid', cid);
-        var url = 'https://www.google-analytics.com/g/collect?v=2&tid=G-G1MX1N0M05&cid=' + cid + '&en=' + eventName + '&ep.page_path=' + encodeURIComponent(params.page_path || '/ad-google') + '&dl=' + encodeURIComponent(window.location.href);
-        navigator.sendBeacon(url);
-        console.log('[GA4] ' + eventName + ' event sent');
-      } catch(err) { console.log('Beacon error:', err); }
+        gtag('event', eventName, Object.assign({ send_to: 'G-G1MX1N0M05' }, params || {}));
+      } catch(err) { console.log('GA4 event error:', err); }
     }
     function trackCall(e){
       sendGA4Event('google_ads_call', {'page_path': '/ad-google', 'page_title': 'Google Ads Landing Page'});
@@ -392,6 +364,12 @@
       sendGA4Event('google_ads_whatsapp', {'page_path': '/ad-google', 'page_title': 'Google Ads Landing Page'});
       return true;
     }
+    document.querySelectorAll('a[href^="tel:"]:not([onclick])').forEach(function(link){
+      link.addEventListener('click', trackCall);
+    });
+    document.querySelectorAll('a[href^="https://wa.me/"]:not([onclick])').forEach(function(link){
+      link.addEventListener('click', trackWhatsApp);
+    });
     function toggleProg(el){el.parentElement.classList.toggle('open');}
     var leadSubmitted=false, leadSubmissionId=null, sendInFlight=false;
     function handleSubmit(e){

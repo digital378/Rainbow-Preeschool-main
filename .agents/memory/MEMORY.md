@@ -18,3 +18,4 @@
 - [SEO audit tool false positives](seo-audit-tool-false-positives.md) — browser-UA crawlers that don't wait for hydration see the empty SPA shell and falsely report missing H1/orphan pages/missing schema; verify via curl before trusting the report.
 - [Cloudflare HSTS vs app-level header](cloudflare-hsts-vs-app-header.md) — apex-domain redirect is issued by Cloudflare before reaching Express, so an app-level HSTS header doesn't cover it; needs the zone's `security_header` setting enabled separately.
 - [Two public directories](two-public-directories.md) — top-level `public/` is served unconditionally (dev AND prod) via its own express.static call; works fine in production despite not going through the Vite build.
+- [Analytics guard strength](analytics-guard-strength.md) — tracking guards must verify dispatch and interaction wiring, explicit destinations, and disabled automatic page views—not event-name strings.
