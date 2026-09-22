@@ -226,7 +226,7 @@
   .band .chapter-intro{ color:rgba(255,255,255,.88); }
   .band .block-title{ color:#fff; }
   .band .block-title .lucide{ background:rgba(0,0,0,.22); color:#fff; }
-  .band .lead-note{ color:rgba(255,255,255,.82); }
+  .band .lead-note{ color:#fff; }
 
   /* ---------- step trail (mini how-to) ---------- */
   .step-trail{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:20px; position:relative; }
@@ -258,15 +258,23 @@
   .story-more .lucide{ width:16px; height:16px; transition:transform .3s; }
   .story-more.open .lucide{ transform:rotate(180deg); }
 
-  /* ---------- checklist ---------- */
-  .checklist{ display:grid; gap:10px; }
-  .check-item{ display:flex; align-items:flex-start; gap:12px; background:var(--paper); border:1px solid var(--line); border-radius:var(--radius-sm); padding:15px 16px; box-shadow:var(--shadow-sm); text-align:left; width:100%; transition:box-shadow .2s ease; }
-  .check-box{ flex:none; width:25px; height:25px; border-radius:8px; border:2px solid var(--line); margin-top:1px; display:flex; align-items:center; justify-content:center; transition:.2s; color:#fff; }
-  .check-box .lucide{ width:15px; height:15px; opacity:0; transform:scale(.5); transition:.2s; }
-  .check-item.done .check-box{ background:var(--gold-deep); border-color:var(--gold-deep); }
-  .check-item.done .check-box .lucide{ opacity:1; transform:scale(1); }
-  .check-item.done p{ color:var(--ink-soft); }
+  /* ---------- parent guide points ---------- */
+  .checklist{ display:grid; gap:10px; list-style:none; margin:0; padding:0; }
+  .check-item{ display:flex; align-items:flex-start; gap:13px; background:var(--paper); border:1px solid var(--line); border-radius:var(--radius-sm); padding:15px 16px; box-shadow:var(--shadow-sm); width:100%; }
+  .check-item::before{ content:''; flex:none; width:8px; height:8px; margin-top:.52em; border-radius:50%; background:var(--gold-deep); box-shadow:0 0 0 4px var(--gold-soft); }
   .check-item p{ font-size:.94rem; color:#3C3125; font-weight:600; }
+
+  /* ---------- explore more ---------- */
+  .explore-grid{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; margin-top:28px; text-align:left; }
+  .explore-card{ border-radius:var(--radius); padding:28px; color:#fff; box-shadow:var(--shadow); }
+  .explore-card.rps{ background:linear-gradient(150deg,var(--red),var(--red-deep)); }
+  .explore-card.ris{ background:linear-gradient(150deg,#1B2A6B,#0E1740); }
+  .explore-card h3{ color:#fff; font-size:1.28rem; }
+  .explore-card p{ margin-top:8px; color:rgba(255,255,255,.85); font-size:.91rem; line-height:1.55; }
+  .link-pills{ display:flex; flex-wrap:wrap; gap:9px; margin-top:16px; }
+  .link-pill{ background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.3); padding:8px 14px; border-radius:999px; font-family:var(--ui-font); font-size:.8rem; font-weight:700; text-decoration:none; color:#fff; transition:background .2s ease, transform .2s ease; }
+  .link-pill:hover{ background:rgba(255,255,255,.24); transform:translateY(-1px); }
+  @media (max-width:720px){ .explore-grid{ grid-template-columns:1fr; } }
 
   /* ---------- quiz ---------- */
   .quiz-card{ background:var(--paper); border:1px solid var(--line); border-radius:var(--radius); padding:24px; box-shadow:var(--shadow-lg); }
@@ -456,7 +464,7 @@
 
   <div class="block" data-reveal>
     <h3 class="block-title"><i data-lucide="flower-2"></i>Meet the Nine Goddesses</h3>
-    <p class="lead-note" style="color:#5b4c3f;margin-bottom:14px;">Swipe through all nine &mdash; a different gentle form of the Goddess for every night.</p>
+    <p class="lead-note" style="margin-bottom:14px;">Swipe through all nine &mdash; a different gentle form of the Goddess for every night.</p>
     <div class="carousel" id="goddessRow">
       <div class="g-card" style="background:#DD6E28"><span class="day">Day 1 &middot; 11 Oct</span><h4>Shailputri</h4><p>A strong, gentle goddess of the mountains, who teaches us to stand tall like a hill.</p></div>
       <div class="g-card" style="background:#8D97A3"><span class="day">Day 2 &middot; 12 Oct</span><h4>Brahmacharini</h4><p>A peaceful goddess who loves learning and teaches us to be patient.</p></div>
@@ -533,13 +541,13 @@
 
   <div class="block" data-reveal>
     <h3 class="block-title"><i data-lucide="home"></i>Parent&rsquo;s Guide to Celebrating at Home</h3>
-    <div class="checklist" id="checklist">
-      <button class="check-item"><span class="check-box"><i data-lucide="check"></i></span><p>Each morning, let your little one pick that day&rsquo;s special colour to wear &mdash; a small ritual they&rsquo;ll look forward to daily.</p></button>
-      <button class="check-item"><span class="check-box"><i data-lucide="check"></i></span><p>In the evening, gather for a gentle diya-lighting moment together &mdash; even watching the flame flicker feels calm and special.</p></button>
-      <button class="check-item"><span class="check-box"><i data-lucide="check"></i></span><p>Try a mini Garba session &mdash; cheerful music, a spoon or small stick to tap along, and a few giggly twirls together.</p></button>
-      <button class="check-item"><span class="check-box"><i data-lucide="check"></i></span><p>On Dussehra evening, keep little ones at a safe, comfortable distance from fireworks, hold them close, and enjoy the lights together.</p></button>
-      <button class="check-item"><span class="check-box"><i data-lucide="check"></i></span><p>End the day with a short, gentle bedtime story &mdash; a simple version of Durga Maa&rsquo;s or Ram&rsquo;s story is a lovely way to close a festive day.</p></button>
-    </div>
+    <ul class="checklist">
+      <li class="check-item"><p>Each morning, let your little one pick that day&rsquo;s special colour to wear &mdash; a small ritual they&rsquo;ll look forward to daily.</p></li>
+      <li class="check-item"><p>In the evening, gather for a gentle diya-lighting moment together &mdash; even watching the flame flicker feels calm and special.</p></li>
+      <li class="check-item"><p>Try a mini Garba session &mdash; cheerful music, a spoon or small stick to tap along, and a few giggly twirls together.</p></li>
+      <li class="check-item"><p>On Dussehra evening, keep little ones at a safe, comfortable distance from fireworks, hold them close, and enjoy the lights together.</p></li>
+      <li class="check-item"><p>End the day with a short, gentle bedtime story &mdash; a simple version of Durga Maa&rsquo;s or Ram&rsquo;s story is a lovely way to close a festive day.</p></li>
+    </ul>
   </div>
 
   <div class="block" data-reveal>
@@ -756,6 +764,46 @@
   </div>
 </section>
 
+<section class="chapter" id="explore">
+  <div class="chapter-head" data-reveal style="text-align:center;">
+    <span class="chapter-kicker" style="justify-content:center;"><span class="kicker-num"><i data-lucide="rainbow"></i></span><span class="kicker-label">Explore More at Rainbow Schools</span></span>
+    <h2 class="chapter-title">Continue the Journey</h2>
+    <p class="chapter-intro" style="margin-left:auto;margin-right:auto;">Discover joyful early learning at Rainbow Preschool International and continue through the school years at Rainbow International School.</p>
+  </div>
+  <div class="explore-grid" data-reveal>
+    <div class="explore-card rps">
+      <h3>Rainbow Preschool International</h3>
+      <p>Ages 1.5&ndash;5.5 years &middot; Thane &middot; Give your little one a joyful start to their learning journey.</p>
+      <div class="link-pills">
+        <a class="link-pill" href="/">Home</a>
+        <a class="link-pill" href="/about">About Us</a>
+        <a class="link-pill" href="/programmes">Programmes</a>
+        <a class="link-pill" href="/playgroup">Playgroup</a>
+        <a class="link-pill" href="/nursery">Nursery</a>
+        <a class="link-pill" href="/kindergarten">Kindergarten</a>
+        <a class="link-pill" href="/preschool-admissions">Admissions</a>
+        <a class="link-pill" href="/gallery">Gallery</a>
+        <a class="link-pill" href="/contact">Contact</a>
+        <a class="link-pill" href="/blog">RPS Blog</a>
+      </div>
+    </div>
+    <div class="explore-card ris">
+      <h3>Rainbow International School</h3>
+      <p>Nursery to Grade 12 &middot; CBSE &middot; Passion for Excellence in every classroom.</p>
+      <div class="link-pills">
+        <a class="link-pill" href="https://rainbowinternationalschool.in/">Home</a>
+        <a class="link-pill" href="https://rainbowinternationalschool.in/about-rainbow-international-school">About RIS</a>
+        <a class="link-pill" href="https://rainbowinternationalschool.in/pre-primary-school-thane">Pre-Primary</a>
+        <a class="link-pill" href="https://rainbowinternationalschool.in/primary-section">Primary Section</a>
+        <a class="link-pill" href="https://rainbowinternationalschool.in/admissions">Admissions</a>
+        <a class="link-pill" href="https://rainbowinternationalschool.in/photo-gallery">Photo Gallery</a>
+        <a class="link-pill" href="https://rainbowinternationalschool.in/contact-us">Contact</a>
+        <a class="link-pill" href="https://rainbowinternationalschool.in/blogs">RIS Blogs</a>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="section-band">
 <div class="wrap footer" data-reveal style="padding-top:56px;">
   <img class="logo-full" src="/images/rps-logo.webp" alt="Rainbow Preschool International logo">
@@ -880,11 +928,6 @@
       sw.classList.add("active");
       swatchDetail.innerHTML = "<span class=\"swatch-detail-dot\" style=\"background:" + sw.style.background + "\"></span><b>" + sw.getAttribute("data-day") + " · " + sw.getAttribute("data-color") + "</b> — worn for " + sw.getAttribute("data-goddess") + ".";
     });
-  });
-
-  /* ---------- checklist ---------- */
-  document.querySelectorAll(".check-item").forEach(function(item){
-    item.addEventListener("click", function(){ item.classList.toggle("done"); });
   });
 
   /* ---------- copy-to-clipboard captions ---------- */
