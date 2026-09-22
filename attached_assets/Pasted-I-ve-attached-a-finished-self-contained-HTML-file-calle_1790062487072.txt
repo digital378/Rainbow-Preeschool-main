@@ -1,0 +1,54 @@
+I've attached a finished, self-contained HTML file called
+rps-navratri-dussehra-2026-for-kids.html — it's the complete design (markup, CSS
+and JS all in one file) for a new blog post celebrating Navratri & Dussehra for
+our preschoolers.
+
+Goal: publish this as a new page on our site at the URL:
+  /blog/navratri-dussehra-2026-for-kids
+
+Before writing any code, inspect how our existing blog posts are implemented —
+look at how /blog/independence-day-for-kids, /blog/ganesh-chaturthi-for-kids,
+/blog/raksha-bandhan-2026-for-kids and /blog/janmashtami-for-kids are routed,
+where their page files/components live, how each one registers its title,
+meta description, and OG/social preview tags, and how they get listed on the
+main /blog index page. Follow that same registration pattern for consistency
+(routing, sitemap.xml entry, blog index card, meta tags) — but do NOT reuse
+those pages' visual template. This new page has its own distinct visual design
+(a full-bleed dark red hero and colour-banded chapter sections) and should keep
+that design exactly as built in the attached file, not be reskinned to match
+the older posts.
+
+What to do with the attached file's content:
+1. Create the new page/route at /blog/navratri-dussehra-2026-for-kids and port
+   over the attached file's HTML structure, all of its <style> rules, and all
+   of its <script> behavior (accordion, tabs, the nine-goddess carousel,
+   colour swatches, quiz, checklist, copy-to-clipboard captions, scroll-reveal
+   animations, sticky chapter nav) so every interactive piece still works
+   exactly as in the attached file.
+2. The attached file embeds the Rainbow Preschool logo as a base64 data URI
+   and loads Google Fonts (Fraunces, Baloo 2, Nunito, Mukta) and the Lucide
+   icon script from a CDN. Replace the embedded base64 logo with a reference
+   to our actual logo asset already in this project (find and reuse the same
+   logo file path the other blog pages use) instead of keeping the inline
+   base64 — that alone will shrink the page weight a lot. Keep the Google
+   Fonts and Lucide CDN includes as they are unless we're already
+   self-hosting fonts elsewhere on the site, in which case follow that
+   existing pattern instead.
+3. Set the page <title> to "Navratri & Dussehra for Little Ones | Rainbow
+   Preschool International" and write a meta description and OG tags
+   consistent with how the other blog posts are tagged, using the hero
+   subtitle copy from the attached file as the basis for the description.
+4. Add this post as a new card/entry on the main /blog listing page, using
+   the same card component the other posts use, with a short excerpt drawn
+   from the hero subtitle.
+5. Add /blog/navratri-dussehra-2026-for-kids to sitemap.xml if we maintain
+   one.
+6. Test that the page renders correctly and responsively on both desktop and
+   mobile widths, that there are no console errors, and that every
+   interactive element (accordion, tabs, carousel, quiz, swatches, copy
+   buttons) works after being ported into our page framework.
+
+Do not change or restyle any of our existing blog posts — this is additive
+only. Do not alter the RPS brand colours, logo, or copy in the attached file.
+When done, give me the live preview URL for /blog/navratri-dussehra-2026-for-kids
+so I can review it.
