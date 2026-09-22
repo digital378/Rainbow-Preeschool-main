@@ -2,6 +2,37 @@ import { type BlogPost } from "@shared/schema";
 import { randomUUID } from "crypto";
 
 export const seoRecoveryBlogPosts: BlogPost[] = [
+  // ─── Navratri & Dussehra 2026 — standalone interactive RPS guide ─────────
+  {
+    id: randomUUID(),
+    title: "Navratri & Dussehra for Little Ones | Rainbow Preschool International",
+    slug: "navratri-dussehra-2026-for-kids",
+    excerpt: "A gentle, giggly Navratri and Dussehra guide for Rainbow Preschool families, with stories, colours, crafts, rhymes and a quiz for little ones aged 1.5 to 5.5 years.",
+    content: `Celebrate Navratri and Dussehra with a warm, age-appropriate guide created for toddlers, preschoolers, and kindergarten children.
+
+## Navratri and Dussehra 2026
+
+Navratri runs from 11 to 19 October 2026, followed by Dussehra on 20 October 2026.
+
+## Stories, Colours, Dance, and Crafts
+
+Introduce little ones to the festivals through gentle stories, nine festive colours, simple Garba and Dandiya activities, crafts, rhymes, and family-friendly celebration ideas.
+
+## Speeches, Essays, Quiz, and Parent Guidance
+
+Find ready-to-use speeches and essays for young learners, a playful ten-question quiz, practical safety guidance, and clear answers to common parent questions.
+
+## Visit the Full Navratri and Dussehra Guide
+
+Visit the [full Navratri and Dussehra 2026 guide](/blog/navratri-dussehra-2026-for-kids) for the complete stories, activities, colour guide, crafts, rhymes, quiz, checklist, and parent FAQs.
+
+EXPLORE_MORE: [Explore Our Programmes](/programmes)|[Schedule a Campus Visit](/preschool-admissions)|[Read More on Our Blog](/blog)`,
+    imageUrl: "/images/rps-logo.webp",
+    category: "Festivals & Events",
+    publishedAt: new Date("2026-09-22"),
+    updatedAt: new Date("2026-09-22"),
+    isPublished: true,
+  },
   // ─── Ganesh Chaturthi 2026 — standalone interactive RPS guide ───────────
   {
     id: randomUUID(),
