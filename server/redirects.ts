@@ -681,6 +681,27 @@ export function setupRedirects(app: Express) {
     next();
   });
 
+  // Remove Replit session markers from public page URLs on the published host.
+  // Keep other query parameters intact; preview hosts and API requests may
+  // depend on their own query strings and must not be rewritten here.
+  app.use((req: Request, res: Response, next: NextFunction) => {
+    if (process.env.NODE_ENV !== "production" ||
+        !["GET", "HEAD"].includes(req.method) ||
+        (req.get("host") || "").toLowerCase() !== "www.rainbowpreschools.com" ||
+        (req.path === "/api" || req.path.startsWith("/api/"))) {
+      return next();
+    }
+
+    const queryStart = req.originalUrl.indexOf("?");
+    if (queryStart === -1) return next();
+    const params = new URLSearchParams(req.originalUrl.slice(queryStart + 1));
+    if (!params.has("replit_sid")) return next();
+
+    params.delete("replit_sid");
+    const query = params.toString();
+    return res.redirect(301, req.originalUrl.slice(0, queryStart) + (query ? `?${query}` : ""));
+  });
+
   // ── 1b. Legacy sitemap_index.xml → canonical sitemap ──────────────────────
   app.get(["/sitemap_index.xml", "/sitemap-index.xml"], (_req: Request, res: Response) => {
     res.redirect(301, "https://www.rainbowpreschools.com/sitemap.xml");
