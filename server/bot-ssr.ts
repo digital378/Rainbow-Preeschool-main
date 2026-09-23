@@ -147,6 +147,12 @@ function looksLikeRealBrowser(userAgent: string): boolean {
  * accurate metadata and correct 404s.
  */
 function shouldServeSSR(userAgent: string): boolean {
+  // Auditors that launch a real browser must measure the hydrated visitor
+  // page; their non-browser HTTP crawlers still receive full bot HTML. Do not
+  // apply this exception to Googlebot: its mobile UA also contains Chrome.
+  const ua = userAgent.toLowerCase();
+  if (["lighthouse", "screamingfrog", "sitebulb", "veritas"].some(tool => ua.includes(tool))
+      && looksLikeRealBrowser(userAgent) && !ua.includes("googlebot")) return false;
   if (isBot(userAgent)) return true;
   return !looksLikeRealBrowser(userAgent);
 }
@@ -307,6 +313,14 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
           html += `<li><a href="${escapeHtml(href)}">${escapeHtml(link.text)}</a></li>\n`;
         });
         html += "</ul>\n";
+      }
+      if (section.images && section.images.length > 0) {
+        for (const image of section.images) {
+          if (!image.src.startsWith("/images/gallery/")) continue;
+          html += `<figure><img src="${escapeHtml(image.src)}" alt="${escapeHtml(image.alt)}" loading="lazy" />`;
+          if (image.caption) html += `<figcaption>${escapeHtml(image.caption)}</figcaption>`;
+          html += "</figure>\n";
+        }
       }
       if (section.table) {
         html += "<table>\n<thead>\n<tr>";

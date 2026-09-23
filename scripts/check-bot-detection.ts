@@ -40,6 +40,10 @@ const TEST_PATH = "/about";
 // BOT_USER_AGENTS and real users are broken.
 const REAL_USER_UAS: { name: string; ua: string }[] = [
   {
+    name: "Lighthouse rendered inspection",
+    ua: "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36 Lighthouse",
+  },
+  {
     name: "WhatsApp iOS",
     ua: "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) WhatsApp/23.20.77 Mobile/15E148 Safari/604.1",
   },
@@ -61,6 +65,14 @@ const BOT_UAS: { name: string; ua: string }[] = [
   {
     name: "Googlebot",
     ua: "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+  },
+  {
+    name: "Googlebot smartphone with Chrome engine token",
+    ua: "Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+  },
+  {
+    name: "Screaming Frog non-rendering crawler",
+    ua: "Screaming Frog SEO Spider/21.0",
   },
 ];
 

@@ -20,7 +20,10 @@ const BASE_URL = "https://www.rainbowpreschools.com";
  * Only the `structuredData` array and the `breadcrumbs` list are injected —
  * no page content — so the React app hydrates normally.
  */
-function injectPageSchemas(urlPath: string, html: string): string {
+export function injectPageSchemas(urlPath: string, html: string): string {
+  // Homepage has its own freshness injection; production does not run this
+  // helper for "/" either, so development must not add an extra schema.
+  if (urlPath === "/") return html;
   const seo = getPageSEO(urlPath);
   if (!seo) return html;
 

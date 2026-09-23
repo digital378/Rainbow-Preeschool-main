@@ -5,10 +5,8 @@
 // /sitemap.xml automatically — no edit to this file required when the team
 // publishes a new blog post.
 //
-// The runtime `<lastmod>` is sourced from `LAST_UPDATED_ISO` in
-// `shared/site-freshness.ts`, so bumping the monthly freshness constant also
-// refreshes every entry in the generated sitemap automatically — no separate
-// edit to a static .xml file is required.
+// Only include <lastmod> when a page has a verified content/metadata update.
+// The visible site-wide review date is not evidence that every URL changed.
 //
 // The dynamic route in `server/index.ts` calls `buildSitemapXml({ extraEntries })`
 // to render the XML on demand, passing in the live blog-post entries. The
@@ -16,7 +14,6 @@
 // historical "dump to disk" workflow stays in sync (note: that script does not
 // have DB access, so the dump only contains the curated non-blog URLs).
 
-import { LAST_UPDATED_ISO } from "./site-freshness";
 import { PREFERRED_DOMAIN } from "./seo-config";
 
 export type SitemapChangefreq =
@@ -33,10 +30,8 @@ export interface SitemapEntry {
   priority: number;
   changefreq: SitemapChangefreq;
   /**
-   * Optional per-entry `<lastmod>` (ISO-8601 `YYYY-MM-DD`). When set it
-   * overrides the global `lastmod` passed to `buildSitemapXml`. Used by the
-   * /sitemap.xml route to emit per-blog-post update dates while non-blog
-   * URLs continue to inherit the site-wide `LAST_UPDATED_ISO`.
+   * Verified page update date (ISO-8601 `YYYY-MM-DD`). Omit when unknown,
+   * rather than claiming a site-wide review date as a page modification.
    */
   lastmod?: string;
 }
@@ -49,24 +44,24 @@ export interface SitemapEntry {
 // in at request time from `storage.getBlogPosts()` by the route handler.
 export const SITEMAP_ENTRIES: SitemapEntry[] = [
   // ── CORE PAGES ──────────────────────────────────────────
-  { url: "/", priority: 1.0, changefreq: "weekly" },
+  { url: "/", priority: 1.0, changefreq: "weekly", lastmod: "2026-09-23" },
   { url: "/about", priority: 0.8, changefreq: "monthly" },
   { url: "/programmes", priority: 0.9, changefreq: "monthly" },
-  { url: "/gallery", priority: 0.8, changefreq: "monthly" },
-  { url: "/contact", priority: 0.9, changefreq: "monthly" },
-  { url: "/blog", priority: 0.7, changefreq: "weekly" },
-  { url: "/faqs", priority: 0.6, changefreq: "monthly" },
+  { url: "/gallery", priority: 0.8, changefreq: "monthly", lastmod: "2026-09-23" },
+  { url: "/contact", priority: 0.9, changefreq: "monthly", lastmod: "2026-09-23" },
+  { url: "/blog", priority: 0.7, changefreq: "weekly", lastmod: "2026-09-23" },
+  { url: "/faqs", priority: 0.6, changefreq: "monthly", lastmod: "2026-09-23" },
 
   // ── HIGH-INTENT LANDING PAGES ────────────────────────────
   { url: "/best-preschool-near-me-in-thane", priority: 1.0, changefreq: "weekly" },
-  { url: "/preschool-admissions", priority: 1.0, changefreq: "weekly" },
+  { url: "/preschool-admissions", priority: 1.0, changefreq: "weekly", lastmod: "2026-09-23" },
   { url: "/play-school-near-me", priority: 1.0, changefreq: "weekly" },
   { url: "/play-school-near-ghodbunder-road", priority: 0.85, changefreq: "monthly" },
   { url: "/play-school-near-majiwada", priority: 0.85, changefreq: "monthly" },
   { url: "/play-school-near-naupada", priority: 0.85, changefreq: "monthly" },
 
   // ── PROGRAMME PAGES ──────────────────────────────────────
-  { url: "/playgroup", priority: 0.9, changefreq: "monthly" },
+  { url: "/playgroup", priority: 0.9, changefreq: "monthly", lastmod: "2026-09-23" },
   { url: "/nursery", priority: 0.9, changefreq: "monthly" },
   { url: "/kindergarten", priority: 0.9, changefreq: "monthly" },
   { url: "/happy-times", priority: 0.7, changefreq: "monthly" },
@@ -172,7 +167,6 @@ export function blogPostSitemapEntry(
 
 export function buildSitemapXml(options: BuildSitemapOptions = {}): string {
   const domain = options.domain ?? PREFERRED_DOMAIN;
-  const lastmod = options.lastmod ?? LAST_UPDATED_ISO;
   const baseEntries = options.entries ?? SITEMAP_ENTRIES;
   const entries = options.extraEntries
     ? [...baseEntries, ...options.extraEntries]
@@ -192,7 +186,7 @@ export function buildSitemapXml(options: BuildSitemapOptions = {}): string {
     .map(
       (entry) => `  <url>
     <loc>${domain}${entry.url}</loc>
-    <lastmod>${entry.lastmod ?? lastmod}</lastmod>
+    ${entry.lastmod ?? options.lastmod ? `<lastmod>${entry.lastmod ?? options.lastmod}</lastmod>` : ""}
     <changefreq>${entry.changefreq}</changefreq>
     <priority>${entry.priority.toFixed(2)}</priority>
   </url>`,

@@ -47,10 +47,8 @@ app.use((req, res, next) => {
 });
 app.use("/api/gsc", requireGscAuth);
 
-// Serve sitemap.xml dynamically so every non-blog <lastmod> is sourced from
-// `LAST_UPDATED_ISO` in `shared/site-freshness.ts`. Bumping that one constant
-// during the monthly refresh updates the visible byline, the Article JSON-LD
-// dateModified AND the sitemap together — no static .xml edit required.
+// Serve sitemap.xml dynamically. A site-wide review date does not mean every
+// URL changed: non-blog entries include <lastmod> only when explicitly verified.
 //
 // Blog posts (/blog/:slug) are pulled live from `storage.getBlogPosts()` and
 // appended on top of the curated entries. Each blog row gets its own
@@ -72,8 +70,7 @@ app.get("/sitemap.xml", async (_req, res) => {
     // on every API write, so even non-curated posts edited through
     // `storage.createBlogPost` and any future update method emit a
     // freshness-accurate date), then `publishedAt` as the last resort. If
-    // none are available the entry inherits the site-wide
-    // `LAST_UPDATED_ISO` from `buildSitemapXml`'s default.
+    // none are available the entry omits <lastmod> rather than inventing one.
     const toIsoDate = (value: Date | null | undefined): string | undefined => {
       if (!value) return undefined;
       const parsed = new Date(value);

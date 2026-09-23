@@ -1,6 +1,6 @@
 ---
-name: Predeploy smoke-test suite
-description: How the predeploy.sh smoke-tests work, what each checks, and known gotchas when the homepage is SPA-served.
+name: Predeploy smoke-test pitfalls
+description: Homepage user-agent differences and truncated publishing logs.
 ---
 
 # Predeploy smoke-test suite
@@ -15,19 +15,13 @@ All four run against the PRODUCTION built server (`node dist/index.cjs`) on port
 | `check-sitemap-200.ts` | Every `<loc>` in /sitemap.xml returns 200 | 80/80 |
 | `check-bot-detection.ts` | `TEST_PATH` page: real-user UAs get `<div id="root">`; Googlebot gets JSON-LD | 4/4 |
 
-## Homepage SPA exception
+## Homepage rendering paths
 
-The homepage `/` is intentionally excluded from bot-ssr.ts. This affects two checks:
+The homepage receives bot SSR for Googlebot, while a browser's initial HTML gets the SPA shell with a separate freshness injection. Never infer bot-visible metadata, H1, or schemas from the browser shell alone.
 
-### check-freshness-signal
-`/` stays in `EVERGREEN_LANDER_URLS` because `server/homepage-freshness.ts` injects Article JSON-LD and the hidden byline `<div>` directly into the SPA shell HTML (before `</head>` and `</body>`) for both dev and production. The check still passes 29/29.
+**Why:** An earlier note incorrectly said the homepage bypassed bot SSR; that assumption hid a real homepage description/H1 mismatch.
 
-**Production path:** `server/static.ts` — `app.get("/")` registered BEFORE `express.static(distPath, { index: false })` so the explicit handler wins. Reads `dist/public/index.html`, calls `injectHomepageFreshness("/", html)`, sends result.
-
-**Dev path:** `server/vite.ts` — `injectHomepageFreshness(url, page)` called inside the Vite catch-all handler.
-
-### check-bot-detection
-`TEST_PATH = "/about"` (not `/`). The homepage is SPA-served so Googlebot gets `<div id="root">` there, not JSON-LD. `/about` is a stable Bot-SSR'd page that proves the middleware is alive.
+**How to apply:** Check initial browser HTML, Googlebot HTML, and hydrated visitor HTML separately before claiming homepage parity.
 
 ## API log truncation gotcha
 `getDeploymentBuild()` returns only ~75 lines of build logs. The Replit UI shows the full output. If a build is failing and the API logs look clean, there may be more failing steps after the truncation point. Check the Replit Publishing > Logs UI directly.

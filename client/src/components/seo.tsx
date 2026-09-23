@@ -111,7 +111,7 @@ export function SEO({
       const seoScripts = document.querySelectorAll('script[data-seo-schema="true"]');
       seoScripts.forEach((script) => script.remove());
     };
-  }, [title, description, keywords, canonical, ogType, ogImage, noIndex, structuredData]);
+  }, [title, description, keywords, canonical, ogType, ogImage, noIndex, robots, structuredData]);
 
   return null;
 }

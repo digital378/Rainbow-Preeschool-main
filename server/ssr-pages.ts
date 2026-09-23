@@ -25,7 +25,9 @@ import { legacyPagesData } from "@shared/legacy-pages-data";
 import { isNonSeoServerRoute } from "./non-seo-routes";
 import { shouldNoIndex, NOINDEX_SLUGS } from "@shared/seo-config";
 import { FAQ_SCHEMA_ITEMS } from "@shared/faq-data";
+import { FAQ_CATEGORIES } from "@shared/faq-data";
 import { ADMISSIONS_FAQ_SCHEMA_ITEMS } from "@shared/admissions-faq-data";
+import { PLAYGROUP_FAQS } from "@shared/playgroup-faq-data";
 import { BEST_PRESCHOOL_FAQ_SCHEMA_ITEMS } from "@shared/best-preschool-faq-data";
 import { NATIONAL_SYMBOLS_FAQ_SCHEMA_ITEMS } from "@shared/national-symbols-faq-data";
 import { NATIONAL_SYMBOLS_CRAFTS } from "@shared/national-symbols-craft-data";
@@ -34,6 +36,7 @@ import { admissionHowToSchema } from "@shared/admissions-howto-data";
 import { redirectMap } from "./redirects";
 import { SITEMAP_ENTRIES } from "@shared/sitemap-entries";
 import { getLiveLegacySitemapEntries } from "./legacy-sitemap";
+import { GALLERY_IMAGES } from "../client/src/lib/gallery-config";
 
 const knownIndexableBodyTargets = new Set([
   ...SITEMAP_ENTRIES.map(entry => entry.url),
@@ -309,6 +312,7 @@ export interface PageSEOData {
      * benefits from machine-readable tabular markup for search engines.
      */
     table?: { headers: string[]; rows: string[][] };
+    images?: { src: string; alt: string; caption?: string }[];
   }[];
   internalLinks?: { text: string; url: string }[];
   /** ISO-8601 date string. When set, bot SSR emits a visible "Last Updated" line and an Article schema with dateModified for E-E-A-T freshness. */
@@ -546,9 +550,9 @@ function localBusinessSchema(locality: string, address: string, phone: string, u
 const staticPages: Record<string, PageSEOData> = {
   "/": {
     title: "Preschool in Thane | Rainbow Preschool International",
-    description: "Trusted preschool chain in Thane since 2007 — Playgroup, Nursery & Kindergarten across 6 centres. Play-based learning. Admissions open.",
+    description: "Preschool in Thane since 2007 — Rainbow Preschool International. 6 centres, Playgroup, Nursery & KG for ages 1.5–6 years. Admissions open for 2026–27.",
     canonical: "https://www.rainbowpreschools.com/",
-    h1: "Trusted Preschool in Thane Since 2007",
+    h1: "Rainbow Preschool Playschool · Nursery · Kindergarten",
     lastModified: LAST_UPDATED_ISO,
     lastModifiedDisplay: LAST_UPDATED_DISPLAY,
     structuredData: [organizationSchema, websiteSchema],
@@ -693,15 +697,11 @@ const staticPages: Record<string, PageSEOData> = {
     structuredData: [programmeOrgSchema, websiteSchema, ...branchLocalBusinessSchemas, {
       "@context": "https://schema.org",
       "@type": "FAQPage",
-      mainEntity: [
-        { "@type": "Question", name: "What is the right age for playgroup in Thane?", acceptedAnswer: { "@type": "Answer", text: "Rainbow Preschool's Playgroup programme is designed for toddlers aged 1.5 to 2.5 years. This is the optimal window for early socialisation, sensory learning, and gentle separation from parents — all the foundations that prepare a child for nursery and beyond." } },
-        { "@type": "Question", name: "Where can I find a good playgroup near me in Thane?", acceptedAnswer: { "@type": "Answer", text: "Rainbow Preschool International runs 6 playgroup centres across Thane West — Manpada, Kalwa, Anand Nagar, Dhokali, Kasarvadavali, and Hariniwas. Each centre follows the same play-based curriculum with trained ECE-qualified female teachers and CCTV-monitored classrooms. Call +91-8291568972 to find the nearest playgroup centre." } },
-        { "@type": "Question", name: "What activities are included in the playgroup programme?", acceptedAnswer: { "@type": "Answer", text: "A typical playgroup day at Rainbow includes welcome circle time, free play at activity stations, songs and rhymes, sensory activities, art and craft, outdoor play, snack time, story time and a goodbye circle. Every activity is age-appropriate and designed to build social, language, motor and cognitive skills through play." } },
-        { "@type": "Question", name: "How is playgroup different from nursery?", acceptedAnswer: { "@type": "Answer", text: "Playgroup (1.5–2.5 years) focuses on socialisation, sensory exploration and gentle introduction to a structured environment. Nursery (2.5–3.5 years) builds on that foundation with structured early literacy, numeracy and pre-writing readiness. Playgroup is purely play-based; nursery introduces age-appropriate academic concepts." } },
-        { "@type": "Question", name: "Are Rainbow's playgroup centres safe for toddlers?", acceptedAnswer: { "@type": "Answer", text: "All 6 Rainbow playgroup centres in Thane have CCTV-enabled classrooms, 100% trained female staff, child-proofed furniture, daily sanitisation, secure entry/exit and small batch sizes of 10–12 toddlers per group for individual attention." } },
-        { "@type": "Question", name: "What are the playgroup timings at Rainbow Preschool Thane?", acceptedAnswer: { "@type": "Answer", text: "We offer two playgroup batches: Morning (8:30 AM – 11:30 AM) and Afternoon (12:30 PM – 3:30 PM), Monday to Friday. Parents can choose the batch that suits their daily routine." } },
-        { "@type": "Question", name: "How do I enquire about playgroup admission?", acceptedAnswer: { "@type": "Answer", text: "Call +91-8291568972 or fill out the admission enquiry form on this page. Our admissions team will respond within 24 hours and arrange a free campus visit at any of our 6 Thane playgroup centres." } },
-      ],
+      mainEntity: PLAYGROUP_FAQS.map(faq => ({
+        "@type": "Question",
+        name: faq.question,
+        acceptedAnswer: { "@type": "Answer", text: faq.answer },
+      })),
     }],
     contentSections: [
       { heading: "For Parents Considering Playgroup", text: "These guides explain typical starting ages, what toddlers gain from play school, and how to prepare for the first day.", links: [
@@ -714,6 +714,7 @@ const staticPages: Record<string, PageSEOData> = {
       { heading: "A Typical Day in Playgroup", text: "Every Playgroup day at Rainbow Preschool follows a gentle, predictable rhythm that toddlers find deeply comforting. Predictability and routine are essential at this age — they help children feel safe and develop the internal organisation that underlies all learning. The day begins with a warm morning welcome circle — favourite songs, greetings, and simple weather talk to help children settle in happily. This is followed by free play at activity stations (art corner, sensory tray, block area, pretend play corner), where children choose their activities and develop independence. A short, focused group activity then brings the class together for a skill-building task. Outdoor play follows — fresh air, movement, and social play in our safe yard. A storytime session builds language and imagination. Snack time teaches self-help skills and social norms. The day closes with a cheerful goodbye circle of songs and affirmations. This complete, balanced structure ensures children thrive emotionally and developmentally every single day." },
       { heading: "Why Playgroup at Rainbow?", items: ["Experienced ECE-qualified and Montessori-trained female teachers, deeply skilled in toddler development and early childhood best practices", "Small classes — maximum 10–12 children per group, ensuring meaningful individual attention for every toddler every day", "CCTV-monitored, child-safe premises with secure entry and exit across all 6 Thane centres", "Activity-based curriculum developed by our Head of Curriculum, updated annually to align with NEP 2020 and global ECE best practices", "Regular parent communication — daily verbal feedback, monthly written progress updates, and open-door access to your child's teacher", "18+ years of trust — Rainbow Preschool has been educating Thane children since 2007, with over 1,00,000 alumni across 6 generations of families", "6 convenient locations across Thane West — Manpada, Hariniwas, Anand Nagar, Dhokali, Kalwa, and Kasarvadavali"] },
       { heading: "Admission & Timings", text: "Playgroup admissions at Rainbow Preschool International are open for children aged 1.5 to 2.5 years. Our Playgroup operates Monday through Friday with morning batches (8:30 AM to 11:30 AM) and afternoon batches (12:30 PM to 3:30 PM) available at select centres, giving working parents maximum flexibility. Admissions are accepted on a rolling basis throughout the year, subject to seat availability. We strongly encourage parents to schedule a free campus tour before enrolling — you can observe the classroom, meet your child's prospective teacher, and ask all the questions you have in a relaxed, no-pressure setting. To book a tour or request an admission form, call us at +91 82915 68972 or walk into any of our 6 Rainbow Preschool centres in Thane West, Monday to Saturday, 9 AM to 6 PM." },
+      { heading: "Frequently Asked Questions — Playgroup", items: PLAYGROUP_FAQS.map(faq => `${faq.question} — ${faq.answer}`) },
     ],
     internalLinks: [...commonInternalLinks, { text: "Best Preschool in Thane", url: "/best-preschool-near-me-in-thane" }, { text: "Nursery Programme", url: "/nursery" }],
     lastModified: LAST_UPDATED_ISO,
@@ -793,7 +794,7 @@ const staticPages: Record<string, PageSEOData> = {
   },
   "/gallery": {
     title: "Photo Gallery | Rainbow Preschool International Thane",
-    description: "Browse photos of our classrooms, activities, events, and centres. See the Rainbow Preschool experience through our gallery of real school moments.",
+    description: "Explore classrooms, activities, events, and facilities across Rainbow Preschool's 6 centres in Thane — 18+ years of joyful early childhood education.",
     canonical: `${BASE_URL}/gallery`,
     lastModified: LAST_UPDATED_ISO,
     lastModifiedDisplay: LAST_UPDATED_DISPLAY,
@@ -814,17 +815,20 @@ const staticPages: Record<string, PageSEOData> = {
     ],
     contentSections: [
       { heading: "Our Gallery Categories", items: ["Classrooms — Bright, child-friendly learning spaces", "Activities — Creative arts, music, and hands-on learning", "Events & Celebrations — Annual days, festivals, and special events", "Happy Times — Joyful moments from school life", "Infrastructure — Modern facilities and safe premises", "Centres in Thane — Our 6 locations across Thane West"] },
+      { heading: "Photos from Our Centres", images: GALLERY_IMAGES.map(image => ({
+        src: image.src, alt: image.alt, caption: image.caption,
+      })) },
     ],
     internalLinks: commonInternalLinks,
   },
   "/contact": {
     title: "Contact Rainbow Preschool Thane | Admissions Enquiry",
-    description: "Contact Rainbow Preschool International for admissions enquiries. Call 82915 68972 or visit any of our 6 centres across Thane West.",
+    description: "Contact Rainbow Preschool International for admissions, school tours & enquiries. 6 centres in Thane West — call 82915 68972 or visit today.",
     keywords: "contact rainbow preschool, preschool admission enquiry thane, preschool phone number thane",
     canonical: `${BASE_URL}/contact`,
     lastModified: LAST_UPDATED_ISO,
     lastModifiedDisplay: LAST_UPDATED_DISPLAY,
-    h1: "Contact Us — Rainbow Preschool International",
+    h1: "Contact Us",
     breadcrumbs: [{ name: "Home", url: "/" }, { name: "Contact", url: "/contact" }],
     structuredData: [
       organizationSchema,
@@ -841,7 +845,7 @@ const staticPages: Record<string, PageSEOData> = {
     ],
     contentSections: [
       { heading: "Get in Touch", text: "We'd love to hear from you! Contact us for admissions enquiries, to schedule a visit, or for any questions about our programmes." },
-      { heading: "Contact Details", items: ["Phone: 82915 68972", "Landline: 022 6114 7114", "Email: admin@rainbowpreschools.com", "Office Hours: Mon - Sat, 9 AM - 6 PM", "Head Office: 2nd Floor, Chestnut Plaza, Opp. Edenwoods, Manpada, Thane (W), 400610"] },
+      { heading: "Contact Details", items: ["Phone: 82915 68972", "Email: admin@rainbowpreschools.com", "Office Hours: Mon - Sat, 9 AM - 6 PM", "Locations: 6 centres across Thane West — find your nearest centre below"] },
     ],
     internalLinks: commonInternalLinks,
   },
@@ -953,12 +957,12 @@ const staticPages: Record<string, PageSEOData> = {
         ]
       },
       {
-        heading: "Key Admission Dates for 2027–28 Academic Year",
+        heading: "Admission Timeline",
         items: [
-          "October to November 2026 — Early Admission Window: Applications open for 2027–28. Families who apply early secure their preferred centre and batch timing. Seats at popular centres fill during this window.",
-          "December 2026 to February 2027 — Main Admission Period: Peak window with maximum seat availability across all 6 Rainbow Preschool centres in Thane. Ideal time to confirm admission before competition increases.",
-          "March to May 2027 — Final Admission Round: Remaining seats are filled; availability is limited especially at Manpada and Hariniwas. Early enquiry during this period is strongly recommended.",
-          "June 2027 Onwards — Academic Year Begins: Mid-term admissions are accepted throughout the year subject to seat availability — well suited for families relocating to Thane or switching from another preschool."
+          "October – November — Early Admissions: Applications open for the next academic year. Early applicants often secure their preferred centre and batch timing.",
+          "December – February — Main Admission Window: Peak admission period with maximum seat availability across all 6 Rainbow centres in Thane.",
+          "March – May — Final Round: Seats fill up quickly, especially at popular centres. Early enquiry during this period is strongly recommended.",
+          "June Onwards — Academic Year Begins: Mid-term admissions are accepted subject to seat availability — ideal for families relocating to Thane."
         ]
       },
       {
@@ -977,6 +981,10 @@ const staticPages: Record<string, PageSEOData> = {
       {
         heading: "Frequently Asked Questions — Preschool Admissions in Thane",
         text: "Parents often have many questions before enrolling their child in preschool for the first time. Here are answers to the most common queries our admissions team receives about the preschool admission process, age eligibility, documents, and fees at Rainbow Preschool International."
+      },
+      {
+        heading: "Admission FAQ Answers",
+        items: ADMISSIONS_FAQ_SCHEMA_ITEMS.map(faq => `${faq.question} — ${faq.answer}`)
       },
       {
         heading: "What is the admission process for playgroup in Thane?",
@@ -1676,6 +1684,10 @@ const staticPages: Record<string, PageSEOData> = {
     ],
     contentSections: [
       { heading: "FAQ Categories", items: ["Admissions & Registration — Process, documents, age groups, mid-year enrollment", "Fees & Payments — Fee structure, instalments, what's included", "Safety & Security — CCTV, pickup protocols, medical emergencies, staff verification", "Curriculum & Learning — Play-based approach, languages, assessments", "Daily Routine & Timings — School hours, typical day, what to bring", "Transport — Availability, safety features", "Settling In — Adjustment tips, separation anxiety, parent involvement", "Centres & Locations — 6 centres across Thane, visiting, quality consistency"] },
+      ...FAQ_CATEGORIES.map(category => ({
+        heading: category.title,
+        items: category.faqs.map(faq => `${faq.question} — ${faq.answer}`),
+      })),
       { heading: "Helpful Next Steps", text: "If you are deciding whether and when to enrol, explore these parent resources.", links: [
         { text: "Try the preschool readiness quiz", url: "/preschool-readiness-quiz" },
         { text: "Read about the admission process", url: "/preschool-admissions" },
@@ -1880,6 +1892,7 @@ staticPages["/ris-11th"] = ris11thLandingSEO;
  */
 interface BlogPostSEORecord {
   title: string;
+  h1?: string;
   description: string;
   keywords: string;
   datePublished: string;
@@ -1962,7 +1975,8 @@ const BLOG_POST_SEO_DATA: Record<string, BlogPostSEORecord> = {
   },
   "what-age-start-play-school": {
     title: "What Age to Start Play School in India | Expert Guide",
-    description: "When should a child start play school? Expert guide on ideal age, readiness signs, benefits of early vs late start, and tips for Indian parents.",
+    h1: "What Age Should a Child Start Play School? Expert Guide for Indian Parents",
+    description: "When should a child start play school? Expert guide on ideal age, readiness signs, benefits of early vs late start, and tips for Indian parents. Trusted advice.",
     keywords: "what age play school, when to start play school, play school age india, right age for playgroup, play school near me",
     datePublished: "2026-02-25",
     lastModified: "2026-04-02",
@@ -2454,7 +2468,7 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
       const schemas: object[] = [{
         "@context": "https://schema.org",
         "@type": ["BlogPosting", "Article"],
-        headline: post.title,
+         headline: post.h1 || post.title,
         description: post.description,
         url: `${BASE_URL}/blog/${slug}`,
         datePublished: post.datePublished,
@@ -2488,7 +2502,7 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
         keywords: post.keywords,
         canonical: `${BASE_URL}/blog/${slug}`,
         ogType: "article",
-        h1: post.title,
+         h1: post.h1 || post.title,
         introText: body?.introText,
         breadcrumbs: [{ name: "Home", url: "/" }, { name: "Blog", url: "/blog" }, { name: post.title.split("|")[0].trim(), url: `/blog/${slug}` }],
         structuredData: schemas,

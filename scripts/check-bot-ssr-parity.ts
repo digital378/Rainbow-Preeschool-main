@@ -23,16 +23,16 @@ const BOT_UA =
 const HUMAN_UA =
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36";
 
-// Title that the static SPA shell (client/index.html) carries.
-// BOT responses should NOT have this title — they should carry the
-// page-specific title from server/ssr-pages.ts.
-const SPA_SHELL_TITLE = "Rainbow Preschool | Playschool, Nursery & Kindergarten";
+const SPA_SHELL_TITLE = "Preschool in Thane | Rainbow Preschool International";
 
 // A string present in every bot-SSR response (from the renderSSRHtml footer
 // in server/bot-ssr.ts) but never in the React SPA shell.
 const BOT_SSR_MARKER = "Our Network:";
 
-const PATHS = ["/", "/playgroup", "/preschool-in-manpada-thane"] as const;
+const PATHS = [
+  "/", "/playgroup", "/contact", "/gallery", "/preschool-admissions",
+  "/faqs", "/blog/what-age-start-play-school", "/preschool-in-manpada-thane",
+] as const;
 
 // A path guaranteed to never be a real route (used to verify true 404s).
 const UNKNOWN_PATH = "/this-page-does-not-exist-regression-check";
@@ -74,6 +74,19 @@ function extractTitle(html: string): string {
     .replace(/&quot;/g, '"')
     .replace(/&#39;/g, "'")
     .trim();
+}
+
+function extractMeta(html: string, name: string): string {
+  return decodeEntities(html.match(new RegExp(`<meta name="${name}" content="([^"]*)"`, "i"))?.[1] ?? "");
+}
+
+function decodeEntities(value: string): string {
+  return value.replace(/&amp;/g, "&").replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&#39;/g, "'");
+}
+
+function extractCanonical(html: string): string {
+  return html.match(/<link rel="canonical" href="([^"]*)"/i)?.[1] ?? "";
 }
 
 function extractH1(html: string): string {
@@ -178,13 +191,22 @@ async function main(): Promise<void> {
         ? `h1: "${h1.slice(0, 60)}"`
         : `No <h1> in bot response for ${path} — ssr-pages.ts entry may be missing or bot-SSR is not activating`,
     });
+    if (path === "/") {
+      results.push({
+        path,
+        assertion: "Homepage bot H1 matches rendered hero",
+        pass: h1 === "Rainbow Preschool Playschool · Nursery · Kindergarten",
+        detail: `bot H1: ${JSON.stringify(h1)}`,
+      });
+    }
 
-    // 2. BOT <title> differs from the SPA shell title
+    // 2. Non-home BOT titles differ from the homepage shell title; homepage
+    // itself must retain exactly the same title across both response paths.
     const title = extractTitle(body);
-    const titleDiffers = title !== SPA_SHELL_TITLE && title.length > 0;
+    const titleDiffers = (path === "/" ? title === SPA_SHELL_TITLE : title !== SPA_SHELL_TITLE) && title.length > 0;
     results.push({
       path,
-      assertion: "BOT <title> differs from SPA shell title",
+      assertion: path === "/" ? "Homepage bot title matches homepage shell" : "BOT <title> differs from SPA shell title",
       pass: titleDiffers,
       detail: titleDiffers
         ? `"${title.slice(0, 70)}"`
@@ -235,6 +257,21 @@ async function main(): Promise<void> {
 
   for (const path of PATHS) {
     const { body, headers } = humanResponses[path];
+    const bot = botResponses[path].body;
+    for (const [field, value] of [
+      ["title", extractTitle],
+      ["description", (html: string) => extractMeta(html, "description")],
+      ["canonical", extractCanonical],
+      ["robots", (html: string) => extractMeta(html, "robots")],
+    ] as const) {
+      const humanValue = value(body);
+      const botValue = value(bot);
+      results.push({
+        path, assertion: `Initial shell ${field} matches bot`,
+        pass: !!humanValue && humanValue === botValue,
+        detail: `initial=${JSON.stringify(humanValue)} bot=${JSON.stringify(botValue)}`,
+      });
+    }
 
     // 5. HUMAN response contains <div id="root">
     const hasRoot = body.includes('<div id="root">');

@@ -1970,7 +1970,6 @@ export default function Home() {
       const entries: Array<{ id: string; json: string }> = [
         { id: 'organization-schema', json: _orgJson },
         { id: 'website-schema',      json: _webJson },
-        { id: 'faq-schema',          json: _faqJson },
         { id: 'video-schema',        json: _videoJson },
         { id: 'home-branches-schema',json: _branchJson },
         { id: 'breadcrumb-schema',   json: _breadcrumbJson },

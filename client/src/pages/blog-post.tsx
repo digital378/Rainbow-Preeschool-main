@@ -700,7 +700,7 @@ const blogPostsData: Record<string, BlogPostData> = {
       "## The Short Answer",
       "Most children are ready for a structured play school or playgroup programme between **1.5 to 2.5 years of age**. However, readiness varies from child to child — age is just one factor.",
       "Here's a general guideline used by leading early childhood educators in India:",
-      "- **Playgroup:** 1.5 to 2.5 years\n- **Nursery:** 2.5 to 4 years\n- **Kindergarten (Jr. KG / Sr. KG):** 4 to 6 years",
+      "- **Playgroup:** 1.5 to 2.5 years\n- **Nursery:** 2.5 to 3.5 years\n- **Kindergarten (Jr. KG / Sr. KG):** 3.5 to 5.5 years",
       "At Rainbow Preschool, our youngest learners join the [Playgroup programme](/playgroup) at 1.5 years, where the focus is on gentle socialisation, sensory exploration, and building comfort with a structured environment.",
       "## Readiness Signs: Is Your Child Ready?",
       "Age alone doesn't determine readiness. Look for these developmental signs:",
