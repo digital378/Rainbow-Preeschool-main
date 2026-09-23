@@ -6,16 +6,22 @@ is written for whoever builds the Indra Intelligence side of the integration.
 
 ## Authentication
 
-Every endpoint below requires the same secret used by the existing
-`/api/rps/export` endpoint (`ADMIN_TOKEN`, an environment secret already
-configured in this project). Send it as any one of:
+Every endpoint below accepts `INDRA_API_TOKEN` as its dedicated secret.
+During migration, `ADMIN_TOKEN` also works; it will be removed once Indra
+has switched. Send either token as:
 
 - Header: `x-api-key: <token>`
 - Header: `Authorization: Bearer <token>`
-- Query param: `?token=<token>`
 
-Missing/wrong token → `401 Unauthorized`. Token not configured server-side →
-`503 Service unavailable`.
+Existing callers using `?token=` with `ADMIN_TOKEN` remain supported temporarily
+so they do not break silently. Do not build new integrations using a URL token:
+URLs can be exposed in browser history, proxies and referrers. The new
+`INDRA_API_TOKEN` works **only in a header**, not in the URL. Ask the site
+administrator to remove legacy query-token support after all callers have
+migrated. The server logs only which credential location a request used
+(`header`, `query`, or `none`), never the token value.
+
+Missing/wrong token → `401 Unauthorized` with an empty response body.
 
 ## Pull endpoints (Indra calls these on demand)
 

@@ -8,35 +8,9 @@
 // data access" for Indra means business data — leads, content, SEO — never
 // authentication secrets.
 
-import type { Express, Request, Response, NextFunction } from "express";
+import type { Express } from "express";
 import { storage } from "./storage";
-
-function requireIndraAuth(req: Request, res: Response, next: NextFunction) {
-  res.setHeader("Cache-Control", "no-store, private, max-age=0");
-
-  const apiKey = process.env.ADMIN_TOKEN;
-  if (!apiKey) {
-    res.status(503).json({ error: "Indra API is not configured" });
-    return;
-  }
-
-  const headerToken = req.header("x-api-key");
-  const authHeader = req.header("authorization") || "";
-  const bearerToken = authHeader.toLowerCase().startsWith("bearer ")
-    ? authHeader.slice(7).trim()
-    : "";
-  const queryTokenRaw = req.query.token;
-  const queryToken = typeof queryTokenRaw === "string" ? queryTokenRaw : "";
-
-  const providedToken = headerToken || bearerToken || queryToken;
-
-  if (!providedToken || providedToken !== apiKey) {
-    res.status(401).json({ error: "Unauthorized" });
-    return;
-  }
-
-  next();
-}
+import { requireIndraAuth } from "./admin-auth";
 
 export function registerIndraApiRoutes(app: Express) {
   app.get("/api/indra/leads", requireIndraAuth, async (_req, res) => {

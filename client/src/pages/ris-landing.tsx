@@ -291,7 +291,7 @@ export default function RISLanding() {
       });
       const data = await res.json();
       if (data.success) {
-        gtag("event", "ris_leads", { parent_name: formData.parentName, phone: formData.phone, grade: formData.grade, seats_remaining: selectedSeat?.seats });
+        gtag("event", "ris_leads", { grade: formData.grade, seats_remaining: selectedSeat?.seats });
         gtag("event", "ris_form_submit", { grade: formData.grade });
         gtag("event", "hero_form_submit", { form: "ris_hero" });
         setIsSubmitted(true);

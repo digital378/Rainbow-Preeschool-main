@@ -9,6 +9,7 @@ import { syncGscData, isGscConfigured } from "./gsc-sync";
 import { appendEnquiryRow, appendJoinNowRow } from "./sheets-sync";
 import { registerIndraApiRoutes } from "./indra-api";
 import { pushIndraEvent } from "./indra-webhook";
+import { requireAdminHeader, requireRpsAuth } from "./admin-auth";
 import path from "path";
 import fs from "fs";
 
@@ -456,30 +457,7 @@ export async function registerRoutes(
 
   registerIndraApiRoutes(app);
 
-  app.get("/api/rps/export", (req, res) => {
-    res.setHeader("Cache-Control", "no-store, private, max-age=0");
-
-    const adminToken = process.env.ADMIN_TOKEN;
-    if (!adminToken) {
-      res.status(503).json({ message: "Service unavailable" });
-      return;
-    }
-
-    const headerToken = req.header("x-api-key");
-    const authHeader = req.header("authorization") || "";
-    const bearerToken = authHeader.toLowerCase().startsWith("bearer ")
-      ? authHeader.slice(7).trim()
-      : "";
-    const queryTokenRaw = req.query.token;
-    const queryToken = typeof queryTokenRaw === "string" ? queryTokenRaw : "";
-
-    const providedToken = headerToken || bearerToken || queryToken;
-
-    if (!providedToken || providedToken !== adminToken) {
-      res.status(401).json({ message: "Unauthorized" });
-      return;
-    }
-
+  app.get("/api/rps/export", requireRpsAuth, (req, res) => {
     res.status(200).json({
       generatedAt: new Date().toISOString(),
       school: "Rainbow Preschools (RPS)",
@@ -1006,7 +984,7 @@ export async function registerRoutes(
   });
 
   // Test MCB CRM integration endpoint
-  app.post("/api/test-mcb", async (req, res) => {
+  app.post("/api/test-mcb", requireAdminHeader, async (req, res) => {
     try {
       const { studentName, fatherName, fatherMobile, branch, utmSource, utmCampaign, utmMedium } = req.body;
       

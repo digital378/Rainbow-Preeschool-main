@@ -181,10 +181,7 @@ export const trackFormSubmit = (params: FormTrackingParams = {}) => {
     programme: params.programme || undefined,
     centre: params.centre || undefined,
     locality: params.locality || undefined,
-    // MCB-aligned parameters
-    parent_name: params.parentName || undefined,
-    student_name: params.studentName || undefined,
-    phone: params.phone || undefined,
+    // Lead details stay on the first-party /api/contact request only.
     child_age: params.childAge || undefined,
     lead_source: params.leadSource || undefined,
     lead_medium: params.leadMedium || undefined,
@@ -240,9 +237,6 @@ export const trackAdLead = (params: AdLeadParams = {}) => {
     page_path: window.location.pathname,
     page_title: document.title,
     page_category: 'ad_conversion',
-    // MCB-aligned parameters
-    parent_name: params.parentName || undefined,
-    phone: params.phone || undefined,
     child_age: params.childAge || undefined,
     branch: params.area || undefined,
     lead_source: params.leadSource || undefined,
@@ -362,9 +356,6 @@ export const trackGoogleAdsLead = (params: AdLeadParams = {}) => {
     page_path: window.location.pathname,
     page_title: document.title,
     page_category: 'google_ads_conversion',
-    // MCB-aligned parameters
-    parent_name: params.parentName || undefined,
-    phone: params.phone || undefined,
     child_age: params.childAge || undefined,
     branch: params.area || undefined,
     lead_source: params.leadSource || undefined,

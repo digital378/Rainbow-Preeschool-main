@@ -328,8 +328,6 @@ export default function RIS11thLanding() {
         // Campaign-specific events for RIS 11th
         gtag("event", "ris_11th_lead", {
           stream: formData.stream,
-          phone: formData.phone,
-          parent_name: formData.name,
         });
         gtag("event", "ris_11th_form_submit", { stream: formData.stream });
         // Also fire to RIS-specific GA4 property

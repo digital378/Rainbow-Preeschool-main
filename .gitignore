@@ -6,3 +6,4 @@ vite.config.ts.*
 *.tar.gz
 *.tsbuildinfo
 source.zip
+attached_assets/*.json

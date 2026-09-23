@@ -331,7 +331,7 @@ export default function AdLanding() {
       const data = await res.json();
       if (data.success) {
         if ((window as any).gtag) {
-          (window as any).gtag("event", "ad_leads", { parent_name: formData.parentName, phone: formData.phone, lead_source: utmData.leadSource });
+          (window as any).gtag("event", "ad_leads", { lead_source: utmData.leadSource });
           (window as any).gtag("event", "ad_form_submit", { form_location: "hero" });
         }
         setIsSubmitted(true);

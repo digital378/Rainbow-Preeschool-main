@@ -113,9 +113,6 @@ export default function FlyerLanding() {
         if (typeof window !== 'undefined' && (window as any).gtag) {
           console.log('[GA4] Firing flyer_leads event');
           (window as any).gtag('event', 'flyer_leads', {
-            parent_name: formData.parentName,
-            phone: formData.phone,
-            child_name: formData.childName,
             area: formData.area,
             lead_source: 'Flyer',
           });

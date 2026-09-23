@@ -229,7 +229,7 @@
           return;
         }
         leadSubmitted=true;
-        if(res.data.emailSent&&res.data.sheetAppended&&window.gtag)gtag('event','Kindergarten_Form_Submit',{parent_name:n,phone:ph,centre:ar});
+        if(res.data.emailSent&&res.data.sheetAppended&&window.gtag)gtag('event','Kindergarten_Form_Submit',{centre:ar});
         document.getElementById('form-view').classList.add('hidden');
         document.getElementById('success-view').classList.remove('hidden');
       }).catch(function(){sendInFlight=false;btn.disabled=false;btn.textContent='Book Free Visit Now';alert('Error submitting. Please try again.');});

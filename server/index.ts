@@ -11,6 +11,7 @@ import { buildSitemapXml, blogPostSitemapEntry } from "@shared/sitemap-entries";
 import { storage } from "./storage";
 import { getBlogPostLastModified } from "./ssr-pages";
 import { getLiveLegacySitemapEntries } from "./legacy-sitemap";
+import { requireDashboardPageAuth, requireGscAuth } from "./admin-auth";
 
 const app = express();
 
@@ -36,6 +37,15 @@ app.use(
 );
 
 app.use(express.urlencoded({ extended: false }));
+
+// Gate dashboard HTML before public static files, redirects, bot SSR or SPA fallbacks.
+app.use((req, res, next) => {
+  if (/^\/(?:gsc|dummy)(?:\/|$)/i.test(req.path)) {
+    return requireDashboardPageAuth(req, res, next);
+  }
+  next();
+});
+app.use("/api/gsc", requireGscAuth);
 
 // Serve sitemap.xml dynamically so every non-blog <lastmod> is sourced from
 // `LAST_UPDATED_ISO` in `shared/site-freshness.ts`. Bumping that one constant
@@ -249,23 +259,12 @@ export function log(message: string, source = "express") {
 app.use((req, res, next) => {
   const start = Date.now();
   const path = req.path;
-  let capturedJsonResponse: Record<string, any> | undefined = undefined;
-
-  const originalResJson = res.json;
-  res.json = function (bodyJson, ...args) {
-    capturedJsonResponse = bodyJson;
-    return originalResJson.apply(res, [bodyJson, ...args]);
-  };
 
   res.on("finish", () => {
     const duration = Date.now() - start;
     if (path.startsWith("/api")) {
-      let logLine = `${req.method} ${path} ${res.statusCode} in ${duration}ms`;
-      if (capturedJsonResponse) {
-        logLine += ` :: ${JSON.stringify(capturedJsonResponse)}`;
-      }
-
-      log(logLine);
+      // Never log response bodies: authenticated exports contain parent/child data.
+      log(`${req.method} ${path} ${res.statusCode} in ${duration}ms`);
     }
   });
 

@@ -198,8 +198,6 @@ export default function AdGoogleLanding() {
       if (data.success && typeof window !== 'undefined' && (window as any).gtag) {
         console.log('[GA4 Debug] Firing google_ads_leads event');
         (window as any).gtag('event', 'google_ads_leads', {
-          parent_name: formData.parentName,
-          phone: formData.phone,
           lead_source: utmData.leadSource,
         });
       }
