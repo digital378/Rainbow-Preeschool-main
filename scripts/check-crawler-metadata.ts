@@ -33,6 +33,10 @@
  *   5. The title is not the "Page Not Found" 404 SSR marker — this is the
  *      exact signature of a route missing its `server/ssr-pages.ts` entry.
  *
+ * Internal dashboard/design routes are not public SEO pages: they must
+ * return 401 to both crawlers and visitors without leaking HTML, and are
+ * checked separately rather than subjected to canonical/title assertions.
+ *
  * It also spot-checks a handful of routes with `Claude-User` and
  * `Perplexity-User` (answer-engine fetchers that hit production live when a
  * person asks ChatGPT/Perplexity about the school) to confirm the bot-SSR
@@ -68,14 +72,11 @@ const SPOT_CHECK_UAS: { name: string; ua: string }[] = [
 ];
 const SPOT_CHECK_ROUTES = ["/about", "/ris", "/play-school-near-me"];
 
-// Routes intentionally excluded from this check:
-//   /dummy — internal design-system reference page (see
-//            .agents/memory/design-system-v2.md). Never linked from the
-//            site, never in the sitemap, and not meant to be crawled at
-//            all — it 404s for bots today, which is the desired outcome,
-//            not a regression.
-//   /blog/:slug, /GSC, /gsc — see inline notes at their filter sites below.
-const EXCLUDED_ROUTES = new Set<string>(["/dummy"]);
+// Internal routes require authentication, not public SEO metadata.
+// /blog/:slug templates are excluded by parseClientRoutes; concrete blog
+// URLs from the live sitemap are still checked.
+const PROTECTED_ROUTES = new Set<string>(["/dummy", "/GSC", "/gsc"]);
+const VISITOR_UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/122.0 Safari/537.36";
 
 // ─── Helpers ──────────────────────────────────────────────────────────────
 
@@ -216,14 +217,25 @@ async function main(): Promise<void> {
     ...(await fetchLiveSitemapPaths()),
   ]);
 
-  // Normalize (strip trailing slash except root) and drop excluded routes.
+  // Normalize (strip trailing slash except root) and separate private routes.
   const routes = [...routeSet]
     .map((r) => (r.length > 1 ? r.replace(/\/$/, "") : r))
-    .filter((r) => !EXCLUDED_ROUTES.has(r))
+    .filter((r) => !PROTECTED_ROUTES.has(r))
     .sort();
 
   const failures: Failure[] = [];
   const notFoundTitleMarker = "Page Not Found | Rainbow Preschool International";
+
+  for (const route of PROTECTED_ROUTES) {
+    for (const [name, ua] of [["Googlebot", GOOGLEBOT_UA], ["visitor", VISITOR_UA]]) {
+      const result = await fetchWithUA(route, ua);
+      if ("error" in result) {
+        failures.push({ route, reason: `${name} request failed: ${result.error}` });
+      } else if (result.status !== 401 || /<html|<div\s+id=["']root/i.test(result.body)) {
+        failures.push({ route, reason: `${name} must receive 401 without page HTML (got HTTP ${result.status})` });
+      }
+    }
+  }
 
   for (const route of routes) {
     const result = await fetchWithUA(route, GOOGLEBOT_UA);
@@ -316,7 +328,7 @@ async function main(): Promise<void> {
 
   // ── Report ──────────────────────────────────────────────────────────────
   console.log(
-    `[check-crawler-metadata] checked ${routes.length} route(s) + ${SPOT_CHECK_ROUTES.length * SPOT_CHECK_UAS.length} answer-engine spot-check(s) against ${BASE_URL}`,
+    `[check-crawler-metadata] checked ${routes.length} public route(s), ${PROTECTED_ROUTES.size * 2} private-route responses and ${SPOT_CHECK_ROUTES.length * SPOT_CHECK_UAS.length} answer-engine spot-check(s) against ${BASE_URL}`,
   );
 
   if (failures.length > 0) {
