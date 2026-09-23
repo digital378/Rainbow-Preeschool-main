@@ -514,14 +514,14 @@ export async function registerRoutes(
         throw error;
       }
 
-      console.log(`[Join Now] Participant recorded: ${data.childName}, ${data.branch}`);
+      console.log("[Join Now] Participant recorded");
       res.status(201).json({ success: true });
     } catch (error) {
       if (error instanceof z.ZodError) {
         res.status(400).json({ error: "Invalid form data", details: error.errors });
         return;
       }
-      console.error("[Join Now] Sheets sync failed:", error);
+      console.error("[Join Now] Sheets sync failed:", error instanceof Error ? error.name : "unknown error");
       res.status(502).json({ error: "Unable to save your details. Please try again." });
     }
   });
@@ -584,7 +584,7 @@ export async function registerRoutes(
       const validatedData = insertContactSchema.parse(formData);
       const contact = await storage.createContact(validatedData);
       
-      console.log(`[Contact] New lead received: ${validatedData.parentName}, ${validatedData.phone}, ${validatedData.programme}`);
+      console.log(`[Contact] New lead received: id=${contact.id}`);
 
       // Notify Indra Intelligence of the new lead. Fire-and-forget: this
       // helper never throws (it logs and gives up after one retry), so it
@@ -606,7 +606,7 @@ export async function registerRoutes(
           leadSource: formData.leadSource || undefined,
           leadMedium: formData.leadMedium || undefined
         });
-        console.log(`[Contact] Email ${emailSent ? 'sent successfully' : 'FAILED'} for ${validatedData.parentName}`);
+        console.log(`[Contact] Email ${emailSent ? "sent successfully" : "FAILED"}: id=${contact.id}`);
         if (!emailSent) {
           try {
             await sendEmailFailureAlertEmail(
@@ -654,9 +654,9 @@ export async function registerRoutes(
           leadMedium: formData.leadMedium,
         });
         sheetAppended = true;
-        console.log(`[Contact] Sheets sync success for ${validatedData.parentName}`);
+        console.log(`[Contact] Sheets sync success: id=${contact.id}`);
       } catch (err) {
-        console.error("[Contact] Sheets sync FAILED — sending alert email:", err);
+        console.error("[Contact] Sheets sync FAILED — sending alert email:", err instanceof Error ? err.name : "unknown error");
         // Alert the team so the lead can be added manually
         try {
           await sendSheetsFailureAlertEmail(
@@ -669,7 +669,7 @@ export async function registerRoutes(
             err,
           );
         } catch (alertErr) {
-          console.error("[Contact] Sheets failure alert email also failed:", alertErr);
+          console.error("[Contact] Sheets failure alert email also failed:", alertErr instanceof Error ? alertErr.name : "unknown error");
         }
       }
 
@@ -692,9 +692,9 @@ export async function registerRoutes(
             utmMedium: formData.leadMedium || "",
             utmCampaign: formData.utmCampaign || "",
           });
-          console.log(`[Contact] MCB ${result.success ? 'success' : 'FAILED'} for ${validatedData.parentName}`);
+          console.log(`[Contact] MCB ${result.success ? "success" : "FAILED"}: id=${contact.id}`);
         } catch (err) {
-          console.error("[Contact] MCB error:", err);
+          console.error("[Contact] MCB error:", err instanceof Error ? err.name : "unknown error");
         }
       })();
 

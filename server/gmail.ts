@@ -105,7 +105,7 @@ Please check the Google Sheets integration and the Replit server logs.
     });
     console.log('[SheetsAlert] Failure alert email sent successfully');
   } catch (mailErr) {
-    console.error('[SheetsAlert] Could not send failure alert email:', mailErr);
+    console.error('[SheetsAlert] Could not send failure alert email:', mailErr instanceof Error ? mailErr.name : 'unknown error');
   }
 }
 
@@ -197,7 +197,7 @@ Please check the Gmail credentials/quota and the Replit server logs.
   } catch (alertErr) {
     // Last resort: this is the only remaining signal, so make sure it's loud
     // in the logs even though we can't email about it.
-    console.error('[EmailAlert] Could not send email-failure alert (both the original email and this alert failed):', alertErr);
+    console.error('[EmailAlert] Could not send email-failure alert (both the original email and this alert failed):', alertErr instanceof Error ? alertErr.name : 'unknown error');
   }
 }
 
@@ -282,7 +282,7 @@ Rainbow Preschools Website
     console.log('Lead notification email sent successfully');
     return true;
   } catch (error) {
-    console.error('Failed to send lead notification email:', error);
+    console.error('Failed to send lead notification email:', error instanceof Error ? error.name : 'unknown error');
     return false;
   }
 }
