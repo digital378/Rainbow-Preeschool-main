@@ -25,7 +25,9 @@ function legacyQueryToken(req: Request): string {
 
 function logAuthSource(req: Request) {
   // Temporary migration signal: path and credential *location* only, never URL or value.
-  const source = headerToken(req) ? "header" : legacyQueryToken(req) ? "query" : "none";
+  const hasHeader = Boolean(headerToken(req));
+  const hasQuery = Boolean(legacyQueryToken(req));
+  const source = hasHeader && hasQuery ? "both" : hasHeader ? "header" : hasQuery ? "query" : "none";
   console.info(`[auth-source] ${req.method} ${req.path} ${source}`);
 }
 
