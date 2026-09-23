@@ -737,17 +737,6 @@ export async function registerRoutes(
     }
   });
 
-  // Get all contacts (for admin)
-  app.get("/api/contacts", async (req, res) => {
-    try {
-      const contacts = await storage.getContacts();
-      res.json(contacts);
-    } catch (error) {
-      console.error("Get contacts error:", error);
-      res.status(500).json({ error: "Failed to fetch contacts" });
-    }
-  });
-
   // Get all blog posts
   app.get("/api/blog", async (req, res) => {
     try {
