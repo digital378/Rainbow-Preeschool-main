@@ -31,6 +31,18 @@ import { NATIONAL_SYMBOLS_FAQ_SCHEMA_ITEMS } from "@shared/national-symbols-faq-
 import { NATIONAL_SYMBOLS_CRAFTS } from "@shared/national-symbols-craft-data";
 import { PLAY_SCHOOL_FAQ_SCHEMA_ITEMS } from "@shared/play-school-faq-data";
 import { admissionHowToSchema } from "@shared/admissions-howto-data";
+import { redirectMap } from "./redirects";
+import { SITEMAP_ENTRIES } from "@shared/sitemap-entries";
+import { getLiveLegacySitemapEntries } from "./legacy-sitemap";
+
+const knownIndexableBodyTargets = new Set([
+  ...SITEMAP_ENTRIES.map(entry => entry.url),
+  ...getLiveLegacySitemapEntries().map(entry => entry.url),
+  ...seoRecoveryBlogPosts.map(post => `/blog/${post.slug}`),
+  ...legacyMigratedBlogPosts.map(post => `/blog/${post.slug}`),
+  ...ssrOnlyBlogPosts.map(post => `/blog/${post.slug}`),
+  ...legacyHardcodedBlogPosts.map(post => `/blog/${post.slug}`),
+]);
 
 // Pre-compute the per-branch LocalBusiness JSON-LD array once at module load
 // so commercial-page SSR can splat it into structuredData without per-request work.
@@ -62,7 +74,44 @@ function stripMarkdown(input: string): string {
 
 interface BlogBody {
   introText: string;
-  contentSections: { heading?: string; text?: string }[];
+  contentSections: { heading?: string; text?: string; links?: { text: string; url: string }[] }[];
+}
+
+function finalInternalTarget(raw: string): string | null {
+  if (!raw || !raw.startsWith("/") || raw.startsWith("//")) return null;
+  let target = raw.split("#")[0].split("?")[0] || "/";
+  const seen = new Set<string>();
+  while (redirectMap[target] && !seen.has(target)) {
+    seen.add(target);
+    target = redirectMap[target];
+  }
+  if (redirectMap[target]) return null;
+  // Don't turn arbitrary or unpublished article URLs into bot-visible links.
+  // DB posts with editorial bodies are seeded here; newly published posts
+  // are linked directly from the live /blog listing instead.
+  return knownIndexableBodyTargets.has(target) ? target : null;
+}
+
+function extractSafeBodyLinks(input: string): { text: string; url: string }[] {
+  const links: { text: string; url: string }[] = [];
+  const seen = new Set<string>();
+  const add = (text: string, rawUrl: string) => {
+    const url = finalInternalTarget(rawUrl.trim());
+    const cleanText = stripMarkdown(stripInlineHtml(text)).trim();
+    if (url && cleanText && !seen.has(url)) {
+      seen.add(url);
+      links.push({ text: cleanText, url });
+    }
+  };
+  input.replace(/\[([^\]]+)\]\(\s*([^)]+?)\s*\)/g, (_m, text, url) => {
+    add(text, url);
+    return _m;
+  });
+  input.replace(/<a\b[^>]*\bhref\s*=\s*["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi, (_m, url, text) => {
+    add(text, url);
+    return _m;
+  });
+  return links;
 }
 
 /**
@@ -88,18 +137,24 @@ function parseBlogBody(rawContent: string): BlogBody {
   const parts = cleaned.split(/\n\s*##\s+/);
   const introRaw = parts.shift() || "";
   const introText = stripMarkdown(introRaw).slice(0, 1500);
+  const introLinks = extractSafeBodyLinks(introRaw);
 
-  const contentSections: { heading?: string; text?: string }[] = [];
+  const contentSections: { heading?: string; text?: string; links?: { text: string; url: string }[] }[] = [];
   for (const chunk of parts) {
     const newlineIdx = chunk.indexOf("\n");
     const heading = (newlineIdx === -1 ? chunk : chunk.slice(0, newlineIdx)).trim();
     const bodyRaw = newlineIdx === -1 ? "" : chunk.slice(newlineIdx + 1);
     const text = stripMarkdown(bodyRaw);
+    const links = extractSafeBodyLinks(bodyRaw);
     if (!heading && !text) continue;
     contentSections.push({
       heading: heading || undefined,
       text: text || undefined,
+      links: links.length ? links : undefined,
     });
+  }
+  if (introLinks.length) {
+    contentSections.unshift({ heading: "Related Reading", links: introLinks });
   }
 
   return { introText, contentSections };
@@ -649,6 +704,11 @@ const staticPages: Record<string, PageSEOData> = {
       ],
     }],
     contentSections: [
+      { heading: "For Parents Considering Playgroup", text: "These guides explain typical starting ages, what toddlers gain from play school, and how to prepare for the first day.", links: [
+        { text: "What age should a child start play school?", url: "/blog/what-age-start-play-school" },
+        { text: "Benefits of play school for two-year-olds", url: "/blog/benefits-play-school-2-year-olds" },
+        { text: "Preparing your child for their first day", url: "/blog/preparing-your-child-for-first-day-preschool" },
+      ]},
       { heading: "About Our Playgroup Programme", text: "Rainbow Preschool International's Playgroup programme is thoughtfully designed for toddlers aged 1.5 to 2.5 years — the most formative and sensitive period of early brain development. During these early years, children's brains are forming neural connections at an extraordinary pace, and the quality of their environment and interactions directly shapes their cognitive, social, emotional, and physical development. Our Playgroup provides a warm, secure, and richly stimulating environment where your child takes their very first steps into a world of exploration, creativity, and joyful learning. With small class sizes of 10–12 children and dedicated, ECE-qualified Early Childhood Educators, every toddler receives the individual attention, encouragement, and care they deserve during this precious phase." },
       { heading: "What Your Child Will Learn", items: ["Socialisation — learning to play alongside and with other children, building their first friendships in a warm, guided group setting", "Fine motor skills — threading beads, block building, clay modelling, and finger painting to develop essential hand strength and coordination", "Gross motor development — running, jumping, balancing, and creative movement play in our safe indoor and outdoor areas", "Language development — songs, nursery rhymes, stories, and picture books to build vocabulary, listening skills, and early literacy foundations", "Sensory exploration — sand, water, textured materials, sounds, and scents to stimulate all five senses and build sensory processing capacity", "Emotional regulation — learning to identify and express feelings appropriately, take turns, manage transitions, and build resilience", "Basic concepts — colours, shapes, sizes, numbers, and patterns introduced through hands-on play activities, not rote learning"] },
       { heading: "A Typical Day in Playgroup", text: "Every Playgroup day at Rainbow Preschool follows a gentle, predictable rhythm that toddlers find deeply comforting. Predictability and routine are essential at this age — they help children feel safe and develop the internal organisation that underlies all learning. The day begins with a warm morning welcome circle — favourite songs, greetings, and simple weather talk to help children settle in happily. This is followed by free play at activity stations (art corner, sensory tray, block area, pretend play corner), where children choose their activities and develop independence. A short, focused group activity then brings the class together for a skill-building task. Outdoor play follows — fresh air, movement, and social play in our safe yard. A storytime session builds language and imagination. Snack time teaches self-help skills and social norms. The day closes with a cheerful goodbye circle of songs and affirmations. This complete, balanced structure ensures children thrive emotionally and developmentally every single day." },
@@ -681,6 +741,10 @@ const staticPages: Record<string, PageSEOData> = {
       ],
     }],
     contentSections: [
+      { heading: "Nursery Guides for Parents", text: "Learn more about nursery learning and the admission process before visiting a centre.", links: [
+        { text: "What children learn in nursery school", url: "/blog/what-children-learn-nursery-school" },
+        { text: "Nursery school admissions in Thane", url: "/blog/nursery-school-admission-thane-2026" },
+      ]},
       { heading: "About Our Nursery Programme", text: "Rainbow Preschool International's Nursery programme is designed for children aged 2.5 to 3.5 years. Building on the foundation laid in Playgroup, the Nursery year introduces more structured learning while keeping play at its heart. Children explore early literacy, pre-numeracy concepts, science, art, and social studies through engaging, theme-based activities. Class sizes are kept small — 12 to 15 children — so teachers can give every child meaningful individual attention." },
       { heading: "What Children Learn in Nursery", items: ["Early literacy — letter recognition, phonics, pre-reading, and storytelling", "Pre-numeracy — counting, number recognition, patterns, and basic sorting", "Environmental awareness — plants, animals, seasons, and community helpers", "Creative arts — painting, collage, clay, music, and dance", "Social skills — cooperating, sharing, conflict resolution, and classroom etiquette", "Life skills — self-help skills, hygiene habits, and independence", "Language — Hindi and English vocabulary development, circle time discussions"] },
       { heading: "Curriculum Approach", text: "The Rainbow Nursery curriculum follows a thematic, activity-based learning approach aligned with the National Curriculum Framework for Early Childhood Care and Education (NCF-ECCE) and NEP 2020 guidelines. Each month focuses on a central theme (e.g., 'My Family', 'Insects', 'Festivals of India') woven through all subject areas. Learning happens through stories, crafts, experiments, songs, role play, and field experiences — never through rote learning or writing drills." },
@@ -713,6 +777,10 @@ const staticPages: Record<string, PageSEOData> = {
       ],
     }],
     contentSections: [
+      { heading: "Learning Beyond the Kindergarten Classroom", text: "Explore hands-on activities and ideas you can try with young children at home.", links: [
+        { text: "50 fun learning activities for preschoolers", url: "/blog/50-fun-learning-activities-preschoolers" },
+        { text: "STEM activities for preschoolers", url: "/blog/stem-activities-preschoolers-home" },
+      ]},
       { heading: "About Our Kindergarten Programme", text: "Rainbow Preschool International's Kindergarten programme is designed for children aged 3.5 to 5.5 years, preparing them thoroughly for the academic and social demands of primary school. The programme covers reading readiness, writing, mathematics, science, social studies, arts, and physical education — all delivered through hands-on, activity-based learning that keeps children engaged and confident. Kindergarten at Rainbow focuses equally on academic skills and character development, ensuring children leave with the knowledge, habits, and mindset to thrive in Class 1 and beyond." },
       { heading: "What Children Learn in Kindergarten", items: ["Reading & writing — phonics, sight words, handwriting, sentence formation, and creative expression", "Mathematics — number operations (up to 100), measurement, time, geometry, and problem-solving", "Environmental Science — living and non-living things, human body, weather, plants, animals", "Social Studies — community helpers, maps, transport, and festivals", "Computer basics — mouse skills, keyboard introduction at select centres", "Arts & Craft — advanced art techniques, model-making, drama, and creative projects", "Physical Education — structured games, yoga, and coordination activities"] },
       { heading: "School Readiness Focus", text: "Rainbow's Kindergarten curriculum is benchmarked against the entry requirements of leading CBSE, ICSE, and IB primary schools in Thane and Mumbai. Children are systematically prepared across all key readiness domains: academic skills (reading, writing, numeracy), cognitive skills (attention, memory, logical thinking), social-emotional skills (managing emotions, following instructions, cooperating), and self-help skills (time management, organisation, independence). Our teachers assess each child's readiness profile and provide targeted support for any areas needing extra attention." },
@@ -840,6 +908,11 @@ const staticPages: Record<string, PageSEOData> = {
       })),
     }, admissionHowToSchema],
     contentSections: [
+      { heading: "Before You Visit a Preschool", text: "Bring your questions on a centre tour and find practical ways to help your child settle in when school starts.", links: [
+        { text: "What to ask during a preschool tour", url: "/blog/what-to-ask-during-a-tour-of-a-preschool-in-thane" },
+        { text: "First-day preschool packing checklist", url: "/blog/first-day-preschool-packing-checklist" },
+        { text: "Preschool readiness quiz", url: "/preschool-readiness-quiz" },
+      ]},
       {
         heading: "About Preschool Admissions at Rainbow Preschool International",
         text: "Rainbow Preschool International has been welcoming children into its family since 2007 — over 18 years of nurturing young minds across Thane. Today, with 6 centres in Thane West and more than one lakh alumni, Rainbow is the preschool of choice for thousands of Thane families. Admissions are open for Playgroup (ages 1.5–2.5 years), Nursery (2.5–3.5 years), Junior KG (3.5–4.5 years), and Senior KG (4.5–5.5 years). Every Rainbow centre maintains the same high standards: small class sizes of 10–15 children, 100% trained and ECE-qualified female teaching staff, CCTV-monitored classrooms, and a play-based curriculum aligned with NEP 2020. The admissions process is designed to be simple, transparent, and stress-free for parents — from first enquiry to your child's first day."
@@ -979,6 +1052,10 @@ const staticPages: Record<string, PageSEOData> = {
         "Parent communication — Daily updates, PTM, open-door policy at every Rainbow centre",
         "Campus visit — Free visits and trial classes Mon–Sat at all 6 Rainbow centres",
       ]},
+      { heading: "Compare Your Preschool Options", text: "If you are still evaluating schools, read the preschool comparison guide and questions parents can ask on a school visit.", links: [
+        { text: "Top preschools in Thane comparison guide", url: "/top-preschools-in-thane" },
+        { text: "Questions to ask during a preschool tour", url: "/blog/what-to-ask-during-a-tour-of-a-preschool-in-thane" },
+      ]},
       { heading: "What Parents Say About Rainbow Preschool", text: "Below are representative quotes from parents across different Rainbow locations — first names only, last names omitted for privacy. These reflect the experiences families share about life at Rainbow Preschool.", items: [
         "★★★★★ Priya (Manpada Centre) — \"My daughter has been at Rainbow Manpada for two years and the transformation is incredible. From a shy toddler to a confident, chatty child who can't wait to go to school every morning. The teachers genuinely know each child individually.\"", // allow-soft-words
         "★★★★★ Rahul (Hariniwas Centre) — \"What made us choose Rainbow over other preschools in Thane was the 100% female staff policy and the CCTV in every classroom. Our son settled in within a week — the teachers handle separation anxiety so patiently and professionally.\"",
@@ -1056,6 +1133,14 @@ const staticPages: Record<string, PageSEOData> = {
         "Kalwa — for Kalwa, Vitawa, Kharegaon, Mumbra-side families",
         "Kasarvadavali (Ghodbunder Road) — for Kasarvadavali, Hiranandani Meadows, Brahmand, upper Ghodbunder families",
       ]},
+      { heading: "Explore by Neighbourhood", text: "Compare the local play school and playgroup information for the area closest to your family:", links: [
+        { text: "Play school near Ghodbunder Road (Manpada and Kasarvadavali)", url: "/play-school-near-ghodbunder-road" },
+        { text: "Play school near Majiwada (Anand Nagar)", url: "/play-school-near-majiwada" },
+        { text: "Play school near Naupada (Hariniwas)", url: "/play-school-near-naupada" },
+        { text: "Playgroup near Ghodbunder Road", url: "/playgroup-near-ghodbunder-road" },
+        { text: "Playgroup in Dhokali (Kolshet Road)", url: "/playgroup-in-dhokali" },
+        { text: "Playgroup in Kalwa", url: "/playgroup-in-kalwa" },
+      ]},
       { heading: "Preschool Near Me — Areas We Serve Across Thane", text: "Parents searching for a 'preschool near me' in Thane will find a Rainbow centre within a short distance from every major residential pocket. Here is a locality-by-locality guide to which Rainbow play school is closest to you.", items: [
         "Manpada, Edenwoods, Hiranandani Estate — Rainbow Preschool Manpada (Aggarwal Arcade, near Khewra Circle) on Ghodbunder Road",
         "Hariniwas Circle, Naupada, Panchpakadi, Charai, Khopat — Rainbow Preschool Hariniwas (Bhakti Mandir Road, opp. Thanawala Garage)",
@@ -1131,6 +1216,7 @@ const staticPages: Record<string, PageSEOData> = {
       ]},
       { heading: "Explore More", text: "Related Thane locality pages and programmes:", links: [
         { text: "Play School Near Me in Thane", url: "/play-school-near-me" },
+        { text: "Playgroup near Ghodbunder Road", url: "/playgroup-near-ghodbunder-road" },
         { text: "Preschool in Manpada, Thane", url: "/preschool-in-manpada-thane" },
         { text: "Preschool in Kasarvadavali, Thane", url: "/preschool-in-kasarvadavali-thane" },
         { text: "Playgroup in Manpada", url: "/playgroup-in-manpada" },
@@ -1252,6 +1338,11 @@ const staticPages: Record<string, PageSEOData> = {
     contentSections: [
       { heading: "About This Quiz", text: "Our preschool readiness quiz evaluates 10 key developmental indicators across 5 categories: Physical readiness, Social skills, Communication ability, Cognitive development, and Independence. Answer Yes or Not Yet to each question to get an instant assessment." },
       { heading: "What the Results Mean", items: ["Score 8-10: Your child shows strong readiness for preschool", "Score 5-7: Your child is almost ready — a gentle introduction like Playgroup may help", "Score 0-4: Give it a little more time — focus on building skills through play at home"] },
+      { heading: "Next Steps for Parents", text: "Read about the gentle Playgroup programme or ask our admissions team about visiting a centre before deciding on a start date.", links: [
+        { text: "Playgroup for children aged 1.5–2.5 years", url: "/playgroup" },
+        { text: "Common questions about preschool", url: "/faqs" },
+        { text: "How admissions work", url: "/preschool-admissions" },
+      ]},
     ],
     internalLinks: commonInternalLinks,
   },
@@ -1268,6 +1359,11 @@ const staticPages: Record<string, PageSEOData> = {
     contentSections: [
       { heading: "How We Ranked These Preschools", text: "Rankings are based on 6 criteria: Google reviews and ratings, curriculum quality, teacher-to-child ratios, safety infrastructure, number of locations, and years of operation." },
       { heading: "Top 10 Preschools in Thane 2026", items: ["#1 Rainbow Preschool International — 4.9★, 487+ reviews, 6 centres across Thane West", "#2 EuroKids — 4.7★, 121+ reviews, national franchise with 1,700+ schools", "#3 Kidzee — 4.5★, 101+ reviews, iLLUME curriculum by Zee Learn", "#4 Podar Jumbo Kids — 4.9★, 988+ reviews, 97-year-old Podar network (Dombivli)", "#5 Kangaroo Kids International — 4.3★, 85+ reviews, international curriculum", "#6 Bachpan Play School — 3.9★, 1,100+ centres nationwide, affordable", "#7 Little Millennium — 4.0★, Living Values curriculum", "#8 FirstCry Intellitots (formerly Oi Playschool) — 3.8★, FirstCry backed", "#9 Footprints Childcare — 4.2★, daycare + preschool from 6 months", "#10 Tree House Play Group — 3.7★, established Thane West presence"] },
+      { heading: "Explore Rainbow in More Detail", text: "Compare the programme, admissions information and parent experiences when choosing a preschool.", links: [
+        { text: "Rainbow's preschool programmes", url: "/programmes" },
+        { text: "Parent experiences at Rainbow", url: "/testimonials" },
+        { text: "Preschool admissions", url: "/preschool-admissions" },
+      ]},
     ],
     internalLinks: commonInternalLinks,
   },
@@ -1287,6 +1383,13 @@ const staticPages: Record<string, PageSEOData> = {
       name: "Rainbow Preschool International",
       url: BASE_URL,
     }],
+    contentSections: [
+      { heading: "From Parent Experiences to a Centre Visit", text: "Learn how admissions work, find answers to common questions, or choose the Rainbow centre nearest your family.", links: [
+        { text: "Admissions and campus visits", url: "/preschool-admissions" },
+        { text: "Questions families ask", url: "/faqs" },
+        { text: "Find your nearest play school in Thane", url: "/play-school-near-me" },
+      ]},
+    ],
     internalLinks: commonInternalLinks,
   },
   "/terms": {
@@ -1369,6 +1472,12 @@ const staticPages: Record<string, PageSEOData> = {
           { "@type": "ListItem", "position": 3, "name": "Holi Activities for Kids", "item": `${BASE_URL}/holi-activities-for-kids` },
         ],
       },
+    ],
+    contentSections: [
+      { heading: "More Activities for Young Children", text: "For another school activity guide, explore sports-day ideas for kindergarten children.", links: [
+        { text: "Sports day activities for kindergarten", url: "/sports-day-activities-for-kindergarten" },
+        { text: "Kindergarten learning at Rainbow", url: "/kindergarten" },
+      ]},
     ],
     internalLinks: commonInternalLinks,
   },
@@ -1567,6 +1676,11 @@ const staticPages: Record<string, PageSEOData> = {
     ],
     contentSections: [
       { heading: "FAQ Categories", items: ["Admissions & Registration — Process, documents, age groups, mid-year enrollment", "Fees & Payments — Fee structure, instalments, what's included", "Safety & Security — CCTV, pickup protocols, medical emergencies, staff verification", "Curriculum & Learning — Play-based approach, languages, assessments", "Daily Routine & Timings — School hours, typical day, what to bring", "Transport — Availability, safety features", "Settling In — Adjustment tips, separation anxiety, parent involvement", "Centres & Locations — 6 centres across Thane, visiting, quality consistency"] },
+      { heading: "Helpful Next Steps", text: "If you are deciding whether and when to enrol, explore these parent resources.", links: [
+        { text: "Try the preschool readiness quiz", url: "/preschool-readiness-quiz" },
+        { text: "Read about the admission process", url: "/preschool-admissions" },
+        { text: "Hear from Rainbow parents", url: "/testimonials" },
+      ]},
     ],
     internalLinks: commonInternalLinks,
   },
@@ -2106,6 +2220,37 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
       });
     }
 
+    const nearbyPages: Record<string, { text: string; url: string }[]> = {
+      "/preschool-in-manpada-thane": [
+        { text: "Play school near Ghodbunder Road", url: "/play-school-near-ghodbunder-road" },
+        { text: "Playgroup in Manpada", url: "/playgroup-in-manpada" },
+      ],
+      "/preschool-in-hariniwas-thane": [
+        { text: "Play school near Naupada", url: "/play-school-near-naupada" },
+      ],
+      "/preschool-in-anand-nagar-thane": [
+        { text: "Play school near Majiwada", url: "/play-school-near-majiwada" },
+        { text: "Playgroup in Anand Nagar", url: "/playgroup-in-anand-nagar" },
+      ],
+      "/preschool-in-dhokali-thane": [
+        { text: "Playgroup in Dhokali", url: "/playgroup-in-dhokali" },
+      ],
+      "/preschool-in-kalwa-thane": [
+        { text: "Playgroup in Kalwa", url: "/playgroup-in-kalwa" },
+      ],
+      "/preschool-in-kasarvadavali-thane": [
+        { text: "Play school near Ghodbunder Road", url: "/play-school-near-ghodbunder-road" },
+        { text: "Playgroup in Kasarvadavali", url: "/playgroup-in-kasarvadavali" },
+      ],
+    };
+    if (nearbyPages[cleanPath]) {
+      richSections.push({
+        heading: `Explore Preschool and Playgroup Near ${centre.locality}`,
+        text: `Read more about the local programmes and nearby play school options for families around ${centre.locality}.`,
+        links: nearbyPages[cleanPath],
+      });
+    }
+
     richSections.push({
       heading: `Visit, Address & Contact for the ${centre.locality} Centre`,
       text: `Our ${centre.locality} centre is located at ${centre.address}. To plan a visit or speak with the centre head, call ${centre.phone} between 9 AM and 6 PM, Monday to Saturday. We strongly encourage a free, no-obligation campus tour before you enrol — you will see our classrooms, meet the teachers, observe a live class in session, and have all your questions answered candidly. Walk-ins are welcome during school hours, and we can also arrange a guided trial class so your child can experience a typical Rainbow morning before you decide. Admissions for the 2026-27 academic year are open on a rolling basis, and seats are allocated on a first-come, first-served basis subject to age criteria and batch availability at the ${centre.locality} centre.`,
@@ -2386,6 +2531,10 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
     const category = data.category || "Resources";
 
     const sections: PageSEOData["contentSections"] = [];
+    const introLinks = extractSafeBodyLinks(data.intro || "");
+    if (introLinks.length) {
+      sections.push({ heading: "From This Article", links: introLinks });
+    }
     for (const s of data.sections) {
       const text = stripInlineHtml(s.content || "");
       const items = (s.bulletPoints || [])
@@ -2395,6 +2544,7 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
         heading: s.heading,
         text: text || undefined,
         items: items.length > 0 ? items : undefined,
+        links: extractSafeBodyLinks(s.content || ""),
       });
     }
 
@@ -2408,7 +2558,7 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
           name: f.question,
           acceptedAnswer: {
             "@type": "Answer",
-            text: stripInlineHtml(f.answer),
+            text: stripMarkdown(stripInlineHtml(f.answer)),
           },
         })),
       });
@@ -2419,8 +2569,9 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
       sections.push({
         heading: "Frequently Asked Questions",
         items: data.faqs.map(
-          (f) => `${f.question} — ${stripInlineHtml(f.answer)}`,
+          (f) => `${f.question} — ${stripMarkdown(stripInlineHtml(f.answer))}`,
         ),
+        links: data.faqs.flatMap(f => extractSafeBodyLinks(f.answer)),
       });
     }
 

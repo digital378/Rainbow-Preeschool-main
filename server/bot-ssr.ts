@@ -5,6 +5,10 @@ import { getPageSEO, type PageSEOData } from "./ssr-pages";
 import { VERIFIED_RATING } from "../shared/verified-rating";
 import { STANDALONE_BLOG_SLUGS } from "../shared/standalone-blog-slugs";
 import { isNonSeoServerRoute } from "./non-seo-routes";
+import { storage } from "./storage";
+import { redirectMap } from "./redirects";
+import { SITEMAP_ENTRIES } from "@shared/sitemap-entries";
+import { getLiveLegacySitemapEntries } from "./legacy-sitemap";
 
 // Inclusion rule: only add UA strings that appear EXCLUSIVELY in automated
 // crawlers / bots and NEVER in any human-operated browser or in-app browser.
@@ -149,6 +153,51 @@ function shouldServeSSR(userAgent: string): boolean {
 
 const BASE_URL = "https://www.rainbowpreschools.com";
 
+function finalInternalPath(raw: string): string | null {
+  if (!raw || !raw.startsWith("/") || raw.startsWith("//")) return null;
+  let path = raw.split("#")[0].split("?")[0] || "/";
+  const seen = new Set<string>();
+  while (redirectMap[path] && !seen.has(path)) {
+    seen.add(path);
+    path = redirectMap[path];
+  }
+  if (redirectMap[path]) return null;
+  return path;
+}
+
+/**
+ * The listing is assembled per request: the database is authoritative for
+ * published posts, while legacy articles remain discoverable until they are
+ * retired.  Keeping this here avoids turning the SEO recovery list into a
+ * second, stale publishing database.
+ */
+async function addArticleDiscoveryLinks(seo: PageSEOData): Promise<PageSEOData> {
+  if (seo.canonical !== `${BASE_URL}/blog`) return seo;
+  const links = new Map<string, { text: string; url: string }>();
+  const add = (text: string, raw: string) => {
+    const url = finalInternalPath(raw);
+    if (!url || url === "/blog" || links.has(url)) return;
+    links.set(url, { text: text.trim(), url });
+  };
+  const posts = await storage.getBlogPosts();
+  for (const post of posts) add(post.title, `/blog/${post.slug}`);
+
+  // Curated root-level articles, including live legacy and seasonal pages.
+  // The sitemap is the allowlist: old legacy records that now redirect must
+  // never appear in this crawlable index.
+  for (const entry of [...SITEMAP_ENTRIES, ...getLiveLegacySitemapEntries()]) {
+    if (entry.url.startsWith("/blog/")) continue;
+    const page = getPageSEO(entry.url);
+    if (page?.ogType !== "article" || page.noIndex ||
+        page.canonical !== `${BASE_URL}${entry.url}`) continue;
+    add(page.h1 || page.title, entry.url);
+  }
+
+  const sections = (seo.contentSections || []).filter(section => section.heading !== "Latest Articles");
+  sections.push({ heading: "Latest Articles", links: Array.from(links.values()) });
+  return { ...seo, contentSections: sections };
+}
+
 function escapeHtml(str: string): string {
   return str
     .replace(/&/g, "&amp;")
@@ -252,12 +301,8 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
       if (section.links && section.links.length > 0) {
         html += "<ul>\n";
         section.links.forEach((link) => {
-          const raw = link.url || "";
-          const href = /^https?:\/\//i.test(raw)
-            ? raw
-            : raw.startsWith("/")
-              ? `${BASE_URL}${raw}`
-              : null;
+          const hrefPath = finalInternalPath(link.url || "");
+          const href = hrefPath ? `${BASE_URL}${hrefPath}` : null;
           if (!href) return;
           html += `<li><a href="${escapeHtml(href)}">${escapeHtml(link.text)}</a></li>\n`;
         });
@@ -382,6 +427,7 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
 
 export function setupBotSSR(app: Express) {
   app.use((req: Request, res: Response, next: NextFunction) => {
+    void (async () => {
     const userAgent = req.headers["user-agent"] || "";
     if (!shouldServeSSR(userAgent)) {
       return next();
@@ -452,7 +498,10 @@ export function setupBotSSR(app: Express) {
       return;
     }
 
-    const html = renderSSRHtml(seo, urlPath);
+    const html = renderSSRHtml(
+      urlPath === "/blog" ? await addArticleDiscoveryLinks(seo) : seo,
+      urlPath,
+    );
     res.status(200).set({
       "Content-Type": "text/html; charset=utf-8",
       // Bot SSR responses vary by user-agent and must NEVER be cached at the
@@ -472,5 +521,6 @@ export function setupBotSSR(app: Express) {
       // for the human SPA shell on the same URL once a bot response leaks through.
     }).removeHeader("Set-Cookie");
     res.send(html);
+    })().catch(next);
   });
 }
