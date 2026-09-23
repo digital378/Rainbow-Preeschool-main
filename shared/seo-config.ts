@@ -23,17 +23,19 @@ export const COMMERCIAL_PAGES_LAST_UPDATED_DISPLAY = LAST_UPDATED_DISPLAY;
 
 // ─── Canonical noindex list — SINGLE SOURCE OF TRUTH ─────────────────────────
 // Every URL that must NEVER appear in Google Search lives here, and ONLY here.
+// Public noindex pages remain crawlable so search engines can see this signal;
+// only internal tools are additionally blocked in robots.txt.
 //
 // Consumers (do not duplicate this list anywhere):
 //   • server/ssr-pages.ts        — `noIndexPages` derives from this array, so
 //                                  bot SSR serves <meta name="robots" content="noindex">
 //   • client (shouldNoIndex)     — SPA pages call shouldNoIndex() for the same meta
-//   • client/public/robots.txt   — must carry a matching `Disallow:` per entry;
-//                                  scripts/check-robots-noindex-sync.ts enforces
-//                                  this in pre-commit, pre-push, and predeploy.
+//   • client/public/robots.txt   — must not block public entries; private tools
+//                                  are the explicit exception checked by
+//                                  scripts/check-robots-noindex-sync.ts.
 //
-// To noindex a new page: add it here AND add a robots.txt Disallow line.
-// The sync guard fails the commit if either side is missed.
+// To noindex a new public page: add it here and its page-level meta tag.
+// Do not add a robots.txt Disallow, since that hides the noindex signal.
 //
 // Rationale per group:
 //   Ad landing pages      — Google Ads conversion pages; organic traffic would
@@ -43,9 +45,9 @@ export const COMMERCIAL_PAGES_LAST_UPDATED_DISPLAY = LAST_UPDATED_DISPLAY;
 //                           preschool search results. Case variants both listed
 //                           because robots.txt matching is case-sensitive.
 //   /join-now             — Referral campaign page; internal/shared-link only.
-//   Author archives       — Thin-content archive pages.
-//   Programme landing     — /kids-activity-club, /summer-camp: campaign landing
-//                           pages not intended for organic indexing.
+//   /terms, /privacy      — Legal notices remain public but are not search pages.
+//   Redirecting author and programme URLs are handled by server/redirects.ts,
+//   not by noindex (which a crawler cannot read on a 301 response).
 //   /gsc, /GSC            — Internal Google Search Console data explorer.
 //   /dummy                — Internal design-system reference/preview page.
 export const NOINDEX_SLUGS: string[] = [
@@ -59,13 +61,9 @@ export const NOINDEX_SLUGS: string[] = [
   "/ris-11th",
   "/join-now",
 
-  // Author archives
-  "/author/rainbow-preschools",
-  "/author/rainbowpreschools",
-
-  // Programme landing pages (not for organic indexing)
-  "/kids-activity-club",
-  "/summer-camp",
+  // Public legal notices
+  "/terms",
+  "/privacy",
 
   // Internal admin tools
   "/GSC",
@@ -73,6 +71,10 @@ export const NOINDEX_SLUGS: string[] = [
   "/dummy",
 
 ];
+
+// Internal tools are noindex and must also remain crawl-blocked. This is
+// intentionally separate from the public campaign/author/programme entries.
+export const PRIVATE_ROBOTS_SLUGS: string[] = ["/gsc", "/GSC", "/dummy"];
 
 // Helper to check if a path should be noindex
 export function shouldNoIndex(path: string): boolean {

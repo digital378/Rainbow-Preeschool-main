@@ -24,7 +24,6 @@ import {
 import { legacyPagesData } from "@shared/legacy-pages-data";
 import { isNonSeoServerRoute } from "./non-seo-routes";
 import { shouldNoIndex, NOINDEX_SLUGS } from "@shared/seo-config";
-import { VERIFIED_RATING } from "@shared/verified-rating";
 import { FAQ_SCHEMA_ITEMS } from "@shared/faq-data";
 import { ADMISSIONS_FAQ_SCHEMA_ITEMS } from "@shared/admissions-faq-data";
 import { BEST_PRESCHOOL_FAQ_SCHEMA_ITEMS } from "@shared/best-preschool-faq-data";
@@ -265,7 +264,7 @@ export interface PageSEOData {
 
 /**
  * Slim EducationalOrganization schema for programme + commercial pages.
- * Org identity + AggregateRating only — no Person review authors.
+ * Org identity only.
  */
 
 const programmeOrgSchema = {
@@ -375,13 +374,6 @@ const organizationSchema = {
     "Montessori Education",
     "Child Development",
   ],
-  aggregateRating: {
-    "@type": "AggregateRating",
-    ratingValue: String(VERIFIED_RATING.ratingValue),
-    reviewCount: String(VERIFIED_RATING.reviewCount),
-    bestRating: "5",
-    worstRating: "1",
-  },
 };
 
 const websiteSchema = {
@@ -405,39 +397,6 @@ const commonInternalLinks = [
   { text: "Preschool Admissions", url: "/preschool-admissions" },
   { text: "Blog", url: "/blog" },
 ];
-
-/**
- * Per-locality Review nodes for the centre LocalBusiness schema.
- *
- * Authored by the Rainbow Preschool Curriculum Team (Organization, not
- * Person), summarising aggregated parent feedback for each centre.
- */
-const centreReviews: Record<string, Array<{ summary: string; date: string; rating: string }>> = {
-  Manpada: [
-    { summary: "Aggregated parent feedback for the Manpada centre highlights caring, ECE-qualified teachers, a structured play-based curriculum and visible gains in children's confidence and social skills within the first term. Female-only staff, small batch sizes and CCTV monitoring rate consistently above 4.8/5 in our quarterly parent survey.", date: "2025-11-15", rating: "5" },
-    { summary: "Curriculum-team review of the Manpada centre confirms strong adherence to the NEP-2020-aligned activity plan, daily parent communication and consistent safety standards. Termly internal audits placed Manpada at 'exceeds standard' on classroom quality, teacher-child ratio and hygiene routines.", date: "2025-10-22", rating: "5" },
-  ],
-  Hariniwas: [
-    { summary: "Aggregated parent feedback for the Hariniwas centre near Panchpakadi highlights the convenient location, experienced teaching staff and steady early-literacy progress. Parents reported their children settled within the first 2-3 weeks and were comfortable being dropped off independently.", date: "2025-09-10", rating: "5" },
-    { summary: "Year-end Curriculum Team review of the Hariniwas centre based on aggregated parent surveys and teacher progress reports. Parents rated curriculum, teacher quality, safety and communication 4.8/5 or higher, with structured pre-writing and number-concept progress noted across the Nursery cohort.", date: "2025-08-18", rating: "5" },
-  ],
-  "Anand Nagar": [
-    { summary: "Aggregated parent feedback for the Anand Nagar centre highlights Montessori-trained teaching staff, a clean campus and consistently strong holistic-development outcomes. Parents specifically called out the calm, structured environment and the quality of the indoor materials.", date: "2025-06-05", rating: "5" },
-    { summary: "Curriculum-team review of the Anand Nagar centre near Tropical Lagoon confirms small batch sizes are being maintained at the published 10-12:1 child-teacher ratio, with individual attention reflected in the termly observation reports for every child.", date: "2025-07-20", rating: "5" },
-  ],
-  Dhokali: [
-    { summary: "Aggregated parent feedback for the Dhokali centre on Kolshet Road confirms an age-appropriate curriculum, deep teacher understanding of early childhood development, and consistent rating of safety features (CCTV, secure entry/exit, verified pickup) above 4.8/5.", date: "2025-09-18", rating: "5" },
-    { summary: "Curriculum-team review of the Dhokali centre highlights a well-equipped play area, fast settling-in (typically within the first week) and high satisfaction with the daily parent-communication channel used by class teachers.", date: "2025-05-28", rating: "5" },
-  ],
-  Kalwa: [
-    { summary: "Aggregated parent feedback for the Kalwa centre highlights the Happy Times extended after-school programme as a major reason working parents in East Thane choose Rainbow. Children remain engaged and learning until working parents finish their day.", date: "2025-05-20", rating: "4" },
-    { summary: "Curriculum-team review of the Kalwa centre near Manisha Nagar confirms patient, attentive teachers and effective settling-in support — even shy or anxious toddlers typically integrate within the first month.", date: "2025-06-15", rating: "5" },
-  ],
-  Kasarvadavali: [
-    { summary: "Aggregated parent feedback for the Kasarvadavali centre near Parijat Gardens highlights the spacious campus, monthly progress reports and consistently strong attendance — children look forward to school every day.", date: "2025-08-30", rating: "5" },
-    { summary: "Curriculum-team review of the Kasarvadavali centre behind Hypercity Mall confirms trained, caring and attentive teaching staff. Parents in this catchment rate the teaching team and centre cleanliness at 4.9/5 in our quarterly survey.", date: "2025-07-08", rating: "5" },
-  ],
-};
 
 function centreFAQSchema(locality: string, phone: string) {
   return {
@@ -488,18 +447,11 @@ function playgroupSchema(locality: string, url: string) {
       opens: "08:00",
       closes: "18:00",
     }],
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: String(VERIFIED_RATING.ratingValue),
-      bestRating: "5",
-      ratingCount: String(VERIFIED_RATING.reviewCount),
-    },
     parentOrganization: { "@id": `${BASE_URL}/#organization` },
   };
 }
 
 function localBusinessSchema(locality: string, address: string, phone: string, url: string, lat?: string, lng?: string, areasServed?: string[]) {
-  const reviews = centreReviews[locality] || [];
   return {
     "@context": "https://schema.org",
     "@type": "Preschool",
@@ -532,22 +484,6 @@ function localBusinessSchema(locality: string, address: string, phone: string, u
       : [{ "@type": "City", name: "Thane" }],
     priceRange: "$$",
     image: `${BASE_URL}/og-image.jpg`,
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: String(VERIFIED_RATING.ratingValue),
-      bestRating: "5",
-      ratingCount: String(VERIFIED_RATING.reviewCount),
-    },
-    ...(reviews.length > 0 && {
-      review: reviews.map(r => ({
-        "@type": "Review",
-        author: { "@type": "Organization", name: "Rainbow Preschool Curriculum Team" },
-        publisher: { "@id": `${BASE_URL}/#organization` },
-        datePublished: r.date,
-        reviewBody: r.summary,
-        reviewRating: { "@type": "Rating", ratingValue: r.rating, bestRating: "5" },
-      })),
-    }),
     parentOrganization: organizationSchema,
   };
 }
@@ -751,7 +687,7 @@ const staticPages: Record<string, PageSEOData> = {
       { heading: "A Typical Nursery Day", text: "A Nursery day at Rainbow begins with a morning circle (calendar, weather, news sharing), followed by theme-based group activities, free choice play, outdoor time, a structured art or science activity, story time, snack, and a closing circle. Homework is minimal and always activity-based — drawing, collecting items, or simple observations — never written worksheets." },
       { heading: "Admission & Timings", text: "Nursery admissions are open for children aged 2.5 to 3.5 years. Our Nursery runs Monday to Friday, with school hours of 8:30 AM to 12:30 PM (extended day available at select centres). Rainbow Preschool has 6 Nursery centres across Thane West — Manpada, Hariniwas Circle, Anand Nagar, Dhokali, Kalwa, and Kasarvadavali. Contact us at +91 82915 68972 to schedule a free school visit." },
     ],
-    internalLinks: [...commonInternalLinks, { text: "Nursery Admission Thane", url: "/nursery-school-admission-thane" }, { text: "Playgroup Programme", url: "/playgroup" }, { text: "Kindergarten Programme", url: "/kindergarten" }],
+    internalLinks: [...commonInternalLinks, { text: "Nursery Admissions", url: "/nursery" }, { text: "Playgroup Programme", url: "/playgroup" }, { text: "Kindergarten Programme", url: "/kindergarten" }],
     lastModified: LAST_UPDATED_ISO,
     lastModifiedDisplay: LAST_UPDATED_DISPLAY,
   },
@@ -1350,13 +1286,6 @@ const staticPages: Record<string, PageSEOData> = {
       "@type": "EducationalOrganization",
       name: "Rainbow Preschool International",
       url: BASE_URL,
-      aggregateRating: {
-        "@type": "AggregateRating",
-        ratingValue: String(VERIFIED_RATING.ratingValue),
-        reviewCount: String(VERIFIED_RATING.reviewCount),
-        bestRating: "5",
-        worstRating: "1",
-      },
     }],
     internalLinks: commonInternalLinks,
   },
@@ -1365,6 +1294,7 @@ const staticPages: Record<string, PageSEOData> = {
     description: "Read the terms and conditions for using the Rainbow Preschool International website, enquiry forms, and educational services.",
     keywords: "rainbow preschool terms of service, website terms",
     canonical: `${BASE_URL}/terms`,
+    noIndex: true,
     lastModified: LAST_UPDATED_ISO,
     lastModifiedDisplay: LAST_UPDATED_DISPLAY,
     h1: "Terms of Service",
@@ -1379,6 +1309,7 @@ const staticPages: Record<string, PageSEOData> = {
     description: "Privacy policy for Rainbow Preschool International. Learn how we collect, use, and protect your personal data in accordance with applicable laws.",
     keywords: "rainbow preschool privacy policy, data protection preschool",
     canonical: `${BASE_URL}/privacy`,
+    noIndex: true,
     lastModified: LAST_UPDATED_ISO,
     lastModifiedDisplay: LAST_UPDATED_DISPLAY,
     h1: "Privacy Policy",

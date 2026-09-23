@@ -5,6 +5,7 @@ import { SEO } from "@/components/seo";
 import { EEATSignals } from "@/components/eeat-signals";
 import { LAST_UPDATED_DISPLAY, LAST_UPDATED_ISO } from "@shared/site-freshness";
 import { legacyPagesData } from "@shared/legacy-pages-data";
+import { legacyFinalDestinations } from "@shared/legacy-final-destinations";
 import type { BlogPost } from "@shared/schema";
 import { ArrowRight, Search, BookOpen } from "lucide-react";
 
@@ -58,14 +59,18 @@ function blogPostToEntry(post: BlogPost): BlogEntry {
 }
 
 function legacyTopicEntries(): BlogEntry[] {
-  return Object.entries(legacyPagesData).map(([key, page]) => {
+  return Object.entries(legacyPagesData).flatMap(([key, page]) => {
     const cleanSlug = key.replace(/\/$/, "").replace(/^\//, "");
-    return {
+    // Redirected legacy entries are not articles at their original URLs.
+    // The actual destination article is listed via the API or its own
+    // non-redirecting legacy entry; do not turn a card into an /about or /blog link.
+    if (legacyFinalDestinations[`/${cleanSlug}`]) return [];
+    return [{
       title: page.h1 || page.title.split("|")[0].trim(),
       excerpt: page.metaDescription,
       url: `/${cleanSlug}`,
       category: CATEGORY_NORMALIZE[page.category || ""] || page.category || "Education",
-    };
+    }];
   });
 }
 
@@ -118,7 +123,14 @@ export default function Blog() {
 
   const allPosts = useMemo<BlogEntry[]>(() => {
     const blogEntries = (apiPosts ?? []).map(blogPostToEntry);
-    return [...blogEntries, ...legacyTopicEntries()];
+    // Prefer the real DB article on any duplicate final URL.
+    const entriesByFinalUrl = new Map<string, BlogEntry>();
+    for (const entry of [...blogEntries, ...legacyTopicEntries()]) {
+      if (!entriesByFinalUrl.has(entry.url)) {
+        entriesByFinalUrl.set(entry.url, entry);
+      }
+    }
+    return Array.from(entriesByFinalUrl.values());
   }, [apiPosts]);
 
   const categories = useMemo(() => {

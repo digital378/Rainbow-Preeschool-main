@@ -349,7 +349,7 @@ const PAGE_AUDITS: PageAudit[] = [
     ],
     improvements: [
       { priority: "High", text: "MANUAL: Replace stock illustrations with original nursery classroom photos (kids reading, phonics activity, art table) — big credibility signal." },
-      { priority: "High", text: "MANUAL: Add 5+ nursery-specific parent reviews mentioning phonics/numeracy progress — feeds into AggregateRating eligibility." },
+      { priority: "High", text: "MANUAL: Collect and publish genuine nursery-specific parent testimonials about their experience." },
       { priority: "Medium", text: "Next on-page win: add a 'Nursery curriculum month-by-month' expandable timeline — increases time-on-page and demonstrates depth." },
       { priority: "Medium", text: "Add admission dates and process section — 'nursery school admission' is a high-volume query in March-May and August-September." },
       { priority: "Medium", text: "Add nursery-specific parent reviews for E-E-A-T and review schema stars." },
@@ -366,7 +366,7 @@ const PAGE_AUDITS: PageAudit[] = [
       { id: "schema", label: "EducationalOrganization + LocalBusiness schema", done: true },
       { id: "faq", label: "FAQ section with FAQPage schema", done: true },
       { id: "video", label: "VideoObject JSON-LD for campus walkthrough", done: true },
-      { id: "reviews", label: "AggregateRating schema (enables stars in SERP)", done: true },
+      { id: "reviews", label: "Visible parent testimonials (no self-serving rating schema)", done: true },
       { id: "breadcrumb", label: "BreadcrumbList schema present", done: true },
       { id: "lcp", label: "Hero image preloaded (LCP <2.5s)", done: true },
       { id: "gbp", label: "All 6 GBP listings link to clean www canonical (manual: update GBP)", done: false },

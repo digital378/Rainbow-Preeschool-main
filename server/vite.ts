@@ -6,6 +6,7 @@ import fs from "fs";
 import path from "path";
 import { nanoid } from "nanoid";
 import { injectHomepageFreshness } from "./homepage-freshness";
+import { injectIndexPolicyShell } from "./index-policy-shell";
 import { isKnownRoute } from "./ssr-pages";
 
 const viteLogger = createLogger();
@@ -51,7 +52,10 @@ export async function setupVite(server: Server, app: Express) {
         `src="/src/main.tsx?v=${nanoid()}"`,
       );
       const page = await vite.transformIndexHtml(url, template);
-      const finalPage = injectHomepageFreshness(url, page);
+      const finalPage = injectIndexPolicyShell(
+        url.split("?")[0],
+        injectHomepageFreshness(url, page),
+      );
       // Status must reflect whether the route actually exists, independent
       // of User-Agent — mirrors the production catch-all in server/static.ts.
       const urlPath = url.split("?")[0];

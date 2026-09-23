@@ -45,7 +45,7 @@ export function EEATSignals({
   schemaId,
 }: EEATSignalsProps) {
   // Schema injection removed — Task #212.
-  // Article with reviewedBy + Preschool/AggregateRating are now emitted by
+  // Article with reviewedBy and Preschool schema are now emitted by
   // server/bot-ssr.ts for all pages that have `lastModified` in their SSR entry,
   // so bots receive them without executing JavaScript.
   // This component is now UI-only: it renders the visible E-E-A-T strip

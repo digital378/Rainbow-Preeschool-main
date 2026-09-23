@@ -1,4 +1,5 @@
 import type { Express, Request, Response, NextFunction } from "express";
+import { NOINDEX_SLUGS, PRIVATE_ROBOTS_SLUGS } from "@shared/seo-config";
 
 // ─── EXACT PATH REDIRECTS ────────────────────────────────────────────────────
 // All paths are lowercase; middleware lowercases before lookup.
@@ -144,12 +145,12 @@ export const redirectMap: Record<string, string> = {
   "/methodology": "/about",
   "/curriculum": "/about",
   "/our-approach": "/about",
-  "/privacy-policy": "/",
-  "/privacy-policy/": "/",
-  "/privacy-policy-2": "/",
-  "/privacy-policy-2/": "/",
-  "/terms-of-use": "/",
-  "/terms-of-use/": "/",
+  "/privacy-policy": "/privacy",
+  "/privacy-policy/": "/privacy",
+  "/privacy-policy-2": "/privacy",
+  "/privacy-policy-2/": "/privacy",
+  "/terms-of-use": "/terms",
+  "/terms-of-use/": "/terms",
   "/elements": "/",
   "/elements/": "/",
   "/elements-draft": "/",
@@ -748,6 +749,11 @@ export function setupRedirects(app: Express) {
     const trailingSlashCanonicals = new Set<string>([
       "/pre-kg-age-guide/",
       "/8-reasons-cooking-is-important-for-kids/",
+      // Public noindex pages must not serve an indexable SPA shell or a
+      // client-side NotFound for their slash variants.
+      ...NOINDEX_SLUGS
+        .filter((slug) => !PRIVATE_ROBOTS_SLUGS.includes(slug))
+        .map((slug) => `${slug.toLowerCase()}/`),
     ]);
     if (trailingSlashCanonicals.has(lowerPath)) {
       return res.redirect(301, lowerPath.slice(0, -1) + qs);

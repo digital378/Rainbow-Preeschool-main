@@ -2,6 +2,7 @@ import express, { type Express, type Request, type Response } from "express";
 import fs from "fs";
 import path from "path";
 import { injectHomepageFreshness } from "./homepage-freshness";
+import { injectIndexPolicyShell } from "./index-policy-shell";
 import { getPageSEO, getStaticPagePaths, isKnownRoute } from "./ssr-pages";
 
 const BASE_URL = "https://www.rainbowpreschools.com";
@@ -122,7 +123,7 @@ function prewarmPageCache(indexPath: string): void {
   const paths = getStaticPagePaths().filter((p) => p !== "/");
   for (const urlPath of paths) {
     if (!pageCache.has(urlPath)) {
-      pageCache.set(urlPath, injectPageSchemas(urlPath, baseHtml));
+      pageCache.set(urlPath, injectIndexPolicyShell(urlPath, injectPageSchemas(urlPath, baseHtml)));
     }
   }
   console.log(`[static] page cache pre-warmed for ${paths.length} paths`);
@@ -209,7 +210,7 @@ export function serveStatic(app: Express) {
       return res.status(status).send(cached);
     }
     // First request for this URL: compute and cache.
-    const html = injectPageSchemas(urlPath, getBaseHtml(indexPath));
+    const html = injectIndexPolicyShell(urlPath, injectPageSchemas(urlPath, getBaseHtml(indexPath)));
     pageCache.set(urlPath, html);
     res.status(status).send(html);
   });

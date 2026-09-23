@@ -6,22 +6,11 @@
  * "this URL must never appear in Google Search". This guard fails the
  * commit/push/deploy when the three declaration layers drift:
  *
- *   1. Every NOINDEX_SLUGS entry must be covered by a `Disallow:` rule in
- *      client/public/robots.txt (robots matching is prefix-based and
- *      case-sensitive, so both are honoured here).
- *   2. Every non-infrastructure `Disallow:` rule in robots.txt must have a
- *      matching NOINDEX_SLUGS entry — a Disallow with no noindex meta means
- *      the URL can still be indexed from external links ("Indexed, though
- *      blocked by robots.txt").
+ *   1. Public NOINDEX_SLUGS entries and redirect sources must remain crawlable.
+ *   2. Private tools and infrastructure Disallow rules must remain blocked.
  *   3. server/ssr-pages.ts must derive its `noIndexPages` from NOINDEX_SLUGS
  *      instead of re-declaring a literal array (the drift that let /ad-mtpg
  *      slip past shouldNoIndex()).
- *
- * Infrastructure Disallow rules are exempt from check 2:
- *   - directory prefixes ending with "/" (e.g. /api/, /mumbai/)
- *   - wildcard/query patterns containing "*" or "?"
- *   - entries in ROBOTS_ONLY_EXEMPTIONS below (crawl-blocks for retired
- *     URL trees that intentionally have no live page to noindex)
  *
  * Exit 0 = in sync. Exit 1 = drift — each problem printed with a fix hint.
  *
@@ -30,18 +19,14 @@
 
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
-import { NOINDEX_SLUGS } from "../shared/seo-config";
+import { NOINDEX_SLUGS, PRIVATE_ROBOTS_SLUGS } from "../shared/seo-config";
+import { legacyPagesData } from "../shared/legacy-pages-data";
+import { legacyFinalDestinations } from "../shared/legacy-final-destinations";
+import { redirectMap } from "../server/redirects";
 
 const ROOT = process.cwd();
 const ROBOTS_PATH = "client/public/robots.txt";
 const SSR_PAGES_PATH = "server/ssr-pages.ts";
-
-// Disallow rules that intentionally have NO NOINDEX_SLUGS counterpart.
-// These block crawling of retired URL trees / non-page routes where no
-// live page exists to serve a noindex meta tag.
-const ROBOTS_ONLY_EXEMPTIONS = new Set<string>([
-  "/thane/kalyan-bhiwandi", // retired franchise page tree, no live route
-]);
 
 function fail(messages: string[]): never {
   console.error("check-robots-noindex-sync: FAILED\n");
@@ -49,7 +34,7 @@ function fail(messages: string[]): never {
   console.error("");
   console.error("  Canonical list: NOINDEX_SLUGS in shared/seo-config.ts");
   console.error("  Robots rules:   client/public/robots.txt");
-  console.error("  To noindex a page, add it to BOTH places (one entry each).");
+  console.error("  Public noindex pages must be crawlable; private tools stay blocked.");
   process.exit(1);
 }
 
@@ -67,27 +52,61 @@ if (disallows.length === 0) {
 
 const problems: string[] = [];
 
-// ── Check 1: every canonical slug is covered by a Disallow rule ─────────────
-// robots.txt matching is prefix-based and case-sensitive.
+// ── Check 1: public noindex pages and redirect sources are crawlable ─────────
 for (const slug of NOINDEX_SLUGS) {
-  const covered = disallows.some((d) => slug === d || slug.startsWith(d));
-  if (!covered) {
+  if (PRIVATE_ROBOTS_SLUGS.includes(slug)) {
+    if (!disallows.includes(slug)) {
+      problems.push(`Private noindex tool "${slug}" must retain Disallow: ${slug}.`);
+    }
+  } else if (disallows.some((d) => slug === d || slug.startsWith(d))) {
     problems.push(
-      `NOINDEX_SLUGS entry "${slug}" has no matching Disallow rule in ${ROBOTS_PATH}. Add: Disallow: ${slug}`,
+      `Public noindex "${slug}" is blocked by robots.txt; remove its Disallow rule.`,
     );
   }
 }
 
-// ── Check 2: every non-infra Disallow rule maps back to NOINDEX_SLUGS ───────
+for (const source of Object.keys(redirectMap)) {
+  if (disallows.some((d) => source === d || source.startsWith(d))) {
+    problems.push(`Redirect source "${source}" is blocked by robots.txt; remove its Disallow rule.`);
+  }
+}
+
+// Blog grid hides legacy paths that redirect. Keep its client-safe lookup in
+// lockstep with the redirect middleware so new redirects cannot add stale cards.
+for (const key of Object.keys(legacyPagesData)) {
+  const path = key.replace(/\/$/, "");
+  const destination = redirectMap[path];
+  if ((legacyFinalDestinations[path] || undefined) !== destination) {
+    problems.push(`Blog redirect lookup drift for "${path}": sync shared/legacy-final-destinations.ts with server/redirects.ts.`);
+  }
+}
+
+// ── Check 2: required infrastructure/private Disallow rules remain ──────────
 for (const d of disallows) {
-  if (d.endsWith("/")) continue; // directory prefix (infra rule)
-  if (d.includes("*") || d.includes("?")) continue; // wildcard/query pattern
-  if (ROBOTS_ONLY_EXEMPTIONS.has(d)) continue;
-  if (!NOINDEX_SLUGS.includes(d)) {
-    problems.push(
-      `robots.txt "Disallow: ${d}" has no matching NOINDEX_SLUGS entry in shared/seo-config.ts. ` +
-        `Add "${d}" to NOINDEX_SLUGS (or to ROBOTS_ONLY_EXEMPTIONS in this script if it is a crawl-only block).`,
-    );
+  if (d === "/api/" || d === "/*?utm_" || PRIVATE_ROBOTS_SLUGS.includes(d)) continue;
+  problems.push(`Unexpected robots.txt Disallow: ${d}. Keep only private tools, /api/, and UTM rules.`);
+}
+for (const required of ["/api/", "/*?utm_", ...PRIVATE_ROBOTS_SLUGS]) {
+  if (!disallows.includes(required)) {
+    problems.push(`Required robots.txt rule is missing: Disallow: ${required}`);
+  }
+}
+
+// Static fast pages are public duplicate landers: they must be crawlable
+// (checked above) but noindex, with a canonical on the final www host.
+for (const [name, target] of Object.entries({
+  playgroup: "/playgroup",
+  nursery: "/nursery",
+  kindergarten: "/kindergarten",
+  daycare: "/happy-times",
+})) {
+  const file = `public/${name}-fast.html`;
+  const html = readFileSync(resolve(ROOT, file), "utf8");
+  if (!/<meta\s+name="robots"\s+content="noindex(?:,\s*(?:follow|nofollow))?"\s*\/?>/i.test(html)) {
+    problems.push(`${file} needs a noindex robots meta tag.`);
+  }
+  if (!html.includes(`<link rel="canonical" href="https://www.rainbowpreschools.com${target}">`)) {
+    problems.push(`${file} needs its final www canonical: ${target}.`);
   }
 }
 
@@ -107,6 +126,6 @@ if (!/const\s+noIndexPages\s*=\s*NOINDEX_SLUGS/.test(ssrRaw)) {
 if (problems.length > 0) fail(problems);
 
 console.log(
-  `check-robots-noindex-sync: OK — ${NOINDEX_SLUGS.length} canonical noindex slugs all covered by robots.txt; ` +
+  `check-robots-noindex-sync: OK — ${NOINDEX_SLUGS.length} canonical noindex slugs are crawlable/private as configured; ` +
     `${disallows.length} Disallow rules accounted for; ssr-pages derives from NOINDEX_SLUGS.`,
 );

@@ -50,9 +50,7 @@ const LOCALITY_URLS = [
 // Remaining indexable, evergreen landers (supporting pages).
 // "/" is served as the React SPA (bot SSR is bypassed at that path), so its
 // freshness signals come from two places:
-//   • server/homepage-freshness.ts injects a hidden Article JSON-LD and a
-//     hidden byline <div> into the HTML shell at serve-time (visible to this
-//     fetch-based check and to non-JS bots).
+//   • server/homepage-freshness.ts injects Article JSON-LD into the HTML shell.
 //   • The <EEATSignals> component in client/src/pages/home.tsx renders the
 //     visible byline after React hydrates (visible to Googlebot and users).
 // All other URLs use bot SSR (server/ssr-pages.ts) for their freshness signal.
@@ -111,10 +109,10 @@ async function checkUrl(path: string): Promise<CheckResult> {
 
   const missing: string[] = [];
   if (status !== 200) missing.push(`status=${status}`);
-  if (!html.includes("Reviewed by Rainbow Preschool Curriculum Team")) {
+  if (path !== "/" && !html.includes("Reviewed by Rainbow Preschool Curriculum Team")) {
     missing.push("byline");
   }
-  if (!html.includes("Last updated:")) {
+  if (path !== "/" && !html.includes("Last updated:")) {
     missing.push("Last updated: line");
   }
   if (!/"@type":\s*"Article"/.test(html)) {
@@ -126,7 +124,7 @@ async function checkUrl(path: string): Promise<CheckResult> {
   ) {
     missing.push(`dateModified=${LAST_UPDATED_ISO}`);
   }
-  if (!html.includes(LAST_UPDATED_DISPLAY)) {
+  if (path !== "/" && !html.includes(LAST_UPDATED_DISPLAY)) {
     missing.push(`display="${LAST_UPDATED_DISPLAY}"`);
   }
 

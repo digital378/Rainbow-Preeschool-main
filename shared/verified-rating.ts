@@ -18,7 +18,7 @@
  * These figures are used on the six high-value commercial landing pages
  * (/playgroup, /nursery, /kindergarten, /play-school-near-me,
  *  /preschool-admissions, /best-preschool-near-me-in-thane)
- * and in the bot SSR pages (server/ssr-pages.ts) to emit AggregateRating JSON-LD.
+ * Display-only rating values. Do not emit self-serving AggregateRating JSON-LD.
  */
 
 export const VERIFIED_RATING = {

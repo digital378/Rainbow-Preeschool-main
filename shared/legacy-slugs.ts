@@ -5,7 +5,7 @@ export const legacySlugs = [
   "/national-symbols-of-india-for-kids/",
   "/solitary-play-activities/",
   "/pre-kg-age-guide/",
-  "/10-spring-gardening-activitie-for-preschoolers/",
+  "/10-spring-gardening-activities-for-preschoolers/",
   "/how-to-motivate-your-kids-for-school-8-ways/",
   "/best-indoor-games-for-kids-at-home/",
   "/7-ways-teaching-aids-help-children-learn-better/",
