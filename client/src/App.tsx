@@ -136,6 +136,7 @@ const LazyPrivacyPage = lazy(() => import("@/pages/legal").then(m => ({ default:
 import { legacySlugs } from "@shared/legacy-slugs";
 
 const STANDALONE_LANDING_PATHS = [
+  "/dummy",
   "/play-school-near-ghodbunder-road",
   "/play-school-near-majiwada",
   "/play-school-near-naupada",
@@ -382,8 +383,11 @@ function AppContent() {
 }
 
 function DeferredSparkleTrail() {
+  const [location] = useLocation();
+  const isDummy = /^\/dummy(?:\/|$)/i.test(location.split("?")[0]);
   const [show, setShow] = useState(false);
   useEffect(() => {
+    if (isDummy) return;
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
     if (isMobile) return;
     let fired = false;
@@ -401,8 +405,8 @@ function DeferredSparkleTrail() {
       if ('requestIdleCallback' in window) cancelIdleCallback(cancelHandle);
       else clearTimeout(cancelHandle);
     };
-  }, []);
-  if (!show) return null;
+  }, [isDummy]);
+  if (isDummy || !show) return null;
   return (
     <ErrorBoundary name="sparkle-trail" silent>
       <Suspense fallback={null}>
