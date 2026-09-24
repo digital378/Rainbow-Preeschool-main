@@ -22,12 +22,23 @@ function shortCaption(reel: Reel) {
   return caption.length > 95 ? `${caption.slice(0, 92).trimEnd()}…` : caption;
 }
 
-export function RainbowTheatre({ active }: { active: boolean }) {
+export function RainbowTheatre({
+  active,
+  enabled = active,
+  endpoint,
+  variant = "walkthrough",
+}: {
+  active: boolean;
+  enabled?: boolean;
+  endpoint?: string;
+  variant?: "walkthrough" | "homepage";
+}) {
   const {
     reels, isPending, isError, refetch, hasNextPage, fetchNextPage, isFetchingNextPage,
-  } = useInstagramReels(active);
+  } = useInstagramReels(enabled, endpoint);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [soundOn, setSoundOn] = useState(false);
+  const [failedVideoId, setFailedVideoId] = useState<string | null>(null);
   const [playlistOpen, setPlaylistOpen] = useState(false);
   const [overlayOpen, setOverlayOpen] = useState(false);
   const [nativeFullscreen, setNativeFullscreen] = useState(false);
@@ -42,6 +53,7 @@ export function RainbowTheatre({ active }: { active: boolean }) {
     () => reels.find((reel) => reel.id === selectedId) ?? reels.find((reel) => reel.mediaUrl) ?? reels[0],
     [reels, selectedId],
   );
+  const hasUsableMedia = Boolean(currentReel?.mediaUrl && currentReel.id !== failedVideoId);
 
   useEffect(() => {
     if (!reels.length) {
@@ -54,24 +66,17 @@ export function RainbowTheatre({ active }: { active: boolean }) {
   }, [reels, selectedId]);
 
   useEffect(() => {
-    if (!active) {
-      setSelectedId(null);
-      setSoundOn(false);
-    }
-  }, [active]);
-
-  useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
     video.muted = !soundOn;
-    if (active && currentReel?.mediaUrl) {
+    if (active && hasUsableMedia) {
       void video.play().catch(() => {
         // Browser autoplay policies may require a user gesture; the native controls remain available.
       });
     } else {
       video.pause();
     }
-  }, [active, currentReel, overlayOpen, soundOn]);
+  }, [active, currentReel, hasUsableMedia, overlayOpen, soundOn]);
 
   useEffect(() => {
     const onFullscreenChange = () => {
@@ -123,6 +128,7 @@ export function RainbowTheatre({ active }: { active: boolean }) {
 
   const selectReel = (id: string) => {
     setSelectedId(id);
+    setFailedVideoId(null);
     setSoundOn(false);
     setPlaylistOpen(false);
   };
@@ -184,7 +190,7 @@ export function RainbowTheatre({ active }: { active: boolean }) {
       className={`rainbow-theatre__player${inOverlay ? " rainbow-theatre__player--overlay" : ""}`}
       ref={inOverlay ? undefined : playerRef}
     >
-      {currentReel?.mediaUrl ? (
+      {hasUsableMedia && currentReel?.mediaUrl ? (
         <video
           ref={videoRef}
           key={currentReel.id}
@@ -196,19 +202,23 @@ export function RainbowTheatre({ active }: { active: boolean }) {
           playsInline
           preload="none"
           controls
+          onError={() => setFailedVideoId(currentReel.id)}
           aria-label={currentReel.caption || "Rainbow Instagram reel"}
         />
       ) : currentReel ? (
         <div className="rainbow-theatre__unavailable">
           {currentReel.thumbnailUrl && <img src={currentReel.thumbnailUrl} alt="" />}
-          <p>This video is available on Instagram.</p>
-          {currentReel.permalink && <a href={currentReel.permalink} target="_blank" rel="noopener noreferrer">Watch on Instagram ↗</a>}
+          <p>{failedVideoId === currentReel.id ? "This video could not be played here." : "This video is available on Instagram."}</p>
+          {currentReel.permalink && <a href={currentReel.permalink} target="_blank" rel="noopener noreferrer">Open on Instagram</a>}
+          {failedVideoId === currentReel.id && (
+            <button type="button" onClick={() => setFailedVideoId(null)}>Try video again</button>
+          )}
         </div>
       ) : (
         <div className="rainbow-theatre__placeholder" aria-label="Reel loads from Instagram">
           <span className="rainbow-theatre__placeholder-mark" aria-hidden="true">R</span>
           <span className="rainbow-theatre__placeholder-caption">
-            {isPending ? "Loading Rainbow videos…" : "Rainbow videos"}
+            {isPending ? "Loading Rainbow videos…" : isError ? "Videos are unavailable right now" : "No videos are available yet"}
           </span>
         </div>
       )}
@@ -222,7 +232,7 @@ export function RainbowTheatre({ active }: { active: boolean }) {
           </button>
         )}
       </div>
-      {currentReel?.mediaUrl && !soundOn && active && (
+      {hasUsableMedia && !soundOn && active && (
         <button type="button" className="rainbow-theatre__sound-prompt" onClick={toggleSound}>
           <VolumeX aria-hidden="true" /> Tap for sound
         </button>
@@ -310,11 +320,11 @@ export function RainbowTheatre({ active }: { active: boolean }) {
   );
 
   return (
-    <section className={`rainbow-theatre${active ? " is-active" : ""}`} aria-label="The Rainbow Theatre">
+    <section className={`rainbow-theatre rainbow-theatre--${variant}${active ? " is-active" : ""}`} aria-label="The Rainbow Theatre">
       <div className="rainbow-theatre__intro">
-        <span className="rainbow-theatre__eyebrow"><i aria-hidden="true" /> Scene 6 · The Rainbow Theatre</span>
-        <h2>Now showing, from our Instagram</h2>
-        <p>Watch the latest Rainbow video. Browse earlier posts in the playlist.</p>
+          <span className="rainbow-theatre__eyebrow"><i aria-hidden="true" /> {variant === "homepage" ? "The Rainbow Theatre" : "Scene 6 · The Rainbow Theatre"}</span>
+          <h2>{variant === "homepage" ? "A front-row look at our days" : "Now showing, from our Instagram"}</h2>
+          <p>{variant === "homepage" ? "Small classroom moments, celebrations and discoveries from Rainbow." : "Watch the latest Rainbow video. Browse earlier posts in the playlist."}</p>
         {isError && (
           <p role="alert" className="rainbow-theatre__error">
             Instagram videos could not load. <button type="button" onClick={() => void refetch()}>Try again</button>
@@ -373,7 +383,7 @@ export function RainbowTheatre({ active }: { active: boolean }) {
             })}
           </div>
           <button type="button" className="rainbow-theatre__browse" onClick={openPlaylist}>
-            Browse videos <span aria-hidden="true">↗</span>
+            Browse videos
           </button>
         </aside>
       </div>

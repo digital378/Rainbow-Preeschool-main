@@ -12,8 +12,8 @@ export type Reel = {
 
 type ReelPage = { reels: Reel[]; nextCursor: string | null };
 
-async function fetchInstagramReels(after: string | null): Promise<ReelPage> {
-  const url = new URL("/dummy/api/instagram/reels", window.location.origin);
+async function fetchInstagramReels(endpoint: string, after: string | null): Promise<ReelPage> {
+  const url = new URL(endpoint, window.location.origin);
   if (after) url.searchParams.set("after", after);
   const response = await fetch(url);
   if (!response.ok) throw new Error("Instagram videos are unavailable right now");
@@ -29,10 +29,10 @@ async function fetchInstagramReels(after: string | null): Promise<ReelPage> {
   return payload as ReelPage;
 }
 
-export function useInstagramReels(enabled: boolean) {
+export function useInstagramReels(enabled: boolean, endpoint = "/dummy/api/instagram/reels") {
   const query = useInfiniteQuery({
-    queryKey: ["/dummy/api/instagram/reels"],
-    queryFn: ({ pageParam }) => fetchInstagramReels(pageParam),
+    queryKey: [endpoint],
+    queryFn: ({ pageParam }) => fetchInstagramReels(endpoint, pageParam),
     initialPageParam: null as string | null,
     getNextPageParam: (page) => page.nextCursor ?? undefined,
     enabled,

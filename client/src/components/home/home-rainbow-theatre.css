@@ -1,0 +1,64 @@
+.home-rainbow-reel {
+  background: linear-gradient(180deg, #fff9ed 0%, #f6e7c8 100%);
+  overflow: hidden;
+  padding: clamp(32px, 6vw, 76px) 0 0;
+}
+
+.home-rainbow-reel__inner {
+  margin: 0 auto;
+  max-width: 1220px;
+  padding: 0 20px;
+}
+
+.home-rainbow-reel__marquee {
+  align-items: center;
+  color: #9c251c;
+  display: flex;
+  font-size: 11px;
+  font-weight: 800;
+  gap: 11px;
+  letter-spacing: .16em;
+  margin: 0 0 14px;
+  text-transform: uppercase;
+}
+
+.home-rainbow-reel__marquee::before,
+.home-rainbow-reel__marquee::after {
+  background: #d49a2c;
+  content: "";
+  height: 1px;
+  width: 36px;
+}
+
+.home-rainbow-reel .rainbow-theatre__player {
+  background-color: #4b251d;
+}
+
+.quick-callback-ticket + .home-rainbow-reel .home-rainbow-reel__inner {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.quick-callback-ticket + .home-rainbow-reel .rainbow-theatre--homepage {
+  border-radius: 0 0 30px 30px;
+  border-top: 0;
+}
+
+@media (max-width: 719px) {
+  .home-rainbow-reel {
+    padding-top: 34px;
+  }
+
+  .home-rainbow-reel__inner {
+    padding: 0 14px;
+  }
+
+  .quick-callback-ticket + .home-rainbow-reel .home-rainbow-reel__inner {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .quick-callback-ticket + .home-rainbow-reel .rainbow-theatre--homepage {
+    border-radius: 0;
+  }
+}

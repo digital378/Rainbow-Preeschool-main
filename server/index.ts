@@ -13,7 +13,7 @@ import { getBlogPostLastModified } from "./ssr-pages";
 import { getLiveLegacySitemapEntries } from "./legacy-sitemap";
 import { requireDashboardPageAuth, requireGscAuth } from "./admin-auth";
 import { dummyGuard } from "./dummy-guard";
-import { getDummyInstagramReels } from "./dummy-instagram";
+import { getDummyInstagramReels, getPublicInstagramReels } from "./dummy-instagram";
 
 const app = express();
 app.use(dummyGuard);
@@ -31,6 +31,9 @@ app.get("/dummy/api/instagram/reels", getDummyInstagramReels);
 app.set('trust proxy', true);
 
 app.use(compression());
+// Homepage reels use the same server-side feed; private walkthrough routes
+// stay authenticated, and the Instagram access token is never sent to clients.
+app.get("/api/instagram/reels", getPublicInstagramReels);
 
 const httpServer = createServer(app);
 

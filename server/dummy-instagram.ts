@@ -1,4 +1,4 @@
-import type { RequestHandler } from "express";
+import type { Request, RequestHandler, Response } from "express";
 
 type InstagramMedia = {
   id?: string;
@@ -30,6 +30,10 @@ type ReelPage = { reels: Reel[]; nextCursor: string | null };
 const PAGE_SIZE = 100;
 const CACHE_MS = 10 * 60 * 1000;
 const pageCache = new Map<string, { expires: number; page: ReelPage }>();
+const pendingPages = new Map<string, Promise<ReelPage>>();
+let failureRetryAt = 0;
+let budgetStartedAt = 0;
+let budgetUsed = 0;
 
 function httpsUrl(value: unknown): string | undefined {
   if (typeof value !== "string") return undefined;
@@ -79,7 +83,9 @@ async function loadReels(after: string | null, token: string): Promise<ReelPage>
   };
 }
 
-export const getDummyInstagramReels: RequestHandler = async (req, res) => {
+async function handleReels(req: Request, res: Response, publicFeed = false) {
+  // Errors must not be cached by the public homepage or an intermediary.
+  if (publicFeed) res.setHeader("Cache-Control", "no-store");
   const token = process.env.INSTAGRAM_ACCESS_TOKEN;
   if (!token) {
     res.status(503).json({ message: "Instagram feed is not configured" });
@@ -93,17 +99,53 @@ export const getDummyInstagramReels: RequestHandler = async (req, res) => {
   const cursor = after || null;
   const key = cursor ?? "first";
   const cached = pageCache.get(key);
+  const sendPage = (page: ReelPage) => {
+    if (publicFeed) res.setHeader("Cache-Control", "public, max-age=60");
+    res.json(page);
+  };
   if (cached && cached.expires > Date.now()) {
-    res.json(cached.page);
+    sendPage(cached.page);
+    return;
+  }
+
+  if (Date.now() < failureRetryAt) {
+    res.setHeader("Retry-After", "15");
+    res.status(502).json({ message: "Instagram feed is temporarily unavailable" });
     return;
   }
 
   try {
-    const page = await loadReels(cursor, token);
-    if (pageCache.size >= 30) pageCache.delete(pageCache.keys().next().value!);
-    pageCache.set(key, { page, expires: Date.now() + CACHE_MS });
-    res.json(page);
+    let pending = pendingPages.get(key);
+    if (!pending) {
+      if (Date.now() - budgetStartedAt >= 60_000) {
+        budgetStartedAt = Date.now();
+        budgetUsed = 0;
+      }
+      // Bound cache-miss work now that the feed is public. Cached responses
+      // remain available; concurrent visitors share one upstream request.
+      if (pendingPages.size >= 4 || budgetUsed >= 30) {
+        res.setHeader("Retry-After", "60");
+        res.status(503).json({ message: "Instagram feed is busy. Please try again shortly." });
+        return;
+      }
+      budgetUsed++;
+      pending = loadReels(cursor, token).then((page) => {
+        if (pageCache.size >= 30) pageCache.delete(pageCache.keys().next().value!);
+        pageCache.set(key, { page, expires: Date.now() + CACHE_MS });
+        return page;
+      }).catch((error) => {
+        failureRetryAt = Date.now() + 15_000;
+        throw error;
+      }).finally(() => pendingPages.delete(key));
+      pendingPages.set(key, pending);
+    }
+    sendPage(await pending);
   } catch {
+    res.setHeader("Retry-After", "15");
     res.status(502).json({ message: "Instagram feed is temporarily unavailable" });
   }
-};
+}
+
+// Keep the private endpoint's existing guard and cache headers intact.
+export const getDummyInstagramReels: RequestHandler = (req, res) => handleReels(req, res);
+export const getPublicInstagramReels: RequestHandler = (req, res) => handleReels(req, res, true);

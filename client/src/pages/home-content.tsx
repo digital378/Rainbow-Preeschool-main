@@ -1,17 +1,10 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { ErrorBoundary } from "@/components/error-boundary";
 import { AwardedBySection } from "@/components/awarded-by-section";
+import { HomeRainbowTheatre } from "@/components/home/home-rainbow-theatre";
+import { QuickCallbackTicket } from "@/components/home/quick-callback-ticket";
 import { EEATSignals } from "@/components/eeat-signals";
 import { LAST_UPDATED_DISPLAY, LAST_UPDATED_ISO } from "@shared/site-freshness";
 import { createAllBranchLocalBusinessSchemas, centres } from "@shared/centre-data";
@@ -49,33 +42,19 @@ function LazySection({ children, rootMargin = "200px", minHeight = 400 }: { chil
   return <div ref={ref}>{visible ? children : <div style={{ minHeight }} />}</div>;
 }
 
-import { useToast } from "@/hooks/use-toast";
 import {
   HOME_VISITOR_COPY,
   HOME_VISITOR_FAQS as faqs,
   HOME_VISITOR_INTERLINK_SEGMENTS,
   PROGRAMMES_VISITOR_COPY,
 } from "@/pages/visitor-page-copy";
-import { useMutation } from "@tanstack/react-query";
-import { apiRequest } from "@/lib/queryClient";
-import { getCampaignAttribution, trackFormSubmit, trackCTAClick } from "@/lib/analytics";
+import { getCampaignAttribution, trackCTAClick } from "@/lib/analytics";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-
-const childAgeOptions = [
-  "Below 1.5 years",
-  "1.5 - 2 years",
-  "2 - 2.5 years",
-  "2.5 - 3 years",
-  "3 - 3.5 years",
-  "3.5 - 4 years",
-  "4 - 5 years",
-  "5+ years",
-];
 
 // --- Static JSON-LD schema objects ---
 // Created once at module load (not on every render) to reduce per-mount CPU cost.
@@ -167,135 +146,6 @@ const _faqJson      = JSON.stringify(_faqSchema);
 const _videoJson    = JSON.stringify(_videoSchema);
 const _branchJson      = JSON.stringify(createAllBranchLocalBusinessSchemas());
 const _breadcrumbJson  = JSON.stringify(createBreadcrumbSchema([{ name: "Home", url: "https://www.rainbowpreschools.com/" }]));
-
-function QuickCallbackStrip() {
-  const { toast } = useToast();
-  const [formData, setFormData] = useState({
-    parentName: "",
-    phone: "",
-    childAge: "",
-  });
-
-  const mutation = useMutation({
-    mutationFn: async (data: typeof formData) => {
-      return apiRequest("POST", "/api/contact", {
-        ...getCampaignAttribution(),
-        parentName: data.parentName,
-        phone: data.phone,
-        childAge: data.childAge,
-        programme: "General Enquiry",
-        branch: "To be assigned",
-        childName: "Quick Callback",
-      });
-    },
-    onSuccess: async (response) => {
-      const data = await response.json();
-      if (data.emailSent) {
-        trackFormSubmit({
-          formType: 'instant',
-          programme: 'General Enquiry',
-          childAge: formData.childAge,
-        });
-      }
-      toast({
-        title: "Thank you!",
-        description: "Our admissions team will call you shortly.",
-      });
-      setFormData({ parentName: "", phone: "", childAge: "" });
-    },
-    onError: () => {
-      toast({
-        title: "Error",
-        description: "Something went wrong. Please try again.",
-        variant: "destructive",
-      });
-    },
-  });
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!formData.parentName || !formData.phone || !formData.childAge) {
-      toast({
-        title: "Please fill all fields",
-        description: "All fields are required to submit the form.",
-        variant: "destructive",
-      });
-      return;
-    }
-    mutation.mutate(formData);
-  };
-
-  return (
-    <section className="py-8 md:py-10 relative overflow-hidden border-b">
-      {/* Warm gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-r from-primary/8 via-amber-50/60 to-primary/5 dark:from-primary/10 dark:via-background dark:to-primary/8" />
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-6">
-          {/* Label */}
-          <div className="flex-shrink-0 hidden md:block">
-          <p className="text-sm font-bold text-foreground leading-tight">{HOME_VISITOR_COPY.sections[3].heading}</p>
-          <p className="text-xs text-muted-foreground">{HOME_VISITOR_COPY.sections[3].paragraphs?.[0]}</p>
-          </div>
-          <div className="hidden md:block w-px h-10 bg-border flex-shrink-0" />
-          {/* Form */}
-          <form onSubmit={handleSubmit} className="flex flex-col md:flex-row items-center gap-3 flex-1">
-            <div className="flex-1 w-full md:w-auto">
-              <Label htmlFor="quick-parent-name" className="sr-only">{HOME_VISITOR_COPY.sections[3].items?.[7]}</Label>
-              <Input
-                id="quick-parent-name"
-                placeholder={HOME_VISITOR_COPY.sections[3].items?.[4]}
-                value={formData.parentName}
-                onChange={(e) => setFormData({ ...formData, parentName: e.target.value })}
-                className="w-full bg-white/80 dark:bg-background/80 backdrop-blur-sm"
-                data-testid="input-quick-parent-name"
-              />
-            </div>
-            <div className="flex-1 w-full md:w-auto">
-              <Label htmlFor="quick-phone" className="sr-only">{HOME_VISITOR_COPY.sections[3].items?.[5]}</Label>
-              <Input
-                id="quick-phone"
-                placeholder={HOME_VISITOR_COPY.sections[3].items?.[5]}
-                type="tel"
-                value={formData.phone}
-                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                className="w-full bg-white/80 dark:bg-background/80 backdrop-blur-sm"
-                data-testid="input-quick-phone"
-              />
-            </div>
-            <div className="flex-1 w-full md:w-auto">
-              <Label htmlFor="quick-child-age" className="sr-only">{HOME_VISITOR_COPY.sections[3].items?.[6]}</Label>
-              <Select
-                value={formData.childAge}
-                onValueChange={(value) => setFormData({ ...formData, childAge: value })}
-              >
-                <SelectTrigger id="quick-child-age" data-testid="select-quick-child-age" className="bg-white/80 dark:bg-background/80 backdrop-blur-sm">
-                  <SelectValue placeholder={HOME_VISITOR_COPY.sections[3].items?.[6]} />
-                </SelectTrigger>
-                <SelectContent>
-                  {childAgeOptions.map((age) => (
-                    <SelectItem key={age} value={age}>{age}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <Button
-              type="submit"
-              disabled={mutation.isPending}
-              className="w-full md:w-auto px-8 shadow-[0_4px_14px_rgba(239,68,68,0.3)] hover:shadow-[0_6px_18px_rgba(239,68,68,0.4)] transition-all duration-300 hover:-translate-y-0.5 font-semibold"
-              data-testid="button-quick-callback"
-            >
-              {mutation.isPending ? "Sending..." : HOME_VISITOR_COPY.sections[3].items?.[3]}
-            </Button>
-          </form>
-        </div>
-        <p className="text-xs text-muted-foreground mt-3 flex items-center gap-1.5">
-          <Lock className="w-3 h-3 text-green-500" />
-          <span>{HOME_VISITOR_COPY.sections[3].items?.[0]}</span>
-        </p>
-      </div>
-    </section>
-  );
-}
 
 /* ═══════════════════════════════════════════════════════════════════════════
    BENTO ABOUT — "Why Parents Choose Rainbow Preschool"
@@ -1970,7 +1820,8 @@ export default function Home() {
       />
 
       <RainbowShelfSection />
-      <QuickCallbackStrip />
+      <QuickCallbackTicket />
+      <HomeRainbowTheatre />
       <AwardedBySection />
 
       <StatsSection />

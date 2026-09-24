@@ -209,7 +209,8 @@
 }
 
 .rainbow-theatre__unavailable p,
-.rainbow-theatre__unavailable a {
+.rainbow-theatre__unavailable a,
+.rainbow-theatre__unavailable button {
   position: relative;
   z-index: 1;
   margin: 0;
@@ -221,6 +222,15 @@
   border-radius: 9px;
   background: white;
   color: #a41d13;
+}
+
+.rainbow-theatre__unavailable button {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, .78);
+  border-radius: 9px;
+  color: white;
+  cursor: pointer;
+  padding: 8px 13px;
 }
 
 .rainbow-theatre__error {
@@ -722,5 +732,89 @@
   .rainbow-theatre__fullscreen * {
     scroll-behavior: auto !important;
     transition-duration: .01ms !important;
+  }
+}
+
+/* Public homepage: a generous proscenium treatment without changing walkthrough pacing. */
+.rainbow-theatre--homepage {
+  --rt-red: #c92f25;
+  --rt-ink: #35221c;
+  --rt-soft: #715d51;
+  --rt-line: #e8d3b3;
+  --rt-paper: #fff8ea;
+  background:
+    radial-gradient(circle at 12% 12%, rgba(246, 194, 83, .24), transparent 20rem),
+    linear-gradient(135deg, #fff3dc, #f9e6c5);
+  border: 1px solid #e5c98f;
+  border-radius: 30px;
+  box-shadow: 0 22px 50px -35px rgba(104, 50, 18, .52);
+  padding: clamp(22px, 4vw, 52px);
+  position: relative;
+}
+
+.rainbow-theatre--homepage::before {
+  border: 1px solid rgba(183, 126, 34, .34);
+  border-radius: 50%;
+  content: "";
+  height: 130px;
+  position: absolute;
+  right: 5%;
+  top: -54px;
+  transform: rotate(-20deg);
+  width: 310px;
+}
+
+.rainbow-theatre--homepage .rainbow-theatre__intro {
+  max-width: 680px;
+  position: relative;
+}
+
+.rainbow-theatre--homepage .rainbow-theatre__intro h2 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(30px, 4.3vw, 58px);
+  letter-spacing: -.045em;
+}
+
+.rainbow-theatre--homepage .rainbow-theatre__layout {
+  grid-template-columns: minmax(0, 1.65fr) minmax(220px, .72fr);
+}
+
+.rainbow-theatre--homepage .rainbow-theatre__player {
+  aspect-ratio: 16 / 9;
+  border: 7px solid #4b251d;
+  border-radius: 18px;
+  height: auto;
+  max-height: none;
+  width: 100%;
+}
+
+.rainbow-theatre--homepage .rainbow-theatre__side {
+  background: rgba(255, 251, 241, .72);
+  border: 1px solid rgba(157, 96, 37, .22);
+  border-radius: 18px;
+  padding: 15px;
+}
+
+.rainbow-theatre--homepage .rainbow-theatre__preview {
+  background: rgba(255, 255, 255, .72);
+}
+
+@media (max-width: 719px), (max-aspect-ratio: 1/1) {
+  .rainbow-theatre--homepage {
+    border-radius: 22px;
+    padding: 22px 16px;
+  }
+
+  .rainbow-theatre--homepage .rainbow-theatre__layout {
+    display: flex;
+  }
+
+  .rainbow-theatre--homepage .rainbow-theatre__player {
+    height: auto;
+    width: 100%;
+  }
+
+  .rainbow-theatre--homepage .rainbow-theatre__side {
+    padding: 12px;
   }
 }
