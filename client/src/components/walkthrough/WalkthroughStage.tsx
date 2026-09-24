@@ -40,6 +40,9 @@ export const WalkthroughStage = forwardRef<
     frameX,
     goToScene,
     isLite,
+    isScrubbing,
+    canToggleMotion,
+    toggleMotion,
     labelScene,
     videoReady,
   } = useScrollScrub({
@@ -73,26 +76,7 @@ export const WalkthroughStage = forwardRef<
           Skip the walkthrough
         </a>
 
-        {isLite ? (
-          <div className="walkthrough-stills" aria-hidden="true">
-            <img
-              className="walkthrough-still walkthrough-still--current"
-              src={SCENES[currentIndex].still[stills]}
-              alt=""
-              fetchPriority={currentIndex === 0 ? "high" : "auto"}
-              decoding="async"
-              style={{ opacity: 1 - blend }}
-            />
-            <img
-              className="walkthrough-still walkthrough-still--next"
-              src={SCENES[nextIndex].still[stills]}
-              alt=""
-              fetchPriority="auto"
-              decoding="async"
-              style={{ opacity: blend }}
-            />
-          </div>
-        ) : (
+        {!isLite && (
           <>
             <img
               className={`walkthrough-poster${videoReady ? " is-faded" : ""}`}
@@ -113,6 +97,26 @@ export const WalkthroughStage = forwardRef<
             />
           </>
         )}
+        {(isLite || isScrubbing || !videoReady) && (
+          <div className="walkthrough-stills" aria-hidden="true">
+            <img
+              className="walkthrough-still walkthrough-still--current"
+              src={SCENES[currentIndex].still[stills]}
+              alt=""
+              {...{ fetchpriority: currentIndex === 0 ? "high" : "auto" }}
+              decoding="async"
+              style={{ opacity: 1 - blend }}
+            />
+            <img
+              className="walkthrough-still walkthrough-still--next"
+              src={SCENES[nextIndex].still[stills]}
+              alt=""
+              {...{ fetchpriority: "auto" }}
+              decoding="async"
+              style={{ opacity: blend }}
+            />
+          </div>
+        )}
 
         <div className="walkthrough-scrim" aria-hidden="true" />
 
@@ -122,6 +126,16 @@ export const WalkthroughStage = forwardRef<
           </span>
           <span>{SCENES[labelScene].name}</span>
         </div>
+        {canToggleMotion && (
+          <button
+            type="button"
+            className="walkthrough-motion-toggle"
+            onClick={toggleMotion}
+            aria-pressed={!isLite}
+          >
+            {isLite ? "Use video backdrop" : "Fast scroll mode"}
+          </button>
+        )}
 
         <nav className="walkthrough-rail" aria-label="Scenes">
           {SCENES.map((scene) => (
@@ -146,8 +160,8 @@ export const WalkthroughStage = forwardRef<
             <section
               className={
                 active
-                  ? "walkthrough-panel is-active"
-                  : "walkthrough-panel"
+                  ? `walkthrough-panel is-active${scene.index === 5 ? " walkthrough-panel--theatre" : ""}`
+                  : `walkthrough-panel${scene.index === 5 ? " walkthrough-panel--theatre" : ""}`
               }
               key={scene.key}
               ref={(element) => {

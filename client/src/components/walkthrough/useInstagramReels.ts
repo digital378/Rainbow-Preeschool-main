@@ -1,43 +1,57 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMemo } from "react";
+import { useInfiniteQuery } from "@tanstack/react-query";
 
 export type Reel = {
   id: string;
-  mediaUrl: string;
+  mediaUrl?: string;
   thumbnailUrl?: string;
   caption?: string;
   permalink?: string;
   timestamp: string;
 };
 
-async function fetchInstagramReels(): Promise<Reel[]> {
-  try {
-    const response = await fetch("/api/instagram/reels");
-    if (!response.ok) return [];
+type ReelPage = { reels: Reel[]; nextCursor: string | null };
 
-    const payload: unknown = await response.json();
-    if (!Array.isArray(payload)) return [];
+async function fetchInstagramReels(after: string | null): Promise<ReelPage> {
+  const url = new URL("/dummy/api/instagram/reels", window.location.origin);
+  if (after) url.searchParams.set("after", after);
+  const response = await fetch(url);
+  if (!response.ok) throw new Error("Instagram videos are unavailable right now");
 
-    return payload
-      .filter((item): item is Reel => (
-        typeof item === "object" &&
-        item !== null &&
-        typeof (item as Reel).id === "string" &&
-        typeof (item as Reel).mediaUrl === "string" &&
-        typeof (item as Reel).timestamp === "string"
-      ))
-      .sort((a, b) => Date.parse(b.timestamp) - Date.parse(a.timestamp));
-  } catch {
-    return [];
+  const payload: unknown = await response.json();
+  if (
+    !payload ||
+    typeof payload !== "object" ||
+    !Array.isArray((payload as ReelPage).reels)
+  ) {
+    throw new Error("Invalid Instagram video response");
   }
+  return payload as ReelPage;
 }
 
-export function useInstagramReels() {
-  const query = useQuery<Reel[]>({
-    queryKey: ["/api/instagram/reels"],
-    queryFn: fetchInstagramReels,
+export function useInstagramReels(enabled: boolean) {
+  const query = useInfiniteQuery({
+    queryKey: ["/dummy/api/instagram/reels"],
+    queryFn: ({ pageParam }) => fetchInstagramReels(pageParam),
+    initialPageParam: null as string | null,
+    getNextPageParam: (page) => page.nextCursor ?? undefined,
+    enabled,
+    retry: 1,
+    staleTime: 5 * 60 * 1000,
     refetchOnWindowFocus: true,
-    refetchInterval: 10 * 60 * 1000,
+    refetchInterval: enabled ? 10 * 60 * 1000 : false,
   });
 
-  return { ...query, reels: query.data ?? [] };
+  const reels = useMemo(() => {
+    const seen = new Set<string>();
+    return (query.data?.pages.flatMap((page) => page.reels) ?? [])
+      .filter((reel) => {
+        if (seen.has(reel.id)) return false;
+        seen.add(reel.id);
+        return true;
+      })
+      .sort((a, b) => Date.parse(b.timestamp) - Date.parse(a.timestamp));
+  }, [query.data]);
+
+  return { ...query, reels };
 }

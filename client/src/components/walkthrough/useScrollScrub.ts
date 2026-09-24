@@ -65,7 +65,11 @@ export function useScrollScrub({
       saveData: current?.saveData ?? false,
     };
   });
+  // Seeking the full-resolution videos can block scrolling even on desktop.
+  // Start with the exact scene stills; the continuous camera is opt-in.
+  const [motionPreference, setMotionPreference] = useState<boolean | null>(null);
   const [failedToStills, setFailedToStills] = useState(false);
+  const [isScrubbing, setIsScrubbing] = useState(false);
   const [frameX, setFrameX] = useState(0);
   const [activeScene, setActiveScene] = useState(0);
   const [labelScene, setLabelScene] = useState(0);
@@ -73,10 +77,11 @@ export function useScrollScrub({
 
   const onSceneChangeRef = useRef(onSceneChange);
   const targetTimeRef = useRef(0);
-  const currentTimeRef = useRef(0);
   const durationRef = useRef(DURATION);
   const activeSceneRef = useRef(0);
   const unlockRef = useRef(false);
+  const seekRef = useRef<() => void>(() => undefined);
+  const movingRef = useRef(false);
 
   useEffect(() => {
     onSceneChangeRef.current = onSceneChange;
@@ -107,11 +112,13 @@ export function useScrollScrub({
     };
   }, []);
 
+  const motionEnabled = motionPreference ?? false;
   const liteMode =
     reducedMotion ||
     connection.saveData ||
     connection.effectiveType === "slow-2g" ||
     connection.effectiveType === "2g" ||
+    !motionEnabled ||
     failedToStills;
 
   useEffect(() => {
@@ -120,13 +127,14 @@ export function useScrollScrub({
     if (!stage || !spacer) return;
 
     let scheduled = false;
+    let movementTimer = 0;
     const update = () => {
       scheduled = false;
       const bounds = spacer.getBoundingClientRect();
       const total = bounds.height - stage.clientHeight;
       const travelled = clamp(-bounds.top, 0, Math.max(total, 0));
       const x = total > 0 ? (travelled / total) * LAST : 0;
-      setFrameX(x);
+      setFrameX((previous) => Math.abs(previous - x) > 0.012 ? x : previous);
 
       const segmentIndex = Math.min(Math.floor(x), SCENES.length - 1);
       const fraction = x - segmentIndex;
@@ -139,7 +147,6 @@ export function useScrollScrub({
               ? 0
               : easeInOutQuad((fraction - HOLD) / (1 - HOLD)) *
                 segmentDuration);
-
       let nextActive = -1;
       if (segmentIndex >= SCENES.length - 1) {
         nextActive = SCENES.length - 1;
@@ -163,12 +170,27 @@ export function useScrollScrub({
       scheduled = true;
       window.requestAnimationFrame(update);
     };
+    const onScroll = () => {
+      if (!movingRef.current) {
+        movingRef.current = true;
+        setIsScrubbing(true);
+        setVideoReady(false);
+      }
+      window.clearTimeout(movementTimer);
+      movementTimer = window.setTimeout(() => {
+        movingRef.current = false;
+        setIsScrubbing(false);
+        seekRef.current();
+      }, 180);
+      scheduleUpdate();
+    };
 
     update();
-    window.addEventListener("scroll", scheduleUpdate, { passive: true });
+    window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", scheduleUpdate, { passive: true });
     return () => {
-      window.removeEventListener("scroll", scheduleUpdate);
+      window.clearTimeout(movementTimer);
+      window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", scheduleUpdate);
     };
   }, [spacerRef, stageRef]);
@@ -185,19 +207,56 @@ export function useScrollScrub({
           : MOBILE_FULL_VIDEO;
     let fallbackAttempted = source === MOBILE_LITE_VIDEO;
     let disposed = false;
+    let seekTimer = 0;
+    let lastSeek = 0;
+    let frameCallback: number | null = null;
+    let awaitingFrame = false;
     setVideoReady(false);
 
-    const seekToCurrentTime = () => {
-      if (disposed || !Number.isFinite(video.duration) || video.duration <= 1) {
-        return;
-      }
-      durationRef.current = video.duration;
-      const maxTime = Math.max(video.duration - 0.01, 0);
-      try {
-        video.currentTime = clamp(currentTimeRef.current, 0, maxTime);
-      } catch {
-        // Some browsers reject seeks until their first decoded frame.
-      }
+    const watchPresentedFrame = () => {
+      if (!video.requestVideoFrameCallback) return;
+      awaitingFrame = true;
+      if (frameCallback !== null) video.cancelVideoFrameCallback(frameCallback);
+      const watch = () => {
+        frameCallback = video.requestVideoFrameCallback((_now, metadata) => {
+          frameCallback = null;
+          if (disposed || movingRef.current) {
+            awaitingFrame = false;
+            return;
+          }
+          if (Math.abs(metadata.mediaTime - targetTimeRef.current) < 0.2) {
+            awaitingFrame = false;
+            setVideoReady(true);
+          } else {
+            watch();
+          }
+        });
+      };
+      watch();
+    };
+
+    const scheduleSeek = () => {
+      if (disposed || document.hidden || movingRef.current || seekTimer) return;
+      seekTimer = window.setTimeout(() => {
+        seekTimer = 0;
+        if (disposed || movingRef.current || video.readyState < 1 || video.seeking) return;
+        const desired = clamp(targetTimeRef.current, 0, Math.max(video.duration - 0.01, 0));
+        if (Math.abs(video.currentTime - desired) < 0.12) {
+          if (!awaitingFrame && video.readyState >= 2) setVideoReady(true);
+          return;
+        }
+        lastSeek = performance.now();
+        setVideoReady(false);
+        try {
+          watchPresentedFrame();
+          video.currentTime = desired;
+        } catch {
+          if (frameCallback !== null) video.cancelVideoFrameCallback(frameCallback);
+          frameCallback = null;
+          awaitingFrame = false;
+          // A still stays visible until the browser accepts the seek.
+        }
+      }, Math.max(0, 140 - (performance.now() - lastSeek)));
     };
     const onLoadedMetadata = () => {
       if (Number.isFinite(video.duration) && video.duration > 1) {
@@ -205,10 +264,10 @@ export function useScrollScrub({
       }
     };
     const onLoadedData = () => {
-      seekToCurrentTime();
-      setVideoReady(true);
-      video.dataset.ready = "true";
+      scheduleSeek();
     };
+    const onSeeked = () => scheduleSeek();
+    const onVisibility = () => { if (!document.hidden) scheduleSeek(); };
     const onError = () => {
       if (disposed) return;
       if (
@@ -225,22 +284,25 @@ export function useScrollScrub({
       setFailedToStills(true);
     };
 
-    currentTimeRef.current =
-      video.readyState >= 2 && Number.isFinite(video.currentTime)
-        ? video.currentTime
-        : currentTimeRef.current;
-    video.dataset.ready = "false";
+    seekRef.current = scheduleSeek;
     video.addEventListener("loadedmetadata", onLoadedMetadata);
     video.addEventListener("loadeddata", onLoadedData);
+    video.addEventListener("seeked", onSeeked);
     video.addEventListener("error", onError);
+    document.addEventListener("visibilitychange", onVisibility);
     video.src = source;
     video.load();
 
     return () => {
       disposed = true;
+      window.clearTimeout(seekTimer);
+      if (frameCallback !== null) video.cancelVideoFrameCallback(frameCallback);
+      seekRef.current = () => undefined;
       video.removeEventListener("loadedmetadata", onLoadedMetadata);
       video.removeEventListener("loadeddata", onLoadedData);
+      video.removeEventListener("seeked", onSeeked);
       video.removeEventListener("error", onError);
+      document.removeEventListener("visibilitychange", onVisibility);
     };
   }, [connection.effectiveType, desktop, liteMode, videoRef]);
 
@@ -275,36 +337,6 @@ export function useScrollScrub({
     };
   }, [liteMode, videoRef]);
 
-  useEffect(() => {
-    if (liteMode) return;
-    let raf = 0;
-    const tick = () => {
-      const video = videoRef.current;
-      const difference = targetTimeRef.current - currentTimeRef.current;
-      currentTimeRef.current =
-        Math.abs(difference) < 0.004
-          ? targetTimeRef.current
-          : currentTimeRef.current + difference * 0.18;
-
-      if (
-        video &&
-        video.readyState >= 2 &&
-        !video.seeking &&
-        Math.abs(video.currentTime - currentTimeRef.current) > 0.03
-      ) {
-        try {
-          video.currentTime = currentTimeRef.current;
-        } catch {
-          // Wait for a later frame if the browser declines this seek.
-        }
-      }
-      raf = window.requestAnimationFrame(tick);
-    };
-
-    raf = window.requestAnimationFrame(tick);
-    return () => window.cancelAnimationFrame(raf);
-  }, [liteMode, videoRef]);
-
   const goToScene = useCallback(
     (index: number) => {
       const stage = stageRef.current;
@@ -330,6 +362,10 @@ export function useScrollScrub({
     frameX,
     goToScene,
     isLite: liteMode,
+    isScrubbing,
+    canToggleMotion: !reducedMotion && !connection.saveData &&
+      !["slow-2g", "2g"].includes(connection.effectiveType) && !failedToStills,
+    toggleMotion: () => setMotionPreference(!motionEnabled),
     labelScene,
     videoReady: videoReady && !liteMode,
   };

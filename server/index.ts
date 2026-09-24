@@ -13,6 +13,7 @@ import { getBlogPostLastModified } from "./ssr-pages";
 import { getLiveLegacySitemapEntries } from "./legacy-sitemap";
 import { requireDashboardPageAuth, requireGscAuth } from "./admin-auth";
 import { dummyGuard } from "./dummy-guard";
+import { getDummyInstagramReels } from "./dummy-instagram";
 
 const app = express();
 app.use(dummyGuard);
@@ -22,6 +23,9 @@ app.use("/walkthrough", express.static(path.join(
   process.cwd(),
   process.env.NODE_ENV === "production" ? "dist/public/walkthrough" : "client/public/walkthrough",
 )));
+// The live feed belongs to the private walkthrough. Its access token never
+// reaches the browser and this route inherits the guard's no-store headers.
+app.get("/dummy/api/instagram/reels", getDummyInstagramReels);
 
 // Trust proxy for proper protocol detection behind load balancers (Replit Deployment)
 app.set('trust proxy', true);

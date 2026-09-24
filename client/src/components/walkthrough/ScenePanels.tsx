@@ -1,4 +1,4 @@
-import { lazy, Suspense, type CSSProperties } from "react";
+import { lazy, memo, Suspense, type CSSProperties } from "react";
 import { ArrowDown, ArrowUpRight, Check, MapPin, Star } from "lucide-react";
 import { ALL_PROGRAMMES } from "@shared/programme-data";
 import { centres } from "@shared/centre-data";
@@ -178,7 +178,7 @@ function AcrossThane({ active }: { active: boolean }) {
   );
 }
 
-export function ScenePanel({
+export const ScenePanel = memo(function ScenePanel({
   index,
   active,
   goTo,
@@ -197,10 +197,10 @@ export function ScenePanel({
       {index === 2 && <Corridor />}
       {index === 3 && <Classroom />}
       {index === 4 && <Playground />}
-      {index === 5 && <><Eyebrow index={5} /><h2>The Rainbow Theatre</h2><RainbowTheatre active={active} /></>}
+      {index === 5 && <RainbowTheatre active={active} />}
       {index === 6 && <Courtyard />}
       {index === 7 && <AcrossThane active={active} />}
       {index < 7 && <span className="walk-scene-next"><button type="button" onClick={() => goTo(index + 1)}>Continue to {sceneNames[index + 1]} <ArrowDown aria-hidden="true" /></button></span>}
     </div>
   );
-}
+});

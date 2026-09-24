@@ -302,6 +302,17 @@
   object-position: 50% 12%;
 }
 
+@media (max-width: 719px), (max-aspect-ratio: 1/1) {
+  .guide-dock--media:not(.guide-dock--minimized) {
+    transform: scale(.62);
+    transform-origin: top right;
+  }
+
+  .guide-dock--media .guide-bubble {
+    display: none;
+  }
+}
+
 @keyframes guide-spin {
   to { transform: rotate(360deg); }
 }

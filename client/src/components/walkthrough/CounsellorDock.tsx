@@ -238,7 +238,7 @@ export default function CounsellorDock({
   };
 
   return (
-    <div className={`guide-dock${minimized ? " guide-dock--minimized" : ""}`} ref={dockRef}>
+    <div className={`guide-dock${minimized ? " guide-dock--minimized" : ""}${sceneIndex === 5 || sceneIndex === 7 ? " guide-dock--media" : ""}`} ref={dockRef}>
       {minimized ? (
         <button
           className="guide-avatar"
@@ -262,7 +262,7 @@ export default function CounsellorDock({
               onPointerUp={onPointerUp}
               onPointerCancel={onPointerUp}
             >
-              {load3d && (
+              {load3d && sceneIndex !== 5 && sceneIndex !== 7 && (
                 <LazyGuideBoundary onError={() => dockRef.current?.classList.remove("guide-dock--ready")}>
                   <Suspense fallback={null}>
                     <Counsellor3D
