@@ -12,8 +12,10 @@ import { storage } from "./storage";
 import { getBlogPostLastModified } from "./ssr-pages";
 import { getLiveLegacySitemapEntries } from "./legacy-sitemap";
 import { requireDashboardPageAuth, requireGscAuth } from "./admin-auth";
+import { dummyGuard } from "./dummy-guard";
 
 const app = express();
+app.use(dummyGuard);
 
 // Trust proxy for proper protocol detection behind load balancers (Replit Deployment)
 app.set('trust proxy', true);
@@ -40,7 +42,7 @@ app.use(express.urlencoded({ extended: false }));
 
 // Gate dashboard HTML before public static files, redirects, bot SSR or SPA fallbacks.
 app.use((req, res, next) => {
-  if (/^\/(?:gsc|dummy)(?:\/|$)/i.test(req.path)) {
+  if (/^\/gsc(?:\/|$)/i.test(req.path)) {
     return requireDashboardPageAuth(req, res, next);
   }
   next();
