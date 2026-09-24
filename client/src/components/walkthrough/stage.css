@@ -83,6 +83,13 @@
 
 .walkthrough-stills {
   z-index: 1;
+  transition: opacity 280ms ease;
+}
+
+.walkthrough-stills.is-faded {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 280ms ease, visibility 0s linear 280ms;
 }
 
 .walkthrough-still {
@@ -239,6 +246,8 @@
 
 .walkthrough-panel:has([data-scene="0"]) {
   max-height: calc(100svh - 155px - env(safe-area-inset-bottom, 0px));
+  /* Once the card reaches its edge, keep scrolling into Reception. */
+  overscroll-behavior-y: auto;
 }
 
 @media (max-width: 719px), (max-aspect-ratio: 1 / 1) {

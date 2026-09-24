@@ -40,7 +40,6 @@ export const WalkthroughStage = forwardRef<
     frameX,
     goToScene,
     isLite,
-    isScrubbing,
     canToggleMotion,
     toggleMotion,
     labelScene,
@@ -91,14 +90,13 @@ export const WalkthroughStage = forwardRef<
               className="walkthrough-video"
               muted
               playsInline
-              preload="metadata"
+              preload="auto"
               aria-hidden="true"
               tabIndex={-1}
             />
           </>
         )}
-        {(isLite || isScrubbing || !videoReady) && (
-          <div className="walkthrough-stills" aria-hidden="true">
+        <div className={`walkthrough-stills${!isLite && videoReady ? " is-faded" : ""}`} aria-hidden="true">
             <img
               className="walkthrough-still walkthrough-still--current"
               src={SCENES[currentIndex].still[stills]}
@@ -115,8 +113,7 @@ export const WalkthroughStage = forwardRef<
               decoding="async"
               style={{ opacity: blend }}
             />
-          </div>
-        )}
+        </div>
 
         <div className="walkthrough-scrim" aria-hidden="true" />
 
