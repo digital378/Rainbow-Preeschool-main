@@ -1351,7 +1351,7 @@ function CtcField({
   colSpan?: boolean; multiline?: boolean; children: React.ReactNode;
 }) {
   return (
-    <div style={colSpan ? { gridColumn:"span 2" } : {}}>
+    <div style={{ minWidth:0, gridColumn:colSpan ? "1 / -1" : undefined }}>
       <label htmlFor={id} style={{
         display:"block", fontSize:13, fontWeight:600, marginBottom:6,
         color: error ? "#DC2626" : isValid ? "#059669" : "#374151",
