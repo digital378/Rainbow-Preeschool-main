@@ -63,18 +63,17 @@
     <link rel="dns-prefetch" href="https://connect.facebook.net">
     <link rel="dns-prefetch" href="https://www.clarity.ms">
     
-    <!-- Fonts: display=swap shows a system fallback immediately and swaps to
-         the web font once it arrives. The @font-face metric overrides in
-         index.css are tuned so the fallback (Arial Bold) is dimensionally
-         identical to Poppins, keeping CLS near zero while the swap is visible.
+    <!-- Fonts: display=optional prevents a very late swap on slow mobile
+         connections. The @font-face metric overrides in index.css keep the
+         fallback close to Poppins when the web font arrives promptly.
          Poppins 800 is loaded because the hero uses font-extrabold.
          The woff2 preload below fetches the Poppins 700 Latin file directly
          so it arrives in the same network round-trip as the CSS, eliminating
          the two-hop delay (CSS → then font) that caused swap-visible CLS. -->
     <link rel="preload" as="font" type="font/woff2" crossorigin href="https://fonts.gstatic.com/s/poppins/v24/pxiByp8kv8JHgFVrLCz7Z1xlFd2JQEk.woff2">
     <!-- Above-fold fonts only (Inter + Poppins). Fredoka is decorative/below-fold — loaded deferred via loadAnalytics() -->
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@600;700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@600;700;800&display=swap"></noscript>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@600;700;800&display=optional" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@600;700;800&display=optional"></noscript>
     
     <!-- Only the home route uses this LCP image. Insert its responsive preload
          synchronously in the head so other routes never request the hero. -->
@@ -189,7 +188,6 @@
       if (window.location.pathname === "/") {
         var heroTemplate = document.getElementById("static-lcp-hero-template");
         document.body.insertBefore(heroTemplate.content.cloneNode(true), heroTemplate);
-        heroTemplate.remove();
       }
     </script>
     <div id="root"></div>

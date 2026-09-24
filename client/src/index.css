@@ -6,7 +6,7 @@
    so there is near-zero visual shift when the web font loads (keeps CLS minimal
    during display=swap). */
 @font-face {
-  font-family: 'Poppins';
+  font-family: 'Poppins Metric Fallback';
   src: local('Arial Bold'), local('Arial');
   font-weight: 600 800;
   font-style: normal;
@@ -25,6 +25,19 @@
   ascent-override: 90%;
   descent-override: 22%;
   line-gap-override: 0%;
+}
+
+/* Scope the metric-compatible Poppins fallback to contact content and footer,
+   while allowing the real Poppins web font to take precedence when available. */
+.contact-page h1,
+.contact-page h2,
+.contact-page h3,
+.contact-page h4,
+body:has(.contact-page) footer h1,
+body:has(.contact-page) footer h2,
+body:has(.contact-page) footer h3,
+body:has(.contact-page) footer h4 {
+  font-family: 'Poppins', 'Poppins Metric Fallback', 'Inter', sans-serif;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════

@@ -7,7 +7,8 @@
  * commit/push/deploy when the three declaration layers drift:
  *
  *   1. Public NOINDEX_SLUGS entries and redirect sources must remain crawlable.
- *   2. Private tools and infrastructure Disallow rules must remain blocked.
+ *   2. Private tools and infrastructure Disallow rules must remain blocked;
+ *      campaign URLs must remain crawlable for their clean canonicals.
  *   3. server/ssr-pages.ts must derive its `noIndexPages` from NOINDEX_SLUGS
  *      instead of re-declaring a literal array (the drift that let /ad-mtpg
  *      slip past shouldNoIndex()).
@@ -83,10 +84,10 @@ for (const key of Object.keys(legacyPagesData)) {
 
 // ── Check 2: required infrastructure/private Disallow rules remain ──────────
 for (const d of disallows) {
-  if (d === "/api/" || d === "/*?utm_" || PRIVATE_ROBOTS_SLUGS.includes(d)) continue;
-  problems.push(`Unexpected robots.txt Disallow: ${d}. Keep only private tools, /api/, and UTM rules.`);
+  if (d === "/api/" || PRIVATE_ROBOTS_SLUGS.includes(d)) continue;
+  problems.push(`Unexpected robots.txt Disallow: ${d}. Keep only private tools and /api/; campaign URLs need to be crawlable.`);
 }
-for (const required of ["/api/", "/*?utm_", ...PRIVATE_ROBOTS_SLUGS]) {
+for (const required of ["/api/", ...PRIVATE_ROBOTS_SLUGS]) {
   if (!disallows.includes(required)) {
     problems.push(`Required robots.txt rule is missing: Disallow: ${required}`);
   }

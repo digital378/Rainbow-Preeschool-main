@@ -869,7 +869,7 @@ Take a photo at the school gate on day 1 (your school's policy permitting). One 
   ## Where to Read Next on the Rainbow Blog
   For continued reading, our **50 Healthy Tiffin Box Ideas** post gives you 5 weeks of lunch ideas, our **Toilet Training Toddlers** guide covers the most common new-school anxiety, and our **Preparing Your Preschooler for a New Sibling** post helps if a younger sibling is on the way during your child's school transition.
 
-EXPLORE_MORE: [Preschool Admissions](/preschool-admissions)|[Our Thane Branches](/branches)|[Find the Best Preschool Near Me](/best-preschool-near-me-in-thane)
+EXPLORE_MORE: [Preschool Admissions](/preschool-admissions)|[Our Thane Branches](/contact)|[Find the Best Preschool Near Me](/best-preschool-near-me-in-thane)
 
 Reviewed by the Rainbow Preschool Curriculum Team
 Last updated: April 2026`,
@@ -1094,7 +1094,7 @@ Each day at our Thane centres begins with a 5-minute "Calm Circle" — a song, a
   ## Where to Read Next on the Rainbow Blog
   Yoga's calming benefits are amplified by reading our **Toddler Tantrum Management** guide (mindfulness is the prevention; tantrum management is the response), our **Screen Time Guidelines** post (less screen, more breath), and our **STEM Activities** collection (calm focus carries beautifully into curiosity-driven learning).
 
-EXPLORE_MORE: [Explore Playgroup](/playgroup)|[Our Nursery Program](/nursery)|[Our Thane Branches](/branches)
+EXPLORE_MORE: [Explore Playgroup](/playgroup)|[Our Nursery Program](/nursery)|[Our Thane Branches](/contact)
 
 Reviewed by the Rainbow Preschool Curriculum Team
 Last updated: April 2026`,
@@ -1433,7 +1433,7 @@ This 26 January, take a few minutes to stand with your child, look at the flag, 
   ## Where to Read Next on the Rainbow Blog
   If you enjoyed this Republic Day guide, you'll love our **50 Fun Learning Activities for Preschoolers** post for more parent-led activities, our **Best Children's Books for Indian Preschoolers** list (it includes several well-reviewed India-themed books), and our **Yoga & Mindfulness for Preschoolers** routines for calmer mornings — perfect after a busy 26 January.
 
-EXPLORE_MORE: [Explore Our Playgroup Program](/playgroup)|[Visit Our Centres](/centres)|[Frequently Asked Questions](/faqs)
+EXPLORE_MORE: [Explore Our Playgroup Program](/playgroup)|[Visit Our Centres](/contact)|[Frequently Asked Questions](/faqs)
 
 Reviewed by the Rainbow Preschool Curriculum Team
 Last updated: April 2026`,

@@ -28,3 +28,17 @@ uri = "file://rainbowpreschools-url-audit.xlsx"
 type = "table"
 title = "Rainbow Preschools — Full URL Audit"
 logical_id = "ac2ab1d2-bcb5-4e00-8cfa-85758c44fec5"
+
+[[outputs]]
+id = "8QXzu3T82piZeh9kJTK4A"
+uri = "file://reports/sitemap-parity-2026-09-24.html"
+type = "html"
+title = "Sitemap parity report — 86 pages"
+description = "Visitor and Googlebot title, description, H1, and body-word comparison for every current sitemap URL; About and Gallery are flagged below 80%."
+logical_id = "7006f5ee-cf89-45dc-9e85-3a3a24539acc"
+content_hash = "sha256:de70c3ef48a155bf8e18ad9da56f93d39831840cf4e8ea247e49ffc6512c98e5"
+size = 13559
+mtime_ms = 1790232268622
+storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:0c61580c-1c60-4ec3-afe4-28e8a9482287/7006f5ee-cf89-45dc-9e85-3a3a24539acc/90d21f01-b6ad-4921-8974-346fca1e18ce"
+storage_version_token = "1790232275561609"
+content_type = "text/html"

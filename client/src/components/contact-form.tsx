@@ -26,6 +26,7 @@ import { programmes, branches } from "@shared/schema";
 import { apiRequest } from "@/lib/queryClient";
 import { getCampaignAttribution, trackFormSubmit, type FormType } from "@/lib/analytics";
 import { Loader2, CheckCircle } from "lucide-react";
+import type { CONTACT_PAGE_COPY } from "@shared/contact-page-copy";
 
 declare global {
   interface Window {
@@ -120,9 +121,10 @@ interface ContactFormProps {
   defaultProgramme?: string;
   compact?: boolean;
   onSuccess?: () => void;
+  copy?: typeof CONTACT_PAGE_COPY.form;
 }
 
-export function ContactForm({ defaultBranch, defaultProgramme, compact = false, onSuccess }: ContactFormProps) {
+export function ContactForm({ defaultBranch, defaultProgramme, compact = false, onSuccess, copy }: ContactFormProps) {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { toast } = useToast();
   const { getToken } = useRecaptcha();
@@ -166,16 +168,16 @@ export function ContactForm({ defaultBranch, defaultProgramme, compact = false, 
       }
       
       toast({
-        title: "Request Submitted!",
-        description: "We'll get back to you within 24 hours.",
+        title: copy?.submittedToast || "Request Submitted!",
+        description: copy?.submittedDescription || "We'll get back to you within 24 hours.",
       });
       form.reset();
       if (onSuccess) onSuccess();
     },
     onError: () => {
       toast({
-        title: "Something went wrong",
-        description: "Please try again or call us directly.",
+        title: copy?.errorToast || "Something went wrong",
+        description: copy?.errorDescription || "Please try again or call us directly.",
         variant: "destructive",
       });
     },
@@ -192,12 +194,12 @@ export function ContactForm({ defaultBranch, defaultProgramme, compact = false, 
         <div className="w-16 h-16 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center mb-4">
           <CheckCircle className="w-8 h-8 text-green-600 dark:text-green-400" />
         </div>
-        <h3 className="text-xl font-semibold mb-2">Thank You!</h3>
+        <h3 className="text-xl font-semibold mb-2">{copy?.thankYou || "Thank You!"}</h3>
         <p className="text-muted-foreground mb-6">
-          We've received your request and will contact you within 24 hours.
+          {copy?.received || "We've received your request and will contact you within 24 hours."}
         </p>
         <Button onClick={() => setIsSubmitted(false)} variant="outline">
-          Submit Another Request
+          {copy?.submitAnother || "Submit Another Request"}
         </Button>
       </div>
     );
@@ -212,10 +214,10 @@ export function ContactForm({ defaultBranch, defaultProgramme, compact = false, 
             name="parentName"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Parent Name *</FormLabel>
+                <FormLabel>{copy?.parentName || "Parent Name *"}</FormLabel>
                 <FormControl>
                   <Input 
-                    placeholder="Enter your name" 
+                    placeholder={copy?.parentNamePlaceholder || "Enter your name"}
                     {...field} 
                     data-testid="input-parent-name"
                   />
@@ -230,10 +232,10 @@ export function ContactForm({ defaultBranch, defaultProgramme, compact = false, 
             name="phone"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Phone Number *</FormLabel>
+                <FormLabel>{copy?.phone || "Phone Number *"}</FormLabel>
                 <FormControl>
                   <Input 
-                    placeholder="Enter phone number" 
+                    placeholder={copy?.phonePlaceholder || "Enter phone number"}
                     type="tel"
                     {...field} 
                     data-testid="input-phone"
@@ -249,10 +251,10 @@ export function ContactForm({ defaultBranch, defaultProgramme, compact = false, 
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel>{copy?.emailLabel || "Email"}</FormLabel>
                 <FormControl>
                   <Input 
-                    placeholder="Enter email address" 
+                    placeholder={copy?.emailPlaceholder || "Enter email address"}
                     type="email"
                     {...field} 
                     data-testid="input-email"
@@ -268,10 +270,10 @@ export function ContactForm({ defaultBranch, defaultProgramme, compact = false, 
             name="childName"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Child's Name *</FormLabel>
+                <FormLabel>{copy?.childName || "Child's Name *"}</FormLabel>
                 <FormControl>
                   <Input 
-                    placeholder="Enter child's name" 
+                    placeholder={copy?.childNamePlaceholder || "Enter child's name"}
                     {...field} 
                     data-testid="input-child-name"
                   />
@@ -286,15 +288,15 @@ export function ContactForm({ defaultBranch, defaultProgramme, compact = false, 
             name="childAge"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Child's Age *</FormLabel>
+                <FormLabel>{copy?.childAge || "Child's Age *"}</FormLabel>
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                   <FormControl>
                     <SelectTrigger data-testid="select-child-age">
-                      <SelectValue placeholder="Select age" />
+                      <SelectValue placeholder={copy?.agePlaceholder || "Select age"} />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    {ageOptions.map((age) => (
+                    {(copy?.ages || ageOptions).map((age) => (
                       <SelectItem key={age} value={age}>
                         {age}
                       </SelectItem>
@@ -311,11 +313,11 @@ export function ContactForm({ defaultBranch, defaultProgramme, compact = false, 
             name="programme"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Programme *</FormLabel>
+                <FormLabel>{copy?.programme || "Programme *"}</FormLabel>
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                   <FormControl>
                     <SelectTrigger data-testid="select-programme">
-                      <SelectValue placeholder="Select programme" />
+                      <SelectValue placeholder={copy?.programmePlaceholder || "Select programme"} />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
@@ -336,11 +338,11 @@ export function ContactForm({ defaultBranch, defaultProgramme, compact = false, 
             name="branch"
             render={({ field }) => (
               <FormItem className={compact ? "" : "md:col-span-2"}>
-                <FormLabel>Preferred Centre *</FormLabel>
+                <FormLabel>{copy?.preferredCentre || "Preferred Centre *"}</FormLabel>
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                   <FormControl>
                     <SelectTrigger data-testid="select-centre">
-                      <SelectValue placeholder="Select centre" />
+                      <SelectValue placeholder={copy?.centrePlaceholder || "Select centre"} />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
@@ -362,10 +364,10 @@ export function ContactForm({ defaultBranch, defaultProgramme, compact = false, 
           name="message"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Message (Optional)</FormLabel>
+              <FormLabel>{copy?.message || "Message (Optional)"}</FormLabel>
               <FormControl>
                 <Textarea 
-                  placeholder="Any questions or specific requirements?" 
+                  placeholder={copy?.messagePlaceholder || "Any questions or specific requirements?"}
                   className="resize-none"
                   rows={compact ? 3 : 4}
                   {...field} 
@@ -387,10 +389,10 @@ export function ContactForm({ defaultBranch, defaultProgramme, compact = false, 
           {mutation.isPending ? (
             <>
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              Submitting...
+              {copy?.submitting || "Submitting..."}
             </>
           ) : (
-            "Request Callback"
+            copy?.submit || "Request Callback"
           )}
         </Button>
       </form>

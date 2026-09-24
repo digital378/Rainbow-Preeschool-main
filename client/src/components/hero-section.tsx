@@ -1,5 +1,6 @@
 import { ArrowRight, Phone, Users, Star, MapPin, Shield } from "lucide-react";
 import { trackCTAClick } from "@/lib/analytics";
+import { useEffect } from "react";
 
 const trustBadges = [
   { Icon: Users,  label: "1,00,000+ Young Learners" },
@@ -9,23 +10,20 @@ const trustBadges = [
 ];
 
 export function HeroSection() {
+  useEffect(() => {
+    // The initial HTML inserts this image before React. Recreate that same
+    // single layer when a client-side navigation returns to the homepage.
+    if (document.getElementById("static-lcp-hero")) return;
+    const template = document.getElementById("static-lcp-hero-template") as HTMLTemplateElement | null;
+    const root = document.getElementById("root");
+    if (template && root) document.body.insertBefore(template.content.cloneNode(true), root);
+  }, []);
+
   return (
     <section className="relative min-h-[80vh] flex items-center overflow-hidden">
 
       {/* ── Background: photo + dark overlays — unchanged ── */}
       <div className="absolute inset-0">
-        <img
-          src="/images/optimized/hero-banner-1.webp"
-          srcSet="/images/optimized/hero-banner-1-480w.webp 480w, /images/optimized/hero-banner-1-640w.webp 640w, /images/optimized/hero-banner-1-828w.webp 828w, /images/optimized/hero-banner-1.webp 1200w"
-          sizes="100vw"
-          alt="Preschool classroom in Thane - Rainbow Preschool"
-          className="w-full h-full object-cover"
-          width={1200}
-          height={675}
-          decoding="async"
-          // @ts-ignore - fetchpriority is valid HTML but React types lag behind
-          fetchpriority="high"
-        />
         <div className="absolute inset-0 bg-gradient-to-r from-black/65 via-black/35 to-black/10 dark:from-black/75 dark:via-black/45 dark:to-black/20" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-transparent hidden md:block" />

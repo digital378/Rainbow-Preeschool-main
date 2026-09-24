@@ -1,0 +1,34 @@
+Spec looks right. Add this addendum before building:
+
+1. EXACT LINK FIXES (edit the link on the page; no new redirects)
+- /kindergarten: /blog/parents-prepare-child-school → /blog/preparing-your-child-for-first-day-preschool
+- /nursery: /blog/preschool-vs-daycare → /blog/preschool-vs-daycare-difference
+- /nursery: /preschool-near-panch-pakhadi-thane-west → /preschool-in-hariniwas-thane (the "Hariniwas (Panchpakadi)" entry in nursery-landing.tsx)
+- /kindergarten, /nursery, /blog/first-day-preschool-packing-checklist, /blog/yoga-mindfulness-preschoolers-daily-routines: /branches → /contact
+- /national-symbols-of-india-for-kids: /admissions → /preschool-admissions; /republic-day-2026 → /blog/republic-day-2026
+- 22 legacy article pages: /best-preschool-in-thane → /best-preschool-near-me-in-thane (probably one shared template; fix it there)
+- /holi-activities-for-kids: /brain-gym-activities-for-preschoolers and /innovative-learning-activities-for-preschoolers → /blog/50-fun-learning-activities-preschoolers
+- /blog/republic-day-2026: /centres → /contact
+
+2. REDIRECT CORRECTIONS
+- The live URL is /thane/kasarwadavli/ (with a "w"), not /thane/kasarvadavli/. Redirect the "w" spelling.
+- Add each of /thane/aggarwal and /thane/kasarwadavli with and without the trailing slash.
+- Place them in the exact-match map so they run BEFORE the "/thane/* → /" catch-all in redirects.ts; otherwise the catch-all still wins.
+
+3. MERGE RULES FOR SHARED DATA
+- <title> and meta description: keep the current bot versions.
+- H1 and body text: keep the current visitor versions.
+- Do not change any URL, slug, publish date, dateModified or sitemap lastmod as a side effect of the refactor.
+
+4. THE 11 THIN PAGES (bot vs visitor words today)
+/ 291 vs 783; /programmes 182 vs 442; /contact 167 vs 464; /blog 596 vs 2,045; /nursery 493 vs 1,532; /kindergarten 521 vs 1,278; /happy-times 121 vs 1,015; /holi-activities-for-kids 183 vs 2,769; /national-symbols-of-india-for-kids 1,023 vs 3,311; /top-preschools-in-thane 318 vs 943; /testimonials 175 vs 916.
+
+5. VALIDATION — EVERY PAGE, NOT JUST AFFECTED ROUTES
+- For every page in the sitemap, report a table: title, description, H1 match (yes/no) and bot vs visitor word count. Flag any page where bot words are under 80% of visitor words.
+- Pass targets: homepage mobile LCP under 4 s in 3 of 3 Lighthouse runs; /contact CLS under 0.1 in 3 of 3.
+
+6. CLOUDFLARE
+- Use Cloudflare's <!--email_off--> ... <!--/email_off--> HTML comments around the email on /contact. That's page-scoped and needs no dashboard change.
+
+7. OUT OF SCOPE
+- Near-duplicate playgroup locality pages: no content rewrites in this task.

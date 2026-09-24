@@ -7,8 +7,7 @@ import { STANDALONE_BLOG_SLUGS } from "../shared/standalone-blog-slugs";
 import { isNonSeoServerRoute } from "./non-seo-routes";
 import { storage } from "./storage";
 import { redirectMap } from "./redirects";
-import { SITEMAP_ENTRIES } from "@shared/sitemap-entries";
-import { getLiveLegacySitemapEntries } from "./legacy-sitemap";
+import { BLOG_LIST_COPY, blogPostToListEntry, legacyBlogListEntries } from "@shared/blog-list-copy";
 
 // Inclusion rule: only add UA strings that appear EXCLUSIVELY in automated
 // crawlers / bots and NEVER in any human-operated browser or in-app browser.
@@ -179,29 +178,19 @@ function finalInternalPath(raw: string): string | null {
  */
 async function addArticleDiscoveryLinks(seo: PageSEOData): Promise<PageSEOData> {
   if (seo.canonical !== `${BASE_URL}/blog`) return seo;
-  const links = new Map<string, { text: string; url: string }>();
-  const add = (text: string, raw: string) => {
-    const url = finalInternalPath(raw);
-    if (!url || url === "/blog" || links.has(url)) return;
-    links.set(url, { text: text.trim(), url });
-  };
   const posts = await storage.getBlogPosts();
-  for (const post of posts) add(post.title, `/blog/${post.slug}`);
-
-  // Curated root-level articles, including live legacy and seasonal pages.
-  // The sitemap is the allowlist: old legacy records that now redirect must
-  // never appear in this crawlable index.
-  for (const entry of [...SITEMAP_ENTRIES, ...getLiveLegacySitemapEntries()]) {
-    if (entry.url.startsWith("/blog/")) continue;
-    const page = getPageSEO(entry.url);
-    if (page?.ogType !== "article" || page.noIndex ||
-        page.canonical !== `${BASE_URL}${entry.url}`) continue;
-    add(page.h1 || page.title, entry.url);
+  const entriesByUrl = new Map<string, ReturnType<typeof blogPostToListEntry>>();
+  for (const entry of [...posts.map(blogPostToListEntry), ...legacyBlogListEntries()]) {
+    if (!entriesByUrl.has(entry.url)) entriesByUrl.set(entry.url, entry);
   }
-
-  const sections = (seo.contentSections || []).filter(section => section.heading !== "Latest Articles");
-  sections.push({ heading: "Latest Articles", links: Array.from(links.values()) });
-  return { ...seo, contentSections: sections };
+  const entries = Array.from(entriesByUrl.values());
+  const categories = Array.from(new Set(entries.map((entry) => entry.category))).sort();
+  return {
+    ...seo,
+    blogCards: entries,
+    blogCategories: [BLOG_LIST_COPY.allCategory, ...categories],
+    blogArticleCount: entries.length,
+  };
 }
 
 function escapeHtml(str: string): string {
@@ -345,6 +334,20 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
   const internalLinksHtml = (seo.internalLinks || [])
     .map((link) => `<li><a href="${BASE_URL}${link.url}">${escapeHtml(link.text)}</a></li>`)
     .join("\n          ");
+  const blogControlsHtml = seo.blogCategories && seo.blogArticleCount !== undefined
+    ? `<section aria-label="Blog filters"><ul>${seo.blogCategories.map(category => `<li>${escapeHtml(category)}</li>`).join("")}</ul><p>${escapeHtml(BLOG_LIST_COPY.articleCountPattern
+      .replace("{count}", String(seo.blogArticleCount))
+      .replace("{plural}", seo.blogArticleCount === 1 ? "" : "s"))}</p></section>`
+    : "";
+  const blogCardsHtml = seo.blogCards
+    ? `<section aria-label="Latest articles"><div>${seo.blogCards.map(card => `
+      <a href="${escapeHtml(card.url)}"><article>
+        <span>${escapeHtml(card.category)}</span>
+        <h2>${escapeHtml(card.title)}</h2>
+        <p>${escapeHtml(card.excerpt)}</p>
+        <div>${escapeHtml(BLOG_LIST_COPY.readArticle)}</div>
+      </article></a>`).join("\n")}</div></section>`
+    : "";
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -416,6 +419,8 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
       ${seo.lastModified ? `<p style="font-size:0.875rem;color:#666;margin:8px 0 16px"><strong>Reviewed by Rainbow Preschool Curriculum Team</strong> — Last updated: <time datetime="${seo.lastModified}">${escapeHtml(seo.lastModifiedDisplay || seo.lastModified)}</time></p>` : ""}
       ${seo.introText ? `<p>${escapeHtml(seo.introText)}</p>` : ""}
       ${contentHtml}
+      ${blogControlsHtml}
+      ${blogCardsHtml}
       ${internalLinksHtml ? `<nav aria-label="Related pages"><h2>Explore More</h2><ul>${internalLinksHtml}</ul></nav>` : ""}
       <a href="${BASE_URL}/contact" class="cta">Enquire Now — Call 82915 68972</a>
       <div class="network">
@@ -455,6 +460,12 @@ export function setupBotSSR(app: Express) {
       urlPath.startsWith("/images/") ||
       urlPath.match(/\.(js|css|png|jpe?g|webp|svg|pdf|ico|woff2?|ttf|map|json|xml|txt)$/)
     ) {
+      return next();
+    }
+
+    // These articles have complete standalone HTML with their own published
+    // dates and metadata. Never replace them with shorter generated summaries.
+    if (STANDALONE_BLOG_SLUGS.some((slug) => urlPath === `/blog/${slug}`)) {
       return next();
     }
 
@@ -512,10 +523,17 @@ export function setupBotSSR(app: Express) {
       return;
     }
 
-    const html = renderSSRHtml(
+    let html = renderSSRHtml(
       urlPath === "/blog" ? await addArticleDiscoveryLinks(seo) : seo,
       urlPath,
     );
+    if (urlPath === "/contact") {
+      const email = "admin@rainbowpreschools.com";
+      html = html.replace(
+        email,
+        `<!--email_off--><a href="mailto:${email}">${email}</a><!--/email_off-->`,
+      );
+    }
     res.status(200).set({
       "Content-Type": "text/html; charset=utf-8",
       // Bot SSR responses vary by user-agent and must NEVER be cached at the

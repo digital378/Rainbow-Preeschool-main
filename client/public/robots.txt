@@ -12,9 +12,6 @@ Disallow: /dummy
 # ── API routes ────────────────────────────────────────────────────────────────
 Disallow: /api/
 
-# ── UTM parameter URLs (prevent duplicate indexing of tracked URLs) ───────────
-Disallow: /*?utm_
-
 # ── Sitemap ───────────────────────────────────────────────────────────────────
 Sitemap: https://www.rainbowpreschools.com/sitemap.xml
 

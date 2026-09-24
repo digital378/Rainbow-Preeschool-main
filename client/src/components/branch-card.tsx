@@ -13,6 +13,13 @@ import {
 
 interface BranchCardProps {
   branch: Branch;
+  copy?: {
+    view: string;
+    localCentre: string;
+    whatsapp: string;
+    directions: string;
+    localPages?: Record<string, { url: string; locality: string }>;
+  };
 }
 
 // Map branch IDs to local preschool landing page URLs
@@ -26,8 +33,8 @@ const branchToLocalPage: Record<string, { url: string; locality: string }> = {
   "kasarvadavali": { url: "/preschool-in-kasarvadavali-thane", locality: "Kasarvadavali" },
 };
 
-export function BranchCard({ branch }: BranchCardProps) {
-  const localPage = branchToLocalPage[branch.id];
+export function BranchCard({ branch, copy = { view: "View", localCentre: "Centre", whatsapp: "WhatsApp", directions: "Directions" } }: BranchCardProps) {
+  const localPage = copy.localPages?.[branch.id] || branchToLocalPage[branch.id];
   const whatsappNumber = branch.whatsapp?.replace(/\s/g, "");
   const landline = 'landline' in branch ? branch.landline : undefined;
   const secondCalling = 'secondCalling' in branch ? branch.secondCalling : undefined;
@@ -133,7 +140,7 @@ export function BranchCard({ branch }: BranchCardProps) {
           {localPage && (
             <Link href={localPage.url} onClick={handleLocalPageClick}>
               <Button className="w-full" data-testid={`button-branch-local-page-${branch.id}`}>
-                View {localPage.locality} Centre
+                {copy.view} {localPage.locality} {copy.localCentre}
                 <ArrowRight className="w-4 h-4 ml-2" />
               </Button>
             </Link>
@@ -156,7 +163,7 @@ export function BranchCard({ branch }: BranchCardProps) {
                   data-testid={`link-branch-whatsapp-${branch.id}`}
                 >
                   <SiWhatsapp className="w-4 h-4 mr-2 text-green-600" />
-                  WhatsApp
+                  {copy.whatsapp}
                 </a>
               </Button>
             )}
@@ -174,7 +181,7 @@ export function BranchCard({ branch }: BranchCardProps) {
                 data-testid={`link-branch-directions-${branch.id}`}
               >
                 <ExternalLink className="w-4 h-4 mr-2" />
-                Directions
+                {copy.directions}
               </a>
             </Button>
           </div>

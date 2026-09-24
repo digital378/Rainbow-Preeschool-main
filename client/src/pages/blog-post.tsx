@@ -13,6 +13,7 @@ import {
   COMMERCIAL_PAGES_LAST_UPDATED_DISPLAY,
 } from "@shared/seo-config";
 import { getBlogAuthorship } from "@shared/blog-authors";
+import { getBlogMetadata } from "@shared/blog-metadata";
 import { VERIFIED_RATING } from "@shared/verified-rating";
 import { Calendar, ArrowLeft, User, Clock, CheckCircle, Download } from "lucide-react";
 import { BlogCTA, type BlogCTATopic } from "@/components/blog-cta";
@@ -1180,6 +1181,7 @@ export default function BlogPost() {
 
   const formattedDate = format(new Date(post.publishedAt), "MMMM dd, yyyy");
   const authorship = getBlogAuthorship(post.slug);
+  const blogMetadata = getBlogMetadata(post.slug);
 
   const postTopic: BlogCTATopic = (() => {
     const s = post.slug;
@@ -1232,8 +1234,8 @@ export default function BlogPost() {
   return (
     <div className="pt-20 md:pt-24">
       <SEO
-        title={post.seoTitle}
-        description={post.seoDescription}
+        title={blogMetadata?.title ?? post.seoTitle}
+        description={blogMetadata?.description ?? post.seoDescription}
         keywords={post.seoKeywords}
         canonical={`https://www.rainbowpreschools.com/blog/${post.slug}`}
         ogType="article"
@@ -1255,7 +1257,7 @@ export default function BlogPost() {
           <header className="mb-8">
             <Badge variant="secondary" className="mb-4">Early Childhood Education</Badge>
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight">
-              {post.title}
+              {blogMetadata?.h1 ?? post.title}
             </h1>
             <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
               <span className="flex items-center gap-1" data-testid={`text-byline-author-${post.slug}`}>

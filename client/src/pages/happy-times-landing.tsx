@@ -32,7 +32,7 @@ import { CountUp } from "@/components/count-up";
 import { BranchCard } from "@/components/branch-card";
 import { EEATSignals } from "@/components/eeat-signals";
 import { LAST_UPDATED_DISPLAY, LAST_UPDATED_ISO } from "@shared/site-freshness";
-import { branches } from "@shared/schema";
+import { HAPPY_TIMES_ACTIVITIES, HAPPY_TIMES_BRANCHES, HAPPY_TIMES_COPY, HAPPY_TIMES_DAILY_ROUTINE, HAPPY_TIMES_FAQS, HAPPY_TIMES_FEATURES } from "@shared/happy-times-content";
 import { 
   CheckCircle, ArrowRight, MapPin, Phone, Clock, Users, Star, Shield, 
   BookOpen, MessageCircle, Activity, UsersRound, Lock, Heart,
@@ -125,7 +125,7 @@ function MiniCallbackForm() {
   return (
     <Card className="shadow-xl border-2 border-primary/20">
       <CardContent className="p-6">
-        <h3 className="text-xl font-bold mb-4 text-center">Request a Free Callback</h3>
+        <h3 className="text-xl font-bold mb-4 text-center">{HAPPY_TIMES_COPY.callbackTitle}</h3>
         <Form {...form}>
           <form onSubmit={form.handleSubmit((data) => mutation.mutate(data))} className="space-y-4">
             <FormField
@@ -133,9 +133,9 @@ function MiniCallbackForm() {
               name="parentName"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Parent Name *</FormLabel>
+                  <FormLabel>{HAPPY_TIMES_COPY.callbackParentLabel}</FormLabel>
                   <FormControl>
-                    <Input placeholder="Your name" {...field} data-testid="input-happytimes-callback-parent-name" />
+                    <Input placeholder={HAPPY_TIMES_COPY.callbackParentPlaceholder} {...field} data-testid="input-happytimes-callback-parent-name" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -146,9 +146,9 @@ function MiniCallbackForm() {
               name="phone"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Mobile Number *</FormLabel>
+                  <FormLabel>{HAPPY_TIMES_COPY.callbackPhoneLabel}</FormLabel>
                   <FormControl>
-                    <Input placeholder="Your mobile number" {...field} data-testid="input-happytimes-callback-phone" />
+                    <Input placeholder={HAPPY_TIMES_COPY.callbackPhonePlaceholder} {...field} data-testid="input-happytimes-callback-phone" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -159,11 +159,11 @@ function MiniCallbackForm() {
               name="childAge"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Child's Age</FormLabel>
+                  <FormLabel>{HAPPY_TIMES_COPY.callbackAgeLabel}</FormLabel>
                   <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger data-testid="select-happytimes-callback-age">
-                        <SelectValue placeholder="Select age" />
+                        <SelectValue placeholder={HAPPY_TIMES_COPY.callbackAgePlaceholder} />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
@@ -183,15 +183,15 @@ function MiniCallbackForm() {
               name="branch"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Preferred Centre</FormLabel>
+                  <FormLabel>{HAPPY_TIMES_COPY.callbackCentreLabel}</FormLabel>
                   <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger data-testid="select-happytimes-callback-branch">
-                        <SelectValue placeholder="Select centre" />
+                        <SelectValue placeholder={HAPPY_TIMES_COPY.callbackCentrePlaceholder} />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {branches.map((branch) => (
+                      {HAPPY_TIMES_BRANCHES.map((branch) => (
                         <SelectItem key={branch.id} value={branch.name}>
                           {branch.name}
                         </SelectItem>
@@ -208,12 +208,12 @@ function MiniCallbackForm() {
               disabled={mutation.isPending}
               data-testid="button-happytimes-callback-submit"
             >
-              {mutation.isPending ? "Submitting..." : "Request a Free Callback"}
+              {mutation.isPending ? "Submitting..." : HAPPY_TIMES_COPY.callbackSubmit}
             </Button>
           </form>
         </Form>
         <p className="text-xs text-muted-foreground text-center mt-3 flex items-center justify-center gap-1">
-          <Lock className="w-3 h-3" /> We respect your privacy. No spam. Only one call.
+          <Lock className="w-3 h-3" /> {HAPPY_TIMES_COPY.privacy}
         </p>
       </CardContent>
     </Card>
@@ -280,9 +280,9 @@ function ActivitiesSection({ activities }: { activities: string[] }) {
     <section ref={sectionRef} className="py-16 md:py-20 lg:py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Daily Activities</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">{HAPPY_TIMES_COPY.activitiesTitle}</h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            A variety of engaging activities to keep your child productive and entertained after school.
+            {HAPPY_TIMES_COPY.activitiesDescription}
           </p>
         </div>
         <div className="flex flex-wrap justify-center gap-3">
@@ -308,53 +308,6 @@ function ActivitiesSection({ activities }: { activities: string[] }) {
     </section>
   );
 }
-
-const featureItems = [
-  { title: "Homework Help", icon: BookOpen, gradient: "from-blue-100 to-blue-200 dark:from-blue-900/30 dark:to-blue-800/30", color: "text-blue-500" },
-  { title: "Supervised Play", icon: Gamepad2, gradient: "from-green-100 to-green-200 dark:from-green-900/30 dark:to-green-800/30", color: "text-green-500" },
-  { title: "Nutritious Snacks", icon: Apple, gradient: "from-orange-100 to-orange-200 dark:from-orange-900/30 dark:to-orange-800/30", color: "text-orange-500" },
-  { title: "Activity Sessions", icon: Palette, gradient: "from-purple-100 to-purple-200 dark:from-purple-900/30 dark:to-purple-800/30", color: "text-purple-500" },
-  { title: "Safe Environment", icon: Shield, gradient: "from-red-100 to-red-200 dark:from-red-900/30 dark:to-red-800/30", color: "text-red-500" },
-  { title: "Flexible Pickup", icon: Clock4, gradient: "from-sky-100 to-sky-200 dark:from-sky-900/30 dark:to-sky-800/30", color: "text-sky-500" },
-];
-
-const dailyRoutine = [
-  { time: "2:00 PM", activity: "Welcome & Snack", description: "Warm welcome and nutritious snack time" },
-  { time: "2:30 PM", activity: "Homework Time", description: "Supervised homework assistance and study support" },
-  { time: "4:00 PM", activity: "Free Play", description: "Unstructured play and social interaction" },
-  { time: "4:30 PM", activity: "Activity Hour", description: "Art, music, or guided activities" },
-  { time: "5:30 PM", activity: "Quiet Time", description: "Reading, puzzles, and calming activities" },
-  { time: "6:00 PM - 7:00 PM", activity: "Pickup", description: "Flexible pickup window for parents" },
-];
-
-const faqs = [
-  {
-    question: "Where can I find a good daycare near me in Thane?",
-    answer: "Rainbow Preschool has 6 daycare centres across Thane including Manpada, Kalwa, Anand Nagar, Dhokali, Kasarvadavali, and Hariniwas. Call 82915 68972 to find the daycare nearest to your home."
-  },
-  {
-    question: "What are the daycare timings for working parents?",
-    answer: "Our daycare operates from 2:00 PM to 7:00 PM on school days. We offer flexible pickup times within this window to accommodate working parents' schedules across Thane."
-  },
-  {
-    question: "Is the daycare safe for my child?",
-    answer: "Absolutely! Safety is our top priority. We have CCTV surveillance, 100% female staff, secure entry/exit, and trained caregivers at all our daycare centres in Thane."
-  },
-  {
-    question: "What age group is daycare suitable for in Thane?",
-    answer: "Our daycare is designed for children aged 2 to 10 years who need after-school care. We group children by age to ensure age-appropriate activities and supervision."
-  },
-  {
-    question: "Are healthy snacks provided at daycare?",
-    answer: "Yes! We provide healthy, nutritious snacks in the afternoon. Our safe daycare for kids also accommodates special dietary requirements if needed."
-  },
-  {
-    question: "How can I enquire about daycare admission in Thane?",
-    answer: "Book a centre visit by calling 82915 68972 or fill out our enquiry form. Our team will schedule a convenient time for you to visit your nearest daycare for working parents."
-  },
-];
-
-const activities = ["Homework help", "Art", "Outdoor play", "Reading", "Board games", "Snack time", "Indoor games", "Story time"];
 
 export default function HappyTimesLanding() {
   useEffect(() => {
@@ -384,10 +337,10 @@ export default function HappyTimesLanding() {
                 Ages 2 - 10 Years
               </Badge>
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-                Daycare in Thane for Children Aged 2 to 10 Years
+                {HAPPY_TIMES_COPY.heroTitle}
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed">
-                A safe, nurturing after-school programme with homework help, supervised play, and healthy snacks. Peace of mind for working parents.
+                {HAPPY_TIMES_COPY.heroDescription}
               </p>
               <div className="flex flex-wrap gap-4">
                 <Button size="lg" onClick={() => document.getElementById('enquiry-form')?.scrollIntoView({ behavior: 'smooth' })} data-testid="button-happytimes-hero-enquire">
@@ -414,16 +367,16 @@ export default function HappyTimesLanding() {
       <section className="py-16 md:py-20 lg:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-center">Why After-School Care Matters</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-center">{HAPPY_TIMES_COPY.whyTitle}</h2>
             <div className="prose prose-lg max-w-none text-muted-foreground">
               <p className="text-lg leading-relaxed mb-4">
-                <strong>After-school care</strong> provides a safe and structured environment for children when school ends but parents are still at work. For families in Thane, Happy Times offers the perfect solution for children aged 2 to 10 years.
+                {HAPPY_TIMES_COPY.whyParagraphs[0]}
               </p>
               <p className="text-lg leading-relaxed mb-4">
-                At Rainbow Preschool's Happy Times, children receive dedicated homework assistance, ensuring they complete assignments with guidance and develop strong study habits. Our supervised play activities promote physical development and social skills in a secure setting.
+                {HAPPY_TIMES_COPY.whyParagraphs[1]}
               </p>
               <p className="text-lg leading-relaxed">
-                Working parents can have complete peace of mind knowing their children are in a caring environment with trained staff, CCTV monitoring, and healthy snacks. Our extended hours until 7 PM accommodate varied work schedules, making pickup convenient and stress-free.
+                {HAPPY_TIMES_COPY.whyParagraphs[2]}
               </p>
             </div>
           </div>
@@ -434,15 +387,15 @@ export default function HappyTimesLanding() {
       <section className="py-16 md:py-20 lg:py-24 bg-muted/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">A Day at Happy Times</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">{HAPPY_TIMES_COPY.dayTitle}</h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              A structured afternoon that balances homework, play, and relaxation.
+              {HAPPY_TIMES_COPY.dayDescription}
             </p>
           </div>
           <div className="max-w-3xl mx-auto">
             <div className="relative">
               <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-primary/20 transform md:-translate-x-1/2" />
-              {dailyRoutine.map((item, index) => (
+              {HAPPY_TIMES_DAILY_ROUTINE.map((item, index) => (
                 <div key={index} className={`relative flex items-start gap-4 mb-8 ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
                   <div className="absolute left-4 md:left-1/2 w-3 h-3 bg-primary rounded-full transform -translate-x-1/2 mt-2" />
                   <div className={`ml-12 md:ml-0 md:w-1/2 ${index % 2 === 0 ? 'md:pr-12 md:text-right' : 'md:pl-12'}`}>
@@ -463,20 +416,31 @@ export default function HappyTimesLanding() {
       <section className="py-16 md:py-20 lg:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">What We Offer</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">{HAPPY_TIMES_COPY.offerTitle}</h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Everything your child needs for a productive and enjoyable after-school experience.
+              {HAPPY_TIMES_COPY.offerDescription}
             </p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
-            {featureItems.map((item, index) => (
+            {HAPPY_TIMES_FEATURES.map((title, index) => {
+              const featureItems = [
+                { icon: BookOpen, gradient: "from-blue-100 to-blue-200 dark:from-blue-900/30 dark:to-blue-800/30", color: "text-blue-500" },
+                { icon: Gamepad2, gradient: "from-green-100 to-green-200 dark:from-green-900/30 dark:to-green-800/30", color: "text-green-500" },
+                { icon: Apple, gradient: "from-orange-100 to-orange-200 dark:from-orange-900/30 dark:to-orange-800/30", color: "text-orange-500" },
+                { icon: Palette, gradient: "from-purple-100 to-purple-200 dark:from-purple-900/30 dark:to-purple-800/30", color: "text-purple-500" },
+                { icon: Shield, gradient: "from-red-100 to-red-200 dark:from-red-900/30 dark:to-red-800/30", color: "text-red-500" },
+                { icon: Clock4, gradient: "from-sky-100 to-sky-200 dark:from-sky-900/30 dark:to-sky-800/30", color: "text-sky-500" },
+              ];
+              const item = featureItems[index];
+              return (
               <div key={index} className="text-center">
                 <div className={`inline-flex items-center justify-center w-16 h-16 rounded-xl bg-gradient-to-br ${item.gradient} shadow-[0_4px_0_0_rgba(0,0,0,0.1)] mb-4`}>
                   <item.icon className={`w-8 h-8 ${item.color}`} />
                 </div>
-                <h3 className="font-semibold text-lg">{item.title}</h3>
+                <h3 className="font-semibold text-lg">{title}</h3>
               </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
@@ -487,29 +451,18 @@ export default function HappyTimesLanding() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
             <div>
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                Need After-School Care for Your Child?
+                {HAPPY_TIMES_COPY.enquiryTitle}
               </h2>
               <p className="text-muted-foreground text-lg leading-relaxed mb-6">
-                Let us help you find the perfect after-school solution. Share your details and we'll guide you through our Happy Times programme.
+                {HAPPY_TIMES_COPY.enquiryDescription}
               </p>
               <ul className="space-y-3">
-                <li className="flex items-center gap-3">
-                  <CheckCircle className="w-5 h-5 text-green-500 shrink-0" />
-                  <span>Flexible hours to suit your work schedule</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <CheckCircle className="w-5 h-5 text-green-500 shrink-0" />
-                  <span>Schedule a centre visit at your convenience</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <CheckCircle className="w-5 h-5 text-green-500 shrink-0" />
-                  <span>Learn about fees and enrollment process</span>
-                </li>
+                {HAPPY_TIMES_COPY.enquiryBullets.map((item) => <li key={item} className="flex items-center gap-3"><CheckCircle className="w-5 h-5 text-green-500 shrink-0" /><span>{item}</span></li>)}
               </ul>
             </div>
             <Card className="shadow-lg">
               <CardContent className="p-6 md:p-8">
-                <h3 className="text-xl font-bold mb-6">Talk to Our Admission Expert</h3>
+                <h3 className="text-xl font-bold mb-6">{HAPPY_TIMES_COPY.admissionExpert}</h3>
                 <ContactForm defaultProgramme="Happy Times" />
               </CardContent>
             </Card>
@@ -522,36 +475,17 @@ export default function HappyTimesLanding() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">Why Choose Happy Times?</h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6">{HAPPY_TIMES_COPY.chooseTitle}</h2>
               <ul className="space-y-4">
-                <li className="flex items-start gap-3">
-                  <Star className="w-5 h-5 text-secondary mt-0.5 shrink-0" />
-                  <span className="text-lg">Extended hours until 7 PM for working parents</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <Star className="w-5 h-5 text-secondary mt-0.5 shrink-0" />
-                  <span className="text-lg">Dedicated homework assistance and study support</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <Star className="w-5 h-5 text-secondary mt-0.5 shrink-0" />
-                  <span className="text-lg">Healthy, nutritious snacks included</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <Star className="w-5 h-5 text-secondary mt-0.5 shrink-0" />
-                  <span className="text-lg">Safe and fun environment with trained staff</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <Star className="w-5 h-5 text-secondary mt-0.5 shrink-0" />
-                  <span className="text-lg">Engaging activities for all age groups</span>
-                </li>
+                {HAPPY_TIMES_COPY.chooseBullets.map((item) => <li key={item} className="flex items-start gap-3"><Star className="w-5 h-5 text-secondary mt-0.5 shrink-0" /><span className="text-lg">{item}</span></li>)}
               </ul>
               <div className="mt-8 text-muted-foreground">
                 <div className="flex items-start gap-4">
                   <Clock className="w-5 h-5 text-primary mt-0.5 shrink-0" />
                   <div>
-                    <strong>Operating Hours:</strong>
+                    <strong>{HAPPY_TIMES_COPY.operatingHours}</strong>
                     <div className="mt-1">
-                      <div>Monday to Friday - 2:00 PM to 7:00 PM</div>
+                      <div>{HAPPY_TIMES_COPY.weekdayHours}</div>
                     </div>
                   </div>
                 </div>
@@ -595,61 +529,61 @@ export default function HappyTimesLanding() {
       <section className="py-16 md:py-20 lg:py-24 bg-muted/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Safety & Hygiene Promise</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">{HAPPY_TIMES_COPY.safetyTitle}</h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Your child's safety is our top priority. Here's how we ensure a secure environment.
+              {HAPPY_TIMES_COPY.safetyDescription}
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <Card className="text-center p-6">
               <ShieldCheck className="w-12 h-12 text-green-500 mx-auto mb-4" />
-              <h3 className="font-semibold text-lg mb-2">Regular Sanitization</h3>
-              <p className="text-sm text-muted-foreground">All toys, surfaces, and classrooms sanitized multiple times daily</p>
+              <h3 className="font-semibold text-lg mb-2">{HAPPY_TIMES_COPY.safetyItems[0].title}</h3>
+              <p className="text-sm text-muted-foreground">{HAPPY_TIMES_COPY.safetyItems[0].description}</p>
             </Card>
             <Card className="text-center p-6">
               <UsersRound className="w-12 h-12 text-red-500 mx-auto mb-4" />
-              <h3 className="font-semibold text-lg mb-2">100% Female Staff</h3>
-              <p className="text-sm text-muted-foreground">All caregivers and teachers are trained female professionals</p>
+              <h3 className="font-semibold text-lg mb-2">{HAPPY_TIMES_COPY.safetyItems[1].title}</h3>
+              <p className="text-sm text-muted-foreground">{HAPPY_TIMES_COPY.safetyItems[1].description}</p>
             </Card>
             <Card className="text-center p-6">
               <Eye className="w-12 h-12 text-blue-500 mx-auto mb-4" />
-              <h3 className="font-semibold text-lg mb-2">CCTV Surveillance</h3>
-              <p className="text-sm text-muted-foreground">24/7 monitoring across all areas of the premises</p>
+              <h3 className="font-semibold text-lg mb-2">{HAPPY_TIMES_COPY.safetyItems[2].title}</h3>
+              <p className="text-sm text-muted-foreground">{HAPPY_TIMES_COPY.safetyItems[2].description}</p>
             </Card>
             <Card className="text-center p-6">
               <MessageSquare className="w-12 h-12 text-purple-500 mx-auto mb-4" />
-              <h3 className="font-semibold text-lg mb-2">Parent Communication</h3>
-              <p className="text-sm text-muted-foreground">Regular updates on your child's activities and progress</p>
+              <h3 className="font-semibold text-lg mb-2">{HAPPY_TIMES_COPY.safetyItems[3].title}</h3>
+              <p className="text-sm text-muted-foreground">{HAPPY_TIMES_COPY.safetyItems[3].description}</p>
             </Card>
           </div>
         </div>
       </section>
 
       {/* Daily Activities - Chip Style */}
-      <ActivitiesSection activities={activities} />
+      <ActivitiesSection activities={[...HAPPY_TIMES_ACTIVITIES]} />
 
       {/* Programme Highlights */}
       <section className="py-16 md:py-20 lg:py-24 bg-muted/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Programme Highlights</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">{HAPPY_TIMES_COPY.highlightsTitle}</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
             <div className="flex items-center gap-3 p-4 bg-background rounded-lg">
               <CheckCircle className="w-5 h-5 text-green-500 shrink-0" />
-              <span>Peace of mind for working parents</span>
+              <span>{HAPPY_TIMES_COPY.highlights[0]}</span>
             </div>
             <div className="flex items-center gap-3 p-4 bg-background rounded-lg">
               <CheckCircle className="w-5 h-5 text-green-500 shrink-0" />
-              <span>Safe, supervised environment</span>
+              <span>{HAPPY_TIMES_COPY.highlights[1]}</span>
             </div>
             <div className="flex items-center gap-3 p-4 bg-background rounded-lg">
               <CheckCircle className="w-5 h-5 text-green-500 shrink-0" />
-              <span>Productive time with homework support</span>
+              <span>{HAPPY_TIMES_COPY.highlights[2]}</span>
             </div>
             <div className="flex items-center gap-3 p-4 bg-background rounded-lg">
               <CheckCircle className="w-5 h-5 text-green-500 shrink-0" />
-              <span>Engaging activities and healthy snacks</span>
+              <span>{HAPPY_TIMES_COPY.highlights[3]}</span>
             </div>
           </div>
         </div>
@@ -660,13 +594,13 @@ export default function HappyTimesLanding() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">Our Locations</p>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Happy Times Centres in Thane</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">{HAPPY_TIMES_COPY.locationsTitle}</h2>
             <p className="text-muted-foreground text-lg">
-              Find a Rainbow Preschool Happy Times centre near you. We have 6 centres across Thane.
+              {HAPPY_TIMES_COPY.locationsDescription}
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {branches.map((branch) => (
+            {HAPPY_TIMES_BRANCHES.map((branch) => (
               <BranchCard key={branch.id} branch={branch} />
             ))}
           </div>
@@ -677,14 +611,14 @@ export default function HappyTimesLanding() {
       <section className="py-16 md:py-20 lg:py-24 bg-muted/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Frequently Asked Questions</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">{HAPPY_TIMES_COPY.faqTitle}</h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Common questions parents ask about our Happy Times programme.
+              {HAPPY_TIMES_COPY.faqDescription}
             </p>
           </div>
           <div className="max-w-3xl mx-auto">
             <Accordion type="single" collapsible className="space-y-4">
-              {faqs.map((faq, index) => (
+              {HAPPY_TIMES_FAQS.map((faq, index) => (
                 <AccordionItem key={index} value={`faq-${index}`} className="bg-background rounded-lg px-6">
                   <AccordionTrigger className="text-left font-semibold hover:no-underline">
                     {faq.question}
@@ -696,7 +630,7 @@ export default function HappyTimesLanding() {
               ))}
             </Accordion>
             <div className="text-center mt-8">
-              <p className="text-muted-foreground mb-4">Still have questions?</p>
+              <p className="text-muted-foreground mb-4">{HAPPY_TIMES_COPY.faqStillQuestions}</p>
               <Button 
                 variant="outline"
                 onClick={() => document.getElementById('enquiry-form')?.scrollIntoView({ behavior: 'smooth' })}
@@ -712,7 +646,7 @@ export default function HappyTimesLanding() {
       {/* Internal Links Section */}
       <section className="py-10 md:py-12 bg-gray-50 dark:bg-gray-800/50">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-lg md:text-xl font-bold text-gray-900 dark:text-white mb-5 text-center">Explore Rainbow Preschool</h2>
+          <h2 className="text-lg md:text-xl font-bold text-gray-900 dark:text-white mb-5 text-center">{HAPPY_TIMES_COPY.exploreTitle}</h2>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             <Link href="/best-preschool-near-me-in-thane" className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center" data-testid="link-happytimes-best-preschool">
               <Award className="w-5 h-5 text-primary" />
@@ -753,10 +687,10 @@ export default function HappyTimesLanding() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="text-center text-white">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-              Give Your Child a Safe and Productive After-School Experience
+              {HAPPY_TIMES_COPY.finalTitle}
             </h2>
             <p className="text-lg md:text-xl mb-8 opacity-90 max-w-2xl mx-auto">
-              Join Happy Times for quality after-school care that gives parents peace of mind.
+              {HAPPY_TIMES_COPY.finalDescription}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button 

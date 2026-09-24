@@ -47,6 +47,14 @@ import { EEATSignals } from "@/components/eeat-signals";
 import { VERIFIED_RATING } from "@/lib/verified-rating";
 import { LAST_UPDATED_DISPLAY, LAST_UPDATED_ISO } from "@shared/site-freshness";
 import { trackProgrammeView, trackFormSubmit } from "@/lib/analytics";
+import {
+  KINDERGARTEN_DAILY_ROUTINE as dailyRoutine,
+  KINDERGARTEN_VISITOR_COPY,
+  KINDERGARTEN_VISITOR_FAQS as faqs,
+  PROGRAMME_LANDING_EEAT_COPY,
+} from "@/pages/visitor-page-copy";
+
+const activities = KINDERGARTEN_VISITOR_COPY.sections[8].items ?? [];
 
 const callbackFormSchema = z.object({
   parentName: z.string().min(2, "Please enter your name"),
@@ -113,7 +121,7 @@ function MiniCallbackForm() {
   return (
     <Card className="shadow-xl border-2 border-primary/20">
       <CardContent className="p-6">
-        <h3 className="text-xl font-bold mb-4 text-center">Request a Free Callback</h3>
+        <h3 className="text-xl font-bold mb-4 text-center">{KINDERGARTEN_VISITOR_COPY.sections[14].items?.[0]}</h3>
         <Form {...form}>
           <form onSubmit={form.handleSubmit((data) => mutation.mutate(data))} className="space-y-4">
             <FormField
@@ -121,9 +129,9 @@ function MiniCallbackForm() {
               name="parentName"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Parent Name *</FormLabel>
+                  <FormLabel>{KINDERGARTEN_VISITOR_COPY.sections[14].items?.[1]}</FormLabel>
                   <FormControl>
-                    <Input placeholder="Your name" {...field} data-testid="input-kg-callback-parent-name" />
+                    <Input placeholder={KINDERGARTEN_VISITOR_COPY.sections[14].items?.[2]} {...field} data-testid="input-kg-callback-parent-name" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -134,9 +142,9 @@ function MiniCallbackForm() {
               name="phone"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Mobile Number *</FormLabel>
+                  <FormLabel>{KINDERGARTEN_VISITOR_COPY.sections[14].items?.[3]}</FormLabel>
                   <FormControl>
-                    <Input placeholder="Your mobile number" {...field} data-testid="input-kg-callback-phone" />
+                    <Input placeholder={KINDERGARTEN_VISITOR_COPY.sections[14].items?.[4]} {...field} data-testid="input-kg-callback-phone" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -147,19 +155,19 @@ function MiniCallbackForm() {
               name="childAge"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Child's Age</FormLabel>
+                  <FormLabel>{KINDERGARTEN_VISITOR_COPY.sections[14].items?.[5]}</FormLabel>
                   <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger data-testid="select-kg-callback-age">
-                        <SelectValue placeholder="Select age" />
+                        <SelectValue placeholder={KINDERGARTEN_VISITOR_COPY.sections[14].items?.[6]} />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="3.5 years">3.5 years</SelectItem>
-                      <SelectItem value="4 years">4 years</SelectItem>
-                      <SelectItem value="4.5 years">4.5 years</SelectItem>
-                      <SelectItem value="5 years">5 years</SelectItem>
-                      <SelectItem value="5.5 years">5.5 years</SelectItem>
+                      <SelectItem value={KINDERGARTEN_VISITOR_COPY.sections[14].items?.[7] ?? ""}>{KINDERGARTEN_VISITOR_COPY.sections[14].items?.[7]}</SelectItem>
+                      <SelectItem value={KINDERGARTEN_VISITOR_COPY.sections[14].items?.[8] ?? ""}>{KINDERGARTEN_VISITOR_COPY.sections[14].items?.[8]}</SelectItem>
+                      <SelectItem value={KINDERGARTEN_VISITOR_COPY.sections[14].items?.[9] ?? ""}>{KINDERGARTEN_VISITOR_COPY.sections[14].items?.[9]}</SelectItem>
+                      <SelectItem value={KINDERGARTEN_VISITOR_COPY.sections[14].items?.[10] ?? ""}>{KINDERGARTEN_VISITOR_COPY.sections[14].items?.[10]}</SelectItem>
+                      <SelectItem value={KINDERGARTEN_VISITOR_COPY.sections[14].items?.[11] ?? ""}>{KINDERGARTEN_VISITOR_COPY.sections[14].items?.[11]}</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />
@@ -171,11 +179,11 @@ function MiniCallbackForm() {
               name="branch"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Preferred Centre</FormLabel>
+                  <FormLabel>{KINDERGARTEN_VISITOR_COPY.sections[14].items?.[12]}</FormLabel>
                   <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger data-testid="select-kg-callback-branch">
-                        <SelectValue placeholder="Select centre" />
+                        <SelectValue placeholder={KINDERGARTEN_VISITOR_COPY.sections[14].items?.[13]} />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
@@ -196,12 +204,12 @@ function MiniCallbackForm() {
               disabled={mutation.isPending}
               data-testid="button-kg-callback-submit"
             >
-              {mutation.isPending ? "Submitting..." : "Request a Free Callback"}
+              {mutation.isPending ? KINDERGARTEN_VISITOR_COPY.sections[14].items?.[14] : KINDERGARTEN_VISITOR_COPY.sections[14].items?.[0]}
             </Button>
           </form>
         </Form>
         <p className="text-xs text-muted-foreground text-center mt-3 flex items-center justify-center gap-1">
-          <Lock className="w-3 h-3" /> We respect your privacy. No spam. Only one call.
+          <Lock className="w-3 h-3" /> {KINDERGARTEN_VISITOR_COPY.sections[14].items?.[15]}
         </p>
       </CardContent>
     </Card>
@@ -229,8 +237,8 @@ function StickyMobileCTA() {
           <Card className="w-full max-w-md max-h-[90vh] overflow-y-auto">
             <CardContent className="p-6">
               <div className="flex justify-between items-center mb-4">
-                <h3 className="text-xl font-bold">Request Callback</h3>
-                <Button variant="ghost" size="icon" aria-label="Close form" onClick={() => setShowForm(false)} data-testid="button-kg-modal-close">
+                <h3 className="text-xl font-bold">{KINDERGARTEN_VISITOR_COPY.sections[14].items?.[16]}</h3>
+                <Button variant="ghost" size="icon" aria-label={KINDERGARTEN_VISITOR_COPY.sections[14].items?.[17]} onClick={() => setShowForm(false)} data-testid="button-kg-modal-close">
                   <span className="text-xl" aria-hidden="true">&times;</span>
                 </Button>
               </div>
@@ -243,7 +251,7 @@ function StickyMobileCTA() {
   );
 }
 
-function ActivitiesSection({ activities }: { activities: string[] }) {
+function ActivitiesSection({ activities, heading, description }: { activities: readonly string[]; heading: string; description: string }) {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -268,9 +276,9 @@ function ActivitiesSection({ activities }: { activities: string[] }) {
     <section ref={sectionRef} className="py-16 md:py-20 lg:py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Daily Activities</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">{heading}</h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            A variety of engaging activities to prepare your child for academic excellence.
+            {description}
           </p>
         </div>
         <div className="flex flex-wrap justify-center gap-3">
@@ -298,69 +306,14 @@ function ActivitiesSection({ activities }: { activities: string[] }) {
 }
 
 const featureItems = [
-  { title: "Reading Readiness", icon: BookOpen, gradient: "from-blue-100 to-blue-200 dark:from-blue-900/30 dark:to-blue-800/30", color: "text-blue-500" },
-  { title: "Writing Skills", icon: PenTool, gradient: "from-purple-100 to-purple-200 dark:from-purple-900/30 dark:to-purple-800/30", color: "text-purple-500" },
-  { title: "Math Concepts", icon: Calculator, gradient: "from-green-100 to-green-200 dark:from-green-900/30 dark:to-green-800/30", color: "text-green-500" },
-  { title: "Science Exploration", icon: Microscope, gradient: "from-orange-100 to-orange-200 dark:from-orange-900/30 dark:to-orange-800/30", color: "text-orange-500" },
-  { title: "Social Studies", icon: Globe, gradient: "from-sky-100 to-sky-200 dark:from-sky-900/30 dark:to-sky-800/30", color: "text-sky-500" },
-  { title: "Physical Development", icon: Dumbbell, gradient: "from-red-100 to-red-200 dark:from-red-900/30 dark:to-red-800/30", color: "text-red-500" },
+  { title: KINDERGARTEN_VISITOR_COPY.sections[2].items?.[0] ?? "", icon: BookOpen, gradient: "from-blue-100 to-blue-200 dark:from-blue-900/30 dark:to-blue-800/30", color: "text-blue-500" },
+  { title: KINDERGARTEN_VISITOR_COPY.sections[2].items?.[1] ?? "", icon: PenTool, gradient: "from-purple-100 to-purple-200 dark:from-purple-900/30 dark:to-purple-800/30", color: "text-purple-500" },
+  { title: KINDERGARTEN_VISITOR_COPY.sections[2].items?.[2] ?? "", icon: Calculator, gradient: "from-green-100 to-green-200 dark:from-green-900/30 dark:to-green-800/30", color: "text-green-500" },
+  { title: KINDERGARTEN_VISITOR_COPY.sections[2].items?.[3] ?? "", icon: Microscope, gradient: "from-orange-100 to-orange-200 dark:from-orange-900/30 dark:to-orange-800/30", color: "text-orange-500" },
+  { title: KINDERGARTEN_VISITOR_COPY.sections[2].items?.[4] ?? "", icon: Globe, gradient: "from-sky-100 to-sky-200 dark:from-sky-900/30 dark:to-sky-800/30", color: "text-sky-500" },
+  { title: KINDERGARTEN_VISITOR_COPY.sections[2].items?.[5] ?? "", icon: Dumbbell, gradient: "from-red-100 to-red-200 dark:from-red-900/30 dark:to-red-800/30", color: "text-red-500" },
 ];
 
-const dailyRoutine = [
-  { time: "8:30 AM", activity: "Morning Assembly", description: "Prayer, pledge, and national anthem" },
-  { time: "9:00 AM", activity: "Language & Literacy", description: "Reading, phonics, and vocabulary building" },
-  { time: "9:45 AM", activity: "Mathematics", description: "Numbers, counting, and basic operations" },
-  { time: "10:30 AM", activity: "Snack Break", description: "Healthy snacks and social interaction" },
-  { time: "11:00 AM", activity: "Environmental Science", description: "Nature, seasons, and world around us" },
-  { time: "11:30 AM", activity: "Art & Craft", description: "Creative expression and fine motor skills" },
-  { time: "12:00 PM", activity: "Sports & PT", description: "Physical education and outdoor games" },
-  { time: "12:30 PM", activity: "Story & Moral Values", description: "Stories that teach life lessons" },
-];
-
-const faqs = [
-  {
-    question: "Where can I find a good kindergarten near me in Thane?",
-    answer: "Rainbow Preschool International has 6 kindergarten centres across Thane — in Manpada, Kalwa, Anand Nagar, Dhokali, Kasarvadavali, and Hariniwas. Each centre offers the same comprehensive Jr. KG and Sr. KG curriculum with experienced teachers, well-equipped classrooms, and a strong focus on school readiness. Call 82915 68972 to find the kindergarten nearest to your home and schedule a free campus visit."
-  },
-  {
-    question: "What is the LKG and UKG admission process at Rainbow Preschool Thane?",
-    answer: "The kindergarten admission process at Rainbow Preschool Thane is straightforward. Start by filling out our online enquiry form or calling 82915 68972 to schedule a campus visit. During the visit, you can explore the classrooms, meet the teachers, and understand the Jr. KG or Sr. KG curriculum based on your child's age. Once you decide to enrol, complete the admission form and your child can begin their kindergarten journey at the nearest centre in Thane."
-  },
-  {
-    question: "What age is appropriate for Jr. KG and Sr. KG in Thane?",
-    answer: "At Rainbow Preschool Thane, Jr. KG (LKG) is designed for children aged 3.5 to 4.5 years, and Sr. KG (UKG) is for children aged 4.5 to 5.5 years. Each level has an age-appropriate curriculum — Jr. KG focuses on building foundational literacy and numeracy skills, while Sr. KG concentrates on school readiness with advanced reading, writing, and math concepts to prepare children for Grade 1."
-  },
-  {
-    question: "How does kindergarten at Rainbow Preschool prepare my child for Grade 1?",
-    answer: "Rainbow Preschool's kindergarten programme in Thane is specifically designed as a complete school readiness programme. By the end of Sr. KG, children can read and write simple sentences, understand number concepts up to 100 including basic addition and subtraction, think independently and follow multi-step instructions, and interact confidently in a structured classroom setting. Our curriculum covers English, Mathematics, Environmental Science, General Knowledge, and value-based education — giving your child a strong academic and emotional foundation for a smooth transition into Grade 1."
-  },
-  {
-    question: "What curriculum do you follow for kindergarten?",
-    answer: "Rainbow Preschool Thane follows a comprehensive and well-structured kindergarten curriculum that covers English language and phonics, Mathematics with hands-on number activities, Environmental Science and awareness, General Knowledge, Art and Craft for creative expression, Physical Education for gross motor development, and value-based education for character building. The curriculum balances structured academics with creative and physical activities, ensuring children develop holistically."
-  },
-  {
-    question: "What is the difference between Jr. KG and Sr. KG?",
-    answer: "Jr. KG (LKG) at Rainbow Preschool Thane introduces children to formal learning with phonics, letter writing, number recognition up to 50, and basic concepts of shapes, colours, and the environment. Sr. KG (UKG) builds on this foundation with advanced reading and sentence formation, number concepts up to 100, simple addition and subtraction, and greater focus on independent thinking and classroom discipline. Together, the two years prepare your child thoroughly for Grade 1 at any school."
-  },
-  {
-    question: "What does a typical day at Rainbow Kindergarten look like?",
-    answer: "A typical day at Rainbow Kindergarten in Thane starts with a morning assembly featuring prayers and value-based activities. This is followed by structured lessons in English, Mathematics, and Environmental Science. Children also participate in art and craft sessions, music, sports, and story time. The day is planned to maintain a healthy balance between focused academics and engaging creative activities, keeping children motivated and excited about learning."
-  },
-  {
-    question: "Is the kindergarten environment safe for my child?",
-    answer: "Every Rainbow Preschool kindergarten centre in Thane prioritises child safety. All centres have trained and experienced female teachers, CCTV-enabled classrooms, child-safe classrooms with age-appropriate furniture, and regularly sanitised premises. We also maintain a secure entry-exit system and ensure that every child is supervised at all times, whether in the classroom, during outdoor play, or at assembly."
-  },
-  {
-    question: "Do you send regular updates on my child's progress in kindergarten?",
-    answer: "Yes, Rainbow Preschool Thane believes in keeping parents actively involved. Kindergarten parents receive regular progress reports, periodic assessments, and feedback through scheduled parent-teacher meetings. Teachers also share daily observations and milestones informally so you always know how your child is progressing in academics, social skills, and overall development."
-  },
-  {
-    question: "How can I enquire about kindergarten admission in Thane?",
-    answer: "You can enquire about Jr. KG or Sr. KG admission at Rainbow Preschool Thane by calling us directly at 82915 68972 or by filling out the admission enquiry form on this page. Our admissions team will respond promptly and arrange a free campus visit at any of our 6 kindergarten centres across Thane — Manpada, Kalwa, Anand Nagar, Dhokali, Kasarvadavali, or Hariniwas."
-  },
-];
-
-const activities = ["Assembly", "Reading", "Writing", "Math games", "Science activities", "Art", "Sports", "Values education"];
 
 export default function KindergartenLanding() {
   useEffect(() => {
@@ -371,7 +324,7 @@ export default function KindergartenLanding() {
     <div className="pt-20 md:pt-24">
       <SEO
         title="Kindergarten in Thane | KG Programme (3.5–5.5 yrs) | Rainbow"
-        description="Kindergarten in Thane (Jr. KG & Sr. KG) for ages 3.5–5.5 — school-readiness covering literacy, numeracy, and life skills. Enquire for 2026-27."
+        description="Prepare your child for primary school with our Kindergarten programme (3.5–5.5 yrs) — reading, writing, maths, and life skills at Rainbow Preschool Thane."
         keywords="kindergarten school in thane, kindergarten near me, best kindergarten school, kindergarten admission near me, lkg admission near me, ukg admission near me, kindergarten curriculum, school readiness program, kindergarten for kids"
         canonical="https://www.rainbowpreschools.com/kindergarten"
         structuredData={createBreadcrumbSchema([
@@ -391,17 +344,17 @@ export default function KindergartenLanding() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
               <Badge variant="secondary" className="text-base px-4 py-1 mb-4">
-                Ages 3.5 - 5.5 Years (Jr. KG & Sr. KG)
+                {KINDERGARTEN_VISITOR_COPY.sections[15].items?.[0]}
               </Badge>
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-                Best Kindergarten in Thane for Children Aged 3.5 to 5.5 Years
+                {KINDERGARTEN_VISITOR_COPY.h1}
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed">
-                Building strong foundations in reading, writing, and math to prepare your child for Grade 1 success.
+                {KINDERGARTEN_VISITOR_COPY.intro}
               </p>
               <div className="flex flex-wrap gap-4">
                 <Button size="lg" onClick={() => document.getElementById('enquiry-form')?.scrollIntoView({ behavior: 'smooth' })} data-testid="button-kg-hero-enquire">
-                  Enquire Now <ArrowRight className="ml-2 h-5 w-5" />
+                  {KINDERGARTEN_VISITOR_COPY.sections[15].items?.[1]} <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
                 <Button 
                   variant="outline" 
@@ -409,7 +362,7 @@ export default function KindergartenLanding() {
                   onClick={() => window.open("https://wa.me/918291568972?text=Hi, I'm interested in Kindergarten admission", "_blank")}
                   data-testid="button-kg-hero-whatsapp"
                 >
-                  <SiWhatsapp className="mr-2 h-5 w-5" /> WhatsApp Us
+                  <SiWhatsapp className="mr-2 h-5 w-5" /> {KINDERGARTEN_VISITOR_COPY.sections[15].items?.[2]}
                 </Button>
               </div>
             </div>
@@ -424,16 +377,16 @@ export default function KindergartenLanding() {
       <section className="py-16 md:py-20 lg:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-center">Why Kindergarten is Important for Your Child</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-center">{KINDERGARTEN_VISITOR_COPY.sections[0].heading}</h2>
             <div className="prose prose-lg max-w-none text-muted-foreground">
               <p className="text-lg leading-relaxed mb-4">
-                <strong>Kindergarten</strong> is a crucial stepping stone between preschool and formal education. For children aged 3.5 to 5.5 years, it provides the essential academic and social foundations needed for success in Grade 1 and beyond.
+                <strong>{KINDERGARTEN_VISITOR_COPY.sections[0].paragraphs?.[0].split(" is ")[0]}</strong>{KINDERGARTEN_VISITOR_COPY.sections[0].paragraphs?.[0].split(" is ").slice(1).join(" is ")}
               </p>
               <p className="text-lg leading-relaxed mb-4">
-                At Rainbow Preschool, our Jr. KG and Sr. KG programmes focus on school readiness through structured learning. Children develop reading and writing foundations, learn mathematical concepts, and build critical thinking skills through engaging activities.
+                {KINDERGARTEN_VISITOR_COPY.sections[0].paragraphs?.[1]}
               </p>
               <p className="text-lg leading-relaxed">
-                Research shows that quality Kindergarten education significantly impacts a child's academic trajectory. Our comprehensive curriculum ensures your child is not just ready for Grade 1, but confident and enthusiastic about learning.
+                {KINDERGARTEN_VISITOR_COPY.sections[0].paragraphs?.[2]}
               </p>
             </div>
           </div>
@@ -444,9 +397,9 @@ export default function KindergartenLanding() {
       <section className="py-16 md:py-20 lg:py-24 bg-muted/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">A Day in Our Kindergarten</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">{KINDERGARTEN_VISITOR_COPY.sections[1].heading}</h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              A well-structured day that balances academic learning with creative and physical activities.
+              {KINDERGARTEN_VISITOR_COPY.sections[1].paragraphs?.[0]}
             </p>
           </div>
           <div className="max-w-3xl mx-auto">
@@ -473,9 +426,9 @@ export default function KindergartenLanding() {
       <section className="py-16 md:py-20 lg:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">What Your Child Will Learn</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">{KINDERGARTEN_VISITOR_COPY.sections[2].heading}</h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Our Kindergarten curriculum covers all essential areas for school readiness.
+              {KINDERGARTEN_VISITOR_COPY.sections[2].paragraphs?.[0]}
             </p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
@@ -497,29 +450,29 @@ export default function KindergartenLanding() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
             <div>
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                Ready to Prepare Your Child for Grade 1?
+                {KINDERGARTEN_VISITOR_COPY.sections[3].heading}
               </h2>
               <p className="text-muted-foreground text-lg leading-relaxed mb-6">
-                Our admission experts are here to guide you. Share your details and we'll help you understand how our Kindergarten can benefit your child.
+                {KINDERGARTEN_VISITOR_COPY.sections[3].paragraphs?.[0]}
               </p>
               <ul className="space-y-3">
                 <li className="flex items-center gap-3">
                   <CheckCircle className="w-5 h-5 text-green-500 shrink-0" />
-                  <span>Personalized guidance for your child's needs</span>
+                  <span>{KINDERGARTEN_VISITOR_COPY.sections[3].items?.[0]}</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <CheckCircle className="w-5 h-5 text-green-500 shrink-0" />
-                  <span>Schedule a centre visit at your convenience</span>
+                  <span>{KINDERGARTEN_VISITOR_COPY.sections[3].items?.[1]}</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <CheckCircle className="w-5 h-5 text-green-500 shrink-0" />
-                  <span>Learn about fees and admission process</span>
+                  <span>{KINDERGARTEN_VISITOR_COPY.sections[3].items?.[2]}</span>
                 </li>
               </ul>
             </div>
             <Card className="shadow-lg">
               <CardContent className="p-6 md:p-8">
-                <h3 className="text-xl font-bold mb-6">Talk to Our Admission Expert</h3>
+                <h3 className="text-xl font-bold mb-6">{KINDERGARTEN_VISITOR_COPY.sections[3].cards?.[0].heading}</h3>
                 <ContactForm defaultProgramme="Kindergarten" />
               </CardContent>
             </Card>
@@ -532,37 +485,37 @@ export default function KindergartenLanding() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">Why Choose Our Kindergarten?</h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6">{KINDERGARTEN_VISITOR_COPY.sections[4].heading}</h2>
               <ul className="space-y-4">
                 <li className="flex items-start gap-3">
                   <Star className="w-5 h-5 text-secondary mt-0.5 shrink-0" />
-                  <span className="text-lg">Comprehensive curriculum covering all subjects</span>
+                  <span className="text-lg">{KINDERGARTEN_VISITOR_COPY.sections[4].items?.[0]}</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <Star className="w-5 h-5 text-secondary mt-0.5 shrink-0" />
-                  <span className="text-lg">Trained and experienced teachers</span>
+                  <span className="text-lg">{KINDERGARTEN_VISITOR_COPY.sections[4].items?.[1]}</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <Star className="w-5 h-5 text-secondary mt-0.5 shrink-0" />
-                  <span className="text-lg">Focus on school readiness and Grade 1 preparation</span>
+                  <span className="text-lg">{KINDERGARTEN_VISITOR_COPY.sections[4].items?.[2]}</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <Star className="w-5 h-5 text-secondary mt-0.5 shrink-0" />
-                  <span className="text-lg">Balance of academics and creative activities</span>
+                  <span className="text-lg">{KINDERGARTEN_VISITOR_COPY.sections[4].items?.[3]}</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <Star className="w-5 h-5 text-secondary mt-0.5 shrink-0" />
-                  <span className="text-lg">Regular progress reports and parent communication</span>
+                  <span className="text-lg">{KINDERGARTEN_VISITOR_COPY.sections[4].items?.[4]}</span>
                 </li>
               </ul>
               <div className="mt-8 text-muted-foreground">
                 <div className="flex items-start gap-4">
                   <Clock className="w-5 h-5 text-primary mt-0.5 shrink-0" />
                   <div>
-                    <strong>Timings:</strong>
+                    <strong>{KINDERGARTEN_VISITOR_COPY.sections[4].items?.[5]}</strong>
                     <div className="mt-1 space-y-1">
-                      <div>Morning Batch - 8:30AM to 12:30PM</div>
-                      <div>Extended Day - 12:00PM to 4:00PM</div>
+                      <div>{KINDERGARTEN_VISITOR_COPY.sections[4].items?.[6]}</div>
+                      <div>{KINDERGARTEN_VISITOR_COPY.sections[4].items?.[7]}</div>
                     </div>
                   </div>
                 </div>
@@ -574,28 +527,28 @@ export default function KindergartenLanding() {
                 <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground whitespace-nowrap">
                   1 Lac+
                 </div>
-                <div className="text-sm text-muted-foreground">Happy Students</div>
+                <div className="text-sm text-muted-foreground">{KINDERGARTEN_VISITOR_COPY.sections[4].items?.[8]}</div>
               </Card>
               <Card className="text-center p-6">
                 <Star className="w-10 h-10 text-secondary mx-auto mb-3" />
                 <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground whitespace-nowrap min-h-[2.5rem] flex items-center justify-center">
                   <CountUp end={18} duration={1500} delay={200} suffix="+" />
                 </div>
-                <div className="text-sm text-muted-foreground">Years of Excellence</div>
+                <div className="text-sm text-muted-foreground">{KINDERGARTEN_VISITOR_COPY.sections[4].items?.[9]}</div>
               </Card>
               <Card className="text-center p-6">
                 <MapPin className="w-10 h-10 text-accent mx-auto mb-3" />
                 <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground whitespace-nowrap min-h-[2.5rem] flex items-center justify-center">
                   <CountUp end={6} duration={1500} delay={400} prefix="0" />
                 </div>
-                <div className="text-sm text-muted-foreground">Centres in Thane</div>
+                <div className="text-sm text-muted-foreground">{KINDERGARTEN_VISITOR_COPY.sections[4].items?.[10]}</div>
               </Card>
               <Card className="text-center p-6">
                 <GraduationCap className="w-10 h-10 text-green-500 mx-auto mb-3" />
                 <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground whitespace-nowrap min-h-[2.5rem] flex items-center justify-center">
                   <CountUp end={100} duration={1500} delay={600} suffix="%" />
                 </div>
-                <div className="text-sm text-muted-foreground">Grade 1 Ready</div>
+                <div className="text-sm text-muted-foreground">{KINDERGARTEN_VISITOR_COPY.sections[4].items?.[11]}</div>
               </Card>
             </div>
           </div>
@@ -606,43 +559,57 @@ export default function KindergartenLanding() {
       <section className="py-16 md:py-20 lg:py-24" data-testid="section-kindergarten-in-thane">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Kindergarten in Thane — School-Ready by Grade 1</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">{KINDERGARTEN_VISITOR_COPY.sections[5].heading}</h2>
             <p className="text-muted-foreground text-lg max-w-3xl mx-auto">
-              Looking for the best <strong>kindergarten in Thane</strong>? Rainbow Preschool International prepares 3.5–5.5 year olds for the demands of Grade 1 with structured literacy, numeracy, and life-skills programmes — across 6 trusted Thane West centres since 2007.
+              {KINDERGARTEN_VISITOR_COPY.sections[5].paragraphs?.[0]}
             </p>
           </div>
           <div className="grid md:grid-cols-2 gap-6 mb-10">
             <Card className="p-6">
-              <h3 className="text-xl font-semibold mb-3">Jr. KG and Sr. KG across Thane West</h3>
+              <h3 className="text-xl font-semibold mb-3">{KINDERGARTEN_VISITOR_COPY.sections[5].cards?.[0].heading}</h3>
               <p className="text-muted-foreground mb-4">
-                Our kindergarten programme runs at all 6 Rainbow centres — <strong>Manpada, Hariniwas, Anand Nagar, Dhokali, Kalwa and Kasarvadavali</strong>. Children move seamlessly from Sr. KG into top Thane primary schools including DAV, Smt. Sulochanadevi, Singhania, Hiranandani Foundation and St. Lawrence.
+                {KINDERGARTEN_VISITOR_COPY.sections[5].cards?.[0].paragraphs?.[0]}
               </p>
-              <Link href="/branches" className="text-primary font-medium hover:underline" data-testid="link-find-nearest-kg">
+              <Link href={KINDERGARTEN_VISITOR_COPY.sections[5].cards?.[0].link?.href ?? ""} className="text-primary font-medium hover:underline" data-testid="link-find-nearest-kg">
                 Find your nearest centre →
               </Link>
             </Card>
             <Card className="p-6">
-              <h3 className="text-xl font-semibold mb-3">School-readiness milestones we cover</h3>
+              <h3 className="text-xl font-semibold mb-3">{KINDERGARTEN_VISITOR_COPY.sections[5].cards?.[1].heading}</h3>
               <ul className="space-y-2 text-muted-foreground">
-                <li className="flex gap-2"><span className="text-primary">✓</span><span><strong>Reading</strong> simple sentences + sight words</span></li>
-                <li className="flex gap-2"><span className="text-primary">✓</span><span><strong>Writing</strong> A–Z + 1–100 confidently</span></li>
-                <li className="flex gap-2"><span className="text-primary">✓</span><span><strong>Math</strong> — addition, subtraction, shapes, patterns</span></li>
-                <li className="flex gap-2"><span className="text-primary">✓</span><span><strong>EVS / GK</strong> — community, environment, values</span></li>
-                <li className="flex gap-2"><span className="text-primary">✓</span><span><strong>Independence</strong> — sitting, listening, following 2-step instructions</span></li>
+                {KINDERGARTEN_VISITOR_COPY.sections[5].cards?.[1].items?.map((item, index) => {
+                  const emphasis = KINDERGARTEN_VISITOR_COPY.sections[5].cards?.[1].itemEmphasis?.[index] ?? "";
+                  return (
+                    <li key={item} className="flex gap-2">
+                      <span className="text-primary">✓</span>
+                      <span><strong>{item.slice(0, emphasis.length)}</strong>{item.slice(emphasis.length)}</span>
+                    </li>
+                  );
+                })}
               </ul>
             </Card>
           </div>
           <div className="bg-muted/40 rounded-2xl p-6 md:p-8 text-center">
             <p className="text-base md:text-lg mb-4">
-              <strong>Worried about Grade 1 transition?</strong> Read our <Link href="/blog/parents-prepare-child-school" className="text-primary hover:underline">guide to preparing your child for school</Link> or compare us with the <Link href="/top-preschools-in-thane" className="text-primary hover:underline">top 10 preschools in Thane</Link>.
+              {KINDERGARTEN_VISITOR_COPY.sections[5].paragraphSegments?.[0].map((segment, index) =>
+                segment.href ? (
+                  <Link key={index} href={segment.href} className="text-primary hover:underline">{segment.text}</Link>
+                ) : segment.text
+              )}
             </p>
             <div className="flex flex-wrap gap-3 justify-center">
-              <Link href="/preschool-admissions" className="inline-flex items-center px-5 py-2.5 rounded-full bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors" data-testid="link-admissions-kg">
-                Apply for KG 2026–27
-              </Link>
-              <Link href="/testimonials" className="inline-flex items-center px-5 py-2.5 rounded-full border border-primary text-primary font-medium hover:bg-primary/5 transition-colors" data-testid="link-testimonials-kg">
-                Read parent reviews
-              </Link>
+              {KINDERGARTEN_VISITOR_COPY.sections[5].links?.map((link, index) => (
+                <Link
+                  key={link.href}
+                  href={link.href ?? ""}
+                  className={index === 0
+                    ? "inline-flex items-center px-5 py-2.5 rounded-full bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors"
+                    : "inline-flex items-center px-5 py-2.5 rounded-full border border-primary text-primary font-medium hover:bg-primary/5 transition-colors"}
+                  data-testid={index === 0 ? "link-admissions-kg" : "link-testimonials-kg"}
+                >
+                  {link.text}
+                </Link>
+              ))}
             </div>
           </div>
         </div>
@@ -652,26 +619,26 @@ export default function KindergartenLanding() {
       <section className="py-16 md:py-20 lg:py-24 bg-muted/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Glimpses of Our Kindergarten</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">{KINDERGARTEN_VISITOR_COPY.sections[6].heading}</h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              See our kindergarteners preparing for school through structured learning, creative activities, and sports.
+              {KINDERGARTEN_VISITOR_COPY.sections[6].paragraphs?.[0]}
             </p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="md:col-span-2 md:row-span-2 relative overflow-hidden rounded-xl aspect-square">
-              <img src="/images/optimized/DSC00054.webp" alt="Kindergarten kids at Rainbow Preschool" className="w-full h-full object-cover" loading="lazy" decoding="async" width="400" height="400" data-testid="img-kindergarten-gallery-1" />
+              <img src="/images/optimized/DSC00054.webp" alt={KINDERGARTEN_VISITOR_COPY.sections[6].imageAlts?.[0]} className="w-full h-full object-cover" loading="lazy" decoding="async" width="400" height="400" data-testid="img-kindergarten-gallery-1" />
             </div>
             <div className="relative overflow-hidden rounded-xl aspect-square">
-              <img src="/images/optimized/DSC00146.webp" alt="Kids in classroom at kindergarten" className="w-full h-full object-cover" loading="lazy" decoding="async" width="400" height="400" data-testid="img-kindergarten-gallery-2" />
+              <img src="/images/optimized/DSC00146.webp" alt={KINDERGARTEN_VISITOR_COPY.sections[6].imageAlts?.[1]} className="w-full h-full object-cover" loading="lazy" decoding="async" width="400" height="400" data-testid="img-kindergarten-gallery-2" />
             </div>
             <div className="relative overflow-hidden rounded-xl aspect-square">
-              <img src="/images/optimized/DSC00002.webp" alt="Children learning in Rainbow Preschool classroom" className="w-full h-full object-cover" loading="lazy" decoding="async" width="400" height="400" data-testid="img-kindergarten-gallery-3" />
+              <img src="/images/optimized/DSC00002.webp" alt={KINDERGARTEN_VISITOR_COPY.sections[6].imageAlts?.[2]} className="w-full h-full object-cover" loading="lazy" decoding="async" width="400" height="400" data-testid="img-kindergarten-gallery-3" />
             </div>
             <div className="relative overflow-hidden rounded-xl aspect-square">
-              <img src="/images/optimized/DSC00070.webp" alt="Creative activity at kindergarten" className="w-full h-full object-cover" loading="lazy" decoding="async" width="400" height="400" data-testid="img-kindergarten-gallery-4" />
+              <img src="/images/optimized/DSC00070.webp" alt={KINDERGARTEN_VISITOR_COPY.sections[6].imageAlts?.[3]} className="w-full h-full object-cover" loading="lazy" decoding="async" width="400" height="400" data-testid="img-kindergarten-gallery-4" />
             </div>
             <div className="relative overflow-hidden rounded-xl aspect-square">
-              <img src="/images/optimized/DSC00175.webp" alt="Group learning activity in kindergarten classroom" className="w-full h-full object-cover" loading="lazy" decoding="async" width="400" height="400" data-testid="img-kindergarten-gallery-5" />
+              <img src="/images/optimized/DSC00175.webp" alt={KINDERGARTEN_VISITOR_COPY.sections[6].imageAlts?.[4]} className="w-full h-full object-cover" loading="lazy" decoding="async" width="400" height="400" data-testid="img-kindergarten-gallery-5" />
             </div>
           </div>
         </div>
@@ -681,61 +648,65 @@ export default function KindergartenLanding() {
       <section className="py-16 md:py-20 lg:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Safety & Hygiene Promise</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">{KINDERGARTEN_VISITOR_COPY.sections[7].heading}</h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Your child's safety is our top priority. Here's how we ensure a secure environment.
+              {KINDERGARTEN_VISITOR_COPY.sections[7].paragraphs?.[0]}
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <Card className="text-center p-6">
               <ShieldCheck className="w-12 h-12 text-green-500 mx-auto mb-4" />
-              <h3 className="font-semibold text-lg mb-2">Regular Sanitization</h3>
-              <p className="text-sm text-muted-foreground">All surfaces, classrooms and materials sanitized multiple times daily</p>
+              <h3 className="font-semibold text-lg mb-2">{KINDERGARTEN_VISITOR_COPY.sections[7].cards?.[0].heading}</h3>
+              <p className="text-sm text-muted-foreground">{KINDERGARTEN_VISITOR_COPY.sections[7].cards?.[0].paragraphs?.[0]}</p>
             </Card>
             <Card className="text-center p-6">
               <UsersRound className="w-12 h-12 text-red-500 mx-auto mb-4" />
-              <h3 className="font-semibold text-lg mb-2">100% Female Staff</h3>
-              <p className="text-sm text-muted-foreground">All caregivers and teachers are trained female professionals</p>
+              <h3 className="font-semibold text-lg mb-2">{KINDERGARTEN_VISITOR_COPY.sections[7].cards?.[1].heading}</h3>
+              <p className="text-sm text-muted-foreground">{KINDERGARTEN_VISITOR_COPY.sections[7].cards?.[1].paragraphs?.[0]}</p>
             </Card>
             <Card className="text-center p-6">
               <Eye className="w-12 h-12 text-blue-500 mx-auto mb-4" />
-              <h3 className="font-semibold text-lg mb-2">CCTV Surveillance in Classrooms</h3>
-              <p className="text-sm text-muted-foreground">Cameras cover classrooms and common areas for child safety.</p>
+              <h3 className="font-semibold text-lg mb-2">{KINDERGARTEN_VISITOR_COPY.sections[7].cards?.[2].heading}</h3>
+              <p className="text-sm text-muted-foreground">{KINDERGARTEN_VISITOR_COPY.sections[7].cards?.[2].paragraphs?.[0]}</p>
             </Card>
             <Card className="text-center p-6">
               <MessageSquare className="w-12 h-12 text-purple-500 mx-auto mb-4" />
-              <h3 className="font-semibold text-lg mb-2">Parent Communication</h3>
-              <p className="text-sm text-muted-foreground">Regular updates on your child's activities and progress</p>
+              <h3 className="font-semibold text-lg mb-2">{KINDERGARTEN_VISITOR_COPY.sections[7].cards?.[3].heading}</h3>
+              <p className="text-sm text-muted-foreground">{KINDERGARTEN_VISITOR_COPY.sections[7].cards?.[3].paragraphs?.[0]}</p>
             </Card>
           </div>
         </div>
       </section>
 
       {/* Daily Activities - Chip Style */}
-      <ActivitiesSection activities={activities} />
+      <ActivitiesSection
+        activities={activities}
+        heading={KINDERGARTEN_VISITOR_COPY.sections[8].heading ?? ""}
+        description={KINDERGARTEN_VISITOR_COPY.sections[8].paragraphs?.[0] ?? ""}
+      />
 
       {/* Programme Highlights */}
       <section className="py-16 md:py-20 lg:py-24 bg-muted/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Programme Highlights</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">{KINDERGARTEN_VISITOR_COPY.sections[9].heading}</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
             <div className="flex items-center gap-3 p-4 bg-background rounded-lg">
               <CheckCircle className="w-5 h-5 text-green-500 shrink-0" />
-              <span>Comprehensive Jr. KG and Sr. KG curriculum</span>
+              <span>{KINDERGARTEN_VISITOR_COPY.sections[9].items?.[0]}</span>
             </div>
             <div className="flex items-center gap-3 p-4 bg-background rounded-lg">
               <CheckCircle className="w-5 h-5 text-green-500 shrink-0" />
-              <span>Focus on reading, writing, and math foundations</span>
+              <span>{KINDERGARTEN_VISITOR_COPY.sections[9].items?.[1]}</span>
             </div>
             <div className="flex items-center gap-3 p-4 bg-background rounded-lg">
               <CheckCircle className="w-5 h-5 text-green-500 shrink-0" />
-              <span>Regular assessments and progress reports</span>
+              <span>{KINDERGARTEN_VISITOR_COPY.sections[9].items?.[2]}</span>
             </div>
             <div className="flex items-center gap-3 p-4 bg-background rounded-lg">
               <CheckCircle className="w-5 h-5 text-green-500 shrink-0" />
-              <span>Smooth transition to Grade 1</span>
+              <span>{KINDERGARTEN_VISITOR_COPY.sections[9].items?.[3]}</span>
             </div>
           </div>
         </div>
@@ -745,10 +716,10 @@ export default function KindergartenLanding() {
       <section className="py-16 md:py-20 lg:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-12">
-            <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">Our Locations</p>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Kindergarten Centres in Thane</h2>
+            <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">{KINDERGARTEN_VISITOR_COPY.sections[10].items?.[0]}</p>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">{KINDERGARTEN_VISITOR_COPY.sections[10].heading}</h2>
             <p className="text-muted-foreground text-lg">
-              Find a Rainbow Preschool Kindergarten near you. We have 6 centres across Thane.
+              {KINDERGARTEN_VISITOR_COPY.sections[10].paragraphs?.[0]}
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -763,9 +734,9 @@ export default function KindergartenLanding() {
       <section className="py-16 md:py-20 lg:py-24 bg-muted/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Frequently Asked Questions</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">{KINDERGARTEN_VISITOR_COPY.sections[11].heading}</h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Common questions parents ask about our Kindergarten programme.
+              {KINDERGARTEN_VISITOR_COPY.sections[11].paragraphs?.[0]}
             </p>
           </div>
           <div className="max-w-3xl mx-auto">
@@ -782,13 +753,13 @@ export default function KindergartenLanding() {
               ))}
             </Accordion>
             <div className="text-center mt-8">
-              <p className="text-muted-foreground mb-4">Still have questions?</p>
+              <p className="text-muted-foreground mb-4">{KINDERGARTEN_VISITOR_COPY.sections[11].items?.[0]}</p>
               <Button 
                 variant="outline"
                 onClick={() => document.getElementById('enquiry-form')?.scrollIntoView({ behavior: 'smooth' })}
                 data-testid="button-kg-faq-callback"
               >
-                Request a Callback
+                {KINDERGARTEN_VISITOR_COPY.sections[11].items?.[1]}
               </Button>
             </div>
           </div>
@@ -798,23 +769,23 @@ export default function KindergartenLanding() {
       {/* Internal Links Section */}
       <section className="py-10 md:py-12 bg-gray-50 dark:bg-gray-800/50">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-lg md:text-xl font-bold text-gray-900 dark:text-white mb-5 text-center">Explore Rainbow Preschool</h2>
+          <h2 className="text-lg md:text-xl font-bold text-gray-900 dark:text-white mb-5 text-center">{KINDERGARTEN_VISITOR_COPY.sections[12].heading}</h2>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             <Link href="/best-preschool-near-me-in-thane" className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center" data-testid="link-kg-best-preschool">
               <Award className="w-5 h-5 text-primary" />
-              <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">Award-Winning Preschool</span>
+              <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">{KINDERGARTEN_VISITOR_COPY.sections[12].items?.[0]}</span>
             </Link>
             <Link href="/play-school-near-me" className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center" data-testid="link-kg-near-me">
               <MapPin className="w-5 h-5 text-primary" />
-              <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">Find Nearest Centre</span>
+              <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">{KINDERGARTEN_VISITOR_COPY.sections[12].items?.[1]}</span>
             </Link>
             <Link href="/preschool-admissions" className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center" data-testid="link-kg-admissions">
               <ClipboardList className="w-5 h-5 text-primary" />
-              <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">Admission Process</span>
+              <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">{KINDERGARTEN_VISITOR_COPY.sections[12].items?.[2]}</span>
             </Link>
             <Link href="/nursery" className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center" data-testid="link-kg-nursery">
               <BookOpen className="w-5 h-5 text-primary" />
-              <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">Nursery Programme</span>
+              <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">{KINDERGARTEN_VISITOR_COPY.sections[12].items?.[3]}</span>
             </Link>
           </div>
         </div>
@@ -823,9 +794,9 @@ export default function KindergartenLanding() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-4">
         <EEATSignals
           pageUrl="/kindergarten"
-          pageName="Kindergarten in Thane"
-          reviewedBy="Rainbow Preschool Curriculum Team"
-          reviewerRole="Curriculum Team, Rainbow Preschool International"
+          pageName={PROGRAMME_LANDING_EEAT_COPY.kindergartenPageName}
+          reviewedBy={PROGRAMME_LANDING_EEAT_COPY.reviewedBy}
+          reviewerRole={PROGRAMME_LANDING_EEAT_COPY.reviewerRole}
           lastUpdated={LAST_UPDATED_DISPLAY}
           lastUpdatedIso={LAST_UPDATED_ISO}
           ratingValue={VERIFIED_RATING.ratingValue}
@@ -840,10 +811,10 @@ export default function KindergartenLanding() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="text-center text-white">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-              Ready to Give Your Child the Best Start for Grade 1?
+              {KINDERGARTEN_VISITOR_COPY.sections[13].heading}
             </h2>
             <p className="text-lg md:text-xl mb-8 opacity-90 max-w-2xl mx-auto">
-              Enroll your child in Rainbow Preschool's Kindergarten programme and watch them thrive.
+              {KINDERGARTEN_VISITOR_COPY.sections[13].paragraphs?.[0]}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button 
@@ -852,7 +823,7 @@ export default function KindergartenLanding() {
                 onClick={() => document.getElementById('enquiry-form')?.scrollIntoView({ behavior: 'smooth' })}
                 data-testid="button-kg-final-callback"
               >
-                <Phone className="mr-2 h-5 w-5" /> Request Callback
+                <Phone className="mr-2 h-5 w-5" /> {KINDERGARTEN_VISITOR_COPY.sections[13].items?.[0]}
               </Button>
               <Button 
                 size="lg" 
@@ -861,7 +832,7 @@ export default function KindergartenLanding() {
                 onClick={() => window.open("https://wa.me/918291568972?text=Hi, I'm interested in Kindergarten admission", "_blank")}
                 data-testid="button-kg-final-whatsapp"
               >
-                <SiWhatsapp className="mr-2 h-5 w-5" /> WhatsApp Us
+                <SiWhatsapp className="mr-2 h-5 w-5" /> {KINDERGARTEN_VISITOR_COPY.sections[13].items?.[1]}
               </Button>
               <Link href="/play-school-near-me">
                 <Button 
@@ -870,7 +841,7 @@ export default function KindergartenLanding() {
                   className="border-white text-white hover:bg-white/20"
                   data-testid="button-kg-final-centres"
                 >
-                  <MapPin className="mr-2 h-5 w-5" /> Find Nearest Centre
+                  <MapPin className="mr-2 h-5 w-5" /> {KINDERGARTEN_VISITOR_COPY.sections[13].items?.[2]}
                 </Button>
               </Link>
             </div>

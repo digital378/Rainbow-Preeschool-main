@@ -26,6 +26,7 @@ export const redirectMap: Record<string, string> = {
   "/overview/": "/about",
 
   "/programs": "/programmes",
+  "/programme": "/programmes",
   "/programmes/": "/programmes",
   "/our-programmes": "/programmes",
   "/our-programs": "/programmes",
@@ -55,7 +56,7 @@ export const redirectMap: Record<string, string> = {
   "/admission-procedure": "/preschool-admissions",
   "/admission-procedure/": "/preschool-admissions",
 
-  "/centres": "/",
+  "/centres": "/contact",
   "/centres/": "/",
 
   // ── Keyword variants → canonical commercial pages (audit: ghost variants) ──
@@ -121,6 +122,10 @@ export const redirectMap: Record<string, string> = {
   "/kasarvadavali": "/preschool-in-kasarvadavali-thane",
   "/thane/dhokali": "/preschool-in-dhokali-thane",
   "/thane/dhokali/": "/preschool-in-dhokali-thane",
+  "/thane/aggarwal": "/preschool-in-manpada-thane",
+  "/thane/aggarwal/": "/preschool-in-manpada-thane",
+  "/thane/kasarwadavli": "/preschool-in-kasarvadavali-thane",
+  "/thane/kasarwadavli/": "/preschool-in-kasarvadavali-thane",
   "/thane/kalyan-bhiwandi": "/",
   "/navi-mumbai/kharghar-sector-12": "/",
   "/navi-mumbai/kharghar-sector-12/": "/",
@@ -814,6 +819,19 @@ export function setupRedirects(app: Express) {
     // ── Attachment URLs (/rooms/.../attachment/ or /mulund-east/attachment/) ──
     if (lowerPath.includes("/attachment/")) {
       return res.redirect(301, preserveAttribution("/about", req.originalUrl));
+    }
+
+    // ── Explicit city redirects must precede the broad city fallback ───────
+    if (
+      lowerPath === "/thane/aggarwal" ||
+      lowerPath === "/thane/aggarwal/" ||
+      lowerPath === "/thane/kasarwadavli" ||
+      lowerPath === "/thane/kasarwadavli/"
+    ) {
+      const cityRedirect = redirectMap[lowerPath];
+      if (cityRedirect) {
+        return res.redirect(301, preserveAttribution(cityRedirect + qs, req.originalUrl));
+      }
     }
 
     // ── Old city branch pages (/thane/*, /navi-mumbai/*, /mumbai/*) ───────

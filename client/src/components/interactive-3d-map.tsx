@@ -15,6 +15,9 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { centres } from "@shared/centre-data";
 import { Navigation as NavigationIcon } from "lucide-react";
+import { CONTACT_PAGE_COPY } from "@shared/contact-page-copy";
+
+const MAP_COPY = CONTACT_PAGE_COPY.map;
 
 /* ─── Brand ─────────────────────────────────────────────────────────────── */
 const PIN_RED = 0xEC210F;
@@ -60,7 +63,7 @@ function worldToScreen(
 }
 
 /* ─── Loading skeleton ───────────────────────────────────────────────────── */
-export function MapLoader({ mobile = false }: { mobile?: boolean }) {
+export function MapLoader({ mobile = false, copy = MAP_COPY }: { mobile?: boolean; copy?: typeof MAP_COPY }) {
   return (
     <div style={{
       width: "100%", height: mobile ? 320 : 480, borderRadius: 20,
@@ -75,7 +78,7 @@ export function MapLoader({ mobile = false }: { mobile?: boolean }) {
           }} />
         ))}
       </div>
-      <p style={{ margin: 0, fontSize: 12, color: "#7c7489" }}>Loading 3D map…</p>
+      <p style={{ margin: 0, fontSize: 12, color: "#7c7489" }}>{copy.loading}</p>
       <style>{`@keyframes mdot{0%,80%,100%{transform:scale(.55);opacity:.35}40%{transform:scale(1);opacity:1}}`}</style>
     </div>
   );
@@ -97,9 +100,10 @@ interface ThreeDMapProps {
   onCentreSelect: (id: string) => void;
   onCentreHover: (id: string | null) => void;
   isMobile: boolean;
+  copy: typeof MAP_COPY;
 }
 
-function ThreeDMap({ highlightedId, onCentreSelect, onCentreHover, isMobile }: ThreeDMapProps) {
+function ThreeDMap({ highlightedId, onCentreSelect, onCentreHover, isMobile, copy }: ThreeDMapProps) {
   const mountRef  = useRef<HTMLDivElement>(null);
   const lblRefs   = useRef<Record<string, HTMLDivElement | null>>({});
   const popRefs   = useRef<Record<string, HTMLDivElement | null>>({});
@@ -481,7 +485,7 @@ function ThreeDMap({ highlightedId, onCentreSelect, onCentreHover, isMobile }: T
       {/* Three.js canvas mounts here */}
       <div ref={mountRef} style={{ width: "100%", height: "100%" }}
         role="img"
-        aria-label="Interactive 3D map of 6 Rainbow Preschool centres across Thane. Use the cards below for keyboard access." />
+        aria-label={copy.accessibleDescription} />
 
       {/* Top-left badge */}
       <div aria-hidden style={{
@@ -493,7 +497,7 @@ function ThreeDMap({ highlightedId, onCentreSelect, onCentreHover, isMobile }: T
         <p style={{ margin: 0, fontSize: 11, fontWeight: 700, color: "#EC210F", letterSpacing: "0.12em", textTransform: "uppercase" }}>
           Rainbow Preschool
         </p>
-        <p style={{ margin: 0, fontSize: 10, color: "#7c7489" }}>6 Centres · Thane</p>
+        <p style={{ margin: 0, fontSize: 10, color: "#7c7489" }}>{copy.centreCount}</p>
       </div>
 
       {/* Top-right hint */}
@@ -506,7 +510,7 @@ function ThreeDMap({ highlightedId, onCentreSelect, onCentreHover, isMobile }: T
       }}>
         <div style={{ width: 7, height: 7, borderRadius: "50%", background: "#EC210F", animation: "glow-pulse 2s ease-in-out infinite" }} />
         <span style={{ fontSize: 10, fontWeight: 500, color: "#55506A" }}>
-          {isMobile ? "Tap pin · drag" : "Click pin · drag"}
+          {isMobile ? copy.tapPinHint : copy.clickPinHint}
         </span>
       </div>
 
@@ -565,7 +569,7 @@ function ThreeDMap({ highlightedId, onCentreSelect, onCentreHover, isMobile }: T
           {/* Close button */}
           <button
             onClick={e => { e.stopPropagation(); setPopId(null); popRef.current = null; }}
-            aria-label={`Close ${c.name} popup`}
+            aria-label={copy.closePopupPattern.replace("{name}", c.name)}
             style={{
               position: "absolute", top: 8, right: 8,
               background: "none", border: "none", cursor: "pointer",
@@ -598,7 +602,7 @@ function ThreeDMap({ highlightedId, onCentreSelect, onCentreHover, isMobile }: T
                 <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
                 <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
               </svg>
-              Directions
+              {copy.directions}
             </a>
 
             <div style={{ display: "flex", gap: 6 }}>
@@ -618,7 +622,7 @@ function ThreeDMap({ highlightedId, onCentreSelect, onCentreHover, isMobile }: T
                   <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
                   <path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.122 1.527 5.857L0 24l6.345-1.527C8.08 23.44 9.998 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm.029 21.818c-1.843 0-3.601-.494-5.121-1.363l-.369-.217-3.768.907.952-3.661-.24-.387A9.789 9.789 0 0 1 2.182 12C2.182 6.59 6.59 2.182 12 2.182s9.818 4.407 9.818 9.818-4.408 9.818-9.989 9.818z"/>
                 </svg>
-                WhatsApp
+                {copy.whatsapp}
               </a>
 
               {/* Call */}
@@ -635,7 +639,7 @@ function ThreeDMap({ highlightedId, onCentreSelect, onCentreHover, isMobile }: T
                 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                   <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.59 1.23h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
                 </svg>
-                Call
+                {copy.call}
               </a>
             </div>
           </div>
@@ -658,13 +662,14 @@ const centreMapPins = [
   { id: "kalwa",         label: "Kalwa",           mapUrl: "https://maps.app.goo.gl/riB8TNUQdJa9yiSY7", x: 80, y: 70, mx: 75, my: 78, color: "#EDE7F6", roof: "#5E35B1", accent: "#9575CD" },
 ];
 
-function IllusMapPin({ centre, isHovered, onHover, onLeave, idx }: {
+function IllusMapPin({ centre, isHovered, onHover, onLeave, idx, copy = MAP_COPY }: {
   centre: typeof centreMapPins[0]; isHovered: boolean;
   onHover: () => void; onLeave: () => void; idx: number;
+  copy?: typeof MAP_COPY;
 }) {
   return (
     <a href={centre.mapUrl} target="_blank" rel="noopener noreferrer"
-      aria-label={`${centre.label} — open in Google Maps`}
+      aria-label={copy.openMapsForPattern.replace("{name}", centre.label)}
       className="cursor-pointer block"
       style={{ position:"absolute", left:"50%", top:"0", zIndex: isHovered ? 30 : 10, transform:"translate(-50%,-100%)" }}
       onMouseEnter={onHover} onMouseLeave={onLeave} onFocus={onHover} onBlur={onLeave}
@@ -674,7 +679,7 @@ function IllusMapPin({ centre, isHovered, onHover, onLeave, idx }: {
         <div className={`relative px-2 py-1 md:px-3 md:py-1.5 rounded-lg mb-1 transition-all duration-300 ${isHovered ? "bg-primary text-white shadow-xl shadow-primary/30" : "bg-white/95 text-gray-800 shadow-lg border border-white/60 backdrop-blur-sm"}`}>
           <span className="text-[10px] md:text-xs font-bold whitespace-nowrap block">{centre.label}</span>
           <div className={`flex items-center justify-center gap-0.5 transition-all duration-300 overflow-hidden ${isHovered ? "opacity-100 max-h-4 mt-0.5" : "opacity-0 max-h-0"}`}>
-            <NavigationIcon className="w-2.5 h-2.5" /><span className="text-[8px] md:text-[9px]">Directions</span>
+            <NavigationIcon className="w-2.5 h-2.5" /><span className="text-[8px] md:text-[9px]">{copy.directions}</span>
           </div>
           <div className={`absolute left-1/2 -bottom-1 w-2 h-2 rotate-45 -translate-x-1/2 transition-colors duration-300 ${isHovered ? "bg-primary" : "bg-white/95"}`} />
         </div>
@@ -741,7 +746,7 @@ function IllusSVGTree({ tx, ty, i, p="" }: { tx:number; ty:number; i:number; p?:
   );
 }
 
-function IllustratedMapFallback({ highlightedCentre }: { highlightedCentre?: string | null }) {
+function IllustratedMapFallback({ highlightedCentre, copy = MAP_COPY }: { highlightedCentre?: string | null; copy?: typeof MAP_COPY }) {
   const [hov, setHov] = useState<string|null>(null);
   const [loaded, setLoaded] = useState(false);
   useEffect(() => { const t = setTimeout(()=>setLoaded(true),100); return ()=>clearTimeout(t); }, []);
@@ -791,11 +796,11 @@ function IllustratedMapFallback({ highlightedCentre }: { highlightedCentre?: str
                   <line key={`c${i}`} x1={x1} y1={y1} x2={x2} y2={y2} stroke="#E53935" strokeWidth=".3" strokeDasharray="1.5 1.5" opacity=".25" className="map-path-animate"/>
                 ))}
               </svg>
-              <div className="absolute top-4 left-4 z-20"><div className="bg-white/90 backdrop-blur-md rounded-xl px-4 py-2.5 shadow-lg border border-white/50"><p className="text-xs font-extrabold text-primary uppercase tracking-widest">Rainbow Preschool</p><p className="text-[11px] text-muted-foreground font-medium">6 Centres Across Thane</p></div></div>
-              <div className="absolute top-4 right-4 z-20"><div className="bg-white/90 backdrop-blur-md rounded-xl px-3 py-2 shadow-lg border border-white/50 flex items-center gap-1.5"><div className="relative w-3 h-3"><div className="absolute inset-0 rounded-full bg-primary map-glow"/><div className="absolute inset-0.5 rounded-full bg-primary"/></div><span className="text-[11px] font-medium">Click to open Maps</span></div></div>
+              <div className="absolute top-4 left-4 z-20"><div className="bg-white/90 backdrop-blur-md rounded-xl px-4 py-2.5 shadow-lg border border-white/50"><p className="text-xs font-extrabold text-primary uppercase tracking-widest">{copy.brand}</p><p className="text-[11px] text-muted-foreground font-medium">{copy.fallbackCentreCount}</p></div></div>
+              <div className="absolute top-4 right-4 z-20"><div className="bg-white/90 backdrop-blur-md rounded-xl px-3 py-2 shadow-lg border border-white/50 flex items-center gap-1.5"><div className="relative w-3 h-3"><div className="absolute inset-0 rounded-full bg-primary map-glow"/><div className="absolute inset-0.5 rounded-full bg-primary"/></div><span className="text-[11px] font-medium">{copy.openMapsHint}</span></div></div>
               {centreMapPins.map((c,idx)=>(
                 <div key={c.id} className="absolute" style={{left:`${c.x}%`,top:`${c.y}%`}}>
-                  <IllusMapPin centre={c} isHovered={hov===c.id} onHover={()=>setHov(c.id)} onLeave={()=>setHov(null)} idx={idx}/>
+                  <IllusMapPin centre={c} isHovered={hov===c.id} onHover={()=>setHov(c.id)} onLeave={()=>setHov(null)} idx={idx} copy={copy}/>
                 </div>
               ))}
             </div>
@@ -825,7 +830,7 @@ function IllustratedMapFallback({ highlightedCentre }: { highlightedCentre?: str
           <div className="absolute inset-0" style={{overflow:"visible"}}>
             {centreMapPins.map((c,idx)=>(
               <div key={c.id} className="absolute" style={{left:`${c.mx}%`,top:`${c.my}%`}}>
-                <IllusMapPin centre={c} isHovered={hov===c.id} onHover={()=>setHov(c.id)} onLeave={()=>setHov(null)} idx={idx}/>
+                <IllusMapPin centre={c} isHovered={hov===c.id} onHover={()=>setHov(c.id)} onLeave={()=>setHov(null)} idx={idx} copy={copy}/>
               </div>
             ))}
           </div>
@@ -833,7 +838,7 @@ function IllustratedMapFallback({ highlightedCentre }: { highlightedCentre?: str
       </div>
 
       <p className="text-center text-sm text-muted-foreground mt-6 mb-8" data-testid="text-map-cta">
-        Click on any location to open directions in Google Maps
+        {copy.directionsPrompt}
       </p>
     </div>
   );
@@ -846,12 +851,14 @@ export interface Interactive3DMapProps {
   highlightedCentre?: string | null;
   onCentreSelect?: (id: string) => void;
   onCentreHover?: (id: string | null) => void;
+  copy?: typeof MAP_COPY;
 }
 
 export function Interactive3DMap({
   highlightedCentre,
   onCentreSelect,
   onCentreHover,
+  copy = MAP_COPY,
 }: Interactive3DMapProps) {
   const [webgl]    = useState(() =>
     typeof window !== "undefined" ? isWebGLAvailable() : false
@@ -868,7 +875,7 @@ export function Interactive3DMap({
   const handleSelect = useCallback((id: string) => onCentreSelect?.(id), [onCentreSelect]);
   const handleHover  = useCallback((id: string | null) => onCentreHover?.(id), [onCentreHover]);
 
-  const fallback = <IllustratedMapFallback highlightedCentre={highlightedCentre} />;
+  const fallback = <IllustratedMapFallback highlightedCentre={highlightedCentre} copy={copy} />;
 
   if (!webgl) return fallback;
 
@@ -879,6 +886,7 @@ export function Interactive3DMap({
         onCentreSelect={handleSelect}
         onCentreHover={handleHover}
         isMobile={isMobile}
+        copy={copy}
       />
     </Map3DErrorBoundary>
   );

@@ -4,79 +4,13 @@ import { CTASection } from "@/components/cta-section";
 import { SEO } from "@/components/seo";
 import { EEATSignals } from "@/components/eeat-signals";
 import { LAST_UPDATED_DISPLAY, LAST_UPDATED_ISO } from "@shared/site-freshness";
-import { legacyPagesData } from "@shared/legacy-pages-data";
-import { legacyFinalDestinations } from "@shared/legacy-final-destinations";
 import type { BlogPost } from "@shared/schema";
 import { ArrowRight, Search, BookOpen } from "lucide-react";
+import { BLOG_LIST_COPY, blogPostToListEntry, legacyBlogListEntries, type BlogListEntry } from "@shared/blog-list-copy";
 
-interface BlogEntry {
-  title: string;
-  excerpt: string;
-  url: string;
-  category: string;
-}
-
-const CATEGORY_COLORS: Record<string, { bg: string; text: string; border: string }> = {
-  "Education": { bg: "bg-blue-50", text: "text-blue-700", border: "border-blue-200" },
-  "Parenting Tips": { bg: "bg-red-50", text: "text-red-700", border: "border-red-200" },
-  "Learning Activities": { bg: "bg-green-50", text: "text-green-700", border: "border-green-200" },
-  "Admissions": { bg: "bg-amber-50", text: "text-amber-700", border: "border-amber-200" },
-  "Child Development": { bg: "bg-purple-50", text: "text-purple-700", border: "border-purple-200" },
-  "School Events": { bg: "bg-orange-50", text: "text-orange-700", border: "border-orange-200" },
-  "Festivals & Events": { bg: "bg-amber-50", text: "text-amber-700", border: "border-amber-200" },
-  "About": { bg: "bg-teal-50", text: "text-teal-700", border: "border-teal-200" },
-};
-
-const DEFAULT_CATEGORY_COLOR = { bg: "bg-gray-50", text: "text-gray-700", border: "border-gray-200" };
-
-const CATEGORY_NORMALIZE: Record<string, string> = {
-  "About Rainbow": "About",
-  "About Us": "About",
-};
-
-const ACCENT_BORDERS = [
-  "border-l-red-500",
-  "border-l-blue-500",
-  "border-l-green-500",
-  "border-l-amber-500",
-  "border-l-purple-500",
-  "border-l-cyan-500",
-  "border-l-orange-500",
-  "border-l-teal-500",
-];
-
-// Fallback shown for any DB-backed BlogPost that doesn't carry an explicit
-// `category` value yet, so the card still renders with a coloured pill.
-const DEFAULT_BLOG_CATEGORY = "Education";
-
-function blogPostToEntry(post: BlogPost): BlogEntry {
-  return {
-    title: post.title,
-    excerpt: post.excerpt,
-    url: `/blog/${post.slug}`,
-    category: post.category || DEFAULT_BLOG_CATEGORY,
-  };
-}
-
-function legacyTopicEntries(): BlogEntry[] {
-  return Object.entries(legacyPagesData).flatMap(([key, page]) => {
-    const cleanSlug = key.replace(/\/$/, "").replace(/^\//, "");
-    // Redirected legacy entries are not articles at their original URLs.
-    // The actual destination article is listed via the API or its own
-    // non-redirecting legacy entry; do not turn a card into an /about or /blog link.
-    if (legacyFinalDestinations[`/${cleanSlug}`]) return [];
-    return [{
-      title: page.h1 || page.title.split("|")[0].trim(),
-      excerpt: page.metaDescription,
-      url: `/${cleanSlug}`,
-      category: CATEGORY_NORMALIZE[page.category || ""] || page.category || "Education",
-    }];
-  });
-}
-
-function BlogCard({ post, index }: { post: BlogEntry; index: number }) {
-  const colors = CATEGORY_COLORS[post.category] || DEFAULT_CATEGORY_COLOR;
-  const accentBorder = ACCENT_BORDERS[index % ACCENT_BORDERS.length];
+function BlogCard({ post, index }: { post: BlogListEntry; index: number }) {
+  const colors = BLOG_LIST_COPY.categoryColors[post.category] || BLOG_LIST_COPY.defaultCategoryColor;
+  const accentBorder = BLOG_LIST_COPY.accentBorders[index % BLOG_LIST_COPY.accentBorders.length];
 
   return (
     <a href={post.url}>
@@ -100,7 +34,7 @@ function BlogCard({ post, index }: { post: BlogEntry; index: number }) {
           </p>
 
           <div className="flex items-center text-primary font-semibold text-sm group-hover:gap-2 transition-all">
-            Read Article
+            {BLOG_LIST_COPY.readArticle}
             <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
           </div>
         </div>
@@ -111,7 +45,7 @@ function BlogCard({ post, index }: { post: BlogEntry; index: number }) {
 
 export default function Blog() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState<string>("All");
+  const [selectedCategory, setSelectedCategory] = useState<string>(BLOG_LIST_COPY.allCategory);
 
   // The blog index is the same source of truth as /sitemap.xml — both pull
   // from `storage.getBlogPosts()`. This means publishing a post via the
@@ -121,11 +55,11 @@ export default function Blog() {
     queryKey: ["/api/blog"],
   });
 
-  const allPosts = useMemo<BlogEntry[]>(() => {
-    const blogEntries = (apiPosts ?? []).map(blogPostToEntry);
+  const allPosts = useMemo<BlogListEntry[]>(() => {
+    const blogEntries = (apiPosts ?? []).map(blogPostToListEntry);
     // Prefer the real DB article on any duplicate final URL.
-    const entriesByFinalUrl = new Map<string, BlogEntry>();
-    for (const entry of [...blogEntries, ...legacyTopicEntries()]) {
+    const entriesByFinalUrl = new Map<string, BlogListEntry>();
+    for (const entry of [...blogEntries, ...legacyBlogListEntries()]) {
       if (!entriesByFinalUrl.has(entry.url)) {
         entriesByFinalUrl.set(entry.url, entry);
       }
@@ -135,15 +69,15 @@ export default function Blog() {
 
   const categories = useMemo(() => {
     const cats = new Set(allPosts.map(p => p.category));
-    return ["All", ...Array.from(cats).sort()];
+    return [BLOG_LIST_COPY.allCategory, ...Array.from(cats).sort()];
   }, [allPosts]);
 
-  const filteredPosts = useMemo(() => {
+  const filteredPosts = useMemo<BlogListEntry[]>(() => {
     return allPosts.filter(post => {
       const matchesSearch = !searchQuery ||
         post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         post.excerpt.toLowerCase().includes(searchQuery.toLowerCase());
-      const matchesCategory = selectedCategory === "All" || post.category === selectedCategory;
+      const matchesCategory = selectedCategory === BLOG_LIST_COPY.allCategory || post.category === selectedCategory;
       return matchesSearch && matchesCategory;
     });
   }, [allPosts, searchQuery, selectedCategory]);
@@ -162,11 +96,11 @@ export default function Blog() {
           <div className="max-w-3xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 bg-primary/10 text-primary text-sm font-medium px-4 py-1.5 rounded-full mb-4">
               <BookOpen className="w-4 h-4" />
-              Our Blog
+              {BLOG_LIST_COPY.eyebrow}
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold mb-4" data-testid="text-blog-heading">Rainbow Preschool Blog</h1>
+            <h1 className="text-4xl md:text-5xl font-bold mb-4" data-testid="text-blog-heading">{BLOG_LIST_COPY.h1}</h1>
             <p className="text-lg text-muted-foreground leading-relaxed">
-              Parenting tips, learning activities, child development insights, and updates from Rainbow Preschool.
+              {BLOG_LIST_COPY.intro}
             </p>
           </div>
         </div>
@@ -179,7 +113,7 @@ export default function Blog() {
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
               <input
                 type="text"
-                placeholder="Search articles..."
+                placeholder={BLOG_LIST_COPY.searchPlaceholder}
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
                 className="w-full pl-10 pr-4 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary bg-white"
@@ -207,8 +141,10 @@ export default function Blog() {
 
           <p className="text-sm text-gray-500 mb-6" data-testid="text-blog-count">
             {isLoading
-              ? "Loading articles…"
-              : `Showing ${filteredPosts.length} article${filteredPosts.length !== 1 ? "s" : ""}`}
+              ? BLOG_LIST_COPY.loading
+              : BLOG_LIST_COPY.articleCountPattern
+                .replace("{count}", String(filteredPosts.length))
+                .replace("{plural}", filteredPosts.length === 1 ? "" : "s")}
           </p>
 
           {isLoading ? (
@@ -228,13 +164,13 @@ export default function Blog() {
             </div>
           ) : (
             <div className="text-center py-16">
-              <p className="text-lg text-gray-500 mb-2">No articles found</p>
-              <p className="text-sm text-gray-400">Try adjusting your search or filter.</p>
+              <p className="text-lg text-gray-500 mb-2">{BLOG_LIST_COPY.noArticles}</p>
+              <p className="text-sm text-gray-400">{BLOG_LIST_COPY.adjustSearch}</p>
               <button
-                onClick={() => { setSearchQuery(""); setSelectedCategory("All"); }}
+                onClick={() => { setSearchQuery(""); setSelectedCategory(BLOG_LIST_COPY.allCategory); }}
                 className="mt-4 text-sm font-medium text-primary hover:underline"
               >
-                Clear filters
+                {BLOG_LIST_COPY.clearFilters}
               </button>
             </div>
           )}
@@ -255,8 +191,8 @@ export default function Blog() {
       </section>
 
       <CTASection
-        title="Want to Learn More?"
-        description="Subscribe to our newsletter for the latest updates and parenting tips."
+        title={BLOG_LIST_COPY.ctaTitle}
+        description={BLOG_LIST_COPY.ctaDescription}
       />
     </article>
   );
