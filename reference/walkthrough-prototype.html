@@ -1,0 +1,751 @@
+<title>Rainbow Walkthrough</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* Single deliberate bright look — brand experience, not theme-switched */
+  :root{
+    --red:#EC210F; --red-deep:#B9170A; --red-tint:#FFF0EC;
+    --ink:#23180F; --ink-soft:#5E4B3E; --line:#EFE3D8;
+    --paper:#FFFBF6; --card:#FFFFFF;
+    --amber:#F4A62A; --sky:#2F8FE0; --leaf:#2EA66A; --plum:#8E4FD1;
+    --hdr:60px;
+    color-scheme: light;
+  }
+  *{box-sizing:border-box;}
+  html,body{background:var(--paper); color:var(--ink);}
+  body{font-family:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif; font-weight:500; -webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-family:'Poppins','Inter',system-ui,sans-serif; font-weight:800; letter-spacing:-.015em; text-wrap:balance; margin:0;}
+  a{color:inherit;}
+  button{font:inherit;}
+  :focus-visible{outline:3px solid var(--amber); outline-offset:2px; border-radius:6px;}
+
+  /* ---------- header ---------- */
+  .hdr{
+    position:fixed; left:0; right:0; top:0; z-index:50;
+    padding-top:env(safe-area-inset-top,0px);
+    background:rgba(255,251,246,.9); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+    border-bottom:1px solid rgba(239,227,216,.8);
+  }
+  .hdr-in{height:var(--hdr); display:flex; align-items:center; gap:14px; padding:0 16px; max-width:1320px; margin:0 auto;}
+  .brand{display:flex; align-items:center; gap:10px; text-decoration:none; min-width:0;}
+  .brand-mark{width:34px; height:34px; border-radius:10px; background:var(--red); display:grid; place-items:center; flex:none;}
+  .brand-mark svg{width:22px; height:22px;}
+  .brand-text{display:flex; flex-direction:column; line-height:1.05; min-width:0;}
+  .brand-text b{font-family:'Poppins',sans-serif; font-weight:800; font-size:16px; color:var(--red);}
+  .brand-text span{font-size:10.5px; font-weight:700; color:var(--ink-soft); letter-spacing:.06em; text-transform:uppercase; white-space:nowrap;}
+  .nav{display:none; gap:22px; margin-left:auto; font-weight:600; font-size:14px;}
+  .nav a{text-decoration:none; color:var(--ink-soft);}
+  .nav a:hover{color:var(--red);}
+  .preview-pill{display:none; font-size:11px; font-weight:700; color:var(--red); background:var(--red-tint); padding:4px 9px; border-radius:999px; letter-spacing:.04em;}
+  .btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; background:var(--red); color:#fff; border:0; border-radius:12px; padding:11px 16px; font-weight:700; font-size:14px; text-decoration:none; cursor:pointer; box-shadow:0 10px 22px -10px rgba(236,33,15,.75); transition:background .2s, transform .2s;}
+  .btn:hover{background:var(--red-deep);}
+  .btn:active{transform:scale(.98);}
+  .btn.ghost{background:transparent; color:var(--red); box-shadow:inset 0 0 0 2px var(--red);}
+  .btn.ghost:hover{background:var(--red-tint);}
+  .hdr .btn{margin-left:auto; padding:9px 14px; font-size:13px;}
+  @media (min-width:900px){
+    .nav{display:flex;}
+    .hdr .btn{margin-left:8px;}
+    .preview-pill{display:inline-block;}
+  }
+
+  /* ---------- the experience ---------- */
+  .experience{display:grid;}
+  .stage{
+    grid-area:1/1; position:sticky; top:0; align-self:start;
+    height:100vh; height:100svh; overflow:hidden; background:#E9DDD2;
+  }
+  .spacer{grid-area:1/1; height:calc(100vh * 10.75); height:calc(100svh * 10.75); pointer-events:none;}
+  .stage video, .stage .poster{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;}
+  .stage .poster{transition:opacity .5s ease;}
+  .stage .poster.gone{opacity:0;}
+  .scrim{position:absolute; inset:0; pointer-events:none;
+    background:linear-gradient(180deg, rgba(35,24,15,.18) 0%, rgba(35,24,15,0) 22%, rgba(35,24,15,0) 45%, rgba(35,24,15,.42) 100%);}
+  @media (min-aspect-ratio:1/1) and (min-width:720px){
+    .scrim{background:linear-gradient(90deg, rgba(35,24,15,.38) 0%, rgba(35,24,15,.08) 45%, rgba(35,24,15,0) 70%);}
+  }
+
+  /* scene label + rail */
+  .where{
+    position:absolute; left:16px; top:calc(var(--hdr) + env(safe-area-inset-top,0px) + 12px); z-index:6;
+    display:flex; align-items:center; gap:8px;
+    background:rgba(255,255,255,.92); border-radius:999px; padding:6px 12px 6px 8px;
+    font-size:12px; font-weight:700; color:var(--ink); box-shadow:0 8px 20px -12px rgba(35,24,15,.5);
+  }
+  .where .n{background:var(--red); color:#fff; border-radius:999px; padding:2px 8px; font-size:11px; font-variant-numeric:tabular-nums;}
+  .rail{position:absolute; z-index:6; display:none; flex-direction:column; gap:10px; top:50%; transform:translateY(-50%);}
+  .rail button{
+    width:10px; height:10px; padding:0; border-radius:50%; border:2px solid #fff; background:rgba(255,255,255,.35);
+    cursor:pointer; position:relative; box-shadow:0 2px 6px rgba(0,0,0,.25); transition:transform .2s, background .2s;
+  }
+  .rail button.on{background:var(--red); transform:scale(1.35);}
+  .rail button span{
+    position:absolute; right:22px; top:50%; transform:translateY(-50%); white-space:nowrap;
+    background:#fff; color:var(--ink); font-size:12px; font-weight:700; padding:4px 10px; border-radius:8px;
+    opacity:0; pointer-events:none; transition:opacity .2s;
+  }
+  @media (min-aspect-ratio:1/1) and (min-width:720px){
+    .rail{display:flex; right:26px;}
+    .rail button{width:12px; height:12px;}
+    .rail button:hover span, .rail button.on span{opacity:1;}
+  }
+
+  /* panels */
+  .panel{
+    position:absolute; z-index:5; left:16px; right:16px; bottom:calc(16px + env(safe-area-inset-bottom,0px));
+    max-height:56svh; overflow:auto; overscroll-behavior:contain;
+    background:rgba(255,255,255,.96); border-radius:22px; padding:20px 18px 18px;
+    box-shadow:0 30px 60px -24px rgba(35,24,15,.55);
+    opacity:0; visibility:hidden; transform:translateY(18px) scale(.985);
+    transition:opacity .45s ease, transform .55s cubic-bezier(.2,.8,.2,1), visibility 0s linear .45s;
+  }
+  .panel.on{opacity:1; visibility:visible; transform:none; transition:opacity .45s ease, transform .55s cubic-bezier(.2,.8,.2,1), visibility 0s;}
+  @media (min-aspect-ratio:1/1) and (min-width:720px){
+    .panel{left:max(28px, 5vw); right:auto; bottom:auto; top:calc(50% + var(--hdr)/2); width:min(440px, 40vw); max-height:calc(100svh - var(--hdr) - 60px); padding:28px 26px 24px;}
+    .panel{transform:translateY(-46%) scale(.985);}
+    .panel.on{transform:translateY(-50%);}
+  }
+  .eyebrow{display:inline-flex; align-items:center; gap:8px; font-size:11.5px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--red);}
+  .eyebrow i{width:18px; height:2px; background:var(--red); border-radius:2px;}
+  .panel h1, .panel h2{font-size:24px; line-height:1.15; margin:8px 0 8px; color:var(--ink);}
+  @media (min-width:900px){ .panel h1, .panel h2{font-size:30px;} }
+  .panel p{font-size:14.5px; line-height:1.55; color:var(--ink-soft); margin:0 0 12px; max-width:58ch;}
+  .panel .actions{display:flex; flex-wrap:wrap; gap:10px; margin-top:14px;}
+
+  .stats{display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin:12px 0 4px;}
+  .stat{background:var(--paper); border:1px solid var(--line); border-radius:14px; padding:10px 12px;}
+  .stat b{display:block; font-family:'Poppins',sans-serif; font-weight:800; font-size:22px; color:var(--red); font-variant-numeric:tabular-nums; line-height:1.1;}
+  .stat span{font-size:12px; font-weight:600; color:var(--ink-soft);}
+
+  .chips{display:flex; flex-wrap:wrap; gap:8px; margin-top:8px;}
+  .chip{display:inline-flex; align-items:center; gap:6px; font-size:12.5px; font-weight:600; color:var(--ink); background:var(--paper); border:1px solid var(--line); padding:7px 11px; border-radius:999px; text-decoration:none;}
+  a.chip:hover{border-color:var(--red); color:var(--red);}
+  .chip svg{width:14px; height:14px; color:var(--leaf);}
+
+  .doors{display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin-top:10px;}
+  .door{display:flex; gap:10px; align-items:flex-start; text-decoration:none; background:var(--paper); border:1px solid var(--line); border-radius:14px; padding:12px; transition:border-color .2s, transform .2s;}
+  .door:hover{border-color:var(--c); transform:translateY(-2px);}
+  .door .arch{width:24px; height:32px; flex:none; border-radius:12px 12px 3px 3px; background:var(--c); position:relative;}
+  .door .arch::after{content:""; position:absolute; right:5px; top:17px; width:4px; height:4px; border-radius:50%; background:#fff;}
+  .door b{display:block; font-family:'Poppins',sans-serif; font-weight:700; font-size:15px; color:var(--ink);}
+  .door span{font-size:12px; font-weight:600; color:var(--ink-soft);}
+
+  .ticks{list-style:none; padding:0; margin:10px 0 0; display:flex; flex-direction:column; gap:10px;}
+  .ticks li{display:flex; gap:10px; align-items:flex-start; font-size:14px; line-height:1.45; color:var(--ink);}
+  .ticks svg{flex:none; width:20px; height:20px; color:#fff; background:var(--leaf); border-radius:50%; padding:4px; margin-top:1px;}
+
+  /* form */
+  form.cb{display:grid; gap:9px; margin-top:12px;}
+  .cb label{font-size:12px; font-weight:700; color:var(--ink-soft);}
+  .cb .row{display:grid; gap:9px; grid-template-columns:1fr 1fr;}
+  .cb input, .cb select{
+    width:100%; background:var(--paper); border:1.5px solid var(--line); border-radius:11px; padding:11px 12px;
+    font-size:14.5px; font-weight:600; color:var(--ink); font-family:inherit;
+  }
+  .cb input:focus, .cb select:focus{border-color:var(--red); outline:none;}
+  .cb .field{display:grid; gap:4px;}
+  .fine{font-size:11.5px; color:var(--ink-soft); margin:2px 0 0;}
+  .ok{display:none; align-items:center; gap:10px; background:#EAF7EF; color:#16603A; border-radius:12px; padding:12px; font-size:13.5px; font-weight:700;}
+  .ok.show{display:flex;}
+  .hint{display:flex; align-items:center; gap:8px; margin-top:14px; font-size:12.5px; font-weight:700; color:var(--ink-soft);}
+  .hint svg{width:16px; height:16px; animation:nudge 1.6s ease-in-out infinite; color:var(--red);}
+  @keyframes nudge{0%,100%{transform:translateY(0);}50%{transform:translateY(4px);}}
+
+  /* testimonials */
+  .quotes{display:grid; grid-auto-flow:column; grid-auto-columns:88%; gap:10px; overflow-x:auto; scroll-snap-type:x mandatory; padding-bottom:6px; margin-top:10px;}
+  .quote{scroll-snap-align:start; background:var(--paper); border:1px solid var(--line); border-radius:16px; padding:14px;}
+  .quote p{font-size:13.5px; color:var(--ink); margin:6px 0 10px;}
+  .quote .who{display:flex; justify-content:space-between; gap:8px; font-size:12px; font-weight:700; color:var(--ink-soft);}
+  .stars{color:var(--amber); letter-spacing:1px;}
+
+  /* theatre reel player */
+  .theatre{display:grid; grid-template-columns:auto 1fr; gap:14px; align-items:start; margin-top:10px;}
+  .reel{
+    width:128px; aspect-ratio:9/16; border-radius:16px; position:relative; overflow:hidden;
+    background:radial-gradient(120% 80% at 50% 10%, #FF7A4D 0%, #EC210F 45%, #7E1208 100%);
+    box-shadow:0 14px 26px -12px rgba(236,33,15,.7); display:grid; place-items:center;
+  }
+  .reel .play{width:44px; height:44px; border-radius:50%; background:rgba(255,255,255,.95); display:grid; place-items:center;}
+  .reel .play svg{width:18px; height:18px; color:var(--red); margin-left:3px;}
+  .reel .cap{position:absolute; left:8px; right:8px; bottom:8px; font-size:10.5px; font-weight:700; color:#fff; line-height:1.3;}
+  .reel .tools{position:absolute; top:8px; right:8px; display:flex; gap:6px;}
+  .iconbtn{width:30px; height:30px; border-radius:9px; border:0; background:rgba(255,255,255,.92); color:var(--ink); display:grid; place-items:center; cursor:pointer;}
+  .iconbtn svg{width:16px; height:16px;}
+  .playlist{display:flex; flex-direction:column; gap:8px;}
+  .pl-item{display:flex; gap:10px; align-items:center; background:var(--paper); border:1px solid var(--line); border-radius:12px; padding:7px; cursor:pointer; text-align:left; width:100%;}
+  .pl-item.cur{border-color:var(--red);}
+  .pl-item .th{width:26px; aspect-ratio:9/16; border-radius:6px; flex:none; background:linear-gradient(160deg,var(--amber),var(--red));}
+  .pl-item b{display:block; font-size:12.5px; color:var(--ink);}
+  .pl-item span{font-size:11px; color:var(--ink-soft);}
+
+  .reel-full{
+    position:fixed; inset:0; z-index:90; background:rgba(20,12,8,.86); display:none; align-items:center; justify-content:center; padding:24px;
+  }
+  .reel-full.show{display:flex;}
+  .reel-full .reel{width:min(360px, 70vw, calc((100svh - 80px) * 9 / 16));}
+  .reel-full .close{position:absolute; top:calc(16px + env(safe-area-inset-top,0px)); right:16px; width:44px; height:44px; border-radius:50%;}
+
+  /* ---------- 3D counsellor ---------- */
+  .guide{
+    position:fixed; z-index:40; right:12px; top:calc(var(--hdr) + env(safe-area-inset-top,0px) + 8px);
+    width:112px; display:flex; flex-direction:column; align-items:center; gap:6px;
+  }
+  .guide .halo{
+    position:relative; width:112px; height:140px; border-radius:22px; overflow:hidden;
+    background:radial-gradient(90% 70% at 50% 85%, #FFFFFF 0%, #FFE9DF 55%, rgba(255,233,223,.0) 100%);
+  }
+  .guide canvas{position:absolute; inset:0; width:100%; height:100%; display:block; touch-action:none; cursor:grab;}
+  .guide canvas:active{cursor:grabbing;}
+  .guide img.fallback{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 12%;}
+  .guide .talk{font-size:12px; padding:7px 12px; border-radius:999px;}
+  .loading-dot{position:absolute; left:50%; top:50%; width:22px; height:22px; margin:-11px 0 0 -11px; border-radius:50%; border:3px solid rgba(236,33,15,.25); border-top-color:var(--red); animation:spin 1s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  @media (min-aspect-ratio:1/1) and (min-width:720px){
+    .guide{top:auto; right:64px; bottom:24px; width:190px;}
+    .guide .halo{width:190px; height:236px; border-radius:28px;}
+    .guide .talk{font-size:13px; padding:9px 16px;}
+  }
+  .bubble{
+    position:fixed; z-index:41; right:132px; top:calc(var(--hdr) + env(safe-area-inset-top,0px) + 58px);
+    max-width:210px; background:#fff; color:var(--ink); border-radius:16px 4px 16px 16px; padding:10px 13px;
+    font-size:13px; font-weight:600; line-height:1.4; box-shadow:0 16px 30px -14px rgba(35,24,15,.55);
+    opacity:0; transform:translateY(-6px) scale(.96); transition:opacity .25s, transform .25s; pointer-events:none;
+  }
+  .bubble.show{opacity:1; transform:none;}
+  @media (min-aspect-ratio:1/1) and (min-width:720px){
+    .bubble{top:auto; right:270px; bottom:170px; border-radius:16px 16px 4px 16px; max-width:240px;}
+  }
+  .help{
+    position:fixed; z-index:80; left:0; right:0; bottom:0; background:#fff; border-radius:24px 24px 0 0;
+    padding:18px 16px calc(18px + env(safe-area-inset-bottom,0px)); box-shadow:0 -20px 50px -20px rgba(35,24,15,.5);
+    transform:translateY(calc(100% + 48px)); visibility:hidden;
+    transition:transform .35s cubic-bezier(.2,.8,.2,1), visibility 0s linear .35s;
+  }
+  .help.show{transform:none; visibility:visible; transition:transform .35s cubic-bezier(.2,.8,.2,1), visibility 0s;}
+  .help h3{font-size:18px; margin:0 0 4px;}
+  .help p{font-size:13px; color:var(--ink-soft); margin:0 0 12px;}
+  .help .grab{width:40px; height:4px; border-radius:4px; background:var(--line); margin:0 auto 12px;}
+  .help .opts{display:grid; grid-template-columns:1fr 1fr; gap:8px;}
+  .help .opts button{background:var(--paper); border:1px solid var(--line); border-radius:12px; padding:12px; font-weight:700; font-size:13.5px; color:var(--ink); text-align:left; cursor:pointer;}
+  .help .opts button:hover{border-color:var(--red); color:var(--red);}
+  .help .x{position:absolute; right:12px; top:12px; width:34px; height:34px; border-radius:50%; border:0; background:var(--paper); cursor:pointer; font-weight:800; color:var(--ink);}
+  @media (min-width:720px){ .help{left:auto; right:24px; bottom:24px; width:380px; border-radius:24px;} }
+
+  /* footer */
+  .foot{background:var(--ink); color:#F3E9E0; padding:34px 16px calc(34px + env(safe-area-inset-bottom,0px));}
+  .foot-in{max-width:1100px; margin:0 auto; display:grid; gap:20px;}
+  .foot b{font-family:'Poppins',sans-serif; font-size:18px; color:#fff;}
+  .foot nav{display:flex; flex-wrap:wrap; gap:10px 18px; font-size:14px; font-weight:600;}
+  .foot nav a{color:#F3E9E0; text-decoration:none;} .foot nav a:hover{color:#fff; text-decoration:underline;}
+  .foot small{font-size:12px; color:#BFAEA0; line-height:1.5;}
+
+  @media (prefers-reduced-motion: reduce){
+    .panel, .panel.on{transition:none;}
+    .hint svg{animation:none;}
+  }
+</style>
+
+<header class="hdr">
+  <div class="hdr-in">
+    <a class="brand" href="https://www.rainbowpreschools.com/" target="_blank" rel="noopener">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M3 17a9 9 0 0 1 18 0" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/><path d="M7 17a5 5 0 0 1 10 0" stroke="#FFD27A" stroke-width="2.6" stroke-linecap="round"/></svg>
+      </span>
+      <span class="brand-text"><b>Rainbow</b><span>Preschool International</span></span>
+    </a>
+    <span class="preview-pill">Concept preview</span>
+    <nav class="nav" aria-label="Main">
+      <a href="https://www.rainbowpreschools.com/programmes" target="_blank" rel="noopener">Programmes</a>
+      <a href="https://www.rainbowpreschools.com/gallery" target="_blank" rel="noopener">Gallery</a>
+      <a href="https://www.rainbowpreschools.com/testimonials" target="_blank" rel="noopener">Reviews</a>
+      <a href="https://www.rainbowpreschools.com/contact" target="_blank" rel="noopener">Contact</a>
+    </nav>
+    <a class="btn" href="#visit" data-jump="7">Book a Visit</a>
+  </div>
+</header>
+
+<main class="experience" id="experience">
+  <div class="stage" id="stage">
+    <img class="poster" id="poster" alt="" src="/walkthrough/scenes/mobile/scene-1.webp">
+    <video id="walk" muted playsinline preload="auto" aria-hidden="true"></video>
+    <div class="scrim"></div>
+
+    <div class="where" aria-live="polite"><span class="n" id="whereN">1 / 8</span><span id="whereT">The Gate</span></div>
+    <nav class="rail" id="rail" aria-label="Scenes"></nav>
+
+    <!-- 1 Gate -->
+    <section class="panel on" data-i="0" aria-label="Welcome">
+      <span class="eyebrow"><i></i>Scene 1 · The Gate</span>
+      <h1>Rainbow Preschool International</h1>
+      <p>Playgroup, Nursery, Kindergarten and Happy Times, across 6 centres in Thane.</p>
+      <form class="cb" id="cbForm" novalidate>
+        <div class="field"><label for="cbName">Parent's name</label><input id="cbName" name="name" autocomplete="name" placeholder="Your name" required></div>
+        <div class="field"><label for="cbPhone">Phone number</label><input id="cbPhone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="10-digit mobile" required></div>
+        <div class="row">
+          <div class="field"><label for="cbProg">Programme</label>
+            <select id="cbProg" name="programme"><option>Playgroup</option><option>Nursery</option><option>Kindergarten</option><option>Happy Times</option></select></div>
+          <div class="field"><label for="cbCentre">Centre</label>
+            <select id="cbCentre" name="centre"><option>Manpada</option><option>Hariniwas</option><option>Anand Nagar</option><option>Dhokali</option><option>Kalwa</option><option>Kasarvadavali</option></select></div>
+        </div>
+        <button class="btn" type="submit">Request a Callback</button>
+        <div class="ok" id="cbOk" role="status"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"/></svg>Thank you! In the live site this goes to the admissions team.</div>
+        <p class="fine">Preview only — nothing is sent. The live build keeps the existing enquiry form, API and tracking exactly as they are.</p>
+      </form>
+      <div class="hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>Scroll to walk through the gate</div>
+    </section>
+
+    <!-- 2 Reception -->
+    <section class="panel" data-i="1" aria-label="About Rainbow">
+      <span class="eyebrow"><i></i>Scene 2 · Reception</span>
+      <h2>About Rainbow</h2>
+      <p>Play-based early learning with a warm, all-women team and safety built into every centre.</p>
+      <div class="stats">
+        <div class="stat"><b>1,00,000+</b><span>Young learners</span></div>
+        <div class="stat"><b>18+</b><span>Years of experience</span></div>
+        <div class="stat"><b>6</b><span>Centres in Thane</span></div>
+        <div class="stat"><b>100%</b><span>Female staff</span></div>
+      </div>
+      <div class="actions"><a class="btn ghost" href="https://www.rainbowpreschools.com/about" target="_blank" rel="noopener">About us</a></div>
+    </section>
+
+    <!-- 3 Corridor -->
+    <section class="panel" data-i="2" aria-label="Programmes">
+      <span class="eyebrow"><i></i>Scene 3 · The Corridor</span>
+      <h2>Four doors, one for every age</h2>
+      <p>Pick a door to open the programme page.</p>
+      <div class="doors">
+        <a class="door" style="--c:var(--red)" href="https://www.rainbowpreschools.com/playgroup" target="_blank" rel="noopener"><span class="arch"></span><span><b>Playgroup</b><span>1.5 – 2.5 years</span></span></a>
+        <a class="door" style="--c:var(--amber)" href="https://www.rainbowpreschools.com/nursery" target="_blank" rel="noopener"><span class="arch"></span><span><b>Nursery</b><span>2.5 – 3.5 years</span></span></a>
+        <a class="door" style="--c:var(--sky)" href="https://www.rainbowpreschools.com/kindergarten" target="_blank" rel="noopener"><span class="arch"></span><span><b>Kindergarten</b><span>3.5 – 5.5 years</span></span></a>
+        <a class="door" style="--c:var(--leaf)" href="https://www.rainbowpreschools.com/happy-times" target="_blank" rel="noopener"><span class="arch"></span><span><b>Happy Times</b><span>2 – 10 years</span></span></a>
+      </div>
+    </section>
+
+    <!-- 4 Classroom -->
+    <section class="panel" data-i="3" aria-label="Why choose us">
+      <span class="eyebrow"><i></i>Scene 4 · The Classroom</span>
+      <h2>Why families choose Rainbow</h2>
+      <ul class="ticks">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"/></svg>A play-based curriculum that builds confidence, language and social skills</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"/></svg>100% female staff and small batches, so every child gets individual attention</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"/></svg>CCTV monitoring, a verified pickup system and secure premises</li>
+      </ul>
+      <div class="actions"><a class="btn ghost" href="https://www.rainbowpreschools.com/programmes" target="_blank" rel="noopener">Our methodology</a></div>
+    </section>
+
+    <!-- 5 Playground -->
+    <section class="panel" data-i="4" aria-label="Life at Rainbow">
+      <span class="eyebrow"><i></i>Scene 5 · The Playground</span>
+      <h2>Life at Rainbow</h2>
+      <p>Classrooms, activities, celebrations and everyday moments from our centres.</p>
+      <div class="chips">
+        <span class="chip">Classrooms</span><span class="chip">Activities</span><span class="chip">Events &amp; Celebrations</span><span class="chip">Learning Through Play</span><span class="chip">Happy Times</span><span class="chip">Infrastructure</span>
+      </div>
+      <div class="actions"><a class="btn ghost" href="https://www.rainbowpreschools.com/gallery" target="_blank" rel="noopener">Open the gallery</a></div>
+    </section>
+
+    <!-- 6 Theatre -->
+    <section class="panel" data-i="5" aria-label="The Rainbow Theatre">
+      <span class="eyebrow"><i></i>Scene 6 · The Rainbow Theatre · New</span>
+      <h2>Now showing, from our Instagram</h2>
+      <p>The newest reel plays on the stage screen. Older reels wait in the playlist.</p>
+      <div class="theatre">
+        <div class="reel" id="reelMini">
+          <div class="tools">
+            <button class="iconbtn" type="button" data-full aria-label="Watch fullscreen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+          </div>
+          <span class="play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4l13 8-13 8z"/></svg></span>
+          <span class="cap" id="reelCap">Latest reel · loads from Instagram</span>
+        </div>
+        <div class="playlist" id="playlist" aria-label="Reel playlist"></div>
+      </div>
+    </section>
+
+    <!-- 7 Courtyard -->
+    <section class="panel" data-i="6" aria-label="Parent reviews">
+      <span class="eyebrow"><i></i>Scene 7 · The Courtyard</span>
+      <h2>What parents say</h2>
+      <div class="quotes" tabindex="0" aria-label="Parent testimonials, swipe for more">
+        <figure class="quote" style="margin:0"><span class="stars">★★★★★</span><p>“My daughter's transformation at Rainbow Preschool has been remarkable. She was extremely shy when she started, and within 3 months she was confidently participating in group activities and making friends.”</p><figcaption class="who"><span>A Rainbow Parent</span><span>Manpada · Nursery</span></figcaption></figure>
+        <figure class="quote" style="margin:0"><span class="stars">★★★★★</span><p>“We were nervous about sending our 1.5-year-old to playgroup, but Rainbow's settling-in process was so gentle. He now runs to school every morning!”</p><figcaption class="who"><span>A Rainbow Parent</span><span>Hariniwas · Playgroup</span></figcaption></figure>
+        <figure class="quote" style="margin:0"><span class="stars">★★★★★</span><p>“As a father, safety was my top concern, and the CCTV monitoring, verified pickup system, and secure premises give me complete peace of mind. My daughter loves her teachers.”</p><figcaption class="who"><span>A Rainbow Parent</span><span>Anand Nagar · Nursery</span></figcaption></figure>
+      </div>
+      <div class="actions"><a class="btn ghost" href="https://www.rainbowpreschools.com/testimonials" target="_blank" rel="noopener">Read all reviews</a></div>
+    </section>
+
+    <!-- 8 Aerial -->
+    <section class="panel" data-i="7" id="visit" aria-label="Find your centre">
+      <span class="eyebrow"><i></i>Scene 8 · Across Thane</span>
+      <h2>Find your nearest centre</h2>
+      <p>Six Rainbow centres across Thane. Tap one to open its page.</p>
+      <div class="chips">
+        <a class="chip" href="https://www.rainbowpreschools.com/preschool-in-manpada-thane" target="_blank" rel="noopener">Manpada</a>
+        <a class="chip" href="https://www.rainbowpreschools.com/preschool-in-hariniwas-thane" target="_blank" rel="noopener">Hariniwas</a>
+        <a class="chip" href="https://www.rainbowpreschools.com/preschool-in-anand-nagar-thane" target="_blank" rel="noopener">Anand Nagar</a>
+        <a class="chip" href="https://www.rainbowpreschools.com/preschool-in-dhokali-thane" target="_blank" rel="noopener">Dhokali</a>
+        <a class="chip" href="https://www.rainbowpreschools.com/preschool-in-kalwa-thane" target="_blank" rel="noopener">Kalwa</a>
+        <a class="chip" href="https://www.rainbowpreschools.com/preschool-in-kasarvadavali-thane" target="_blank" rel="noopener">Kasarvadavali</a>
+      </div>
+      <div class="actions">
+        <a class="btn" href="https://www.rainbowpreschools.com/contact" target="_blank" rel="noopener">Book a Visit</a>
+        <a class="btn ghost" href="https://www.rainbowpreschools.com/faqs" target="_blank" rel="noopener">FAQs</a>
+      </div>
+    </section>
+  </div>
+  <div class="spacer" id="spacer" aria-hidden="true"></div>
+</main>
+
+<footer class="foot">
+  <div class="foot-in">
+    <b>Rainbow Preschool International</b>
+    <nav aria-label="Footer">
+      <a href="https://www.rainbowpreschools.com/programmes" target="_blank" rel="noopener">Programmes</a>
+      <a href="https://www.rainbowpreschools.com/gallery" target="_blank" rel="noopener">Gallery</a>
+      <a href="https://www.rainbowpreschools.com/testimonials" target="_blank" rel="noopener">Testimonials</a>
+      <a href="https://www.rainbowpreschools.com/faqs" target="_blank" rel="noopener">FAQs</a>
+      <a href="https://www.rainbowpreschools.com/contact" target="_blank" rel="noopener">Contact</a>
+    </nav>
+    <small>Concept preview of the /dummy homepage walkthrough. Scenes and camera moves are the generated Higgsfield clips; the guide is the real 3D counsellor mesh rendered live. The production homepage is untouched.</small>
+  </div>
+</footer>
+
+<!-- counsellor -->
+<div class="guide" id="guide">
+  <div class="halo">
+    <img class="fallback" id="guideImg" src="/walkthrough/counsellor/counsellor-fallback.jpg" alt="Your Rainbow guide">
+    <canvas id="guideCanvas" aria-label="3D counsellor. Tap to say hello, drag to turn her around." role="img"></canvas>
+    <span class="loading-dot" id="guideLoad"></span>
+  </div>
+  <button class="btn talk" type="button" id="talkBtn">Talk to me</button>
+</div>
+<div class="bubble" id="bubble" role="status" aria-live="polite"></div>
+
+<div class="help" id="help" role="dialog" aria-modal="false" aria-labelledby="helpT">
+  <button class="x" type="button" id="helpX" aria-label="Close">✕</button>
+  <div class="grab"></div>
+  <h3 id="helpT">How can I help?</h3>
+  <p>Pick a topic and I'll walk you there.</p>
+  <div class="opts">
+    <button type="button" data-go="0">Request a callback</button>
+    <button type="button" data-go="2">Programmes &amp; ages</button>
+    <button type="button" data-go="6">Parent reviews</button>
+    <button type="button" data-go="5">The Rainbow Theatre</button>
+    <button type="button" data-go="7">Find a centre</button>
+    <button type="button" data-go="3">Why Rainbow</button>
+  </div>
+</div>
+
+<div class="reel-full" id="reelFull" role="dialog" aria-label="Reel player">
+  <button class="iconbtn close" type="button" id="reelClose" aria-label="Close player"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  <div class="reel">
+    <span class="play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4l13 8-13 8z"/></svg></span>
+    <span class="cap" id="reelFullCap">Latest reel · loads from Instagram</span>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.js"></script>
+<script>
+/* ============ scroll-driven walkthrough ============ */
+(function(){
+  var SCENES = ['The Gate','Reception','The Corridor','The Classroom','The Playground','The Rainbow Theatre','The Courtyard','Across Thane'];
+  var N = SCENES.length, LAST = N - 1 + 0.5, HOLD = 0.42;
+  var stage = document.getElementById('stage'), spacer = document.getElementById('spacer');
+  var video = document.getElementById('walk'), poster = document.getElementById('poster');
+  var panels = [].slice.call(document.querySelectorAll('.panel'));
+  var rail = document.getElementById('rail');
+  var whereN = document.getElementById('whereN'), whereT = document.getElementById('whereT');
+  var duration = 35.2917, seg = duration / (N - 1);
+  var target = 0, cur = 0, active = 0, isDesktop = null;
+
+  SCENES.forEach(function(name, i){
+    var b = document.createElement('button');
+    b.type = 'button'; b.setAttribute('aria-label', 'Go to ' + name);
+    b.innerHTML = '<span>' + name + '</span>';
+    b.addEventListener('click', function(){ go(i); });
+    rail.appendChild(b);
+  });
+  var dots = [].slice.call(rail.children);
+
+  function pickSource(){
+    var d = window.matchMedia('(min-aspect-ratio: 1/1) and (min-width: 720px)').matches;
+    if (d === isDesktop) return;
+    isDesktop = d;
+    var t = cur;
+    poster.src = d ? '/walkthrough/scenes/desktop/scene-1.webp' : '/walkthrough/scenes/mobile/scene-1.webp';
+    poster.classList.remove('gone');
+    var base = d ? '/walkthrough/video/walk-desktop' : '/walkthrough/video/walk-mobile';
+    var h264 = video.canPlayType('video/mp4; codecs="avc1.42E01E"') !== '';
+    video.src = base + (h264 ? '.mp4' : '.webm');
+    video.onerror = function(){ if (/\.mp4$/.test(video.src)){ video.src = base + '.webm'; video.load(); } };
+    video.load();
+    video.addEventListener('loadeddata', function once(){
+      video.removeEventListener('loadeddata', once);
+      if (isFinite(video.duration) && video.duration > 1){ duration = video.duration; seg = duration / (N - 1); }
+      try { video.currentTime = t; } catch(e){}
+      poster.classList.add('gone');
+    });
+  }
+  pickSource();
+  window.addEventListener('resize', pickSource);
+
+  // iOS needs one play() inside a gesture before seeking paints frames
+  var unlocked = false;
+  function unlock(){
+    if (unlocked) return; unlocked = true;
+    var p = video.play(); if (p && p.then) p.then(function(){ video.pause(); }).catch(function(){});
+  }
+  ['touchstart','pointerdown','wheel','keydown'].forEach(function(ev){ window.addEventListener(ev, unlock, {once:true, passive:true}); });
+
+  function ease(x){ return x < .5 ? 2*x*x : 1 - Math.pow(-2*x + 2, 2) / 2; }
+
+  function progressX(){
+    var r = spacer.getBoundingClientRect();
+    var total = r.height - stage.clientHeight;
+    var s = Math.min(Math.max(-r.top, 0), total);
+    return total > 0 ? (s / total) * LAST : 0;
+  }
+
+  function update(){
+    var x = progressX();
+    var i = Math.min(Math.floor(x), N - 1), f = x - i;
+    if (i >= N - 1){ target = duration; }
+    else target = i * seg + (f < HOLD ? 0 : ease((f - HOLD) / (1 - HOLD)) * seg);
+    var show = -1;
+    if (i >= N - 1) show = N - 1;
+    else if (f < HOLD + 0.08) show = i;
+    else if (f > 0.9) show = i + 1;
+    if (show !== active){
+      panels.forEach(function(p, k){ p.classList.toggle('on', k === show); });
+      if (show >= 0){
+        active = show;
+        whereN.textContent = (show + 1) + ' / ' + N;
+        whereT.textContent = SCENES[show];
+        dots.forEach(function(d, k){ d.classList.toggle('on', k === show); });
+        window.dispatchEvent(new CustomEvent('scenechange', {detail:{index:show, name:SCENES[show]}}));
+      } else active = -1;
+    }
+  }
+
+  function tick(){
+    var diff = target - cur;
+    cur = Math.abs(diff) < 0.004 ? target : cur + diff * 0.18;
+    if (video.readyState >= 2 && !video.seeking && Math.abs(video.currentTime - cur) > 0.03){
+      try { video.currentTime = cur; } catch(e){}
+    }
+    requestAnimationFrame(tick);
+  }
+
+  window.addEventListener('scroll', update, {passive:true});
+  window.addEventListener('resize', update);
+  update(); dots[0].classList.add('on');
+  requestAnimationFrame(tick);
+
+  function go(i){
+    var r = spacer.getBoundingClientRect();
+    var total = r.height - stage.clientHeight;
+    var y = window.scrollY + r.top + (i / LAST) * total + 2;
+    window.scrollTo({top: y, behavior: 'smooth'});
+  }
+  window.rpsGo = go;
+  document.querySelectorAll('[data-jump]').forEach(function(a){
+    a.addEventListener('click', function(e){ e.preventDefault(); go(+a.getAttribute('data-jump')); });
+  });
+
+  /* callback form (preview only, sends nothing) */
+  var form = document.getElementById('cbForm');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var name = document.getElementById('cbName'), phone = document.getElementById('cbPhone');
+    if (!name.value.trim()){ name.focus(); return; }
+    if (!/^\D*(\d\D*){10}$/.test(phone.value)){ phone.focus(); phone.setCustomValidity('Enter a 10-digit number'); phone.reportValidity(); return; }
+    phone.setCustomValidity('');
+    document.getElementById('cbOk').classList.add('show');
+    window.dispatchEvent(new CustomEvent('formsubmitted'));
+  });
+  document.getElementById('cbPhone').addEventListener('input', function(){ this.setCustomValidity(''); });
+
+  /* theatre: playlist + fullscreen */
+  var pl = document.getElementById('playlist'), cap = document.getElementById('reelCap'), fcap = document.getElementById('reelFullCap');
+  for (var k = 1; k <= 4; k++){
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'pl-item' + (k === 1 ? ' cur' : '');
+    b.innerHTML = '<span class="th"></span><span><b>' + (k === 1 ? 'Newest reel' : 'Reel ' + k) + '</b><span>Loads from Instagram</span></span>';
+    (function(k, b){ b.addEventListener('click', function(){
+      pl.querySelectorAll('.pl-item').forEach(function(x){ x.classList.remove('cur'); });
+      b.classList.add('cur');
+      cap.textContent = fcap.textContent = (k === 1 ? 'Newest reel' : 'Reel ' + k) + ' · loads from Instagram';
+    }); })(k, b);
+    pl.appendChild(b);
+  }
+  var full = document.getElementById('reelFull');
+  document.querySelector('[data-full]').addEventListener('click', function(){ full.classList.add('show'); document.getElementById('reelClose').focus(); });
+  document.getElementById('reelClose').addEventListener('click', function(){ full.classList.remove('show'); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape'){ full.classList.remove('show'); document.getElementById('help').classList.remove('show'); } });
+
+  /* talk-to-me quick help */
+  var help = document.getElementById('help');
+  document.getElementById('talkBtn').addEventListener('click', function(){ help.classList.add('show'); window.dispatchEvent(new CustomEvent('guidehello')); });
+  document.getElementById('helpX').addEventListener('click', function(){ help.classList.remove('show'); });
+  help.querySelectorAll('[data-go]').forEach(function(b){
+    b.addEventListener('click', function(){ help.classList.remove('show'); go(+b.getAttribute('data-go')); });
+  });
+})();
+</script>
+
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
+<script type="module">
+/* ============ live 3D counsellor ============ */
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
+const canvas = document.getElementById('guideCanvas');
+const img = document.getElementById('guideImg');
+const load = document.getElementById('guideLoad');
+const bubble = document.getElementById('bubble');
+const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+const LINES = {
+  hello: "Hi! I'm your Rainbow guide. Scroll with me, I'll show you around.",
+  0: "Welcome! Leave your number and our team will call you back.",
+  1: "This is our reception. Here's a little about us.",
+  2: "Four doors, one for each age. Tap one to peek inside.",
+  3: "Our classrooms, where the learning happens through play.",
+  4: "The playground! Our gallery has lots more moments.",
+  5: "Our new theatre. The latest Instagram reel is on screen.",
+  6: "Here's what parents tell us.",
+  7: "Six centres across Thane. Which one is closest to you?",
+  thanks: "Thank you! Our admissions team will be in touch soon."
+};
+let bubbleT;
+function say(text, ms = 3800){
+  bubble.textContent = text; bubble.classList.add('show');
+  clearTimeout(bubbleT); bubbleT = setTimeout(() => bubble.classList.remove('show'), ms);
+}
+
+let renderer;
+try {
+  renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'low-power' });
+} catch (e) { load.remove(); throw e; }
+renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.15;
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(26, 1, 0.01, 50);
+scene.add(new THREE.HemisphereLight(0xffffff, 0xffe2d4, 1.9));
+const key = new THREE.DirectionalLight(0xffffff, 2.4); key.position.set(1.2, 2.2, 2.4); scene.add(key);
+const rim = new THREE.DirectionalLight(0xffc9a8, 1.4); rim.position.set(-2, 1.5, -1.5); scene.add(rim);
+
+const pivot = new THREE.Group(); scene.add(pivot);
+let model = null, H = 1.9, baseY = 0;
+
+function size(){
+  const w = canvas.clientWidth, h = canvas.clientHeight;
+  if (!w || !h) return;
+  renderer.setSize(w, h, false);
+  camera.aspect = w / h; camera.updateProjectionMatrix();
+  if (model){
+    const visH = H * 0.74, fov = THREE.MathUtils.degToRad(camera.fov);
+    const dist = (visH / 2) / Math.tan(fov / 2) * 1.02;
+    const focus = H * 0.16;
+    camera.position.set(0, focus + H * 0.05, dist);
+    camera.lookAt(0, focus, 0);
+  }
+}
+new ResizeObserver(size).observe(canvas);
+
+new GLTFLoader().load('/walkthrough/counsellor/counsellor.glb', (gltf) => {
+  model = gltf.scene;
+  const box = new THREE.Box3().setFromObject(model);
+  const c = box.getCenter(new THREE.Vector3()), s = box.getSize(new THREE.Vector3());
+  model.position.sub(c);
+  H = s.y; baseY = 0;
+  model.traverse(o => { if (o.isMesh){ o.material.side = THREE.FrontSide; if (o.material.map) o.material.map.anisotropy = 4; } });
+  pivot.add(model);
+  size();
+  img.hidden = true; load.remove();
+  setTimeout(() => say(LINES.hello, 4200), 700);
+}, undefined, () => { load.remove(); });
+
+/* interaction state */
+let followYaw = 0, followPitch = 0, dragYaw = 0, dragging = false, downX = 0, downY = 0, moved = 0;
+let hop = 0, hops = 0, look = 0, lookT = 0, wiggle = 0;
+const desktopMQ = window.matchMedia('(min-aspect-ratio: 1/1) and (min-width: 720px)');
+
+window.addEventListener('pointermove', (e) => {
+  if (dragging){
+    const dx = e.clientX - downX; moved = Math.max(moved, Math.abs(dx) + Math.abs(e.clientY - downY));
+    dragYaw = dx * 0.018; return;
+  }
+  if (e.pointerType !== 'mouse') return;
+  const r = canvas.getBoundingClientRect();
+  const cx = r.left + r.width / 2, cy = r.top + r.height * 0.3;
+  followYaw = THREE.MathUtils.clamp((e.clientX - cx) / window.innerWidth * 1.6, -0.7, 0.7);
+  followPitch = THREE.MathUtils.clamp((e.clientY - cy) / window.innerHeight * 0.5, -0.18, 0.22);
+}, { passive: true });
+
+canvas.addEventListener('pointerdown', (e) => { dragging = true; downX = e.clientX; downY = e.clientY; moved = 0; canvas.setPointerCapture(e.pointerId); });
+canvas.addEventListener('pointerup', (e) => {
+  dragging = false;
+  if (moved < 8){ hop = 1; hops = 1; wiggle = 1; say(LINES.hello); }
+});
+canvas.addEventListener('pointercancel', () => { dragging = false; });
+
+window.addEventListener('guidehello', () => { hop = 1; hops = 1; wiggle = 1; });
+window.addEventListener('scenechange', (e) => {
+  const i = e.detail.index;
+  look = desktopMQ.matches ? -0.55 : 0; lookT = 1.6;       // turn toward the panel
+  if (!desktopMQ.matches) followPitch = 0.12;
+  if (LINES[i]) say(LINES[i], 3200);
+});
+window.addEventListener('formsubmitted', () => {
+  hop = 1; hops = 3; wiggle = 1; say(LINES.thanks, 4500);
+  if (window.confetti && !reduce){
+    const r = canvas.getBoundingClientRect();
+    window.confetti({ particleCount: 110, spread: 75, startVelocity: 38, origin: { x: (r.left + r.width / 2) / window.innerWidth, y: (r.top + r.height / 2) / window.innerHeight }, colors: ['#EC210F', '#F4A62A', '#2F8FE0', '#2EA66A', '#FFFFFF'] });
+  }
+});
+
+/* procedural motion (the delivered mesh has no skeleton, so she moves as a whole) */
+const clock = new THREE.Clock();
+let yaw = 0, pitch = 0, visible = true;
+new IntersectionObserver(([en]) => { visible = en.isIntersecting; }).observe(canvas);
+document.addEventListener('visibilitychange', () => { if (!document.hidden) clock.getDelta(); });
+
+function frame(){
+  requestAnimationFrame(frame);
+  if (!model || !visible || document.hidden) return;
+  const dt = Math.min(clock.getDelta(), 0.05), t = clock.elapsedTime;
+  const m = reduce ? 0 : 1;
+
+  if (lookT > 0){ lookT -= dt; } else { look *= 0.9; }
+  if (!dragging) dragYaw *= 0.92;
+  const idleYaw = m * Math.sin(t * 0.45) * 0.14;
+  const wig = wiggle > 0 ? Math.sin(t * 22) * 0.12 * wiggle : 0; wiggle = Math.max(0, wiggle - dt * 1.8);
+  const tYaw = idleYaw + followYaw + dragYaw + look + wig;
+  yaw += (tYaw - yaw) * Math.min(1, dt * 6);
+  pitch += (followPitch - pitch) * Math.min(1, dt * 4);
+  if (!desktopMQ.matches && lookT <= 0) followPitch *= 0.97;
+
+  let jump = 0;
+  if (hop > 0){
+    hop -= dt * 2.4;
+    if (hop <= 0 && hops > 1){ hops--; hop = 1; }
+    const k = Math.max(hop, 0);
+    jump = Math.sin((1 - k) * Math.PI) * H * 0.06;
+  }
+  const breathe = m * Math.sin(t * 1.7);
+  pivot.rotation.set(pitch * 0.5, yaw, m * Math.sin(t * 0.9) * 0.018);
+  pivot.position.y = baseY + jump + breathe * H * 0.004;
+  model.scale.set(1 - breathe * 0.003, 1 + breathe * 0.006, 1 - breathe * 0.003);
+  renderer.render(scene, camera);
+}
+frame();
+</script>
