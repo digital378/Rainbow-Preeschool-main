@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "wouter";
 import { centres } from "@shared/centre-data";
+import { getCampaignAttribution } from "@/lib/analytics";
 // ─── EDITABLE CONFIG ─────────────────────────────────────────────────────────
 const CONFIG = {
   phone: "+918291568972",
@@ -151,30 +152,29 @@ const CONFIG = {
 
 const GA4_ID = "G-G1MX1N0M05";
 
-function getUtmParams() {
-  const params = new URLSearchParams(window.location.search);
-  const gclid = params.get("gclid");
-  const gadSource = params.get("gad_source");
-  const gbraid = params.get("gbraid");
-  const wbraid = params.get("wbraid");
-  const fbclid = params.get("fbclid");
-  const utmSource = params.get("utm_source");
-  const utmCampaign = params.get("utm_campaign");
-
-  let leadSource = "Website";
-  let leadMedium = "Ad Landing Page";
-
-  if (gclid || gadSource || gbraid || wbraid) {
-    leadSource = "Google Ads";
-    leadMedium = "Paid Search";
-  } else if (fbclid) {
-    leadSource = "Meta Ads";
-    leadMedium = "Paid Social";
-  } else if (utmSource) {
-    leadSource = utmSource;
+function safeCampaignAnalyticsValue(value?: string): string | undefined {
+  if (!value) return undefined;
+  const cleaned = value.trim().replace(/[\u0000-\u001f\u007f]/g, "").slice(0, 200);
+  if (!cleaned) return undefined;
+  if (["Google Ads", "Meta Ads", "Paid Search", "Paid Social", "Website"].includes(cleaned)) {
+    return cleaned;
   }
-  if (utmCampaign) leadMedium = `${leadMedium} - ${utmCampaign}`;
-  return { leadSource, leadMedium };
+  if (
+    !/^[A-Za-z0-9._~-]{1,100}$/.test(cleaned) ||
+    /\d{7,}/.test(cleaned.replace(/[-._~]/g, ""))
+  ) {
+    return undefined;
+  }
+  return cleaned;
+}
+
+function getUtmParams() {
+  const attribution = getCampaignAttribution();
+  return {
+    ...attribution,
+    leadSource: attribution.leadSource || "Website",
+    leadMedium: attribution.leadMedium || "Ad Landing Page",
+  };
 }
 
 const PhoneIcon = () => (
@@ -278,11 +278,11 @@ export default function AdLanding() {
       (window as any).dataLayer = (window as any).dataLayer || [];
       (window as any).gtag = function () { (window as any).dataLayer.push(arguments); };
       (window as any).gtag("js", new Date());
-      (window as any).gtag("config", "GT-55BFZCQT");
-      (window as any).gtag("config", GA4_ID, { page_path: "/ad", page_title: "Ad Landing Page" });
+      (window as any).gtag("config", "GT-55BFZCQT", { send_page_view: false });
+      (window as any).gtag("config", GA4_ID, { page_path: "/ad", page_title: "Ad Landing Page", send_page_view: false });
       (window as any).gtag("config", "AW-1747212533/a68zCIykmPsbEJnzrYtB", { phone_conversion_number: "82915 68972" });
     } else {
-      (window as any).gtag("config", GA4_ID, { page_path: "/ad", page_title: "Ad Landing Page" });
+      (window as any).gtag("config", GA4_ID, { page_path: "/ad", page_title: "Ad Landing Page", send_page_view: false });
       (window as any).gtag("config", "AW-1747212533/a68zCIykmPsbEJnzrYtB", { phone_conversion_number: "82915 68972" });
     }
 
@@ -326,12 +326,31 @@ export default function AdLanding() {
           message: `Ad Landing - Area: ${formData.area}`,
           leadSource: utmData.leadSource,
           leadMedium: utmData.leadMedium,
+          utmSource: utmData.utmSource,
+          utmMedium: utmData.utmMedium,
+          utmCampaign: utmData.utmCampaign,
+          utmContent: utmData.utmContent,
+          utmTerm: utmData.utmTerm,
+          gclid: utmData.gclid,
+          gadSource: utmData.gadSource,
+          gbraid: utmData.gbraid,
+          wbraid: utmData.wbraid,
+          fbclid: utmData.fbclid,
+          msclkid: utmData.msclkid,
         }),
       });
       const data = await res.json();
       if (data.success) {
         if ((window as any).gtag) {
-          (window as any).gtag("event", "ad_leads", { lead_source: utmData.leadSource });
+          (window as any).gtag("event", "ad_leads", {
+            page_path: "/ad",
+            page_location: window.location.origin + window.location.pathname,
+            lead_source: safeCampaignAnalyticsValue(utmData.leadSource),
+            lead_medium: safeCampaignAnalyticsValue(utmData.leadMedium),
+            utm_source: safeCampaignAnalyticsValue(utmData.utmSource),
+            utm_medium: safeCampaignAnalyticsValue(utmData.utmMedium),
+            utm_campaign: safeCampaignAnalyticsValue(utmData.utmCampaign),
+          });
           (window as any).gtag("event", "ad_form_submit", { form_location: "hero" });
         }
         setIsSubmitted(true);

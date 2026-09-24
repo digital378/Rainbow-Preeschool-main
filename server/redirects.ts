@@ -657,6 +657,37 @@ export const redirectMap: Record<string, string> = {
   "/about/akheela-balbale/": "/about",
 };
 
+const ATTRIBUTION_PARAMS = [
+  "utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term",
+  "gclid", "gad_source", "gbraid", "wbraid", "fbclid", "msclkid",
+];
+
+/**
+ * Carry attribution values through a canonical redirect while leaving other
+ * query-string cleanup intact. Values already on the target always win.
+ */
+export function preserveAttribution(target: string, originalUrl: string): string {
+  const targetHashIndex = target.indexOf("#");
+  const targetWithoutHash = targetHashIndex < 0 ? target : target.slice(0, targetHashIndex);
+  const hash = targetHashIndex < 0 ? "" : target.slice(targetHashIndex);
+  const targetQueryIndex = targetWithoutHash.indexOf("?");
+  const targetPath = targetQueryIndex < 0 ? targetWithoutHash : targetWithoutHash.slice(0, targetQueryIndex);
+  const targetParams = new URLSearchParams(
+    targetQueryIndex < 0 ? "" : targetWithoutHash.slice(targetQueryIndex + 1),
+  );
+  const sourceQueryIndex = originalUrl.indexOf("?");
+  if (sourceQueryIndex >= 0) {
+    const sourceParams = new URLSearchParams(originalUrl.slice(sourceQueryIndex + 1));
+    for (const key of ATTRIBUTION_PARAMS) {
+      if (!targetParams.has(key) && sourceParams.has(key)) {
+        targetParams.set(key, sourceParams.get(key) || "");
+      }
+    }
+  }
+  const query = targetParams.toString();
+  return `${targetPath}${query ? `?${query}` : ""}${hash}`;
+}
+
 export function setupRedirects(app: Express) {
   // ── 1. Canonical host enforcement (production only) ────────────────────────
   // Enforces https://www.rainbowpreschools.com as the single canonical host.
@@ -704,8 +735,9 @@ export function setupRedirects(app: Express) {
   });
 
   // ── 1b. Legacy sitemap_index.xml → canonical sitemap ──────────────────────
-  app.get(["/sitemap_index.xml", "/sitemap-index.xml"], (_req: Request, res: Response) => {
-    res.redirect(301, "https://www.rainbowpreschools.com/sitemap.xml");
+  app.get(["/sitemap_index.xml", "/sitemap-index.xml"], (req: Request, res: Response) => {
+    const target = preserveAttribution("https://www.rainbowpreschools.com/sitemap.xml", req.originalUrl);
+    res.redirect(301, target);
   });
 
   // ── 2. Main redirect middleware ────────────────────────────────────────────
@@ -716,28 +748,22 @@ export function setupRedirects(app: Express) {
       ? req.originalUrl.substring(req.originalUrl.indexOf("?"))
       : "";
 
-    // ── Strip UTM params (full query drop) and junk params ───────────────────
+    // ── Preserve campaign attribution; strip only junk parameters ────────────
     if (qs) {
       const params = new URLSearchParams(qs.slice(1));
-      const utmParams = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"];
-      const hasUtm = utmParams.some(p => params.has(p));
-      if (hasUtm) {
-        // UTM params present — redirect to clean path with no query string at all
-        return res.redirect(301, rawPath);
-      }
       const junkParams = ["amp", "noamp", "replytocom"];
       const hasJunk = junkParams.some(p => params.has(p));
       if (hasJunk) {
         junkParams.forEach(p => params.delete(p));
         const cleanQs = params.toString() ? `?${params.toString()}` : "";
-        return res.redirect(301, rawPath + cleanQs);
+        return res.redirect(301, preserveAttribution(rawPath + cleanQs, req.originalUrl));
       }
     }
 
     // ── Strip double slashes (//slug → /slug) ─────────────────────────────
     if (/\/\//.test(rawPath)) {
       const clean = rawPath.replace(/\/+/g, "/");
-      return res.redirect(301, clean + qs);
+      return res.redirect(301, preserveAttribution(clean + qs, req.originalUrl));
     }
 
     // ── Trailing-slash canonicals (no-slash form is canonical) ────────────
@@ -756,72 +782,72 @@ export function setupRedirects(app: Express) {
         .map((slug) => `${slug.toLowerCase()}/`),
     ]);
     if (trailingSlashCanonicals.has(lowerPath)) {
-      return res.redirect(301, lowerPath.slice(0, -1) + qs);
+      return res.redirect(301, preserveAttribution(lowerPath.slice(0, -1) + qs, req.originalUrl));
     }
 
     // ── Strip WordPress pagination suffix /1000 ────────────────────────────
     if (/\/1000\/?$/.test(lowerPath)) {
       const base = lowerPath.replace(/\/1000\/?$/, "") || "/";
-      return res.redirect(301, base + qs);
+      return res.redirect(301, preserveAttribution(base + qs, req.originalUrl));
     }
 
     // ── Strip junk numeric paths (/1/, /5/, /9/, /10/) ────────────────────
     if (/^\/\d{1,3}\/?$/.test(lowerPath)) {
-      return res.redirect(301, "/" + qs);
+      return res.redirect(301, preserveAttribution("/" + qs, req.originalUrl));
     }
 
     // ── Dot-file / garbage paths (/.You, /.env, etc.) ────────────────────
     if (/^\/\./.test(rawPath)) {
-      return res.redirect(301, "/");
+      return res.redirect(301, preserveAttribution("/", req.originalUrl));
     }
 
     // ── WordPress feed URLs (/slug/feed or /slug/feed/) ───────────────────
     if (/\/feed\/?$/.test(lowerPath)) {
-      return res.redirect(301, "/blog" + qs);
+      return res.redirect(301, preserveAttribution("/blog" + qs, req.originalUrl));
     }
 
     // ── Author / pagination (/author/... or /author/.../page/N) ──────────
     if (lowerPath.startsWith("/author/")) {
-      return res.redirect(301, "/blog");
+      return res.redirect(301, preserveAttribution("/blog", req.originalUrl));
     }
 
     // ── Attachment URLs (/rooms/.../attachment/ or /mulund-east/attachment/) ──
     if (lowerPath.includes("/attachment/")) {
-      return res.redirect(301, "/about");
+      return res.redirect(301, preserveAttribution("/about", req.originalUrl));
     }
 
     // ── Old city branch pages (/thane/*, /navi-mumbai/*, /mumbai/*) ───────
     if (lowerPath.startsWith("/navi-mumbai/") || lowerPath.startsWith("/mumbai/")) {
-      return res.redirect(301, "/");
+      return res.redirect(301, preserveAttribution("/", req.originalUrl));
     }
     if (lowerPath.startsWith("/thane/") && !lowerPath.startsWith("/thane/dhokali")) {
-      return res.redirect(301, "/");
+      return res.redirect(301, preserveAttribution("/", req.originalUrl));
     }
 
     // ── WordPress category/tag archives ───────────────────────────────────
     if (lowerPath.startsWith("/category/") || lowerPath.startsWith("/tag/")) {
-      return res.redirect(301, "/blog");
+      return res.redirect(301, preserveAttribution("/blog", req.originalUrl));
     }
 
     // ── WordPress .php files ───────────────────────────────────────────────
     if (lowerPath.endsWith(".php")) {
-      return res.redirect(301, "/");
+      return res.redirect(301, preserveAttribution("/", req.originalUrl));
     }
 
     // ── WordPress core paths ───────────────────────────────────────────────
     if (lowerPath.includes("/wp-") || lowerPath.includes("/wordpress")) {
-      return res.redirect(301, "/");
+      return res.redirect(301, preserveAttribution("/", req.originalUrl));
     }
 
     // ── Referral spam URLs ─────────────────────────────────────────────────
     if (qs.includes("referral_url=")) {
-      return res.redirect(301, rawPath);
+      return res.redirect(301, preserveAttribution(rawPath, req.originalUrl));
     }
 
     // ── Exact map lookup ───────────────────────────────────────────────────
     const directMatch = redirectMap[lowerPath];
     if (directMatch) {
-      return res.redirect(301, directMatch + qs);
+      return res.redirect(301, preserveAttribution(directMatch + qs, req.originalUrl));
     }
 
     // ── Try without trailing slash ─────────────────────────────────────────
@@ -829,7 +855,7 @@ export function setupRedirects(app: Express) {
       ? lowerPath.slice(0, -1)
       : null;
     if (withoutSlash && redirectMap[withoutSlash]) {
-      return res.redirect(301, redirectMap[withoutSlash] + qs);
+      return res.redirect(301, preserveAttribution(redirectMap[withoutSlash] + qs, req.originalUrl));
     }
 
     next();

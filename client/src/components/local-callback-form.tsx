@@ -13,7 +13,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
-import { trackFormSubmit, trackFormView, getUTMParams, type FormType } from "@/lib/analytics";
+import { trackFormSubmit, trackFormView, getUTMParams, getCampaignAttribution, type FormType } from "@/lib/analytics";
 import { CheckCircle2, Lock } from "lucide-react";
 
 interface LocalCallbackFormProps {
@@ -80,6 +80,7 @@ export function LocalCallbackForm({
   const mutation = useMutation({
     mutationFn: async (data: typeof formData) => {
       const response = await apiRequest("POST", "/api/contact", {
+        ...getCampaignAttribution(),
         parentName: data.parentName,
         phone: data.phone,
         childAge: data.childAge,

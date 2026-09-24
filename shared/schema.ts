@@ -24,6 +24,8 @@ export const insertContactSchema = createInsertSchema(contactSubmissions).omit({
   id: true,
   createdAt: true,
   isRead: true,
+}).extend({
+  utmCampaign: z.string().trim().max(200).nullish(),
 });
 
 export type InsertContact = z.infer<typeof insertContactSchema>;

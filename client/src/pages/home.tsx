@@ -54,7 +54,7 @@ function LazySection({ children, rootMargin = "200px", minHeight = 400 }: { chil
 import { useToast } from "@/hooks/use-toast";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
-import { trackFormSubmit, trackCTAClick } from "@/lib/analytics";
+import { getCampaignAttribution, trackFormSubmit, trackCTAClick } from "@/lib/analytics";
 import {
   Accordion,
   AccordionContent,
@@ -217,6 +217,7 @@ function QuickCallbackStrip() {
   const mutation = useMutation({
     mutationFn: async (data: typeof formData) => {
       return apiRequest("POST", "/api/contact", {
+        ...getCampaignAttribution(),
         parentName: data.parentName,
         phone: data.phone,
         childAge: data.childAge,
@@ -231,9 +232,6 @@ function QuickCallbackStrip() {
         trackFormSubmit({
           formType: 'instant',
           programme: 'General Enquiry',
-          // MCB-aligned parameters
-          parentName: formData.parentName,
-          phone: formData.phone,
           childAge: formData.childAge,
         });
       }
@@ -1674,7 +1672,7 @@ function ContactSection() {
       const res = await fetch("/api/contact", {
         method:"POST",
         headers:{ "Content-Type":"application/json" },
-        body:JSON.stringify(values),
+        body:JSON.stringify({ ...values, ...getCampaignAttribution() }),
       });
       if (!res.ok) throw new Error("Network error");
       setSubmitted(true);

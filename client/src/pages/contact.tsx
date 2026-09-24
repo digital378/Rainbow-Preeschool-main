@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { Link } from "wouter";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { ContactForm } from "@/components/contact-form";
@@ -8,10 +8,34 @@ import { EEATSignals } from "@/components/eeat-signals";
 import { LAST_UPDATED_DISPLAY, LAST_UPDATED_ISO } from "@shared/site-freshness";
 import { branches } from "@shared/schema";
 import { Phone, Mail, Clock, MapPin, Award, ClipboardList, Images, Navigation as NavigationIcon } from "lucide-react";
-import { Interactive3DMap } from "@/components/interactive-3d-map";
 import { ErrorBoundary } from "@/components/error-boundary";
 
+const Interactive3DMap = lazy(() =>
+  import("@/components/interactive-3d-map").then(({ Interactive3DMap: Map }) => ({ default: Map }))
+);
+
 export default function Contact() {
+  const mapAnchorRef = useRef<HTMLDivElement>(null);
+  const [shouldLoadMap, setShouldLoadMap] = useState(false);
+
+  useEffect(() => {
+    const anchor = mapAnchorRef.current;
+    if (!anchor) return;
+    if (!("IntersectionObserver" in window)) {
+      setShouldLoadMap(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry?.isIntersecting) {
+        setShouldLoadMap(true);
+        observer.disconnect();
+      }
+    }, { rootMargin: "400px 0px" });
+    observer.observe(anchor);
+    return () => observer.disconnect();
+  }, []);
+
   useEffect(() => {
     const script = document.createElement("script");
     script.src = "https://eeconfigstaticfiles.blob.core.windows.net/staticfiles/rpsinternational/ee-form-widget/form-5/widget.js";
@@ -137,9 +161,29 @@ export default function Contact() {
             <p className="text-muted-foreground text-lg">Locate your nearest Rainbow Preschools Centre in Thane.</p>
           </div>
           
-          <ErrorBoundary name="contact-3d-map" silent>
-            <Interactive3DMap />
-          </ErrorBoundary>
+          <div
+            ref={mapAnchorRef}
+            className="mb-8 h-[320px] w-full md:h-[480px]"
+            role="region"
+            aria-label="Interactive map of Rainbow Preschool centres"
+            aria-busy={!shouldLoadMap}
+          >
+            {shouldLoadMap ? (
+              <ErrorBoundary name="contact-3d-map" silent>
+                <Suspense fallback={
+                  <div className="flex h-full items-center justify-center rounded-[20px] bg-muted text-muted-foreground" role="status">
+                    Loading the interactive centre map…
+                  </div>
+                }>
+                  <Interactive3DMap />
+                </Suspense>
+              </ErrorBoundary>
+            ) : (
+              <div className="flex h-full items-center justify-center rounded-[20px] bg-muted px-6 text-center text-muted-foreground" role="status">
+                Map of 6 Rainbow Preschool centres across Thane. The interactive map loads as you approach; centre details are listed below.
+              </div>
+            )}
+          </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {branches.map((branch) => (

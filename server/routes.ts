@@ -582,7 +582,11 @@ export async function registerRoutes(
       }
 
       const validatedData = insertContactSchema.parse(formData);
-      const contact = await storage.createContact(validatedData);
+      // Campaign belongs to the lead notification/CRM request, not the
+      // existing lead table: new server code must remain safe with the
+      // published table even when its schema has not been updated yet.
+      const { utmCampaign, ...storedData } = validatedData;
+      const contact = await storage.createContact(storedData);
       
       console.log(`[Contact] New lead received: id=${contact.id}`);
 
@@ -604,7 +608,8 @@ export async function registerRoutes(
           branch: validatedData.branch,
           message: validatedData.message || undefined,
           leadSource: formData.leadSource || undefined,
-          leadMedium: formData.leadMedium || undefined
+          leadMedium: formData.leadMedium || undefined,
+          utmCampaign: validatedData.utmCampaign || undefined,
         });
         console.log(`[Contact] Email ${emailSent ? "sent successfully" : "FAILED"}: id=${contact.id}`);
         if (!emailSent) {
@@ -690,7 +695,7 @@ export async function registerRoutes(
             branchID,
             utmSource: formData.leadSource || "",
             utmMedium: formData.leadMedium || "",
-            utmCampaign: formData.utmCampaign || "",
+            utmCampaign: validatedData.utmCampaign || "",
           });
           console.log(`[Contact] MCB ${result.success ? "success" : "FAILED"}: id=${contact.id}`);
         } catch (err) {

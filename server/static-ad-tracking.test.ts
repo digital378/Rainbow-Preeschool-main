@@ -1,5 +1,6 @@
 import { spawnSync } from "node:child_process";
 import { readFileSync, rmSync, writeFileSync } from "node:fs";
+import { runInNewContext } from "node:vm";
 import { describe, expect, it } from "vitest";
 import {
   validateStaticAdTracking,
@@ -47,6 +48,110 @@ const validHtml = `
 `;
 
 describe("static ad tracking guard", () => {
+  it.each(["public/ad-google.html", "public/ad-mtpg.html"])(
+    "keeps only campaign query keys in the manual page view for %s",
+    (file) => {
+      const html = readFileSync(file, "utf8");
+      expect(html).toContain("function getSafeCampaignPageLocation()");
+      expect(html).toContain("page_location: getSafeCampaignPageLocation()");
+      expect(html).toContain("'utm_campaign'");
+      expect(html).toContain("'gclid'");
+      expect(html).not.toContain("page_location: window.location.href");
+      expect(html.match(/gtag\('event', 'page_view'/g)).toHaveLength(1);
+    },
+  );
+
+  it.each([
+    "client/src/pages/ad-landing.tsx",
+    "client/src/pages/ad-google-landing.tsx",
+    "public/ad-google.html",
+    "public/ad-mtpg.html",
+    "public/daycare-fast.html",
+    "public/kindergarten-fast.html",
+    "public/nursery-fast.html",
+    "public/playgroup-fast.html",
+  ])("sanitizes campaign values before ad conversion analytics in %s", (file) => {
+    const source = readFileSync(file, "utf8");
+    expect(source).toContain("safeCampaignAnalyticsValue");
+    expect(source).toContain("/^[A-Za-z0-9._~-]{1,100}$/");
+    expect(source).toContain("\\d{7,}");
+    expect(source).toContain("replace(/[-._~]/g");
+    expect(source).toMatch(/["']Google Ads["']/);
+    expect(source).toMatch(/["']Website["']/);
+    expect(source).toMatch(/["']?utm_campaign["']?\s*:\s*safeCampaignAnalyticsValue\(/);
+    const campaignParameters = [...source.matchAll(/["']?utm_campaign["']?\s*:\s*([^\n,}]+)/g)];
+    expect(campaignParameters.length).toBeGreaterThan(0);
+    for (const [, value] of campaignParameters) {
+      expect(value.trim().startsWith("safeCampaignAnalyticsValue(")).toBe(true);
+    }
+    expect(source.replace(/\s/g, "")).toContain(
+      "window.location.origin+window.location.pathname",
+    );
+  });
+
+  it.each([
+    "client/src/pages/ad-landing.tsx",
+    "client/src/pages/ad-google-landing.tsx",
+    "public/ad-google.html",
+    "public/ad-mtpg.html",
+    "public/daycare-fast.html",
+    "public/kindergarten-fast.html",
+    "public/nursery-fast.html",
+    "public/playgroup-fast.html",
+  ])("rejects PII-shaped values in the static conversion sanitizer in %s", (file) => {
+    const source = readFileSync(file, "utf8");
+    const isReactPage = file.endsWith(".tsx");
+    const helper = isReactPage
+      ? source.match(/^function safeCampaignAnalyticsValue\(value\?: string\): string \| undefined \{[\s\S]*?^\}/m)?.[0]
+      : source.match(/function safeCampaignAnalyticsValue\(value\)\s*\{[\s\S]*?\n    \}/)?.[0];
+    expect(helper).toBeDefined();
+    const executableHelper = isReactPage
+      ? helper!.replace(
+          "function safeCampaignAnalyticsValue(value?: string): string | undefined {",
+          "function safeCampaignAnalyticsValue(value) {",
+        )
+      : helper!;
+    const context: Record<string, any> = {};
+    runInNewContext(`${executableHelper}; globalThis.sanitize = safeCampaignAnalyticsValue;`, context);
+    expect(context.sanitize("spring_open_house")).toBe("spring_open_house");
+    expect(context.sanitize("parent@example.com")).toBeUndefined();
+    expect(context.sanitize("9876543210")).toBeUndefined();
+    expect(context.sanitize("98765-43210")).toBeUndefined();
+    expect(context.sanitize("98765.43210")).toBeUndefined();
+    expect(context.sanitize("98765_43210")).toBeUndefined();
+    expect(context.sanitize("first_last")).toBe("first_last");
+    expect(context.sanitize("Google Ads")).toBe("Google Ads");
+  });
+
+  it.each(["public/ad-google.html", "public/ad-mtpg.html"])(
+    "filters static page_location query data for %s",
+    (file) => {
+      const html = readFileSync(file, "utf8");
+      const helper = html.match(/function getSafeCampaignPageLocation\(\)\s*\{[\s\S]*?\n {4}\}/)?.[0];
+      expect(helper).toBeDefined();
+      const context: Record<string, any> = {
+        window: {
+          location: {
+            origin: "https://www.rainbowpreschools.com",
+            pathname: "/ad-campaign",
+            search: "?utm_source=google&utm_campaign=spring&gclid=click-a&gclid=click-b&utm_content=98765-43210&utm_term=98765.43210&name=Parent&phone=9876543210",
+          },
+        },
+        URLSearchParams,
+      };
+      runInNewContext(`${helper}; globalThis.safeLocation = getSafeCampaignPageLocation();`, context);
+      const safeLocation = new URL(context.safeLocation);
+      expect(safeLocation.searchParams.get("utm_source")).toBe("google");
+      expect(safeLocation.searchParams.get("utm_campaign")).toBe("spring");
+      expect(safeLocation.searchParams.get("gclid")).toBe("click-a");
+      expect(safeLocation.searchParams.getAll("gclid")).toHaveLength(1);
+      expect(safeLocation.searchParams.has("utm_content")).toBe(false);
+      expect(safeLocation.searchParams.has("utm_term")).toBe(false);
+      expect(safeLocation.searchParams.has("name")).toBe(false);
+      expect(safeLocation.searchParams.has("phone")).toBe(false);
+    },
+  );
+
   it("accepts both current static ad pages", () => {
     const pages = [
       {

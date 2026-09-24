@@ -198,6 +198,29 @@
   <script>
     function trackCall(){if(window.gtag)gtag('event','Playgroup_Call');}
     function trackWhatsApp(){if(window.gtag)gtag('event','Playgroup_Whatsapp');}
+    function safeCampaignAnalyticsValue(value){
+      if(typeof value!=='string')return undefined;
+      var cleaned=value.trim().replace(/[\u0000-\u001f\u007f]/g,'').slice(0,200);
+      if(!cleaned)return undefined;
+      if(['Google Ads','Meta Ads','Paid Search','Paid Social','Website'].indexOf(cleaned)!==-1)return cleaned;
+      if(!/^[A-Za-z0-9._~-]{1,100}$/.test(cleaned)||/\d{7,}/.test(cleaned.replace(/[-._~]/g,'')))return undefined;
+      return cleaned;
+    }
+    function getCampaignAttribution(){
+      var keys=['utm_source','utm_medium','utm_campaign','utm_content','utm_term','gclid','gad_source','gbraid','wbraid','fbclid','msclkid'];
+      var query=new URLSearchParams(window.location.search), values={}, hasIncoming=false;
+      keys.forEach(function(k){var v=query.get(k);if(v){values[k]=v.slice(0,200);hasIncoming=true;}});
+      try{
+        var stored=JSON.parse(sessionStorage.getItem('rainbow_campaign_attribution')||'null');
+        if(hasIncoming){sessionStorage.setItem('rainbow_campaign_attribution',JSON.stringify({capturedAt:Date.now(),values:values}));}
+        else if(stored&&Date.now()>=stored.capturedAt&&Date.now()-stored.capturedAt<=1800000){values=stored.values||{};}
+        else{sessionStorage.removeItem('rainbow_campaign_attribution');}
+      }catch(e){}
+      var google=values.gclid||values.gad_source||values.gbraid||values.wbraid;
+      var meta=values.fbclid;
+      return{leadSource:values.utm_source||(google?'Google Ads':meta?'Meta Ads':'Website'),leadMedium:values.utm_medium||(google?'Paid Search':meta?'Paid Social':'Playgroup Landing'),utmSource:values.utm_source,utmMedium:values.utm_medium,utmCampaign:values.utm_campaign,utmContent:values.utm_content,utmTerm:values.utm_term,gclid:values.gclid,gadSource:values.gad_source,gbraid:values.gbraid,wbraid:values.wbraid,fbclid:values.fbclid,msclkid:values.msclkid};
+    }
+    var campaignAttribution=getCampaignAttribution();
     var leadSubmitted=false, leadSubmissionId=null, sendInFlight=false;
     function handleSubmit(e){
       e.preventDefault();
@@ -218,7 +241,7 @@
       fetch('/api/contact',{
         method:'POST',
         headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({submissionId:leadSubmissionId,parentName:n,phone:ph,childName:'Not provided',childAge:'1.5-2.5',programme:'Playgroup',branch:ar,message:'Playgroup Fast Page - Area: '+ar,leadSource:'Website',leadMedium:'Playgroup Landing'})
+        body:JSON.stringify(Object.assign({submissionId:leadSubmissionId,parentName:n,phone:ph,childName:'Not provided',childAge:'1.5-2.5',programme:'Playgroup',branch:ar,message:'Playgroup Fast Page - Area: '+ar},campaignAttribution))
       }).then(function(r){return r.json().then(function(d){return {ok:r.ok,data:d};});}).then(function(res){
         sendInFlight=false;
         // Only counted as a real lead once the backend has actually saved it
@@ -230,7 +253,7 @@
           return;
         }
         leadSubmitted=true;
-        if(res.data.emailSent&&res.data.sheetAppended&&window.gtag)gtag('event','Playgroup_Form_Submit',{centre:ar});
+        if(res.data.emailSent&&res.data.sheetAppended&&window.gtag)gtag('event','Playgroup_Form_Submit',{page_path:window.location.pathname,page_location:window.location.origin+window.location.pathname,centre:ar,lead_source:safeCampaignAnalyticsValue(campaignAttribution.leadSource),lead_medium:safeCampaignAnalyticsValue(campaignAttribution.leadMedium),utm_source:safeCampaignAnalyticsValue(campaignAttribution.utmSource),utm_medium:safeCampaignAnalyticsValue(campaignAttribution.utmMedium),utm_campaign:safeCampaignAnalyticsValue(campaignAttribution.utmCampaign)});
         document.getElementById('form-view').classList.add('hidden');
         document.getElementById('success-view').classList.remove('hidden');
       }).catch(function(){sendInFlight=false;btn.disabled=false;btn.textContent='Book Free Visit Now';alert('Error submitting. Please try again.');});

@@ -173,6 +173,7 @@ export const trackFormSubmit = (params: FormTrackingParams = {}) => {
   });
   
   // Build event data with MCB-aligned parameters
+  const attribution = getCampaignAttribution();
   const eventData: Record<string, any> = {
     page_path: window.location.pathname,
     page_title: document.title,
@@ -183,11 +184,12 @@ export const trackFormSubmit = (params: FormTrackingParams = {}) => {
     locality: params.locality || undefined,
     // Lead details stay on the first-party /api/contact request only.
     child_age: params.childAge || undefined,
-    lead_source: params.leadSource || undefined,
-    lead_medium: params.leadMedium || undefined,
-    utm_campaign: params.utmCampaign || undefined,
-    utm_term: params.utmTerm || undefined,
-    utm_content: params.utmContent || undefined,
+    lead_source: safeAnalyticsValue(params.leadSource || attribution.leadSource),
+    lead_medium: safeAnalyticsValue(params.leadMedium || attribution.leadMedium),
+    utm_source: safeAnalyticsValue(attribution.utmSource),
+    utm_medium: safeAnalyticsValue(attribution.utmMedium),
+    utm_campaign: safeAnalyticsValue(params.utmCampaign || attribution.utmCampaign),
+    campaign: safeAnalyticsValue(params.utmCampaign || attribution.utmCampaign),
   };
 
   // Fire GA4 event via gtag (primary method)
@@ -233,14 +235,19 @@ export const trackAdLead = (params: AdLeadParams = {}) => {
     page: window.location.pathname,
   });
   
+  const attribution = getCampaignAttribution();
   const eventData: Record<string, any> = {
     page_path: window.location.pathname,
     page_title: document.title,
     page_category: 'ad_conversion',
     child_age: params.childAge || undefined,
     branch: params.area || undefined,
-    lead_source: params.leadSource || undefined,
-    lead_medium: params.leadMedium || undefined,
+    lead_source: safeAnalyticsValue(params.leadSource || attribution.leadSource),
+    lead_medium: safeAnalyticsValue(params.leadMedium || attribution.leadMedium),
+    utm_source: safeAnalyticsValue(attribution.utmSource),
+    utm_medium: safeAnalyticsValue(attribution.utmMedium),
+    utm_campaign: safeAnalyticsValue(attribution.utmCampaign),
+    campaign: safeAnalyticsValue(attribution.utmCampaign),
   };
   
   if (typeof window.gtag === 'function' && measurementId) {
@@ -352,14 +359,19 @@ export const trackGoogleAdsLead = (params: AdLeadParams = {}) => {
     page: window.location.pathname,
   });
   
+  const attribution = getCampaignAttribution();
   const eventData: Record<string, any> = {
     page_path: window.location.pathname,
     page_title: document.title,
     page_category: 'google_ads_conversion',
     child_age: params.childAge || undefined,
     branch: params.area || undefined,
-    lead_source: params.leadSource || undefined,
-    lead_medium: params.leadMedium || undefined,
+    lead_source: safeAnalyticsValue(params.leadSource || attribution.leadSource),
+    lead_medium: safeAnalyticsValue(params.leadMedium || attribution.leadMedium),
+    utm_source: safeAnalyticsValue(attribution.utmSource),
+    utm_medium: safeAnalyticsValue(attribution.utmMedium),
+    utm_campaign: safeAnalyticsValue(attribution.utmCampaign),
+    campaign: safeAnalyticsValue(attribution.utmCampaign),
   };
   
   if (typeof window.gtag === 'function' && measurementId) {
@@ -544,8 +556,17 @@ const DEFAULT_TITLE = 'Rainbow Preschool International - Thane';
 // same route (StrictMode, concurrent mode) don't fire duplicate pageviews.
 let lastTrackedUrl = '';
 
-export const trackPageView = (url: string, retryCount = 0) => {
+export const trackPageView = (url: string, retryCount = 0, campaignQuerySnapshot?: string) => {
   if (typeof window === 'undefined') return;
+  // Capture entry attribution before a later SPA route drops the query string.
+  getCampaignAttribution();
+  const campaignQuery = campaignQuerySnapshot ?? window.location.search;
+  const pagePath = new URL(url, window.location.origin).pathname;
+  const pageLocation = buildCampaignSafePageLocation(
+    window.location.origin,
+    pagePath,
+    campaignQuery,
+  );
   
   const measurementId = import.meta.env.VITE_GA_MEASUREMENT_ID;
   if (!measurementId) return;
@@ -556,7 +577,7 @@ export const trackPageView = (url: string, retryCount = 0) => {
   // If gtag isn't ready yet (async script loading), retry up to 10 times
   if (!window.gtag) {
     if (retryCount < 10) {
-      setTimeout(() => trackPageView(url, retryCount + 1), 200);
+      setTimeout(() => trackPageView(url, retryCount + 1, campaignQuery), 200);
     } else {
       console.warn('[GA4] gtag not available after retries, pageview not tracked');
     }
@@ -574,12 +595,12 @@ export const trackPageView = (url: string, retryCount = 0) => {
       return;
     }
     // Final dedup: bail if this URL was already sent (covers StrictMode double-effect).
-    if (url === lastTrackedUrl) return;
-    lastTrackedUrl = url;
+    if (pagePath === lastTrackedUrl) return;
+    lastTrackedUrl = pagePath;
     window.gtag('event', 'page_view', {
-      page_path: url,
+      page_path: pagePath,
       page_title: title,
-      page_location: window.location.href
+      page_location: pageLocation
     });
     console.debug('[GA4] Pageview tracked:', url, title);
   };
@@ -609,7 +630,15 @@ export const trackFormView = (params: LeadEventParams) => {
   pushToDataLayer({
     event: 'lead_form_view',
     page_path: window.location.pathname,
-    ...params,
+    programme: params.programme,
+    locality: params.locality,
+    centre: params.centre,
+    source_page: params.source_page,
+    form_id: params.form_id,
+    form_name: params.form_name,
+    utm_source: safeAnalyticsValue(params.utm_source),
+    utm_medium: safeAnalyticsValue(params.utm_medium),
+    utm_campaign: safeAnalyticsValue(params.utm_campaign),
   });
 };
 
@@ -627,7 +656,9 @@ export const trackWhatsAppClick = (params: { centre?: string; locality?: string;
 export const trackCallClick = (params: { centre?: string; locality?: string; phone?: string; source_page?: string }) => {
   pushToDataLayer({
     event: 'call_click',
-    ...params,
+    centre: params.centre,
+    locality: params.locality,
+    source_page: params.source_page,
   });
   
   trackEvent('call_click', 'engagement', params.centre || params.locality);
@@ -653,17 +684,145 @@ export const trackLocalPageClick = (params: { centre?: string; locality?: string
   trackEvent('local_page_click', 'engagement', params.locality);
 };
 
-// Get UTM parameters from URL
-export const getUTMParams = () => {
-  if (typeof window === 'undefined') return {};
-  
-  const params = new URLSearchParams(window.location.search);
+const ATTRIBUTION_SESSION_KEY = "rainbow_campaign_attribution";
+const ATTRIBUTION_SESSION_TTL_MS = 30 * 60 * 1000;
+const ATTRIBUTION_KEYS = [
+  "utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term",
+  "gclid", "gad_source", "gbraid", "wbraid", "fbclid", "msclkid",
+] as const;
+
+/**
+ * Keep GA4 page_location useful for campaign acquisition without forwarding
+ * arbitrary query data (which may contain personal information). get() and
+ * set() deliberately collapse duplicate keys to a single allowlisted value.
+ */
+export const buildCampaignSafePageLocation = (
+  origin: string,
+  pathname: string,
+  search: string,
+): string => {
+  const incoming = new URLSearchParams(search);
+  const safe = new URLSearchParams();
+  for (const key of ATTRIBUTION_KEYS) {
+    const value = safeAnalyticsValue(incoming.get(key) || undefined);
+    if (value) safe.set(key, value);
+  }
+  const query = safe.toString();
+  return `${origin}${pathname}${query ? `?${query}` : ""}`;
+};
+
+export interface CampaignAttribution {
+  leadSource?: string;
+  leadMedium?: string;
+  utmSource?: string;
+  utmMedium?: string;
+  utmCampaign?: string;
+  utmContent?: string;
+  utmTerm?: string;
+  gclid?: string;
+  gadSource?: string;
+  gbraid?: string;
+  wbraid?: string;
+  fbclid?: string;
+  msclkid?: string;
+}
+
+type StoredAttribution = { capturedAt: number; values: Record<string, string> };
+
+const cleanAttributionValue = (value: unknown): string | undefined => {
+  if (typeof value !== "string") return undefined;
+  const cleaned = value.trim().replace(/[\u0000-\u001f\u007f]/g, "").slice(0, 200);
+  return cleaned || undefined;
+};
+
+// Query parameters are untrusted: an allowlisted *key* can still contain an
+// email address, phone number or a person's name. Only accept compact campaign
+// slugs (plus the known non-PII source/medium labels) in GA payloads.
+const safeAnalyticsValue = (value: string | undefined): string | undefined => {
+  const cleaned = cleanAttributionValue(value);
+  if (!cleaned) return undefined;
+  if (["Google Ads", "Meta Ads", "Paid Search", "Paid Social", "Website"].includes(cleaned)) {
+    return cleaned;
+  }
+  if (!/^[A-Za-z0-9._~-]{1,100}$/.test(cleaned) ||
+      /\d{7,}/.test(cleaned.replace(/[-._~]/g, ""))) {
+    return undefined;
+  }
+  return cleaned;
+};
+
+/**
+ * First-party campaign values are retained for at most 30 minutes in this tab.
+ * Click identifiers are returned for lead requests only and are never copied
+ * into analytics event payloads.
+ */
+export const getCampaignAttribution = (): CampaignAttribution => {
+  if (typeof window === "undefined") return {};
+  const query = new URLSearchParams(window.location.search);
+  const incoming: Record<string, string> = {};
+  for (const key of ATTRIBUTION_KEYS) {
+    const value = cleanAttributionValue(query.get(key));
+    if (value) incoming[key] = value;
+  }
+
+  let values = incoming;
+  try {
+    if (Object.keys(incoming).length) {
+      const stored: StoredAttribution = { capturedAt: Date.now(), values: incoming };
+      window.sessionStorage.setItem(ATTRIBUTION_SESSION_KEY, JSON.stringify(stored));
+    } else {
+      const raw = window.sessionStorage.getItem(ATTRIBUTION_SESSION_KEY);
+      if (raw) {
+        const stored = JSON.parse(raw) as StoredAttribution;
+        if (Date.now() - stored.capturedAt <= ATTRIBUTION_SESSION_TTL_MS &&
+            Date.now() >= stored.capturedAt && stored.values &&
+            typeof stored.values === "object") {
+          values = {};
+          for (const key of ATTRIBUTION_KEYS) {
+            const value = cleanAttributionValue(stored.values[key]);
+            if (value) values[key] = value;
+          }
+        } else {
+          window.sessionStorage.removeItem(ATTRIBUTION_SESSION_KEY);
+        }
+      }
+    }
+  } catch {
+    // Storage can be unavailable in privacy-restricted browsers; use this URL.
+  }
+
+  const utmSource = cleanAttributionValue(values.utm_source);
+  const utmMedium = cleanAttributionValue(values.utm_medium);
+  const utmCampaign = cleanAttributionValue(values.utm_campaign);
+  const googleClick = values.gclid || values.gad_source || values.gbraid || values.wbraid;
+  const metaClick = values.fbclid;
   return {
-    utm_source: params.get('utm_source') || undefined,
-    utm_medium: params.get('utm_medium') || undefined,
-    utm_campaign: params.get('utm_campaign') || undefined,
-    utm_term: params.get('utm_term') || undefined,
-    utm_content: params.get('utm_content') || undefined,
+    leadSource: utmSource || (googleClick ? "Google Ads" : metaClick ? "Meta Ads" : undefined),
+    leadMedium: utmMedium || (googleClick ? "Paid Search" : metaClick ? "Paid Social" : undefined),
+    utmSource,
+    utmMedium,
+    utmCampaign,
+    utmContent: cleanAttributionValue(values.utm_content),
+    utmTerm: cleanAttributionValue(values.utm_term),
+    gclid: cleanAttributionValue(values.gclid),
+    gadSource: cleanAttributionValue(values.gad_source),
+    gbraid: cleanAttributionValue(values.gbraid),
+    wbraid: cleanAttributionValue(values.wbraid),
+    fbclid: cleanAttributionValue(values.fbclid),
+    msclkid: cleanAttributionValue(values.msclkid),
+  };
+};
+
+// Keep the historical UTM-shaped helper API, now backed by bounded session
+// attribution so forms still receive campaign context after SPA navigation.
+export const getUTMParams = () => {
+  const attribution = getCampaignAttribution();
+  return {
+    utm_source: attribution.utmSource,
+    utm_medium: attribution.utmMedium,
+    utm_campaign: attribution.utmCampaign,
+    utm_term: attribution.utmTerm,
+    utm_content: attribution.utmContent,
   };
 };
 

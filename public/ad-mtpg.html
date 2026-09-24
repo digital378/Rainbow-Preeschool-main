@@ -21,6 +21,16 @@
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
+    function getSafeCampaignPageLocation(){
+      var allowed=['utm_source','utm_medium','utm_campaign','utm_content','utm_term','gclid','gad_source','gbraid','wbraid','fbclid','msclkid'];
+      var incoming=new URLSearchParams(window.location.search),safe=new URLSearchParams();
+      allowed.forEach(function(key){
+        var value=incoming.get(key);
+        var cleaned=value&&value.trim().replace(/[\u0000-\u001f\u007f]/g,'').slice(0,200);
+        if(cleaned&&/^[A-Za-z0-9._~-]{1,100}$/.test(cleaned)&&!/\d{7,}/.test(cleaned.replace(/[-._~]/g,'')))safe.set(key,cleaned);
+      });
+      return window.location.origin+window.location.pathname+(safe.toString()?'?'+safe.toString():'');
+    }
     gtag('js', new Date());
     gtag('config', 'G-G1MX1N0M05', { 'send_page_view': false });
     gtag('config', 'AW-1747212533/a68zCIykmPsbEJnzrYtB', {
@@ -30,7 +40,7 @@
       send_to: 'G-G1MX1N0M05',
       page_path: '/ad-mtpg',
       page_title: 'Mid Term Playgroup Landing Page',
-      page_location: window.location.href
+      page_location: getSafeCampaignPageLocation()
     });
   </script>
   <script>
@@ -560,14 +570,27 @@
       appId: "FIREBASE_APP_ID"
     };
 
-    // ── UTM capture ────────────────────────────────────────────────────
+    // ── Bounded campaign attribution (click IDs are request-only) ───────
+    function safeCampaignAnalyticsValue(value){
+      if(typeof value!=='string')return undefined;
+      var cleaned=value.trim().replace(/[\u0000-\u001f\u007f]/g,'').slice(0,200);
+      if(!cleaned)return undefined;
+      if(['Google Ads','Meta Ads','Paid Search','Paid Social','Website'].indexOf(cleaned)!==-1)return cleaned;
+      if(!/^[A-Za-z0-9._~-]{1,100}$/.test(cleaned)||/\d{7,}/.test(cleaned.replace(/[-._~]/g,'')))return undefined;
+      return cleaned;
+    }
     var utm = (function(){
-      var p = new URLSearchParams(window.location.search);
-      var leadSource = 'Google Ads - Mid Term Playgroup';
-      var leadMedium = 'Paid Search';
-      var c = p.get('utm_campaign');
-      if (c) leadMedium = leadMedium + ' - ' + c;
-      return { leadSource: leadSource, leadMedium: leadMedium };
+      var keys=['utm_source','utm_medium','utm_campaign','utm_content','utm_term','gclid','gad_source','gbraid','wbraid','fbclid','msclkid'];
+      var p=new URLSearchParams(window.location.search),values={},hasIncoming=false;
+      keys.forEach(function(k){var v=p.get(k);if(v){values[k]=v.slice(0,200);hasIncoming=true;}});
+      try{
+        var stored=JSON.parse(sessionStorage.getItem('rainbow_campaign_attribution')||'null');
+        if(hasIncoming){sessionStorage.setItem('rainbow_campaign_attribution',JSON.stringify({capturedAt:Date.now(),values:values}));}
+        else if(stored&&Date.now()>=stored.capturedAt&&Date.now()-stored.capturedAt<=1800000){values=stored.values||{};}
+        else{sessionStorage.removeItem('rainbow_campaign_attribution');}
+      }catch(e){}
+      var google=values.gclid||values.gad_source||values.gbraid||values.wbraid,meta=values.fbclid;
+      return{leadSource:values.utm_source||(google?'Google Ads':meta?'Meta Ads':'Google Ads - Mid Term Playgroup'),leadMedium:values.utm_medium||(google?'Paid Search':meta?'Paid Social':'Paid Search'),utmSource:values.utm_source,utmMedium:values.utm_medium,utmCampaign:values.utm_campaign,utmContent:values.utm_content,utmTerm:values.utm_term,gclid:values.gclid,gadSource:values.gad_source,gbraid:values.gbraid,wbraid:values.wbraid,fbclid:values.fbclid,msclkid:values.msclkid};
     })();
 
     // ── GA4 conversion tracking ────────────────────────────────────────
@@ -578,7 +601,12 @@
         gtag('event', eventName, {
           send_to: 'G-G1MX1N0M05',
           page_path: (params && params.page_path) || '/ad-mtpg',
-          page_location: window.location.href
+          page_location: window.location.origin + window.location.pathname,
+          lead_source: safeCampaignAnalyticsValue(utm.leadSource),
+          lead_medium: safeCampaignAnalyticsValue(utm.leadMedium),
+          utm_source: safeCampaignAnalyticsValue(utm.utmSource),
+          utm_medium: safeCampaignAnalyticsValue(utm.utmMedium),
+          utm_campaign: safeCampaignAnalyticsValue(utm.utmCampaign)
         });
       } catch(err) {}
     }
@@ -852,7 +880,18 @@
         branch: document.getElementById('area').value,
         message: 'Mid-Term Playgroup Ad Lead - Area: ' + document.getElementById('area').value + ' (OTP Verified)',
         leadSource: utm.leadSource,
-        leadMedium: utm.leadMedium
+        leadMedium: utm.leadMedium,
+        utmSource: utm.utmSource,
+        utmMedium: utm.utmMedium,
+        utmCampaign: utm.utmCampaign,
+        utmContent: utm.utmContent,
+        utmTerm: utm.utmTerm,
+        gclid: utm.gclid,
+        gadSource: utm.gadSource,
+        gbraid: utm.gbraid,
+        wbraid: utm.wbraid,
+        fbclid: utm.fbclid,
+        msclkid: utm.msclkid
       };
       return fetch('/api/contact', {
         method: 'POST',

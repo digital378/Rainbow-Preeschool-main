@@ -12,6 +12,16 @@
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
+    function getSafeCampaignPageLocation(){
+      var allowed=['utm_source','utm_medium','utm_campaign','utm_content','utm_term','gclid','gad_source','gbraid','wbraid','fbclid','msclkid'];
+      var incoming=new URLSearchParams(window.location.search),safe=new URLSearchParams();
+      allowed.forEach(function(key){
+        var value=incoming.get(key);
+        var cleaned=value&&value.trim().replace(/[\u0000-\u001f\u007f]/g,'').slice(0,200);
+        if(cleaned&&/^[A-Za-z0-9._~-]{1,100}$/.test(cleaned)&&!/\d{7,}/.test(cleaned.replace(/[-._~]/g,'')))safe.set(key,cleaned);
+      });
+      return window.location.origin+window.location.pathname+(safe.toString()?'?'+safe.toString():'');
+    }
     gtag('js', new Date());
     gtag('config', 'GT-55BFZCQT', { 'send_page_view': false });
     gtag('config', 'G-G1MX1N0M05', { 'send_page_view': false });
@@ -22,7 +32,7 @@
       send_to: 'G-G1MX1N0M05',
       page_path: '/ad-google',
       page_title: 'Google Ads Landing Page',
-      page_location: window.location.href
+      page_location: getSafeCampaignPageLocation()
     });
   </script>
   
@@ -329,19 +339,35 @@
   </footer>
 
   <script>
+    function safeCampaignAnalyticsValue(value){
+      if(typeof value!=='string')return undefined;
+      var cleaned=value.trim().replace(/[\u0000-\u001f\u007f]/g,'').slice(0,200);
+      if(!cleaned)return undefined;
+      if(['Google Ads','Meta Ads','Paid Search','Paid Social','Website'].indexOf(cleaned)!==-1)return cleaned;
+      if(!/^[A-Za-z0-9._~-]{1,100}$/.test(cleaned)||/\d{7,}/.test(cleaned.replace(/[-._~]/g,'')))return undefined;
+      return cleaned;
+    }
     function getUtmParams(){
-      var p=new URLSearchParams(window.location.search);
-      var src='Website',med='Ad Landing Page';
-      if(p.get('gclid')||p.get('gad_source')||p.get('gbraid')||p.get('wbraid')){src='Google Ads';med='Paid Search';}
-      else if(p.get('fbclid')){src='Meta Ads';med='Paid Social';}
-      else if(p.get('utm_source')){src=p.get('utm_source');}
-      if(p.get('utm_campaign'))med+=(' - '+p.get('utm_campaign'));
-      return{leadSource:src,leadMedium:med};
+      var keys=['utm_source','utm_medium','utm_campaign','utm_content','utm_term','gclid','gad_source','gbraid','wbraid','fbclid','msclkid'];
+      var p=new URLSearchParams(window.location.search),values={},hasIncoming=false;
+      keys.forEach(function(k){var v=p.get(k);if(v){values[k]=v.slice(0,200);hasIncoming=true;}});
+      try{
+        var stored=JSON.parse(sessionStorage.getItem('rainbow_campaign_attribution')||'null');
+        if(hasIncoming){sessionStorage.setItem('rainbow_campaign_attribution',JSON.stringify({capturedAt:Date.now(),values:values}));}
+        else if(stored&&Date.now()>=stored.capturedAt&&Date.now()-stored.capturedAt<=1800000){values=stored.values||{};}
+        else{sessionStorage.removeItem('rainbow_campaign_attribution');}
+      }catch(e){}
+      var google=values.gclid||values.gad_source||values.gbraid||values.wbraid,meta=values.fbclid;
+      return{leadSource:values.utm_source||(google?'Google Ads':meta?'Meta Ads':'Website'),leadMedium:values.utm_medium||(google?'Paid Search':meta?'Paid Social':'Ad Landing Page'),utmSource:values.utm_source,utmMedium:values.utm_medium,utmCampaign:values.utm_campaign,utmContent:values.utm_content,utmTerm:values.utm_term,gclid:values.gclid,gadSource:values.gad_source,gbraid:values.gbraid,wbraid:values.wbraid,fbclid:values.fbclid,msclkid:values.msclkid};
     }
     var utm=getUtmParams();
     function sendGA4Event(eventName, params) {
       try {
-        gtag('event', eventName, Object.assign({ send_to: 'G-G1MX1N0M05' }, params || {}));
+        gtag('event', eventName, Object.assign({
+          send_to: 'G-G1MX1N0M05',
+          page_path: window.location.pathname,
+          page_location: window.location.origin + window.location.pathname
+        }, params || {}));
       } catch(err) { console.log('GA4 event error:', err); }
     }
     function trackCall(e){
@@ -397,7 +423,7 @@
       fetch('/api/contact',{
         method:'POST',
         headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({submissionId:leadSubmissionId,parentName:n,phone:ph,childName:'Not provided',childAge:age,programme:'General Enquiry',branch:ar,message:'Ad Landing - Area: '+ar,leadSource:utm.leadSource,leadMedium:utm.leadMedium})
+        body:JSON.stringify({submissionId:leadSubmissionId,parentName:n,phone:ph,childName:'Not provided',childAge:age,programme:'General Enquiry',branch:ar,message:'Ad Landing - Area: '+ar,leadSource:utm.leadSource,leadMedium:utm.leadMedium,utmSource:utm.utmSource,utmMedium:utm.utmMedium,utmCampaign:utm.utmCampaign,utmContent:utm.utmContent,utmTerm:utm.utmTerm,gclid:utm.gclid,gadSource:utm.gadSource,gbraid:utm.gbraid,wbraid:utm.wbraid,fbclid:utm.fbclid,msclkid:utm.msclkid})
       }).then(function(r){return r.json().then(function(d){return {ok:r.ok,data:d};});}).then(function(res){
         sendInFlight=false;
         console.log('Form response:', res.data);
@@ -412,7 +438,12 @@
           'page_path': '/ad-google',
           'page_title': 'Google Ads Landing Page',
           'child_age': age,
-          'branch': ar
+          'branch': ar,
+          'lead_source': safeCampaignAnalyticsValue(utm.leadSource),
+          'lead_medium': safeCampaignAnalyticsValue(utm.leadMedium),
+          'utm_source': safeCampaignAnalyticsValue(utm.utmSource),
+          'utm_medium': safeCampaignAnalyticsValue(utm.utmMedium),
+          'utm_campaign': safeCampaignAnalyticsValue(utm.utmCampaign)
         });
         document.getElementById('form-view').classList.add('hidden');
         document.getElementById('success-view').classList.remove('hidden');

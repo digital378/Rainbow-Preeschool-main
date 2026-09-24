@@ -24,7 +24,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { programmes, branches } from "@shared/schema";
 import { apiRequest } from "@/lib/queryClient";
-import { trackFormSubmit, type FormType } from "@/lib/analytics";
+import { getCampaignAttribution, trackFormSubmit, type FormType } from "@/lib/analytics";
 import { Loader2, CheckCircle } from "lucide-react";
 
 declare global {
@@ -143,7 +143,10 @@ export function ContactForm({ defaultBranch, defaultProgramme, compact = false, 
 
   const mutation = useMutation({
     mutationFn: async (data: ContactFormValues & { recaptchaToken?: string }) => {
-      const response = await apiRequest("POST", "/api/contact", data);
+      const response = await apiRequest("POST", "/api/contact", {
+        ...data,
+        ...getCampaignAttribution(),
+      });
       return response.json();
     },
     onSuccess: (responseData: { success: boolean; id: number }) => {
@@ -158,10 +161,6 @@ export function ContactForm({ defaultBranch, defaultProgramme, compact = false, 
           formType: 'detailed' as FormType,
           programme: form.getValues("programme"),
           centre: form.getValues("branch"),
-          // MCB-aligned parameters
-          parentName: form.getValues("parentName"),
-          studentName: form.getValues("childName"),
-          phone: form.getValues("phone"),
           childAge: form.getValues("childAge"),
         });
       }

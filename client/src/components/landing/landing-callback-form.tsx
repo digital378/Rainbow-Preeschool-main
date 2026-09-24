@@ -17,7 +17,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import { Lock, CheckCircle2, Loader2 } from "lucide-react";
-import { trackFormSubmit, trackFormView, getUTMParams, type FormType } from "@/lib/analytics";
+import { getCampaignAttribution, getUTMParams, trackFormSubmit, trackFormView, type FormType } from "@/lib/analytics";
 
 const formSchema = z.object({
   parentName: z.string().min(2, "Please enter your name"),
@@ -56,13 +56,13 @@ export function LandingCallbackForm({ locality, sourcePage }: LandingCallbackFor
         entries.forEach((entry) => {
           if (entry.isIntersecting && !hasTrackedView.current) {
             hasTrackedView.current = true;
-            const urlParams = new URLSearchParams(window.location.search);
+            const utms = getUTMParams();
             trackFormView({
               locality,
               source_page: sourcePage,
-              utm_source: urlParams.get("utm_source") || undefined,
-              utm_medium: urlParams.get("utm_medium") || undefined,
-              utm_campaign: urlParams.get("utm_campaign") || undefined,
+              utm_source: utms.utm_source,
+              utm_medium: utms.utm_medium,
+              utm_campaign: utms.utm_campaign,
             });
           }
         });
@@ -86,8 +86,9 @@ export function LandingCallbackForm({ locality, sourcePage }: LandingCallbackFor
 
   const mutation = useMutation({
     mutationFn: async (data: FormData) => {
-      const urlParams = new URLSearchParams(window.location.search);
+      const attribution = getCampaignAttribution();
       const response = await apiRequest("POST", "/api/contact", {
+        ...attribution,
         parentName: data.parentName,
         phone: data.phone,
         childAge: data.childAge,
@@ -96,10 +97,10 @@ export function LandingCallbackForm({ locality, sourcePage }: LandingCallbackFor
         branch: locality,
         childName: "Playgroup Landing Enquiry",
         sourcePage: sourcePage,
-        utmSource: urlParams.get("utm_source") || "",
-        utmMedium: urlParams.get("utm_medium") || "",
-        utmCampaign: urlParams.get("utm_campaign") || "",
-        utmContent: urlParams.get("utm_content") || "",
+        utmSource: attribution.utmSource || "",
+        utmMedium: attribution.utmMedium || "",
+        utmCampaign: attribution.utmCampaign || "",
+        utmContent: attribution.utmContent || "",
       });
       return response.json();
     },
@@ -112,9 +113,6 @@ export function LandingCallbackForm({ locality, sourcePage }: LandingCallbackFor
           formType: 'instant' as FormType,
           programme: "Playgroup",
           locality,
-          // MCB-aligned parameters
-          parentName: form.getValues().parentName,
-          phone: form.getValues().phone,
           childAge: form.getValues().childAge,
         });
       }

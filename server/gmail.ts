@@ -12,6 +12,7 @@ interface ContactFormData {
   message?: string;
   leadSource?: string;
   leadMedium?: string;
+  utmCampaign?: string;
 }
 
 const transporter = nodemailer.createTransport({
@@ -212,6 +213,9 @@ export async function sendLeadNotificationEmail(data: ContactFormData): Promise<
 
   try {
     const emailSubject = `New Enquiry from ${data.parentName} - Rainbow Preschools Website`;
+    const safeCampaign = data.utmCampaign?.replace(/[&<>"']/g, (char) =>
+      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[char] || char,
+    );
 
     const htmlBody = `
 <!DOCTYPE html>
@@ -241,6 +245,7 @@ export async function sendLeadNotificationEmail(data: ContactFormData): Promise<
     <tr><td>Preferred_Centre</td><td>${data.branch}</td></tr>
     <tr><td>LeadSource</td><td>${data.leadSource || 'Website'}</td></tr>
     <tr><td>LeadMedium</td><td>${data.leadMedium || 'Website Enquiry Form'}</td></tr>
+    <tr><td>Campaign</td><td>${safeCampaign || 'Not provided'}</td></tr>
     <tr><td>Message</td><td>${data.message || 'No message provided'}</td></tr>
   </table>
   
@@ -265,6 +270,7 @@ Programme               | ${data.programme}
 Preferred_Centre        | ${data.branch}
 LeadSource              | ${data.leadSource || 'Website'}
 LeadMedium              | ${data.leadMedium || 'Website Enquiry Form'}
+Campaign                | ${data.utmCampaign || 'Not provided'}
 Message                 | ${data.message || 'No message provided'}
 
 Best regards,

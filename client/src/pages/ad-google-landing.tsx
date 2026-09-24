@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { ErrorBoundary } from "@/components/error-boundary";
+import { getCampaignAttribution } from "@/lib/analytics";
 
 // Google Ads landing page with OTP verification
 const areas = ["Manpada", "Hariniwas", "Anand Nagar", "Dhokali", "Kalwa", "Kasarvadavali"];
@@ -7,21 +8,29 @@ const areas = ["Manpada", "Hariniwas", "Anand Nagar", "Dhokali", "Kalwa", "Kasar
 // GA4 Measurement ID
 const GA4_ID = "G-G1MX1N0M05";
 
-function getUtmParams() {
-  const params = new URLSearchParams(window.location.search);
-  const gclid = params.get('gclid');
-  const gadSource = params.get('gad_source');
-  const utmCampaign = params.get('utm_campaign');
-  
-  let leadSource = 'Google Ads';
-  let leadMedium = 'Paid Search';
-  
-  if (gclid || gadSource) {
-    leadSource = 'Google Ads';
-    leadMedium = 'Paid Search';
+function safeCampaignAnalyticsValue(value?: string): string | undefined {
+  if (!value) return undefined;
+  const cleaned = value.trim().replace(/[\u0000-\u001f\u007f]/g, "").slice(0, 200);
+  if (!cleaned) return undefined;
+  if (["Google Ads", "Meta Ads", "Paid Search", "Paid Social", "Website"].includes(cleaned)) {
+    return cleaned;
   }
-  if (utmCampaign) leadMedium = `${leadMedium} - ${utmCampaign}`;
-  return { leadSource, leadMedium };
+  if (
+    !/^[A-Za-z0-9._~-]{1,100}$/.test(cleaned) ||
+    /\d{7,}/.test(cleaned.replace(/[-._~]/g, ""))
+  ) {
+    return undefined;
+  }
+  return cleaned;
+}
+
+function getUtmParams() {
+  const attribution = getCampaignAttribution();
+  return {
+    ...attribution,
+    leadSource: attribution.leadSource || "Google Ads",
+    leadMedium: attribution.leadMedium || "Paid Search",
+  };
 }
 
 // Minimal SVG icons
@@ -93,7 +102,7 @@ export default function AdGoogleLanding() {
       const w = window as any;
       w.dataLayer = w.dataLayer || [];
       w.gtag = w.gtag || function () { w.dataLayer.push(arguments); };
-      w.gtag('config', GA4_ID, { page_path: '/ad-google', page_title: 'Google Ads Landing Page' });
+      w.gtag('config', GA4_ID, { page_path: '/ad-google', page_title: 'Google Ads Landing Page', send_page_view: false });
     };
     if ('requestIdleCallback' in window) {
       (window as any).requestIdleCallback(registerAdPageConfig, { timeout: 2000 });
@@ -192,13 +201,30 @@ export default function AdGoogleLanding() {
           message: `Google Ads Lead - Area: ${formData.area} (OTP Verified)`,
           leadSource: utmData.leadSource,
           leadMedium: utmData.leadMedium,
+          utmSource: utmData.utmSource,
+          utmMedium: utmData.utmMedium,
+          utmCampaign: utmData.utmCampaign,
+          utmContent: utmData.utmContent,
+          utmTerm: utmData.utmTerm,
+          gclid: utmData.gclid,
+          gadSource: utmData.gadSource,
+          gbraid: utmData.gbraid,
+          wbraid: utmData.wbraid,
+          fbclid: utmData.fbclid,
+          msclkid: utmData.msclkid,
         }),
       });
       const data = await res.json();
       if (data.success && typeof window !== 'undefined' && (window as any).gtag) {
         console.log('[GA4 Debug] Firing google_ads_leads event');
         (window as any).gtag('event', 'google_ads_leads', {
-          lead_source: utmData.leadSource,
+          page_path: '/ad-google',
+          page_location: window.location.origin + window.location.pathname,
+          lead_source: safeCampaignAnalyticsValue(utmData.leadSource),
+          lead_medium: safeCampaignAnalyticsValue(utmData.leadMedium),
+          utm_source: safeCampaignAnalyticsValue(utmData.utmSource),
+          utm_medium: safeCampaignAnalyticsValue(utmData.utmMedium),
+          utm_campaign: safeCampaignAnalyticsValue(utmData.utmCampaign),
         });
       }
       setStep('success');

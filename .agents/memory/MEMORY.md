@@ -21,3 +21,4 @@
 - [Analytics guard strength](analytics-guard-strength.md) — tracking guards must verify dispatch and interaction wiring, explicit destinations, and disabled automatic page views—not event-name strings.
 - [Dependency reconciliation](post-merge-dependency-setup.md) — use npm clean installs; mixed lockfiles can confuse deploy detection and pnpm-linked trees break incremental npm installs.
 - [Private page cookies](private-page-cookies.md) — public HTML renderers strip Set-Cookie; complete private login on a redirect before rendering the SPA page.
+- [Campaign attribution privacy](campaign-attribution-privacy.md) — preserving redirect UTMs requires filtering their values, not just keys, at every analytics event and page view.
