@@ -559,8 +559,27 @@ let lastTrackedUrl = '';
 export const trackPageView = (url: string, retryCount = 0, campaignQuerySnapshot?: string) => {
   if (typeof window === 'undefined') return;
   // Capture entry attribution before a later SPA route drops the query string.
-  getCampaignAttribution();
-  const campaignQuery = campaignQuerySnapshot ?? window.location.search;
+  const attribution = getCampaignAttribution();
+  const storedAttributionQuery = new URLSearchParams();
+  const attributionPairs: Array<[string, string | undefined]> = [
+    ["utm_source", attribution.utmSource],
+    ["utm_medium", attribution.utmMedium],
+    ["utm_campaign", attribution.utmCampaign],
+    ["utm_content", attribution.utmContent],
+    ["utm_term", attribution.utmTerm],
+    ["gclid", attribution.gclid],
+    ["gad_source", attribution.gadSource],
+    ["gbraid", attribution.gbraid],
+    ["wbraid", attribution.wbraid],
+    ["fbclid", attribution.fbclid],
+    ["msclkid", attribution.msclkid],
+  ];
+  for (const [key, value] of attributionPairs) {
+    if (value) storedAttributionQuery.set(key, value);
+  }
+  const explicitCampaignQuery = campaignQuerySnapshot ?? window.location.search;
+  const campaignQuery = explicitCampaignQuery ||
+    (storedAttributionQuery.toString() ? `?${storedAttributionQuery.toString()}` : "");
   const pagePath = new URL(url, window.location.origin).pathname;
   const pageLocation = buildCampaignSafePageLocation(
     window.location.origin,

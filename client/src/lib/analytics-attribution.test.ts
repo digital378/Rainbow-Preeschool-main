@@ -27,7 +27,7 @@ function installBrowser(search: string) {
   };
   vi.stubGlobal("window", fakeWindow);
   vi.stubGlobal("document", { title: "Playgroup | Rainbow Preschools" });
-  return { fakeWindow, dataLayer };
+  return { fakeWindow, dataLayer, sessionValues };
 }
 
 afterEach(() => {
@@ -127,6 +127,24 @@ describe("bounded campaign attribution", () => {
     );
     expect(pageView.page_location).not.toContain("Parent");
     expect(pageView.page_location).not.toContain("9876543210");
+  });
+
+  it("uses captured campaign values for page_location after the address bar is scrubbed", () => {
+    vi.useFakeTimers();
+    vi.stubEnv("VITE_GA_MEASUREMENT_ID", "G-TEST");
+    const gtag = vi.fn();
+    const { fakeWindow } = installBrowser("?utm_source=google&utm_campaign=spring-open-house&gclid=click-123");
+    (fakeWindow as any).gtag = gtag;
+    getCampaignAttribution();
+    fakeWindow.location.search = "";
+
+    trackPageView("/nursery");
+    vi.advanceTimersByTime(101);
+
+    const pageView = gtag.mock.calls[0][2] as Record<string, string>;
+    expect(pageView.page_location).toBe(
+      "https://www.rainbowpreschools.com/nursery?utm_source=google&utm_campaign=spring-open-house&gclid=click-123",
+    );
   });
 
   it("retains source, medium, campaign and click IDs for first-party requests across SPA navigation", () => {

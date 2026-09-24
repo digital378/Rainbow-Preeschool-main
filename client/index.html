@@ -2,6 +2,30 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <!-- Capture attribution for first-party forms, then remove query strings
+         before any third-party analytics can inspect the browser URL. -->
+    <script id="campaign-attribution-url-scrubber">
+      (function () {
+        var keys = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "gclid", "gad_source", "gbraid", "wbraid", "fbclid", "msclkid"];
+        var incoming = new URLSearchParams(window.location.search);
+        var values = {};
+        keys.forEach(function (key) {
+          var value = incoming.get(key);
+          if (value) values[key] = value.trim().replace(/[\u0000-\u001f\u007f]/g, "").slice(0, 200);
+        });
+        try {
+          if (Object.keys(values).length) {
+            sessionStorage.setItem("rainbow_campaign_attribution", JSON.stringify({
+              capturedAt: Date.now(),
+              values: values
+            }));
+          }
+        } catch (_) {}
+        if (window.location.search) {
+          window.history.replaceState(window.history.state, "", window.location.pathname + window.location.hash);
+        }
+      })();
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5" />
     <meta name="description" content="Preschool in Thane since 2007 — Rainbow Preschool International. 6 centres, Playgroup, Nursery &amp; KG for ages 1.5–6 years. Admissions open for 2026–27." />
     <meta name="keywords" content="rainbow preschool, preschool in thane, playgroup in thane, nursery school thane, early childhood education thane, rainbow preschool international" />

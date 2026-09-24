@@ -48,6 +48,46 @@ const validHtml = `
 `;
 
 describe("static ad tracking guard", () => {
+  it.each(["client/index.html", "public/ad-google.html", "public/ad-mtpg.html"])(
+    "captures attribution and removes the raw query before analytics can load in %s",
+    (file) => {
+      const html = readFileSync(file, "utf8");
+      const script = html.match(/<script id="campaign-attribution-url-scrubber">([\s\S]*?)<\/script>/)?.[1];
+      expect(script).toBeDefined();
+      const saved = new Map<string, string>();
+      const replacements: string[] = [];
+      const window = {
+        location: {
+          search: "?utm_source=google&utm_campaign=parent%40example.com&phone=9876543210",
+          pathname: "/contact",
+          hash: "#callback",
+        },
+        history: {
+          state: { navigation: true },
+          replaceState: (_state: unknown, _title: string, url: string) => replacements.push(url),
+        },
+      };
+      const sessionStorage = {
+        setItem: (key: string, value: string) => saved.set(key, value),
+      };
+      runInNewContext(script!, {
+        window,
+        sessionStorage,
+        URLSearchParams,
+        Date,
+        Object,
+      });
+
+      expect(JSON.parse(saved.get("rainbow_campaign_attribution")!).values.utm_campaign)
+        .toBe("parent@example.com");
+      expect(replacements).toEqual(["/contact#callback"]);
+      const analyticsScriptIndex = file === "client/index.html"
+        ? html.indexOf("gtm.js?id=")
+        : html.search(/googletagmanager\.com\/gtag\/js/);
+      expect(analyticsScriptIndex).toBeGreaterThan(html.indexOf(script!));
+    },
+  );
+
   it.each(["public/ad-google.html", "public/ad-mtpg.html"])(
     "keeps only campaign query keys in the manual page view for %s",
     (file) => {

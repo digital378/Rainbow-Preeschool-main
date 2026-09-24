@@ -3,6 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script id="campaign-attribution-url-scrubber">
+    (function(){
+      var keys=['utm_source','utm_medium','utm_campaign','utm_content','utm_term','gclid','gad_source','gbraid','wbraid','fbclid','msclkid'];
+      var incoming=new URLSearchParams(window.location.search),values={};
+      keys.forEach(function(key){var value=incoming.get(key);if(value)values[key]=value.trim().replace(/[\u0000-\u001f\u007f]/g,'').slice(0,200);});
+      try{if(Object.keys(values).length)sessionStorage.setItem('rainbow_campaign_attribution',JSON.stringify({capturedAt:Date.now(),values:values}));}catch(_){}
+      if(window.location.search)window.history.replaceState(window.history.state,'',window.location.pathname+window.location.hash);
+    })();
+  </script>
   <meta name="robots" content="noindex, nofollow">
   <meta name="description" content="Mid-term playgroup admissions open in Thane. Join Rainbow Preschool mid-year — no waiting for June. CCTV, female staff, gentle settling-in. Limited seats.">
   <title>Mid-Term Playgroup Admission in Thane | Rainbow Preschool</title>
@@ -24,8 +33,10 @@
     function getSafeCampaignPageLocation(){
       var allowed=['utm_source','utm_medium','utm_campaign','utm_content','utm_term','gclid','gad_source','gbraid','wbraid','fbclid','msclkid'];
       var incoming=new URLSearchParams(window.location.search),safe=new URLSearchParams();
+      var storedValues={};
+      try{var stored=JSON.parse(sessionStorage.getItem('rainbow_campaign_attribution')||'null');if(stored&&Date.now()>=stored.capturedAt&&Date.now()-stored.capturedAt<=1800000)storedValues=stored.values||{};}catch(_){}
       allowed.forEach(function(key){
-        var value=incoming.get(key);
+        var value=incoming.get(key)||storedValues[key];
         var cleaned=value&&value.trim().replace(/[\u0000-\u001f\u007f]/g,'').slice(0,200);
         if(cleaned&&/^[A-Za-z0-9._~-]{1,100}$/.test(cleaned)&&!/\d{7,}/.test(cleaned.replace(/[-._~]/g,'')))safe.set(key,cleaned);
       });
