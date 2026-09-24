@@ -159,17 +159,17 @@
   gap: 8px;
   min-height: 44px;
   margin-top: 14px;
-  border: 1px solid #e6d3ba;
+  border: 1px solid transparent;
   border-radius: 12px;
-  background: #fffdf8;
-  color: #ba2922;
+  background: linear-gradient(110deg, #f58529 0%, #dd2a7b 40%, #8134af 75%, #515bd4 100%);
+  color: #fff;
   font-size: 12px;
   font-weight: 700;
   text-decoration: none;
 }
 
 .rainbow-theatre--homepage .rainbow-theatre__instagram svg { width: 18px; height: 18px; }
-.rainbow-theatre--homepage .rainbow-theatre__instagram:hover { background: #fff0e6; }
+.rainbow-theatre--homepage .rainbow-theatre__instagram:hover { filter: brightness(.92); }
 .rainbow-theatre--homepage .rainbow-theatre__transport button:focus-visible,
 .rainbow-theatre--homepage .rainbow-theatre__instagram:focus-visible { outline: 3px solid #e6b451; outline-offset: 3px; }
 
