@@ -26,11 +26,6 @@
       "approxMB": 28
     }
   },
-  "counsellor": {
-    "model": "/walkthrough/counsellor/counsellor.glb",
-    "fallbackImage": "/walkthrough/counsellor/counsellor-fallback.jpg",
-    "note": "Static textured mesh (no skeleton, no animation clips). Animate procedurally. If a rigged version is added later, play clips named wave/point/clap when present."
-  },
   "scenes": [
     {
       "index": 0,

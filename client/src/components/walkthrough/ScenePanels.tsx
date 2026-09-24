@@ -47,16 +47,17 @@ function Stats() {
   );
 }
 
-function Gate({ onFormSuccess }: { onFormSuccess: () => void }) {
+function Gate() {
   return (
     <>
       <Eyebrow index={0} />
       <h1>Rainbow Preschool International</h1>
-      <p>Playgroup, Nursery, Kindergarten and Happy Times, across 6 centres in Thane.</p>
-      <Stats />
-      <WalkthroughCallbackForm onFormSuccess={onFormSuccess} />
-      <p className="walk-fine">Your details are used only to respond to your callback request.</p>
-      <div className="walk-hint"><ArrowDown aria-hidden="true" />Scroll to walk through the gate</div>
+      <p>A joyful start for little learners, across six centres in Thane.</p>
+      <div className="walk-gate-proof" aria-label="18 years of experience and six centres across Thane">
+        <span><strong>18+</strong> years of experience</span>
+        <span><strong>6</strong> centres across Thane</span>
+      </div>
+      <WalkthroughCallbackForm />
     </>
   );
 }
@@ -182,17 +183,15 @@ export const ScenePanel = memo(function ScenePanel({
   index,
   active,
   goTo,
-  onFormSuccess,
 }: {
   index: number;
   active: boolean;
   goTo: (index: number) => void;
-  onFormSuccess: () => void;
 }) {
   if (index < 0 || index > 7) return null;
   return (
     <div className="walk-panel-content" data-scene={index}>
-      {index === 0 && <Gate onFormSuccess={onFormSuccess} />}
+      {index === 0 && <Gate />}
       {index === 1 && <Reception />}
       {index === 2 && <Corridor />}
       {index === 3 && <Classroom />}

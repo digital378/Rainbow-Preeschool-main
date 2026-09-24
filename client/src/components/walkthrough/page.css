@@ -35,19 +35,19 @@ body:has(.wt-page) {
   inset: 0 0 auto;
   z-index: 50;
   padding-top: env(safe-area-inset-top, 0px);
-  background: rgba(255, 251, 246, 0.9);
-  border-bottom: 1px solid rgba(239, 227, 216, 0.8);
+  background: rgba(255, 255, 255, 0.96);
+  border-bottom: 1px solid rgba(239, 227, 216, 0.7);
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
 }
 .wt-header-inner {
   height: var(--wt-header-height);
-  max-width: 1320px;
+  max-width: 1400px;
   margin: auto;
-  padding: 0 16px;
+  padding: 0 clamp(16px, 3vw, 40px);
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: clamp(10px, 2vw, 26px);
 }
 .wt-brand {
   display: inline-flex;
@@ -61,7 +61,7 @@ body:has(.wt-page) {
   font-weight: 800;
   line-height: 1;
 }
-.wt-brand img { width: 40px; height: 40px; object-fit: contain; }
+.wt-brand img { width: 44px; height: 44px; object-fit: contain; }
 .wt-brand small {
   display: block;
   padding-top: 4px;
@@ -70,43 +70,93 @@ body:has(.wt-page) {
   letter-spacing: .04em;
   text-transform: uppercase;
 }
-.wt-preview-pill {
-  display: none;
-  padding: 4px 9px;
-  border-radius: 999px;
-  background: #fff0ec;
-  color: var(--wt-red);
-  font-size: 11px;
-  font-weight: 700;
-}
 .wt-navigation {
   display: none;
-  gap: 22px;
+  align-items: center;
+  gap: 2px;
   margin-left: auto;
-  font-size: 14px;
+  padding: 4px;
+  border-radius: 999px;
+  background: var(--wt-red);
+  box-shadow: 0 6px 16px rgb(236 33 15 / 13%);
+  font-size: 13px;
   font-weight: 600;
 }
-.wt-navigation a { color: var(--wt-muted); text-decoration: none; }
-.wt-navigation a:hover { color: var(--wt-red); }
-.wt-visit-button {
-  margin-left: auto;
-  padding: 10px 14px;
-  border: 0;
-  border-radius: 12px;
-  background: var(--wt-red);
+.wt-navigation a {
+  padding: 7px 11px;
+  border-radius: 999px;
   color: white;
-  font-size: 13px;
-  font-weight: 700;
-  cursor: pointer;
+  text-decoration: none;
   white-space: nowrap;
 }
-.wt-visit-button:hover { background: var(--wt-red-dark); }
-@media (min-width: 900px) {
-  .wt-preview-pill, .wt-navigation { display: flex; }
-  .wt-visit-button { margin-left: 8px; }
+.wt-navigation a:hover, .wt-navigation a:focus-visible { background: rgb(255 255 255 / 18%); color: white; }
+.wt-header-actions { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+.wt-visit-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 38px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: #f8c840;
+  color: #23180f;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.wt-visit-button:hover { background: #f3b92f; }
+.wt-mobile-menu { position: relative; }
+.wt-mobile-menu summary {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  border: 1px solid var(--wt-line);
+  border-radius: 12px;
+  background: #fff;
+  color: var(--wt-ink);
+  cursor: pointer;
+  list-style: none;
+}
+.wt-mobile-menu summary::-webkit-details-marker { display: none; }
+.wt-mobile-menu[open] summary { border-color: var(--wt-red); }
+.wt-mobile-menu nav {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  display: grid;
+  width: min(260px, calc(100vw - 32px));
+  padding: 8px;
+  border: 1px solid var(--wt-line);
+  border-radius: 17px;
+  background: #fff;
+  box-shadow: 0 18px 45px rgb(35 24 15 / 20%);
+}
+.wt-mobile-menu nav :is(a, button) {
+  display: block;
+  width: 100%;
+  padding: 11px 12px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--wt-ink);
+  font: 700 14px Inter, system-ui, sans-serif;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+.wt-mobile-menu nav :is(a, button):hover { background: #fff0ec; color: var(--wt-red); }
+.wt-mobile-menu nav button { color: var(--wt-red); }
+@media (min-width: 940px) {
+  .wt-navigation { display: flex; }
+  .wt-mobile-menu { display: none; }
 }
 @media (max-width: 420px) {
   .wt-brand { font-size: 14px; gap: 6px; }
-  .wt-brand img { width: 34px; height: 34px; }
+  .wt-brand img { width: 36px; height: 36px; }
   .wt-brand small { font-size: 8px; }
+  .wt-visit-button { padding: 8px 10px; }
+  .wt-visit-button span { display: none; }
 }

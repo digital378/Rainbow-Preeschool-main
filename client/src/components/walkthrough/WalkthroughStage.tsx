@@ -105,7 +105,7 @@ export const WalkthroughStage = forwardRef<
               alt=""
               {...{ fetchpriority: currentIndex === 0 ? "high" : "auto" }}
               decoding="async"
-              style={{ opacity: 1 - blend }}
+              style={{ opacity: 1 }}
             />
             <img
               className="walkthrough-still walkthrough-still--next"

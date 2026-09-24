@@ -24,3 +24,4 @@
 - [Campaign attribution privacy](campaign-attribution-privacy.md) — filter values and scrub the URL before third-party tags; keep raw attribution only for first-party leads.
 - [Sticky stages and body overflow](sticky-stages-body-overflow.md) — overflow-x:hidden on body can make sticky children scroll away; inspect computed ancestor overflow before changing the layout.
 - [Instagram Login reel media](instagram-login-reel-media.md) — Instagram Login tokens may work only on graph.instagram.com, and some VIDEO records lack a playable media URL.
+- [Preview banner layout offset](preview-banner-layout-offset.md) — proxied private previews can inject a banner above sticky full-screen stages; compare against local rendering before changing layout.

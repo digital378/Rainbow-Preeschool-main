@@ -44,6 +44,11 @@ function clamp(value: number, min: number, max: number): number {
   return Math.min(Math.max(value, min), max);
 }
 
+function sceneScrollSpans(total: number, viewportHeight: number) {
+  const first = Math.min(total / LAST, viewportHeight * 0.72);
+  return { first, later: (total - first) / (LAST - 1) };
+}
+
 export function useScrollScrub({
   stageRef,
   spacerRef,
@@ -133,8 +138,13 @@ export function useScrollScrub({
       const bounds = spacer.getBoundingClientRect();
       const total = bounds.height - stage.clientHeight;
       const travelled = clamp(-bounds.top, 0, Math.max(total, 0));
-      const x = total > 0 ? (travelled / total) * LAST : 0;
-      setFrameX((previous) => Math.abs(previous - x) > 0.012 ? x : previous);
+      const spans = sceneScrollSpans(total, stage.clientHeight);
+      const x = total > 0
+        ? travelled < spans.first
+          ? travelled / spans.first
+          : 1 + (travelled - spans.first) / spans.later
+        : 0;
+      setFrameX((previous) => Math.abs(previous - x) > 0.003 ? x : previous);
 
       const segmentIndex = Math.min(Math.floor(x), SCENES.length - 1);
       const fraction = x - segmentIndex;
@@ -147,14 +157,12 @@ export function useScrollScrub({
               ? 0
               : easeInOutQuad((fraction - HOLD) / (1 - HOLD)) *
                 segmentDuration);
-      let nextActive = -1;
-      if (segmentIndex >= SCENES.length - 1) {
-        nextActive = SCENES.length - 1;
-      } else if (fraction < HOLD + 0.08) {
-        nextActive = segmentIndex;
-      } else if (fraction > 0.9) {
-        nextActive = segmentIndex + 1;
-      }
+      // Switch panels at the midpoint of the matching backdrop crossfade.
+      // Never leave an interval with no active panel.
+      const nextActive = segmentIndex >= SCENES.length - 1 ||
+        fraction < HOLD + (1 - HOLD) / 2
+        ? segmentIndex
+        : segmentIndex + 1;
 
       if (nextActive !== activeSceneRef.current) {
         activeSceneRef.current = nextActive;
@@ -346,8 +354,9 @@ export function useScrollScrub({
       const sceneIndex = clamp(Math.round(index), 0, SCENES.length - 1);
       const bounds = spacer.getBoundingClientRect();
       const total = bounds.height - stage.clientHeight;
-      const top =
-        window.scrollY + bounds.top + (sceneIndex / LAST) * total + 2;
+      const spans = sceneScrollSpans(total, stage.clientHeight);
+      const distance = sceneIndex === 0 ? 0 : spans.first + (sceneIndex - 1) * spans.later;
+      const top = window.scrollY + bounds.top + distance + 2;
       window.scrollTo({
         top,
         behavior: reducedMotion ? "auto" : "smooth",

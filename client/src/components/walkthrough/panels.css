@@ -81,11 +81,40 @@
   font-weight: 600;
 }
 
+.walk-gate-proof {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  margin: 12px 0 16px;
+  padding-bottom: 13px;
+  border-bottom: 1px solid var(--walk-line);
+  color: var(--walk-muted);
+  font-size: 11px;
+  font-weight: 650;
+}
+
+.walk-gate-proof strong { color: var(--walk-red); font-size: 14px; }
+.walk-callback-heading h2,
+.walk-panel-content .walk-callback-heading h2 {
+  margin: 0 0 2px;
+  font-size: 17px;
+}
+.walk-panel-content .walk-callback-heading p { margin-bottom: 10px; font-size: 12px; }
+
 .walk-callback {
   display: grid;
-  gap: 8px;
-  grid-template-columns: 1fr 1fr;
-  margin-top: 10px;
+  gap: 9px 10px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.walk-field { min-width: 0; }
+.walk-field:first-child { grid-column: 1 / -1; }
+.walk-field label {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--walk-ink);
+  font-size: 11px;
+  font-weight: 700;
 }
 
 .walk-callback input,
@@ -93,12 +122,23 @@
   box-sizing: border-box;
   width: 100%;
   min-width: 0;
-  border: 1.5px solid var(--walk-line);
-  border-radius: 10px;
-  padding: 10px;
+  min-height: 42px;
+  border: 1px solid #d9c9bc;
+  border-radius: 11px;
+  padding: 10px 11px;
   color: var(--walk-ink);
-  background: var(--walk-paper);
-  font: 600 13px Inter, sans-serif;
+  background: #fff;
+  font: 500 13px Inter, sans-serif;
+}
+
+.walk-callback input::placeholder { color: #83776d; opacity: 1; }
+.walk-callback :is(input, select)[aria-invalid="true"] { border-color: #c82016; }
+.walk-field-error {
+  display: block;
+  margin-top: 4px;
+  color: #a71910;
+  font-size: 11px;
+  line-height: 1.25;
 }
 
 .walk-callback input:focus,
@@ -107,13 +147,43 @@
   outline-offset: 1px;
 }
 
-.walk-callback input:first-of-type {
-  grid-column: 1 / -1;
-}
-
 .walk-callback .walk-btn {
   grid-column: 1 / -1;
   width: 100%;
+  min-height: 44px;
+  margin-top: 2px;
+}
+.walk-panel-content .walk-callback-privacy {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin: 9px 0 0;
+  color: var(--walk-muted);
+  font-size: 10px;
+}
+.walk-callback-privacy svg { flex: none; color: #2a8b54; }
+.walk-panel-content .walk-form-error { grid-column: 1 / -1; margin: 0; color: #a71910; font-size: 11px; }
+.walk-callback-success {
+  display: grid;
+  gap: 6px;
+  margin: 18px 0;
+  padding: 17px;
+  border: 1px solid #b6dfc3;
+  border-radius: 16px;
+  background: #f1fbf3;
+  color: #21452c;
+}
+.walk-callback-success svg { width: 25px; height: 25px; color: #258849; }
+.walk-panel-content .walk-callback-success p { margin: 0; color: #396349; font-size: 12px; }
+.walk-callback-success button {
+  justify-self: start;
+  margin-top: 3px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--walk-red);
+  font: 700 12px Inter, sans-serif;
+  cursor: pointer;
 }
 
 .walk-btn {
@@ -238,12 +308,24 @@
 
 @media (max-width: 420px) {
   .walk-callback { grid-template-columns: 1fr; }
-  .walk-callback input:first-of-type, .walk-callback .walk-btn { grid-column: auto; }
-  .walk-callback input, .walk-callback select { padding: 9px; font-size: 12px; }
+  .walk-field:first-child, .walk-callback .walk-btn { grid-column: auto; }
+  .walk-callback input, .walk-callback select { padding: 9px 10px; font-size: 12px; }
   .walk-door { gap: 6px; padding: 8px 7px; }
   .walk-door b { font-size: 12px; }
   .walk-door small { font-size: 9.5px; }
   .walk-gallery img { height: 58px; }
+}
+
+@media (max-width: 719px) and (max-height: 700px) {
+  .walk-panel-content[data-scene="0"] > p { margin-bottom: 8px; font-size: 13px; }
+  .walk-panel-content[data-scene="0"] h1 { margin: 5px 0; font-size: 23px; }
+  .walk-gate-proof { display: none; }
+  .walk-panel-content .walk-callback-heading p { display: none; }
+  .walk-callback { gap: 6px; }
+  .walk-field label { margin-bottom: 3px; }
+  .walk-callback input, .walk-callback select { min-height: 39px; }
+  .walk-panel-content .walk-callback-privacy { margin-top: 5px; }
+  .walk-scene-next { margin-top: 6px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
