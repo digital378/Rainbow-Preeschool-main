@@ -37,8 +37,10 @@ function clamp(value: number, min: number, max: number): number {
   return Math.min(Math.max(value, min), max);
 }
 
-function sceneScrollSpans(total: number, viewportHeight: number) {
-  const first = Math.min(total / LAST, viewportHeight * 0.72);
+function sceneScrollSpans(total: number, viewportHeight: number, desktop: boolean) {
+  // Give the desktop camera time to render the frames between scene markers.
+  // Keep the shorter mobile scroll path unchanged.
+  const first = Math.min(total / LAST, viewportHeight * (desktop ? 2.25 : 0.72));
   return { first, later: (total - first) / (LAST - 1) };
 }
 
@@ -78,6 +80,9 @@ export function useScrollScrub({
   const activeSceneRef = useRef(0);
   const unlockRef = useRef(false);
   const seekRef = useRef<() => void>(() => undefined);
+  const cancelNavigationRef = useRef<(() => void) | null>(null);
+
+  useEffect(() => () => cancelNavigationRef.current?.(), []);
 
   useEffect(() => {
     onSceneChangeRef.current = onSceneChange;
@@ -128,7 +133,7 @@ export function useScrollScrub({
       const bounds = spacer.getBoundingClientRect();
       const total = bounds.height - stage.clientHeight;
       const travelled = clamp(-bounds.top, 0, Math.max(total, 0));
-      const spans = sceneScrollSpans(total, stage.clientHeight);
+      const spans = sceneScrollSpans(total, stage.clientHeight, desktop);
       const x = total > 0
         ? travelled < spans.first
           ? travelled / spans.first
@@ -175,7 +180,7 @@ export function useScrollScrub({
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", scheduleUpdate);
     };
-  }, [spacerRef, stageRef]);
+  }, [desktop, spacerRef, stageRef]);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -187,22 +192,31 @@ export function useScrollScrub({
     let lastSeek = 0;
     setVideoReady(false);
 
+    const seekToTarget = () => {
+      if (disposed || video.readyState < 1 || video.seeking) return;
+      const desired = clamp(targetTimeRef.current, 0, Math.max(video.duration - 0.01, 0));
+      if (Math.abs(video.currentTime - desired) < 0.04) {
+        return;
+      }
+      lastSeek = performance.now();
+      try {
+        video.currentTime = desired;
+      } catch {
+        setFailedToStills(true);
+      }
+    };
     const scheduleSeek = () => {
-      if (disposed || document.hidden || seekTimer) return;
-      seekTimer = window.setTimeout(() => {
-        seekTimer = 0;
-        if (disposed || video.readyState < 1 || video.seeking) return;
-        const desired = clamp(targetTimeRef.current, 0, Math.max(video.duration - 0.01, 0));
-        if (Math.abs(video.currentTime - desired) < 0.04) {
-          return;
-        }
-        lastSeek = performance.now();
-        try {
-          video.currentTime = desired;
-        } catch {
-          setFailedToStills(true);
-        }
-      }, Math.max(0, 60 - (performance.now() - lastSeek)));
+      if (disposed || document.hidden) return;
+      // Desktop scroll updates already arrive once per animation frame. Seek
+      // immediately, then catch up to the latest target after each seeked event.
+      if (desktop) {
+        seekToTarget();
+      } else if (!seekTimer) {
+        seekTimer = window.setTimeout(() => {
+          seekTimer = 0;
+          seekToTarget();
+        }, Math.max(0, 60 - (performance.now() - lastSeek)));
+      }
     };
     const onLoadedMetadata = () => {
       if (Number.isFinite(video.duration) && video.duration > 1) {
@@ -280,6 +294,7 @@ export function useScrollScrub({
 
   const goToScene = useCallback(
     (index: number) => {
+      cancelNavigationRef.current?.();
       const stage = stageRef.current;
       const spacer = spacerRef.current;
       if (!stage || !spacer) return;
@@ -287,15 +302,46 @@ export function useScrollScrub({
       const sceneIndex = clamp(Math.round(index), 0, SCENES.length - 1);
       const bounds = spacer.getBoundingClientRect();
       const total = bounds.height - stage.clientHeight;
-      const spans = sceneScrollSpans(total, stage.clientHeight);
+      const spans = sceneScrollSpans(total, stage.clientHeight, desktop);
       const distance = sceneIndex === 0 ? 0 : spans.first + (sceneIndex - 1) * spans.later;
       const top = window.scrollY + bounds.top + distance + 2;
+      const start = window.scrollY;
+      const delta = top - start;
+      if (desktop && !reducedMotion && Math.abs(delta) > 3 &&
+          Math.abs(delta) <= stage.clientHeight * 3) {
+        // Native smooth scrolling crosses a whole scene in under a second,
+        // outrunning the video decoder. Pace adjacent-scene navigation so
+        // the camera can actually show the intervening frames.
+        const duration = Math.max(450, Math.abs(delta) / stage.clientHeight * 1000);
+        let frame = 0;
+        let beganAt = 0;
+        const cancel = () => {
+          window.cancelAnimationFrame(frame);
+          window.removeEventListener("wheel", cancel);
+          window.removeEventListener("touchstart", cancel);
+          window.removeEventListener("keydown", cancel);
+          if (cancelNavigationRef.current === cancel) cancelNavigationRef.current = null;
+        };
+        const tick = (now: number) => {
+          if (!beganAt) beganAt = now;
+          const progress = clamp((now - beganAt) / duration, 0, 1);
+          window.scrollTo(0, start + delta * progress);
+          if (progress < 1) frame = window.requestAnimationFrame(tick);
+          else cancel();
+        };
+        cancelNavigationRef.current = cancel;
+        window.addEventListener("wheel", cancel, { passive: true });
+        window.addEventListener("touchstart", cancel, { passive: true });
+        window.addEventListener("keydown", cancel);
+        frame = window.requestAnimationFrame(tick);
+        return;
+      }
       window.scrollTo({
         top,
         behavior: reducedMotion ? "auto" : "smooth",
       });
     },
-    [reducedMotion, spacerRef, stageRef],
+    [desktop, reducedMotion, spacerRef, stageRef],
   );
 
   return {

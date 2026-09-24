@@ -264,6 +264,11 @@
 }
 
 @media (min-aspect-ratio: 1 / 1) and (min-width: 720px) {
+  .walkthrough-spacer {
+    height: calc(100vh * 17.875);
+    height: calc(100svh * 17.875);
+  }
+
   .walkthrough-skip,
   .walkthrough-motion-toggle {
     left: auto;
