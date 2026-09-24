@@ -7,7 +7,7 @@ import { VERIFIED_RATING } from "@shared/verified-rating";
 import { AwardedBySection } from "@/components/awarded-by-section";
 import { CountUp } from "@/components/count-up";
 import { WalkthroughCallbackForm } from "./WalkthroughCallbackForm";
-import { RainbowTheatre } from "./RainbowTheatre";
+import { RainbowTheatre } from "@/components/rainbow-theatre/RainbowTheatre";
 import "./panels.css";
 
 const SchoolTownMap3D = lazy(() => import("@/components/SchoolTownMap3D"));

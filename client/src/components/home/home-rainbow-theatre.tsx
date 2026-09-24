@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { RainbowTheatre } from "@/components/walkthrough/RainbowTheatre";
+import { RainbowTheatre } from "@/components/rainbow-theatre/RainbowTheatre";
 import "./home-rainbow-theatre.css";
 
 export function HomeRainbowTheatre() {
@@ -34,7 +34,6 @@ export function HomeRainbowTheatre() {
   return (
     <section ref={sectionRef} className="home-rainbow-reel" aria-label="Rainbow Theatre">
       <div className="home-rainbow-reel__inner">
-        <p className="home-rainbow-reel__marquee">Rainbow Theatre</p>
         <RainbowTheatre active={active} enabled={loaded} endpoint="/api/instagram/reels" variant="homepage" />
       </div>
     </section>

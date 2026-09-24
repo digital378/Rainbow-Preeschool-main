@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { KeyboardEvent } from "react";
 import { createPortal } from "react-dom";
-import { Maximize2, ListVideo, Volume2, VolumeX, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, Instagram, Maximize2, ListVideo, Volume2, VolumeX, X } from "lucide-react";
 import { useInstagramReels, type Reel } from "./useInstagramReels";
 import "./theatre.css";
 
@@ -34,10 +34,17 @@ export function RainbowTheatre({
   variant?: "walkthrough" | "homepage";
 }) {
   const {
-    reels, isPending, isError, refetch, hasNextPage, fetchNextPage, isFetchingNextPage,
+    reels: sourceReels, isPending, isError, refetch, hasNextPage, fetchNextPage, isFetchingNextPage,
   } = useInstagramReels(enabled, endpoint);
+  // Some Instagram VIDEO records have no media URL.
+  // Only offer directly playable records in the public theatre.
+  const reels = useMemo(
+    () => variant === "homepage" ? sourceReels.filter((reel) => Boolean(reel.mediaUrl)) : sourceReels,
+    [sourceReels, variant],
+  );
   const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [soundOn, setSoundOn] = useState(false);
+  const [soundOn, setSoundOn] = useState(variant === "homepage");
+  const [playbackBlocked, setPlaybackBlocked] = useState(false);
   const [failedVideoId, setFailedVideoId] = useState<string | null>(null);
   const [playlistOpen, setPlaylistOpen] = useState(false);
   const [overlayOpen, setOverlayOpen] = useState(false);
@@ -54,6 +61,7 @@ export function RainbowTheatre({
     [reels, selectedId],
   );
   const hasUsableMedia = Boolean(currentReel?.mediaUrl && currentReel.id !== failedVideoId);
+  const currentIndex = reels.findIndex((reel) => reel.id === currentReel?.id);
 
   useEffect(() => {
     if (!reels.length) {
@@ -68,14 +76,20 @@ export function RainbowTheatre({
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
+    let cancelled = false;
     video.muted = !soundOn;
     if (active && hasUsableMedia) {
-      void video.play().catch(() => {
-        // Browser autoplay policies may require a user gesture; the native controls remain available.
+      void video.play().then(() => {
+        if (!cancelled) setPlaybackBlocked(false);
+      }).catch((error: unknown) => {
+        if (!cancelled && error instanceof DOMException && error.name === "NotAllowedError") {
+          setPlaybackBlocked(true);
+        }
       });
     } else {
       video.pause();
     }
+    return () => { cancelled = true; };
   }, [active, currentReel, hasUsableMedia, overlayOpen, soundOn]);
 
   useEffect(() => {
@@ -129,8 +143,18 @@ export function RainbowTheatre({
   const selectReel = (id: string) => {
     setSelectedId(id);
     setFailedVideoId(null);
-    setSoundOn(false);
+    if (variant === "walkthrough") setSoundOn(false);
+    setPlaybackBlocked(false);
     setPlaylistOpen(false);
+    if (variant === "homepage" && id === currentReel?.id) {
+      void videoRef.current?.play().catch(() => setPlaybackBlocked(true));
+    }
+  };
+
+  const stepReel = (direction: -1 | 1) => {
+    if (reels.length < 2) return;
+    const nextIndex = (currentIndex + direction + reels.length) % reels.length;
+    selectReel(reels[nextIndex].id);
   };
 
   const toggleSound = () => setSoundOn((value) => !value);
@@ -202,6 +226,7 @@ export function RainbowTheatre({
           playsInline
           preload="none"
           controls
+          onPlay={() => setPlaybackBlocked(false)}
           onError={() => setFailedVideoId(currentReel.id)}
           aria-label={currentReel.caption || "Rainbow Instagram reel"}
         />
@@ -209,7 +234,7 @@ export function RainbowTheatre({
         <div className="rainbow-theatre__unavailable">
           {currentReel.thumbnailUrl && <img src={currentReel.thumbnailUrl} alt="" />}
           <p>{failedVideoId === currentReel.id ? "This video could not be played here." : "This video is available on Instagram."}</p>
-          {currentReel.permalink && <a href={currentReel.permalink} target="_blank" rel="noopener noreferrer">Open on Instagram</a>}
+          {variant === "walkthrough" && currentReel.permalink && <a href={currentReel.permalink} target="_blank" rel="noopener noreferrer">Open on Instagram</a>}
           {failedVideoId === currentReel.id && (
             <button type="button" onClick={() => setFailedVideoId(null)}>Try video again</button>
           )}
@@ -232,6 +257,13 @@ export function RainbowTheatre({
           </button>
         )}
       </div>
+      {hasUsableMedia && playbackBlocked && soundOn && active && variant === "homepage" && (
+        <button type="button" className="rainbow-theatre__sound-prompt" onClick={() => {
+          void videoRef.current?.play().catch(() => setPlaybackBlocked(true));
+        }}>
+          <Volume2 aria-hidden="true" /> Tap to play with sound
+        </button>
+      )}
       {hasUsableMedia && !soundOn && active && (
         <button type="button" className="rainbow-theatre__sound-prompt" onClick={toggleSound}>
           <VolumeX aria-hidden="true" /> Tap for sound
@@ -335,6 +367,19 @@ export function RainbowTheatre({
       <div className="rainbow-theatre__layout">
         <div className="rainbow-theatre__screen-wrap">
           {!overlayOpen && renderPlayer()}
+          {variant === "homepage" && (
+            <div className="rainbow-theatre__transport" role="group" aria-label="Video navigation">
+              <button type="button" aria-label="Previous video" disabled={reels.length < 2} onClick={() => stepReel(-1)}>
+                <ChevronLeft aria-hidden="true" /> Previous
+              </button>
+              <span className="rainbow-theatre__position" aria-live="polite">
+                {currentIndex >= 0 ? `${currentIndex + 1} / ${reels.length}` : "—"}
+              </span>
+              <button type="button" aria-label="Next video" disabled={reels.length < 2} onClick={() => stepReel(1)}>
+                Next <ChevronRight aria-hidden="true" />
+              </button>
+            </div>
+          )}
           <div className="rainbow-theatre__current-copy" aria-live="polite">
             <span className="rainbow-theatre__live-dot" aria-hidden="true" />
             {currentReel ? shortCaption(currentReel) : "Reel · loads from Instagram"}
@@ -385,6 +430,17 @@ export function RainbowTheatre({
           <button type="button" className="rainbow-theatre__browse" onClick={openPlaylist}>
             Browse videos
           </button>
+          {variant === "homepage" && (
+            <a
+              className="rainbow-theatre__instagram"
+              href="https://www.instagram.com/rainbowpreschools/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Visit Rainbow Preschool on Instagram (opens in a new tab)"
+            >
+              <Instagram aria-hidden="true" /> Visit Instagram
+            </a>
+          )}
         </aside>
       </div>
 

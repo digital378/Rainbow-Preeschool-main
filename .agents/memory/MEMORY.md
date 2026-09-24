@@ -26,3 +26,4 @@
 - [Instagram Login reel media](instagram-login-reel-media.md) — Instagram Login tokens may work only on graph.instagram.com, and some VIDEO records lack a playable media URL.
 - [Preview banner layout offset](preview-banner-layout-offset.md) — proxied private previews can inject a banner above sticky full-screen stages; compare against local rendering before changing layout.
 - [Scroll-scrub video pacing](scroll-scrub-video-pacing.md) — buffering is not enough for smooth scrubbing; seek decode cost and footage seconds per viewport both matter.
+- [Private paths and shared UI](private-path-shared-ui.md) — protected path segments also gate Vite source modules; public UI must not import components from private namespaces.
