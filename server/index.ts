@@ -16,6 +16,12 @@ import { dummyGuard } from "./dummy-guard";
 
 const app = express();
 app.use(dummyGuard);
+// Serve the private media before bot SSR's unknown-route handling. The guard
+// above authenticates every request and reapplies no-store headers to 206s.
+app.use("/walkthrough", express.static(path.join(
+  process.cwd(),
+  process.env.NODE_ENV === "production" ? "dist/public/walkthrough" : "client/public/walkthrough",
+)));
 
 // Trust proxy for proper protocol detection behind load balancers (Replit Deployment)
 app.set('trust proxy', true);

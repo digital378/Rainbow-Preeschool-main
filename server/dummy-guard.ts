@@ -1,7 +1,24 @@
 import { createHash, timingSafeEqual } from "node:crypto";
 import type { RequestHandler } from "express";
 
-const protectedPath = /^\/(?:dummy|walkthrough)(?:\/|$)/i;
+// Vite's development /@fs route can expose a file in client/public under its
+// absolute disk path. Guard the directory segment there too, not just its
+// public URL. Decode nested URL encoding before the static middleware does.
+const protectedSegment = /(?:^|\/)(?:dummy|walkthrough)(?=\/|$)/i;
+function isProtectedPath(path: string): boolean {
+  let decoded = path.replace(/\\/g, "/");
+  for (let depth = 0; depth < 4; depth++) {
+    if (protectedSegment.test(decoded)) return true;
+    try {
+      const next = decodeURIComponent(decoded).replace(/\\/g, "/");
+      if (next === decoded) break;
+      decoded = next;
+    } catch {
+      break;
+    }
+  }
+  return protectedSegment.test(decoded);
+}
 const privacyHeaders = {
   "X-Robots-Tag": "noindex, nofollow, noarchive, nosnippet, noimageindex",
   "Cache-Control": "private, no-store, max-age=0",
@@ -15,12 +32,12 @@ function equalSecret(received: string, expected: string): boolean {
 }
 
 export const dummyGuard: RequestHandler = (req, res, next) => {
-  if (!protectedPath.test(req.path)) return next();
+  if (!isProtectedPath(req.path)) return next();
 
   // Static file servers may set a public cache policy after this middleware.
   // Preserve private headers at the last possible moment on all status codes.
   const writeHead = res.writeHead;
-  res.writeHead = function (...args: Parameters<typeof res.writeHead>) {
+  res.writeHead = function (this: typeof res, ...args: Parameters<typeof res.writeHead>) {
     for (const [name, value] of Object.entries(privacyHeaders)) {
       res.setHeader(name, value);
     }
