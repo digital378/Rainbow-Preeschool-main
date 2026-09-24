@@ -1976,7 +1976,7 @@ const BLOG_POST_SEO_DATA: Record<string, BlogPostSEORecord> = {
   "what-age-start-play-school": {
     title: "What Age to Start Play School in India | Expert Guide",
     h1: "What Age Should a Child Start Play School? Expert Guide for Indian Parents",
-    description: "When should a child start play school? Expert guide on ideal age, readiness signs, benefits of early vs late start, and tips for Indian parents. Trusted advice.",
+    description: "When should a child start play school? Learn ideal age, readiness signs, and the benefits of starting early or later, with tips for Indian parents.",
     keywords: "what age play school, when to start play school, play school age india, right age for playgroup, play school near me",
     datePublished: "2026-02-25",
     lastModified: "2026-04-02",
