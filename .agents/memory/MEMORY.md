@@ -22,3 +22,4 @@
 - [Dependency reconciliation](post-merge-dependency-setup.md) — use npm clean installs; mixed lockfiles can confuse deploy detection and pnpm-linked trees break incremental npm installs.
 - [Private page cookies](private-page-cookies.md) — public HTML renderers strip Set-Cookie; complete private login on a redirect before rendering the SPA page.
 - [Campaign attribution privacy](campaign-attribution-privacy.md) — filter values and scrub the URL before third-party tags; keep raw attribution only for first-party leads.
+- [Sticky stages and body overflow](sticky-stages-body-overflow.md) — overflow-x:hidden on body can make sticky children scroll away; inspect computed ancestor overflow before changing the layout.

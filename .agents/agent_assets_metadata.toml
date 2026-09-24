@@ -42,3 +42,143 @@ mtime_ms = 1790232268622
 storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:0c61580c-1c60-4ec3-afe4-28e8a9482287/7006f5ee-cf89-45dc-9e85-3a3a24539acc/90d21f01-b6ad-4921-8974-346fca1e18ce"
 storage_version_token = "1790232275561609"
 content_type = "text/html"
+
+[[outputs]]
+id = "fPlc0qPoETy-NwEU1jGg4"
+uri = "file://reference/screenshots/mobile-scene-1.png"
+type = "image"
+title = "390×844 Scene 1"
+description = "Private walkthrough mobile scene 1 screenshot from local authenticated test."
+logical_id = "ad84c98b-ef47-4c67-8071-47864fecab3e"
+content_hash = "sha256:3f9c95ff66504f6f731f2baf87423083637558adffc012eaa4cf9e0d4ab91b4b"
+size = 294420
+mtime_ms = 1790233576170
+storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:0c61580c-1c60-4ec3-afe4-28e8a9482287/ad84c98b-ef47-4c67-8071-47864fecab3e/2f8c0781-1097-4740-89ef-1e2984e9521a"
+storage_version_token = "1790234195443600"
+content_type = "image/png"
+
+[[outputs]]
+id = "qVS2QaiYN_uhAlEVmpzIS"
+uri = "file://reference/screenshots/mobile-scene-3.png"
+type = "image"
+title = "390×844 Scene 3"
+description = "Private walkthrough mobile scene 3 screenshot from local authenticated test."
+logical_id = "8f95a772-17e6-4052-bbd6-aa6c95d7e58d"
+content_hash = "sha256:3dbb80b889b864011da45221f973ffb7f0f4446a9eb831c39e2528cae1c15cb6"
+size = 297224
+mtime_ms = 1790233577502
+storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:0c61580c-1c60-4ec3-afe4-28e8a9482287/8f95a772-17e6-4052-bbd6-aa6c95d7e58d/1ffd2d9f-479d-4ff7-9e60-8aadb6042634"
+storage_version_token = "1790234197774223"
+content_type = "image/png"
+
+[[outputs]]
+id = "n7Z4QaV6AnNKnUyMx-tbK"
+uri = "file://reference/screenshots/mobile-scene-6.png"
+type = "image"
+title = "390×844 Scene 6"
+description = "Private walkthrough mobile scene 6 screenshot from local authenticated test."
+logical_id = "e015ff82-50a3-42d0-a0fb-acea9c063d5d"
+content_hash = "sha256:c93067f3f072934b7e53bc354f94b6aa20be2d5f22495cbe31bbf3ee3fac52e2"
+size = 302774
+mtime_ms = 1790233578894
+storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:0c61580c-1c60-4ec3-afe4-28e8a9482287/e015ff82-50a3-42d0-a0fb-acea9c063d5d/8810f74d-786f-422d-9e5e-fe5353980c28"
+storage_version_token = "1790234199916688"
+content_type = "image/png"
+
+[[outputs]]
+id = "qVyTEqzK22AWpCLOg4L4h"
+uri = "file://reference/screenshots/mobile-scene-8.png"
+type = "image"
+title = "390×844 Scene 8"
+description = "Private walkthrough mobile scene 8 screenshot from local authenticated test."
+logical_id = "bb15b737-f90d-4611-b6c9-f1d9dad9529b"
+content_hash = "sha256:90184b068545fe774d7387175de3d8f93cec3cac514b405ad5810e5241ed0981"
+size = 343965
+mtime_ms = 1790233580970
+storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:0c61580c-1c60-4ec3-afe4-28e8a9482287/bb15b737-f90d-4611-b6c9-f1d9dad9529b/269baf30-a15f-4c7b-99dc-d1997cddc0f1"
+storage_version_token = "1790234202116039"
+content_type = "image/png"
+
+[[outputs]]
+id = "vWKxLQgPmPLpHPKhRkltJ"
+uri = "file://reference/screenshots/mobile-help.png"
+type = "image"
+title = "390×844 Counsellor help"
+description = "Private walkthrough mobile help screenshot from local authenticated test."
+logical_id = "3f784b39-eb2d-4ef9-afcb-7f10e0ce157f"
+content_hash = "sha256:2c630975d7685d1e6d07a2f5e213b7c53552a8931c173b221e442d33b0316f31"
+size = 217970
+mtime_ms = 1790234043698
+storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:0c61580c-1c60-4ec3-afe4-28e8a9482287/3f784b39-eb2d-4ef9-afcb-7f10e0ce157f/e410f3d7-1a68-4a32-a5d7-44b35fc94e0c"
+storage_version_token = "1790234204229677"
+content_type = "image/png"
+
+[[outputs]]
+id = "F3ObjGqOw2sXFwoVcfkIh"
+uri = "file://reference/screenshots/desktop-scene-1.png"
+type = "image"
+title = "1440×900 Scene 1"
+description = "Private walkthrough desktop scene 1 screenshot from local authenticated test."
+logical_id = "debdc4fe-d22a-41ea-b8c6-dd2770e91705"
+content_hash = "sha256:4ac7305e5907cbc7249c3bdf9cc5330a2ddf167e40fe6c9e93ea7c7cbad67ab1"
+size = 1400498
+mtime_ms = 1790233584926
+storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:0c61580c-1c60-4ec3-afe4-28e8a9482287/debdc4fe-d22a-41ea-b8c6-dd2770e91705/7527432e-e99b-4769-85dc-dc802f0e393f"
+storage_version_token = "1790234207221700"
+content_type = "image/png"
+
+[[outputs]]
+id = "rDEGgbLNhmmceuu38-Rak"
+uri = "file://reference/screenshots/desktop-scene-3.png"
+type = "image"
+title = "1440×900 Scene 3"
+description = "Private walkthrough desktop scene 3 screenshot from local authenticated test."
+logical_id = "b708c554-3cfd-484c-8026-dbeafe03d2a6"
+content_hash = "sha256:bf14a5bbcae89d30dda6f17db9079f51c049ecda68aecd7fada87d7029f9fde3"
+size = 1366900
+mtime_ms = 1790233586862
+storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:0c61580c-1c60-4ec3-afe4-28e8a9482287/b708c554-3cfd-484c-8026-dbeafe03d2a6/a9fd2e71-86fe-48c1-bb06-046550198a5c"
+storage_version_token = "1790234210156439"
+content_type = "image/png"
+
+[[outputs]]
+id = "YxTAOlYCmh-_4qB1ooMBE"
+uri = "file://reference/screenshots/desktop-scene-6.png"
+type = "image"
+title = "1440×900 Scene 6"
+description = "Private walkthrough desktop scene 6 screenshot from local authenticated test."
+logical_id = "eeb916cb-1a83-49da-9ff8-b8f49c454fdd"
+content_hash = "sha256:576b2ad58375b9d67bd16478c8006d936a9b6497013fd92b2952ec3074ae34c5"
+size = 1286205
+mtime_ms = 1790233588850
+storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:0c61580c-1c60-4ec3-afe4-28e8a9482287/eeb916cb-1a83-49da-9ff8-b8f49c454fdd/3cd7dc18-22c3-4779-8861-538e83ed2b7b"
+storage_version_token = "1790234215484117"
+content_type = "image/png"
+
+[[outputs]]
+id = "-nOb2RAX1wf3dtmaQTMzK"
+uri = "file://reference/screenshots/desktop-scene-8.png"
+type = "image"
+title = "1440×900 Scene 8"
+description = "Private walkthrough desktop scene 8 screenshot from local authenticated test."
+logical_id = "09e3da7e-4c8e-454f-858d-343f6278371f"
+content_hash = "sha256:052655db73cb19fa408f175b8c41020603f1e467b5c6be4135e5f0b69e7f2c92"
+size = 1513128
+mtime_ms = 1790233591834
+storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:0c61580c-1c60-4ec3-afe4-28e8a9482287/09e3da7e-4c8e-454f-858d-343f6278371f/3309c355-67d2-4a10-b7ad-62024cd07501"
+storage_version_token = "1790234218349231"
+content_type = "image/png"
+
+[[outputs]]
+id = "dGM6OVyt3ZEMxYPFiHEsq"
+uri = "file://reference/screenshots/desktop-help.png"
+type = "image"
+title = "1440×900 Counsellor help"
+description = "Private walkthrough desktop help screenshot from local authenticated test."
+logical_id = "dd2b7d6e-6355-43ae-ac70-52b9f0f0f5d0"
+content_hash = "sha256:e208e0d962858995ff9da36e0bbc3fdf4cfc90519f1def468baf774df4519b33"
+size = 1127699
+mtime_ms = 1790234047046
+storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:0c61580c-1c60-4ec3-afe4-28e8a9482287/dd2b7d6e-6355-43ae-ac70-52b9f0f0f5d0/627cadfe-1d7b-4a02-8177-378523914d3b"
+storage_version_token = "1790234221153298"
+content_type = "image/png"
