@@ -1,0 +1,61 @@
+Homepage SEO rebuild (Brief 1). Keep the current design style; this is about order, headings, content and parity. Change only the homepage and the shared components it needs; no URL changes. Every section below must be in the bot HTML exactly as visitors see it (text, headings, centre cards, images). Today the bot HTML is missing the centre addresses and phones, the Why Choose Us cards, the curriculum section and the awards.
+
+TITLE AND META
+- Title: "Preschool in Thane | Playgroup, Nursery & KG | Rainbow"
+- Meta description: "Playgroup, nursery and KG for ages [1.5 to 5.5] at 6 Rainbow Preschool International centres in Thane, since 2007. Book a free visit for 2026-27."
+
+NEW SECTION ORDER
+1. Hero (current section 1)
+   - Keep "Rainbow Preschool" as the large brand line, but it is no longer the H1.
+   - H1 below it: "Preschool in Thane: Playgroup, Nursery and Kindergarten". In the prepaint hero, no entrance animation.
+   - Paragraph under the H1: "Trusted by Thane families since 2007, Rainbow Preschool International welcomes children from [1.5 to 5.5] years at our 6 centres in Manpada, Kasarvadavali, Anand Nagar, Hariniwas, Dhokali and Kalwa. We offer playgroup, nursery and kindergarten, and admissions for 2026-27 are open."
+   - Stat chips as static text: 18+ Years of Excellence, 6 Centres Across Thane, 100% Female Staff, [1,00,000+ Young Learners only if confirmed].
+   - Buttons: "Book a Visit" (scrolls to the form in section 8) and "WhatsApp".
+
+2. H2 "Programmes by age: playgroup, nursery and kindergarten" (move up the current "Programmes for Every Stage of Early Learning")
+   - Keep the 4 cards (Playgroup, Nursery, Kindergarten, Happy Times) and their Learn More links.
+   - Add one line per card on what a day includes. KG age [3.5-5.5] everywhere on the page.
+
+3. H2 "Our 6 preschool centres in Thane" (move up the current "Our Preschool Centres Across Thane")
+   - Keep the 6 cards with address, phones, WhatsApp, Directions and View Centre.
+   - Add opening hours [..] and a landmark to each card.
+
+4. H2 "Why Thane parents choose Rainbow" (merge current "Why Parents Choose Rainbow Preschool", "A Trusted Early Learning Journey Since 2007" and the 4 feature chips in "A world built for little explorers")
+   - Keep the 6 cards: Safety & CCTV, Certified Teachers, Hygiene First, 30:2 Student-Teacher, GPS Transport, Play-Based Learning.
+   - Keep the short "Since 2007..." intro paragraph.
+   - Remove the broken stats widget ("51,840+", "9+", "03", "52%" shown under form labels such as "Your Name" and "Call Now") and the "Expert Teachers" and "Small Batches" chips.
+
+5. H2 "Our play-based curriculum" (current "Research-Based Curriculum for Every Child")
+   - Keep the six areas; drop "Research-Based". All tab text written into the page, not only on click.
+
+6. H2 "A day at Rainbow" (merge current "A world built for little explorers" and "The Rainbow Theatre")
+   - Classroom photo strip first, each photo with alt text, width and height.
+   - The video and Instagram reels as poster images that load only on tap.
+
+7. H2 "What parents say" (current "Parents from Thane Say", with "Recognised & Awarded" moved here)
+   - Keep the 4 testimonials with centre names.
+   - Name each award in text next to its logo: [award name, awarding body, year].
+   - No rating number unless shown as "[4.9] on Google from [N] reviews" with a link.
+
+8. H2 "How admission works" (current "Request A Callback")
+   - This is the only enquiry form on the page. Beside it, 4 steps: [enquiry, centre visit, form and documents, confirmation], and a link to /preschool-admissions.
+
+9. H2 "Questions parents ask" (current FAQ)
+   - Keep the existing questions; answers must match the page (KG age, timings [..], transport: GPS-enabled in-house transport [at all centres or some]).
+   - Add: "Is Rainbow Preschool International part of Rainbow International School?" (one line, link to the school's site) and "When is the right age to start preschool?" (link to /blog/what-age-start-play-school).
+
+REMOVE
+- "Start Exploring" quick links (duplicates the menu).
+- "Quick Callback" form (duplicate form).
+- "Helpful guides for Thane parents" line (its links move into sections 2 and 3).
+
+ALSO
+- Mobile sticky bottom bar: Call, WhatsApp, Book a Visit.
+- Footer link "Best Preschool in Thane": relabel to "Find a preschool near you".
+- Structured data: replace Article with WebPage; one organisation entry (Rainbow Preschool International, logo, foundingDate 2007, phone, sameAs); each of the 6 centres as a Preschool entry with address, geo, phone and opening hours matching the cards. No rating or review markup.
+- "Last updated" shows the publish date.
+
+BEFORE OFFERING PUBLISH, REPORT
+- Bot vs visitor parity on / : title, description and H1 match; bot text 90-120% of visitor text; centre addresses present in bot HTML.
+- 3 mobile Lighthouse runs on / (target LCP under 2.5 s, CLS under 0.1).
+- No console errors; the enquiry form submits.
