@@ -1,80 +1,22 @@
 /**
- * Homepage freshness injection
+ * Homepage JSON-LD injection for the initial visitor HTML shell.
  *
- * The homepage ("/") is served as the React SPA to all visitors — bot SSR is
- * intentionally bypassed there so Googlebot executes JavaScript and indexes
- * the live page. However, the client-side EEATSignals component and SEO
- * Article JSON-LD are injected via useEffect and therefore absent from the
- * raw HTML shell that curl/fetch sees before JS runs.
- *
- * This module injects the same signals directly into the HTML shell so that:
- *   1. check-freshness-signal.ts (which uses fetch() without JS) can verify
- *      the homepage carries the required freshness markers.
- *   2. Bots that do NOT execute JavaScript still pick up the Article JSON-LD.
- * The visible reviewer byline is rendered by React's EEATSignals component
- * after hydration. We do not inject hidden text into the homepage shell.
- *
- * The Article date is derived from shared/site-freshness.ts.
+ * The homepage React components add schemas after hydration, so include the
+ * same shared WebPage, Organization and centre schemas in raw HTML too.
  */
-
-import { LAST_UPDATED_ISO } from "../shared/site-freshness";
-
-const BASE_URL = "https://www.rainbowpreschools.com";
-
-function buildArticleScript(): string {
-  const schema = {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    "headline": "Rainbow Preschool International — Preschool Chain in Thane Since 2007",
-    "datePublished": "2024-06-01",
-    "dateModified": LAST_UPDATED_ISO,
-    "author": {
-      "@type": "Organization",
-      "name": "Rainbow Preschool Curriculum Team",
-      "parentOrganization": {
-        "@type": "Organization",
-        "name": "Rainbow Preschool International",
-      },
-    },
-    "reviewedBy": {
-      "@type": "Organization",
-      "name": "Rainbow Preschool Curriculum Team",
-      "parentOrganization": {
-        "@type": "Organization",
-        "name": "Rainbow Preschool International",
-      },
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "Rainbow Preschool International",
-      "logo": {
-        "@type": "ImageObject",
-        "url": `${BASE_URL}/images/optimized/logo.webp`,
-      },
-    },
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": `${BASE_URL}/`,
-    },
-    "inLanguage": "en-IN",
-  };
-  return `<script type="application/ld+json">${JSON.stringify(schema)}</script>`;
-}
+import { HOMEPAGE_STRUCTURED_DATA } from "../shared/homepage-schema";
 
 /**
- * If `urlPath` is exactly "/", injects:
- *   • An Article JSON-LD <script> before </head>
- * For any other path the HTML is returned unchanged.
+ * If `urlPath` is exactly "/", inject the reusable homepage schemas before
+ * </head>. All other paths are returned unchanged.
  */
 export function injectHomepageFreshness(urlPath: string, html: string): string {
   if (urlPath !== "/") return html;
 
-  let result = html;
-
-  const articleScript = buildArticleScript();
-  if (result.includes("</head>")) {
-    result = result.replace("</head>", `${articleScript}\n</head>`);
-  }
-
-  return result;
+  const schemaScripts = HOMEPAGE_STRUCTURED_DATA
+    .map((schema, index) => `<script id="homepage-schema-${index}" type="application/ld+json">${JSON.stringify(schema)}</script>`)
+    .join("\n");
+  return html.includes("</head>")
+    ? html.replace("</head>", `${schemaScripts}\n</head>`)
+    : html;
 }

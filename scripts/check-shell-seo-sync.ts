@@ -7,7 +7,7 @@
  *
  *   1. `client/index.html` — read by social scrapers and crawlers before JS
  *      runs (static shell).
- *   2. `client/src/pages/home.tsx` — the <SEO> component props set after React
+ *   2. `client/src/pages/home-content.tsx` — the <SEO> component props set after React
  *      hydration.
  *
  * If a developer updates the React SEO props but forgets to mirror the change
@@ -95,7 +95,7 @@ function parseShell(): ShellValues {
 }
 
 // ---------------------------------------------------------------------------
-// Parse client/src/pages/home.tsx  (SEO component props)
+// Parse client/src/pages/home-content.tsx  (SEO component props)
 // ---------------------------------------------------------------------------
 
 interface ReactValues {
@@ -104,7 +104,7 @@ interface ReactValues {
 }
 
 function parseReact(): ReactValues {
-  const src = readFile("client/src/pages/home.tsx");
+  const src = readFile("client/src/pages/home-content.tsx");
 
   // Find the <SEO ... /> block.  The component spans several lines so we need
   // to locate the opening tag and read until the self-closing />.
@@ -154,7 +154,7 @@ function check(
     errors.push(
       `  ✗ ${field} mismatch:\n` +
       `      index.html : "${shellValue}"\n` +
-      `      home.tsx   : "${reactValue}"`
+      `      home-content.tsx: "${reactValue}"`
     );
   }
 }
@@ -170,13 +170,13 @@ check("twitter:description", shell.twitterDescription, react.description);
 
 if (errors.length > 0) {
   console.error(
-    "\n[check-shell-seo-sync] FAIL — index.html shell tags are out of sync with home.tsx <SEO>:\n"
+    "\n[check-shell-seo-sync] FAIL — index.html shell tags are out of sync with home-content.tsx <SEO>:\n"
   );
   for (const e of errors) {
     console.error(e);
   }
   console.error(
-    "\n  Update both client/index.html AND client/src/pages/home.tsx together,\n" +
+    "\n  Update both client/index.html AND client/src/pages/home-content.tsx together,\n" +
     "  or bypass once with --no-verify if you are mid-refactor.\n"
   );
   process.exit(1);

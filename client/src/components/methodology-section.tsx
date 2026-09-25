@@ -179,6 +179,32 @@ export function MethodologySection() {
   // ── Mark user has taken control ────────────────────────────────────────
   const markInteracted = useCallback(() => setUserInteracted(true), []);
 
+  const handleTabKeyDown = useCallback((
+    e: React.KeyboardEvent<HTMLButtonElement>,
+    currentIndex: number,
+    group: string,
+  ) => {
+    let nextIndex: number | null = null;
+    if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+      nextIndex = (currentIndex + 1) % AREAS.length;
+    } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+      nextIndex = (currentIndex - 1 + AREAS.length) % AREAS.length;
+    } else if (e.key === "Home") {
+      nextIndex = 0;
+    } else if (e.key === "End") {
+      nextIndex = AREAS.length - 1;
+    }
+    if (nextIndex === null) return;
+
+    e.preventDefault();
+    markInteracted();
+    setActiveArea(AREAS[nextIndex].id);
+    const tablist = e.currentTarget.closest(`[data-tab-group="${group}"]`);
+    tablist
+      ?.querySelector<HTMLButtonElement>(`[data-tab-index="${nextIndex}"]`)
+      ?.focus();
+  }, [markInteracted]);
+
   // ── Derived highlight ─────────────────────────────────────────────────
   // Auto-tour feeds a non-null highlight until the user takes over
   const highlightId: AreaId | null = userInteracted
@@ -226,7 +252,8 @@ export function MethodologySection() {
               className="text-3xl md:text-4xl font-bold mb-6 pb-4 relative inline-block"
               style={{ lineHeight: "1.15" }}
             >
-              Research-Based Curriculum for Every Child
+              Play-Based Curriculum for{" "}
+              <span className="text-primary">Every Child</span>
               <span
                 className="absolute left-0 h-1.5 md:h-2 w-full rounded-full bg-gradient-to-r from-primary via-red-400 to-secondary"
                 style={{ bottom: "0.5rem" }}
@@ -248,18 +275,26 @@ export function MethodologySection() {
             {/* Chips — 1-to-1 with orbit nodes */}
             <div
               className="flex flex-wrap gap-2 mb-5"
-              role="group"
+              role="tablist"
               aria-label="Curriculum areas"
+              data-tab-group="chips"
             >
-              {AREAS.map((area) => {
+              {AREAS.map((area, i) => {
                 const isHl = highlightId === area.id;
                 return (
                   <button
                     key={area.id}
+                    id={`curriculum-chip-tab-${area.id}`}
+                    role="tab"
+                    aria-controls={`curriculum-desktop-panel-${area.id} curriculum-mobile-panel-${area.id}`}
+                    aria-selected={isHl}
+                    tabIndex={isHl || (!highlightId && i === 0) ? 0 : -1}
+                    data-tab-index={i}
                     onClick={() => {
                       markInteracted();
                       setActiveArea(activeArea === area.id ? null : area.id);
                     }}
+                    onKeyDown={(e) => handleTabKeyDown(e, i, "chips")}
                     onMouseEnter={() => { markInteracted(); setHoveredChip(area.id); }}
                     onMouseLeave={() => setHoveredChip(null)}
                     onFocus={() => { markInteracted(); setHoveredChip(area.id); }}
@@ -272,7 +307,6 @@ export function MethodologySection() {
                     )}
                     style={isHl ? { background: area.fill } : {}}
                     data-testid={`chip-${area.id}`}
-                    aria-pressed={activeArea === area.id}
                     aria-label={`${area.label}: ${area.benefit}`}
                   >
                     {area.shortLabel}
@@ -283,26 +317,28 @@ export function MethodologySection() {
 
             {/* Detail card — desktop only; mobile has its own below the grid */}
             <div className="relative mb-6 hidden md:block" style={{ height: 76 }} aria-live="off">
-              {highlightedData && (
+              {AREAS.map((area) => (
                 <div
-                  key={highlightedData.id}
+                  key={`${area.id}-${highlightId === area.id}`}
+                  id={`curriculum-desktop-panel-${area.id}`}
+                  role="tabpanel"
+                  aria-labelledby={`curriculum-chip-tab-${area.id}`}
+                  tabIndex={0}
+                  hidden={highlightId !== area.id}
                   className="absolute inset-0 p-3 rounded-xl bg-muted/40"
                   style={{
-                    borderLeft: `4px solid ${highlightedData.fill}`,
+                    borderLeft: `4px solid ${area.fill}`,
                     animation: "ms-card-fade 0.35s ease forwards",
                   }}
                 >
-                  <p
-                    className="font-semibold leading-snug"
-                    style={{ color: highlightedData.fill }}
-                  >
-                    {highlightedData.label}
+                  <p className="font-semibold leading-snug" style={{ color: area.fill }}>
+                    {area.label}
                   </p>
                   <p className="text-sm text-muted-foreground mt-0.5">
-                    {highlightedData.benefit}
+                    {area.benefit}
                   </p>
                 </div>
-              )}
+              ))}
             </div>
 
             {/* CTA — desktop only; mobile CTA lives after the detail card below */}
@@ -333,6 +369,9 @@ export function MethodologySection() {
               {/* Parallax wrapper */}
               <div
                 ref={orbitRef}
+                role="tablist"
+                aria-label="Interactive curriculum orbit: six learning areas connected to a central hub"
+                data-tab-group="orbit"
                 style={{
                   position: "relative",
                   width: "100%",
@@ -342,8 +381,6 @@ export function MethodologySection() {
                     : `translate(${parallax.x}px, ${parallax.y}px)`,
                   transition: "transform 0.15s ease-out",
                 }}
-                role="img"
-                aria-label="Interactive curriculum orbit: six learning areas connected to a central hub"
               >
 
                 {/* ── SVG layer: gradients · lines · energy dots · sparkles */}
@@ -614,6 +651,12 @@ export function MethodologySection() {
                       >
                         {/* LAYER 3 — button: scale + dim + focus ring */}
                         <button
+                          id={`curriculum-orbit-tab-${a.id}`}
+                          role="tab"
+                          aria-controls={`curriculum-desktop-panel-${a.id} curriculum-mobile-panel-${a.id}`}
+                          aria-selected={isHl}
+                          tabIndex={isHl || (!highlightId && i === 0) ? 0 : -1}
+                          data-tab-index={i}
                           onClick={() => {
                             markInteracted();
                             setActiveArea(activeArea === a.id ? null : a.id);
@@ -641,10 +684,11 @@ export function MethodologySection() {
                               e.preventDefault();
                               markInteracted();
                               setActiveArea(activeArea === a.id ? null : a.id);
+                            } else {
+                              handleTabKeyDown(e, i, "orbit");
                             }
                           }}
                           aria-label={`${a.label}: ${a.benefit}`}
-                          aria-pressed={activeArea === a.id}
                           data-testid={`curriculum-area-${a.id}`}
                           style={{
                             position: "relative",
@@ -839,8 +883,9 @@ export function MethodologySection() {
                 <div
                   className="grid grid-cols-2 gap-3 w-full"
                   style={{ maxWidth: 360 }}
-                  role="group"
+                  role="tablist"
                   aria-label="Curriculum areas"
+                  data-tab-group="mobile"
                 >
                   {AREAS.map((a, i) => {
                     const PillIcon = a.Icon;
@@ -848,6 +893,12 @@ export function MethodologySection() {
                     return (
                       <button
                         key={a.id}
+                        id={`curriculum-mobile-tab-${a.id}`}
+                        role="tab"
+                        aria-controls={`curriculum-desktop-panel-${a.id} curriculum-mobile-panel-${a.id}`}
+                        aria-selected={isHl}
+                        tabIndex={isHl || (!highlightId && i === 0) ? 0 : -1}
+                        data-tab-index={i}
                         onClick={() => {
                           markInteracted();
                           setActiveArea(activeArea === a.id ? null : a.id);
@@ -857,6 +908,7 @@ export function MethodologySection() {
                           setHoveredChip(a.id);
                         }}
                         onBlur={() => setHoveredChip(null)}
+                        onKeyDown={(e) => handleTabKeyDown(e, i, "mobile")}
                         className="flex items-center gap-2.5 px-3 rounded-xl border-2 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
                         style={{
                           minHeight: 52,
@@ -872,7 +924,6 @@ export function MethodologySection() {
                           ].join(", "),
                         }}
                         data-testid={`mob-area-${a.id}`}
-                        aria-pressed={activeArea === a.id}
                         aria-label={`${a.label}: ${a.benefit}`}
                       >
                         <span
@@ -922,23 +973,28 @@ export function MethodologySection() {
 
               {/* SINGLE detail card — only instance visible on mobile */}
               <div className="relative w-full" style={{ height: 72, maxWidth: 360 }} aria-live="off">
-                {highlightedData && (
+                {AREAS.map((area) => (
                   <div
-                    key={highlightedData.id}
+                    key={`${area.id}-${highlightId === area.id}`}
+                    id={`curriculum-mobile-panel-${area.id}`}
+                    role="tabpanel"
+                    aria-labelledby={`curriculum-chip-tab-${area.id}`}
+                    tabIndex={0}
+                    hidden={highlightId !== area.id}
                     className="absolute inset-0 p-3 rounded-xl bg-muted/40"
                     style={{
-                      borderLeft: `4px solid ${highlightedData.fill}`,
+                      borderLeft: `4px solid ${area.fill}`,
                       animation: "ms-card-fade 0.35s ease forwards",
                     }}
                   >
-                    <p className="font-semibold leading-snug" style={{ color: highlightedData.fill }}>
-                      {highlightedData.label}
+                    <p className="font-semibold leading-snug" style={{ color: area.fill }}>
+                      {area.label}
                     </p>
                     <p className="text-sm text-muted-foreground mt-0.5">
-                      {highlightedData.benefit}
+                      {area.benefit}
                     </p>
                   </div>
-                )}
+                ))}
               </div>
 
               {/* CTA — mobile only; desktop version is in the left column */}

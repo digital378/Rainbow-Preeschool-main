@@ -34,10 +34,11 @@ export interface ProgrammeCardProps {
   href:         string;
   themeColor:   string;            // hex e.g. "#EC210F"
   iconSticker?: React.ReactNode;   // chunky badge pinned to top-left corner
+  ctaLabel?:    string;
 }
 
 export function ProgrammeCard({
-  title, ageLabel, description, imageUrl, href, themeColor, iconSticker,
+  title, ageLabel, description, imageUrl, href, themeColor, iconSticker, ctaLabel = "Learn More",
 }: ProgrammeCardProps) {
   const shouldReduceMotion = useReducedMotion();
   const [hovered, setHovered] = React.useState(false);
@@ -119,7 +120,7 @@ export function ProgrammeCard({
         <p className="mt-2 flex-1 text-sm leading-relaxed text-neutral-600 dark:text-gray-300 line-clamp-3">{description}</p>
         <span className="mt-auto inline-flex items-center gap-1 pt-4 text-sm font-semibold"
           style={{ color: themeColor }}>
-          Learn More{" "}
+          {ctaLabel}{" "}
           <span className="transition-transform group-hover:translate-x-1" aria-hidden>→</span>
         </span>
       </>

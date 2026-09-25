@@ -3,9 +3,9 @@
  * Freshness signal smoke-test for bot SSR.
  *
  * Curls every URL on which the "Reviewed by Rainbow Preschool Curriculum Team
- * — Last updated …" byline + Article JSON-LD with dateModified is required,
+ * — Last updated …" byline + dated JSON-LD is required,
  * pretending to be Googlebot, and exits non-zero if any URL is missing the
- * visible byline, the visible "Last updated:" line, the Article schema, or
+ * visible byline, the visible "Last updated:" line, the page schema, or
  * the expected dateModified date.
  *
  * Run after every monthly bump of shared/site-freshness.ts:
@@ -19,6 +19,7 @@
  */
 
 import { LAST_UPDATED_ISO, LAST_UPDATED_DISPLAY } from "../shared/site-freshness";
+import { HOME_PUBLISH_DATE_ISO } from "../shared/home-publish-date";
 
 const BASE = (process.argv[2] || "http://localhost:5000").replace(/\/$/, "");
 const UA = "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)";
@@ -50,7 +51,7 @@ const LOCALITY_URLS = [
 // Remaining indexable, evergreen landers (supporting pages).
 // "/" is served as the React SPA (bot SSR is bypassed at that path), so its
 // freshness signals come from two places:
-//   • server/homepage-freshness.ts injects Article JSON-LD into the HTML shell.
+//   • server/homepage-freshness.ts injects WebPage JSON-LD into the HTML shell.
 //   • The <EEATSignals> component in client/src/pages/home.tsx renders the
 //     visible byline after React hydrates (visible to Googlebot and users).
 // All other URLs use bot SSR (server/ssr-pages.ts) for their freshness signal.
@@ -115,14 +116,19 @@ async function checkUrl(path: string): Promise<CheckResult> {
   if (path !== "/" && !html.includes("Last updated:")) {
     missing.push("Last updated: line");
   }
-  if (!/"@type":\s*"Article"/.test(html)) {
-    missing.push("Article JSON-LD");
+  const expectedType = path === "/" ? "WebPage" : "Article";
+  if (!new RegExp(`"@type":\\s*"${expectedType}"`).test(html)) {
+    missing.push(`${expectedType} JSON-LD`);
   }
+  if (path === "/" && /"@type":\s*"Article"/.test(html)) {
+    missing.push("unexpected homepage Article JSON-LD");
+  }
+  const expectedDate = path === "/" ? HOME_PUBLISH_DATE_ISO : LAST_UPDATED_ISO;
   if (
-    !html.includes(`"dateModified":"${LAST_UPDATED_ISO}"`) &&
-    !html.includes(`"dateModified": "${LAST_UPDATED_ISO}"`)
+    !html.includes(`"dateModified":"${expectedDate}"`) &&
+    !html.includes(`"dateModified": "${expectedDate}"`)
   ) {
-    missing.push(`dateModified=${LAST_UPDATED_ISO}`);
+    missing.push(`dateModified=${expectedDate}`);
   }
   if (path !== "/" && !html.includes(LAST_UPDATED_DISPLAY)) {
     missing.push(`display="${LAST_UPDATED_DISPLAY}"`);

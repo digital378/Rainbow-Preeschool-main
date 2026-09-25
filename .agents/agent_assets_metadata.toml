@@ -182,3 +182,31 @@ mtime_ms = 1790234047046
 storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:0c61580c-1c60-4ec3-afe4-28e8a9482287/dd2b7d6e-6355-43ae-ac70-52b9f0f0f5d0/627cadfe-1d7b-4a02-8177-378523914d3b"
 storage_version_token = "1790234221153298"
 content_type = "image/png"
+
+[[outputs]]
+id = "s6tsqf6kzVqe3S3hen9hj"
+uri = "file://screenshots/homepage-review/mobile-390.html"
+type = "html"
+title = "Homepage before & after — 390 px"
+description = "17 section comparisons, including the two removed blocks. Select any screenshot to view it at full resolution."
+logical_id = "aa4e73db-1400-41cb-aa07-45541087f647"
+content_hash = "sha256:9b7044bba09bd78d59560b0077b51d722bbd4962eff604cef52144f6068c62d0"
+size = 1996998
+mtime_ms = 1790325861390
+storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:0c61580c-1c60-4ec3-afe4-28e8a9482287/aa4e73db-1400-41cb-aa07-45541087f647/b7cd172d-889f-43cf-9525-927e009a3a1a"
+storage_version_token = "1790325990941448"
+content_type = "text/html"
+
+[[outputs]]
+id = "NsG3unCKuZHEXZGlZl18v"
+uri = "file://screenshots/homepage-review/desktop-1366.html"
+type = "html"
+title = "Homepage before & after — 1366 px"
+description = "17 section comparisons at desktop width, with full-resolution image viewing."
+logical_id = "6b28b4e4-5588-49bd-ba4a-b9a42a7c0374"
+content_hash = "sha256:5e3cc31b4cb753d5d68bf32acaf87e8c1f4dab329a403584ed6dc502d06914d2"
+size = 2969933
+mtime_ms = 1790325864522
+storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:0c61580c-1c60-4ec3-afe4-28e8a9482287/6b28b4e4-5588-49bd-ba4a-b9a42a7c0374/cc2be52c-0814-425a-bc3a-691f5ffd8a71"
+storage_version_token = "1790325994296370"
+content_type = "text/html"

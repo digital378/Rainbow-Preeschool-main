@@ -77,24 +77,21 @@ export interface VisitorFaq {
 export const HOME_VISITOR_FAQS: readonly VisitorFaq[] = [
   {
     question: "What programmes does Rainbow Preschool offer and for which ages?",
-    schemaAnswerText: "We offer three main programmes: Playgroup for children aged 1.5–2.5 years, Nursery for ages 2.5–3.5 years, and Kindergarten for ages 3.5–5 years. Each programme follows a play-based curriculum that covers language, numbers, art, and social skills.",
+    schemaAnswerText: "Playgroup for 1.5–2.5 years, Nursery for 2.5–3.5 years, and Kindergarten (Jr. KG and Sr. KG) for 3.5–5.5 years.",
     answerSegments: [
-      { text: "We offer three main programmes: " },
       { text: "Playgroup", href: "/playgroup" },
-      { text: " for children aged 1.5–2.5 years, " },
+      { text: " for 1.5–2.5 years, " },
       { text: "Nursery", href: "/nursery" },
-      { text: " for ages 2.5–3.5 years, and " },
+      { text: " for 2.5–3.5 years, and " },
       { text: "Kindergarten", href: "/kindergarten" },
-      { text: " for ages 3.5–5 years. Each programme follows a play-based curriculum that covers language, numbers, art, and social skills." },
+      { text: " (Jr. KG and Sr. KG) for 3.5–5.5 years." },
     ],
   },
   {
     question: "What are the school timings and working days?",
-    schemaAnswerText: "Our centres are open Monday to Saturday, 8:00 AM to 6:00 PM. We offer both half-day and full-day options to suit your schedule. Extended care through our Happy Times programme is also available for working parents.",
+    schemaAnswerText: "Timings vary by centre and programme. Please call your nearest centre for exact timings.",
     answerSegments: [
-      { text: "Our centres are open Monday to Saturday, 8:00 AM to 6:00 PM. We offer both half-day and full-day options to suit your schedule. Extended care through our " },
-      { text: "Happy Times", href: "/happy-times" },
-      { text: " programme is also available for working parents." },
+      { text: "Timings vary by centre and programme. Please call your nearest centre for exact timings." },
     ],
   },
   {
@@ -144,37 +141,52 @@ export const HOME_VISITOR_FAQS: readonly VisitorFaq[] = [
   },
   {
     question: "Does Rainbow Preschool provide transport facilities?",
-    schemaAnswerText: "Some centres offer CCTV-enabled transport with trained attendants. Availability and routes vary by centre. Please contact your preferred centre for transport details and pickup routes.",
+    schemaAnswerText: "GPS-enabled in-house transport is available at all six centres.",
     answerSegments: [
-      { text: "Some centres offer CCTV-enabled transport with trained attendants. Availability and routes vary by centre. Please " },
-      { text: "contact your preferred centre", href: "/contact" },
-      { text: " for transport details and pickup routes." },
+      { text: "GPS-enabled in-house transport is available at all six centres." },
+    ],
+  },
+  {
+    question: "Is Rainbow Preschool International part of Rainbow International School?",
+    schemaAnswerText: "Yes. Rainbow Preschool International is part of the Rainbow International School network.",
+    answerSegments: [
+      { text: "Yes. Rainbow Preschool International is part of the Rainbow International School network. Visit " },
+      { text: "Rainbow International School", href: "https://rainbowinternationalschool.in" },
+      { text: "." },
+    ],
+  },
+  {
+    question: "When is the right age to start preschool?",
+    schemaAnswerText: "The right age depends on the child. Read our guide to what age to start play school.",
+    answerSegments: [
+      { text: "The right age depends on the child. Read our guide to " },
+      { text: "what age to start play school", href: "/blog/what-age-start-play-school" },
+      { text: "." },
     ],
   },
 ];
 
 export const HOME_VISITOR_COPY: VisitorPageCopy = {
   path: "/",
-  h1: "Rainbow Preschool Playschool · Nursery · Kindergarten",
+  h1: "Preschool in Thane · Playgroup, Nursery & Kindergarten",
   intro:
     "Thane's trusted preschool since 2007 — where every child's first steps into learning are joyful, safe, and full of wonder.",
   sections: [
     {
       heading: "Why Parents Choose Rainbow Preschool",
       paragraphs: [
-        "Since 2007, Rainbow Preschool International has helped over 1,00,000 young learners learn, play, and grow across Thane. Our centres follow a play-based curriculum that builds reading, writing, and number skills through hands-on activities, stories, art, and outdoor play.",
-        "All six centres are in Thane West — a Rainbow Preschool is always close to home.",
+        "Trusted by Thane families since 2007, Rainbow Preschool International welcomes children from 1.5 to 5.5 years at our 6 centres in Manpada, Kasarvadavali, Anand Nagar, Hariniwas, Dhokali and Kalwa. We offer playgroup, nursery and kindergarten, all built around play-based learning.",
       ],
     },
     {
       heading: "OUR LEARNING ENVIRONMENT",
       paragraphs: ["A world built for little explorers", "Peek inside a real day at Rainbow Preschool"],
-      items: ["Play-Based Learning", "CCTV-Safe Campuses", "Expert Teachers", "Small Batches"],
+      items: ["Play-Based Learning", "CCTV-Safe Campuses", "Certified Teachers", "30:2 Student–Teacher Ratio"],
     },
     {
       heading: "OUR PROGRAMMES",
       paragraphs: [
-        "Programmes for Every Stage of Early Learning",
+        "Playgroup, Nursery & Kindergarten in Thane",
         "Age-appropriate programmes designed to nurture your child's unique growth, curiosity, and confidence.",
       ],
       items: [
@@ -192,52 +204,24 @@ export const HOME_VISITOR_COPY: VisitorPageCopy = {
       ],
     },
     {
-      heading: "WHERE TO NEXT?",
-      paragraphs: ["Start Exploring"],
-      items: ["Quick Links", "Why Us", "Find Centre", "Book Visit", "Our Programmes", "Playgroup", "Nursery", "Kindergarten", "Happy Times"],
-    },
-    {
-      heading: "Quick Callback",
-      paragraphs: ["Free consultation"],
-      items: [
-        "No spam · One call from our admissions team · Free",
-        "No spam · One call from our admissions team · Completely free",
-        "Call Now",
-        "Get a Free Callback",
-        "Your Name",
-        "Phone Number",
-        "Child's Age",
-        "Parent Name",
-      ],
-    },
-    {
       heading: "ABOUT US",
       items: [
         "Learn More About Us",
-        "Young Learners",
-        "Years of Excellence",
-        "Centres in Thane",
+        "Years in Thane",
+        "Centres",
         "Female Staff",
-        "Loved by Thane parents",
-        "Read parent reviews",
+        "Student–Teacher Ratio",
       ],
     },
   ],
 };
 
-export const HOME_VISITOR_INTERLINK_SEGMENTS: readonly VisitorTextSegment[] = [
-  { text: "Helpful guides for Thane parents: compare options on our " },
-  { text: "best preschool guide", href: "/best-preschool-near-me-in-thane" },
-  { text: ", " },
-  { text: "find a centre near you", href: "/play-school-near-me" },
-  { text: ", or explore programme guides for " },
-  { text: "Playgroup guide", href: "/playgroup" },
-  { text: ", " },
-  { text: "Nursery guide", href: "/nursery" },
-  { text: ", and " },
-  { text: "Kindergarten guide", href: "/kindergarten" },
-  { text: "." },
-];
+export const HOME_CALLBACK_COPY = {
+  reassurance: "No spam · One call from our admissions team · Completely free",
+  callNow: "Call Now",
+} as const;
+
+export const HOME_VISITOR_INTERLINK_SEGMENTS: readonly VisitorTextSegment[] = [];
 
 export const PROGRAMMES_VISITOR_COPY: VisitorPageCopy = {
   path: "/programmes",

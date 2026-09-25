@@ -1,9 +1,8 @@
-import { ArrowRight, Phone, Users, Star, MapPin, Shield } from "lucide-react";
+import { ArrowRight, Phone, Star, MapPin, Shield } from "lucide-react";
 import { trackCTAClick } from "@/lib/analytics";
 import { useLayoutEffect } from "react";
 
 const trustBadges = [
-  { Icon: Users,  label: "1,00,000+ Young Learners" },
   { Icon: Star,   label: "18+ Years of Excellence" },
   { Icon: MapPin, label: "6 Centres Across Thane" },
   { Icon: Shield, label: "100% Female Staff" },
@@ -57,9 +56,9 @@ export function HeroSection() {
             </div>
           </a>
 
-          {/* H1 — "Rainbow" white / "Preschool" red, each on own line, dummy scale */}
-          <h1
-            className="font-black text-white mb-5"
+          {/* Brand wordmark — unchanged visual style, not a heading */}
+          <div
+            className="font-black text-white"
             style={{
               fontFamily: "'Fredoka One','Baloo 2',system-ui,sans-serif",
               fontSize: "clamp(2.7rem, 6vw, 5.2rem)",
@@ -74,13 +73,14 @@ export function HeroSection() {
             >
               Preschool
             </span>
-            {/* Subtitle — dot separators, lighter weight */}
-            <span
-              className="block font-semibold text-white/80 mt-3"
-              style={{ fontSize: "clamp(1.1rem, 2.4vw, 1.85rem)", letterSpacing: "-0.012em", lineHeight: 1.34 }}
-            >
-              Playschool · Nursery · Kindergarten
-            </span>
+          </div>
+
+          {/* Only homepage H1 — original subtitle styling, visible in first paint */}
+          <h1
+            className="block font-semibold text-white/80 mt-3 mb-5"
+            style={{ fontSize: "clamp(1.1rem, 2.4vw, 1.85rem)", letterSpacing: "-0.012em", lineHeight: 1.34 }}
+          >
+            Preschool in Thane · Playgroup, Nursery &amp; Kindergarten
           </h1>
 
           {/* Description */}

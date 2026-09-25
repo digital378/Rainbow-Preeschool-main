@@ -29,7 +29,12 @@ async function fetchInstagramReels(endpoint: string, after: string | null): Prom
   return payload as ReelPage;
 }
 
-export function useInstagramReels(enabled: boolean, endpoint = "/dummy/api/instagram/reels") {
+export function useInstagramReels(
+  enabled: boolean,
+  endpoint = "/dummy/api/instagram/reels",
+  options: { tapOnly?: boolean } = {},
+) {
+  const { tapOnly = false } = options;
   const query = useInfiniteQuery({
     queryKey: [endpoint],
     queryFn: ({ pageParam }) => fetchInstagramReels(endpoint, pageParam),
@@ -37,9 +42,9 @@ export function useInstagramReels(enabled: boolean, endpoint = "/dummy/api/insta
     getNextPageParam: (page) => page.nextCursor ?? undefined,
     enabled,
     retry: 1,
-    staleTime: 5 * 60 * 1000,
-    refetchOnWindowFocus: true,
-    refetchInterval: enabled ? 10 * 60 * 1000 : false,
+    staleTime: tapOnly ? Infinity : 5 * 60 * 1000,
+    refetchOnWindowFocus: !tapOnly,
+    refetchInterval: !tapOnly && enabled ? 10 * 60 * 1000 : false,
   });
 
   const reels = useMemo(() => {

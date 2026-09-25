@@ -23,7 +23,7 @@ const BOT_UA =
 const HUMAN_UA =
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36";
 
-const SPA_SHELL_TITLE = "Preschool in Thane | Rainbow Preschool International";
+const SPA_SHELL_TITLE = "Preschool in Thane | Playgroup, Nursery & KG | Rainbow";
 
 // A string present in every bot-SSR response (from the renderSSRHtml footer
 // in server/bot-ssr.ts) but never in the React SPA shell.
@@ -92,7 +92,7 @@ function extractCanonical(html: string): string {
 function extractH1(html: string): string {
   const m = html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i);
   if (!m) return "";
-  return m[1].replace(/<[^>]+>/g, "").trim();
+  return decodeEntities(m[1].replace(/<[^>]+>/g, "").trim());
 }
 
 function hasJsonLd(html: string): boolean {
@@ -195,7 +195,7 @@ async function main(): Promise<void> {
       results.push({
         path,
         assertion: "Homepage bot H1 matches rendered hero",
-        pass: h1 === "Rainbow Preschool Playschool · Nursery · Kindergarten",
+        pass: h1 === "Preschool in Thane · Playgroup, Nursery & Kindergarten",
         detail: `bot H1: ${JSON.stringify(h1)}`,
       });
     }

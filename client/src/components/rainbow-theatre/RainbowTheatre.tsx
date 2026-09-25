@@ -1,13 +1,15 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { KeyboardEvent } from "react";
 import { createPortal } from "react-dom";
-import { ChevronLeft, ChevronRight, Instagram, Maximize2, ListVideo, Volume2, VolumeX, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, Instagram, Maximize2, ListVideo, Play, Volume2, VolumeX, X } from "lucide-react";
 import { useInstagramReels, type Reel } from "./useInstagramReels";
+import { LOCAL_REEL_POSTERS } from "./local-reel-posters";
 import "./theatre.css";
 
 const PLACEHOLDER_COUNT = 4;
 
 function formatDate(timestamp: string) {
+  if (!timestamp) return "";
   const date = new Date(timestamp);
   if (Number.isNaN(date.getTime())) return "Date unavailable";
   return new Intl.DateTimeFormat(undefined, { month: "short", day: "numeric", year: "numeric" }).format(date);
@@ -33,19 +35,35 @@ export function RainbowTheatre({
   endpoint?: string;
   variant?: "walkthrough" | "homepage";
 }) {
+  const [playRequestedId, setPlayRequestedId] = useState<string | null>(null);
   const {
-    reels: sourceReels, isPending, isError, refetch, hasNextPage, fetchNextPage, isFetchingNextPage,
-  } = useInstagramReels(enabled, endpoint);
-  // Some Instagram VIDEO records have no media URL.
-  // Only offer directly playable records in the public theatre.
-  const reels = useMemo(
-    () => variant === "homepage" ? sourceReels.filter((reel) => Boolean(reel.mediaUrl)) : sourceReels,
-    [sourceReels, variant],
+    reels: sourceReels, isPending, isFetching, isError, data: liveFeedData, refetch,
+    hasNextPage, fetchNextPage, isFetchingNextPage,
+  } = useInstagramReels(
+    enabled && (variant !== "homepage" || playRequestedId !== null),
+    endpoint,
+    { tapOnly: variant === "homepage" },
   );
+  const reels = useMemo(() => {
+    if (variant !== "homepage") return sourceReels;
+    const liveById = new Map(sourceReels.map((reel) => [reel.id, reel]));
+    return LOCAL_REEL_POSTERS.map((poster) => {
+      const live = liveById.get(poster.id);
+      return {
+        id: poster.id,
+        caption: poster.caption,
+        permalink: poster.permalink,
+        thumbnailUrl: poster.posterPath,
+        mediaUrl: live?.mediaUrl,
+        timestamp: live?.timestamp ?? "",
+      };
+    });
+  }, [sourceReels, variant]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [soundOn, setSoundOn] = useState(variant === "homepage");
   const [playbackBlocked, setPlaybackBlocked] = useState(false);
   const [failedVideoId, setFailedVideoId] = useState<string | null>(null);
+  const [videoRetryNonce, setVideoRetryNonce] = useState(0);
   const [playlistOpen, setPlaylistOpen] = useState(false);
   const [overlayOpen, setOverlayOpen] = useState(false);
   const [nativeFullscreen, setNativeFullscreen] = useState(false);
@@ -61,7 +79,56 @@ export function RainbowTheatre({
     [reels, selectedId],
   );
   const hasUsableMedia = Boolean(currentReel?.mediaUrl && currentReel.id !== failedVideoId);
+  const shouldLoadCurrentReel = variant !== "homepage" || playRequestedId === currentReel?.id;
+  const requestedLiveReel = sourceReels.find((reel) => reel.id === playRequestedId);
+  const livePageCount = liveFeedData?.pages.length ?? 0;
+  const hasLoadedLiveFeed = livePageCount > 0;
+  const liveFeedFailed = variant === "homepage" && playRequestedId !== null && isError && !isFetching;
+  const selectedReelUnavailable = variant === "homepage" &&
+    playRequestedId === currentReel?.id &&
+    hasLoadedLiveFeed &&
+    !isFetching &&
+    !isError &&
+    (requestedLiveReel ? !requestedLiveReel.mediaUrl : !hasNextPage);
+  const showHomepagePosterButton = variant === "homepage" &&
+    Boolean(currentReel) &&
+    failedVideoId !== currentReel?.id &&
+    !liveFeedFailed &&
+    !selectedReelUnavailable &&
+    !(shouldLoadCurrentReel && hasUsableMedia);
+  const showHomepageLoading = variant === "homepage" &&
+    playRequestedId === currentReel?.id &&
+    enabled &&
+    (isPending || isFetching);
+  const showFeedError = variant !== "homepage" || playRequestedId !== null;
   const currentIndex = reels.findIndex((reel) => reel.id === currentReel?.id);
+
+  useEffect(() => {
+    if (
+      variant !== "homepage" ||
+      !enabled ||
+      playRequestedId === null ||
+      isError ||
+      isFetching ||
+      !hasLoadedLiveFeed ||
+      requestedLiveReel ||
+      !hasNextPage
+    ) {
+      return;
+    }
+    void fetchNextPage({ cancelRefetch: false });
+  }, [
+    enabled,
+    fetchNextPage,
+    hasLoadedLiveFeed,
+    hasNextPage,
+    isError,
+    isFetching,
+    livePageCount,
+    playRequestedId,
+    requestedLiveReel,
+    variant,
+  ]);
 
   useEffect(() => {
     if (!reels.length) {
@@ -78,7 +145,7 @@ export function RainbowTheatre({
     if (!video) return;
     let cancelled = false;
     video.muted = !soundOn;
-    if (active && hasUsableMedia) {
+    if (active && hasUsableMedia && shouldLoadCurrentReel) {
       void video.play().then(() => {
         if (!cancelled) setPlaybackBlocked(false);
       }).catch((error: unknown) => {
@@ -90,7 +157,7 @@ export function RainbowTheatre({
       video.pause();
     }
     return () => { cancelled = true; };
-  }, [active, currentReel, hasUsableMedia, overlayOpen, soundOn]);
+  }, [active, currentReel, hasUsableMedia, overlayOpen, playRequestedId, shouldLoadCurrentReel, soundOn]);
 
   useEffect(() => {
     const onFullscreenChange = () => {
@@ -142,13 +209,11 @@ export function RainbowTheatre({
 
   const selectReel = (id: string) => {
     setSelectedId(id);
+    if (variant === "homepage") setPlayRequestedId(id);
     setFailedVideoId(null);
     if (variant === "walkthrough") setSoundOn(false);
     setPlaybackBlocked(false);
     setPlaylistOpen(false);
-    if (variant === "homepage" && id === currentReel?.id) {
-      void videoRef.current?.play().catch(() => setPlaybackBlocked(true));
-    }
   };
 
   const stepReel = (direction: -1 | 1) => {
@@ -214,10 +279,56 @@ export function RainbowTheatre({
       className={`rainbow-theatre__player${inOverlay ? " rainbow-theatre__player--overlay" : ""}`}
       ref={inOverlay ? undefined : playerRef}
     >
-      {hasUsableMedia && currentReel?.mediaUrl ? (
+      {showHomepagePosterButton && currentReel ? (
+        <button
+          type="button"
+          className="rainbow-theatre__poster-button"
+          style={{
+            alignItems: "center",
+            background: "#281a15",
+            border: 0,
+            cursor: showHomepageLoading ? "wait" : "pointer",
+            display: "flex",
+            height: "100%",
+            justifyContent: "center",
+            overflow: "hidden",
+            padding: 0,
+            position: "relative",
+            width: "100%",
+          }}
+          aria-label={showHomepageLoading ? `Loading video: ${shortCaption(currentReel)}` : `Play video: ${shortCaption(currentReel)}`}
+          aria-busy={showHomepageLoading}
+          disabled={showHomepageLoading}
+          onClick={() => selectReel(currentReel.id)}
+        >
+          <img className="rainbow-theatre__video" src={currentReel.thumbnailUrl} alt="" />
+          {!showHomepageLoading && (
+            <span
+              aria-hidden="true"
+              style={{
+                alignItems: "center",
+                background: "rgba(255, 255, 255, .94)",
+                borderRadius: "50%",
+                boxShadow: "0 8px 24px rgba(79, 12, 2, .24)",
+                color: "var(--rt-red)",
+                display: "flex",
+                height: 56,
+                justifyContent: "center",
+                left: "50%",
+                position: "absolute",
+                top: "50%",
+                transform: "translate(-50%, -50%)",
+                width: 56,
+              }}
+            >
+              <Play aria-hidden="true" fill="currentColor" size={24} />
+            </span>
+          )}
+        </button>
+      ) : hasUsableMedia && currentReel?.mediaUrl && shouldLoadCurrentReel ? (
         <video
           ref={videoRef}
-          key={currentReel.id}
+          key={`${currentReel.id}:${videoRetryNonce}`}
           className="rainbow-theatre__video"
           src={currentReel.mediaUrl}
           poster={currentReel.thumbnailUrl}
@@ -233,17 +344,41 @@ export function RainbowTheatre({
       ) : currentReel ? (
         <div className="rainbow-theatre__unavailable">
           {currentReel.thumbnailUrl && <img src={currentReel.thumbnailUrl} alt="" />}
-          <p>{failedVideoId === currentReel.id ? "This video could not be played here." : "This video is available on Instagram."}</p>
-          {variant === "walkthrough" && currentReel.permalink && <a href={currentReel.permalink} target="_blank" rel="noopener noreferrer">Open on Instagram</a>}
-          {failedVideoId === currentReel.id && (
-            <button type="button" onClick={() => setFailedVideoId(null)}>Try video again</button>
+          <p>
+            {failedVideoId === currentReel.id
+              ? "This video could not be played here."
+              : liveFeedFailed
+                ? "Instagram could not load this reel."
+                : selectedReelUnavailable
+                  ? "This reel is no longer available for in-page playback."
+                  : "This video is available on Instagram."}
+          </p>
+          {currentReel.permalink && (
+            <a href={currentReel.permalink} target="_blank" rel="noopener noreferrer">Open on Instagram</a>
+          )}
+          {(failedVideoId === currentReel.id || liveFeedFailed || selectedReelUnavailable) && (
+            <button
+              type="button"
+              onClick={() => {
+                setVideoRetryNonce((nonce) => nonce + 1);
+                setFailedVideoId(null);
+                if (variant === "homepage") {
+                  setPlayRequestedId(currentReel.id);
+                  void refetch();
+                }
+              }}
+            >
+              Try video again
+            </button>
           )}
         </div>
       ) : (
-        <div className="rainbow-theatre__placeholder" aria-label="Reel loads from Instagram">
+        <div className="rainbow-theatre__placeholder" aria-label={variant === "homepage" ? "Rainbow reel poster" : "Reel loads from Instagram"}>
           <span className="rainbow-theatre__placeholder-mark" aria-hidden="true">R</span>
           <span className="rainbow-theatre__placeholder-caption">
-            {isPending ? "Loading Rainbow videos…" : isError ? "Videos are unavailable right now" : "No videos are available yet"}
+            {isPending
+              ? variant === "homepage" ? "" : "Loading Rainbow videos…"
+              : isError ? "Videos are unavailable right now" : "No videos are available yet"}
           </span>
         </div>
       )}
@@ -312,11 +447,13 @@ export function RainbowTheatre({
                   {!reel?.thumbnailUrl && <span>{String(index + 1).padStart(2, "0")}</span>}
                 </span>
                 <span className="rainbow-theatre__drawer-copy">
-                  <strong>{reel ? excerpt(reel) : "Reel · loads from Instagram"}</strong>
-                  <small>{reel ? formatDate(reel.timestamp) : "From our Instagram"}</small>
+                  <strong>{reel ? excerpt(reel) : variant === "homepage" ? "" : "Reel · loads from Instagram"}</strong>
+                  <small>{reel ? formatDate(reel.timestamp) : variant === "homepage" ? "" : "From our Instagram"}</small>
                 </span>
                 <span className="rainbow-theatre__option-mark" aria-hidden="true">
-                  {reel?.id === currentReel?.id ? "Selected" : reel?.mediaUrl ? "Play" : "Instagram"}
+                  {reel?.id === currentReel?.id
+                    ? "Selected"
+                    : variant === "homepage" || reel?.mediaUrl ? "Play" : "Instagram"}
                 </span>
               </button>
             );
@@ -357,7 +494,7 @@ export function RainbowTheatre({
           <span className="rainbow-theatre__eyebrow"><i aria-hidden="true" /> {variant === "homepage" ? "The Rainbow Theatre" : "Scene 6 · The Rainbow Theatre"}</span>
           <h2>{variant === "homepage" ? "A front-row look at our days" : "Now showing, from our Instagram"}</h2>
           <p>{variant === "homepage" ? "Small classroom moments, celebrations and discoveries from Rainbow." : "Watch the latest Rainbow video. Browse earlier posts in the playlist."}</p>
-        {isError && (
+        {isError && showFeedError && (
           <p role="alert" className="rainbow-theatre__error">
             Instagram videos could not load. <button type="button" onClick={() => void refetch()}>Try again</button>
           </p>
@@ -382,7 +519,11 @@ export function RainbowTheatre({
           )}
           <div className="rainbow-theatre__current-copy" aria-live="polite">
             <span className="rainbow-theatre__live-dot" aria-hidden="true" />
-            {currentReel ? shortCaption(currentReel) : "Reel · loads from Instagram"}
+            {showHomepageLoading
+              ? "Loading video…"
+              : currentReel
+                ? shortCaption(currentReel)
+                : variant === "homepage" ? "" : "Reel · loads from Instagram"}
           </div>
         </div>
 
@@ -390,7 +531,7 @@ export function RainbowTheatre({
           <div className="rainbow-theatre__side-heading">
             <div>
               <span className="rainbow-theatre__kicker">THE PLAYLIST</span>
-              <h3>{reels.length ? `${reels.length} videos` : isPending ? "Loading…" : "No videos yet"}</h3>
+              <h3>{reels.length ? `${reels.length} videos` : isPending && variant === "homepage" ? "" : isPending ? "Loading…" : "No videos yet"}</h3>
             </div>
             <button
               type="button"
@@ -413,15 +554,17 @@ export function RainbowTheatre({
                   className={`rainbow-theatre__preview${reel?.id === currentReel?.id ? " is-current" : ""}`}
                   onClick={() => reel && selectReel(reel.id)}
                   disabled={!reel}
-                  aria-label={reel ? `${reel.mediaUrl ? "Play video" : "View Instagram video"}: ${excerpt(reel)}` : "Reel · loads from Instagram"}
+                  aria-label={reel
+                    ? `${variant === "homepage" || reel.mediaUrl ? "Play video" : "View Instagram video"}: ${excerpt(reel)}`
+                    : variant === "homepage" ? "Instagram reel poster" : "Reel · loads from Instagram"}
                 >
                   <span className="rainbow-theatre__thumb" aria-hidden="true">
                     {reel?.thumbnailUrl && <img src={reel.thumbnailUrl} alt="" loading="lazy" />}
                     {!reel?.thumbnailUrl && <span>{String(index + 1).padStart(2, "0")}</span>}
                   </span>
                   <span className="rainbow-theatre__preview-text">
-                    <strong>{reel ? excerpt(reel) : "Reel · loads from Instagram"}</strong>
-                    <small>{reel ? formatDate(reel.timestamp) : "From our Instagram"}</small>
+                    <strong>{reel ? excerpt(reel) : variant === "homepage" ? "" : "Reel · loads from Instagram"}</strong>
+                    <small>{reel ? formatDate(reel.timestamp) : variant === "homepage" ? "" : "From our Instagram"}</small>
                   </span>
                 </button>
               );

@@ -30,7 +30,7 @@ const features = [
     description: "Ideal ratio ensuring personalised care and individual attention for every child.",
     bg: "from-violet-50 to-violet-100/40", border: "border-violet-200/60", accent: "#8b5cf6", highlight: null },
   { Icon: Bus,      title: "GPS Transport",
-    description: "Safe, GPS-enabled in-house transport with real-time tracking for parents.",
+    description: "Safe, GPS-enabled in-house transport at all six centres, with real-time tracking for parents.",
     bg: "from-orange-50 to-orange-100/40", border: "border-orange-200/60", accent: "#f97316", highlight: null },
   { Icon: Gamepad2, title: "Play-Based Learning",
     description: "Holistic, play-based curriculum for confident early development and growth.",

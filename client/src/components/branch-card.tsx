@@ -13,6 +13,7 @@ import {
 
 interface BranchCardProps {
   branch: Branch;
+  classesText?: string;
   copy?: {
     view: string;
     localCentre: string;
@@ -33,7 +34,7 @@ const branchToLocalPage: Record<string, { url: string; locality: string }> = {
   "kasarvadavali": { url: "/preschool-in-kasarvadavali-thane", locality: "Kasarvadavali" },
 };
 
-export function BranchCard({ branch, copy = { view: "View", localCentre: "Centre", whatsapp: "WhatsApp", directions: "Directions" } }: BranchCardProps) {
+export function BranchCard({ branch, classesText, copy = { view: "View", localCentre: "Centre", whatsapp: "WhatsApp", directions: "Directions" } }: BranchCardProps) {
   const localPage = copy.localPages?.[branch.id] || branchToLocalPage[branch.id];
   const whatsappNumber = branch.whatsapp?.replace(/\s/g, "");
   const landline = 'landline' in branch ? branch.landline : undefined;
@@ -91,6 +92,12 @@ export function BranchCard({ branch, copy = { view: "View", localCentre: "Centre
       <CardContent className="flex-1 flex flex-col">
         <p className="text-sm text-muted-foreground leading-relaxed mb-4">
           {branch.address}
+          {classesText && (
+            <>
+              <br />
+              Classes: {classesText}
+            </>
+          )}
         </p>
 
         <div className="space-y-2 mb-4">

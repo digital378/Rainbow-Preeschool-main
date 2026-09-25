@@ -6,7 +6,6 @@ import { ABOUT_PAGE_COPY } from "@shared/about-page-content";
 import { ADMISSIONS_PAGE_COPY } from "@shared/admissions-page-copy";
 import {
   CENTRE_CARD_IMAGES,
-  HOME_CAMPUS_IMAGE,
   HOME_FILMSTRIP_IMAGES,
   HOME_HERO_IMAGE,
   HOME_PROGRAMME_IMAGES,
@@ -55,12 +54,25 @@ import {
 } from "@shared/national-symbols-page-content";
 import { TOP_PRESCHOOLS_COPY, TOP_PRESCHOOLS_SSR_COPY } from "@shared/top-preschools-thane-content";
 import {
+  HOME_CALLBACK_COPY,
   HOME_VISITOR_COPY,
   HOME_VISITOR_FAQS,
-  HOME_VISITOR_INTERLINK_SEGMENTS,
   PROGRAMMES_VISITOR_COPY,
 } from "../client/src/pages/visitor-page-copy";
-import { testimonials as homeTestimonials } from "@shared/schema";
+import {
+  branches as homepageBranches,
+  testimonials as homeTestimonials,
+} from "@shared/schema";
+import {
+  HOME_PUBLISH_DATE_DISPLAY,
+  HOME_PUBLISH_DATE_ISO,
+} from "@shared/home-publish-date";
+import {
+  HOMEPAGE_DESCRIPTION,
+  HOMEPAGE_H1,
+  HOMEPAGE_STRUCTURED_DATA,
+  HOMEPAGE_TITLE,
+} from "@shared/homepage-schema";
 import { BEST_PRESCHOOL_FAQ_SCHEMA_ITEMS } from "@shared/best-preschool-faq-data";
 import { NATIONAL_SYMBOLS_FAQ_SCHEMA_ITEMS } from "@shared/national-symbols-faq-data";
 import { NATIONAL_SYMBOLS_CRAFTS } from "@shared/national-symbols-craft-data";
@@ -482,9 +494,14 @@ export interface PageSEOData {
   breadcrumbs?: { name: string; url: string }[];
   structuredData?: object[];
   contentSections?: {
+    eyebrow?: string;
     heading?: string;
     text?: string;
     items?: string[];
+    faqItems?: readonly {
+      question: string;
+      answerSegments: readonly { text: string; href?: string }[];
+    }[];
     /**
      * Optional inline anchors rendered as a <ul><li><a> list inside the
      * section. Use this to surface high-value internal anchors (e.g. the 5
@@ -506,10 +523,18 @@ export interface PageSEOData {
   blogCategories?: string[];
   blogArticleCount?: number;
   internalLinks?: { text: string; url: string }[];
-  /** ISO-8601 date string. When set, bot SSR emits a visible "Last Updated" line and an Article schema with dateModified for E-E-A-T freshness. */
+  /** ISO-8601 date string used by the visible reviewer line; bot SSR emits an Article schema except for the homepage. */
   lastModified?: string;
   /** Display date (e.g. "Month DD, YYYY"). Optional. */
   lastModifiedDisplay?: string;
+  /** Homepage-only switches for page-specific structured data and reviewer placement. */
+  homepage?: boolean;
+  reviewerAfterContent?: boolean;
+  finalCallToAction?: {
+    title: string;
+    description: string;
+    links: { text: string; url: string }[];
+  };
 }
 
 /**
@@ -738,57 +763,252 @@ function localBusinessSchema(locality: string, address: string, phone: string, u
   };
 }
 
+const homepageBranchImageKeys: Record<string, keyof typeof CENTRE_CARD_IMAGES> = {
+  aggarwal: "manpada",
+  hariniwas: "hariniwas",
+  "anand-nagar": "anand-nagar",
+  dhokali: "dhokali",
+  kalwa: "kalwa",
+  kasarvadavali: "kasarvadavali",
+};
+
+const homepageBranchClasses: Record<string, string> = {
+  aggarwal: "Playgroup to Grade 4",
+  kalwa: "Playgroup to Grade 4",
+  kasarvadavali: "Playgroup to Grade 3",
+  hariniwas: "Playgroup to Grade 3",
+  "anand-nagar": "Playgroup to Grade 2",
+  dhokali: "Playgroup to Sr. KG",
+};
+
+const homepageAwardImages = [
+  { src: "/images/optimized/india-today.webp", alt: "India Today Award" },
+  { src: "/images/optimized/tmc-logo.webp", alt: "Thane Municipal Corporation Recognition" },
+  { src: "/images/optimized/scoonews-light.webp", alt: "Scoo News Feature" },
+  { src: "/images/optimized/wes-mumbai.webp", alt: "15th World Education Summit Mumbai" },
+  { src: "/images/optimized/economic-times.webp", alt: "Economic Times Feature" },
+  { src: "/images/optimized/nsa-award.webp", alt: "National School Awards 2023" },
+] as const;
+
+const homepageReelPosters = [
+  { src: "/instagram-reels/poster-001.jpg", alt: "Rainbow preschoolers visiting a Ganpati Pandal near Khewra Circle." },
+  { src: "/instagram-reels/poster-002.jpg", alt: "Children sharing joyful moments at Rainbow Preschools." },
+  { src: "/instagram-reels/poster-003.jpg", alt: "Rainbow preschoolers celebrating Ganesh Chaturthi with prayers and festive activities." },
+] as const;
+
+const homepageProgrammeIds = ["playgroup", "nursery", "kindergarten", "happy-times"] as const;
+const homepageProgrammeLinks: Record<typeof homepageProgrammeIds[number], string> = {
+  playgroup: "/playgroup",
+  nursery: "/nursery",
+  kindergarten: "/kindergarten",
+  "happy-times": "/happy-times",
+};
+
+const homepageSections: NonNullable<PageSEOData["contentSections"]> = [
+  {
+    eyebrow: "The Rainbow Theatre",
+    heading: "A front-row look at our days",
+    text: "Small classroom moments, celebrations and discoveries from Rainbow.",
+    items: ["Previous", "Next", "The Playlist", "Playlist", "Browse videos"],
+    links: [{ text: "Visit Instagram", url: "https://www.instagram.com/rainbowpreschools/" }],
+    images: homepageReelPosters,
+  },
+  {
+    eyebrow: "RECOGNISED & AWARDED",
+    items: [
+      "Best Preschool in Thane — 2018, 2023",
+      "Cleanest Preschool — 2020",
+      "Most Promising Preschool Chain of the Year — 2021",
+      "Emerging Preschool Chain of the Year — 2022",
+    ],
+    images: homepageAwardImages,
+  },
+  {
+    eyebrow: HOME_VISITOR_COPY.sections[3].heading,
+    heading: HOME_VISITOR_COPY.sections[0].heading,
+    text: HOME_VISITOR_COPY.sections[0].paragraphs?.[0],
+    items: [
+      "18+ Years in Thane",
+      "6 Centres",
+      "100% Female Staff",
+      "30:2 Student–Teacher Ratio",
+      "Join Our Family!",
+    ],
+    links: [
+      ...centres.map((centre) => ({
+        text: centre.localityName,
+        url: centre.preschoolLandingUrl,
+      })),
+      { text: "Learn More About Us", url: "/about" },
+    ],
+    images: [{ src: "/characters/student-girl.webp", alt: "" }],
+  },
+  {
+    eyebrow: HOME_VISITOR_COPY.sections[1].heading,
+    heading: HOME_VISITOR_COPY.sections[1].paragraphs?.[0],
+    text: HOME_VISITOR_COPY.sections[1].paragraphs?.[1],
+    items: [...(HOME_VISITOR_COPY.sections[1].items ?? [])],
+    images: [
+      { src: "/assets/walkthrough-poster.webp", alt: "Rainbow Preschool campus walkthrough video" },
+      ...HOME_FILMSTRIP_IMAGES,
+    ],
+  },
+  {
+    eyebrow: HOME_VISITOR_COPY.sections[2].heading,
+    heading: "Playgroup, Nursery & Kindergarten in Thane",
+    text: `${HOME_VISITOR_COPY.sections[2].paragraphs?.[1] ?? ""}`,
+    items: [
+      ...homepageProgrammeIds.flatMap((id) => {
+        const programme = PROGRAMMES_VISITOR_COPY.programmes?.find((entry) => entry.id === id);
+        if (!programme) {
+          throw new Error(`Missing homepage programme copy for "${id}".`);
+        }
+        const ageRange = id === "kindergarten" ? "3.5–5.5 years" : programme.ageRange;
+        return [`${programme.name} · ${ageRange} — ${programme.description}`];
+      }),
+    ],
+    links: [
+      ...homepageProgrammeIds.map((id) => {
+        const programme = PROGRAMMES_VISITOR_COPY.programmes?.find((entry) => entry.id === id);
+        if (!programme) {
+          throw new Error(`Missing homepage programme copy for "${id}".`);
+        }
+        return {
+          text: `Learn more about ${programme.name}`,
+          url: homepageProgrammeLinks[id],
+        };
+      }),
+      { text: "View All Programmes", url: "/programmes" },
+    ],
+    images: HOME_PROGRAMME_IMAGES,
+  },
+  {
+    eyebrow: "Why Choose Us",
+    heading: "A Trusted Early Learning Journey Since 2007",
+    text: "Every element of our centres is designed with your child's safety, happiness, and growth in mind.",
+    items: [
+      "Safety & CCTV — CCTV-monitored premises with 100% female teaching staff. Verified pickup system and daily hygiene routines keep every child safe.",
+      "Certified Teachers — ECCEd certified & experienced teachers who nurture every child with love and individual attention.",
+      "Hygiene First — Daily sanitisation, child-safe washrooms, and hygiene-first practices throughout.",
+      "30:2 Student-Teacher — Ideal ratio ensuring personalised care and individual attention for every child.",
+      "GPS Transport — Safe, GPS-enabled in-house transport at all six centres, with real-time tracking for parents.",
+      "Play-Based Learning — Holistic, play-based curriculum for confident early development and growth.",
+    ],
+  },
+  {
+    eyebrow: "Our Methodology",
+    heading: "Play-Based Curriculum for Every Child",
+    text: "At Rainbow Preschool, our teachers are dedicated and nurturing. Their singular goal is to help your child meet milestones and become successful. We offer a path toward elementary school that can be personalized to meet each child's needs.\nOur curriculum is designed for preschool and playgroup children in Thane, supporting holistic early development through age-appropriate activities.",
+    items: [
+      "Art Studio — Creativity + fine motor skills",
+      "Maths & Science — Logical thinking + curiosity",
+      "Sports & Movement — Physical fitness + coordination",
+      "Skill Development — Independence + confidence",
+      "General Aptitude — Critical thinking + focus",
+      "Bilingual Education — Communication + expression",
+      "View Our Programmes",
+    ],
+    links: [{ text: "View Our Programmes", url: "/programmes" }],
+  },
+  {
+    eyebrow: "Testimonials",
+    heading: HOME_VISITOR_COPY.sections[2].items?.[4],
+    text: HOME_VISITOR_COPY.sections[2].items?.[5],
+    items: homeTestimonials.map((testimonial) =>
+      `${testimonial.name} · ${testimonial.locality} — ${testimonial.text}`
+    ),
+  },
+  {
+    eyebrow: HOME_VISITOR_COPY.sections[2].items?.[1],
+    heading: HOME_VISITOR_COPY.sections[2].items?.[2],
+    text: HOME_VISITOR_COPY.sections[2].items?.[3],
+    items: [
+      "Parent Name *",
+      "Enter your name",
+      "Phone Number *",
+      "Enter phone number",
+      "Email",
+      "Enter email address",
+      "Child's Name *",
+      "Enter child's name",
+      "Child's Age *",
+      "Select age",
+      "Programme *",
+      "Select programme",
+      "Preferred Centre *",
+      "Select centre",
+      "Message (Optional)",
+      "Any questions or specific requirements?",
+      "Request Callback",
+      HOME_CALLBACK_COPY.reassurance,
+      HOME_CALLBACK_COPY.callNow,
+      "WhatsApp",
+    ],
+    images: [{ src: "/assets/walkthrough-poster.webp", alt: "Rainbow Preschool campus" }],
+    links: [
+      { text: HOME_CALLBACK_COPY.callNow, url: "tel:+918828195788" },
+      { text: "WhatsApp", url: "https://wa.me/918828195788" },
+    ],
+  },
+  {
+    eyebrow: HOME_VISITOR_COPY.sections[2].items?.[6],
+    heading: HOME_VISITOR_COPY.sections[2].items?.[7],
+    text: HOME_VISITOR_COPY.sections[2].items?.[8],
+    items: homepageBranches.map((branch) => {
+      const phones = [
+        "landline" in branch ? branch.landline : undefined,
+        branch.calling,
+        "secondCalling" in branch ? branch.secondCalling : undefined,
+      ]
+        .filter(Boolean)
+        .join(" · ");
+      return `${branch.name} — ${branch.address} · Phone: ${phones} · Classes: ${homepageBranchClasses[branch.id]}`;
+    }),
+    images: homepageBranches.map((branch) => {
+      const imageKey = homepageBranchImageKeys[branch.id];
+      if (!imageKey) {
+        throw new Error(`Missing homepage centre image for "${branch.id}".`);
+      }
+      return CENTRE_CARD_IMAGES[imageKey];
+    }),
+    links: homepageBranches.map((branch) => {
+      const localPage = CONTACT_PAGE_COPY.localPages[branch.id];
+      if (!localPage) {
+        throw new Error(`Missing homepage local page for "${branch.id}".`);
+      }
+      return { text: `View ${localPage.locality} Centre`, url: localPage.url };
+    }),
+  },
+  {
+    heading: HOME_VISITOR_COPY.sections[2].items?.[9],
+    text: HOME_VISITOR_COPY.sections[2].items?.[10],
+    faqItems: HOME_VISITOR_FAQS,
+  },
+];
+
 const staticPages: Record<string, PageSEOData> = {
   "/": {
-    title: "Preschool in Thane | Rainbow Preschool International",
-    description: "Preschool in Thane since 2007 — Rainbow Preschool International. 6 centres, Playgroup, Nursery & KG for ages 1.5–6 years. Admissions open for 2026–27.",
+    title: HOMEPAGE_TITLE,
+    description: HOMEPAGE_DESCRIPTION,
     canonical: "https://www.rainbowpreschools.com/",
-    h1: HOME_VISITOR_COPY.h1,
-    lastModified: LAST_UPDATED_ISO,
-    lastModifiedDisplay: LAST_UPDATED_DISPLAY,
-    structuredData: [organizationSchema, websiteSchema],
-    introText: HOME_VISITOR_COPY.intro,
+    h1: HOMEPAGE_H1,
+    lastModified: HOME_PUBLISH_DATE_ISO,
+    lastModifiedDisplay: HOME_PUBLISH_DATE_DISPLAY,
+    structuredData: [...HOMEPAGE_STRUCTURED_DATA],
     images: [HOME_HERO_IMAGE],
-    contentSections: [
-      {
-        images: [
-          HOME_CAMPUS_IMAGE,
-          ...HOME_FILMSTRIP_IMAGES,
-          ...HOME_PROGRAMME_IMAGES,
-        ],
-      },
-      ...visitorCopySections(HOME_VISITOR_COPY.sections),
-      {
-        heading: HOME_VISITOR_COPY.sections[2].items?.[9],
-        text: HOME_VISITOR_COPY.sections[2].items?.[10],
-        items: HOME_VISITOR_FAQS.map((faq) =>
-          `${faq.question} — ${faq.answerSegments.map((segment) => segment.text).join("")}`
-        ),
-      },
-      {
-        text: HOME_VISITOR_INTERLINK_SEGMENTS.map((segment) => segment.text).join(""),
-      },
-      {
-        heading: "Testimonials",
-        items: homeTestimonials.map((testimonial) =>
-          `${testimonial.name} · ${testimonial.locality} — ${testimonial.text}`
-        ),
-      },
-    ],
-    internalLinks: [
-      { text: "Playgroup (1.5–2.5 years)", url: "/playgroup" },
-      { text: "Nursery (2.5–3.5 years)", url: "/nursery" },
-      { text: "Kindergarten (3.5–5.5 years)", url: "/kindergarten" },
-      { text: "All Programmes", url: "/programmes" },
-      { text: "Preschool Admissions", url: "/preschool-admissions" },
-      { text: "Contact Us", url: "/contact" },
-      { text: "Preschool in Manpada", url: "/preschool-in-manpada-thane" },
-      { text: "Preschool in Hariniwas", url: "/preschool-in-hariniwas-thane" },
-      { text: "Preschool in Anand Nagar", url: "/preschool-in-anand-nagar-thane" },
-      { text: "Preschool in Dhokali", url: "/preschool-in-dhokali-thane" },
-      { text: "Preschool in Kalwa", url: "/preschool-in-kalwa-thane" },
-      { text: "Preschool in Kasarvadavali", url: "/preschool-in-kasarvadavali-thane" },
-    ],
+    homepage: true,
+    reviewerAfterContent: true,
+    introText: HOME_VISITOR_COPY.intro,
+    contentSections: homepageSections,
+    finalCallToAction: {
+      title: "Ready to begin your child's learning journey?",
+      description: "Join 1,00,000+ young learners who began their early learning journey with Rainbow Preschool. Schedule a free campus visit today.",
+      links: [
+        { text: "Request a Callback", url: "/contact" },
+        { text: "WhatsApp", url: "https://wa.me/918291568972?text=Hi%2C%20I%20would%20like%20to%20know%20more%20about%20Rainbow%20Preschool" },
+        { text: "Call Now", url: "tel:+918291568972" },
+      ],
+    },
   },
   "/about": {
     title: "About Rainbow Preschool Thane | Since 2007",

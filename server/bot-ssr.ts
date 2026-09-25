@@ -223,6 +223,25 @@ function escapeHtml(str: string): string {
     .replace(/'/g, "&#39;");
 }
 
+const allowedHomepageExternalLinks = new Set([
+  "https://www.instagram.com/rainbowpreschools/",
+  "https://rainbowinternationalschool.in",
+  "https://wa.me/918828195788",
+  "https://wa.me/918291568972?text=Hi%2C%20I%20would%20like%20to%20know%20more%20about%20Rainbow%20Preschool",
+  "tel:+918828195788",
+  "tel:+918291568972",
+]);
+
+function resolvePageLink(url: string): { href: string; external: boolean } | null {
+  const hrefPath = finalInternalPath(url);
+  if (hrefPath) {
+    return { href: `${BASE_URL}${hrefPath}`, external: false };
+  }
+  return allowedHomepageExternalLinks.has(url)
+    ? { href: url, external: !url.startsWith("tel:") }
+    : null;
+}
+
 function renderImageHtml(image: {
   src: string;
   alt: string;
@@ -230,7 +249,7 @@ function renderImageHtml(image: {
   height?: number;
   caption?: string;
 }): string {
-  if (!/^\/(?:images|assets|blog|blog-assets)\/[A-Za-z0-9_./-]+$/.test(image.src) || image.src.includes("..")) return "";
+  if (!/^\/(?:images|assets|blog|blog-assets|characters|instagram-reels)\/[A-Za-z0-9_./-]+$/.test(image.src) || image.src.includes("..")) return "";
   const width = image.width === undefined ? "" : ` width="${image.width}"`;
   const height = image.height === undefined ? "" : ` height="${image.height}"`;
   const imageHtml = `<img src="${escapeHtml(image.src)}" alt="${escapeHtml(image.alt)}"${width}${height} loading="lazy" />`;
@@ -276,7 +295,7 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
     if (Array.isArray(t)) return t.some((v) => v === "Article" || v === "BlogPosting");
     return false;
   });
-  if (seo.lastModified && !hasExistingArticle) {
+  if (seo.lastModified && !seo.homepage && !hasExistingArticle) {
     // E-E-A-T: emit a rich Article with reviewedBy for pages that don't already
     // have their own Article/BlogPosting in structuredData. Blog posts are excluded
     // here because their ssr-pages.ts entry already includes BlogPosting + reviewedBy.
@@ -317,6 +336,9 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
   const contentHtml = (seo.contentSections || [])
     .map((section) => {
       let html = `<section>`;
+      if (section.eyebrow) {
+        html += `<p class="section-eyebrow">${escapeHtml(section.eyebrow)}</p>\n`;
+      }
       if (section.heading) {
         html += `<h2>${escapeHtml(section.heading)}</h2>\n`;
       }
@@ -333,12 +355,27 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
       if (section.links && section.links.length > 0) {
         html += "<ul>\n";
         section.links.forEach((link) => {
-          const hrefPath = finalInternalPath(link.url || "");
-          const href = hrefPath ? `${BASE_URL}${hrefPath}` : null;
-          if (!href) return;
-          html += `<li><a href="${escapeHtml(href)}">${escapeHtml(link.text)}</a></li>\n`;
+          const safeLink = resolvePageLink(link.url || "");
+          if (!safeLink) return;
+          const rel = safeLink.external ? ` rel="noopener noreferrer"` : "";
+          html += `<li><a href="${escapeHtml(safeLink.href)}"${rel}>${escapeHtml(link.text)}</a></li>\n`;
         });
         html += "</ul>\n";
+      }
+      if (section.faqItems?.length) {
+        html += `<div class="faq-list">\n`;
+        section.faqItems.forEach((faq) => {
+          const answer = faq.answerSegments.map((segment) => {
+            const text = escapeHtml(segment.text);
+            if (!segment.href) return text;
+            const safeLink = resolvePageLink(segment.href);
+            if (!safeLink) return text;
+            const rel = safeLink.external ? ` rel="noopener noreferrer"` : "";
+            return `<a href="${escapeHtml(safeLink.href)}"${rel}>${text}</a>`;
+          }).join("");
+          html += `<details open><summary>${escapeHtml(faq.question)}</summary><p>${answer}</p></details>\n`;
+        });
+        html += `</div>\n`;
       }
       if (section.images && section.images.length > 0) {
         for (const image of section.images) {
@@ -382,6 +419,17 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
         <div>${escapeHtml(BLOG_LIST_COPY.readArticle)}</div>
       </article></a>`).join("\n")}</div></section>`
     : "";
+  const reviewerCreditHtml = seo.lastModified
+    ? `<p style="font-size:0.875rem;color:#666;margin:8px 0 16px"><strong>Reviewed by Rainbow Preschool Curriculum Team</strong> — Last updated: <time datetime="${escapeHtml(seo.lastModified)}">${escapeHtml(seo.lastModifiedDisplay || seo.lastModified)}</time></p>`
+    : "";
+  const finalCallToActionHtml = seo.finalCallToAction
+    ? `<section class="final-cta"><h2>${escapeHtml(seo.finalCallToAction.title)}</h2><p>${escapeHtml(seo.finalCallToAction.description)}</p><ul>${seo.finalCallToAction.links.map((link) => {
+      const safeLink = resolvePageLink(link.url);
+      if (!safeLink) return "";
+      const rel = safeLink.external ? ` rel="noopener noreferrer"` : "";
+      return `<li><a href="${escapeHtml(safeLink.href)}"${rel}>${escapeHtml(link.text)}</a></li>`;
+    }).join("")}</ul></section>`
+    : `<a href="${BASE_URL}/contact" class="cta">Enquire Now — Call 82915 68972</a>`;
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -450,14 +498,15 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
     <main>
       ${seo.breadcrumbs ? `<div class="breadcrumb">${seo.breadcrumbs.map((b) => `<a href="${BASE_URL}${b.url}">${escapeHtml(b.name)}</a>`).join(" › ")}</div>` : ""}
       <h1>${escapeHtml(seo.h1 || seo.title)}</h1>
-      ${seo.lastModified ? `<p style="font-size:0.875rem;color:#666;margin:8px 0 16px"><strong>Reviewed by Rainbow Preschool Curriculum Team</strong> — Last updated: <time datetime="${seo.lastModified}">${escapeHtml(seo.lastModifiedDisplay || seo.lastModified)}</time></p>` : ""}
+      ${seo.reviewerAfterContent ? "" : reviewerCreditHtml}
       ${seo.introText ? `<p>${escapeHtml(seo.introText)}</p>` : ""}
       ${(seo.images || []).map(renderImageHtml).join("\n")}
       ${contentHtml}
+      ${seo.reviewerAfterContent ? reviewerCreditHtml : ""}
       ${blogControlsHtml}
       ${blogCardsHtml}
       ${internalLinksHtml ? `<nav aria-label="Related pages"><h2>Explore More</h2><ul>${internalLinksHtml}</ul></nav>` : ""}
-      <a href="${BASE_URL}/contact" class="cta">Enquire Now — Call 82915 68972</a>
+      ${finalCallToActionHtml}
       <div class="network">
         <p><strong>Our Network:</strong> <a href="https://rainbowinternationalschool.in" rel="noopener">Rainbow International School</a> — CBSE-affiliated K–12 school in Thane West, Nursery to Class 12</p>
       </div>
@@ -470,7 +519,7 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
         <a href="${BASE_URL}/kindergarten">Kindergarten</a>
         <a href="${BASE_URL}/preschool-admissions">Admissions</a>
         <a href="${BASE_URL}/best-preschool-near-me-in-thane">Best Preschool in Thane</a>
-        <a href="${BASE_URL}/play-school-near-me">Play School Near Me</a>
+        <a href="${BASE_URL}/play-school-near-me">Find a preschool near you</a>
       </div>
       <p><a href="https://rainbowinternationalschool.in" rel="noopener">Rainbow International School</a> — CBSE K–12, Nursery to Class 12</p>
       <p><a href="${BASE_URL}/privacy">Privacy Policy</a> | <a href="${BASE_URL}/terms">Terms of Service</a></p>

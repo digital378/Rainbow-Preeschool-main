@@ -4,17 +4,16 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { ErrorBoundary } from "@/components/error-boundary";
 import { AwardedBySection } from "@/components/awarded-by-section";
 import { HomeRainbowTheatre } from "@/components/home/home-rainbow-theatre";
-import { QuickCallbackTicket } from "@/components/home/quick-callback-ticket";
 import { EEATSignals } from "@/components/eeat-signals";
-import { LAST_UPDATED_DISPLAY, LAST_UPDATED_ISO } from "@shared/site-freshness";
+import { HOME_PUBLISH_DATE_DISPLAY, HOME_PUBLISH_DATE_ISO } from "@shared/home-publish-date";
 import { HOME_CAMPUS_IMAGE } from "@shared/page-image-data";
-import { createAllBranchLocalBusinessSchemas, centres } from "@shared/centre-data";
+import { centres } from "@shared/centre-data";
 import { cn } from "@/lib/utils";
-import { PLAYGROUP, NURSERY, KINDERGARTEN } from "@shared/programme-data";
+import { HOMEPAGE_STRUCTURED_DATA } from "@shared/homepage-schema";
 import { BranchCard } from "@/components/branch-card";
 import { TestimonialCard } from "@/components/testimonial-card";
 import { CountUp } from "@/components/count-up";
-import { SEO, createBreadcrumbSchema } from "@/components/seo";
+import { SEO } from "@/components/seo";
 import { programmes, branches, testimonials } from "@shared/schema";
 import { ArrowRight, Star, Users, MapPin, Shield, Lock, Phone, Award, FileText, Palette, BookOpen, GraduationCap, Puzzle, ShieldCheck, Volume2, VolumeX, Pencil, Sun, User, Mail, Smile, Calendar, MessageSquare, AlertCircle, CheckCircle } from "lucide-react";
 import { SiWhatsapp } from "react-icons/si";
@@ -44,9 +43,9 @@ function LazySection({ children, rootMargin = "200px", minHeight = 400 }: { chil
 }
 
 import {
+  HOME_CALLBACK_COPY,
   HOME_VISITOR_COPY,
   HOME_VISITOR_FAQS as faqs,
-  HOME_VISITOR_INTERLINK_SEGMENTS,
   PROGRAMMES_VISITOR_COPY,
 } from "@/pages/visitor-page-copy";
 import { getCampaignAttribution, trackCTAClick } from "@/lib/analytics";
@@ -57,96 +56,11 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-// --- Static JSON-LD schema objects ---
-// Created once at module load (not on every render) to reduce per-mount CPU cost.
-const _organizationSchema = {
-  "@context": "https://schema.org",
-  "@type": "EducationalOrganization",
-  "name": "Rainbow Preschool International",
-  "alternateName": "Rainbow Preschools",
-  "url": "https://www.rainbowpreschools.com",
-  "logo": "https://www.rainbowpreschools.com/images/logo.webp",
-  "description": `Trusted preschool chain in Thane since 2007. Play-based early learning for children aged ${PLAYGROUP.ageMin}–${KINDERGARTEN.ageMax} years. 6 centres across Thane West.`,
-  "foundingDate": "2007",
-  "areaServed": [
-    { "@type": "City", "name": "Thane" },
-    { "@type": "Place", "name": "Thane West" },
-    { "@type": "Place", "name": "Ghodbunder Road, Thane" },
-    { "@type": "Place", "name": "Manpada, Thane" },
-    { "@type": "Place", "name": "Naupada, Thane" },
-    { "@type": "Place", "name": "Majiwada, Thane" },
-    { "@type": "Place", "name": "Kolshet Road, Thane" },
-    { "@type": "Place", "name": "Kalwa, Thane" },
-    { "@type": "Place", "name": "Kasarvadavali, Thane" },
-    { "@type": "AdministrativeArea", "name": "Mumbai Metropolitan Region" }
-  ],
-  "contactPoint": {
-    "@type": "ContactPoint",
-    "telephone": "+91-8291568972",
-    "contactType": "admissions",
-    "areaServed": "IN",
-    "availableLanguage": ["English", "Hindi", "Marathi"]
-  },
-  "sameAs": [
-    "https://facebook.com/rainbowpreschools",
-    "https://instagram.com/rainbowpreschools",
-    "https://youtube.com/rainbowpreschools"
-  ],
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "2nd Floor, Chestnut Plaza, Opp. Edenwoods, Khewra Cir Marg, Manpada",
-    "addressLocality": "Thane",
-    "addressRegion": "Maharashtra",
-    "postalCode": "400610",
-    "addressCountry": "IN"
-  },
-};
-
-const _websiteSchema = {
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "Rainbow Preschool International",
-  "url": "https://www.rainbowpreschools.com",
-  "description": "Trusted preschool chain in Thane since 2007"
-};
-
-const _faqSchema = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": faqs.map((faq) => ({
-    "@type": "Question",
-    "name": faq.question,
-    "acceptedAnswer": {
-      "@type": "Answer",
-      "text": faq.schemaAnswerText ?? faq.answerSegments.map((segment) => segment.text).join(""),
-    }
-  }))
-};
-
-const _videoSchema = {
-  "@context": "https://schema.org",
-  "@type": "VideoObject",
-  "name": "Rainbow Preschool International — Campus Walkthrough",
-  "description": `Take a virtual tour of Rainbow Preschool International's campus in Thane. See our colourful classrooms, safe play areas, and nurturing learning environment designed for children aged ${PLAYGROUP.ageMin} to ${KINDERGARTEN.ageMax} years.`,
-  "thumbnailUrl": "https://www.rainbowpreschools.com/og-image.jpg",
-  "uploadDate": "2025-01-15T00:00:00+05:30",
-  "contentUrl": "https://www.rainbowpreschools.com/assets/RPS_Walkthrough_Video_-_Website_1_1766126796450.mp4",
-  "embedUrl": "https://www.rainbowpreschools.com/",
-  "duration": "PT1M30S",
-  "publisher": {
-    "@type": "Organization",
-    "name": "Rainbow Preschool International",
-    "logo": { "@type": "ImageObject", "url": "https://www.rainbowpreschools.com/images/logo.webp" }
-  }
-};
-
-// Pre-serialised JSON strings — JSON.stringify is done once at module load, not at render time.
-const _orgJson      = JSON.stringify(_organizationSchema);
-const _webJson      = JSON.stringify(_websiteSchema);
-const _faqJson      = JSON.stringify(_faqSchema);
-const _videoJson    = JSON.stringify(_videoSchema);
-const _branchJson      = JSON.stringify(createAllBranchLocalBusinessSchemas());
-const _breadcrumbJson  = JSON.stringify(createBreadcrumbSchema([{ name: "Home", url: "https://www.rainbowpreschools.com/" }]));
+// Serialise the exact same verified homepage schema objects used by bot HTML.
+const homeSchemaEntries = HOMEPAGE_STRUCTURED_DATA.map((schema, index) => ({
+  id: `homepage-schema-${index}`,
+  json: JSON.stringify(schema),
+}));
 
 /* ═══════════════════════════════════════════════════════════════════════════
    BENTO ABOUT — "Why Parents Choose Rainbow Preschool"
@@ -242,20 +156,16 @@ function BentoStar({ cls }: { cls?: string }) {
 }
 
 const ABOUT_STATS = [
-  { Icon: Users,  label: HOME_VISITOR_COPY.sections[4].items?.[1] ?? "",      grad:"linear-gradient(135deg,#F5320C 0%,#FF5A3C 100%)", glow:"rgba(245,50,12,.28)",
-    target: 100000, format: (n: number) => `${n >= 100000 ? "1,00,000" : n.toLocaleString("en-IN")}+` },
-  { Icon: Star,   label: HOME_VISITOR_COPY.sections[4].items?.[2] ?? "", grad:"linear-gradient(135deg,#FFB020 0%,#FF7A00 100%)", glow:"rgba(255,122,0,.26)",
+  { Icon: Star,   label: HOME_VISITOR_COPY.sections[3].items?.[1] ?? "", grad:"linear-gradient(135deg,#FFB020 0%,#FF7A00 100%)", glow:"rgba(255,122,0,.26)",
     target: 18, format: (n: number) => `${n}+` },
-  { Icon: MapPin, label: HOME_VISITOR_COPY.sections[4].items?.[3] ?? "",    grad:"linear-gradient(135deg,#1F7AF0 0%,#48A0FF 100%)", glow:"rgba(31,122,240,.26)",
-    target: 6, format: (n: number) => String(n).padStart(2, "0") },
-  { Icon: Shield, label: HOME_VISITOR_COPY.sections[4].items?.[4] ?? "",        grad:"linear-gradient(135deg,#06B463 0%,#22D67E 100%)", glow:"rgba(6,180,99,.26)",
+  { Icon: MapPin, label: HOME_VISITOR_COPY.sections[3].items?.[2] ?? "",    grad:"linear-gradient(135deg,#1F7AF0 0%,#48A0FF 100%)", glow:"rgba(31,122,240,.26)",
+    target: 6, format: (n: number) => String(n) },
+  { Icon: Shield, label: HOME_VISITOR_COPY.sections[3].items?.[3] ?? "",        grad:"linear-gradient(135deg,#06B463 0%,#22D67E 100%)", glow:"rgba(6,180,99,.26)",
     target: 100, format: (n: number) => `${n}%` },
+  { Icon: Users,  label: HOME_VISITOR_COPY.sections[3].items?.[4] ?? "",      grad:"linear-gradient(135deg,#F5320C 0%,#FF5A3C 100%)", glow:"rgba(245,50,12,.28)",
+    target: 30, format: (n: number) => `${Math.min(n, 30)}:2` },
 ];
 
-const ABOUT_AVATARS = [
-  { bg:"#EC210F", l:"A" }, { bg:"#F59E0B", l:"B" },
-  { bg:"#1F7AF0", l:"C" }, { bg:"#06B463", l:"D" },
-];
 const BENTO_CLS = ["bento-s1","bento-s2","bento-s3","bento-s4"] as const;
 
 function StatsSection() {
@@ -295,7 +205,7 @@ function StatsSection() {
 
             <p style={{ fontSize:"0.63rem", fontWeight:700, letterSpacing:"0.22em",
               textTransform:"uppercase", color:"#EC210F", margin:"0 0 14px" }}>
-              {HOME_VISITOR_COPY.sections[4].heading}
+              {HOME_VISITOR_COPY.sections[3].heading}
             </p>
 
             <h2 className="section-title" style={{ fontSize:"clamp(1.9rem,3.4vw,2.9rem)", margin:"0 0 4px", lineHeight:1.15 }}>
@@ -326,9 +236,6 @@ function StatsSection() {
             <p className="dm-body" style={{ color:"#55506A", fontSize:"1.0625rem", lineHeight:1.78, margin:"0 0 16px", maxWidth:"34rem" }}>
               {HOME_VISITOR_COPY.sections[0].paragraphs?.[0]}
             </p>
-            <p className="dm-body" style={{ color:"#55506A", lineHeight:1.72, margin:"0 0 24px", maxWidth:"34rem" }}>
-              {HOME_VISITOR_COPY.sections[0].paragraphs?.[1]}
-            </p>
 
             {/* Centre chips */}
             <div className="chip-row" style={{ margin:"0 0 32px" }}>
@@ -353,7 +260,7 @@ function StatsSection() {
                   border:"1.5px solid rgba(33,27,46,.20)", color:"#211B2E", background:"white",
                   transition:"all 0.22s ease", boxShadow:"0 2px 10px rgba(33,27,46,.06)",
                   textDecoration:"none", gap:8 }}>
-                {HOME_VISITOR_COPY.sections[4].items?.[0]}
+                {HOME_VISITOR_COPY.sections[3].items?.[0]}
                 <ArrowRight size={16} className="about-arrow"/>
               </a>
             </div>
@@ -435,50 +342,6 @@ function StatsSection() {
                 </div>
               </BentoTiltCard>
             ))}
-
-            {/* ⑥ Trust / rating tile */}
-            <BentoTiltCard
-              className="bento-trust stat-card du-fade"
-              style={{ borderRadius:20, background:"white",
-                border:"1px solid rgba(33,27,46,.07)",
-                boxShadow:"0 10px 28px rgba(33,27,46,.08)",
-                transitionDelay:"380ms" }}
-              intensity={5}
-            >
-              <div style={{ padding:"16px 20px 18px", position:"relative", overflow:"hidden" }}>
-                <div aria-hidden style={{ position:"absolute", top:0, left:0, right:0, height:3,
-                  background:"linear-gradient(90deg,#EC210F,#F59E0B,#22C55E,#1F7AF0,#8B5CF6)",
-                  borderRadius:"20px 20px 0 0" }}/>
-                <div style={{ display:"flex", alignItems:"center", gap:14, marginBottom:10, paddingTop:6 }}>
-                  <div style={{ display:"flex", flexShrink:0 }}>
-                    {ABOUT_AVATARS.map((av, i) => (
-                      <div key={i} style={{ width:30, height:30, borderRadius:"50%",
-                        background:av.bg, border:"2.5px solid white",
-                        marginLeft: i === 0 ? 0 : -9, position:"relative",
-                        zIndex:ABOUT_AVATARS.length - i, display:"flex", alignItems:"center",
-                        justifyContent:"center", fontSize:"0.64rem", fontWeight:700, color:"white" }}>
-                        {av.l}
-                      </div>
-                    ))}
-                  </div>
-                  <div>
-                    <div style={{ display:"flex", alignItems:"center", gap:5, marginBottom:2 }}>
-                      <span style={{ color:"#F59E0B", letterSpacing:"1px", fontSize:"0.88rem" }}>★★★★★</span>
-                      <span className="dm-dark-text" style={{ fontWeight:700, fontSize:"0.9rem", color:"#211B2E" }}>4.9</span>
-                    </div>
-                    <p className="dm-stat-label" style={{ fontSize:"0.72rem", color:"#55506A", margin:0, fontWeight:500 }}>
-                      {HOME_VISITOR_COPY.sections[4].items?.[5]}
-                    </p>
-                  </div>
-                </div>
-                <a href="https://www.google.com/maps/search/Rainbow+Preschool+Thane"
-                  target="_blank" rel="noopener noreferrer"
-                  style={{ fontSize:"0.72rem", color:"#EC210F", textDecoration:"none",
-                    fontWeight:600, display:"inline-flex", alignItems:"center", gap:4 }}>
-                  {HOME_VISITOR_COPY.sections[4].items?.[6]} <ArrowRight size={11}/>
-                </a>
-              </div>
-            </BentoTiltCard>
 
           </div>{/* /bento-grid */}
         </div>
@@ -1238,12 +1101,12 @@ function ProgrammesDummyHome() {
             {HOME_VISITOR_COPY.sections[2].heading}
           </p>
           <h2 className="prog-heading section-title" style={{ margin:"0 0 14px" }}>
-            {HOME_VISITOR_COPY.sections[2].paragraphs?.[0].slice(0, 30)}
+            Playgroup, Nursery & Kindergarten in{" "}
             <span style={{
               background:"linear-gradient(95deg,#F59E0B 0%,#EC210F 100%)",
               WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent", backgroundClip:"text",
             }}>
-              {HOME_VISITOR_COPY.sections[2].paragraphs?.[0].slice(30)}
+              Thane
             </span>
           </h2>
           <p className="prog-subtitle" style={{ color:"#55506A", fontSize:"1.0625rem", lineHeight:1.72, margin:0 }}>
@@ -1266,11 +1129,12 @@ function ProgrammesDummyHome() {
                 <FloatWrapperProg idx={i}>
                   <BentoProgrammeCard
                     title={prog.name}
-                    ageLabel={prog.ageRange}
+                    ageLabel={id === "kindergarten" ? "3.5–5.5 years" : prog.ageRange}
                     description={prog.description}
                     imageUrl={prog.image}
                     href={href}
                     themeColor={color}
+                    ctaLabel={`Learn more about ${prog.name}`}
                     iconSticker={
                       <div style={{
                         width:40, height:40, borderRadius:"50%",
@@ -1586,7 +1450,7 @@ function ContactSection() {
             }}>
               <Lock size={13} style={{ color:"#059669", flexShrink:0 }} />
               <span style={{ fontSize:13, color:"#059669", fontWeight:500 }}>
-                {HOME_VISITOR_COPY.sections[3].items?.[1]}
+                {HOME_CALLBACK_COPY.reassurance}
               </span>
             </div>
 
@@ -1599,7 +1463,7 @@ function ContactSection() {
                 boxShadow:"0 3px 10px rgba(33,27,46,0.22)",
                 transition:"transform 0.18s ease, box-shadow 0.18s ease",
               }}>
-                <Phone size={13} /> {HOME_VISITOR_COPY.sections[3].items?.[2]}
+                <Phone size={13} /> {HOME_CALLBACK_COPY.callNow}
               </a>
               <a href="https://wa.me/918828195788" target="_blank" rel="noopener noreferrer" className="ctc-contact-btn" style={{
                 display:"inline-flex", alignItems:"center", gap:7,
@@ -1776,19 +1640,21 @@ function ContactSection() {
   );
 }
 
+const HOMEPAGE_BRANCH_CLASSES: Record<string, string> = {
+  aggarwal: "Playgroup to Grade 4",
+  kalwa: "Playgroup to Grade 4",
+  kasarvadavali: "Playgroup to Grade 3",
+  hariniwas: "Playgroup to Grade 3",
+  "anand-nagar": "Playgroup to Grade 2",
+  dhokali: "Playgroup to Sr. KG",
+};
+
 export default function Home() {
   // Inject all schemas after paint so they don't block the main thread (bots get
   // them via server-side bot-ssr.ts instead).
   useEffect(() => {
     const inject = () => {
-      const entries: Array<{ id: string; json: string }> = [
-        { id: 'organization-schema', json: _orgJson },
-        { id: 'website-schema',      json: _webJson },
-        { id: 'video-schema',        json: _videoJson },
-        { id: 'home-branches-schema',json: _branchJson },
-        { id: 'breadcrumb-schema',   json: _breadcrumbJson },
-      ];
-      for (const { id, json } of entries) {
+      for (const { id, json } of homeSchemaEntries) {
         const existing = document.getElementById(id);
         if (existing) existing.remove();
         const s = document.createElement('script');
@@ -1810,7 +1676,7 @@ export default function Home() {
 
     return () => {
       cancelFn?.();
-      ['organization-schema', 'website-schema', 'faq-schema', 'video-schema', 'home-branches-schema', 'breadcrumb-schema'].forEach(id => {
+      homeSchemaEntries.forEach(({ id }) => {
         document.getElementById(id)?.remove();
       });
     };
@@ -1819,14 +1685,12 @@ export default function Home() {
   return (
     <div>
       <SEO
-        title="Preschool in Thane | Rainbow Preschool International"
-        description="Preschool in Thane since 2007 — Rainbow Preschool International. 6 centres, Playgroup, Nursery & KG for ages 1.5–6 years. Admissions open for 2026–27."
+        title="Preschool in Thane | Playgroup, Nursery & KG | Rainbow"
+        description="Playgroup, nursery and KG for ages 1.5 to 5.5 at 6 Rainbow Preschool International centres in Thane, since 2007. Book a free visit for 2026-27."
         keywords="rainbow preschool, preschool in thane, playgroup in thane, nursery school thane, early childhood education thane, rainbow preschool international"
         canonical="https://www.rainbowpreschools.com/"
       />
 
-      <RainbowShelfSection />
-      <QuickCallbackTicket />
       <HomeRainbowTheatre />
       <AwardedBySection />
 
@@ -1871,35 +1735,6 @@ export default function Home() {
       <ContactSection />
 
 
-      <div className="py-6 bg-primary/5">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-sm text-muted-foreground text-center leading-relaxed" data-testid="text-seo-interlinks">
-            {HOME_VISITOR_INTERLINK_SEGMENTS.map((segment, index) =>
-              segment.href ? (
-                <a
-                  key={index}
-                  href={segment.href}
-                  className="text-primary hover:underline font-medium"
-                  data-testid={
-                    segment.href === "/best-preschool-near-me-in-thane"
-                      ? "link-inline-best-preschool-in-thane"
-                      : segment.href === "/play-school-near-me"
-                        ? "link-inline-play-school-near-me-in-thane"
-                        : segment.href === "/playgroup"
-                          ? "link-inline-playgroup-in-thane"
-                          : segment.href === "/nursery"
-                            ? "link-inline-nursery-in-thane"
-                            : "link-inline-kindergarten-in-thane"
-                  }
-                >
-                  {segment.text}
-                </a>
-              ) : segment.text
-            )}
-          </p>
-        </div>
-      </div>
-
       <LazySection minHeight={600} rootMargin="300px">
         {/* Centres Section - Local SEO Gold */}
         <section id="centres" className="py-16 md:py-20 lg:py-24 cv-auto">
@@ -1914,7 +1749,7 @@ export default function Home() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {branches.map((branch) => (
-                <BranchCard key={branch.id} branch={branch} />
+                <BranchCard key={branch.id} branch={branch} classesText={HOMEPAGE_BRANCH_CLASSES[branch.id]} />
               ))}
             </div>
           </div>
@@ -1967,8 +1802,8 @@ export default function Home() {
           pageName="Rainbow Preschool International — Preschool Chain in Thane"
           reviewedBy="Rainbow Preschool Curriculum Team"
           reviewerRole="Curriculum Team, Rainbow Preschool International"
-          lastUpdated={LAST_UPDATED_DISPLAY}
-          lastUpdatedIso={LAST_UPDATED_ISO}
+          lastUpdated={HOME_PUBLISH_DATE_DISPLAY}
+          lastUpdatedIso={HOME_PUBLISH_DATE_ISO}
           showRating={false}
           schemaId="home-eeat"
         />
