@@ -1,0 +1,23 @@
+Live check 25 Sep: parity, links, redirects, robots and the /contact email fix are all confirmed live — don't touch them. Next round:
+
+1. Homepage LCP: the LCP element is now the hero H1 (the amber span inside it), rendered by React with an animate-in/fade-in/slide-in animation. Put the H1 text into the prepaint static hero (as done for the image) and remove the entrance animation from the H1. Target: mobile LCP < 4 s in 3 of 3 Lighthouse runs.
+
+2. Real-user server response: CrUX p75 TTFB is 2.1 s on phones (visitors are almost all in India) vs ~0.3 s from a US test machine. PROPOSE, don't implement: a Cloudflare Cache Rule that caches the visitor HTML at the edge with a short TTL, purged on deploy, and BYPASSES cache for every user agent in BOT_USER_AGENTS (bot-ssr.ts), so bots never get the cached visitor shell and visitors never get bot HTML. Send me the exact rule first.
+
+3. 301 redirects (old URLs Google still shows, currently 404):
+   /17-national-symbols-of-india-for-kids-2026/ → /national-symbols-of-india-for-kids
+   /national-symbols-of-india → /national-symbols-of-india-for-kids
+   /36-motivational-thoughts-for-the-day-for-kids → /36-motivational-thoughts-of-the-day-for-kids
+   /blog/50-healthy-tiffin-box-ideas-preschoolers-indian → /blog/healthy-tiffin-box-ideas-preschoolers
+   /blog/what-age-start-presschool → /blog/what-age-start-play-school
+   /kindergarten/rainy-season-activities-for-kindergarten → /rainy-season-activities-for-kindergarten
+
+4. Parity: bring /about and /gallery bot text to ≥ 80% of visitor text using the shared data.
+
+5. /preschool-admissions: list any text in the bot HTML that visitors can't reach (including by opening an FAQ). If it can't be reached, remove it from the bot HTML or add it to the visitor page.
+
+6. Images in bot HTML: 80 of 86 indexable pages have no <img> for bots while visitors see images. Add the main visible images (same src, alt, width, height) to the bot HTML, starting with /, /about, /programmes, the 6 centre pages and blog featured images.
+
+7. Pre-deploy script: don't purge the production Cloudflare cache during local validation.
+
+Keep Stage 4 untouched. Same rules: no URL, slug or date changes. Re-run the full sitemap parity report and 3× mobile Lighthouse on / and /contact before offering Publish.
