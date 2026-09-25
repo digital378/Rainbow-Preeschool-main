@@ -12,10 +12,11 @@ import { storage } from "./storage";
 import { getBlogPostLastModified } from "./ssr-pages";
 import { getLiveLegacySitemapEntries } from "./legacy-sitemap";
 import { requireDashboardPageAuth, requireGscAuth } from "./admin-auth";
-import { dummyGuard } from "./dummy-guard";
+import { dummyGuard, dummyLogin } from "./dummy-guard";
 import { getDummyInstagramReels, getPublicInstagramReels } from "./dummy-instagram";
 
 const app = express();
+app.post("/dummy/login", ...dummyLogin);
 app.use(dummyGuard);
 // Serve the private media before bot SSR's unknown-route handling. The guard
 // above authenticates every request and reapplies no-store headers to 206s.
