@@ -34,10 +34,12 @@ export interface ProgrammeCardProps {
   href:         string;
   themeColor:   string;            // hex e.g. "#EC210F"
   iconSticker?: React.ReactNode;   // chunky badge pinned to top-left corner
+  dayIncludes?: string;
+  imageAlt?: string;
 }
 
 export function ProgrammeCard({
-  title, ageLabel, description, imageUrl, href, themeColor, iconSticker,
+  title, ageLabel, description, imageUrl, href, themeColor, iconSticker, dayIncludes, imageAlt,
 }: ProgrammeCardProps) {
   const shouldReduceMotion = useReducedMotion();
   const [hovered, setHovered] = React.useState(false);
@@ -90,7 +92,7 @@ export function ProgrammeCard({
   const Photo = ({ asMotion }: { asMotion: boolean }) => {
     const inner = (
       <>
-        <img src={imageUrl} alt={title} loading="lazy"
+        <img src={imageUrl} alt={imageAlt ?? title} loading="lazy"
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.06]" />
         <div className="absolute inset-x-0 bottom-0 h-1/3 pointer-events-none"
           style={{ background: `linear-gradient(to top, ${themeColor}33, transparent)` }} />
@@ -117,6 +119,7 @@ export function ProgrammeCard({
       <>
         <h3 className="text-lg font-bold leading-tight" style={{ color: themeColor }}>{title}</h3>
         <p className="mt-2 flex-1 text-sm leading-relaxed text-neutral-600 dark:text-gray-300 line-clamp-3">{description}</p>
+        {dayIncludes && <p className="mt-2 text-xs leading-relaxed text-neutral-600 dark:text-gray-300">{dayIncludes}</p>}
         <span className="mt-auto inline-flex items-center gap-1 pt-4 text-sm font-semibold"
           style={{ color: themeColor }}>
           Learn More{" "}

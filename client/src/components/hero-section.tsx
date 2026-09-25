@@ -1,15 +1,28 @@
-import { ArrowRight, Phone, Users, Star, MapPin, Shield } from "lucide-react";
+import { Phone, Star, MapPin, Shield } from "lucide-react";
 import { trackCTAClick } from "@/lib/analytics";
 import { useLayoutEffect } from "react";
+import { HOME_ADMISSIONS_WHATSAPP, HOME_H1, HOME_HERO_COPY, HOME_HERO_STATS } from "@shared/homepage-content";
 
 const trustBadges = [
-  { Icon: Users,  label: "1,00,000+ Young Learners" },
-  { Icon: Star,   label: "18+ Years of Excellence" },
-  { Icon: MapPin, label: "6 Centres Across Thane" },
-  { Icon: Shield, label: "100% Female Staff" },
+  { Icon: Star, label: HOME_HERO_STATS[0] },
+  { Icon: MapPin, label: HOME_HERO_STATS[1] },
+  { Icon: Shield, label: HOME_HERO_STATS[2] },
 ];
 
 export function HeroSection() {
+  const scrollToAdmissions = () => {
+    let attempts = 0;
+    const findAdmissions = () => {
+      const admissions = document.getElementById("admissions");
+      if (admissions) {
+        admissions.scrollIntoView({ behavior: "smooth", block: "start" });
+      } else if (attempts++ < 40) {
+        window.setTimeout(findAdmissions, 50);
+      }
+    };
+    findAdmissions();
+  };
+
   useLayoutEffect(() => {
     // On client-side navigation, restore the same background layer if the
     // initial document did not create it for this route.
@@ -22,6 +35,7 @@ export function HeroSection() {
     // Keep the prepainted LCP title only until React has committed its single
     // accessible H1, so the static copy cannot remain visibly duplicated.
     document.getElementById("static-lcp-hero-title")?.remove();
+    document.getElementById("static-lcp-hero-brand")?.remove();
   }, []);
 
   return (
@@ -38,7 +52,7 @@ export function HeroSection() {
         <div className="max-w-2xl">
 
           {/* Admissions badge — kept exactly */}
-          <a href="/contact" data-testid="link-admissions-badge">
+          <a href="#admissions" data-testid="link-admissions-badge">
             <div
               className="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-full mb-8 cursor-pointer hover:bg-white/15 transition-all duration-300 hover:scale-105 animate-in fade-in slide-in-from-bottom-3 duration-700"
               style={{
@@ -57,9 +71,9 @@ export function HeroSection() {
             </div>
           </a>
 
-          {/* H1 — "Rainbow" white / "Preschool" red, each on own line, dummy scale */}
-          <h1
-            className="font-black text-white mb-5"
+          {/* Brand line is intentionally not the page heading. */}
+          <p
+            className="font-black text-white mb-0"
             style={{
               fontFamily: "'Fredoka One','Baloo 2',system-ui,sans-serif",
               fontSize: "clamp(2.7rem, 6vw, 5.2rem)",
@@ -74,21 +88,20 @@ export function HeroSection() {
             >
               Preschool
             </span>
-            {/* Subtitle — dot separators, lighter weight */}
-            <span
-              className="block font-semibold text-white/80 mt-3"
-              style={{ fontSize: "clamp(1.1rem, 2.4vw, 1.85rem)", letterSpacing: "-0.012em", lineHeight: 1.34 }}
-            >
-              Playschool · Nursery · Kindergarten
-            </span>
+          </p>
+
+          <h1
+            className="block font-semibold text-white/80 mt-3 mb-5"
+            style={{ fontSize: "clamp(1.1rem, 2.4vw, 1.85rem)", letterSpacing: "-0.012em", lineHeight: 1.34 }}
+          >
+            {HOME_H1}
           </h1>
 
           {/* Description */}
           <p
-            className="text-[1.05rem] md:text-[1.15rem] text-white/70 max-w-[500px] mb-9 leading-[1.76] animate-in fade-in slide-in-from-bottom-4 duration-700"
-            style={{ animationFillMode: "both", animationDelay: "300ms" }}
+            className="text-[1.05rem] md:text-[1.15rem] text-white/70 max-w-[500px] mb-9 leading-[1.76]"
           >
-            Thane's trusted preschool since 2007 — where every child's first steps into learning are joyful, safe, and full of wonder.
+            {HOME_HERO_COPY}
           </p>
 
           {/* Trust pills — cleaner dummy style */}
@@ -118,7 +131,7 @@ export function HeroSection() {
           >
             {/* Primary — solid red pill */}
             <a
-              href="/contact"
+              href="#admissions"
               data-testid="button-hero-callback"
               className="inline-flex items-center justify-center gap-2.5 rounded-full font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:scale-[1.03]"
               style={{
@@ -130,16 +143,20 @@ export function HeroSection() {
                 boxShadow: "0 10px 40px rgba(220,38,38,0.48), 0 4px 18px rgba(220,38,38,0.30), inset 0 1px 0 rgba(255,255,255,0.22)",
                 textDecoration: "none",
               }}
-              onClick={() => trackCTAClick("request_callback", "hero")}
+              onClick={() => {
+                trackCTAClick("book_visit", "hero");
+                scrollToAdmissions();
+              }}
             >
               <Phone className="w-4 h-4 flex-shrink-0" />
-              Request a Callback
+              Book a Visit
             </a>
 
-            {/* Ghost — frosted pill */}
             <a
-              href="/programmes"
-              data-testid="button-hero-programmes"
+              href={HOME_ADMISSIONS_WHATSAPP}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-testid="button-hero-whatsapp"
               className="inline-flex items-center justify-center gap-2.5 rounded-full font-semibold text-white group transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/18"
               style={{
                 height: 60,
@@ -151,15 +168,19 @@ export function HeroSection() {
                 border: "1px solid rgba(255,255,255,0.30)",
                 textDecoration: "none",
               }}
-              onClick={() => trackCTAClick("explore_programmes", "hero")}
+              onClick={() => trackCTAClick("whatsapp", "hero")}
             >
-              Explore Programmes
-              <ArrowRight className="w-4 h-4 flex-shrink-0 transition-transform duration-200 group-hover:translate-x-1.5" />
+              WhatsApp
             </a>
           </div>
 
         </div>
       </div>
+      <nav aria-label="Quick contact" className="fixed bottom-0 inset-x-0 z-50 grid grid-cols-3 gap-1 bg-white border-t shadow-lg p-2 md:hidden">
+        <a className="rounded-full bg-amber-400 text-slate-950 text-center text-sm font-semibold py-3" href="tel:+918291568972">Call</a>
+        <a className="rounded-full bg-green-600 text-white text-center text-sm font-semibold py-3" href={HOME_ADMISSIONS_WHATSAPP} target="_blank" rel="noopener noreferrer">WhatsApp</a>
+        <a className="rounded-full bg-primary text-white text-center text-sm font-semibold py-3" href="#admissions" onClick={scrollToAdmissions}>Book a Visit</a>
+      </nav>
 
       {/* Bottom wave — unchanged */}
       <div className="absolute -bottom-1 left-0 right-0">

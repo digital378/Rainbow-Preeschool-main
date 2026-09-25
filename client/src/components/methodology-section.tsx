@@ -12,6 +12,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { HOME_CURRICULUM, HOME_HEADINGS } from "@shared/homepage-content";
 import { useState, useEffect, useRef, useCallback } from "react";
 
 // ─── Constants ─────────────────────────────────────────────────────────────
@@ -111,7 +112,7 @@ type AreaId = (typeof AREAS)[number]["id"];
 
 // ─── Component ─────────────────────────────────────────────────────────────
 
-export function MethodologySection() {
+export function MethodologySection({ homepage = false }: { homepage?: boolean }) {
   const [activeArea,     setActiveArea]     = useState<AreaId | null>(null);
   const [hoveredNode,    setHoveredNode]    = useState<AreaId | null>(null);
   const [hoveredChip,    setHoveredChip]    = useState<AreaId | null>(null);
@@ -226,7 +227,7 @@ export function MethodologySection() {
               className="text-3xl md:text-4xl font-bold mb-6 pb-4 relative inline-block"
               style={{ lineHeight: "1.15" }}
             >
-              Research-Based Curriculum for Every Child
+              {homepage ? HOME_HEADINGS.curriculum : "Research-Based Curriculum for Every Child"}
               <span
                 className="absolute left-0 h-1.5 md:h-2 w-full rounded-full bg-gradient-to-r from-primary via-red-400 to-secondary"
                 style={{ bottom: "0.5rem" }}
@@ -952,6 +953,13 @@ export function MethodologySection() {
             </div>
           </div>
         </div>
+        {homepage && (
+          <div className="sr-only" aria-label="Curriculum learning areas">
+            {HOME_CURRICULUM.map((area) => (
+              <p key={area.title}>{area.title}: {area.text}</p>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* ── Keyframe animations ─────────────────────────────────────────── */}

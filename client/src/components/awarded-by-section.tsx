@@ -1,13 +1,13 @@
 import { useRef, useEffect } from "react";
+import { HOME_AWARDS, HOME_UPDATED_DISPLAY } from "@shared/homepage-content";
 
 /* ── image paths (unchanged) ── */
-const indiaToday         = "/images/optimized/india-today.webp";
-const thaneMunicipal     = "/images/optimized/tmc-logo.webp";
-const scooNewsLight      = "/images/optimized/scoonews-light.webp";
-const scooNewsDark       = "/images/optimized/scoonews-dark.webp";
-const worldEducationSummit = "/images/optimized/wes-mumbai.webp";
-const economicTimes      = "/images/optimized/economic-times.webp";
-const nsaAward           = "/images/optimized/nsa-award.webp";
+const indiaToday         = "/images/optimized/India_Today.webp";
+const thaneMunicipal     = "/images/optimized/Thane-Municipal-Cooperation-Logo.webp";
+const scooNewsLight      = "/images/optimized/Scoo_News_(For_Light_Mode).webp";
+const scooNewsDark       = "/images/optimized/Scoo_News_(For_Dark_Mode).webp";
+const economicTimes      = "/images/optimized/The_Economic_Times.webp";
+const nsaAward           = "/images/optimized/National_School_Awards.webp";
 
 interface AwardLogo {
   name: string;
@@ -22,7 +22,6 @@ const awardLogos: AwardLogo[] = [
   { name: "India Today",          src: indiaToday,          alt: "India Today Award",                      url: "https://www.indiatoday.in" },
   { name: "Thane Municipal Corporation", src: thaneMunicipal, alt: "Thane Municipal Corporation Recognition", url: "https://thanecity.gov.in/tmc/CitizenHome.html" },
   { name: "Scoo News",            src: scooNewsLight, srcDark: scooNewsDark, alt: "Scoo News Feature",     url: "https://scoonews.com/" },
-  { name: "World Education Summit", src: worldEducationSummit, alt: "15th World Education Summit Mumbai",  url: "https://www.educationsummit.com/" },
   { name: "Economic Times",       src: economicTimes,       alt: "Economic Times Feature",                 url: "https://economictimes.indiatimes.com/" },
   { name: "NSA Award",            src: nsaAward,            alt: "National School Awards 2023",            url: "http://nationalschoolawards.in/" },
 ];
@@ -32,7 +31,7 @@ const awardLogos: AwardLogo[] = [
    Seamless marquee · grayscale at rest → full colour on hover · pause on hover
    Fade-mask edges · scroll entrance · prefers-reduced-motion static fallback
 ───────────────────────────────────────────────────────────────────────────── */
-export function AwardedBySection() {
+export function AwardedBySection({ homepageAwards }: { homepageAwards?: typeof HOME_AWARDS }) {
   const sectionRef = useRef<HTMLElement>(null);
 
   /* Scroll entrance: add .ab-in class when section crosses threshold */
@@ -168,6 +167,10 @@ export function AwardedBySection() {
         lineHeight: 1.65,
       }}>
         Recognised by leading national and education platforms for excellence in early childhood education.
+        {homepageAwards?.filter((award) => !award.logo).map((award) => (
+          <span key={`${award.name}-${award.year}`}> {award.name} — {award.body}, {award.year}.</span>
+        ))}
+        {homepageAwards && ` Last updated ${HOME_UPDATED_DISPLAY}.`}
       </p>
 
       {/* Marquee wrapper — edge fade masks */}
@@ -185,37 +188,66 @@ export function AwardedBySection() {
         <div className="ab-track">
 
           {/* ── Real logos: read by screen readers, keyboard-focusable ── */}
-          {awardLogos.map((logo) => (
-            <a
-              key={logo.name}
-              href={logo.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="ab-logo-link"
-              data-testid={`link-award-${logo.name.toLowerCase().replace(/\s+/g, "-")}`}
-            >
-              {logo.srcDark ? (
-                <>
-                  <img src={logo.src}     alt={logo.alt} loading="lazy" decoding="async" className="dark:hidden" />
-                  <img src={logo.srcDark} alt={logo.alt} loading="lazy" decoding="async" className="hidden dark:block" />
-                </>
-              ) : (
-                <img src={logo.src} alt={logo.alt} loading="lazy" decoding="async" />
-              )}
-            </a>
-          ))}
+          {awardLogos.map((logo) => {
+            const caption = homepageAwards?.find((award) =>
+              (logo.name === "India Today" && award.body === "India Today")
+              || (logo.name === "Thane Municipal Corporation" && award.body === "Thane Municipal Corporation")
+              || (logo.name === "Scoo News" && award.body === "ScooNews")
+              || (logo.name === "NSA Award" && award.body.includes("National School")),
+            );
+            return (
+              <a
+                key={logo.name}
+                href={logo.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="ab-logo-link"
+                style={caption ? { flexDirection: "column" } : undefined}
+                data-testid={`link-award-${logo.name.toLowerCase().replace(/\s+/g, "-")}`}
+              >
+                {logo.srcDark ? (
+                  <>
+                    <img src={logo.src}     alt={logo.alt} loading="lazy" decoding="async" className="dark:hidden" />
+                    <img src={logo.srcDark} alt={logo.alt} loading="lazy" decoding="async" className="hidden dark:block" />
+                  </>
+                ) : (
+                  <img src={logo.src} alt={logo.alt} loading="lazy" decoding="async" />
+                )}
+                {caption && (
+                  <span style={{ maxWidth: 220, marginTop: 8, whiteSpace: "normal", textAlign: "center", color: "var(--foreground)", fontSize: 12, lineHeight: 1.35 }}>
+                    <strong style={{ display: "block" }}>{caption.name}</strong>
+                    <span style={{ display: "block", marginTop: 3, color: "#6B7280" }}>{caption.body} · {caption.year}</span>
+                  </span>
+                )}
+              </a>
+            );
+          })}
 
           {/* ── Duplicate logos: aria-hidden, not focusable, seamless loop ── */}
-          {awardLogos.map((logo) => (
-            <span
-              key={`${logo.name}-dup`}
-              aria-hidden="true"
-              className="ab-logo-link ab-dup"
-              style={{ cursor: "default" }}
-            >
-              <img src={logo.src} alt="" loading="lazy" decoding="async" />
-            </span>
-          ))}
+          {awardLogos.map((logo) => {
+            const caption = homepageAwards?.find((award) =>
+              (logo.name === "India Today" && award.body === "India Today")
+              || (logo.name === "Thane Municipal Corporation" && award.body === "Thane Municipal Corporation")
+              || (logo.name === "Scoo News" && award.body === "ScooNews")
+              || (logo.name === "NSA Award" && award.body.includes("National School")),
+            );
+            return (
+              <span
+                key={`${logo.name}-dup`}
+                aria-hidden="true"
+                className="ab-logo-link ab-dup"
+                style={{ cursor: "default", flexDirection: caption ? "column" : undefined }}
+              >
+                <img src={logo.src} alt="" loading="lazy" decoding="async" />
+                {caption && (
+                  <span style={{ maxWidth: 220, marginTop: 8, whiteSpace: "normal", textAlign: "center", color: "var(--foreground)", fontSize: 12, lineHeight: 1.35 }}>
+                    <strong style={{ display: "block" }}>{caption.name}</strong>
+                    <span style={{ display: "block", marginTop: 3, color: "#6B7280" }}>{caption.body} · {caption.year}</span>
+                  </span>
+                )}
+              </span>
+            );
+          })}
 
         </div>
       </div>

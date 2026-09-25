@@ -231,8 +231,12 @@ function renderImageHtml(image: {
   caption?: string;
 }): string {
   if (!/^\/(?:images|assets|blog|blog-assets)\/[A-Za-z0-9_./-]+$/.test(image.src) || image.src.includes("..")) return "";
-  const width = image.width === undefined ? "" : ` width="${image.width}"`;
-  const height = image.height === undefined ? "" : ` height="${image.height}"`;
+  const width = Number.isInteger(image.width) && image.width! > 0 && image.width! <= 10000
+    ? ` width="${image.width}"`
+    : "";
+  const height = Number.isInteger(image.height) && image.height! > 0 && image.height! <= 10000
+    ? ` height="${image.height}"`
+    : "";
   const imageHtml = `<img src="${escapeHtml(image.src)}" alt="${escapeHtml(image.alt)}"${width}${height} loading="lazy" />`;
   return image.caption
     ? `<figure>${imageHtml}<figcaption>${escapeHtml(image.caption)}</figcaption></figure>`
@@ -276,7 +280,10 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
     if (Array.isArray(t)) return t.some((v) => v === "Article" || v === "BlogPosting");
     return false;
   });
-  if (seo.lastModified && !hasExistingArticle) {
+  // The homepage owns its complete WebPage/organization/preschool graph in
+  // shared/homepage-content.ts. Do not append a generic Article there.
+  const isHomepage = requestUrl === "/";
+  if (seo.lastModified && !hasExistingArticle && !isHomepage) {
     // E-E-A-T: emit a rich Article with reviewedBy for pages that don't already
     // have their own Article/BlogPosting in structuredData. Blog posts are excluded
     // here because their ssr-pages.ts entry already includes BlogPosting + reviewedBy.
@@ -311,17 +318,87 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
 
 
   const structuredDataScripts = allStructuredData
-    .map((data) => `<script type="application/ld+json">${JSON.stringify(data)}</script>`)
+    .map((data) => `<script type="application/ld+json">${JSON.stringify(data)
+      .replace(/</g, "\\u003c")
+      .replace(/>/g, "\\u003e")
+      .replace(/&/g, "\\u0026")}</script>`)
     .join("\n    ");
+
+  const renderSafeLink = (link: { text: string; url: string }): string => {
+    let href: string | null = null;
+    let external = false;
+    if (/^#[A-Za-z][A-Za-z0-9_-]*$/.test(link.url)) {
+      href = link.url;
+    } else if (/^tel:\+?\d+$/.test(link.url)) {
+      href = link.url;
+    } else if (link.url.startsWith("/") && !link.url.startsWith("//") && !link.url.includes("..")) {
+      const fragment = link.url.match(/#([A-Za-z][A-Za-z0-9_-]*)$/)?.[1];
+      const linkPath = fragment ? link.url.slice(0, link.url.lastIndexOf("#")) : link.url;
+      const assetPath = /^\/assets\/[A-Za-z0-9_./-]+$/.test(linkPath) ? linkPath : null;
+      const internalPath = assetPath ? null : finalInternalPath(linkPath);
+      const safePath = assetPath || internalPath;
+      href = safePath ? `${BASE_URL}${safePath}${fragment ? `#${fragment}` : ""}` : null;
+    } else {
+      try {
+        const parsed = new URL(link.url);
+        if (parsed.protocol === "https:" && !parsed.username && !parsed.password) {
+          href = parsed.toString();
+          external = true;
+        }
+      } catch {
+        href = null;
+      }
+    }
+    if (!href) return "";
+    return `<a href="${escapeHtml(href)}"${external ? ' rel="noopener noreferrer"' : ""}>${escapeHtml(link.text)}</a>`;
+  };
 
   const contentHtml = (seo.contentSections || [])
     .map((section) => {
-      let html = `<section>`;
+      const safeId = section.id && /^[A-Za-z][A-Za-z0-9_-]*$/.test(section.id)
+        ? ` id="${escapeHtml(section.id)}"`
+        : "";
+      let html = `<section${safeId}>`;
       if (section.heading) {
         html += `<h2>${escapeHtml(section.heading)}</h2>\n`;
       }
       if (section.text) {
         html += `<p>${escapeHtml(section.text)}</p>\n`;
+      }
+      if (section.cards) {
+        html += `<div class="cards">\n`;
+        for (const card of section.cards) {
+          if (card.groupHeading) html += `<h3 class="card-group-heading">${escapeHtml(card.groupHeading)}</h3>`;
+          html += `<article class="card">`;
+          if (Number.isInteger(card.number) && card.number! > 0) {
+            html += `<span class="step-number">${card.number}</span>`;
+          }
+          if (card.quote) html += `<blockquote>${escapeHtml(card.quote)}</blockquote>`;
+          if (card.image) html += `${renderImageHtml(card.image)}`;
+          if (card.eyebrow) html += `<p class="card-eyebrow">${escapeHtml(card.eyebrow)}</p>`;
+          if (card.title) html += `<h3>${escapeHtml(card.title)}</h3>`;
+          if (card.text) html += `<p>${escapeHtml(card.text)}</p>`;
+          if (card.details?.length) {
+            html += "<dl>";
+            for (const detail of card.details) {
+              html += `<dt>${escapeHtml(detail.label)}</dt><dd>${escapeHtml(detail.value)}</dd>`;
+            }
+            html += "</dl>";
+          }
+          if (card.segments?.length) {
+            html += "<p>";
+            for (const segment of card.segments) {
+              const segmentLink = segment.href ? renderSafeLink({ text: segment.text, url: segment.href }) : "";
+              html += segmentLink || escapeHtml(segment.text);
+            }
+            html += "</p>";
+          }
+          if (card.links?.length) {
+            html += `<p class="card-links">${card.links.map(renderSafeLink).filter(Boolean).join(" · ")}</p>`;
+          }
+          html += "</article>\n";
+        }
+        html += "</div>\n";
       }
       if (section.items) {
         html += "<ul>\n";
@@ -333,10 +410,8 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
       if (section.links && section.links.length > 0) {
         html += "<ul>\n";
         section.links.forEach((link) => {
-          const hrefPath = finalInternalPath(link.url || "");
-          const href = hrefPath ? `${BASE_URL}${hrefPath}` : null;
-          if (!href) return;
-          html += `<li><a href="${escapeHtml(href)}">${escapeHtml(link.text)}</a></li>\n`;
+          const safeLink = renderSafeLink(link);
+          if (safeLink) html += `<li>${safeLink}</li>\n`;
         });
         html += "</ul>\n";
       }
@@ -360,6 +435,9 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
         });
         html += "</tbody>\n</table>\n";
       }
+      if (section.footerText) {
+        html += `<p>${escapeHtml(section.footerText)}</p>\n`;
+      }
       html += `</section>`;
       return html;
     })
@@ -382,6 +460,22 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
         <div>${escapeHtml(BLOG_LIST_COPY.readArticle)}</div>
       </article></a>`).join("\n")}</div></section>`
     : "";
+  const freshnessHtml = seo.lastModified
+    ? `<p style="font-size:0.875rem;color:#666;margin:8px 0 16px"><strong>Reviewed by Rainbow Preschool Curriculum Team</strong> — Last updated: <time datetime="${escapeHtml(seo.lastModified)}">${escapeHtml(seo.lastModifiedDisplay || seo.lastModified)}</time></p>`
+    : "";
+  const heroHtml = seo.brandLine
+    ? `<section class="hero">
+      <p class="brand-line">${escapeHtml(seo.brandLine)}</p>
+      <h1>${escapeHtml(seo.h1 || seo.title)}</h1>
+      ${seo.introText ? `<p>${escapeHtml(seo.introText)}</p>` : ""}
+      ${seo.heroStats?.length ? `<ul class="hero-stats">${seo.heroStats.map((stat) => `<li>${escapeHtml(stat)}</li>`).join("")}</ul>` : ""}
+      ${seo.heroActions?.length ? `<p class="hero-actions">${seo.heroActions.map(renderSafeLink).filter(Boolean).join(" · ")}</p>` : ""}
+      ${(seo.images || []).map(renderImageHtml).join("\n")}
+    </section>`
+    : `<h1>${escapeHtml(seo.h1 || seo.title)}</h1>
+      ${freshnessHtml}
+      ${seo.introText ? `<p>${escapeHtml(seo.introText)}</p>` : ""}
+      ${(seo.images || []).map(renderImageHtml).join("\n")}`;
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -422,12 +516,27 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
       header a{color:#fff;text-decoration:none;margin-right:16px}
       main{max-width:960px;margin:0 auto;padding:24px 16px}
       h1{font-family:Poppins,sans-serif;font-size:2rem;margin-bottom:16px}
+      .brand-line{font-family:Poppins,sans-serif;font-size:2rem;font-weight:700;margin:0}
+      .hero{padding-bottom:16px}
+      .hero-stats{display:flex;flex-wrap:wrap;gap:10px;padding:0;list-style:none}
+      .hero-stats li{background:#fff7ed;border-radius:999px;padding:6px 12px}
       h2{font-family:Poppins,sans-serif;font-size:1.5rem;margin-top:32px}
       footer{background:#f5f5f5;padding:24px 16px;text-align:center;margin-top:48px;border-top:1px solid #ddd}
       footer a{color:#dc2626;margin:0 8px}
       a{color:#dc2626}
       ul{padding-left:20px}
       li{margin-bottom:8px}
+      .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+      .card-group-heading{grid-column:1/-1}
+      .card{border:1px solid #e5e7eb;border-radius:10px;padding:16px;background:#fff}
+      .card img{display:block;max-width:100%;height:auto;border-radius:6px;margin:8px 0}
+      .card-links{display:flex;flex-wrap:wrap;gap:10px}
+      .card-eyebrow{font-size:.875rem;font-weight:600;color:#dc2626;margin:0}
+      .card blockquote{margin:8px 0}
+      .card dl{margin:8px 0}
+      .card dt{font-weight:700}
+      .card dd{margin:0 0 8px}
+      .step-number{display:inline-grid;place-items:center;width:32px;height:32px;border-radius:50%;background:#dc2626;color:#fff;font-weight:700}
       .nav{display:flex;gap:16px;flex-wrap:wrap}
       .breadcrumb{font-size:0.875rem;color:#666;margin-bottom:16px}
       .breadcrumb a{color:#dc2626}
@@ -449,10 +558,7 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
     </header>
     <main>
       ${seo.breadcrumbs ? `<div class="breadcrumb">${seo.breadcrumbs.map((b) => `<a href="${BASE_URL}${b.url}">${escapeHtml(b.name)}</a>`).join(" › ")}</div>` : ""}
-      <h1>${escapeHtml(seo.h1 || seo.title)}</h1>
-      ${seo.lastModified ? `<p style="font-size:0.875rem;color:#666;margin:8px 0 16px"><strong>Reviewed by Rainbow Preschool Curriculum Team</strong> — Last updated: <time datetime="${seo.lastModified}">${escapeHtml(seo.lastModifiedDisplay || seo.lastModified)}</time></p>` : ""}
-      ${seo.introText ? `<p>${escapeHtml(seo.introText)}</p>` : ""}
-      ${(seo.images || []).map(renderImageHtml).join("\n")}
+      ${heroHtml}
       ${contentHtml}
       ${blogControlsHtml}
       ${blogCardsHtml}
@@ -469,7 +575,7 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
         <a href="${BASE_URL}/nursery">Nursery</a>
         <a href="${BASE_URL}/kindergarten">Kindergarten</a>
         <a href="${BASE_URL}/preschool-admissions">Admissions</a>
-        <a href="${BASE_URL}/best-preschool-near-me-in-thane">Best Preschool in Thane</a>
+        <a href="${BASE_URL}/best-preschool-near-me-in-thane">Find a preschool near you</a>
         <a href="${BASE_URL}/play-school-near-me">Play School Near Me</a>
       </div>
       <p><a href="https://rainbowinternationalschool.in" rel="noopener">Rainbow International School</a> — CBSE K–12, Nursery to Class 12</p>

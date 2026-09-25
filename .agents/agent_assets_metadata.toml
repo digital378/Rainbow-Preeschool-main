@@ -182,3 +182,17 @@ mtime_ms = 1790234047046
 storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:0c61580c-1c60-4ec3-afe4-28e8a9482287/dd2b7d6e-6355-43ae-ac70-52b9f0f0f5d0/627cadfe-1d7b-4a02-8177-378523914d3b"
 storage_version_token = "1790234221153298"
 content_type = "image/png"
+
+[[outputs]]
+id = "nYEZk8XBoTIXYr8lYA22p"
+uri = "file://screenshots/homepage-freeze/comparison.html"
+type = "html"
+title = "Updated homepage before-and-after review"
+description = "The admissions photo, trust badge and contact buttons are restored. Review every touched section at 390px and 1366px, plus the remaining verification gaps."
+logical_id = "b7d62c06-d84c-48ac-ab84-2a6ff5cb5c3d"
+content_hash = "sha256:abbfb3ac1ec61d8d5e814e3b77719c8c183390ed5ec31fb05afb2db72e0cd14c"
+size = 11068787
+mtime_ms = 1790322444751
+storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:0c61580c-1c60-4ec3-afe4-28e8a9482287/b7d62c06-d84c-48ac-ab84-2a6ff5cb5c3d/4cb22c33-55d7-40b8-a13e-7f58c7f6d3a4"
+storage_version_token = "1790322476859951"
+content_type = "text/html"

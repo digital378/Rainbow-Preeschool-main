@@ -34,7 +34,7 @@ export function HomeRainbowTheatre() {
   return (
     <section ref={sectionRef} className="home-rainbow-reel" aria-label="Rainbow Theatre">
       <div className="home-rainbow-reel__inner">
-        <RainbowTheatre active={active} enabled={loaded} endpoint="/api/instagram/reels" variant="homepage" />
+        <RainbowTheatre active={active} enabled={loaded} endpoint="/api/instagram/reels" variant="homepage" tapToPlay />
       </div>
     </section>
   );

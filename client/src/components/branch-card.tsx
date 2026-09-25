@@ -13,6 +13,8 @@ import {
 
 interface BranchCardProps {
   branch: Branch;
+  landmark?: string;
+  openingHours?: string;
   copy?: {
     view: string;
     localCentre: string;
@@ -33,7 +35,7 @@ const branchToLocalPage: Record<string, { url: string; locality: string }> = {
   "kasarvadavali": { url: "/preschool-in-kasarvadavali-thane", locality: "Kasarvadavali" },
 };
 
-export function BranchCard({ branch, copy = { view: "View", localCentre: "Centre", whatsapp: "WhatsApp", directions: "Directions" } }: BranchCardProps) {
+export function BranchCard({ branch, landmark, openingHours, copy = { view: "View", localCentre: "Centre", whatsapp: "WhatsApp", directions: "Directions" } }: BranchCardProps) {
   const localPage = copy.localPages?.[branch.id] || branchToLocalPage[branch.id];
   const whatsappNumber = branch.whatsapp?.replace(/\s/g, "");
   const landline = 'landline' in branch ? branch.landline : undefined;
@@ -92,6 +94,12 @@ export function BranchCard({ branch, copy = { view: "View", localCentre: "Centre
         <p className="text-sm text-muted-foreground leading-relaxed mb-4">
           {branch.address}
         </p>
+        {(landmark || openingHours) && (
+          <p className="flex items-start gap-2 text-sm text-muted-foreground leading-relaxed mb-4">
+            <MapPin className="w-4 h-4 mt-0.5 shrink-0" />
+            <span>{landmark && `Landmark: ${landmark}`}{landmark && openingHours && " · "}{openingHours}</span>
+          </p>
+        )}
 
         <div className="space-y-2 mb-4">
           {landline && (

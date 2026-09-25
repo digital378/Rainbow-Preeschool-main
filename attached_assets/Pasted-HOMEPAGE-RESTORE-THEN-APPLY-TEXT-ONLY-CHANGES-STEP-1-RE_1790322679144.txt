@@ -1,0 +1,103 @@
+HOMEPAGE: RESTORE, THEN APPLY TEXT-ONLY CHANGES
+
+STEP 1 — RESTORE
+Revert the homepage and every component you changed for it to the version from the checkpoint before the "Homepage SEO rebuild (Brief 1)" task. The restored page must look identical to that version: same components, fonts, font weights, heading sizes, two-colour accent headings, backgrounds, spacing, animations and card designs. Do not rebuild any section.
+
+STEP 2 — DESIGN RULES FOR THIS TASK
+- Reuse every existing section exactly as it was. Only change the text, order, links and code listed below.
+- Every heading keeps its original font, weight, size and colour style, including the orange/yellow accent on the last words (e.g. "A world built for [little explorers]").
+- Do not merge sections. Do not add new layouts, cards, widgets or images.
+- Do not invent facts. If a fact is not written in this message, leave that text out.
+
+STEP 3 — FINAL SECTION ORDER (existing sections only)
+1. Hero
+2. The Rainbow Theatre
+3. Recognised & Awarded
+4. Why Parents Choose Rainbow Preschool
+5. A world built for little explorers
+6. Programmes
+7. Why Choose Us: A Trusted Early Learning Journey Since 2007
+8. Our Methodology
+9. Testimonials: Parents from Thane Say...
+10. Request A Callback
+11. Our Preschool Centres Across Thane
+12. Frequently Asked Questions
+Removed: "Start Exploring" quick links, the "Quick Callback" strip, and the "Helpful guides for Thane parents" line.
+
+STEP 4 — TEXT CHANGES, SECTION BY SECTION
+
+1. Hero (same design)
+   - "Rainbow Preschool" stays exactly as it looks, but becomes a styled <p> or <div>, not a heading.
+   - The existing subline "Playschool · Nursery · Kindergarten" becomes the page's only H1, in exactly the same style and size, with the text: "Preschool in Thane · Playgroup, Nursery & Kindergarten"
+   - Tagline stays as it was: "Thane's trusted preschool since 2007 — where every child's first steps into learning are joyful, safe, and full of wonder."
+   - Stat chips: 18+ Years of Excellence, 6 Centres Across Thane, 100% Female Staff. Remove "1,00,000+ Young Learners".
+   - Buttons unchanged: "Request a Callback" and "Explore Programmes".
+   - H1 in the prepaint hero, no entrance animation on it.
+
+2. The Rainbow Theatre (same design, same position as before)
+   - Only change: each reel shows its poster image and loads from Instagram only when tapped. No "Loading…" text.
+
+3. Recognised & Awarded (same logo marquee)
+   - Remove the empty "Awarded By:" label.
+   - Remove the award text paragraph and the "Last updated" line inside it.
+   - Show only these under the logos, in the existing small caption style:
+     • Best Preschool in Thane — 2018, 2023
+     • Cleanest Preschool — 2020
+     • Most Promising Preschool Chain of the Year — 2021
+     • Emerging Preschool Chain of the Year — 2022
+   - Do NOT show any awarding organisation until I confirm it. Remove "Excellence in Preschool Education, India Today, 2017"; it is not confirmed.
+
+4. Why Parents Choose Rainbow Preschool (same design)
+   - Paragraph text: "Trusted by Thane families since 2007, Rainbow Preschool International welcomes children from 1.5 to 5.5 years at our 6 centres in Manpada, Kasarvadavali, Anand Nagar, Hariniwas, Dhokali and Kalwa. We offer playgroup, nursery and kindergarten, all built around play-based learning."
+   - Keep the locality chips and the illustration.
+   - Fix the stats cards in the same card design: each card shows one number with its correct label: "18+ | Years in Thane", "6 | Centres", "100% | Female Staff", "30:2 | Student–Teacher Ratio". Remove the "4.9 ★" rating card, the "A B C D" avatars, and every form label ("Your Name", "Call Now", "Phone Number", "Child's Age", "Get a Free Callback") inside these cards.
+
+5. A world built for little explorers (same design, same heading)
+   - Chips: "Expert Teachers" → "Certified Teachers"; "Small Batches" → "30:2 Student–Teacher Ratio". Keep "Play-Based Learning" and "CCTV-Safe Campuses".
+   - The video shows a poster image and plays on tap. Keep the photo strip below it as it was.
+
+6. Programmes (same design)
+   - Heading in the same two-colour style: "Playgroup, Nursery & Kindergarten in [Thane]" (accent on "Thane").
+   - Kindergarten age badge: 3.5–5.5 years.
+   - Remove the extra "A day includes…" lines, so the cards match the original.
+   - Card links named "Learn more about Playgroup", "Learn more about Nursery", "Learn more about Kindergarten", "Learn more about Happy Times" (same link style).
+
+7. Why Choose Us (same design, same heading)
+   - GPS Transport card text: "Safe, GPS-enabled in-house transport at all six centres, with real-time tracking for parents."
+
+8. Our Methodology (same design)
+   - Heading: "Play-Based Curriculum for [Every Child]" (replaces "Research-Based").
+   - All six tab texts present in the page HTML, not only after clicking.
+
+9. Testimonials: unchanged.
+
+10. Request A Callback (same design)
+    - This is the only enquiry form on the page. Keep its video, "Why Us" and buttons exactly as they were.
+
+11. Our Preschool Centres Across Thane (same design, same heading, now just above the FAQ)
+    - Keep the 6 cards exactly as they were.
+    - Add one line to each card, in the card's existing grey address text style: "Classes: …"
+      • Aggarwal Centre (Manpada): Playgroup to Grade 4
+      • Kalwa Centre: Playgroup to Grade 4
+      • Kasarvadavali Centre: Playgroup to Grade 3
+      • Hariniwas Centre: Playgroup to Grade 3
+      • Anand Nagar Centre: Playgroup to Grade 2
+      • Dhokali Centre: Playgroup to Sr. KG
+    - Remove the hours line ("Monday–Saturday, 9:00 AM–6:00 PM"); it is not verified. I will send the hours.
+
+12. Frequently Asked Questions (same design)
+    - Ages answer: Playgroup 1.5–2.5, Nursery 2.5–3.5, Kindergarten (Jr. KG and Sr. KG) 3.5–5.5 years.
+    - Timings answer: "Timings vary by centre and programme; please call your nearest centre." (until I send verified hours)
+    - Transport answer: GPS-enabled in-house transport at all six centres.
+    - Add: "Is Rainbow Preschool International part of Rainbow International School?" with a one-line answer and a link to the school's website.
+    - Add: "When is the right age to start preschool?" with a short answer and a link to /blog/what-age-start-play-school.
+
+STEP 5 — NON-VISUAL SEO (no visible change)
+- Title: "Preschool in Thane | Playgroup, Nursery & KG | Rainbow"
+- Meta description: "Playgroup, nursery and KG for ages 1.5 to 5.5 at 6 Rainbow Preschool International centres in Thane, since 2007. Book a free visit for 2026-27."
+- Bot HTML matches the visitor page for every section above, including centre addresses and phones.
+- Structured data: WebPage; one organisation entry for Rainbow Preschool International (logo, foundingDate 2007, phone, sameAs); each centre as a Preschool entry with address and phone. No opening hours and no award or rating markup until confirmed.
+
+STEP 6 — BEFORE OFFERING PUBLISH
+- Screenshots of every section at 390 px and 1366 px, next to the same section from the restored checkpoint. Any visual difference beyond the text and chip changes listed here = fix it first.
+- Bot vs visitor parity on / ; 3 mobile Lighthouse runs; no console errors; the form submits.

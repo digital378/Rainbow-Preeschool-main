@@ -27,11 +27,13 @@ export function RainbowTheatre({
   enabled = active,
   endpoint,
   variant = "walkthrough",
+  tapToPlay = false,
 }: {
   active: boolean;
   enabled?: boolean;
   endpoint?: string;
   variant?: "walkthrough" | "homepage";
+  tapToPlay?: boolean;
 }) {
   const {
     reels: sourceReels, isPending, isError, refetch, hasNextPage, fetchNextPage, isFetchingNextPage,
@@ -43,6 +45,7 @@ export function RainbowTheatre({
     [sourceReels, variant],
   );
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [startedByUser, setStartedByUser] = useState(false);
   const [soundOn, setSoundOn] = useState(variant === "homepage");
   const [playbackBlocked, setPlaybackBlocked] = useState(false);
   const [failedVideoId, setFailedVideoId] = useState<string | null>(null);
@@ -78,7 +81,7 @@ export function RainbowTheatre({
     if (!video) return;
     let cancelled = false;
     video.muted = !soundOn;
-    if (active && hasUsableMedia) {
+    if (active && hasUsableMedia && (!tapToPlay || startedByUser)) {
       void video.play().then(() => {
         if (!cancelled) setPlaybackBlocked(false);
       }).catch((error: unknown) => {
@@ -90,7 +93,7 @@ export function RainbowTheatre({
       video.pause();
     }
     return () => { cancelled = true; };
-  }, [active, currentReel, hasUsableMedia, overlayOpen, soundOn]);
+  }, [active, currentReel, hasUsableMedia, overlayOpen, soundOn, startedByUser, tapToPlay]);
 
   useEffect(() => {
     const onFullscreenChange = () => {
@@ -214,7 +217,16 @@ export function RainbowTheatre({
       className={`rainbow-theatre__player${inOverlay ? " rainbow-theatre__player--overlay" : ""}`}
       ref={inOverlay ? undefined : playerRef}
     >
-      {hasUsableMedia && currentReel?.mediaUrl ? (
+      {hasUsableMedia && currentReel?.mediaUrl && tapToPlay && !startedByUser ? (
+        <button
+          type="button"
+          aria-label="Play Rainbow Instagram reel"
+          onClick={() => setStartedByUser(true)}
+          style={{ position: "absolute", inset: 0, display: "block", width: "100%", height: "100%", padding: 0, border: 0, background: "transparent", cursor: "pointer" }}
+        >
+          {currentReel.thumbnailUrl && <img src={currentReel.thumbnailUrl} alt="" className="rainbow-theatre__video" />}
+        </button>
+      ) : hasUsableMedia && currentReel?.mediaUrl ? (
         <video
           ref={videoRef}
           key={currentReel.id}
