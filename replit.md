@@ -1,5 +1,14 @@
 # Rainbow Preschool International Website
 
+## Design freeze (set by the Digital Marketing Manager, 25 Sep 2026)
+- Never change the visual design or layout of any existing page or section unless the task names the exact visual change.
+- SEO and content tasks may only edit text, headings, links, metadata and structured data, move existing sections, and delete sections the task lists by name.
+- Always reuse the existing section components and their styling. Never replace a section with a new or generic component. Never merge sections into a new component.
+- Every heading keeps its original font, weight, size and colours, including the two-colour accent words.
+- Never invent facts (awards, awarding bodies, hours, numbers, dates). If a fact is not given in the task, leave it out and ask.
+- Before offering Publish, show before-and-after screenshots of every section touched, at 390 px and 1366 px. If anything looks different beyond what the task named, stop and ask.
+- If a task is unclear about design, ask first.
+
 ## Overview
 
 This project is a full-stack web application for Rainbow Preschool International, a preschool chain in Thane, India. It serves as a marketing and lead generation platform, showcasing educational programs, branch locations, and facilitating enquiries. The website aims to establish a robust, SEO-friendly online presence to attract and convert leads through comprehensive content, an engaging blog, and various contact options. The project also focuses on aggressive local SEO strategies and dedicated landing pages for ad campaigns to maximize market reach and conversion, ultimately contributing to business growth and market leadership in early childhood education.
