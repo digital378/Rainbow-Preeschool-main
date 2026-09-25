@@ -22,8 +22,8 @@
 }
 
 .walkthrough-spacer {
-  height: calc(100vh * 8.25);
-  height: calc(100svh * 8.25);
+  height: calc(100vh * 6.25);
+  height: calc(100svh * 6.25);
   pointer-events: none;
 }
 
@@ -216,7 +216,8 @@
   left: 16px;
   max-height: 56svh;
   overflow: auto;
-  overscroll-behavior: contain;
+  /* Let the page advance once a card reaches the end of its own content. */
+  overscroll-behavior-y: auto;
   padding: 20px 18px 18px;
   border-radius: 22px;
   background: rgb(255 255 255 / 96%);
@@ -265,8 +266,8 @@
 
 @media (min-aspect-ratio: 1 / 1) and (min-width: 720px) {
   .walkthrough-spacer {
-    height: calc(100vh * 17.875);
-    height: calc(100svh * 17.875);
+    height: calc(100vh * 8.125);
+    height: calc(100svh * 8.125);
   }
 
   .walkthrough-skip,

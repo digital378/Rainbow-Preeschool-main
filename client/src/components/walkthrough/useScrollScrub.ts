@@ -38,8 +38,7 @@ function clamp(value: number, min: number, max: number): number {
 }
 
 function sceneScrollSpans(total: number, viewportHeight: number, desktop: boolean) {
-  // Give the desktop camera time to render the frames between scene markers.
-  // Keep the shorter mobile scroll path unchanged.
+  // Keep roughly even scroll distance between scene markers.
   const first = Math.min(total / LAST, viewportHeight * (desktop ? 2.25 : 0.72));
   return { first, later: (total - first) / (LAST - 1) };
 }
@@ -73,6 +72,7 @@ export function useScrollScrub({
   const [activeScene, setActiveScene] = useState(0);
   const [labelScene, setLabelScene] = useState(0);
   const [videoReady, setVideoReady] = useState(false);
+  const [videoAligned, setVideoAligned] = useState(false);
 
   const onSceneChangeRef = useRef(onSceneChange);
   const targetTimeRef = useRef(0);
@@ -80,7 +80,6 @@ export function useScrollScrub({
   const activeSceneRef = useRef(0);
   const unlockRef = useRef(false);
   const seekRef = useRef<() => void>(() => undefined);
-  const cancelNavigationRef = useRef<(() => void) | null>(null);
 
   const presentFrame = useCallback((x: number) => {
     setFrameX((previous) => Math.abs(previous - x) > 0.003 ? x : previous);
@@ -96,8 +95,6 @@ export function useScrollScrub({
       onSceneChangeRef.current?.(nextActive);
     }
   }, []);
-
-  useEffect(() => () => cancelNavigationRef.current?.(), []);
 
   useEffect(() => {
     onSceneChangeRef.current = onSceneChange;
@@ -154,14 +151,18 @@ export function useScrollScrub({
           ? travelled / spans.first
           : 1 + (travelled - spans.first) / spans.later
         : 0;
-      // Scroll sets the camera destination. In video mode the presented frame,
-      // not the scroll wheel, determines when the scene's text changes.
+      // The scene and stills follow the user's scroll immediately, even if the
+      // video decoder needs time to catch up.
       targetTimeRef.current = clamp(
         x * durationRef.current / (SCENES.length - 1),
         0,
         durationRef.current,
       );
-      if (liteMode || !videoReady) presentFrame(x);
+      presentFrame(x);
+      if (!liteMode && videoReady &&
+          Math.abs((videoRef.current?.currentTime ?? 0) - targetTimeRef.current) > 0.6) {
+        setVideoAligned(false);
+      }
       seekRef.current();
     };
     const scheduleUpdate = () => {
@@ -178,7 +179,7 @@ export function useScrollScrub({
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", scheduleUpdate);
     };
-  }, [desktop, liteMode, presentFrame, spacerRef, stageRef, videoReady]);
+  }, [desktop, liteMode, presentFrame, spacerRef, stageRef, videoReady, videoRef]);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -190,8 +191,8 @@ export function useScrollScrub({
     let videoFrame = 0;
     let readyForDisplay = false;
     let usesVideoFrames = false;
-    let lastReverseSeek = 0;
     setVideoReady(false);
+    setVideoAligned(false);
 
     const schedulePlayback = () => {
       if (!disposed && !document.hidden && !playbackFrame) {
@@ -209,12 +210,11 @@ export function useScrollScrub({
       }
       try {
         if (gap > 0.1) {
-          // Let the camera travel through the intervening video frames rather
-          // than replacing each wheel movement with a single seeked still.
-          // A far-away rail jump starts near its destination.
-          if (gap > 8) {
+          // Large scroll jumps should not make the video play seconds behind
+          // the scene. Seek close, then play the remaining moving frames.
+          if (gap > 2.5) {
             video.pause();
-            video.currentTime = Math.max(0, desired - 2);
+            video.currentTime = Math.max(0, desired - 0.5);
           } else {
             video.playbackRate = clamp(gap * 2, 1, 4);
             if (video.paused) {
@@ -227,14 +227,11 @@ export function useScrollScrub({
           }
           schedulePlayback();
         } else if (gap < -0.1) {
-          // HTML video cannot play backwards. Decode short reverse steps so
-          // back-scrolling also shows the camera moving, rather than jumping.
+          // HTML video cannot play backwards; seek close to the new position
+          // rather than queuing dozens of tiny, expensive reverse decodes.
           video.pause();
           video.playbackRate = 1;
-          if (performance.now() - lastReverseSeek >= 65) {
-            lastReverseSeek = performance.now();
-            video.currentTime = Math.max(desired, video.currentTime - 0.24);
-          }
+          video.currentTime = Math.max(0, desired - 0.04);
           schedulePlayback();
         } else {
           video.pause();
@@ -248,7 +245,7 @@ export function useScrollScrub({
     const showVideo = () => {
       if (video.readyState < 2 || Math.abs(video.currentTime - targetTimeRef.current) >= 0.18) return;
       readyForDisplay = true;
-      presentFrame(clamp(video.currentTime * (SCENES.length - 1) / durationRef.current, 0, LAST));
+      setVideoAligned(true);
       setVideoReady(true);
     };
     const onLoadedMetadata = () => {
@@ -266,20 +263,21 @@ export function useScrollScrub({
     };
     const onSeeked = () => {
       if (!readyForDisplay) showVideo();
-      if (!usesVideoFrames && readyForDisplay) {
-        presentFrame(clamp(video.currentTime * (SCENES.length - 1) / durationRef.current, 0, LAST));
+      if (readyForDisplay && Math.abs(video.currentTime - targetTimeRef.current) < 0.3) {
+        setVideoAligned(true);
       }
       schedulePlayback();
     };
     const onTimeUpdate = () => {
-      if (readyForDisplay && !usesVideoFrames) {
-        presentFrame(clamp(video.currentTime * (SCENES.length - 1) / durationRef.current, 0, LAST));
+      if (readyForDisplay && !usesVideoFrames &&
+          Math.abs(video.currentTime - targetTimeRef.current) < 0.3) {
+        setVideoAligned(true);
       }
     };
     const onVideoFrame = (_now: number, metadata: { mediaTime: number }) => {
       if (disposed) return;
-      if (readyForDisplay) {
-        presentFrame(clamp(metadata.mediaTime * (SCENES.length - 1) / durationRef.current, 0, LAST));
+      if (readyForDisplay && Math.abs(metadata.mediaTime - targetTimeRef.current) < 0.3) {
+        setVideoAligned(true);
       }
       videoFrame = video.requestVideoFrameCallback(onVideoFrame);
     };
@@ -318,7 +316,7 @@ export function useScrollScrub({
       video.removeEventListener("error", onError);
       document.removeEventListener("visibilitychange", onVisibility);
     };
-  }, [desktop, liteMode, presentFrame, videoRef]);
+  }, [desktop, liteMode, videoRef]);
 
   useEffect(() => {
     if (liteMode) return;
@@ -351,7 +349,6 @@ export function useScrollScrub({
 
   const goToScene = useCallback(
     (index: number) => {
-      cancelNavigationRef.current?.();
       const stage = stageRef.current;
       const spacer = spacerRef.current;
       if (!stage || !spacer) return;
@@ -362,37 +359,6 @@ export function useScrollScrub({
       const spans = sceneScrollSpans(total, stage.clientHeight, desktop);
       const distance = sceneIndex === 0 ? 0 : spans.first + (sceneIndex - 1) * spans.later;
       const top = window.scrollY + bounds.top + distance + 2;
-      const start = window.scrollY;
-      const delta = top - start;
-      if (desktop && !reducedMotion && Math.abs(delta) > 3 &&
-          Math.abs(delta) <= stage.clientHeight * 3) {
-        // Native smooth scrolling crosses a whole scene in under a second,
-        // outrunning the video decoder. Pace adjacent-scene navigation so
-        // the camera can actually show the intervening frames.
-        const duration = Math.max(450, Math.abs(delta) / stage.clientHeight * 1000);
-        let frame = 0;
-        let beganAt = 0;
-        const cancel = () => {
-          window.cancelAnimationFrame(frame);
-          window.removeEventListener("wheel", cancel);
-          window.removeEventListener("touchstart", cancel);
-          window.removeEventListener("keydown", cancel);
-          if (cancelNavigationRef.current === cancel) cancelNavigationRef.current = null;
-        };
-        const tick = (now: number) => {
-          if (!beganAt) beganAt = now;
-          const progress = clamp((now - beganAt) / duration, 0, 1);
-          window.scrollTo(0, start + delta * progress);
-          if (progress < 1) frame = window.requestAnimationFrame(tick);
-          else cancel();
-        };
-        cancelNavigationRef.current = cancel;
-        window.addEventListener("wheel", cancel, { passive: true });
-        window.addEventListener("touchstart", cancel, { passive: true });
-        window.addEventListener("keydown", cancel);
-        frame = window.requestAnimationFrame(tick);
-        return;
-      }
       window.scrollTo({
         top,
         behavior: reducedMotion ? "auto" : "smooth",
@@ -412,5 +378,6 @@ export function useScrollScrub({
     toggleMotion: () => setMotionPreference(!motionEnabled),
     labelScene,
     videoReady: videoReady && !liteMode,
+    videoAligned: videoReady && videoAligned && !liteMode,
   };
 }
