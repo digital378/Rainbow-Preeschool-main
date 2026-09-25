@@ -44,7 +44,6 @@ export const WalkthroughStage = forwardRef<
     toggleMotion,
     labelScene,
     videoReady,
-    videoAligned,
   } = useScrollScrub({
     stageRef,
     spacerRef,
@@ -97,7 +96,7 @@ export const WalkthroughStage = forwardRef<
             />
           </>
         )}
-        <div className={`walkthrough-stills${videoAligned ? " is-faded" : ""}`} aria-hidden="true">
+        <div className={`walkthrough-stills${videoReady ? " is-faded" : ""}`} aria-hidden="true">
             <img
               className="walkthrough-still walkthrough-still--current"
               src={SCENES[currentIndex].still[stills]}

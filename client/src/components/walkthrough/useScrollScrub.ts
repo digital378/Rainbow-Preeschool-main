@@ -72,7 +72,6 @@ export function useScrollScrub({
   const [activeScene, setActiveScene] = useState(0);
   const [labelScene, setLabelScene] = useState(0);
   const [videoReady, setVideoReady] = useState(false);
-  const [videoAligned, setVideoAligned] = useState(false);
 
   const onSceneChangeRef = useRef(onSceneChange);
   const targetTimeRef = useRef(0);
@@ -159,10 +158,6 @@ export function useScrollScrub({
         durationRef.current,
       );
       presentFrame(x);
-      if (!liteMode && videoReady &&
-          Math.abs((videoRef.current?.currentTime ?? 0) - targetTimeRef.current) > 0.6) {
-        setVideoAligned(false);
-      }
       seekRef.current();
     };
     const scheduleUpdate = () => {
@@ -179,7 +174,7 @@ export function useScrollScrub({
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", scheduleUpdate);
     };
-  }, [desktop, liteMode, presentFrame, spacerRef, stageRef, videoReady, videoRef]);
+  }, [desktop, presentFrame, spacerRef, stageRef]);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -188,11 +183,8 @@ export function useScrollScrub({
     const source = desktop ? DESKTOP_VIDEO : MOBILE_LITE_VIDEO;
     let disposed = false;
     let playbackFrame = 0;
-    let videoFrame = 0;
     let readyForDisplay = false;
-    let usesVideoFrames = false;
     setVideoReady(false);
-    setVideoAligned(false);
 
     const schedulePlayback = () => {
       if (!disposed && !document.hidden && !playbackFrame) {
@@ -212,11 +204,11 @@ export function useScrollScrub({
         if (gap > 0.1) {
           // Large scroll jumps should not make the video play seconds behind
           // the scene. Seek close, then play the remaining moving frames.
-          if (gap > 2.5) {
+          if (gap > 1.4) {
             video.pause();
-            video.currentTime = Math.max(0, desired - 0.5);
+            video.currentTime = Math.max(0, desired - 0.18);
           } else {
-            video.playbackRate = clamp(gap * 2, 1, 4);
+            video.playbackRate = clamp(gap * 8, 1, 4);
             if (video.paused) {
               void video.play().catch(() => {
                 // Muted playback should be allowed, but preserve scrubbing on
@@ -245,7 +237,6 @@ export function useScrollScrub({
     const showVideo = () => {
       if (video.readyState < 2 || Math.abs(video.currentTime - targetTimeRef.current) >= 0.18) return;
       readyForDisplay = true;
-      setVideoAligned(true);
       setVideoReady(true);
     };
     const onLoadedMetadata = () => {
@@ -263,23 +254,7 @@ export function useScrollScrub({
     };
     const onSeeked = () => {
       if (!readyForDisplay) showVideo();
-      if (readyForDisplay && Math.abs(video.currentTime - targetTimeRef.current) < 0.3) {
-        setVideoAligned(true);
-      }
       schedulePlayback();
-    };
-    const onTimeUpdate = () => {
-      if (readyForDisplay && !usesVideoFrames &&
-          Math.abs(video.currentTime - targetTimeRef.current) < 0.3) {
-        setVideoAligned(true);
-      }
-    };
-    const onVideoFrame = (_now: number, metadata: { mediaTime: number }) => {
-      if (disposed) return;
-      if (readyForDisplay && Math.abs(metadata.mediaTime - targetTimeRef.current) < 0.3) {
-        setVideoAligned(true);
-      }
-      videoFrame = video.requestVideoFrameCallback(onVideoFrame);
     };
     const onVisibility = () => {
       if (document.hidden) video.pause();
@@ -293,26 +268,19 @@ export function useScrollScrub({
     video.addEventListener("loadedmetadata", onLoadedMetadata);
     video.addEventListener("loadeddata", onLoadedData);
     video.addEventListener("seeked", onSeeked);
-    video.addEventListener("timeupdate", onTimeUpdate);
     video.addEventListener("error", onError);
     document.addEventListener("visibilitychange", onVisibility);
-    if (typeof video.requestVideoFrameCallback === "function") {
-      usesVideoFrames = true;
-      videoFrame = video.requestVideoFrameCallback(onVideoFrame);
-    }
     video.src = source;
     video.load();
 
     return () => {
       disposed = true;
       window.cancelAnimationFrame(playbackFrame);
-      if (videoFrame) video.cancelVideoFrameCallback(videoFrame);
       video.pause();
       seekRef.current = () => undefined;
       video.removeEventListener("loadedmetadata", onLoadedMetadata);
       video.removeEventListener("loadeddata", onLoadedData);
       video.removeEventListener("seeked", onSeeked);
-      video.removeEventListener("timeupdate", onTimeUpdate);
       video.removeEventListener("error", onError);
       document.removeEventListener("visibilitychange", onVisibility);
     };
@@ -378,6 +346,5 @@ export function useScrollScrub({
     toggleMotion: () => setMotionPreference(!motionEnabled),
     labelScene,
     videoReady: videoReady && !liteMode,
-    videoAligned: videoReady && videoAligned && !liteMode,
   };
 }
