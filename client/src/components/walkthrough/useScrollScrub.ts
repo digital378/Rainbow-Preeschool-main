@@ -82,6 +82,21 @@ export function useScrollScrub({
   const seekRef = useRef<() => void>(() => undefined);
   const cancelNavigationRef = useRef<(() => void) | null>(null);
 
+  const presentFrame = useCallback((x: number) => {
+    setFrameX((previous) => Math.abs(previous - x) > 0.003 ? x : previous);
+    const segmentIndex = Math.min(Math.floor(x), SCENES.length - 1);
+    const fraction = x - segmentIndex;
+    const nextActive = segmentIndex >= SCENES.length - 1 || fraction < 0.5
+      ? segmentIndex
+      : segmentIndex + 1;
+    if (nextActive !== activeSceneRef.current) {
+      activeSceneRef.current = nextActive;
+      setActiveScene(nextActive);
+      setLabelScene(nextActive);
+      onSceneChangeRef.current?.(nextActive);
+    }
+  }, []);
+
   useEffect(() => () => cancelNavigationRef.current?.(), []);
 
   useEffect(() => {
@@ -139,32 +154,15 @@ export function useScrollScrub({
           ? travelled / spans.first
           : 1 + (travelled - spans.first) / spans.later
         : 0;
-      setFrameX((previous) => Math.abs(previous - x) > 0.003 ? x : previous);
-
-      const segmentIndex = Math.min(Math.floor(x), SCENES.length - 1);
-      const fraction = x - segmentIndex;
-      // Every scroll increment advances the camera, including the first one.
+      // Scroll sets the camera destination. In video mode the presented frame,
+      // not the scroll wheel, determines when the scene's text changes.
       targetTimeRef.current = clamp(
         x * durationRef.current / (SCENES.length - 1),
         0,
         durationRef.current,
       );
+      if (liteMode || !videoReady) presentFrame(x);
       seekRef.current();
-      // Switch panels midway through the camera move, never leaving a blank stage.
-      // Never leave an interval with no active panel.
-      const nextActive = segmentIndex >= SCENES.length - 1 ||
-        fraction < 0.5
-        ? segmentIndex
-        : segmentIndex + 1;
-
-      if (nextActive !== activeSceneRef.current) {
-        activeSceneRef.current = nextActive;
-        setActiveScene(nextActive);
-        if (nextActive >= 0) {
-          setLabelScene(nextActive);
-          onSceneChangeRef.current?.(nextActive);
-        }
-      }
     };
     const scheduleUpdate = () => {
       if (scheduled) return;
@@ -180,7 +178,7 @@ export function useScrollScrub({
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", scheduleUpdate);
     };
-  }, [desktop, spacerRef, stageRef]);
+  }, [desktop, liteMode, presentFrame, spacerRef, stageRef, videoReady]);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -188,35 +186,70 @@ export function useScrollScrub({
 
     const source = desktop ? DESKTOP_VIDEO : MOBILE_LITE_VIDEO;
     let disposed = false;
-    let seekTimer = 0;
-    let lastSeek = 0;
+    let playbackFrame = 0;
+    let videoFrame = 0;
+    let readyForDisplay = false;
+    let usesVideoFrames = false;
+    let lastReverseSeek = 0;
     setVideoReady(false);
 
-    const seekToTarget = () => {
-      if (disposed || video.readyState < 1 || video.seeking) return;
+    const schedulePlayback = () => {
+      if (!disposed && !document.hidden && !playbackFrame) {
+        playbackFrame = window.requestAnimationFrame(syncPlayback);
+      }
+    };
+    const syncPlayback = () => {
+      playbackFrame = 0;
+      if (disposed || document.hidden || video.readyState < 1) return;
       const desired = clamp(targetTimeRef.current, 0, Math.max(video.duration - 0.01, 0));
-      if (Math.abs(video.currentTime - desired) < 0.04) {
+      const gap = desired - video.currentTime;
+      if (video.seeking) {
+        schedulePlayback();
         return;
       }
-      lastSeek = performance.now();
       try {
-        video.currentTime = desired;
+        if (gap > 0.1) {
+          // Let the camera travel through the intervening video frames rather
+          // than replacing each wheel movement with a single seeked still.
+          // A far-away rail jump starts near its destination.
+          if (gap > 8) {
+            video.pause();
+            video.currentTime = Math.max(0, desired - 2);
+          } else {
+            video.playbackRate = clamp(gap * 2, 1, 4);
+            if (video.paused) {
+              void video.play().catch(() => {
+                // Muted playback should be allowed, but preserve scrubbing on
+                // browsers that block programmatic play.
+                if (!disposed && !video.seeking) video.currentTime = desired;
+              });
+            }
+          }
+          schedulePlayback();
+        } else if (gap < -0.1) {
+          // HTML video cannot play backwards. Decode short reverse steps so
+          // back-scrolling also shows the camera moving, rather than jumping.
+          video.pause();
+          video.playbackRate = 1;
+          if (performance.now() - lastReverseSeek >= 65) {
+            lastReverseSeek = performance.now();
+            video.currentTime = Math.max(desired, video.currentTime - 0.24);
+          }
+          schedulePlayback();
+        } else {
+          video.pause();
+          video.playbackRate = 1;
+          if (Math.abs(gap) > 0.04) video.currentTime = desired;
+        }
       } catch {
         setFailedToStills(true);
       }
     };
-    const scheduleSeek = () => {
-      if (disposed || document.hidden) return;
-      // Desktop scroll updates already arrive once per animation frame. Seek
-      // immediately, then catch up to the latest target after each seeked event.
-      if (desktop) {
-        seekToTarget();
-      } else if (!seekTimer) {
-        seekTimer = window.setTimeout(() => {
-          seekTimer = 0;
-          seekToTarget();
-        }, Math.max(0, 60 - (performance.now() - lastSeek)));
-      }
+    const showVideo = () => {
+      if (video.readyState < 2 || Math.abs(video.currentTime - targetTimeRef.current) >= 0.18) return;
+      readyForDisplay = true;
+      presentFrame(clamp(video.currentTime * (SCENES.length - 1) / durationRef.current, 0, LAST));
+      setVideoReady(true);
     };
     const onLoadedMetadata = () => {
       if (Number.isFinite(video.duration) && video.duration > 1) {
@@ -224,42 +257,68 @@ export function useScrollScrub({
       }
     };
     const onLoadedData = () => {
-      // If the visitor started scrolling during load, keep the still visible
-      // until the video has reached that part of the camera move.
-      if (Math.abs(video.currentTime - targetTimeRef.current) < 0.18) {
-        setVideoReady(true);
+      if (Math.abs(video.currentTime - targetTimeRef.current) >= 0.18) {
+        video.currentTime = targetTimeRef.current;
+      } else {
+        showVideo();
       }
-      scheduleSeek();
+      schedulePlayback();
     };
     const onSeeked = () => {
-      if (video.readyState >= 2) setVideoReady(true);
-      scheduleSeek();
+      if (!readyForDisplay) showVideo();
+      if (!usesVideoFrames && readyForDisplay) {
+        presentFrame(clamp(video.currentTime * (SCENES.length - 1) / durationRef.current, 0, LAST));
+      }
+      schedulePlayback();
     };
-    const onVisibility = () => { if (!document.hidden) scheduleSeek(); };
+    const onTimeUpdate = () => {
+      if (readyForDisplay && !usesVideoFrames) {
+        presentFrame(clamp(video.currentTime * (SCENES.length - 1) / durationRef.current, 0, LAST));
+      }
+    };
+    const onVideoFrame = (_now: number, metadata: { mediaTime: number }) => {
+      if (disposed) return;
+      if (readyForDisplay) {
+        presentFrame(clamp(metadata.mediaTime * (SCENES.length - 1) / durationRef.current, 0, LAST));
+      }
+      videoFrame = video.requestVideoFrameCallback(onVideoFrame);
+    };
+    const onVisibility = () => {
+      if (document.hidden) video.pause();
+      else schedulePlayback();
+    };
     const onError = () => {
       if (!disposed) setFailedToStills(true);
     };
 
-    seekRef.current = scheduleSeek;
+    seekRef.current = schedulePlayback;
     video.addEventListener("loadedmetadata", onLoadedMetadata);
     video.addEventListener("loadeddata", onLoadedData);
     video.addEventListener("seeked", onSeeked);
+    video.addEventListener("timeupdate", onTimeUpdate);
     video.addEventListener("error", onError);
     document.addEventListener("visibilitychange", onVisibility);
+    if (typeof video.requestVideoFrameCallback === "function") {
+      usesVideoFrames = true;
+      videoFrame = video.requestVideoFrameCallback(onVideoFrame);
+    }
     video.src = source;
     video.load();
 
     return () => {
       disposed = true;
-      window.clearTimeout(seekTimer);
+      window.cancelAnimationFrame(playbackFrame);
+      if (videoFrame) video.cancelVideoFrameCallback(videoFrame);
+      video.pause();
       seekRef.current = () => undefined;
       video.removeEventListener("loadedmetadata", onLoadedMetadata);
       video.removeEventListener("loadeddata", onLoadedData);
       video.removeEventListener("seeked", onSeeked);
+      video.removeEventListener("timeupdate", onTimeUpdate);
       video.removeEventListener("error", onError);
       document.removeEventListener("visibilitychange", onVisibility);
     };
-  }, [desktop, liteMode, videoRef]);
+  }, [desktop, liteMode, presentFrame, videoRef]);
 
   useEffect(() => {
     if (liteMode) return;
@@ -270,9 +329,7 @@ export function useScrollScrub({
       unlockRef.current = true;
       const result = video.play();
       if (result && typeof result.then === "function") {
-        result.then(() => video.pause()).catch(() => undefined);
-      } else {
-        video.pause();
+        result.then(() => seekRef.current()).catch(() => undefined);
       }
       window.removeEventListener("touchstart", unlock);
       window.removeEventListener("pointerdown", unlock);
