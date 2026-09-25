@@ -94,7 +94,7 @@ export const VISIBLE_NAME_RE =
 // Surrounding-context keywords that indicate the literal is being used as
 // a visible byline / reviewer / testimonial author.
 export const BYLINE_CONTEXT_RE =
-  /\b(testimonial|reviewer|review|quote|parent|byline|byLine|author|contributor|reviewedBy)\b/i;
+  /\b(testimonial|reviewer|review|quote|byline|byLine|author|contributor|reviewedBy)\b|\bfeedback\s+from\s+(?:a\s+)?parent\b|\bparent(?:\s+(?:testimonial|review|comment|feedback|name)|\s*[:=])/i;
 
 // HowToStep schema step names (e.g. `name: "Submit Required Documents"`)
 // look like person names but are schema labels — skip them.

@@ -263,4 +263,17 @@ describe("TRUE NEGATIVES — short or non-person names are not flagged", () => {
     const hits = scanLines(lines(src));
     assert.strictEqual(hits.length, 0, "expected zero hits — no byline context");
   });
+
+  it("does not mistake a centre locality for a byline near a Parent Partnership heading", () => {
+    const src = `
+      trustCards: [
+        { title: "Parent Partnership", description: "Regular updates and involvement" },
+      ],
+      centres: [
+        { name: "Anand Nagar", area: "Majiwada, opposite Tropical Lagoon" },
+      ],
+    `;
+    const hits = scanLines(lines(src));
+    assert.strictEqual(hits.length, 0, "expected zero hits for a centre locality");
+  });
 });
