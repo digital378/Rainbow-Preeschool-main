@@ -8,15 +8,6 @@ This project is a full-stack web application for Rainbow Preschool International
 
 Preferred communication style: Simple, everyday language.
 
-## Design freeze (set by the Digital Marketing Manager, 25 Sep 2026)
-- Never change the visual design or layout of any existing page or section unless the task names the exact visual change.
-- SEO and content tasks may only: edit text, headings, links, metadata and structured data; move existing sections; delete sections the task lists by name.
-- Always reuse the existing section components and their styling. Never replace a section with a new or generic component.
-- "Merge sections" means placing the existing components next to each other, not building a new combined component.
-- Any new element the task asks for (for example a sticky bar or a form label) must match the existing site style and must be listed in your plan before you build it.
-- Before offering Publish: show before-and-after screenshots of every section you touched, on mobile (390 px) and desktop (1366 px). If any section looks different beyond what the task named, stop and ask.
-- If a task is unclear about design, ask first. Do not decide.
-
 ## System Architecture
 
 The application is a full-stack web application with a React-based frontend and an Express.js backend. A bot-specific Server-Side Rendering (SSR) system is implemented for enhanced SEO.

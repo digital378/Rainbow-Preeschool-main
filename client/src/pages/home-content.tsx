@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { ErrorBoundary } from "@/components/error-boundary";
 import { AwardedBySection } from "@/components/awarded-by-section";
 import { HomeRainbowTheatre } from "@/components/home/home-rainbow-theatre";
+import { QuickCallbackTicket } from "@/components/home/quick-callback-ticket";
 import { EEATSignals } from "@/components/eeat-signals";
 import { LAST_UPDATED_DISPLAY, LAST_UPDATED_ISO } from "@shared/site-freshness";
 import { HOME_CAMPUS_IMAGE } from "@shared/page-image-data";
@@ -12,8 +13,6 @@ import { cn } from "@/lib/utils";
 import { PLAYGROUP, NURSERY, KINDERGARTEN } from "@shared/programme-data";
 import { BranchCard } from "@/components/branch-card";
 import { TestimonialCard } from "@/components/testimonial-card";
-import { WhyChooseUs } from "@/components/why-choose-us";
-import { MethodologySection } from "@/components/methodology-section";
 import { CountUp } from "@/components/count-up";
 import { SEO, createBreadcrumbSchema } from "@/components/seo";
 import { programmes, branches, testimonials } from "@shared/schema";
@@ -22,6 +21,8 @@ import { SiWhatsapp } from "react-icons/si";
 import { ProgrammeCard as BentoProgrammeCard } from "@/components/ui/programme-card";
 import { useState, useEffect, lazy, Suspense, useRef } from "react";
 
+const WhyChooseUs = lazy(() => import("@/components/why-choose-us").then(m => ({ default: m.WhyChooseUs })));
+const MethodologySection = lazy(() => import("@/components/methodology-section").then(m => ({ default: m.MethodologySection })));
 const CTASection = lazy(() => import("@/components/cta-section").then(m => ({ default: m.CTASection })));
 const ContactForm = lazy(() => import("@/components/contact-form").then(m => ({ default: m.ContactForm })));
 
@@ -55,11 +56,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import {
-  HOME_ADMISSIONS_COPY, HOME_AWARDS, HOME_CENTRES, HOME_CURRICULUM, HOME_DAY_PHOTOS,
-  HOME_HEADINGS, HOME_PROGRAMMES, HOME_STRUCTURED_DATA, HOME_TESTIMONIALS, HOME_TITLE,
-  HOME_DESCRIPTION, HOME_WHY_CARDS, HOME_WHY_INTRO, HOME_UPDATED_DISPLAY,
-} from "@shared/homepage-content";
 
 // --- Static JSON-LD schema objects ---
 // Created once at module load (not on every render) to reduce per-mount CPU cost.
@@ -781,6 +777,16 @@ const LE_CHIPS = [
   { Icon: GraduationCap, label: HOME_VISITOR_COPY.sections[1].items?.[2] ?? "", grad:"linear-gradient(135deg,#1F7AF0 0%,#48A0FF 100%)", glow:"rgba(31,122,240,.28)", side:"left"  as const, bob:"le-bob-a 4.5s ease-in-out 0.8s infinite" },
   { Icon: Users,         label: HOME_VISITOR_COPY.sections[1].items?.[3] ?? "", grad:"linear-gradient(135deg,#7C4DFF 0%,#A06BFF 100%)", glow:"rgba(124,77,255,.28)", side:"right" as const, bob:"le-bob-b 6.0s ease-in-out 0.2s infinite" },
 ];
+const LE_FILMSTRIP = [
+  "rainbow-preschool-classroom-activity-01.webp",
+  "rainbow-preschool-classroom-learning-01.webp",
+  "rainbow-preschool-activity-room-01.webp",
+  "rainbow-preschool-learning-through-play-01.webp",
+  "rainbow-preschool-classroom-activity-02.webp",
+  "rainbow-preschool-classroom-learning-02.webp",
+  "rainbow-preschool-activity-room-02.webp",
+  "rainbow-preschool-learning-through-play-02.webp",
+];
 
 function LearningEnvironmentSection() {
   const sectionRef  = useRef<HTMLElement>(null);
@@ -792,7 +798,6 @@ function LearningEnvironmentSection() {
   const [chipsIn,     setChipsIn]     = useState(false);
   const [stripPaused, setStripPaused] = useState(false);
   const [videoError,  setVideoError]  = useState(false);
-  const [videoTarget, setVideoTarget] = useState<"desktop" | "mobile" | null>(null);
 
   useEffect(() => {
     const el = sectionRef.current;
@@ -801,6 +806,8 @@ function LearningEnvironmentSection() {
       if (e.isIntersecting) {
         setWinIn(true);
         setTimeout(() => setChipsIn(true), 420);
+        videoRef.current?.play().catch(() => {});
+        mobileVideoRef.current?.play().catch(() => {});
       } else {
         videoRef.current?.pause();
         mobileVideoRef.current?.pause();
@@ -833,7 +840,7 @@ function LearningEnvironmentSection() {
   };
 
   return (
-    <section ref={sectionRef} id="a-day-at-rainbow" className="section-le relative overflow-hidden"
+    <section ref={sectionRef} className="section-le relative overflow-hidden"
       style={{ background:"#ffffff" }}>
 
       {/* Cloud scallop top */}
@@ -869,39 +876,15 @@ function LearningEnvironmentSection() {
             {HOME_VISITOR_COPY.sections[1].heading}
           </p>
           <h2 className="section-title" style={{ fontSize:"clamp(2rem,4.5vw,3.4rem)", margin:"0 0 14px" }}>
+            {HOME_VISITOR_COPY.sections[1].paragraphs?.[0].slice(0, 18)}
             <span style={{
               background:"linear-gradient(95deg,#F59E0B 0%,#EF4444 100%)",
               WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent", backgroundClip:"text",
-            }}>{HOME_HEADINGS.day}</span>
+            }}>{HOME_VISITOR_COPY.sections[1].paragraphs?.[0].slice(18)}</span>
           </h2>
           <p className="dm-body" style={{ color:"#55506A", fontSize:"1rem", maxWidth:440, margin:"0 auto", lineHeight:1.65 }}>
             {HOME_VISITOR_COPY.sections[1].paragraphs?.[1]}
           </p>
-        </div>
-
-        {/* Original animated classroom photo strip, placed first as requested. */}
-        <div style={{
-          margin:"0 auto 48px", overflow:"hidden", maxWidth:1200,
-          opacity: winIn ? 1 : 0, transition:"opacity 0.7s ease 0.2s",
-        }}>
-          <p className="dm-subtle" style={{ textAlign:"center", fontSize:"0.62rem", fontWeight:700, letterSpacing:"0.2em",
-            textTransform:"uppercase", color:"#9A8FA8", margin:"0 0 16px" }}>
-            REAL CLASSROOMS · REAL MOMENTS
-          </p>
-          <div style={{ display:"flex", gap:12, width:"max-content",
-            animation:"le-filmstrip 40s linear infinite",
-            animationPlayState:stripPaused ? "paused" : "running" }}
-            onMouseEnter={() => setStripPaused(true)} onMouseLeave={() => setStripPaused(false)}>
-            {[...HOME_DAY_PHOTOS, ...HOME_DAY_PHOTOS].map((photo, i) => (
-              <div key={`${photo.src}-${i}`} style={{ flexShrink:0, width:240, height:152, borderRadius:16, overflow:"hidden",
-                boxShadow:"0 4px 18px rgba(33,27,46,.10)" }}>
-                <img src={photo.src} alt={i < HOME_DAY_PHOTOS.length ? photo.alt : ""}
-                  width={photo.width} height={photo.height} loading="lazy"
-                  aria-hidden={i >= HOME_DAY_PHOTOS.length}
-                  style={{ display:"block", width:"100%", height:"100%", objectFit:"cover" }} />
-              </div>
-            ))}
-          </div>
         </div>
 
         {/* Desktop: 3-col (left chips | video | right chips) */}
@@ -963,11 +946,11 @@ function LearningEnvironmentSection() {
                     width={HOME_CAMPUS_IMAGE.width}
                     height={HOME_CAMPUS_IMAGE.height}
                     style={{ display:"block", width:"100%", height:"100%", objectFit:"cover" }} />
-                ) : videoTarget === "desktop" ? (<>
+                ) : (<>
                   <video ref={videoRef}
                     src="/assets/RPS_Walkthrough_Video_-_Website_1_1766126796450.mp4"
                     poster="/assets/walkthrough-poster.webp"
-                    muted loop autoPlay playsInline preload="none"
+                    muted loop playsInline preload="none"
                     aria-label="Campus walkthrough of Rainbow Preschool — classrooms, activity areas, outdoor spaces"
                     style={{ display:"block", width:"100%", height:"100%", objectFit:"cover" }}
                     onError={() => setVideoError(true)}
@@ -980,12 +963,7 @@ function LearningEnvironmentSection() {
                     {muted ? <VolumeX size={13}/> : <Volume2 size={13}/>}
                     {muted ? "Sound off" : "Sound on"}
                   </button>
-                </>) : (
-                  <button type="button" onClick={() => setVideoTarget("desktop")} className="relative block w-full h-full p-0 border-0 bg-transparent text-left">
-                    <img src="/assets/walkthrough-poster.webp" alt="Rainbow Preschool campus walkthrough"
-                      loading="lazy" width={800} height={450} style={{ display:"block", width:"100%", height:"100%", objectFit:"cover" }} />
-                  </button>
-                )}
+                </>)}
               </div>
             </div>
           </div>
@@ -1039,11 +1017,11 @@ function LearningEnvironmentSection() {
                   width={HOME_CAMPUS_IMAGE.width}
                   height={HOME_CAMPUS_IMAGE.height}
                   style={{ display:"block", width:"100%", height:"100%", objectFit:"cover" }} />
-              ) : videoTarget === "mobile" ? (<>
+              ) : (<>
                 <video ref={mobileVideoRef}
                   src="/assets/RPS_Walkthrough_Video_-_Website_1_1766126796450.mp4"
                   poster="/assets/walkthrough-poster.webp"
-                  muted loop autoPlay playsInline preload="none"
+                  muted loop playsInline preload="none"
                   aria-label="Campus walkthrough of Rainbow Preschool"
                   style={{ display:"block", width:"100%", height:"100%", objectFit:"cover" }}
                   onError={() => setVideoError(true)}
@@ -1055,12 +1033,7 @@ function LearningEnvironmentSection() {
                   aria-label={muted ? "Unmute" : "Mute"}>
                   {muted ? <VolumeX size={12}/> : <Volume2 size={12}/>}
                 </button>
-              </>) : (
-                <button type="button" onClick={() => setVideoTarget("mobile")} className="relative block w-full h-full p-0 border-0 bg-transparent text-left">
-                  <img src="/assets/walkthrough-poster.webp" alt="Rainbow Preschool campus walkthrough"
-                    loading="lazy" width={800} height={450} style={{ display:"block", width:"100%", height:"100%", objectFit:"cover" }} />
-                </button>
-              )}
+              </>)}
             </div>
           </div>
           <div className="grid grid-cols-2 gap-3 mb-2">
@@ -1084,6 +1057,33 @@ function LearningEnvironmentSection() {
           </div>
         </div>
 
+        {/* Filmstrip */}
+        <div style={{
+          marginTop:52, overflow:"hidden",
+          opacity: winIn ? 1 : 0,
+          transition: "opacity 0.7s ease 0.3s",
+        }}>
+          <p className="dm-subtle" style={{ textAlign:"center", fontSize:"0.62rem", fontWeight:700, letterSpacing:"0.2em",
+            textTransform:"uppercase", color:"#9A8FA8", margin:"0 0 16px" }}>
+            REAL CLASSROOMS · REAL MOMENTS
+          </p>
+          <div style={{ display:"flex", gap:12, width:"max-content",
+            animation:"le-filmstrip 40s linear infinite",
+            animationPlayState: stripPaused ? "paused" : "running" }}
+            onMouseEnter={() => setStripPaused(true)}
+            onMouseLeave={() => setStripPaused(false)}>
+            {[...LE_FILMSTRIP, ...LE_FILMSTRIP].map((src, i) => (
+              <div key={i} style={{ flexShrink:0, width:240, height:152, borderRadius:16, overflow:"hidden",
+                boxShadow:"0 4px 18px rgba(33,27,46,.10)" }}>
+                <img src={`/images/gallery/${src}`}
+                  alt="Rainbow Preschool classroom moment"
+                  loading="lazy"
+                  style={{ display:"block", width:"100%", height:"100%", objectFit:"cover" }}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
 
       {/* Cloud scallop bottom */}
@@ -1179,7 +1179,7 @@ function ProgrammesDummyHome() {
   }, []);
 
   return (
-      <section ref={sectionRef} id="programmes" className="section-prog relative overflow-hidden"
+    <section ref={sectionRef} className="section-prog relative overflow-hidden"
       style={{
         backgroundImage: [
           "radial-gradient(circle,rgba(33,27,46,.045) 1px,transparent 1px)",
@@ -1235,13 +1235,16 @@ function ProgrammesDummyHome() {
         }}>
           <p style={{ fontSize:"0.63rem", fontWeight:700, letterSpacing:"0.22em",
             textTransform:"uppercase", color:"#EC210F", margin:"0 0 14px" }}>
-            Our programmes
+            {HOME_VISITOR_COPY.sections[2].heading}
           </p>
           <h2 className="prog-heading section-title" style={{ margin:"0 0 14px" }}>
+            {HOME_VISITOR_COPY.sections[2].paragraphs?.[0].slice(0, 30)}
             <span style={{
               background:"linear-gradient(95deg,#F59E0B 0%,#EC210F 100%)",
               WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent", backgroundClip:"text",
-            }}>{HOME_HEADINGS.programmes}</span>
+            }}>
+              {HOME_VISITOR_COPY.sections[2].paragraphs?.[0].slice(30)}
+            </span>
           </h2>
           <p className="prog-subtitle" style={{ color:"#55506A", fontSize:"1.0625rem", lineHeight:1.72, margin:0 }}>
             {HOME_VISITOR_COPY.sections[2].paragraphs?.[1]}
@@ -1255,7 +1258,6 @@ function ProgrammesDummyHome() {
         >
           {PD_CARDS_HOME.map(({ id, color, href, StickerIcon }, i) => {
             const prog = progMap[id] as { name:string; ageRange:string; description:string; image:string } | undefined;
-            const sharedProgramme = HOME_PROGRAMMES.find(({ href: programmeHref }) => programmeHref === href);
             if (!prog) return null;
             return (
               <div key={id}
@@ -1264,11 +1266,9 @@ function ProgrammesDummyHome() {
                 <FloatWrapperProg idx={i}>
                   <BentoProgrammeCard
                     title={prog.name}
-                    ageLabel={sharedProgramme?.age ?? prog.ageRange}
+                    ageLabel={prog.ageRange}
                     description={prog.description}
                     imageUrl={prog.image}
-                    imageAlt={sharedProgramme?.imageAlt}
-                    dayIncludes={sharedProgramme?.day}
                     href={href}
                     themeColor={color}
                     iconSticker={
@@ -1404,6 +1404,7 @@ function ContactSection() {
   const sectionRef      = useRef<HTMLElement>(null);
   const confettiPortal  = useRef<HTMLDivElement>(null);
   const floatRef        = useRef<HTMLDivElement>(null);
+  const contactVideoRef = useRef<HTMLVideoElement>(null);
   const [visible,    setVisible]    = useState(false);
   const [values,     setValues]     = useState<Record<string,string>>(CTC_INIT);
   const [errors,     setErrors]     = useState<Record<string,string>>({});
@@ -1413,7 +1414,6 @@ function ContactSection() {
   const [submitted,  setSubmitted]  = useState(false);
   const [submitErr,  setSubmitErr]  = useState("");
   const [videoError, setVideoError] = useState(false);
-  const [videoPlaying, setVideoPlaying] = useState(false);
 
   useEffect(() => {
     const el = sectionRef.current;
@@ -1422,6 +1422,12 @@ function ContactSection() {
     obs.observe(el);
     return () => obs.disconnect();
   }, []);
+
+  useEffect(() => {
+    if (visible && contactVideoRef.current) {
+      contactVideoRef.current.play().catch(() => {});
+    }
+  }, [visible]);
 
   const onVideoMove = (e: React.MouseEvent) => {
     if (prefersReduced || !floatRef.current) return;
@@ -1523,9 +1529,8 @@ function ContactSection() {
   return (
     <section
       ref={sectionRef}
-      id="admissions"
-      aria-labelledby="admissions-heading"
-      className="scroll-mt-20"
+      id="contact"
+      aria-label="Request A Callback"
       style={{ padding:"80px 0 96px", background:"linear-gradient(160deg,#FFF3F2 0%,#FBF1EE 55%,#FFF3F2 100%)", position:"relative" }}
     >
       <div ref={confettiPortal} aria-hidden style={{ position:"fixed", inset:0, pointerEvents:"none", zIndex:9999, overflow:"hidden" }} />
@@ -1535,14 +1540,13 @@ function ContactSection() {
 
           {/* ══ LEFT COLUMN ════════════════════════════════════════════════ */}
           <div style={fade(0)}>
-            <p className="section-eyebrow">ADMISSIONS</p>
-            <h2 id="admissions-heading" className="text-headline" style={{ marginBottom:12 }}>{HOME_HEADINGS.admissions}</h2>
+            <p className="section-eyebrow">{HOME_VISITOR_COPY.sections[2].items?.[1]}</p>
+            <h2 className="text-headline" style={{ marginBottom:12 }}>{HOME_VISITOR_COPY.sections[2].items?.[2]}</h2>
             <p className="dm-body" style={{ fontSize:16, color:"#55506A", lineHeight:1.65, marginBottom:32 }}>
-              {HOME_ADMISSIONS_COPY}{" "}
-              <a href="/preschool-admissions" className="text-primary hover:underline">Learn more about preschool admissions.</a>
+              {HOME_VISITOR_COPY.sections[2].items?.[3]}
             </p>
 
-            {/* Original media frame and quick-contact controls. */}
+            {/* Video with decorative accent + float + parallax */}
             <div style={{ position:"relative", marginBottom:24 }}
               onMouseMove={onVideoMove} onMouseLeave={onVideoLeave}>
               <div aria-hidden style={{
@@ -1559,17 +1563,11 @@ function ContactSection() {
                   {videoError ? (
                     <img src="/assets/walkthrough-poster.webp" alt="Rainbow Preschool campus" width={800} height={450} loading="lazy" style={{ width:"100%", height:"auto", display:"block" }} />
                   ) : (
-                    <video
+                    <video ref={contactVideoRef}
                       src="/assets/RPS_Walkthrough_Video_-_Website_1_1766126796450.mp4"
                       poster="/assets/walkthrough-poster.webp"
                       loop muted playsInline preload="none"
-                      controls={videoPlaying}
-                      tabIndex={0}
-                      role="button"
-                      aria-label="Play Rainbow Preschool campus walkthrough"
-                      onClick={(e) => { if (!videoPlaying) { setVideoPlaying(true); void e.currentTarget.play(); } }}
-                      onKeyDown={(e) => { if ((e.key === "Enter" || e.key === " ") && !videoPlaying) { e.preventDefault(); setVideoPlaying(true); void e.currentTarget.play(); } }}
-                      style={{ width:"100%", height:"auto", display:"block", cursor:videoPlaying ? "default" : "pointer" }}
+                      style={{ width:"100%", height:"auto", display:"block" }}
                       width={800} height={450}
                       onError={() => setVideoError(true)}
                     >
@@ -1580,6 +1578,7 @@ function ContactSection() {
               </div>
             </div>
 
+            {/* Reassurance badge */}
             <div className="ctc-trust-badge" style={{
               display:"flex", alignItems:"center", gap:8, marginBottom:20,
               padding:"10px 16px", borderRadius:10,
@@ -1591,6 +1590,7 @@ function ContactSection() {
               </span>
             </div>
 
+            {/* Quick-contact buttons */}
             <div style={{ display:"flex", gap:10, flexWrap:"wrap" }}>
               <a href="tel:+918828195788" className="ctc-contact-btn ctc-call-btn" style={{
                 display:"inline-flex", alignItems:"center", gap:7,
@@ -1776,49 +1776,78 @@ function ContactSection() {
   );
 }
 
-function HomepageCentresSection() {
-  const centreIdForBranch: Record<string, string> = {
-    aggarwal: "manpada",
-    hariniwas: "hariniwas",
-    "anand-nagar": "anand-nagar",
-    dhokali: "dhokali",
-    kalwa: "kalwa",
-    kasarvadavali: "kasarvadavali",
-  };
-  return (
-    <section id="centres" className="py-16 md:py-20 lg:py-24 cv-auto">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">Find your nearest centre</p>
-          <h2 className="text-3xl md:text-4xl font-bold mb-4" data-sparkle>{HOME_HEADINGS.centres}</h2>
-          <p className="text-muted-foreground text-lg">Visit the Rainbow Preschool International centre most convenient for your family.</p>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {branches.map((branch) => {
-            const centre = HOME_CENTRES.find(({ id }) => id === centreIdForBranch[branch.id]);
-            return (
-              <BranchCard key={branch.id} branch={branch}
-                landmark={centre?.landmark}
-                openingHours={centre?.openingHours} />
-            );
-          })}
-        </div>
-      </div>
-    </section>
-  );
-}
+export default function Home() {
+  // Inject all schemas after paint so they don't block the main thread (bots get
+  // them via server-side bot-ssr.ts instead).
+  useEffect(() => {
+    const inject = () => {
+      const entries: Array<{ id: string; json: string }> = [
+        { id: 'organization-schema', json: _orgJson },
+        { id: 'website-schema',      json: _webJson },
+        { id: 'video-schema',        json: _videoJson },
+        { id: 'home-branches-schema',json: _branchJson },
+        { id: 'breadcrumb-schema',   json: _breadcrumbJson },
+      ];
+      for (const { id, json } of entries) {
+        const existing = document.getElementById(id);
+        if (existing) existing.remove();
+        const s = document.createElement('script');
+        s.type = 'application/ld+json';
+        s.id = id;
+        s.textContent = json;
+        document.head.appendChild(s);
+      }
+    };
 
-export function LegacyHome() {
+    let cancelFn: (() => void) | undefined;
+    if (typeof requestIdleCallback === 'function') {
+      const id = requestIdleCallback(inject, { timeout: 3000 });
+      cancelFn = () => cancelIdleCallback(id);
+    } else {
+      const id = setTimeout(inject, 300);
+      cancelFn = () => clearTimeout(id);
+    }
+
+    return () => {
+      cancelFn?.();
+      ['organization-schema', 'website-schema', 'faq-schema', 'video-schema', 'home-branches-schema', 'breadcrumb-schema'].forEach(id => {
+        document.getElementById(id)?.remove();
+      });
+    };
+  }, []);
+
   return (
     <div>
-      <ProgrammesDummyHome />
-      <HomepageCentresSection />
-      <WhyChooseUs homepage />
-      <MethodologySection homepage />
-      <LearningEnvironmentSection />
-      <HomeRainbowTheatre />
+      <SEO
+        title="Preschool in Thane | Rainbow Preschool International"
+        description="Preschool in Thane since 2007 — Rainbow Preschool International. 6 centres, Playgroup, Nursery & KG for ages 1.5–6 years. Admissions open for 2026–27."
+        keywords="rainbow preschool, preschool in thane, playgroup in thane, nursery school thane, early childhood education thane, rainbow preschool international"
+        canonical="https://www.rainbowpreschools.com/"
+      />
 
-      <>
+      <RainbowShelfSection />
+      <QuickCallbackTicket />
+      <HomeRainbowTheatre />
+      <AwardedBySection />
+
+      <StatsSection />
+
+      <LearningEnvironmentSection />
+
+      <ProgrammesDummyHome />
+
+      <LazySection minHeight={500}>
+        <Suspense fallback={null}>
+          <WhyChooseUs />
+        </Suspense>
+      </LazySection>
+      <LazySection minHeight={500}>
+        <Suspense fallback={null}>
+          <MethodologySection />
+        </Suspense>
+      </LazySection>
+
+      <LazySection minHeight={440} rootMargin="300px">
         {/* Testimonials Section - Local SEO Enhanced */}
         <section id="testimonials" className="py-16 md:py-20 lg:py-24 relative overflow-hidden cv-auto">
           {/* Diagonal gradient background */}
@@ -1827,36 +1856,77 @@ export function LegacyHome() {
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-12">
               <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">Testimonials</p>
-              <h2 className="text-3xl md:text-4xl font-bold mb-2" data-sparkle>{HOME_HEADINGS.parents}</h2>
-              <p className="text-sm text-muted-foreground mt-3">Stories from families at our Thane preschool centres.</p>
+              <h2 className="text-3xl md:text-4xl font-bold mb-2" data-sparkle>{HOME_VISITOR_COPY.sections[2].items?.[4]}</h2>
+              <p className="text-sm text-muted-foreground mt-3">{HOME_VISITOR_COPY.sections[2].items?.[5]}</p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {HOME_TESTIMONIALS.map((testimonial) => {
-                const fullTestimonial = testimonials.find(({ id }) => id === testimonial.id);
-                return fullTestimonial ? (
-                <TestimonialCard
-                  key={testimonial.id}
-                  testimonial={fullTestimonial}
-                  showCentreLabel={HOME_CENTRES.some((centre) =>
-                    centre.localityName.toLowerCase() === testimonial.locality.toLowerCase()
-                  )}
-                />
-                ) : null;
-              })}
+              {testimonials.map((testimonial) => (
+                <TestimonialCard key={testimonial.id} testimonial={testimonial} />
+              ))}
             </div>
           </div>
         </section>
-        <AwardedBySection homepageAwards={HOME_AWARDS} />
-      </>
+      </LazySection>
 
       <ContactSection />
 
+
+      <div className="py-6 bg-primary/5">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <p className="text-sm text-muted-foreground text-center leading-relaxed" data-testid="text-seo-interlinks">
+            {HOME_VISITOR_INTERLINK_SEGMENTS.map((segment, index) =>
+              segment.href ? (
+                <a
+                  key={index}
+                  href={segment.href}
+                  className="text-primary hover:underline font-medium"
+                  data-testid={
+                    segment.href === "/best-preschool-near-me-in-thane"
+                      ? "link-inline-best-preschool-in-thane"
+                      : segment.href === "/play-school-near-me"
+                        ? "link-inline-play-school-near-me-in-thane"
+                        : segment.href === "/playgroup"
+                          ? "link-inline-playgroup-in-thane"
+                          : segment.href === "/nursery"
+                            ? "link-inline-nursery-in-thane"
+                            : "link-inline-kindergarten-in-thane"
+                  }
+                >
+                  {segment.text}
+                </a>
+              ) : segment.text
+            )}
+          </p>
+        </div>
+      </div>
+
+      <LazySection minHeight={600} rootMargin="300px">
+        {/* Centres Section - Local SEO Gold */}
+        <section id="centres" className="py-16 md:py-20 lg:py-24 cv-auto">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center max-w-3xl mx-auto mb-12">
+              <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">{HOME_VISITOR_COPY.sections[2].items?.[6]}</p>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4" data-sparkle>{HOME_VISITOR_COPY.sections[2].items?.[7]}</h2>
+              <p className="text-muted-foreground text-lg">
+                {HOME_VISITOR_COPY.sections[2].items?.[8]}
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {branches.map((branch) => (
+                <BranchCard key={branch.id} branch={branch} />
+              ))}
+            </div>
+          </div>
+        </section>
+      </LazySection>
+
       {/* FAQs Section - Homepage SEO with Schema */}
-      <section id="faqs" className="py-16 md:py-20 lg:py-24 bg-card cv-auto">
+      <section className="py-16 md:py-20 lg:py-24 bg-card cv-auto">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12" data-reveal="float">
-            <h2 className="text-3xl md:text-4xl font-bold" data-sparkle>{HOME_HEADINGS.faqs}</h2>
-            <p className="text-muted-foreground mt-2">Find answers to common questions about our programmes, centres and admissions.</p>
+            <h2 className="text-3xl md:text-4xl font-bold" data-sparkle>{HOME_VISITOR_COPY.sections[2].items?.[9]}</h2>
+            <p className="text-muted-foreground mt-2">{HOME_VISITOR_COPY.sections[2].items?.[10]}</p>
           </div>
           <Accordion type="single" collapsible className="w-full">
             {faqs.map((faq, index) => (
@@ -1871,7 +1941,7 @@ export function LegacyHome() {
                 >
                   {faq.question}
                 </AccordionTrigger>
-                <AccordionContent forceMount
+                <AccordionContent
                   className="text-muted-foreground"
                   data-testid={`faq-content-${index}`}
                 >
@@ -1910,43 +1980,6 @@ export function LegacyHome() {
         </Suspense>
       </LazySection>
 
-    </div>
-  );
-}
-
-export default function Home() {
-  useEffect(() => {
-    const created: HTMLScriptElement[] = [];
-    HOME_STRUCTURED_DATA.forEach((schema, index) => {
-      const existing = Array.from(document.querySelectorAll<HTMLScriptElement>('script[type="application/ld+json"]'))
-        .find((script) => {
-          if (script.id === `home-structured-data-${index}`) return true;
-          try { return JSON.parse(script.textContent || "{}")["@id"] === schema["@id"]; } catch { return false; }
-        });
-      if (existing) {
-        existing.textContent = JSON.stringify(schema);
-        return;
-      }
-      const script = document.createElement("script");
-      script.type = "application/ld+json";
-      script.id = `home-structured-data-${index}`;
-      script.dataset.homeSchema = "true";
-      script.textContent = JSON.stringify(schema);
-      document.head.appendChild(script);
-      created.push(script);
-    });
-    return () => created.forEach((script) => script.remove());
-  }, []);
-
-  return (
-    <div>
-      <SEO
-        title={HOME_TITLE}
-        description={HOME_DESCRIPTION}
-        keywords="rainbow preschool, preschool in thane, playgroup in thane, nursery school thane, early childhood education thane, rainbow preschool international"
-        canonical="https://www.rainbowpreschools.com/"
-      />
-      <LegacyHome />
     </div>
   );
 }

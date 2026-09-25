@@ -1,7 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import { Shield, Award, Sparkles, Users, Bus, Gamepad2 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { HOME_HEADINGS, HOME_WHY_CARDS, HOME_WHY_INTRO } from "@shared/homepage-content";
 
 function usePrefersReducedMotion() {
   const [pref, setPref] = useState(false);
@@ -260,7 +259,7 @@ function WcuTile({ feature, idx }: { feature: typeof features[number]; idx: numb
 }
 
 /* ── Main exported component ────────────────────────────────────────── */
-export function WhyChooseUs({ homepage = false }: { homepage?: boolean }) {
+export function WhyChooseUs() {
   const sectionRef = useRef<HTMLElement>(null);
   const [visible, setVisible] = useState(false);
 
@@ -322,9 +321,9 @@ export function WhyChooseUs({ homepage = false }: { homepage?: boolean }) {
           transition: "opacity 0.7s ease, transform 0.7s cubic-bezier(.22,1,.36,1)",
         }}>
           <p className="section-eyebrow">Why Choose Us</p>
-          <h2 className="text-headline mb-3">{homepage ? HOME_HEADINGS.why : "A Trusted Early Learning Journey Since 2007"}</h2>
+          <h2 className="text-headline mb-3">A Trusted Early Learning Journey Since 2007</h2>
           <p className="text-muted-foreground text-[16px] leading-relaxed max-w-xl">
-            {homepage ? HOME_WHY_INTRO : "Every element of our centres is designed with your child's safety, happiness, and growth in mind."}
+            Every element of our centres is designed with your child's safety, happiness, and growth in mind.
           </p>
         </div>
 
@@ -334,11 +333,7 @@ export function WhyChooseUs({ homepage = false }: { homepage?: boolean }) {
           style={{ perspective: "1000px", gridAutoRows: "1fr" }}
         >
           {features.map((f, i) => (
-            <WcuTile key={f.title} feature={homepage ? {
-              ...f,
-              title: HOME_WHY_CARDS[i].title,
-              description: HOME_WHY_CARDS[i].text,
-            } : f} idx={i} />
+            <WcuTile key={f.title} feature={f} idx={i} />
           ))}
         </div>
       </div>

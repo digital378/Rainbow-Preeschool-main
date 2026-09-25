@@ -6,7 +6,10 @@ import { ABOUT_PAGE_COPY } from "@shared/about-page-content";
 import { ADMISSIONS_PAGE_COPY } from "@shared/admissions-page-copy";
 import {
   CENTRE_CARD_IMAGES,
+  HOME_CAMPUS_IMAGE,
+  HOME_FILMSTRIP_IMAGES,
   HOME_HERO_IMAGE,
+  HOME_PROGRAMME_IMAGES,
   PLAY_SCHOOL_GALLERY_IMAGES,
   PROGRAMME_GALLERY_IMAGES,
 } from "@shared/page-image-data";
@@ -57,29 +60,7 @@ import {
   HOME_VISITOR_INTERLINK_SEGMENTS,
   PROGRAMMES_VISITOR_COPY,
 } from "../client/src/pages/visitor-page-copy";
-import {
-  HOME_ADMISSIONS_COPY,
-  HOME_ADMISSIONS_WHATSAPP,
-  HOME_AWARDS,
-  HOME_CENTRES,
-  HOME_CURRICULUM,
-  HOME_DAY_PHOTOS,
-  HOME_HEADINGS,
-  HOME_HERO_COPY,
-  HOME_HERO_STATS,
-  HOME_PROGRAMMES,
-  HOME_STRUCTURED_DATA,
-  HOME_TESTIMONIALS,
-  HOME_TITLE,
-  HOME_DESCRIPTION,
-  HOME_URL,
-  HOME_H1,
-  HOME_UPDATED_DISPLAY,
-  HOME_UPDATED_ISO,
-  HOME_VIDEO,
-  HOME_WHY_CARDS,
-  HOME_WHY_INTRO,
-} from "@shared/homepage-content";
+import { testimonials as homeTestimonials } from "@shared/schema";
 import { BEST_PRESCHOOL_FAQ_SCHEMA_ITEMS } from "@shared/best-preschool-faq-data";
 import { NATIONAL_SYMBOLS_FAQ_SCHEMA_ITEMS } from "@shared/national-symbols-faq-data";
 import { NATIONAL_SYMBOLS_CRAFTS } from "@shared/national-symbols-craft-data";
@@ -303,153 +284,6 @@ function visitorCopySections(
   });
 }
 
-function homepageContentSections(): NonNullable<PageSEOData["contentSections"]> {
-  const programmeCopy = PROGRAMMES_VISITOR_COPY.programmes ?? [];
-  const faqCards = HOME_VISITOR_FAQS.map((faq) => {
-    return {
-      title: faq.question,
-      segments: faq.answerSegments.map((segment) => ({
-        text: segment.text,
-        ...(segment.href ? { href: segment.href } : {}),
-      })),
-    };
-  });
-
-  return [
-    {
-      heading: HOME_HEADINGS.programmes,
-      text: "Programmes for Every Stage of Early Learning. Age-appropriate programmes designed to nurture your child's unique growth, curiosity, and confidence.",
-      cards: HOME_PROGRAMMES.map((programme) => {
-        const copy = programmeCopy.find(({ id }) => `/${id}` === programme.href);
-        return {
-          title: programme.name,
-          eyebrow: programme.age,
-          text: [
-            copy?.description,
-            copy?.features.length ? `Key features: ${copy.features.join("; ")}.` : undefined,
-            copy?.activities.length ? `Activities include: ${copy.activities.join(", ")}.` : undefined,
-            copy?.schedule ? `Schedule: ${copy.schedule.replace(/\n/g, "; ")}.` : undefined,
-            programme.day,
-          ].filter((part): part is string => Boolean(part)).join(" "),
-          image: { src: programme.image, alt: programme.imageAlt, width: 400, height: 260 },
-          links: [{ text: "Learn More", url: programme.href }],
-        };
-      }),
-    },
-    {
-      heading: HOME_HEADINGS.centres,
-      text: "With six branches spread across Thane West, a Rainbow Preschool centre is always close to home. Visit the centre nearest to you and experience our warm, welcoming classrooms firsthand.",
-      cards: HOME_CENTRES.map((centre) => ({
-        title: centre.name,
-        details: [
-          { label: "Address", value: `${centre.address}, Thane – ${centre.postalCode}` },
-          { label: "Landmark", value: centre.landmark },
-          { label: "Opening hours", value: centre.openingHours },
-        ],
-        links: [
-          ...centre.phoneNumbers.map((phone) => ({
-            text: phone,
-            url: `tel:${phone.replace(/[^\d+]/g, "")}`,
-          })),
-          { text: "WhatsApp", url: `https://wa.me/91${centre.whatsappNumber}` },
-          { text: "Directions", url: centre.googleMapsDirectionsUrl },
-          { text: "View Centre", url: centre.preschoolLandingUrl },
-        ],
-      })),
-    },
-    {
-      heading: HOME_HEADINGS.why,
-      text: HOME_WHY_INTRO,
-      cards: HOME_WHY_CARDS.map((card) => ({ title: card.title, text: card.text })),
-    },
-    {
-      heading: HOME_HEADINGS.curriculum,
-      text: "At Rainbow Preschool, our teachers are dedicated and nurturing. Their singular goal is to help your child meet milestones and become successful. We offer a path toward elementary school that can be personalized to meet each child's needs. Our curriculum is designed for preschool and playgroup children in Thane, supporting holistic early development through age-appropriate activities.",
-      cards: HOME_CURRICULUM.map((area) => ({ title: area.title, text: area.text })),
-    },
-    {
-      heading: HOME_HEADINGS.day,
-      text: "OUR LEARNING ENVIRONMENT · Peek inside a real day at Rainbow Preschool. REAL CLASSROOMS · REAL MOMENTS.",
-      items: [...(HOME_VISITOR_COPY.sections[1].items ?? [])],
-      images: HOME_DAY_PHOTOS,
-      cards: [
-        {
-          image: { src: HOME_VIDEO.poster, alt: HOME_VIDEO.posterAlt, width: 800, height: 450 },
-          links: [{ text: "Play campus walkthrough", url: HOME_VIDEO.src }],
-        },
-        {
-          title: "The Rainbow Theatre — A front-row look at our days",
-          text: "Small classroom moments, celebrations and discoveries from Rainbow.",
-          links: [{ text: "Visit Instagram", url: "https://www.instagram.com/rainbowpreschoolthane/" }],
-        },
-      ],
-    },
-    {
-      heading: HOME_HEADINGS.parents,
-      text: "Stories from families at our Thane preschool centres. Recognised by leading national and education platforms for excellence in early childhood education.",
-      cards: [
-        ...HOME_TESTIMONIALS.slice(0, 4).map((testimonial) => {
-          const centre = HOME_CENTRES.find(({ localityName }) =>
-            localityName.toLowerCase() === testimonial.locality.toLowerCase()
-          );
-          return {
-            title: testimonial.name,
-            quote: testimonial.text,
-            text: `Parent, ${centre ? `${centre.localityName} Centre` : testimonial.locality}`,
-          };
-        }),
-        ...HOME_AWARDS.map((award, index) => ({
-          ...(index === 0 ? { groupHeading: "Recognised & Awarded" } : {}),
-          title: award.name,
-          text: `${award.body} · ${award.year}`,
-          ...(award.logo ? { image: { src: award.logo, alt: "", width: 64, height: 64 } } : {}),
-          ...(award.source ? { links: [{ text: "Award source", url: award.source }] } : {}),
-        })),
-        {
-          groupHeading: "Media logo",
-          title: "The Economic Times",
-          image: { src: "/images/optimized/The_Economic_Times.webp", alt: "Economic Times Feature", width: 160, height: 64 },
-          links: [{ text: "The Economic Times", url: "https://economictimes.indiatimes.com/" }],
-        },
-      ],
-      footerText: `Last updated ${HOME_UPDATED_DISPLAY}`,
-    },
-    {
-      heading: HOME_HEADINGS.admissions,
-      id: "admissions",
-      text: HOME_ADMISSIONS_COPY,
-      images: [{ src: "/assets/walkthrough-poster.webp", alt: "Rainbow Preschool campus", width: 800, height: 450 }],
-      items: [
-        HOME_VISITOR_COPY.sections[3].items?.[1] ?? "",
-        "Request a callback form",
-        "Parent Name",
-        "Phone Number",
-        "Email",
-        "Child's Name",
-        "Child's Age",
-        "Programme",
-        "Preferred Centre",
-        "Message (Optional)",
-        "Request Callback",
-      ],
-      links: [
-        { text: "Learn more about preschool admissions.", url: "/preschool-admissions" },
-        { text: "WhatsApp", url: "https://wa.me/918828195788" },
-        { text: "Find Centre", url: "tel:+918828195788" },
-      ],
-    },
-    {
-      heading: HOME_HEADINGS.faqs,
-      text: "Find answers to common questions about our programmes, centres and admissions.",
-      cards: faqCards,
-      links: HOME_VISITOR_INTERLINK_SEGMENTS.flatMap((segment) =>
-        segment.href ? [{ text: segment.text, url: segment.href }] : []
-      ),
-      footerText: `Reviewed by Rainbow Preschool Curriculum Team · Curriculum Team, Rainbow Preschool International · Last updated: ${LAST_UPDATED_DISPLAY}`,
-    },
-  ];
-}
-
 function visitorProgrammePageSections(
   copy: typeof NURSERY_VISITOR_COPY,
   faqs: readonly { question: string; answer: string }[],
@@ -643,31 +477,14 @@ export interface PageSEOData {
   ogType?: string;
   ogImage?: string;
   noIndex?: boolean;
-  brandLine?: string;
-  heroStats?: string[];
-  heroActions?: { text: string; url: string }[];
   h1?: string;
   introText?: string;
   breadcrumbs?: { name: string; url: string }[];
   structuredData?: object[];
   contentSections?: {
     heading?: string;
-    id?: string;
     text?: string;
-    footerText?: string;
     items?: string[];
-    cards?: {
-      title?: string;
-      eyebrow?: string;
-      text?: string;
-      quote?: string;
-      groupHeading?: string;
-      number?: number;
-      image?: { src: string; alt: string; width?: number; height?: number };
-      details?: { label: string; value: string }[];
-      links?: { text: string; url: string }[];
-      segments?: { text: string; href?: string }[];
-    }[];
     /**
      * Optional inline anchors rendered as a <ul><li><a> list inside the
      * section. Use this to surface high-value internal anchors (e.g. the 5
@@ -689,7 +506,7 @@ export interface PageSEOData {
   blogCategories?: string[];
   blogArticleCount?: number;
   internalLinks?: { text: string; url: string }[];
-  /** ISO-8601 date string. When set, bot SSR emits a visible "Last Updated" line and freshness structured data. */
+  /** ISO-8601 date string. When set, bot SSR emits a visible "Last Updated" line and an Article schema with dateModified for E-E-A-T freshness. */
   lastModified?: string;
   /** Display date (e.g. "Month DD, YYYY"). Optional. */
   lastModifiedDisplay?: string;
@@ -923,22 +740,55 @@ function localBusinessSchema(locality: string, address: string, phone: string, u
 
 const staticPages: Record<string, PageSEOData> = {
   "/": {
-    title: HOME_TITLE,
-    description: HOME_DESCRIPTION,
-    canonical: HOME_URL,
-    brandLine: "Rainbow Preschool",
-    heroStats: [...HOME_HERO_STATS],
-    heroActions: [
-      { text: "Book a Visit", url: "#admissions" },
-      { text: "WhatsApp", url: HOME_ADMISSIONS_WHATSAPP },
-    ],
-    h1: HOME_H1,
-    lastModified: HOME_UPDATED_ISO,
-    lastModifiedDisplay: HOME_UPDATED_DISPLAY,
-    structuredData: HOME_STRUCTURED_DATA,
-    introText: HOME_HERO_COPY,
+    title: "Preschool in Thane | Rainbow Preschool International",
+    description: "Preschool in Thane since 2007 — Rainbow Preschool International. 6 centres, Playgroup, Nursery & KG for ages 1.5–6 years. Admissions open for 2026–27.",
+    canonical: "https://www.rainbowpreschools.com/",
+    h1: HOME_VISITOR_COPY.h1,
+    lastModified: LAST_UPDATED_ISO,
+    lastModifiedDisplay: LAST_UPDATED_DISPLAY,
+    structuredData: [organizationSchema, websiteSchema],
+    introText: HOME_VISITOR_COPY.intro,
     images: [HOME_HERO_IMAGE],
-    contentSections: homepageContentSections(),
+    contentSections: [
+      {
+        images: [
+          HOME_CAMPUS_IMAGE,
+          ...HOME_FILMSTRIP_IMAGES,
+          ...HOME_PROGRAMME_IMAGES,
+        ],
+      },
+      ...visitorCopySections(HOME_VISITOR_COPY.sections),
+      {
+        heading: HOME_VISITOR_COPY.sections[2].items?.[9],
+        text: HOME_VISITOR_COPY.sections[2].items?.[10],
+        items: HOME_VISITOR_FAQS.map((faq) =>
+          `${faq.question} — ${faq.answerSegments.map((segment) => segment.text).join("")}`
+        ),
+      },
+      {
+        text: HOME_VISITOR_INTERLINK_SEGMENTS.map((segment) => segment.text).join(""),
+      },
+      {
+        heading: "Testimonials",
+        items: homeTestimonials.map((testimonial) =>
+          `${testimonial.name} · ${testimonial.locality} — ${testimonial.text}`
+        ),
+      },
+    ],
+    internalLinks: [
+      { text: "Playgroup (1.5–2.5 years)", url: "/playgroup" },
+      { text: "Nursery (2.5–3.5 years)", url: "/nursery" },
+      { text: "Kindergarten (3.5–5.5 years)", url: "/kindergarten" },
+      { text: "All Programmes", url: "/programmes" },
+      { text: "Preschool Admissions", url: "/preschool-admissions" },
+      { text: "Contact Us", url: "/contact" },
+      { text: "Preschool in Manpada", url: "/preschool-in-manpada-thane" },
+      { text: "Preschool in Hariniwas", url: "/preschool-in-hariniwas-thane" },
+      { text: "Preschool in Anand Nagar", url: "/preschool-in-anand-nagar-thane" },
+      { text: "Preschool in Dhokali", url: "/preschool-in-dhokali-thane" },
+      { text: "Preschool in Kalwa", url: "/preschool-in-kalwa-thane" },
+      { text: "Preschool in Kasarvadavali", url: "/preschool-in-kasarvadavali-thane" },
+    ],
   },
   "/about": {
     title: "About Rainbow Preschool Thane | Since 2007",

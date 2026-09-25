@@ -5,10 +5,9 @@ import { type Testimonial } from "@shared/schema";
 
 interface TestimonialCardProps {
   testimonial: Testimonial;
-  showCentreLabel?: boolean;
 }
 
-export function TestimonialCard({ testimonial, showCentreLabel = false }: TestimonialCardProps) {
+export function TestimonialCard({ testimonial }: TestimonialCardProps) {
   const initials = testimonial.name
     .split(" ")
     .map((n) => n[0])
@@ -50,7 +49,7 @@ export function TestimonialCard({ testimonial, showCentreLabel = false }: Testim
           </Avatar>
           <div>
             <p className="font-medium text-sm">{testimonial.name}</p>
-            <p className="text-xs text-muted-foreground">Parent, {testimonial.locality}{showCentreLabel ? " Centre" : ""}</p>
+            <p className="text-xs text-muted-foreground">Parent, {testimonial.locality}</p>
           </div>
         </div>
       </CardContent>

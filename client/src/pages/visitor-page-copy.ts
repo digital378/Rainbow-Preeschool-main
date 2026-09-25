@@ -77,7 +77,7 @@ export interface VisitorFaq {
 export const HOME_VISITOR_FAQS: readonly VisitorFaq[] = [
   {
     question: "What programmes does Rainbow Preschool offer and for which ages?",
-    schemaAnswerText: "We offer three main programmes: Playgroup for children aged 1.5–2.5 years, Nursery for ages 2.5–3.5 years, and Kindergarten for ages 3.5–5.5 years. Each programme follows a play-based curriculum that covers language, numbers, art, and social skills.",
+    schemaAnswerText: "We offer three main programmes: Playgroup for children aged 1.5–2.5 years, Nursery for ages 2.5–3.5 years, and Kindergarten for ages 3.5–5 years. Each programme follows a play-based curriculum that covers language, numbers, art, and social skills.",
     answerSegments: [
       { text: "We offer three main programmes: " },
       { text: "Playgroup", href: "/playgroup" },
@@ -85,16 +85,16 @@ export const HOME_VISITOR_FAQS: readonly VisitorFaq[] = [
       { text: "Nursery", href: "/nursery" },
       { text: " for ages 2.5–3.5 years, and " },
       { text: "Kindergarten", href: "/kindergarten" },
-      { text: " for ages 3.5–5.5 years. Each programme follows a play-based curriculum that covers language, numbers, art, and social skills." },
+      { text: " for ages 3.5–5 years. Each programme follows a play-based curriculum that covers language, numbers, art, and social skills." },
     ],
   },
   {
     question: "What are the school timings and working days?",
-    schemaAnswerText: "All six centres are open Monday to Saturday, 9:00 AM to 6:00 PM. Programme and care schedules may differ; ask your preferred centre for details. Happy Times extended care is available for working parents.",
+    schemaAnswerText: "Our centres are open Monday to Saturday, 8:00 AM to 6:00 PM. We offer both half-day and full-day options to suit your schedule. Extended care through our Happy Times programme is also available for working parents.",
     answerSegments: [
-      { text: "All six centres are open Monday to Saturday, 9:00 AM to 6:00 PM. Programme and care schedules may differ; ask your preferred centre for details. " },
+      { text: "Our centres are open Monday to Saturday, 8:00 AM to 6:00 PM. We offer both half-day and full-day options to suit your schedule. Extended care through our " },
       { text: "Happy Times", href: "/happy-times" },
-      { text: " extended care is available for working parents." },
+      { text: " programme is also available for working parents." },
     ],
   },
   {
@@ -115,10 +115,10 @@ export const HOME_VISITOR_FAQS: readonly VisitorFaq[] = [
   },
   {
     question: "How can parents book a campus visit and get fee details?",
-    schemaAnswerText: "Book a campus visit by contacting any of our six Thane centres — our team will guide you through the process and share the latest fee structure. You can also fill in the form below or call 82915 68972. View full admissions information.",
+    schemaAnswerText: "Book a campus visit by contacting any of our six Thane centres — our team will guide you through the process and share the latest fee structure. You can also fill in our contact form or call 82915 68972.",
     answerSegments: [
       { text: "Book a campus visit by contacting any of our six Thane centres — our team will guide you through the process and share the latest fee structure. You can also " },
-      { text: "fill in the form below", href: "/#admissions" },
+      { text: "fill in our contact form", href: "/contact" },
       { text: " or call 82915 68972. " },
       { text: "View full admissions information", href: "/preschool-admissions" },
       { text: "." },
@@ -126,9 +126,9 @@ export const HOME_VISITOR_FAQS: readonly VisitorFaq[] = [
   },
   {
     question: "Where are Rainbow Preschool centres located in Thane?",
-    schemaAnswerText: "We have six centres in Thane: Manpada (near Ghodbunder Road), Hariniwas (Naupada), Anand Nagar (Majiwada), Dhokali (Kolshet Road), Kalwa, and Kasarvadavali (Ghodbunder Road). Find the centre nearest to you.",
+    schemaAnswerText: "We have six centres across Thane West: Manpada (near Ghodbunder Road), Hariniwas (Naupada), Anand Nagar (Majiwada), Dhokali (Kolshet Road), Kalwa, and Kasarvadavali (Ghodbunder Road).",
     answerSegments: [
-      { text: "We have six centres in Thane: Manpada (near Ghodbunder Road), Hariniwas (Naupada), Anand Nagar (Majiwada), Dhokali (Kolshet Road), Kalwa, and Kasarvadavali (Ghodbunder Road). " },
+      { text: "We have six centres across Thane West: Manpada (near Ghodbunder Road), Hariniwas (Naupada), Anand Nagar (Majiwada), Dhokali (Kolshet Road), Kalwa, and Kasarvadavali (Ghodbunder Road). " },
       { text: "Find the centre nearest to you", href: "/play-school-near-me" },
       { text: "." },
     ],
@@ -144,29 +144,11 @@ export const HOME_VISITOR_FAQS: readonly VisitorFaq[] = [
   },
   {
     question: "Does Rainbow Preschool provide transport facilities?",
-    schemaAnswerText: "GPS-enabled in-house transport is available at all six centres. Please contact your preferred centre for routes and pickup details.",
+    schemaAnswerText: "Some centres offer CCTV-enabled transport with trained attendants. Availability and routes vary by centre. Please contact your preferred centre for transport details and pickup routes.",
     answerSegments: [
-      { text: "GPS-enabled in-house transport is available at all six centres. Please " },
+      { text: "Some centres offer CCTV-enabled transport with trained attendants. Availability and routes vary by centre. Please " },
       { text: "contact your preferred centre", href: "/contact" },
-      { text: " for routes and pickup details." },
-    ],
-  },
-  {
-    question: "Is Rainbow Preschool International part of Rainbow International School?",
-    schemaAnswerText: "Yes. Rainbow Preschool International is the preschool network associated with Rainbow International School. Visit the school's website.",
-    answerSegments: [
-      { text: "Yes. Rainbow Preschool International is the preschool network associated with Rainbow International School. " },
-      { text: "Visit the school's website", href: "https://rainbowinternationalschool.in/" },
-      { text: "." },
-    ],
-  },
-  {
-    question: "When is the right age to start preschool?",
-    schemaAnswerText: "Children can start Rainbow's Playgroup from 1.5 years. Read our guide to choosing the right age to start play school.",
-    answerSegments: [
-      { text: "Children can start Rainbow's Playgroup from 1.5 years. " },
-      { text: "Read our guide to choosing the right age to start play school", href: "/blog/what-age-start-play-school" },
-      { text: "." },
+      { text: " for transport details and pickup routes." },
     ],
   },
 ];

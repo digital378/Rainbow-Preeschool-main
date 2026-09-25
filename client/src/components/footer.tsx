@@ -84,7 +84,7 @@ export function Footer() {
               </li>
               <li>
                 <Link href="/best-preschool-near-me-in-thane" className="text-sm text-muted-foreground hover:text-foreground transition-colors" data-testid="link-footer-best-preschool">
-                  Find a preschool near you
+                  Best Preschool in Thane
                 </Link>
               </li>
               <li>
