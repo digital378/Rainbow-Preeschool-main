@@ -22,3 +22,10 @@ Keep local/predeploy validation free of external production mutations. Do not us
 **Why:** The build also runs before promotion and may fail, while the same validation script can be invoked locally. Purging the live cache there would affect the current release, not the new one.
 
 **How to apply:** For future CDN invalidation, arrange a separate post-release trigger and verify it only runs after the new version is serving; leave build-time checks read-only against live services.
+
+## Attribution guard context
+Visible-byline checks should require specific attribution evidence, not any nearby mention of a parent in unrelated page copy.
+
+**Why:** A centre locality next to a "Parent Partnership" trust-card heading was misidentified as a person's byline and blocked an otherwise valid publish.
+
+**How to apply:** When changing editorial guards, test both real person attributions and unrelated names beside family-oriented text. Run the full publish checks, not only the individual guard.
