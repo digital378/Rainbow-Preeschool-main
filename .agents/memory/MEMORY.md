@@ -1,7 +1,7 @@
 - [Express catch-all path stripping](express-catch-all-path-stripping.md) — app.use("*", fn) sets req.path to "/" for every route; use app.use(fn) + req.originalUrl instead.
 - [H1 sync pattern](h1-sync.md) — SSR h1: field in ssr-pages.ts must equal client <h1> text exactly; guard checks parity.
 - [Title cannibalisation guard](title-guard.md) — scripts/check-no-title-cannibalisation.ts; wired in pre-commit, pre-push, predeploy; NOT in npm run check (cannot edit package.json).
-- [Predeploy smoke-test pitfalls](predeploy-smoke-tests.md) — homepage has distinct bot and browser paths; publishing API logs can truncate before later failures.
+- [Predeploy smoke-test pitfalls](predeploy-smoke-tests.md) — homepage bot/browser paths differ; publishing logs can truncate; deployment-build env is not runtime env.
 - [Homepage redesign patterns](homepage-redesign-patterns.md) — design system token application patterns; bento grid, shadow-card, section-eyebrow, bg-surface-warm, icon-xl/md/sm usage.
 - [Premium Design System v2.0](design-system-v2.md) — all tokens, component classes, shadow/radius/surface/animation vars; shadows were all 0 before; /dummy is the visual reference page.
 - [R3F firewall + Three.js fallback](r3f-firewall.md) — @react-three/fiber/@react-three/drei blocked by Replit firewall; use raw Three.js. Replit preview has no GPU so need isWebGLAvailable() + CSS fallback.
@@ -16,6 +16,7 @@
 - [Tester elementFromPoint pointer-events false negative](tester-elementfrompoint-pointer-events.md) — `pointer-events:none` overlays (e.g. fixed progress bars) are invisible to elementFromPoint-based tester checks; confirm via actual screenshot pixels, not just DOM hit-testing, before trusting a tester "not observed" verdict.
 - [Bot-SSR content gap risk](bot-ssr-content-gap.md) — server/ssr-pages.ts entries can lack `contentSections`, meaning bots get almost no body content even though real users see a rich page; when a task asks for content to be "crawlable"/"in SSR HTML", check this file's entry for the route, not just the React component.
 - [SEO audit tool false positives](seo-audit-tool-false-positives.md) — browser-UA crawlers that don't wait for hydration see the empty SPA shell and falsely report missing H1/orphan pages/missing schema; verify via curl before trusting the report.
+- [Rendered image parity scope](rendered-image-parity-scope.md) — compare unique stable editorial image tuples; repeated carousels and conditional media fallbacks distort raw counts.
 - [Cloudflare HSTS vs app-level header](cloudflare-hsts-vs-app-header.md) — apex-domain redirect is issued by Cloudflare before reaching Express, so an app-level HSTS header doesn't cover it; needs the zone's `security_header` setting enabled separately.
 - [Two public directories](two-public-directories.md) — top-level `public/` is served unconditionally (dev AND prod) via its own express.static call; works fine in production despite not going through the Vite build.
 - [Analytics guard strength](analytics-guard-strength.md) — tracking guards must verify dispatch and interaction wiring, explicit destinations, and disabled automatic page views—not event-name strings.

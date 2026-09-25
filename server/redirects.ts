@@ -390,6 +390,12 @@ export const redirectMap: Record<string, string> = {
   "/plyagroup": "/playgroup",
 
   // ── Old blog redirects ─────────────────────────────────────────────────────
+  "/17-national-symbols-of-india-for-kids-2026/": "/national-symbols-of-india-for-kids",
+  "/national-symbols-of-india": "/national-symbols-of-india-for-kids",
+  "/36-motivational-thoughts-for-the-day-for-kids": "/36-motivational-thoughts-of-the-day-for-kids",
+  "/blog/50-healthy-tiffin-box-ideas-preschoolers-indian": "/blog/healthy-tiffin-box-ideas-preschoolers",
+  "/blog/what-age-start-presschool": "/blog/what-age-start-play-school",
+  "/kindergarten/rainy-season-activities-for-kindergarten": "/rainy-season-activities-for-kindergarten",
   "/solitary-play-activities-for-preschoolers-types-and-benefits": "/blog/how-play-based-learning-shapes-young-minds",
   "/solitary-play-activities-for-preschoolers-types-and-benefits/": "/blog/how-play-based-learning-shapes-young-minds",
   "/christmas-celebration-at-aarna-foundation": "/blog",

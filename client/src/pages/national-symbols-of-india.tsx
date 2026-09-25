@@ -5,7 +5,16 @@ import { SEO, createBreadcrumbSchema, createFAQSchema } from "@/components/seo";
 import { TricolourProgressBar } from "@/components/tricolour-progress-bar";
 import { NATIONAL_SYMBOLS_FAQS } from "@shared/national-symbols-faq-data";
 import { NATIONAL_SYMBOLS_CRAFTS } from "@shared/national-symbols-craft-data";
-import { NATIONAL_SYMBOLS, NATIONAL_SYMBOLS_COPY, NATIONAL_SYMBOLS_LINKS, NATIONAL_SYMBOL_RIDDLES, NATIONAL_SYMBOL_ZONES, type NationalSymbolZone } from "@shared/national-symbols-page-content";
+import {
+  NATIONAL_SYMBOLS,
+  NATIONAL_SYMBOLS_COPY,
+  NATIONAL_SYMBOLS_LINKS,
+  NATIONAL_SYMBOL_IMAGE_SOURCES,
+  NATIONAL_SYMBOL_MATCH_PAIRS,
+  NATIONAL_SYMBOL_RIDDLES,
+  NATIONAL_SYMBOL_ZONES,
+  type NationalSymbolZone,
+} from "@shared/national-symbols-page-content";
 
 const faqs = NATIONAL_SYMBOLS_FAQS;
 
@@ -16,17 +25,8 @@ type Craft = { name: string; instruction: string; time: string; ages: string; zo
 // Craft data lives in shared/national-symbols-craft-data.ts (shared with SSR HowTo schema).
 const crafts: Craft[] = NATIONAL_SYMBOLS_CRAFTS;
 
-const SYMBOL_IMAGES: Record<string, string> = {
- flag: "/images/symbols/flag.webp", emblem: "/images/symbols/emblem.webp", anthem: "/images/symbols/anthem.webp",
- song: "/images/symbols/song.webp", pledge: "/images/symbols/pledge.webp", rupee: "/images/symbols/rupee.webp",
- calendar: "/images/symbols/calendar.webp", tiger: "/images/symbols/tiger.webp", peacock: "/images/symbols/peacock.webp",
- dolphin: "/images/symbols/dolphin.webp", cobra: "/images/symbols/cobra.webp", elephant: "/images/symbols/elephant.webp",
- lotus: "/images/symbols/lotus.webp", mango: "/images/symbols/mango.webp", banyan: "/images/symbols/banyan.webp",
- pumpkin: "/images/symbols/pumpkin.webp", ganga: "/images/symbols/ganga.webp",
-};
-
 function SymbolArt({ id, size = 68 }: { id: string; size?: number }) {
- const src = SYMBOL_IMAGES[id];
+ const src = NATIONAL_SYMBOL_IMAGE_SOURCES[id];
  return <span aria-hidden="true" className="symbol-art symbol-art-3d" style={{ width: size, height: size }}>{src && <img src={src} alt="" width={size} height={size} style={{ width: Math.round(size * 0.86), height: Math.round(size * 0.86), objectFit: "contain" }}/>}</span>;
 }
 
@@ -40,7 +40,7 @@ function useReveal() {
 export default function NationalSymbolsOfIndia() {
  const {ref,seen}=useReveal(); const [collected,setCollected]=useState<Set<string>>(new Set()); const [depth,setDepth]=useState<Record<string,"toddler"|"preschooler">>({}); const [revealed,setRevealed]=useState<Set<number>>(new Set()); const [faq,setFaq]=useState<number|null>(null); const [selected,setSelected]=useState<string|null>(null); const [matchLabel,setMatchLabel]=useState<string|null>(null); const [matched,setMatched]=useState<Set<string>>(new Set());
   const zones=useMemo(()=>NATIONAL_SYMBOL_ZONES,[]);
- const matchPairs=useMemo(()=>[["flag","Tiranga"],["emblem","Four Lions"],["tiger","National Animal"],["peacock","National Bird"],["lotus","National Flower"],["mango","National Fruit"],["banyan","National Tree"],["elephant","National Heritage Animal"],["dolphin","National Aquatic Animal"],["cobra","National Reptile"],["pumpkin","National Vegetable"],["rupee","National Currency"]] as [string,string][],[]);
+ const matchPairs=useMemo(()=>NATIONAL_SYMBOL_MATCH_PAIRS.map(([id,label])=>[id,label] as [string,string]),[]);
  const shuffledNames=useMemo(()=>{const arr=matchPairs.slice();for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]]}return arr},[matchPairs]);
  useEffect(()=>{const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const id=e.target.id.replace("symbol-","");setCollected(s=>new Set(s).add(id))}}),{threshold:.35}); document.querySelectorAll("[data-symbol-card]").forEach(x=>io.observe(x)); return()=>io.disconnect()},[]);
  const stamp=(id:string)=>setCollected(s=>new Set(s).add(id));

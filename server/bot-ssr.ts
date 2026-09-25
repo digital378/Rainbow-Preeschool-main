@@ -8,6 +8,8 @@ import { isNonSeoServerRoute } from "./non-seo-routes";
 import { storage } from "./storage";
 import { redirectMap } from "./redirects";
 import { BLOG_LIST_COPY, blogPostToListEntry, legacyBlogListEntries } from "@shared/blog-list-copy";
+import { getBlogFeaturedImage, LEGACY_BLOG_FEATURED_IMAGE_URLS, LEGACY_BLOG_LOCAL_POST_SLUGS } from "@shared/blog-featured-image-data";
+import { getBlogMetadata } from "@shared/blog-metadata";
 
 // Inclusion rule: only add UA strings that appear EXCLUSIVELY in automated
 // crawlers / bots and NEVER in any human-operated browser or in-app browser.
@@ -193,6 +195,25 @@ async function addArticleDiscoveryLinks(seo: PageSEOData): Promise<PageSEOData> 
   };
 }
 
+async function addVisitorSelectedBlogImage(seo: PageSEOData, path: string): Promise<PageSEOData> {
+  if (!path.startsWith("/blog/")) return seo;
+  const slug = path.slice("/blog/".length);
+  const isLegacyLocalPost = (LEGACY_BLOG_LOCAL_POST_SLUGS as readonly string[]).includes(slug);
+  const apiPost = isLegacyLocalPost ? null : await storage.getBlogPostBySlug(slug);
+  const imageUrl = isLegacyLocalPost
+    ? LEGACY_BLOG_FEATURED_IMAGE_URLS[slug]
+    : apiPost?.imageUrl;
+  const image = getBlogFeaturedImage(
+    imageUrl,
+    getBlogMetadata(slug)?.h1 ?? seo.h1 ?? apiPost?.title ?? seo.title,
+  );
+  if (!image) return seo;
+  return {
+    ...seo,
+    contentSections: [{ images: [image] }, ...(seo.contentSections || [])],
+  };
+}
+
 function escapeHtml(str: string): string {
   return str
     .replace(/&/g, "&amp;")
@@ -200,6 +221,22 @@ function escapeHtml(str: string): string {
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#39;");
+}
+
+function renderImageHtml(image: {
+  src: string;
+  alt: string;
+  width?: number;
+  height?: number;
+  caption?: string;
+}): string {
+  if (!/^\/(?:images|assets|blog|blog-assets)\/[A-Za-z0-9_./-]+$/.test(image.src) || image.src.includes("..")) return "";
+  const width = image.width === undefined ? "" : ` width="${image.width}"`;
+  const height = image.height === undefined ? "" : ` height="${image.height}"`;
+  const imageHtml = `<img src="${escapeHtml(image.src)}" alt="${escapeHtml(image.alt)}"${width}${height} loading="lazy" />`;
+  return image.caption
+    ? `<figure>${imageHtml}<figcaption>${escapeHtml(image.caption)}</figcaption></figure>`
+    : imageHtml;
 }
 
 function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
@@ -305,10 +342,7 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
       }
       if (section.images && section.images.length > 0) {
         for (const image of section.images) {
-          if (!image.src.startsWith("/images/gallery/")) continue;
-          html += `<figure><img src="${escapeHtml(image.src)}" alt="${escapeHtml(image.alt)}" loading="lazy" />`;
-          if (image.caption) html += `<figcaption>${escapeHtml(image.caption)}</figcaption>`;
-          html += "</figure>\n";
+          html += `${renderImageHtml(image)}\n`;
         }
       }
       if (section.table) {
@@ -418,6 +452,7 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
       <h1>${escapeHtml(seo.h1 || seo.title)}</h1>
       ${seo.lastModified ? `<p style="font-size:0.875rem;color:#666;margin:8px 0 16px"><strong>Reviewed by Rainbow Preschool Curriculum Team</strong> — Last updated: <time datetime="${seo.lastModified}">${escapeHtml(seo.lastModifiedDisplay || seo.lastModified)}</time></p>` : ""}
       ${seo.introText ? `<p>${escapeHtml(seo.introText)}</p>` : ""}
+      ${(seo.images || []).map(renderImageHtml).join("\n")}
       ${contentHtml}
       ${blogControlsHtml}
       ${blogCardsHtml}
@@ -523,10 +558,9 @@ export function setupBotSSR(app: Express) {
       return;
     }
 
-    let html = renderSSRHtml(
-      urlPath === "/blog" ? await addArticleDiscoveryLinks(seo) : seo,
-      urlPath,
-    );
+    let renderSeo = urlPath === "/blog" ? await addArticleDiscoveryLinks(seo) : seo;
+    renderSeo = await addVisitorSelectedBlogImage(renderSeo, urlPath);
+    let html = renderSSRHtml(renderSeo, urlPath);
     if (urlPath === "/contact") {
       const email = "admin@rainbowpreschools.com";
       html = html.replace(

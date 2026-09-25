@@ -7,6 +7,7 @@ import { HomeRainbowTheatre } from "@/components/home/home-rainbow-theatre";
 import { QuickCallbackTicket } from "@/components/home/quick-callback-ticket";
 import { EEATSignals } from "@/components/eeat-signals";
 import { LAST_UPDATED_DISPLAY, LAST_UPDATED_ISO } from "@shared/site-freshness";
+import { HOME_CAMPUS_IMAGE } from "@shared/page-image-data";
 import { createAllBranchLocalBusinessSchemas, centres } from "@shared/centre-data";
 import { cn } from "@/lib/utils";
 import { PLAYGROUP, NURSERY, KINDERGARTEN } from "@shared/programme-data";
@@ -492,22 +493,22 @@ function StatsSection() {
 ═══════════════════════════════════════════════════════════════════════════ */
 const SHELF_ITEMS = [
   { href:"/best-preschool-near-me-in-thane", label:HOME_VISITOR_COPY.sections[3].items?.[1] ?? "",       Icon:Award,
-    color:"#F5320C", gradient:"linear-gradient(145deg,#FF5A3C,#F5320C)",
+    color:"#F5320C", textColor:"#C8270C", gradient:"linear-gradient(145deg,#FF5A3C,#F5320C)",
     group:"A" as const, sigAnim:"rs-sig-medal" },
   { href:"/play-school-near-me",             label:HOME_VISITOR_COPY.sections[3].items?.[2] ?? "",  Icon:MapPin,
-    color:"#06B463", gradient:"linear-gradient(145deg,#22D67E,#06B463)",
+    color:"#06B463", textColor:"#087B49", gradient:"linear-gradient(145deg,#22D67E,#06B463)",
     group:"A" as const, sigAnim:"rs-sig-pin" },
   { href:"/preschool-admissions",            label:HOME_VISITOR_COPY.sections[3].items?.[3] ?? "",   Icon:FileText,
-    color:"#1F7AF0", gradient:"linear-gradient(145deg,#48A0FF,#1F7AF0)",
+    color:"#1F7AF0", textColor:"#1761BD", gradient:"linear-gradient(145deg,#48A0FF,#1F7AF0)",
     group:"A" as const, sigAnim:"rs-sig-cal" },
   { href:"/playgroup",                       label:HOME_VISITOR_COPY.sections[3].items?.[5] ?? "",    Icon:Palette,
-    color:"#FB6112", gradient:"linear-gradient(145deg,#FF8A3D,#FB6112)",
+    color:"#FB6112", textColor:"#BC4709", gradient:"linear-gradient(145deg,#FF8A3D,#FB6112)",
     group:"B" as const, sigAnim:"rs-sig-pal" },
   { href:"/nursery",                         label:HOME_VISITOR_COPY.sections[3].items?.[6] ?? "",      Icon:BookOpen,
-    color:"#7C4DFF", gradient:"linear-gradient(145deg,#A06BFF,#7C4DFF)",
+    color:"#7C4DFF", textColor:"#6235C9", gradient:"linear-gradient(145deg,#A06BFF,#7C4DFF)",
     group:"B" as const, sigAnim:"rs-sig-book" },
   { href:"/kindergarten",                    label:HOME_VISITOR_COPY.sections[3].items?.[7] ?? "", Icon:GraduationCap,
-    color:"#06B6A4", gradient:"linear-gradient(145deg,#2CD8C4,#06B6A4)",
+    color:"#06B6A4", textColor:"#087B73", gradient:"linear-gradient(145deg,#2CD8C4,#06B6A4)",
     group:"B" as const, sigAnim:"rs-sig-grad" },
 ];
 type ShelfItem = typeof SHELF_ITEMS[number];
@@ -586,11 +587,11 @@ function ShelfCard({ item, globalIdx, isActive, onActivate }: {
         <div className="rs-lift">
           <div ref={innerRef} className="rs-inner-card"
             style={{
-              borderRadius:22, background:"white",
-              border: isActive ? `2px solid ${item.color}` : "1px solid rgba(33,27,46,.06)",
+              borderRadius:22, background:`linear-gradient(180deg,#FFFFFF 35%,${item.color}14 100%)`,
+              border: isActive ? `2px solid ${item.color}` : `1px solid ${item.color}2E`,
               boxShadow: isActive
                 ? `0 0 0 4px ${item.color}22,0 16px 40px ${item.color}30`
-                : `0 10px 30px ${item.color}1A,0 4px 12px rgba(33,27,46,.05)`,
+                : `0 10px 30px ${item.color}2A,0 4px 12px rgba(33,27,46,.05)`,
               padding:"22px 14px 16px", position:"relative", overflow:"hidden",
               transformStyle:"preserve-3d", willChange:"transform",
               transition:"box-shadow 0.3s,border-color 0.25s",
@@ -616,7 +617,7 @@ function ShelfCard({ item, globalIdx, isActive, onActivate }: {
               </div>
             </div>
             <p style={{ textAlign:"center",fontWeight:700,fontSize:"0.795rem",
-              color:item.color,margin:0,lineHeight:1.3,
+              color:item.textColor,margin:0,lineHeight:1.3,
               fontFamily:"'Fredoka One','Baloo 2',system-ui,sans-serif",
               letterSpacing:"-0.01em" }}>{item.label}</p>
             <div className="rs-arrow" style={{ display:"flex",justifyContent:"center",marginTop:5 }}>
@@ -647,6 +648,7 @@ function MobileRowTile({ item, globalIdx, isActive, onActivate }: {
       style={{
         transitionDelay:`${globalIdx * 60}ms`,
         transform: tapped ? "scale(0.975)" : "none",
+        background:`linear-gradient(90deg,${item.color}12 0%,#FFFFFF 55%)`,
         boxShadow: isActive
           ? `inset 0 0 0 2px ${item.color},0 8px 24px ${item.color}30`
           : tapped
@@ -661,7 +663,7 @@ function MobileRowTile({ item, globalIdx, isActive, onActivate }: {
           boxShadow:`0 6px 16px ${item.color}55` }}>
         <item.Icon style={{ width:20,height:20,color:"white" }}/>
       </div>
-      <span style={{ flex:1,fontWeight:700,fontSize:"0.9rem",color:item.color,
+      <span style={{ flex:1,fontWeight:700,fontSize:"0.9rem",color:item.textColor,
         fontFamily:"'Fredoka One','Baloo 2',system-ui,sans-serif",
         letterSpacing:"-0.01em" }}>{item.label}</span>
       <span style={{ color:item.color,fontSize:16,fontWeight:700,flexShrink:0,marginRight:2 }}>→</span>
@@ -939,8 +941,10 @@ function LearningEnvironmentSection() {
             }}>
               <div className="relative aspect-video">
                 {videoError ? (
-                  <img src="/images/optimized/classroom-rainbow-preschool.webp" alt="Rainbow Preschool campus"
+                  <img src={HOME_CAMPUS_IMAGE.src} alt={HOME_CAMPUS_IMAGE.alt}
                     loading="lazy"
+                    width={HOME_CAMPUS_IMAGE.width}
+                    height={HOME_CAMPUS_IMAGE.height}
                     style={{ display:"block", width:"100%", height:"100%", objectFit:"cover" }} />
                 ) : (<>
                   <video ref={videoRef}
@@ -1008,8 +1012,10 @@ function LearningEnvironmentSection() {
             boxShadow:"0 24px 60px rgba(33,27,46,.15), 0 0 0 5px rgba(255,255,255,.88), 0 0 0 6px rgba(33,27,46,.05)" }}>
             <div className="relative aspect-video">
               {videoError ? (
-                <img src="/images/optimized/classroom-rainbow-preschool.webp" alt="Rainbow Preschool campus"
+                <img src={HOME_CAMPUS_IMAGE.src} alt={HOME_CAMPUS_IMAGE.alt}
                   loading="lazy"
+                  width={HOME_CAMPUS_IMAGE.width}
+                  height={HOME_CAMPUS_IMAGE.height}
                   style={{ display:"block", width:"100%", height:"100%", objectFit:"cover" }} />
               ) : (<>
                 <video ref={mobileVideoRef}

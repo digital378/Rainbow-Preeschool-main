@@ -12,6 +12,7 @@ import { SEOCrossLinks } from "@/components/seo-crosslinks";
 import { EEATSignals } from "@/components/eeat-signals";
 import { VERIFIED_RATING } from "@/lib/verified-rating";
 import { LAST_UPDATED_DISPLAY, LAST_UPDATED_ISO } from "@shared/site-freshness";
+import { CENTRE_CARD_IMAGES } from "@shared/page-image-data";
 import { PLAYGROUP, NURSERY, KINDERGARTEN, HAPPY_TIMES } from "@shared/programme-data";
 import { useState, useEffect } from "react";
 
@@ -473,28 +474,21 @@ export default function BestPreschoolInThane() {
                 </p>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
                   {centres.map((centre) => {
-                    const centreImages: Record<string, string> = {
-                      'manpada': '/images/centres/manpada.webp',
-                      'hariniwas': '/images/centres/hariniwas.webp',
-                      'anand-nagar': '/images/centres/anand-nagar.webp',
-                      'dhokali': '/images/centres/dhokali.webp',
-                      'kalwa': '/images/centres/kalwa.webp',
-                      'kasarvadavali': '/images/centres/kasarvadavali.webp',
-                    };
+                    const centreImage = CENTRE_CARD_IMAGES[centre.id as keyof typeof CENTRE_CARD_IMAGES];
                     return (
                       <Link
                         key={centre.id}
                         href={centre.preschoolLandingUrl || `/contact`}
                         className="bg-white dark:bg-gray-800 rounded-lg border dark:border-gray-700 hover:shadow-md transition-shadow overflow-hidden group"
                       >
-                        {centreImages[centre.id] && (
+                        {centreImage && (
                           <img
-                            src={centreImages[centre.id]}
-                            alt={`Rainbow Preschool ${centre.localityName} centre, Thane`}
+                            src={centreImage.src}
+                            alt={centreImage.alt}
                             loading="lazy"
                             decoding="async"
-                            width="400"
-                            height="200"
+                            width={centreImage.width}
+                            height={centreImage.height}
                             className="w-full h-28 md:h-36 object-cover group-hover:scale-105 transition-transform duration-300"
                           />
                         )}

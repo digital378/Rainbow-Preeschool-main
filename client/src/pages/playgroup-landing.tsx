@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from "react";
+import { PROGRAMME_GALLERY_IMAGES } from "@shared/page-image-data";
 import { Link } from "wouter";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -628,21 +629,11 @@ export default function PlaygroupLanding() {
             </p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="md:col-span-2 md:row-span-2 relative overflow-hidden rounded-xl aspect-square">
-              <img src="/images/optimized/DSC00002.webp" alt="Toddler playing at Rainbow Preschool playgroup" className="w-full h-full object-cover" loading="lazy" decoding="async" width="400" height="400" data-testid="img-playgroup-gallery-1" />
-            </div>
-            <div className="relative overflow-hidden rounded-xl aspect-square">
-              <img src="/images/optimized/DSC00070.webp" alt="Happy kids at playgroup" className="w-full h-full object-cover" loading="lazy" decoding="async" width="400" height="400" data-testid="img-playgroup-gallery-2" />
-            </div>
-            <div className="relative overflow-hidden rounded-xl aspect-square">
-              <img src="/images/optimized/DSC00051.webp" alt="Children playing with colorful toys at Rainbow Preschool" className="w-full h-full object-cover" loading="lazy" decoding="async" width="400" height="400" data-testid="img-playgroup-gallery-3" />
-            </div>
-            <div className="relative overflow-hidden rounded-xl aspect-square">
-              <img src="/images/optimized/DSC00175.webp" alt="Toddler learning with educational toys" className="w-full h-full object-cover" loading="lazy" decoding="async" width="400" height="400" data-testid="img-playgroup-gallery-4" />
-            </div>
-            <div className="relative overflow-hidden rounded-xl aspect-square">
-              <img src="/images/optimized/DSC00177.webp" alt="Child playing at playgroup" className="w-full h-full object-cover" loading="lazy" decoding="async" width="400" height="400" data-testid="img-playgroup-gallery-5" />
-            </div>
+            {PROGRAMME_GALLERY_IMAGES.playgroup.map((image, index) => (
+              <div key={image.src} className={`${index === 0 ? "md:col-span-2 md:row-span-2" : ""} relative overflow-hidden rounded-xl aspect-square`}>
+                <img src={image.src} alt={image.alt ?? ""} className="w-full h-full object-cover" loading="lazy" decoding="async" width={image.width} height={image.height} data-testid={`img-playgroup-gallery-${index + 1}`} />
+              </div>
+            ))}
           </div>
         </div>
       </section>

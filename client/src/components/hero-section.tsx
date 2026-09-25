@@ -1,6 +1,6 @@
 import { ArrowRight, Phone, Users, Star, MapPin, Shield } from "lucide-react";
 import { trackCTAClick } from "@/lib/analytics";
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 
 const trustBadges = [
   { Icon: Users,  label: "1,00,000+ Young Learners" },
@@ -10,13 +10,18 @@ const trustBadges = [
 ];
 
 export function HeroSection() {
-  useEffect(() => {
-    // The initial HTML inserts this image before React. Recreate that same
-    // single layer when a client-side navigation returns to the homepage.
-    if (document.getElementById("static-lcp-hero")) return;
-    const template = document.getElementById("static-lcp-hero-template") as HTMLTemplateElement | null;
-    const root = document.getElementById("root");
-    if (template && root) document.body.insertBefore(template.content.cloneNode(true), root);
+  useLayoutEffect(() => {
+    // On client-side navigation, restore the same background layer if the
+    // initial document did not create it for this route.
+    if (!document.getElementById("static-lcp-hero")) {
+      const template = document.getElementById("static-lcp-hero-template") as HTMLTemplateElement | null;
+      const root = document.getElementById("root");
+      if (template && root) document.body.insertBefore(template.content.cloneNode(true), root);
+    }
+
+    // Keep the prepainted LCP title only until React has committed its single
+    // accessible H1, so the static copy cannot remain visibly duplicated.
+    document.getElementById("static-lcp-hero-title")?.remove();
   }, []);
 
   return (
@@ -54,14 +59,12 @@ export function HeroSection() {
 
           {/* H1 — "Rainbow" white / "Preschool" red, each on own line, dummy scale */}
           <h1
-            className="font-black text-white mb-5 animate-in fade-in slide-in-from-bottom-4 duration-700"
+            className="font-black text-white mb-5"
             style={{
               fontFamily: "'Fredoka One','Baloo 2',system-ui,sans-serif",
               fontSize: "clamp(2.7rem, 6vw, 5.2rem)",
               lineHeight: 1.02,
               letterSpacing: "-0.01em",
-              animationFillMode: "both",
-              animationDelay: "150ms",
             }}
           >
             Rainbow

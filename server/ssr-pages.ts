@@ -2,6 +2,17 @@ import {
   LAST_UPDATED_DISPLAY,
   LAST_UPDATED_ISO,
 } from "@shared/site-freshness";
+import { ABOUT_PAGE_COPY } from "@shared/about-page-content";
+import { ADMISSIONS_PAGE_COPY } from "@shared/admissions-page-copy";
+import {
+  CENTRE_CARD_IMAGES,
+  HOME_CAMPUS_IMAGE,
+  HOME_FILMSTRIP_IMAGES,
+  HOME_HERO_IMAGE,
+  HOME_PROGRAMME_IMAGES,
+  PLAY_SCHOOL_GALLERY_IMAGES,
+  PROGRAMME_GALLERY_IMAGES,
+} from "@shared/page-image-data";
 import {
   getBlogAuthorship,
   blogPersonToSchema,
@@ -18,6 +29,8 @@ import {
   whyParentsChoose,
   preschoolFAQs,
   preschoolPageSEO,
+  defaultCentreGalleryImages,
+  centres,
   getCentreBySlug,
   createAllBranchLocalBusinessSchemas,
 } from "@shared/centre-data";
@@ -26,14 +39,20 @@ import { isNonSeoServerRoute } from "./non-seo-routes";
 import { shouldNoIndex, NOINDEX_SLUGS } from "@shared/seo-config";
 import { FAQ_SCHEMA_ITEMS } from "@shared/faq-data";
 import { FAQ_CATEGORIES } from "@shared/faq-data";
-import { ADMISSIONS_FAQ_SCHEMA_ITEMS } from "@shared/admissions-faq-data";
+import { ADMISSIONS_FAQ_SCHEMA_ITEMS, admissionsFAQs } from "@shared/admissions-faq-data";
 import { PLAYGROUP_FAQS } from "@shared/playgroup-faq-data";
 import { getPlaygroupLandingBySlug } from "@shared/playgroup-landing-data";
 import { BLOG_METADATA } from "@shared/blog-metadata";
 import { testimonials, testimonialsSEO } from "@shared/testimonials-content";
 import { HAPPY_TIMES_COPY, HAPPY_TIMES_SSR_COPY } from "@shared/happy-times-content";
-import { HOLI_COPY, HOLI_ACTIVITIES_SSR_COPY } from "@shared/holi-activities-content";
-import { NATIONAL_SYMBOLS_COPY, NATIONAL_SYMBOLS_SSR_COPY } from "@shared/national-symbols-page-content";
+import { HOLI_COPY, HOLI_ACTIVITIES_SSR_COPY, HOLI_IMAGES } from "@shared/holi-activities-content";
+import {
+  NATIONAL_SYMBOLS,
+  NATIONAL_SYMBOLS_COPY,
+  NATIONAL_SYMBOL_IMAGE_SOURCES,
+  NATIONAL_SYMBOL_MATCH_PAIRS,
+  NATIONAL_SYMBOLS_SSR_COPY,
+} from "@shared/national-symbols-page-content";
 import { TOP_PRESCHOOLS_COPY, TOP_PRESCHOOLS_SSR_COPY } from "@shared/top-preschools-thane-content";
 import {
   HOME_VISITOR_COPY,
@@ -50,7 +69,14 @@ import { admissionHowToSchema } from "@shared/admissions-howto-data";
 import { redirectMap } from "./redirects";
 import { SITEMAP_ENTRIES } from "@shared/sitemap-entries";
 import { getLiveLegacySitemapEntries } from "./legacy-sitemap";
-import { GALLERY_IMAGES } from "../client/src/lib/gallery-config";
+import {
+  GALLERY_IMAGES,
+  GALLERY_CATEGORIES,
+  GALLERY_CTA,
+  GALLERY_SEO_CONTENT,
+  GALLERY_PAGE_COPY,
+  GALLERY_GRID_IMAGE_SIZE,
+} from "../client/src/lib/gallery-config";
 import { CONTACT_PAGE_COPY } from "@shared/contact-page-copy";
 import {
   BLOG_LIST_COPY,
@@ -262,8 +288,18 @@ function visitorProgrammePageSections(
   copy: typeof NURSERY_VISITOR_COPY,
   faqs: readonly { question: string; answer: string }[],
   routine: readonly { time: string; activity: string; description: string }[],
+  galleryImages: readonly { src: string; alt?: string; width: number; height: number }[],
 ): NonNullable<PageSEOData["contentSections"]> {
   const sections = visitorCopySections(copy.sections);
+  const gallerySection = sections[6];
+  if (gallerySection) {
+    gallerySection.images = galleryImages.map((image, index) => ({
+      src: image.src,
+      alt: image.alt ?? copy.sections[6].imageAlts?.[index] ?? "",
+      width: image.width,
+      height: image.height,
+    }));
+  }
   const daySection = sections.find((section) => section.heading?.startsWith("A Day in Our "));
   if (daySection) {
     daySection.items = routine.map((step) => `${step.time} — ${step.activity}: ${step.description}`);
@@ -463,8 +499,9 @@ export interface PageSEOData {
      * benefits from machine-readable tabular markup for search engines.
      */
     table?: { headers: string[]; rows: string[][] };
-    images?: { src: string; alt: string; caption?: string }[];
+    images?: readonly { src: string; alt: string; caption?: string; width?: number; height?: number }[];
   }[];
+  images?: { src: string; alt: string; width: number; height: number }[];
   blogCards?: BlogListEntry[];
   blogCategories?: string[];
   blogArticleCount?: number;
@@ -711,7 +748,15 @@ const staticPages: Record<string, PageSEOData> = {
     lastModifiedDisplay: LAST_UPDATED_DISPLAY,
     structuredData: [organizationSchema, websiteSchema],
     introText: HOME_VISITOR_COPY.intro,
+    images: [HOME_HERO_IMAGE],
     contentSections: [
+      {
+        images: [
+          HOME_CAMPUS_IMAGE,
+          ...HOME_FILMSTRIP_IMAGES,
+          ...HOME_PROGRAMME_IMAGES,
+        ],
+      },
       ...visitorCopySections(HOME_VISITOR_COPY.sections),
       {
         heading: HOME_VISITOR_COPY.sections[2].items?.[9],
@@ -752,30 +797,77 @@ const staticPages: Record<string, PageSEOData> = {
     canonical: `${BASE_URL}/about`,
     lastModified: LAST_UPDATED_ISO,
     lastModifiedDisplay: LAST_UPDATED_DISPLAY,
-    h1: "About Rainbow Preschool International",
-    introText: "Since 2007, Rainbow Preschool International has been a trusted name in early childhood education across Thane, serving over 1,00,000 young learners.",
+    h1: ABOUT_PAGE_COPY.heroHeading,
+    introText: ABOUT_PAGE_COPY.heroTagline,
     breadcrumbs: [{ name: "Home", url: "/" }, { name: "About Us", url: "/about" }],
     structuredData: [organizationSchema, {
       "@context": "https://schema.org",
       "@type": "FAQPage",
-      mainEntity: [
-        { "@type": "Question", name: "When did Rainbow Preschool start?", acceptedAnswer: { "@type": "Answer", text: "Rainbow Preschool International started in Thane in 2007 and has grown into a trusted early learning network for young children." } },
-        { "@type": "Question", name: "How many centres does Rainbow Preschool have in Thane?", acceptedAnswer: { "@type": "Answer", text: "Rainbow Preschool has 6 centres across Thane: Manpada, Hariniwas, Anand Nagar, Dhokali, Kalwa, and Kasarvadavali." } },
-        { "@type": "Question", name: "Which programmes are offered?", acceptedAnswer: { "@type": "Answer", text: "Rainbow Preschool offers Playgroup, Nursery, Kindergarten, and Happy Times extended care for young children." } },
-        { "@type": "Question", name: "What age groups are accepted?", acceptedAnswer: { "@type": "Answer", text: "Rainbow offers age-appropriate early learning programmes for children aged 1.5 to 6 years." } },
-        { "@type": "Question", name: "How does Rainbow support child safety?", acceptedAnswer: { "@type": "Answer", text: "Rainbow supports child safety through CCTV-enabled campuses, 100% female teaching staff, secure pickup practices, child-friendly classrooms, and daily hygiene routines." } },
-        { "@type": "Question", name: "How can parents book a visit?", acceptedAnswer: { "@type": "Answer", text: "Parents can call 82915 68972, send a WhatsApp enquiry, or fill in the contact form to book a campus visit." } },
-      ],
+      mainEntity: ABOUT_PAGE_COPY.faqs.map((faq) => ({
+        "@type": "Question",
+        name: faq.question,
+        acceptedAnswer: { "@type": "Answer", text: faq.answer },
+      })),
     }],
     contentSections: [
-      { heading: "Our Story", text: "Founded in 2007, Rainbow Preschool International began with a single centre in Thane. Today, we operate 6 centres across Thane West, providing quality early childhood education to thousands of families." },
-      { heading: "Our Mission", text: "To provide a safe, nurturing, and stimulating environment where every child can develop to their fullest potential through play-based learning." },
-      { heading: "Our Values", items: ["Child-centric approach to education", "Safe and nurturing environment", "Play-based learning methodology", "Strong parent-school partnership", "Continuous teacher development"] },
-      { heading: "Our Programmes", items: ["Playgroup (1.5–2.5 years) — play-based learning and socialisation for toddlers. See /playgroup", "Nursery (2.5–3.5 years) — early literacy, numeracy, and confidence. See /nursery", "Kindergarten (3.5–5.5 years) — full school-readiness programme. See /kindergarten"] },
-      { heading: "Our 6 Centres Across Thane", items: ["Manpada — Near Khewra Circle (/preschool-in-manpada-thane)", "Hariniwas — Naupada, Central Thane (/preschool-in-hariniwas-thane)", "Anand Nagar — Majiwada, opposite Tropical Lagoon (/preschool-in-anand-nagar-thane)", "Dhokali — Kolshet Road (/preschool-in-dhokali-thane)", "Kalwa — Eastern Thane (/preschool-in-kalwa-thane)", "Kasarvadavali — Ghodbunder Road (/preschool-in-kasarvadavali-thane)"] },
-      { heading: "Frequently Asked Questions", items: ["When did Rainbow Preschool start? Rainbow Preschool International started in Thane in 2007 and has grown into a trusted early learning network for young children.", "How many centres does Rainbow Preschool have in Thane? Rainbow Preschool has 6 centres across Thane: Manpada, Hariniwas, Anand Nagar, Dhokali, Kalwa, and Kasarvadavali.", "Which programmes are offered? Rainbow Preschool offers Playgroup, Nursery, Kindergarten, and Happy Times extended care for young children.", "What age groups are accepted? Rainbow offers age-appropriate early learning programmes for children aged 1.5 to 6 years.", "How does Rainbow support child safety? Rainbow supports child safety through CCTV-enabled campuses, 100% female teaching staff, secure pickup practices, child-friendly classrooms, and daily hygiene routines.", "How can parents book a visit? Parents can call 82915 68972, send a WhatsApp enquiry, or fill in the contact form to book a campus visit."] },
+      {
+        heading: ABOUT_PAGE_COPY.storyHeading,
+        text: ABOUT_PAGE_COPY.storyParagraphs.join(" "),
+        images: ABOUT_PAGE_COPY.storyImages,
+      },
+      {
+        items: ABOUT_PAGE_COPY.stats.map((stat) => `${stat.value} ${stat.label}`),
+      },
+      {
+        heading: ABOUT_PAGE_COPY.programmesHeading,
+        text: ABOUT_PAGE_COPY.programmesIntro,
+        items: ABOUT_PAGE_COPY.programmes.map((programme) => `${programme.title} (${programme.age}) — ${programme.copy}`),
+        links: ABOUT_PAGE_COPY.programmes.map((programme) => ({ text: programme.title, url: programme.href })),
+      },
+      {
+        heading: ABOUT_PAGE_COPY.chairpersonHeading,
+        text: [ABOUT_PAGE_COPY.chairpersonIntro, ...ABOUT_PAGE_COPY.chairpersonFullNote].join(" "),
+      },
+      {
+        heading: ABOUT_PAGE_COPY.curriculumHeading,
+        text: ABOUT_PAGE_COPY.curriculumIntro,
+      },
+      { heading: "Key Principles", items: [...ABOUT_PAGE_COPY.keyPrinciples] },
+      { heading: "Effective Implementation", items: [...ABOUT_PAGE_COPY.effectiveImplementation] },
+      {
+        heading: "Learning Domains",
+        items: ABOUT_PAGE_COPY.learningDomains.map((domain) => `${domain.domain} — ${domain.areas}`),
+      },
+      {
+        heading: ABOUT_PAGE_COPY.trustHeading,
+        items: ABOUT_PAGE_COPY.trustCards.map((card) => `${card.title} — ${card.description}`),
+      },
+      {
+        heading: ABOUT_PAGE_COPY.centresHeading,
+        items: ABOUT_PAGE_COPY.centres.map((centre) => `${centre.name} — ${centre.area}`),
+        links: ABOUT_PAGE_COPY.centres.map((centre) => ({ text: "View Centre →", url: centre.href })),
+      },
+      {
+        heading: ABOUT_PAGE_COPY.faqHeading,
+        items: ABOUT_PAGE_COPY.faqs.map((faq) => `${faq.question} ${faq.answer}`),
+      },
+      {
+        heading: ABOUT_PAGE_COPY.journeyHeading,
+        items: ABOUT_PAGE_COPY.milestones.map((milestone) => `${milestone.year} — ${milestone.title}: ${milestone.description}`),
+      },
+      {
+        heading: ABOUT_PAGE_COPY.coordinatorsHeading,
+        text: ABOUT_PAGE_COPY.coordinatorIntro,
+        items: ABOUT_PAGE_COPY.coordinators.map((person) => `${person.name} — Academic Coordinator, ${person.centre}`),
+        images: ABOUT_PAGE_COPY.coordinators.map((person) => ({
+          src: person.img,
+          alt: `${person.name} - Academic Coordinator, Rainbow Preschool International`,
+          width: person.width,
+          height: person.height,
+        })),
+      },
     ],
-    internalLinks: commonInternalLinks,
+    internalLinks: [...commonInternalLinks, ...ABOUT_PAGE_COPY.exploreLinks],
   },
   "/programmes": {
     title: "Preschool Programmes in Thane | Rainbow Preschool",
@@ -826,6 +918,12 @@ const staticPages: Record<string, PageSEOData> = {
       ...(PROGRAMMES_VISITOR_COPY.programmes ?? []).map((programme) => ({
         heading: programme.name,
         text: programme.description,
+        images: [{
+          src: programme.image,
+          alt: programme.imageAlt,
+          width: 640,
+          height: 360,
+        }],
         items: [
           programme.ageRange,
           PROGRAMMES_VISITOR_COPY.sections[0].items?.[0] ?? "",
@@ -869,6 +967,11 @@ const staticPages: Record<string, PageSEOData> = {
       { heading: "About Our Playgroup Programme", text: "Rainbow Preschool International's Playgroup programme is thoughtfully designed for toddlers aged 1.5 to 2.5 years — the most formative and sensitive period of early brain development. During these early years, children's brains are forming neural connections at an extraordinary pace, and the quality of their environment and interactions directly shapes their cognitive, social, emotional, and physical development. Our Playgroup provides a warm, secure, and richly stimulating environment where your child takes their very first steps into a world of exploration, creativity, and joyful learning. With small class sizes of 10–12 children and dedicated, ECE-qualified Early Childhood Educators, every toddler receives the individual attention, encouragement, and care they deserve during this precious phase." },
       { heading: "What Your Child Will Learn", items: ["Socialisation — learning to play alongside and with other children, building their first friendships in a warm, guided group setting", "Fine motor skills — threading beads, block building, clay modelling, and finger painting to develop essential hand strength and coordination", "Gross motor development — running, jumping, balancing, and creative movement play in our safe indoor and outdoor areas", "Language development — songs, nursery rhymes, stories, and picture books to build vocabulary, listening skills, and early literacy foundations", "Sensory exploration — sand, water, textured materials, sounds, and scents to stimulate all five senses and build sensory processing capacity", "Emotional regulation — learning to identify and express feelings appropriately, take turns, manage transitions, and build resilience", "Basic concepts — colours, shapes, sizes, numbers, and patterns introduced through hands-on play activities, not rote learning"] },
       { heading: "A Typical Day in Playgroup", text: "Every Playgroup day at Rainbow Preschool follows a gentle, predictable rhythm that toddlers find deeply comforting. Predictability and routine are essential at this age — they help children feel safe and develop the internal organisation that underlies all learning. The day begins with a warm morning welcome circle — favourite songs, greetings, and simple weather talk to help children settle in happily. This is followed by free play at activity stations (art corner, sensory tray, block area, pretend play corner), where children choose their activities and develop independence. A short, focused group activity then brings the class together for a skill-building task. Outdoor play follows — fresh air, movement, and social play in our safe yard. A storytime session builds language and imagination. Snack time teaches self-help skills and social norms. The day closes with a cheerful goodbye circle of songs and affirmations. This complete, balanced structure ensures children thrive emotionally and developmentally every single day." },
+      {
+        heading: "Glimpses of Our Playgroup",
+        text: "See our toddlers exploring, playing, and learning in our safe and colorful classrooms.",
+        images: PROGRAMME_GALLERY_IMAGES.playgroup,
+      },
       { heading: "Why Playgroup at Rainbow?", items: ["Experienced ECE-qualified and Montessori-trained female teachers, deeply skilled in toddler development and early childhood best practices", "Small classes — maximum 10–12 children per group, ensuring meaningful individual attention for every toddler every day", "CCTV-monitored, child-safe premises with secure entry and exit across all 6 Thane centres", "Activity-based curriculum developed by our Head of Curriculum, updated annually to align with NEP 2020 and global ECE best practices", "Regular parent communication — daily verbal feedback, monthly written progress updates, and open-door access to your child's teacher", "18+ years of trust — Rainbow Preschool has been educating Thane children since 2007, with over 1,00,000 alumni", "6 convenient locations across Thane West — Manpada, Hariniwas, Anand Nagar, Dhokali, Kalwa, and Kasarvadavali"] },
       { heading: "Admission & Timings", text: "Playgroup admissions at Rainbow Preschool International are open for children aged 1.5 to 2.5 years. Our Playgroup operates Monday through Friday with morning batches (8:30 AM to 11:30 AM) and afternoon batches (12:30 PM to 3:30 PM) available at select centres, giving working parents maximum flexibility. Admissions are accepted on a rolling basis throughout the year, subject to seat availability. We strongly encourage parents to schedule a free campus tour before enrolling — you can observe the classroom, meet your child's prospective teacher, and ask all the questions you have in a relaxed, no-pressure setting. To book a tour or request an admission form, call us at +91 82915 68972 or walk into any of our 6 Rainbow Preschool centres in Thane West, Monday to Saturday, 9 AM to 6 PM." },
       { heading: "Frequently Asked Questions — Playgroup", items: PLAYGROUP_FAQS.map(faq => `${faq.question} — ${faq.answer}`) },
@@ -903,6 +1006,7 @@ const staticPages: Record<string, PageSEOData> = {
       NURSERY_VISITOR_COPY,
       NURSERY_VISITOR_FAQS,
       NURSERY_DAILY_ROUTINE,
+      PROGRAMME_GALLERY_IMAGES.nursery,
     ),
     internalLinks: [...commonInternalLinks, { text: "Nursery Admissions", url: "/nursery" }, { text: "Playgroup Programme", url: "/playgroup" }, { text: "Kindergarten Programme", url: "/kindergarten" }],
     lastModified: LAST_UPDATED_ISO,
@@ -934,6 +1038,7 @@ const staticPages: Record<string, PageSEOData> = {
       KINDERGARTEN_VISITOR_COPY,
       KINDERGARTEN_VISITOR_FAQS,
       KINDERGARTEN_DAILY_ROUTINE,
+      PROGRAMME_GALLERY_IMAGES.kindergarten,
     ),
     internalLinks: [...commonInternalLinks, { text: "Nursery Programme", url: "/nursery" }, { text: "Preschool Admissions", url: "/preschool-admissions" }],
     lastModified: LAST_UPDATED_ISO,
@@ -945,7 +1050,8 @@ const staticPages: Record<string, PageSEOData> = {
     canonical: `${BASE_URL}/gallery`,
     lastModified: LAST_UPDATED_ISO,
     lastModifiedDisplay: LAST_UPDATED_DISPLAY,
-    h1: "Rainbow Preschool Photos",
+    h1: GALLERY_PAGE_COPY.heroTitle,
+    introText: GALLERY_PAGE_COPY.heroDescription,
     breadcrumbs: [{ name: "Home", url: "/" }, { name: "Gallery", url: "/gallery" }],
     structuredData: [
       organizationSchema,
@@ -961,10 +1067,52 @@ const staticPages: Record<string, PageSEOData> = {
       },
     ],
     contentSections: [
-      { heading: "Our Gallery Categories", items: ["Classrooms — Bright, child-friendly learning spaces", "Activities — Creative arts, music, and hands-on learning", "Events & Celebrations — Annual days, festivals, and special events", "Happy Times — Joyful moments from school life", "Infrastructure — Modern facilities and safe premises", "Centres in Thane — Our 6 locations across Thane West"] },
-      { heading: "Photos from Our Centres", images: GALLERY_IMAGES.map(image => ({
-        src: image.src, alt: image.alt, caption: image.caption,
-      })) },
+      {
+        items: [
+          GALLERY_PAGE_COPY.heroEyebrow,
+          `${GALLERY_IMAGES.length} photos · ${GALLERY_CATEGORIES.length - 1} categories`,
+          ...GALLERY_PAGE_COPY.stats.map((stat) => `${stat.value} ${stat.label}`),
+        ],
+      },
+      {
+        items: GALLERY_CATEGORIES.map((category) => {
+          const count = category.id === "all"
+            ? GALLERY_IMAGES.length
+            : GALLERY_IMAGES.filter((image) => image.category === category.id).length;
+          return `${category.label} (${count})`;
+        }),
+      },
+      {
+        text: `Showing ${GALLERY_IMAGES.length} photos`,
+        items: GALLERY_IMAGES.map((image) => {
+          const category = GALLERY_CATEGORIES.find(({ id }) => id === image.category)?.label ?? image.category;
+          return image.caption ? `${image.caption} — ${category}` : category;
+        }),
+        images: GALLERY_IMAGES.map((image) => ({
+          src: image.src,
+          alt: image.alt,
+          caption: image.caption,
+          width: GALLERY_GRID_IMAGE_SIZE.width,
+          height: GALLERY_GRID_IMAGE_SIZE.height,
+        })),
+      },
+      {
+        heading: GALLERY_PAGE_COPY.seoHeading,
+        text: GALLERY_SEO_CONTENT,
+        links: GALLERY_PAGE_COPY.programmeLinks.map((link) => ({ text: link.label, url: link.href })),
+      },
+      {
+        heading: GALLERY_PAGE_COPY.exploreHeading,
+        links: GALLERY_PAGE_COPY.exploreLinks.map((link) => ({ text: link.label, url: link.href })),
+      },
+      {
+        heading: GALLERY_CTA.heading,
+        text: GALLERY_CTA.subtext,
+        links: [
+          { text: GALLERY_CTA.primaryBtn.label, url: GALLERY_CTA.primaryBtn.href },
+          { text: GALLERY_CTA.secondaryBtn.label, url: GALLERY_CTA.secondaryBtn.href },
+        ],
+      },
     ],
     internalLinks: commonInternalLinks,
   },
@@ -1032,15 +1180,15 @@ const staticPages: Record<string, PageSEOData> = {
     internalLinks: commonInternalLinks,
   },
   "/preschool-admissions": {
-    title: "Preschool Admissions in Thane | Rainbow Preschool",
-    description: "Apply for preschool admission at Rainbow Preschool Thane. Playgroup, Nursery & KG open — age criteria, documents, fee structure & step-by-step process.",
-    keywords: "preschool admissions in thane, preschool admission near me, nursery admission thane, kindergarten admission thane, playgroup admission thane, preschool admission process, preschool admission form, preschool admission enquiry",
+    title: ADMISSIONS_PAGE_COPY.meta.title,
+    description: ADMISSIONS_PAGE_COPY.meta.description,
+    keywords: ADMISSIONS_PAGE_COPY.meta.keywords,
     canonical: `${BASE_URL}/preschool-admissions`,
-    h1: "Preschool Admissions in Thane",
+    h1: ADMISSIONS_PAGE_COPY.hero.h1,
     breadcrumbs: [{ name: "Home", url: "/" }, { name: "Preschool Admissions", url: "/preschool-admissions" }],
     lastModified: LAST_UPDATED_ISO,
     lastModifiedDisplay: LAST_UPDATED_DISPLAY,
-    introText: "Rainbow Preschool International offers preschool admissions in Thane for children aged 1.5 to 5.5 years across four programmes — Playgroup, Nursery, Junior KG, and Senior KG. With 6 centres across Thane West and 18+ years of experience educating over one lakh children, Rainbow is one of Thane's most trusted names in early childhood education. Admissions for the 2026–27 academic year are now open. Whether you are enquiring about playgroup admission, nursery admission, or kindergarten admission in Thane, our team will guide you through every step — from your first call to your child's first day.",
+    introText: `${ADMISSIONS_PAGE_COPY.hero.subheadline} ${ADMISSIONS_PAGE_COPY.hero.supporting}`,
     structuredData: [programmeOrgSchema, websiteSchema, ...branchLocalBusinessSchemas, {
       "@context": "https://schema.org",
       "@type": "FAQPage",
@@ -1051,91 +1199,100 @@ const staticPages: Record<string, PageSEOData> = {
       })),
     }, admissionHowToSchema],
     contentSections: [
-      { heading: "Before You Visit a Preschool", text: "Bring your questions on a centre tour and find practical ways to help your child settle in when school starts.", links: [
-        { text: "What to ask during a preschool tour", url: "/blog/what-to-ask-during-a-tour-of-a-preschool-in-thane" },
-        { text: "First-day preschool packing checklist", url: "/blog/first-day-preschool-packing-checklist" },
-        { text: "Preschool readiness quiz", url: "/preschool-readiness-quiz" },
-      ]},
       {
-        heading: "About Preschool Admissions at Rainbow Preschool International",
-        text: "Rainbow Preschool International has been welcoming children into its family since 2007 — over 18 years of nurturing young minds across Thane. Today, with 6 centres in Thane West and more than one lakh alumni, Rainbow is the preschool of choice for thousands of Thane families. Admissions are open for Playgroup (ages 1.5–2.5 years), Nursery (2.5–3.5 years), Junior KG (3.5–4.5 years), and Senior KG (4.5–5.5 years). Every Rainbow centre maintains the same high standards: small class sizes of 10–15 children, 100% trained and ECE-qualified female teaching staff, CCTV-monitored classrooms, and a play-based curriculum aligned with NEP 2020. The admissions process is designed to be simple, transparent, and stress-free for parents — from first enquiry to your child's first day."
+        heading: ADMISSIONS_PAGE_COPY.hero.eyebrow,
+        text: `${ADMISSIONS_PAGE_COPY.hero.form.title} — ${ADMISSIONS_PAGE_COPY.hero.form.subtext}`,
+        items: ["18+ Years", "1L+ Students", "Award-Winning"],
       },
       {
-        heading: "Step-by-Step Preschool Admission Process",
-        items: [
-          "Step 1 — Submit an Enquiry: Fill the online enquiry form on this page, call us at 82915 68972, or walk into any Rainbow Preschool centre in Thane, Monday to Saturday, 9 AM to 6 PM.",
-          "Step 2 — Schedule a Free Campus Visit: Our admissions team will arrange a guided tour of your preferred centre, covering classrooms, play areas, and safety installations so you can experience the Rainbow environment firsthand.",
-          "Step 3 — Speak with the Admissions Team: Discuss your child's age, preferred programme (Playgroup, Nursery, or KG), batch timing preferences, transport requirements, and any questions about the curriculum or fees.",
-          "Step 4 — Complete the Registration Form: Fill the formal admission registration form at the centre and submit it to reserve your child's seat. Forms are available at all 6 Thane centres.",
-          "Step 5 — Submit Required Documents: Provide the necessary documents — birth certificate, ID proof, photographs, address proof, and vaccination card — to complete your child's admission file.",
-          "Step 6 — Confirm Admission and Attend Orientation: Pay the admission fee to confirm the seat. Attend our parent orientation session before your child's first day to meet teachers and understand the daily routine."
-        ]
+        items: ADMISSIONS_PAGE_COPY.programmes.map((programme) => `${programme.label} — ${programme.age} — View programme →`),
+        links: ADMISSIONS_PAGE_COPY.programmes.map((programme) => ({
+          text: programme.label,
+          url: programme.href,
+        })),
       },
       {
-        heading: "Age Eligibility for Preschool Admission in Thane",
-        text: "Each programme at Rainbow Preschool is carefully designed for a specific stage of early childhood development. Age is calculated as of June 1st of the academic year. Choosing the right programme for your child's age ensures they are developmentally ready for the curriculum and social environment.",
+        heading: "Preschool Admission Process",
+        text: ADMISSIONS_PAGE_COPY.sections.processIntro,
+        items: ADMISSIONS_PAGE_COPY.admissionSteps.map((step) => `Step ${step.step} — ${step.title}: ${step.desc}`),
+      },
+      {
+        heading: "Age Criteria for Preschool Admissions",
+        text: ADMISSIONS_PAGE_COPY.sections.ageIntro,
         items: [
-          "Playgroup — Ages 1.5 to 2.5 years: Designed for toddlers taking their very first steps into a learning environment. Focuses on sensory play, music, movement, and gentle socialisation. Helps children develop separation comfort, basic routines, and an appetite for exploration through play.",
-          "Nursery — Ages 2.5 to 3.5 years: Introduces structured early learning through phonics, early numeracy, storytelling, and fine motor activities. Children build language confidence, independence, and creative expression in a warm, supportive classroom.",
-          "Junior KG (Jr. KG) — Ages 3.5 to 4.5 years: Pre-reading, early writing skills, and introductory mathematics. Children engage in project-based learning, science discovery activities, and structured group work that builds both academic and social skills.",
-          "Senior KG (Sr. KG) — Ages 4.5 to 5.5 years: Full school-readiness programme covering reading fluency, sentence writing, mental maths, and general knowledge. Designed for a smooth, confident transition into Class 1 at any CBSE, ICSE, or IB school."
-        ]
+          ...ADMISSIONS_PAGE_COPY.ageCriteria.map((item) => `${item.programme} — ${item.age}: ${item.desc}`),
+          ADMISSIONS_PAGE_COPY.sections.ageNote,
+        ],
       },
       {
         heading: "Documents Required for Admission",
-        text: "Please keep the following documents ready when completing the admission process at any Rainbow Preschool centre in Thane. Bring originals and one photocopy of each document.",
+        text: ADMISSIONS_PAGE_COPY.sections.documentsIntro,
+        items: [...ADMISSIONS_PAGE_COPY.documents, ADMISSIONS_PAGE_COPY.sections.documentsNote],
+      },
+      {
+        heading: "When Do Preschool Admissions Open?",
+        text: ADMISSIONS_PAGE_COPY.sections.timelineIntro,
+        items: ADMISSIONS_PAGE_COPY.admissionTimeline.map((item) => `${item.period} — ${item.label}: ${item.desc}`),
+      },
+      {
+        heading: "Rainbow Preschool Centres in Thane",
+        text: ADMISSIONS_PAGE_COPY.sections.centresIntro,
+        items: centres.map((centre) => `${centre.name} — ${centre.localityName}: View Details`),
+        links: centres.map((centre) => ({
+          text: `View ${centre.name}`,
+          url: centre.preschoolLandingUrl || "/contact",
+        })),
+        images: centres.flatMap((centre) => {
+          const centreImage = ADMISSIONS_PAGE_COPY.centreImages[centre.id as keyof typeof ADMISSIONS_PAGE_COPY.centreImages];
+          return centreImage ? [{
+            src: centreImage.src,
+            alt: centreImage.alt,
+            width: 400,
+            height: 200,
+          }] : [];
+        }),
+      },
+      {
+        heading: ADMISSIONS_PAGE_COPY.seoCopyBlock.title,
+        text: ADMISSIONS_PAGE_COPY.seoCopyBlock.para,
+        links: [
+          { text: "Call Admissions Team", url: "/contact" },
+          { text: "Contact Us", url: "/contact" },
+        ],
+      },
+      {
+        heading: "Preschool Admissions — Frequently Asked Questions",
+        text: ADMISSIONS_PAGE_COPY.sections.faqIntro,
+        items: ADMISSIONS_FAQ_SCHEMA_ITEMS.map((faq) => {
+          const sharedFaq = admissionsFAQs.find((item) => item.question === faq.question);
+          return [
+            `${faq.question} — ${faq.answer}`,
+            ...(sharedFaq?.bullets ?? []),
+          ].join(" ");
+        }),
+      },
+      {
+        heading: "Explore Programmes & Resources",
         items: [
-          "Child's birth certificate — original and one photocopy (mandatory for age verification at the time of admission)",
-          "4 to 6 recent passport-size photographs of the child — white background preferred",
-          "Parent or guardian ID proof — Aadhaar card, passport, or driving licence of both parents",
-          "Address proof — Aadhaar card, utility bill, or rental agreement showing current Thane address",
-          "Child's Aadhaar card — if available (not mandatory but strongly recommended)",
-          "Previous school records — transfer certificate or most recent progress report if applicable",
-          "Vaccination card and any relevant medical history or allergy information the school should be aware of",
-          "Two passport-size photographs of both parents for ID card preparation at the centre"
-        ]
+          "Playgroup — Ages 1.5–2.5",
+          "Nursery — Ages 2.5–3.5",
+          "Kindergarten — Ages 3.5–5.5",
+          "Find a Centre — Near You",
+        ],
+        links: [
+          { text: "Playgroup", url: "/playgroup" },
+          { text: "Nursery", url: "/nursery" },
+          { text: "Kindergarten", url: "/kindergarten" },
+          { text: "Find a Centre", url: "/play-school-near-me" },
+        ],
       },
       {
-        heading: "Admission Timeline",
-        items: [
-          "October – November — Early Admissions: Applications open for the next academic year. Early applicants often secure their preferred centre and batch timing.",
-          "December – February — Main Admission Window: Peak admission period with maximum seat availability across all 6 Rainbow centres in Thane.",
-          "March – May — Final Round: Seats fill up quickly, especially at popular centres. Early enquiry during this period is strongly recommended.",
-          "June Onwards — Academic Year Begins: Mid-term admissions are accepted subject to seat availability — ideal for families relocating to Thane."
-        ]
-      },
-      {
-        heading: "Why Thane Families Choose Rainbow Preschool",
-        text: "Rainbow Preschool International has built its reputation over 18 years on consistent quality, care, and outcomes. Our commitment to every child's holistic development — cognitive, social, emotional, and physical — sets us apart from other preschools in Thane.",
-        items: [
-          "18+ years of preschool education experience in Thane since 2007, with over 1,00,000 alumni",
-          "100% trained female teaching staff — ECE-qualified and Montessori-trained educators with an average tenure of 5+ years",
-          "Small class sizes — maximum 10–15 children per batch — ensuring meaningful individual attention for every child every day",
-          "CCTV-monitored, child-safe premises with secure entry and exit, child-proofed furniture, and daily sanitisation at all 6 centres",
-          "Play-based, NEP 2020-aligned curriculum developed by our Head of Curriculum and updated annually with current ECE best practices",
-          "Regular parent communication — daily verbal feedback, monthly written progress updates, and open access to your child's teacher",
-          "6 convenient locations across Thane West — Manpada, Hariniwas, Anand Nagar, Dhokali, Kalwa, and Kasarvadavali — for easy access from any neighbourhood"
-        ]
-      },
-      {
-        heading: "Frequently Asked Questions — Preschool Admissions in Thane",
-        text: "Parents often have many questions before enrolling their child in preschool for the first time. Here are answers to the most common queries our admissions team receives about the preschool admission process, age eligibility, documents, and fees at Rainbow Preschool International."
-      },
-      {
-        heading: "Admission FAQ Answers",
-        items: ADMISSIONS_FAQ_SCHEMA_ITEMS.map(faq => `${faq.question} — ${faq.answer}`)
-      },
-      {
-        heading: "What is the admission process for playgroup in Thane?",
-        text: "The playgroup admission process at Rainbow Preschool is simple and takes 3 to 5 working days. Start by submitting an enquiry — online, by calling 82915 68972, or by walking into any of our 6 Thane centres. Our admissions team will schedule a free campus tour at your nearest Rainbow centre. You can visit the playgroup classroom, meet the teachers, and let your toddler experience the environment. Once satisfied, complete the registration form and submit documents. Confirm the seat with the admission fee. Playgroup admissions are open for children aged 1.5 to 2.5 years. Mid-term admissions are also accepted subject to seat availability."
-      },
-      {
-        heading: "What documents do I need for nursery admission in Thane?",
-        text: "For nursery admission at Rainbow Preschool, please bring: the child's birth certificate (original plus one photocopy), 4 to 6 passport-size photographs of the child, parent ID proof (Aadhaar, passport, or driving licence), address proof showing your Thane address, child's Aadhaar card if available, and vaccination card. If the child attended another school previously, a transfer certificate or progress report is also required. All these documents are needed in original and one photocopy each. If any document is temporarily unavailable, provisional admission can be granted with a commitment to submit the document within 30 days."
-      },
-      {
-        heading: "Is there a waiting list for preschool admission at Rainbow?",
-        text: "Rainbow Preschool has limited seats per batch to maintain small class sizes of 10–15 children — this is essential for the individual attention our teachers provide. During peak admission months (December to March), popular centres and timings can fill up. We recommend enquiring as early as possible — ideally in October or November before the main window opens — to secure your preferred centre and batch. We do maintain a waiting list for filled batches, and parents are notified if a seat becomes available. For the most current availability at any centre, call 82915 68972 or fill the enquiry form on this page."
+        heading: ADMISSIONS_PAGE_COPY.sections.finalCtaTitle,
+        text: ADMISSIONS_PAGE_COPY.sections.finalCtaDescription,
+        links: [
+          { text: "Call Now", url: "tel:+918291568972" },
+          { text: "WhatsApp Us", url: "https://wa.me/918291568972" },
+        ],
       },
     ],
     internalLinks: [...commonInternalLinks, { text: "Playgroup Programme", url: "/playgroup" }, { text: "Nursery Programme", url: "/nursery" }, { text: "Kindergarten Programme", url: "/kindergarten" }],
@@ -1186,7 +1343,10 @@ const staticPages: Record<string, PageSEOData> = {
         "Dhokali (Kolshet Road) — serves Kolshet Road, Dhokali Naka, Vandana Nagar and Balkum",
         "Kalwa — serves Kalwa, Mumbra side, Vitawa and Kharegaon",
         "Kasarvadavali (Ghodbunder Road) — serves Kasarvadavali, Hiranandani Meadows, Brahmand and the upper Ghodbunder belt",
-      ]},
+      ], images: centres.flatMap((centre) => {
+        const image = CENTRE_CARD_IMAGES[centre.id as keyof typeof CENTRE_CARD_IMAGES];
+        return image ? [image] : [];
+      })},
       { heading: "What Thane Parents Say About Rainbow", text: "Rainbow has been trusted by Thane families for over 18 years. Parents consistently mention three things: how genuinely caring the teachers are, how visibly happy and confident their child has become, and how transparent we are about safety, progress and daily life at school. Many of our families have sent multiple children to Rainbow over the years, and we now have second-generation Rainbow students whose parents themselves attended our centres in the early years." },
       { heading: "Admission Process — Simple, Transparent, Pressure-Free", text: "Admissions at Rainbow Preschool are open year-round and follow a simple 5-step process. Step 1 — Enquire by phone (+91-8291568972) or fill the online form on this page. Step 2 — Schedule a free campus visit at your nearest Thane centre, at a time that suits you, including Saturdays. Step 3 — Tour the classrooms, meet the lead teacher and ask all your questions in a relaxed, no-pressure setting. Step 4 — If you decide to enrol, complete the simple admission form and submit your documents. Step 5 — Welcome to Rainbow! Your child starts on a date that suits your family. There is no entrance test, no parent interview, no donation. We believe enrolment should be easy for parents and joyful for children." },
       { heading: "How to Compare Preschools in Thane", text: "When evaluating any preschool in Thane, focus on these key criteria: safety infrastructure (CCTV in every classroom, biometric entry, female staff); teacher qualifications (ECE certification, not just a general degree); student-teacher ratio (ideal 1:10–1:15); curriculum approach (play-based and NEP 2020 aligned); centre proximity; hygiene standards; parent communication frequency; and whether a free campus visit and trial class are offered.", items: [
@@ -1252,6 +1412,7 @@ const staticPages: Record<string, PageSEOData> = {
     }],
     contentSections: [
       { heading: "Rainbow Preschool — Your Nearest Play School in Thane", text: "When parents in Thane search for a play school near me, they are usually looking for three things at once: a centre genuinely close to home, an environment they can absolutely trust with a 1.5- to 2.5-year-old toddler, and a curriculum that is play-based rather than worksheet-driven. Rainbow Preschool International delivers all three across 6 strategically located centres in Thane West — Manpada, Hariniwas (Naupada), Anand Nagar (Majiwada), Dhokali (Kolshet Road), Kalwa and Kasarvadavali (Ghodbunder Road). We have been Thane's most-trusted play school since 2007, with over 1,00,000 alumni, a 4.9-star Google rating from 487+ verified parent reviews, and award recognition from India Today, ScooNews, the Economic Times and the World Education Summit. Whichever Thane neighbourhood you live in, there is a Rainbow play school within a short, convenient distance from your home." },
+      { heading: "Inside Our Play School Classrooms", text: "A peek into the colourful, safe, and stimulating environment where your child will learn and grow.", images: PLAY_SCHOOL_GALLERY_IMAGES },
       { heading: "What Makes a Good Play School Near You", text: "A genuinely good play school is much more than a clean room with toys. When you visit any play school in Thane, evaluate it on these six dimensions — they are exactly the standards Rainbow has been built around for 18+ years.", items: [
         "Safe, child-friendly environment — CCTV-enabled classrooms, child-proofed furniture, secure single-point entry/exit, daily sanitisation",
         "Trained, ECE-qualified female educators — every teacher background-verified, regularly trained in early childhood development and first aid",
@@ -1638,6 +1799,12 @@ const staticPages: Record<string, PageSEOData> = {
         "Rainbow Preschool International",
         HOLI_COPY.heroDescriptionAfterLink,
       ]),
+      images: HOLI_IMAGES.map((image) => ({
+        src: image.src,
+        alt: image.alt,
+        width: 600,
+        height: 600,
+      })),
     }],
     internalLinks: commonInternalLinks,
   },
@@ -1760,6 +1927,28 @@ const staticPages: Record<string, PageSEOData> = {
         NATIONAL_SYMBOLS_COPY.heroTitle,
         NATIONAL_SYMBOLS_COPY.heroDescription,
       ]),
+      images: [
+        ...NATIONAL_SYMBOLS.map((symbol) => ({
+          src: NATIONAL_SYMBOL_IMAGE_SOURCES[symbol.id],
+          alt: "",
+          width: 68,
+          height: 68,
+        })),
+        {
+          src: NATIONAL_SYMBOL_IMAGE_SOURCES.flag,
+          alt: "",
+          width: 100,
+          height: 100,
+        },
+        ...NATIONAL_SYMBOL_MATCH_PAIRS.map(([id]) => ({
+          src: NATIONAL_SYMBOL_IMAGE_SOURCES[id],
+          alt: "",
+          width: 42,
+          height: 42,
+        })),
+        { src: "/images/rps-logo.webp", alt: "Rainbow Preschool International" },
+        { src: "/images/ris-logo.webp", alt: "Rainbow International School" },
+      ],
     }],
     internalLinks: commonInternalLinks,
   },
@@ -2381,7 +2570,19 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
       introText: intros?.paragraph1 ?? `Looking for a quality preschool in ${centre.locality}, Thane? Rainbow Preschool International's ${centre.locality} centre offers Playgroup, Nursery, and Kindergarten programmes in a safe, nurturing environment.`,
       breadcrumbs: [{ name: "Home", url: "/" }, { name: "Centres", url: "/best-preschool-near-me-in-thane" }, { name: `Preschool in ${centre.locality}, Thane`, url: cleanPath }],
       structuredData: [localBusinessSchema(centre.locality, centre.address, centre.phone, cleanPath, centre.lat, centre.lng, getCentreBySlug(localitySlug)?.areasServed), richFAQSchema],
-      contentSections: richSections,
+      contentSections: [
+        ...richSections,
+        ...(richCentre ? [{
+          heading: `Our Learning Spaces in ${richCentre.localityName}`,
+          text: "Explore our vibrant classrooms and play areas designed to inspire curiosity and learning",
+          images: (richCentre.galleryImages || defaultCentreGalleryImages).map((src, index) => ({
+            src,
+            alt: `Rainbow Preschool ${richCentre.localityName} classroom activities ${index + 1}`,
+            width: 400,
+            height: 400,
+          })),
+        }] : []),
+      ],
       internalLinks: [
         ...commonInternalLinks,
         { text: "Best Preschool in Thane", url: "/best-preschool-near-me-in-thane" },
@@ -2591,7 +2792,7 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
       if (faqSchema) schemas.push(faqSchema);
 
       const body = BLOG_BODY_BY_SLUG[slug];
-      const blogContentSections: { heading?: string; text?: string; items?: string[] }[] = body
+      const blogContentSections: NonNullable<PageSEOData["contentSections"]> = body
         ? [...body.contentSections]
         : [];
       if (postFaqs && postFaqs.length > 0) {

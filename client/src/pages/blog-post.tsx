@@ -20,6 +20,11 @@ import { BlogCTA, type BlogCTATopic } from "@/components/blog-cta";
 import { BlogStickyBar } from "@/components/blog-sticky-bar";
 import { format } from "date-fns";
 import type { BlogPost as ApiBlogPost } from "@shared/schema";
+import {
+  getBlogFeaturedImage,
+  LEGACY_BLOG_FEATURED_IMAGE_URLS,
+  type BlogFeaturedImage,
+} from "@shared/blog-featured-image-data";
 
 // Convert a server-side BlogPost (markdown content string) into the
 // client-side BlogPostData shape (paragraphs array) used by the renderer.
@@ -66,6 +71,7 @@ function adaptApiPost(api: ApiBlogPost): BlogPostData {
     seoDescription: api.excerpt,
     seoKeywords: "",
     wordCount,
+    featuredImage: getBlogFeaturedImage(api.imageUrl, getBlogMetadata(api.slug)?.h1 ?? api.title) ?? undefined,
   };
 }
 
@@ -82,6 +88,7 @@ interface BlogPostData {
   seoDescription: string;
   seoKeywords: string;
   wordCount: number;
+  featuredImage?: BlogFeaturedImage;
 }
 
 /**
@@ -1146,7 +1153,15 @@ export default function BlogPost() {
   });
 
   const post = useMemo<BlogPostData | null>(() => {
-    if (localPost) return localPost;
+    if (localPost) {
+      return {
+        ...localPost,
+        featuredImage: getBlogFeaturedImage(
+          LEGACY_BLOG_FEATURED_IMAGE_URLS[localPost.slug],
+          getBlogMetadata(localPost.slug)?.h1 ?? localPost.title,
+        ) ?? undefined,
+      };
+    }
     if (apiPost) return adaptApiPost(apiPost);
     return null;
   }, [localPost, apiPost]);
@@ -1274,6 +1289,18 @@ export default function BlogPost() {
               </span>
             </div>
           </header>
+
+          {post.featuredImage && (
+            <img
+              src={post.featuredImage.src}
+              alt={post.featuredImage.alt}
+              width={post.featuredImage.width}
+              height={post.featuredImage.height}
+              loading="eager"
+              decoding="async"
+              className="w-full h-auto rounded-xl mb-8"
+            />
+          )}
 
           <div className="prose prose-lg max-w-none dark:prose-invert">
             {post.content.map((paragraph, index) => {

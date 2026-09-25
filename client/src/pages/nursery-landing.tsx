@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from "react";
+import { PROGRAMME_GALLERY_IMAGES } from "@shared/page-image-data";
 import { Link } from "wouter";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -636,21 +637,11 @@ export default function NurseryLanding() {
             </p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="md:col-span-2 md:row-span-2 relative overflow-hidden rounded-xl aspect-square">
-              <img src="/images/optimized/DSC00010.webp" alt={NURSERY_VISITOR_COPY.sections[6].imageAlts?.[0]} className="w-full h-full object-cover" loading="lazy" decoding="async" width="400" height="400" data-testid="img-nursery-gallery-1" />
-            </div>
-            <div className="relative overflow-hidden rounded-xl aspect-square">
-              <img src="/images/optimized/DSC00011.webp" alt={NURSERY_VISITOR_COPY.sections[6].imageAlts?.[1]} className="w-full h-full object-cover" loading="lazy" decoding="async" width="400" height="400" data-testid="img-nursery-gallery-2" />
-            </div>
-            <div className="relative overflow-hidden rounded-xl aspect-square">
-              <img src="/images/optimized/DSC00147.webp" alt={NURSERY_VISITOR_COPY.sections[6].imageAlts?.[2]} className="w-full h-full object-cover" loading="lazy" decoding="async" width="400" height="400" data-testid="img-nursery-gallery-3" />
-            </div>
-            <div className="relative overflow-hidden rounded-xl aspect-square">
-              <img src="/images/optimized/DSC00192.webp" alt={NURSERY_VISITOR_COPY.sections[6].imageAlts?.[3]} className="w-full h-full object-cover" loading="lazy" decoding="async" width="400" height="400" data-testid="img-nursery-gallery-4" />
-            </div>
-            <div className="relative overflow-hidden rounded-xl aspect-square">
-              <img src="/images/optimized/DSC00229.webp" alt={NURSERY_VISITOR_COPY.sections[6].imageAlts?.[4]} className="w-full h-full object-cover" loading="lazy" decoding="async" width="400" height="400" data-testid="img-nursery-gallery-5" />
-            </div>
+            {PROGRAMME_GALLERY_IMAGES.nursery.map((image, index) => (
+              <div key={image.src} className={`${index === 0 ? "md:col-span-2 md:row-span-2" : ""} relative overflow-hidden rounded-xl aspect-square`}>
+                <img src={image.src} alt={NURSERY_VISITOR_COPY.sections[6].imageAlts?.[index] ?? ""} className="w-full h-full object-cover" loading="lazy" decoding="async" width={image.width} height={image.height} data-testid={`img-nursery-gallery-${index + 1}`} />
+              </div>
+            ))}
           </div>
         </div>
       </section>

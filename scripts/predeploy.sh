@@ -90,9 +90,9 @@
 #       confirm they're recognized by BOT_USER_AGENTS in server/bot-ssr.ts.
 #   17. Lighthouse performance guard — simulated-mobile Lighthouse audit against
 #       home + priority landing page. Skippable with SKIP_PERF_GUARD=1.
-#   18. Purge Cloudflare edge cache — runs last so it only fires after every
-#       other guard has passed. Non-blocking: if the purge fails we log a
-#       warning and let the deploy succeed.
+#   18. Leave the production Cloudflare cache untouched. This validation
+#       script also runs locally and during a deployment build, before the
+#       new release is live. A cache purge belongs after a successful publish.
 #
 # The HTTP-based checks (12–15) run against the SAME booted server so we only
 # pay the build-and-boot cost once. The deploy is blocked (non-zero exit)
@@ -373,34 +373,14 @@ if [ "${FRESHNESS_EXIT}" -ne 0 ] || [ "${KEYWORD_EXIT}" -ne 0 ] || [ "${SITEMAP_
 fi
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Step 18/18 — Purge Cloudflare edge cache
+# Step 18/18 — Do not mutate the production Cloudflare cache here.
 #
-# Runs LAST so it only fires after every other guard has passed. Without this,
-# the new CDN-Cache-Control max-age=3600 takes up to an hour to take effect
-# at each POP because old cached responses keep being served until they
-# naturally expire. Purging forces every POP to re-fetch on the next request.
-#
-# Non-blocking: if the purge fails (network blip, token rotated, etc.) we log
-# a warning and let the deploy succeed. The TTL bump still ships; cache just
-# self-heals over the next hour instead of instantly. Skipped entirely when
-# either secret is missing so local dev runs of predeploy.sh stay quiet.
+# predeploy.sh is used both for local validation and as the deployment build
+# command. A build runs before the release is live and can still fail; purging
+# now could expose stale production assets and cause needless cache misses.
+# Purge only after a successful production release through a separate hook.
 # ─────────────────────────────────────────────────────────────────────────────
-if [ -n "$CF_ZONE_ID" ] && [ -n "$CF_API_TOKEN" ]; then
-  log "step 18/18 — Purging Cloudflare edge cache ..."
-  PURGE_RESPONSE=$(curl -sX POST \
-    "https://api.cloudflare.com/client/v4/zones/$CF_ZONE_ID/purge_cache" \
-    -H "Authorization: Bearer $CF_API_TOKEN" \
-    -H "Content-Type: application/json" \
-    --data '{"purge_everything":true}')
-  if echo "$PURGE_RESPONSE" | grep -q '"success":true'; then
-    log "Cloudflare cache purged successfully."
-  else
-    log "WARNING — Cloudflare cache purge failed: $PURGE_RESPONSE"
-    log "Continuing anyway; old cached responses will expire within max-age."
-  fi
-else
-  log "step 18/18 — SKIPPED Cloudflare cache purge (CF_ZONE_ID or CF_API_TOKEN not set)."
-fi
+log "step 18/18 — SKIPPED Cloudflare purge (validation must not touch production cache)."
 
 log "PASS — byline guard + title-cannibalisation + description-length + bot-ua-list + h1-parity + no-pink guard + eeat-show-rating guard + sitemap-blog-slugs guard + standalone-blog-pages SEO guard + build + freshness + keyword-targets + sitemap-200 + bot-detection + ad-pages + crawler-metadata + Lighthouse perf guard all succeeded; deploy may proceed."
 exit 0

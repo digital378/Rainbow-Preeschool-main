@@ -32,8 +32,40 @@
 
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
+import { ABOUT_PAGE_COPY } from "../shared/about-page-content";
+import { ADMISSIONS_PAGE_COPY } from "../shared/admissions-page-copy";
+import { HAPPY_TIMES_COPY } from "../shared/happy-times-content";
+import { HOLI_COPY } from "../shared/holi-activities-content";
+import { NATIONAL_SYMBOLS_COPY } from "../shared/national-symbols-page-content";
+import { TOP_PRESCHOOLS_COPY } from "../shared/top-preschools-thane-content";
+import { CONTACT_PAGE_COPY } from "../shared/contact-page-copy";
+import { BLOG_LIST_COPY } from "../shared/blog-list-copy";
+import { testimonialsSEO } from "../shared/testimonials-content";
+import { GALLERY_PAGE_COPY } from "../client/src/lib/gallery-config";
+import {
+  HOME_VISITOR_COPY,
+  KINDERGARTEN_VISITOR_COPY,
+  NURSERY_VISITOR_COPY,
+  PROGRAMMES_VISITOR_COPY,
+} from "../client/src/pages/visitor-page-copy";
 
 const ROOT = process.cwd();
+const SHARED_H1_EXPRESSIONS: Record<string, string> = {
+  "HOME_VISITOR_COPY.h1": HOME_VISITOR_COPY.h1,
+  "ABOUT_PAGE_COPY.heroHeading": ABOUT_PAGE_COPY.heroHeading,
+  "PROGRAMMES_VISITOR_COPY.h1": PROGRAMMES_VISITOR_COPY.h1,
+  "NURSERY_VISITOR_COPY.h1": NURSERY_VISITOR_COPY.h1,
+  "KINDERGARTEN_VISITOR_COPY.h1": KINDERGARTEN_VISITOR_COPY.h1,
+  "GALLERY_PAGE_COPY.heroTitle": GALLERY_PAGE_COPY.heroTitle,
+  "CONTACT_PAGE_COPY.h1": CONTACT_PAGE_COPY.h1,
+  "BLOG_LIST_COPY.h1": BLOG_LIST_COPY.h1,
+  "ADMISSIONS_PAGE_COPY.hero.h1": ADMISSIONS_PAGE_COPY.hero.h1,
+  "HAPPY_TIMES_COPY.heroTitle": HAPPY_TIMES_COPY.heroTitle,
+  "TOP_PRESCHOOLS_COPY.title": TOP_PRESCHOOLS_COPY.title,
+  "testimonialsSEO.h1": testimonialsSEO.h1,
+  "HOLI_COPY.heroTitle": HOLI_COPY.heroTitle,
+  "NATIONAL_SYMBOLS_COPY.heroTitle": NATIONAL_SYMBOLS_COPY.heroTitle,
+};
 
 function readLines(rel: string): string[] {
   return readFileSync(resolve(ROOT, rel), "utf8").split("\n");
@@ -81,13 +113,29 @@ function parseSsrH1s(): Map<string, SsrH1Entry> {
     if (braceDepth >= 2) {
       // Only capture h1 at depth 2 (top-level field of the entry object)
       if (braceDepth === 2) {
-        const h1Match = line.match(/^\s+h1:\s*"((?:[^"\\]|\\.)*)"/);
+        const h1Match = line.match(/^\s+h1:\s*(.+?)(?:,)?\s*$/);
         if (h1Match && currentKey) {
+          const rawValue = h1Match[1].trim();
+          let h1: string;
+          if (rawValue.startsWith('"')) {
+            try {
+              h1 = JSON.parse(rawValue.replace(/,$/, ""));
+            } catch {
+              throw new Error(`${file}:${i + 1} — could not parse h1 string for ${currentKey}: ${rawValue}`);
+            }
+          } else {
+            const expression = rawValue.replace(/,$/, "").trim();
+            const resolved = SHARED_H1_EXPRESSIONS[expression];
+            if (resolved === undefined) {
+              throw new Error(`${file}:${i + 1} — unresolved shared h1 expression for ${currentKey}: ${expression}. Add it to SHARED_H1_EXPRESSIONS.`);
+            }
+            h1 = resolved;
+          }
           result.set(currentKey, {
             file,
             line: i + 1,
             url: currentKey,
-            h1: h1Match[1],
+            h1,
           });
         }
       }
@@ -129,7 +177,27 @@ function parseSsrH1s(): Map<string, SsrH1Entry> {
  * `const hero = { h1: "..." }` declaration in the file.
  */
 function resolveJsxExpr(expr: string, lines: string[]): string | null {
-  const dotMatch = expr.trim().match(/^(\w+)\.(\w+)$/);
+  const normalizedExpr = expr.trim();
+  const sharedH1 = SHARED_H1_EXPRESSIONS[normalizedExpr];
+  if (sharedH1 !== undefined) return sharedH1;
+  const sharedMember = normalizedExpr.match(/^(\w+)\.(\w+)(?:\.(\w+))?$/);
+  if (sharedMember) {
+    const [, objectName, fieldName, nestedField] = sharedMember;
+    for (const line of lines) {
+      const destructured = line.match(/\bconst\s*\{([^}]+)\}\s*=\s*(\w+)\s*;/);
+      if (!destructured) continue;
+      const alias = destructured[1].split(",").map((entry) => {
+        const [sourceName, aliasName] = entry.trim().split(/\s*:\s*/);
+        return { sourceName, aliasName: aliasName || sourceName };
+      }).find((entry) => entry.aliasName === objectName);
+      if (alias) {
+        const sourceExpression = `${destructured[2]}.${alias.sourceName}.${fieldName}${nestedField ? `.${nestedField}` : ""}`;
+        const resolved = SHARED_H1_EXPRESSIONS[sourceExpression];
+        if (resolved !== undefined) return resolved;
+      }
+    }
+  }
+  const dotMatch = normalizedExpr.match(/^(\w+)\.(\w+)$/);
   if (!dotMatch) return null;
   const [, objName, fieldName] = dotMatch;
 
@@ -264,6 +332,8 @@ const CLIENT_H1_MAP: Record<string, { file: string; nthH1?: number }> = {
   "/nursery":                     { file: "client/src/pages/nursery-landing.tsx" },
   "/kindergarten":                { file: "client/src/pages/kindergarten-landing.tsx" },
   "/happy-times":                 { file: "client/src/pages/happy-times-landing.tsx" },
+  "/holi-activities-for-kids":    { file: "client/src/pages/holi-activities.tsx" },
+  "/national-symbols-of-india-for-kids": { file: "client/src/pages/national-symbols-of-india.tsx" },
   // SEO commercial landing pages
   "/preschool-admissions":        { file: "client/src/pages/preschool-admissions.tsx" },
   "/best-preschool-near-me-in-thane": { file: "client/src/pages/best-preschool-in-thane.tsx" },

@@ -5,6 +5,7 @@ import { EEATSignals } from "@/components/eeat-signals";
 import { VERIFIED_RATING } from "@/lib/verified-rating";
 import { LAST_UPDATED_DISPLAY, LAST_UPDATED_ISO } from "@shared/site-freshness";
 import { admissionsFAQs } from "@shared/admissions-faq-data";
+import { ADMISSIONS_PAGE_COPY } from "@shared/admissions-page-copy";
 import { admissionHowToSchema } from "@shared/admissions-howto-data";
 import { centres } from "@shared/centre-data";
 import {
@@ -17,86 +18,27 @@ import { useState, useEffect } from "react";
 
 // ── Editable page data ────────────────────────────────────────────────────────
 
-const meta = {
-  title: "Preschool Admissions in Thane | Rainbow Preschool",
-  description: "Apply for preschool admission at Rainbow Preschool Thane. Playgroup, Nursery & KG open — age criteria, documents, fee structure & step-by-step process.",
-  keywords: "preschool admissions in thane, preschool admission near me, nursery admission thane, kindergarten admission thane, playgroup admission thane, preschool admission process, preschool admission form, preschool admission enquiry",
+const { meta, hero, programmes, ageCriteria, documents, seoCopyBlock } = ADMISSIONS_PAGE_COPY;
+const stepIcons = {
+  clipboardList: ClipboardList,
+  mapPin: MapPin,
+  messageCircle: MessageCircle,
+  fileText: FileText,
+  check: Check,
+  graduationCap: GraduationCap,
 };
-
-const hero = {
-  eyebrow: "Admissions Open 2026–27",
-  h1: "Preschool Admissions in Thane",
-  subheadline: "Start your child's early learning journey with Rainbow Preschool International. We offer admissions for Playgroup, Nursery, Jr. KG, and Sr. KG across multiple centres in Thane.",
-  supporting: "Explore age criteria, admission process, centre options, and submit an enquiry to speak with our admissions team.",
-  form: {
-    title: "Start Your Admission Enquiry",
-    subtext: "Fill the form and our admissions team will contact you within 24 hours",
-  },
-};
-
-const programmes = [
-  { label: "Playgroup", age: "1.5 – 2.5 years", href: "/playgroup", color: "bg-yellow-50 dark:bg-yellow-900/30 border-yellow-200 dark:border-yellow-800" },
-  { label: "Nursery", age: "2.5 – 3.5 years", href: "/nursery", color: "bg-blue-50 dark:bg-blue-900/30 border-blue-200 dark:border-blue-800" },
-  { label: "Jr. KG", age: "3.5 – 4.5 years", href: "/kindergarten", color: "bg-green-50 dark:bg-green-900/30 border-green-200 dark:border-green-800" },
-  { label: "Sr. KG", age: "4.5 – 5.5 years", href: "/kindergarten", color: "bg-purple-50 dark:bg-purple-900/30 border-purple-200 dark:border-purple-800" },
-];
-
-const admissionSteps = [
-  { icon: ClipboardList, step: "01", title: "Submit an Enquiry", desc: "Fill the online form on this page, call us at 82915 68972, or walk into any Rainbow Preschool centre in Thane." },
-  { icon: MapPin,         step: "02", title: "Schedule a Campus Visit", desc: "Our admissions team will arrange a guided tour of your preferred centre — classrooms, play areas, and safety installations." },
-  { icon: MessageCircle, step: "03", title: "Speak with the Admissions Team", desc: "Discuss your child's age, preferred programme, batch timing, and any questions with our experienced admissions team." },
-  { icon: FileText,       step: "04", title: "Complete the Registration Form", desc: "Fill the formal admission registration form and submit it to the centre to reserve your child's seat." },
-  { icon: Check,          step: "05", title: "Submit Required Documents", desc: "Provide the necessary documents — birth certificate, ID proof, photographs, and address proof — to complete the admission file." },
-  { icon: GraduationCap, step: "06", title: "Confirm Admission & Onboarding", desc: "Pay the admission fee to confirm the seat. Attend our parent orientation session before your child's first day." },
-];
-
-const ageCriteria = [
-  { programme: "Playgroup", age: "1.5 – 2.5 years", desc: "Sensory play, music, movement, and first social introduction. Focuses on separation comfort, basic routines, and exploration.", href: "/playgroup", color: "border-l-yellow-400" },
-  { programme: "Nursery",   age: "2.5 – 3.5 years", desc: "Phonics, early numeracy, storytelling, and fine motor skills. Children build language, independence, and creative confidence.", href: "/nursery",   color: "border-l-blue-400" },
-  { programme: "Jr. KG",    age: "3.5 – 4.5 years", desc: "Pre-reading, writing, and early maths. Project-based learning, science activities, and structured group work.", href: "/kindergarten", color: "border-l-green-400" },
-  { programme: "Sr. KG",    age: "4.5 – 5.5 years", desc: "Full school-readiness — reading fluency, writing, mental maths, and general knowledge for a smooth Class 1 transition.", href: "/kindergarten", color: "border-l-purple-400" },
-];
-
-const documents = [
-  "Child's birth certificate — original and one photocopy (mandatory for age verification)",
-  "4–6 recent passport-size photographs of the child — white background preferred",
-  "Parent/guardian ID proof — Aadhaar card, passport, or driving licence of both parents",
-  "Address proof — Aadhaar, utility bill, or rental agreement showing current Thane address",
-  "Child's Aadhaar card — if available (not mandatory but recommended)",
-  "Previous school records — transfer certificate or progress report if applicable",
-  "Vaccination card and any relevant medical history or allergy information",
-  "Two passport-size photographs of both parents for ID card purposes",
-];
-
-const admissionTimeline = [
-  { period: "October – November", label: "Early Admissions", desc: "Applications open for the next academic year. Early applicants often secure their preferred centre and batch timing.", icon: Star },
-  { period: "December – February", label: "Main Admission Window", desc: "Peak admission period with maximum seat availability across all 6 Rainbow centres in Thane.", icon: CalendarDays },
-  { period: "March – May", label: "Final Round", desc: "Seats fill up quickly, especially at popular centres. Early enquiry during this period is strongly recommended.", icon: Clock },
-  { period: "June Onwards", label: "Academic Year Begins", desc: "Mid-term admissions are accepted subject to seat availability — ideal for families relocating to Thane.", icon: MapPin },
-];
-
-const centreImagesMap: Record<string, string> = {
-  'manpada': '/images/centres/manpada.webp',
-  'hariniwas': '/images/centres/hariniwas.webp',
-  'anand-nagar': '/images/centres/anand-nagar.webp',
-  'dhokali': '/images/centres/dhokali.webp',
-  'kalwa': '/images/centres/kalwa.webp',
-  'kasarvadavali': '/images/centres/kasarvadavali.webp',
-};
-
-const centreAltText: Record<string, string> = {
-  'manpada': 'Preschool admissions at Rainbow Preschool Manpada centre, Thane',
-  'hariniwas': 'Rainbow Preschool Hariniwas admission centre, Thane',
-  'anand-nagar': 'Nursery admission at Rainbow Preschool Anand Nagar, Thane',
-  'dhokali': 'Rainbow Preschool Dhokali centre for playgroup admissions in Thane',
-  'kalwa': 'Preschool admission centre at Rainbow Preschool Kalwa, Thane',
-  'kasarvadavali': 'Rainbow Preschool Kasarvadavali admission centre, Thane West',
-};
-
-const seoCopyBlock = {
-  title: "Preschool Admissions Made Simple in Thane",
-  para: "Rainbow Preschool International offers preschool admissions in Thane across Playgroup, Nursery, Jr. KG, and Sr. KG. Parents can explore age criteria, centre options, admission steps, and speak with our admissions team for personalised guidance across all six Thane locations. Whether you are applying for nursery admissions, kindergarten admissions, or looking to enrol your toddler in playgroup — our team will guide you through every step of the process.",
-};
+const admissionSteps = ADMISSIONS_PAGE_COPY.admissionSteps.map((step) => ({
+  ...step,
+  icon: stepIcons[step.icon],
+}));
+const timelineIcons = { star: Star, calendarDays: CalendarDays, clock: Clock, mapPin: MapPin };
+const admissionTimeline = ADMISSIONS_PAGE_COPY.admissionTimeline.map((item) => ({
+  ...item,
+  icon: timelineIcons[item.icon],
+}));
+const centreImagesMap = Object.fromEntries(
+  Object.entries(ADMISSIONS_PAGE_COPY.centreImages).map(([id, image]) => [id, image]),
+) as Record<string, { src: string; alt: string }>;
 
 
 // ── Component ─────────────────────────────────────────────────────────────────
@@ -114,6 +56,7 @@ export default function PreschoolAdmissions() {
     { name: "Home", url: "/" },
     { name: "Preschool Admissions", url: "/preschool-admissions" },
   ];
+  const [ageIntroPrefix, ageIntroSuffix] = ADMISSIONS_PAGE_COPY.sections.ageIntro.split("June 1st");
 
   const structuredData = [
     organizationSchema,
@@ -227,7 +170,7 @@ export default function PreschoolAdmissions() {
                   Preschool Admission Process
                 </h2>
                 <p className="text-sm md:text-base text-gray-600 dark:text-gray-300 text-center max-w-2xl mx-auto mb-6 md:mb-8">
-                  Joining Rainbow Preschool is straightforward. Here are the six steps from first enquiry to your child's first day.
+                  {ADMISSIONS_PAGE_COPY.sections.processIntro}
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   {admissionSteps.map((s, idx) => (
@@ -253,7 +196,7 @@ export default function PreschoolAdmissions() {
                   Age Criteria for Preschool Admissions
                 </h2>
                 <p className="text-sm md:text-base text-gray-600 dark:text-gray-300 text-center max-w-2xl mx-auto mb-6">
-                  Each programme at Rainbow Preschool is designed for a specific developmental stage. Age is calculated as of <strong>June 1st</strong> of the academic year.
+                  {ageIntroPrefix}<strong>June 1st</strong>{ageIntroSuffix}
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {ageCriteria.map((item, idx) => (
@@ -268,7 +211,7 @@ export default function PreschoolAdmissions() {
                   ))}
                 </div>
                 <p className="text-xs text-gray-500 dark:text-gray-400 text-center mt-4">
-                  If your child's age falls between two programmes, our team will assess developmental readiness and guide you to the right fit.
+                  {ADMISSIONS_PAGE_COPY.sections.ageNote}
                 </p>
               </div>
             </section>
@@ -280,7 +223,7 @@ export default function PreschoolAdmissions() {
                   Documents Required for Admission
                 </h2>
                 <p className="text-sm md:text-base text-gray-600 dark:text-gray-300 text-center max-w-2xl mx-auto mb-6">
-                  Please keep the following documents ready to complete your child's admission at Rainbow Preschool.
+                  {ADMISSIONS_PAGE_COPY.sections.documentsIntro}
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {documents.map((doc, idx) => (
@@ -291,7 +234,7 @@ export default function PreschoolAdmissions() {
                   ))}
                 </div>
                 <p className="text-xs text-gray-500 dark:text-gray-400 text-center mt-4">
-                  Our admissions team will guide you through the exact documentation needed for your chosen centre and programme.
+                  {ADMISSIONS_PAGE_COPY.sections.documentsNote}
                 </p>
               </div>
             </section>
@@ -303,7 +246,7 @@ export default function PreschoolAdmissions() {
                   When Do Preschool Admissions Open?
                 </h2>
                 <p className="text-sm md:text-base text-gray-600 dark:text-gray-300 text-center max-w-2xl mx-auto mb-6">
-                  Rainbow Preschool accepts applications year-round. Here is the typical admission calendar to help you plan.
+                  {ADMISSIONS_PAGE_COPY.sections.timelineIntro}
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                   {admissionTimeline.map((item, idx) => (
@@ -327,7 +270,7 @@ export default function PreschoolAdmissions() {
                   Rainbow Preschool Centres in Thane
                 </h2>
                 <p className="text-sm md:text-base text-gray-600 dark:text-gray-300 text-center max-w-3xl mx-auto mb-6">
-                  Choose the Rainbow Preschool centre that is most convenient for your home, commute, or daily routine. All 6 centres offer the same admissions programmes and quality standards.
+                  {ADMISSIONS_PAGE_COPY.sections.centresIntro}
                 </p>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
                   {centres.map((centre) => (
@@ -338,8 +281,8 @@ export default function PreschoolAdmissions() {
                     >
                       {centreImagesMap[centre.id] && (
                         <img
-                          src={centreImagesMap[centre.id]}
-                          alt={centreAltText[centre.id] || `Preschool admissions at Rainbow Preschool ${centre.localityName} Thane`}
+                          src={centreImagesMap[centre.id].src}
+                          alt={centreImagesMap[centre.id].alt}
                           loading="lazy"
                           decoding="async"
                           width="400"
@@ -386,7 +329,7 @@ export default function PreschoolAdmissions() {
                   Preschool Admissions — Frequently Asked Questions
                 </h2>
                 <p className="text-sm text-gray-600 dark:text-gray-300 text-center mb-6">
-                  Common questions from parents enquiring about preschool admission in Thane
+                  {ADMISSIONS_PAGE_COPY.sections.faqIntro}
                 </p>
                 <div className="space-y-2 md:space-y-3">
                   {admissionsFAQs.map((faq, index) => {
@@ -473,8 +416,8 @@ export default function PreschoolAdmissions() {
             <section className="relative overflow-hidden py-8 md:py-12 px-4 bg-gradient-to-r from-primary via-accent to-secondary text-white">
               <div className="absolute inset-0 bg-black/40" />
               <div className="relative z-10 max-w-4xl mx-auto text-center">
-                <h2 className="text-xl md:text-2xl font-bold mb-3 md:mb-4">Ready to Start Your Child's Admission?</h2>
-                <p className="mb-4 md:mb-6 text-sm md:text-base opacity-90">Call us, WhatsApp, or fill the form above — our admissions team responds within 24 hours.</p>
+                <h2 className="text-xl md:text-2xl font-bold mb-3 md:mb-4">{ADMISSIONS_PAGE_COPY.sections.finalCtaTitle}</h2>
+                <p className="mb-4 md:mb-6 text-sm md:text-base opacity-90">{ADMISSIONS_PAGE_COPY.sections.finalCtaDescription}</p>
                 <div className="flex flex-wrap justify-center gap-3 md:gap-4">
                   <a href="tel:+918291568972" className="px-5 md:px-6 py-2 md:py-3 bg-white text-primary rounded-lg font-semibold text-sm md:text-base hover:bg-gray-100 transition-colors">
                     Call Now

@@ -27,6 +27,41 @@ export const NATIONAL_SYMBOLS = [
   { id:"ganga",name:"National River — Ganga",hindi:"गंगा",category:"river",zone:"nature",unofficial:false,spotted:"Flowing through the northern Indian plains, from the Himalayas to the Bay of Bengal.",fact:"The Ganga was officially declared India's National River in November 2008. Millions of people depend on it every day for water, farming and daily life.",toddler:"The Ganga is a very big, very important river.",preschooler:"The Ganga begins high up in the snowy Himalayas and travels a very long way before reaching the sea, giving water to millions of people, plants and animals along the way. That's why we try to keep it clean.",tryThis:"Talk about one simple way your family can save water at home this week."},
 ] satisfies NationalSymbol[];
 
+export const NATIONAL_SYMBOL_IMAGE_SOURCES: Record<string, string> = {
+  flag: "/images/symbols/flag.webp",
+  emblem: "/images/symbols/emblem.webp",
+  anthem: "/images/symbols/anthem.webp",
+  song: "/images/symbols/song.webp",
+  pledge: "/images/symbols/pledge.webp",
+  rupee: "/images/symbols/rupee.webp",
+  calendar: "/images/symbols/calendar.webp",
+  tiger: "/images/symbols/tiger.webp",
+  peacock: "/images/symbols/peacock.webp",
+  dolphin: "/images/symbols/dolphin.webp",
+  cobra: "/images/symbols/cobra.webp",
+  elephant: "/images/symbols/elephant.webp",
+  lotus: "/images/symbols/lotus.webp",
+  mango: "/images/symbols/mango.webp",
+  banyan: "/images/symbols/banyan.webp",
+  pumpkin: "/images/symbols/pumpkin.webp",
+  ganga: "/images/symbols/ganga.webp",
+};
+
+export const NATIONAL_SYMBOL_MATCH_PAIRS = [
+  ["flag", "Tiranga"],
+  ["emblem", "Four Lions"],
+  ["tiger", "National Animal"],
+  ["peacock", "National Bird"],
+  ["lotus", "National Flower"],
+  ["mango", "National Fruit"],
+  ["banyan", "National Tree"],
+  ["elephant", "National Heritage Animal"],
+  ["dolphin", "National Aquatic Animal"],
+  ["cobra", "National Reptile"],
+  ["pumpkin", "National Vegetable"],
+  ["rupee", "National Currency"],
+] as const;
+
 export const NATIONAL_SYMBOL_ZONES = [
   {id:"identity",title:"Zone 1 — The Nation's Identity",intro:"These are the symbols India chose for itself — a flag, a song, a promise, a sign on every coin. They tell the story of who we are as one country made of many people.",accent:"#b5653c"},
   {id:"wild",title:"Zone 2 — The Wild Trail",intro:"India shares its land with some extraordinary animals. These five were chosen to represent the country's wild beauty — spot them at the zoo, in a book, or even on your next holiday.",accent:"#3e756d"},

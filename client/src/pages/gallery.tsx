@@ -4,15 +4,21 @@ import { Button } from "@/components/ui/button";
 import { EEATSignals } from "@/components/eeat-signals";
 import { LAST_UPDATED_DISPLAY, LAST_UPDATED_ISO } from "@shared/site-freshness";
 import { Link } from "wouter";
-import { X, ChevronLeft, ChevronRight, Images, Award, MapPin, ClipboardList, BookOpen, ZoomIn, Users, Heart, Star } from "lucide-react";
+import { X, ChevronLeft, ChevronRight, Images, Award, MapPin, ClipboardList, BookOpen, ZoomIn, Users, Star } from "lucide-react";
 import {
   GALLERY_CATEGORIES,
   GALLERY_IMAGES,
   GALLERY_CTA,
+  GALLERY_PAGE_COPY,
+  GALLERY_GRID_IMAGE_SIZE,
+  GALLERY_MARQUEE_IMAGE_SIZE,
   GALLERY_SEO_CONTENT,
   type GalleryCategoryId,
   type GalleryImage,
 } from "@/lib/gallery-config";
+
+const GALLERY_STAT_ICONS = { images: Images, mapPin: MapPin, star: Star, users: Users };
+const GALLERY_LINK_ICONS = { award: Award, mapPin: MapPin, clipboardList: ClipboardList, bookOpen: BookOpen };
 
 function gtag(...args: any[]) {
   if ((window as any).gtag) (window as any).gtag(...args);
@@ -215,13 +221,13 @@ export default function Gallery() {
         <div className="relative max-w-3xl mx-auto px-4 text-center">
           <div className="inline-flex items-center gap-2 bg-primary/10 text-primary rounded-full px-4 py-1.5 text-sm font-medium mb-4">
             <Images className="w-4 h-4" />
-            Life at Rainbow Preschools
+            {GALLERY_PAGE_COPY.heroEyebrow}
           </div>
           <h1 className="text-3xl md:text-5xl font-bold text-foreground mb-4 leading-tight">
-            Rainbow Preschool Photos
+            {GALLERY_PAGE_COPY.heroTitle}
           </h1>
           <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
-            Explore our classrooms, activities, events, and joyful learning moments across our 6 centres in Thane.
+            {GALLERY_PAGE_COPY.heroDescription}
           </p>
           <p className="text-sm text-muted-foreground mt-2">
             {GALLERY_IMAGES.length} photos &nbsp;·&nbsp; {GALLERY_CATEGORIES.length - 1} categories
@@ -234,7 +240,7 @@ export default function Gallery() {
             className="flex gap-3 animate-marquee"
             style={{ width: "max-content" }}
           >
-            {[...GALLERY_IMAGES.slice(0, 10), ...GALLERY_IMAGES.slice(0, 10)].map((img, i) => (
+          {[...GALLERY_IMAGES.slice(0, 10), ...GALLERY_IMAGES.slice(0, 10)].map((img, i) => (
               <div key={i} className="w-28 h-20 md:w-36 md:h-24 flex-shrink-0 rounded-xl overflow-hidden shadow-md">
                 <img
                   src={img.src}
@@ -242,8 +248,8 @@ export default function Gallery() {
                   className="w-full h-full object-cover"
                   loading="lazy"
                   decoding="async"
-                  width="144"
-                  height="96"
+                  width={GALLERY_MARQUEE_IMAGE_SIZE.width}
+                  height={GALLERY_MARQUEE_IMAGE_SIZE.height}
                 />
               </div>
             ))}
@@ -254,45 +260,28 @@ export default function Gallery() {
       {/* ── Stats Trust Bar ──────────────────────────────────────── */}
       <div className="bg-white dark:bg-background border-b border-gray-100 dark:border-gray-800">
         <div className="max-w-3xl mx-auto px-4 py-4 flex items-center justify-center gap-5 md:gap-10 flex-wrap">
-          <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
-              <Images className="w-4 h-4 text-primary" />
-            </div>
-            <div>
-              <div className="text-base font-bold text-foreground leading-none">50+</div>
-              <div className="text-[11px] text-muted-foreground mt-0.5">Real Photos</div>
-            </div>
-          </div>
-          <div className="w-px h-7 bg-border hidden sm:block" />
-          <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 bg-blue-50 dark:bg-blue-950/30 rounded-full flex items-center justify-center flex-shrink-0">
-              <MapPin className="w-4 h-4 text-blue-600" />
-            </div>
-            <div>
-              <div className="text-base font-bold text-foreground leading-none">6</div>
-              <div className="text-[11px] text-muted-foreground mt-0.5">Unique Centres</div>
-            </div>
-          </div>
-          <div className="w-px h-7 bg-border hidden sm:block" />
-          <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 bg-amber-50 dark:bg-amber-950/30 rounded-full flex items-center justify-center flex-shrink-0">
-              <Star className="w-4 h-4 text-amber-500" />
-            </div>
-            <div>
-              <div className="text-base font-bold text-foreground leading-none">18+</div>
-              <div className="text-[11px] text-muted-foreground mt-0.5">Years of Joy</div>
-            </div>
-          </div>
-          <div className="w-px h-7 bg-border hidden sm:block" />
-          <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 bg-green-50 dark:bg-green-950/30 rounded-full flex items-center justify-center flex-shrink-0">
-              <Users className="w-4 h-4 text-green-600" />
-            </div>
-            <div>
-              <div className="text-base font-bold text-foreground leading-none">1 Lac+</div>
-              <div className="text-[11px] text-muted-foreground mt-0.5">Happy Families</div>
-            </div>
-          </div>
+          {GALLERY_PAGE_COPY.stats.map((stat, index) => {
+            const StatIcon = GALLERY_STAT_ICONS[stat.icon];
+            const iconStyles = [
+              "bg-primary/10 text-primary",
+              "bg-blue-50 dark:bg-blue-950/30 text-blue-600",
+              "bg-amber-50 dark:bg-amber-950/30 text-amber-500",
+              "bg-green-50 dark:bg-green-950/30 text-green-600",
+            ][index];
+            return (
+              <div key={stat.label} className="flex items-center gap-2.5">
+                <div className={`w-9 h-9 ${iconStyles} rounded-full flex items-center justify-center flex-shrink-0`}>
+                  <StatIcon className="w-4 h-4" />
+                </div>
+                <div>
+                  <div className="text-base font-bold text-foreground leading-none">{stat.value}</div>
+                  <div className="text-[11px] text-muted-foreground mt-0.5">{stat.label}</div>
+                </div>
+              </div>
+            );
+          }).flatMap((stat, index) => index < GALLERY_PAGE_COPY.stats.length - 1
+            ? [stat, <div key={`gallery-stat-divider-${index}`} className="w-px h-7 bg-border hidden sm:block" />]
+            : [stat])}
         </div>
       </div>
 
@@ -336,14 +325,14 @@ export default function Gallery() {
       {/* ── Masonry Grid ─────────────────────────────────────────── */}
       <section className="max-w-7xl mx-auto px-4 py-8 md:py-10">
         <p className="text-sm text-muted-foreground mb-6">
-          Showing <strong>{filteredImages.length}</strong> photos
+          {GALLERY_PAGE_COPY.showingPrefix} <strong>{filteredImages.length}</strong> {GALLERY_PAGE_COPY.photosLabel}
           {activeCategory !== "all" && (
             <> in <strong>{GALLERY_CATEGORIES.find((c) => c.id === activeCategory)?.label}</strong></>
           )}
         </p>
 
         {filteredImages.length === 0 ? (
-          <div className="text-center py-20 text-muted-foreground">No images in this category yet.</div>
+          <div className="text-center py-20 text-muted-foreground">{GALLERY_PAGE_COPY.emptyCategoryText}</div>
         ) : (
           <div key={activeCategory} className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
             {filteredImages.map((img, i) => (
@@ -360,8 +349,8 @@ export default function Gallery() {
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                   loading="lazy"
                   decoding="async"
-                  width="400"
-                  height="300"
+                  width={GALLERY_GRID_IMAGE_SIZE.width}
+                  height={GALLERY_GRID_IMAGE_SIZE.height}
                 />
                 {/* Hover overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-between p-3">
@@ -391,16 +380,11 @@ export default function Gallery() {
       <section className="max-w-4xl mx-auto px-4 pb-10">
         <div className="bg-gray-50 dark:bg-muted/30 rounded-2xl p-6 md:p-8">
           <h2 className="text-lg font-semibold text-foreground mb-3">
-            About Rainbow Preschools — Thane's Most Trusted Preschool
+            {GALLERY_PAGE_COPY.seoHeading}
           </h2>
           <p className="text-sm text-muted-foreground leading-relaxed">{GALLERY_SEO_CONTENT}</p>
           <div className="flex flex-wrap gap-2 mt-4">
-            {[
-              { label: "Playgroup",    href: "/playgroup" },
-              { label: "Nursery",      href: "/nursery" },
-              { label: "Kindergarten", href: "/kindergarten" },
-              { label: "Happy Times",  href: "/happy-times" },
-            ].map(({ label, href }) => (
+            {GALLERY_PAGE_COPY.programmeLinks.map(({ label, href }) => (
               <Link key={label} href={href} className="text-xs bg-primary/10 text-primary rounded-full px-3 py-1 font-medium hover:bg-primary/20 transition-colors">
                 {label}
               </Link>
@@ -412,24 +396,17 @@ export default function Gallery() {
       {/* Internal Links Section */}
       <section className="py-10 md:py-12 bg-gray-50 dark:bg-gray-800/50">
         <div className="max-w-5xl mx-auto px-4">
-          <h2 className="text-lg md:text-xl font-bold text-gray-900 dark:text-white mb-5 text-center">Explore Rainbow Preschool</h2>
+          <h2 className="text-lg md:text-xl font-bold text-gray-900 dark:text-white mb-5 text-center">{GALLERY_PAGE_COPY.exploreHeading}</h2>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            <Link href="/best-preschool-near-me-in-thane" className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center" data-testid="link-gallery-best-preschool">
-              <Award className="w-5 h-5 text-primary" />
-              <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">Award-Winning Preschool</span>
-            </Link>
-            <Link href="/play-school-near-me" className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center" data-testid="link-gallery-near-me">
-              <MapPin className="w-5 h-5 text-primary" />
-              <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">Find Nearest Centre</span>
-            </Link>
-            <Link href="/preschool-admissions" className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center" data-testid="link-gallery-admissions">
-              <ClipboardList className="w-5 h-5 text-primary" />
-              <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">Admission Process</span>
-            </Link>
-            <Link href="/programmes" className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center" data-testid="link-gallery-programmes">
-              <BookOpen className="w-5 h-5 text-primary" />
-              <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">Our Programmes</span>
-            </Link>
+            {GALLERY_PAGE_COPY.exploreLinks.map((item) => {
+              const ItemIcon = GALLERY_LINK_ICONS[item.icon];
+              return (
+                <Link key={item.href} href={item.href} className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center" data-testid={item.testId}>
+                  <ItemIcon className="w-5 h-5 text-primary" />
+                  <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">{item.label}</span>
+                </Link>
+              );
+            })}
           </div>
         </div>
       </section>

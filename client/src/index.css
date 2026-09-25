@@ -478,17 +478,17 @@ body:has(.contact-page) footer h4 {
 
   .rs-shine {
     position:absolute;inset:0;border-radius:inherit;pointer-events:none;
-    background:linear-gradient(118deg,transparent 30%,rgba(255,255,255,.65) 50%,transparent 70%);
+    background:linear-gradient(118deg,transparent 30%,rgba(255,255,255,.35) 50%,transparent 70%);
     background-size:260% 100%;background-position:-100% 0;
-    transition:background-position 0.55s ease;mix-blend-mode:screen;
+    opacity:0;transition:background-position 0.55s ease,opacity 0.2s ease;mix-blend-mode:screen;
   }
-  .rs-card:hover .rs-shine { background-position:200% 0; }
+  .rs-card:hover .rs-shine { opacity:1;background-position:200% 0; }
 
   .rs-pop {
-    opacity:0;transform:scale(0.82) translateY(22px);
-    transition:opacity 0.5s cubic-bezier(.34,1.56,.64,1),transform 0.5s cubic-bezier(.34,1.56,.64,1);
+    opacity:1;transform:scale(0.96) translateY(10px);
+    transition:transform 0.4s cubic-bezier(.34,1.56,.64,1);
   }
-  .rs-pop.rs-visible { opacity:1;transform:none; }
+  .rs-pop.rs-visible { transform:none; }
 
   .rs-row-tile {
     display:flex;align-items:center;gap:14px;

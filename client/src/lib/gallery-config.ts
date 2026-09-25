@@ -22,6 +22,38 @@ export interface GalleryImage {
   category: Exclude<GalleryCategoryId, "all">;
 }
 
+export const GALLERY_GRID_IMAGE_SIZE = { width: 400, height: 300 } as const;
+export const GALLERY_MARQUEE_IMAGE_SIZE = { width: 144, height: 96 } as const;
+
+export const GALLERY_PAGE_COPY = {
+  heroEyebrow: "Life at Rainbow Preschools",
+  heroTitle: "Rainbow Preschool Photos",
+  heroDescription: "Explore our classrooms, activities, events, and joyful learning moments across our 6 centres in Thane.",
+  stats: [
+    { value: "50+", label: "Real Photos", icon: "images" },
+    { value: "6", label: "Unique Centres", icon: "mapPin" },
+    { value: "18+", label: "Years of Joy", icon: "star" },
+    { value: "1 Lac+", label: "Happy Families", icon: "users" },
+  ],
+  showingPrefix: "Showing",
+  photosLabel: "photos",
+  emptyCategoryText: "No images in this category yet.",
+  seoHeading: "About Rainbow Preschools — Thane's Most Trusted Preschool",
+  programmeLinks: [
+    { label: "Playgroup", href: "/playgroup" },
+    { label: "Nursery", href: "/nursery" },
+    { label: "Kindergarten", href: "/kindergarten" },
+    { label: "Happy Times", href: "/happy-times" },
+  ],
+  exploreHeading: "Explore Rainbow Preschool",
+  exploreLinks: [
+    { label: "Award-Winning Preschool", href: "/best-preschool-near-me-in-thane", icon: "award", testId: "link-gallery-best-preschool" },
+    { label: "Find Nearest Centre", href: "/play-school-near-me", icon: "mapPin", testId: "link-gallery-near-me" },
+    { label: "Admission Process", href: "/preschool-admissions", icon: "clipboardList", testId: "link-gallery-admissions" },
+    { label: "Our Programmes", href: "/programmes", icon: "bookOpen", testId: "link-gallery-programmes" },
+  ],
+} as const;
+
 export const GALLERY_CATEGORIES: GalleryCategory[] = [
   { id: "all",                  label: "All" },
   { id: "classrooms",           label: "Classrooms" },
