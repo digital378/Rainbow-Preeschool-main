@@ -204,11 +204,11 @@ export function useScrollScrub({
         if (gap > 0.1) {
           // Large scroll jumps should not make the video play seconds behind
           // the scene. Seek close, then play the remaining moving frames.
-          if (gap > 1.4) {
+          if (gap > 1) {
             video.pause();
-            video.currentTime = Math.max(0, desired - 0.18);
+            video.currentTime = Math.max(0, desired - 0.08);
           } else {
-            video.playbackRate = clamp(gap * 8, 1, 4);
+            video.playbackRate = clamp(gap * 16, 1, 6);
             if (video.paused) {
               void video.play().catch(() => {
                 // Muted playback should be allowed, but preserve scrubbing on
