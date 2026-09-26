@@ -4,6 +4,7 @@ import { createPortal } from "react-dom";
 import { ChevronLeft, ChevronRight, Instagram, Maximize2, ListVideo, Play, Volume2, VolumeX, X } from "lucide-react";
 import { useInstagramReels, type Reel } from "./useInstagramReels";
 import { LOCAL_REEL_POSTERS } from "./local-reel-posters";
+import { LOCAL_REEL_MEDIA } from "./local-reel-media";
 import "./theatre.css";
 
 const PLACEHOLDER_COUNT = 4;
@@ -22,18 +23,6 @@ function excerpt(reel: Reel) {
 function shortCaption(reel: Reel) {
   const caption = excerpt(reel);
   return caption.length > 95 ? `${caption.slice(0, 92).trimEnd()}…` : caption;
-}
-
-function instagramEmbedUrl(permalink?: string): string | null {
-  if (!permalink) return null;
-  try {
-    const url = new URL(permalink);
-    if (url.protocol !== "https:" || !["www.instagram.com", "instagram.com"].includes(url.hostname)) return null;
-    if (!/^\/(reel|p|tv)\/[A-Za-z0-9_-]+\/?$/.test(url.pathname)) return null;
-    return `https://www.instagram.com${url.pathname.replace(/\/?$/, "/")}embed/`;
-  } catch {
-    return null;
-  }
 }
 
 export function RainbowTheatre({
@@ -66,7 +55,7 @@ export function RainbowTheatre({
         caption: poster.caption,
         permalink: poster.permalink,
         thumbnailUrl: poster.posterPath,
-        mediaUrl: live?.mediaUrl,
+        mediaUrl: LOCAL_REEL_MEDIA[poster.id] ?? live?.mediaUrl,
         timestamp: live?.timestamp ?? "",
       };
     });
@@ -81,7 +70,6 @@ export function RainbowTheatre({
   const [nativeFullscreen, setNativeFullscreen] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const playerRef = useRef<HTMLDivElement>(null);
-  const [playerWidth, setPlayerWidth] = useState(326);
   const closeRef = useRef<HTMLButtonElement>(null);
   const fullscreenCloseRef = useRef<HTMLButtonElement>(null);
   const returnFocusRef = useRef<HTMLElement | null>(null);
@@ -91,6 +79,7 @@ export function RainbowTheatre({
     () => reels.find((reel) => reel.id === selectedId) ?? reels.find((reel) => reel.mediaUrl) ?? reels[0],
     [reels, selectedId],
   );
+  const isLocalMedia = currentReel?.mediaUrl?.startsWith("/instagram-reels/local-") ?? false;
   const hasUsableMedia = Boolean(currentReel?.mediaUrl && currentReel.id !== failedVideoId);
   const shouldLoadCurrentReel = variant !== "homepage" || playRequestedId === currentReel?.id;
   const requestedLiveReel = sourceReels.find((reel) => reel.id === playRequestedId);
@@ -102,6 +91,7 @@ export function RainbowTheatre({
     hasLoadedLiveFeed &&
     !isFetching &&
     !isError &&
+    !currentReel?.mediaUrl &&
     (requestedLiveReel ? !requestedLiveReel.mediaUrl : !hasNextPage);
   const showHomepagePosterButton = variant === "homepage" &&
     Boolean(currentReel) &&
@@ -111,17 +101,10 @@ export function RainbowTheatre({
     !(shouldLoadCurrentReel && hasUsableMedia);
   const showHomepageLoading = variant === "homepage" &&
     playRequestedId === currentReel?.id &&
+    !hasUsableMedia &&
     enabled &&
     (isPending || isFetching);
-  const embedUrl = instagramEmbedUrl(currentReel?.permalink);
-  const showInstagramEmbed = variant === "homepage" &&
-    playRequestedId === currentReel?.id &&
-    !showHomepageLoading &&
-    Boolean(embedUrl) &&
-    (selectedReelUnavailable || liveFeedFailed || failedVideoId === currentReel?.id);
-  // Instagram's embed has a 326px minimum layout width, even inside a narrower phone player.
-  const embedScale = Math.min(1, playerWidth / 326);
-  const showFeedError = variant !== "homepage" || playRequestedId !== null;
+  const showFeedError = variant !== "homepage" || (playRequestedId !== null && !hasUsableMedia);
   const currentIndex = reels.findIndex((reel) => reel.id === currentReel?.id);
 
   useEffect(() => {
@@ -160,15 +143,6 @@ export function RainbowTheatre({
       setSelectedId(null);
     }
   }, [reels, selectedId]);
-
-  useEffect(() => {
-    const player = playerRef.current;
-    if (!player) return;
-    const observer = new ResizeObserver(() => setPlayerWidth(player.clientWidth));
-    observer.observe(player);
-    setPlayerWidth(player.clientWidth);
-    return () => observer.disconnect();
-  }, []);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -308,8 +282,6 @@ export function RainbowTheatre({
     <div
       className={`rainbow-theatre__player${inOverlay ? " rainbow-theatre__player--overlay" : ""}`}
       ref={inOverlay ? undefined : playerRef}
-      // The cross-origin embed can paint blank inside an isolated, transformed player.
-      style={showInstagramEmbed ? { isolation: "auto" } : undefined}
     >
       {showHomepagePosterButton && currentReel ? (
         <button
@@ -362,7 +334,7 @@ export function RainbowTheatre({
           ref={videoRef}
           key={`${currentReel.id}:${videoRetryNonce}`}
           className="rainbow-theatre__video"
-          src={currentReel.mediaUrl}
+          src={isLocalMedia ? undefined : currentReel.mediaUrl}
           poster={currentReel.thumbnailUrl}
           muted={!soundOn}
           loop
@@ -372,23 +344,14 @@ export function RainbowTheatre({
           onPlay={() => setPlaybackBlocked(false)}
           onError={() => setFailedVideoId(currentReel.id)}
           aria-label={currentReel.caption || "Rainbow Instagram reel"}
-        />
-      ) : showInstagramEmbed && embedUrl ? (
-        <iframe
-          key={currentReel?.id}
-          className="rainbow-theatre__video rainbow-theatre__instagram-embed"
-          src={embedUrl}
-          title={`Instagram reel: ${currentReel ? shortCaption(currentReel) : "Rainbow Preschool"}`}
-          style={{
-            width: !inOverlay && embedScale < 1 ? 326 : "100%",
-            height: !inOverlay && embedScale < 1 ? `${100 / embedScale}%` : "100%",
-            transform: !inOverlay && embedScale < 1 ? `scale(${embedScale})` : undefined,
-            transformOrigin: "top left",
-          }}
-          allow="autoplay; fullscreen; picture-in-picture"
-          allowFullScreen
-          referrerPolicy="strict-origin-when-cross-origin"
-        />
+        >
+          {isLocalMedia && (
+            <>
+              <source src={currentReel.mediaUrl.replace(/\.mp4$/, ".webm")} type="video/webm" />
+              <source src={currentReel.mediaUrl} type="video/mp4" />
+            </>
+          )}
+        </video>
       ) : currentReel ? (
         <div className="rainbow-theatre__unavailable">
           {currentReel.thumbnailUrl && <img src={currentReel.thumbnailUrl} alt="" />}
@@ -430,7 +393,7 @@ export function RainbowTheatre({
           </span>
         </div>
       )}
-      {!showInstagramEmbed && <div className="rainbow-theatre__controls">
+      <div className="rainbow-theatre__controls">
         <button type="button" onClick={toggleSound} aria-label={soundOn ? "Mute reel" : "Turn reel sound on"} className="rainbow-theatre__icon-button">
           {soundOn ? <Volume2 aria-hidden="true" /> : <VolumeX aria-hidden="true" />}
         </button>
@@ -439,7 +402,7 @@ export function RainbowTheatre({
             <Maximize2 aria-hidden="true" />
           </button>
         )}
-      </div>}
+      </div>
       {hasUsableMedia && playbackBlocked && soundOn && active && variant === "homepage" && (
         <button type="button" className="rainbow-theatre__sound-prompt" onClick={() => {
           void videoRef.current?.play().catch(() => setPlaybackBlocked(true));
