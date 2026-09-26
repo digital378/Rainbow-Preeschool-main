@@ -88,6 +88,9 @@
 #       missing its server/ssr-pages.ts entry. Also spot-checks Claude-User
 #       and Perplexity-User (answer-engine fetchers) on a few routes to
 #       confirm they're recognized by BOT_USER_AGENTS in server/bot-ssr.ts.
+#   16d. scripts/check-local-reel-media.ts — verifies every mapped local
+#       Theatre reel has playable MP4 and WebM files with positive duration,
+#       served as video with HTTP byte-range support.
 #   17. Lighthouse performance guard — simulated-mobile Lighthouse audit against
 #       home + priority landing page. Skippable with SKIP_PERF_GUARD=1.
 #   18. Leave the production Cloudflare cache untouched. This validation
@@ -298,6 +301,12 @@ npx --no-install tsx scripts/check-crawler-metadata.ts "${PREDEPLOY_URL}"
 CRAWLER_METADATA_EXIT=$?
 set -e
 
+log "step 16d/18 — tsx scripts/check-local-reel-media.ts ${PREDEPLOY_URL}"
+set +e
+npx --no-install tsx scripts/check-local-reel-media.ts "${PREDEPLOY_URL}"
+LOCAL_REELS_EXIT=$?
+set -e
+
 # ── step 15 — Lighthouse performance guard ───────────────────────────────────
 # Runs a simulated-mobile Lighthouse audit against home + priority landing page.
 # Skippable during initial threshold calibration: SKIP_PERF_GUARD=1 bash predeploy.sh
@@ -323,7 +332,7 @@ else
 fi
 # ─────────────────────────────────────────────────────────────────────────────
 
-if [ "${FRESHNESS_EXIT}" -ne 0 ] || [ "${KEYWORD_EXIT}" -ne 0 ] || [ "${SITEMAP_EXIT}" -ne 0 ] || [ "${BOT_DETECTION_EXIT}" -ne 0 ] || [ "${AD_PAGES_EXIT}" -ne 0 ] || [ "${CRAWLER_METADATA_EXIT}" -ne 0 ] || [ "${PERF_EXIT}" -ne 0 ]; then
+if [ "${FRESHNESS_EXIT}" -ne 0 ] || [ "${KEYWORD_EXIT}" -ne 0 ] || [ "${SITEMAP_EXIT}" -ne 0 ] || [ "${BOT_DETECTION_EXIT}" -ne 0 ] || [ "${AD_PAGES_EXIT}" -ne 0 ] || [ "${CRAWLER_METADATA_EXIT}" -ne 0 ] || [ "${LOCAL_REELS_EXIT}" -ne 0 ] || [ "${PERF_EXIT}" -ne 0 ]; then
   if [ "${FRESHNESS_EXIT}" -ne 0 ]; then
     log "FAIL — freshness smoke-test exited ${FRESHNESS_EXIT}. See offending URLs above."
   fi
@@ -343,6 +352,9 @@ if [ "${FRESHNESS_EXIT}" -ne 0 ] || [ "${KEYWORD_EXIT}" -ne 0 ] || [ "${SITEMAP_
   if [ "${CRAWLER_METADATA_EXIT}" -ne 0 ]; then
     log "FAIL — crawler-metadata regression check exited ${CRAWLER_METADATA_EXIT}. A route is missing self-referencing title/description/canonical for recognized bots, or an answer-engine UA isn't reaching bot-SSR content. See per-route details above."
   fi
+  if [ "${LOCAL_REELS_EXIT}" -ne 0 ]; then
+    log "FAIL — local reel media check exited ${LOCAL_REELS_EXIT}. See missing/invalid files or HTTP video responses above."
+  fi
   if [ "${PERF_EXIT}" -ne 0 ]; then
     log "FAIL — Lighthouse performance guard exited ${PERF_EXIT}. See per-page results above."
     log "To bypass during threshold calibration: SKIP_PERF_GUARD=1 bash scripts/predeploy.sh"
@@ -350,7 +362,7 @@ if [ "${FRESHNESS_EXIT}" -ne 0 ] || [ "${KEYWORD_EXIT}" -ne 0 ] || [ "${SITEMAP_
   log "tail of booted server log (last 80 lines of ${SERVER_LOG}):"
   tail -n 80 "${SERVER_LOG}" >&2 || true
   log "blocking deploy."
-  # Surface whichever HTTP check failed first (freshness → keyword → sitemap → bot-detection → crawler-metadata → perf).
+  # Surface whichever HTTP check failed first.
   if [ "${FRESHNESS_EXIT}" -ne 0 ]; then
     exit "${FRESHNESS_EXIT}"
   fi
@@ -369,6 +381,9 @@ if [ "${FRESHNESS_EXIT}" -ne 0 ] || [ "${KEYWORD_EXIT}" -ne 0 ] || [ "${SITEMAP_
   if [ "${CRAWLER_METADATA_EXIT}" -ne 0 ]; then
     exit "${CRAWLER_METADATA_EXIT}"
   fi
+  if [ "${LOCAL_REELS_EXIT}" -ne 0 ]; then
+    exit "${LOCAL_REELS_EXIT}"
+  fi
   exit "${PERF_EXIT}"
 fi
 
@@ -382,5 +397,5 @@ fi
 # ─────────────────────────────────────────────────────────────────────────────
 log "step 18/18 — SKIPPED Cloudflare purge (validation must not touch production cache)."
 
-log "PASS — byline guard + title-cannibalisation + description-length + bot-ua-list + h1-parity + no-pink guard + eeat-show-rating guard + sitemap-blog-slugs guard + standalone-blog-pages SEO guard + build + freshness + keyword-targets + sitemap-200 + bot-detection + ad-pages + crawler-metadata + Lighthouse perf guard all succeeded; deploy may proceed."
+log "PASS — byline guard + title-cannibalisation + description-length + bot-ua-list + h1-parity + no-pink guard + eeat-show-rating guard + sitemap-blog-slugs guard + standalone-blog-pages SEO guard + build + freshness + keyword-targets + sitemap-200 + bot-detection + ad-pages + crawler-metadata + local-reel-media + Lighthouse perf guard all succeeded; deploy may proceed."
 exit 0
