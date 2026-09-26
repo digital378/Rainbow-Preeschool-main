@@ -117,6 +117,11 @@
   width: 100%;
 }
 
+.rainbow-theatre__instagram-embed {
+  border: 0;
+  object-fit: contain;
+}
+
 .rainbow-theatre__placeholder {
   align-items: center;
   background:

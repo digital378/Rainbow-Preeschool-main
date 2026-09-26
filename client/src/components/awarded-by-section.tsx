@@ -83,6 +83,14 @@ export function AwardedBySection() {
           width: max-content;
           animation: ab-scroll 30s linear infinite;
         }
+        /* Each half must cover the viewport, or the loop exposes empty space
+           when the six natural-width logos are narrower than the screen. */
+        .ab-logo-group {
+          display: flex;
+          flex: 0 0 auto;
+          min-width: 100vw;
+          justify-content: space-around;
+        }
         /* Pause on hover anywhere inside the track */
         .ab-track:hover { animation-play-state: paused; }
 
@@ -128,6 +136,12 @@ export function AwardedBySection() {
             justify-content: center;
             width: 100%;
           }
+          .ab-logo-group {
+            min-width: 0;
+            width: 100%;
+            flex-wrap: wrap;
+            justify-content: center;
+          }
           .ab-dup { display: none !important; }
           .ab-logo-link:hover,
           .ab-logo-link:focus-visible { transform: none; }
@@ -168,6 +182,7 @@ export function AwardedBySection() {
         <div className="ab-track">
 
           {/* ── Real logos: read by screen readers, keyboard-focusable ── */}
+          <div className="ab-logo-group">
           {awardLogos.map((logo) => (
             <a
               key={logo.name}
@@ -187,8 +202,10 @@ export function AwardedBySection() {
               )}
             </a>
           ))}
+          </div>
 
           {/* ── Duplicate logos: aria-hidden, not focusable, seamless loop ── */}
+          <div className="ab-logo-group" aria-hidden="true">
           {awardLogos.map((logo) => (
             <span
               key={`${logo.name}-dup`}
@@ -199,6 +216,7 @@ export function AwardedBySection() {
               <img src={logo.src} alt="" loading="lazy" decoding="async" />
             </span>
           ))}
+          </div>
 
         </div>
       </div>

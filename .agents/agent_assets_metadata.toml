@@ -224,3 +224,17 @@ mtime_ms = 1790400309461
 storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:0c61580c-1c60-4ec3-afe4-28e8a9482287/3decf799-db42-4382-b608-cafd0712fca9/df7aa772-b835-4694-aead-5a44db3f2b07"
 storage_version_token = "1790400318498688"
 content_type = "text/html"
+
+[[outputs]]
+id = "C43KAW3IXNANCUZedm3Qo"
+uri = "file://reports/home-seo-audit/fixes/comparison.html"
+type = "html"
+title = "Awards and reel fixes — mobile and desktop comparisons"
+description = "Before/after screenshots at 390px and 1366px; shows continuous awards logos and the tapped reel’s official Instagram embed."
+logical_id = "06511042-aa77-4547-8e95-56eba64f0168"
+content_hash = "sha256:49f6347b64f56b9670e1ce828267d3307476112be19138047a75e9e7d47cc7d9"
+size = 508530
+mtime_ms = 1790401109221
+storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:0c61580c-1c60-4ec3-afe4-28e8a9482287/06511042-aa77-4547-8e95-56eba64f0168/04df47c1-233a-46a2-ae59-7b4a022a764a"
+storage_version_token = "1790401131292860"
+content_type = "text/html"
