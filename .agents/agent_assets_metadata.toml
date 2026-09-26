@@ -210,3 +210,17 @@ mtime_ms = 1790325864522
 storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:0c61580c-1c60-4ec3-afe4-28e8a9482287/6b28b4e4-5588-49bd-ba4a-b9a42a7c0374/cc2be52c-0814-425a-bc3a-691f5ffd8a71"
 storage_version_token = "1790325994296370"
 content_type = "text/html"
+
+[[outputs]]
+id = "niwkCQGMMZDsVJye1-Id-"
+uri = "file://reports/home-seo-audit/visual-comparison.html"
+type = "html"
+title = "Homepage audit: before and after every section"
+description = "All 15 sections including footer at 390px and 1366px; 60 full-resolution screenshots, audit findings and three mobile Lighthouse results."
+logical_id = "3decf799-db42-4382-b608-cafd0712fca9"
+content_hash = "sha256:5ca5ab16b9a20279e39c1ad171f4be991a31901c2ce0b46c45e7f6280e836b77"
+size = 9911839
+mtime_ms = 1790400309461
+storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:0c61580c-1c60-4ec3-afe4-28e8a9482287/3decf799-db42-4382-b608-cafd0712fca9/df7aa772-b835-4694-aead-5a44db3f2b07"
+storage_version_token = "1790400318498688"
+content_type = "text/html"

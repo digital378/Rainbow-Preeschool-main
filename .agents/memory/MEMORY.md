@@ -28,3 +28,4 @@
 - [Preview banner layout offset](preview-banner-layout-offset.md) — proxied private previews can inject a banner above sticky full-screen stages; compare against local rendering before changing layout.
 - [Scroll-scrub video pacing](scroll-scrub-video-pacing.md) — buffering is not enough for smooth scrubbing; seek decode cost and footage seconds per viewport both matter.
 - [Private paths and shared UI](private-path-shared-ui.md) — protected path segments also gate Vite source modules; public UI must not import components from private namespaces.
+- [Homepage site-name schema](homepage-site-name-schema.md) — retain WebSite markup for the search site name while keeping removed homepage FAQ, video, and breadcrumb markup out.

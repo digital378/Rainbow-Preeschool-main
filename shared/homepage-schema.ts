@@ -69,8 +69,17 @@ export const HOMEPAGE_WEBPAGE_SCHEMA = {
   })),
 };
 
+export const HOMEPAGE_WEBSITE_SCHEMA = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Rainbow Preschool International",
+  alternateName: "Rainbow Preschool",
+  url: HOMEPAGE_URL,
+};
+
 export const HOMEPAGE_STRUCTURED_DATA = [
   HOMEPAGE_WEBPAGE_SCHEMA,
+  HOMEPAGE_WEBSITE_SCHEMA,
   HOMEPAGE_ORGANIZATION_SCHEMA,
   ...HOMEPAGE_PRESCHOOL_SCHEMAS,
 ] as const;
