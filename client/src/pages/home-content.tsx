@@ -346,6 +346,40 @@ function StatsSection() {
               </BentoTiltCard>
             ))}
 
+            {/* Parent story fills the middle row without an unverified rating claim. */}
+            <BentoTiltCard
+              className="bento-trust stat-card du-fade"
+              style={{ borderRadius:20, background:"white",
+                border:"1px solid rgba(33,27,46,.07)",
+                boxShadow:"0 10px 28px rgba(33,27,46,.08)",
+                transitionDelay:"380ms" }}
+              intensity={5}
+            >
+              <div style={{ padding:"16px 20px 18px", position:"relative" }}>
+                <div aria-hidden style={{ position:"absolute", top:0, left:0, right:0, height:3,
+                  background:"linear-gradient(90deg,#EC210F,#F59E0B,#22C55E,#1F7AF0,#8B5CF6)",
+                  borderRadius:"20px 20px 0 0" }}/>
+                <p style={{ color:"#EC210F", fontSize:"0.7rem", fontWeight:700,
+                  letterSpacing:"0.08em", textTransform:"uppercase", margin:"2px 0 8px" }}>
+                  What parents say
+                </p>
+                <blockquote style={{ margin:0 }}>
+                  <p style={{ color:"#211B2E", fontSize:"0.84rem", lineHeight:1.5,
+                    margin:"0 0 8px" }}>
+                    “{testimonials[1].text}”
+                  </p>
+                  <footer style={{ color:"#55506A", fontSize:"0.72rem", marginBottom:10 }}>
+                    — {testimonials[1].name}, {testimonials[1].locality}
+                  </footer>
+                </blockquote>
+                <a href="/testimonials" style={{ fontSize:"0.76rem", color:"#EC210F",
+                  textDecoration:"none", fontWeight:700, display:"inline-flex",
+                  alignItems:"center", gap:5 }}>
+                  Read parent reviews <ArrowRight size={13} aria-hidden="true"/>
+                </a>
+              </div>
+            </BentoTiltCard>
+
           </div>{/* /bento-grid */}
         </div>
       </div>
