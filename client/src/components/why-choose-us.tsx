@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from "react";
-import { Shield, Award, Sparkles, Users, Bus, Gamepad2 } from "lucide-react";
+import { Shield, Award, Sparkles, Users, Bus, Gamepad2, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 function usePrefersReducedMotion() {
@@ -336,6 +336,18 @@ export function WhyChooseUs() {
             <WcuTile key={f.title} feature={f} idx={i} />
           ))}
         </div>
+        <details className="group mx-auto mt-10 max-w-3xl text-center text-sm text-muted-foreground">
+          <summary className="inline-flex cursor-pointer list-none items-center gap-2 rounded-md px-3 py-2 font-medium text-foreground/70 hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 [&::-webkit-details-marker]:hidden">
+            Awards &amp; recognition
+            <ChevronDown aria-hidden="true" className="h-4 w-4 transition-transform group-open:rotate-180" />
+          </summary>
+          <ul className="mt-3 grid gap-2 px-3 text-center leading-relaxed sm:grid-cols-2">
+            <li>Best Preschool in Thane — 2018, 2023</li>
+            <li>Cleanest Preschool — 2020</li>
+            <li>Most Promising Preschool Chain of the Year — 2021</li>
+            <li>Emerging Preschool Chain of the Year — 2022</li>
+          </ul>
+        </details>
       </div>
     </section>
   );

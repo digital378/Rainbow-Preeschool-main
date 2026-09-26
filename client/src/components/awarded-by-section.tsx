@@ -221,24 +221,6 @@ export function AwardedBySection() {
         </div>
       </div>
 
-      <ul
-        className="ab-reveal"
-        style={{
-          textAlign: "center",
-          color: "#6B7280",
-          fontSize: "0.95rem",
-          maxWidth: 520,
-          margin: "32px auto 0",
-          lineHeight: 1.65,
-          listStyle: "none",
-          padding: 0,
-        }}
-      >
-        <li>Best Preschool in Thane — 2018, 2023</li>
-        <li>Cleanest Preschool — 2020</li>
-        <li>Most Promising Preschool Chain of the Year — 2021</li>
-        <li>Emerging Preschool Chain of the Year — 2022</li>
-      </ul>
     </section>
   );
 }

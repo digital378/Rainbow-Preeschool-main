@@ -365,7 +365,7 @@ export function RainbowTheatre({
                   : "This video is available on Instagram."}
           </p>
           {currentReel.permalink && (
-            <a href={currentReel.permalink} target="_blank" rel="noopener noreferrer">Open on Instagram</a>
+            <a href={currentReel.permalink} target="_blank" rel="noopener noreferrer">Watch on Instagram</a>
           )}
           {(failedVideoId === currentReel.id || liveFeedFailed || selectedReelUnavailable) && (
             <button
