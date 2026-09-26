@@ -96,19 +96,23 @@ export function HeroSection() {
             className="flex flex-wrap gap-2 mb-9 animate-in fade-in slide-in-from-bottom-4 duration-700"
             style={{ animationFillMode: "both", animationDelay: "450ms" }}
           >
-            {trustBadges.map(({ Icon, label }, i) => (
-              <div
-                key={i}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full cursor-default select-none transition-all duration-200 hover:scale-105"
-                style={{
-                  background: "rgba(255,255,255,0.93)",
-                  border: "1px solid rgba(255,255,255,0.6)",
-                }}
-              >
-                <Icon className="w-3.5 h-3.5 text-yellow-500 flex-shrink-0" />
-                <span className="text-[11px] font-semibold tracking-wide whitespace-nowrap" style={{ color: "#211B2E" }}>{label}</span>
-              </div>
-            ))}
+            {trustBadges.map(({ Icon, label }, i) => {
+              const Badge = i === 1 ? "a" : "span";
+              return (
+                <Badge
+                  key={label}
+                  {...(i === 1 ? { href: "#centres", "data-testid": "link-hero-centres" } : {})}
+                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full select-none transition-all duration-200 hover:scale-105 ${i === 1 ? "cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-400" : "cursor-default"}`}
+                  style={{
+                    background: "rgba(255,255,255,0.93)",
+                    border: "1px solid rgba(255,255,255,0.6)",
+                  }}
+                >
+                  <Icon className="w-3.5 h-3.5 text-yellow-500 flex-shrink-0" />
+                  <span className="text-[11px] font-semibold tracking-wide whitespace-nowrap" style={{ color: "#211B2E" }}>{label}</span>
+                </Badge>
+              );
+            })}
           </div>
 
           {/* CTAs — pill shape matching dummy */}

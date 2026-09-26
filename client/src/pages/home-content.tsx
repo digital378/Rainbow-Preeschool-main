@@ -26,20 +26,23 @@ const CTASection = lazy(() => import("@/components/cta-section").then(m => ({ de
 const ContactForm = lazy(() => import("@/components/contact-form").then(m => ({ default: m.ContactForm })));
 
 
-function LazySection({ children, rootMargin = "200px", minHeight = 400 }: { children: React.ReactNode; rootMargin?: string; minHeight?: number }) {
+function LazySection({ children, rootMargin = "200px", minHeight = 400, id }: { children: React.ReactNode; rootMargin?: string; minHeight?: number; id?: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+    if (id && window.location.hash === `#${id}`) {
+      el.scrollIntoView({ behavior: "auto" });
+    }
     const obs = new IntersectionObserver(
       ([entry]) => { if (entry.isIntersecting) { setVisible(true); obs.disconnect(); } },
       { rootMargin }
     );
     obs.observe(el);
     return () => obs.disconnect();
-  }, [rootMargin]);
-  return <div ref={ref}>{visible ? children : <div style={{ minHeight }} />}</div>;
+  }, [rootMargin, id]);
+  return <div ref={ref} id={id} className={id ? "scroll-mt-24" : undefined}>{visible ? children : <div style={{ minHeight }} />}</div>;
 }
 
 import {
@@ -1735,9 +1738,9 @@ export default function Home() {
       <ContactSection />
 
 
-      <LazySection minHeight={600} rootMargin="300px">
+      <LazySection id="centres" minHeight={600} rootMargin="300px">
         {/* Centres Section - Local SEO Gold */}
-        <section id="centres" className="py-16 md:py-20 lg:py-24 cv-auto">
+        <section className="py-16 md:py-20 lg:py-24 cv-auto">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-12">
               <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">{HOME_VISITOR_COPY.sections[2].items?.[6]}</p>
