@@ -6,6 +6,7 @@ import { useInstagramReels, type Reel } from "./useInstagramReels";
 import { LOCAL_REEL_POSTERS } from "./local-reel-posters";
 import { LOCAL_REEL_MEDIA } from "./local-reel-media";
 import "./theatre.css";
+import { cleanReelCaption } from "@shared/clean-reel-caption";
 
 const PLACEHOLDER_COUNT = 4;
 
@@ -17,7 +18,7 @@ function formatDate(timestamp: string) {
 }
 
 function excerpt(reel: Reel) {
-  return reel.caption?.trim() || "A little moment from Rainbow";
+  return cleanReelCaption(reel.caption) || "A little moment from Rainbow";
 }
 
 function shortCaption(reel: Reel) {
@@ -343,7 +344,7 @@ export function RainbowTheatre({
           controls
           onPlay={() => setPlaybackBlocked(false)}
           onError={() => setFailedVideoId(currentReel.id)}
-          aria-label={currentReel.caption || "Rainbow Instagram reel"}
+          aria-label={cleanReelCaption(currentReel.caption) || "Rainbow Instagram reel"}
         >
           {isLocalMedia && (
             <>

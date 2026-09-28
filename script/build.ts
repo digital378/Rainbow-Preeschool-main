@@ -82,11 +82,6 @@ async function buildAll() {
   await checkStaticAdTracking();
   await rm("dist", { recursive: true, force: true });
 
-  // The same immutable date is embedded in the client and server bundles.
-  // A later publish rebuilds both, so the reviewer credit reflects that publish.
-  const publishDate = new Date().toISOString().slice(0, 10);
-  process.env.HOME_PUBLISH_DATE = publishDate;
-
   console.log("building client...");
   await viteBuild();
 
@@ -106,7 +101,6 @@ async function buildAll() {
     outfile: "dist/index.cjs",
     define: {
       "process.env.NODE_ENV": '"production"',
-      __HOME_PUBLISH_DATE__: JSON.stringify(publishDate),
     },
     minify: true,
     external: externals,

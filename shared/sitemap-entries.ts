@@ -15,6 +15,7 @@
 // have DB access, so the dump only contains the curated non-blog URLs).
 
 import { PREFERRED_DOMAIN } from "./seo-config";
+import { HOME_PUBLISH_DATE_ISO } from "./home-publish-date";
 
 export type SitemapChangefreq =
   | "always"
@@ -44,7 +45,7 @@ export interface SitemapEntry {
 // in at request time from `storage.getBlogPosts()` by the route handler.
 export const SITEMAP_ENTRIES: SitemapEntry[] = [
   // ── CORE PAGES ──────────────────────────────────────────
-  { url: "/", priority: 1.0, changefreq: "weekly", lastmod: "2026-09-23" },
+  { url: "/", priority: 1.0, changefreq: "weekly", lastmod: HOME_PUBLISH_DATE_ISO },
   { url: "/about", priority: 0.8, changefreq: "monthly" },
   { url: "/programmes", priority: 0.9, changefreq: "monthly" },
   { url: "/gallery", priority: 0.8, changefreq: "monthly", lastmod: "2026-09-23" },

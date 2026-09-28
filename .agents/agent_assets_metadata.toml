@@ -238,3 +238,87 @@ mtime_ms = 1790401109221
 storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:0c61580c-1c60-4ec3-afe4-28e8a9482287/06511042-aa77-4547-8e95-56eba64f0168/04df47c1-233a-46a2-ae59-7b4a022a764a"
 storage_version_token = "1790401131292860"
 content_type = "text/html"
+
+[[outputs]]
+id = "9sa83cQOg9BC_c7G48GZu"
+uri = "file://screenshots/homepage-fixes/compare-awards-390.png"
+type = "image"
+title = "Recognised & Awarded — 390px before / after"
+description = "Left: before. Right: after. Homepage preview; not published."
+logical_id = "5eafa589-f3e7-45d5-8e58-3190d52ac7b9"
+content_hash = "sha256:7844866295dae5557aad384bfd72be750e12d5c7f15f832fab725774ce54906f"
+size = 80267
+mtime_ms = 1790574621877
+storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:0c61580c-1c60-4ec3-afe4-28e8a9482287/5eafa589-f3e7-45d5-8e58-3190d52ac7b9/33d89799-de96-4176-8b68-7402d5b3f273"
+storage_version_token = "1790574643911814"
+content_type = "image/png"
+
+[[outputs]]
+id = "fXszK0TKPz2smTSulRXLH"
+uri = "file://screenshots/homepage-fixes/compare-awards-1366.png"
+type = "image"
+title = "Recognised & Awarded — 1366px before / after"
+description = "Left: before. Right: after. Homepage preview; not published."
+logical_id = "3862ed9f-42dc-4343-b54f-bdf5e311d270"
+content_hash = "sha256:fb3af60d87296edc8354b3451ede87258823c518fdb5a842ada0d2a962300af9"
+size = 113473
+mtime_ms = 1790574622233
+storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:0c61580c-1c60-4ec3-afe4-28e8a9482287/3862ed9f-42dc-4343-b54f-bdf5e311d270/139c997d-0a34-4009-a264-9c081e255c42"
+storage_version_token = "1790574645766191"
+content_type = "image/png"
+
+[[outputs]]
+id = "Da2F7gEyKsv2dCTDKJgy7"
+uri = "file://screenshots/homepage-fixes/compare-theatre-390.png"
+type = "image"
+title = "Rainbow Theatre — 390px before / after"
+description = "Left: before. Right: after. Homepage preview; not published."
+logical_id = "0dc7cf3e-97c3-4ecd-8f71-5ab51ef9a00f"
+content_hash = "sha256:fefb326b59ba3f963db9035575940a8cb6d22b37329378c7d8e9f436fe5ac748"
+size = 361006
+mtime_ms = 1790574622493
+storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:0c61580c-1c60-4ec3-afe4-28e8a9482287/0dc7cf3e-97c3-4ecd-8f71-5ab51ef9a00f/26c5490d-f444-4dff-9e82-fb95270993f3"
+storage_version_token = "1790574647935390"
+content_type = "image/png"
+
+[[outputs]]
+id = "dULo93uPli-8WCrxXHvpn"
+uri = "file://screenshots/homepage-fixes/compare-theatre-1366.png"
+type = "image"
+title = "Rainbow Theatre — 1366px before / after"
+description = "Left: before. Right: after. Homepage preview; not published."
+logical_id = "a48d4501-1e51-43e7-8541-21ef1ab8573f"
+content_hash = "sha256:9b04d61643de8a70864ca457fd98f032ccfbfba85747befaecbe5ce1220bdf54"
+size = 486882
+mtime_ms = 1790574623113
+storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:0c61580c-1c60-4ec3-afe4-28e8a9482287/a48d4501-1e51-43e7-8541-21ef1ab8573f/a8e7dd6e-06f6-4805-a559-27729ef232e7"
+storage_version_token = "1790574650532528"
+content_type = "image/png"
+
+[[outputs]]
+id = "eHXwCk-ZVJhFCuvnQt51F"
+uri = "file://screenshots/homepage-fixes/compare-why-390.png"
+type = "image"
+title = "Why Choose Us — 390px before / after"
+description = "Left: before. Right: after. Homepage preview; not published."
+logical_id = "f8476223-73f4-45c0-97bc-ff4bf564cd31"
+content_hash = "sha256:29eb9d6bc2a6de40f1a29baf75decc16d8e89d39b6a5fd9ce97e799e8defb990"
+size = 1399735
+mtime_ms = 1790574624365
+storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:0c61580c-1c60-4ec3-afe4-28e8a9482287/f8476223-73f4-45c0-97bc-ff4bf564cd31/a80fade4-1915-4de4-abda-b47f4212c070"
+storage_version_token = "1790574653592791"
+content_type = "image/png"
+
+[[outputs]]
+id = "_CRUG98znxJUO4mQEC8aF"
+uri = "file://screenshots/homepage-fixes/compare-why-1366.png"
+type = "image"
+title = "Why Choose Us — 1366px before / after"
+description = "Left: before. Right: after. Homepage preview; not published."
+logical_id = "b633f394-a9e0-4c15-9aa0-765b7f4fd6e4"
+content_hash = "sha256:b3448f6928788ade2c6b83dc1c1ab3a28a0e4b236fdb1c8cbeed53f32cd7bb25"
+size = 1677625
+mtime_ms = 1790574626181
+storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:0c61580c-1c60-4ec3-afe4-28e8a9482287/b633f394-a9e0-4c15-9aa0-765b7f4fd6e4/a69573af-d2e6-44a6-8855-df5bc90cee84"
+storage_version_token = "1790574656639116"
+content_type = "image/png"

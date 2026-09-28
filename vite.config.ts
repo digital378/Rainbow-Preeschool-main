@@ -4,11 +4,6 @@ import path from "path";
 import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
 
 export default defineConfig({
-  define: {
-    __HOME_PUBLISH_DATE__: JSON.stringify(
-      process.env.HOME_PUBLISH_DATE ?? new Date().toISOString().slice(0, 10),
-    ),
-  },
   plugins: [
     react(),
     runtimeErrorOverlay(),

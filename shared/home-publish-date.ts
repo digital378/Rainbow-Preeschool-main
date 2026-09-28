@@ -1,14 +1,5 @@
-/**
- * The homepage reviewer credit uses the date this release was built for
- * publishing, not the global editorial freshness date. Vite and esbuild
- * replace this token with the same UTC date during a production build.
- */
-declare const __HOME_PUBLISH_DATE__: string;
-
-export const HOME_PUBLISH_DATE_ISO =
-  typeof __HOME_PUBLISH_DATE__ === "string"
-    ? __HOME_PUBLISH_DATE__
-    : new Date().toISOString().slice(0, 10);
+/** Update only when the homepage's content actually changes, not on every build. */
+export const HOME_PUBLISH_DATE_ISO = "2026-09-28";
 
 export const HOME_PUBLISH_DATE_DISPLAY = new Intl.DateTimeFormat("en-US", {
   month: "long",
