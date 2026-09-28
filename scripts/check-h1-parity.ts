@@ -42,6 +42,7 @@ import { CONTACT_PAGE_COPY } from "../shared/contact-page-copy";
 import { BLOG_LIST_COPY } from "../shared/blog-list-copy";
 import { testimonialsSEO } from "../shared/testimonials-content";
 import { GALLERY_PAGE_COPY } from "../client/src/lib/gallery-config";
+import { HOMEPAGE_H1 } from "../shared/homepage-schema";
 import {
   HOME_VISITOR_COPY,
   KINDERGARTEN_VISITOR_COPY,
@@ -51,6 +52,7 @@ import {
 
 const ROOT = process.cwd();
 const SHARED_H1_EXPRESSIONS: Record<string, string> = {
+  HOMEPAGE_H1,
   "HOME_VISITOR_COPY.h1": HOME_VISITOR_COPY.h1,
   "ABOUT_PAGE_COPY.heroHeading": ABOUT_PAGE_COPY.heroHeading,
   "PROGRAMMES_VISITOR_COPY.h1": PROGRAMMES_VISITOR_COPY.h1,

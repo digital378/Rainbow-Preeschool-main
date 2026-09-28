@@ -1,6 +1,6 @@
 ---
 name: Predeploy smoke-test pitfalls
-description: Homepage user-agent differences, truncated publishing logs, and deployment-build environment boundaries.
+description: Homepage user-agent differences, local port collisions, truncated publishing logs, and deployment-build environment boundaries.
 ---
 
 ## Homepage rendering paths
@@ -10,6 +10,14 @@ The homepage receives bot SSR for Googlebot, while a browser's initial HTML gets
 **Why:** An earlier note incorrectly said the homepage bypassed bot SSR; that assumption hid a real homepage description/H1 mismatch.
 
 **How to apply:** Check initial browser HTML, Googlebot HTML, and hydrated visitor HTML separately before claiming homepage parity.
+
+## Local smoke-test port collision
+
+Run predeploy validation on an unused port when the development workflow already owns the script's default port.
+
+**Why:** The smoke-test production server can fail to bind, while the script's reachability check mistakenly accepts the running development server. Later checks then report misleading failures against the wrong application instance.
+
+**How to apply:** Set `PREDEPLOY_PORT` to a free port for local runs, then confirm the boot log says the production server bound to that port.
 
 ## API log truncation gotcha
 `getDeploymentBuild()` returns only ~75 lines of build logs. The Replit UI shows the full output. If a build is failing and the API logs look clean, there may be more failing steps after the truncation point. Check the Replit Publishing > Logs UI directly.

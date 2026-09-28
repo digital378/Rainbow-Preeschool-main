@@ -34,8 +34,8 @@
  *      exact signature of a route missing its `server/ssr-pages.ts` entry.
  *
  * Internal dashboard/design routes are not public SEO pages: they must
- * return 401 to both crawlers and visitors without leaking HTML, and are
- * checked separately rather than subjected to canonical/title assertions.
+ * return 401 without leaking HTML, except /dummy, which serves its private
+ * sign-in form with noindex/no-store headers. They are checked separately.
  *
  * It also spot-checks a handful of routes with `Claude-User` and
  * `Perplexity-User` (answer-engine fetchers that hit production live when a
@@ -164,6 +164,8 @@ interface FetchOutcome {
   status: number;
   finalPath: string;
   body: string;
+  xRobotsTag: string;
+  cacheControl: string;
 }
 
 async function fetchWithUA(
@@ -183,7 +185,13 @@ async function fetchWithUA(
     } catch {
       /* keep original path */
     }
-    return { status: res.status, finalPath, body };
+    return {
+      status: res.status,
+      finalPath,
+      body,
+      xRobotsTag: res.headers.get("x-robots-tag") || "",
+      cacheControl: res.headers.get("cache-control") || "",
+    };
   } catch (e: unknown) {
     return { error: e instanceof Error ? e.message : String(e) };
   }
@@ -231,6 +239,16 @@ async function main(): Promise<void> {
       const result = await fetchWithUA(route, ua);
       if ("error" in result) {
         failures.push({ route, reason: `${name} request failed: ${result.error}` });
+      } else if (route === "/dummy") {
+        const isPrivateLogin = result.status === 200 &&
+          /<title>Private walkthrough \| Rainbow Preschool<\/title>/i.test(result.body) &&
+          /<form method="post" action="\/dummy\/login">/i.test(result.body) &&
+          !/<div\s+id=["']root/i.test(result.body) &&
+          /\bnoindex\b/i.test(result.xRobotsTag) &&
+          /\bno-store\b/i.test(result.cacheControl);
+        if (!isPrivateLogin) {
+          failures.push({ route, reason: `${name} must receive only the noindex/no-store private sign-in form (got HTTP ${result.status})` });
+        }
       } else if (result.status !== 401 || /<html|<div\s+id=["']root/i.test(result.body)) {
         failures.push({ route, reason: `${name} must receive 401 without page HTML (got HTTP ${result.status})` });
       }

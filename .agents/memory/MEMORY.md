@@ -1,7 +1,7 @@
 - [Express catch-all path stripping](express-catch-all-path-stripping.md) — app.use("*", fn) sets req.path to "/" for every route; use app.use(fn) + req.originalUrl instead.
 - [H1 sync pattern](h1-sync.md) — SSR h1: field in ssr-pages.ts must equal client <h1> text exactly; guard checks parity.
 - [Title cannibalisation guard](title-guard.md) — scripts/check-no-title-cannibalisation.ts; wired in pre-commit, pre-push, predeploy; NOT in npm run check (cannot edit package.json).
-- [Predeploy smoke-test pitfalls](predeploy-smoke-tests.md) — homepage bot/browser paths differ; publishing logs can truncate; deployment-build env is not runtime env.
+- [Predeploy smoke-test pitfalls](predeploy-smoke-tests.md) — homepage paths differ; local port collisions can test the wrong server; build logs truncate.
 - [Homepage redesign patterns](homepage-redesign-patterns.md) — design system token application patterns; bento grid, shadow-card, section-eyebrow, bg-surface-warm, icon-xl/md/sm usage.
 - [Premium Design System v2.0](design-system-v2.md) — all tokens, component classes, shadow/radius/surface/animation vars; shadows were all 0 before; /dummy is the visual reference page.
 - [R3F firewall + Three.js fallback](r3f-firewall.md) — @react-three/fiber/@react-three/drei blocked by Replit firewall; use raw Three.js. Replit preview has no GPU so need isWebGLAvailable() + CSS fallback.
