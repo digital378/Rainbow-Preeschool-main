@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useLayoutEffect, useState, useRef } from "react";
 import { PROGRAMME_GALLERY_IMAGES } from "@shared/page-image-data";
 import { Link } from "wouter";
 import { Badge } from "@/components/ui/badge";
@@ -323,6 +323,17 @@ const featureItems = [
 
 
 export default function NurseryLanding() {
+  const hasFirstPaintHeading = useRef(
+    typeof document !== "undefined" && !!document.getElementById("nursery-initial-h1")
+  );
+
+  useLayoutEffect(() => {
+    if (hasFirstPaintHeading.current) {
+      document.getElementById("nursery-initial")?.classList.add("nursery-hydrated");
+      return () => document.getElementById("nursery-initial")?.remove();
+    }
+  }, []);
+
   useEffect(() => {
     trackProgrammeView("nursery");
   }, []);
@@ -332,8 +343,11 @@ export default function NurseryLanding() {
       <SEO
         title={NURSERY_COPY.title}
         description={NURSERY_COPY.description}
-        keywords="nursery school in thane, nursery school near me, nursery school admission near me, nursery class for kids, play based nursery school"
+        keywords={null}
         canonical="https://www.rainbowpreschools.com/nursery"
+        ogImage={NURSERY_COPY.ogImage}
+        ogImageAlt={NURSERY_COPY.ogImageAlt}
+        lang="en-IN"
         structuredData={[NURSERY_WEBPAGE_SCHEMA, createBreadcrumbSchema([
           { name: "Home", url: "/" },
           { name: "Programmes", url: "/programmes" },
@@ -354,9 +368,13 @@ export default function NurseryLanding() {
               <Badge variant="secondary" className="text-base px-4 py-1 mb-4">
                 {NURSERY_VISITOR_COPY.sections[17].items?.[0]}
               </Badge>
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-                {NURSERY_VISITOR_COPY.h1}
-              </h1>
+              {hasFirstPaintHeading.current
+                ? <div aria-hidden="true" className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 invisible" style={{ fontFamily: "Poppins, Inter, sans-serif", letterSpacing: "-0.02em" }}>
+                    {NURSERY_VISITOR_COPY.h1}
+                  </div>
+                : <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
+                    {NURSERY_VISITOR_COPY.h1}
+                  </h1>}
               <p className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed">
                 {NURSERY_VISITOR_COPY.intro}
               </p>

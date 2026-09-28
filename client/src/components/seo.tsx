@@ -4,10 +4,12 @@ import { PLAYGROUP, KINDERGARTEN, HAPPY_TIMES } from "@shared/programme-data";
 interface SEOProps {
   title: string;
   description: string;
-  keywords?: string;
+  keywords?: string | null;
   canonical?: string;
   ogType?: "website" | "article";
   ogImage?: string;
+  ogImageAlt?: string;
+  lang?: string;
   noIndex?: boolean;
   robots?: string;
   structuredData?: object | object[];
@@ -23,12 +25,15 @@ export function SEO({
   canonical,
   ogType = "website",
   ogImage,
+  ogImageAlt,
+  lang,
   noIndex = false,
   robots,
   structuredData,
 }: SEOProps) {
   useEffect(() => {
     document.title = title;
+    if (lang) document.documentElement.lang = lang;
 
     const updateMeta = (selector: string, content: string, attribute = "content") => {
       const element = document.querySelector(selector);
@@ -51,9 +56,8 @@ export function SEO({
     };
 
     updateMeta('meta[name="description"]', description);
-    if (keywords) {
-      updateMeta('meta[name="keywords"]', keywords);
-    }
+    if (keywords === null) document.querySelector('meta[name="keywords"]')?.remove();
+    else if (keywords) updateOrCreateMeta("keywords", keywords);
 
     const robotsContent = robots ?? (noIndex ? "noindex, nofollow" : "index, follow");
     updateOrCreateMeta("robots", robotsContent);
@@ -75,6 +79,7 @@ export function SEO({
     updateOrCreateMeta("og:type", ogType, "property");
     updateOrCreateMeta("og:url", fullCanonical, "property");
     updateOrCreateMeta("og:image", ogImageUrl, "property");
+    if (ogImageAlt) updateOrCreateMeta("og:image:alt", ogImageAlt, "property");
     updateOrCreateMeta("og:site_name", "Rainbow Preschool International", "property");
     updateOrCreateMeta("og:locale", "en_IN", "property");
 
@@ -88,6 +93,7 @@ export function SEO({
     updateOrCreateMeta("twitter:title", title);
     updateOrCreateMeta("twitter:description", description);
     updateOrCreateMeta("twitter:image", ogImageUrl);
+    if (ogImageAlt) updateOrCreateMeta("twitter:image:alt", ogImageAlt);
 
     // AUDIT-206: Core client-side schema mechanism for JS-rendered users.
     // Pages pass structuredData via SEO props; this injects it into <head>.
@@ -110,8 +116,13 @@ export function SEO({
     return () => {
       const seoScripts = document.querySelectorAll('script[data-seo-schema="true"]');
       seoScripts.forEach((script) => script.remove());
+      if (ogImageAlt) {
+        document.querySelector('meta[property="og:image:alt"]')?.remove();
+        document.querySelector('meta[name="twitter:image:alt"]')?.remove();
+      }
+      if (lang && document.documentElement.lang === lang) document.documentElement.lang = "en";
     };
-  }, [title, description, keywords, canonical, ogType, ogImage, noIndex, robots, structuredData]);
+  }, [title, description, keywords, canonical, ogType, ogImage, ogImageAlt, lang, noIndex, robots, structuredData]);
 
   return null;
 }

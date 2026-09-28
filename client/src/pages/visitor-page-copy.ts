@@ -372,7 +372,7 @@ export const KINDERGARTEN_VISITOR_COPY: VisitorPageCopy = {
     {
       heading: "Why Kindergarten is Important for Your Child",
       paragraphs: [
-        "Kindergarten is a crucial stepping stone between preschool and formal education. For children aged 3.5 to 5.5 years, it provides the essential academic and social foundations needed for success in Grade 1 and beyond.",
+        "Kindergarten is a crucial stepping stone between nursery and formal education. For children aged 3.5 to 5.5 years, it provides the essential academic and social foundations needed for success in Grade 1 and beyond.",
         "At Rainbow Preschool, our Jr. KG and Sr. KG programmes focus on school readiness through structured learning. Children develop reading and writing foundations, learn mathematical concepts, and build critical thinking skills through engaging activities.",
         "Research shows that quality Kindergarten education significantly impacts a child's academic trajectory. Our comprehensive curriculum ensures your child is not just ready for Grade 1, but confident and enthusiastic about learning.",
       ],

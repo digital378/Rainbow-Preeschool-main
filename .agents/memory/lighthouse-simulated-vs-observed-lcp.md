@@ -1,10 +1,10 @@
 ---
 name: Lighthouse simulated and observed LCP
-description: Avoid interpreting the trace's fast first paint as a fast Lighthouse LCP score on programme pages.
+description: Why a first-paint heading can still score badly in Lighthouse when React replaces or moves it.
 ---
 
-On programme pages with a static first-paint hero later replaced by React, Lighthouse's *simulated* mobile LCP can remain near 20 seconds even when the trace's observed LCP is around 1 second. Do not conflate the two numbers or claim that the reported Lighthouse LCP improved because the initial H1 is visible.
+On programme pages with a static first-paint hero later replaced by React, Lighthouse's *simulated* mobile LCP can remain near 20 seconds even when the trace's observed LCP is around 1 second. Merely retaining the same DOM node is not enough if it is moved into the React tree after JavaScript: the move can trigger another paint. Keeping the original heading stationary while React reserves matching, visually hidden space for it avoids this late LCP candidate.
 
-**Why:** A nursery first-paint change reduced the trace's observed LCP to about 1–2 seconds but three Lighthouse simulated LCP runs still reported about 18–20 seconds. The LCP breakdown identified the hero heading and a short observed render delay; the headline audit and score remained slow.
+**Why:** The initial nursery hero rendered quickly, but replacing or moving its H1 during hydration kept three simulated mobile LCP runs at roughly 18–20 seconds. A stationary heading reduced all three to roughly 2–3 seconds without changing the final hero geometry.
 
-**How to apply:** For performance reports, distinguish the `largest-contentful-paint` audit value from `metrics.details.items[0].observedLargestContentfulPaint`. Report the requested Lighthouse score and LCP without substituting the observed trace value. Investigate the model's resource dependency chain before attributing the gap to a visual or copy change.
+**How to apply:** Distinguish the `largest-contentful-paint` audit value from the trace's observed LCP. Inspect the selected LCP DOM node across hydration, not just whether an initial H1 exists. If the initial node must remain outside React, reserve the same geometry inside React, hide the duplicate visual and clean up the external node on route changes; verify alignment at multiple widths.

@@ -381,7 +381,7 @@ export default function KindergartenLanding() {
             <h2 className="text-3xl md:text-4xl font-bold mb-6 text-center">{KINDERGARTEN_VISITOR_COPY.sections[0].heading}</h2>
             <div className="prose prose-lg max-w-none text-muted-foreground">
               <p className="text-lg leading-relaxed mb-4">
-                <strong>{KINDERGARTEN_VISITOR_COPY.sections[0].paragraphs?.[0].split(" is ")[0]}</strong>{KINDERGARTEN_VISITOR_COPY.sections[0].paragraphs?.[0].split(" is ").slice(1).join(" is ")}
+                <strong>Kindergarten</strong>{KINDERGARTEN_VISITOR_COPY.sections[0].paragraphs?.[0].slice("Kindergarten".length).split("nursery")[0]}<Link href="/nursery" className="text-primary hover:underline">nursery</Link>{KINDERGARTEN_VISITOR_COPY.sections[0].paragraphs?.[0].split("nursery").slice(1).join("nursery")}
               </p>
               <p className="text-lg leading-relaxed mb-4">
                 {KINDERGARTEN_VISITOR_COPY.sections[0].paragraphs?.[1]}

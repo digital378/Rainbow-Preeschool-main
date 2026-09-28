@@ -6,7 +6,7 @@ export interface NurseryFAQ {
 
 export const NURSERY_FAQS: readonly NurseryFAQ[] = [
   {
-    question: "Where can I find a good nursery school near me in Thane?",
+    question: "Is there a nursery school near me in Thane?",
     answerSegments: [
       { text: "Rainbow Preschool International has 6 nursery centres across Thane: Manpada, Hariniwas (Panchpakhadi), Anand Nagar, Dhokali, Kalwa and Kasarvadavali. They offer a play-based curriculum for children aged 2.5 to 3.5 years. You can " },
       { text: "find your nearest centre", href: "/play-school-near-me" },
@@ -14,7 +14,7 @@ export const NURSERY_FAQS: readonly NurseryFAQ[] = [
     ],
   },
   {
-    question: "What is the nursery school admission process at Rainbow Preschool Thane?",
+    question: "What is the nursery admission process at Rainbow Preschool?",
     answerSegments: [
       { text: "The five steps are enquiry, a free centre visit, a relaxed parent–child interaction, submitting documents and the admission fee, then 2–3 short orientation sessions before term. Enquire using the form or call 82915 68972; the admissions team will call within 24 hours. Read more about the " },
       { text: "admission process", href: "/preschool-admissions" },
@@ -22,7 +22,7 @@ export const NURSERY_FAQS: readonly NurseryFAQ[] = [
     ],
   },
   {
-    question: "What is the right age for nursery school in Thane?",
+    question: "What is the age for nursery admission in Thane?",
     answerSegments: [
       { text: "Nursery is for children aged 2.5 to 3.5 years, counted as of 1 June of the academic year. For 2027-28, your child should be 2.5–3.5 years old on 1 June 2027. The programme introduces phonics, number recognition and creative activities as children grow in confidence, independence and friendships. See " },
       { text: "admission details", href: "/preschool-admissions" },
@@ -78,7 +78,7 @@ export const NURSERY_FAQS: readonly NurseryFAQ[] = [
     ],
   },
   {
-    question: "How can I enquire about nursery admission in Thane?",
+    question: "How do I apply for nursery admission for 2027-28?",
     answerSegments: [
       { text: "Use the enquiry form on this page or call " },
       { text: "82915 68972", href: "tel:8291568972" },

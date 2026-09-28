@@ -24,6 +24,7 @@ export function injectIndexPolicyShell(path: string, html: string): string {
     .replace(/<meta name="robots" content="[^"]*"\s*\/?>/i, `<meta name="robots" content="${robots}" />`)
     .replace(/<link rel="canonical" href="[^"]*"\s*\/?>/i, `<link rel="canonical" href="${escape(canonical)}" />`);
   if (!seo) return result;
+  if (path === "/nursery") result = result.replace('<html lang="en">', '<html lang="en-IN">');
 
   const updateMeta = (kind: "name" | "property", key: string, value: string) => {
     const tag = `<meta ${kind}="${key}" content="${escape(value)}" />`;
@@ -40,6 +41,11 @@ export function injectIndexPolicyShell(path: string, html: string): string {
   updateMeta("property", "og:title", seo.title);
   updateMeta("property", "og:description", seo.description);
   updateMeta("property", "og:image", seo.ogImage ?? `${PREFERRED_DOMAIN}/og-image.jpg`);
+  if (path === "/nursery") {
+    updateMeta("property", "og:locale", "en_IN");
+    updateMeta("property", "og:image:alt", NURSERY_COPY.ogImageAlt);
+    updateMeta("name", "twitter:image:alt", NURSERY_COPY.ogImageAlt);
+  }
   updateMeta("name", "twitter:url", canonical);
   updateMeta("name", "twitter:title", seo.title);
   updateMeta("name", "twitter:description", seo.description);
@@ -50,13 +56,12 @@ export function injectIndexPolicyShell(path: string, html: string): string {
     result = result.replace(/\s*<meta name="keywords" content="[^"]*"\s*\/?>/i, "");
   }
   if (path === "/playgroup" || path === "/nursery") {
-    // The SPA replaces this route-specific first-paint markup on mount. The
-    // H1 is visible immediately even on a slow connection; it has no entrance
-    // animation, and the hydrated component retains its existing styling.
+    // The H1 is visible immediately even on a slow connection. Nursery keeps
+    // this exact node when React mounts so the LCP candidate is not replaced.
     const copy = path === "/nursery" ? NURSERY_COPY : PLAYGROUP_COPY;
     const faqs = path === "/nursery" ? NURSERY_FAQS : PLAYGROUP_FAQS;
     const id = path === "/nursery" ? "nursery-initial" : "playgroup-initial";
-    const initialHero = `<div id="${id}"><section><div class="${id}-inner"><span class="${id}-badge">${escape(copy.heroBadge)}</span><h1>${escape(copy.h1)}</h1><p>${escape(copy.heroSubline)}</p></div></section><div hidden aria-hidden="true">${faqs.map(faq => `<div><strong>${escape(faq.question)}</strong><p>${faq.answerSegments.map(segment => segment.href ? `<a href="${escape(segment.href)}">${escape(segment.text)}</a>` : escape(segment.text)).join("")}</p></div>`).join("")}</div></div>`;
+    const initialHero = `<div id="${id}"><section><div class="${id}-inner"><span class="${id}-badge">${escape(copy.heroBadge)}</span><h1${path === "/nursery" ? ' id="nursery-initial-h1"' : ""}>${escape(copy.h1)}</h1><p>${escape(copy.heroSubline)}</p></div></section><div hidden aria-hidden="true">${faqs.map(faq => `<div><strong>${escape(faq.question)}</strong><p>${faq.answerSegments.map(segment => segment.href ? `<a href="${escape(segment.href)}">${escape(segment.text)}</a>` : escape(segment.text)).join("")}</p></div>`).join("")}</div></div>`;
     result = result.replace("</head>", `<style>
       #${id}{padding-top:5rem;font-family:Inter,system-ui,sans-serif}
       #${id} section{padding:4rem 0;background:linear-gradient(120deg,rgba(223,32,96,.1),rgba(255,193,7,.05),rgba(77,176,115,.1))}
@@ -66,8 +71,26 @@ export function injectIndexPolicyShell(path: string, html: string): string {
       #${id} p{font-size:1.125rem;line-height:1.625;margin:0;max-width:42rem;color:#6b7280}
       @media(min-width:768px){#${id}{padding-top:6rem}#${id} section{padding:6rem 0}#${id} h1{font-size:2.25rem}#${id} p{font-size:1.25rem}}
       @media(min-width:1024px){#${id} section{padding:8rem 0}#${id} h1{font-size:3rem}}
+      ${path === "/nursery" ? `
+        #nursery-initial{position:absolute;inset:0 0 auto;z-index:2;pointer-events:none}
+        #nursery-initial .nursery-initial-inner{position:relative;top:2px}
+        #nursery-initial h1{font-family:Poppins,Inter,sans-serif;line-height:1.2}
+        @media(min-width:640px){#nursery-initial .nursery-initial-inner{padding:0 1.5rem}}
+        @media(min-width:768px){#nursery-initial h1{line-height:2.5rem;max-width:none}}
+        @media(min-width:1024px){
+          #nursery-initial .nursery-initial-inner{padding:0 2rem;top:40px}
+          #nursery-initial h1,#nursery-initial p{max-width:calc((100% - 3rem)/2)}
+          #nursery-initial h1{line-height:1}
+        }
+        @media(min-width:1280px){#nursery-initial .nursery-initial-inner{top:78px}}
+        #nursery-initial.nursery-hydrated section{background:none}
+        #nursery-initial.nursery-hydrated .nursery-initial-badge,
+        #nursery-initial.nursery-hydrated p{visibility:hidden}
+      ` : ""}
     </style></head>`);
-    result = result.replace('<div id="root"></div>', `<div id="root">${initialHero}</div>`);
+    result = result.replace('<div id="root"></div>', path === "/nursery"
+      ? `${initialHero}<div id="root"></div>`
+      : `<div id="root">${initialHero}</div>`);
   }
   return result;
 }

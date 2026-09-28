@@ -547,6 +547,7 @@ export interface PageSEOData {
   canonical?: string;
   ogType?: string;
   ogImage?: string;
+  ogImageAlt?: string;
   noIndex?: boolean;
   h1?: string;
   introText?: string;
@@ -1260,7 +1261,8 @@ const staticPages: Record<string, PageSEOData> = {
   "/nursery": {
     title: NURSERY_COPY.title,
     description: NURSERY_COPY.description,
-    keywords: "nursery school in thane, nursery school near me, nursery admission thane, nursery programme thane",
+    ogImage: NURSERY_COPY.ogImage,
+    ogImageAlt: NURSERY_COPY.ogImageAlt,
     canonical: `${BASE_URL}/nursery`,
     h1: NURSERY_COPY.h1,
     introText: NURSERY_COPY.heroSubline,
@@ -1306,12 +1308,16 @@ const staticPages: Record<string, PageSEOData> = {
         { "@type": "Question", name: "How can I enquire about kindergarten admission in Thane?", acceptedAnswer: { "@type": "Answer", text: "Call +91-8291568972 or fill out the admission enquiry form on this page. Our admissions team will respond promptly and arrange a free campus visit at any of our 6 kindergarten centres across Thane — Manpada, Kalwa, Anand Nagar, Dhokali, Kasarvadavali, or Hariniwas." } },
       ],
     }],
-    contentSections: visitorProgrammePageSections(
-      KINDERGARTEN_VISITOR_COPY,
-      KINDERGARTEN_VISITOR_FAQS,
-      KINDERGARTEN_DAILY_ROUTINE,
-      PROGRAMME_GALLERY_IMAGES.kindergarten,
-    ),
+    contentSections: (() => {
+      const sections = visitorProgrammePageSections(
+        KINDERGARTEN_VISITOR_COPY,
+        KINDERGARTEN_VISITOR_FAQS,
+        KINDERGARTEN_DAILY_ROUTINE,
+        PROGRAMME_GALLERY_IMAGES.kindergarten,
+      );
+      sections[0].links = [{ text: "nursery", url: "/nursery" }];
+      return sections;
+    })(),
     internalLinks: [...commonInternalLinks, { text: "Nursery Programme", url: "/nursery" }, { text: "Preschool Admissions", url: "/preschool-admissions" }],
     lastModified: LAST_UPDATED_ISO,
     lastModifiedDisplay: LAST_UPDATED_DISPLAY,

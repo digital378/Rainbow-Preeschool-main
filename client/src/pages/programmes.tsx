@@ -114,8 +114,8 @@ export default function Programmes() {
                       </>
                     )}
                     
-                    <Link href={`/${programme.id}`}>
-                      <Button data-testid={`button-more-info-${programme.id}`}>
+                    <Link href={`/${programme.id}`} aria-label={programme.id === "nursery" ? "Nursery programme in Thane" : undefined}>
+                      <Button aria-label={programme.id === "nursery" ? "Nursery programme in Thane" : undefined} data-testid={`button-more-info-${programme.id}`}>
                         {PROGRAMMES_VISITOR_COPY.sections[0].items?.[3]}
                         <ArrowRight className="ml-2 h-4 w-4" />
                       </Button>

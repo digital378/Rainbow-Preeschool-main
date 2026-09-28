@@ -33,4 +33,4 @@
 - [Reel refresh on Autoscale](reel-refresh-autoscale.md) — keep the six-hour in-process timer plus request-time stale/expiry checks; an idle Autoscale instance cannot run timers.
 - [Retired page invariants](retired-page-invariants.md) — archived page source can still trigger live-route startup and SEO source-scan checks; scope exclusions to truly retired pages.
 - [Standalone locality page ending](standalone-contact-ending.md) — six centre pages and Ghodbunder Road intentionally end at contact CTA, without footer in visitor or crawler HTML.
-- [Lighthouse simulated vs observed LCP](lighthouse-simulated-vs-observed-lcp.md) — static first paint can be fast in Chrome's trace while Lighthouse's simulated LCP remains slow; report both honestly.
+- [Lighthouse hydration LCP](lighthouse-simulated-vs-observed-lcp.md) — replacing or moving a first-paint H1 during React mount can keep simulated LCP slow; leave the initial node stationary.

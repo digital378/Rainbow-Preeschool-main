@@ -7,6 +7,7 @@ import { localityLandingPages, preschoolLandingPages } from "@shared/centre-data
 export function Footer() {
   const currentYear = new Date().getFullYear();
   const [location] = useLocation();
+  const FooterHeading = location === "/nursery" ? "h3" : "h2";
 
   return (
     <footer className="bg-card border-t">
@@ -20,7 +21,7 @@ export function Footer() {
             <div className="flex items-center gap-2">
               <img 
                 src={logoImage} 
-                alt="Rainbow Preschool International" 
+                alt={location === "/nursery" ? "Rainbow Preschool International footer logo" : "Rainbow Preschool International"}
                 loading="lazy"
                 className="w-20 h-20 object-contain"
                 width={80}
@@ -66,7 +67,7 @@ export function Footer() {
 
           {/* Quick Links */}
           <nav aria-label="Quick links">
-            <h2 className="font-semibold text-base mb-4">Quick Links</h2>
+            <FooterHeading className="font-semibold text-base mb-4">Quick Links</FooterHeading>
             <ul className="space-y-2">
               <li>
                 <Link href="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors" data-testid="link-footer-home">
@@ -114,7 +115,7 @@ export function Footer() {
 
           {/* Programmes */}
           <nav aria-label="Programmes">
-            <h2 className="font-semibold text-base mb-4">Our Programmes</h2>
+            <FooterHeading className="font-semibold text-base mb-4">Our Programmes</FooterHeading>
             <ul className="space-y-2">
               <li>
                 <Link
@@ -148,7 +149,7 @@ export function Footer() {
 
           {/* Preschool Centres in Thane */}
           <nav aria-label="Our centres">
-            <h2 className="font-semibold text-base mb-4">Our Centres</h2>
+            <FooterHeading className="font-semibold text-base mb-4">Our Centres</FooterHeading>
             <ul className="space-y-2">
               {preschoolLandingPages.map((location) => (
                 <li key={location.slug}>
@@ -166,7 +167,7 @@ export function Footer() {
 
           {/* Contact Info */}
           <div>
-            <h2 className="font-semibold text-base mb-4">Contact Info</h2>
+            <FooterHeading className="font-semibold text-base mb-4">Contact Info</FooterHeading>
             <ul className="space-y-3">
               <li className="flex items-start gap-3">
                 <MapPin className="h-4 w-4 text-primary mt-0.5 shrink-0" />
@@ -208,7 +209,7 @@ export function Footer() {
 
         {/* Our Network / Sister School */}
         <div className="mt-10 pt-8 border-t">
-          <h2 className="font-semibold text-base mb-3">Our Network</h2>
+          <FooterHeading className="font-semibold text-base mb-3">Our Network</FooterHeading>
           <div className="flex items-start gap-3">
             <GraduationCap className="h-5 w-5 text-primary mt-0.5 shrink-0" />
             <div>
