@@ -1,6 +1,6 @@
 ---
 name: Predeploy smoke-test pitfalls
-description: Homepage user-agent differences, local port collisions, truncated publishing logs, and deployment-build environment boundaries.
+description: Homepage user-agent differences, local port collisions, schema contract drift, truncated publishing logs, and deployment-build environment boundaries.
 ---
 
 ## Homepage rendering paths
@@ -18,6 +18,14 @@ Run predeploy validation on an unused port when the development workflow already
 **Why:** The smoke-test production server can fail to bind, while the script's reachability check mistakenly accepts the running development server. Later checks then report misleading failures against the wrong application instance.
 
 **How to apply:** Set `PREDEPLOY_PORT` to a free port for local runs, then confirm the boot log says the production server bound to that port.
+
+## Schema contract drift
+
+When a page intentionally switches from Article/FAQ/Organization markup to a dated WebPage, update the publishing checks to assert the new schema and that page's own publish date. Do not restore retired markup just to satisfy stale assertions.
+
+**Why:** A publish was blocked by checks that still demanded retired schema types and a site-wide date on programme pages even though their rendered visitor and crawler output correctly used the page-specific WebPage contract.
+
+**How to apply:** Compare both user-agent HTML paths against the current product decision, keep checks strict for the remaining page types, and run the whole pre-publish sequence after changing the assertions.
 
 ## API log truncation gotcha
 `getDeploymentBuild()` returns only ~75 lines of build logs. The Replit UI shows the full output. If a build is failing and the API logs look clean, there may be more failing steps after the truncation point. Check the Replit Publishing > Logs UI directly.

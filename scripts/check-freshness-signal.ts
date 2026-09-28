@@ -21,6 +21,8 @@
 import { LAST_UPDATED_ISO, LAST_UPDATED_DISPLAY } from "../shared/site-freshness";
 import { HOME_PUBLISH_DATE_ISO } from "../shared/home-publish-date";
 import { ADMISSIONS_PUBLISH_DATE_ISO, ADMISSIONS_PUBLISH_DATE_DISPLAY } from "../shared/admissions-page-copy";
+import { PLAYGROUP_COPY } from "../shared/playgroup-page-content";
+import { NURSERY_COPY } from "../shared/nursery-page-content";
 
 const BASE = (process.argv[2] || "http://localhost:5000").replace(/\/$/, "");
 const UA = "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)";
@@ -111,23 +113,30 @@ async function checkUrl(path: string): Promise<CheckResult> {
     missing.push("Last updated: line");
   }
   const admissionsPage = path === "/preschool-admissions";
-  const expectedType = path === "/" || admissionsPage ? "WebPage" : "Article";
+  const programmePage = path === "/playgroup" || path === "/nursery";
+  const expectedType = path === "/" || admissionsPage || programmePage ? "WebPage" : "Article";
   if (!new RegExp(`"@type":\\s*"${expectedType}"`).test(html)) {
     missing.push(`${expectedType} JSON-LD`);
   }
-  if ((path === "/" || admissionsPage) && /"@type":\s*"Article"/.test(html)) {
+  if ((path === "/" || admissionsPage || programmePage) && /"@type":\s*"Article"/.test(html)) {
     missing.push(`unexpected Article JSON-LD on ${path}`);
   }
   const expectedDate = path === "/"
     ? HOME_PUBLISH_DATE_ISO
-    : admissionsPage ? ADMISSIONS_PUBLISH_DATE_ISO : LAST_UPDATED_ISO;
+    : admissionsPage ? ADMISSIONS_PUBLISH_DATE_ISO
+    : path === "/playgroup" ? PLAYGROUP_COPY.publishDate
+    : path === "/nursery" ? NURSERY_COPY.publishDate
+    : LAST_UPDATED_ISO;
   if (
     !html.includes(`"dateModified":"${expectedDate}"`) &&
     !html.includes(`"dateModified": "${expectedDate}"`)
   ) {
     missing.push(`dateModified=${expectedDate}`);
   }
-  const expectedDisplay = admissionsPage ? ADMISSIONS_PUBLISH_DATE_DISPLAY : LAST_UPDATED_DISPLAY;
+  const expectedDisplay = admissionsPage ? ADMISSIONS_PUBLISH_DATE_DISPLAY
+    : path === "/playgroup" ? PLAYGROUP_COPY.publishDateDisplay
+    : path === "/nursery" ? NURSERY_COPY.publishDateDisplay
+    : LAST_UPDATED_DISPLAY;
   if (path !== "/" && !html.includes(expectedDisplay)) {
     missing.push(`display="${expectedDisplay}"`);
   }

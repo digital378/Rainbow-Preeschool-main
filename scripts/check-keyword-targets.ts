@@ -10,10 +10,9 @@
  *   - client/src/App.tsx, sitemaps        (no /preschool-near-me references)
  *
  * Asserts (as Googlebot):
- *   1. Commercial pages other than admissions emit FAQPage JSON-LD.
- *   2. Each programme page (/playgroup, /nursery, /kindergarten) emits an
- *      EducationalOrganization / Organization schema (parity with the locality
- *      pages).
+ *   1. Playgroup and nursery emit their dated WebPage JSON-LD; kindergarten
+ *      and play-school-near-me retain FAQPage JSON-LD.
+ *   2. Kindergarten retains EducationalOrganization / Organization JSON-LD.
  *   3. /play-school-near-me has a visible body with at least 1,200 words of
  *      meaningful prose (length proxy for content depth).
  *   4. The homepage emits anchor tags to all 4 commercial URLs in the body.
@@ -53,6 +52,7 @@ const COMMERCIAL_PAGES = [
 ];
 
 const PROGRAMME_PAGES = ["/playgroup", "/nursery", "/kindergarten"];
+const WEBPAGE_ONLY_PROGRAMMES = new Set(["/playgroup", "/nursery"]);
 
 const BYLINE = "Reviewed by Rainbow Preschool Curriculum Team";
 
@@ -270,10 +270,13 @@ async function main(): Promise<void> {
         failures.push({ url: path, reason: `status=${status}` });
         continue;
       }
-      if (path !== "/preschool-admissions" && !hasFaqPageJsonLd(html)) {
+      if (WEBPAGE_ONLY_PROGRAMMES.has(path) && !/"@type"\s*:\s*"WebPage"/.test(html)) {
+        failures.push({ url: path, reason: "missing WebPage JSON-LD" });
+      }
+      if (!WEBPAGE_ONLY_PROGRAMMES.has(path) && !hasFaqPageJsonLd(html)) {
         failures.push({ url: path, reason: "missing FAQPage JSON-LD" });
       }
-      if (PROGRAMME_PAGES.includes(path) && !hasOrgJsonLd(html)) {
+      if (path === "/kindergarten" && !hasOrgJsonLd(html)) {
         failures.push({ url: path, reason: "missing Organization JSON-LD" });
       }
 
@@ -339,7 +342,7 @@ async function main(): Promise<void> {
   //   /faqs               → FAQPage  (the schema most at risk from the orig bug)
   //   /preschool-admissions → WebPage + BreadcrumbList
   //   /about              → EducationalOrganization + FAQPage
-  //   /playgroup          → EducationalOrganization
+  //   /playgroup          → WebPage (the visitor and crawler use the same dated schema)
   const BROWSER_UA_SCHEMA_CHECKS: Array<{
     path: string;
     assertions: Array<{ label: string; test: (html: string) => boolean }>;
@@ -367,7 +370,7 @@ async function main(): Promise<void> {
     {
       path: "/playgroup",
       assertions: [
-        { label: "EducationalOrganization JSON-LD", test: hasOrgJsonLd },
+        { label: "WebPage JSON-LD", test: (html) => /"@type"\s*:\s*"WebPage"/.test(html) },
       ],
     },
   ];

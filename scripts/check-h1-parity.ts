@@ -43,6 +43,8 @@ import { BLOG_LIST_COPY } from "../shared/blog-list-copy";
 import { testimonialsSEO } from "../shared/testimonials-content";
 import { GALLERY_PAGE_COPY } from "../client/src/lib/gallery-config";
 import { HOMEPAGE_H1 } from "../shared/homepage-schema";
+import { PLAYGROUP_COPY } from "../shared/playgroup-page-content";
+import { NURSERY_COPY } from "../shared/nursery-page-content";
 import {
   HOME_VISITOR_COPY,
   KINDERGARTEN_VISITOR_COPY,
@@ -56,6 +58,8 @@ const SHARED_H1_EXPRESSIONS: Record<string, string> = {
   "HOME_VISITOR_COPY.h1": HOME_VISITOR_COPY.h1,
   "ABOUT_PAGE_COPY.heroHeading": ABOUT_PAGE_COPY.heroHeading,
   "PROGRAMMES_VISITOR_COPY.h1": PROGRAMMES_VISITOR_COPY.h1,
+  "PLAYGROUP_COPY.h1": PLAYGROUP_COPY.h1,
+  "NURSERY_COPY.h1": NURSERY_COPY.h1,
   "NURSERY_VISITOR_COPY.h1": NURSERY_VISITOR_COPY.h1,
   "KINDERGARTEN_VISITOR_COPY.h1": KINDERGARTEN_VISITOR_COPY.h1,
   "GALLERY_PAGE_COPY.heroTitle": GALLERY_PAGE_COPY.heroTitle,
