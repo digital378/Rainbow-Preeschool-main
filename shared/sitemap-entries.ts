@@ -16,6 +16,7 @@
 
 import { PREFERRED_DOMAIN } from "./seo-config";
 import { HOME_PUBLISH_DATE_ISO } from "./home-publish-date";
+import { ADMISSIONS_PUBLISH_DATE_ISO } from "./admissions-page-copy";
 
 export type SitemapChangefreq =
   | "always"
@@ -55,7 +56,7 @@ export const SITEMAP_ENTRIES: SitemapEntry[] = [
 
   // ── HIGH-INTENT LANDING PAGES ────────────────────────────
   { url: "/best-preschool-near-me-in-thane", priority: 1.0, changefreq: "weekly" },
-  { url: "/preschool-admissions", priority: 1.0, changefreq: "weekly", lastmod: "2026-09-23" },
+  { url: "/preschool-admissions", priority: 1.0, changefreq: "weekly", lastmod: ADMISSIONS_PUBLISH_DATE_ISO },
   { url: "/play-school-near-me", priority: 1.0, changefreq: "weekly" },
   { url: "/play-school-near-ghodbunder-road", priority: 0.85, changefreq: "monthly" },
   { url: "/play-school-near-majiwada", priority: 0.85, changefreq: "monthly" },

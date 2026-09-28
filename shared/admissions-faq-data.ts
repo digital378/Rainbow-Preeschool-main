@@ -1,126 +1,77 @@
-/**
- * Canonical FAQ content for the /preschool-admissions page.
- *
- * Used by:
- *  - server/ssr-pages.ts  → FAQPage JSON-LD injected into raw HTML (Google sees it without JS)
- *  - client/src/pages/preschool-admissions.tsx → UI rendering (bullets rendered as list items)
- *
- * Edit questions/answers here; both SSR schema and client page update automatically.
- */
-
 export interface AdmissionsFAQ {
   question: string;
   answer: string;
-  bullets?: string[];
+  links?: { text: string; href: string }[];
 }
 
 export const admissionsFAQs: AdmissionsFAQ[] = [
   {
-    question: "What is the admission process for Rainbow Preschool?",
-    answer: "The admission process at Rainbow Preschool is designed to be simple and transparent. Here are the key steps:",
-    bullets: [
-      "Submit an enquiry online, by phone, or by visiting any Rainbow centre in Thane",
-      "Schedule a campus tour to see classrooms, play areas, and meet the teaching team",
-      "Your child attends a short, informal interaction session with our educators",
-      "Complete the registration form and submit required documents",
-      "Pay the admission fee to confirm the seat",
-      "Attend the parent orientation session before your child's first day",
-      "The entire process typically takes 3–5 working days from enquiry to confirmed admission",
-    ],
+    question: "What is the admission process at Rainbow Preschool?",
+    answer: "Our admission process has six steps: send an enquiry, visit a centre, speak with our admissions team, fill the registration form, submit the documents, and pay the admission fee to confirm the seat. We then invite you to a parent orientation before your child's first day.",
   },
   {
     question: "What documents are required for preschool admission?",
-    answer: "Please keep the following documents ready when completing admission at Rainbow Preschool. Originals plus one photocopy of each:",
-    bullets: [
-      "Child's birth certificate — mandatory for age verification",
-      "4–6 passport-size photographs of the child",
-      "Parent/guardian ID proof — Aadhaar, passport, voter ID, or driving licence",
-      "Address proof — Aadhaar, utility bill, or rental agreement with Thane address",
-      "Child's Aadhaar card — if available",
-      "Previous school records — transfer certificate or progress report if applicable",
-      "Vaccination card and any relevant medical or allergy records",
-      "If any document is unavailable, provisional admission can be granted with a 30-day submission commitment",
-    ],
+    answer: "You'll need your child's birth certificate (original and one photocopy), 4–6 passport-size photos of your child, ID proof of both parents, address proof, and your child's vaccination card. Previous school records and your child's Aadhaar card are needed if available, plus two passport-size photos of each parent for ID cards.",
   },
   {
-    question: "What is the age criteria for admission to each programme?",
-    answer: "Age is calculated as of June 1st of the academic year. The minimum ages for each programme are:",
-    bullets: [
-      "Playgroup — 1.5 to 2.5 years: First structured learning experience for toddlers",
-      "Nursery — 2.5 to 3.5 years: Language, phonics, fine motor, and independence skills",
-      "Jr. KG — 3.5 to 4.5 years: Pre-reading, early writing, and structured play-based learning",
-      "Sr. KG — 4.5 to 5.5 years: Full school-readiness for a smooth Class 1 transition",
-      "If your child's age falls between two programmes, our educators will assess developmental readiness and guide you to the right fit",
+    question: "What is the age criteria for each programme?",
+    answer: "We count age as of 1 June of the academic year: Playgroup 1.5–2.5 years, Nursery 2.5–3.5 years, Jr. KG 3.5–4.5 years and Sr. KG 4.5–5.5 years.",
+    links: [
+      { text: "Playgroup", href: "/playgroup" },
+      { text: "Nursery", href: "/nursery" },
+      { text: "Jr. KG", href: "/kindergarten" },
+      { text: "Sr. KG", href: "/kindergarten" },
     ],
   },
   {
     question: "When do preschool admissions open for the new academic year?",
-    answer: "Rainbow Preschool follows an annual admission cycle but welcomes enquiries year-round:",
-    bullets: [
-      "October–November — Early admissions open; families who apply early get preferred centres and timings",
-      "December–February — Main admission window with the most seat availability across all 6 Thane centres",
-      "March–May — Final round; seats fill quickly, especially at Manpada and Hariniwas",
-      "June onwards — Academic year begins; mid-term admissions accepted subject to availability",
-      "We strongly recommend enquiring early to avoid missing your preferred batch",
-    ],
+    answer: "Early admissions for the next academic year open in October and November. Our main admission window runs from December to February, with a final round from March to May. We accept enquiries all year.",
   },
   {
     question: "What are the fees for preschool admission in Thane?",
-    answer: "Rainbow Preschool offers competitive and transparent pricing. Here is a general overview of fee components:",
-    bullets: [
-      "Admission fee — one-time payment at enrolment covering registration, orientation, and starter kit",
-      "Tuition fee — monthly or term-based fee covering curriculum, teaching staff, and learning materials",
-      "Activity fee — covers art, music, dance, yoga, sports, and field trips throughout the year",
-      "Transport fee — optional, based on route and distance; GPS-tracked vehicles with female attendants",
-      "Flexible payment plans available — monthly, quarterly, half-yearly, or annual",
-      "No hidden charges — full fee breakdown shared before admission is confirmed",
-      "For exact fees at your preferred centre, call 82915 68972 or fill the enquiry form above",
-    ],
+    answer: "Fees vary by programme and centre. Call us on 82915 68972 or visit your nearest centre for current fee details.",
+    links: [{ text: "82915 68972", href: "tel:+918291568972" }],
   },
   {
     question: "Do you offer mid-term preschool admissions?",
-    answer: "Yes, Rainbow Preschool accepts mid-term admissions throughout the academic year:",
-    bullets: [
-      "Available year-round subject to seat availability at the preferred centre",
-      "Brief assessment ensures your child is placed in the appropriate group",
-      "Catch-up support from teachers helps mid-term joiners settle in comfortably",
-      "Fees are calculated on a pro-rata basis from the month of joining",
-      "Ideal for families relocating to Thane or switching from another preschool",
-      "Contact us to check current seat availability at your nearest Rainbow centre",
-    ],
+    answer: "Yes. We accept mid-year admissions, subject to seat availability at your preferred centre. This suits families who move to Thane during the year.",
   },
   {
-    question: "How do I choose the right Rainbow Preschool centre for admission?",
-    answer: "With 6 centres across Thane, here are a few practical factors to help you choose the most suitable one:",
-    bullets: [
-      "Proximity — choose the centre closest to your home, workplace, or daily commute route",
-      "Transport availability — check if a Rainbow bus route covers your building or area",
-      "Batch timing — different centres may offer slightly different session start times",
-      "Campus visit — visit the centre in person and let your child's comfort guide the final decision",
-      "Our admissions team is happy to help you compare options and find the best fit",
-    ],
+    question: "How do I choose the right Rainbow Preschool centre?",
+    answer: "Most parents choose the centre closest to home or their daily route. Also check how far each centre continues: some go up to Grade 4, and Dhokali runs up to Sr. KG. See all centres on our preschool near you page.",
+    links: [{ text: "preschool near you", href: "/play-school-near-me" }],
   },
   {
     question: "Can I visit the preschool before taking admission?",
-    answer: "Absolutely — we strongly encourage every parent to schedule a campus tour before enrolling. Here is what to expect:",
-    bullets: [
-      "Guided tour of classrooms, play areas, washrooms, kitchen, and safety installations",
-      "Meet the centre head and teaching staff who will work with your child",
-      "Observe an ongoing class session to see our teaching approach in action",
-      "Your child is welcome to attend a free trial class to experience the environment",
-      "Get clear answers on fees, timings, transport, and the full admission process",
-      "Book a visit by calling 82915 68972, filling the form above, or messaging us on WhatsApp",
-    ],
+    answer: "Yes, we encourage every parent to visit first. You'll see the classrooms, play areas and safety measures and meet our team. Book a visit through the form on this page or call us.",
+    links: [{ text: "call us", href: "tel:+918291568972" }],
+  },
+  {
+    question: "What age should my child be for nursery admission in 2027-28?",
+    answer: "Your child should be 2.5 to 3.5 years old on 1 June 2027. Children aged 1.5 to 2.5 years join Playgroup, and children aged 3.5 to 5.5 join Jr. KG or Sr. KG.",
+    links: [{ text: "Nursery", href: "/nursery" }],
+  },
+  {
+    question: "Which Rainbow Preschool centres continue after Sr. KG?",
+    answer: "Aggarwal (Manpada) and Kalwa go up to Grade 4, Kasarvadavali and Hariniwas up to Grade 3, and Anand Nagar up to Grade 2. Dhokali runs up to Sr. KG.",
   },
 ];
 
-/**
- * Pre-flattened list of { question, answer } pairs.
- * Used by server/ssr-pages.ts to build the FAQPage JSON-LD schema at module load.
- * Bullets are joined with ". " and appended to the answer text.
- */
-export const ADMISSIONS_FAQ_SCHEMA_ITEMS: Array<{ question: string; answer: string }> =
-  admissionsFAQs.map(faq => ({
-    question: faq.question,
-    answer: faq.bullets ? `${faq.answer} ${faq.bullets.join(". ")}` : faq.answer,
-  }));
+/** Shared text/link segments for the accordion and bot HTML (not JSON-LD). */
+export function admissionsAnswerSegments(faq: AdmissionsFAQ): { text: string; href?: string }[] {
+  const segments: { text: string; href?: string }[] = [];
+  let start = 0;
+  for (const link of faq.links ?? []) {
+    const index = faq.answer.indexOf(link.text, start);
+    if (index < 0) continue;
+    if (index > start) segments.push({ text: faq.answer.slice(start, index) });
+    segments.push({ text: link.text, href: link.href });
+    start = index + link.text.length;
+  }
+  if (start < faq.answer.length) segments.push({ text: faq.answer.slice(start) });
+  // The exact answer copy does not contain "Nursery"; add its requested link after it.
+  if (faq.question.startsWith("What age should my child")) {
+    segments.push({ text: " Read about " }, { text: "Nursery", href: "/nursery" }, { text: "." });
+  }
+  return segments;
+}

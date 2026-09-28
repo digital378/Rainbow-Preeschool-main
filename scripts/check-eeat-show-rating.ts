@@ -40,7 +40,6 @@ const VERIFIED_RATING_PAGES = new Set([
   "nursery-landing.tsx",
   "kindergarten-landing.tsx",
   "play-school-near-me.tsx",
-  "preschool-admissions.tsx",
   "best-preschool-in-thane.tsx",
 ]);
 

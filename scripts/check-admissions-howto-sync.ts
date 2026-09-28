@@ -1,14 +1,12 @@
 #!/usr/bin/env tsx
 /**
- * Admissions HowTo schema sync guard.
+ * Admissions HowTo schema removal guard.
  *
- * Ensures that both SSR and client consume the shared source-of-truth in
- * `shared/admissions-howto-data.ts` and that neither file re-introduces a
- * local HowTo override.
+ * The admissions page intentionally has no HowTo JSON-LD. Check its client
+ * page and its own SSR entry (not unrelated HowTo content elsewhere in SSR).
  *
- * Two checks per file:
- *   1. IMPORT present  — `admissionHowToSchema` is imported from
- *                        `@shared/admissions-howto-data`.
+ * Checks per file:
+ *   1. IMPORT absent — `admissionHowToSchema` must not be imported.
  *   2. LOCAL const absent — no locally-defined const whose name contains
  *                           "HowTo" (case-insensitive), and no inline
  *                           `"@type": "HowTo"` literal that is NOT inside
@@ -50,14 +48,14 @@ function walkTsx(dir: string): string[] {
   return results;
 }
 
-/** Files that MUST import admissionHowToSchema from the shared module. */
-const REQUIRED_IMPORT_FILES = [
+/** Admissions page and its SSR entry must not include HowTo markup. */
+const ADMISSIONS_FILES = [
   "server/ssr-pages.ts",
   "client/src/pages/preschool-admissions.tsx",
 ];
 
 /**
- * Pattern that counts as a correct import.
+ * Pattern for a now-forbidden import.
  * Matches lines like:
  *   import { admissionHowToSchema } from "@shared/admissions-howto-data";
  *   import { admissionHowToSchema, ... } from "@shared/admissions-howto-data";
@@ -102,18 +100,22 @@ function check(relPath: string): Failure[] {
     ];
   }
 
-  const lines = src.split(/\r?\n/);
+  const start = src.indexOf('"/preschool-admissions": {');
+  const end = src.indexOf('"/best-preschool-near-me-in-thane": {');
+  if (relPath === "server/ssr-pages.ts" && (start < 0 || end <= start)) {
+    return [{ file: relPath, line: null, message: "Admissions SSR entry not found for HowTo check." }];
+  }
+  const admissionsSource = relPath === "server/ssr-pages.ts" ? src.slice(start, end) : src;
+  const lines = admissionsSource.split(/\r?\n/);
   const failures: Failure[] = [];
 
-  // --- Check 1: required import present ------------------------------------
+  // --- Check 1: removed admissions HowTo import stays removed --------------
   const hasImport = IMPORT_RE.test(src);
-  if (!hasImport) {
+  if (hasImport) {
     failures.push({
       file: relPath,
       line: null,
-      message:
-        `Missing import: 'admissionHowToSchema' must be imported from ` +
-        `'@shared/admissions-howto-data'. Do not define a local copy.`,
+      message: "Admissions HowTo schema import must be removed.",
     });
   }
 
@@ -121,7 +123,7 @@ function check(relPath: string): Failure[] {
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
 
-    // Skip import lines themselves — they are the *correct* usage.
+    // Import declarations are checked separately above.
     if (/^\s*import\s/.test(line)) continue;
 
     if (LOCAL_CONST_NAME_RE.test(line)) {
@@ -130,7 +132,7 @@ function check(relPath: string): Failure[] {
         line: i + 1,
         message:
           `Local HowTo const detected: '${line.trim()}'. ` +
-          `Use the shared admissionHowToSchema from @shared/admissions-howto-data instead.`,
+          `Do not add HowTo markup to the admissions page.`,
       });
     }
 
@@ -140,7 +142,7 @@ function check(relPath: string): Failure[] {
         line: i + 1,
         message:
           `Inline "@type":"HowTo" literal detected: '${line.trim()}'. ` +
-          `Remove it and import admissionHowToSchema from @shared/admissions-howto-data.`,
+          `Remove HowTo markup from the admissions page.`,
       });
     }
   }
@@ -206,8 +208,8 @@ function checkComponents(): Failure[] {
 function main(): void {
   const allFailures: Failure[] = [];
 
-  // Check 1+2: required import files (SSR + client page)
-  for (const relPath of REQUIRED_IMPORT_FILES) {
+  // Check the admissions SSR entry and browser page.
+  for (const relPath of ADMISSIONS_FILES) {
     allFailures.push(...check(relPath));
   }
 
@@ -216,9 +218,8 @@ function main(): void {
 
   if (allFailures.length === 0) {
     console.log(
-      `[check-admissions-howto-sync] PASSED — both SSR and client import ` +
-        `admissionHowToSchema from @shared/admissions-howto-data; no local overrides found ` +
-        `in pages/ or components/.`,
+      `[check-admissions-howto-sync] PASSED — admissions has no HowTo markup; ` +
+        `no rogue component-level HowTo definitions found.`,
     );
     process.exit(0);
   }
@@ -231,11 +232,8 @@ function main(): void {
     console.error(`  [FAIL] ${f.file}${loc}  ${f.message}`);
   }
   console.error(
-    `\nFix: ensure both server/ssr-pages.ts and client/src/pages/preschool-admissions.tsx\n` +
-      `import admissionHowToSchema from @shared/admissions-howto-data and do NOT define\n` +
-      `a local HowTo const or inline "@type":"HowTo" object. Do not introduce HowTo\n` +
-      `schema in client/src/components/ — add to the COMPONENTS_ALLOWLIST only if\n` +
-      `the component is a legitimate schema declarer, not a call site.`,
+    `\nFix: remove HowTo schema from the admissions page and its SSR entry.\n` +
+      `Do not introduce unrelated HowTo definitions in client components.`,
   );
   process.exit(1);
 }

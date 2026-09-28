@@ -10,7 +10,7 @@
  *   - client/src/App.tsx, sitemaps        (no /preschool-near-me references)
  *
  * Asserts (as Googlebot):
- *   1. Each of the 5 commercial pages emits FAQPage JSON-LD.
+ *   1. Commercial pages other than admissions emit FAQPage JSON-LD.
  *   2. Each programme page (/playgroup, /nursery, /kindergarten) emits an
  *      EducationalOrganization / Organization schema (parity with the locality
  *      pages).
@@ -263,7 +263,7 @@ async function main(): Promise<void> {
         failures.push({ url: path, reason: `status=${status}` });
         continue;
       }
-      if (!hasFaqPageJsonLd(html)) {
+      if (path !== "/preschool-admissions" && !hasFaqPageJsonLd(html)) {
         failures.push({ url: path, reason: "missing FAQPage JSON-LD" });
       }
       if (PROGRAMME_PAGES.includes(path) && !hasOrgJsonLd(html)) {
@@ -330,7 +330,7 @@ async function main(): Promise<void> {
   //
   // Pages + expected @type assertions:
   //   /faqs               → FAQPage  (the schema most at risk from the orig bug)
-  //   /preschool-admissions → FAQPage + EducationalOrganization
+  //   /preschool-admissions → WebPage + BreadcrumbList
   //   /about              → EducationalOrganization + FAQPage
   //   /playgroup          → EducationalOrganization
   const BROWSER_UA_SCHEMA_CHECKS: Array<{
@@ -346,8 +346,8 @@ async function main(): Promise<void> {
     {
       path: "/preschool-admissions",
       assertions: [
-        { label: "FAQPage JSON-LD", test: hasFaqPageJsonLd },
-        { label: "EducationalOrganization JSON-LD", test: hasOrgJsonLd },
+        { label: "WebPage JSON-LD", test: (html) => /"@type"\s*:\s*"WebPage"/.test(html) },
+        { label: "BreadcrumbList JSON-LD", test: (html) => /"@type"\s*:\s*"BreadcrumbList"/.test(html) },
       ],
     },
     {
@@ -463,7 +463,7 @@ async function main(): Promise<void> {
   }
 
   console.log(
-    `\n[check-keyword-targets] PASSED — ${COMMERCIAL_PAGES.length} commercial pages have full schema + self-canonical + curriculum-team byline, ${DEEP_CONTENT_PAGES.length} deep-content pages meet word target, ${REDIRECTS.length} ghost slugs 301 correctly, ${BROWSER_UA_SCHEMA_CHECKS.length} SPA pages verified with browser UA (injectPageSchemas path). (Homepage anchor check skipped — SPA-served to all visitors; Googlebot executes JS.)`
+    `\n[check-keyword-targets] PASSED — ${COMMERCIAL_PAGES.length} commercial pages have expected schema + self-canonical + curriculum-team byline, ${DEEP_CONTENT_PAGES.length} deep-content pages meet word target, ${REDIRECTS.length} ghost slugs 301 correctly, ${BROWSER_UA_SCHEMA_CHECKS.length} SPA pages verified with browser UA (injectPageSchemas path). (Homepage anchor check skipped — SPA-served to all visitors; Googlebot executes JS.)`
   );
   process.exit(0);
 }

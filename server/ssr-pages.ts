@@ -3,7 +3,10 @@ import {
   LAST_UPDATED_ISO,
 } from "@shared/site-freshness";
 import { ABOUT_PAGE_COPY } from "@shared/about-page-content";
-import { ADMISSIONS_PAGE_COPY } from "@shared/admissions-page-copy";
+import {
+  ADMISSIONS_CENTRE_CLASSES, ADMISSIONS_PAGE_COPY, ADMISSIONS_PUBLISH_DATE_DISPLAY,
+  ADMISSIONS_PUBLISH_DATE_ISO, ADMISSIONS_SECTION_HEADINGS, ADMISSIONS_WEBPAGE_SCHEMA,
+} from "@shared/admissions-page-copy";
 import {
   CENTRE_CARD_IMAGES,
   HOME_FILMSTRIP_IMAGES,
@@ -38,7 +41,7 @@ import { isNonSeoServerRoute } from "./non-seo-routes";
 import { shouldNoIndex, NOINDEX_SLUGS } from "@shared/seo-config";
 import { FAQ_SCHEMA_ITEMS } from "@shared/faq-data";
 import { FAQ_CATEGORIES } from "@shared/faq-data";
-import { ADMISSIONS_FAQ_SCHEMA_ITEMS, admissionsFAQs } from "@shared/admissions-faq-data";
+import { admissionsAnswerSegments, admissionsFAQs } from "@shared/admissions-faq-data";
 import { PLAYGROUP_FAQS } from "@shared/playgroup-faq-data";
 import { getPlaygroupLandingBySlug } from "@shared/playgroup-landing-data";
 import { BLOG_METADATA } from "@shared/blog-metadata";
@@ -79,7 +82,6 @@ import { BEST_PRESCHOOL_FAQ_SCHEMA_ITEMS } from "@shared/best-preschool-faq-data
 import { NATIONAL_SYMBOLS_FAQ_SCHEMA_ITEMS } from "@shared/national-symbols-faq-data";
 import { NATIONAL_SYMBOLS_CRAFTS } from "@shared/national-symbols-craft-data";
 import { PLAY_SCHOOL_FAQ_SCHEMA_ITEMS } from "@shared/play-school-faq-data";
-import { admissionHowToSchema } from "@shared/admissions-howto-data";
 import { redirectMap } from "./redirects";
 import { SITEMAP_ENTRIES } from "@shared/sitemap-entries";
 import { getLiveLegacySitemapEntries } from "./legacy-sitemap";
@@ -527,6 +529,8 @@ export interface PageSEOData {
   internalLinks?: { text: string; url: string }[];
   /** ISO-8601 date string used by the visible reviewer line; bot SSR emits an Article schema except for the homepage. */
   lastModified?: string;
+  /** Some landing pages use WebPage only but still display a reviewed date. */
+  suppressArticleSchema?: boolean;
   /** Display date (e.g. "Month DD, YYYY"). Optional. */
   lastModifiedDisplay?: string;
   /** Homepage-only switches for page-specific structured data and reviewer placement. */
@@ -1405,60 +1409,56 @@ const staticPages: Record<string, PageSEOData> = {
     canonical: `${BASE_URL}/preschool-admissions`,
     h1: ADMISSIONS_PAGE_COPY.hero.h1,
     breadcrumbs: [{ name: "Home", url: "/" }, { name: "Preschool Admissions", url: "/preschool-admissions" }],
-    lastModified: LAST_UPDATED_ISO,
-    lastModifiedDisplay: LAST_UPDATED_DISPLAY,
+    lastModified: ADMISSIONS_PUBLISH_DATE_ISO,
+    lastModifiedDisplay: ADMISSIONS_PUBLISH_DATE_DISPLAY,
+    suppressArticleSchema: true,
     introText: `${ADMISSIONS_PAGE_COPY.hero.subheadline} ${ADMISSIONS_PAGE_COPY.hero.supporting}`,
-    structuredData: [programmeOrgSchema, websiteSchema, ...branchLocalBusinessSchemas, {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      mainEntity: ADMISSIONS_FAQ_SCHEMA_ITEMS.map(item => ({
-        "@type": "Question",
-        name: item.question,
-        acceptedAnswer: { "@type": "Answer", text: item.answer },
-      })),
-    }, admissionHowToSchema],
+    structuredData: [ADMISSIONS_WEBPAGE_SCHEMA],
     contentSections: [
       {
-        heading: ADMISSIONS_PAGE_COPY.hero.eyebrow,
-        text: `${ADMISSIONS_PAGE_COPY.hero.form.title} — ${ADMISSIONS_PAGE_COPY.hero.form.subtext}`,
-        items: ["18+ Years", "1L+ Students", "Award-Winning"],
+        eyebrow: ADMISSIONS_PAGE_COPY.hero.eyebrow,
+        heading: ADMISSIONS_PAGE_COPY.hero.form.title,
+        text: ADMISSIONS_PAGE_COPY.hero.form.subtext,
+        items: ["18+ Years", "1L+ Students", "Award-Winning", "WhatsApp", "Call Now"],
       },
       {
-        items: ADMISSIONS_PAGE_COPY.programmes.map((programme) => `${programme.label} — ${programme.age} — View programme →`),
+        items: ADMISSIONS_PAGE_COPY.programmes.map((programme) => `${programme.age} — View programme →`),
         links: ADMISSIONS_PAGE_COPY.programmes.map((programme) => ({
           text: programme.label,
           url: programme.href,
         })),
       },
       {
-        heading: "Preschool Admission Process",
+        heading: ADMISSIONS_SECTION_HEADINGS.process,
         text: ADMISSIONS_PAGE_COPY.sections.processIntro,
         items: ADMISSIONS_PAGE_COPY.admissionSteps.map((step) => `Step ${step.step} — ${step.title}: ${step.desc}`),
+        links: [{ text: "82915 68972", url: "tel:+918291568972" }],
       },
       {
-        heading: "Age Criteria for Preschool Admissions",
+        heading: ADMISSIONS_SECTION_HEADINGS.age,
         text: ADMISSIONS_PAGE_COPY.sections.ageIntro,
         items: [
           ...ADMISSIONS_PAGE_COPY.ageCriteria.map((item) => `${item.programme} — ${item.age}: ${item.desc}`),
           ADMISSIONS_PAGE_COPY.sections.ageNote,
         ],
+        links: [{ text: "preschool readiness quiz", url: "/preschool-readiness-quiz" }],
       },
       {
-        heading: "Documents Required for Admission",
+        heading: ADMISSIONS_SECTION_HEADINGS.documents,
         text: ADMISSIONS_PAGE_COPY.sections.documentsIntro,
         items: [...ADMISSIONS_PAGE_COPY.documents, ADMISSIONS_PAGE_COPY.sections.documentsNote],
       },
       {
-        heading: "When Do Preschool Admissions Open?",
+        heading: ADMISSIONS_SECTION_HEADINGS.timeline,
         text: ADMISSIONS_PAGE_COPY.sections.timelineIntro,
         items: ADMISSIONS_PAGE_COPY.admissionTimeline.map((item) => `${item.period} — ${item.label}: ${item.desc}`),
       },
       {
-        heading: "Rainbow Preschool Centres in Thane",
+        heading: ADMISSIONS_SECTION_HEADINGS.centres,
         text: ADMISSIONS_PAGE_COPY.sections.centresIntro,
-        items: centres.map((centre) => `${centre.name} — ${centre.localityName}: View Details`),
+        items: centres.map((centre) => `${centre.name} — ${centre.localityName} — ${ADMISSIONS_CENTRE_CLASSES[centre.id]}`),
         links: centres.map((centre) => ({
-          text: `View ${centre.name}`,
+          text: "View Details →",
           url: centre.preschoolLandingUrl || "/contact",
         })),
         images: centres.flatMap((centre) => {
@@ -1475,28 +1475,25 @@ const staticPages: Record<string, PageSEOData> = {
         heading: ADMISSIONS_PAGE_COPY.seoCopyBlock.title,
         text: ADMISSIONS_PAGE_COPY.seoCopyBlock.para,
         links: [
-          { text: "Call Admissions Team", url: "/contact" },
+          { text: "Call Admissions Team", url: "tel:+918291568972" },
           { text: "Contact Us", url: "/contact" },
         ],
       },
       {
-        heading: "Preschool Admissions — Frequently Asked Questions",
+        heading: ADMISSIONS_SECTION_HEADINGS.faq,
         text: ADMISSIONS_PAGE_COPY.sections.faqIntro,
-        items: ADMISSIONS_FAQ_SCHEMA_ITEMS.map((faq) => {
-          const sharedFaq = admissionsFAQs.find((item) => item.question === faq.question);
-          return [
-            `${faq.question} — ${faq.answer}`,
-            ...(sharedFaq?.bullets ?? []),
-          ].join(" ");
-        }),
+        faqItems: admissionsFAQs.map((faq) => ({
+          question: faq.question,
+          answerSegments: admissionsAnswerSegments(faq),
+        })),
       },
       {
         heading: "Explore Programmes & Resources",
         items: [
-          "Playgroup — Ages 1.5–2.5",
-          "Nursery — Ages 2.5–3.5",
-          "Kindergarten — Ages 3.5–5.5",
-          "Find a Centre — Near You",
+          "Ages 1.5–2.5",
+          "Ages 2.5–3.5",
+          "Ages 3.5–5.5",
+          "Near You",
         ],
         links: [
           { text: "Playgroup", url: "/playgroup" },
@@ -1514,7 +1511,7 @@ const staticPages: Record<string, PageSEOData> = {
         ],
       },
     ],
-    internalLinks: [...commonInternalLinks, { text: "Playgroup Programme", url: "/playgroup" }, { text: "Nursery Programme", url: "/nursery" }, { text: "Kindergarten Programme", url: "/kindergarten" }],
+    internalLinks: [],
   },
   "/best-preschool-near-me-in-thane": {
     title: "Best Preschool Near Me in Thane | Rainbow Preschool",

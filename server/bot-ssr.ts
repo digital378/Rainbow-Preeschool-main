@@ -295,7 +295,7 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
     if (Array.isArray(t)) return t.some((v) => v === "Article" || v === "BlogPosting");
     return false;
   });
-  if (seo.lastModified && !seo.homepage && !hasExistingArticle) {
+  if (seo.lastModified && !seo.homepage && !seo.suppressArticleSchema && !hasExistingArticle) {
     // E-E-A-T: emit a rich Article with reviewedBy for pages that don't already
     // have their own Article/BlogPosting in structuredData. Blog posts are excluded
     // here because their ssr-pages.ts entry already includes BlogPosting + reviewedBy.

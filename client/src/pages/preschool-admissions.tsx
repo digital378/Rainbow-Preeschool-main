@@ -1,12 +1,12 @@
 import { Link } from "wouter";
-import { SEO, organizationSchema, websiteSchema, createBreadcrumbSchema } from "@/components/seo";
+import { SEO, createBreadcrumbSchema } from "@/components/seo";
 import { ContactForm } from "@/components/contact-form";
 import { EEATSignals } from "@/components/eeat-signals";
-import { VERIFIED_RATING } from "@/lib/verified-rating";
-import { LAST_UPDATED_DISPLAY, LAST_UPDATED_ISO } from "@shared/site-freshness";
-import { admissionsFAQs } from "@shared/admissions-faq-data";
-import { ADMISSIONS_PAGE_COPY } from "@shared/admissions-page-copy";
-import { admissionHowToSchema } from "@shared/admissions-howto-data";
+import { admissionsAnswerSegments, admissionsFAQs } from "@shared/admissions-faq-data";
+import {
+  ADMISSIONS_CENTRE_CLASSES, ADMISSIONS_PAGE_COPY, ADMISSIONS_PUBLISH_DATE_DISPLAY,
+  ADMISSIONS_PUBLISH_DATE_ISO, ADMISSIONS_SECTION_HEADINGS, ADMISSIONS_WEBPAGE_SCHEMA,
+} from "@shared/admissions-page-copy";
 import { centres } from "@shared/centre-data";
 import {
   Check, MessageCircle, Phone, ChevronDown,
@@ -56,13 +56,9 @@ export default function PreschoolAdmissions() {
     { name: "Home", url: "/" },
     { name: "Preschool Admissions", url: "/preschool-admissions" },
   ];
-  const [ageIntroPrefix, ageIntroSuffix] = ADMISSIONS_PAGE_COPY.sections.ageIntro.split("June 1st");
-
   const structuredData = [
-    organizationSchema,
-    websiteSchema,
+    ADMISSIONS_WEBPAGE_SCHEMA,
     createBreadcrumbSchema(breadcrumbs),
-    admissionHowToSchema,
   ];
 
   return (
@@ -167,7 +163,7 @@ export default function PreschoolAdmissions() {
             <section className="py-8 md:py-12 px-4 bg-white dark:bg-gray-800" style={{ contentVisibility: 'auto', containIntrinsicSize: '0 360px' }}>
               <div className="max-w-6xl mx-auto">
                 <h2 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-2 text-center">
-                  Preschool Admission Process
+                  {ADMISSIONS_SECTION_HEADINGS.process}
                 </h2>
                 <p className="text-sm md:text-base text-gray-600 dark:text-gray-300 text-center max-w-2xl mx-auto mb-6 md:mb-8">
                   {ADMISSIONS_PAGE_COPY.sections.processIntro}
@@ -181,7 +177,15 @@ export default function PreschoolAdmissions() {
                       <div>
                         <span className="text-xs text-primary font-semibold uppercase tracking-wide">Step {s.step}</span>
                         <h3 className="font-semibold text-gray-900 dark:text-white text-sm md:text-base mb-1">{s.title}</h3>
-                        <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">{s.desc}</p>
+                        <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
+                          {s.step === "01" ? (
+                            <>
+                              {s.desc.split("82915 68972")[0]}
+                              <a href="tel:+918291568972" className="underline">82915 68972</a>
+                              {s.desc.split("82915 68972")[1]}
+                            </>
+                          ) : s.desc}
+                        </p>
                       </div>
                     </div>
                   ))}
@@ -193,10 +197,10 @@ export default function PreschoolAdmissions() {
             <section className="py-8 md:py-12 px-4" style={{ contentVisibility: 'auto', containIntrinsicSize: '0 300px' }}>
               <div className="max-w-6xl mx-auto">
                 <h2 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-2 text-center">
-                  Age Criteria for Preschool Admissions
+                  {ADMISSIONS_SECTION_HEADINGS.age}
                 </h2>
                 <p className="text-sm md:text-base text-gray-600 dark:text-gray-300 text-center max-w-2xl mx-auto mb-6">
-                  {ageIntroPrefix}<strong>June 1st</strong>{ageIntroSuffix}
+                  {ADMISSIONS_PAGE_COPY.sections.ageIntro}
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {ageCriteria.map((item, idx) => (
@@ -211,7 +215,9 @@ export default function PreschoolAdmissions() {
                   ))}
                 </div>
                 <p className="text-xs text-gray-500 dark:text-gray-400 text-center mt-4">
-                  {ADMISSIONS_PAGE_COPY.sections.ageNote}
+                  {ADMISSIONS_PAGE_COPY.sections.ageNote.split("preschool readiness quiz")[0]}
+                  <Link href="/preschool-readiness-quiz" className="underline">preschool readiness quiz</Link>
+                  {ADMISSIONS_PAGE_COPY.sections.ageNote.split("preschool readiness quiz")[1]}
                 </p>
               </div>
             </section>
@@ -220,7 +226,7 @@ export default function PreschoolAdmissions() {
             <section className="py-8 md:py-12 px-4 bg-white dark:bg-gray-800" style={{ contentVisibility: 'auto', containIntrinsicSize: '0 280px' }}>
               <div className="max-w-4xl mx-auto">
                 <h2 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-2 text-center">
-                  Documents Required for Admission
+                  {ADMISSIONS_SECTION_HEADINGS.documents}
                 </h2>
                 <p className="text-sm md:text-base text-gray-600 dark:text-gray-300 text-center max-w-2xl mx-auto mb-6">
                   {ADMISSIONS_PAGE_COPY.sections.documentsIntro}
@@ -243,7 +249,7 @@ export default function PreschoolAdmissions() {
             <section className="py-8 md:py-12 px-4" style={{ contentVisibility: 'auto', containIntrinsicSize: '0 280px' }}>
               <div className="max-w-6xl mx-auto">
                 <h2 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-2 text-center">
-                  When Do Preschool Admissions Open?
+                  {ADMISSIONS_SECTION_HEADINGS.timeline}
                 </h2>
                 <p className="text-sm md:text-base text-gray-600 dark:text-gray-300 text-center max-w-2xl mx-auto mb-6">
                   {ADMISSIONS_PAGE_COPY.sections.timelineIntro}
@@ -267,7 +273,7 @@ export default function PreschoolAdmissions() {
             <section className="py-8 md:py-12 px-4 bg-white dark:bg-gray-800" style={{ contentVisibility: 'auto', containIntrinsicSize: '0 300px' }}>
               <div className="max-w-6xl mx-auto">
                 <h2 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-2 text-center">
-                  Rainbow Preschool Centres in Thane
+                  {ADMISSIONS_SECTION_HEADINGS.centres}
                 </h2>
                 <p className="text-sm md:text-base text-gray-600 dark:text-gray-300 text-center max-w-3xl mx-auto mb-6">
                   {ADMISSIONS_PAGE_COPY.sections.centresIntro}
@@ -293,6 +299,7 @@ export default function PreschoolAdmissions() {
                       <div className="p-3 md:p-4">
                         <h3 className="font-semibold text-gray-900 dark:text-white text-sm md:text-base">{centre.name}</h3>
                         <p className="text-xs md:text-sm text-gray-600 dark:text-gray-300">{centre.localityName}</p>
+                         <p className="text-xs md:text-sm text-gray-600 dark:text-gray-300">{ADMISSIONS_CENTRE_CLASSES[centre.id]}</p>
                         <span className="text-primary text-xs md:text-sm font-medium mt-1 inline-block">View Details →</span>
                       </div>
                     </Link>
@@ -326,7 +333,7 @@ export default function PreschoolAdmissions() {
             <section className="py-8 md:py-12 px-4 bg-white dark:bg-gray-800" style={{ contentVisibility: 'auto', containIntrinsicSize: '0 600px' }}>
               <div className="max-w-4xl mx-auto">
                 <h2 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-2 text-center">
-                  Preschool Admissions — Frequently Asked Questions
+                  {ADMISSIONS_SECTION_HEADINGS.faq}
                 </h2>
                 <p className="text-sm text-gray-600 dark:text-gray-300 text-center mb-6">
                   {ADMISSIONS_PAGE_COPY.sections.faqIntro}
@@ -340,25 +347,26 @@ export default function PreschoolAdmissions() {
                           className="w-full flex items-center justify-between gap-4 p-4 md:p-5 bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors text-left"
                           onClick={() => setOpenFaq(isOpen ? null : index)}
                           aria-expanded={isOpen}
+                           aria-controls={`admissions-faq-answer-${index}`}
                         >
                           <h3 className="font-semibold text-gray-900 dark:text-white text-sm md:text-base">{faq.question}</h3>
                           <ChevronDown className={`w-5 h-5 flex-shrink-0 text-primary transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`} />
                         </button>
-                        {isOpen && (
-                          <div className="p-4 md:p-5 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
-                            <p className="text-gray-600 dark:text-gray-300 text-xs md:text-sm mb-2">{faq.answer}</p>
-                            {faq.bullets && (
-                              <ul className="space-y-1.5 text-gray-600 dark:text-gray-300 text-xs md:text-sm">
-                                {faq.bullets.map((bullet, bIdx) => (
-                                  <li key={bIdx} className="flex items-start gap-2">
-                                    <span className="text-primary mt-1 flex-shrink-0">•</span>
-                                    <span>{bullet}</span>
-                                  </li>
-                                ))}
-                              </ul>
+                        <div
+                          id={`admissions-faq-answer-${index}`}
+                          hidden={!isOpen}
+                          className="p-4 md:p-5 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700"
+                        >
+                          <p className="text-gray-600 dark:text-gray-300 text-xs md:text-sm mb-2">
+                            {admissionsAnswerSegments(faq).map((segment, segmentIndex) =>
+                              segment.href ? (
+                                segment.href.startsWith("tel:") ?
+                                  <a key={segmentIndex} href={segment.href} className="underline">{segment.text}</a> :
+                                  <Link key={segmentIndex} href={segment.href} className="underline">{segment.text}</Link>
+                              ) : <span key={segmentIndex}>{segment.text}</span>,
                             )}
+                          </p>
                           </div>
-                        )}
                       </div>
                     );
                   })}
@@ -400,13 +408,12 @@ export default function PreschoolAdmissions() {
               <div className="max-w-4xl mx-auto">
                 <EEATSignals
                   pageUrl="/preschool-admissions"
-                  pageName="Preschool Admissions 2026–27"
+                  pageName={hero.h1}
                   reviewedBy="Rainbow Preschool Curriculum Team"
                   reviewerRole="Curriculum Team, Rainbow Preschool International"
-                  lastUpdated={LAST_UPDATED_DISPLAY}
-                  lastUpdatedIso={LAST_UPDATED_ISO}
-                  ratingValue={VERIFIED_RATING.ratingValue}
-                  reviewCount={VERIFIED_RATING.reviewCount}
+                  lastUpdated={ADMISSIONS_PUBLISH_DATE_DISPLAY}
+                  lastUpdatedIso={ADMISSIONS_PUBLISH_DATE_ISO}
+                  showRating={false}
                   schemaId="preschool-admissions-eeat"
                 />
               </div>

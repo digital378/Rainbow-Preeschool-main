@@ -3302,7 +3302,7 @@ RIS_BACKLINK:Early learning is just the beginning. [Rainbow International School
     title: "Nursery School Admission in Thane 2026-27",
     slug: "nursery-school-admission-thane-2026",
     excerpt: "",
-    content: `Planning nursery school admission for your child in Thane? The 2026-27 admission season is upon us, and getting started early gives you the best chance of securing a spot at your preferred school. This step-by-step guide covers everything you need to know — from age criteria and documents to timelines and insider tips.
+    content: `Planning nursery school admission for your child in Thane? The 2026-27 admission season is upon us, and getting started early gives you the best chance of securing a spot at your preferred school. This step-by-step guide covers everything you need to know — from age criteria and documents to timelines and insider tips. For current Rainbow enrolment, see [preschool admission in Thane 2026-27 and 2027-28](/preschool-admissions).
 
 ## Nursery Admission Timeline for Thane (2026-27)
 
