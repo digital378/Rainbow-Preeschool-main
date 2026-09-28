@@ -337,12 +337,6 @@ function AppContent() {
       <>
         <ScrollToTop />
         <Router />
-        {(normalizedPath.startsWith("/preschool-in-") ||
-          normalizedPath === "/play-school-near-ghodbunder-road") && (
-          <Suspense fallback={null}>
-            <Footer />
-          </Suspense>
-        )}
       </>
     );
   }
