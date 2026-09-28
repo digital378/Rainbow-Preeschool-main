@@ -259,6 +259,10 @@ function renderImageHtml(image: {
 }
 
 function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
+  // These standalone pages end at their contact CTA in the visitor app.
+  // Keep the crawler HTML aligned rather than appending the shared footer.
+  const endsAtContact = requestUrl === "/play-school-near-ghodbunder-road"
+    || /^\/preschool-in-(?:manpada|hariniwas|anand-nagar|dhokali|kalwa|kasarvadavali)-thane$/.test(requestUrl);
   const fullUrl = `${BASE_URL}${requestUrl}`;
   const canonical = seo.canonical || fullUrl;
   const ogImage = seo.ogImage || `${BASE_URL}/og-image.jpg`;
@@ -509,11 +513,11 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
       ${blogCardsHtml}
       ${internalLinksHtml ? `<nav aria-label="Related pages"><h2>Explore More</h2><ul>${internalLinksHtml}</ul></nav>` : ""}
       ${finalCallToActionHtml}
-      <div class="network">
+      ${endsAtContact ? "" : `<div class="network">
         <p><strong>Our Network:</strong> <a href="https://rainbowinternationalschool.in" rel="noopener">Rainbow International School</a> — CBSE-affiliated K–12 school in Thane West, Nursery to Class 12</p>
-      </div>
+      </div>`}
     </main>
-    <footer>
+    ${endsAtContact ? "" : `<footer>
       <p>&copy; ${new Date().getFullYear()} Rainbow Preschool International. All rights reserved.</p>
       <div aria-label="Quick Links">
         <a href="${BASE_URL}/">Home</a>
@@ -533,7 +537,7 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
       </div>
       <p><a href="https://rainbowinternationalschool.in" rel="noopener">Rainbow International School</a> — CBSE K–12, Nursery to Class 12</p>
       <p><a href="${BASE_URL}/privacy">Privacy Policy</a> | <a href="${BASE_URL}/terms">Terms of Service</a></p>
-    </footer>
+    </footer>`}
   </body>
 </html>`;
 }
