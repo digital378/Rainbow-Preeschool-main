@@ -1,0 +1,132 @@
+PAGE: /playgroup — SEO and content update (+ one homepage meta fix)
+
+RULES (design freeze in replit.md applies)
+- Change only text, headings, links, metadata and structured data. Reuse every existing section and component exactly as it is: same layout, cards, colours, fonts, spacing, icons and order. Don't add, merge or restyle sections.
+- Use only the facts in this prompt. Don't invent hours, fees, numbers or awarding bodies.
+- Don't take or send screenshots. Reply with a short text summary. Don't publish until I approve.
+
+WHY THIS PAGE MATTERS
+Over the last 28 days /playgroup had 550 impressions and 9 clicks, at average position 18.1. It already ranks 4.3 for "play group near me", so it's close to page 1 for "playgroup in Thane". Three things hold it back: Google sees a different page from visitors, the headline makes a "Best" claim, and the headline loads late on phones. Fixing these gives Google one clear, consistent page to rank.
+
+CONFIRMED FACTS FOR THIS PAGE
+Ages 1.5–2.5 years · Morning batch 8:30–11:30 AM and afternoon batch 12:30–3:30 PM, Monday to Friday · 30:2 student–teacher ratio · 100% female teaching staff with ECCE training · CCTV-monitored classrooms at all 6 centres · Play-based curriculum aligned with NEP 2020 · Daily parent updates and monthly progress reports · Toys, surfaces and classrooms sanitised multiple times daily · Since 2007 · 6 centres · 1 lakh+ students · Google rating 4.9 from 487 reviews.
+REMOVE everywhere (visitor and Google versions): "maximum 10–12 children" / "small batch sizes (10-12 children)", "Montessori-trained", "Head of Curriculum", "within a 10-minute drive", "Research shows…", and every use of "best" as a claim.
+
+────────────────
+PART A — SEO METADATA
+A1. Title: "Playgroup in Thane for 1.5–2.5 Years | Rainbow Preschool"
+A2. Meta description: "Playgroup for toddlers aged 1.5 to 2.5 years at our 6 Rainbow Preschool International centres in Thane. Morning and afternoon batches, play-based learning."
+A3. Open Graph/Twitter title and description: same as A1/A2. Canonical stays https://www.rainbowpreschools.com/playgroup.
+A4. H1: "Playgroup in Thane for Children Aged 1.5 to 2.5 Years". Keep the existing H1 style.
+Why: the main keyword "playgroup in Thane" goes first in the title and H1, the age range matches how parents search, and removing "Best" meets our brand rules. Unsupported superlatives also tend to lower click-through.
+
+────────────────
+PART B — ONE PAGE FOR VISITORS AND GOOGLE
+B1. The visitor page is the source of truth. Rebuild Google's version so it has exactly the same sections, in the same order, with the same headings and text as the visitor page after the changes below. Remove Google-only blocks: the old "About Our Playgroup Programme", "Admission & Timings" and "Explore More" lists, and the "Best Preschool in Thane" labels.
+B2. The 10 FAQ answers must be in the visitor page HTML while the accordion is closed (hidden, not removed), as we did on /preschool-admissions.
+Why: visitors now see about 1,000 words in 14 sections, and Google sees 1,640 words in 7 different sections. Google trusts and ranks pages where both versions match.
+
+────────────────
+PART C — SECTION BY SECTION (same components, new text)
+
+C1. HERO
+- Keep the "Ages 1.5 - 2.5 Years" badge, the buttons and the callback form.
+- H1 as in A4.
+- Subline: "A joyful, safe first step into learning, routine and friendships for toddlers in Thane."
+Why: the keyword sits in the first lines Google reads, and the "Best" claim is gone.
+
+C2. "Why Playgroup is Important for Your Toddler"
+- H2: "Why Playgroup Matters Between 1.5 and 2.5 Years"
+- Paragraph 1: "Playgroup is your child's first structured learning experience outside home. Between 1.5 and 2.5 years, toddlers learn fastest through play, so our playgroup gives them a gentle, happy introduction to routine, friends and new skills."
+- Paragraph 2: "At Rainbow Preschool, our playgroup focuses on social interaction, sensory exploration and motor skills. Through planned activities, children learn to share, take turns and build confidence in a safe, caring space."
+- Paragraph 3: "Early, well-guided play supports language, thinking and emotional development, and gives your child a strong foundation for nursery." Link "nursery" to /nursery.
+Why: replaces the vague "research shows" claim with plain, true statements, and links to the next class up.
+
+C3. "A Day in Our Playgroup"
+- H2: "A Typical Day in Our Playgroup"
+- Intro: "Our morning batch runs from 8:30 to 11:30 AM, Monday to Friday. The afternoon batch, 12:30 to 3:30 PM, follows the same gentle rhythm."
+- Keep the 7 time slots and their labels exactly as they are.
+Why: "playgroup timings" is a common search, and this answers it clearly for both batches.
+
+C4. "What Your Child Will Learn"
+- Intro: "Our playgroup curriculum nurtures every side of your toddler's development through play."
+- Keep the 6 tags.
+
+C5. "Want to Know If Playgroup Is Right for Your Child?"
+- Keep the heading, bullets and button. Change "Learn about fees and admission process" to "Ask about fees and the admission process".
+
+C6. "Why Choose Our Playgroup?"
+- Replace "Small batch sizes for individual attention (10-12 children)" with "30:2 student–teacher ratio for individual attention".
+- Change "Trained and caring female teachers" to "ECCE-trained, caring female teachers".
+- Timings block: "Morning Batch – 8:30 AM to 11:30 AM" / "Afternoon Batch – 12:30 PM to 3:30 PM" / add a third line in the same style: "Monday to Friday".
+- Keep the stats row (1 Lac+, 18+, 06, 100%).
+Why: swaps an unconfirmed class size for our confirmed ratio and states the teacher training plainly.
+
+C7. "Playgroup in Thane — Why 1,00,000+ Parents Choose Rainbow"
+- H2: "Playgroup in Thane: Why Families Choose Rainbow"
+- Paragraph: "Looking for a trusted playgroup in Thane? Rainbow Preschool International has cared for Thane's youngest learners since 2007, with over 1 lakh children taught across our 6 centres."
+- Sub-heading "Closest playgroup near you in Thane" → "A playgroup near you in Thane". Text: "Our centres are in Manpada, Hariniwas (Panchpakhadi), Anand Nagar, Dhokali, Kalwa and Kasarvadavali, easy to reach from Ghodbunder Road, LBS Marg, Pokhran Road and the Eastern Express Highway." (the 10-minute claim is removed)
+- Change "Find your nearest centre →" to link to /play-school-near-me (not /contact).
+- Checklist: "30:2 student–teacher ratio: your child is noticed every day" · "100% female teaching staff with ECCE training" · "CCTV-monitored classrooms at all 6 centres" · "Play-based curriculum aligned with NEP 2020" · "Daily parent updates and monthly progress reports".
+- "New to playgroup?" text: "Take our 2-minute readiness quiz to see whether your toddler is ready, or read our guides on the right age to start play school, the benefits of play school for two-year-olds, and preparing for the first day." Links: "right age to start play school" → /blog/what-age-start-play-school; "benefits of play school for two-year-olds" → /blog/benefits-play-school-2-year-olds; "preparing for the first day" → /blog/preparing-your-child-for-first-day-preschool. Keep the two buttons.
+Why: "playgroup near me" is our strongest search for this page, so this section now names every area and road clearly, links to the centre finder, and connects three supporting blog posts that were only in Google's version.
+
+C8. GLIMPSES, SAFETY & HYGIENE, DAILY ACTIVITIES: keep as they are.
+
+C9. "Programme Highlights"
+- Change "Individual attention with small batch sizes" to "Individual attention with a 30:2 student–teacher ratio".
+- Change "Trained and experienced teachers" to "ECCE-trained, experienced teachers".
+
+C10. "Playgroup Centres in Thane": keep the six centre cards, addresses, numbers and links unchanged.
+
+C11. FAQ (answers in the HTML per B2)
+- H2: "Playgroup FAQs"
+- Keep the 10 questions. Replace the answers with short, direct versions (40–60 words each) using only the confirmed facts above. Include these points:
+  • Where: the 6 centre areas + link "find your nearest centre" → /play-school-near-me
+  • Admission process: enquiry, centre visit, registration, documents, admission fee + link "admission process" → /preschool-admissions
+  • Right age: 1.5 to 2.5 years, counted as of 1 June of the academic year
+  • Safety: 100% female staff, CCTV-monitored classrooms, sanitised multiple times daily
+  • Typical day: morning 8:30–11:30 AM or afternoon 12:30–3:30 PM, Monday to Friday
+  • Enquiry: call 82915 68972 (tel link) or use the form on this page
+  • Fees, if mentioned: "call us for current fee details"
+Why: short, factual answers are what Google's AI Overviews and chat assistants quote, and each answer carries a useful internal link.
+
+C12. "Explore Rainbow Preschool"
+- Replace the "Award-Winning Preschool" card (it duplicates "Find Nearest Centre") with "Kindergarten Programme" → /kindergarten. Keep the other 3 cards.
+
+C13. REVIEWED BY CARD
+- "Last updated": the date of this publish.
+- Change "4.9 from 487 parent reviews" to "4.9 from 487 Google reviews". Keep the stars.
+Why: naming the source makes the rating transparent.
+
+C14. FINAL CTA
+- Change "Give your toddler the best start with Rainbow Preschool's playgroup programme." to "Give your toddler a happy, confident start with our playgroup."
+
+────────────────
+PART D — STRUCTURED DATA (Google's version)
+D1. Remove OpeningHoursSpecification, FAQPage, Article, the repeated Preschool/EducationalOrganization/Place blocks, and any AggregateRating.
+D2. Keep only: WebPage (name = H1, description = A2, dateModified = publish date, publisher/about = the homepage Organization @id) and BreadcrumbList: Home › Programmes › Playgroup.
+D3. Set dateModified, the visible "Last updated" and the sitemap <lastmod> for /playgroup to the same publish date. Use 2026-09-30 unless I give another date.
+Why: this is a clean, consistent setup with nothing unconfirmed. Google doesn't show star ratings for a business's reviews of itself, so rating markup would only add risk.
+
+────────────────
+PART E — MOBILE SPEED (no visual change)
+Earlier phone tests showed the H1 appearing about 9 seconds after load.
+- Make sure the H1 and hero text are in the initial HTML and visible without waiting for a JavaScript animation.
+- Preload the hero image (or give it fetchpriority="high") and lazy-load images below the fold.
+- Report mobile Lighthouse Performance and LCP before and after (3 runs each). Don't change the look.
+Why: a fast headline on phones helps rankings (Core Web Vitals), and most parents search on mobile.
+
+────────────────
+PART F — HOMEPAGE META FIX
+Homepage meta description: "Playgroup, nursery and KG for ages 1.5 to 5.5 at 6 Rainbow Preschool International centres in Thane, since 2007. Book a free visit for 2026-27 or 2027-28." Change nothing else on the homepage.
+Why: it matches the admissions page, now that 2027-28 enquiries are opening.
+
+────────────────
+PART G — CHECKS, THEN REPORT (no screenshots)
+1. Visitor and Google versions of /playgroup have the same headings in the same order. Report both word counts.
+2. None of the removed claims appears in either version.
+3. All links added or changed in this prompt return 200.
+4. Structured data contains only WebPage and BreadcrumbList.
+5. Lighthouse before/after numbers from Part E.
+Reply with a short text summary. Don't publish until I approve.
