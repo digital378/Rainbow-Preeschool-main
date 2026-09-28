@@ -43,6 +43,7 @@ import { FAQ_SCHEMA_ITEMS } from "@shared/faq-data";
 import { FAQ_CATEGORIES } from "@shared/faq-data";
 import { admissionsAnswerSegments, admissionsFAQs } from "@shared/admissions-faq-data";
 import { PLAYGROUP_FAQS } from "@shared/playgroup-faq-data";
+import { PLAYGROUP_COPY, PLAYGROUP_WEBPAGE_SCHEMA } from "@shared/playgroup-page-content";
 import { BLOG_METADATA } from "@shared/blog-metadata";
 import { testimonials, testimonialsSEO } from "@shared/testimonials-content";
 import { HAPPY_TIMES_COPY, HAPPY_TIMES_SSR_COPY } from "@shared/happy-times-content";
@@ -492,13 +493,21 @@ export interface PageSEOData {
   noIndex?: boolean;
   h1?: string;
   introText?: string;
+  heroBadge?: string;
+  heroSubheading?: string;
   breadcrumbs?: { name: string; url: string }[];
   structuredData?: object[];
   contentSections?: {
     eyebrow?: string;
     heading?: string;
     text?: string;
-    items?: string[];
+    paragraphs?: readonly string[];
+    richParagraphs?: readonly (readonly { text: string; href?: string }[])[];
+    faqAsHeadings?: boolean;
+    faqOutro?: { text: string; linkText: string; url: string };
+    subsections?: readonly { heading?: string; text?: string; items?: readonly string[] }[];
+    afterSubsectionsRichParagraphs?: readonly (readonly { text: string; href?: string }[])[];
+    items?: readonly string[];
     faqItems?: readonly {
       question: string;
       answerSegments: readonly { text: string; href?: string }[];
@@ -1124,42 +1133,71 @@ const staticPages: Record<string, PageSEOData> = {
     internalLinks: commonInternalLinks,
   },
   "/playgroup": {
-    title: "Playgroup in Thane (1.5–2.5 yrs) | Rainbow Preschool",
-    description: "Enroll your toddler in our Playgroup (1.5–2.5 yrs) — play-based learning and gentle socialisation across Rainbow Preschool's 6 Thane West centres.",
+    title: PLAYGROUP_COPY.title,
+    description: PLAYGROUP_COPY.description,
     keywords: "playgroup in thane, playgroup near me, playgroup school thane, toddler programme thane",
     canonical: `${BASE_URL}/playgroup`,
-    h1: "Best Playgroup in Thane for Children Aged 1.5 to 2.5 Years",
+    h1: PLAYGROUP_COPY.h1,
+    introText: PLAYGROUP_COPY.heroSubline,
+    heroBadge: PLAYGROUP_COPY.heroBadge,
+    heroSubheading: "Request a Free Callback",
     breadcrumbs: [{ name: "Home", url: "/" }, { name: "Programmes", url: "/programmes" }, { name: "Playgroup", url: "/playgroup" }],
-    structuredData: [programmeOrgSchema, websiteSchema, ...branchLocalBusinessSchemas, {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      mainEntity: PLAYGROUP_FAQS.map(faq => ({
-        "@type": "Question",
-        name: faq.question,
-        acceptedAnswer: { "@type": "Answer", text: faq.answer },
-      })),
-    }],
+    structuredData: [PLAYGROUP_WEBPAGE_SCHEMA],
+    suppressArticleSchema: true,
     contentSections: [
-      { heading: "For Parents Considering Playgroup", text: "These guides explain typical starting ages, what toddlers gain from play school, and how to prepare for the first day.", links: [
-        { text: "What age should a child start play school?", url: "/blog/what-age-start-play-school" },
-        { text: "Benefits of play school for two-year-olds", url: "/blog/benefits-play-school-2-year-olds" },
-        { text: "Preparing your child for their first day", url: "/blog/preparing-your-child-for-first-day-preschool" },
-      ]},
-      { heading: "About Our Playgroup Programme", text: "Rainbow Preschool International's Playgroup programme is thoughtfully designed for toddlers aged 1.5 to 2.5 years — the most formative and sensitive period of early brain development. During these early years, children's brains are forming neural connections at an extraordinary pace, and the quality of their environment and interactions directly shapes their cognitive, social, emotional, and physical development. Our Playgroup provides a warm, secure, and richly stimulating environment where your child takes their very first steps into a world of exploration, creativity, and joyful learning. With small class sizes of 10–12 children and dedicated, ECE-qualified Early Childhood Educators, every toddler receives the individual attention, encouragement, and care they deserve during this precious phase." },
-      { heading: "What Your Child Will Learn", items: ["Socialisation — learning to play alongside and with other children, building their first friendships in a warm, guided group setting", "Fine motor skills — threading beads, block building, clay modelling, and finger painting to develop essential hand strength and coordination", "Gross motor development — running, jumping, balancing, and creative movement play in our safe indoor and outdoor areas", "Language development — songs, nursery rhymes, stories, and picture books to build vocabulary, listening skills, and early literacy foundations", "Sensory exploration — sand, water, textured materials, sounds, and scents to stimulate all five senses and build sensory processing capacity", "Emotional regulation — learning to identify and express feelings appropriately, take turns, manage transitions, and build resilience", "Basic concepts — colours, shapes, sizes, numbers, and patterns introduced through hands-on play activities, not rote learning"] },
-      { heading: "A Typical Day in Playgroup", text: "Every Playgroup day at Rainbow Preschool follows a gentle, predictable rhythm that toddlers find deeply comforting. Predictability and routine are essential at this age — they help children feel safe and develop the internal organisation that underlies all learning. The day begins with a warm morning welcome circle — favourite songs, greetings, and simple weather talk to help children settle in happily. This is followed by free play at activity stations (art corner, sensory tray, block area, pretend play corner), where children choose their activities and develop independence. A short, focused group activity then brings the class together for a skill-building task. Outdoor play follows — fresh air, movement, and social play in our safe yard. A storytime session builds language and imagination. Snack time teaches self-help skills and social norms. The day closes with a cheerful goodbye circle of songs and affirmations. This complete, balanced structure ensures children thrive emotionally and developmentally every single day." },
+      { heading: PLAYGROUP_COPY.whyHeading, paragraphs: PLAYGROUP_COPY.whyParagraphs, richParagraphs: [PLAYGROUP_COPY.whyFinalSegments] },
+      { heading: PLAYGROUP_COPY.dayHeading, text: PLAYGROUP_COPY.dayIntro, items: PLAYGROUP_COPY.routine.map(slot => `${slot.time} ${slot.activity} ${slot.description}`) },
+      { heading: PLAYGROUP_COPY.learningHeading, text: PLAYGROUP_COPY.learningIntro,
+        subsections: PLAYGROUP_COPY.learningTags.map(heading => ({ heading })) },
+      { heading: PLAYGROUP_COPY.enquiryHeading, text: PLAYGROUP_COPY.enquiryIntro, items: PLAYGROUP_COPY.enquiryBullets,
+        subsections: [{ heading: "Talk to Our Admission Expert" }] },
+      { heading: PLAYGROUP_COPY.chooseHeading, items: [...PLAYGROUP_COPY.chooseBullets, "1 Lac+ Happy Students", "18+ Years of Excellence", "06 Centres in Thane", "100% Female Staff", "Timings:", ...PLAYGROUP_COPY.timings] },
+      { heading: PLAYGROUP_COPY.localityHeading, text: PLAYGROUP_COPY.localityIntro,
+        subsections: [
+          { heading: PLAYGROUP_COPY.nearHeading, text: PLAYGROUP_COPY.nearText },
+          { heading: PLAYGROUP_COPY.checklistHeading, items: PLAYGROUP_COPY.checklist.map(item => `${item.emphasis}${item.rest}`) },
+        ],
+        afterSubsectionsRichParagraphs: [[{ text: "New to playgroup? " }, ...PLAYGROUP_COPY.newToPlaygroupSegments]],
+        links: [
+          { text: "Find your nearest centre →", url: "/play-school-near-me" },
+          { text: "Take the readiness quiz", url: "/preschool-readiness-quiz" },
+          { text: "Admission process", url: "/preschool-admissions" },
+        ] },
       {
-        heading: "Glimpses of Our Playgroup",
-        text: "See our toddlers exploring, playing, and learning in our safe and colorful classrooms.",
+        heading: PLAYGROUP_COPY.galleryHeading,
+        text: PLAYGROUP_COPY.galleryIntro,
         images: PROGRAMME_GALLERY_IMAGES.playgroup,
       },
-      { heading: "Why Playgroup at Rainbow?", items: ["Experienced ECE-qualified and Montessori-trained female teachers, deeply skilled in toddler development and early childhood best practices", "Small classes — maximum 10–12 children per group, ensuring meaningful individual attention for every toddler every day", "CCTV-monitored, child-safe premises with secure entry and exit across all 6 Thane centres", "Activity-based curriculum developed by our Head of Curriculum, updated annually to align with NEP 2020 and global ECE best practices", "Regular parent communication — daily verbal feedback, monthly written progress updates, and open-door access to your child's teacher", "18+ years of trust — Rainbow Preschool has been educating Thane children since 2007, with over 1,00,000 alumni", "6 convenient locations across Thane West — Manpada, Hariniwas, Anand Nagar, Dhokali, Kalwa, and Kasarvadavali"] },
-      { heading: "Admission & Timings", text: "Playgroup admissions at Rainbow Preschool International are open for children aged 1.5 to 2.5 years. Our Playgroup operates Monday through Friday with morning batches (8:30 AM to 11:30 AM) and afternoon batches (12:30 PM to 3:30 PM) available at select centres, giving working parents maximum flexibility. Admissions are accepted on a rolling basis throughout the year, subject to seat availability. We strongly encourage parents to schedule a free campus tour before enrolling — you can observe the classroom, meet your child's prospective teacher, and ask all the questions you have in a relaxed, no-pressure setting. To book a tour or request an admission form, call us at +91 82915 68972 or walk into any of our 6 Rainbow Preschool centres in Thane West, Monday to Saturday, 9 AM to 6 PM." },
-      { heading: "Frequently Asked Questions — Playgroup", items: PLAYGROUP_FAQS.map(faq => `${faq.question} — ${faq.answer}`) },
+      { heading: PLAYGROUP_COPY.safetyHeading, text: PLAYGROUP_COPY.safetyIntro,
+        subsections: PLAYGROUP_COPY.safetyCards.map(card => ({ heading: card.title, text: card.text })) },
+      { heading: PLAYGROUP_COPY.activitiesHeading, text: PLAYGROUP_COPY.activitiesIntro, items: PLAYGROUP_COPY.activities },
+      { heading: PLAYGROUP_COPY.highlightsHeading, items: PLAYGROUP_COPY.highlights },
+      { eyebrow: "Our Locations", heading: PLAYGROUP_COPY.centresHeading, text: PLAYGROUP_COPY.centresIntro,
+        subsections: homepageBranches.map(branch => ({
+          heading: branch.name,
+          text: [branch.address, "landline" in branch ? branch.landline : "", branch.calling, "secondCalling" in branch ? branch.secondCalling : ""].filter(Boolean).join(" "),
+        })) },
+      { heading: PLAYGROUP_COPY.faqHeading, text: PLAYGROUP_COPY.faqIntro, faqItems: PLAYGROUP_FAQS, faqAsHeadings: true,
+        faqOutro: { text: "Still have questions?", linkText: "Request a Callback", url: "/playgroup#enquiry-form" } },
+      { heading: PLAYGROUP_COPY.exploreHeading, links: [
+        { text: PLAYGROUP_COPY.exploreLabels[0], url: "/kindergarten" },
+        { text: PLAYGROUP_COPY.exploreLabels[1], url: "/play-school-near-me" },
+        { text: PLAYGROUP_COPY.exploreLabels[2], url: "/preschool-admissions" },
+        { text: PLAYGROUP_COPY.exploreLabels[3], url: "/nursery" },
+      ] },
     ],
-    internalLinks: [...commonInternalLinks, { text: "Best Preschool in Thane", url: "/play-school-near-me" }, { text: "Nursery Programme", url: "/nursery" }],
-    lastModified: LAST_UPDATED_ISO,
-    lastModifiedDisplay: LAST_UPDATED_DISPLAY,
+    finalCallToAction: {
+      title: PLAYGROUP_COPY.finalHeading,
+      description: PLAYGROUP_COPY.finalIntro,
+      links: [
+        { text: "Request Callback", url: "/playgroup#enquiry-form" },
+        { text: "WhatsApp Us", url: "https://wa.me/918291568972?text=Hi%2C%20I%27m%20interested%20in%20Playgroup%20admission" },
+        { text: "Find Nearest Centre", url: "/play-school-near-me" },
+      ],
+    },
+    reviewerAfterContent: true,
+    lastModified: PLAYGROUP_COPY.publishDate,
+    lastModifiedDisplay: PLAYGROUP_COPY.publishDateDisplay,
   },
   "/nursery": {
     title: "Nursery School in Thane (2.5–3.5 yrs) | Rainbow Preschool",

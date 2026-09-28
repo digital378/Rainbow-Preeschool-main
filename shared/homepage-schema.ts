@@ -7,7 +7,7 @@ export const HOMEPAGE_URL = "https://www.rainbowpreschools.com/";
 export const HOMEPAGE_TITLE =
   "Preschool in Thane | Playgroup, Nursery & KG | Rainbow";
 export const HOMEPAGE_DESCRIPTION =
-  "Playgroup, nursery and KG for ages 1.5 to 5.5 at 6 Rainbow Preschool International centres in Thane, since 2007. Book a free visit for 2026-27.";
+  "Playgroup, nursery and KG for ages 1.5 to 5.5 at 6 Rainbow Preschool International centres in Thane, since 2007. Book a free visit for 2026-27 or 2027-28.";
 export const HOMEPAGE_H1 =
   "Preschool in Thane · Playgroup, Nursery & Kindergarten";
 

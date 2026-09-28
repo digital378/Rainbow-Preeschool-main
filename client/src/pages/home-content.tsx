@@ -1723,7 +1723,7 @@ export default function Home() {
     <div>
       <SEO
         title="Preschool in Thane | Playgroup, Nursery & KG | Rainbow"
-        description="Playgroup, nursery and KG for ages 1.5 to 5.5 at 6 Rainbow Preschool International centres in Thane, since 2007. Book a free visit for 2026-27."
+        description="Playgroup, nursery and KG for ages 1.5 to 5.5 at 6 Rainbow Preschool International centres in Thane, since 2007. Book a free visit for 2026-27 or 2027-28."
         keywords="rainbow preschool, preschool in thane, playgroup in thane, nursery school thane, early childhood education thane, rainbow preschool international"
         canonical="https://www.rainbowpreschools.com/"
       />

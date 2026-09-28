@@ -228,6 +228,7 @@ const allowedHomepageExternalLinks = new Set([
   "https://rainbowinternationalschool.in",
   "https://wa.me/918828195788",
   "https://wa.me/918291568972?text=Hi%2C%20I%20would%20like%20to%20know%20more%20about%20Rainbow%20Preschool",
+  "https://wa.me/918291568972?text=Hi%2C%20I%27m%20interested%20in%20Playgroup%20admission",
   "tel:+918828195788",
   "tel:+918291568972",
 ]);
@@ -349,6 +350,27 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
       if (section.text) {
         html += `<p>${escapeHtml(section.text)}</p>\n`;
       }
+      if (section.paragraphs) {
+        section.paragraphs.forEach((paragraph) => { html += `<p>${escapeHtml(paragraph)}</p>\n`; });
+      }
+      const renderRichParagraph = (segments: readonly { text: string; href?: string }[]) => {
+        const body = segments.map(segment => {
+          const safeLink = segment.href ? resolvePageLink(segment.href) : null;
+          return safeLink
+            ? `<a href="${escapeHtml(safeLink.href)}">${escapeHtml(segment.text)}</a>`
+            : escapeHtml(segment.text);
+        }).join("");
+        html += `<p>${body}</p>\n`;
+      };
+      section.richParagraphs?.forEach(renderRichParagraph);
+      if (section.subsections) {
+        section.subsections.forEach((subsection) => {
+          if (subsection.heading) html += `<h3>${escapeHtml(subsection.heading)}</h3>\n`;
+          if (subsection.text) html += `<p>${escapeHtml(subsection.text)}</p>\n`;
+          if (subsection.items) html += `<ul>${subsection.items.map(item => `<li>${escapeHtml(item)}</li>`).join("")}</ul>\n`;
+        });
+      }
+      section.afterSubsectionsRichParagraphs?.forEach(renderRichParagraph);
       if (section.items) {
         html += "<ul>\n";
         section.items.forEach((item) => {
@@ -377,9 +399,16 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
             const rel = safeLink.external ? ` rel="noopener noreferrer"` : "";
             return `<a href="${escapeHtml(safeLink.href)}"${rel}>${text}</a>`;
           }).join("");
-          html += `<details open><summary>${escapeHtml(faq.question)}</summary><p>${answer}</p></details>\n`;
+           html += section.faqAsHeadings
+             ? `<div><h3>${escapeHtml(faq.question)}</h3><p>${answer}</p></div>\n`
+             : `<details open><summary>${escapeHtml(faq.question)}</summary><p>${answer}</p></details>\n`;
         });
         html += `</div>\n`;
+      }
+      if (section.faqOutro) {
+        html += `<p>${escapeHtml(section.faqOutro.text)}</p>`;
+        const link = resolvePageLink(section.faqOutro.url);
+        if (link) html += `<a href="${escapeHtml(link.href)}">${escapeHtml(section.faqOutro.linkText)}</a>`;
       }
       if (section.images && section.images.length > 0) {
         for (const image of section.images) {
@@ -424,7 +453,7 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
       </article></a>`).join("\n")}</div></section>`
     : "";
   const reviewerCreditHtml = seo.lastModified
-    ? `<p style="font-size:0.875rem;color:#666;margin:8px 0 16px"><strong>Reviewed by Rainbow Preschool Curriculum Team</strong> — Last updated: <time datetime="${escapeHtml(seo.lastModified)}">${escapeHtml(seo.lastModifiedDisplay || seo.lastModified)}</time></p>`
+    ? `<p style="font-size:0.875rem;color:#666;margin:8px 0 16px"><strong>Reviewed by Rainbow Preschool Curriculum Team</strong>${requestUrl === "/playgroup" ? " — Curriculum Team, Rainbow Preschool International" : ""} — Last updated: <time datetime="${escapeHtml(seo.lastModified)}">${escapeHtml(seo.lastModifiedDisplay || seo.lastModified)}</time>${requestUrl === "/playgroup" ? " — 4.9 from 487 Google reviews" : ""}</p>`
     : "";
   const finalCallToActionHtml = seo.finalCallToAction
     ? `<section class="final-cta"><h2>${escapeHtml(seo.finalCallToAction.title)}</h2><p>${escapeHtml(seo.finalCallToAction.description)}</p><ul>${seo.finalCallToAction.links.map((link) => {
@@ -503,9 +532,11 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
       ${seo.breadcrumbs ? `<div class="breadcrumb">${seo.breadcrumbs.map((b) => b.url
         ? `<a href="${BASE_URL}${b.url}">${escapeHtml(b.name)}</a>`
         : `<span>${escapeHtml(b.name)}</span>`).join(" › ")}</div>` : ""}
+      ${seo.heroBadge ? `<p>${escapeHtml(seo.heroBadge)}</p>` : ""}
       <h1>${escapeHtml(seo.h1 || seo.title)}</h1>
       ${seo.reviewerAfterContent ? "" : reviewerCreditHtml}
       ${seo.introText ? `<p>${escapeHtml(seo.introText)}</p>` : ""}
+      ${seo.heroSubheading ? `<h3>${escapeHtml(seo.heroSubheading)}</h3>` : ""}
       ${(seo.images || []).map(renderImageHtml).join("\n")}
       ${contentHtml}
       ${seo.reviewerAfterContent ? reviewerCreditHtml : ""}

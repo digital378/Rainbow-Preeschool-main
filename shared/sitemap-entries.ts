@@ -17,6 +17,7 @@
 import { PREFERRED_DOMAIN } from "./seo-config";
 import { HOME_PUBLISH_DATE_ISO } from "./home-publish-date";
 import { ADMISSIONS_PUBLISH_DATE_ISO } from "./admissions-page-copy";
+import { PLAYGROUP_COPY } from "./playgroup-page-content";
 
 export type SitemapChangefreq =
   | "always"
@@ -83,7 +84,7 @@ export const SITEMAP_ENTRIES: SitemapEntry[] = [
   { url: "/play-school-near-ghodbunder-road", priority: 0.85, changefreq: "monthly" },
 
   // ── PROGRAMME PAGES ──────────────────────────────────────
-  { url: "/playgroup", priority: 0.9, changefreq: "monthly", lastmod: "2026-09-23" },
+  { url: "/playgroup", priority: 0.9, changefreq: "monthly", lastmod: PLAYGROUP_COPY.publishDate },
   { url: "/nursery", priority: 0.9, changefreq: "monthly" },
   { url: "/kindergarten", priority: 0.9, changefreq: "monthly" },
   { url: "/happy-times", priority: 0.7, changefreq: "monthly" },

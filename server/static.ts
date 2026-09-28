@@ -32,7 +32,7 @@ export function injectPageSchemas(urlPath: string, html: string): string {
   if (seo.structuredData && seo.structuredData.length > 0) {
     for (const schema of seo.structuredData) {
       scripts.push(
-        `<script type="application/ld+json">${JSON.stringify(schema)}</script>`,
+        `<script type="application/ld+json"${urlPath === "/playgroup" ? ' data-seo-schema="true"' : ""}>${JSON.stringify(schema)}</script>`,
       );
     }
   }
@@ -50,7 +50,7 @@ export function injectPageSchemas(urlPath: string, html: string): string {
       })),
     };
     scripts.push(
-      `<script type="application/ld+json">${JSON.stringify(breadcrumbSchema)}</script>`,
+      `<script type="application/ld+json"${urlPath === "/playgroup" ? ' data-seo-schema="true"' : ""}>${JSON.stringify(breadcrumbSchema)}</script>`,
     );
   }
 

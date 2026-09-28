@@ -21,6 +21,8 @@ interface EEATSignalsProps {
   lastUpdatedIso?: string;
   ratingValue?: number;
   reviewCount?: number;
+  /** Optional source label for the visible count; all other pages retain their existing text. */
+  ratingSource?: string;
   /** When false, suppresses the star/rating display. */
   showRating?: boolean;
   schemaId: string;
@@ -41,6 +43,7 @@ export function EEATSignals({
   lastUpdatedIso: _lastUpdatedIso,
   ratingValue = 4.9,
   reviewCount = 487,
+  ratingSource = "parent reviews",
   showRating = true,
   schemaId,
 }: EEATSignalsProps) {
@@ -100,7 +103,7 @@ export function EEATSignals({
               ))}
             </div>
             <span className="text-xs text-muted-foreground">
-              <strong className="text-gray-900 dark:text-white">{ratingValue.toFixed(1)}</strong> from {reviewCount.toLocaleString()} parent reviews
+              <strong className="text-gray-900 dark:text-white">{ratingValue.toFixed(1)}</strong> from {reviewCount.toLocaleString()} {ratingSource}
             </span>
           </div>
         )}

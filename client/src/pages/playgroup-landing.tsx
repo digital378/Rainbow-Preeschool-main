@@ -47,7 +47,7 @@ import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { EEATSignals } from "@/components/eeat-signals";
 import { VERIFIED_RATING } from "@/lib/verified-rating";
-import { LAST_UPDATED_DISPLAY, LAST_UPDATED_ISO } from "@shared/site-freshness";
+import { PLAYGROUP_COPY, PLAYGROUP_WEBPAGE_SCHEMA } from "@shared/playgroup-page-content";
 import { trackProgrammeView, trackFormSubmit } from "@/lib/analytics";
 import { PLAYGROUP_FAQS } from "@shared/playgroup-faq-data";
 
@@ -256,7 +256,7 @@ function StickyMobileCTA() {
   );
 }
 
-function ActivitiesSection({ activities }: { activities: string[] }) {
+function ActivitiesSection({ activities }: { activities: readonly string[] }) {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -281,9 +281,9 @@ function ActivitiesSection({ activities }: { activities: string[] }) {
     <section ref={sectionRef} className="py-16 md:py-20 lg:py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Daily Activities</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">{PLAYGROUP_COPY.activitiesHeading}</h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            A variety of engaging activities to keep your child learning and having fun.
+            {PLAYGROUP_COPY.activitiesIntro}
           </p>
         </div>
         <div className="flex flex-wrap justify-center gap-3">
@@ -311,27 +311,19 @@ function ActivitiesSection({ activities }: { activities: string[] }) {
 }
 
 const featureItems = [
-  { title: "Colors & Shapes", icon: Shapes, gradient: "from-red-100 to-red-200 dark:from-red-900/30 dark:to-red-800/30", color: "text-red-500" },
-  { title: "Sensory Play", icon: HandHeart, gradient: "from-green-100 to-green-200 dark:from-green-900/30 dark:to-green-800/30", color: "text-green-500" },
-  { title: "Motor Skills", icon: Activity, gradient: "from-purple-100 to-purple-200 dark:from-purple-900/30 dark:to-purple-800/30", color: "text-purple-500" },
-  { title: "Language through Songs", icon: Music, gradient: "from-blue-100 to-blue-200 dark:from-blue-900/30 dark:to-blue-800/30", color: "text-blue-500" },
-  { title: "Social Interaction", icon: UsersRound, gradient: "from-orange-100 to-orange-200 dark:from-orange-900/30 dark:to-orange-800/30", color: "text-orange-500" },
-  { title: "Storytelling", icon: MessageCircle, gradient: "from-sky-100 to-sky-200 dark:from-sky-900/30 dark:to-sky-800/30", color: "text-sky-500" },
+  { title: PLAYGROUP_COPY.learningTags[0], icon: Shapes, gradient: "from-red-100 to-red-200 dark:from-red-900/30 dark:to-red-800/30", color: "text-red-500" },
+  { title: PLAYGROUP_COPY.learningTags[1], icon: HandHeart, gradient: "from-green-100 to-green-200 dark:from-green-900/30 dark:to-green-800/30", color: "text-green-500" },
+  { title: PLAYGROUP_COPY.learningTags[2], icon: Activity, gradient: "from-purple-100 to-purple-200 dark:from-purple-900/30 dark:to-purple-800/30", color: "text-purple-500" },
+  { title: PLAYGROUP_COPY.learningTags[3], icon: Music, gradient: "from-blue-100 to-blue-200 dark:from-blue-900/30 dark:to-blue-800/30", color: "text-blue-500" },
+  { title: PLAYGROUP_COPY.learningTags[4], icon: UsersRound, gradient: "from-orange-100 to-orange-200 dark:from-orange-900/30 dark:to-orange-800/30", color: "text-orange-500" },
+  { title: PLAYGROUP_COPY.learningTags[5], icon: MessageCircle, gradient: "from-sky-100 to-sky-200 dark:from-sky-900/30 dark:to-sky-800/30", color: "text-sky-500" },
 ];
 
-const dailyRoutine = [
-  { time: "8:30 AM", activity: "Welcome Circle & Attendance", description: "Warm greetings and settling in" },
-  { time: "9:00 AM", activity: "Free Play & Exploration", description: "Open-ended play with toys and materials" },
-  { time: "9:30 AM", activity: "Rhymes & Songs", description: "Music, movement, and language development" },
-  { time: "10:00 AM", activity: "Snack Time", description: "Healthy snacks and social interaction" },
-  { time: "10:30 AM", activity: "Learning Activity", description: "Colors, shapes, or sensory exploration" },
-  { time: "11:00 AM", activity: "Outdoor Play", description: "Physical activity and motor skill development" },
-  { time: "11:30 AM", activity: "Story Time & Goodbye", description: "Calming stories and preparation for pickup" },
-];
+const dailyRoutine = PLAYGROUP_COPY.routine;
 
 const faqs = PLAYGROUP_FAQS;
 
-const activities = ["Circle time", "Music & movement", "Art exploration", "Free play", "Outdoor activities", "Rhymes & songs", "Sensory play", "Puppet shows"];
+const activities = PLAYGROUP_COPY.activities;
 
 export default function PlaygroupLanding() {
   useEffect(() => {
@@ -341,14 +333,15 @@ export default function PlaygroupLanding() {
   return (
     <div className="pt-20 md:pt-24">
       <SEO
-        title="Playgroup in Thane (1.5–2.5 yrs) | Rainbow Preschool"
-        description="Enroll your toddler in our Playgroup (1.5–2.5 yrs) — play-based learning and gentle socialisation across Rainbow Preschool's 6 Thane West centres."
-        keywords="playgroup in thane, playgroup near me, best playgroup, playgroup admission near me, playgroup for toddlers, playgroup school in thane, early learning playgroup, play based playgroup, best playgroup in thane"
+        title={PLAYGROUP_COPY.title}
+        description={PLAYGROUP_COPY.description}
+        keywords="playgroup in thane, playgroup near me, playgroup admission near me, playgroup for toddlers, playgroup school in thane, early learning playgroup, play based playgroup"
         canonical="https://www.rainbowpreschools.com/playgroup"
-        structuredData={createBreadcrumbSchema([
+        structuredData={[PLAYGROUP_WEBPAGE_SCHEMA, createBreadcrumbSchema([
           { name: "Home", url: "/" },
+          { name: "Programmes", url: "/programmes" },
           { name: "Playgroup", url: "/playgroup" },
-        ])}
+        ])]}
       />
 
       {/* Hero Section with Inline Callback Form */}
@@ -362,13 +355,13 @@ export default function PlaygroupLanding() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
               <Badge variant="secondary" className="text-base px-4 py-1 mb-4">
-                Ages 1.5 - 2.5 Years
+                {PLAYGROUP_COPY.heroBadge}
               </Badge>
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-                Best Playgroup in Thane for Children Aged 1.5 to 2.5 Years
+                {PLAYGROUP_COPY.h1}
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed">
-                A joyful, safe, and nurturing first step into learning, routine, and social confidence.
+                {PLAYGROUP_COPY.heroSubline}
               </p>
               <div className="flex flex-wrap gap-4">
                 <Button size="lg" onClick={() => document.getElementById('enquiry-form')?.scrollIntoView({ behavior: 'smooth' })} data-testid="button-hero-enquire">
@@ -395,16 +388,18 @@ export default function PlaygroupLanding() {
       <section className="py-16 md:py-20 lg:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-center">Why Playgroup is Important for Your Toddler</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-center">{PLAYGROUP_COPY.whyHeading}</h2>
             <div className="prose prose-lg max-w-none text-muted-foreground">
               <p className="text-lg leading-relaxed mb-4">
-                <strong>Playgroup</strong> is your child's first structured learning experience outside home. For toddlers aged 1.5 to 2.5 years, it provides a gentle introduction to early childhood development through play-based learning.
+                <strong>Playgroup</strong>{PLAYGROUP_COPY.whyParagraphs[0].slice("Playgroup".length)}
               </p>
               <p className="text-lg leading-relaxed mb-4">
-                At Rainbow Preschool, our playgroup programme focuses on social interaction, sensory exploration, and motor skill development. Through carefully designed activities, children learn to share, cooperate, and build confidence in a safe, nurturing environment.
+                {PLAYGROUP_COPY.whyParagraphs[1]}
               </p>
               <p className="text-lg leading-relaxed">
-                Research shows that early exposure to structured play significantly enhances cognitive development, language acquisition, and emotional regulation. Our playgroup creates the perfect foundation for your child's educational journey.
+                {PLAYGROUP_COPY.whyFinalSegments.map((segment, index) => "href" in segment
+                  ? <Link key={index} href={segment.href} className="text-primary hover:underline">{segment.text}</Link>
+                  : <span key={index}>{segment.text}</span>)}
               </p>
             </div>
           </div>
@@ -415,9 +410,9 @@ export default function PlaygroupLanding() {
       <section className="py-16 md:py-20 lg:py-24 bg-muted/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">A Day in Our Playgroup</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">{PLAYGROUP_COPY.dayHeading}</h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              A structured yet flexible routine that balances learning, play, and rest.
+              {PLAYGROUP_COPY.dayIntro}
             </p>
           </div>
           <div className="max-w-3xl mx-auto">
@@ -444,9 +439,9 @@ export default function PlaygroupLanding() {
       <section className="py-16 md:py-20 lg:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">What Your Child Will Learn</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">{PLAYGROUP_COPY.learningHeading}</h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Our playgroup curriculum is designed to nurture every aspect of your toddler's development.
+              {PLAYGROUP_COPY.learningIntro}
             </p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
@@ -468,23 +463,23 @@ export default function PlaygroupLanding() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
             <div>
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                Want to Know If Playgroup Is Right for Your Child?
+                {PLAYGROUP_COPY.enquiryHeading}
               </h2>
               <p className="text-muted-foreground text-lg leading-relaxed mb-6">
-                Our admission experts are here to guide you. Share your details and we'll help you understand how our playgroup can benefit your child.
+                {PLAYGROUP_COPY.enquiryIntro}
               </p>
               <ul className="space-y-3">
                 <li className="flex items-center gap-3">
                   <CheckCircle className="w-5 h-5 text-green-500 shrink-0" />
-                  <span>Personalized guidance for your child's needs</span>
+                  <span>{PLAYGROUP_COPY.enquiryBullets[0]}</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <CheckCircle className="w-5 h-5 text-green-500 shrink-0" />
-                  <span>Schedule a centre visit at your convenience</span>
+                  <span>{PLAYGROUP_COPY.enquiryBullets[1]}</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <CheckCircle className="w-5 h-5 text-green-500 shrink-0" />
-                  <span>Learn about fees and admission process</span>
+                  <span>{PLAYGROUP_COPY.enquiryBullets[2]}</span>
                 </li>
               </ul>
             </div>
@@ -503,27 +498,27 @@ export default function PlaygroupLanding() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">Why Choose Our Playgroup?</h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6">{PLAYGROUP_COPY.chooseHeading}</h2>
               <ul className="space-y-4">
                 <li className="flex items-start gap-3">
                   <Star className="w-5 h-5 text-secondary mt-0.5 shrink-0" />
-                  <span className="text-lg">Small batch sizes for individual attention (10-12 children)</span>
+                  <span className="text-lg">{PLAYGROUP_COPY.chooseBullets[0]}</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <Star className="w-5 h-5 text-secondary mt-0.5 shrink-0" />
-                  <span className="text-lg">Trained and caring female teachers</span>
+                  <span className="text-lg">{PLAYGROUP_COPY.chooseBullets[1]}</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <Star className="w-5 h-5 text-secondary mt-0.5 shrink-0" />
-                  <span className="text-lg">Safe and hygienic environment</span>
+                  <span className="text-lg">{PLAYGROUP_COPY.chooseBullets[2]}</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <Star className="w-5 h-5 text-secondary mt-0.5 shrink-0" />
-                  <span className="text-lg">Gentle transition to school routine</span>
+                  <span className="text-lg">{PLAYGROUP_COPY.chooseBullets[3]}</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <Star className="w-5 h-5 text-secondary mt-0.5 shrink-0" />
-                  <span className="text-lg">Structured yet flexible curriculum</span>
+                  <span className="text-lg">{PLAYGROUP_COPY.chooseBullets[4]}</span>
                 </li>
               </ul>
               <div className="mt-8 text-muted-foreground">
@@ -532,8 +527,7 @@ export default function PlaygroupLanding() {
                   <div>
                     <strong>Timings:</strong>
                     <div className="mt-1 space-y-1">
-                      <div>Morning Batch - 8:30AM to 11:30AM</div>
-                      <div>Afternoon Batch - 12:30PM to 3:30PM</div>
+                      {PLAYGROUP_COPY.timings.map((timing) => <div key={timing}>{timing}</div>)}
                     </div>
                   </div>
                 </div>
@@ -577,35 +571,34 @@ export default function PlaygroupLanding() {
       <section className="py-16 md:py-20 lg:py-24" data-testid="section-playgroup-in-thane">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Playgroup in Thane — Why 1,00,000+ Parents Choose Rainbow</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">{PLAYGROUP_COPY.localityHeading}</h2>
             <p className="text-muted-foreground text-lg max-w-3xl mx-auto">
-              Looking for a trusted <strong>playgroup in Thane</strong>? Rainbow Preschool International has been a trusted early-years home in Thane since 2007, with 6 centres across Thane West and a 18+ year track record of nurturing happy, confident toddlers.
+              {PLAYGROUP_COPY.localityIntro.split("playgroup in Thane")[0]}<strong>playgroup in Thane</strong>{PLAYGROUP_COPY.localityIntro.split("playgroup in Thane")[1]}
             </p>
           </div>
           <div className="grid md:grid-cols-2 gap-6 mb-10">
             <Card className="p-6">
-              <h3 className="text-xl font-semibold mb-3">Closest playgroup near you in Thane</h3>
+              <h3 className="text-xl font-semibold mb-3">{PLAYGROUP_COPY.nearHeading}</h3>
               <p className="text-muted-foreground mb-4">
-                With centres in <strong>Manpada, Hariniwas (Panchpakadi), Anand Nagar, Dhokali, Kalwa and Kasarvadavali</strong>, most Thane West homes are within a 10-minute drive of a Rainbow playgroup. We're easy to reach from Ghodbunder Road, LBS Marg, Pokhran Road, and the Eastern Express Highway.
+                {PLAYGROUP_COPY.nearText.split(PLAYGROUP_COPY.centreAreas)[0]}<strong>{PLAYGROUP_COPY.centreAreas}</strong>{PLAYGROUP_COPY.nearText.split(PLAYGROUP_COPY.centreAreas)[1]}
               </p>
-              <Link href="/contact" className="text-primary font-medium hover:underline" data-testid="link-find-nearest-centre">
+              <Link href="/play-school-near-me" className="text-primary font-medium hover:underline" data-testid="link-find-nearest-centre">
                 Find your nearest centre →
               </Link>
             </Card>
             <Card className="p-6">
-              <h3 className="text-xl font-semibold mb-3">What makes our Thane playgroup different</h3>
+              <h3 className="text-xl font-semibold mb-3">{PLAYGROUP_COPY.checklistHeading}</h3>
               <ul className="space-y-2 text-muted-foreground">
-                <li className="flex gap-2"><span className="text-primary">✓</span><span><strong>15:1 ratio</strong> — your child gets noticed every single day</span></li>
-                <li className="flex gap-2"><span className="text-primary">✓</span><span><strong>100% female teaching staff</strong> with ECCE training</span></li>
-                <li className="flex gap-2"><span className="text-primary">✓</span><span><strong>CCTV-monitored</strong> classrooms across all 6 centres</span></li>
-                <li className="flex gap-2"><span className="text-primary">✓</span><span><strong>Play-based curriculum</strong> aligned with NEP 2020</span></li>
-                <li className="flex gap-2"><span className="text-primary">✓</span><span><strong>Daily parent updates</strong> + monthly progress reports</span></li>
+                {PLAYGROUP_COPY.checklist.map((item) => <li key={item.emphasis} className="flex gap-2"><span className="text-primary">✓</span><span><strong>{item.emphasis}</strong>{item.rest}</span></li>)}
               </ul>
             </Card>
           </div>
           <div className="bg-muted/40 rounded-2xl p-6 md:p-8 text-center">
             <p className="text-base md:text-lg mb-4">
-              <strong>New to playgroup?</strong> Take our 2-minute readiness quiz to check whether your toddler is ready to start, or read our <Link href="/blog/what-age-start-play-school" className="text-primary hover:underline">guide to starting play school</Link>.
+              <strong>New to playgroup?</strong> {" "}
+              {PLAYGROUP_COPY.newToPlaygroupSegments.map((segment, index) => "href" in segment
+                ? <Link key={index} href={segment.href} className="text-primary hover:underline">{segment.text}</Link>
+                : <span key={index}>{segment.text}</span>)}
             </p>
             <div className="flex flex-wrap gap-3 justify-center">
               <Link href="/preschool-readiness-quiz" className="inline-flex items-center px-5 py-2.5 rounded-full bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors" data-testid="link-readiness-quiz">
@@ -623,9 +616,9 @@ export default function PlaygroupLanding() {
       <section className="py-16 md:py-20 lg:py-24 bg-muted/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Glimpses of Our Playgroup</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">{PLAYGROUP_COPY.galleryHeading}</h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              See our toddlers exploring, playing, and learning in our safe and colorful classrooms.
+              {PLAYGROUP_COPY.galleryIntro}
             </p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -642,31 +635,31 @@ export default function PlaygroupLanding() {
       <section className="py-16 md:py-20 lg:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Safety & Hygiene Promise</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">{PLAYGROUP_COPY.safetyHeading}</h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Your child's safety is our top priority. Here's how we ensure a secure environment.
+              {PLAYGROUP_COPY.safetyIntro}
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <Card className="text-center p-6">
               <ShieldCheck className="w-12 h-12 text-green-500 mx-auto mb-4" />
-              <h3 className="font-semibold text-lg mb-2">Regular Sanitization</h3>
-              <p className="text-sm text-muted-foreground">All toys, surfaces, and classrooms sanitized multiple times daily</p>
+              <h3 className="font-semibold text-lg mb-2">{PLAYGROUP_COPY.safetyCards[0].title}</h3>
+              <p className="text-sm text-muted-foreground">{PLAYGROUP_COPY.safetyCards[0].text}</p>
             </Card>
             <Card className="text-center p-6">
               <UsersRound className="w-12 h-12 text-red-500 mx-auto mb-4" />
-              <h3 className="font-semibold text-lg mb-2">100% Female Staff</h3>
-              <p className="text-sm text-muted-foreground">All caregivers and teachers are trained female professionals</p>
+              <h3 className="font-semibold text-lg mb-2">{PLAYGROUP_COPY.safetyCards[1].title}</h3>
+              <p className="text-sm text-muted-foreground">{PLAYGROUP_COPY.safetyCards[1].text}</p>
             </Card>
             <Card className="text-center p-6">
               <Eye className="w-12 h-12 text-blue-500 mx-auto mb-4" />
-              <h3 className="font-semibold text-lg mb-2">CCTV Surveillance</h3>
-              <p className="text-sm text-muted-foreground">Monitoring across key campus areas</p>
+              <h3 className="font-semibold text-lg mb-2">{PLAYGROUP_COPY.safetyCards[2].title}</h3>
+              <p className="text-sm text-muted-foreground">{PLAYGROUP_COPY.safetyCards[2].text}</p>
             </Card>
             <Card className="text-center p-6">
               <MessageSquare className="w-12 h-12 text-purple-500 mx-auto mb-4" />
-              <h3 className="font-semibold text-lg mb-2">Parent Communication</h3>
-              <p className="text-sm text-muted-foreground">Regular updates on your child's activities and progress</p>
+              <h3 className="font-semibold text-lg mb-2">{PLAYGROUP_COPY.safetyCards[3].title}</h3>
+              <p className="text-sm text-muted-foreground">{PLAYGROUP_COPY.safetyCards[3].text}</p>
             </Card>
           </div>
         </div>
@@ -679,24 +672,24 @@ export default function PlaygroupLanding() {
       <section className="py-16 md:py-20 lg:py-24 bg-muted/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Programme Highlights</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">{PLAYGROUP_COPY.highlightsHeading}</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
             <div className="flex items-center gap-3 p-4 bg-background rounded-lg">
               <CheckCircle className="w-5 h-5 text-green-500 shrink-0" />
-              <span>Individual attention with small batch sizes</span>
+              <span>{PLAYGROUP_COPY.highlights[0]}</span>
             </div>
             <div className="flex items-center gap-3 p-4 bg-background rounded-lg">
               <CheckCircle className="w-5 h-5 text-green-500 shrink-0" />
-              <span>Trained and experienced teachers</span>
+              <span>{PLAYGROUP_COPY.highlights[1]}</span>
             </div>
             <div className="flex items-center gap-3 p-4 bg-background rounded-lg">
               <CheckCircle className="w-5 h-5 text-green-500 shrink-0" />
-              <span>Safe and secure environment</span>
+              <span>{PLAYGROUP_COPY.highlights[2]}</span>
             </div>
             <div className="flex items-center gap-3 p-4 bg-background rounded-lg">
               <CheckCircle className="w-5 h-5 text-green-500 shrink-0" />
-              <span>Regular parent updates and communication</span>
+              <span>{PLAYGROUP_COPY.highlights[3]}</span>
             </div>
           </div>
         </div>
@@ -707,9 +700,9 @@ export default function PlaygroupLanding() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">Our Locations</p>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Playgroup Centres in Thane</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">{PLAYGROUP_COPY.centresHeading}</h2>
             <p className="text-muted-foreground text-lg">
-              Find a Rainbow Preschool playgroup near you. We have 6 centres across Thane.
+              {PLAYGROUP_COPY.centresIntro}
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -721,12 +714,13 @@ export default function PlaygroupLanding() {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-16 md:py-20 lg:py-24 bg-muted/30">
+      <section id="playgroup-faq" className="py-16 md:py-20 lg:py-24 bg-muted/30">
+        <style>{`#playgroup-faq [role="region"][data-state="closed"] { display: none; }`}</style>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Frequently Asked Questions</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">{PLAYGROUP_COPY.faqHeading}</h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Common questions parents ask about our playgroup programme.
+              {PLAYGROUP_COPY.faqIntro}
             </p>
           </div>
           <div className="max-w-3xl mx-auto">
@@ -736,8 +730,12 @@ export default function PlaygroupLanding() {
                   <AccordionTrigger className="text-left font-semibold hover:no-underline">
                     {faq.question}
                   </AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground">
-                    {faq.answer}
+                  <AccordionContent forceMount className="text-muted-foreground">
+                    {faq.answerSegments.map((segment, segmentIndex) => segment.href
+                      ? segment.href.startsWith("tel:")
+                        ? <a key={segmentIndex} href={segment.href} className="text-primary hover:underline">{segment.text}</a>
+                        : <Link key={segmentIndex} href={segment.href} className="text-primary hover:underline">{segment.text}</Link>
+                      : <span key={segmentIndex}>{segment.text}</span>)}
                   </AccordionContent>
                 </AccordionItem>
               ))}
@@ -759,23 +757,23 @@ export default function PlaygroupLanding() {
       {/* Internal Links Section */}
       <section className="py-10 md:py-12 bg-gray-50 dark:bg-gray-800/50">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-lg md:text-xl font-bold text-gray-900 dark:text-white mb-5 text-center">Explore Rainbow Preschool</h2>
+          <h2 className="text-lg md:text-xl font-bold text-gray-900 dark:text-white mb-5 text-center">{PLAYGROUP_COPY.exploreHeading}</h2>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            <Link href="/play-school-near-me" className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center" data-testid="link-playgroup-best-preschool">
+            <Link href="/kindergarten" className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center" data-testid="link-playgroup-best-preschool">
               <Award className="w-5 h-5 text-primary" />
-              <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">Award-Winning Preschool</span>
+              <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">{PLAYGROUP_COPY.exploreLabels[0]}</span>
             </Link>
             <Link href="/play-school-near-me" className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center" data-testid="link-playgroup-near-me">
               <MapPin className="w-5 h-5 text-primary" />
-              <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">Find Nearest Centre</span>
+              <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">{PLAYGROUP_COPY.exploreLabels[1]}</span>
             </Link>
             <Link href="/preschool-admissions" className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center" data-testid="link-playgroup-admissions">
               <ClipboardList className="w-5 h-5 text-primary" />
-              <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">Admission Process</span>
+              <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">{PLAYGROUP_COPY.exploreLabels[2]}</span>
             </Link>
             <Link href="/nursery" className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center" data-testid="link-playgroup-nursery">
               <BookOpen className="w-5 h-5 text-primary" />
-              <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">Nursery Programme</span>
+              <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">{PLAYGROUP_COPY.exploreLabels[3]}</span>
             </Link>
           </div>
         </div>
@@ -787,11 +785,12 @@ export default function PlaygroupLanding() {
           pageName="Playgroup in Thane"
           reviewedBy="Rainbow Preschool Curriculum Team"
           reviewerRole="Curriculum Team, Rainbow Preschool International"
-          lastUpdated={LAST_UPDATED_DISPLAY}
-          lastUpdatedIso={LAST_UPDATED_ISO}
+          lastUpdated={PLAYGROUP_COPY.publishDateDisplay}
+          lastUpdatedIso={PLAYGROUP_COPY.publishDate}
           ratingValue={VERIFIED_RATING.ratingValue}
           reviewCount={VERIFIED_RATING.reviewCount}
           schemaId="playgroup-landing"
+          ratingSource="Google reviews"
         />
       </div>
 
@@ -801,10 +800,10 @@ export default function PlaygroupLanding() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="text-center text-white">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-              Ready to Begin Your Child's Happy Learning Journey?
+              {PLAYGROUP_COPY.finalHeading}
             </h2>
             <p className="text-lg md:text-xl mb-8 opacity-90 max-w-2xl mx-auto">
-              Give your toddler the best start with Rainbow Preschool's playgroup programme.
+              {PLAYGROUP_COPY.finalIntro}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button 
