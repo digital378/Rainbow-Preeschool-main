@@ -20,6 +20,7 @@
 
 import { LAST_UPDATED_ISO, LAST_UPDATED_DISPLAY } from "../shared/site-freshness";
 import { HOME_PUBLISH_DATE_ISO } from "../shared/home-publish-date";
+import { ADMISSIONS_PUBLISH_DATE_ISO, ADMISSIONS_PUBLISH_DATE_DISPLAY } from "../shared/admissions-page-copy";
 
 const BASE = (process.argv[2] || "http://localhost:5000").replace(/\/$/, "");
 const UA = "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)";
@@ -116,22 +117,26 @@ async function checkUrl(path: string): Promise<CheckResult> {
   if (path !== "/" && !html.includes("Last updated:")) {
     missing.push("Last updated: line");
   }
-  const expectedType = path === "/" ? "WebPage" : "Article";
+  const admissionsPage = path === "/preschool-admissions";
+  const expectedType = path === "/" || admissionsPage ? "WebPage" : "Article";
   if (!new RegExp(`"@type":\\s*"${expectedType}"`).test(html)) {
     missing.push(`${expectedType} JSON-LD`);
   }
-  if (path === "/" && /"@type":\s*"Article"/.test(html)) {
-    missing.push("unexpected homepage Article JSON-LD");
+  if ((path === "/" || admissionsPage) && /"@type":\s*"Article"/.test(html)) {
+    missing.push(`unexpected Article JSON-LD on ${path}`);
   }
-  const expectedDate = path === "/" ? HOME_PUBLISH_DATE_ISO : LAST_UPDATED_ISO;
+  const expectedDate = path === "/"
+    ? HOME_PUBLISH_DATE_ISO
+    : admissionsPage ? ADMISSIONS_PUBLISH_DATE_ISO : LAST_UPDATED_ISO;
   if (
     !html.includes(`"dateModified":"${expectedDate}"`) &&
     !html.includes(`"dateModified": "${expectedDate}"`)
   ) {
     missing.push(`dateModified=${expectedDate}`);
   }
-  if (path !== "/" && !html.includes(LAST_UPDATED_DISPLAY)) {
-    missing.push(`display="${LAST_UPDATED_DISPLAY}"`);
+  const expectedDisplay = admissionsPage ? ADMISSIONS_PUBLISH_DATE_DISPLAY : LAST_UPDATED_DISPLAY;
+  if (path !== "/" && !html.includes(expectedDisplay)) {
+    missing.push(`display="${expectedDisplay}"`);
   }
 
   return {
@@ -145,7 +150,7 @@ async function checkUrl(path: string): Promise<CheckResult> {
 async function main() {
   console.log(`[check-freshness-signal] BASE=${BASE}`);
   console.log(
-    `[check-freshness-signal] Expecting LAST_UPDATED_ISO="${LAST_UPDATED_ISO}" / LAST_UPDATED_DISPLAY="${LAST_UPDATED_DISPLAY}"`
+    `[check-freshness-signal] Expecting standard date="${LAST_UPDATED_ISO}", admissions date="${ADMISSIONS_PUBLISH_DATE_ISO}", homepage date="${HOME_PUBLISH_DATE_ISO}"`
   );
   console.log(`[check-freshness-signal] Checking ${ALL_URLS.length} URL(s) as Googlebot…\n`);
 

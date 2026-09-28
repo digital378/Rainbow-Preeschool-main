@@ -54,7 +54,7 @@
 #   11. npm run build — production build.
 #   12. Boot the production server on $PREDEPLOY_URL for the HTTP smoke-tests.
 #   13. scripts/check-freshness-signal.ts — asserts the visible "Last updated"
-#       byline + Article JSON-LD dateModified across the 18 commercial +
+#       byline + page-specific JSON-LD dateModified across the commercial +
 #       locality URLs.
 #   14. scripts/check-keyword-targets.ts — asserts the 15 priority commercial
 #       keyword guarantees: FAQPage JSON-LD on the 5 commercial pages,
