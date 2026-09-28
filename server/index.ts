@@ -13,7 +13,7 @@ import { getBlogPostLastModified } from "./ssr-pages";
 import { getLiveLegacySitemapEntries } from "./legacy-sitemap";
 import { requireDashboardPageAuth, requireGscAuth } from "./admin-auth";
 import { dummyGuard, dummyLogin } from "./dummy-guard";
-import { getDummyInstagramReels, getPublicInstagramReels } from "./dummy-instagram";
+import { getDummyInstagramReels, getPublicInstagramReels, startInstagramReelRefreshJob } from "./dummy-instagram";
 
 const app = express();
 app.post("/dummy/login", ...dummyLogin);
@@ -318,6 +318,7 @@ app.use((req, res, next) => {
     },
     () => {
       log(`serving on port ${port}`);
+      startInstagramReelRefreshJob();
     },
   );
 })();

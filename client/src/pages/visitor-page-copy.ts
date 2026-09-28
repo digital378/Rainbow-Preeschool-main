@@ -175,7 +175,7 @@ export const HOME_VISITOR_COPY: VisitorPageCopy = {
     {
       heading: "Why Parents Choose Rainbow Preschool",
       paragraphs: [
-        "Trusted by Thane families since 2007, Rainbow Preschool International welcomes children from 1.5 to 5.5 years at our 6 centres in Manpada, Kasarvadavali, Anand Nagar, Hariniwas, Dhokali and Kalwa. We offer playgroup, nursery and kindergarten, all built around play-based learning.",
+        "Trusted by Thane families since 2007, Rainbow Preschool International welcomes children from 1.5 to 5.5 years at our 6 centres in Manpada, Kasarvadavali, Anand Nagar, Hariniwas, Dhokali and Kalwa. We offer playgroup, nursery and kindergarten, all built around play-based learning. We have been named Best Preschool in Thane (2018, 2023), Cleanest Preschool (2020), Most Promising Preschool Chain of the Year (2021) and Emerging Preschool Chain of the Year (2022).",
       ],
     },
     {

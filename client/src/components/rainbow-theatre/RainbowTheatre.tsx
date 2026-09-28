@@ -80,6 +80,8 @@ export function RainbowTheatre({
     () => reels.find((reel) => reel.id === selectedId) ?? reels.find((reel) => reel.mediaUrl) ?? reels[0],
     [reels, selectedId],
   );
+  const currentThumbnail = currentReel?.thumbnailUrl ??
+    LOCAL_REEL_POSTERS.find((poster) => poster.id === currentReel?.id)?.posterPath;
   const isLocalMedia = currentReel?.mediaUrl?.startsWith("/instagram-reels/local-") ?? false;
   const hasUsableMedia = Boolean(currentReel?.mediaUrl && currentReel.id !== failedVideoId);
   const shouldLoadCurrentReel = variant !== "homepage" || playRequestedId === currentReel?.id;
@@ -336,7 +338,7 @@ export function RainbowTheatre({
           key={`${currentReel.id}:${videoRetryNonce}`}
           className="rainbow-theatre__video"
           src={isLocalMedia ? undefined : currentReel.mediaUrl}
-          poster={currentReel.thumbnailUrl}
+          poster={currentThumbnail}
           muted={!soundOn}
           loop
           playsInline
@@ -355,7 +357,7 @@ export function RainbowTheatre({
         </video>
       ) : currentReel ? (
         <div className="rainbow-theatre__unavailable">
-          {currentReel.thumbnailUrl && <img src={currentReel.thumbnailUrl} alt="" />}
+          {currentThumbnail && <img src={currentThumbnail} alt="" />}
           <p>
             {failedVideoId === currentReel.id
               ? "This video could not be played here."

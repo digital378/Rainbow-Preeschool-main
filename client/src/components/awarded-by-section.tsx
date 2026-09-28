@@ -15,17 +15,16 @@ interface AwardLogo {
   srcDark?: string;
   alt: string;
   url: string;
-  caption?: string;
 }
 
 /* ── logos in original order (unchanged) ── */
 const awardLogos: AwardLogo[] = [
   { name: "India Today",          src: indiaToday,          alt: "India Today Award",                      url: "https://www.indiatoday.in" },
-  { name: "Thane Municipal Corporation", src: thaneMunicipal, alt: "Thane Municipal Corporation Recognition", url: "https://thanecity.gov.in/tmc/CitizenHome.html", caption: "Best Preschool in Thane — 2018" },
-  { name: "Scoo News",            src: scooNewsLight, srcDark: scooNewsDark, alt: "Scoo News Feature",     url: "https://scoonews.com/", caption: "Best Preschool in Thane — 2023" },
-  { name: "World Education Summit", src: worldEducationSummit, alt: "15th World Education Summit Mumbai",  url: "https://www.educationsummit.com/", caption: "Cleanest Preschool — 2020" },
-  { name: "Economic Times",       src: economicTimes,       alt: "Economic Times Feature",                 url: "https://economictimes.indiatimes.com/", caption: "Most Promising Preschool Chain of the Year — 2021" },
-  { name: "NSA Award",            src: nsaAward,            alt: "National School Awards logo",            url: "http://nationalschoolawards.in/", caption: "Emerging Preschool Chain of the Year — 2022" },
+  { name: "Thane Municipal Corporation", src: thaneMunicipal, alt: "Thane Municipal Corporation Recognition", url: "https://thanecity.gov.in/tmc/CitizenHome.html" },
+  { name: "Scoo News",            src: scooNewsLight, srcDark: scooNewsDark, alt: "Scoo News Feature",     url: "https://scoonews.com/" },
+  { name: "World Education Summit", src: worldEducationSummit, alt: "15th World Education Summit Mumbai",  url: "https://www.educationsummit.com/" },
+  { name: "Economic Times",       src: economicTimes,       alt: "Economic Times Feature",                 url: "https://economictimes.indiatimes.com/" },
+  { name: "NSA Award",            src: nsaAward,            alt: "National School Awards 2023",            url: "http://nationalschoolawards.in/" },
 ];
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -107,16 +106,6 @@ export function AwardedBySection() {
           transition: filter .25s ease, opacity .25s ease, transform .25s ease;
           border-radius: 6px;
           text-decoration: none;
-          flex-direction: column;
-          max-width: 245px;
-          text-align: center;
-          gap: 10px;
-        }
-        .ab-logo-caption {
-          font-size: 12px;
-          line-height: 1.35;
-          color: #4b5563;
-          white-space: normal;
         }
         .ab-logo-link:hover,
         .ab-logo-link:focus-visible {
@@ -211,7 +200,6 @@ export function AwardedBySection() {
               ) : (
                 <img src={logo.src} alt={logo.alt} loading="lazy" decoding="async" />
               )}
-              {logo.caption && <span className="ab-logo-caption">{logo.caption}</span>}
             </a>
           ))}
           </div>
@@ -226,7 +214,6 @@ export function AwardedBySection() {
               style={{ cursor: "default" }}
             >
               <img src={logo.src} alt="" loading="lazy" decoding="async" />
-              {logo.caption && <span className="ab-logo-caption">{logo.caption}</span>}
             </span>
           ))}
           </div>

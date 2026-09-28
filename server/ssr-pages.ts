@@ -789,7 +789,7 @@ const homepageAwardImages = [
   { src: "/images/optimized/scoonews-light.webp", alt: "Scoo News Feature" },
   { src: "/images/optimized/wes-mumbai.webp", alt: "15th World Education Summit Mumbai" },
   { src: "/images/optimized/economic-times.webp", alt: "Economic Times Feature" },
-  { src: "/images/optimized/nsa-award.webp", alt: "National School Awards logo" },
+  { src: "/images/optimized/nsa-award.webp", alt: "National School Awards 2023" },
 ] as const;
 
 const homepageReelPosters = [
@@ -820,13 +820,6 @@ const homepageSections: NonNullable<PageSEOData["contentSections"]> = [
   },
   {
     eyebrow: "RECOGNISED & AWARDED",
-    items: [
-      "Best Preschool in Thane — 2018",
-      "Best Preschool in Thane — 2023",
-      "Cleanest Preschool — 2020",
-      "Most Promising Preschool Chain of the Year — 2021",
-      "Emerging Preschool Chain of the Year — 2022",
-    ],
     images: homepageAwardImages,
   },
   {
