@@ -2,6 +2,8 @@ import { shouldNoIndex, PREFERRED_DOMAIN } from "@shared/seo-config";
 import { getPageSEO } from "./ssr-pages";
 import { PLAYGROUP_COPY } from "@shared/playgroup-page-content";
 import { PLAYGROUP_FAQS } from "@shared/playgroup-faq-data";
+import { NURSERY_COPY } from "@shared/nursery-page-content";
+import { NURSERY_FAQS } from "@shared/nursery-faq-data";
 
 /**
  * Keep the browser's initial document metadata aligned with bot SSR and the
@@ -47,20 +49,23 @@ export function injectIndexPolicyShell(path: string, html: string): string {
   } else {
     result = result.replace(/\s*<meta name="keywords" content="[^"]*"\s*\/?>/i, "");
   }
-  if (path === "/playgroup") {
+  if (path === "/playgroup" || path === "/nursery") {
     // The SPA replaces this route-specific first-paint markup on mount. The
     // H1 is visible immediately even on a slow connection; it has no entrance
     // animation, and the hydrated component retains its existing styling.
-    const initialHero = `<div id="playgroup-initial"><section><div class="playgroup-initial-inner"><span class="playgroup-initial-badge">${PLAYGROUP_COPY.heroBadge}</span><h1>${PLAYGROUP_COPY.h1}</h1><p>${PLAYGROUP_COPY.heroSubline}</p></div></section><div hidden aria-hidden="true">${PLAYGROUP_FAQS.map(faq => `<div><strong>${escape(faq.question)}</strong><p>${faq.answerSegments.map(segment => segment.href ? `<a href="${escape(segment.href)}">${escape(segment.text)}</a>` : escape(segment.text)).join("")}</p></div>`).join("")}</div></div>`;
+    const copy = path === "/nursery" ? NURSERY_COPY : PLAYGROUP_COPY;
+    const faqs = path === "/nursery" ? NURSERY_FAQS : PLAYGROUP_FAQS;
+    const id = path === "/nursery" ? "nursery-initial" : "playgroup-initial";
+    const initialHero = `<div id="${id}"><section><div class="${id}-inner"><span class="${id}-badge">${escape(copy.heroBadge)}</span><h1>${escape(copy.h1)}</h1><p>${escape(copy.heroSubline)}</p></div></section><div hidden aria-hidden="true">${faqs.map(faq => `<div><strong>${escape(faq.question)}</strong><p>${faq.answerSegments.map(segment => segment.href ? `<a href="${escape(segment.href)}">${escape(segment.text)}</a>` : escape(segment.text)).join("")}</p></div>`).join("")}</div></div>`;
     result = result.replace("</head>", `<style>
-      #playgroup-initial{padding-top:5rem;font-family:Inter,system-ui,sans-serif}
-      #playgroup-initial section{padding:4rem 0;background:linear-gradient(120deg,rgba(223,32,96,.1),rgba(255,193,7,.05),rgba(77,176,115,.1))}
-      #playgroup-initial .playgroup-initial-inner{max-width:80rem;margin:auto;padding:0 1rem}
-      #playgroup-initial .playgroup-initial-badge{display:inline-block;padding:.25rem 1rem;margin-bottom:1rem;border-radius:999px;font-size:1rem;background:#f3f4f6}
-      #playgroup-initial h1{font-size:1.875rem;line-height:1.25;font-weight:700;margin:0 0 1.5rem;max-width:42rem}
-      #playgroup-initial p{font-size:1.125rem;line-height:1.625;margin:0;max-width:42rem;color:#6b7280}
-      @media(min-width:768px){#playgroup-initial{padding-top:6rem}#playgroup-initial section{padding:6rem 0}#playgroup-initial h1{font-size:2.25rem}#playgroup-initial p{font-size:1.25rem}}
-      @media(min-width:1024px){#playgroup-initial section{padding:8rem 0}#playgroup-initial h1{font-size:3rem}}
+      #${id}{padding-top:5rem;font-family:Inter,system-ui,sans-serif}
+      #${id} section{padding:4rem 0;background:linear-gradient(120deg,rgba(223,32,96,.1),rgba(255,193,7,.05),rgba(77,176,115,.1))}
+      #${id} .${id}-inner{max-width:80rem;margin:auto;padding:0 1rem}
+      #${id} .${id}-badge{display:inline-block;padding:.25rem 1rem;margin-bottom:1rem;border-radius:999px;font-size:1rem;background:#f3f4f6}
+      #${id} h1{font-size:1.875rem;line-height:1.25;font-weight:700;margin:0 0 1.5rem;max-width:42rem}
+      #${id} p{font-size:1.125rem;line-height:1.625;margin:0;max-width:42rem;color:#6b7280}
+      @media(min-width:768px){#${id}{padding-top:6rem}#${id} section{padding:6rem 0}#${id} h1{font-size:2.25rem}#${id} p{font-size:1.25rem}}
+      @media(min-width:1024px){#${id} section{padding:8rem 0}#${id} h1{font-size:3rem}}
     </style></head>`);
     result = result.replace('<div id="root"></div>', `<div id="root">${initialHero}</div>`);
   }

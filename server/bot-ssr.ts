@@ -229,6 +229,7 @@ const allowedHomepageExternalLinks = new Set([
   "https://wa.me/918828195788",
   "https://wa.me/918291568972?text=Hi%2C%20I%20would%20like%20to%20know%20more%20about%20Rainbow%20Preschool",
   "https://wa.me/918291568972?text=Hi%2C%20I%27m%20interested%20in%20Playgroup%20admission",
+  "https://wa.me/918291568972?text=Hi%2C%20I%27m%20interested%20in%20Nursery%20admission",
   "tel:+918828195788",
   "tel:+918291568972",
 ]);
@@ -353,6 +354,9 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
       if (section.paragraphs) {
         section.paragraphs.forEach((paragraph) => { html += `<p>${escapeHtml(paragraph)}</p>\n`; });
       }
+      if (section.beforeSubsectionsItems) {
+        html += `<ol>${section.beforeSubsectionsItems.map(item => `<li>${escapeHtml(item)}</li>`).join("")}</ol>\n`;
+      }
       const renderRichParagraph = (segments: readonly { text: string; href?: string }[]) => {
         const body = segments.map(segment => {
           const safeLink = segment.href ? resolvePageLink(segment.href) : null;
@@ -368,6 +372,12 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
           if (subsection.heading) html += `<h3>${escapeHtml(subsection.heading)}</h3>\n`;
           if (subsection.text) html += `<p>${escapeHtml(subsection.text)}</p>\n`;
           if (subsection.items) html += `<ul>${subsection.items.map(item => `<li>${escapeHtml(item)}</li>`).join("")}</ul>\n`;
+          if (subsection.links) {
+            subsection.links.forEach(link => {
+              const safeLink = resolvePageLink(link.url);
+              if (safeLink) html += `<a href="${escapeHtml(safeLink.href)}">${escapeHtml(link.text)}</a>\n`;
+            });
+          }
         });
       }
       section.afterSubsectionsRichParagraphs?.forEach(renderRichParagraph);
@@ -453,7 +463,7 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
       </article></a>`).join("\n")}</div></section>`
     : "";
   const reviewerCreditHtml = seo.lastModified
-    ? `<p style="font-size:0.875rem;color:#666;margin:8px 0 16px"><strong>Reviewed by Rainbow Preschool Curriculum Team</strong>${requestUrl === "/playgroup" ? " — Curriculum Team, Rainbow Preschool International" : ""} — Last updated: <time datetime="${escapeHtml(seo.lastModified)}">${escapeHtml(seo.lastModifiedDisplay || seo.lastModified)}</time>${requestUrl === "/playgroup" ? " — 4.9 from 487 Google reviews" : ""}</p>`
+    ? `<p style="font-size:0.875rem;color:#666;margin:8px 0 16px"><strong>Reviewed by Rainbow Preschool Curriculum Team</strong>${requestUrl === "/playgroup" || requestUrl === "/nursery" ? " — Curriculum Team, Rainbow Preschool International" : ""} — Last updated: <time datetime="${escapeHtml(seo.lastModified)}">${escapeHtml(seo.lastModifiedDisplay || seo.lastModified)}</time>${requestUrl === "/playgroup" || requestUrl === "/nursery" ? " — 4.9 from 487 Google reviews" : ""}</p>`
     : "";
   const finalCallToActionHtml = seo.finalCallToAction
     ? `<section class="final-cta"><h2>${escapeHtml(seo.finalCallToAction.title)}</h2><p>${escapeHtml(seo.finalCallToAction.description)}</p><ul>${seo.finalCallToAction.links.map((link) => {

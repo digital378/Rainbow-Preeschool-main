@@ -44,6 +44,8 @@ import { FAQ_CATEGORIES } from "@shared/faq-data";
 import { admissionsAnswerSegments, admissionsFAQs } from "@shared/admissions-faq-data";
 import { PLAYGROUP_FAQS } from "@shared/playgroup-faq-data";
 import { PLAYGROUP_COPY, PLAYGROUP_WEBPAGE_SCHEMA } from "@shared/playgroup-page-content";
+import { NURSERY_COPY, NURSERY_VISITOR_COPY, NURSERY_DAILY_ROUTINE, NURSERY_WEBPAGE_SCHEMA } from "@shared/nursery-page-content";
+import { NURSERY_FAQS } from "@shared/nursery-faq-data";
 import { BLOG_METADATA } from "@shared/blog-metadata";
 import { testimonials, testimonialsSEO } from "@shared/testimonials-content";
 import { HAPPY_TIMES_COPY, HAPPY_TIMES_SSR_COPY } from "@shared/happy-times-content";
@@ -101,9 +103,6 @@ import {
   KINDERGARTEN_DAILY_ROUTINE,
   KINDERGARTEN_VISITOR_COPY,
   KINDERGARTEN_VISITOR_FAQS,
-  NURSERY_DAILY_ROUTINE,
-  NURSERY_VISITOR_COPY,
-  NURSERY_VISITOR_FAQS,
 } from "../client/src/pages/visitor-page-copy";
 
 const knownIndexableBodyTargets = new Set([
@@ -329,6 +328,64 @@ function visitorProgrammePageSections(
   return sections;
 }
 
+function nurseryPageSections(): NonNullable<PageSEOData["contentSections"]> {
+  const s = NURSERY_VISITOR_COPY.sections;
+  return [
+    { heading: s[0].heading, richParagraphs: s[0].paragraphSegments },
+    { heading: s[1].heading, text: s[1].paragraphs?.[0],
+      items: NURSERY_DAILY_ROUTINE.map(slot => `${slot.time} ${slot.activity} ${slot.description}`) },
+    { heading: s[2].heading, text: s[2].paragraphs?.[0],
+      subsections: s[2].items?.map(heading => ({ heading })) },
+    { heading: s[3].heading, text: s[3].paragraphs?.[0], items: s[3].items,
+      subsections: [{ heading: s[3].cards?.[0].heading }] },
+    { heading: s[4].heading, items: [
+      ...(s[4].items?.slice(0, 8) ?? []),
+      "1 Lac+ Happy Students", "18+ Years of Excellence", "06 Centres in Thane", "100% Female Staff",
+      s[4].items?.[8] ?? "",
+    ] },
+    { heading: s[5].heading, text: s[5].paragraphs?.[0],
+      subsections: [
+        { heading: s[5].cards?.[0].heading, text: s[5].cards?.[0].paragraphs?.[0],
+          links: [{ text: s[5].cards?.[0].link?.text ?? "", url: s[5].cards?.[0].link?.href ?? "" }] },
+        { heading: s[5].cards?.[1].heading, items: s[5].cards?.[1].items },
+      ],
+      afterSubsectionsRichParagraphs: s[5].paragraphSegments,
+      links: s[5].links?.filter((link): link is { text: string; href: string } => Boolean(link.href))
+        .map(link => ({ text: link.text, url: link.href })) },
+    { heading: s[6].heading, text: s[6].paragraphs?.[0],
+      images: PROGRAMME_GALLERY_IMAGES.nursery.map((image, index) => ({
+        ...image, alt: s[6].imageAlts?.[index] ?? "",
+      })) },
+    { heading: s[7].heading, text: s[7].paragraphs?.[0],
+      subsections: s[7].cards?.map(card => ({ heading: card.heading, text: card.paragraphs?.[0] })) },
+    { heading: s[8].heading, text: s[8].paragraphs?.[0], items: s[8].items },
+    { heading: s[9].heading, items: s[9].items },
+    { eyebrow: s[10].items?.[0], heading: s[10].heading, text: s[10].paragraphs?.[0],
+      subsections: homepageBranches.map(branch => ({
+        heading: branch.name,
+        text: [branch.address, "landline" in branch ? branch.landline : "", branch.calling, "secondCalling" in branch ? branch.secondCalling : ""].filter(Boolean).join(" "),
+      })) },
+    { heading: s[11].heading, text: s[11].paragraphs?.[0],
+      subsections: s[11].locations?.map(location => ({
+        heading: `Nursery in ${location.name}`, text: location.landmark,
+        links: [{ text: s[11].items?.[0] ?? "View centre →", url: location.url }],
+      })) },
+    { heading: s[12].heading, text: s[12].paragraphs?.[0],
+      beforeSubsectionsItems: s[12].steps?.map(step => `${step.label} ${step.description}`),
+      subsections: [{ heading: s[12].items?.[0],
+        items: s[12].details?.slice(0, 3).map(detail => `${detail.label} ${detail.text}`) }],
+      afterSubsectionsRichParagraphs: s[12].paragraphSegments },
+    { heading: s[13].heading, text: s[13].paragraphs?.[0], faqItems: NURSERY_FAQS, faqAsHeadings: true,
+      faqOutro: { text: s[13].items?.[0] ?? "", linkText: s[13].items?.[1] ?? "", url: "/nursery#enquiry-form" } },
+    { heading: s[14].heading, links: [
+      { text: s[14].items?.[0] ?? "", url: "/playgroup" },
+      { text: s[14].items?.[1] ?? "", url: "/play-school-near-me" },
+      { text: s[14].items?.[2] ?? "", url: "/preschool-admissions" },
+      { text: s[14].items?.[3] ?? "", url: "/kindergarten" },
+    ] },
+  ];
+}
+
 function contactPageSections(): NonNullable<PageSEOData["contentSections"]> {
   const copy = CONTACT_PAGE_COPY;
   const branchCards = copy.branches.flatMap((branch) => {
@@ -505,7 +562,8 @@ export interface PageSEOData {
     richParagraphs?: readonly (readonly { text: string; href?: string }[])[];
     faqAsHeadings?: boolean;
     faqOutro?: { text: string; linkText: string; url: string };
-    subsections?: readonly { heading?: string; text?: string; items?: readonly string[] }[];
+    subsections?: readonly { heading?: string; text?: string; items?: readonly string[]; links?: readonly { text: string; url: string }[] }[];
+    beforeSubsectionsItems?: readonly string[];
     afterSubsectionsRichParagraphs?: readonly (readonly { text: string; href?: string }[])[];
     items?: readonly string[];
     faqItems?: readonly {
@@ -1200,36 +1258,31 @@ const staticPages: Record<string, PageSEOData> = {
     lastModifiedDisplay: PLAYGROUP_COPY.publishDateDisplay,
   },
   "/nursery": {
-    title: "Nursery School in Thane (2.5–3.5 yrs) | Rainbow Preschool",
-    description: "Looking for nursery near me in Thane? Rainbow Preschool's Nursery (2.5–3.5 yrs) builds phonics, numeracy & social skills across 6 centres. Enquire now.",
-    keywords: "nursery school in thane, nursery admission thane, nursery programme thane",
+    title: NURSERY_COPY.title,
+    description: NURSERY_COPY.description,
+    keywords: "nursery school in thane, nursery school near me, nursery admission thane, nursery programme thane",
     canonical: `${BASE_URL}/nursery`,
-    h1: NURSERY_VISITOR_COPY.h1,
-    introText: NURSERY_VISITOR_COPY.intro,
+    h1: NURSERY_COPY.h1,
+    introText: NURSERY_COPY.heroSubline,
+    heroBadge: NURSERY_COPY.heroBadge,
+    heroSubheading: NURSERY_VISITOR_COPY.sections[16].items?.[0],
     breadcrumbs: [{ name: "Home", url: "/" }, { name: "Programmes", url: "/programmes" }, { name: "Nursery", url: "/nursery" }],
-    structuredData: [programmeOrgSchema, websiteSchema, ...branchLocalBusinessSchemas, {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      mainEntity: [
-        { "@type": "Question", name: "Where can I find a good nursery school near me in Thane?", acceptedAnswer: { "@type": "Answer", text: "Rainbow Preschool International has 6 nursery school centres across Thane — in Manpada, Kalwa, Anand Nagar, Dhokali, Kasarvadavali, and Hariniwas. Each centre offers the same quality nursery education with trained teachers, structured phonics-based curriculum, and safe classrooms designed for children aged 2.5 to 3.5 years. Call +91-8291568972 to find the nursery school nearest to your home." } },
-        { "@type": "Question", name: "What is the nursery school admission process at Rainbow Preschool Thane?", acceptedAnswer: { "@type": "Answer", text: "The nursery admission process is simple. Fill out our online enquiry form or call +91-8291568972 to book a free campus visit. During the visit, you can explore the classrooms, meet the teachers, and understand our nursery curriculum in detail. Once you decide to enrol, complete the admission form and your child can begin their structured early learning journey." } },
-        { "@type": "Question", name: "What is the right age for nursery school in Thane?", acceptedAnswer: { "@type": "Answer", text: "The ideal age for nursery school at Rainbow Preschool Thane is 2.5 to 3.5 years. At this developmental stage, children are naturally ready to move beyond free play and begin structured learning. Our nursery programme introduces phonics, number recognition, pre-writing skills, and social interaction in an age-appropriate way." } },
-        { "@type": "Question", name: "How is nursery different from playgroup?", acceptedAnswer: { "@type": "Answer", text: "Playgroup focuses on socialisation and sensory exploration for toddlers aged 1.5–2.5 years. Nursery (2.5–3.5 years) is more structured — children begin formal learning through phonics, number concepts (1–20), pre-writing exercises, and guided creative activities, building on the social confidence developed in playgroup." } },
-        { "@type": "Question", name: "What will my child learn in nursery class?", acceptedAnswer: { "@type": "Answer", text: "In Rainbow's nursery programme, your child will learn phonics basics and letter recognition, number concepts from 1 to 20, pre-writing skills including pencil grip and tracing, art and creative expression through drawing and craft, and essential social skills like sharing, listening, and following instructions." } },
-        { "@type": "Question", name: "Is the nursery environment safe for my child?", acceptedAnswer: { "@type": "Answer", text: "Every Rainbow Preschool nursery centre in Thane has 100% trained female staff, CCTV-enabled classrooms, child-proofed furniture, regularly sanitised spaces, and small batch sizes of 12–15 children per class for personalised attention." } },
-        { "@type": "Question", name: "How does nursery prepare my child for kindergarten?", acceptedAnswer: { "@type": "Answer", text: "By the end of the nursery year, children can recognise letters and their sounds, count and identify numbers up to 20, hold a pencil correctly and trace basic shapes, follow classroom routines independently, and interact confidently with peers and teachers — ensuring kindergarten-readiness both academically and emotionally." } },
-        { "@type": "Question", name: "How can I enquire about nursery admission in Thane?", acceptedAnswer: { "@type": "Answer", text: "Call +91-8291568972 or fill out the admission enquiry form on this page. Our admissions team will respond promptly and arrange a free campus visit at any of our 6 nursery centres across Thane — Manpada, Kalwa, Anand Nagar, Dhokali, Kasarvadavali, or Hariniwas." } },
+    structuredData: [NURSERY_WEBPAGE_SCHEMA],
+    suppressArticleSchema: true,
+    contentSections: nurseryPageSections(),
+    internalLinks: [],
+    finalCallToAction: {
+      title: NURSERY_VISITOR_COPY.sections[15].heading ?? "",
+      description: NURSERY_VISITOR_COPY.sections[15].paragraphs?.[0] ?? "",
+      links: [
+        { text: "Request Callback", url: "/nursery#enquiry-form" },
+        { text: "WhatsApp Us", url: "https://wa.me/918291568972?text=Hi%2C%20I%27m%20interested%20in%20Nursery%20admission" },
+        { text: "Find Nearest Centre", url: "/play-school-near-me" },
       ],
-    }],
-    contentSections: visitorProgrammePageSections(
-      NURSERY_VISITOR_COPY,
-      NURSERY_VISITOR_FAQS,
-      NURSERY_DAILY_ROUTINE,
-      PROGRAMME_GALLERY_IMAGES.nursery,
-    ),
-    internalLinks: [...commonInternalLinks, { text: "Nursery Admissions", url: "/nursery" }, { text: "Playgroup Programme", url: "/playgroup" }, { text: "Kindergarten Programme", url: "/kindergarten" }],
-    lastModified: LAST_UPDATED_ISO,
-    lastModifiedDisplay: LAST_UPDATED_DISPLAY,
+    },
+    reviewerAfterContent: true,
+    lastModified: NURSERY_COPY.publishDate,
+    lastModifiedDisplay: NURSERY_COPY.publishDateDisplay,
   },
   "/kindergarten": {
     title: "Kindergarten in Thane | KG Programme (3.5–5.5 yrs) | Rainbow",

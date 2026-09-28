@@ -47,14 +47,9 @@ import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { EEATSignals } from "@/components/eeat-signals";
 import { VERIFIED_RATING } from "@/lib/verified-rating";
-import { LAST_UPDATED_DISPLAY, LAST_UPDATED_ISO } from "@shared/site-freshness";
+import { NURSERY_COPY, NURSERY_DAILY_ROUTINE as dailyRoutine, NURSERY_VISITOR_COPY, NURSERY_WEBPAGE_SCHEMA } from "@shared/nursery-page-content";
+import { NURSERY_FAQS as faqs } from "@shared/nursery-faq-data";
 import { trackProgrammeView, trackFormSubmit } from "@/lib/analytics";
-import {
-  NURSERY_DAILY_ROUTINE as dailyRoutine,
-  NURSERY_VISITOR_COPY,
-  NURSERY_VISITOR_FAQS as faqs,
-  PROGRAMME_LANDING_EEAT_COPY,
-} from "@/pages/visitor-page-copy";
 
 const activities = NURSERY_VISITOR_COPY.sections[8].items ?? [];
 
@@ -335,14 +330,15 @@ export default function NurseryLanding() {
   return (
     <div className="pt-20 md:pt-24">
       <SEO
-        title="Nursery School in Thane (2.5–3.5 yrs) | Rainbow Preschool"
-        description="Looking for nursery near me in Thane? Rainbow Preschool's Nursery (2.5–3.5 yrs) builds phonics, numeracy & social skills across 6 centres. Enquire now."
-        keywords="nursery school in thane, nursery school near me, best nursery school, nursery school admission near me, nursery school admission enquiry, nursery class for kids, play based nursery school, nursery education program, top nursery school in thane"
+        title={NURSERY_COPY.title}
+        description={NURSERY_COPY.description}
+        keywords="nursery school in thane, nursery school near me, nursery school admission near me, nursery class for kids, play based nursery school"
         canonical="https://www.rainbowpreschools.com/nursery"
-        structuredData={createBreadcrumbSchema([
+        structuredData={[NURSERY_WEBPAGE_SCHEMA, createBreadcrumbSchema([
           { name: "Home", url: "/" },
+          { name: "Programmes", url: "/programmes" },
           { name: "Nursery", url: "/nursery" },
-        ])}
+        ])]}
       />
 
       {/* Hero Section with Inline Callback Form */}
@@ -392,13 +388,13 @@ export default function NurseryLanding() {
             <h2 className="text-3xl md:text-4xl font-bold mb-6 text-center">{NURSERY_VISITOR_COPY.sections[0].heading}</h2>
             <div className="prose prose-lg max-w-none text-muted-foreground">
               <p className="text-lg leading-relaxed mb-4">
-                <strong>{NURSERY_VISITOR_COPY.sections[0].paragraphs?.[0].split(" is ")[0]}</strong>{NURSERY_VISITOR_COPY.sections[0].paragraphs?.[0].split(" is ").slice(1).join(" is ")}
+                <strong>Nursery</strong>{NURSERY_VISITOR_COPY.sections[0].paragraphs?.[0].slice("Nursery".length).split("playgroup")[0]}<Link href="/playgroup" className="text-primary hover:underline">playgroup</Link>.
               </p>
               <p className="text-lg leading-relaxed mb-4">
                 {NURSERY_VISITOR_COPY.sections[0].paragraphs?.[1]}
               </p>
               <p className="text-lg leading-relaxed">
-                {NURSERY_VISITOR_COPY.sections[0].paragraphs?.[2]}
+                {NURSERY_VISITOR_COPY.sections[0].paragraphs?.[2].split("Kindergarten")[0]}<Link href="/kindergarten" className="text-primary hover:underline">Kindergarten</Link>.
               </p>
             </div>
           </div>
@@ -528,6 +524,7 @@ export default function NurseryLanding() {
                     <div className="mt-1 space-y-1">
                       <div>{NURSERY_VISITOR_COPY.sections[4].items?.[6]}</div>
                       <div>{NURSERY_VISITOR_COPY.sections[4].items?.[7]}</div>
+                      <div>{NURSERY_VISITOR_COPY.sections[4].items?.[8]}</div>
                     </div>
                   </div>
                 </div>
@@ -539,28 +536,28 @@ export default function NurseryLanding() {
                 <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground whitespace-nowrap min-h-[2.5rem] flex items-center justify-center">
                   1 Lac+
                 </div>
-                <div className="text-sm text-muted-foreground">{NURSERY_VISITOR_COPY.sections[4].items?.[8]}</div>
+                <div className="text-sm text-muted-foreground">{NURSERY_VISITOR_COPY.sections[4].items?.[9]}</div>
               </Card>
               <Card className="text-center p-6">
                 <Star className="w-10 h-10 text-secondary mx-auto mb-3" />
                 <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground whitespace-nowrap min-h-[2.5rem] flex items-center justify-center">
                   <CountUp end={18} duration={1500} delay={200} suffix="+" />
                 </div>
-                <div className="text-sm text-muted-foreground">{NURSERY_VISITOR_COPY.sections[4].items?.[9]}</div>
+                <div className="text-sm text-muted-foreground">{NURSERY_VISITOR_COPY.sections[4].items?.[10]}</div>
               </Card>
               <Card className="text-center p-6">
                 <MapPin className="w-10 h-10 text-accent mx-auto mb-3" />
                 <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground whitespace-nowrap min-h-[2.5rem] flex items-center justify-center">
                   <CountUp end={6} duration={1500} delay={400} prefix="0" />
                 </div>
-                <div className="text-sm text-muted-foreground">{NURSERY_VISITOR_COPY.sections[4].items?.[10]}</div>
+                <div className="text-sm text-muted-foreground">{NURSERY_VISITOR_COPY.sections[4].items?.[11]}</div>
               </Card>
               <Card className="text-center p-6">
                 <Shield className="w-10 h-10 text-green-500 mx-auto mb-3" />
                 <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground whitespace-nowrap min-h-[2.5rem] flex items-center justify-center">
                   <CountUp end={100} duration={1500} delay={600} suffix="%" />
                 </div>
-                <div className="text-sm text-muted-foreground">{NURSERY_VISITOR_COPY.sections[4].items?.[11]}</div>
+                <div className="text-sm text-muted-foreground">{NURSERY_VISITOR_COPY.sections[4].items?.[12]}</div>
               </Card>
             </div>
           </div>
@@ -772,7 +769,7 @@ export default function NurseryLanding() {
             <h3 className="font-semibold text-base md:text-lg mb-3">{NURSERY_VISITOR_COPY.sections[12].items?.[0]}</h3>
             <ul className="space-y-2 text-sm md:text-base text-muted-foreground">
               {NURSERY_VISITOR_COPY.sections[12].details?.map(({ label, text }) => (
-                <li key={label}><strong>{label}</strong> {text}</li>
+                <li key={label}><strong>{label}</strong> {label === "Documents:" ? <>See the full list on our <Link href="/preschool-admissions" className="text-primary hover:underline">admissions page</Link></> : text}</li>
               ))}
             </ul>
           </div>
@@ -780,7 +777,8 @@ export default function NurseryLanding() {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-16 md:py-20 lg:py-24 bg-muted/30">
+      <section id="nursery-faq" className="py-16 md:py-20 lg:py-24 bg-muted/30">
+        <style>{`#nursery-faq [role="region"][data-state="closed"] { display: none; }`}</style>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">{NURSERY_VISITOR_COPY.sections[13].heading}</h2>
@@ -795,8 +793,12 @@ export default function NurseryLanding() {
                   <AccordionTrigger className="text-left font-semibold hover:no-underline">
                     {faq.question}
                   </AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground">
-                    {faq.answer}
+                  <AccordionContent forceMount className="text-muted-foreground">
+                    {faq.answerSegments.map((segment, segmentIndex) => segment.href
+                      ? segment.href.startsWith("tel:")
+                        ? <a key={segmentIndex} href={segment.href} className="text-primary hover:underline">{segment.text}</a>
+                        : <Link key={segmentIndex} href={segment.href} className="text-primary hover:underline">{segment.text}</Link>
+                      : <span key={segmentIndex}>{segment.text}</span>)}
                   </AccordionContent>
                 </AccordionItem>
               ))}
@@ -820,7 +822,7 @@ export default function NurseryLanding() {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-lg md:text-xl font-bold text-gray-900 dark:text-white mb-5 text-center">{NURSERY_VISITOR_COPY.sections[14].heading}</h2>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            <Link href="/play-school-near-me" className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center" data-testid="link-nursery-best-preschool">
+            <Link href="/playgroup" className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center" data-testid="link-nursery-best-preschool">
               <Award className="w-5 h-5 text-primary" />
               <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">{NURSERY_VISITOR_COPY.sections[14].items?.[0]}</span>
             </Link>
@@ -843,14 +845,15 @@ export default function NurseryLanding() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-4">
         <EEATSignals
           pageUrl="/nursery"
-          pageName={PROGRAMME_LANDING_EEAT_COPY.nurseryPageName}
-          reviewedBy={PROGRAMME_LANDING_EEAT_COPY.reviewedBy}
-          reviewerRole={PROGRAMME_LANDING_EEAT_COPY.reviewerRole}
-          lastUpdated={LAST_UPDATED_DISPLAY}
-          lastUpdatedIso={LAST_UPDATED_ISO}
+          pageName={NURSERY_COPY.pageName}
+          reviewedBy={NURSERY_COPY.reviewedBy}
+          reviewerRole={NURSERY_COPY.reviewerRole}
+          lastUpdated={NURSERY_COPY.publishDateDisplay}
+          lastUpdatedIso={NURSERY_COPY.publishDate}
           ratingValue={VERIFIED_RATING.ratingValue}
           reviewCount={VERIFIED_RATING.reviewCount}
           schemaId="nursery-landing"
+          ratingSource="Google reviews"
         />
       </div>
 
