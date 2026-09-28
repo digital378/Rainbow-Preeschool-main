@@ -28,12 +28,13 @@ type Reel = {
 type ReelPage = { reels: Reel[]; nextCursor: string | null };
 
 const PAGE_SIZE = 100;
-const CACHE_MS = 10 * 60 * 1000;
+const CACHE_MS = 6 * 60 * 60 * 1000;
 const FULL_REFRESH_MS = 6 * 60 * 60 * 1000;
 const EXPIRY_CHECK_MS = 60 * 60 * 1000;
 const EXPIRY_WINDOW_MS = 24 * 60 * 60 * 1000;
 const pageCache = new Map<string, { expires: number; page: ReelPage }>();
 const pendingPages = new Map<string, Promise<ReelPage>>();
+const nextBackgroundAttempt = new Map<string, number>();
 let failureRetryAt = 0;
 let budgetStartedAt = 0;
 let budgetUsed = 0;
@@ -69,10 +70,10 @@ export function mediaUrlExpiry(url: string): number | undefined {
   return undefined;
 }
 
-function hasExpiringMedia(page: ReelPage, now: number): boolean {
+function hasMediaExpiringBy(page: ReelPage, deadline: number): boolean {
   return page.reels.some(({ mediaUrl }) => {
     const expiry = mediaUrl ? mediaUrlExpiry(mediaUrl) : undefined;
-    return expiry !== undefined && expiry <= now + EXPIRY_WINDOW_MS;
+    return expiry !== undefined && expiry <= deadline;
   });
 }
 
@@ -128,11 +129,15 @@ async function loadReels(after: string | null, token: string): Promise<ReelPage>
 function refreshPage(key: string, token: string): Promise<ReelPage> {
   const ongoing = pendingPages.get(key);
   if (ongoing) return ongoing;
+  nextBackgroundAttempt.set(key, Date.now() + EXPIRY_CHECK_MS);
   const pending = loadReels(key === "first" ? null : key, token)
     .then((page) => {
       if (pageCache.size >= 30 && !pageCache.has(key)) {
         const oldest = Array.from(pageCache.keys()).find((cursor) => cursor !== "first");
-        if (oldest) pageCache.delete(oldest);
+        if (oldest) {
+          pageCache.delete(oldest);
+          nextBackgroundAttempt.delete(oldest);
+        }
       }
       pageCache.set(key, { page, expires: Date.now() + CACHE_MS });
       return page;
@@ -175,7 +180,8 @@ export function startInstagramReelRefreshJob(): void {
         }
       } else {
         for (const [key, cached] of Array.from(pageCache.entries())) {
-          if (!hasExpiringMedia(cached.page, now)) continue;
+          if (!hasMediaExpiringBy(cached.page, now + EXPIRY_WINDOW_MS)) continue;
+          if (now < (nextBackgroundAttempt.get(key) ?? 0)) continue;
           try {
             await refreshPage(key, token);
           } catch {
@@ -209,20 +215,45 @@ async function handleReels(req: Request, res: Response, publicFeed = false) {
   const key = cursor ?? "first";
   const cached = pageCache.get(key);
   const sendPage = (page: ReelPage) => {
-    if (publicFeed) res.setHeader("Cache-Control", "public, max-age=60");
+    if (publicFeed) {
+      res.setHeader("Cache-Control", hasMediaExpiringBy(page, Date.now() + 60_000)
+        ? "no-store"
+        : "public, max-age=60");
+    }
     res.json(withoutExpiredMedia(page));
   };
-  if (cached && cached.expires > Date.now()) {
+  const now = Date.now();
+  if (cached && hasMediaExpiringBy(cached.page, now)) {
+    // Do not hand out an already-expired URL. Wait for an in-flight or fresh
+    // request; if Instagram fails, return the poster/permalink without mediaUrl.
+    try {
+      const pending = pendingPages.get(key);
+      if (pending || now >= failureRetryAt) {
+        sendPage(await (pending ?? refreshPage(key, token)));
+        return;
+      }
+    } catch {
+      // Use the existing thumbnail/Instagram link instead of an expired URL.
+    }
+    res.setHeader("Cache-Control", "no-store");
+    res.json(withoutExpiredMedia(cached.page));
+    return;
+  }
+  if (cached) {
+    if (
+      now >= failureRetryAt &&
+      now >= (nextBackgroundAttempt.get(key) ?? 0) &&
+      (cached.expires <= now || hasMediaExpiringBy(cached.page, now + EXPIRY_WINDOW_MS))
+    ) {
+      void refreshPage(key, token).catch(() => {
+        // Keep the last usable cached page; the next check can retry.
+      });
+    }
     sendPage(cached.page);
     return;
   }
 
   if (Date.now() < failureRetryAt) {
-    if (cached) {
-      res.setHeader("Cache-Control", "no-store");
-      res.json(withoutExpiredMedia(cached.page));
-      return;
-    }
     res.setHeader("Retry-After", "15");
     res.status(502).json({ message: "Instagram feed is temporarily unavailable" });
     return;
@@ -247,11 +278,6 @@ async function handleReels(req: Request, res: Response, publicFeed = false) {
     }
     sendPage(await pending);
   } catch {
-    if (cached) {
-      res.setHeader("Cache-Control", "no-store");
-      res.json(withoutExpiredMedia(cached.page));
-      return;
-    }
     res.setHeader("Retry-After", "15");
     res.status(502).json({ message: "Instagram feed is temporarily unavailable" });
   }
