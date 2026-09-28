@@ -14,7 +14,7 @@
  *   npx tsx scripts/check-sitemap-200.ts http://127.0.0.1:5000
  */
 
-import { SITEMAP_ENTRIES } from "../shared/sitemap-entries";
+import { ARCHIVED_REDIRECT_PATHS, SITEMAP_ENTRIES } from "../shared/sitemap-entries";
 import { redirectMap } from "../server/redirects";
 import { STANDALONE_BLOG_SLUGS } from "../shared/standalone-blog-slugs";
 
@@ -139,6 +139,26 @@ async function pool<T, R>(
   );
   if (locs.length === 0) {
     console.error("\n[check-sitemap-200] FAIL — sitemap.xml has zero <loc> entries.");
+    process.exit(1);
+  }
+
+  const sitemapPaths = new Set(locs.map((loc) => {
+    try {
+      const path = new URL(loc).pathname.toLowerCase();
+      return path === "/" ? path : path.replace(/\/+$/, "");
+    } catch {
+      const path = loc.split(/[?#]/, 1)[0].toLowerCase();
+      return path === "/" ? path : path.replace(/\/+$/, "");
+    }
+  }));
+  const archivedInSitemap = [...ARCHIVED_REDIRECT_PATHS].filter((path) =>
+    sitemapPaths.has(path),
+  );
+  if (archivedInSitemap.length > 0) {
+    console.error(
+      `\n[check-sitemap-200] FAIL — ${archivedInSitemap.length} redirected source URL(s) remain in sitemap.xml:`,
+    );
+    for (const path of archivedInSitemap) console.error(`  [STALE] ${path}`);
     process.exit(1);
   }
 

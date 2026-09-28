@@ -496,7 +496,9 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
       </nav>
     </header>
     <main>
-      ${seo.breadcrumbs ? `<div class="breadcrumb">${seo.breadcrumbs.map((b) => `<a href="${BASE_URL}${b.url}">${escapeHtml(b.name)}</a>`).join(" › ")}</div>` : ""}
+      ${seo.breadcrumbs ? `<div class="breadcrumb">${seo.breadcrumbs.map((b) => b.url
+        ? `<a href="${BASE_URL}${b.url}">${escapeHtml(b.name)}</a>`
+        : `<span>${escapeHtml(b.name)}</span>`).join(" › ")}</div>` : ""}
       <h1>${escapeHtml(seo.h1 || seo.title)}</h1>
       ${seo.reviewerAfterContent ? "" : reviewerCreditHtml}
       ${seo.introText ? `<p>${escapeHtml(seo.introText)}</p>` : ""}
@@ -513,13 +515,21 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
     </main>
     <footer>
       <p>&copy; ${new Date().getFullYear()} Rainbow Preschool International. All rights reserved.</p>
-      <div>
+      <div aria-label="Quick Links">
+        <a href="${BASE_URL}/">Home</a>
+        <a href="${BASE_URL}/about">About Us</a>
+        <a href="${BASE_URL}/programmes">Our Programmes</a>
+        ${requestUrl === "/play-school-near-me"
+          ? "Find a preschool near you"
+          : `<a href="${BASE_URL}/play-school-near-me">Find a preschool near you</a>`}
+        <a href="${BASE_URL}/preschool-admissions">Preschool Admissions</a>
+        <a href="${BASE_URL}/blog">Blogs</a>
+        <a href="${BASE_URL}/contact">Contact Us</a>
+      </div>
+      <div aria-label="Our Programmes">
         <a href="${BASE_URL}/playgroup">Playgroup</a>
         <a href="${BASE_URL}/nursery">Nursery</a>
         <a href="${BASE_URL}/kindergarten">Kindergarten</a>
-        <a href="${BASE_URL}/preschool-admissions">Admissions</a>
-        <a href="${BASE_URL}/best-preschool-near-me-in-thane">Best Preschool in Thane</a>
-        <a href="${BASE_URL}/play-school-near-me">Find a preschool near you</a>
       </div>
       <p><a href="https://rainbowinternationalschool.in" rel="noopener">Rainbow International School</a> — CBSE K–12, Nursery to Class 12</p>
       <p><a href="${BASE_URL}/privacy">Privacy Policy</a> | <a href="${BASE_URL}/terms">Terms of Service</a></p>

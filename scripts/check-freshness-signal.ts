@@ -30,7 +30,6 @@ const COMMERCIAL_URLS = [
   "/nursery",
   "/playgroup",
   "/play-school-near-me",
-  "/best-preschool-near-me-in-thane",
   "/preschool-admissions",
 ];
 
@@ -41,12 +40,6 @@ const LOCALITY_URLS = [
   "/preschool-in-dhokali-thane",
   "/preschool-in-kalwa-thane",
   "/preschool-in-kasarvadavali-thane",
-  "/playgroup-in-manpada",
-  "/playgroup-in-kalwa",
-  "/playgroup-near-ghodbunder-road",
-  "/playgroup-in-anand-nagar",
-  "/playgroup-in-kasarvadavali",
-  "/playgroup-in-dhokali",
 ];
 
 // Remaining indexable, evergreen landers (supporting pages).

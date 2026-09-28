@@ -175,11 +175,11 @@ describe("TRUE NEGATIVES — quoted-string exemption", () => {
 // ---------------------------------------------------------------------------
 
 describe("TRUE NEGATIVES — canonical-file exemption", () => {
-  it("allows 'Best Preschool in Thane' on best-preschool-in-thane.tsx", () => {
+  it("allows 'Best Preschool in Thane' on play-school-near-me.tsx", () => {
     const src = `
       return <h1>Best Preschool in Thane</h1>;
     `;
-    const errors = scanPageLines(lines(src), "best-preschool-in-thane.tsx");
+    const errors = scanPageLines(lines(src), "play-school-near-me.tsx");
     assert.strictEqual(errors.length, 0, "canonical file must not be flagged");
   });
 
@@ -223,7 +223,7 @@ describe("TRUE NEGATIVES — canonical-file exemption", () => {
 describe("TRUE NEGATIVES — anchor exemption (href / <a> / <Link>)", () => {
   it("allows phrase in a JSX href attribute", () => {
     const src = `
-      <a href="/best-preschool-near-me-in-thane">Best Preschool in Thane</a>
+      <a href="/play-school-near-me">Best Preschool in Thane</a>
     `;
     const errors = scanPageLines(lines(src), "about.tsx");
     assert.strictEqual(errors.length, 0, "line with href= must be skipped");
@@ -239,7 +239,7 @@ describe("TRUE NEGATIVES — anchor exemption (href / <a> / <Link>)", () => {
 
   it("allows phrase on a line containing <Link>", () => {
     const src = `
-      <Link to="/best-preschool-near-me-in-thane">Best Preschool in Thane</Link>
+      <Link to="/play-school-near-me">Best Preschool in Thane</Link>
     `;
     const errors = scanPageLines(lines(src), "about.tsx");
     assert.strictEqual(errors.length, 0, "line with <Link> must be skipped");
@@ -292,7 +292,7 @@ describe("TRUE NEGATIVES — comment and import lines are skipped", () => {
 
   it("ignores an import line containing a reserved phrase", () => {
     const src = `
-      import BestPreschoolInThane from "./best-preschool-in-thane";
+      import PlaySchoolNearMe from "./play-school-near-me";
     `;
     const errors = scanPageLines(lines(src), "about.tsx");
     assert.strictEqual(errors.length, 0, "import lines must be skipped");
@@ -327,7 +327,7 @@ describe("TRUE NEGATIVES — meta fields in shared data files are skipped", () =
   it("does not flag a phrase inside a url: field", () => {
     const src = `
       {
-        url: "/best-preschool-near-me-in-thane",
+        url: "/play-school-near-me",
       }
     `;
     const errors = scanDataLines(lines(src), "shared/centre-data.ts");
@@ -337,7 +337,7 @@ describe("TRUE NEGATIVES — meta fields in shared data files are skipped", () =
   it("does not flag a line in a visible field when href= appears before the phrase", () => {
     const src = `
       {
-        heading: '<a href="/best-preschool-near-me-in-thane">Best Preschool in Thane</a>',
+        heading: '<a href="/play-school-near-me">Best Preschool in Thane</a>',
       }
     `;
     const errors = scanDataLines(lines(src), "shared/centre-data.ts");

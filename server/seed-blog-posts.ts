@@ -556,7 +556,7 @@ While most children train without medical involvement, do consult your paediatri
   ## Where to Read Next on the Rainbow Blog
   Toilet training is closely tied to other big transitions. Read our **First Day of Preschool Packing Checklist** if you are also navigating school start, and our **Preparing Your Preschooler for a New Sibling** if a baby is on the way — both transitions that can affect toilet training timelines and require sensitive handling.
 
-EXPLORE_MORE: [Admissions Information](/preschool-admissions)|[Find a Center Near You](/best-preschool-near-me-in-thane)|[Playgroup Details](/playgroup)
+EXPLORE_MORE: [Admissions Information](/preschool-admissions)|[Find a Center Near You](/play-school-near-me)|[Playgroup Details](/playgroup)
 
 Reviewed by the Rainbow Preschool Curriculum Team
 Last updated: April 2026`,
@@ -869,7 +869,7 @@ Take a photo at the school gate on day 1 (your school's policy permitting). One 
   ## Where to Read Next on the Rainbow Blog
   For continued reading, our **50 Healthy Tiffin Box Ideas** post gives you 5 weeks of lunch ideas, our **Toilet Training Toddlers** guide covers the most common new-school anxiety, and our **Preparing Your Preschooler for a New Sibling** post helps if a younger sibling is on the way during your child's school transition.
 
-EXPLORE_MORE: [Preschool Admissions](/preschool-admissions)|[Our Thane Branches](/contact)|[Find the Best Preschool Near Me](/best-preschool-near-me-in-thane)
+EXPLORE_MORE: [Preschool Admissions](/preschool-admissions)|[Our Thane Branches](/contact)|[Find the Best Preschool Near Me](/play-school-near-me)
 
 Reviewed by the Rainbow Preschool Curriculum Team
 Last updated: April 2026`,
@@ -982,7 +982,7 @@ Our weekly schedule across all Thane centres includes a "Wonder Wednesday" — a
   ## Where to Read Next on the Rainbow Blog
   Pair STEM with movement: our **Yoga & Mindfulness for Preschoolers** post covers the physical-development side, while our **Toddler Speech Development** guide covers the language side. Together with STEM, you get a balanced "whole child" approach to early learning at home.
 
-EXPLORE_MORE: [Our Kindergarten Program](/kindergarten)|[Nursery Details](/nursery)|[Best Preschool Near Me in Thane](/best-preschool-near-me-in-thane)
+EXPLORE_MORE: [Our Kindergarten Program](/kindergarten)|[Nursery Details](/nursery)|[Best Preschool Near Me in Thane](/play-school-near-me)
 
 Reviewed by the Rainbow Preschool Curriculum Team
 Last updated: April 2026`,
@@ -2207,7 +2207,7 @@ When children pretend to be doctors, teachers, parents, or superheroes, they're 
 
 **At Rainbow Preschool:** Our dramatic play centres include home corners, markets, doctor's offices, and other themed areas that invite imaginative exploration.
 
-EXPLORE_MORE:[Our Play-Based Programmes](/programmes)|[Playgroup for Toddlers](/playgroup)|[Best Preschool in Thane](/best-preschool-near-me-in-thane)|[Parent Testimonials](/testimonials)
+EXPLORE_MORE:[Our Play-Based Programmes](/programmes)|[Playgroup for Toddlers](/playgroup)|[Best Preschool in Thane](/play-school-near-me)|[Parent Testimonials](/testimonials)
 
 ### 2. Constructive Play (Building and Creating)
 
@@ -2484,7 +2484,7 @@ RIS_BACKLINK:Play-based learning continues to be valuable as children grow. [Rai
 
 **Trust the Teachers:** Trained preschool teachers are experts at helping children settle in. Most children stop crying within minutes of parents leaving.
 
-EXPLORE_MORE:[Our Programmes](/programmes)|[Nursery Programme](/nursery)|[Top Preschool in Thane](/best-preschool-near-me-in-thane)|[Preschool Admissions 2026-27](/preschool-admissions)
+EXPLORE_MORE:[Our Programmes](/programmes)|[Nursery Programme](/nursery)|[Top Preschool in Thane](/play-school-near-me)|[Preschool Admissions 2026-27](/preschool-admissions)
 
 ## The First Week: What to Expect
 
@@ -2634,7 +2634,7 @@ A well-designed physical space supports learning:
 
 **Outdoor Areas:** Safe outdoor spaces allow for physical activity and connection with nature.
 
-EXPLORE_MORE:[Preschool Near You in Thane](/best-preschool-near-me-in-thane)|[Our Programmes](/programmes)|[10 Signs of a Good Preschool](/blog/signs-of-good-preschool-thane)|[Preschool Admissions](/preschool-admissions)
+EXPLORE_MORE:[Preschool Near You in Thane](/play-school-near-me)|[Our Programmes](/programmes)|[10 Signs of a Good Preschool](/blog/signs-of-good-preschool-thane)|[Preschool Admissions](/preschool-admissions)
 
 ## The Role of Relationships
 
@@ -2750,7 +2750,7 @@ Safety should be non-negotiable. Check for:
 
 Rainbow Preschool maintains 24/7 CCTV monitoring, daily hygiene routines, fire safety equipment, and first-aid-trained staff across all centres.
 
-EXPLORE_MORE:[Find a Preschool Near You in Thane](/best-preschool-near-me-in-thane)|[Our Programmes](/programmes)|[Preschool Admissions 2026-27](/preschool-admissions)|[Is Your Child Ready? Take the Quiz](/preschool-readiness-quiz)
+EXPLORE_MORE:[Find a Preschool Near You in Thane](/play-school-near-me)|[Our Programmes](/programmes)|[Preschool Admissions 2026-27](/preschool-admissions)|[Is Your Child Ready? Take the Quiz](/preschool-readiness-quiz)
 
 ## Sign 6: Strong Communication with Parents
 
@@ -2961,7 +2961,7 @@ Rainbow Preschool operates Monday to Saturday, 8 AM to 6 PM, with both half-day 
 
 The investment in preschool education yields measurable returns — Nobel Prize-winning economist James Heckman's research shows a 13% annual return on investment in quality early childhood education through better academic outcomes and higher adult earnings.
 
-EXPLORE_MORE:[Explore Rainbow's Programmes](/programmes)|[Kindergarten Programme](/kindergarten)|[Best Preschool Near You in Thane](/best-preschool-near-me-in-thane)|[Happy Times After-School Programme](/happy-times)
+EXPLORE_MORE:[Explore Rainbow's Programmes](/programmes)|[Kindergarten Programme](/kindergarten)|[Best Preschool Near You in Thane](/play-school-near-me)|[Happy Times After-School Programme](/happy-times)
 
 ## 7. Social Development
 

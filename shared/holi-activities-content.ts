@@ -185,7 +185,7 @@ export const HOLI_HELPFUL_LINKS = [
   { text: "Admissions Information", url: "/preschool-admissions" },
   { text: "Diwali Activities for Kindergarten", url: "/diwali-activity-for-kindergarten" },
   { text: "Sports Day Activities for Kindergarten", url: "/sports-day-activities-for-kindergarten" },
-  { text: "Best Preschool in Thane", url: "/best-preschool-near-me-in-thane" },
+  { text: "Best Preschool in Thane", url: "/play-school-near-me" },
   { text: "Contact Us", url: "/contact" },
 ] as const;
 
@@ -195,7 +195,7 @@ export const HOLI_RELATED_ARTICLES = [
   { title: "Indoor Games for Kids at Home", url: "/best-indoor-games-for-kids-at-home" },
   { title: "Brain Gym Activities for Preschoolers", url: "/blog/50-fun-learning-activities-preschoolers" },
   { title: "Innovative Learning Activities", url: "/blog/50-fun-learning-activities-preschoolers" },
-  { title: "Best Preschool in Thane", url: "/best-preschool-near-me-in-thane" },
+  { title: "Best Preschool in Thane", url: "/play-school-near-me" },
 ] as const;
 
 export const HOLI_SCHOOL_LINKS = [

@@ -648,7 +648,7 @@ export default function HappyTimesLanding() {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-lg md:text-xl font-bold text-gray-900 dark:text-white mb-5 text-center">{HAPPY_TIMES_COPY.exploreTitle}</h2>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            <Link href="/best-preschool-near-me-in-thane" className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center" data-testid="link-happytimes-best-preschool">
+            <Link href="/play-school-near-me" className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center" data-testid="link-happytimes-best-preschool">
               <Award className="w-5 h-5 text-primary" />
               <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">Award-Winning Preschool</span>
             </Link>

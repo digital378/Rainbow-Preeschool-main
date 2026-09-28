@@ -292,7 +292,7 @@ export default function ReadinessQuiz() {
                   <ArrowRight className="w-4 h-4 text-red-500 flex-shrink-0" />
                   10 Signs of a Good Preschool
                 </Link>
-                <Link href="/blog/nursery-school-admission-thane-2026" className="flex items-center gap-2 p-3 rounded-lg border hover:border-red-300 hover:shadow-sm transition-all text-sm text-gray-700" data-testid="link-quiz-admission">
+                <Link href="/preschool-admissions" className="flex items-center gap-2 p-3 rounded-lg border hover:border-red-300 hover:shadow-sm transition-all text-sm text-gray-700" data-testid="link-quiz-admission">
                   <ArrowRight className="w-4 h-4 text-red-500 flex-shrink-0" />
                   Nursery Admission Guide 2026-27
                 </Link>

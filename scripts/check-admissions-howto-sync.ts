@@ -101,7 +101,7 @@ function check(relPath: string): Failure[] {
   }
 
   const start = src.indexOf('"/preschool-admissions": {');
-  const end = src.indexOf('"/best-preschool-near-me-in-thane": {');
+  const end = src.indexOf('"/play-school-near-me": {', start);
   if (relPath === "server/ssr-pages.ts" && (start < 0 || end <= start)) {
     return [{ file: relPath, line: null, message: "Admissions SSR entry not found for HowTo check." }];
   }

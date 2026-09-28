@@ -62,8 +62,8 @@ export const redirectMap: Record<string, string> = {
   // ── Keyword variants → canonical commercial pages (audit: ghost variants) ──
   "/playschool-near-me": "/play-school-near-me",
   "/playschool-near-me/": "/play-school-near-me",
-  "/preschool-near-me": "/best-preschool-near-me-in-thane",
-  "/preschool-near-me/": "/best-preschool-near-me-in-thane",
+  "/preschool-near-me": "/play-school-near-me",
+  "/preschool-near-me/": "/play-school-near-me",
   "/playgroup-near-me": "/playgroup",
   "/playgroup-near-me/": "/playgroup",
   "/nursery-near-me": "/nursery",
@@ -88,10 +88,10 @@ export const redirectMap: Record<string, string> = {
   "/play-school-thane/": "/play-school-near-me",
   "/playschool-thane": "/play-school-near-me",
   "/playschool-thane/": "/play-school-near-me",
-  "/best-preschool-thane": "/best-preschool-near-me-in-thane",
-  "/best-preschool-thane/": "/best-preschool-near-me-in-thane",
-  "/preschool-thane": "/best-preschool-near-me-in-thane",
-  "/preschool-thane/": "/best-preschool-near-me-in-thane",
+  "/best-preschool-thane": "/play-school-near-me",
+  "/best-preschool-thane/": "/play-school-near-me",
+  "/preschool-thane": "/play-school-near-me",
+  "/preschool-thane/": "/play-school-near-me",
   "/preschool-vs-daycare": "/blog/preschool-vs-daycare-difference",
   "/preschool-vs-daycare/": "/blog/preschool-vs-daycare-difference",
   "/nursery-school-admission": "/nursery",
@@ -232,12 +232,12 @@ export const redirectMap: Record<string, string> = {
   // 301-redirected to the appropriate canonical destination.
   //
   // Commercial keyword variants → canonical commercial pages
-  "/preschool-near-me-in-thane": "/best-preschool-near-me-in-thane",
-  "/preschool-near-me-in-thane/": "/best-preschool-near-me-in-thane",
-  "/best-preschool-near-me": "/best-preschool-near-me-in-thane",
-  "/best-preschool-near-me/": "/best-preschool-near-me-in-thane",
-  "/pre-school-thane": "/best-preschool-near-me-in-thane",
-  "/pre-school-thane/": "/best-preschool-near-me-in-thane",
+  "/preschool-near-me-in-thane": "/play-school-near-me",
+  "/preschool-near-me-in-thane/": "/play-school-near-me",
+  "/best-preschool-near-me": "/play-school-near-me",
+  "/best-preschool-near-me/": "/play-school-near-me",
+  "/pre-school-thane": "/play-school-near-me",
+  "/pre-school-thane/": "/play-school-near-me",
   "/playschool-in-thane": "/play-school-near-me",
   "/playschool-in-thane/": "/play-school-near-me",
   "/best-play-school-near-me": "/play-school-near-me",
@@ -288,8 +288,8 @@ export const redirectMap: Record<string, string> = {
   "/preschool-in-ghodbunder-road-thane": "/preschool-in-kasarvadavali-thane",
   "/preschool-in-ghodbunder-road-thane/": "/preschool-in-kasarvadavali-thane",
   // Thane West: generic city-area slug → canonical commercial page.
-  "/preschool-in-thane-west": "/best-preschool-near-me-in-thane",
-  "/preschool-in-thane-west/": "/best-preschool-near-me-in-thane",
+  "/preschool-in-thane-west": "/play-school-near-me",
+  "/preschool-in-thane-west/": "/play-school-near-me",
   // Naupada / Panchpakadi: Hariniwas centre is at Hariniwas Circle, Panchpakadi.
   "/preschool-in-naupada": "/preschool-in-hariniwas-thane",
   "/preschool-in-naupada/": "/preschool-in-hariniwas-thane",
@@ -333,15 +333,15 @@ export const redirectMap: Record<string, string> = {
   "/nursery-school-in-thane/": "/nursery",
 
   // ── Best preschool slug change ─────────────────────────────────────────────
-  "/best-preschool-in-thane": "/best-preschool-near-me-in-thane",
+  "/best-preschool-in-thane": "/play-school-near-me",
 
   // ── Generic /preschool-in-thane → canonical commercial page ──────────────
   // Soft-duplicate guard: this slug used to fall through to the SPA shell
   // and render the homepage's title + canonical=/, leaking equity from the
   // canonical commercial URL. Both bare and trailing-slash variants are
   // covered in scripts/check-keyword-targets.ts.
-  "/preschool-in-thane": "/best-preschool-near-me-in-thane",
-  "/preschool-in-thane/": "/best-preschool-near-me-in-thane",
+  "/preschool-in-thane": "/play-school-near-me",
+  "/preschool-in-thane/": "/play-school-near-me",
 
   // ── Top preschools duplicate ──────────────────────────────────────────────
   "/top-10-preschools-thane-comparison-guide": "/top-preschools-in-thane",
@@ -482,8 +482,8 @@ export const redirectMap: Record<string, string> = {
   "/how-to-choose-best-preschool-thane/": "/blog/signs-of-good-preschool-thane",
   "/playgroup-admission-thane-complete-guide": "/preschool-admissions",
   "/playgroup-admission-thane-complete-guide/": "/preschool-admissions",
-  "/why-rainbow-preschool-best-thane-2026": "/best-preschool-near-me-in-thane",
-  "/why-rainbow-preschool-best-thane-2026/": "/best-preschool-near-me-in-thane",
+  "/why-rainbow-preschool-best-thane-2026": "/play-school-near-me",
+  "/why-rainbow-preschool-best-thane-2026/": "/play-school-near-me",
   "/what-makes-great-preschool-checklist": "/blog/signs-of-good-preschool-thane",
   "/what-makes-great-preschool-checklist/": "/blog/signs-of-good-preschool-thane",
   "/preschool-vs-daycare-difference": "/blog/preschool-vs-daycare-difference",
@@ -666,6 +666,33 @@ export const redirectMap: Record<string, string> = {
   "/teacher-training-quality-preschool/": "/about",
   "/about/akheela-balbale": "/about",
   "/about/akheela-balbale/": "/about",
+
+  // Consolidated landing pages. Both slash forms are included for sitemap
+  // filtering; the early redirect middleware also normalizes case and slashes.
+  "/best-preschool-near-me-in-thane": "/play-school-near-me",
+  "/best-preschool-near-me-in-thane/": "/play-school-near-me",
+  "/playgroup-near-ghodbunder-road": "/play-school-near-ghodbunder-road",
+  "/playgroup-near-ghodbunder-road/": "/play-school-near-ghodbunder-road",
+  "/playgroup-in-manpada": "/preschool-in-manpada-thane",
+  "/playgroup-in-manpada/": "/preschool-in-manpada-thane",
+  "/playgroup-in-kasarvadavali": "/preschool-in-kasarvadavali-thane",
+  "/playgroup-in-kasarvadavali/": "/preschool-in-kasarvadavali-thane",
+  "/playgroup-in-anand-nagar": "/preschool-in-anand-nagar-thane",
+  "/playgroup-in-anand-nagar/": "/preschool-in-anand-nagar-thane",
+  "/playgroup-in-kalwa": "/preschool-in-kalwa-thane",
+  "/playgroup-in-kalwa/": "/preschool-in-kalwa-thane",
+  "/playgroup-in-dhokali": "/preschool-in-dhokali-thane",
+  "/playgroup-in-dhokali/": "/preschool-in-dhokali-thane",
+  "/play-school-near-majiwada": "/preschool-in-anand-nagar-thane",
+  "/play-school-near-majiwada/": "/preschool-in-anand-nagar-thane",
+  "/play-school-near-naupada": "/preschool-in-hariniwas-thane",
+  "/play-school-near-naupada/": "/preschool-in-hariniwas-thane",
+  "/blog/nursery-school-admission-thane-2026": "/preschool-admissions",
+  "/blog/nursery-school-admission-thane-2026/": "/preschool-admissions",
+  "/importance-of-play-in-childrens-emotional-growth": "/blog/how-play-based-learning-shapes-young-minds",
+  "/importance-of-play-in-childrens-emotional-growth/": "/blog/how-play-based-learning-shapes-young-minds",
+  "/healthy-preschool-meals-for-bright-minds-and-bodies": "/blog/healthy-tiffin-box-ideas-preschoolers",
+  "/healthy-preschool-meals-for-bright-minds-and-bodies/": "/blog/healthy-tiffin-box-ideas-preschoolers",
 };
 
 const ATTRIBUTION_PARAMS = [
@@ -700,6 +727,39 @@ export function preserveAttribution(target: string, originalUrl: string): string
 }
 
 export function setupRedirects(app: Express) {
+  // Consolidated-page redirects run before host/query canonicalization so
+  // every UA gets one permanent hop, with the incoming query untouched.
+  const consolidatedTargets: Record<string, string> = {
+    "/best-preschool-near-me-in-thane": "/play-school-near-me",
+    "/playgroup-near-ghodbunder-road": "/play-school-near-ghodbunder-road",
+    "/playgroup-in-manpada": "/preschool-in-manpada-thane",
+    "/playgroup-in-kasarvadavali": "/preschool-in-kasarvadavali-thane",
+    "/playgroup-in-anand-nagar": "/preschool-in-anand-nagar-thane",
+    "/playgroup-in-kalwa": "/preschool-in-kalwa-thane",
+    "/playgroup-in-dhokali": "/preschool-in-dhokali-thane",
+    "/play-school-near-majiwada": "/preschool-in-anand-nagar-thane",
+    "/play-school-near-naupada": "/preschool-in-hariniwas-thane",
+    "/blog/nursery-school-admission-thane-2026": "/preschool-admissions",
+    "/importance-of-play-in-childrens-emotional-growth": "/blog/how-play-based-learning-shapes-young-minds",
+    "/healthy-preschool-meals-for-bright-minds-and-bodies": "/blog/healthy-tiffin-box-ideas-preschoolers",
+  };
+  app.use((req: Request, res: Response, next: NextFunction) => {
+    if (!["GET", "HEAD"].includes(req.method)) return next();
+    const normalizedPath = req.path.toLowerCase().replace(/\/+$/, "") || "/";
+    const target = consolidatedTargets[normalizedPath];
+    if (!target) return next();
+    const queryIndex = req.originalUrl.indexOf("?");
+    const query = queryIndex < 0 ? "" : req.originalUrl.slice(queryIndex);
+    const host = (req.get("host") || "").toLowerCase();
+    const proto = (req.get("x-forwarded-proto") || req.protocol).toLowerCase();
+    const needsCanonicalHost = process.env.NODE_ENV === "production" &&
+      (host !== "www.rainbowpreschools.com" || proto === "http");
+    const location = needsCanonicalHost
+      ? `https://www.rainbowpreschools.com${target}${query}`
+      : `${target}${query}`;
+    return res.redirect(301, location);
+  });
+
   // ── 1. Canonical host enforcement (production only) ────────────────────────
   // Enforces https://www.rainbowpreschools.com as the single canonical host.
   // Handles all four non-canonical variants:

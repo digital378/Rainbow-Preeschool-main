@@ -46,7 +46,7 @@ export const CONTACT_PAGE_COPY = {
   },
   exploreHeading: "Explore Rainbow Preschool",
   links: [
-    { href: "/best-preschool-near-me-in-thane", label: "Award-Winning Preschool" },
+    { href: "/play-school-near-me", label: "Award-Winning Preschool" },
     { href: "/play-school-near-me", label: "Find Nearest Centre" },
     { href: "/preschool-admissions", label: "Admission Process" },
     { href: "/gallery", label: "Photo Gallery" },

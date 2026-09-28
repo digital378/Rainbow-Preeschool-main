@@ -1,4 +1,4 @@
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { Phone, Mail, MapPin, Clock, GraduationCap } from "lucide-react";
 import { SiFacebook, SiInstagram, SiYoutube } from "react-icons/si";
 const logoImage = "/images/optimized/rainbow-logo.webp";
@@ -6,6 +6,7 @@ import { localityLandingPages, preschoolLandingPages } from "@shared/centre-data
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
+  const [location] = useLocation();
 
   return (
     <footer className="bg-card border-t">
@@ -83,23 +84,19 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/best-preschool-near-me-in-thane" className="text-sm text-muted-foreground hover:text-foreground transition-colors" data-testid="link-footer-best-preschool">
-                  Find a preschool near you
-                </Link>
-              </li>
-              <li>
-                <Link href="/play-school-near-me" className="text-sm text-muted-foreground hover:text-foreground transition-colors" data-testid="link-footer-play-school-near-me">
-                  Play School Near Me
-                </Link>
+                {location === "/play-school-near-me" ? (
+                  <span className="text-sm text-muted-foreground" data-testid="link-footer-find-preschool-near-you">
+                    Find a preschool near you
+                  </span>
+                ) : (
+                  <Link href="/play-school-near-me" className="text-sm text-muted-foreground hover:text-foreground transition-colors" data-testid="link-footer-find-preschool-near-you">
+                    Find a preschool near you
+                  </Link>
+                )}
               </li>
               <li>
                 <Link href="/preschool-admissions" className="text-sm text-muted-foreground hover:text-foreground transition-colors" data-testid="link-footer-preschool-admissions">
                   Preschool Admissions
-                </Link>
-              </li>
-              <li>
-                <Link href="/nursery" className="text-sm text-muted-foreground hover:text-foreground transition-colors" data-testid="link-footer-nursery">
-                  Nursery Programme
                 </Link>
               </li>
               <li>

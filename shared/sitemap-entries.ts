@@ -38,6 +38,29 @@ export interface SitemapEntry {
   lastmod?: string;
 }
 
+// These sources are intentionally kept as archived content/redirect records,
+// but neither curated nor dynamically supplied sitemap entries may advertise
+// their former URLs.
+export const ARCHIVED_REDIRECT_PATHS = new Set([
+  "/best-preschool-near-me-in-thane",
+  "/playgroup-near-ghodbunder-road",
+  "/playgroup-in-manpada",
+  "/playgroup-in-kasarvadavali",
+  "/playgroup-in-anand-nagar",
+  "/playgroup-in-kalwa",
+  "/playgroup-in-dhokali",
+  "/play-school-near-majiwada",
+  "/play-school-near-naupada",
+  "/blog/nursery-school-admission-thane-2026",
+  "/importance-of-play-in-childrens-emotional-growth",
+  "/healthy-preschool-meals-for-bright-minds-and-bodies",
+]);
+
+function normalizeSitemapPath(path: string): string {
+  const pathname = path.split(/[?#]/, 1)[0].toLowerCase();
+  return pathname === "/" ? pathname : pathname.replace(/\/+$/, "");
+}
+
 // NOTE: when adding/removing non-blog URLs, keep this list — and ONLY this
 // list — in sync. The dynamic /sitemap.xml route reads from here, so any
 // addition is served immediately (no static-file edit needed).
@@ -55,12 +78,9 @@ export const SITEMAP_ENTRIES: SitemapEntry[] = [
   { url: "/faqs", priority: 0.6, changefreq: "monthly", lastmod: "2026-09-23" },
 
   // ── HIGH-INTENT LANDING PAGES ────────────────────────────
-  { url: "/best-preschool-near-me-in-thane", priority: 1.0, changefreq: "weekly" },
   { url: "/preschool-admissions", priority: 1.0, changefreq: "weekly", lastmod: ADMISSIONS_PUBLISH_DATE_ISO },
   { url: "/play-school-near-me", priority: 1.0, changefreq: "weekly" },
   { url: "/play-school-near-ghodbunder-road", priority: 0.85, changefreq: "monthly" },
-  { url: "/play-school-near-majiwada", priority: 0.85, changefreq: "monthly" },
-  { url: "/play-school-near-naupada", priority: 0.85, changefreq: "monthly" },
 
   // ── PROGRAMME PAGES ──────────────────────────────────────
   { url: "/playgroup", priority: 0.9, changefreq: "monthly", lastmod: "2026-09-23" },
@@ -77,12 +97,6 @@ export const SITEMAP_ENTRIES: SitemapEntry[] = [
   { url: "/preschool-in-kasarvadavali-thane", priority: 0.9, changefreq: "monthly" },
 
   // ── LOCAL SEO – PLAYGROUP PAGES ──────────────────────────
-  { url: "/playgroup-in-manpada", priority: 0.85, changefreq: "monthly" },
-  { url: "/playgroup-in-kalwa", priority: 0.85, changefreq: "monthly" },
-  { url: "/playgroup-near-ghodbunder-road", priority: 0.85, changefreq: "monthly" },
-  { url: "/playgroup-in-anand-nagar", priority: 0.85, changefreq: "monthly" },
-  { url: "/playgroup-in-kasarvadavali", priority: 0.85, changefreq: "monthly" },
-  { url: "/playgroup-in-dhokali", priority: 0.85, changefreq: "monthly" },
 
   // ── BLOG POSTS (under /blog/:slug) ───────────────────────
   // Blog URLs are pulled live from `storage.getBlogPosts()` by the
@@ -123,10 +137,8 @@ export const SITEMAP_ENTRIES: SitemapEntry[] = [
   { url: "/guide-to-understanding-good-touch-and-bad-touch", priority: 0.6, changefreq: "monthly" },
   { url: "/impact-of-parent-teacher-communication-on-student-success", priority: 0.55, changefreq: "monthly" },
   { url: "/7-things-you-can-do-to-help-children-overcome-fear", priority: 0.5, changefreq: "monthly" },
-  { url: "/importance-of-play-in-childrens-emotional-growth", priority: 0.55, changefreq: "monthly" },
   { url: "/what-makes-children-forget-their-manners", priority: 0.5, changefreq: "monthly" },
   { url: "/trends-in-early-childhood-education", priority: 0.55, changefreq: "monthly" },
-  { url: "/healthy-preschool-meals-for-bright-minds-and-bodies", priority: 0.5, changefreq: "monthly" },
   { url: "/boost-early-childhood-development-with-educational-toys", priority: 0.55, changefreq: "monthly" },
   { url: "/6-simple-tips-for-improving-listening-skills-in-preschoolers", priority: 0.5, changefreq: "monthly" },
   { url: "/10-spring-gardening-activities-for-preschoolers", priority: 0.5, changefreq: "yearly" },
@@ -178,6 +190,7 @@ export function buildSitemapXml(options: BuildSitemapOptions = {}): string {
   // `SITEMAP_ENTRIES` take precedence over any dynamically merged ones.
   const byUrl = new Map<string, SitemapEntry>();
   for (const entry of entries) {
+    if (ARCHIVED_REDIRECT_PATHS.has(normalizeSitemapPath(entry.url))) continue;
     if (!byUrl.has(entry.url)) {
       byUrl.set(entry.url, entry);
     }

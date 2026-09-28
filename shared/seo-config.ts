@@ -89,5 +89,5 @@ export const LOCATION_LINK_MAP: Record<string, string> = {
   "kasarvadavali": "/preschool-in-kasarvadavali-thane",
   "anand-nagar": "/preschool-in-anand-nagar-thane",
   "hariniwas": "/preschool-in-hariniwas-thane",
-  "ghodbunder": "/playgroup-near-ghodbunder-road",
+  "ghodbunder": "/play-school-near-ghodbunder-road",
 };

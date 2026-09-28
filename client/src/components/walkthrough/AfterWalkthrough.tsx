@@ -18,7 +18,7 @@ const helpfulLinks = [
   { href: "/contact", label: "Contact" },
   { href: "/preschool-admissions", label: "Admissions" },
   { href: "/play-school-near-me", label: "Find a centre" },
-  { href: "/best-preschool-near-me-in-thane", label: "Best preschool guide" },
+  { href: "/play-school-near-me", label: "Best preschool guide" },
   { href: "/blog", label: "Blog" },
   { href: "/privacy", label: "Privacy policy" },
   { href: "/terms", label: "Terms of service" },

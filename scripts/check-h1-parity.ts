@@ -338,12 +338,9 @@ const CLIENT_H1_MAP: Record<string, { file: string; nthH1?: number }> = {
   "/national-symbols-of-india-for-kids": { file: "client/src/pages/national-symbols-of-india.tsx" },
   // SEO commercial landing pages
   "/preschool-admissions":        { file: "client/src/pages/preschool-admissions.tsx" },
-  "/best-preschool-near-me-in-thane": { file: "client/src/pages/best-preschool-in-thane.tsx" },
   "/play-school-near-me":         { file: "client/src/pages/play-school-near-me.tsx" },
   // Hyperlocal "near {landmark}" play school pages
   "/play-school-near-ghodbunder-road": { file: "client/src/pages/play-school-near-ghodbunder-road.tsx" },
-  "/play-school-near-majiwada":   { file: "client/src/pages/play-school-near-majiwada.tsx" },
-  "/play-school-near-naupada":    { file: "client/src/pages/play-school-near-naupada.tsx" },
   // Legal — one file, two routes; nthH1 selects which <h1> applies
   "/terms":                       { file: "client/src/pages/legal.tsx", nthH1: 1 },
   "/privacy":                     { file: "client/src/pages/legal.tsx", nthH1: 2 },
@@ -354,7 +351,7 @@ const CLIENT_H1_MAP: Record<string, { file: string; nthH1?: number }> = {
 // ---------------------------------------------------------------------------
 
 // ---------------------------------------------------------------------------
-// Step 5: Locality pages (preschool-in-* and playgroup-in-*)
+// Step 5: Surviving preschool locality pages
 // ---------------------------------------------------------------------------
 //
 // These pages use template-generated SSR h1s and shared data for client h1s.
@@ -432,61 +429,6 @@ function parsePrischoolClientH1s(): Map<string, string> {
 }
 
 /**
- * Parse playgroundPages URL→h1 from server/ssr-pages.ts.
- * Each entry must have an explicit `h1:` field (added as part of H1 parity fix).
- */
-function parsePlaygroupSSRH1s(): Map<string, string> {
-  const lines = readLines("server/ssr-pages.ts");
-  const result = new Map<string, string>();
-  let inMap = false;
-  for (const line of lines) {
-    if (!inMap) {
-      if (/^const playgroundPages:/.test(line)) inMap = true;
-      continue;
-    }
-    if (/^\};\s*$/.test(line)) break;
-    const m = line.match(/"(\/playgroup[^"]+)":\s*\{[^}]*\bh1:\s*"([^"]+)"/);
-    if (m) result.set(m[1], m[2]);
-  }
-  return result;
-}
-
-/**
- * Parse playgroundLandingPages from shared/playgroup-landing-data.ts.
- * Returns Map<url, h1>, e.g. "/playgroup-in-manpada" → "Playgroup in Manpada, Thane (1.5-2.5 Years)"
- */
-function parsePlaygroupClientH1s(): Map<string, string> {
-  const lines = readLines("shared/playgroup-landing-data.ts");
-  const result = new Map<string, string>();
-  let inArray = false;
-  let currentUrl = "";
-  let inSeo = false;
-  let seoDepth = 0;
-
-  for (const line of lines) {
-    if (!inArray) {
-      if (/^export const playgroundLandingPages/.test(line)) inArray = true;
-      continue;
-    }
-    const urlM = line.match(/^\s+url:\s*["']([^"']+)["']/);
-    if (urlM) currentUrl = urlM[1];
-
-    if (!inSeo && /^\s+seo:\s*\{/.test(line)) {
-      inSeo = true;
-      seoDepth = 1;
-      continue;
-    }
-    if (inSeo) {
-      seoDepth += (line.match(/\{/g) ?? []).length - (line.match(/\}/g) ?? []).length;
-      const h1M = line.match(/^\s+h1:\s*["']([^"']+)["']/);
-      if (h1M && currentUrl) result.set(currentUrl, h1M[1]);
-      if (seoDepth <= 0) inSeo = false;
-    }
-  }
-  return result;
-}
-
-/**
  * Check that SSR h1s for locality pages match the client h1 values from shared data.
  * Returns an array of error strings (empty = all pass).
  */
@@ -525,38 +467,6 @@ function checkLocalityPages(): { errors: string[]; checked: number } {
           `H1 MISMATCH for ${url}:\n` +
             `  SSR (server/ssr-pages.ts preschoolCentres h1 template → locality "${locality}"): "${ssrH1}"\n` +
             `  Client (shared/centre-data.ts preschoolPageSEO["${localitySlug}"].h1): "${clientH1}"\n` +
-            `  Fix: update one side so the h1 texts are byte-equal.`,
-        );
-      }
-    }
-  }
-
-  // --- Playgroup locality pages ---
-  const playgroupSSRH1s = parsePlaygroupSSRH1s();
-  const playgroupClientH1s = parsePlaygroupClientH1s();
-
-  if (playgroupSSRH1s.size === 0) {
-    errors.push(
-      "server/ssr-pages.ts — playgroundPages map has no explicit h1 fields. " +
-        "Add an `h1:` string to every entry in the playgroundPages map.",
-    );
-  } else {
-    for (const [url, ssrH1] of playgroupSSRH1s) {
-      const clientH1 = playgroupClientH1s.get(url);
-      if (!clientH1) {
-        errors.push(
-          `H1 MISMATCH for ${url}:\n` +
-            `  SSR: "${ssrH1}"\n` +
-            `  Client: no entry with url="${url}" in shared/playgroup-landing-data.ts playgroundLandingPages.`,
-        );
-        continue;
-      }
-      checked++;
-      if (ssrH1 !== clientH1) {
-        errors.push(
-          `H1 MISMATCH for ${url}:\n` +
-            `  SSR (server/ssr-pages.ts playgroundPages[url].h1): "${ssrH1}"\n` +
-            `  Client (shared/playgroup-landing-data.ts playgroundLandingPages[url].seo.h1): "${clientH1}"\n` +
             `  Fix: update one side so the h1 texts are byte-equal.`,
         );
       }

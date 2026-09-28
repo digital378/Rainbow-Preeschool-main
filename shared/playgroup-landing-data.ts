@@ -31,7 +31,7 @@ export const playgroundLandingPages: PlaygroupLandingData[] = [
   {
     slug: "manpada",
     localityName: "Manpada",
-    url: "/playgroup-in-manpada",
+    url: "/preschool-in-manpada-thane",
     centreId: "manpada",
     seo: {
       title: "Playgroup in Manpada, Thane | Rainbow Preschool",
@@ -63,7 +63,7 @@ export const playgroundLandingPages: PlaygroupLandingData[] = [
   {
     slug: "kalwa",
     localityName: "Kalwa",
-    url: "/playgroup-in-kalwa",
+    url: "/preschool-in-kalwa-thane",
     centreId: "kalwa",
     seo: {
       title: "Playgroup in Kalwa, Thane | Rainbow Preschool",
@@ -95,7 +95,7 @@ export const playgroundLandingPages: PlaygroupLandingData[] = [
   {
     slug: "ghodbunder-road",
     localityName: "Ghodbunder Road",
-    url: "/playgroup-near-ghodbunder-road",
+    url: "/play-school-near-ghodbunder-road",
     centreId: "kasarvadavali",
     seo: {
       title: "Playgroup near Ghodbunder Road, Thane | Rainbow Preschool",
@@ -127,7 +127,7 @@ export const playgroundLandingPages: PlaygroupLandingData[] = [
   {
     slug: "anand-nagar",
     localityName: "Anand Nagar",
-    url: "/playgroup-in-anand-nagar",
+    url: "/preschool-in-anand-nagar-thane",
     centreId: "anand-nagar",
     seo: {
       title: "Playgroup in Anand Nagar, Thane | Rainbow Preschool",
@@ -159,7 +159,7 @@ export const playgroundLandingPages: PlaygroupLandingData[] = [
   {
     slug: "kasarvadavali",
     localityName: "Kasarvadavali",
-    url: "/playgroup-in-kasarvadavali",
+    url: "/preschool-in-kasarvadavali-thane",
     centreId: "kasarvadavali",
     seo: {
       title: "Playgroup in Kasarvadavali, Thane | Rainbow Preschool",
@@ -191,7 +191,7 @@ export const playgroundLandingPages: PlaygroupLandingData[] = [
   {
     slug: "dhokali",
     localityName: "Dhokali",
-    url: "/playgroup-in-dhokali",
+    url: "/preschool-in-dhokali-thane",
     centreId: "dhokali",
     seo: {
       title: "Playgroup in Dhokali, Thane | Rainbow Preschool",

@@ -231,8 +231,8 @@ const realSSR = readFileSync(
 );
 
 assert(
-  "/best-preschool-near-me-in-thane has FAQPage in its staticPages block",
-  hasFAQPageSSRCoverage(realSSR, "/best-preschool-near-me-in-thane"),
+  "/play-school-near-ghodbunder-road has FAQPage in its staticPages block",
+  hasFAQPageSSRCoverage(realSSR, "/play-school-near-ghodbunder-road"),
   true
 );
 

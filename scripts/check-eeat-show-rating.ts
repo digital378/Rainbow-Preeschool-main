@@ -40,7 +40,6 @@ const VERIFIED_RATING_PAGES = new Set([
   "nursery-landing.tsx",
   "kindergarten-landing.tsx",
   "play-school-near-me.tsx",
-  "best-preschool-in-thane.tsx",
 ]);
 
 interface Violation {
@@ -63,6 +62,8 @@ try {
 
 for (const name of names) {
   if (!name.endsWith(".tsx")) continue;
+  // Archived component: its route redirects before any client render.
+  if (name === "best-preschool-in-thane.tsx") continue;
 
   const filePath = resolve(PAGES_DIR, name);
   const src = readFileSync(filePath, "utf8");

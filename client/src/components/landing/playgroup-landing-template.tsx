@@ -195,12 +195,12 @@ export function PlaygroupLandingTemplate({ data }: PlaygroupLandingTemplateProps
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {[
-                { name: "Manpada", url: "/playgroup-in-manpada", landmark: "Aggarwal Arcade, near Khewra Circle, Thane (W)" },
+                { name: "Manpada", url: "/preschool-in-manpada-thane", landmark: "Aggarwal Arcade, near Khewra Circle, Thane (W)" },
                 { name: "Hariniwas (Panchpakadi)", url: "/playgroup", landmark: "M.V. Apartments, Bhakti Mandir Road, Thane (W)" },
-                { name: "Anand Nagar", url: "/playgroup-in-anand-nagar", landmark: "Near LBS Marg, Anand Nagar, Thane (W)" },
-                { name: "Dhokali", url: "/playgroup-in-dhokali", landmark: "Off Ghodbunder Road, Dhokali, Thane (W)" },
-                { name: "Kalwa", url: "/playgroup-in-kalwa", landmark: "Near Kalwa Bridge, Kalwa, Thane" },
-                { name: "Kasarvadavali", url: "/playgroup-in-kasarvadavali", landmark: "Ghodbunder Road, Kasarvadavali, Thane (W)" },
+                { name: "Anand Nagar", url: "/preschool-in-anand-nagar-thane", landmark: "Near LBS Marg, Anand Nagar, Thane (W)" },
+                { name: "Dhokali", url: "/preschool-in-dhokali-thane", landmark: "Off Ghodbunder Road, Dhokali, Thane (W)" },
+                { name: "Kalwa", url: "/preschool-in-kalwa-thane", landmark: "Near Kalwa Bridge, Kalwa, Thane" },
+                { name: "Kasarvadavali", url: "/preschool-in-kasarvadavali-thane", landmark: "Ghodbunder Road, Kasarvadavali, Thane (W)" },
               ].map((c) => (
                 <Link key={c.name} href={c.url} className="block p-4 md:p-5 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all bg-white dark:bg-gray-800" data-testid={`link-playgroup-near-${c.name.toLowerCase().split(" ")[0]}`}>
                   <h3 className="font-semibold text-gray-900 dark:text-white mb-1">Playgroup in {c.name}</h3>
@@ -273,7 +273,7 @@ export function PlaygroupLandingTemplate({ data }: PlaygroupLandingTemplateProps
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-lg md:text-xl font-bold text-gray-900 dark:text-white mb-5 text-center">Explore Rainbow Preschool</h2>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            <Link href="/best-preschool-near-me-in-thane" className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center" data-testid="link-local-playgroup-best-preschool">
+            <Link href="/play-school-near-me" className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center" data-testid="link-local-playgroup-best-preschool">
               <span className="text-xl">🏆</span>
               <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">Award-Winning Preschool</span>
             </Link>

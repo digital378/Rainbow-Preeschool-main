@@ -130,7 +130,7 @@ function PreschoolLocationTemplate({ localitySlug }: PreschoolLocationPageProps)
           "@type": "ListItem",
           "position": 2,
           "name": "Centres",
-          "item": "https://www.rainbowpreschools.com/best-preschool-near-me-in-thane"
+          "item": "https://www.rainbowpreschools.com/play-school-near-me"
         },
         {
           "@type": "ListItem",
@@ -234,7 +234,7 @@ function PreschoolLocationTemplate({ localitySlug }: PreschoolLocationPageProps)
             </li>
             <ChevronRight className="h-4 w-4" />
             <li>
-              <Link href="/best-preschool-near-me-in-thane" className="hover:text-primary" data-testid="breadcrumb-centres">
+              <Link href="/play-school-near-me" className="hover:text-primary" data-testid="breadcrumb-centres">
                 Centres
               </Link>
             </li>
@@ -590,7 +590,7 @@ function PreschoolLocationTemplate({ localitySlug }: PreschoolLocationPageProps)
           </h2>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             <Link
-              href="/best-preschool-near-me-in-thane"
+              href="/play-school-near-me"
               className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center"
               data-testid="link-centre-best-preschool"
             >
@@ -598,7 +598,7 @@ function PreschoolLocationTemplate({ localitySlug }: PreschoolLocationPageProps)
               <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">Award-Winning Preschool</span>
             </Link>
             <Link
-              href="/best-preschool-near-me-in-thane"
+              href="/play-school-near-me"
               className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center"
               data-testid="link-centre-near-me"
             >
@@ -628,19 +628,27 @@ function PreschoolLocationTemplate({ localitySlug }: PreschoolLocationPageProps)
       {(() => {
         const siblingPlaygroup = getPlaygroupLandingBySlug(localitySlug);
         if (!siblingPlaygroup) return null;
+        const siblingLinkClassName = "text-primary underline underline-offset-2 hover:text-primary/80";
+        const siblingLinkText = `Playgroup in ${centre.localityName} (1.5–2.5 years)`;
         return (
           <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-6" data-testid={`section-sibling-playgroup-${localitySlug}`}>
             <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-4 md:p-5">
               <p className="text-sm text-gray-700 dark:text-gray-200">
                 <span className="font-semibold">Looking for the toddler programme?</span>{" "}
                 See our{" "}
-                <Link
-                  href={siblingPlaygroup.url}
-                  className="text-primary underline underline-offset-2 hover:text-primary/80"
-                  data-testid={`link-sibling-playgroup-${localitySlug}`}
-                >
-                  Playgroup in {centre.localityName} (1.5–2.5 years)
-                </Link>
+                {siblingPlaygroup.url === seo.canonicalPath ? (
+                  <span className={siblingLinkClassName} data-testid={`text-sibling-playgroup-${localitySlug}`}>
+                    {siblingLinkText}
+                  </span>
+                ) : (
+                  <Link
+                    href={siblingPlaygroup.url}
+                    className={siblingLinkClassName}
+                    data-testid={`link-sibling-playgroup-${localitySlug}`}
+                  >
+                    {siblingLinkText}
+                  </Link>
+                )}
                 {" "}page.
               </p>
             </div>

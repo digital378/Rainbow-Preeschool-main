@@ -15,13 +15,13 @@
  *      one canonical URL, and no other URL's title may contain that
  *      phrase. The matrix:
  *
- *         "Best Preschool in Thane"        → /best-preschool-near-me-in-thane
+ *         "Best Preschool in Thane"        → /play-school-near-me
  *         "Play School Near Me"            → /play-school-near-me
  *         "Playgroup in Thane"             → /playgroup
  *         "Nursery School in Thane"        → /nursery
  *         "Kindergarten in Thane"          → /kindergarten
  *         "Preschool Admissions in Thane"  → /preschool-admissions
- *         (bare) "Preschool in Thane"      → /best-preschool-near-me-in-thane
+ *         (bare) "Preschool in Thane"      → /
  *                                            (the home page is brand-led
  *                                            and uses "Preschool Chain in
  *                                            Thane" instead of the bare
@@ -78,7 +78,7 @@ const OWNED_PHRASES: Array<{ phrase: RegExp; label: string; canonicalUrls: RegEx
   {
     phrase: /\bbest preschool in thane\b/i,
     label: "Best Preschool in Thane",
-    canonicalUrls: [/^\/best-preschool-near-me-in-thane$/],
+    canonicalUrls: [/^\/play-school-near-me$/],
   },
   {
     phrase: /\bplay school near me\b/i,
@@ -249,7 +249,6 @@ const CLIENT_PAGE_URLS: Record<string, string> = {
   "contact.tsx": "/contact",
   "blog.tsx": "/blog",
   "preschool-admissions.tsx": "/preschool-admissions",
-  "best-preschool-in-thane.tsx": "/best-preschool-near-me-in-thane",
   "play-school-near-me.tsx": "/play-school-near-me",
   "happy-times-landing.tsx": "/happy-times",
   "kids-activity-club-landing.tsx": "/kids-activity-club",
@@ -265,8 +264,6 @@ const CLIENT_PAGE_URLS: Record<string, string> = {
   "local-playgroup.tsx": "/playgroup",
   // Hyperlocal "near {landmark}" play school pages
   "play-school-near-ghodbunder-road.tsx": "/play-school-near-ghodbunder-road",
-  "play-school-near-majiwada.tsx": "/play-school-near-majiwada",
-  "play-school-near-naupada.tsx": "/play-school-near-naupada",
 };
 
 function scanClientPages() {

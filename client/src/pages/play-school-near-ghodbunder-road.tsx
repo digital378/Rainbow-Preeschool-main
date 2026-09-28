@@ -235,8 +235,8 @@ export default function PlaySchoolNearGhodbunderRoad() {
               { text: "Play School Near Me in Thane", url: "/play-school-near-me" },
               { text: "Preschool in Manpada, Thane", url: "/preschool-in-manpada-thane" },
               { text: "Preschool in Kasarvadavali, Thane", url: "/preschool-in-kasarvadavali-thane" },
-              { text: "Playgroup in Manpada", url: "/playgroup-in-manpada" },
-              { text: "Playgroup in Kasarvadavali", url: "/playgroup-in-kasarvadavali" },
+              { text: "Playgroup in Manpada", url: "/preschool-in-manpada-thane" },
+              { text: "Playgroup in Kasarvadavali", url: "/preschool-in-kasarvadavali-thane" },
               { text: "Playgroup Programme", url: "/playgroup" },
               { text: "Preschool Admissions", url: "/preschool-admissions" },
             ].map((link) => (

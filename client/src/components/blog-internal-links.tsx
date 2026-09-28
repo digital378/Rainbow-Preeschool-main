@@ -69,7 +69,7 @@ export function BlogInternalLinks({ currentSlug = "", topic }: BlogInternalLinks
         </Link>
         
         <Link 
-          href="/best-preschool-near-me-in-thane"
+          href="/play-school-near-me"
           className="flex items-center gap-2 px-4 py-3 bg-white rounded-lg border border-gray-200 hover:border-red-300 hover:shadow-sm transition-all text-sm font-medium text-gray-700"
           data-testid="link-blog-best-preschool"
         >

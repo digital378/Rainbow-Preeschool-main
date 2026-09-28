@@ -1,6 +1,7 @@
 #!/usr/bin/env tsx
 import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
+import { ARCHIVED_REDIRECT_PATHS } from "../shared/sitemap-entries";
 
 const ROOT = process.cwd();
 const BASE = "https://www.rainbowpreschools.com";
@@ -145,10 +146,18 @@ while ((pm = pgRe.exec(pgText))) {
   });
 }
 
+// Archived redirect sources are retained in legacy metadata but are not
+// current SEO pages and therefore do not belong in this report.
+for (let i = rows.length - 1; i >= 0; i--) {
+  const path = rows[i].url.split(/[?#]/, 1)[0].toLowerCase();
+  const normalized = path === "/" ? path : path.replace(/\/+$/, "");
+  if (ARCHIVED_REDIRECT_PATHS.has(normalized)) rows.splice(i, 1);
+}
+
 // Sort: site pages first, locality next, blog last; alphabetical within group
 function group(r: Row): number {
   if (r.url === "/" || ["/about","/programmes","/gallery","/contact","/blog","/faqs","/testimonials","/preschool-readiness-quiz","/top-preschools-in-thane","/terms","/privacy"].includes(r.url)) return 0;
-  if (["/playgroup","/nursery","/kindergarten","/happy-times","/best-preschool-near-me-in-thane","/play-school-near-me","/preschool-admissions"].includes(r.url)) return 1;
+  if (["/playgroup","/nursery","/kindergarten","/happy-times","/play-school-near-me","/preschool-admissions"].includes(r.url)) return 1;
   if (r.url.startsWith("/preschool-in-") || r.url.startsWith("/playgroup-in-") || r.url.startsWith("/playgroup-near-")) return 2;
   if (r.url.startsWith("/blog/")) return 4;
   return 3;

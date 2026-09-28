@@ -42,7 +42,7 @@ export const centres: CentreData[] = [
     name: "Aggarwal Centre (Manpada)",
     localityName: "Manpada",
     localitySlug: "manpada",
-    playgroundLandingUrl: "/playgroup-in-manpada",
+    playgroundLandingUrl: "/preschool-in-manpada-thane",
     preschoolLandingUrl: "/preschool-in-manpada-thane",
     address: "Aggarwal Arcade, Near Khewra Circle, Manpada, Thane (W)",
     postalCode: "400610",
@@ -87,7 +87,7 @@ export const centres: CentreData[] = [
     name: "Anand Nagar Centre",
     localityName: "Anand Nagar",
     localitySlug: "anand-nagar",
-    playgroundLandingUrl: "/playgroup-in-anand-nagar",
+    playgroundLandingUrl: "/preschool-in-anand-nagar-thane",
     preschoolLandingUrl: "/preschool-in-anand-nagar-thane",
     address: "Kris Commercial Plaza, 1st Floor, Opp. Tropical Lagoon, Anand Nagar, Thane (W)",
     postalCode: "400601",
@@ -109,7 +109,7 @@ export const centres: CentreData[] = [
     name: "Dhokali Centre",
     localityName: "Dhokali",
     localitySlug: "dhokali",
-    playgroundLandingUrl: "/playgroup-in-dhokali",
+    playgroundLandingUrl: "/preschool-in-dhokali-thane",
     preschoolLandingUrl: "/preschool-in-dhokali-thane",
     address: "Kolshet Road, Dhokali Naka, Opp. Aban Park Society, Thane (W)",
     postalCode: "400607",
@@ -131,7 +131,7 @@ export const centres: CentreData[] = [
     name: "Kalwa Centre",
     localityName: "Kalwa",
     localitySlug: "kalwa",
-    playgroundLandingUrl: "/playgroup-in-kalwa",
+    playgroundLandingUrl: "/preschool-in-kalwa-thane",
     preschoolLandingUrl: "/preschool-in-kalwa-thane",
     address: "Harsh Prasad Co-op Hsg, Soc, Near Sayba Hall, Manisha Nagar, Gate No.1, Kalwa",
     postalCode: "400605",
@@ -153,7 +153,7 @@ export const centres: CentreData[] = [
     name: "Kasarvadavali Centre",
     localityName: "Kasarvadavali",
     localitySlug: "kasarvadavali",
-    playgroundLandingUrl: "/playgroup-in-kasarvadavali",
+    playgroundLandingUrl: "/preschool-in-kasarvadavali-thane",
     preschoolLandingUrl: "/preschool-in-kasarvadavali-thane",
     address: "Rosa Gardenia, Next to Parijat Gardens, Kasarvadavali, Behind Hypercity Mall, Thane (W)",
     postalCode: "400615",
@@ -257,12 +257,12 @@ export const preschoolLandingPages = [
 // Get all locality landing pages for internal linking (playgroup pages - legacy)
 // "Thane" (city-broad) was removed Apr 2026 — /playgroup-in-thane now 301s to /playgroup
 export const localityLandingPages = [
-  { name: "Manpada", slug: "manpada", url: "/playgroup-in-manpada" },
-  { name: "Kalwa", slug: "kalwa", url: "/playgroup-in-kalwa" },
-  { name: "Ghodbunder Road", slug: "ghodbunder-road", url: "/playgroup-near-ghodbunder-road" },
-  { name: "Anand Nagar", slug: "anand-nagar", url: "/playgroup-in-anand-nagar" },
-  { name: "Kasarvadavali", slug: "kasarvadavali", url: "/playgroup-in-kasarvadavali" },
-  { name: "Dhokali", slug: "dhokali", url: "/playgroup-in-dhokali" },
+  { name: "Manpada", slug: "manpada", url: "/preschool-in-manpada-thane" },
+  { name: "Kalwa", slug: "kalwa", url: "/preschool-in-kalwa-thane" },
+  { name: "Ghodbunder Road", slug: "ghodbunder-road", url: "/play-school-near-ghodbunder-road" },
+  { name: "Anand Nagar", slug: "anand-nagar", url: "/preschool-in-anand-nagar-thane" },
+  { name: "Kasarvadavali", slug: "kasarvadavali", url: "/preschool-in-kasarvadavali-thane" },
+  { name: "Dhokali", slug: "dhokali", url: "/preschool-in-dhokali-thane" },
 ];
 
 // SEO Meta data for preschool pages

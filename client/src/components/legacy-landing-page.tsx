@@ -333,7 +333,7 @@ export function LegacyLandingPage({ data }: LegacyLandingPageProps) {
                     </div>
                   </div>
                   <div className="grid sm:grid-cols-2 gap-3 mt-5">
-                    <Link href="/best-preschool-near-me-in-thane" className="group flex items-center justify-between p-3 bg-white rounded-lg border border-primary/20 hover:border-primary/40 hover:shadow-sm transition-all" data-testid="link-cta-best-preschool">
+                    <Link href="/play-school-near-me" className="group flex items-center justify-between p-3 bg-white rounded-lg border border-primary/20 hover:border-primary/40 hover:shadow-sm transition-all" data-testid="link-cta-best-preschool">
                       <div>
                         <span className="font-semibold text-foreground group-hover:text-primary transition-colors text-sm">Best Preschool in Thane</span>
                         <span className="block text-xs text-muted-foreground">Why parents choose Rainbow</span>

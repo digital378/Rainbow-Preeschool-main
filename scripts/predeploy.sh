@@ -57,14 +57,13 @@
 #       byline + page-specific JSON-LD dateModified across the commercial +
 #       locality URLs.
 #   14. scripts/check-keyword-targets.ts — asserts the 15 priority commercial
-#       keyword guarantees: FAQPage JSON-LD on the 5 commercial pages,
+#       keyword guarantees: FAQPage JSON-LD on the surviving commercial pages,
 #       Organization JSON-LD on /playgroup, /nursery, /kindergarten, ≥ 1,200
-#       visible words inside <main> on /play-school-near-me and
-#       /best-preschool-near-me-in-thane, the homepage linking to all 5
-#       commercial URLs, all 16 ghost-slug variants 301-redirecting to their
-#       canonical page (32 redirect assertions including trailing-slash forms),
-#       and /preschool-near-me 301-redirecting to
-#       /best-preschool-near-me-in-thane.
+#       visible words inside <main> on /play-school-near-me, the homepage
+#       linking to all surviving commercial URLs, all ghost/merged URL variants
+#       301-redirecting directly to their canonical page (including trailing
+#       slash forms), and /preschool-near-me 301-redirecting to
+#       /play-school-near-me.
 #   15. scripts/check-sitemap-200.ts — fetches /sitemap.xml and asserts every
 #       <loc> entry returns 200 OK. Catches any sitemap row that has been
 #       301-redirected (which would surface the "URL is in sitemap but

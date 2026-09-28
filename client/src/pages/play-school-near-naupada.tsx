@@ -204,7 +204,7 @@ export default function PlaySchoolNearNaupada() {
               { text: "Playgroup Programme", url: "/playgroup" },
               { text: "Nursery Programme", url: "/nursery" },
               { text: "Preschool Admissions", url: "/preschool-admissions" },
-              { text: "Best Preschool Near Me in Thane", url: "/best-preschool-near-me-in-thane" },
+              { text: "Best Preschool Near Me in Thane", url: "/play-school-near-me" },
             ].map((link) => (
               <Link key={link.url} href={link.url}>
                 <span className="inline-flex items-center gap-1 text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-200 underline underline-offset-4">

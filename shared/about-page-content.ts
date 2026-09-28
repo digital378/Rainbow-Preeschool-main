@@ -121,7 +121,7 @@ export const ABOUT_PAGE_COPY = {
     { name: "Mittal Shah", centre: "Kalwa Centre", img: "/images/coordinators/mittal-shah.webp", width: 128, height: 128 },
   ],
   exploreLinks: [
-    { text: "Award-Winning Preschool", url: "/best-preschool-near-me-in-thane" },
+    { text: "Award-Winning Preschool", url: "/play-school-near-me" },
     { text: "Find Nearest Centre", url: "/play-school-near-me" },
     { text: "Admission Process", url: "/preschool-admissions" },
     { text: "Photo Gallery", url: "/gallery" },

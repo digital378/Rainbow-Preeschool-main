@@ -172,7 +172,6 @@ const CLIENT_PAGE_URLS: Record<string, string> = {
   "contact.tsx": "/contact",
   "blog.tsx": "/blog",
   "preschool-admissions.tsx": "/preschool-admissions",
-  "best-preschool-in-thane.tsx": "/best-preschool-near-me-in-thane",
   "play-school-near-me.tsx": "/play-school-near-me",
   "happy-times-landing.tsx": "/happy-times",
   "kids-activity-club-landing.tsx": "/kids-activity-club",

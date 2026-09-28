@@ -35,7 +35,7 @@ export const FAQ_CATEGORIES: SharedFAQCategory[] = [
       {
         question: "What documents are required for admission?",
         answer: "You'll need: child's birth certificate, 4-6 passport-sized photographs, Aadhaar card (child and both parents), address proof, and immunisation/vaccination record. Some centres may request a medical fitness certificate and blood group card.",
-        relatedLink: { text: "Step-by-Step Admission Guide", url: "/blog/nursery-school-admission-thane-2026" },
+        relatedLink: { text: "Step-by-Step Admission Guide", url: "/preschool-admissions" },
       },
       {
         question: "Is there a waiting list? How early should I apply?",

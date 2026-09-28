@@ -201,10 +201,10 @@ export default function PlaySchoolNearMajiwada() {
             {[
               { text: "Play School Near Me in Thane", url: "/play-school-near-me" },
               { text: "Preschool in Anand Nagar, Thane", url: "/preschool-in-anand-nagar-thane" },
-              { text: "Playgroup in Anand Nagar", url: "/playgroup-in-anand-nagar" },
+              { text: "Playgroup in Anand Nagar", url: "/preschool-in-anand-nagar-thane" },
               { text: "Playgroup Programme", url: "/playgroup" },
               { text: "Preschool Admissions", url: "/preschool-admissions" },
-              { text: "Best Preschool Near Me in Thane", url: "/best-preschool-near-me-in-thane" },
+              { text: "Best Preschool Near Me in Thane", url: "/play-school-near-me" },
             ].map((link) => (
               <Link key={link.url} href={link.url}>
                 <span className="inline-flex items-center gap-1 text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-200 underline underline-offset-4">

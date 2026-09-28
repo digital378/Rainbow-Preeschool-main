@@ -392,7 +392,7 @@ function StatsSection() {
    Copied from /dummy page. Self-contained: data + sub-components + section.
 ═══════════════════════════════════════════════════════════════════════════ */
 const SHELF_ITEMS = [
-  { href:"/best-preschool-near-me-in-thane", label:HOME_VISITOR_COPY.sections[3].items?.[1] ?? "",       Icon:Award,
+  { href:"/play-school-near-me", label:HOME_VISITOR_COPY.sections[3].items?.[1] ?? "",       Icon:Award,
     color:"#F5320C", textColor:"#C8270C", gradient:"linear-gradient(145deg,#FF5A3C,#F5320C)",
     group:"A" as const, sigAnim:"rs-sig-medal" },
   { href:"/play-school-near-me",             label:HOME_VISITOR_COPY.sections[3].items?.[2] ?? "",  Icon:MapPin,

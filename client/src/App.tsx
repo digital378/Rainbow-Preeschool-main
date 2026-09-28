@@ -54,21 +54,11 @@ const FAQsPage = lazy(() => import("@/pages/faqs"));
 // High-intent SEO landing pages
 const PreschoolAdmissions = lazy(() => import("@/pages/preschool-admissions"));
 const Gallery = lazy(() => import("@/pages/gallery"));
-const BestPreschoolInThane = lazy(() => import("@/pages/best-preschool-in-thane"));
 const PlaySchoolNearMe = lazy(() => import("@/pages/play-school-near-me"));
 const PlaySchoolNearGhodbunderRoad = lazy(() => import("@/pages/play-school-near-ghodbunder-road"));
-const PlaySchoolNearMajiwada = lazy(() => import("@/pages/play-school-near-majiwada"));
-const PlaySchoolNearNaupada = lazy(() => import("@/pages/play-school-near-naupada"));
 
 const RainbowSparkleTrail = lazy(() => import("@/components/rainbow-sparkle-trail").then(m => ({ default: m.RainbowSparkleTrail })));
 const DummyPage = lazy(() => import("@/pages/dummy"));
-
-const LazyPlaygroupInManpada = lazy(() => import("@/pages/local-playgroup").then(m => ({ default: m.PlaygroupInManpada })));
-const LazyPlaygroupInKalwa = lazy(() => import("@/pages/local-playgroup").then(m => ({ default: m.PlaygroupInKalwa })));
-const LazyPlaygroupNearGhodbunderRoad = lazy(() => import("@/pages/local-playgroup").then(m => ({ default: m.PlaygroupNearGhodbunderRoad })));
-const LazyPlaygroupInAnandNagar = lazy(() => import("@/pages/local-playgroup").then(m => ({ default: m.PlaygroupInAnandNagar })));
-const LazyPlaygroupInKasarvadavali = lazy(() => import("@/pages/local-playgroup").then(m => ({ default: m.PlaygroupInKasarvadavali })));
-const LazyPlaygroupInDhokali = lazy(() => import("@/pages/local-playgroup").then(m => ({ default: m.PlaygroupInDhokali })));
 
 const LazyPreschoolInManpada = lazy(() => import("@/pages/preschool-location").then(m => ({ default: m.PreschoolInManpada })));
 const LazyPreschoolInHariniwas = lazy(() => import("@/pages/preschool-location").then(m => ({ default: m.PreschoolInHariniwas })));
@@ -95,10 +85,8 @@ const LazyDiwaliActivities = lazy(() => import("@/pages/legacy-pages").then(m =>
 const LazyParentTeacherCommunication = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.ParentTeacherCommunication })));
 const LazyHoliActivities = lazy(() => import("@/pages/holi-activities"));
 const LazyOvercomeFear = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.OvercomeFear })));
-const LazyPlayEmotionalGrowth = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.PlayEmotionalGrowth })));
 const LazyForgetManners = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.ForgetManners })));
 const LazyTrendsEarlyChildhood = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.TrendsEarlyChildhood })));
-const LazyHealthyPreschoolMeals = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.HealthyPreschoolMeals })));
 const LazyEducationalToys = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.EducationalToys })));
 const LazyCookingForKids = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.CookingForKids })));
 
@@ -138,14 +126,6 @@ import { legacySlugs } from "@shared/legacy-slugs";
 const STANDALONE_LANDING_PATHS = [
   "/dummy",
   "/play-school-near-ghodbunder-road",
-  "/play-school-near-majiwada",
-  "/play-school-near-naupada",
-  "/playgroup-in-manpada",
-  "/playgroup-in-kalwa",
-  "/playgroup-near-ghodbunder-road",
-  "/playgroup-in-anand-nagar",
-  "/playgroup-in-kasarvadavali",
-  "/playgroup-in-dhokali",
   "/preschool-in-manpada-thane",
   "/preschool-in-hariniwas-thane",
   "/preschool-in-anand-nagar-thane",
@@ -158,7 +138,12 @@ const STANDALONE_LANDING_PATHS = [
   "/RIS",
   "/ris-11th",
   "/join-now",
-  ...legacySlugs.map(slug => slug.replace(/\/$/, '')),
+  ...legacySlugs
+    .filter(slug => ![
+      "/importance-of-play-in-childrens-emotional-growth/",
+      "/healthy-preschool-meals-for-bright-minds-and-bodies/",
+    ].includes(slug))
+    .map(slug => slug.replace(/\/$/, '')),
   "/author/rainbowpreschools",
   "/author/rainbow-preschools",
 ];
@@ -218,11 +203,8 @@ function Router() {
         
         {/* High-intent SEO landing pages */}
         <Route path="/preschool-admissions" component={PreschoolAdmissions} />
-        <Route path="/best-preschool-near-me-in-thane" component={BestPreschoolInThane} />
         <Route path="/play-school-near-me" component={PlaySchoolNearMe} />
         <Route path="/play-school-near-ghodbunder-road" component={PlaySchoolNearGhodbunderRoad} />
-        <Route path="/play-school-near-majiwada" component={PlaySchoolNearMajiwada} />
-        <Route path="/play-school-near-naupada" component={PlaySchoolNearNaupada} />
         
         <Route path="/join-now" component={ReferralPage} />
         <Route path="/ad" component={AdLanding} />
@@ -234,12 +216,6 @@ function Router() {
         <Route path="/ris" component={RISLanding} />
         <Route path="/ris-11th" component={RIS11thLanding} />
         
-        <Route path="/playgroup-in-manpada" component={LazyPlaygroupInManpada} />
-        <Route path="/playgroup-in-kalwa" component={LazyPlaygroupInKalwa} />
-        <Route path="/playgroup-near-ghodbunder-road" component={LazyPlaygroupNearGhodbunderRoad} />
-        <Route path="/playgroup-in-anand-nagar" component={LazyPlaygroupInAnandNagar} />
-        <Route path="/playgroup-in-kasarvadavali" component={LazyPlaygroupInKasarvadavali} />
-        <Route path="/playgroup-in-dhokali" component={LazyPlaygroupInDhokali} />
         
         <Route path="/preschool-in-manpada-thane" component={LazyPreschoolInManpada} />
         <Route path="/preschool-in-hariniwas-thane" component={LazyPreschoolInHariniwas} />
@@ -266,10 +242,8 @@ function Router() {
         <Route path="/impact-of-parent-teacher-communication-on-student-success" component={LazyParentTeacherCommunication} />
         <Route path="/holi-activities-for-kids" component={LazyHoliActivities} />
         <Route path="/7-things-you-can-do-to-help-children-overcome-fear" component={LazyOvercomeFear} />
-        <Route path="/importance-of-play-in-childrens-emotional-growth" component={LazyPlayEmotionalGrowth} />
         <Route path="/what-makes-children-forget-their-manners" component={LazyForgetManners} />
         <Route path="/trends-in-early-childhood-education" component={LazyTrendsEarlyChildhood} />
-        <Route path="/healthy-preschool-meals-for-bright-minds-and-bodies" component={LazyHealthyPreschoolMeals} />
         <Route path="/boost-early-childhood-development-with-educational-toys" component={LazyEducationalToys} />
         <Route path="/8-reasons-cooking-is-important-for-kids" component={LazyCookingForKids} />
         
@@ -363,6 +337,12 @@ function AppContent() {
       <>
         <ScrollToTop />
         <Router />
+        {(normalizedPath.startsWith("/preschool-in-") ||
+          normalizedPath === "/play-school-near-ghodbunder-road") && (
+          <Suspense fallback={null}>
+            <Footer />
+          </Suspense>
+        )}
       </>
     );
   }

@@ -24,7 +24,7 @@ const BASE_URL = process.env.BASE_URL || 'http://localhost:5000';
 
 const PAGES = [
   { name: 'home',                 path: '/' },
-  { name: 'best-preschool-thane', path: '/best-preschool-near-me-in-thane' },
+  { name: 'play-school-near-me',  path: '/play-school-near-me' },
 ];
 
 // Thresholds can be overridden via env vars so predeploy.sh can pass

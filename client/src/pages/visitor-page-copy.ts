@@ -447,7 +447,7 @@ export const NURSERY_VISITOR_COPY: VisitorPageCopy = {
       ]],
       links: [
         { text: "Apply for nursery 2026–27", href: "/preschool-admissions" },
-        { text: "Compare top Thane preschools", href: "/best-preschool-near-me-in-thane" },
+        { text: "Compare top Thane preschools", href: "/play-school-near-me" },
       ],
     },
     {

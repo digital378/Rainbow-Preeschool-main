@@ -1,0 +1,73 @@
+TASK: Merge 12 pages into stronger pages (301 redirects) and clean up every site-wide link to them.
+
+RULES (design freeze in replit.md applies)
+- Change only redirects, links, link labels, sitemap entries and the SEO check scripts. Don't change the design of any page, footer or section. Keep every grid, card and style as it is.
+- Don't take or send screenshots. Reply with a short text summary. Don't publish until I approve.
+
+WHY
+These 12 pages target the same searches as other pages on our site, so they compete with each other and none ranks well. Together they had fewer than 10 clicks in 28 days. A 301 redirect passes each page's ranking signals to the page that should rank. Google sees one strong page per search instead of two weak ones. Parents who click an old link or search result still land on the right page.
+
+────────────────
+PART 1 — 301 REDIRECTS (permanent, one hop, visitors and Google/bots alike)
+Old URL → new URL
+1. /best-preschool-near-me-in-thane → /play-school-near-me
+2. /playgroup-near-ghodbunder-road → /play-school-near-ghodbunder-road
+3. /playgroup-in-manpada → /preschool-in-manpada-thane
+4. /playgroup-in-kasarvadavali → /preschool-in-kasarvadavali-thane
+5. /playgroup-in-anand-nagar → /preschool-in-anand-nagar-thane
+6. /playgroup-in-kalwa → /preschool-in-kalwa-thane
+7. /playgroup-in-dhokali → /preschool-in-dhokali-thane
+8. /play-school-near-majiwada → /preschool-in-anand-nagar-thane
+9. /play-school-near-naupada → /preschool-in-hariniwas-thane
+10. /blog/nursery-school-admission-thane-2026 → /preschool-admissions
+11. /importance-of-play-in-childrens-emotional-growth → /blog/how-play-based-learning-shapes-young-minds
+12. /healthy-preschool-meals-for-bright-minds-and-bodies → /blog/healthy-tiffin-box-ideas-preschoolers
+
+- Add them in server/redirects.ts so they apply to every visitor, including Googlebot and the bot-SSR path. Keep query strings.
+- Handle trailing slashes and uppercase variants (e.g. /playgroup-in-kalwa/ → same target).
+- No chains: if any existing redirect points to one of these 12 old URLs, point it straight at the new URL.
+- Remove the 12 old routes from App.tsx, prefetch, ssr-pages.ts and bot-ssr.ts so nothing serves them with a 200 any more. Keep the redirect only.
+Why: one clean hop keeps nearly all the ranking value. Chains and pages that still return 200 split it.
+
+────────────────
+PART 2 — FOOTER (same on every page, visitor and Google versions)
+Quick Links becomes exactly this, in this order:
+Home (/) · About Us (/about) · Our Programmes (/programmes) · Find a preschool near you (/play-school-near-me) · Preschool Admissions (/preschool-admissions) · Blogs (/blog) · Contact Us (/contact)
+- Remove "Best Preschool in Thane". Remove the second link to /play-school-near-me ("Play School Near Me"), because "Find a preschool near you" replaces it. Remove "Nursery Programme" from Quick Links, because the Our Programmes column already lists Playgroup, Nursery and Kindergarten.
+- Keep the Our Programmes, Our Centres, Contact Info and Our Network columns unchanged.
+- Make sure every page uses this one footer. Some pages currently show a different Quick Links list (the homepage and /preschool-admissions differ).
+Why: the footer appears on every page, so its links count on all 86 pages. Pointing them only at live pages that should rank concentrates that strength. Removing duplicates keeps the footer tidy without changing its design.
+
+────────────────
+PART 3 — "PARENTS ALSO SEARCH FOR" CROSS-LINKS (seo-crosslinks.tsx)
+Keep the same 6 cards, grid and icons. Change only the card data:
+1. Replace the "Best Preschool in Thane / Top-rated since 2007" card with: label "Playgroup Programme", desc "Ages 1.5–2.5 years", href /playgroup (keep the existing Star icon).
+2. "Play School Near Me": change desc from "Ages 1.5–2.5 years" to "6 centres in Thane".
+3. "Admissions 2026-27": label "Preschool Admissions", desc "2026-27 & 2027-28".
+4. Leave the other cards unchanged.
+Why: removes a "Best" claim from site-wide links and a wrong age description, and sends this block's authority to /playgroup, our next page to improve.
+
+────────────────
+PART 4 — EVERY OTHER INTERNAL LINK
+- Search the whole codebase (client pages and components, shared data files, blog content in the database, bot-SSR templates, centre and locality data, FAQ data, legacy-pages-data, legacy-slugs, seo-config) for links to the 12 old URLs. Change each one to its new URL from Part 1.
+- If a link would now point to the page it sits on (e.g. /play-school-near-me linking to itself), remove that link and keep its text as plain text.
+- Blog posts in the database: update the link URLs only. Don't rewrite the post text.
+Why: internal links that go through a redirect waste crawl budget and lose a little value. Direct links are cleaner.
+
+────────────────
+PART 5 — SITEMAP AND SEO CHECK SCRIPTS
+- Remove the 12 old URLs from the sitemap. Don't change the lastmod of pages you only relinked.
+- Update the check scripts in /scripts (keyword targets, overlap, cannibalisation, H1 parity, FAQ coverage, freshness) and their data so they no longer expect the 12 old pages. Don't weaken any check for the remaining pages.
+Why: the sitemap should list only pages we want indexed. Stale scripts would flag false errors on future tasks.
+
+────────────────
+PART 6 — CONTENT ON THE OLD PAGES
+Don't copy any content into the target pages now. Instead, for each of the 12 old pages, list any facts or sections that aren't on its target page (e.g. local landmarks, a unique FAQ). I'll decide what to add when each target page gets its own update.
+
+────────────────
+PART 7 — CHECKS, THEN REPORT (no screenshots)
+1. Each of the 12 old URLs returns a single 301 to the correct new URL, for a normal browser and for a Googlebot user agent. Also check with a trailing slash.
+2. None of the 12 old URLs appears anywhere in the rendered HTML of any page (visitor and Google versions), or in the sitemap.
+3. The footer Quick Links are identical on the homepage, /preschool-admissions, /playgroup, a centre page and a blog post.
+4. The build passes and the SEO check scripts pass.
+5. Reply with: the redirect test table (old URL, status, location); the number of links updated, by file; the Part 6 content list. Don't publish until I approve.

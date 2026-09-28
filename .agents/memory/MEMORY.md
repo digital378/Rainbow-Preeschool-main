@@ -31,3 +31,4 @@
 - [Homepage site-name schema](homepage-site-name-schema.md) — retain WebSite markup for the search site name while keeping removed homepage FAQ, video, and breadcrumb markup out.
 - [Cloudflare tag gateway interception](cloudflare-tag-gateway.md) — production /xrdb is handled at Cloudflare before Express; origin routes cannot repair edge script 404s.
 - [Reel refresh on Autoscale](reel-refresh-autoscale.md) — keep the six-hour in-process timer plus request-time stale/expiry checks; an idle Autoscale instance cannot run timers.
+- [Retired page invariants](retired-page-invariants.md) — archived page source can still trigger live-route startup and SEO source-scan checks; scope exclusions to truly retired pages.

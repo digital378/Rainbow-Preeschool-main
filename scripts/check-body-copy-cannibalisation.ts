@@ -17,7 +17,7 @@
  * ─────────────────
  * If "/about" renders an <h2> that says "Leading Preschool in Thane since 2007",
  * Google can associate that keyword phrase with /about instead of (or alongside)
- * the canonical /best-preschool-near-me-in-thane. That dilutes the ranking
+ * the canonical /play-school-near-me. That dilutes the ranking
  * signal for the page that is supposed to own the phrase.
  *
  * HOW IT WORKS — TSX PAGE FILES
@@ -62,8 +62,8 @@
  * ──────────────────────────────────────
  * Phrase                          Canonical file(s)
  * ─────────────────────────────── ──────────────────────────────────────────
- * Best Preschool in Thane         best-preschool-in-thane.tsx
- * Preschool in Thane (bare)       best-preschool-in-thane.tsx
+ * Best Preschool in Thane         play-school-near-me.tsx
+ * Preschool in Thane (bare)       play-school-near-me.tsx
  *                                 preschool-admissions.tsx
  * Play School Near Me             play-school-near-me.tsx
  *                                 play-school-near-*.tsx (locality variants)
@@ -85,6 +85,7 @@ const PAGES_DIR = "client/src/pages";
 // These are paid-ad landing pages, event pages, or internal tools that are not
 // organic SEO targets. Adding a page here should always have a written reason.
 export const EXEMPT_FILES = new Set<string>([
+  "best-preschool-in-thane.tsx", // retired page: route now 301s, archived component cannot render
   "gsc-dashboard.tsx",      // internal analytics dashboard, never indexed
   "ad-landing.tsx",         // paid-ad landing page (Google/Meta ads) — not organic
   "ad-google-landing.tsx",  // paid-ad landing page — not organic
@@ -105,13 +106,13 @@ export const OWNED_PHRASES: PhraseRule[] = [
   {
     phrase: /\bbest preschool in thane\b/i,
     label: "Best Preschool in Thane",
-    canonicalFiles: ["best-preschool-in-thane.tsx"],
+    canonicalFiles: ["play-school-near-me.tsx"],
   },
   {
     phrase: /\bpreschool in thane\b/i,
     label: "Preschool in Thane (bare)",
-    // Both the commercial page and the admissions page are canonical for this bare phrase.
-    canonicalFiles: ["best-preschool-in-thane.tsx", "preschool-admissions.tsx"],
+    // The surviving commercial page and admissions page are canonical for this bare phrase.
+    canonicalFiles: ["play-school-near-me.tsx", "preschool-admissions.tsx"],
   },
   {
     phrase: /\bplay school near me\b/i,

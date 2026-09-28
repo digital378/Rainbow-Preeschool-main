@@ -12,7 +12,7 @@ const commonInternalLinks = [
   { text: "Kindergarten Programme Details", url: "/kindergarten" },
   { text: "About Rainbow Preschools", url: "/about" },
   { text: "Play School Near Me in Thane", url: "/play-school-near-me" },
-  { text: "Best Preschool in Thane", url: "/best-preschool-near-me-in-thane" },
+  { text: "Best Preschool in Thane", url: "/play-school-near-me" },
 ];
 
 // Common related links
@@ -22,7 +22,7 @@ const commonRelatedLinks = [
   { title: "Kindergarten (3.5–5.5 years)", url: "/kindergarten", description: "School readiness programme" },
   { title: "Contact & Admissions", url: "/contact", description: "Get in touch with us" },
   { title: "Play School Near Me", url: "/play-school-near-me", description: "Find a play school near you in Thane" },
-  { title: "Best Preschool in Thane", url: "/best-preschool-near-me-in-thane", description: "Award-winning preschool in Thane" },
+  { title: "Best Preschool in Thane", url: "/play-school-near-me", description: "Award-winning preschool in Thane" },
 ];
 
 export const legacyPagesData: Record<string, LegacyPageData> = {
@@ -312,7 +312,7 @@ export const legacyPagesData: Record<string, LegacyPageData> = {
           "<a href=\"/playgroup\">Playgroup (1.5–2.5 years)</a> — the stage just before Pre-KG, ideal for first-time school exposure.",
           "<a href=\"/nursery\">Nursery in Thane (2.5–3.5 years)</a> — Rainbow's Pre-KG-equivalent programme with phonics, numbers and pre-writing.",
           "<a href=\"/kindergarten\">Kindergarten (4–6 years)</a> — the next step after Pre-KG, building reading, writing and school readiness.",
-          "<a href=\"/best-preschool-near-me-in-thane\">Best preschool near me in Thane</a> — see why 1 lakh+ Thane parents picked Rainbow.",
+          "<a href=\"/play-school-near-me\">Best preschool near me in Thane</a> — see why 1 lakh+ Thane parents picked Rainbow.",
           "<a href=\"/preschool-admissions\">Admission process & current intake dates</a> — exactly how to enrol for 2026–27."
         ]
       },
@@ -9284,7 +9284,7 @@ Object.assign(legacyPagesData, {
       },
       {
         heading: "Why Rainbow Preschools Believes in Joyful Learning",
-        content: "At Rainbow Preschools, learning is designed to be engaging, interactive and development-focused. We believe children learn best when they feel secure, curious and happy in their environment.\n\nCelebrations like April Fool's Day, when handled with care, become opportunities to build confidence, encourage participation, strengthen social comfort, support creative thinking and make school feel exciting and welcoming.\n\nThat is why our approach to early childhood education includes activities that balance fun with purposeful learning. Discover what sets us apart on our <a href=\"/best-preschool-near-me-in-thane\">best preschool in Thane</a> page, or <a href=\"/contact\">contact us</a> to learn more about our six centres and how to get started.",
+        content: "At Rainbow Preschools, learning is designed to be engaging, interactive and development-focused. We believe children learn best when they feel secure, curious and happy in their environment.\n\nCelebrations like April Fool's Day, when handled with care, become opportunities to build confidence, encourage participation, strengthen social comfort, support creative thinking and make school feel exciting and welcoming.\n\nThat is why our approach to early childhood education includes activities that balance fun with purposeful learning. Discover what sets us apart on our <a href=\"/play-school-near-me\">best preschool in Thane</a> page, or <a href=\"/contact\">contact us</a> to learn more about our six centres and how to get started.",
         bulletPoints: []
       }
     ],
@@ -9315,7 +9315,7 @@ Object.assign(legacyPagesData, {
       }
     ],
     relatedLinks: [
-      { title: "Best Preschool in Thane", url: "/best-preschool-near-me-in-thane", description: "Why Rainbow stands out in Thane" },
+      { title: "Best Preschool in Thane", url: "/play-school-near-me", description: "Why Rainbow stands out in Thane" },
       { title: "Preschool Admissions Guide", url: "/preschool-admissions", description: "Age criteria, process and documents" },
       { title: "Play School Near Me", url: "/play-school-near-me", description: "All 6 Rainbow centre locations" },
       { title: "Playgroup Programme (Ages 1.5–2.5)", url: "/playgroup", description: "Early play-based learning" },

@@ -52,7 +52,7 @@ interface OwnedPhrase {
 }
 
 const OWNED_PHRASES: OwnedPhrase[] = [
-  { phrase: /\bbest preschool in thane\b/i, label: "Best Preschool in Thane", canonicalUrls: [/^\/best-preschool-near-me-in-thane$/] },
+  { phrase: /\bbest preschool in thane\b/i, label: "Best Preschool in Thane", canonicalUrls: [/^\/play-school-near-me$/] },
   { phrase: /\bplay school near me\b/i, label: "Play School Near Me", canonicalUrls: [/^\/play-school-near-me$/] },
   { phrase: /\bplaygroup in thane\b/i, label: "Playgroup in Thane", canonicalUrls: [/^\/playgroup$/] },
   { phrase: /\bnursery school in thane\b/i, label: "Nursery School in Thane", canonicalUrls: [/^\/nursery$/] },
@@ -60,6 +60,24 @@ const OWNED_PHRASES: OwnedPhrase[] = [
   { phrase: /\bpreschool admissions in thane\b/i, label: "Preschool Admissions in Thane", canonicalUrls: [/^\/preschool-admissions$/] },
   { phrase: /\bpreschool in thane\b/i, label: "Preschool in Thane", canonicalUrls: [/^\/$/] },
 ];
+
+// Preserve historical GSC observations while attributing their former URLs
+// to the surviving destinations. This keeps the overlap report useful without
+// treating redirected pages as current keyword owners.
+const REDIRECTED_PAGE_DESTINATIONS: Record<string, string> = {
+  "/best-preschool-near-me-in-thane": "/play-school-near-me",
+  "/playgroup-near-ghodbunder-road": "/play-school-near-ghodbunder-road",
+  "/playgroup-in-manpada": "/preschool-in-manpada-thane",
+  "/playgroup-in-kasarvadavali": "/preschool-in-kasarvadavali-thane",
+  "/playgroup-in-anand-nagar": "/preschool-in-anand-nagar-thane",
+  "/playgroup-in-kalwa": "/preschool-in-kalwa-thane",
+  "/playgroup-in-dhokali": "/preschool-in-dhokali-thane",
+  "/play-school-near-majiwada": "/preschool-in-anand-nagar-thane",
+  "/play-school-near-naupada": "/preschool-in-hariniwas-thane",
+  "/blog/nursery-school-admission-thane-2026": "/preschool-admissions",
+  "/importance-of-play-in-childrens-emotional-growth": "/blog/how-play-based-learning-shapes-young-minds",
+  "/healthy-preschool-meals-for-bright-minds-and-bodies": "/blog/healthy-tiffin-box-ideas-preschoolers",
+};
 
 // ── Data shapes ────────────────────────────────────────────────────────────
 interface QueryEntry {
@@ -126,11 +144,14 @@ function jaccard(a: Set<string>, b: Set<string>): number {
 function flattenRows(log: LogFile): Row[] {
   const rows: Row[] = [];
   for (const page of log.pages) {
+    const normalizedPath = page.url.split(/[?#]/, 1)[0].toLowerCase();
+    const path = normalizedPath === "/" ? normalizedPath : normalizedPath.replace(/\/+$/, "");
+    const url = REDIRECTED_PAGE_DESTINATIONS[path] ?? path;
     for (const audit of page.audits) {
       for (const q of audit.queries) {
         if (q.excludeFromOverlap) continue;
         rows.push({
-          url: page.url,
+          url,
           query: q.query,
           normalized: normalize(q.query),
           position: q.position,

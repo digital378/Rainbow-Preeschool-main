@@ -43,7 +43,6 @@ import { FAQ_SCHEMA_ITEMS } from "@shared/faq-data";
 import { FAQ_CATEGORIES } from "@shared/faq-data";
 import { admissionsAnswerSegments, admissionsFAQs } from "@shared/admissions-faq-data";
 import { PLAYGROUP_FAQS } from "@shared/playgroup-faq-data";
-import { getPlaygroupLandingBySlug } from "@shared/playgroup-landing-data";
 import { BLOG_METADATA } from "@shared/blog-metadata";
 import { testimonials, testimonialsSEO } from "@shared/testimonials-content";
 import { HAPPY_TIMES_COPY, HAPPY_TIMES_SSR_COPY } from "@shared/happy-times-content";
@@ -78,7 +77,6 @@ import {
   HOMEPAGE_STRUCTURED_DATA,
   HOMEPAGE_TITLE,
 } from "@shared/homepage-schema";
-import { BEST_PRESCHOOL_FAQ_SCHEMA_ITEMS } from "@shared/best-preschool-faq-data";
 import { NATIONAL_SYMBOLS_FAQ_SCHEMA_ITEMS } from "@shared/national-symbols-faq-data";
 import { NATIONAL_SYMBOLS_CRAFTS } from "@shared/national-symbols-craft-data";
 import { PLAY_SCHOOL_FAQ_SCHEMA_ITEMS } from "@shared/play-school-faq-data";
@@ -465,7 +463,6 @@ const BLOG_SLUGS = [
   "preschool-vs-daycare-difference",
   "what-age-start-play-school",
   "benefits-play-school-2-year-olds",
-  "nursery-school-admission-thane-2026",
   "what-children-learn-nursery-school",
   "50-fun-learning-activities-preschoolers",
   "best-childrens-books-indian-preschoolers",
@@ -673,7 +670,7 @@ const commonInternalLinks = [
   { text: "Kindergarten (3.5–5.5 years)", url: "/kindergarten" },
   { text: "Gallery", url: "/gallery" },
   { text: "Contact & Admissions", url: "/contact" },
-  { text: "Best Preschool in Thane", url: "/best-preschool-near-me-in-thane" },
+  { text: "Best Preschool in Thane", url: "/play-school-near-me" },
   { text: "Play School Near Me", url: "/play-school-near-me" },
   { text: "Preschool Admissions", url: "/preschool-admissions" },
   { text: "Blog", url: "/blog" },
@@ -690,45 +687,6 @@ function centreFAQSchema(locality: string, phone: string) {
       { "@type": "Question", name: `What programmes are available at Rainbow Preschool ${locality}?`, acceptedAnswer: { "@type": "Answer", text: `We offer Playgroup (1.5–2.5 years), Nursery (2.5–3.5 years), Kindergarten (3.5–5.5 years), and Happy Times extended after-school care at our ${locality} centre.` } },
       { "@type": "Question", name: `Can I visit Rainbow Preschool ${locality} before enrolling?`, acceptedAnswer: { "@type": "Answer", text: `Absolutely. We strongly encourage a campus tour before enrollment. Contact us to schedule a free visit — your child is also welcome to join a trial class to experience our environment.` } },
     ],
-  };
-}
-
-function playgroupFAQSchema(locality: string) {
-  return {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: [
-      { "@type": "Question", name: `What is the best age to start playgroup in ${locality}?`, acceptedAnswer: { "@type": "Answer", text: `Children can start Rainbow Preschool's Playgroup from 1.5 years (18 months). Our playgroup in ${locality} is tailored for toddlers aged 1.5 to 2.5 years, developing social skills and early learning through structured and free play.` } },
-      { "@type": "Question", name: `Is the playgroup in ${locality} safe for toddlers?`, acceptedAnswer: { "@type": "Answer", text: `Yes. Rainbow Preschool's centre has CCTV-enabled classrooms, 100% female teaching staff, a secure entry/exit system, and child-safe furniture. Safety is our highest priority.` } },
-      { "@type": "Question", name: `What activities does the playgroup programme include?`, acceptedAnswer: { "@type": "Answer", text: `Our playgroup curriculum includes sensory play, music and movement, art activities, storytelling, puppet shows, outdoor play, and circle time — all designed for age-appropriate development.` } },
-      { "@type": "Question", name: `How is playgroup different from nursery?`, acceptedAnswer: { "@type": "Answer", text: `Playgroup (1.5–2.5 years) focuses on sensory exploration, social skills, and motor development through play. Nursery (2.5–3.5 years) introduces more structured learning including phonics, number concepts, and pre-writing skills.` } },
-      { "@type": "Question", name: `What are the playgroup timings?`, acceptedAnswer: { "@type": "Answer", text: `Rainbow Preschool offers morning batch (8:30 AM–11:30 AM) and afternoon batch (12:30 PM–3:30 PM). Contact your nearest centre to confirm availability and batch timings.` } },
-    ],
-  };
-}
-
-function playgroupSchema(locality: string, url: string) {
-  return {
-    "@context": "https://schema.org",
-    "@type": "Preschool",
-    "@id": `${BASE_URL}${url}`,
-    name: `Rainbow Preschool International — Playgroup in ${locality}`,
-    description: `Quality playgroup programme in ${locality}, Thane for toddlers aged 1.5 to 2.5 years. Play-based early learning with certified female teachers.`,
-    url: `${BASE_URL}${url}`,
-    telephone: "+918291568972",
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: locality === "Thane" ? "Thane" : `${locality}, Thane`,
-      addressRegion: "Maharashtra",
-      addressCountry: "IN",
-    },
-    openingHoursSpecification: [{
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-      opens: "08:00",
-      closes: "18:00",
-    }],
-    parentOrganization: { "@id": `${BASE_URL}/#organization` },
   };
 }
 
@@ -1199,7 +1157,7 @@ const staticPages: Record<string, PageSEOData> = {
       { heading: "Admission & Timings", text: "Playgroup admissions at Rainbow Preschool International are open for children aged 1.5 to 2.5 years. Our Playgroup operates Monday through Friday with morning batches (8:30 AM to 11:30 AM) and afternoon batches (12:30 PM to 3:30 PM) available at select centres, giving working parents maximum flexibility. Admissions are accepted on a rolling basis throughout the year, subject to seat availability. We strongly encourage parents to schedule a free campus tour before enrolling — you can observe the classroom, meet your child's prospective teacher, and ask all the questions you have in a relaxed, no-pressure setting. To book a tour or request an admission form, call us at +91 82915 68972 or walk into any of our 6 Rainbow Preschool centres in Thane West, Monday to Saturday, 9 AM to 6 PM." },
       { heading: "Frequently Asked Questions — Playgroup", items: PLAYGROUP_FAQS.map(faq => `${faq.question} — ${faq.answer}`) },
     ],
-    internalLinks: [...commonInternalLinks, { text: "Best Preschool in Thane", url: "/best-preschool-near-me-in-thane" }, { text: "Nursery Programme", url: "/nursery" }],
+    internalLinks: [...commonInternalLinks, { text: "Best Preschool in Thane", url: "/play-school-near-me" }, { text: "Nursery Programme", url: "/nursery" }],
     lastModified: LAST_UPDATED_ISO,
     lastModifiedDisplay: LAST_UPDATED_DISPLAY,
   },
@@ -1513,110 +1471,13 @@ const staticPages: Record<string, PageSEOData> = {
     ],
     internalLinks: [],
   },
-  "/best-preschool-near-me-in-thane": {
-    title: "Best Preschool Near Me in Thane | Rainbow Preschool",
-    description: "Looking for the best preschool near you in Thane? Explore Rainbow Preschool's 6 centres, safety, curriculum and campus visit options.",
-    keywords: "best preschool near me, preschool near me, preschool in thane, best preschool in thane, top preschool in thane, nursery school in thane, kindergarten in thane, preschool admission in thane, Rainbow Preschools",
-    canonical: `${BASE_URL}/best-preschool-near-me-in-thane`,
-    h1: "Best Preschool Near Me in Thane",
-    breadcrumbs: [{ name: "Home", url: "/" }, { name: "Best Preschool in Thane", url: "/best-preschool-near-me-in-thane" }],
-    structuredData: [organizationSchema, websiteSchema, ...branchLocalBusinessSchemas, {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      mainEntity: BEST_PRESCHOOL_FAQ_SCHEMA_ITEMS.map(item => ({
-        "@type": "Question",
-        name: item.question,
-        acceptedAnswer: { "@type": "Answer", text: item.answer },
-      })),
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "EducationalOrganization",
-      "@id": `${BASE_URL}/#organization`,
-      name: "Rainbow Preschool International",
-      url: BASE_URL,
-    }],
-    contentSections: [
-      { heading: "Why Rainbow is a Trusted Preschool in Thane", text: "Choosing the best preschool in Thane is one of the most important early decisions a parent makes — and Rainbow Preschool International has earned the trust of over 1,00,000 Thane families since 2007. Across our 6 Thane West centres, we have built a reputation on consistent quality: awards from India Today (Best Preschool Chain), ScooNews Global Edu Awards, the Economic Times, and the World Education Summit. Three reasons consistently come up when Thane parents tell us why Rainbow is their choice: trained, ECE-qualified female teachers who genuinely understand toddler and preschooler development; small batch sizes (10–15 children) so every child is seen, heard and supported every single day; and a play-based, NEP-aligned curriculum that builds school-readiness without rote pressure. We are not the cheapest preschool in Thane and we are not the largest — we are the most trusted, because we have done one thing well for nearly two decades.", items: [
-        "18+ years of focused early childhood expertise — established 2007, never franchised out",
-        "6 Thane West centres — Manpada, Hariniwas (Naupada), Anand Nagar (Majiwada), Dhokali (Kolshet Road), Kalwa, Kasarvadavali (Ghodbunder Road)",
-        "Over 1,00,000 alumni",
-        "100% trained, female teaching staff — ECE-qualified or Montessori-trained, all background-verified",
-        "Small batch sizes — 10–12 in Playgroup, 12–15 in Nursery and Kindergarten — for genuine individual attention",
-        "Award-winning recognition from India Today, ScooNews, Economic Times and the World Education Summit",
-      ]},
-      { heading: "Our Three Age-Aligned Programmes", text: "Rainbow Preschool's curriculum is built around three age-appropriate programmes, each designed by our Head of Curriculum and reviewed annually against NEP 2020 and NCF-FS guidelines. Children move smoothly from one programme to the next, with the same trusted teaching team and consistent learning philosophy across all 6 Thane centres.", items: [
-        "Playgroup (1.5–2.5 years) — Gentle separation, sensory exploration, social play, songs and rhymes. Morning and afternoon batches available.",
-        "Nursery (2.5–3.5 years) — Phonics, number recognition (1–20), pre-writing, art, theme-based learning, structured circle time and outdoor play.",
-        "Kindergarten (4–6 years, Jr. KG and Sr. KG) — Reading and writing, mathematics up to 100, environmental science, computer basics, drama, sports and full Grade-1-readiness.",
-      ]},
-      { heading: "Safety, Hygiene and Trust — What We Promise Every Parent", text: "When parents tell us they chose Rainbow as the best preschool in Thane, safety is almost always the first reason. Every Rainbow centre across Thane West is built around the same non-negotiable safety protocol: 24/7 CCTV monitoring of every classroom and corridor, 100% trained female teaching staff (no exceptions), child-proofed furniture with rounded edges, daily sanitisation of toys and high-touch surfaces, secure single-point entry/exit with verified pickup, and a fully-trained first-aid certified educator on every floor every day. We also maintain transparent monthly safety audits and share the findings with parents during PTM. Our infrastructure includes fire-safety equipment, emergency-evacuation drills with children every quarter, and clean drinking water tested independently every month. For parents on Ghodbunder Road, in Naupada, around Majiwada, in Kolshet Road, in Kalwa or in Kasarvadavali, this means the same Rainbow safety standard, no matter which centre is nearest your home." },
-      { heading: "Curriculum and Teaching Philosophy", text: "Rainbow's curriculum is built on the principle that early childhood is for joyful exploration, not rote memorisation. Every learning activity is delivered through play, story, art, music, movement or hands-on investigation — never worksheets-only or drill-based instruction. We follow a thematic approach, with each month organised around a child-friendly theme (My Family, Festivals of India, Insects, Transport, Healthy Me, Our Earth) that runs through language, numeracy, science awareness, art and circle time. Our curriculum is benchmarked annually against the entry expectations of leading CBSE, ICSE and IB primary schools in Thane and Mumbai — Singhania, Hiranandani Foundation, Smt. Sulochanadevi Singhania, Lodha World, Universal, Vasant Vihar, Bombay Cambridge International Academy and others — so when your child finishes Sr. KG at Rainbow, they are genuinely ready for the academic and social demands of Grade 1." },
-      { heading: "Our 6 Centres — Find the Best Preschool Near You in Thane", text: "Every Rainbow centre delivers the same curriculum, the same safety standard and the same teacher-training philosophy — what changes is convenience. Pick the centre nearest your home so your child spends less time in the car and more time learning, playing and growing.", items: [
-        "Manpada (Hiranandani Estate, Ghodbunder Road) — convenient for families on Ghodbunder Road, Hiranandani Estate and Patlipada",
-        "Hariniwas Circle (Naupada) — serves Naupada, Panchpakadi, Charai and Khopat",
-        "Anand Nagar (Majiwada) — serves Majiwada, Tropical Lagoon, Anand Nagar and Vasant Vihar",
-        "Dhokali (Kolshet Road) — serves Kolshet Road, Dhokali Naka, Vandana Nagar and Balkum",
-        "Kalwa — serves Kalwa, Mumbra side, Vitawa and Kharegaon",
-        "Kasarvadavali (Ghodbunder Road) — serves Kasarvadavali, Hiranandani Meadows, Brahmand and the upper Ghodbunder belt",
-      ], images: centres.flatMap((centre) => {
-        const image = CENTRE_CARD_IMAGES[centre.id as keyof typeof CENTRE_CARD_IMAGES];
-        return image ? [image] : [];
-      })},
-      { heading: "What Thane Parents Say About Rainbow", text: "Rainbow has been trusted by Thane families for over 18 years. Parents consistently mention three things: how genuinely caring the teachers are, how visibly happy and confident their child has become, and how transparent we are about safety, progress and daily life at school. Many of our families have sent multiple children to Rainbow over the years, and we now have second-generation Rainbow students whose parents themselves attended our centres in the early years." },
-      { heading: "Admission Process — Simple, Transparent, Pressure-Free", text: "Admissions at Rainbow Preschool are open year-round and follow a simple 5-step process. Step 1 — Enquire by phone (+91-8291568972) or fill the online form on this page. Step 2 — Schedule a free campus visit at your nearest Thane centre, at a time that suits you, including Saturdays. Step 3 — Tour the classrooms, meet the lead teacher and ask all your questions in a relaxed, no-pressure setting. Step 4 — If you decide to enrol, complete the simple admission form and submit your documents. Step 5 — Welcome to Rainbow! Your child starts on a date that suits your family. There is no entrance test, no parent interview, no donation. We believe enrolment should be easy for parents and joyful for children." },
-      { heading: "How to Compare Preschools in Thane", text: "When evaluating any preschool in Thane, focus on these key criteria: safety infrastructure (CCTV in every classroom, biometric entry, female staff); teacher qualifications (ECE certification, not just a general degree); student-teacher ratio (ideal 1:10–1:15); curriculum approach (play-based and NEP 2020 aligned); centre proximity; hygiene standards; parent communication frequency; and whether a free campus visit and trial class are offered.", items: [
-        "Safety & CCTV — 24/7 CCTV in every classroom, biometric entry, GPS-tracked transport at Rainbow",
-        "Teacher qualification — 100% ECE-certified or Montessori-trained female educators at Rainbow",
-        "Curriculum — Proprietary Rainbow Curriculum, play-based, NEP 2020 aligned",
-        "Centre proximity — 6 centres across Thane West, at least one near most localities",
-        "Student-teacher ratio — 1:10 in Playgroup; 1:12–15 in Nursery and KG at Rainbow",
-        "Hygiene — Daily sanitisation, independent water testing at all Rainbow centres",
-        "Parent communication — Daily updates, PTM, open-door policy at every Rainbow centre",
-        "Campus visit — Free visits and trial classes Mon–Sat at all 6 Rainbow centres",
-      ]},
-      { heading: "Compare Your Preschool Options", text: "If you are still evaluating schools, read the preschool comparison guide and questions parents can ask on a school visit.", links: [
-        { text: "Top preschools in Thane comparison guide", url: "/top-preschools-in-thane" },
-        { text: "Questions to ask during a preschool tour", url: "/blog/what-to-ask-during-a-tour-of-a-preschool-in-thane" },
-      ]},
-      { heading: "What Parents Say About Rainbow Preschool", text: "Below are representative quotes from parents across different Rainbow locations — first names only, last names omitted for privacy. These reflect the experiences families share about life at Rainbow Preschool.", items: [
-        "★★★★★ Priya (Manpada Centre) — \"My daughter has been at Rainbow Manpada for two years and the transformation is incredible. From a shy toddler to a confident, chatty child who can't wait to go to school every morning. The teachers genuinely know each child individually.\"", // allow-soft-words
-        "★★★★★ Rahul (Hariniwas Centre) — \"What made us choose Rainbow over other preschools in Thane was the 100% female staff policy and the CCTV in every classroom. Our son settled in within a week — the teachers handle separation anxiety so patiently and professionally.\"",
-        "★★★★★ Anita (Kasarvadavali Centre) — \"We shifted from another well-known preschool chain to Rainbow Kasarvadavali and the difference was immediately obvious — smaller batches, more individual attention, and daily verbal updates from the teacher at pickup. I feel completely informed.\"",
-        "★★★★★ Deepa (Dhokali Centre) — \"My son started Nursery at Rainbow Dhokali not knowing a single English word. By end of term he was forming sentences and naming shapes and colours. The phonics approach is genuinely different from the rote learning we had feared.\"",
-        "★★★★★ Meera (Anand Nagar Centre) — \"When our daughter moved to Sr. KG, her class teacher at Hiranandani Foundation School said she was one of the most school-ready children she had seen. That is the best endorsement I can give Rainbow Anand Nagar.\"",
-        "★★★★★ Sanjay (Kalwa Centre) — \"Three of my children have been through Rainbow Kalwa — my eldest is now in Class 5 and still remembers her nursery teacher's name. The bond they build with children here is real. I would not consider any other preschool in Thane.\"",
-      ]},
-      { heading: "Why Thane Parents Choose Rainbow Over Other Preschool Chains", text: "When Thane parents compare Rainbow Preschool International with other preschool options in the city, several differences consistently come up. Rainbow is the only preschool chain in Thane that was founded and has operated exclusively in Thane for over 18 years — it is not a national franchise adapting a generic kit to the local market. The Rainbow Curriculum is developed in-house by a dedicated curriculum team, benchmarked annually against NEP 2020 and the entry expectations of leading Thane primary schools, and refined based on 18 years of observing how Thane children learn and grow. Rainbow also enforces a 100% female, ECE-certified staff policy without exception — not a preference, a non-negotiable standard at all 6 centres. These facts — combined with national recognition from India Today, ScooNews, the Economic Times, and the World Education Summit — explain why Rainbow consistently comes up as the answer when Thane parents search for the best preschool near them." },
-      { heading: "Programmes Available at Every Centre", items: ["Playgroup (1.5–2.5 years)", "Nursery (2.5–3.5 years)", "Kindergarten (3.5–5.5 years, Jr. KG + Sr. KG)", "Happy Times — extended care for working parents (2–10 years)"] },
-      { heading: "Frequently Asked Questions", text: "Below are the questions Thane parents most commonly ask before enrolling. If your question is not listed here, call +91-8291568972 — our admissions team is happy to walk you through anything in detail." , items: [
-        "Q: What is the right age to start preschool in Thane? A: Most children are ready for Playgroup at 1.5 to 2 years and for Nursery at 2.5 to 3 years. Every child is different — visit a centre and see how your child responds before deciding.",
-        "Q: Are admissions open mid-year? A: Yes — Rainbow Preschool admissions are open year-round on a rolling basis at all 6 Thane centres, subject to seat availability.",
-        "Q: Do you have any special offers for siblings or alumni families? A: Yes, we run a sibling concession and an alumni-family concession. Ask the admissions team during your campus visit.",
-        "Q: What is the parent-teacher communication frequency? A: Daily verbal updates at pickup, monthly written progress notes, and quarterly formal PTMs. Teachers are also reachable via the centre coordinator.",
-      ]},
-      { heading: "Continue Exploring", text: "Read more about our programmes, the locality nearest you, or how to enquire:", links: [
-        { text: "Playgroup (1.5–2.5 years)", url: "/playgroup" },
-        { text: "Nursery (2.5–3.5 years)", url: "/nursery" },
-        { text: "Kindergarten (4–6 years)", url: "/kindergarten" },
-        { text: "Play School Near Me in Thane", url: "/play-school-near-me" },
-        { text: "Preschool Admissions Process", url: "/preschool-admissions" },
-        { text: "Preschool in Manpada, Thane", url: "/preschool-in-manpada-thane" },
-        { text: "Preschool in Hariniwas, Thane", url: "/preschool-in-hariniwas-thane" },
-        { text: "Preschool in Kasarvadavali, Thane", url: "/preschool-in-kasarvadavali-thane" },
-      ]},
-    ],
-    internalLinks: commonInternalLinks,
-    lastModified: LAST_UPDATED_ISO,
-    lastModifiedDisplay: LAST_UPDATED_DISPLAY,
-  },
   "/play-school-near-me": {
     title: "Play School & Preschool Near Me in Thane | Rainbow",
     description: "Find the best play school & preschool near you in Thane — Rainbow Preschool, 6 centres across Thane West, safe play-based learning since 2007.",
     keywords: "play school near me, preschool near me, playschool near me in thane, preschool near me in thane, top playschool thane, best play school thane",
     canonical: `${BASE_URL}/play-school-near-me`,
     h1: "Play School & Preschool Near Me in Thane",
-    breadcrumbs: [{ name: "Home", url: "/" }, { name: "Play School Near Me", url: "/play-school-near-me" }],
+    breadcrumbs: [{ name: "Home", url: "/" }, { name: "Play School Near Me", url: "" }],
     structuredData: [organizationSchema, websiteSchema, ...branchLocalBusinessSchemas, {
       "@context": "https://schema.org",
       "@type": "FAQPage",
@@ -1659,11 +1520,11 @@ const staticPages: Record<string, PageSEOData> = {
       ]},
       { heading: "Explore by Neighbourhood", text: "Compare the local play school and playgroup information for the area closest to your family:", links: [
         { text: "Play school near Ghodbunder Road (Manpada and Kasarvadavali)", url: "/play-school-near-ghodbunder-road" },
-        { text: "Play school near Majiwada (Anand Nagar)", url: "/play-school-near-majiwada" },
-        { text: "Play school near Naupada (Hariniwas)", url: "/play-school-near-naupada" },
-        { text: "Playgroup near Ghodbunder Road", url: "/playgroup-near-ghodbunder-road" },
-        { text: "Playgroup in Dhokali (Kolshet Road)", url: "/playgroup-in-dhokali" },
-        { text: "Playgroup in Kalwa", url: "/playgroup-in-kalwa" },
+        { text: "Play school near Majiwada (Anand Nagar)", url: "/preschool-in-anand-nagar-thane" },
+        { text: "Play school near Naupada (Hariniwas)", url: "/preschool-in-hariniwas-thane" },
+        { text: "Playgroup near Ghodbunder Road", url: "/play-school-near-ghodbunder-road" },
+        { text: "Playgroup in Dhokali (Kolshet Road)", url: "/preschool-in-dhokali-thane" },
+        { text: "Playgroup in Kalwa", url: "/preschool-in-kalwa-thane" },
       ]},
       { heading: "Preschool Near Me — Areas We Serve Across Thane", text: "Parents searching for a 'preschool near me' in Thane will find a Rainbow centre within a short distance from every major residential pocket. Here is a locality-by-locality guide to which Rainbow play school is closest to you.", items: [
         "Manpada, Edenwoods, Hiranandani Estate — Rainbow Preschool Manpada (Aggarwal Arcade, near Khewra Circle) on Ghodbunder Road",
@@ -1686,11 +1547,10 @@ const staticPages: Record<string, PageSEOData> = {
         "Q: Which is the nearest play school to Hariniwas Circle or Panchpakadi? A: The Hariniwas centre on Bhakti Mandir Road, near Hariniwas Circle, serves Panchpakadi, Naupada, Charai, and Khopat families.",
         "Q: Is there a Rainbow play school near Kolshet Road? A: Yes — the Dhokali centre is on Kolshet Road at Dhokali Naka, opposite Aban Park Society.",
       ]},
-      { heading: "Continue Exploring", text: "Read more about our age-aligned programmes, related Thane locality pages, or our admissions process:", links: [
+      { heading: "Continue Exploring", text: "Read more about our age-aligned programmes, related Thane locality pages, or our admissions process. Best Preschool Near Me in Thane and Play School Near Me are this page:", links: [
         { text: "Playgroup Programme (1.5–2.5 years)", url: "/playgroup" },
         { text: "Nursery Programme (2.5–3.5 years)", url: "/nursery" },
         { text: "Kindergarten Programme (3.5–5.5 yrs)", url: "/kindergarten" },
-        { text: "Best Preschool Near Me in Thane", url: "/best-preschool-near-me-in-thane" },
         { text: "Preschool Admissions", url: "/preschool-admissions" },
         { text: "Preschool in Manpada, Thane", url: "/preschool-in-manpada-thane" },
         { text: "Preschool in Anand Nagar, Thane", url: "/preschool-in-anand-nagar-thane" },
@@ -1698,12 +1558,12 @@ const staticPages: Record<string, PageSEOData> = {
         { text: "Preschool in Kasarvadavali, Thane", url: "/preschool-in-kasarvadavali-thane" },
         { text: "Preschool in Hariniwas, Thane", url: "/preschool-in-hariniwas-thane" },
         { text: "Preschool in Kalwa, Thane", url: "/preschool-in-kalwa-thane" },
-        { text: "Playgroup in Manpada, Thane", url: "/playgroup-in-manpada" },
-        { text: "Playgroup in Kalwa, Thane", url: "/playgroup-in-kalwa" },
-        { text: "Playgroup in Kasarvadavali, Thane", url: "/playgroup-in-kasarvadavali" },
+        { text: "Playgroup in Manpada, Thane", url: "/preschool-in-manpada-thane" },
+        { text: "Playgroup in Kalwa, Thane", url: "/preschool-in-kalwa-thane" },
+        { text: "Playgroup in Kasarvadavali, Thane", url: "/preschool-in-kasarvadavali-thane" },
       ]},
     ],
-    internalLinks: commonInternalLinks,
+    internalLinks: commonInternalLinks.filter((link) => link.url !== "/play-school-near-me"),
     lastModified: LAST_UPDATED_ISO,
     lastModifiedDisplay: LAST_UPDATED_DISPLAY,
   },
@@ -1738,100 +1598,13 @@ const staticPages: Record<string, PageSEOData> = {
         "Q: What age does the play school accept? A: 1.5 to 2.5 years (Playgroup programme).",
         "Q: Are admissions open? A: Yes, year-round rolling basis. Call +91-8291568972.",
       ]},
-      { heading: "Explore More", text: "Related Thane locality pages and programmes:", links: [
+      { heading: "Explore More", text: "Related Thane locality pages and programmes. Playgroup near Ghodbunder Road is this page:", links: [
         { text: "Play School Near Me in Thane", url: "/play-school-near-me" },
-        { text: "Playgroup near Ghodbunder Road", url: "/playgroup-near-ghodbunder-road" },
         { text: "Preschool in Manpada, Thane", url: "/preschool-in-manpada-thane" },
         { text: "Preschool in Kasarvadavali, Thane", url: "/preschool-in-kasarvadavali-thane" },
-        { text: "Playgroup in Manpada", url: "/playgroup-in-manpada" },
-        { text: "Playgroup in Kasarvadavali", url: "/playgroup-in-kasarvadavali" },
+        { text: "Playgroup in Manpada", url: "/preschool-in-manpada-thane" },
+        { text: "Playgroup in Kasarvadavali", url: "/preschool-in-kasarvadavali-thane" },
         { text: "Playgroup Programme", url: "/playgroup" },
-        { text: "Preschool Admissions", url: "/preschool-admissions" },
-      ]},
-    ],
-    internalLinks: commonInternalLinks,
-    lastModified: LAST_UPDATED_ISO,
-    lastModifiedDisplay: LAST_UPDATED_DISPLAY,
-  },
-  "/play-school-near-majiwada": {
-    title: "Play School Near Majiwada, Thane | Rainbow Preschool",
-    description: "Rainbow Preschool Anand Nagar, opposite Tropical Lagoon at Majiwada Junction — the nearest play school for Majiwada, Vasant Vihar & Kapurbawdi.",
-    keywords: "play school near majiwada, preschool near majiwada thane, playschool majiwada junction, preschool anand nagar thane",
-    canonical: `${BASE_URL}/play-school-near-majiwada`,
-    h1: "Play School Near Majiwada, Thane",
-    breadcrumbs: [
-      { name: "Home", url: "/" },
-      { name: "Play School Near Me", url: "/play-school-near-me" },
-      { name: "Majiwada", url: "/play-school-near-majiwada" },
-    ],
-    structuredData: [organizationSchema, websiteSchema, {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      mainEntity: [
-        { "@type": "Question", name: "Which play school is nearest to Majiwada Junction in Thane?", acceptedAnswer: { "@type": "Answer", text: "Rainbow Preschool's Anand Nagar centre, at Kris Commercial Plaza opposite Tropical Lagoon, is the nearest play school to Majiwada Junction." } },
-        { "@type": "Question", name: "Is there a preschool near Tropical Lagoon in Thane?", acceptedAnswer: { "@type": "Answer", text: "Yes. Rainbow Preschool Anand Nagar is directly opposite Tropical Lagoon at Majiwada Junction — one of the most conveniently located play schools on the Ghodbunder Road side of Thane." } },
-        { "@type": "Question", name: "Is there a play school near Vasant Vihar or Kapurbawdi?", acceptedAnswer: { "@type": "Answer", text: "Yes. Rainbow Preschool Anand Nagar at Majiwada Junction serves families from Vasant Vihar and Kapurbawdi — both a short ride from the centre." } },
-        { "@type": "Question", name: "What is the address of Rainbow Preschool near Majiwada?", acceptedAnswer: { "@type": "Answer", text: "Kris Commercial Plaza, Opposite Tropical Lagoon, Majiwada Junction, Anand Nagar, Thane (W). Call +91-8291568972 for directions." } },
-        { "@type": "Question", name: "Are admissions open at the play school near Majiwada?", acceptedAnswer: { "@type": "Answer", text: "Yes, admissions are open year-round on a rolling basis. No entrance test, no donation. Call +91-8291568972 or fill the enquiry form to book a free campus visit." } },
-      ],
-    }],
-    contentSections: [
-      { heading: "Nearest Rainbow Centre to Majiwada — Anand Nagar", text: "Rainbow Preschool's Anand Nagar centre is at Kris Commercial Plaza, opposite Tropical Lagoon at Majiwada Junction. This is the nearest play school for families in Anand Nagar, Majiwada, Vasant Vihar, Kapurbawdi and Teen Haath Naka area. Tropical Lagoon is one of Thane's best-known landmarks, making the centre easy to locate for every parent in the area." },
-      { heading: "Frequently Asked Questions about Play School Near Majiwada", text: "Parents near Majiwada commonly ask:", items: [
-        "Q: Which play school is nearest to Majiwada Junction? A: Rainbow Preschool Anand Nagar, opposite Tropical Lagoon at Majiwada Junction.",
-        "Q: Is there a preschool near Tropical Lagoon? A: Yes — Rainbow Preschool Anand Nagar is directly opposite Tropical Lagoon.",
-        "Q: Is there a play school near Vasant Vihar? A: Yes — the Anand Nagar centre serves Vasant Vihar and Kapurbawdi.",
-        "Q: What is the address? A: Kris Commercial Plaza, Opp. Tropical Lagoon, Majiwada Junction, Anand Nagar, Thane (W).",
-        "Q: Are admissions open? A: Yes, year-round rolling basis. Call +91-8291568972.",
-      ]},
-      { heading: "Explore More", text: "Related pages:", links: [
-        { text: "Play School Near Me in Thane", url: "/play-school-near-me" },
-        { text: "Preschool in Anand Nagar, Thane", url: "/preschool-in-anand-nagar-thane" },
-        { text: "Playgroup in Anand Nagar", url: "/playgroup-in-anand-nagar" },
-        { text: "Playgroup Programme", url: "/playgroup" },
-        { text: "Preschool Admissions", url: "/preschool-admissions" },
-      ]},
-    ],
-    internalLinks: commonInternalLinks,
-    lastModified: LAST_UPDATED_ISO,
-    lastModifiedDisplay: LAST_UPDATED_DISPLAY,
-  },
-  "/play-school-near-naupada": {
-    title: "Play School Near Naupada, Thane | Rainbow Preschool",
-    description: "Rainbow Preschool Hariniwas, Bhakti Mandir Road near Hariniwas Circle — the nearest play school for Naupada, Panchpakadi, Charai & Khopat.",
-    keywords: "play school near naupada, preschool near naupada thane, playschool panchpakadi thane, preschool hariniwas thane",
-    canonical: `${BASE_URL}/play-school-near-naupada`,
-    h1: "Play School Near Naupada, Thane",
-    breadcrumbs: [
-      { name: "Home", url: "/" },
-      { name: "Play School Near Me", url: "/play-school-near-me" },
-      { name: "Naupada", url: "/play-school-near-naupada" },
-    ],
-    structuredData: [organizationSchema, websiteSchema, {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      mainEntity: [
-        { "@type": "Question", name: "Which play school is nearest to Naupada in Thane?", acceptedAnswer: { "@type": "Answer", text: "Rainbow Preschool Hariniwas, on Bhakti Mandir Road near Hariniwas Circle (Panchpakadi), is the nearest play school for families in Naupada." } },
-        { "@type": "Question", name: "Is there a preschool near Panchpakadi in Thane?", acceptedAnswer: { "@type": "Answer", text: "Yes. Rainbow Preschool Hariniwas is at Hariniwas Circle, Panchpakadi — one of Thane's central landmarks, within walking distance for many Panchpakadi families." } },
-        { "@type": "Question", name: "Where is Rainbow Preschool near Hariniwas Circle?", acceptedAnswer: { "@type": "Answer", text: "Rainbow Preschool Hariniwas is at M.V. Apartments, Bhakti Mandir Road, Hariniwas Circle, Panchpakadi, Thane (W). Call +91-8291568972 for directions." } },
-        { "@type": "Question", name: "Is there a play school near Charai or Khopat in Thane?", acceptedAnswer: { "@type": "Answer", text: "Yes. The Hariniwas centre on Bhakti Mandir Road near Panchpakadi is the most convenient Rainbow Preschool for families in Charai and Khopat." } },
-        { "@type": "Question", name: "Are admissions open for play school near Naupada?", acceptedAnswer: { "@type": "Answer", text: "Yes, admissions are open year-round on a rolling basis. No entrance test, no donation. Call +91-8291568972 or fill the enquiry form to book a free campus visit." } },
-      ],
-    }],
-    contentSections: [
-      { heading: "Nearest Rainbow Centre to Naupada — Hariniwas, Panchpakadi", text: "Rainbow Preschool Hariniwas is at M.V. Apartments, Bhakti Mandir Road, Hariniwas Circle, Panchpakadi — the nearest play school for families in Naupada, Panchpakadi, Charai and Khopat. Hariniwas Circle is a well-known central Thane landmark, making the centre easy to locate for every family in this part of Thane." },
-      { heading: "Frequently Asked Questions about Play School Near Naupada", text: "Parents near Naupada and Panchpakadi commonly ask:", items: [
-        "Q: Which play school is nearest to Naupada? A: Rainbow Preschool Hariniwas (Bhakti Mandir Road, Hariniwas Circle, Panchpakadi) is the nearest centre.",
-        "Q: Is there a preschool near Panchpakadi? A: Yes — Hariniwas Circle is the landmark; walking distance for Panchpakadi families.",
-        "Q: Where exactly is Rainbow Preschool near Hariniwas Circle? A: M.V. Apartments, Bhakti Mandir Road, Hariniwas Circle, Panchpakadi, Thane (W).",
-        "Q: Is there a play school near Charai or Khopat? A: Yes — the Hariniwas centre serves Charai and Khopat families.",
-        "Q: Are admissions open? A: Yes, year-round rolling basis. Call +91-8291568972.",
-      ]},
-      { heading: "Explore More", text: "Related pages:", links: [
-        { text: "Play School Near Me in Thane", url: "/play-school-near-me" },
-        { text: "Preschool in Hariniwas, Thane", url: "/preschool-in-hariniwas-thane" },
-        { text: "Playgroup Programme", url: "/playgroup" },
-        { text: "Nursery Programme", url: "/nursery" },
         { text: "Preschool Admissions", url: "/preschool-admissions" },
       ]},
     ],
@@ -2217,15 +1990,6 @@ const preschoolCentres: Record<string, { locality: string; address: string; phon
   "/preschool-in-kasarvadavali-thane": { locality: "Kasarvadavali", address: "Rosa Gardenia, Next to Parijat Gardens, Kasarvadavali, Behind Hypercity Mall, Thane (W)", phone: "+918291568972", lat: "19.2499", lng: "72.9721" },
 };
 
-const playgroundPages: Record<string, { locality: string; h1: string }> = {
-  "/playgroup-in-manpada": { locality: "Manpada", h1: "Playgroup in Manpada, Thane (1.5-2.5 Years)" },
-  "/playgroup-in-kalwa": { locality: "Kalwa", h1: "Playgroup in Kalwa, Thane (1.5-2.5 Years)" },
-  "/playgroup-near-ghodbunder-road": { locality: "Ghodbunder Road", h1: "Playgroup near Ghodbunder Road, Thane (1.5-2.5 Years)" },
-  "/playgroup-in-anand-nagar": { locality: "Anand Nagar", h1: "Playgroup in Anand Nagar, Thane (1.5-2.5 Years)" },
-  "/playgroup-in-kasarvadavali": { locality: "Kasarvadavali", h1: "Playgroup in Kasarvadavali, Thane (1.5-2.5 Years)" },
-  "/playgroup-in-dhokali": { locality: "Dhokali", h1: "Playgroup in Dhokali, Thane (1.5-2.5 Years)" },
-};
-
 // ── Pages intentionally excluded from indexing ──────────────────────────────
 // Derived from the canonical NOINDEX_SLUGS list in shared/seo-config.ts —
 // do NOT add paths here. To noindex a new page, add it to NOINDEX_SLUGS and
@@ -2475,12 +2239,6 @@ const BLOG_POST_SEO_DATA: Record<string, BlogPostSEORecord> = {
     lastModified: "2026-04-20",
     lastModifiedDisplay: "April 20, 2026",
   },
-  "nursery-school-admission-thane-2026": {
-    keywords: "nursery school admission thane, nursery admission 2026, preschool admission thane, nursery school near me",
-    datePublished: "2026-01-15",
-    lastModified: "2026-03-15",
-    lastModifiedDisplay: "March 15, 2026",
-  },
   "what-children-learn-nursery-school": {
     keywords: "what children learn in nursery, nursery school curriculum, nursery school syllabus, nursery school near me",
     datePublished: "2025-12-20",
@@ -2600,6 +2358,9 @@ const allSeededBlogSlugs = new Set([
   ...legacyHardcodedBlogPosts.map(({ slug }) => slug),
 ]);
 allSeededBlogSlugs.forEach((slug) => {
+  // The retired admission article remains in seed data for archival reference,
+  // but its URL redirects and must not require live-page SEO metadata.
+  if (slug === "nursery-school-admission-thane-2026") return;
   if (!BLOG_METADATA[slug] || !BLOG_POST_SEO_DATA[slug]) {
     throw new Error(`Missing shared metadata or SEO dates for blog slug: ${slug}`);
   }
@@ -2643,8 +2404,27 @@ export function isKnownRoute(urlPath: string): boolean {
   return getPageSEO(urlPath) !== null || isNonSeoServerRoute(urlPath);
 }
 
+const RETIRED_PAGE_PATHS = new Set([
+  "/best-preschool-near-me-in-thane",
+  "/playgroup-near-ghodbunder-road",
+  "/playgroup-in-manpada",
+  "/playgroup-in-kasarvadavali",
+  "/playgroup-in-anand-nagar",
+  "/playgroup-in-kalwa",
+  "/playgroup-in-dhokali",
+  "/play-school-near-majiwada",
+  "/play-school-near-naupada",
+  "/blog/nursery-school-admission-thane-2026",
+  "/importance-of-play-in-childrens-emotional-growth",
+  "/healthy-preschool-meals-for-bright-minds-and-bodies",
+]);
+
 export function getPageSEO(urlPath: string): PageSEOData | null {
   const cleanPath = urlPath.replace(/\/$/, "") || "/";
+
+  // Historical content remains in its archive sources, but these paths must
+  // never produce a 200 SSR document after their permanent redirects.
+  if (RETIRED_PAGE_PATHS.has(cleanPath.toLowerCase())) return null;
 
   if (staticPages[cleanPath]) {
     return staticPages[cleanPath];
@@ -2737,31 +2517,25 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
     const nearbyPages: Record<string, { text: string; url: string }[]> = {
       "/preschool-in-manpada-thane": [
         { text: "Play school near Ghodbunder Road", url: "/play-school-near-ghodbunder-road" },
-        { text: "Playgroup in Manpada", url: "/playgroup-in-manpada" },
-      ],
-      "/preschool-in-hariniwas-thane": [
-        { text: "Play school near Naupada", url: "/play-school-near-naupada" },
-      ],
-      "/preschool-in-anand-nagar-thane": [
-        { text: "Play school near Majiwada", url: "/play-school-near-majiwada" },
-        { text: "Playgroup in Anand Nagar", url: "/playgroup-in-anand-nagar" },
-      ],
-      "/preschool-in-dhokali-thane": [
-        { text: "Playgroup in Dhokali", url: "/playgroup-in-dhokali" },
-      ],
-      "/preschool-in-kalwa-thane": [
-        { text: "Playgroup in Kalwa", url: "/playgroup-in-kalwa" },
       ],
       "/preschool-in-kasarvadavali-thane": [
         { text: "Play school near Ghodbunder Road", url: "/play-school-near-ghodbunder-road" },
-        { text: "Playgroup in Kasarvadavali", url: "/playgroup-in-kasarvadavali" },
       ],
     };
-    if (nearbyPages[cleanPath]) {
+    const nearbyPlainText: Record<string, string[]> = {
+      "/preschool-in-manpada-thane": ["Playgroup in Manpada"],
+      "/preschool-in-hariniwas-thane": ["Play school near Naupada"],
+      "/preschool-in-anand-nagar-thane": ["Play school near Majiwada", "Playgroup in Anand Nagar"],
+      "/preschool-in-dhokali-thane": ["Playgroup in Dhokali"],
+      "/preschool-in-kalwa-thane": ["Playgroup in Kalwa"],
+      "/preschool-in-kasarvadavali-thane": ["Playgroup in Kasarvadavali"],
+    };
+    if (nearbyPages[cleanPath] || nearbyPlainText[cleanPath]) {
       richSections.push({
         heading: `Explore Preschool and Playgroup Near ${centre.locality}`,
         text: `Read more about the local programmes and nearby play school options for families around ${centre.locality}.`,
         links: nearbyPages[cleanPath],
+        items: nearbyPlainText[cleanPath],
       });
     }
 
@@ -2784,7 +2558,7 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
       canonical: `${BASE_URL}${cleanPath}`,
       h1: `Preschool in ${centre.locality}, Thane`,
       introText: intros?.paragraph1 ?? `Looking for a quality preschool in ${centre.locality}, Thane? Rainbow Preschool International's ${centre.locality} centre offers Playgroup, Nursery, and Kindergarten programmes in a safe, nurturing environment.`,
-      breadcrumbs: [{ name: "Home", url: "/" }, { name: "Centres", url: "/best-preschool-near-me-in-thane" }, { name: `Preschool in ${centre.locality}, Thane`, url: cleanPath }],
+      breadcrumbs: [{ name: "Home", url: "/" }, { name: "Centres", url: "/play-school-near-me" }, { name: `Preschool in ${centre.locality}, Thane`, url: cleanPath }],
       structuredData: [localBusinessSchema(centre.locality, centre.address, centre.phone, cleanPath, centre.lat, centre.lng, getCentreBySlug(localitySlug)?.areasServed), richFAQSchema],
       contentSections: [
         ...richSections,
@@ -2801,57 +2575,12 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
       ],
       internalLinks: [
         ...commonInternalLinks,
-        { text: "Best Preschool in Thane", url: "/best-preschool-near-me-in-thane" },
+        { text: "Best Preschool in Thane", url: "/play-school-near-me" },
         { text: `Playgroup near ${centre.locality}`, url: "/playgroup" },
         { text: `Nursery near ${centre.locality}`, url: "/nursery" },
         { text: `Kindergarten near ${centre.locality}`, url: "/kindergarten" },
         { text: "Preschool Admissions 2026-27", url: "/preschool-admissions" },
       ],
-      lastModified: LAST_UPDATED_ISO,
-      lastModifiedDisplay: LAST_UPDATED_DISPLAY,
-    };
-  }
-
-  if (playgroundPages[cleanPath]) {
-    const pg = playgroundPages[cleanPath];
-    const sharedGhodbunderData = cleanPath === "/playgroup-near-ghodbunder-road"
-      ? getPlaygroupLandingBySlug("ghodbunder-road")
-      : undefined;
-    const sharedLocalityData = cleanPath.startsWith("/playgroup-in-")
-      ? getPlaygroupLandingBySlug(cleanPath.slice("/playgroup-in-".length))
-      : undefined;
-    const isThanePage = pg.locality === "Thane";
-    const localitySuffix = isThanePage ? "" : `, ${pg.locality}`;
-    const localContext = isThanePage
-      ? `Thane is home to over 2 lakh families with young children, and Rainbow Preschool has been the trusted choice for Thane parents since 2007. With 6 conveniently located centres across Thane West — Manpada, Hariniwas Circle, Anand Nagar, Dhokali, Kalwa, and Kasarvadavali — Rainbow Preschool is within easy reach for most Thane families. Our playgroup in Thane is well-suited to the busy Thane lifestyle: we offer flexible morning and afternoon batches, a safe and familiar neighbourhood environment, and teachers who deeply understand the needs, culture, and values of Thane families. Whether you live near Ghodbunder Road, Teen Haath Naka, Manpada, or Kolshet Road, there is a Rainbow Preschool centre within a short, convenient distance from your home. Choosing a local playgroup means your toddler spends less time travelling and more time playing, learning, and growing in a relaxed and settled state of mind.`
-      : `Rainbow Preschool's ${pg.locality} centre is conveniently located to serve families in and around ${pg.locality}, Thane West. Parents appreciate the ease of drop-off and pick-up and the fact that their toddler is learning in a familiar, local community alongside neighbourhood children.`;
-
-    return {
-      title: sharedGhodbunderData?.seo.title ?? (isThanePage
-        ? `Playgroup in Thane | Best Toddler Playschool | Rainbow Preschool`
-        : `Playgroup in ${pg.locality}, Thane | Rainbow Preschool`),
-      description: sharedGhodbunderData?.seo.description ?? sharedLocalityData?.seo.description ?? (isThanePage
-        ? `Best playgroup in Thane for toddlers aged 1.5–2.5 years. Play-based learning, sensory activities, social skills, and gentle school readiness at Rainbow Preschool International — 6 centres across Thane West.`
-        : `Best playgroup in ${pg.locality}, Thane. Age 1.5-2.5 years. Play-based learning, sensory activities, and gentle socialisation at Rainbow Preschool.`),
-      keywords: isThanePage
-        ? `playgroup in thane, playgroup near me thane, toddler playgroup thane, playschool thane, best playgroup thane west, playgroup 1.5 years thane`
-        : `playgroup in ${pg.locality.toLowerCase()}, playgroup near ${pg.locality.toLowerCase()}, toddler playgroup ${pg.locality.toLowerCase()}`,
-      canonical: `${BASE_URL}${cleanPath}`,
-      h1: sharedGhodbunderData?.seo.h1 ?? pg.h1,
-      introText: sharedGhodbunderData?.introParagraph ?? (isThanePage
-        ? `Looking for the best playgroup in Thane for your toddler? Rainbow Preschool International has been providing trusted, high-quality playgroup education to Thane families since 2007. Our Playgroup programme is designed specifically for children aged 1.5 to 2.5 years, providing a warm, nurturing, and stimulating first school experience that sets the foundation for a lifetime of learning.`
-        : `Looking for a quality playgroup in ${pg.locality}, Thane? Rainbow Preschool International's ${pg.locality} centre offers a trusted Playgroup programme for toddlers aged 1.5 to 2.5 years.`),
-      breadcrumbs: [{ name: "Home", url: "/" }, { name: "Playgroup", url: "/playgroup" }, { name: `Playgroup in ${pg.locality}`, url: cleanPath }],
-      structuredData: [playgroupSchema(pg.locality, cleanPath), playgroupFAQSchema(pg.locality)],
-      contentSections: [
-        { heading: `About Our Playgroup in ${isThanePage ? "Thane" : pg.locality}`, text: `Rainbow Preschool International's Playgroup programme is thoughtfully designed for toddlers aged 1.5 to 2.5 years. At this stage, children are in a rapid phase of brain development — the experiences they have and the environment they grow in shape their cognitive, social, emotional, and physical development for years to come. Our playgroup in ${isThanePage ? "Thane" : pg.locality + localitySuffix} provides a safe, structured, and stimulating environment where your child can explore freely, form their first friendships, develop early language skills, and build the confidence they will carry into Nursery and beyond. Every aspect of our programme — from the classroom layout to the daily routine to the choice of activities — is guided by established child development research and our 18+ years of experience nurturing over 1,00,000 Rainbow children.` },
-        { heading: `Playgroup near you in ${isThanePage ? "Thane" : pg.locality}`, text: localContext },
-        { heading: "What Your Toddler Will Experience", items: ["Welcome circle — songs, greetings, and a comforting predictable start to every day", "Free play at activity stations — art corner, block area, sensory tray, pretend play", "Structured group activity — a focused, age-appropriate skill-building task in a fun format", "Outdoor play and movement — gross motor skills, coordination, and physical confidence", "Story time and rhymes — building vocabulary, listening skills, and a love of books", "Snack time — learning self-help skills, table manners, and social norms", "Goodbye circle — songs and a warm, positive end to the school day"] },
-        { heading: "Key Learning Outcomes", items: ["Social skills — making friends, sharing, taking turns, and cooperating in a group", "Fine motor development — finger muscles strengthened through art, clay, threading, and building", "Gross motor skills — running, jumping, balancing, and coordinated movement", "Language development — growing vocabulary in English and Hindi through songs, stories, and conversations", "Sensory processing — exploring textures, sounds, smells, and colours", "Emotional regulation — naming feelings, managing transitions, and building resilience", "Early independence — managing belongings, following simple instructions, self-care routines"] },
-        { heading: "Why Rainbow Playgroup?", items: ["Experienced ECE-qualified, Montessori-trained female teachers with CRB-equivalent checks", "Small batches of 10–12 children — every toddler receives individual attention and care", "CCTV-monitored, child-safe premises with secure entry and exit", "18+ years of trust — Rainbow Preschool has been educating Thane children since 2007", "Activity-based curriculum designed by curriculum experts and updated regularly", "Regular parent communication — daily feedback, monthly reports, and open-door teacher access", "6 convenient centres across Thane West for easy drop-off and pick-up"] },
-        { heading: `Admission & Timings for Playgroup in ${isThanePage ? "Thane" : pg.locality}`, text: `Playgroup admissions are open for children aged 1.5 to 2.5 years. Our Playgroup operates Monday to Friday with both morning (8:30 AM–11:30 AM) and afternoon (12:30 PM–3:30 PM) batches at select centres. Enrolment is available on a rolling basis throughout the year, subject to availability. We encourage parents to visit the campus before enrolling — our free campus tour includes a classroom visit, meeting the teacher, and a Q&A session. To book a visit or enquire about admissions at our ${isThanePage ? "Thane West" : pg.locality} centres, call us at +91-8291568972 or walk into any Rainbow Preschool centre Monday to Saturday, 9 AM–6 PM.` },
-      ],
-      internalLinks: [...commonInternalLinks, { text: "Playgroup Programme", url: "/playgroup" }, { text: "Preschool in Thane", url: "/best-preschool-near-me-in-thane" }],
       lastModified: LAST_UPDATED_ISO,
       lastModifiedDisplay: LAST_UPDATED_DISPLAY,
     };
@@ -2896,10 +2625,6 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
         "benefits-play-school-2-year-olds": [
           { q: "What are the benefits of play school for 2 year olds?", a: "Play school for 2 year olds builds social skills, improves language development, enhances motor skills through structured play, develops emotional independence, and prepares children for formal education. Rainbow Preschool's Playgroup programme is specifically designed for this age group." },
           { q: "How does play school help toddler development?", a: "Play school accelerates toddler development across 5 domains: cognitive (problem-solving, curiosity), social (sharing, cooperation), emotional (self-regulation, confidence), physical (fine and gross motor skills), and language (vocabulary, communication)." },
-        ],
-        "nursery-school-admission-thane-2026": [
-          { q: "When do nursery admissions start in Thane for 2026-27?", a: "Most preschools in Thane begin nursery admissions from October-November for the next academic year. However, Rainbow Preschool offers year-round admissions, so you can enroll your child at any time. Contact 82915 68972 for current availability." },
-          { q: "What documents are needed for nursery admission in Thane?", a: "Required documents typically include: child's birth certificate, passport-size photographs, parent's Aadhaar card, address proof, and immunisation records. Some preschools may require additional documents." },
         ],
         "how-play-based-learning-shapes-young-minds": [
           { q: "What is play-based learning in preschool?", a: "Play-based learning is an educational approach where children learn through structured and free play activities rather than rote memorisation. It develops cognitive, social, emotional, and physical skills naturally. Rainbow Preschool follows a play-based, activity-driven curriculum." },

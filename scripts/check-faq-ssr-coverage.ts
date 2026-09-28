@@ -102,6 +102,9 @@ for (const abs of allFiles) {
     source.match(/canonical=\{["']([^"']+)["']\}/);
 
   const canonical = canonicalMatch ? canonicalMatch[1] : null;
+  // The archived best-preschool component no longer has a route; requests
+  // redirect before SSR, so its old FAQ schema must not be required here.
+  if (canonical === "/best-preschool-near-me-in-thane") continue;
   callSites.push({ rel, canonical });
 }
 

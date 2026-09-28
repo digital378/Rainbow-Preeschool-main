@@ -1,6 +1,6 @@
 #!/usr/bin/env tsx
 /**
- * Keyword-targets smoke-test for the 5 commercial destination pages.
+ * Keyword-targets smoke-test for the 4 surviving commercial destination pages.
  *
  * Verifies that the 15-keyword SEO recovery work stays in place over time.
  * Run after every edit to:
@@ -14,21 +14,18 @@
  *   2. Each programme page (/playgroup, /nursery, /kindergarten) emits an
  *      EducationalOrganization / Organization schema (parity with the locality
  *      pages).
- *   3. /play-school-near-me and /best-preschool-near-me-in-thane each have a
- *      visible body with at least 1,200 words of meaningful prose (length
- *      proxy for content depth).
- *   4. The homepage emits anchor tags to all 5 commercial URLs in the body.
+ *   3. /play-school-near-me has a visible body with at least 1,200 words of
+ *      meaningful prose (length proxy for content depth).
+ *   4. The homepage emits anchor tags to all 4 commercial URLs in the body.
  *   5. Each commercial page emits a self-referential <link rel="canonical">
- *      pointing at its own URL (protects against the historical bug where
- *      /preschool-near-me declared a canonical to /best-preschool-near-me-in-thane).
+ *      pointing at its own URL (protects against historical canonical drift).
  *   6. Each commercial page emits the visible "Reviewed by Rainbow Preschool
  *      Curriculum Team" byline (E-E-A-T trust signal; per the editorial rule
  *      no individual person name may appear).
  *   7. Every ghost slug (and trailing-slash variant) returns 301 to its
  *      canonical destination.
- *   8. /preschool-near-me 301s to /best-preschool-near-me-in-thane.
- *   9. /playschool-near-me 301s to /play-school-near-me (NOT to
- *      /best-preschool-near-me-in-thane — historical bug).
+ *   8. Legacy and merged URLs 301 directly to their surviving destinations.
+ *   9. /playschool-near-me 301s to /play-school-near-me.
  *
  * Usage:
  *   tsx scripts/check-keyword-targets.ts                                # localhost:5000
@@ -53,7 +50,6 @@ const COMMERCIAL_PAGES = [
   "/nursery",
   "/kindergarten",
   "/play-school-near-me",
-  "/best-preschool-near-me-in-thane",
 ];
 
 const PROGRAMME_PAGES = ["/playgroup", "/nursery", "/kindergarten"];
@@ -62,7 +58,6 @@ const BYLINE = "Reviewed by Rainbow Preschool Curriculum Team";
 
 const DEEP_CONTENT_PAGES = [
   "/play-school-near-me",
-  "/best-preschool-near-me-in-thane",
 ];
 const DEEP_CONTENT_MIN_WORDS = 1200;
 
@@ -70,7 +65,19 @@ const DEEP_CONTENT_MIN_WORDS = 1200;
 // BOTH bare and trailing-slash form. The list below is generated from a base
 // mapping so it can never drift partial again.
 const REDIRECT_BASE: Array<{ from: string; to: string }> = [
-  { from: "/preschool-near-me", to: "/best-preschool-near-me-in-thane" },
+  { from: "/preschool-near-me", to: "/play-school-near-me" },
+  { from: "/best-preschool-near-me-in-thane", to: "/play-school-near-me" },
+  { from: "/playgroup-near-ghodbunder-road", to: "/play-school-near-ghodbunder-road" },
+  { from: "/playgroup-in-manpada", to: "/preschool-in-manpada-thane" },
+  { from: "/playgroup-in-kasarvadavali", to: "/preschool-in-kasarvadavali-thane" },
+  { from: "/playgroup-in-anand-nagar", to: "/preschool-in-anand-nagar-thane" },
+  { from: "/playgroup-in-kalwa", to: "/preschool-in-kalwa-thane" },
+  { from: "/playgroup-in-dhokali", to: "/preschool-in-dhokali-thane" },
+  { from: "/play-school-near-majiwada", to: "/preschool-in-anand-nagar-thane" },
+  { from: "/play-school-near-naupada", to: "/preschool-in-hariniwas-thane" },
+  { from: "/blog/nursery-school-admission-thane-2026", to: "/preschool-admissions" },
+  { from: "/importance-of-play-in-childrens-emotional-growth", to: "/blog/how-play-based-learning-shapes-young-minds" },
+  { from: "/healthy-preschool-meals-for-bright-minds-and-bodies", to: "/blog/healthy-tiffin-box-ideas-preschoolers" },
   { from: "/playschool-near-me", to: "/play-school-near-me" },
   { from: "/playgroup-near-me", to: "/playgroup" },
   { from: "/nursery-near-me", to: "/nursery" },
@@ -84,20 +91,20 @@ const REDIRECT_BASE: Array<{ from: string; to: string }> = [
   { from: "/kindergarten-thane", to: "/kindergarten" },
   { from: "/play-school-thane", to: "/play-school-near-me" },
   { from: "/playschool-thane", to: "/play-school-near-me" },
-  { from: "/best-preschool-thane", to: "/best-preschool-near-me-in-thane" },
-  { from: "/preschool-thane", to: "/best-preschool-near-me-in-thane" },
+  { from: "/best-preschool-thane", to: "/play-school-near-me" },
+  { from: "/preschool-thane", to: "/play-school-near-me" },
   // Soft-duplicate guard: /preschool-in-thane previously fell through to
   // the SPA shell and rendered the homepage canonical (=/), leaking
   // commercial-keyword equity. Must 301 to the canonical commercial page.
-  { from: "/preschool-in-thane", to: "/best-preschool-near-me-in-thane" },
+  { from: "/preschool-in-thane", to: "/play-school-near-me" },
 
   // ── Wave-2 soft-duplicate guard (Apr 2026 sweep) ─────────────────────────
   // These are the next wave of keyword-close slugs that were returning 200
   // via the SPA shell instead of 301-ing to the canonical commercial page.
   // Each one splits ranking signal from the true destination page.
-  { from: "/preschool-near-me-in-thane", to: "/best-preschool-near-me-in-thane" },
-  { from: "/best-preschool-near-me", to: "/best-preschool-near-me-in-thane" },
-  { from: "/pre-school-thane", to: "/best-preschool-near-me-in-thane" },
+  { from: "/preschool-near-me-in-thane", to: "/play-school-near-me" },
+  { from: "/best-preschool-near-me", to: "/play-school-near-me" },
+  { from: "/pre-school-thane", to: "/play-school-near-me" },
   { from: "/playschool-in-thane", to: "/play-school-near-me" },
   { from: "/best-play-school-near-me", to: "/play-school-near-me" },
   { from: "/best-play-school-in-thane", to: "/play-school-near-me" },
@@ -122,7 +129,7 @@ const REDIRECT_BASE: Array<{ from: string; to: string }> = [
   // the bottom of this file generates both variants automatically.
   { from: "/preschool-in-ghodbunder-road", to: "/preschool-in-kasarvadavali-thane" },
   { from: "/preschool-in-ghodbunder-road-thane", to: "/preschool-in-kasarvadavali-thane" },
-  { from: "/preschool-in-thane-west", to: "/best-preschool-near-me-in-thane" },
+  { from: "/preschool-in-thane-west", to: "/play-school-near-me" },
   { from: "/preschool-in-naupada", to: "/preschool-in-hariniwas-thane" },
   { from: "/preschool-in-naupada-thane", to: "/preschool-in-hariniwas-thane" },
   { from: "/preschool-in-panchpakadi", to: "/preschool-in-hariniwas-thane" },
