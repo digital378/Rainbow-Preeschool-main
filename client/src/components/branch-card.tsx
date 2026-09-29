@@ -15,6 +15,7 @@ interface BranchCardProps {
   branch: Branch;
   classesText?: string;
   daycareText?: string;
+  image?: { src: string; alt: string };
   copy?: {
     view: string;
     localCentre: string;
@@ -36,7 +37,7 @@ const branchToLocalPage: Record<string, { url: string; locality: string }> = {
   "kasarvadavali": { url: "/preschool-in-kasarvadavali-thane", locality: "Kasarvadavali" },
 };
 
-export function BranchCard({ branch, classesText, daycareText, copy = { view: "View", localCentre: "Centre", whatsapp: "WhatsApp", directions: "Directions" } }: BranchCardProps) {
+export function BranchCard({ branch, classesText, daycareText, image, copy = { view: "View", localCentre: "Centre", whatsapp: "WhatsApp", directions: "Directions" } }: BranchCardProps) {
   const localPage = copy.localPages?.[branch.id] || branchToLocalPage[branch.id];
   const whatsappNumber = branch.whatsapp?.replace(/\s/g, "");
   const landline = 'landline' in branch ? branch.landline : undefined;
@@ -78,9 +79,20 @@ export function BranchCard({ branch, classesText, daycareText, copy = { view: "V
 
   return (
     <Card 
-      className="h-full flex flex-col"
+      className={`h-full flex flex-col${image ? " overflow-hidden" : ""}`}
       data-testid={`card-branch-${branch.id}`}
     >
+      {image && (
+        <img
+          src={image.src}
+          alt={image.alt}
+          width={900}
+          height={600}
+          loading="lazy"
+          decoding="async"
+          className="w-full aspect-[3/2] object-cover"
+        />
+      )}
       <CardHeader className="pb-3">
         <div className="flex items-start gap-3">
           <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">

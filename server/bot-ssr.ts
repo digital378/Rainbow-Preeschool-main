@@ -369,6 +369,7 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
       section.richParagraphs?.forEach(renderRichParagraph);
       if (section.subsections) {
         section.subsections.forEach((subsection) => {
+          if (subsection.image) html += `${renderImageHtml(subsection.image)}\n`;
           if (subsection.heading) html += `<h3>${escapeHtml(subsection.heading)}</h3>\n`;
           if (subsection.text) html += `<p>${escapeHtml(subsection.text)}</p>\n`;
           if (subsection.items) html += `<ul>${subsection.items.map(item => `<li>${escapeHtml(item)}</li>`).join("")}</ul>\n`;

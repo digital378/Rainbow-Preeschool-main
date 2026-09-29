@@ -50,12 +50,33 @@ export const CONTACT_PAGE_COPY = {
     accessibleActions: true,
   },
   centreDetails: {
-    aggarwal: { classes: "Playgroup to Grade 4", daycare: "Happy Times daycare available" },
-    hariniwas: { classes: "Playgroup to Grade 3" },
-    "anand-nagar": { classes: "Playgroup to Grade 2", daycare: "Happy Times daycare available" },
-    dhokali: { classes: "Playgroup to Sr. KG", daycare: "Happy Times daycare available" },
-    kalwa: { classes: "Playgroup to Grade 4" },
-    kasarvadavali: { classes: "Playgroup to Grade 3" },
+    aggarwal: {
+      classes: "Playgroup to Grade 4",
+      daycare: "Happy Times daycare available",
+      image: { src: "/images/gallery/rainbow-preschool-manpada-centre-thane.webp", alt: "Rainbow Preschool Manpada centre in Thane — Aggarwal Centre" },
+    },
+    hariniwas: {
+      classes: "Playgroup to Grade 3",
+      image: { src: "/images/gallery/rainbow-preschool-hariniwas-centre-thane.webp", alt: "Rainbow Preschool Hariniwas centre in Thane" },
+    },
+    "anand-nagar": {
+      classes: "Playgroup to Grade 2",
+      daycare: "Happy Times daycare available",
+      image: { src: "/images/gallery/rainbow-preschool-anand-nagar-centre-thane.webp", alt: "Rainbow Preschool Anand Nagar centre in Thane" },
+    },
+    dhokali: {
+      classes: "Playgroup to Sr. KG",
+      daycare: "Happy Times daycare available",
+      image: { src: "/images/gallery/rainbow-preschool-dhokali-centre-thane.webp", alt: "Rainbow Preschool Dhokali centre in Thane" },
+    },
+    kalwa: {
+      classes: "Playgroup to Grade 4",
+      image: { src: "/images/gallery/rainbow-preschool-kalwa-centre-thane.webp", alt: "Rainbow Preschool Kalwa centre in Thane" },
+    },
+    kasarvadavali: {
+      classes: "Playgroup to Grade 3",
+      image: { src: "/images/gallery/rainbow-preschool-kasarvadavali-centre-thane.webp", alt: "Rainbow Preschool Kasarvadavali centre in Thane" },
+    },
   },
   branches,
   localPages: {

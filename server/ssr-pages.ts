@@ -396,6 +396,7 @@ function contactPageSections(): NonNullable<PageSEOData["contentSections"]> {
     const details = copy.centreDetails[branch.id as keyof typeof copy.centreDetails];
     return {
       heading: branch.name,
+      image: { ...details.image, width: 900, height: 600 },
       text: branch.address,
       items: [
         `Classes: ${details.classes}`,
@@ -560,7 +561,7 @@ export interface PageSEOData {
     richParagraphs?: readonly (readonly { text: string; href?: string }[])[];
     faqAsHeadings?: boolean;
     faqOutro?: { text: string; linkText: string; url: string };
-    subsections?: readonly { heading?: string; text?: string; items?: readonly string[]; links?: readonly { text: string; url: string }[] }[];
+    subsections?: readonly { heading?: string; image?: { src: string; alt: string; width?: number; height?: number }; text?: string; items?: readonly string[]; links?: readonly { text: string; url: string }[] }[];
     beforeSubsectionsItems?: readonly string[];
     afterSubsectionsRichParagraphs?: readonly (readonly { text: string; href?: string }[])[];
     items?: readonly string[];

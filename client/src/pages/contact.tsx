@@ -180,6 +180,7 @@ export default function Contact() {
                   branch={branch}
                   classesText={details.classes}
                   daycareText={"daycare" in details ? details.daycare : undefined}
+                  image={details.image}
                   copy={{ ...CONTACT_PAGE_COPY.branchCard, localPages: CONTACT_PAGE_COPY.localPages }}
                 />
               );
