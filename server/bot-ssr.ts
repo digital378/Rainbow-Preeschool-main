@@ -445,9 +445,6 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
     })
     .join("\n");
 
-  const internalLinksHtml = (seo.internalLinks || [])
-    .map((link) => `<li><a href="${BASE_URL}${link.url}">${escapeHtml(link.text)}</a></li>`)
-    .join("\n          ");
   const blogControlsHtml = seo.blogCategories && seo.blogArticleCount !== undefined
     ? `<section aria-label="Blog filters"><ul>${seo.blogCategories.map(category => `<li>${escapeHtml(category)}</li>`).join("")}</ul><p>${escapeHtml(BLOG_LIST_COPY.articleCountPattern
       .replace("{count}", String(seo.blogArticleCount))
@@ -475,7 +472,7 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
     : `<a href="${BASE_URL}/contact" class="cta">Enquire Now — Call 82915 68972</a>`;
 
   return `<!DOCTYPE html>
- <html lang="${requestUrl === "/nursery" || requestUrl === "/kindergarten" ? "en-IN" : "en"}">
+  <html lang="${requestUrl === "/nursery" || requestUrl === "/kindergarten" || requestUrl === "/programmes" ? "en-IN" : "en"}">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5" />
@@ -492,7 +489,7 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
     <meta property="og:description" content="${escapeHtml(seo.description)}" />
     <meta property="og:image" content="${ogImage}" />
      <meta property="og:image:alt" content="${escapeHtml(seo.ogImageAlt || "Three preschoolers in red uniforms playing on a bright yellow background with colorful toy blocks")}" />
-    ${requestUrl === "/nursery" || requestUrl === "/kindergarten" ? `<meta property="og:image:type" content="image/jpeg" />
+     ${requestUrl === "/nursery" || requestUrl === "/kindergarten" || requestUrl === "/programmes" ? `<meta property="og:image:type" content="image/jpeg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />` : ""}
     <meta property="og:site_name" content="Rainbow Preschool International" />
@@ -555,7 +552,6 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
       ${seo.reviewerAfterContent ? reviewerCreditHtml : ""}
       ${blogControlsHtml}
       ${blogCardsHtml}
-      ${internalLinksHtml ? `<nav aria-label="Related pages"><h2>Explore More</h2><ul>${internalLinksHtml}</ul></nav>` : ""}
       ${finalCallToActionHtml}
       ${endsAtContact ? "" : `<div class="network">
         <p><strong>Our Network:</strong> <a href="https://rainbowinternationalschool.in" rel="noopener">Rainbow International School</a> — CBSE-affiliated K–12 school in Thane West, Nursery to Class 12</p>

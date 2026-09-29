@@ -555,8 +555,8 @@ export default function AdGoogleLanding() {
               { 
                 id: 'daycare',
                 name: 'Daycare in Thane', 
-                age: '2-10 years',
-                desc: 'Our Daycare provides a safe, nurturing environment for children aged 2-10 years. With flexible hours for working parents, we offer homework assistance, engaging activities, and nutritious meals. Your child will be well cared for while you\'re at work.',
+                age: '2-8 years',
+                desc: 'Our Daycare provides a safe, nurturing environment for children aged 2-8 years. With flexible hours for working parents, we offer homework assistance, engaging activities, and nutritious meals. Your child will be well cared for while you\'re at work.',
                 features: [
                   { name: 'Flexible Hours', icon: '⏰' },
                   { name: 'Homework Help', icon: '📝' },

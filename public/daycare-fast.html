@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Daycare in Thane | Ages 2-10 Years | Rainbow Preschool</title>
-  <meta name="description" content="Best daycare in Thane for children aged 2-10 years. Safe, nurturing environment. Homework help, activities, nutritious meals. 6 centres. Book a free visit!">
+  <title>Daycare in Thane | Ages 2-8 Years | Rainbow Preschool</title>
+  <meta name="description" content="Best daycare in Thane for children aged 2-8 years. Safe, nurturing environment. Homework help, activities, nutritious meals. 6 centres. Book a free visit!">
   <meta name="robots" content="noindex, follow">
   <link rel="canonical" href="https://www.rainbowpreschools.com/happy-times">
   <style>
@@ -93,7 +93,7 @@
       <div>
         <div class="badge">Best Daycare in Thane</div>
         <h1>Daycare in <span>Thane</span></h1>
-        <div class="age-tag">Ages 2 - 10 Years</div>
+        <div class="age-tag">Ages 2 - 8 Years</div>
         <p class="subtitle">Safe, nurturing after-school care at Rainbow Preschool. Branches in Manpada (Aggarwal), Kalwa, Dhokali, Kasarvadavali, Anand Nagar & Hariniwas.</p>
         
         <div class="highlights">
@@ -241,7 +241,7 @@
       fetch('/api/contact',{
         method:'POST',
         headers:{'Content-Type':'application/json'},
-        body:JSON.stringify(Object.assign({submissionId:leadSubmissionId,parentName:n,phone:ph,childName:'Not provided',childAge:'2-10',programme:'Daycare',branch:ar,message:'Daycare Fast Page - Area: '+ar},campaignAttribution))
+        body:JSON.stringify(Object.assign({submissionId:leadSubmissionId,parentName:n,phone:ph,childName:'Not provided',childAge:'2-8',programme:'Daycare',branch:ar,message:'Daycare Fast Page - Area: '+ar},campaignAttribution))
       }).then(function(r){return r.json().then(function(d){return {ok:r.ok,data:d};});}).then(function(res){
         sendInFlight=false;
         // Only counted as a real lead once the backend has actually saved it

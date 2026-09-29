@@ -5,7 +5,8 @@ import { PLAYGROUP_FAQS } from "@shared/playgroup-faq-data";
 import { NURSERY_COPY } from "@shared/nursery-page-content";
 import { NURSERY_FAQS } from "@shared/nursery-faq-data";
 import { KINDERGARTEN_COPY } from "@shared/kindergarten-page-content";
-import { KINDERGARTEN_VISITOR_FAQS } from "../client/src/pages/visitor-page-copy";
+import { KINDERGARTEN_VISITOR_FAQS, PROGRAMMES_VISITOR_COPY } from "../client/src/pages/visitor-page-copy";
+import { PROGRAMMES_COPY, PROGRAMMES_FAQS } from "@shared/programmes-page-content";
 
 /**
  * Keep the browser's initial document metadata aligned with bot SSR and the
@@ -26,7 +27,7 @@ export function injectIndexPolicyShell(path: string, html: string): string {
     .replace(/<meta name="robots" content="[^"]*"\s*\/?>/i, `<meta name="robots" content="${robots}" />`)
     .replace(/<link rel="canonical" href="[^"]*"\s*\/?>/i, `<link rel="canonical" href="${escape(canonical)}" />`);
   if (!seo) return result;
-  if (path === "/nursery" || path === "/kindergarten") result = result.replace('<html lang="en">', '<html lang="en-IN">');
+  if (path === "/nursery" || path === "/kindergarten" || path === "/programmes") result = result.replace('<html lang="en">', '<html lang="en-IN">');
 
   const updateMeta = (kind: "name" | "property", key: string, value: string) => {
     const tag = `<meta ${kind}="${key}" content="${escape(value)}" />`;
@@ -43,13 +44,13 @@ export function injectIndexPolicyShell(path: string, html: string): string {
   updateMeta("property", "og:title", seo.title);
   updateMeta("property", "og:description", seo.description);
   updateMeta("property", "og:image", seo.ogImage ?? `${PREFERRED_DOMAIN}/og-image.jpg`);
-  if (path === "/nursery" || path === "/kindergarten") {
+  if (path === "/nursery" || path === "/kindergarten" || path === "/programmes") {
     updateMeta("property", "og:locale", "en_IN");
-    updateMeta("property", "og:image:alt", path === "/kindergarten" ? KINDERGARTEN_COPY.ogImageAlt : NURSERY_COPY.ogImageAlt);
+    updateMeta("property", "og:image:alt", path === "/programmes" ? PROGRAMMES_COPY.ogImageAlt : path === "/kindergarten" ? KINDERGARTEN_COPY.ogImageAlt : NURSERY_COPY.ogImageAlt);
     updateMeta("property", "og:image:type", "image/jpeg");
     updateMeta("property", "og:image:width", "1200");
     updateMeta("property", "og:image:height", "630");
-    updateMeta("name", "twitter:image:alt", path === "/kindergarten" ? KINDERGARTEN_COPY.ogImageAlt : NURSERY_COPY.ogImageAlt);
+    updateMeta("name", "twitter:image:alt", path === "/programmes" ? PROGRAMMES_COPY.ogImageAlt : path === "/kindergarten" ? KINDERGARTEN_COPY.ogImageAlt : NURSERY_COPY.ogImageAlt);
   }
   updateMeta("name", "twitter:url", canonical);
   updateMeta("name", "twitter:title", seo.title);
@@ -101,6 +102,22 @@ export function injectIndexPolicyShell(path: string, html: string): string {
     result = result.replace('<div id="root"></div>', stationary
       ? `${initialHero}<div id="root"></div>`
       : `<div id="root">${initialHero}</div>`);
+  }
+  if (path === "/programmes") {
+    const faqHtml = PROGRAMMES_FAQS.map(faq => `<div><strong>${escape(faq.question)}</strong><p>${faq.answerSegments.map(segment => "href" in segment ? `<a href="${escape(segment.href)}">${escape(segment.text)}</a>` : escape(segment.text)).join("")}</p></div>`).join("");
+    result = result.replace("</head>", `<style>
+      #programmes-initial{position:absolute;inset:0 0 auto;z-index:2;pointer-events:none;padding-top:5rem;font-family:Inter,system-ui,sans-serif}
+      #programmes-initial section{padding:3rem 0;background:linear-gradient(120deg,rgba(223,32,96,.05),rgba(255,193,7,.05),rgba(77,176,115,.05))}
+      #programmes-initial .programmes-initial-inner{max-width:80rem;margin:auto;padding:0 1rem;text-align:center}
+      #programmes-initial h1{font-family:Poppins,Inter,sans-serif;font-size:1.875rem;line-height:2.25rem;font-weight:700;margin:0 0 1rem}
+      #programmes-initial p{font-size:1rem;line-height:1.625;margin:0;color:#6b7280}
+      @media(min-width:640px){#programmes-initial .programmes-initial-inner{padding:0 1.5rem}}
+      @media(min-width:768px){#programmes-initial{padding-top:6rem}#programmes-initial section{padding:4rem 0}#programmes-initial h1{font-size:2.25rem;line-height:2.5rem}#programmes-initial p{font-size:1.125rem}}
+      @media(min-width:1024px){#programmes-initial section{padding:5rem 0}}
+      #programmes-initial.programmes-hydrated section{background:none}
+      #programmes-initial.programmes-hydrated p{visibility:hidden}
+    </style></head>`);
+    result = result.replace('<div id="root"></div>', `<div id="programmes-initial"><section><div class="programmes-initial-inner"><h1 id="programmes-initial-h1">${escape(PROGRAMMES_COPY.h1)}</h1><p>${escape(PROGRAMMES_VISITOR_COPY.intro ?? "")}</p></div></section><div id="programmes-initial-faq" hidden aria-hidden="true">${faqHtml}</div></div><div id="root"></div>`);
   }
   return result;
 }

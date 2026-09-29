@@ -38,9 +38,9 @@ export const KINDERGARTEN: ProgrammeInfo = {
 
 export const HAPPY_TIMES: ProgrammeInfo = {
   name: "Happy Times",
-  ageRange: "2\u201310 years",
+  ageRange: "2\u20138 years",
   ageMin: 2,
-  ageMax: 10,
+  ageMax: 8,
   url: "/happy-times",
 };
 

@@ -29,14 +29,14 @@ export const bestPreschoolFAQs: BestPreschoolFAQ[] = [
   },
   {
     question: "What programmes does Rainbow Preschool offer in Thane?",
-    answer: "Rainbow Preschool International offers a full range of early childhood education programmes in Thane, catering to children from 1.5 to 10 years of age:",
+    answer: "Rainbow Preschool International offers a full range of early childhood education programmes in Thane, catering to children from 1.5 to 8 years of age:",
     bullets: [
       "Playgroup (1.5–2.5 years) — sensory play, music, and social introduction for toddlers",
       "Nursery (2.5–3.5 years) — phonics, early numeracy, art, and language foundations",
       "Jr. KG (3.5–4.5 years) — structured literacy, numeracy, and creative development",
       "Sr. KG (4.5–5.5 years) — comprehensive school-readiness covering reading, writing, and life skills",
-      "Happy Times (2–10 years) — after-school enrichment with homework support, arts, and sports",
-      "Daycare (2–10 years) — safe, engaging care with flexible hours for working parents",
+      "Happy Times (2–8 years) — after-school enrichment with homework support, arts, and sports",
+      "Daycare (2–8 years) — safe, engaging care with flexible hours for working parents",
     ],
   },
   {

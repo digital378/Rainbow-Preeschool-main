@@ -171,7 +171,7 @@ function MiniCallbackForm() {
                       <SelectItem value="4-5 years">4-5 years</SelectItem>
                       <SelectItem value="5-6 years">5-6 years</SelectItem>
                       <SelectItem value="6-8 years">6-8 years</SelectItem>
-                      <SelectItem value="8-10 years">8-10 years</SelectItem>
+                      <SelectItem value="7-8 years">7-8 years</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />
@@ -318,7 +318,7 @@ export default function HappyTimesLanding() {
     <div className="pt-20 md:pt-24">
       <SEO
         title="Daycare in Thane | Safe After-School Care | Rainbow Preschool"
-        description="Enroll your child (ages 2–10) in Happy Times — Rainbow Preschool's after-school enrichment in Thane. Art, music, dance, sports & creative play."
+        description="Enroll your child (ages 2–8 years) in Happy Times — Rainbow Preschool's after-school enrichment in Thane. Art, music, dance, sports & creative play."
         keywords="daycare in thane, daycare near me, best daycare in thane, daycare for children near me, daycare for working parents, safe daycare for kids, daycare with cctv, full day daycare, preschool daycare"
         canonical="https://www.rainbowpreschools.com/happy-times"
       />
@@ -334,7 +334,7 @@ export default function HappyTimesLanding() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
               <Badge variant="secondary" className="text-base px-4 py-1 mb-4">
-                Ages 2 - 10 Years
+                Ages 2 - 8 Years
               </Badge>
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
                 {HAPPY_TIMES_COPY.heroTitle}

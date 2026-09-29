@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 import { useLocation } from "wouter";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -6,7 +6,9 @@ import { Button } from "@/components/ui/button";
 import { CTASection } from "@/components/cta-section";
 import { SEO } from "@/components/seo";
 import { EEATSignals } from "@/components/eeat-signals";
-import { LAST_UPDATED_DISPLAY, LAST_UPDATED_ISO } from "@shared/site-freshness";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { createBreadcrumbSchema } from "@/components/seo";
+import { PROGRAMMES_COPY, PROGRAMMES_FAQS, PROGRAMMES_WEBPAGE_SCHEMA, PROGRAMMES_ITEMLIST_SCHEMA } from "@shared/programmes-page-content";
 import { Baby, BookOpen, GraduationCap, Heart, CheckCircle, ArrowRight, Award, MapPin, ClipboardList, Images } from "lucide-react";
 
 import { Link } from "wouter";
@@ -17,6 +19,17 @@ import {
 } from "@/pages/visitor-page-copy";
 
 const mainProgrammes = PROGRAMMES_VISITOR_COPY.programmes ?? [];
+const programmeLinkNames: Record<string, string> = {
+  playgroup: "Playgroup programme in Thane",
+  nursery: "Nursery programme in Thane",
+  kindergarten: "Kindergarten, Jr. KG and Sr. KG in Thane",
+  "happy-times": "Happy Times daycare in Thane",
+};
+const programmeStructuredData = [
+  PROGRAMMES_WEBPAGE_SCHEMA,
+  createBreadcrumbSchema([{ name: "Home", url: "/" }, { name: "Programmes", url: "/programmes" }]),
+  PROGRAMMES_ITEMLIST_SCHEMA,
+];
 
 const iconMap = {
   baby: Baby,
@@ -27,6 +40,17 @@ const iconMap = {
 
 export default function Programmes() {
   const [location] = useLocation();
+  const hasFirstPaintHeading = useRef(
+    typeof document !== "undefined" && !!document.getElementById("programmes-initial-h1")
+  );
+
+  useLayoutEffect(() => {
+    if (hasFirstPaintHeading.current) {
+      document.getElementById("programmes-initial")?.classList.add("programmes-hydrated");
+      document.getElementById("programmes-initial-faq")?.remove();
+      return () => document.getElementById("programmes-initial")?.remove();
+    }
+  }, []);
 
   useEffect(() => {
     const hash = window.location.hash.slice(1);
@@ -44,16 +68,25 @@ export default function Programmes() {
   return (
     <article className="pt-20 md:pt-24">
       <SEO
-        title="Preschool Programmes in Thane | Rainbow Preschool"
-        description="Explore Rainbow Preschool's programmes — Playgroup (1.5–2.5 yrs), Nursery (2.5–3.5 yrs), Kindergarten (3.5–5.5 yrs). Book a free campus visit today."
-        keywords="preschool programmes in thane, rainbow preschool curriculum, playgroup in thane, nursery in thane, kindergarten thane, playgroup programme, nursery curriculum, kg admission thane, lkg ukg thane"
+        title={PROGRAMMES_COPY.title}
+        description={PROGRAMMES_COPY.description}
+        keywords={null}
         canonical="/programmes"
+        lang="en-IN"
+        ogImage={PROGRAMMES_COPY.ogImage}
+        ogImageAlt={PROGRAMMES_COPY.ogImageAlt}
+        ogImageType="image/jpeg"
+        ogImageWidth={1200}
+        ogImageHeight={630}
+        structuredData={hasFirstPaintHeading.current ? undefined : programmeStructuredData}
       />
       {/* Hero Section */}
       <section className="py-12 md:py-16 lg:py-20 bg-gradient-to-br from-primary/5 via-accent/5 to-secondary/5 flex items-center justify-center">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h1 className="text-3xl md:text-4xl font-bold mb-4">{PROGRAMMES_VISITOR_COPY.h1}</h1>
+            {hasFirstPaintHeading.current
+              ? <div aria-hidden="true" className="text-3xl md:text-4xl font-bold mb-4" style={{ visibility: "hidden" }}>{PROGRAMMES_VISITOR_COPY.h1}</div>
+              : <h1 className="text-3xl md:text-4xl font-bold mb-4">{PROGRAMMES_VISITOR_COPY.h1}</h1>}
             <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
               {PROGRAMMES_VISITOR_COPY.intro}
             </p>
@@ -114,8 +147,8 @@ export default function Programmes() {
                       </>
                     )}
                     
-                    <Link href={`/${programme.id}`} aria-label={programme.id === "nursery" ? "Nursery programme in Thane" : undefined}>
-                      <Button aria-label={programme.id === "nursery" ? "Nursery programme in Thane" : undefined} data-testid={`button-more-info-${programme.id}`}>
+                    <Link href={`/${programme.id}`} aria-label={programmeLinkNames[programme.id]}>
+                      <Button aria-label={programmeLinkNames[programme.id]} data-testid={`button-more-info-${programme.id}`}>
                         {PROGRAMMES_VISITOR_COPY.sections[0].items?.[3]}
                         <ArrowRight className="ml-2 h-4 w-4" />
                       </Button>
@@ -166,7 +199,7 @@ export default function Programmes() {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-lg md:text-xl font-bold text-gray-900 dark:text-white mb-5 text-center">{PROGRAMMES_VISITOR_COPY.sections[0].heading}</h2>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            <Link href="/play-school-near-me" className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center" data-testid="link-programmes-best-preschool">
+            <Link href="/preschool-readiness-quiz" className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center" data-testid="link-programmes-best-preschool">
               <Award className="w-5 h-5 text-primary" />
               <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">{PROGRAMMES_VISITOR_COPY.sections[0].items?.[5]}</span>
             </Link>
@@ -186,14 +219,41 @@ export default function Programmes() {
         </div>
       </section>
 
+      <section id="programmes-faq" className="py-16 md:py-20 lg:py-24 bg-muted/30">
+        <style>{`#programmes-faq [role="region"][data-state="closed"] { display: none; }`}</style>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">{PROGRAMMES_COPY.faqHeading}</h2>
+          </div>
+          <div className="max-w-3xl mx-auto">
+            <Accordion type="single" collapsible className="space-y-4">
+              {PROGRAMMES_FAQS.map((faq, index) => (
+                <AccordionItem key={faq.question} value={`faq-${index}`} className="bg-background rounded-lg px-6">
+                  <AccordionTrigger className="text-left font-semibold hover:no-underline">
+                    {faq.question}
+                  </AccordionTrigger>
+                  <AccordionContent forceMount className="text-muted-foreground">
+                    {faq.answerSegments.map((segment, segmentIndex) =>
+                      "href" in segment && segment.href
+                        ? <Link key={segmentIndex} href={segment.href} className="text-primary hover:underline">{segment.text}</Link>
+                        : <span key={segmentIndex}>{segment.text}</span>
+                    )}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
+        </div>
+      </section>
+
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
         <EEATSignals
           pageUrl="/programmes"
           pageName={PROGRAMMES_VISITOR_EEAT_COPY.pageName}
           reviewedBy={PROGRAMMES_VISITOR_EEAT_COPY.reviewedBy}
           reviewerRole={PROGRAMMES_VISITOR_EEAT_COPY.reviewerRole}
-          lastUpdated={LAST_UPDATED_DISPLAY}
-          lastUpdatedIso={LAST_UPDATED_ISO}
+          lastUpdated={PROGRAMMES_COPY.publishDateDisplay}
+          lastUpdatedIso={PROGRAMMES_COPY.publishDate}
           showRating={false}
           schemaId="programmes-eeat"
         />

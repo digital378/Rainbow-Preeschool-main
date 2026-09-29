@@ -24,6 +24,7 @@ import { ADMISSIONS_PUBLISH_DATE_ISO, ADMISSIONS_PUBLISH_DATE_DISPLAY } from "..
 import { PLAYGROUP_COPY } from "../shared/playgroup-page-content";
 import { NURSERY_COPY } from "../shared/nursery-page-content";
 import { KINDERGARTEN_COPY } from "../shared/kindergarten-page-content";
+import { PROGRAMMES_COPY } from "../shared/programmes-page-content";
 
 const BASE = (process.argv[2] || "http://localhost:5000").replace(/\/$/, "");
 const UA = "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)";
@@ -114,7 +115,7 @@ async function checkUrl(path: string): Promise<CheckResult> {
     missing.push("Last updated: line");
   }
   const admissionsPage = path === "/preschool-admissions";
-  const programmePage = path === "/playgroup" || path === "/nursery" || path === "/kindergarten";
+  const programmePage = path === "/playgroup" || path === "/nursery" || path === "/kindergarten" || path === "/programmes";
   const expectedType = path === "/" || admissionsPage || programmePage ? "WebPage" : "Article";
   if (!new RegExp(`"@type":\\s*"${expectedType}"`).test(html)) {
     missing.push(`${expectedType} JSON-LD`);
@@ -128,6 +129,7 @@ async function checkUrl(path: string): Promise<CheckResult> {
     : path === "/playgroup" ? PLAYGROUP_COPY.publishDate
     : path === "/nursery" ? NURSERY_COPY.publishDate
     : path === "/kindergarten" ? KINDERGARTEN_COPY.publishDate
+    : path === "/programmes" ? PROGRAMMES_COPY.publishDate
     : LAST_UPDATED_ISO;
   if (
     !html.includes(`"dateModified":"${expectedDate}"`) &&
@@ -139,6 +141,7 @@ async function checkUrl(path: string): Promise<CheckResult> {
     : path === "/playgroup" ? PLAYGROUP_COPY.publishDateDisplay
     : path === "/nursery" ? NURSERY_COPY.publishDateDisplay
     : path === "/kindergarten" ? KINDERGARTEN_COPY.publishDateDisplay
+    : path === "/programmes" ? PROGRAMMES_COPY.publishDateDisplay
     : LAST_UPDATED_DISPLAY;
   if (path !== "/" && !html.includes(expectedDisplay)) {
     missing.push(`display="${expectedDisplay}"`);

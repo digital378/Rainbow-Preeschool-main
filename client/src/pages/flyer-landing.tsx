@@ -372,8 +372,8 @@ export default function FlyerLanding() {
               {
                 id: 'daycare',
                 name: 'Daycare in Thane',
-                age: '2-10 years',
-                desc: 'Our Daycare provides a safe, nurturing environment for children aged 2-10 years. With flexible hours for working parents, we offer homework assistance, engaging activities, and nutritious meals.',
+                age: '2-8 years',
+                desc: 'Our Daycare provides a safe, nurturing environment for children aged 2-8 years. With flexible hours for working parents, we offer homework assistance, engaging activities, and nutritious meals.',
                 features: ['Flexible Hours', 'Homework Help', 'Fun Activities', 'Nutritious Meals']
               },
             ].map((p) => (

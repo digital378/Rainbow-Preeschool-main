@@ -74,7 +74,7 @@ const CONFIG = {
       id: "daycare",
       name: "Happy Times",
       location: "in Thane",
-      age: "2 – 10 years",
+      age: "2 – 8 years",
       summary: "A safe, structured environment for children beyond school hours.",
       icon: "🏡",
       color: "#f59e0b",

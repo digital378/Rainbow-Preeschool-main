@@ -1,11 +1,11 @@
 import { branches } from "./schema";
 
 export const HAPPY_TIMES_COPY = {
-  heroTitle: "Daycare in Thane for Children Aged 2 to 10 Years",
+  heroTitle: "Daycare in Thane for Children Aged 2 to 8 Years",
   heroDescription: "A safe, nurturing after-school programme with homework help, supervised play, and healthy snacks. Peace of mind for working parents.",
   whyTitle: "Why After-School Care Matters",
   whyParagraphs: [
-    "After-school care provides a safe and structured environment for children when school ends but parents are still at work. For families in Thane, Happy Times offers the perfect solution for children aged 2 to 10 years.",
+    "After-school care provides a safe and structured environment for children when school ends but parents are still at work. For families in Thane, Happy Times offers the perfect solution for children aged 2 to 8 years.",
     "At Rainbow Preschool's Happy Times, children receive dedicated homework assistance, ensuring they complete assignments with guidance and develop strong study habits. Our supervised play activities promote physical development and social skills in a secure setting.",
     "Working parents can have complete peace of mind knowing their children are in a caring environment with trained staff, CCTV monitoring, and healthy snacks. Our extended hours until 7 PM accommodate varied work schedules, making pickup convenient and stress-free.",
   ],
@@ -103,7 +103,7 @@ export const HAPPY_TIMES_FAQS = [
   { question: "Where can I find a good daycare near me in Thane?", answer: "Rainbow Preschool has 6 daycare centres across Thane including Manpada, Kalwa, Anand Nagar, Dhokali, Kasarvadavali, and Hariniwas. Call 82915 68972 to find the daycare nearest to your home." },
   { question: "What are the daycare timings for working parents?", answer: "Our daycare operates from 2:00 PM to 7:00 PM on school days. We offer flexible pickup times within this window to accommodate working parents' schedules across Thane." },
   { question: "Is the daycare safe for my child?", answer: "Absolutely! Safety is our top priority. We have CCTV surveillance, 100% female staff, secure entry/exit, and trained caregivers at all our daycare centres in Thane." },
-  { question: "What age group is daycare suitable for in Thane?", answer: "Our daycare is designed for children aged 2 to 10 years who need after-school care. We group children by age to ensure age-appropriate activities and supervision." },
+  { question: "What age group is daycare suitable for in Thane?", answer: "Our daycare is designed for children aged 2 to 8 years who need after-school care. We group children by age to ensure age-appropriate activities and supervision." },
   { question: "Are healthy snacks provided at daycare?", answer: "Yes! We provide healthy, nutritious snacks in the afternoon. Our safe daycare for kids also accommodates special dietary requirements if needed." },
   { question: "How can I enquire about daycare admission in Thane?", answer: "Book a centre visit by calling 82915 68972 or fill out our enquiry form. Our team will schedule a convenient time for you to visit your nearest daycare for working parents." },
 ] as const;

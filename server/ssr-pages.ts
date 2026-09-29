@@ -46,6 +46,7 @@ import { PLAYGROUP_FAQS } from "@shared/playgroup-faq-data";
 import { PLAYGROUP_COPY, PLAYGROUP_WEBPAGE_SCHEMA } from "@shared/playgroup-page-content";
 import { NURSERY_COPY, NURSERY_VISITOR_COPY, NURSERY_DAILY_ROUTINE, NURSERY_WEBPAGE_SCHEMA } from "@shared/nursery-page-content";
 import { KINDERGARTEN_COPY, KINDERGARTEN_WEBPAGE_SCHEMA } from "@shared/kindergarten-page-content";
+import { PROGRAMMES_COPY, PROGRAMMES_FAQS, PROGRAMMES_WEBPAGE_SCHEMA, PROGRAMMES_ITEMLIST_SCHEMA } from "@shared/programmes-page-content";
 import { NURSERY_FAQS } from "@shared/nursery-faq-data";
 import { BLOG_METADATA } from "@shared/blog-metadata";
 import { testimonials, testimonialsSEO } from "@shared/testimonials-content";
@@ -1121,49 +1122,18 @@ const staticPages: Record<string, PageSEOData> = {
     internalLinks: [...commonInternalLinks, ...ABOUT_PAGE_COPY.exploreLinks],
   },
   "/programmes": {
-    title: "Preschool Programmes in Thane | Rainbow Preschool",
-    description: "Explore Rainbow Preschool's programmes — Playgroup (1.5–2.5 yrs), Nursery (2.5–3.5 yrs), Kindergarten (3.5–5.5 yrs). Book a free campus visit today.",
-    keywords: "preschool programmes thane, playgroup programme, nursery programme, kindergarten programme, early childhood curriculum",
+    title: PROGRAMMES_COPY.title,
+    description: PROGRAMMES_COPY.description,
+    ogImage: PROGRAMMES_COPY.ogImage,
+    ogImageAlt: PROGRAMMES_COPY.ogImageAlt,
     canonical: `${BASE_URL}/programmes`,
-    lastModified: LAST_UPDATED_ISO,
-    lastModifiedDisplay: LAST_UPDATED_DISPLAY,
+    lastModified: PROGRAMMES_COPY.publishDate,
+    lastModifiedDisplay: PROGRAMMES_COPY.publishDateDisplay,
     h1: PROGRAMMES_VISITOR_COPY.h1,
     breadcrumbs: [{ name: "Home", url: "/" }, { name: "Programmes", url: "/programmes" }],
-    structuredData: [
-      programmeOrgSchema,
-      websiteSchema,
-      {
-        "@context": "https://schema.org",
-        "@type": "ItemList",
-        name: "Preschool Programmes at Rainbow Preschool International",
-        description: "Overview of all three age-aligned preschool programmes offered by Rainbow Preschool International in Thane.",
-        url: `${BASE_URL}/programmes`,
-        numberOfItems: 3,
-        itemListElement: [
-          {
-            "@type": "ListItem",
-            position: 1,
-            name: "Playgroup (1.5–2.5 years)",
-            url: `${BASE_URL}/playgroup`,
-            description: "Play-based early learning and socialisation for toddlers aged 1.5 to 2.5 years.",
-          },
-          {
-            "@type": "ListItem",
-            position: 2,
-            name: "Nursery (2.5–3.5 years)",
-            url: `${BASE_URL}/nursery`,
-            description: "Early literacy, numeracy, and confidence-building for children aged 2.5 to 3.5 years.",
-          },
-          {
-            "@type": "ListItem",
-            position: 3,
-            name: "Kindergarten (3.5–5.5 years)",
-            url: `${BASE_URL}/kindergarten`,
-            description: "Comprehensive school-readiness programme covering reading, writing, maths, and life skills.",
-          },
-        ],
-      },
-    ],
+    structuredData: [PROGRAMMES_WEBPAGE_SCHEMA, PROGRAMMES_ITEMLIST_SCHEMA],
+    suppressArticleSchema: true,
+    reviewerAfterContent: true,
     introText: PROGRAMMES_VISITOR_COPY.intro,
     contentSections: [
       ...(PROGRAMMES_VISITOR_COPY.programmes ?? []).map((programme) => ({
@@ -1188,9 +1158,30 @@ const staticPages: Record<string, PageSEOData> = {
       })),
       ...visitorCopySections([{
         ...PROGRAMMES_VISITOR_COPY.sections[0],
-        items: PROGRAMMES_VISITOR_COPY.sections[0].items?.slice(5),
+        items: [],
+        links: [
+          { text: PROGRAMMES_VISITOR_COPY.sections[0].items?.[5] ?? "", href: "/preschool-readiness-quiz" },
+          { text: PROGRAMMES_VISITOR_COPY.sections[0].items?.[6] ?? "", href: "/play-school-near-me" },
+          { text: PROGRAMMES_VISITOR_COPY.sections[0].items?.[7] ?? "", href: "/preschool-admissions" },
+          { text: PROGRAMMES_VISITOR_COPY.sections[0].items?.[8] ?? "", href: "/gallery" },
+        ],
       }]),
+      {
+        heading: PROGRAMMES_COPY.faqHeading,
+        faqItems: PROGRAMMES_FAQS.map(faq => ({
+          question: faq.question,
+          answerSegments: faq.answerSegments.map(segment => ({
+            text: segment.text,
+            href: "href" in segment ? segment.href : undefined,
+          })),
+        })),
+      },
     ],
+    finalCallToAction: {
+      title: PROGRAMMES_VISITOR_COPY.sections[0].items?.[9] ?? "",
+      description: PROGRAMMES_VISITOR_COPY.sections[0].items?.[10] ?? "",
+      links: [],
+    },
     internalLinks: commonInternalLinks,
   },
   "/playgroup": {
@@ -1716,7 +1707,7 @@ const staticPages: Record<string, PageSEOData> = {
   },
   "/happy-times": {
     title: "Daycare in Thane | Safe After-School Care | Rainbow Preschool",
-    description: "Enroll your child (ages 2–10) in Happy Times — Rainbow Preschool's after-school enrichment in Thane. Art, music, dance, sports & creative play.",
+    description: "Enroll your child (ages 2–8) in Happy Times — Rainbow Preschool's after-school enrichment in Thane. Art, music, dance, sports & creative play.",
     canonical: `${BASE_URL}/happy-times`,
     lastModified: LAST_UPDATED_ISO,
     lastModifiedDisplay: LAST_UPDATED_DISPLAY,
