@@ -9,4 +9,12 @@ if (window.location.pathname !== "/") {
   if (staticHero) staticHero.remove();
 }
 
-createRoot(document.getElementById("root")!).render(<App />);
+const mountApp = () => createRoot(document.getElementById("root")!).render(<App />);
+
+if (window.location.pathname === "/top-preschools-in-thane") {
+  // Its heading and intro are already in the HTML. Let that text paint before
+  // React lays out the accordion and below-fold link lists.
+  requestAnimationFrame(() => requestAnimationFrame(mountApp));
+} else {
+  mountApp();
+}

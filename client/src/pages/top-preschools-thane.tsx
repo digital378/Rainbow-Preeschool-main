@@ -29,23 +29,26 @@ function trackAdmissionsClick(event: MouseEvent<HTMLAnchorElement>, link: (typeo
   };
 
   if (isCall) {
-    // Let GTM process the queued event before leaving the page. A timeout
-    // still opens the dialer if GTM is blocked or slow.
+    // Give the queued event a brief chance to flush without making parents
+    // wait for a slow or blocked tag before the dialer opens.
     event.preventDefault();
-    fallback = window.setTimeout(finishCall, 1800);
+    fallback = window.setTimeout(finishCall, 300);
   }
   const measurementId = import.meta.env.VITE_GA_MEASUREMENT_ID;
   if (measurementId && typeof window.gtag === "function") {
     // Queue an explicit GA4 event as well as the custom GTM event. GTM may
     // not have a tag for this custom event, but both queues survive late load.
-    window.gtag("event", link.event, { send_to: measurementId, phone: "8291568972" });
+    window.gtag("event", link.event, {
+      send_to: measurementId,
+      phone: "8291568972",
+      ...(isCall ? { event_callback: finishCall, event_timeout: 250 } : {}),
+    });
   } else {
     console.warn(`Unable to queue GA4 event: ${link.event}`);
   }
   pushToDataLayer({
     event: link.event,
     phone: "8291568972",
-    ...(isCall ? { eventCallback: finishCall, eventTimeout: 1600 } : {}),
   });
   loadDeferredAnalytics();
 }
