@@ -38,3 +38,4 @@
 - [Standalone locality page ending](standalone-contact-ending.md) — six centre pages and Ghodbunder Road intentionally end at contact CTA, without footer in visitor or crawler HTML.
 - [Lighthouse hydration LCP](lighthouse-simulated-vs-observed-lcp.md) — replacing or moving a first-paint H1 during React mount can keep simulated LCP slow; leave the initial node stationary.
 - [Inert hero template H1](inert-hero-template-h1.md) — raw HTML parsers count the homepage H1 inside an inert template on other routes; live DOM queries do not.
+- [Comparison page attribution](comparison-page-attribution.md) — the About box is intentionally absent; visitor and bot versions show only the date near the bottom.

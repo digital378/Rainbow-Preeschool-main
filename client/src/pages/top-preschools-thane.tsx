@@ -5,7 +5,6 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { SEO } from "@/components/seo";
 import { CTASection } from "@/components/cta-section";
 import { BlogInternalLinks } from "@/components/blog-internal-links";
-import { EEATSignals } from "@/components/eeat-signals";
 import { loadDeferredAnalytics, pushToDataLayer } from "@/lib/analytics";
 import {
   TOP_PRESCHOOLS,
@@ -202,17 +201,10 @@ export default function TopPreschoolsThane() {
           comparisonLabel={TOP_PRESCHOOLS_COPY.exploreLinks[7].label}
           tagline={TOP_PRESCHOOLS_COPY.exploreFooter}
         />
+        <p className="my-6 text-sm text-muted-foreground">
+          Last updated: <time dateTime={TOP_PRESCHOOLS_COPY.dateIso}>{TOP_PRESCHOOLS_COPY.dateDisplay}</time>
+        </p>
 
-        <EEATSignals
-          pageUrl="/top-preschools-in-thane"
-          pageName={TOP_PRESCHOOLS_COPY.h1}
-          reviewedBy="Rainbow Preschool International Curriculum Team"
-          reviewerRole="Curriculum Team, Rainbow Preschool International"
-          lastUpdated={TOP_PRESCHOOLS_COPY.dateDisplay}
-          lastUpdatedIso={TOP_PRESCHOOLS_COPY.dateIso}
-          showRating={false}
-          schemaId="top-preschools-in-thane-eeat"
-        />
       </section>
 
       <CTASection title={TOP_PRESCHOOLS_COPY.cta.title} description={TOP_PRESCHOOLS_COPY.cta.description} whatsappHref={TOP_PRESCHOOLS_COPY.cta.links[1].href} />

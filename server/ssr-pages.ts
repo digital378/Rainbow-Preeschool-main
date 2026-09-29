@@ -1739,6 +1739,7 @@ const staticPages: Record<string, PageSEOData> = {
     ogImageAlt: TOP_PRESCHOOLS_COPY.ogImageAlt,
     lastModified: TOP_PRESCHOOLS_COPY.dateIso,
     lastModifiedDisplay: TOP_PRESCHOOLS_COPY.dateDisplay,
+    reviewerAfterContent: true,
     suppressArticleSchema: true,
     structuredData: [TOP_PRESCHOOLS_WEBPAGE_SCHEMA],
     h1: TOP_PRESCHOOLS_COPY.h1,

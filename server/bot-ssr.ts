@@ -475,7 +475,9 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
       </article></a>`).join("\n")}</div></section>`
     : "";
   const reviewerCreditHtml = seo.lastModified
-    ? `<p style="font-size:0.875rem;color:#666;margin:8px 0 16px"><strong>Reviewed by Rainbow Preschool Curriculum Team</strong>${requestUrl === "/playgroup" || requestUrl === "/nursery" ? " — Curriculum Team, Rainbow Preschool International" : ""} — Last updated: <time datetime="${escapeHtml(seo.lastModified)}">${escapeHtml(seo.lastModifiedDisplay || seo.lastModified)}</time>${requestUrl === "/playgroup" || requestUrl === "/nursery" ? " — 4.9 from 487 Google reviews" : ""}</p>`
+    ? requestUrl === "/top-preschools-in-thane"
+      ? `<p style="font-size:0.875rem;color:#666;margin:24px 0">Last updated: <time datetime="${escapeHtml(seo.lastModified)}">${escapeHtml(seo.lastModifiedDisplay || seo.lastModified)}</time></p>`
+      : `<p style="font-size:0.875rem;color:#666;margin:8px 0 16px"><strong>Reviewed by Rainbow Preschool Curriculum Team</strong>${requestUrl === "/playgroup" || requestUrl === "/nursery" ? " — Curriculum Team, Rainbow Preschool International" : ""} — Last updated: <time datetime="${escapeHtml(seo.lastModified)}">${escapeHtml(seo.lastModifiedDisplay || seo.lastModified)}</time>${requestUrl === "/playgroup" || requestUrl === "/nursery" ? " — 4.9 from 487 Google reviews" : ""}</p>`
     : "";
   const finalCallToActionHtml = seo.finalCallToAction
     ? `<section class="final-cta"><h2>${escapeHtml(seo.finalCallToAction.title)}</h2><p>${escapeHtml(seo.finalCallToAction.description)}</p><ul>${seo.finalCallToAction.links.map((link) => {

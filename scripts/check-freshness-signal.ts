@@ -110,7 +110,17 @@ async function checkUrl(path: string): Promise<CheckResult> {
 
   const missing: string[] = [];
   if (status !== 200) missing.push(`status=${status}`);
-  if (path !== "/" && !html.includes("Reviewed by Rainbow Preschool Curriculum Team")) {
+  if (path === "/top-preschools-in-thane") {
+    const byline = `Last updated: <time datetime="${TOP_PRESCHOOLS_COPY.dateIso}">${TOP_PRESCHOOLS_COPY.dateDisplay}</time>`;
+    if (!html.includes(byline)) missing.push("last-updated line");
+    if (html.includes("About This Comparison")) missing.push("retired comparison box");
+    if (html.includes("Reviewed by Rainbow Preschool Curriculum Team")) {
+      missing.push("outdated reviewer byline");
+    }
+    if (html.indexOf(byline) < html.indexOf(TOP_PRESCHOOLS_COPY.exploreTitle)) {
+      missing.push("last-updated line is before the comparison content");
+    }
+  } else if (path !== "/" && !html.includes("Reviewed by Rainbow Preschool Curriculum Team")) {
     missing.push("byline");
   }
   if (path !== "/" && !html.includes("Last updated:")) {
