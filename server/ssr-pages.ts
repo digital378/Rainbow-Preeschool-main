@@ -1746,7 +1746,6 @@ const staticPages: Record<string, PageSEOData> = {
     heroBadge: TOP_PRESCHOOLS_COPY.badge,
     breadcrumbs: [{ name: "Home", url: "/" }, { name: "Top Preschools in Thane", url: "/top-preschools-in-thane" }],
     contentSections: [
-      { heading: TOP_PRESCHOOLS_COPY.comparisonTitle, text: TOP_PRESCHOOLS_COPY.comparisonDescription },
       {
         subsections: TOP_PRESCHOOLS.map((school) => ({
           heading: school.name,

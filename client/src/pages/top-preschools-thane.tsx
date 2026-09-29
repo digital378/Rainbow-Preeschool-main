@@ -15,7 +15,7 @@ import {
   TOP_PRESCHOOLS_WEBPAGE_SCHEMA,
   TOP_PRESCHOOLS_BREADCRUMB_SCHEMA,
 } from "@shared/top-preschools-thane-content";
-import { Star, Shield, CheckCircle, Award } from "lucide-react";
+import { Star, Shield, CheckCircle } from "lucide-react";
 
 export default function TopPreschoolsThane() {
   const hasFirstPaintHeading = useRef(
@@ -55,14 +55,6 @@ export default function TopPreschoolsThane() {
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">{TOP_PRESCHOOLS_COPY.introduction}</p>
           </div>
         )}
-
-        <div className="bg-amber-50 border border-amber-200 rounded-xl p-5 mb-10">
-          <h2 className="text-sm font-semibold text-amber-800 mb-2 flex items-center gap-2">
-            <Award className="w-4 h-4" />
-            {TOP_PRESCHOOLS_COPY.comparisonTitle}
-          </h2>
-          <p className="text-sm text-amber-700">{TOP_PRESCHOOLS_COPY.comparisonDescription}</p>
-        </div>
 
         <Accordion type="single" defaultValue="school-rainbow-preschool-international" collapsible className="space-y-6">
           {TOP_PRESCHOOLS.map((school) => (

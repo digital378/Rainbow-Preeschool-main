@@ -23,8 +23,6 @@ export const TOP_PRESCHOOLS_COPY = {
   h1: "Top Preschools in Thane: Ages, Areas and Google Ratings",
   introduction: "Choosing a preschool in Thane usually comes down to three things: the right age group, a centre close to home, and what other parents say. This page puts those facts side by side for well-known preschools in Thane.",
   badge: "Updated for 2027-28",
-  comparisonTitle: "About This Comparison",
-  comparisonDescription: "Published by Rainbow Preschool International. This is not a ranking. It lists facts only: age groups, areas and Google ratings as shown on 29 September 2026. Ratings change often, so please check each school's Google profile for the latest and visit before you decide.",
   dateIso: "2026-09-29",
   dateDisplay: "29 September 2026",
   ogImage: `${BASE_URL}/images/og/top-preschools-thane-1200x630.jpg`,
