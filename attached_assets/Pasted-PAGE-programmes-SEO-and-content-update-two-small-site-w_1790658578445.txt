@@ -1,0 +1,110 @@
+PAGE: /programmes — SEO and content update (+ two small site-wide fixes)
+
+RULES (design freeze in replit.md applies)
+- Change only text, headings, links, metadata, structured data and share tags. Reuse every existing component exactly as it is.
+- ONE approved addition: an FAQ section at the bottom (Part C7), reusing the exact FAQ accordion component and styling from /playgroup. No other new sections, no restyling.
+- Use only the facts below. Don't take or send screenshots. Reply with a short text summary. Don't publish until I approve.
+- Same method as /playgroup, /nursery and /kindergarten: shared content for the visitor page and Google's version, FAQ answers in the HTML while closed, and the first-paint H1 fix if LCP is slow.
+
+WHY THIS PAGE MATTERS
+/programmes is the hub linking to all our programme pages, but it's thin (about 410 words), had 36 impressions and 0 clicks in 28 days at position 24.3, and shows wrong Happy Times details. Parents search "preschool programmes in Thane" and "which class for my child's age". A clear age guide and FAQ make it the page that routes them to the right programme, and pass link strength to /playgroup, /nursery and /kindergarten.
+
+CONFIRMED FACTS
+Playgroup 1.5–2.5 · Nursery 2.5–3.5 · Jr. KG 3.5–4.5 · Sr. KG 4.5–5.5 (age as of 1 June of the academic year) · Preschool batches: morning 8:30–11:30 AM and afternoon 12:30–3:30 PM, Monday to Friday · 30:2 student–teacher ratio · 100% female, ECCE-trained teaching staff · CCTV-monitored classrooms · Play-based curriculum aligned with NEP 2020 · 6 centres in Thane.
+Happy Times (daycare): ages 2–8 years · 8:30 AM to 7:30 PM · one nutritious meal provided · available only at our Aggarwal (Manpada), Anand Nagar and Dhokali centres.
+REMOVE: "2 - 10 years", "Flexible hours for working parents", "Extended hours available", "Nutritious meals" (plural, unqualified), and any "best" claims.
+
+────────────────
+PART A — SEO METADATA
+A1. Title: "Preschool Programmes in Thane: Playgroup to KG | Rainbow"
+A2. Meta description: "Compare our playgroup (1.5–2.5), nursery (2.5–3.5) and Jr./Sr. KG (3.5–5.5) programmes at 6 Rainbow Preschool International centres in Thane, plus daycare."
+A3. OG/Twitter title and description = A1/A2. Canonical https://www.rainbowpreschools.com/programmes. og:locale en_IN, <html lang="en-IN">. Remove the meta keywords tag.
+A4. H1: "Preschool Programmes in Thane: Playgroup, Nursery & KG". Keep the existing H1 style.
+A5. Share image: 1200×630 JPG (under 300 KB) from /images/optimized/kindergarten-kids-colorful-mats.webp, saved as /images/og/programmes-share-1200x630.jpg. og:image and twitter:image with type, width and height tags; og:image:alt "Children at Rainbow Preschool programmes in Thane".
+
+────────────────
+PART B — ONE PAGE FOR VISITORS AND GOOGLE
+The visitor page is the source of truth. Google's version must have the same sections, order, headings and text, including the new FAQ. Remove Google-only blocks, including "Explore More".
+
+────────────────
+PART C — SECTION BY SECTION
+
+C1. INTRO (under the H1, same text style; this may become two short paragraphs in the same element)
+"We offer four programmes across Thane, each designed for a stage of your child's early years: Playgroup for toddlers from 1.5 years, Nursery from 2.5, and Jr. KG and Sr. KG from 3.5 to 5.5, the two years before Grade 1. We count your child's age as of 1 June of the academic year."
+"Every programme is play-based, aligned with NEP 2020 and taught by ECCE-trained female teachers, with a 30:2 student–teacher ratio. For working parents, our Happy Times daycare runs until 7:30 PM at three centres."
+Why: the first lines now tell Google and parents exactly which programme fits which age, the main thing people come to this page for.
+
+C2. PLAYGROUP CARD
+- Description: "Your toddler's first step into learning: play, music, colours and new friends, in a gentle and safe routine."
+- Key Features: keep the 4 items. Timings: keep, and add a line in the same style: "Monday to Friday".
+- "More Info" button: accessible name "Playgroup programme in Thane" (the visible text can stay "More Info"). Link /playgroup.
+
+C3. NURSERY CARD
+- Description: "Phonics, numbers, stories and creative play that build on playgroup and prepare your child for Kindergarten."
+- Keep the features and activities. Timings: add "Monday to Friday".
+- "More Info" accessible name: "Nursery programme in Thane". Link /nursery.
+
+C4. KINDERGARTEN CARD
+- Age badge: "3.5 - 5.5 years (Jr. KG & Sr. KG)".
+- Description: "Jr. KG and Sr. KG: reading, writing, maths, EVS and general knowledge, so your child walks into Grade 1 confident and ready."
+- Timings: add "Monday to Friday".
+- "More Info" accessible name: "Kindergarten, Jr. KG and Sr. KG in Thane". Link /kindergarten.
+
+C5. HAPPY TIMES CARD
+- Age badge: "2 - 8 years".
+- Description: "Safe, homely daycare after school hours, with engaging activities and one nutritious meal, at our Manpada, Anand Nagar and Dhokali centres."
+- Key Features (4 items): "Open 8:30 AM to 7:30 PM" · "One nutritious meal provided" · "Engaging, supervised activities" · "Available at Aggarwal (Manpada), Anand Nagar and Dhokali".
+- "Schedule:" line: replace "Extended hours available" with "8:30 AM – 7:30 PM".
+- "Activities Include" list: replace "100% female staff", "Homely care for children" and "CCTV-enabled care areas" with "Homework support", "Art and craft" and "Indoor and outdoor play" ONLY IF these appear on /happy-times already. If not, use "Supervised play", "Storytime" and "Art and craft". Move "100% female staff" and "CCTV-enabled care areas" into Key Features only if the 4-item limit allows; otherwise drop them from this card.
+- "More Info" accessible name: "Happy Times daycare in Thane". Link /happy-times.
+
+C6. "Explore Rainbow Preschool"
+- Replace "Award-Winning Preschool" (it duplicates "Find Nearest Centre") with "Readiness Quiz" → /preschool-readiness-quiz. Keep the others.
+
+C7. NEW FAQ SECTION (approved; reuse the /playgroup FAQ accordion exactly)
+- Place it after "Explore Rainbow Preschool" and before the reviewed-by card / final CTA.
+- H2: "Which Programme Is Right for My Child?"
+- 6 Q&As (answers in the HTML while closed; include links):
+  Q: Which class should my child join based on age?
+  A: "Playgroup for 1.5–2.5 years, Nursery for 2.5–3.5, Jr. KG for 3.5–4.5 and Sr. KG for 4.5–5.5. We count age as of 1 June of the academic year. If your child is between two classes, our team will guide you." (link Playgroup, Nursery and Jr. KG/Sr. KG to their pages)
+  Q: What is the difference between playgroup and nursery?
+  A: "Playgroup (1.5–2.5) is a gentle first routine focused on play, senses and social skills. Nursery (2.5–3.5) adds early phonics, numbers and pre-writing, building on what children learn in playgroup."
+  Q: What do children learn in Jr. KG and Sr. KG?
+  A: "Jr. KG and Sr. KG build reading, writing, maths, EVS and general knowledge over two years, so children are confident and ready for Grade 1." (link /kindergarten)
+  Q: What are the timings for playgroup, nursery and KG?
+  A: "All three run a morning batch from 8:30 to 11:30 AM and an afternoon batch from 12:30 to 3:30 PM, Monday to Friday."
+  Q: Do you offer daycare for working parents?
+  A: "Yes. Happy Times, our daycare for children aged 2–8, runs from 8:30 AM to 7:30 PM with one nutritious meal, at our Manpada, Anand Nagar and Dhokali centres." (link "Happy Times" → /happy-times)
+  Q: How do I apply for admission?
+  A: "Send an enquiry, visit a centre, meet our team, then complete registration, documents and the admission fee. See the full process on our admissions page." (link → /preschool-admissions)
+Why: these are the exact questions parents ask when comparing classes. Short answers are what Google's "People also ask" and AI Overviews quote.
+
+C8. REVIEWED BY: "Last updated" = publish date.
+
+C9. FINAL CTA: "Ready to Enroll Your Child?" → "Ready to Find the Right Programme?" Text: "Book a free centre visit and our team will help you choose the right class for your child's age."
+
+C10. Image alt texts:
+- playgroup-child-toy-car: "Playgroup toddler playing at Rainbow Preschool, Thane"
+- nursery-girl-drawing: "Nursery child drawing in class"
+- kindergarten-kids-colorful-mats: "Kindergarten children learning together on colourful mats"
+- happy-times-daycare-kids: "Children at Happy Times daycare"
+
+────────────────
+PART D — STRUCTURED DATA
+Keep only: WebPage (name = H1, description = A2, dateModified = publish date, publisher = the homepage Organization @id), BreadcrumbList (Home › Programmes), and ItemList listing the 4 programme pages (/playgroup, /nursery, /kindergarten, /happy-times). Remove Article and the repeated organisation/place blocks. No FAQPage, AggregateRating or hours markup. Visible date, dateModified and sitemap <lastmod> = the publish date.
+
+────────────────
+PART E — TWO SITE-WIDE FIXES (text/data only, no visual change)
+E1. Happy Times ages: search the whole site (homepage programme cards, /happy-times, shared data, bot-SSR, llms.txt, llms-full.txt) for Happy Times ages "2 - 10", "2–10" or "2 to 10" and change them to "2–8 years". List every place changed. Don't change anything else on /happy-times; it gets its own update later.
+E2. Google-only "Explore More" block: on every page where Google's version still has the old "Explore More" link list (for example with "Best Preschool in Thane" and "Contact & Admissions"), remove that block so Google's version matches the visitor page. List the pages changed.
+
+────────────────
+PART F — CHECKS, THEN REPORT (no screenshots)
+1. Visitor and Google versions of /programmes: same title, description, H1, H2 list and FAQ. Report word counts (target: at least 800 visible words).
+2. No "2 - 10", "Extended hours available", "Flexible hours" or "best" claims on /programmes, and no Happy Times "2–10" anywhere on the site.
+3. The FAQ uses the /playgroup accordion component with identical styling.
+4. All links return 200. og:image is a 200 image/jpeg, 1200×630.
+5. Structured data: only WebPage, BreadcrumbList and ItemList.
+6. 3 mobile Lighthouse runs (Performance, LCP, CLS).
+7. The list of pages changed for E1 and E2.
+Reply with a short text summary. Don't publish until I approve.
