@@ -1,5 +1,7 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useLayoutEffect, useState, useRef } from "react";
 import { PROGRAMME_GALLERY_IMAGES } from "@shared/page-image-data";
+import { ADMISSIONS_CENTRE_CLASSES } from "@shared/admissions-page-copy";
+import { KINDERGARTEN_COPY, KINDERGARTEN_WEBPAGE_SCHEMA } from "@shared/kindergarten-page-content";
 import { Link } from "wouter";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -46,7 +48,6 @@ import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { EEATSignals } from "@/components/eeat-signals";
 import { VERIFIED_RATING } from "@/lib/verified-rating";
-import { LAST_UPDATED_DISPLAY, LAST_UPDATED_ISO } from "@shared/site-freshness";
 import { trackProgrammeView, trackFormSubmit } from "@/lib/analytics";
 import {
   KINDERGARTEN_DAILY_ROUTINE as dailyRoutine,
@@ -317,6 +318,17 @@ const featureItems = [
 
 
 export default function KindergartenLanding() {
+  const hasFirstPaintHeading = useRef(
+    typeof document !== "undefined" && !!document.getElementById("kindergarten-initial-h1")
+  );
+
+  useLayoutEffect(() => {
+    if (hasFirstPaintHeading.current) {
+      document.getElementById("kindergarten-initial")?.classList.add("kindergarten-hydrated");
+      return () => document.getElementById("kindergarten-initial")?.remove();
+    }
+  }, []);
+
   useEffect(() => {
     trackProgrammeView("kindergarten");
   }, []);
@@ -324,14 +336,20 @@ export default function KindergartenLanding() {
   return (
     <div className="pt-20 md:pt-24">
       <SEO
-        title="Kindergarten in Thane | KG Programme (3.5–5.5 yrs) | Rainbow"
-        description="Prepare your child for primary school with our Kindergarten programme (3.5–5.5 yrs) — reading, writing, maths, and life skills at Rainbow Preschool Thane."
-        keywords="kindergarten school in thane, kindergarten near me, best kindergarten school, kindergarten admission near me, lkg admission near me, ukg admission near me, kindergarten curriculum, school readiness program, kindergarten for kids"
+        title={KINDERGARTEN_COPY.title}
+        description={KINDERGARTEN_COPY.description}
         canonical="https://www.rainbowpreschools.com/kindergarten"
-        structuredData={createBreadcrumbSchema([
+        lang="en-IN"
+        ogImage={KINDERGARTEN_COPY.ogImage}
+        ogImageAlt={KINDERGARTEN_COPY.ogImageAlt}
+        ogImageType="image/jpeg"
+        ogImageWidth={1200}
+        ogImageHeight={630}
+        structuredData={hasFirstPaintHeading.current ? undefined : [KINDERGARTEN_WEBPAGE_SCHEMA, createBreadcrumbSchema([
           { name: "Home", url: "/" },
+          { name: "Programmes", url: "/programmes" },
           { name: "Kindergarten", url: "/kindergarten" },
-        ])}
+        ])]}
       />
 
       {/* Hero Section with Inline Callback Form */}
@@ -347,9 +365,9 @@ export default function KindergartenLanding() {
               <Badge variant="secondary" className="text-base px-4 py-1 mb-4">
                 {KINDERGARTEN_VISITOR_COPY.sections[15].items?.[0]}
               </Badge>
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-                {KINDERGARTEN_VISITOR_COPY.h1}
-              </h1>
+              {hasFirstPaintHeading.current
+                ? <div className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6" aria-hidden="true"><span className="invisible">{KINDERGARTEN_VISITOR_COPY.h1}</span></div>
+                : <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">{KINDERGARTEN_VISITOR_COPY.h1}</h1>}
               <p className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed">
                 {KINDERGARTEN_VISITOR_COPY.intro}
               </p>
@@ -517,6 +535,7 @@ export default function KindergartenLanding() {
                     <div className="mt-1 space-y-1">
                       <div>{KINDERGARTEN_VISITOR_COPY.sections[4].items?.[6]}</div>
                       <div>{KINDERGARTEN_VISITOR_COPY.sections[4].items?.[7]}</div>
+                      <div>{KINDERGARTEN_VISITOR_COPY.sections[4].items?.[8]}</div>
                     </div>
                   </div>
                 </div>
@@ -528,28 +547,28 @@ export default function KindergartenLanding() {
                 <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground whitespace-nowrap">
                   1 Lac+
                 </div>
-                <div className="text-sm text-muted-foreground">{KINDERGARTEN_VISITOR_COPY.sections[4].items?.[8]}</div>
+                <div className="text-sm text-muted-foreground">{KINDERGARTEN_VISITOR_COPY.sections[4].items?.[9]}</div>
               </Card>
               <Card className="text-center p-6">
                 <Star className="w-10 h-10 text-secondary mx-auto mb-3" />
                 <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground whitespace-nowrap min-h-[2.5rem] flex items-center justify-center">
                   <CountUp end={18} duration={1500} delay={200} suffix="+" />
                 </div>
-                <div className="text-sm text-muted-foreground">{KINDERGARTEN_VISITOR_COPY.sections[4].items?.[9]}</div>
+                <div className="text-sm text-muted-foreground">{KINDERGARTEN_VISITOR_COPY.sections[4].items?.[10]}</div>
               </Card>
               <Card className="text-center p-6">
                 <MapPin className="w-10 h-10 text-accent mx-auto mb-3" />
                 <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground whitespace-nowrap min-h-[2.5rem] flex items-center justify-center">
                   <CountUp end={6} duration={1500} delay={400} prefix="0" />
                 </div>
-                <div className="text-sm text-muted-foreground">{KINDERGARTEN_VISITOR_COPY.sections[4].items?.[10]}</div>
+                <div className="text-sm text-muted-foreground">{KINDERGARTEN_VISITOR_COPY.sections[4].items?.[11]}</div>
               </Card>
               <Card className="text-center p-6">
                 <GraduationCap className="w-10 h-10 text-green-500 mx-auto mb-3" />
                 <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground whitespace-nowrap min-h-[2.5rem] flex items-center justify-center">
                   <CountUp end={100} duration={1500} delay={600} suffix="%" />
                 </div>
-                <div className="text-sm text-muted-foreground">{KINDERGARTEN_VISITOR_COPY.sections[4].items?.[11]}</div>
+                <div className="text-sm text-muted-foreground">{KINDERGARTEN_VISITOR_COPY.sections[4].items?.[12]}</div>
               </Card>
             </div>
           </div>
@@ -569,7 +588,9 @@ export default function KindergartenLanding() {
             <Card className="p-6">
               <h3 className="text-xl font-semibold mb-3">{KINDERGARTEN_VISITOR_COPY.sections[5].cards?.[0].heading}</h3>
               <p className="text-muted-foreground mb-4">
-                {KINDERGARTEN_VISITOR_COPY.sections[5].cards?.[0].paragraphs?.[0]}
+                {KINDERGARTEN_VISITOR_COPY.sections[5].cards?.[0].paragraphs?.[0].split("Rainbow International School")[0]}
+                <a href="https://rainbowinternationalschool.in" target="_blank" rel="noopener" className="text-primary hover:underline">Rainbow International School</a>
+                {KINDERGARTEN_VISITOR_COPY.sections[5].cards?.[0].paragraphs?.[0].split("Rainbow International School")[1]}
               </p>
               <Link href={KINDERGARTEN_VISITOR_COPY.sections[5].cards?.[0].link?.href ?? ""} className="text-primary font-medium hover:underline" data-testid="link-find-nearest-kg">
                 Find your nearest centre →
@@ -714,8 +735,8 @@ export default function KindergartenLanding() {
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {branches.map((branch) => (
-              <BranchCard key={branch.id} branch={branch} />
+              {branches.map((branch) => (
+                <BranchCard key={branch.id} branch={branch} classesText={ADMISSIONS_CENTRE_CLASSES[branch.id === "aggarwal" ? "manpada" : branch.id]?.replace(/^Classes: /, "")} />
             ))}
           </div>
         </div>
@@ -738,7 +759,9 @@ export default function KindergartenLanding() {
                     {faq.question}
                   </AccordionTrigger>
                   <AccordionContent className="text-muted-foreground">
-                    {faq.answer}
+                    {faq.answerSegments?.map((segment, i) => segment.href
+                      ? <a key={i} href={segment.href} target={segment.href.startsWith("https://") ? "_blank" : undefined} rel={segment.href.startsWith("https://") ? "noopener" : undefined} className="text-primary hover:underline">{segment.text}</a>
+                      : segment.text) ?? faq.answer}
                   </AccordionContent>
                 </AccordionItem>
               ))}
@@ -762,7 +785,7 @@ export default function KindergartenLanding() {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-lg md:text-xl font-bold text-gray-900 dark:text-white mb-5 text-center">{KINDERGARTEN_VISITOR_COPY.sections[12].heading}</h2>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            <Link href="/play-school-near-me" className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center" data-testid="link-kg-best-preschool">
+            <Link href="/playgroup" className="flex flex-col items-center gap-1.5 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-md transition-all text-center" data-testid="link-kg-best-preschool">
               <Award className="w-5 h-5 text-primary" />
               <span className="text-xs md:text-sm font-medium text-gray-800 dark:text-gray-100 leading-tight">{KINDERGARTEN_VISITOR_COPY.sections[12].items?.[0]}</span>
             </Link>
@@ -788,10 +811,11 @@ export default function KindergartenLanding() {
           pageName={PROGRAMME_LANDING_EEAT_COPY.kindergartenPageName}
           reviewedBy={PROGRAMME_LANDING_EEAT_COPY.reviewedBy}
           reviewerRole={PROGRAMME_LANDING_EEAT_COPY.reviewerRole}
-          lastUpdated={LAST_UPDATED_DISPLAY}
-          lastUpdatedIso={LAST_UPDATED_ISO}
+          lastUpdated={KINDERGARTEN_COPY.publishDateDisplay}
+          lastUpdatedIso={KINDERGARTEN_COPY.publishDate}
           ratingValue={VERIFIED_RATING.ratingValue}
           reviewCount={VERIFIED_RATING.reviewCount}
+          ratingSource="Google reviews"
           schemaId="kindergarten-landing"
         />
       </div>

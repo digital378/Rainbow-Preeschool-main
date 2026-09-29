@@ -19,6 +19,7 @@ import { HOME_PUBLISH_DATE_ISO } from "./home-publish-date";
 import { ADMISSIONS_PUBLISH_DATE_ISO } from "./admissions-page-copy";
 import { PLAYGROUP_COPY } from "./playgroup-page-content";
 import { NURSERY_COPY } from "./nursery-page-content";
+import { KINDERGARTEN_COPY } from "./kindergarten-page-content";
 
 export type SitemapChangefreq =
   | "always"
@@ -87,7 +88,7 @@ export const SITEMAP_ENTRIES: SitemapEntry[] = [
   // ── PROGRAMME PAGES ──────────────────────────────────────
   { url: "/playgroup", priority: 0.9, changefreq: "monthly", lastmod: PLAYGROUP_COPY.publishDate },
   { url: "/nursery", priority: 0.9, changefreq: "monthly", lastmod: NURSERY_COPY.publishDate },
-  { url: "/kindergarten", priority: 0.9, changefreq: "monthly" },
+  { url: "/kindergarten", priority: 0.9, changefreq: "monthly", lastmod: KINDERGARTEN_COPY.publishDate },
   { url: "/happy-times", priority: 0.7, changefreq: "monthly" },
 
   // ── LOCAL SEO – PRESCHOOL CENTRE PAGES ──────────────────

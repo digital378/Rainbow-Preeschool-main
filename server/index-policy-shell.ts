@@ -4,6 +4,8 @@ import { PLAYGROUP_COPY } from "@shared/playgroup-page-content";
 import { PLAYGROUP_FAQS } from "@shared/playgroup-faq-data";
 import { NURSERY_COPY } from "@shared/nursery-page-content";
 import { NURSERY_FAQS } from "@shared/nursery-faq-data";
+import { KINDERGARTEN_COPY } from "@shared/kindergarten-page-content";
+import { KINDERGARTEN_VISITOR_FAQS } from "../client/src/pages/visitor-page-copy";
 
 /**
  * Keep the browser's initial document metadata aligned with bot SSR and the
@@ -24,7 +26,7 @@ export function injectIndexPolicyShell(path: string, html: string): string {
     .replace(/<meta name="robots" content="[^"]*"\s*\/?>/i, `<meta name="robots" content="${robots}" />`)
     .replace(/<link rel="canonical" href="[^"]*"\s*\/?>/i, `<link rel="canonical" href="${escape(canonical)}" />`);
   if (!seo) return result;
-  if (path === "/nursery") result = result.replace('<html lang="en">', '<html lang="en-IN">');
+  if (path === "/nursery" || path === "/kindergarten") result = result.replace('<html lang="en">', '<html lang="en-IN">');
 
   const updateMeta = (kind: "name" | "property", key: string, value: string) => {
     const tag = `<meta ${kind}="${key}" content="${escape(value)}" />`;
@@ -41,13 +43,13 @@ export function injectIndexPolicyShell(path: string, html: string): string {
   updateMeta("property", "og:title", seo.title);
   updateMeta("property", "og:description", seo.description);
   updateMeta("property", "og:image", seo.ogImage ?? `${PREFERRED_DOMAIN}/og-image.jpg`);
-  if (path === "/nursery") {
+  if (path === "/nursery" || path === "/kindergarten") {
     updateMeta("property", "og:locale", "en_IN");
-    updateMeta("property", "og:image:alt", NURSERY_COPY.ogImageAlt);
+    updateMeta("property", "og:image:alt", path === "/kindergarten" ? KINDERGARTEN_COPY.ogImageAlt : NURSERY_COPY.ogImageAlt);
     updateMeta("property", "og:image:type", "image/jpeg");
     updateMeta("property", "og:image:width", "1200");
     updateMeta("property", "og:image:height", "630");
-    updateMeta("name", "twitter:image:alt", NURSERY_COPY.ogImageAlt);
+    updateMeta("name", "twitter:image:alt", path === "/kindergarten" ? KINDERGARTEN_COPY.ogImageAlt : NURSERY_COPY.ogImageAlt);
   }
   updateMeta("name", "twitter:url", canonical);
   updateMeta("name", "twitter:title", seo.title);
@@ -58,13 +60,18 @@ export function injectIndexPolicyShell(path: string, html: string): string {
   } else {
     result = result.replace(/\s*<meta name="keywords" content="[^"]*"\s*\/?>/i, "");
   }
-  if (path === "/playgroup" || path === "/nursery") {
-    // The H1 is visible immediately even on a slow connection. Nursery keeps
-    // this exact node when React mounts so the LCP candidate is not replaced.
-    const copy = path === "/nursery" ? NURSERY_COPY : PLAYGROUP_COPY;
-    const faqs = path === "/nursery" ? NURSERY_FAQS : PLAYGROUP_FAQS;
-    const id = path === "/nursery" ? "nursery-initial" : "playgroup-initial";
-    const initialHero = `<div id="${id}"><section><div class="${id}-inner"><span class="${id}-badge">${escape(copy.heroBadge)}</span><h1${path === "/nursery" ? ' id="nursery-initial-h1"' : ""}>${escape(copy.h1)}</h1><p>${escape(copy.heroSubline)}</p></div></section><div hidden aria-hidden="true">${faqs.map(faq => `<div><strong>${escape(faq.question)}</strong><p>${faq.answerSegments.map(segment => segment.href ? `<a href="${escape(segment.href)}">${escape(segment.text)}</a>` : escape(segment.text)).join("")}</p></div>`).join("")}</div></div>`;
+  if (path === "/playgroup" || path === "/nursery" || path === "/kindergarten") {
+    // Keep the first-paint H1 as the LCP candidate after React mounts.
+    const stationary = path !== "/playgroup";
+    const copy = path === "/kindergarten" ? KINDERGARTEN_COPY : path === "/nursery" ? NURSERY_COPY : PLAYGROUP_COPY;
+    const faqs = path === "/kindergarten"
+      ? KINDERGARTEN_VISITOR_FAQS.map(faq => ({
+          question: faq.question,
+          answerSegments: faq.answerSegments ?? [{ text: faq.answer, href: undefined }],
+        }))
+      : path === "/nursery" ? NURSERY_FAQS : PLAYGROUP_FAQS;
+    const id = path === "/kindergarten" ? "kindergarten-initial" : path === "/nursery" ? "nursery-initial" : "playgroup-initial";
+    const initialHero = `<div id="${id}"><section><div class="${id}-inner"><span class="${id}-badge">${escape(copy.heroBadge)}</span><h1${stationary ? ` id="${id}-h1"` : ""}>${escape(copy.h1)}</h1><p>${escape(copy.heroSubline)}</p></div></section><div hidden aria-hidden="true">${faqs.map(faq => `<div><strong>${escape(faq.question)}</strong><p>${faq.answerSegments.map(segment => segment.href ? `<a href="${escape(segment.href)}">${escape(segment.text)}</a>` : escape(segment.text)).join("")}</p></div>`).join("")}</div></div>`;
     result = result.replace("</head>", `<style>
       #${id}{padding-top:5rem;font-family:Inter,system-ui,sans-serif}
       #${id} section{padding:4rem 0;background:linear-gradient(120deg,rgba(223,32,96,.1),rgba(255,193,7,.05),rgba(77,176,115,.1))}
@@ -74,24 +81,24 @@ export function injectIndexPolicyShell(path: string, html: string): string {
       #${id} p{font-size:1.125rem;line-height:1.625;margin:0;max-width:42rem;color:#6b7280}
       @media(min-width:768px){#${id}{padding-top:6rem}#${id} section{padding:6rem 0}#${id} h1{font-size:2.25rem}#${id} p{font-size:1.25rem}}
       @media(min-width:1024px){#${id} section{padding:8rem 0}#${id} h1{font-size:3rem}}
-      ${path === "/nursery" ? `
-        #nursery-initial{position:absolute;inset:0 0 auto;z-index:2;pointer-events:none}
-        #nursery-initial .nursery-initial-inner{position:relative;top:2px}
-        #nursery-initial h1{font-family:Poppins,Inter,sans-serif;line-height:1.2}
-        @media(min-width:640px){#nursery-initial .nursery-initial-inner{padding:0 1.5rem}}
-        @media(min-width:768px){#nursery-initial h1{line-height:2.5rem;max-width:none}}
+      ${stationary ? `
+        #${id}{position:absolute;inset:0 0 auto;z-index:2;pointer-events:none}
+        #${id} .${id}-inner{position:relative;top:2px}
+        #${id} h1{font-family:Poppins,Inter,sans-serif;line-height:1.2}
+        @media(min-width:640px){#${id} .${id}-inner{padding:0 1.5rem}}
+        @media(min-width:768px){#${id} h1{line-height:2.5rem;max-width:none}}
         @media(min-width:1024px){
-          #nursery-initial .nursery-initial-inner{padding:0 2rem;top:40px}
-          #nursery-initial h1,#nursery-initial p{max-width:calc((100% - 3rem)/2)}
-          #nursery-initial h1{line-height:1}
+          #${id} .${id}-inner{padding:0 2rem;top:40px}
+          #${id} h1,#${id} p{max-width:calc((100% - 3rem)/2)}
+          #${id} h1{line-height:1}
         }
-        @media(min-width:1280px){#nursery-initial .nursery-initial-inner{top:78px}}
-        #nursery-initial.nursery-hydrated section{background:none}
-        #nursery-initial.nursery-hydrated .nursery-initial-badge,
-        #nursery-initial.nursery-hydrated p{visibility:hidden}
+        @media(min-width:1280px){#${id} .${id}-inner{top:78px}}
+        #${id}.${path === "/nursery" ? "nursery" : "kindergarten"}-hydrated section{background:none}
+        #${id}.${path === "/nursery" ? "nursery" : "kindergarten"}-hydrated .${id}-badge,
+        #${id}.${path === "/nursery" ? "nursery" : "kindergarten"}-hydrated p{visibility:hidden}
       ` : ""}
     </style></head>`);
-    result = result.replace('<div id="root"></div>', path === "/nursery"
+    result = result.replace('<div id="root"></div>', stationary
       ? `${initialHero}<div id="root"></div>`
       : `<div id="root">${initialHero}</div>`);
   }

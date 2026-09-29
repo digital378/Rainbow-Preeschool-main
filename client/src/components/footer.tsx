@@ -7,7 +7,7 @@ import { localityLandingPages, preschoolLandingPages } from "@shared/centre-data
 export function Footer() {
   const currentYear = new Date().getFullYear();
   const [location] = useLocation();
-  const FooterHeading = location === "/nursery" ? "h3" : "h2";
+  const FooterHeading = "h3";
 
   return (
     <footer className="bg-card border-t">

@@ -1,0 +1,127 @@
+PAGE: /kindergarten — SEO and content update (+ site-wide footer heading standardisation)
+
+RULES (design freeze in replit.md applies)
+- Change only text, headings, links, metadata, structured data and share tags. Reuse every existing section and component exactly as it is: same layout, cards, colours, fonts, spacing, icons and order. Don't add, merge or restyle sections.
+- Use only the facts below. Don't take or send screenshots. Reply with a short text summary. Don't publish until I approve.
+- Use the same method as /playgroup and /nursery: shared content that both the visitor page and Google's version render from, FAQ answers kept in the HTML while closed, and the same first-paint H1 fix for LCP.
+
+WHY THIS PAGE MATTERS
+Over the last 28 days /kindergarten had 193 impressions and 2 clicks, at average position 19.5. Parents search "kindergarten in Thane", "KG school in Thane", "Jr KG / Sr KG admission" and "LKG UKG admission". The page has a "Best" headline, wrong timings, unverifiable claims ("100% Grade 1 Ready", named third-party schools) and different content for Google and visitors. Fixing these gives Google one clear, accurate KG page.
+
+CONFIRMED FACTS
+Jr. KG 3.5–4.5 years, Sr. KG 4.5–5.5 years, counted as of 1 June of the academic year · Morning batch 8:30–11:30 AM and afternoon batch 12:30–3:30 PM, Monday to Friday · 30:2 student–teacher ratio · 100% female teaching staff with ECCE training · CCTV-monitored classrooms at all 6 centres · Play-based curriculum aligned with NEP 2020 · Daily parent updates and monthly progress reports · Sanitised multiple times daily · Since 2007 · 6 centres · 1 lakh+ students · Google rating 4.9 from 487 reviews.
+After Sr. KG: children can continue into primary classes at 5 of our centres: Aggarwal (Manpada) and Kalwa up to Grade 4, Kasarvadavali and Hariniwas up to Grade 3, Anand Nagar up to Grade 2 (Dhokali runs up to Sr. KG). Our group's CBSE K–12 school, Rainbow International School (RIS) in Brahmand, Thane West, is a further option: https://rainbowinternationalschool.in
+Admission steps and calendar: as on /preschool-admissions and /nursery.
+REMOVE everywhere: "Best Kindergarten", "best kindergarten in Thane", "Research shows…", "100% Grade 1 Ready", the named third-party schools (DAV, Singhania, etc.), "Extended Day 12:00PM to 4:00PM", "Morning Batch 8:30AM to 12:30PM", and every other "best" claim.
+
+────────────────
+PART A — SEO METADATA
+A1. Title: "Kindergarten in Thane: Jr. KG & Sr. KG | Rainbow Preschool"
+A2. Meta description: "Jr. KG and Sr. KG for children aged 3.5 to 5.5 at our 6 Rainbow Preschool International centres in Thane: reading, writing and maths for Grade 1."
+A3. OG/Twitter title and description: same as A1/A2. Canonical: https://www.rainbowpreschools.com/kindergarten. og:locale en_IN, <html lang="en-IN">. Remove the meta keywords tag.
+A4. H1: "Kindergarten in Thane: Jr. KG & Sr. KG for Ages 3.5 to 5.5". Keep the existing H1 style.
+A5. Share image: create a 1200×630 JPG (under 300 KB) from /images/optimized/DSC00054.webp at /images/og/kindergarten-share-1200x630.jpg. Use it for og:image and twitter:image, with og:image:type image/jpeg, width 1200, height 630, and og:image:alt "Kindergarten children at Rainbow Preschool, Thane".
+Why: the main keyword goes first and the class names parents search are included. The "Best" claim is gone. WhatsApp and Facebook shares show a real KG photo.
+
+────────────────
+PART B — ONE PAGE FOR VISITORS AND GOOGLE
+B1. The visitor page is the source of truth. Google's version must have the same sections, order, headings and text. Remove Google-only headings such as "Callback Form", "Hero Actions" and "Explore More".
+B2. All 10 FAQ answers must be in the visitor HTML while the accordion is closed. Google's version gets the same 10 (it has 8 now).
+
+────────────────
+PART C — SECTION BY SECTION
+
+C1. HERO: keep the badge "Ages 3.5 - 5.5 Years (Jr. KG & Sr. KG)", buttons and form. H1 per A4. Subline: "Reading, writing and maths foundations that get your child confident and ready for Grade 1."
+
+C2. "Why Kindergarten is Important for Your Child"
+- H2: "Why Kindergarten Matters Between 3.5 and 5.5 Years"
+- P1: "Kindergarten bridges nursery and formal school. Over two years, Jr. KG and Sr. KG, children build the reading, writing, number and social skills they need for Grade 1." Keep the link on "nursery" → /nursery.
+- P2: "At Rainbow Preschool, our Jr. KG and Sr. KG programmes combine structured learning with play, so children learn to read simple sentences, write confidently, work with numbers and think for themselves."
+- P3: "Our goal is a child who walks into Grade 1 confident, curious and ready to learn."
+
+C3. "A Day in Our Kindergarten"
+- H2: "A Typical Day in Our Kindergarten"
+- Intro: "Our morning batch runs from 8:30 to 11:30 AM, Monday to Friday. The afternoon batch, 12:30 to 3:30 PM, follows the same routine."
+- Update the time slots in the same component (keep the activity names and descriptions):
+  8:30 AM Morning Assembly · 8:50 AM Language & Literacy · 9:30 AM Mathematics · 10:00 AM Snack Break · 10:20 AM Environmental Science · 10:45 AM Art & Craft / Sports & PT (alternate days) · 11:15 AM Story & Moral Values
+  (This merges "Art & Craft" and "Sports & PT" into one slot, so the timeline has 7 slots instead of 8. Keep the same card style.)
+Why: the old timeline ran to 12:30 PM, which contradicts the real batch timings.
+
+C4. "What Your Child Will Learn": keep the tags. Intro: "Our kindergarten curriculum covers every area of school readiness."
+
+C5. "Ready to Prepare Your Child for Grade 1?": change "Learn about fees and admission process" to "Ask about fees and the admission process".
+
+C6. "Why Choose Our Kindergarten?"
+- "Trained and experienced teachers" → "ECCE-trained, experienced teachers".
+- "Regular progress reports and parent communication" → "Daily parent updates and monthly progress reports".
+- Timings: "Morning Batch – 8:30 AM to 11:30 AM" / "Afternoon Batch – 12:30 PM to 3:30 PM" / "Monday to Friday" (same style).
+- Stats row: set the centres stat to "06 / Centres in Thane" (the number is missing). Replace "100% / Grade 1 Ready" with "100% / Female Staff".
+
+C7. "Kindergarten in Thane — School-Ready by Grade 1"
+- H2: "Kindergarten in Thane: Ready for Grade 1"
+- Paragraph: "Looking for a kindergarten in Thane? Rainbow Preschool International has prepared Thane's children for school since 2007, with structured literacy, numeracy and life-skills learning across our 6 centres."
+- "Jr. KG and Sr. KG across Thane West" text: "Jr. KG and Sr. KG run at all 6 Rainbow centres: Manpada, Hariniwas, Anand Nagar, Dhokali, Kalwa and Kasarvadavali. After Sr. KG, children can continue into primary classes at 5 of our centres, or move on to our group's CBSE K–12 school, Rainbow International School in Brahmand, Thane West." Link "Rainbow International School" → https://rainbowinternationalschool.in (opens in a new tab, rel="noopener").
+- "Find your nearest centre →" links to /play-school-near-me (not /contact).
+- Keep the 5 milestone items.
+- "Worried about Grade 1 transition?" line: "Worried about the move to Grade 1? Read our guide to preparing your child for school, or see how we compare in our guide to top preschools in Thane." Links unchanged (/blog/preparing-your-child-for-first-day-preschool, /top-preschools-in-thane).
+- Buttons: "Apply for KG 2026–27" → "Apply for KG admission" (/preschool-admissions). Keep "Read parent reviews".
+Why: this removes unverified claims about other schools and replaces them with a true, strong reason to choose us: children can continue with Rainbow after KG.
+
+C8. SAFETY & HYGIENE, DAILY ACTIVITIES, GLIMPSES: keep the text as it is. Image alt texts:
+- DSC00054: "Kindergarten children at Rainbow Preschool, Thane"
+- DSC00146: "Jr. KG classroom at Rainbow Preschool in Thane"
+- DSC00002: "Kindergarten children learning in class"
+- DSC00070: "Art and craft activity in our kindergarten"
+- DSC00175: "Group learning activity in a Sr. KG class"
+- Any other image: a short, specific description, with no duplicate alt texts.
+
+C9. "Programme Highlights": "Regular assessments and progress reports" → "Monthly progress reports and daily parent updates".
+
+C10. "Kindergarten Centres in Thane" cards: keep the addresses and links. In each card, add one line under the address in the same text style as the address line:
+  Manpada: "Classes: Playgroup to Grade 4" · Hariniwas: "Classes: Playgroup to Grade 3" · Anand Nagar: "Classes: Playgroup to Grade 2" · Dhokali: "Classes: Playgroup to Sr. KG" · Kalwa: "Classes: Playgroup to Grade 4" · Kasarvadavali: "Classes: Playgroup to Grade 3"
+
+C11. FAQ (answers in HTML per B2)
+- H2: "Kindergarten FAQs"
+- Reword these questions to match searches:
+  "Where can I find a good kindergarten near me in Thane?" → "Is there a kindergarten near me in Thane?"
+  "What is the LKG and UKG admission process at Rainbow Preschool Thane?" → "What is the Jr. KG (LKG) and Sr. KG (UKG) admission process?"
+  "What age is appropriate for Jr. KG and Sr. KG in Thane?" → "What is the age for Jr. KG and Sr. KG admission in Thane?"
+  "How can I enquire about kindergarten admission in Thane?" → "How do I apply for KG admission for 2027-28?"
+- Answers of 40–60 words, using only the facts above. Include: the 6 areas + "find your nearest centre" → /play-school-near-me; the admission steps + "admission process" → /preschool-admissions; Jr. KG 3.5–4.5 and Sr. KG 4.5–5.5 as of 1 June; the difference between Jr. KG and Sr. KG; batches and days; NEP 2020-aligned play-based curriculum; safety facts; daily updates and monthly reports; continuing after Sr. KG (centre list + RIS link). For fees: "Call us for current fee details."
+
+C12. "Explore Rainbow Preschool": replace "Award-Winning Preschool" with "Playgroup Programme" → /playgroup. Keep the others.
+
+C13. REVIEWED BY: "Last updated" = publish date. Rating text → "4.9 from 487 Google reviews".
+
+C14. FINAL CTA: H2 "Ready to Give Your Child the Best Start for Grade 1?" → "Ready to Prepare Your Child for Grade 1?" Text: "Enrol your child in our kindergarten programme and watch them grow in confidence."
+
+────────────────
+PART D — STRUCTURED DATA
+D1. Remove OpeningHoursSpecification, FAQPage, Article, the repeated Preschool/EducationalOrganization/Place blocks, and any AggregateRating.
+D2. Keep only WebPage (name = H1, description = A2, dateModified = publish date, publisher/about = the homepage Organization @id) and BreadcrumbList: Home › Programmes › Kindergarten.
+D3. Visible date, dateModified and sitemap <lastmod> all equal the publish date. Tell me the date before publishing.
+
+────────────────
+PART E — MOBILE SPEED
+Apply the same LCP fix as /nursery (keep the first-paint H1 in place during hydration). Report 3 mobile Lighthouse runs before and after (Performance, LCP, CLS). No visual change.
+
+────────────────
+PART F — AI FILES AND INTERNAL LINKS
+- llms.txt and llms-full.txt: update the /kindergarten line to "Kindergarten, Jr. KG & Sr. KG (3.5–5.5 years): reading, writing and maths for Grade 1 at 6 centres in Thane; morning and afternoon batches, Monday to Friday."
+- Make sure /nursery links to /kindergarten with the words "Kindergarten programme" (already in its brief), and /programmes' KG card links to /kindergarten.
+
+────────────────
+PART G — FOOTER HEADINGS, SITE-WIDE (no visual change)
+Apply the /nursery footer change to the shared footer on every page: the column titles "Quick Links", "Our Programmes", "Our Centres", "Contact Info" and "Our Network" become H3 with the exact same styling. Remove the /nursery-only exception note from replit.md and replace it with: "Footer column titles are H3 site-wide." Check that no page's look changes.
+Why: every page then uses identical footer code, and the page's own H2s stay the main topics.
+
+────────────────
+PART H — CHECKS, THEN REPORT (no screenshots)
+1. Visitor and Google versions of /kindergarten have the same title, description, H1, H2 list and alt texts. Report both word counts.
+2. None of the removed claims appears. No "12:30 PM" batch end or "4:00 PM" remains on the page.
+3. All added or changed links return 200. The RIS link opens in a new tab.
+4. Structured data contains only WebPage and BreadcrumbList. og:image returns 200 as image/jpeg, 1200×630.
+5. Lighthouse before/after from Part E.
+6. The footer headings are H3 on /, /preschool-admissions, /playgroup, /nursery and /kindergarten, with no visual change.
+7. /playgroup, /nursery, /preschool-admissions and the homepage content are unchanged, apart from the footer heading tags.
+Reply with a short text summary. Don't publish until I approve.

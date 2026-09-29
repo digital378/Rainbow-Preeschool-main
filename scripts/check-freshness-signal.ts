@@ -23,6 +23,7 @@ import { HOME_PUBLISH_DATE_ISO } from "../shared/home-publish-date";
 import { ADMISSIONS_PUBLISH_DATE_ISO, ADMISSIONS_PUBLISH_DATE_DISPLAY } from "../shared/admissions-page-copy";
 import { PLAYGROUP_COPY } from "../shared/playgroup-page-content";
 import { NURSERY_COPY } from "../shared/nursery-page-content";
+import { KINDERGARTEN_COPY } from "../shared/kindergarten-page-content";
 
 const BASE = (process.argv[2] || "http://localhost:5000").replace(/\/$/, "");
 const UA = "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)";
@@ -113,7 +114,7 @@ async function checkUrl(path: string): Promise<CheckResult> {
     missing.push("Last updated: line");
   }
   const admissionsPage = path === "/preschool-admissions";
-  const programmePage = path === "/playgroup" || path === "/nursery";
+  const programmePage = path === "/playgroup" || path === "/nursery" || path === "/kindergarten";
   const expectedType = path === "/" || admissionsPage || programmePage ? "WebPage" : "Article";
   if (!new RegExp(`"@type":\\s*"${expectedType}"`).test(html)) {
     missing.push(`${expectedType} JSON-LD`);
@@ -126,6 +127,7 @@ async function checkUrl(path: string): Promise<CheckResult> {
     : admissionsPage ? ADMISSIONS_PUBLISH_DATE_ISO
     : path === "/playgroup" ? PLAYGROUP_COPY.publishDate
     : path === "/nursery" ? NURSERY_COPY.publishDate
+    : path === "/kindergarten" ? KINDERGARTEN_COPY.publishDate
     : LAST_UPDATED_ISO;
   if (
     !html.includes(`"dateModified":"${expectedDate}"`) &&
@@ -136,6 +138,7 @@ async function checkUrl(path: string): Promise<CheckResult> {
   const expectedDisplay = admissionsPage ? ADMISSIONS_PUBLISH_DATE_DISPLAY
     : path === "/playgroup" ? PLAYGROUP_COPY.publishDateDisplay
     : path === "/nursery" ? NURSERY_COPY.publishDateDisplay
+    : path === "/kindergarten" ? KINDERGARTEN_COPY.publishDateDisplay
     : LAST_UPDATED_DISPLAY;
   if (path !== "/" && !html.includes(expectedDisplay)) {
     missing.push(`display="${expectedDisplay}"`);

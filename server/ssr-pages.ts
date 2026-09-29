@@ -45,6 +45,7 @@ import { admissionsAnswerSegments, admissionsFAQs } from "@shared/admissions-faq
 import { PLAYGROUP_FAQS } from "@shared/playgroup-faq-data";
 import { PLAYGROUP_COPY, PLAYGROUP_WEBPAGE_SCHEMA } from "@shared/playgroup-page-content";
 import { NURSERY_COPY, NURSERY_VISITOR_COPY, NURSERY_DAILY_ROUTINE, NURSERY_WEBPAGE_SCHEMA } from "@shared/nursery-page-content";
+import { KINDERGARTEN_COPY, KINDERGARTEN_WEBPAGE_SCHEMA } from "@shared/kindergarten-page-content";
 import { NURSERY_FAQS } from "@shared/nursery-faq-data";
 import { BLOG_METADATA } from "@shared/blog-metadata";
 import { testimonials, testimonialsSEO } from "@shared/testimonials-content";
@@ -300,7 +301,7 @@ function visitorCopySections(
 
 function visitorProgrammePageSections(
   copy: typeof NURSERY_VISITOR_COPY,
-  faqs: readonly { question: string; answer: string }[],
+  faqs: readonly { question: string; answer: string; answerSegments?: readonly { text: string; href?: string }[] }[],
   routine: readonly { time: string; activity: string; description: string }[],
   galleryImages: readonly { src: string; alt?: string; width: number; height: number }[],
 ): NonNullable<PageSEOData["contentSections"]> {
@@ -314,16 +315,17 @@ function visitorProgrammePageSections(
       height: image.height,
     }));
   }
-  const daySection = sections.find((section) => section.heading?.startsWith("A Day in Our "));
+  const daySection = sections.find((section) => section.heading?.startsWith("A Typical Day in Our "));
   if (daySection) {
     daySection.items = routine.map((step) => `${step.time} — ${step.activity}: ${step.description}`);
   }
-  const faqSection = sections.find((section) => section.heading === "Frequently Asked Questions");
+  const faqSection = sections.find((section) => section.heading === "Kindergarten FAQs");
   if (faqSection) {
-    faqSection.items = [
-      ...(faqSection.items ?? []),
-      ...faqs.map((faq) => `${faq.question} — ${faq.answer}`),
-    ];
+    faqSection.faqItems = faqs.map((faq) => ({
+      question: faq.question,
+      answerSegments: faq.answerSegments ?? [{ text: faq.answer }],
+    }));
+    faqSection.faqAsHeadings = true;
   }
   return sections;
 }
@@ -1287,40 +1289,43 @@ const staticPages: Record<string, PageSEOData> = {
     lastModifiedDisplay: NURSERY_COPY.publishDateDisplay,
   },
   "/kindergarten": {
-    title: "Kindergarten in Thane | KG Programme (3.5–5.5 yrs) | Rainbow",
-    description: "Prepare your child for primary school with our Kindergarten programme (3.5–5.5 yrs) — reading, writing, maths, and life skills at Rainbow Preschool Thane.",
-    keywords: "kindergarten in thane, kindergarten school thane, school readiness programme thane",
+    title: KINDERGARTEN_COPY.title,
+    description: KINDERGARTEN_COPY.description,
+    ogImage: KINDERGARTEN_COPY.ogImage,
+    ogImageAlt: KINDERGARTEN_COPY.ogImageAlt,
     canonical: `${BASE_URL}/kindergarten`,
     h1: KINDERGARTEN_VISITOR_COPY.h1,
     introText: KINDERGARTEN_VISITOR_COPY.intro,
     breadcrumbs: [{ name: "Home", url: "/" }, { name: "Programmes", url: "/programmes" }, { name: "Kindergarten", url: "/kindergarten" }],
-    structuredData: [programmeOrgSchema, websiteSchema, ...branchLocalBusinessSchemas, {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      mainEntity: [
-        { "@type": "Question", name: "Where can I find a good kindergarten near me in Thane?", acceptedAnswer: { "@type": "Answer", text: "Rainbow Preschool International has 6 kindergarten centres across Thane — in Manpada, Kalwa, Anand Nagar, Dhokali, Kasarvadavali, and Hariniwas. Each centre offers the same comprehensive Jr. KG and Sr. KG curriculum with experienced teachers, well-equipped classrooms, and a strong focus on school readiness." } },
-        { "@type": "Question", name: "What is the LKG and UKG admission process at Rainbow Preschool Thane?", acceptedAnswer: { "@type": "Answer", text: "Fill out our online enquiry form or call +91-8291568972 to schedule a campus visit. During the visit, you can explore the classrooms, meet the teachers, and understand the Jr. KG or Sr. KG curriculum based on your child's age. Once you decide to enrol, complete the admission form and your child can begin their kindergarten journey at the nearest centre." } },
-        { "@type": "Question", name: "What age is appropriate for Jr. KG and Sr. KG in Thane?", acceptedAnswer: { "@type": "Answer", text: "Jr. KG (LKG) is designed for children aged 3.5 to 4.5 years, and Sr. KG (UKG) is for children aged 4.5 to 5.5 years. Jr. KG focuses on building foundational literacy and numeracy skills, while Sr. KG concentrates on school readiness with advanced reading, writing, and math concepts to prepare children for Grade 1." } },
-        { "@type": "Question", name: "How does kindergarten at Rainbow Preschool prepare my child for Grade 1?", acceptedAnswer: { "@type": "Answer", text: "By the end of Sr. KG, children can read and write simple sentences, understand number concepts up to 100 including basic addition and subtraction, think independently and follow multi-step instructions, and interact confidently in a structured classroom — giving your child a strong foundation for a smooth transition into Grade 1." } },
-        { "@type": "Question", name: "What curriculum do you follow for kindergarten?", acceptedAnswer: { "@type": "Answer", text: "Rainbow Preschool Thane follows a comprehensive curriculum covering English language and phonics, Mathematics with hands-on number activities, Environmental Science, General Knowledge, Art and Craft, Physical Education, and value-based education for character building. The curriculum balances structured academics with creative and physical activities." } },
-        { "@type": "Question", name: "What is the difference between Jr. KG and Sr. KG?", acceptedAnswer: { "@type": "Answer", text: "Jr. KG (LKG) introduces children to formal learning with phonics, letter writing, number recognition up to 50, and basic concepts of shapes, colours, and the environment. Sr. KG (UKG) builds on this with advanced reading and sentence formation, number concepts up to 100, simple addition and subtraction, and greater focus on independent thinking and classroom discipline." } },
-        { "@type": "Question", name: "Is the kindergarten environment safe for my child?", acceptedAnswer: { "@type": "Answer", text: "Every Rainbow Preschool kindergarten centre in Thane has trained and experienced female teachers, CCTV-enabled classrooms, child-safe classrooms with age-appropriate furniture, regularly sanitised premises, and a secure entry-exit system. Every child is supervised at all times." } },
-        { "@type": "Question", name: "How can I enquire about kindergarten admission in Thane?", acceptedAnswer: { "@type": "Answer", text: "Call +91-8291568972 or fill out the admission enquiry form on this page. Our admissions team will respond promptly and arrange a free campus visit at any of our 6 kindergarten centres across Thane — Manpada, Kalwa, Anand Nagar, Dhokali, Kasarvadavali, or Hariniwas." } },
-      ],
-    }],
+    structuredData: [KINDERGARTEN_WEBPAGE_SCHEMA],
+    suppressArticleSchema: true,
     contentSections: (() => {
       const sections = visitorProgrammePageSections(
-        KINDERGARTEN_VISITOR_COPY,
+        { ...KINDERGARTEN_VISITOR_COPY, sections: KINDERGARTEN_VISITOR_COPY.sections.slice(0, 14) },
         KINDERGARTEN_VISITOR_FAQS,
         KINDERGARTEN_DAILY_ROUTINE,
         PROGRAMME_GALLERY_IMAGES.kindergarten,
       );
       sections[0].links = [{ text: "nursery", url: "/nursery" }];
+      sections[4].items = [
+        ...(sections[4].items ?? []),
+        "1 Lac+", "18+", "06", "100%",
+      ];
+      sections[5].links = [
+        ...(sections[5].links ?? []),
+        { text: "Rainbow International School", url: "https://rainbowinternationalschool.in" },
+        { text: "guide to preparing your child for school", url: "/blog/preparing-your-child-for-first-day-preschool" },
+        { text: "guide to top preschools in Thane", url: "/top-preschools-in-thane" },
+      ];
+      sections[10].items = [
+        ...(sections[10].items ?? []),
+        ...homepageBranches.map((branch) => `${branch.name} — ${branch.address} — ${ADMISSIONS_CENTRE_CLASSES[branch.id === "aggarwal" ? "manpada" : branch.id]}`),
+      ];
       return sections;
     })(),
-    internalLinks: [...commonInternalLinks, { text: "Nursery Programme", url: "/nursery" }, { text: "Preschool Admissions", url: "/preschool-admissions" }],
-    lastModified: LAST_UPDATED_ISO,
-    lastModifiedDisplay: LAST_UPDATED_DISPLAY,
+    internalLinks: [],
+    lastModified: KINDERGARTEN_COPY.publishDate,
+    lastModifiedDisplay: KINDERGARTEN_COPY.publishDateDisplay,
   },
   "/gallery": {
     title: "Photo Gallery | Rainbow Preschool International Thane",

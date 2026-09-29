@@ -6,6 +6,7 @@
  * Sections and lists retain the order used by the visitor pages.
  */
 import { NURSERY_VISITOR_COPY } from "../../../shared/nursery-page-content";
+import { KINDERGARTEN_COPY } from "../../../shared/kindergarten-page-content";
 
 export {
   NURSERY_COPY,
@@ -365,28 +366,27 @@ export const BLOG_VISITOR_COPY: VisitorPageCopy = {
 
 export const KINDERGARTEN_VISITOR_COPY: VisitorPageCopy = {
   path: "/kindergarten",
-  h1: "Best Kindergarten in Thane for Children Aged 3.5 to 5.5 Years",
-  intro:
-    "Building strong foundations in reading, writing, and math to prepare your child for Grade 1 success.",
+  h1: KINDERGARTEN_COPY.h1,
+  intro: "Reading, writing and maths foundations that get your child confident and ready for Grade 1.",
   sections: [
     {
-      heading: "Why Kindergarten is Important for Your Child",
+      heading: "Why Kindergarten Matters Between 3.5 and 5.5 Years",
       paragraphs: [
-        "Kindergarten is a crucial stepping stone between nursery and formal education. For children aged 3.5 to 5.5 years, it provides the essential academic and social foundations needed for success in Grade 1 and beyond.",
-        "At Rainbow Preschool, our Jr. KG and Sr. KG programmes focus on school readiness through structured learning. Children develop reading and writing foundations, learn mathematical concepts, and build critical thinking skills through engaging activities.",
-        "Research shows that quality Kindergarten education significantly impacts a child's academic trajectory. Our comprehensive curriculum ensures your child is not just ready for Grade 1, but confident and enthusiastic about learning.",
+        "Kindergarten bridges nursery and formal school. Over two years, Jr. KG and Sr. KG, children build the reading, writing, number and social skills they need for Grade 1.",
+        "At Rainbow Preschool, our Jr. KG and Sr. KG programmes combine structured learning with play, so children learn to read simple sentences, write confidently, work with numbers and think for themselves.",
+        "Our goal is a child who walks into Grade 1 confident, curious and ready to learn.",
       ],
     },
     {
-      heading: "A Day in Our Kindergarten",
+      heading: "A Typical Day in Our Kindergarten",
       paragraphs: [
-        "A well-structured day that balances academic learning with creative and physical activities.",
+        "Our morning batch runs from 8:30 to 11:30 AM, Monday to Friday. The afternoon batch, 12:30 to 3:30 PM, follows the same routine.",
       ],
     },
     {
       heading: "What Your Child Will Learn",
       paragraphs: [
-        "Our Kindergarten curriculum covers all essential areas for school readiness.",
+        "Our kindergarten curriculum covers every area of school readiness.",
       ],
       items: [
         "Reading Readiness",
@@ -405,7 +405,7 @@ export const KINDERGARTEN_VISITOR_COPY: VisitorPageCopy = {
       items: [
         "Personalized guidance for your child's needs",
         "Schedule a centre visit at your convenience",
-        "Learn about fees and admission process",
+        "Ask about fees and the admission process",
       ],
       cards: [{ heading: "Talk to Our Admission Expert" }],
     },
@@ -413,31 +413,32 @@ export const KINDERGARTEN_VISITOR_COPY: VisitorPageCopy = {
       heading: "Why Choose Our Kindergarten?",
       items: [
         "Comprehensive curriculum covering all subjects",
-        "Trained and experienced teachers",
+        "ECCE-trained, experienced teachers",
         "Focus on school readiness and Grade 1 preparation",
         "Balance of academics and creative activities",
-        "Regular progress reports and parent communication",
+        "Daily parent updates and monthly progress reports",
         "Timings:",
-        "Morning Batch - 8:30AM to 12:30PM",
-        "Extended Day - 12:00PM to 4:00PM",
+        "Morning Batch – 8:30 AM to 11:30 AM",
+        "Afternoon Batch – 12:30 PM to 3:30 PM",
+        "Monday to Friday",
         "Happy Students",
         "Years of Excellence",
         "Centres in Thane",
-        "Grade 1 Ready",
+        "Female Staff",
       ],
     },
     {
-      heading: "Kindergarten in Thane — School-Ready by Grade 1",
+      heading: "Kindergarten in Thane: Ready for Grade 1",
       paragraphs: [
-        "Looking for the best kindergarten in Thane? Rainbow Preschool International prepares 3.5–5.5 year olds for the demands of Grade 1 with structured literacy, numeracy, and life-skills programmes — across 6 trusted Thane West centres since 2007.",
+        "Looking for a kindergarten in Thane? Rainbow Preschool International has prepared Thane's children for school since 2007, with structured literacy, numeracy and life-skills learning across our 6 centres.",
       ],
       cards: [
         {
           heading: "Jr. KG and Sr. KG across Thane West",
           paragraphs: [
-            "Our kindergarten programme runs at all 6 Rainbow centres — Manpada, Hariniwas, Anand Nagar, Dhokali, Kalwa and Kasarvadavali. Children move seamlessly from Sr. KG into top Thane primary schools including DAV, Smt. Sulochanadevi, Singhania, Hiranandani Foundation and St. Lawrence.",
+            "Jr. KG and Sr. KG run at all 6 Rainbow centres: Manpada, Hariniwas, Anand Nagar, Dhokali, Kalwa and Kasarvadavali. After Sr. KG, children can continue into primary classes at 5 of our centres, or move on to our group's CBSE K–12 school, Rainbow International School in Brahmand, Thane West.",
           ],
-          link: { text: "Find your nearest centre →", href: "/contact" },
+          link: { text: "Find your nearest centre →", href: "/play-school-near-me" },
         },
         {
           heading: "School-readiness milestones we cover",
@@ -452,14 +453,14 @@ export const KINDERGARTEN_VISITOR_COPY: VisitorPageCopy = {
         },
       ],
       paragraphSegments: [[
-        { text: "Worried about Grade 1 transition? Read our " },
+        { text: "Worried about the move to Grade 1? Read our " },
         { text: "guide to preparing your child for school", href: "/blog/preparing-your-child-for-first-day-preschool" },
-        { text: " or compare us with the " },
-        { text: "top 10 preschools in Thane", href: "/top-preschools-in-thane" },
+        { text: ", or see how we compare in our " },
+        { text: "guide to top preschools in Thane", href: "/top-preschools-in-thane" },
         { text: "." },
       ]],
       links: [
-        { text: "Apply for KG 2026–27", href: "/preschool-admissions" },
+        { text: "Apply for KG admission", href: "/preschool-admissions" },
         { text: "Read parent reviews", href: "/testimonials" },
       ],
     },
@@ -469,11 +470,11 @@ export const KINDERGARTEN_VISITOR_COPY: VisitorPageCopy = {
         "See our kindergarteners preparing for school through structured learning, creative activities, and sports.",
       ],
       imageAlts: [
-        "Kindergarten kids at Rainbow Preschool",
-        "Kids in classroom at kindergarten",
-        "Children learning in Rainbow Preschool classroom",
-        "Creative activity at kindergarten",
-        "Group learning activity in kindergarten classroom",
+        "Kindergarten children at Rainbow Preschool, Thane",
+        "Jr. KG classroom at Rainbow Preschool in Thane",
+        "Kindergarten children learning in class",
+        "Art and craft activity in our kindergarten",
+        "Group learning activity in a Sr. KG class",
       ],
     },
     {
@@ -498,7 +499,7 @@ export const KINDERGARTEN_VISITOR_COPY: VisitorPageCopy = {
       items: [
         "Comprehensive Jr. KG and Sr. KG curriculum",
         "Focus on reading, writing, and math foundations",
-        "Regular assessments and progress reports",
+        "Monthly progress reports and daily parent updates",
         "Smooth transition to Grade 1",
       ],
     },
@@ -508,23 +509,23 @@ export const KINDERGARTEN_VISITOR_COPY: VisitorPageCopy = {
       items: ["Our Locations"],
     },
     {
-      heading: "Frequently Asked Questions",
+      heading: "Kindergarten FAQs",
       paragraphs: ["Common questions parents ask about our Kindergarten programme."],
       items: ["Still have questions?", "Request a Callback"],
     },
     {
       heading: "Explore Rainbow Preschool",
       items: [
-        "Award-Winning Preschool",
+        "Playgroup Programme",
         "Find Nearest Centre",
         "Admission Process",
         "Nursery Programme",
       ],
     },
     {
-      heading: "Ready to Give Your Child the Best Start for Grade 1?",
+      heading: "Ready to Prepare Your Child for Grade 1?",
       paragraphs: [
-        "Enroll your child in Rainbow Preschool's Kindergarten programme and watch them thrive.",
+        "Enrol your child in our kindergarten programme and watch them grow in confidence.",
       ],
       items: ["Request Callback", "WhatsApp Us", "Find Nearest Centre"],
     },
@@ -561,30 +562,64 @@ export const KINDERGARTEN_VISITOR_COPY: VisitorPageCopy = {
 export interface VisitorFaqCopy {
   question: string;
   answer: string;
+  answerSegments?: readonly VisitorTextSegment[];
+}
+
+function kindergartenFaq(question: string, answerSegments: readonly VisitorTextSegment[]): VisitorFaqCopy {
+  return { question, answer: answerSegments.map((segment) => segment.text).join(""), answerSegments };
 }
 
 export const KINDERGARTEN_VISITOR_FAQS: readonly VisitorFaqCopy[] = [
-  { question: "Where can I find a good kindergarten near me in Thane?", answer: "Rainbow Preschool International has 6 kindergarten centres across Thane — in Manpada, Kalwa, Anand Nagar, Dhokali, Kasarvadavali, and Hariniwas. Each centre offers the same comprehensive Jr. KG and Sr. KG curriculum with experienced teachers, well-equipped classrooms, and a strong focus on school readiness. Call 82915 68972 to find the kindergarten nearest to your home and schedule a free campus visit." },
-  { question: "What is the LKG and UKG admission process at Rainbow Preschool Thane?", answer: "The kindergarten admission process at Rainbow Preschool Thane is straightforward. Start by filling out our online enquiry form or calling 82915 68972 to schedule a campus visit. During the visit, you can explore the classrooms, meet the teachers, and understand the Jr. KG or Sr. KG curriculum based on your child's age. Once you decide to enrol, complete the admission form and your child can begin their kindergarten journey at the nearest centre in Thane." },
-  { question: "What age is appropriate for Jr. KG and Sr. KG in Thane?", answer: "At Rainbow Preschool Thane, Jr. KG (LKG) is designed for children aged 3.5 to 4.5 years, and Sr. KG (UKG) is for children aged 4.5 to 5.5 years. Each level has an age-appropriate curriculum — Jr. KG focuses on building foundational literacy and numeracy skills, while Sr. KG concentrates on school readiness with advanced reading, writing, and math concepts to prepare children for Grade 1." },
-  { question: "How does kindergarten at Rainbow Preschool prepare my child for Grade 1?", answer: "Rainbow Preschool's kindergarten programme in Thane is specifically designed as a complete school readiness programme. By the end of Sr. KG, children can read and write simple sentences, understand number concepts up to 100 including basic addition and subtraction, think independently and follow multi-step instructions, and interact confidently in a structured classroom setting. Our curriculum covers English, Mathematics, Environmental Science, General Knowledge, and value-based education — giving your child a strong academic and emotional foundation for a smooth transition into Grade 1." },
-  { question: "What curriculum do you follow for kindergarten?", answer: "Rainbow Preschool Thane follows a comprehensive and well-structured kindergarten curriculum that covers English language and phonics, Mathematics with hands-on number activities, Environmental Science and awareness, General Knowledge, Art and Craft for creative expression, Physical Education for gross motor development, and value-based education for character building. The curriculum balances structured academics with creative and physical activities, ensuring children develop holistically." },
-  { question: "What is the difference between Jr. KG and Sr. KG?", answer: "Jr. KG (LKG) at Rainbow Preschool Thane introduces children to formal learning with phonics, letter writing, number recognition up to 50, and basic concepts of shapes, colours, and the environment. Sr. KG (UKG) builds on this foundation with advanced reading and sentence formation, number concepts up to 100, simple addition and subtraction, and greater focus on independent thinking and classroom discipline. Together, the two years prepare your child thoroughly for Grade 1 at any school." },
-  { question: "What does a typical day at Rainbow Kindergarten look like?", answer: "A typical day at Rainbow Kindergarten in Thane starts with a morning assembly featuring prayers and value-based activities. This is followed by structured lessons in English, Mathematics, and Environmental Science. Children also participate in art and craft sessions, music, sports, and story time. The day is planned to maintain a healthy balance between focused academics and engaging creative activities, keeping children motivated and excited about learning." },
-  { question: "Is the kindergarten environment safe for my child?", answer: "Every Rainbow Preschool kindergarten centre in Thane prioritises child safety. All centres have trained and experienced female teachers, CCTV-enabled classrooms, child-safe classrooms with age-appropriate furniture, and regularly sanitised premises. We also maintain a secure entry-exit system and ensure that every child is supervised at all times, whether in the classroom, during outdoor play, or at assembly." },
-  { question: "Do you send regular updates on my child's progress in kindergarten?", answer: "Yes, Rainbow Preschool Thane believes in keeping parents actively involved. Kindergarten parents receive regular progress reports, periodic assessments, and feedback through scheduled parent-teacher meetings. Teachers also share daily observations and milestones informally so you always know how your child is progressing in academics, social skills, and overall development." },
-  { question: "How can I enquire about kindergarten admission in Thane?", answer: "You can enquire about Jr. KG or Sr. KG admission at Rainbow Preschool Thane by calling us directly at 82915 68972 or by filling out the admission enquiry form on this page. Our admissions team will respond promptly and arrange a free campus visit at any of our 6 kindergarten centres across Thane — Manpada, Kalwa, Anand Nagar, Dhokali, Kasarvadavali, or Hariniwas." },
+  kindergartenFaq("Is there a kindergarten near me in Thane?", [
+    { text: "Rainbow Preschool International has six centres in Thane: Manpada, Hariniwas, Anand Nagar, Dhokali, Kalwa and Kasarvadavali. To locate a centre, " },
+    { text: "find your nearest centre", href: "/play-school-near-me" },
+    { text: ". Jr. KG and Sr. KG are offered across all six centres, with morning and afternoon batches Monday to Friday." },
+  ]),
+  kindergartenFaq("What is the Jr. KG (LKG) and Sr. KG (UKG) admission process?", [
+    { text: "Enquire by form or phone, visit a centre, then attend a relaxed parent–child interaction. To confirm admission, submit the documents and pay the admission fee; orientation follows before term starts. See the full " },
+    { text: "admission process", href: "/preschool-admissions" },
+    { text: " for documents and dates. Call us for current fee details." },
+  ]),
+  kindergartenFaq("What is the age for Jr. KG and Sr. KG admission in Thane?", [
+    { text: "Age eligibility is counted as of 1 June of the academic year. Jr. KG is for children aged 3.5–4.5 years, while Sr. KG is for children aged 4.5–5.5 years. These are the two kindergarten levels; check the " },
+    { text: "admission process", href: "/preschool-admissions" },
+    { text: " for that year's steps and calendar." },
+  ]),
+  kindergartenFaq("How does kindergarten at Rainbow Preschool prepare my child for Grade 1?", [
+    { text: "Our NEP 2020-aligned, play-based curriculum builds reading, writing and maths foundations for Grade 1. After Sr. KG, children can continue at five centres: Aggarwal (Manpada) and Kalwa to Grade 4, Kasarvadavali and Hariniwas to Grade 3, Anand Nagar to Grade 2. Another option is " },
+    { text: "Rainbow International School", href: "https://rainbowinternationalschool.in" },
+    { text: ", our group's CBSE K–12 school in Brahmand, Thane West." },
+  ]),
+  kindergartenFaq("What curriculum do you follow for kindergarten?", [
+    { text: "Rainbow Preschool's kindergarten curriculum is play-based and aligned with NEP 2020. It builds reading, writing and maths foundations for Grade 1. Jr. KG and Sr. KG offer morning and afternoon batches, Monday to Friday, with a 30:2 student–teacher ratio and ECCE-trained female teaching staff across our six Thane centres." },
+  ]),
+  kindergartenFaq("What is the difference between Jr. KG and Sr. KG?", [
+    { text: "Jr. KG (LKG) is for children aged 3.5–4.5 years, while Sr. KG (UKG) is for ages 4.5–5.5, counted as of 1 June of the academic year. Jr. KG introduces reading, writing and maths through play; Sr. KG builds on those foundations as children prepare for Grade 1." },
+  ]),
+  kindergartenFaq("What does a typical day at Rainbow Kindergarten look like?", [
+    { text: "The morning batch runs from 8:30 to 11:30 AM, and the afternoon batch from 12:30 to 3:30 PM, Monday to Friday. A typical routine includes morning assembly, language and literacy, mathematics, a snack break, environmental science, art or sports, and story time. The afternoon follows the same rhythm." },
+  ]),
+  kindergartenFaq("Is the kindergarten environment safe for my child?", [
+    { text: "All six Rainbow Preschool centres have CCTV-monitored classrooms, and premises are sanitised multiple times daily. Our teaching staff is 100% female with ECCE training. Kindergarten follows the same safety and hygiene practices across Manpada, Hariniwas, Anand Nagar, Dhokali, Kalwa and Kasarvadavali. You can visit your nearest centre to learn more." },
+  ]),
+  kindergartenFaq("Do you send regular updates on my child's progress in kindergarten?", [
+    { text: "Yes. Parents receive daily updates and monthly progress reports during kindergarten. Our teachers share how children are doing as they develop reading, writing, maths and social skills through play-based learning. This communication follows the same schedule at our six Thane centres, so you can stay informed throughout Jr. KG and Sr. KG." },
+  ]),
+  kindergartenFaq("How do I apply for KG admission for 2027-28?", [
+    { text: "For KG admission for 2027–28, enquire by form or phone and arrange a centre visit. A parent–child interaction, document submission, fee payment and orientation follow. Early admissions are October–November, the main window December–February and the final round March–May. See the " },
+    { text: "admission process", href: "/preschool-admissions" },
+    { text: " for details. Call us for current fee details." },
+  ]),
 ];
 
 export const KINDERGARTEN_DAILY_ROUTINE = [
   { time: "8:30 AM", activity: "Morning Assembly", description: "Prayer, pledge, and national anthem" },
-  { time: "9:00 AM", activity: "Language & Literacy", description: "Reading, phonics, and vocabulary building" },
-  { time: "9:45 AM", activity: "Mathematics", description: "Numbers, counting, and basic operations" },
-  { time: "10:30 AM", activity: "Snack Break", description: "Healthy snacks and social interaction" },
-  { time: "11:00 AM", activity: "Environmental Science", description: "Nature, seasons, and world around us" },
-  { time: "11:30 AM", activity: "Art & Craft", description: "Creative expression and fine motor skills" },
-  { time: "12:00 PM", activity: "Sports & PT", description: "Physical education and outdoor games" },
-  { time: "12:30 PM", activity: "Story & Moral Values", description: "Stories that teach life lessons" },
+  { time: "8:50 AM", activity: "Language & Literacy", description: "Reading, phonics, and vocabulary building" },
+  { time: "9:30 AM", activity: "Mathematics", description: "Numbers, counting, and basic operations" },
+  { time: "10:00 AM", activity: "Snack Break", description: "Healthy snacks and social interaction" },
+  { time: "10:20 AM", activity: "Environmental Science", description: "Nature, seasons, and world around us" },
+  { time: "10:45 AM", activity: "Art & Craft / Sports & PT (alternate days)", description: "Creative expression and fine motor skills; physical education and outdoor games" },
+  { time: "11:15 AM", activity: "Story & Moral Values", description: "Stories that teach life lessons" },
 ] as const;
 
 /** All six pages keyed by their unchanged canonical paths for SSR consumers. */
