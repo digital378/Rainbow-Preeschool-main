@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 import { Link } from "wouter";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { ContactForm } from "@/components/contact-form";
@@ -7,16 +7,9 @@ import { SEO } from "@/components/seo";
 import { EEATSignals } from "@/components/eeat-signals";
 import { CONTACT_PAGE_COPY, CONTACT_PAGE_SCHEMA, CONTACT_BREADCRUMB_SCHEMA } from "@shared/contact-page-copy";
 import { Phone, Mail, Clock, MapPin, Award, ClipboardList, Images, Navigation as NavigationIcon } from "lucide-react";
-import { ErrorBoundary } from "@/components/error-boundary";
-
-const Interactive3DMap = lazy(() =>
-  import("@/components/interactive-3d-map").then(({ Interactive3DMap: Map }) => ({ default: Map }))
-);
 
 export default function Contact() {
-  const mapAnchorRef = useRef<HTMLDivElement>(null);
   const emailLinkRef = useRef<HTMLAnchorElement>(null);
-  const [shouldLoadMap, setShouldLoadMap] = useState(false);
   const hasFirstPaintHeading = useRef(
     typeof document !== "undefined" && !!document.getElementById("contact-initial-h1")
   );
@@ -39,24 +32,6 @@ export default function Contact() {
       start.remove();
       end.remove();
     };
-  }, []);
-
-  useEffect(() => {
-    const anchor = mapAnchorRef.current;
-    if (!anchor) return;
-    if (!("IntersectionObserver" in window)) {
-      setShouldLoadMap(true);
-      return;
-    }
-
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry?.isIntersecting) {
-        setShouldLoadMap(true);
-        observer.disconnect();
-      }
-    }, { rootMargin: "400px 0px" });
-    observer.observe(anchor);
-    return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
@@ -193,30 +168,6 @@ export default function Contact() {
           <div className="text-center max-w-3xl mx-auto mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">{CONTACT_PAGE_COPY.centresHeading}</h2>
             <p className="text-muted-foreground text-lg">{CONTACT_PAGE_COPY.centresDescription}</p>
-          </div>
-          
-          <div
-            ref={mapAnchorRef}
-            className="mb-8 h-[320px] w-full md:h-[480px]"
-            role="region"
-            aria-label={CONTACT_PAGE_COPY.mapLabel}
-            aria-busy={!shouldLoadMap}
-          >
-            {shouldLoadMap ? (
-              <ErrorBoundary name="contact-3d-map" silent>
-                <Suspense fallback={
-                  <div className="flex h-full items-center justify-center rounded-[20px] bg-muted text-muted-foreground" role="status">
-                    {CONTACT_PAGE_COPY.mapLoading}
-                  </div>
-                }>
-                  <Interactive3DMap copy={CONTACT_PAGE_COPY.map} />
-                </Suspense>
-              </ErrorBoundary>
-            ) : (
-              <div className="flex h-full items-center justify-center rounded-[20px] bg-muted px-6 text-center text-muted-foreground" role="status">
-                {CONTACT_PAGE_COPY.mapPlaceholder}
-              </div>
-            )}
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

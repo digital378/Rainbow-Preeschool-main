@@ -432,7 +432,7 @@ function contactPageSections(): NonNullable<PageSEOData["contentSections"]> {
     },
     {
       heading: copy.centresHeading,
-      text: `${copy.centresDescription}\n${copy.mapPlaceholder}`,
+      text: copy.centresDescription,
       subsections: branchCards,
     },
     {
