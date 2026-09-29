@@ -44,6 +44,9 @@ export function injectIndexPolicyShell(path: string, html: string): string {
   if (path === "/nursery") {
     updateMeta("property", "og:locale", "en_IN");
     updateMeta("property", "og:image:alt", NURSERY_COPY.ogImageAlt);
+    updateMeta("property", "og:image:type", "image/jpeg");
+    updateMeta("property", "og:image:width", "1200");
+    updateMeta("property", "og:image:height", "630");
     updateMeta("name", "twitter:image:alt", NURSERY_COPY.ogImageAlt);
   }
   updateMeta("name", "twitter:url", canonical);

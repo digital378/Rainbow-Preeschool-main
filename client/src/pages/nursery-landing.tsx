@@ -347,6 +347,9 @@ export default function NurseryLanding() {
         canonical="https://www.rainbowpreschools.com/nursery"
         ogImage={NURSERY_COPY.ogImage}
         ogImageAlt={NURSERY_COPY.ogImageAlt}
+        ogImageType="image/jpeg"
+        ogImageWidth={1200}
+        ogImageHeight={630}
         lang="en-IN"
         structuredData={[NURSERY_WEBPAGE_SCHEMA, createBreadcrumbSchema([
           { name: "Home", url: "/" },

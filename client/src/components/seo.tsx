@@ -9,6 +9,9 @@ interface SEOProps {
   ogType?: "website" | "article";
   ogImage?: string;
   ogImageAlt?: string;
+  ogImageType?: string;
+  ogImageWidth?: number;
+  ogImageHeight?: number;
   lang?: string;
   noIndex?: boolean;
   robots?: string;
@@ -26,6 +29,9 @@ export function SEO({
   ogType = "website",
   ogImage,
   ogImageAlt,
+  ogImageType,
+  ogImageWidth,
+  ogImageHeight,
   lang,
   noIndex = false,
   robots,
@@ -80,6 +86,9 @@ export function SEO({
     updateOrCreateMeta("og:url", fullCanonical, "property");
     updateOrCreateMeta("og:image", ogImageUrl, "property");
     if (ogImageAlt) updateOrCreateMeta("og:image:alt", ogImageAlt, "property");
+    if (ogImageType) updateOrCreateMeta("og:image:type", ogImageType, "property");
+    if (ogImageWidth) updateOrCreateMeta("og:image:width", String(ogImageWidth), "property");
+    if (ogImageHeight) updateOrCreateMeta("og:image:height", String(ogImageHeight), "property");
     updateOrCreateMeta("og:site_name", "Rainbow Preschool International", "property");
     updateOrCreateMeta("og:locale", "en_IN", "property");
 
@@ -120,9 +129,12 @@ export function SEO({
         document.querySelector('meta[property="og:image:alt"]')?.remove();
         document.querySelector('meta[name="twitter:image:alt"]')?.remove();
       }
+      if (ogImageType) document.querySelector('meta[property="og:image:type"]')?.remove();
+      if (ogImageWidth) document.querySelector('meta[property="og:image:width"]')?.remove();
+      if (ogImageHeight) document.querySelector('meta[property="og:image:height"]')?.remove();
       if (lang && document.documentElement.lang === lang) document.documentElement.lang = "en";
     };
-  }, [title, description, keywords, canonical, ogType, ogImage, ogImageAlt, lang, noIndex, robots, structuredData]);
+  }, [title, description, keywords, canonical, ogType, ogImage, ogImageAlt, ogImageType, ogImageWidth, ogImageHeight, lang, noIndex, robots, structuredData]);
 
   return null;
 }

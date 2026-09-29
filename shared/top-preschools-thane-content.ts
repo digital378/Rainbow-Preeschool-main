@@ -80,7 +80,7 @@ export const TOP_PRESCHOOLS: PreschoolEntry[] = [
     highlights: [
       "18+ years of experience with 1,00,000+ alumni",
       "6 centres across Thane for maximum convenience",
-      "100% female, ECE/Montessori-certified teaching staff",
+      "100% female, ECCE-trained teaching staff",
       "Small batch sizes: 10-12 children per teacher",
       "Play-based curriculum covering all 5 developmental domains",
       "24/7 CCTV, verified pickup, daily hygiene routines",

@@ -86,7 +86,7 @@ export const FAQ_CATEGORIES: SharedFAQCategory[] = [
       },
       {
         question: "Are all staff background-verified?",
-        answer: "Yes, every staff member undergoes rigorous background verification before joining. Our 100% female teaching staff are ECE and Montessori certified, providing an additional layer of comfort for parents.",
+        answer: "Yes, every staff member undergoes rigorous background verification before joining. Our 100% female teaching staff are ECCE-trained, providing an additional layer of comfort for parents.",
       },
     ],
   },
@@ -95,7 +95,7 @@ export const FAQ_CATEGORIES: SharedFAQCategory[] = [
     faqs: [
       {
         question: "What curriculum does Rainbow Preschool follow?",
-        answer: "We follow a play-based, activity-driven curriculum that covers all five developmental domains: cognitive, social, emotional, physical, and language development. Activities include literacy, numeracy, science awareness, creative arts, music, yoga, dance, and physical education. Our teachers are ECE and Montessori certified.",
+        answer: "We follow a play-based, activity-driven curriculum that covers all five developmental domains: cognitive, social, emotional, physical, and language development. Activities include literacy, numeracy, science awareness, creative arts, music, yoga, dance, and physical education. Our teachers are ECCE-trained.",
         relatedLink: { text: "Learn About Our Programmes", url: "/programmes" },
       },
       {

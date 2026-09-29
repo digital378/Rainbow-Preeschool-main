@@ -2710,7 +2710,7 @@ Pay close attention to how teachers interact with children:
 
 **Why it matters:** The quality of the teacher-child relationship is the single most important factor in early childhood education. A landmark study published in *Child Development* found that children with warm, responsive teachers showed significantly better language development, social skills, and school readiness.
 
-At Rainbow Preschool, our 100% female teaching staff are ECE and Montessori certified. We invest in ongoing professional development because we know that great teachers make great preschools.
+At Rainbow Preschool, our 100% female teaching staff are ECCE-trained. We invest in ongoing professional development because we know that great teachers make great preschools.
 
 ## Sign 3: Low Teacher-to-Child Ratios
 
@@ -2905,7 +2905,7 @@ At Rainbow Preschool, our play-based curriculum covers all five developmental do
 - Requirements vary widely — some centres hire based on availability
 - Professional development opportunities may be limited
 
-Rainbow Preschool employs 100% ECE and Montessori-certified teaching staff who receive continuous training in child development, classroom management, and emergency first aid.
+Rainbow Preschool employs 100% female, ECCE-trained teaching staff who receive continuous training in child development, classroom management, and emergency first aid.
 
 ## 3. Timing and Schedule
 
@@ -3417,7 +3417,7 @@ We're currently accepting admissions for 2026-27 across all six centres in Thane
 - 4.9★ Google rating with 487+ reviews
 - 6 centres across Thane (one is always near you)
 - Small batch sizes: 10-12 children per teacher
-- 100% ECE/Montessori certified female staff
+- 100% female, ECCE-trained teaching staff
 - 24/7 CCTV, verified pickup, daily hygiene routines
 - Play-based curriculum with clear developmental goals
 

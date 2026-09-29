@@ -5,7 +5,7 @@ export const NURSERY_COPY = {
   title: "Nursery School in Thane (2.5–3.5 Years) | Rainbow Preschool",
   description:
     "Nursery for children aged 2.5 to 3.5 years at our 6 Rainbow Preschool International centres in Thane: phonics, numbers and play. Admissions open for 2027-28.",
-  ogImage: "https://www.rainbowpreschools.com/images/optimized/nursery-share-1200x630.webp",
+  ogImage: "https://www.rainbowpreschools.com/images/og/nursery-share-1200x630.jpg",
   ogImageAlt: "Nursery class reading session at Rainbow Preschool, Thane",
   h1: "Nursery School in Thane for Children Aged 2.5 to 3.5 Years",
   publishDate: "2026-09-30",

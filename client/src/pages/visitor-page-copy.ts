@@ -118,9 +118,9 @@ export const HOME_VISITOR_FAQS: readonly VisitorFaq[] = [
   },
   {
     question: "What qualifications do the teachers have?",
-    schemaAnswerText: "Our teachers hold degrees or diplomas in Early Childhood Education (ECE), Montessori training, or equivalent qualifications. All staff undergo background checks and regular training in child development, classroom management, and first aid.",
+    schemaAnswerText: "Our teachers are ECCE-trained (Early Childhood Care and Education), and our teaching staff is 100% female. They are experienced in working with young children and guide each child through play-based learning.",
     answerSegments: [
-      { text: "Our teachers hold degrees or diplomas in Early Childhood Education (ECE), Montessori training, or equivalent qualifications. All staff undergo background checks and regular training in child development, classroom management, and first aid." },
+      { text: "Our teachers are ECCE-trained (Early Childhood Care and Education), and our teaching staff is 100% female. They are experienced in working with young children and guide each child through play-based learning." },
     ],
   },
   {

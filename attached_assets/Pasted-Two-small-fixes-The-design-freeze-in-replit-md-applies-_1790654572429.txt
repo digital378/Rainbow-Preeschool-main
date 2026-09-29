@@ -1,0 +1,21 @@
+Two small fixes. The design freeze in replit.md applies: no visual changes. Don't take or send screenshots, and don't publish until I approve.
+
+1. NURSERY SHARE IMAGE → JPG
+- Create a JPG copy of /images/optimized/nursery-share-1200x630.webp at exactly 1200×630, quality about 85, under 300 KB. Save it as /images/og/nursery-share-1200x630.jpg.
+- On /nursery (visitor and Google versions), point og:image and twitter:image to the JPG. Add og:image:type "image/jpeg", og:image:width 1200 and og:image:height 630. Keep the existing og:image:alt.
+- Keep the WebP file; just stop using it for sharing.
+Why: WhatsApp and some Facebook previews don't show WebP images reliably. JPG always shows, so shared links display the nursery photo.
+
+2. HOMEPAGE FAQ — REMOVE "MONTESSORI"
+- In the homepage FAQ "What qualifications do the teachers have?", replace the whole answer with:
+  "Our teachers are ECCE-trained (Early Childhood Care and Education), and our teaching staff is 100% female. They are experienced in working with young children and guide each child through play-based learning."
+- Update it in the visitor page, Google's version, and any shared FAQ data the homepage uses.
+- Then search the whole site (pages, shared data files, bot-SSR templates, llms.txt, llms-full.txt, blog source data) for "Montessori". Replace any claim that our teachers are Montessori-trained with "ECCE-trained". List any other "Montessori" mentions (e.g. a blog post explaining teaching methods) in your reply. Don't change those; I'll decide.
+Why: "Montessori training" isn't a confirmed fact. ECCE training is, and it's what /playgroup and /nursery now say, so the site stays consistent.
+
+CHECKS, THEN REPORT (short text only)
+- The JPG returns HTTP 200, content-type image/jpeg, 1200×630.
+- /nursery og:image and twitter:image point to the JPG in both versions.
+- The homepage FAQ answer matches in both versions, and no teacher-qualification claim anywhere says "Montessori".
+- Only the homepage FAQ answer and the /nursery share tags changed.
+Don't publish until I approve.

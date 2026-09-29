@@ -146,7 +146,7 @@ const whyParentsChoose = [
 
 const comparisonCriteria = [
   { check: "Safety & CCTV", why: "CCTV in every classroom deters incidents and gives parents peace of mind.", rainbow: "24/7 CCTV in every classroom; biometric entry; GPS-tracked transport" },
-  { check: "Teacher qualification", why: "ECE-certified teachers understand child development; a general degree is not enough.", rainbow: "100% ECE-certified or Montessori-trained female educators, all background-verified" },
+  { check: "Teacher qualification", why: "ECE-certified teachers understand child development; a general degree is not enough.", rainbow: "100% female, ECCE-trained educators, all background-verified" },
   { check: "Curriculum approach", why: "Play-based, NEP 2020-aligned learning builds skills through exploration, not rote.", rainbow: "Proprietary Rainbow Curriculum — play-based, thematic, NEP 2020 aligned" },
   { check: "Centre proximity", why: "Shorter commute means a less stressed child and more family time.", rainbow: "6 centres across Thane West — at least one near most Thane localities" },
   { check: "Student-teacher ratio", why: "1:10 to 1:15 ensures every child gets individual attention every day.", rainbow: "1:10 in Playgroup; 1:12–15 in Nursery and KG" },
