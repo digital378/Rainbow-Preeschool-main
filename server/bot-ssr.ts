@@ -469,10 +469,10 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
       const rel = safeLink.external ? ` rel="noopener noreferrer"` : "";
       return `<li><a href="${escapeHtml(safeLink.href)}"${rel}>${escapeHtml(link.text)}</a></li>`;
     }).join("")}</ul></section>`
-    : `<a href="${BASE_URL}/contact" class="cta">Enquire Now — Call 82915 68972</a>`;
+    : requestUrl === "/contact" ? "" : `<a href="${BASE_URL}/contact" class="cta">Enquire Now — Call 82915 68972</a>`;
 
   return `<!DOCTYPE html>
-  <html lang="${requestUrl === "/nursery" || requestUrl === "/kindergarten" || requestUrl === "/programmes" ? "en-IN" : "en"}">
+  <html lang="${requestUrl === "/nursery" || requestUrl === "/kindergarten" || requestUrl === "/programmes" || requestUrl === "/contact" ? "en-IN" : "en"}">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5" />
@@ -489,7 +489,7 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
     <meta property="og:description" content="${escapeHtml(seo.description)}" />
     <meta property="og:image" content="${ogImage}" />
      <meta property="og:image:alt" content="${escapeHtml(seo.ogImageAlt || "Three preschoolers in red uniforms playing on a bright yellow background with colorful toy blocks")}" />
-     ${requestUrl === "/nursery" || requestUrl === "/kindergarten" || requestUrl === "/programmes" ? `<meta property="og:image:type" content="image/jpeg" />
+     ${requestUrl === "/nursery" || requestUrl === "/kindergarten" || requestUrl === "/programmes" || requestUrl === "/contact" ? `<meta property="og:image:type" content="image/jpeg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />` : ""}
     <meta property="og:site_name" content="Rainbow Preschool International" />
@@ -539,13 +539,19 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
       </nav>
     </header>
     <main>
-      ${seo.breadcrumbs ? `<div class="breadcrumb">${seo.breadcrumbs.map((b) => b.url
+      ${seo.breadcrumbs && requestUrl !== "/contact" ? `<div class="breadcrumb">${seo.breadcrumbs.map((b) => b.url
         ? `<a href="${BASE_URL}${b.url}">${escapeHtml(b.name)}</a>`
         : `<span>${escapeHtml(b.name)}</span>`).join(" › ")}</div>` : ""}
       ${seo.heroBadge ? `<p>${escapeHtml(seo.heroBadge)}</p>` : ""}
       <h1>${escapeHtml(seo.h1 || seo.title)}</h1>
       ${seo.reviewerAfterContent ? "" : reviewerCreditHtml}
-      ${seo.introText ? `<p>${escapeHtml(seo.introText)}</p>` : ""}
+       ${seo.introSegments
+         ? `<p>${seo.introSegments.map(segment =>
+             segment.href && /^tel:\+?[0-9]+$/.test(segment.href)
+               ? `<a href="${escapeHtml(segment.href)}">${escapeHtml(segment.text)}</a>`
+               : escapeHtml(segment.text)
+           ).join("")}</p>`
+         : seo.introText ? `<p>${escapeHtml(seo.introText)}</p>` : ""}
       ${seo.heroSubheading ? `<h3>${escapeHtml(seo.heroSubheading)}</h3>` : ""}
       ${(seo.images || []).map(renderImageHtml).join("\n")}
       ${contentHtml}

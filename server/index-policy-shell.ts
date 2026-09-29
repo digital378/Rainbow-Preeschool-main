@@ -7,6 +7,7 @@ import { NURSERY_FAQS } from "@shared/nursery-faq-data";
 import { KINDERGARTEN_COPY } from "@shared/kindergarten-page-content";
 import { KINDERGARTEN_VISITOR_FAQS, PROGRAMMES_VISITOR_COPY } from "../client/src/pages/visitor-page-copy";
 import { PROGRAMMES_COPY, PROGRAMMES_FAQS } from "@shared/programmes-page-content";
+import { CONTACT_PAGE_COPY } from "@shared/contact-page-copy";
 
 /**
  * Keep the browser's initial document metadata aligned with bot SSR and the
@@ -27,7 +28,7 @@ export function injectIndexPolicyShell(path: string, html: string): string {
     .replace(/<meta name="robots" content="[^"]*"\s*\/?>/i, `<meta name="robots" content="${robots}" />`)
     .replace(/<link rel="canonical" href="[^"]*"\s*\/?>/i, `<link rel="canonical" href="${escape(canonical)}" />`);
   if (!seo) return result;
-  if (path === "/nursery" || path === "/kindergarten" || path === "/programmes") result = result.replace('<html lang="en">', '<html lang="en-IN">');
+  if (path === "/nursery" || path === "/kindergarten" || path === "/programmes" || path === "/contact") result = result.replace('<html lang="en">', '<html lang="en-IN">');
 
   const updateMeta = (kind: "name" | "property", key: string, value: string) => {
     const tag = `<meta ${kind}="${key}" content="${escape(value)}" />`;
@@ -44,13 +45,13 @@ export function injectIndexPolicyShell(path: string, html: string): string {
   updateMeta("property", "og:title", seo.title);
   updateMeta("property", "og:description", seo.description);
   updateMeta("property", "og:image", seo.ogImage ?? `${PREFERRED_DOMAIN}/og-image.jpg`);
-  if (path === "/nursery" || path === "/kindergarten" || path === "/programmes") {
+  if (path === "/nursery" || path === "/kindergarten" || path === "/programmes" || path === "/contact") {
     updateMeta("property", "og:locale", "en_IN");
-    updateMeta("property", "og:image:alt", path === "/programmes" ? PROGRAMMES_COPY.ogImageAlt : path === "/kindergarten" ? KINDERGARTEN_COPY.ogImageAlt : NURSERY_COPY.ogImageAlt);
+    updateMeta("property", "og:image:alt", path === "/contact" ? CONTACT_PAGE_COPY.ogImageAlt : path === "/programmes" ? PROGRAMMES_COPY.ogImageAlt : path === "/kindergarten" ? KINDERGARTEN_COPY.ogImageAlt : NURSERY_COPY.ogImageAlt);
     updateMeta("property", "og:image:type", "image/jpeg");
     updateMeta("property", "og:image:width", "1200");
     updateMeta("property", "og:image:height", "630");
-    updateMeta("name", "twitter:image:alt", path === "/programmes" ? PROGRAMMES_COPY.ogImageAlt : path === "/kindergarten" ? KINDERGARTEN_COPY.ogImageAlt : NURSERY_COPY.ogImageAlt);
+    updateMeta("name", "twitter:image:alt", path === "/contact" ? CONTACT_PAGE_COPY.ogImageAlt : path === "/programmes" ? PROGRAMMES_COPY.ogImageAlt : path === "/kindergarten" ? KINDERGARTEN_COPY.ogImageAlt : NURSERY_COPY.ogImageAlt);
   }
   updateMeta("name", "twitter:url", canonical);
   updateMeta("name", "twitter:title", seo.title);
@@ -118,6 +119,25 @@ export function injectIndexPolicyShell(path: string, html: string): string {
       #programmes-initial.programmes-hydrated p{visibility:hidden}
     </style></head>`);
     result = result.replace('<div id="root"></div>', `<div id="programmes-initial"><section><div class="programmes-initial-inner"><h1 id="programmes-initial-h1">${escape(PROGRAMMES_COPY.h1)}</h1><p>${escape(PROGRAMMES_VISITOR_COPY.intro ?? "")}</p></div></section><div id="programmes-initial-faq" hidden aria-hidden="true">${faqHtml}</div></div><div id="root"></div>`);
+  }
+  if (path === "/contact") {
+    result = result.replace("</head>", `<style>
+      #contact-initial{position:absolute;inset:0 0 auto;z-index:2;pointer-events:none;padding-top:5rem;font-family:Inter,system-ui,sans-serif}
+      #contact-initial section{padding:6rem 0;background:linear-gradient(120deg,rgba(223,32,96,.05),rgba(255,193,7,.05),rgba(77,176,115,.05))}
+      #contact-initial .contact-initial-inner{max-width:80rem;margin:auto;padding:0 1rem;text-align:center}
+      #contact-initial h1{font-family:Poppins,Inter,sans-serif;font-size:2.25rem;line-height:2.5rem;font-weight:700;margin:0 0 1.5rem}
+      #contact-initial p{font-size:1.125rem;line-height:1.625;margin:0;color:#6b7280;pointer-events:auto}
+      #contact-initial p a{color:inherit;text-decoration:none}
+      #contact-initial p a:hover{color:#df2060}
+      @media(min-width:640px){#contact-initial .contact-initial-inner{padding:0 1.5rem}}
+      @media(min-width:768px){#contact-initial{padding-top:6rem}#contact-initial section{padding:8rem 0}#contact-initial h1{font-size:3rem;line-height:1}}
+      @media(min-width:1024px){#contact-initial section{padding:10rem 0}}
+      #contact-initial.contact-hydrated section{background:none}
+    </style></head>`);
+    const linkedIntro = CONTACT_PAGE_COPY.introSegments.map(segment => "href" in segment
+      ? `<a href="${escape(segment.href)}">${escape(segment.text)}</a>`
+      : escape(segment.text)).join("");
+    result = result.replace('<div id="root"></div>', `<div id="contact-initial"><section><div class="contact-initial-inner"><h1 id="contact-initial-h1">${escape(CONTACT_PAGE_COPY.h1)}</h1><p>${linkedIntro}</p></div></section></div><div id="root"></div>`);
   }
   return result;
 }

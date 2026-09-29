@@ -27,6 +27,19 @@ export const HOMEPAGE_ORGANIZATION_SCHEMA = {
   },
   foundingDate: "2007",
   telephone: "+918291568972",
+  contactPoint: {
+    "@type": "ContactPoint",
+    telephone: "+91-8291568972",
+    email: "admin@rainbowpreschools.com",
+    contactType: "admissions",
+    areaServed: "Thane",
+    hoursAvailable: {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      opens: "09:00",
+      closes: "18:00",
+    },
+  },
   sameAs: [
     "https://www.google.com/maps/place/?q=place_id:ChIJs8uL-1-5vjcRPWjKJYOMaA0",
     "https://www.facebook.com/rainbowpreschoolthane",

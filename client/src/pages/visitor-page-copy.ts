@@ -8,6 +8,7 @@
 import { NURSERY_VISITOR_COPY } from "../../../shared/nursery-page-content";
 import { KINDERGARTEN_COPY } from "../../../shared/kindergarten-page-content";
 import { PROGRAMMES_COPY } from "../../../shared/programmes-page-content";
+import { CONTACT_PAGE_COPY } from "../../../shared/contact-page-copy";
 
 export {
   NURSERY_COPY,
@@ -328,31 +329,32 @@ export const PROGRAMME_LANDING_EEAT_COPY = {
 
 export const CONTACT_VISITOR_COPY: VisitorPageCopy = {
   path: "/contact",
-  h1: "Contact Us",
-  intro: "Have questions about admissions or want to schedule a tour? We'd love to hear from you!",
+  h1: CONTACT_PAGE_COPY.h1,
+  intro: CONTACT_PAGE_COPY.intro,
   sections: [
     {
-      heading: "Request A Callback",
-      paragraphs: ["Fill out the form and we'll get back to you shortly."],
+      heading: CONTACT_PAGE_COPY.callbackHeading,
+      paragraphs: [CONTACT_PAGE_COPY.callbackDescription],
     },
     {
-      heading: "Contact Information",
+      heading: undefined,
       items: [
-        "Phone",
-        "82915 68972",
-        "Email",
-        "admin@rainbowpreschools.com",
-        "Working Hours",
-        "Monday - Saturday",
-        "9AM - 6PM",
-        "Locations",
-        "6 Centres across Thane West",
-        "Find your nearest centre below",
+        CONTACT_PAGE_COPY.phoneLabel,
+        CONTACT_PAGE_COPY.generalPhone,
+        CONTACT_PAGE_COPY.phoneSecondary,
+        CONTACT_PAGE_COPY.emailLabel,
+        CONTACT_PAGE_COPY.email,
+        CONTACT_PAGE_COPY.workingHoursLabel,
+        CONTACT_PAGE_COPY.workingDays,
+        CONTACT_PAGE_COPY.workingHours,
+        CONTACT_PAGE_COPY.locationsLabel,
+        CONTACT_PAGE_COPY.locationCount,
+        CONTACT_PAGE_COPY.nearestCentrePrompt,
       ],
     },
     {
-      heading: "Our Centres",
-      paragraphs: ["Locate your nearest Rainbow Preschools Centre in Thane."],
+      heading: CONTACT_PAGE_COPY.centresHeading,
+      paragraphs: [CONTACT_PAGE_COPY.centresDescription],
     },
   ],
 };

@@ -21,6 +21,7 @@ import { PLAYGROUP_COPY } from "./playgroup-page-content";
 import { NURSERY_COPY } from "./nursery-page-content";
 import { KINDERGARTEN_COPY } from "./kindergarten-page-content";
 import { PROGRAMMES_COPY } from "./programmes-page-content";
+import { CONTACT_PAGE_COPY } from "./contact-page-copy";
 
 export type SitemapChangefreq =
   | "always"
@@ -77,7 +78,7 @@ export const SITEMAP_ENTRIES: SitemapEntry[] = [
   { url: "/about", priority: 0.8, changefreq: "monthly" },
   { url: "/programmes", priority: 0.9, changefreq: "monthly", lastmod: PROGRAMMES_COPY.publishDate },
   { url: "/gallery", priority: 0.8, changefreq: "monthly", lastmod: "2026-09-23" },
-  { url: "/contact", priority: 0.9, changefreq: "monthly", lastmod: "2026-09-23" },
+  { url: "/contact", priority: 0.9, changefreq: "monthly", lastmod: CONTACT_PAGE_COPY.publishDate },
   { url: "/blog", priority: 0.7, changefreq: "weekly", lastmod: "2026-09-23" },
   { url: "/faqs", priority: 0.6, changefreq: "monthly", lastmod: "2026-09-23" },
 

@@ -14,12 +14,14 @@ import {
 interface BranchCardProps {
   branch: Branch;
   classesText?: string;
+  daycareText?: string;
   copy?: {
     view: string;
     localCentre: string;
     whatsapp: string;
     directions: string;
     localPages?: Record<string, { url: string; locality: string }>;
+    accessibleActions?: boolean;
   };
 }
 
@@ -34,7 +36,7 @@ const branchToLocalPage: Record<string, { url: string; locality: string }> = {
   "kasarvadavali": { url: "/preschool-in-kasarvadavali-thane", locality: "Kasarvadavali" },
 };
 
-export function BranchCard({ branch, classesText, copy = { view: "View", localCentre: "Centre", whatsapp: "WhatsApp", directions: "Directions" } }: BranchCardProps) {
+export function BranchCard({ branch, classesText, daycareText, copy = { view: "View", localCentre: "Centre", whatsapp: "WhatsApp", directions: "Directions" } }: BranchCardProps) {
   const localPage = copy.localPages?.[branch.id] || branchToLocalPage[branch.id];
   const whatsappNumber = branch.whatsapp?.replace(/\s/g, "");
   const landline = 'landline' in branch ? branch.landline : undefined;
@@ -98,6 +100,12 @@ export function BranchCard({ branch, classesText, copy = { view: "View", localCe
               Classes: {classesText}
             </>
           )}
+          {daycareText && (
+            <>
+              <br />
+              {daycareText}
+            </>
+          )}
         </p>
 
         <div className="space-y-2 mb-4">
@@ -106,6 +114,7 @@ export function BranchCard({ branch, classesText, copy = { view: "View", localCe
               <Phone className="w-4 h-4 text-muted-foreground" />
               <a
                 href={`tel:${landline.replace(/-/g, "")}`}
+                aria-label={copy.accessibleActions ? `Call ${branch.name}` : undefined}
                 className="hover:text-primary transition-colors"
                 onClick={() => handleCallClick(landline)}
                 data-testid={`link-branch-landline-${branch.id}`}
@@ -119,6 +128,7 @@ export function BranchCard({ branch, classesText, copy = { view: "View", localCe
               <Phone className="w-4 h-4 text-muted-foreground" />
               <a
                 href={`tel:${callingNumber}`}
+                aria-label={copy.accessibleActions ? `Call ${branch.name}` : undefined}
                 className="hover:text-primary transition-colors"
                 onClick={() => handleCallClick(branch.calling!)}
                 data-testid={`link-branch-calling-${branch.id}`}
@@ -132,6 +142,7 @@ export function BranchCard({ branch, classesText, copy = { view: "View", localCe
               <Phone className="w-4 h-4 text-muted-foreground" />
               <a
                 href={`tel:${secondCalling.replace(/\s/g, "")}`}
+                aria-label={copy.accessibleActions ? `Call ${branch.name}` : undefined}
                 className="hover:text-primary transition-colors"
                 onClick={() => handleCallClick(secondCalling)}
                 data-testid={`link-branch-second-${branch.id}`}
@@ -164,6 +175,7 @@ export function BranchCard({ branch, classesText, copy = { view: "View", localCe
               >
                 <a
                   href={`https://wa.me/91${whatsappNumber}`}
+                  aria-label={copy.accessibleActions ? `WhatsApp ${branch.name}` : undefined}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={handleWhatsAppClick}
@@ -182,6 +194,7 @@ export function BranchCard({ branch, classesText, copy = { view: "View", localCe
             >
               <a
                 href={branch.mapUrl}
+                  aria-label={copy.accessibleActions ? `Directions to ${branch.name}` : undefined}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={handleDirectionsClick}

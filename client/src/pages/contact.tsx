@@ -1,12 +1,11 @@
-import { lazy, Suspense, useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Link } from "wouter";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { ContactForm } from "@/components/contact-form";
 import { BranchCard } from "@/components/branch-card";
-import { SEO, createBreadcrumbSchema } from "@/components/seo";
+import { SEO } from "@/components/seo";
 import { EEATSignals } from "@/components/eeat-signals";
-import { LAST_UPDATED_DISPLAY, LAST_UPDATED_ISO } from "@shared/site-freshness";
-import { CONTACT_PAGE_COPY } from "@shared/contact-page-copy";
+import { CONTACT_PAGE_COPY, CONTACT_PAGE_SCHEMA, CONTACT_BREADCRUMB_SCHEMA } from "@shared/contact-page-copy";
 import { Phone, Mail, Clock, MapPin, Award, ClipboardList, Images, Navigation as NavigationIcon } from "lucide-react";
 import { ErrorBoundary } from "@/components/error-boundary";
 
@@ -18,6 +17,16 @@ export default function Contact() {
   const mapAnchorRef = useRef<HTMLDivElement>(null);
   const emailLinkRef = useRef<HTMLAnchorElement>(null);
   const [shouldLoadMap, setShouldLoadMap] = useState(false);
+  const hasFirstPaintHeading = useRef(
+    typeof document !== "undefined" && !!document.getElementById("contact-initial-h1")
+  );
+
+  useLayoutEffect(() => {
+    if (hasFirstPaintHeading.current) {
+      document.getElementById("contact-initial")?.classList.add("contact-hydrated");
+      return () => document.getElementById("contact-initial")?.remove();
+    }
+  }, []);
 
   useEffect(() => {
     const link = emailLinkRef.current;
@@ -68,23 +77,34 @@ export default function Contact() {
   return (
     <article className="contact-page pt-20 md:pt-24">
       <SEO
-        title="Contact Rainbow Preschool Thane | Admissions Enquiry"
-        description="Contact Rainbow Preschool International for admissions, school tours & enquiries. 6 centres in Thane West — call 82915 68972 or visit today."
-        keywords="contact rainbow preschool, preschool admissions thane, preschool enquiry, nursery admissions thane, school admission 2025, nursery school fees, preschool registration, preschool admission form, rainbow preschool enquiry thane"
-        canonical="https://www.rainbowpreschools.com/contact"
-        structuredData={createBreadcrumbSchema([
-          { name: "Home", url: "/" },
-          { name: "Contact", url: "/contact" },
-        ])}
+        title={CONTACT_PAGE_COPY.title}
+        description={CONTACT_PAGE_COPY.description}
+        keywords={null}
+        canonical="/contact"
+        lang="en-IN"
+        ogImage={CONTACT_PAGE_COPY.ogImage}
+        ogImageAlt={CONTACT_PAGE_COPY.ogImageAlt}
+        ogImageType="image/jpeg"
+        ogImageWidth={1200}
+        ogImageHeight={630}
+        structuredData={hasFirstPaintHeading.current ? undefined : [CONTACT_PAGE_SCHEMA, CONTACT_BREADCRUMB_SCHEMA]}
       />
       {/* Hero Section */}
       <section className="py-24 md:py-32 lg:py-40 bg-gradient-to-br from-primary/5 via-accent/5 to-secondary/5 flex items-center justify-center">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">{CONTACT_PAGE_COPY.h1}</h1>
-            <p className="text-lg text-muted-foreground leading-relaxed">
-              {CONTACT_PAGE_COPY.intro}
-            </p>
+            {hasFirstPaintHeading.current
+              ? <div aria-hidden="true" className="text-4xl md:text-5xl font-bold mb-6" style={{ visibility: "hidden" }}>{CONTACT_PAGE_COPY.h1}</div>
+              : <h1 className="text-4xl md:text-5xl font-bold mb-6">{CONTACT_PAGE_COPY.h1}</h1>}
+            {hasFirstPaintHeading.current
+              ? <p aria-hidden="true" className="text-lg text-muted-foreground leading-relaxed" style={{ visibility: "hidden" }}>{CONTACT_PAGE_COPY.intro}</p>
+              : <p className="text-lg text-muted-foreground leading-relaxed">
+                  {CONTACT_PAGE_COPY.introSegments.map((segment, index) =>
+                    "href" in segment
+                      ? <a key={index} href={segment.href} className="hover:text-primary transition-colors">{segment.text}</a>
+                      : <span key={index}>{segment.text}</span>
+                  )}
+                </p>}
           </div>
         </div>
       </section>
@@ -119,6 +139,7 @@ export default function Contact() {
                       <a href="tel:8291568972" className="text-muted-foreground hover:text-primary transition-colors" data-testid="link-contact-phone">
                         {CONTACT_PAGE_COPY.generalPhone}
                       </a>
+                      <p className="text-sm text-muted-foreground mt-1">{CONTACT_PAGE_COPY.phoneSecondary}</p>
                     </div>
                   </div>
 
@@ -160,7 +181,6 @@ export default function Contact() {
 
               <blockquote className="border-l-4 border-primary pl-4 italic text-muted-foreground">
                 {CONTACT_PAGE_COPY.quote}
-                <footer className="mt-2 text-sm font-medium text-foreground">{CONTACT_PAGE_COPY.quoteAttribution}</footer>
               </blockquote>
             </div>
           </div>
@@ -200,9 +220,19 @@ export default function Contact() {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {CONTACT_PAGE_COPY.branches.map((branch) => (
-              <BranchCard key={branch.id} branch={branch} copy={{ ...CONTACT_PAGE_COPY.branchCard, localPages: CONTACT_PAGE_COPY.localPages }} />
-            ))}
+            {CONTACT_PAGE_COPY.branches.map((branch) => {
+              const details = CONTACT_PAGE_COPY.centreDetails[branch.id as keyof typeof CONTACT_PAGE_COPY.centreDetails];
+              if (!details) throw new Error(`Missing contact details for ${branch.id}`);
+              return (
+                <BranchCard
+                  key={branch.id}
+                  branch={branch}
+                  classesText={details.classes}
+                  daycareText={"daycare" in details ? details.daycare : undefined}
+                  copy={{ ...CONTACT_PAGE_COPY.branchCard, localPages: CONTACT_PAGE_COPY.localPages }}
+                />
+              );
+            })}
           </div>
         </div>
       </section>
@@ -238,8 +268,8 @@ export default function Contact() {
           pageName="Contact Rainbow Preschool Thane"
           reviewedBy="Rainbow Preschool Curriculum Team"
           reviewerRole="Curriculum Team, Rainbow Preschool International"
-          lastUpdated={LAST_UPDATED_DISPLAY}
-          lastUpdatedIso={LAST_UPDATED_ISO}
+          lastUpdated={CONTACT_PAGE_COPY.publishDateDisplay}
+          lastUpdatedIso={CONTACT_PAGE_COPY.publishDate}
           showRating={false}
           schemaId="contact-eeat"
         />

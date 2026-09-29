@@ -6,25 +6,35 @@ import { branches } from "./schema";
  * canonical centre records in shared/schema.
  */
 export const CONTACT_PAGE_COPY = {
-  h1: "Contact Us",
-  intro: "Have questions about admissions or want to schedule a tour? We'd love to hear from you!",
+  title: "Contact Rainbow Preschool Thane | Phone & Centres",
+  description: "Call 82915 68972 or visit one of our 6 Rainbow Preschool International centres in Thane. Addresses, phone and WhatsApp numbers, head office and enquiry form.",
+  ogImage: "https://www.rainbowpreschools.com/images/og/contact-share-1200x630.jpg",
+  ogImageAlt: "Rainbow Preschool centre in Thane",
+  publishDate: "2026-09-29",
+  publishDateDisplay: "September 29, 2026",
+  h1: "Contact Rainbow Preschool in Thane",
+  intro: "Questions about admissions or want to visit a centre? Call us on 82915 68972, WhatsApp your nearest centre, or send the form below. Our admissions team replies within 24 hours.",
+  introSegments: [
+    { text: "Questions about admissions or want to visit a centre? Call us on " },
+    { text: "82915 68972", href: "tel:8291568972" },
+    { text: ", WhatsApp your nearest centre, or send the form below. Our admissions team replies within 24 hours." },
+  ],
   callbackHeading: "Request A Callback",
-  callbackDescription: "Fill out the form and we'll get back to you shortly.",
-  contactInformationHeading: "Contact Information",
+  callbackDescription: "Share a few details and our admissions team will call you within 24 hours.",
   phoneLabel: "Phone",
   generalPhone: "82915 68972",
+  phoneSecondary: "Admissions enquiries",
   emailLabel: "Email",
   email: "admin@rainbowpreschools.com",
   workingHoursLabel: "Working Hours",
-  workingDays: "Monday - Saturday",
-  workingHours: "9AM - 6PM",
+  workingDays: "Monday – Saturday",
+  workingHours: "9 AM – 6 PM",
   locationsLabel: "Locations",
-  locationCount: "6 Centres across Thane West",
-  nearestCentrePrompt: "Find your nearest centre below",
-  quote: "The secret of getting ahead is getting started.",
-  quoteAttribution: "— Mark Twain",
-  centresHeading: "Our Centres",
-  centresDescription: "Locate your nearest Rainbow Preschools Centre in Thane.",
+  locationCount: "6 centres across Thane",
+  nearestCentrePrompt: "Head office: 2nd Floor, Chestnut Plaza, Opp. Edenwoods, Khewra Circle Marg, Manpada, Thane (W) 400610",
+  quote: "Prefer to visit? Every centre welcomes parents for a free visit. Call ahead to book a time.",
+  centresHeading: "Our 6 Preschool Centres in Thane",
+  centresDescription: "Find your nearest Rainbow Preschool centre. Call, WhatsApp or get directions.",
   mapLabel: "Interactive map of Rainbow Preschool centres",
   mapLoading: "Loading the interactive centre map…",
   mapPlaceholder: "Map of 6 Rainbow Preschool centres across Thane. The interactive map loads as you approach; centre details are listed below.",
@@ -46,7 +56,7 @@ export const CONTACT_PAGE_COPY = {
   },
   exploreHeading: "Explore Rainbow Preschool",
   links: [
-    { href: "/play-school-near-me", label: "Award-Winning Preschool" },
+    { href: "/programmes", label: "Our Programmes" },
     { href: "/play-school-near-me", label: "Find Nearest Centre" },
     { href: "/preschool-admissions", label: "Admission Process" },
     { href: "/gallery", label: "Photo Gallery" },
@@ -56,6 +66,15 @@ export const CONTACT_PAGE_COPY = {
     localCentre: "Centre",
     whatsapp: "WhatsApp",
     directions: "Directions",
+    accessibleActions: true,
+  },
+  centreDetails: {
+    aggarwal: { classes: "Playgroup to Grade 4", daycare: "Happy Times daycare available" },
+    hariniwas: { classes: "Playgroup to Grade 3" },
+    "anand-nagar": { classes: "Playgroup to Grade 2", daycare: "Happy Times daycare available" },
+    dhokali: { classes: "Playgroup to Sr. KG", daycare: "Happy Times daycare available" },
+    kalwa: { classes: "Playgroup to Grade 4" },
+    kasarvadavali: { classes: "Playgroup to Grade 3" },
   },
   branches,
   localPages: {
@@ -94,4 +113,27 @@ export const CONTACT_PAGE_COPY = {
     errorToast: "Something went wrong",
     errorDescription: "Please try again or call us directly.",
   },
+} as const;
+
+const BASE_URL = "https://www.rainbowpreschools.com";
+
+export const CONTACT_PAGE_SCHEMA = {
+  "@context": "https://schema.org",
+  "@type": "ContactPage",
+  "@id": `${BASE_URL}/contact#webpage`,
+  url: `${BASE_URL}/contact`,
+  name: CONTACT_PAGE_COPY.h1,
+  description: CONTACT_PAGE_COPY.description,
+  dateModified: CONTACT_PAGE_COPY.publishDate,
+  about: { "@id": `${BASE_URL}/#organization` },
+  mainEntity: { "@id": `${BASE_URL}/#organization` },
+} as const;
+
+export const CONTACT_BREADCRUMB_SCHEMA = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: `${BASE_URL}/` },
+    { "@type": "ListItem", position: 2, name: "Contact", item: `${BASE_URL}/contact` },
+  ],
 } as const;

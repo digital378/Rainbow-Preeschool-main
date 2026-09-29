@@ -96,7 +96,7 @@ import {
   GALLERY_PAGE_COPY,
   GALLERY_GRID_IMAGE_SIZE,
 } from "../client/src/lib/gallery-config";
-import { CONTACT_PAGE_COPY } from "@shared/contact-page-copy";
+import { CONTACT_PAGE_COPY, CONTACT_PAGE_SCHEMA } from "@shared/contact-page-copy";
 import {
   BLOG_LIST_COPY,
   type BlogListEntry,
@@ -391,18 +391,23 @@ function nurseryPageSections(): NonNullable<PageSEOData["contentSections"]> {
 
 function contactPageSections(): NonNullable<PageSEOData["contentSections"]> {
   const copy = CONTACT_PAGE_COPY;
-  const branchCards = copy.branches.flatMap((branch) => {
+  const branchCards = copy.branches.map((branch) => {
     const localPage = copy.localPages[branch.id as keyof typeof copy.localPages];
-    return [
-      branch.name,
-      branch.address,
-      "landline" in branch ? branch.landline : undefined,
-      branch.calling,
-      "secondCalling" in branch ? branch.secondCalling : undefined,
-      ...(localPage ? [`View ${localPage.locality} ${copy.branchCard.localCentre}`] : []),
-      copy.branchCard.whatsapp,
-      copy.branchCard.directions,
-    ].filter((value): value is string => Boolean(value));
+    const details = copy.centreDetails[branch.id as keyof typeof copy.centreDetails];
+    return {
+      heading: branch.name,
+      text: branch.address,
+      items: [
+        `Classes: ${details.classes}`,
+        "daycare" in details ? details.daycare : undefined,
+        "landline" in branch ? branch.landline : undefined,
+        branch.calling,
+        "secondCalling" in branch ? branch.secondCalling : undefined,
+        copy.branchCard.whatsapp,
+        copy.branchCard.directions,
+      ].filter((value): value is string => Boolean(value)),
+      links: localPage ? [{ text: `View ${localPage.locality} ${copy.branchCard.localCentre}`, url: localPage.url }] : [],
+    };
   });
   const formCopy = [
     copy.form.parentName, copy.form.parentNamePlaceholder,
@@ -415,37 +420,25 @@ function contactPageSections(): NonNullable<PageSEOData["contentSections"]> {
     copy.form.message, copy.form.messagePlaceholder, copy.form.submit,
   ];
   return [
-    { heading: copy.callbackHeading, text: copy.callbackDescription },
+    { heading: copy.callbackHeading, text: copy.callbackDescription, items: formCopy },
     {
-      heading: copy.contactInformationHeading,
-      items: [
-        copy.phoneLabel, copy.generalPhone, copy.emailLabel, copy.email,
-        copy.workingHoursLabel, copy.workingDays, copy.workingHours,
-        copy.locationsLabel, copy.locationCount, copy.nearestCentrePrompt,
-        copy.quote, copy.quoteAttribution,
+      subsections: [
+        { heading: copy.phoneLabel, text: copy.generalPhone, items: [copy.phoneSecondary] },
+        { heading: copy.emailLabel, text: copy.email },
+        { heading: copy.workingHoursLabel, text: `${copy.workingDays} ${copy.workingHours}` },
+        { heading: copy.locationsLabel, text: copy.locationCount, items: [copy.nearestCentrePrompt] },
       ],
+      items: [copy.quote],
     },
     {
       heading: copy.centresHeading,
-      text: [
-        copy.centresDescription,
-        copy.mapPlaceholder,
-        copy.map.accessibleDescription,
-        copy.map.centreCount,
-        copy.map.openMapsHint,
-        copy.map.directionsPrompt,
-      ].join("\n"),
-      items: branchCards,
-      links: copy.branches.flatMap((branch) => {
-        const localPage = copy.localPages[branch.id as keyof typeof copy.localPages];
-        return localPage ? [{ text: `View ${localPage.locality} ${copy.branchCard.localCentre}`, url: localPage.url }] : [];
-      }),
+      text: `${copy.centresDescription}\n${copy.mapPlaceholder}`,
+      subsections: branchCards,
     },
     {
       heading: copy.exploreHeading,
       links: copy.links.map((link) => ({ text: link.label, url: link.href })),
     },
-    { heading: copy.form.submit, items: formCopy },
   ];
 }
 
@@ -554,6 +547,7 @@ export interface PageSEOData {
   noIndex?: boolean;
   h1?: string;
   introText?: string;
+  introSegments?: readonly { text: string; href?: string }[];
   heroBadge?: string;
   heroSubheading?: string;
   breadcrumbs?: { name: string; url: string }[];
@@ -1392,28 +1386,20 @@ const staticPages: Record<string, PageSEOData> = {
     internalLinks: commonInternalLinks,
   },
   "/contact": {
-    title: "Contact Rainbow Preschool Thane | Admissions Enquiry",
-    description: "Contact Rainbow Preschool International for admissions, school tours & enquiries. 6 centres in Thane West — call 82915 68972 or visit today.",
-    keywords: "contact rainbow preschool, preschool admission enquiry thane, preschool phone number thane",
+    title: CONTACT_PAGE_COPY.title,
+    description: CONTACT_PAGE_COPY.description,
+    ogImage: CONTACT_PAGE_COPY.ogImage,
+    ogImageAlt: CONTACT_PAGE_COPY.ogImageAlt,
     canonical: `${BASE_URL}/contact`,
-    lastModified: LAST_UPDATED_ISO,
-    lastModifiedDisplay: LAST_UPDATED_DISPLAY,
+    lastModified: CONTACT_PAGE_COPY.publishDate,
+    lastModifiedDisplay: CONTACT_PAGE_COPY.publishDateDisplay,
     h1: CONTACT_PAGE_COPY.h1,
     introText: CONTACT_PAGE_COPY.intro,
+    introSegments: CONTACT_PAGE_COPY.introSegments,
     breadcrumbs: [{ name: "Home", url: "/" }, { name: "Contact", url: "/contact" }],
-    structuredData: [
-      organizationSchema,
-      {
-        "@context": "https://schema.org",
-        "@type": "ContactPage",
-        "@id": `${BASE_URL}/contact`,
-        name: "Contact Rainbow Preschool International",
-        description: "Contact page for Rainbow Preschool International — admissions enquiries, campus visits, and general questions.",
-        url: `${BASE_URL}/contact`,
-        isPartOf: { "@id": `${BASE_URL}/#website` },
-        about: { "@id": `${BASE_URL}/#organization` },
-      },
-    ],
+    structuredData: [CONTACT_PAGE_SCHEMA],
+    suppressArticleSchema: true,
+    reviewerAfterContent: true,
     contentSections: contactPageSections(),
     internalLinks: commonInternalLinks,
   },
