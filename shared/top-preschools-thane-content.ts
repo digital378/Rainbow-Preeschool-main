@@ -1,4 +1,4 @@
-import { preschoolLandingPages } from "./centre-data";
+import { centres } from "./centre-data";
 
 const BASE_URL = "https://www.rainbowpreschools.com";
 const PAGE_URL = `${BASE_URL}/top-preschools-in-thane`;
@@ -12,21 +12,26 @@ export interface PreschoolEntry {
   isRainbow?: boolean;
 }
 
+export const TOP_PRESCHOOLS_CENTRE_LINKS = centres.map((centre) => ({
+  label: centre.id === "manpada" ? "Aggarwal (Manpada)" : centre.name.replace(" Centre", ""),
+  href: centre.googleMapsDirectionsUrl,
+}));
+
 export const TOP_PRESCHOOLS_COPY = {
   metaTitle: "Top Preschools in Thane (2026-27): Ages, Areas & Google Ratings | Rainbow",
-  metaDescription: "Compare preschools in Thane side by side: age groups, areas covered and Google ratings. Published by Rainbow Preschools, with 6 centres in Thane since 2007.",
+  metaDescription: "Compare preschools in Thane side by side: age groups, areas covered and Google ratings. Published by Rainbow Preschool International, with 6 centres in Thane since 2007.",
   h1: "Top Preschools in Thane: Ages, Areas and Google Ratings",
-  introduction: "Choosing a preschool in Thane usually comes down to three things: the right age group, a centre close to home, and what other parents say. This page puts those facts side by side for well-known preschools in Thane. We are Rainbow Preschools, so we've listed ourselves first. The other schools are listed in alphabetical order. Ratings are as shown on Google on 29 September 2026, and they change often, so please check Google Maps for the latest and visit any school before you decide.",
+  introduction: "Choosing a preschool in Thane usually comes down to three things: the right age group, a centre close to home, and what other parents say. This page puts those facts side by side for well-known preschools in Thane.",
   badge: "Updated for 2026-27",
   comparisonTitle: "About This Comparison",
-  comparisonDescription: "Published by Rainbow Preschools. This list shows ages, areas and Google ratings for comparison.",
+  comparisonDescription: "Published by Rainbow Preschool International, so we've listed ourselves first. The other schools are in alphabetical order. Ratings are as shown on Google on 29 September 2026 and change often, so please check each school's Google profile for the latest and visit before you decide.",
   dateIso: "2026-09-29",
   dateDisplay: "29 September 2026",
   ogImage: `${BASE_URL}/images/og/top-preschools-thane-1200x630.jpg`,
-  ogImageAlt: "Rainbow Preschool centres in Thane",
+  ogImageAlt: "Rainbow Preschool International centres in Thane",
   rainbowFacts: [
     "Ages: 1.5 to 5.5 years (Playgroup, Nursery, Jr. KG, Sr. KG)",
-    `Centres: 6 centres in Thane — ${preschoolLandingPages.map((centre) => centre.name).join(", ")}`,
+    `Centres: 6 centres in Thane — ${TOP_PRESCHOOLS_CENTRE_LINKS.map((centre) => centre.label).join(", ")}`,
     "Running since 2007",
     "Teachers: 100% female, ECCE-trained teaching staff",
     "Class ratio: 30:2 (two teachers per class of 30)",
@@ -41,7 +46,11 @@ export const TOP_PRESCHOOLS_COPY = {
     { label: "Admissions 2026-27", href: "/preschool-admissions" },
     { label: "Contact us", href: "/contact" },
   ],
-  competitorNote: "See Google Maps for this school's current reviews, timings and contact details.",
+  admissionsLinks: [
+    { label: "Call Admissions: 82915 68972", href: "tel:+918291568972", event: "top_preschools_call" },
+    { label: "WhatsApp Admissions", href: "https://wa.me/918291568972?text=Hi%2C%20I%27d%20like%20to%20enquire%20about%20admissions%20at%20Rainbow%20Preschool%20International.", event: "top_preschools_whatsapp" },
+  ],
+  competitorNote: "See this school's Google profile for current reviews, timings and contact details.",
   chooseTitle: "How to Choose the Right Preschool for Your Child",
   mustHaveTitle: "Must-Have Criteria",
   niceToHaveTitle: "Nice-to-Have Features",
@@ -59,11 +68,11 @@ export const TOP_PRESCHOOLS_COPY = {
     "Transport facility",
     "Parent communication app",
   ],
-  exploreTitle: "Explore Rainbow Preschool",
+  exploreTitle: "Explore Rainbow Preschool International",
   exploreLinks: [
     { label: "Preschool Admissions", href: "/preschool-admissions" },
     { label: "Find Preschool Near You", href: "/play-school-near-me" },
-    { label: "Rainbow Preschools, Thane", href: "/play-school-near-me" },
+    { label: "Rainbow Preschool International, Thane", href: "/play-school-near-me" },
     { label: "Play School Near Me", href: "/play-school-near-me" },
     { label: "Playgroup Programme", href: "/playgroup" },
     { label: "Nursery Programme", href: "/nursery" },
@@ -71,13 +80,13 @@ export const TOP_PRESCHOOLS_COPY = {
     { label: "Preschools in Thane", href: "/top-preschools-in-thane" },
     { label: "Readiness Quiz", href: "/preschool-readiness-quiz" },
   ],
-  exploreFooter: "Rainbow Preschools in Thane since 2007",
+  exploreFooter: "Rainbow Preschool International in Thane since 2007",
   cta: {
     title: "Ready to begin your child's learning journey?",
-    description: "Visit a Rainbow Preschool centre in Thane or ask our team about the right programme for your child.",
+    description: "Visit a Rainbow Preschool International centre in Thane or ask our team about the right programme for your child.",
     links: [
       { label: "Request a Callback", href: "/contact" },
-      { label: "WhatsApp", href: "https://wa.me/918291568972?text=Hi%2C%20I%20would%20like%20to%20know%20more%20about%20Rainbow%20Preschool" },
+      { label: "WhatsApp", href: "https://wa.me/918291568972?text=Hi%2C%20I%20would%20like%20to%20know%20more%20about%20Rainbow%20Preschool%20International" },
       { label: "Call Now", href: "tel:+918291568972" },
     ],
   },
@@ -85,10 +94,10 @@ export const TOP_PRESCHOOLS_COPY = {
 
 export const TOP_PRESCHOOLS: readonly PreschoolEntry[] = [
   {
-    name: "Rainbow Preschools",
+    name: "Rainbow Preschool International",
     rating: 4.9,
     reviews: 487,
-    locations: preschoolLandingPages.map((centre) => centre.name),
+    locations: TOP_PRESCHOOLS_CENTRE_LINKS.map((centre) => centre.label),
     ageRange: "1.5 to 5.5 years",
     isRainbow: true,
   },
@@ -102,6 +111,15 @@ export const TOP_PRESCHOOLS: readonly PreschoolEntry[] = [
   { name: "Podar Jumbo Kids", rating: 4.9, reviews: 988, locations: ["Dombivli"], ageRange: "1.5 – 5 years" },
   { name: "Tree House", rating: 3.7, reviews: 70, locations: ["Brahmand (Ghodbunder Road)", "Chitalsar Manpada"], ageRange: "1.5 – 6 years" },
 ];
+
+// Search links, not claimed exact business-profile URLs. Replace these entries
+// when individual competitor profile links are available.
+export const TOP_PRESCHOOLS_COMPETITOR_LINKS = TOP_PRESCHOOLS.filter((school) => !school.isRainbow)
+  .flatMap((school) => school.locations.map((area) => ({
+    schoolName: school.name,
+    label: `${school.name} ${area.replace(/\s*\([^)]*\)/g, "").trim()} on Google Maps`,
+    href: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${school.name} ${area} Thane`)}`,
+  })));
 
 export const TOP_PRESCHOOLS_WEBPAGE_SCHEMA = {
   "@context": "https://schema.org",

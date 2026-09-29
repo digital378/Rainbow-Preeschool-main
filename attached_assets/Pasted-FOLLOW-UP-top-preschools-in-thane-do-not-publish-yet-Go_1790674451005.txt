@@ -1,0 +1,75 @@
+FOLLOW-UP: /top-preschools-in-thane (do not publish yet)
+
+Good work. Four more changes are needed. Same rules as before: keep the design freeze, don't take screenshots, don't invent facts, and send a text report only.
+
+────────────────────────────────
+1. FIX THE OVERLAP AT THE TOP
+────────────────────────────────
+On desktop, the last two lines of the intro paragraph run underneath the yellow "About This Comparison" box.
+- Find the cause and fix it. It's probably a fixed height on the hero, a negative margin/translate on the box, or absolute positioning. Remove that so the box always sits below the intro with the same gap used elsewhere on the page. Don't change colours, fonts or the box's style.
+- The intro and the box say the same thing twice, so shorten both:
+  - Intro: "Choosing a preschool in Thane usually comes down to three things: the right age group, a centre close to home, and what other parents say. This page puts those facts side by side for well-known preschools in Thane."
+  - About This Comparison box: "Published by Rainbow Preschool International, so we've listed ourselves first. The other schools are in alphabetical order. Ratings are as shown on Google on 29 September 2026 and change often, so please check each school's Google profile for the latest and visit before you decide."
+- Check the layout at 360px, 390px, 768px, 1024px and 1440px widths. Nothing may overlap at any of them. Check by reading the layout/DOM; don't take screenshots.
+Benefit: overlapping text hurts readability and can count as a layout-shift/usability problem. It also looks careless on a page parents use to compare schools.
+
+────────────────────────────────
+2. BRAND NAME
+────────────────────────────────
+Our official name is "Rainbow Preschool International". On this page, replace every "Rainbow Preschools" / "Rainbow Preschool" with "Rainbow Preschool International". This covers the accordion item title, the intro, the About box, the meta description, og:description, the share-image alt text and the structured data names.
+- Meta description: "Compare preschools in Thane side by side: age groups, areas covered and Google ratings. Published by Rainbow Preschool International, with 6 centres in Thane since 2007."
+- The title stays as it is ("… | Rainbow"). A longer name would get cut off in Google.
+- Do NOT change other pages. List any other pages or components that still say "Rainbow Preschools" in your report so we can fix them separately.
+Benefit: using one consistent name everywhere helps Google tie the website, the 6 Google Business Profiles and the reviews to the same brand.
+
+────────────────────────────────
+3. RAINBOW ITEM: CALL, WHATSAPP AND 6 GOOGLE PROFILES
+────────────────────────────────
+(This is an approved design addition. Reuse the existing red pill button style already in this item, like "Our Programmes", and the green WhatsApp button style from the header. Don't create new styles.)
+
+a) Admissions contact row, for Rainbow only. Place it at the top of the button area:
+   - "Call Admissions: 82915 68972" → tel:+918291568972
+   - "WhatsApp Admissions" → https://wa.me/918291568972?text=Hi%2C%20I%27d%20like%20to%20enquire%20about%20admissions%20at%20Rainbow%20Preschool%20International.
+   - Push dataLayer events top_preschools_call and top_preschools_whatsapp, the same pattern as the header buttons.
+
+b) "Our centres on Google". Add one button per centre that opens that centre's Google Business Profile. Use googleMapsDirectionsUrl from shared/centre-data.ts; don't type the links by hand:
+   - Aggarwal (Manpada)
+   - Hariniwas
+   - Anand Nagar
+   - Dhokali
+   - Kalwa
+   - Kasarvadavali
+   Links open in a new tab with rel="noopener".
+   Also update the centres line in this item to: "Centres: 6 centres in Thane — Aggarwal (Manpada), Hariniwas, Anand Nagar, Dhokali, Kalwa, Kasarvadavali".
+
+c) Keep the existing four buttons (Our Programmes, Find a centre near you, Admissions 2026-27, Contact us) below these.
+
+Benefit: parents can call, WhatsApp or check a centre's reviews straight from the comparison, where they are ready to decide. Linking our own profiles also strengthens the website ↔ Google Business Profile connection for local search.
+
+────────────────────────────────
+4. COMPETITOR ITEMS: LINK TO THEIR THANE GOOGLE PROFILES
+────────────────────────────────
+- For every area listed in a competitor's item, add one button: "[Brand] [Area] on Google Maps".
+- Use a Google Maps search link: https://www.google.com/maps/search/?api=1&query=[Brand]+[Area]+Thane (URL-encoded).
+  Example: EuroKids gets 4 buttons (Kavesar, Anand Nagar, Owale, Manpada).
+- Use a plain outline button style that already exists on the site, not the red style. That keeps Rainbow's buttons visually primary.
+- Links open in a new tab with rel="nofollow noopener noreferrer".
+- NO phone or WhatsApp buttons for other schools.
+- Replace their line "See Google Maps for this school's current reviews, timings and contact details." with: "See this school's Google profile for current reviews, timings and contact details."
+- Put all competitor links in one list in the shared content file, so exact profile links can be swapped in later without touching the component.
+Benefit: parents can check each school themselves, which makes the page more useful and fair. nofollow means we don't pass ranking strength to competitors.
+
+────────────────────────────────
+CHECKS
+────────────────────────────────
+- All new buttons and links must appear in both the Googlebot (SSR) HTML and the visitor page, including inside closed accordion items.
+- Structured data is unchanged apart from the name (WebPage + BreadcrumbList only).
+- The LCP/H1 method is unchanged. Re-run mobile Lighthouse.
+
+REPORT BACK (text only)
+1. What caused the overlap and how you fixed it
+2. The final intro and About box text
+3. The list of Rainbow buttons with their links, and one competitor item's buttons with their links
+4. The other pages/components that still say "Rainbow Preschools"
+5. Lighthouse mobile scores
+Do not publish until I approve.

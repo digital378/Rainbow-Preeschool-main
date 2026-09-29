@@ -6,9 +6,12 @@ import { SEO } from "@/components/seo";
 import { CTASection } from "@/components/cta-section";
 import { BlogInternalLinks } from "@/components/blog-internal-links";
 import { EEATSignals } from "@/components/eeat-signals";
+import { pushToDataLayer } from "@/lib/analytics";
 import {
   TOP_PRESCHOOLS,
   TOP_PRESCHOOLS_COPY,
+  TOP_PRESCHOOLS_CENTRE_LINKS,
+  TOP_PRESCHOOLS_COMPETITOR_LINKS,
   TOP_PRESCHOOLS_WEBPAGE_SCHEMA,
   TOP_PRESCHOOLS_BREADCRUMB_SCHEMA,
 } from "@shared/top-preschools-thane-content";
@@ -42,26 +45,16 @@ export default function TopPreschoolsThane() {
         structuredData={hasFirstPaintHeading.current ? undefined : [TOP_PRESCHOOLS_WEBPAGE_SCHEMA, TOP_PRESCHOOLS_BREADCRUMB_SCHEMA]}
       />
 
-      <section className="max-w-5xl mx-auto px-4 py-12 sm:py-16">
-        <div className="text-center mb-12">
-          {hasFirstPaintHeading.current ? (
-            <div aria-hidden="true" style={{ visibility: "hidden" }}>
-              <span className="inline-block px-4 py-1.5 bg-red-50 text-red-600 text-sm font-semibold rounded-full mb-4">
-                {TOP_PRESCHOOLS_COPY.badge}
-              </span>
-              <div className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">{TOP_PRESCHOOLS_COPY.h1}</div>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">{TOP_PRESCHOOLS_COPY.introduction}</p>
-            </div>
-          ) : (
-            <>
-              <span className="inline-block px-4 py-1.5 bg-red-50 text-red-600 text-sm font-semibold rounded-full mb-4" data-testid="comparison-badge">
-                {TOP_PRESCHOOLS_COPY.badge}
-              </span>
-              <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">{TOP_PRESCHOOLS_COPY.h1}</h1>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">{TOP_PRESCHOOLS_COPY.introduction}</p>
-            </>
-          )}
-        </div>
+      <section className={`max-w-5xl mx-auto px-4 pb-12 sm:pb-16 ${hasFirstPaintHeading.current ? "pt-0" : "pt-12 sm:pt-16"}`}>
+        {!hasFirstPaintHeading.current && (
+          <div className="text-center mb-12">
+            <span className="inline-block px-4 py-1.5 bg-red-50 text-red-600 text-sm font-semibold rounded-full mb-4" data-testid="comparison-badge">
+              {TOP_PRESCHOOLS_COPY.badge}
+            </span>
+            <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">{TOP_PRESCHOOLS_COPY.h1}</h1>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">{TOP_PRESCHOOLS_COPY.introduction}</p>
+          </div>
+        )}
 
         <div className="bg-amber-50 border border-amber-200 rounded-xl p-5 mb-10">
           <h2 className="text-sm font-semibold text-amber-800 mb-2 flex items-center gap-2">
@@ -99,6 +92,32 @@ export default function TopPreschoolsThane() {
                       ))}
                     </ul>
                     <div className="flex flex-wrap gap-3 mt-5">
+                      {TOP_PRESCHOOLS_COPY.admissionsLinks.map((link) => (
+                        <a
+                          key={link.event}
+                          href={link.href}
+                          target={link.event === "top_preschools_whatsapp" ? "_blank" : undefined}
+                          rel={link.event === "top_preschools_whatsapp" ? "noopener noreferrer" : undefined}
+                          onClick={() => pushToDataLayer({ event: link.event, phone: "8291568972" })}
+                          className={link.event === "top_preschools_whatsapp"
+                            ? "inline-flex items-center gap-1.5 rounded-full bg-green-500 hover:bg-green-600 text-white font-semibold text-sm px-4 py-2 shadow-md transition-colors"
+                            : "inline-flex items-center px-4 py-2 rounded-md bg-red-600 text-white text-sm font-semibold hover:bg-red-700"}
+                        >
+                          {link.label}
+                        </a>
+                      ))}
+                    </div>
+                    <div className="mt-5">
+                      <p className="text-sm font-semibold text-gray-900 mb-3">Our centres on Google</p>
+                      <div className="flex flex-wrap gap-3">
+                        {TOP_PRESCHOOLS_CENTRE_LINKS.map((centre) => (
+                          <a key={centre.href} href={centre.href} target="_blank" rel="noopener" className="inline-flex items-center px-4 py-2 rounded-md bg-red-600 text-white text-sm font-semibold hover:bg-red-700">
+                            {centre.label} on Google Maps
+                          </a>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="flex flex-wrap gap-3 mt-5">
                       {TOP_PRESCHOOLS_COPY.rainbowLinks.map((link) => (
                         <Link key={link.href} href={link.href} className="inline-flex items-center px-4 py-2 rounded-md bg-red-600 text-white text-sm font-semibold hover:bg-red-700">
                           {link.label}
@@ -111,6 +130,13 @@ export default function TopPreschoolsThane() {
                     <p>Areas: {school.locations.join(", ")}</p>
                     <p>Ages: {school.ageRange}</p>
                     <p>{TOP_PRESCHOOLS_COPY.competitorNote}</p>
+                    <div className="flex flex-wrap gap-3 pt-2">
+                      {TOP_PRESCHOOLS_COMPETITOR_LINKS.filter((link) => link.schoolName === school.name).map((link) => (
+                        <a key={link.href} href={link.href} target="_blank" rel="nofollow noopener noreferrer" className="inline-flex items-center px-4 py-2 rounded-md border border-gray-200 bg-white text-gray-700 font-medium hover:border-gray-400">
+                          {link.label}
+                        </a>
+                      ))}
+                    </div>
                   </div>
                 )}
               </AccordionContent>
@@ -152,7 +178,7 @@ export default function TopPreschoolsThane() {
         <EEATSignals
           pageUrl="/top-preschools-in-thane"
           pageName={TOP_PRESCHOOLS_COPY.h1}
-          reviewedBy="Rainbow Preschool Curriculum Team"
+          reviewedBy="Rainbow Preschool International Curriculum Team"
           reviewerRole="Curriculum Team, Rainbow Preschool International"
           lastUpdated={TOP_PRESCHOOLS_COPY.dateDisplay}
           lastUpdatedIso={TOP_PRESCHOOLS_COPY.dateIso}
@@ -161,7 +187,7 @@ export default function TopPreschoolsThane() {
         />
       </section>
 
-      <CTASection title={TOP_PRESCHOOLS_COPY.cta.title} description={TOP_PRESCHOOLS_COPY.cta.description} />
+      <CTASection title={TOP_PRESCHOOLS_COPY.cta.title} description={TOP_PRESCHOOLS_COPY.cta.description} whatsappHref={TOP_PRESCHOOLS_COPY.cta.links[1].href} />
     </article>
   );
 }

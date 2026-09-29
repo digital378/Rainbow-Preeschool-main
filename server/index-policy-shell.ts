@@ -142,12 +142,12 @@ export function injectIndexPolicyShell(path: string, html: string): string {
   }
   if (path === "/top-preschools-in-thane") {
     result = result.replace("</head>", `<style>
-      #top-preschools-initial{position:absolute;inset:0 0 auto;z-index:2;pointer-events:none;padding-top:5rem;font-family:Inter,system-ui,sans-serif}
+      #top-preschools-initial{position:relative;padding-top:5rem;font-family:Inter,system-ui,sans-serif}
       #top-preschools-initial section{max-width:64rem;margin:auto;padding:3rem 1rem;text-align:center}
       #top-preschools-initial .comparison-badge{display:inline-block;padding:.375rem 1rem;background:#fef2f2;color:#dc2626;font-size:.875rem;font-weight:600;border-radius:9999px;margin-bottom:1rem}
       #top-preschools-initial h1{font-family:Poppins,Inter,sans-serif;font-size:1.875rem;line-height:2.25rem;font-weight:700;color:#111827;margin:0 0 1rem}
       #top-preschools-initial p{font-size:1.125rem;line-height:1.75rem;color:#6b7280;max-width:42rem;margin:0 auto}
-      @media(min-width:640px){#top-preschools-initial section{padding:4rem 1rem}#top-preschools-initial h1{font-size:2.25rem;line-height:2.5rem}}
+      @media(min-width:640px){#top-preschools-initial section{padding:4rem 1rem 3rem}#top-preschools-initial h1{font-size:2.25rem;line-height:2.5rem}}
     </style></head>`);
     result = result.replace('<div id="root"></div>', `<div id="top-preschools-initial"><section><span class="comparison-badge">${escape(TOP_PRESCHOOLS_COPY.badge)}</span><h1 id="top-preschools-initial-h1">${escape(TOP_PRESCHOOLS_COPY.h1)}</h1><p>${escape(TOP_PRESCHOOLS_COPY.introduction)}</p></section></div><div id="root"></div>`);
   }

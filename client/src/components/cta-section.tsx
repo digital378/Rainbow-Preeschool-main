@@ -7,11 +7,13 @@ import { trackCTAClick } from "@/lib/analytics";
 interface CTASectionProps {
   title?: string;
   description?: string;
+  whatsappHref?: string;
 }
 
 export function CTASection({
   title = "Ready to begin your child's learning journey?",
   description = "Join 1,00,000+ young learners who began their early learning journey with Rainbow Preschool. Schedule a free campus visit today.",
+  whatsappHref = "https://wa.me/918291568972?text=Hi%2C%20I%20would%20like%20to%20know%20more%20about%20Rainbow%20Preschool",
 }: CTASectionProps) {
   return (
     <section className="relative overflow-hidden bg-gradient-to-r from-primary via-accent to-secondary">
@@ -38,7 +40,7 @@ export function CTASection({
           </Link>
           <div className="flex items-center gap-3">
             <a
-              href="https://wa.me/918291568972?text=Hi%2C%20I%20would%20like%20to%20know%20more%20about%20Rainbow%20Preschool"
+              href={whatsappHref}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 bg-white/15 hover:bg-white/25 backdrop-blur-sm text-white font-medium text-sm px-5 h-12 rounded-full transition-colors"

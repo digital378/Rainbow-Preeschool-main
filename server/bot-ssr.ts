@@ -10,6 +10,7 @@ import { redirectMap } from "./redirects";
 import { BLOG_LIST_COPY, blogPostToListEntry, legacyBlogListEntries } from "@shared/blog-list-copy";
 import { getBlogFeaturedImage, LEGACY_BLOG_FEATURED_IMAGE_URLS, LEGACY_BLOG_LOCAL_POST_SLUGS } from "@shared/blog-featured-image-data";
 import { getBlogMetadata } from "@shared/blog-metadata";
+import { TOP_PRESCHOOLS_COPY, TOP_PRESCHOOLS_CENTRE_LINKS, TOP_PRESCHOOLS_COMPETITOR_LINKS } from "@shared/top-preschools-thane-content";
 
 // Inclusion rule: only add UA strings that appear EXCLUSIVELY in automated
 // crawlers / bots and NEVER in any human-operated browser or in-app browser.
@@ -234,12 +235,19 @@ const allowedHomepageExternalLinks = new Set([
   "tel:+918291568972",
 ]);
 
+const allowedTopPreschoolsExternalLinks = new Set([
+  TOP_PRESCHOOLS_COPY.admissionsLinks[1].href,
+  TOP_PRESCHOOLS_COPY.cta.links[1].href,
+  ...TOP_PRESCHOOLS_CENTRE_LINKS.map((link) => link.href),
+  ...TOP_PRESCHOOLS_COMPETITOR_LINKS.map((link) => link.href),
+]);
+
 function resolvePageLink(url: string): { href: string; external: boolean } | null {
   const hrefPath = finalInternalPath(url);
   if (hrefPath) {
     return { href: `${BASE_URL}${hrefPath}`, external: false };
   }
-  return allowedHomepageExternalLinks.has(url)
+  return (allowedHomepageExternalLinks.has(url) || allowedTopPreschoolsExternalLinks.has(url))
     ? { href: url, external: !url.startsWith("tel:") }
     : null;
 }
@@ -376,7 +384,13 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
           if (subsection.links) {
             subsection.links.forEach(link => {
               const safeLink = resolvePageLink(link.url);
-              if (safeLink) html += `<a href="${escapeHtml(safeLink.href)}">${escapeHtml(link.text)}</a>\n`;
+              if (safeLink) {
+                const target = link.newTab && safeLink.external ? ' target="_blank"' : "";
+                const rel = safeLink.external
+                  ? ` rel="${link.nofollow ? "nofollow " : ""}noopener${link.nofollow || !link.newTab ? " noreferrer" : ""}"`
+                  : "";
+                html += `<a href="${escapeHtml(safeLink.href)}"${target}${rel}>${escapeHtml(link.text)}</a>\n`;
+              }
             });
           }
         });

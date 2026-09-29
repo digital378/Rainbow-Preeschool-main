@@ -59,7 +59,7 @@ import {
   NATIONAL_SYMBOL_MATCH_PAIRS,
   NATIONAL_SYMBOLS_SSR_COPY,
 } from "@shared/national-symbols-page-content";
-import { TOP_PRESCHOOLS, TOP_PRESCHOOLS_COPY, TOP_PRESCHOOLS_WEBPAGE_SCHEMA } from "@shared/top-preschools-thane-content";
+import { TOP_PRESCHOOLS, TOP_PRESCHOOLS_COPY, TOP_PRESCHOOLS_CENTRE_LINKS, TOP_PRESCHOOLS_COMPETITOR_LINKS, TOP_PRESCHOOLS_WEBPAGE_SCHEMA } from "@shared/top-preschools-thane-content";
 import { cleanReelCaption } from "@shared/clean-reel-caption";
 import { LOCAL_REEL_POSTERS } from "../client/src/components/rainbow-theatre/local-reel-posters";
 import {
@@ -561,7 +561,7 @@ export interface PageSEOData {
     richParagraphs?: readonly (readonly { text: string; href?: string }[])[];
     faqAsHeadings?: boolean;
     faqOutro?: { text: string; linkText: string; url: string };
-    subsections?: readonly { heading?: string; image?: { src: string; alt: string; width?: number; height?: number }; text?: string; items?: readonly string[]; links?: readonly { text: string; url: string }[] }[];
+    subsections?: readonly { heading?: string; image?: { src: string; alt: string; width?: number; height?: number }; text?: string; items?: readonly string[]; links?: readonly { text: string; url: string; newTab?: boolean; nofollow?: boolean }[] }[];
     beforeSubsectionsItems?: readonly string[];
     afterSubsectionsRichParagraphs?: readonly (readonly { text: string; href?: string }[])[];
     items?: readonly string[];
@@ -1754,7 +1754,14 @@ const staticPages: Record<string, PageSEOData> = {
           items: school.isRainbow
             ? TOP_PRESCHOOLS_COPY.rainbowFacts
             : [`Areas: ${school.locations.join(", ")}`, `Ages: ${school.ageRange}`, TOP_PRESCHOOLS_COPY.competitorNote],
-          links: school.isRainbow ? TOP_PRESCHOOLS_COPY.rainbowLinks.map((link) => ({ text: link.label, url: link.href })) : [],
+          links: school.isRainbow
+            ? [
+                ...TOP_PRESCHOOLS_COPY.admissionsLinks.map((link) => ({ text: link.label, url: link.href, newTab: link.event === "top_preschools_whatsapp" })),
+                ...TOP_PRESCHOOLS_CENTRE_LINKS.map((link) => ({ text: `${link.label} on Google Maps`, url: link.href, newTab: true })),
+                ...TOP_PRESCHOOLS_COPY.rainbowLinks.map((link) => ({ text: link.label, url: link.href })),
+              ]
+            : TOP_PRESCHOOLS_COMPETITOR_LINKS.filter((link) => link.schoolName === school.name)
+                .map((link) => ({ text: link.label, url: link.href, newTab: true, nofollow: true })),
         })),
       },
       {
