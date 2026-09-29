@@ -8,7 +8,7 @@ import { SEO } from "@/components/seo";
 import { EEATSignals } from "@/components/eeat-signals";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { createBreadcrumbSchema } from "@/components/seo";
-import { PROGRAMMES_COPY, PROGRAMMES_FAQS, PROGRAMMES_WEBPAGE_SCHEMA, PROGRAMMES_ITEMLIST_SCHEMA } from "@shared/programmes-page-content";
+import { PROGRAMMES_COPY, PROGRAMMES_FAQS, PROGRAMMES_GUIDANCE, PROGRAMMES_WEBPAGE_SCHEMA, PROGRAMMES_ITEMLIST_SCHEMA } from "@shared/programmes-page-content";
 import { Baby, BookOpen, GraduationCap, Heart, CheckCircle, ArrowRight, Award, MapPin, ClipboardList, Images } from "lucide-react";
 
 import { Link } from "wouter";
@@ -192,6 +192,9 @@ export default function Programmes() {
               </div>
             );
           })}
+          <div className="max-w-4xl mx-auto space-y-4 text-muted-foreground leading-relaxed">
+            {PROGRAMMES_GUIDANCE.map(paragraph => <p key={paragraph}>{paragraph}</p>)}
+          </div>
         </div>
       </section>
 

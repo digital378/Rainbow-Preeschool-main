@@ -46,7 +46,7 @@ import { PLAYGROUP_FAQS } from "@shared/playgroup-faq-data";
 import { PLAYGROUP_COPY, PLAYGROUP_WEBPAGE_SCHEMA } from "@shared/playgroup-page-content";
 import { NURSERY_COPY, NURSERY_VISITOR_COPY, NURSERY_DAILY_ROUTINE, NURSERY_WEBPAGE_SCHEMA } from "@shared/nursery-page-content";
 import { KINDERGARTEN_COPY, KINDERGARTEN_WEBPAGE_SCHEMA } from "@shared/kindergarten-page-content";
-import { PROGRAMMES_COPY, PROGRAMMES_FAQS, PROGRAMMES_WEBPAGE_SCHEMA, PROGRAMMES_ITEMLIST_SCHEMA } from "@shared/programmes-page-content";
+import { PROGRAMMES_COPY, PROGRAMMES_FAQS, PROGRAMMES_GUIDANCE, PROGRAMMES_WEBPAGE_SCHEMA, PROGRAMMES_ITEMLIST_SCHEMA } from "@shared/programmes-page-content";
 import { NURSERY_FAQS } from "@shared/nursery-faq-data";
 import { BLOG_METADATA } from "@shared/blog-metadata";
 import { testimonials, testimonialsSEO } from "@shared/testimonials-content";
@@ -1156,6 +1156,7 @@ const staticPages: Record<string, PageSEOData> = {
           PROGRAMMES_VISITOR_COPY.sections[0].items?.[3] ?? "",
         ].filter(Boolean),
       })),
+      { paragraphs: [...PROGRAMMES_GUIDANCE] },
       ...visitorCopySections([{
         ...PROGRAMMES_VISITOR_COPY.sections[0],
         items: [],

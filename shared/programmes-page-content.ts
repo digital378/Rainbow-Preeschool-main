@@ -36,6 +36,14 @@ export const PROGRAMMES_ITEMLIST_SCHEMA = {
   ],
 } as const;
 
+/** Additional comparison guidance shown in the existing programme list on both versions. */
+export const PROGRAMMES_GUIDANCE = [
+  "Start with your child's age on 1 June of the academic year. Playgroup is for children aged 1.5–2.5 and introduces a gentle routine through play, music, colours and new friends. Nursery is for ages 2.5–3.5. It builds on playgroup with phonics, numbers, stories, creative play and early pre-writing. These are different stages of the same preschool journey, not interchangeable age labels. If your child is between two classes, our team can guide you through the choice when you enquire or visit a centre.",
+  "Kindergarten includes Jr. KG for ages 3.5–4.5 and Sr. KG for ages 4.5–5.5: the two years before Grade 1. Children work on reading, writing, maths, EVS and general knowledge as they grow towards school readiness. Like Playgroup and Nursery, both KG stages have a morning batch from 8:30 to 11:30 AM and an afternoon batch from 12:30 to 3:30 PM, Monday to Friday. Compare the age bands first, then look at what your child will learn during each stage.",
+  "Across the preschool programmes, learning is play-based and aligned with NEP 2020. Our teaching staff are 100% female and ECCE-trained, and the student–teacher ratio is 30:2. Classrooms are CCTV-monitored. Rainbow Preschool International has six centres in Thane, so the programme you choose is also a chance to find a centre near your family. The activities and key features listed above show what each age group experiences; the same morning and afternoon batch times apply to Playgroup, Nursery and KG.",
+  "Happy Times is daycare rather than a preschool class. It serves children aged 2–8 and runs from 8:30 AM to 7:30 PM for working parents, with one nutritious meal and engaging, supervised activities. It is offered at Aggarwal (Manpada), Anand Nagar and Dhokali, not at all six centres. Supervised play, storytime and art and craft are among the activities shown above. If you need both an age-appropriate preschool class and daycare, check the relevant programme details and the Happy Times page before sending an enquiry or arranging a centre visit.",
+] as const;
+
 export const PROGRAMMES_FAQS = [
   {
     question: "Which class should my child join based on age?",
