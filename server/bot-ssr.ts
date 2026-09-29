@@ -470,10 +470,10 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
       const rel = safeLink.external ? ` rel="noopener noreferrer"` : "";
       return `<li><a href="${escapeHtml(safeLink.href)}"${rel}>${escapeHtml(link.text)}</a></li>`;
     }).join("")}</ul></section>`
-    : requestUrl === "/contact" ? "" : `<a href="${BASE_URL}/contact" class="cta">Enquire Now — Call 82915 68972</a>`;
+    : requestUrl === "/contact" || requestUrl === "/top-preschools-in-thane" ? "" : `<a href="${BASE_URL}/contact" class="cta">Enquire Now — Call 82915 68972</a>`;
 
   return `<!DOCTYPE html>
-  <html lang="${requestUrl === "/nursery" || requestUrl === "/kindergarten" || requestUrl === "/programmes" || requestUrl === "/contact" ? "en-IN" : "en"}">
+  <html lang="${requestUrl === "/nursery" || requestUrl === "/kindergarten" || requestUrl === "/programmes" || requestUrl === "/contact" || requestUrl === "/top-preschools-in-thane" ? "en-IN" : "en"}">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5" />
@@ -490,7 +490,7 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
     <meta property="og:description" content="${escapeHtml(seo.description)}" />
     <meta property="og:image" content="${ogImage}" />
      <meta property="og:image:alt" content="${escapeHtml(seo.ogImageAlt || "Three preschoolers in red uniforms playing on a bright yellow background with colorful toy blocks")}" />
-     ${requestUrl === "/nursery" || requestUrl === "/kindergarten" || requestUrl === "/programmes" || requestUrl === "/contact" ? `<meta property="og:image:type" content="image/jpeg" />
+     ${requestUrl === "/nursery" || requestUrl === "/kindergarten" || requestUrl === "/programmes" || requestUrl === "/contact" || requestUrl === "/top-preschools-in-thane" ? `<meta property="og:image:type" content="image/jpeg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />` : ""}
     <meta property="og:site_name" content="Rainbow Preschool International" />

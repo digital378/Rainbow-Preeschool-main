@@ -59,7 +59,7 @@ import {
   NATIONAL_SYMBOL_MATCH_PAIRS,
   NATIONAL_SYMBOLS_SSR_COPY,
 } from "@shared/national-symbols-page-content";
-import { TOP_PRESCHOOLS_COPY, TOP_PRESCHOOLS_SSR_COPY } from "@shared/top-preschools-thane-content";
+import { TOP_PRESCHOOLS, TOP_PRESCHOOLS_COPY, TOP_PRESCHOOLS_WEBPAGE_SCHEMA } from "@shared/top-preschools-thane-content";
 import { cleanReelCaption } from "@shared/clean-reel-caption";
 import { LOCAL_REEL_POSTERS } from "../client/src/components/rainbow-theatre/local-reel-posters";
 import {
@@ -1732,22 +1732,49 @@ const staticPages: Record<string, PageSEOData> = {
     internalLinks: commonInternalLinks,
   },
   "/top-preschools-in-thane": {
-    title: "Top 10 Preschools in Thane 2026 — Honest Comparison Guide",
-    description: "Compare the top 10 preschools in Thane for 2026 — fees, curriculum, safety, teacher ratios, and parent reviews. Find the right fit for your child.",
-    keywords: "top preschools in thane, best preschools thane, preschool comparison thane, preschool rankings thane, best play school thane, top 10 preschools thane",
+    title: TOP_PRESCHOOLS_COPY.metaTitle,
+    description: TOP_PRESCHOOLS_COPY.metaDescription,
     canonical: `${BASE_URL}/top-preschools-in-thane`,
-    lastModified: LAST_UPDATED_ISO,
-    lastModifiedDisplay: LAST_UPDATED_DISPLAY,
-    h1: TOP_PRESCHOOLS_COPY.title,
+    ogImage: TOP_PRESCHOOLS_COPY.ogImage,
+    ogImageAlt: TOP_PRESCHOOLS_COPY.ogImageAlt,
+    lastModified: TOP_PRESCHOOLS_COPY.dateIso,
+    lastModifiedDisplay: TOP_PRESCHOOLS_COPY.dateDisplay,
+    suppressArticleSchema: true,
+    structuredData: [TOP_PRESCHOOLS_WEBPAGE_SCHEMA],
+    h1: TOP_PRESCHOOLS_COPY.h1,
     introText: TOP_PRESCHOOLS_COPY.introduction,
+    heroBadge: TOP_PRESCHOOLS_COPY.badge,
     breadcrumbs: [{ name: "Home", url: "/" }, { name: "Top Preschools in Thane", url: "/top-preschools-in-thane" }],
-    contentSections: [{
-      items: copyLinesWithout(TOP_PRESCHOOLS_SSR_COPY, [
-        TOP_PRESCHOOLS_COPY.title,
-        TOP_PRESCHOOLS_COPY.introduction,
-      ]),
-    }],
-    internalLinks: commonInternalLinks,
+    contentSections: [
+      { heading: TOP_PRESCHOOLS_COPY.comparisonTitle, text: TOP_PRESCHOOLS_COPY.comparisonDescription },
+      {
+        subsections: TOP_PRESCHOOLS.map((school) => ({
+          heading: school.name,
+          text: `${school.rating.toFixed(1)} ★ (${school.reviews} Google reviews)`,
+          items: school.isRainbow
+            ? TOP_PRESCHOOLS_COPY.rainbowFacts
+            : [`Areas: ${school.locations.join(", ")}`, `Ages: ${school.ageRange}`, TOP_PRESCHOOLS_COPY.competitorNote],
+          links: school.isRainbow ? TOP_PRESCHOOLS_COPY.rainbowLinks.map((link) => ({ text: link.label, url: link.href })) : [],
+        })),
+      },
+      {
+        heading: TOP_PRESCHOOLS_COPY.chooseTitle,
+        subsections: [
+          { heading: TOP_PRESCHOOLS_COPY.mustHaveTitle, items: TOP_PRESCHOOLS_COPY.mustHave },
+          { heading: TOP_PRESCHOOLS_COPY.niceToHaveTitle, items: TOP_PRESCHOOLS_COPY.niceToHave },
+        ],
+      },
+      {
+        heading: TOP_PRESCHOOLS_COPY.exploreTitle,
+        links: TOP_PRESCHOOLS_COPY.exploreLinks.map((link) => ({ text: link.label, url: link.href })),
+        items: [TOP_PRESCHOOLS_COPY.exploreFooter],
+      },
+      {
+        heading: TOP_PRESCHOOLS_COPY.cta.title,
+        text: TOP_PRESCHOOLS_COPY.cta.description,
+        links: TOP_PRESCHOOLS_COPY.cta.links.map((link) => ({ text: link.label, url: link.href })),
+      },
+    ],
   },
   "/testimonials": {
     title: testimonialsSEO.title,

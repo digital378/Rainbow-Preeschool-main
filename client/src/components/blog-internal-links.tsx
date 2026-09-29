@@ -6,6 +6,10 @@ import type { BlogCTATopic } from "@/components/blog-cta";
 interface BlogInternalLinksProps {
   currentSlug?: string;
   topic?: BlogCTATopic;
+  heading?: string;
+  bestLabel?: string;
+  comparisonLabel?: string;
+  tagline?: string;
 }
 
 const TOPIC_FEATURED: Partial<Record<BlogCTATopic, { href: string; label: string; desc: string }>> = {
@@ -15,7 +19,7 @@ const TOPIC_FEATURED: Partial<Record<BlogCTATopic, { href: string; label: string
   admissions: { href: "/preschool-admissions", label: "Preschool Admissions 2025–26", desc: "Book a free visit · No entrance test" },
 };
 
-export function BlogInternalLinks({ currentSlug = "", topic }: BlogInternalLinksProps) {
+export function BlogInternalLinks({ currentSlug = "", topic, heading, bestLabel, comparisonLabel, tagline }: BlogInternalLinksProps) {
   const getLocationLink = () => {
     for (const [keyword, url] of Object.entries(LOCATION_LINK_MAP)) {
       if (currentSlug.includes(keyword)) {
@@ -31,7 +35,7 @@ export function BlogInternalLinks({ currentSlug = "", topic }: BlogInternalLinks
   return (
     <div className="mt-12 p-6 bg-gradient-to-r from-red-50 to-yellow-50 rounded-xl border border-red-100">
       <h3 className="text-lg font-semibold text-gray-900 mb-4">
-        Explore Rainbow Preschool
+        {heading ?? "Explore Rainbow Preschool"}
       </h3>
 
       {featured && (
@@ -74,7 +78,7 @@ export function BlogInternalLinks({ currentSlug = "", topic }: BlogInternalLinks
           data-testid="link-blog-best-preschool"
         >
           <Award className="w-4 h-4 text-primary flex-shrink-0" />
-          Best Preschool in Thane
+          {bestLabel ?? "Best Preschool in Thane"}
         </Link>
         
         <Link 
@@ -119,7 +123,7 @@ export function BlogInternalLinks({ currentSlug = "", topic }: BlogInternalLinks
           data-testid="link-blog-top-preschools"
         >
           <BarChart3 className="w-4 h-4 text-orange-500 flex-shrink-0" />
-          Top 10 Preschools in Thane
+          {comparisonLabel ?? "Top 10 Preschools in Thane"}
         </Link>
         
         <Link 
@@ -147,7 +151,7 @@ export function BlogInternalLinks({ currentSlug = "", topic }: BlogInternalLinks
       )}
       
       <p className="mt-4 text-xs text-gray-500">
-        Rainbow Preschool International - Trusted by 1,00,000+ families since 2007
+        {tagline ?? "Rainbow Preschool International - Trusted by 1,00,000+ families since 2007"}
       </p>
     </div>
   );

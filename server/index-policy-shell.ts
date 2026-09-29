@@ -8,6 +8,7 @@ import { KINDERGARTEN_COPY } from "@shared/kindergarten-page-content";
 import { KINDERGARTEN_VISITOR_FAQS, PROGRAMMES_VISITOR_COPY } from "../client/src/pages/visitor-page-copy";
 import { PROGRAMMES_COPY, PROGRAMMES_FAQS } from "@shared/programmes-page-content";
 import { CONTACT_PAGE_COPY } from "@shared/contact-page-copy";
+import { TOP_PRESCHOOLS_COPY } from "@shared/top-preschools-thane-content";
 
 /**
  * Keep the browser's initial document metadata aligned with bot SSR and the
@@ -28,7 +29,7 @@ export function injectIndexPolicyShell(path: string, html: string): string {
     .replace(/<meta name="robots" content="[^"]*"\s*\/?>/i, `<meta name="robots" content="${robots}" />`)
     .replace(/<link rel="canonical" href="[^"]*"\s*\/?>/i, `<link rel="canonical" href="${escape(canonical)}" />`);
   if (!seo) return result;
-  if (path === "/nursery" || path === "/kindergarten" || path === "/programmes" || path === "/contact") result = result.replace('<html lang="en">', '<html lang="en-IN">');
+  if (path === "/nursery" || path === "/kindergarten" || path === "/programmes" || path === "/contact" || path === "/top-preschools-in-thane") result = result.replace('<html lang="en">', '<html lang="en-IN">');
 
   const updateMeta = (kind: "name" | "property", key: string, value: string) => {
     const tag = `<meta ${kind}="${key}" content="${escape(value)}" />`;
@@ -45,9 +46,9 @@ export function injectIndexPolicyShell(path: string, html: string): string {
   updateMeta("property", "og:title", seo.title);
   updateMeta("property", "og:description", seo.description);
   updateMeta("property", "og:image", seo.ogImage ?? `${PREFERRED_DOMAIN}/og-image.jpg`);
-  if (path === "/nursery" || path === "/kindergarten" || path === "/programmes" || path === "/contact") {
+  if (path === "/nursery" || path === "/kindergarten" || path === "/programmes" || path === "/contact" || path === "/top-preschools-in-thane") {
     updateMeta("property", "og:locale", "en_IN");
-    updateMeta("property", "og:image:alt", path === "/contact" ? CONTACT_PAGE_COPY.ogImageAlt : path === "/programmes" ? PROGRAMMES_COPY.ogImageAlt : path === "/kindergarten" ? KINDERGARTEN_COPY.ogImageAlt : NURSERY_COPY.ogImageAlt);
+    updateMeta("property", "og:image:alt", path === "/top-preschools-in-thane" ? TOP_PRESCHOOLS_COPY.ogImageAlt : path === "/contact" ? CONTACT_PAGE_COPY.ogImageAlt : path === "/programmes" ? PROGRAMMES_COPY.ogImageAlt : path === "/kindergarten" ? KINDERGARTEN_COPY.ogImageAlt : NURSERY_COPY.ogImageAlt);
     updateMeta("property", "og:image:type", "image/jpeg");
     updateMeta("property", "og:image:width", "1200");
     updateMeta("property", "og:image:height", "630");
@@ -138,6 +139,17 @@ export function injectIndexPolicyShell(path: string, html: string): string {
       ? `<a href="${escape(segment.href)}">${escape(segment.text)}</a>`
       : escape(segment.text)).join("");
     result = result.replace('<div id="root"></div>', `<div id="contact-initial"><section><div class="contact-initial-inner"><h1 id="contact-initial-h1">${escape(CONTACT_PAGE_COPY.h1)}</h1><p>${linkedIntro}</p></div></section></div><div id="root"></div>`);
+  }
+  if (path === "/top-preschools-in-thane") {
+    result = result.replace("</head>", `<style>
+      #top-preschools-initial{position:absolute;inset:0 0 auto;z-index:2;pointer-events:none;padding-top:5rem;font-family:Inter,system-ui,sans-serif}
+      #top-preschools-initial section{max-width:64rem;margin:auto;padding:3rem 1rem;text-align:center}
+      #top-preschools-initial .comparison-badge{display:inline-block;padding:.375rem 1rem;background:#fef2f2;color:#dc2626;font-size:.875rem;font-weight:600;border-radius:9999px;margin-bottom:1rem}
+      #top-preschools-initial h1{font-family:Poppins,Inter,sans-serif;font-size:1.875rem;line-height:2.25rem;font-weight:700;color:#111827;margin:0 0 1rem}
+      #top-preschools-initial p{font-size:1.125rem;line-height:1.75rem;color:#6b7280;max-width:42rem;margin:0 auto}
+      @media(min-width:640px){#top-preschools-initial section{padding:4rem 1rem}#top-preschools-initial h1{font-size:2.25rem;line-height:2.5rem}}
+    </style></head>`);
+    result = result.replace('<div id="root"></div>', `<div id="top-preschools-initial"><section><span class="comparison-badge">${escape(TOP_PRESCHOOLS_COPY.badge)}</span><h1 id="top-preschools-initial-h1">${escape(TOP_PRESCHOOLS_COPY.h1)}</h1><p>${escape(TOP_PRESCHOOLS_COPY.introduction)}</p></section></div><div id="root"></div>`);
   }
   return result;
 }

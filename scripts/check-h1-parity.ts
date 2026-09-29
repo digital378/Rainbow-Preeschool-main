@@ -67,7 +67,7 @@ const SHARED_H1_EXPRESSIONS: Record<string, string> = {
   "BLOG_LIST_COPY.h1": BLOG_LIST_COPY.h1,
   "ADMISSIONS_PAGE_COPY.hero.h1": ADMISSIONS_PAGE_COPY.hero.h1,
   "HAPPY_TIMES_COPY.heroTitle": HAPPY_TIMES_COPY.heroTitle,
-  "TOP_PRESCHOOLS_COPY.title": TOP_PRESCHOOLS_COPY.title,
+  "TOP_PRESCHOOLS_COPY.h1": TOP_PRESCHOOLS_COPY.h1,
   "testimonialsSEO.h1": testimonialsSEO.h1,
   "HOLI_COPY.heroTitle": HOLI_COPY.heroTitle,
   "NATIONAL_SYMBOLS_COPY.heroTitle": NATIONAL_SYMBOLS_COPY.heroTitle,

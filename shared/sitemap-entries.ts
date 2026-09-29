@@ -20,6 +20,7 @@ import { ADMISSIONS_PUBLISH_DATE_ISO } from "./admissions-page-copy";
 import { PLAYGROUP_COPY } from "./playgroup-page-content";
 import { NURSERY_COPY } from "./nursery-page-content";
 import { KINDERGARTEN_COPY } from "./kindergarten-page-content";
+import { TOP_PRESCHOOLS_COPY } from "./top-preschools-thane-content";
 import { PROGRAMMES_COPY } from "./programmes-page-content";
 import { CONTACT_PAGE_COPY } from "./contact-page-copy";
 
@@ -126,7 +127,7 @@ export const SITEMAP_ENTRIES: SitemapEntry[] = [
 
   // ── INTERACTIVE TOOLS & SOCIAL PROOF ────────────────────
   { url: "/preschool-readiness-quiz", priority: 0.7, changefreq: "monthly" },
-  { url: "/top-preschools-in-thane", priority: 0.7, changefreq: "monthly" },
+  { url: "/top-preschools-in-thane", priority: 0.7, changefreq: "monthly", lastmod: TOP_PRESCHOOLS_COPY.dateIso },
   { url: "/testimonials", priority: 0.6, changefreq: "monthly" },
 
   // ── LEGACY PAGES – ADMISSION & PLAYGROUP ────────────────
