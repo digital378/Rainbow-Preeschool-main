@@ -338,7 +338,7 @@ async function main(): Promise<void> {
   // Pages + expected @type assertions:
   //   /faqs               → FAQPage  (the schema most at risk from the orig bug)
   //   /preschool-admissions → WebPage + BreadcrumbList
-  //   /about              → EducationalOrganization + FAQPage
+  //   /about              → AboutPage + BreadcrumbList (no FAQPage)
   //   /playgroup          → WebPage (the visitor and crawler use the same dated schema)
   const BROWSER_UA_SCHEMA_CHECKS: Array<{
     path: string;
@@ -360,8 +360,9 @@ async function main(): Promise<void> {
     {
       path: "/about",
       assertions: [
-        { label: "EducationalOrganization JSON-LD", test: hasOrgJsonLd },
-        { label: "FAQPage JSON-LD", test: hasFaqPageJsonLd },
+        { label: "AboutPage JSON-LD", test: (html) => /"@type"\s*:\s*"AboutPage"/.test(html) },
+        { label: "BreadcrumbList JSON-LD", test: (html) => /"@type"\s*:\s*"BreadcrumbList"/.test(html) },
+        { label: "no FAQPage or Article JSON-LD", test: (html) => !/"@type"\s*:\s*"(?:FAQPage|Article)"/.test(html) },
       ],
     },
     {

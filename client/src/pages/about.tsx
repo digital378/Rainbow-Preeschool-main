@@ -4,9 +4,7 @@ import { Button } from "@/components/ui/button";
 import { SEO, createBreadcrumbSchema } from "@/components/seo";
 import { CountUp } from "@/components/count-up";
 import { CTASection } from "@/components/cta-section";
-import { EEATSignals } from "@/components/eeat-signals";
-import { LAST_UPDATED_DISPLAY, LAST_UPDATED_ISO } from "@shared/site-freshness";
-import { ABOUT_PAGE_COPY } from "@shared/about-page-content";
+import { ABOUT_PAGE_COPY, ABOUT_PAGE_SCHEMA } from "@shared/about-page-content";
 import {
   Phone,
   Star,
@@ -28,11 +26,10 @@ import {
   Images,
 } from "lucide-react";
 import { SiWhatsapp } from "react-icons/si";
-import { useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { trackCTAClick, trackCallClick, trackWhatsAppClick } from "@/lib/analytics";
 
 const PHONE_NUMBER = "+918291568972";
-const WHATSAPP_LINK = "https://wa.me/918291568972?text=Hi%2C%20I%20would%20like%20to%20know%20more%20about%20Rainbow%20Preschool";
 
 const milestones = ABOUT_PAGE_COPY.milestones;
 const trustIcons = [Shield, Users, GraduationCap, Sparkles, Heart, Handshake];
@@ -62,33 +59,49 @@ const exploreTestIds = [
 export default function About() {
   const [isChairpersonExpanded, setIsChairpersonExpanded] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const hasFirstPaintHeading = useRef(
+    typeof document !== "undefined" && !!document.getElementById("about-initial-h1"),
+  );
+
+  useLayoutEffect(() => {
+    if (hasFirstPaintHeading.current) {
+      document.getElementById("about-initial")?.classList.add("about-hydrated");
+      return () => document.getElementById("about-initial")?.remove();
+    }
+  }, []);
 
   return (
     <article className="pt-20 md:pt-24">
       <SEO
-        title="About Rainbow Preschool Thane | Since 2007"
-        description="Learn about Rainbow Preschool International — Thane's trusted preschool since 2007. 6 centres, play-based learning, 1,00,000+ alumni. Our story and values."
-        keywords="rainbow preschool thane, about rainbow preschool, rainbow preschool international, rainbow school thane, preschool thane history, trusted preschool thane, early childhood education thane"
+        title={ABOUT_PAGE_COPY.title}
+        description={ABOUT_PAGE_COPY.description}
+        keywords={null}
         canonical="/about"
-        structuredData={createBreadcrumbSchema([
+        lang="en-IN"
+        ogImage={ABOUT_PAGE_COPY.ogImage}
+        ogImageAlt={ABOUT_PAGE_COPY.ogImageAlt}
+        ogImageType="image/jpeg"
+        ogImageWidth={1200}
+        ogImageHeight={630}
+        structuredData={hasFirstPaintHeading.current ? undefined : [ABOUT_PAGE_SCHEMA, createBreadcrumbSchema([
           { name: "Home", url: "/" },
-          { name: "About", url: "/about" },
-        ])}
+          { name: "About Us", url: "/about" },
+        ])]}
       />
 
       {/* SECTION A - Hero */}
       <section className="py-16 md:py-24 lg:py-32 flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-primary/5 via-accent/5 to-secondary/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center max-w-4xl mx-auto">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
-              {ABOUT_PAGE_COPY.heroHeading}
-            </h1>
+            {hasFirstPaintHeading.current
+              ? <div aria-hidden="true" className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4" style={{ visibility: "hidden" }}>{ABOUT_PAGE_COPY.heroHeading}</div>
+              : <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">{ABOUT_PAGE_COPY.heroHeading}</h1>}
             <p className="text-xl md:text-2xl text-muted-foreground mb-8">
               {ABOUT_PAGE_COPY.heroTagline}
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
-              <Link href="/contact">
+              <Link href={ABOUT_PAGE_COPY.heroLinks.visit}>
                 <Button
                   size="lg"
                   className="text-base px-8"
@@ -99,7 +112,7 @@ export default function About() {
                 </Button>
               </Link>
               <a
-                href={WHATSAPP_LINK}
+                href={ABOUT_PAGE_COPY.heroLinks.whatsapp}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => trackWhatsAppClick({ source_page: "about" })}
@@ -113,7 +126,7 @@ export default function About() {
                   WhatsApp Us
                 </Button>
               </a>
-              <Link href="/programmes">
+              <Link href={ABOUT_PAGE_COPY.heroLinks.programmes}>
                 <Button
                   size="lg"
                   variant="outline"
@@ -197,6 +210,10 @@ export default function About() {
               </Link>
             ))}
           </div>
+          <p className="text-muted-foreground text-center mb-8">
+            <Link href={ABOUT_PAGE_COPY.daycareHref} className="text-primary hover:underline">{ABOUT_PAGE_COPY.daycareLinkText}</Link>
+            {ABOUT_PAGE_COPY.daycareIntro.slice(ABOUT_PAGE_COPY.daycareLinkText.length)}
+          </p>
           <div className="text-center">
             <Link href="/programmes">
               <Button
@@ -232,8 +249,7 @@ export default function About() {
               </button>
             </div>
 
-            {isChairpersonExpanded && (
-              <div className="mt-6 space-y-4 text-muted-foreground leading-relaxed bg-background/50 rounded-lg p-6">
+              <div hidden={!isChairpersonExpanded} className="mt-6 space-y-4 text-muted-foreground leading-relaxed bg-background/50 rounded-lg p-6">
                 {ABOUT_PAGE_COPY.chairpersonFullNote.map((paragraph, i) => (
                   <p key={paragraph} className={i === 0 ? "italic text-center" : i === ABOUT_PAGE_COPY.chairpersonFullNote.length - 1 ? "pt-2" : undefined}>
                     {i === ABOUT_PAGE_COPY.chairpersonFullNote.length - 1
@@ -242,7 +258,6 @@ export default function About() {
                   </p>
                 ))}
               </div>
-            )}
           </div>
         </div>
       </section>
@@ -363,7 +378,7 @@ export default function About() {
                         className="text-xs font-medium text-primary hover:underline"
                         data-testid={`link-centre-${i}`}
                       >
-                        View Centre →
+                         {centre.linkText}
                       </Link>
                     </div>
                   </div>
@@ -371,6 +386,7 @@ export default function About() {
               </Card>
             ))}
           </div>
+          <p className="text-muted-foreground text-center mt-8">{ABOUT_PAGE_COPY.transportNote}</p>
         </div>
       </section>
 
@@ -382,6 +398,9 @@ export default function About() {
             {faqItems.map((faq, i) => (
               <div key={i} className="border rounded-lg overflow-hidden" data-testid={`faq-item-${i}`}>
                 <button
+                  type="button"
+                  aria-expanded={openFaq === i}
+                  aria-controls={`about-faq-answer-${i}`}
                   className="w-full flex items-center justify-between gap-4 px-5 py-4 text-left font-medium hover:bg-muted/50 transition-colors"
                   onClick={() => setOpenFaq(openFaq === i ? null : i)}
                   data-testid={`faq-toggle-${i}`}
@@ -389,11 +408,9 @@ export default function About() {
                   <span>{faq.question}</span>
                   <ChevronDown className={`w-4 h-4 shrink-0 text-muted-foreground transition-transform ${openFaq === i ? "rotate-180" : ""}`} />
                 </button>
-                {openFaq === i && (
-                  <div className="px-5 pb-4 text-muted-foreground text-sm leading-relaxed">
+                  <div id={`about-faq-answer-${i}`} hidden={openFaq !== i} className="px-5 pb-4 text-muted-foreground text-sm leading-relaxed">
                     {faq.answer}
                   </div>
-                )}
               </div>
             ))}
           </div>
@@ -476,16 +493,9 @@ export default function About() {
       </section>
 
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
-        <EEATSignals
-          pageUrl="/about"
-          pageName="About Rainbow Preschool International"
-          reviewedBy="Rainbow Preschool Curriculum Team"
-          reviewerRole="Curriculum Team, Rainbow Preschool International"
-          lastUpdated={LAST_UPDATED_DISPLAY}
-          lastUpdatedIso={LAST_UPDATED_ISO}
-          showRating={false}
-          schemaId="about-eeat"
-        />
+        <p className="my-6 text-sm text-muted-foreground">
+          Last updated: <time dateTime={ABOUT_PAGE_COPY.dateIso}>{ABOUT_PAGE_COPY.dateDisplay}</time>
+        </p>
       </section>
 
       <CTASection />

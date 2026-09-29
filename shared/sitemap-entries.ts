@@ -76,7 +76,7 @@ function normalizeSitemapPath(path: string): string {
 export const SITEMAP_ENTRIES: SitemapEntry[] = [
   // ── CORE PAGES ──────────────────────────────────────────
   { url: "/", priority: 1.0, changefreq: "weekly", lastmod: HOME_PUBLISH_DATE_ISO },
-  { url: "/about", priority: 0.8, changefreq: "monthly" },
+  { url: "/about", priority: 0.8, changefreq: "monthly", lastmod: "2026-09-29" },
   { url: "/programmes", priority: 0.9, changefreq: "monthly", lastmod: PROGRAMMES_COPY.publishDate },
   { url: "/gallery", priority: 0.8, changefreq: "monthly", lastmod: "2026-09-23" },
   { url: "/contact", priority: 0.9, changefreq: "monthly", lastmod: CONTACT_PAGE_COPY.publishDate },

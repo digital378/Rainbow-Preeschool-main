@@ -2,7 +2,7 @@ import {
   LAST_UPDATED_DISPLAY,
   LAST_UPDATED_ISO,
 } from "@shared/site-freshness";
-import { ABOUT_PAGE_COPY } from "@shared/about-page-content";
+import { ABOUT_PAGE_COPY, ABOUT_PAGE_SCHEMA } from "@shared/about-page-content";
 import {
   ADMISSIONS_CENTRE_CLASSES, ADMISSIONS_PAGE_COPY, ADMISSIONS_PUBLISH_DATE_DISPLAY,
   ADMISSIONS_PUBLISH_DATE_ISO, ADMISSIONS_SECTION_HEADINGS, ADMISSIONS_WEBPAGE_SCHEMA,
@@ -1038,38 +1038,47 @@ const staticPages: Record<string, PageSEOData> = {
     },
   },
   "/about": {
-    title: "About Rainbow Preschool Thane | Since 2007",
-    description: "Learn about Rainbow Preschool International — Thane's trusted preschool since 2007. 6 centres, play-based learning, 1,00,000+ alumni. Our story and values.",
-    keywords: "about rainbow preschool, preschool thane history, early childhood education thane",
+    title: ABOUT_PAGE_COPY.title,
+    description: ABOUT_PAGE_COPY.description,
+    ogImage: ABOUT_PAGE_COPY.ogImage,
+    ogImageAlt: ABOUT_PAGE_COPY.ogImageAlt,
     canonical: `${BASE_URL}/about`,
-    lastModified: LAST_UPDATED_ISO,
-    lastModifiedDisplay: LAST_UPDATED_DISPLAY,
+    lastModified: ABOUT_PAGE_COPY.dateIso,
+    lastModifiedDisplay: ABOUT_PAGE_COPY.dateDisplay,
+    suppressArticleSchema: true,
+    reviewerAfterContent: true,
     h1: ABOUT_PAGE_COPY.heroHeading,
     introText: ABOUT_PAGE_COPY.heroTagline,
     breadcrumbs: [{ name: "Home", url: "/" }, { name: "About Us", url: "/about" }],
-    structuredData: [organizationSchema, {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      mainEntity: ABOUT_PAGE_COPY.faqs.map((faq) => ({
-        "@type": "Question",
-        name: faq.question,
-        acceptedAnswer: { "@type": "Answer", text: faq.answer },
-      })),
-    }],
+    structuredData: [ABOUT_PAGE_SCHEMA],
     contentSections: [
       {
-        heading: ABOUT_PAGE_COPY.storyHeading,
-        text: ABOUT_PAGE_COPY.storyParagraphs.join(" "),
-        images: ABOUT_PAGE_COPY.storyImages,
+        links: [
+          { text: "Book a Visit", url: ABOUT_PAGE_COPY.heroLinks.visit },
+          { text: "WhatsApp Us", url: ABOUT_PAGE_COPY.heroLinks.whatsapp },
+          { text: "Explore Programmes", url: ABOUT_PAGE_COPY.heroLinks.programmes },
+        ],
       },
       {
         items: ABOUT_PAGE_COPY.stats.map((stat) => `${stat.value} ${stat.label}`),
       },
       {
+        heading: ABOUT_PAGE_COPY.storyHeading,
+        paragraphs: ABOUT_PAGE_COPY.storyParagraphs,
+        images: ABOUT_PAGE_COPY.storyImages,
+      },
+      {
         heading: ABOUT_PAGE_COPY.programmesHeading,
         text: ABOUT_PAGE_COPY.programmesIntro,
-        items: ABOUT_PAGE_COPY.programmes.map((programme) => `${programme.title} (${programme.age}) — ${programme.copy}`),
-        links: ABOUT_PAGE_COPY.programmes.map((programme) => ({ text: programme.title, url: programme.href })),
+        subsections: ABOUT_PAGE_COPY.programmes.map((programme) => ({
+          heading: programme.title,
+          text: `${programme.age} — ${programme.copy}`,
+          links: [{ text: programme.title, url: programme.href }],
+        })),
+        afterSubsectionsRichParagraphs: [[
+          { text: ABOUT_PAGE_COPY.daycareLinkText, href: ABOUT_PAGE_COPY.daycareHref },
+          { text: ABOUT_PAGE_COPY.daycareIntro.slice(ABOUT_PAGE_COPY.daycareLinkText.length) },
+        ], [{ text: "View All Programmes", href: "/programmes" }]],
       },
       {
         heading: ABOUT_PAGE_COPY.chairpersonHeading,
@@ -1087,20 +1096,33 @@ const staticPages: Record<string, PageSEOData> = {
       },
       {
         heading: ABOUT_PAGE_COPY.trustHeading,
-        items: ABOUT_PAGE_COPY.trustCards.map((card) => `${card.title} — ${card.description}`),
+        subsections: ABOUT_PAGE_COPY.trustCards.map((card) => ({
+          heading: card.title,
+          text: card.description,
+        })),
       },
       {
         heading: ABOUT_PAGE_COPY.centresHeading,
-        items: ABOUT_PAGE_COPY.centres.map((centre) => `${centre.name} — ${centre.area}`),
-        links: ABOUT_PAGE_COPY.centres.map((centre) => ({ text: "View Centre →", url: centre.href })),
+        subsections: ABOUT_PAGE_COPY.centres.map((centre) => ({
+          heading: centre.name,
+          text: centre.area,
+          links: [{ text: centre.linkText, url: centre.href }],
+        })),
+        afterSubsectionsRichParagraphs: [[{ text: ABOUT_PAGE_COPY.transportNote }]],
       },
       {
         heading: ABOUT_PAGE_COPY.faqHeading,
-        items: ABOUT_PAGE_COPY.faqs.map((faq) => `${faq.question} ${faq.answer}`),
+        faqItems: ABOUT_PAGE_COPY.faqs.map((faq) => ({
+          question: faq.question,
+          answerSegments: [{ text: faq.answer }],
+        })),
       },
       {
         heading: ABOUT_PAGE_COPY.journeyHeading,
-        items: ABOUT_PAGE_COPY.milestones.map((milestone) => `${milestone.year} — ${milestone.title}: ${milestone.description}`),
+        subsections: ABOUT_PAGE_COPY.milestones.map((milestone) => ({
+          heading: milestone.title,
+          text: `${milestone.year} — ${milestone.description}`,
+        })),
       },
       {
         heading: ABOUT_PAGE_COPY.coordinatorsHeading,
@@ -1112,6 +1134,10 @@ const staticPages: Record<string, PageSEOData> = {
           width: person.width,
           height: person.height,
         })),
+      },
+      {
+        heading: ABOUT_PAGE_COPY.exploreHeading,
+        links: ABOUT_PAGE_COPY.exploreLinks.map((link) => ({ text: link.text, url: link.url })),
       },
     ],
     internalLinks: [...commonInternalLinks, ...ABOUT_PAGE_COPY.exploreLinks],

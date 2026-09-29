@@ -9,6 +9,7 @@ import { KINDERGARTEN_VISITOR_FAQS, PROGRAMMES_VISITOR_COPY } from "../client/sr
 import { PROGRAMMES_COPY, PROGRAMMES_FAQS } from "@shared/programmes-page-content";
 import { CONTACT_PAGE_COPY } from "@shared/contact-page-copy";
 import { TOP_PRESCHOOLS_COPY } from "@shared/top-preschools-thane-content";
+import { ABOUT_PAGE_COPY } from "@shared/about-page-content";
 
 /**
  * Keep the browser's initial document metadata aligned with bot SSR and the
@@ -29,7 +30,7 @@ export function injectIndexPolicyShell(path: string, html: string): string {
     .replace(/<meta name="robots" content="[^"]*"\s*\/?>/i, `<meta name="robots" content="${robots}" />`)
     .replace(/<link rel="canonical" href="[^"]*"\s*\/?>/i, `<link rel="canonical" href="${escape(canonical)}" />`);
   if (!seo) return result;
-  if (path === "/nursery" || path === "/kindergarten" || path === "/programmes" || path === "/contact" || path === "/top-preschools-in-thane") result = result.replace('<html lang="en">', '<html lang="en-IN">');
+  if (path === "/nursery" || path === "/kindergarten" || path === "/programmes" || path === "/contact" || path === "/top-preschools-in-thane" || path === "/about") result = result.replace('<html lang="en">', '<html lang="en-IN">');
 
   const updateMeta = (kind: "name" | "property", key: string, value: string) => {
     const tag = `<meta ${kind}="${key}" content="${escape(value)}" />`;
@@ -46,13 +47,13 @@ export function injectIndexPolicyShell(path: string, html: string): string {
   updateMeta("property", "og:title", seo.title);
   updateMeta("property", "og:description", seo.description);
   updateMeta("property", "og:image", seo.ogImage ?? `${PREFERRED_DOMAIN}/og-image.jpg`);
-  if (path === "/nursery" || path === "/kindergarten" || path === "/programmes" || path === "/contact" || path === "/top-preschools-in-thane") {
+  if (path === "/nursery" || path === "/kindergarten" || path === "/programmes" || path === "/contact" || path === "/top-preschools-in-thane" || path === "/about") {
     updateMeta("property", "og:locale", "en_IN");
-    updateMeta("property", "og:image:alt", path === "/top-preschools-in-thane" ? TOP_PRESCHOOLS_COPY.ogImageAlt : path === "/contact" ? CONTACT_PAGE_COPY.ogImageAlt : path === "/programmes" ? PROGRAMMES_COPY.ogImageAlt : path === "/kindergarten" ? KINDERGARTEN_COPY.ogImageAlt : NURSERY_COPY.ogImageAlt);
+    updateMeta("property", "og:image:alt", path === "/about" ? ABOUT_PAGE_COPY.ogImageAlt : path === "/top-preschools-in-thane" ? TOP_PRESCHOOLS_COPY.ogImageAlt : path === "/contact" ? CONTACT_PAGE_COPY.ogImageAlt : path === "/programmes" ? PROGRAMMES_COPY.ogImageAlt : path === "/kindergarten" ? KINDERGARTEN_COPY.ogImageAlt : NURSERY_COPY.ogImageAlt);
     updateMeta("property", "og:image:type", "image/jpeg");
     updateMeta("property", "og:image:width", "1200");
     updateMeta("property", "og:image:height", "630");
-    updateMeta("name", "twitter:image:alt", path === "/contact" ? CONTACT_PAGE_COPY.ogImageAlt : path === "/programmes" ? PROGRAMMES_COPY.ogImageAlt : path === "/kindergarten" ? KINDERGARTEN_COPY.ogImageAlt : NURSERY_COPY.ogImageAlt);
+    updateMeta("name", "twitter:image:alt", path === "/about" ? ABOUT_PAGE_COPY.ogImageAlt : path === "/top-preschools-in-thane" ? TOP_PRESCHOOLS_COPY.ogImageAlt : path === "/contact" ? CONTACT_PAGE_COPY.ogImageAlt : path === "/programmes" ? PROGRAMMES_COPY.ogImageAlt : path === "/kindergarten" ? KINDERGARTEN_COPY.ogImageAlt : NURSERY_COPY.ogImageAlt);
   }
   updateMeta("name", "twitter:url", canonical);
   updateMeta("name", "twitter:title", seo.title);
@@ -62,6 +63,23 @@ export function injectIndexPolicyShell(path: string, html: string): string {
     updateMeta("name", "keywords", seo.keywords);
   } else {
     result = result.replace(/\s*<meta name="keywords" content="[^"]*"\s*\/?>/i, "");
+  }
+  if (path === "/about") {
+    // Let the headline paint with its metric-compatible fallback before the
+    // Poppins stylesheet arrives; loading an external font at highest
+    // priority competes with the first paint on slow mobile connections.
+    result = result.replace(/<link rel="preload" as="font" type="font\/woff2" crossorigin href="https:\/\/fonts\.gstatic\.com\/[^"]+">/, "");
+    result = result.replaceAll(
+      "family=Poppins:wght@600;700;800&display=optional",
+      "family=Poppins:wght@700&display=swap",
+    );
+    result = result.replace("</head>", `<style>
+      #about-initial{position:absolute;top:9rem;left:0;right:0;z-index:2;pointer-events:none;text-align:center;padding:0 1rem}
+      #about-initial h1{font-family:Poppins,Inter,sans-serif;font-size:2.25rem;line-height:2.5rem;font-weight:700;margin:0 auto;max-width:56rem}
+      @media(min-width:768px){#about-initial{top:12rem}#about-initial h1{font-size:3rem;line-height:1}}
+      @media(min-width:1024px){#about-initial{top:14rem}#about-initial h1{font-size:3.75rem;line-height:1}}
+    </style></head>`);
+    result = result.replace('<div id="root"></div>', `<div id="about-initial"><h1 id="about-initial-h1">${escape(ABOUT_PAGE_COPY.heroHeading)}</h1></div><div id="root"></div>`);
   }
   if (path === "/playgroup" || path === "/nursery" || path === "/kindergarten") {
     // Keep the first-paint H1 as the LCP candidate after React mounts.
