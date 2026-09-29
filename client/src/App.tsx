@@ -297,7 +297,7 @@ function Router() {
   );
 }
 
-function DeferredChatWidget() {
+function DeferredChatWidget({ comparisonPage = false }: { comparisonPage?: boolean }) {
   const [show, setShow] = useState(false);
   useEffect(() => {
     let fired = false;
@@ -305,17 +305,21 @@ function DeferredChatWidget() {
     const events = ['pointerdown', 'keydown', 'touchstart', 'scroll'] as const;
     events.forEach(e => window.addEventListener(e, load, { once: true, passive: true }));
     let cancelHandle: number;
-    if ('requestIdleCallback' in window) {
+    // The comparison page's static H1/intro should paint before chat runs.
+    // An actual user interaction still loads chat immediately on every route.
+    if (comparisonPage) {
+      cancelHandle = globalThis.window.setTimeout(load, 8000);
+    } else if ('requestIdleCallback' in window) {
       cancelHandle = requestIdleCallback(load, { timeout: 5000 });
     } else {
-      cancelHandle = window.setTimeout(load, 5000);
+      cancelHandle = globalThis.window.setTimeout(load, 5000);
     }
     return () => {
       events.forEach(e => window.removeEventListener(e, load));
-      if ('requestIdleCallback' in window) cancelIdleCallback(cancelHandle);
+      if ('requestIdleCallback' in window && !comparisonPage) cancelIdleCallback(cancelHandle);
       else clearTimeout(cancelHandle);
     };
-  }, []);
+  }, [comparisonPage]);
   if (!show) return null;
   return (
     <ErrorBoundary name="chat-widget" silent>
@@ -351,7 +355,7 @@ function AppContent() {
       <Suspense fallback={null}>
         <Footer />
       </Suspense>
-      <DeferredChatWidget />
+      <DeferredChatWidget comparisonPage={normalizedPath === "/top-preschools-in-thane"} />
     </div>
   );
 }
@@ -372,7 +376,7 @@ function DeferredSparkleTrail() {
     if ('requestIdleCallback' in window) {
       cancelHandle = requestIdleCallback(load, { timeout: 6000 });
     } else {
-      cancelHandle = window.setTimeout(load, 6000);
+      cancelHandle = globalThis.window.setTimeout(load, 6000);
     }
     return () => {
       events.forEach(e => window.removeEventListener(e, load));

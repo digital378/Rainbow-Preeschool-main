@@ -75,7 +75,7 @@ export function BlogInternalLinks({ currentSlug = "", topic, heading, bestLabel,
         <Link 
           href="/play-school-near-me"
           className="flex items-center gap-2 px-4 py-3 bg-white rounded-lg border border-gray-200 hover:border-red-300 hover:shadow-sm transition-all text-sm font-medium text-gray-700"
-          data-testid="link-blog-best-preschool"
+          data-testid={currentSlug === "top-preschools-thane" ? "link-blog-preschool-overview" : "link-blog-best-preschool"}
         >
           <Award className="w-4 h-4 text-primary flex-shrink-0" />
           {bestLabel ?? "Best Preschool in Thane"}

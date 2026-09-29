@@ -10,7 +10,7 @@ import { redirectMap } from "./redirects";
 import { BLOG_LIST_COPY, blogPostToListEntry, legacyBlogListEntries } from "@shared/blog-list-copy";
 import { getBlogFeaturedImage, LEGACY_BLOG_FEATURED_IMAGE_URLS, LEGACY_BLOG_LOCAL_POST_SLUGS } from "@shared/blog-featured-image-data";
 import { getBlogMetadata } from "@shared/blog-metadata";
-import { TOP_PRESCHOOLS_COPY, TOP_PRESCHOOLS_CENTRE_LINKS, TOP_PRESCHOOLS_COMPETITOR_LINKS } from "@shared/top-preschools-thane-content";
+import { TOP_PRESCHOOLS_COPY, TOP_PRESCHOOLS_CENTRE_LINKS, TOP_PRESCHOOLS_COMPETITOR_LINKS, TOP_PRESCHOOLS_BREADCRUMB_SCHEMA } from "@shared/top-preschools-thane-content";
 
 // Inclusion rule: only add UA strings that appear EXCLUSIVELY in automated
 // crawlers / bots and NEVER in any human-operated browser or in-app browser.
@@ -281,7 +281,7 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
   const allStructuredData = [...(seo.structuredData || [])];
 
   if (seo.breadcrumbs && seo.breadcrumbs.length > 0) {
-    allStructuredData.push({
+    allStructuredData.push(requestUrl === "/top-preschools-in-thane" ? TOP_PRESCHOOLS_BREADCRUMB_SCHEMA : {
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
       "itemListElement": seo.breadcrumbs.map((b, i) => ({

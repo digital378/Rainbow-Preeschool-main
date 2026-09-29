@@ -64,13 +64,13 @@ export default function TopPreschoolsThane() {
           <p className="text-sm text-amber-700">{TOP_PRESCHOOLS_COPY.comparisonDescription}</p>
         </div>
 
-        <Accordion type="single" defaultValue="school-0" collapsible className="space-y-6">
-          {TOP_PRESCHOOLS.map((school, index) => (
+        <Accordion type="single" defaultValue="school-rainbow-preschool-international" collapsible className="space-y-6">
+          {TOP_PRESCHOOLS.map((school) => (
             <AccordionItem
               key={school.name}
-              value={`school-${index}`}
+              value={`school-${school.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
               className={`overflow-hidden rounded-xl ${school.isRainbow ? "border-2 border-red-300 shadow-lg ring-1 ring-red-100" : "border shadow-sm"}`}
-              data-testid={`preschool-card-${index + 1}`}
+              data-testid={`preschool-card-${school.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
             >
               <AccordionTrigger headerAsDiv className={`text-left hover:no-underline px-5 sm:px-6 gap-4 ${school.isRainbow ? "bg-red-50/30" : "bg-white"}`}>
                 <span className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
@@ -80,7 +80,7 @@ export default function TopPreschoolsThane() {
                   </span>
                 </span>
               </AccordionTrigger>
-              <AccordionContent forceMount className={`px-5 sm:px-6 ${school.isRainbow ? "bg-red-50/30" : "bg-white"}`}>
+              <AccordionContent forceMount disableClosedAnimation className={`px-5 sm:px-6 ${school.isRainbow ? "bg-red-50/30" : "bg-white"}`}>
                 {school.isRainbow ? (
                   <>
                     <ul className="grid sm:grid-cols-2 gap-x-6 gap-y-2 text-sm text-gray-700">

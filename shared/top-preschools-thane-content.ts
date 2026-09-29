@@ -18,13 +18,13 @@ export const TOP_PRESCHOOLS_CENTRE_LINKS = centres.map((centre) => ({
 }));
 
 export const TOP_PRESCHOOLS_COPY = {
-  metaTitle: "Top Preschools in Thane (2026-27): Ages, Areas & Google Ratings | Rainbow",
+  metaTitle: "Top Preschools in Thane (2027-28): Ages, Areas & Google Ratings | Rainbow",
   metaDescription: "Compare preschools in Thane side by side: age groups, areas covered and Google ratings. Published by Rainbow Preschool International, with 6 centres in Thane since 2007.",
   h1: "Top Preschools in Thane: Ages, Areas and Google Ratings",
   introduction: "Choosing a preschool in Thane usually comes down to three things: the right age group, a centre close to home, and what other parents say. This page puts those facts side by side for well-known preschools in Thane.",
-  badge: "Updated for 2026-27",
+  badge: "Updated for 2027-28",
   comparisonTitle: "About This Comparison",
-  comparisonDescription: "Published by Rainbow Preschool International, so we've listed ourselves first. The other schools are in alphabetical order. Ratings are as shown on Google on 29 September 2026 and change often, so please check each school's Google profile for the latest and visit before you decide.",
+  comparisonDescription: "Published by Rainbow Preschool International. This is not a ranking. It lists facts only: age groups, areas and Google ratings as shown on 29 September 2026. Ratings change often, so please check each school's Google profile for the latest and visit before you decide.",
   dateIso: "2026-09-29",
   dateDisplay: "29 September 2026",
   ogImage: `${BASE_URL}/images/og/top-preschools-thane-1200x630.jpg`,
@@ -43,7 +43,7 @@ export const TOP_PRESCHOOLS_COPY = {
   rainbowLinks: [
     { label: "Our Programmes", href: "/programmes" },
     { label: "Find a centre near you", href: "/play-school-near-me" },
-    { label: "Admissions 2026-27", href: "/preschool-admissions" },
+    { label: "Admissions 2027-28", href: "/preschool-admissions" },
     { label: "Contact us", href: "/contact" },
   ],
   admissionsLinks: [
@@ -137,7 +137,7 @@ export const TOP_PRESCHOOLS_BREADCRUMB_SCHEMA = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Home", item: `${BASE_URL}/` },
-    { "@type": "ListItem", position: 2, name: "Top Preschools in Thane", item: PAGE_URL },
+    { "@type": "ListItem", name: "Home", item: `${BASE_URL}/` },
+    { "@type": "ListItem", name: "Top Preschools in Thane", item: PAGE_URL },
   ],
 };

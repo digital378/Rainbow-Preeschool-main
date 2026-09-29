@@ -4,6 +4,7 @@ import path from "path";
 import { injectHomepageFreshness } from "./homepage-freshness";
 import { injectIndexPolicyShell } from "./index-policy-shell";
 import { getPageSEO, getStaticPagePaths, isKnownRoute } from "./ssr-pages";
+import { TOP_PRESCHOOLS_BREADCRUMB_SCHEMA } from "@shared/top-preschools-thane-content";
 
 const BASE_URL = "https://www.rainbowpreschools.com";
 
@@ -39,7 +40,7 @@ export function injectPageSchemas(urlPath: string, html: string): string {
 
   // BreadcrumbList — mirrors the auto-injection in bot-ssr.ts renderSSRHtml()
   if (seo.breadcrumbs && seo.breadcrumbs.length > 0) {
-    const breadcrumbSchema = {
+    const breadcrumbSchema = urlPath === "/top-preschools-in-thane" ? TOP_PRESCHOOLS_BREADCRUMB_SCHEMA : {
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
       itemListElement: seo.breadcrumbs.map((b, i) => ({

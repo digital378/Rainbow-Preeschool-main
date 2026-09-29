@@ -133,11 +133,18 @@
         loadAnalytics();
       }
       function setupAnalyticsSchedule() {
-        if ('requestIdleCallback' in window) {
-          requestIdleCallback(scheduleAnalytics, { timeout: 3500 });
-        } else {
-          setTimeout(scheduleAnalytics, 1500);
-        }
+        var comparisonPage = window.location.pathname === '/top-preschools-in-thane';
+        // This page's first paint is a static comparison heading; keep GTM off
+        // its initial main-thread work while retaining the interaction fallback.
+        var scheduleOnIdle = function() {
+          if ('requestIdleCallback' in window) {
+            requestIdleCallback(scheduleAnalytics, { timeout: 3500 });
+          } else {
+            setTimeout(scheduleAnalytics, 1500);
+          }
+        };
+        if (comparisonPage) setTimeout(scheduleOnIdle, 8000);
+        else scheduleOnIdle();
         // Also load on first user interaction to avoid missing fast-bounce events
         ['pointerdown','keydown','touchstart','scroll'].forEach(function(evt) {
           document.addEventListener(evt, scheduleAnalytics, { once: true, passive: true, capture: true });

@@ -141,6 +141,12 @@ export function injectIndexPolicyShell(path: string, html: string): string {
     result = result.replace('<div id="root"></div>', `<div id="contact-initial"><section><div class="contact-initial-inner"><h1 id="contact-initial-h1">${escape(CONTACT_PAGE_COPY.h1)}</h1><p>${linkedIntro}</p></div></section></div><div id="root"></div>`);
   }
   if (path === "/top-preschools-in-thane") {
+    // Only this comparison route needs Poppins 700 above the fold; keep the
+    // existing font families, and use swap so text stays visible while loading.
+    result = result.replaceAll(
+      "family=Poppins:wght@600;700;800&display=optional",
+      "family=Poppins:wght@700&display=swap",
+    );
     result = result.replace("</head>", `<style>
       #top-preschools-initial{position:relative;padding-top:5rem;font-family:Inter,system-ui,sans-serif}
       #top-preschools-initial section{max-width:64rem;margin:auto;padding:3rem 1rem;text-align:center}
