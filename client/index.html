@@ -105,12 +105,11 @@
       @media (min-width:1024px){#static-lcp-hero #static-lcp-hero-title{left:max(32px,calc((100% - 1280px)/2 + 32px));right:32px;max-width:42rem}}
     </style>
     
-    <!-- GTM REMOVED - was causing duplicate events. Using direct gtag tracking instead -->
-    
-    <!-- Defer analytics loading until after page load for better FCP/LCP -->
+    <!-- Defer the GTM download, but queue GA4 configuration and events immediately. -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
+      gtag('config', 'G-G1MX1N0M05', { send_page_view: false });
       
       function gtagSendEvent(url) {
         var callback = function () {
@@ -125,30 +124,37 @@
         return false;
       }
       
-      // Load analytics after page is idle — with interaction fallback to avoid losing fast-bounce tracking
+      // The first interaction or the fallback timer loads GTM; events queued
+      // in dataLayer before then are processed when the container arrives.
       var analyticsLoaded = false;
       function scheduleAnalytics() {
         if (analyticsLoaded) return;
         analyticsLoaded = true;
         loadAnalytics();
       }
+      window.loadDeferredAnalytics = scheduleAnalytics;
+      var comparisonPage = window.location.pathname === '/top-preschools-in-thane';
+      var interactionEvents = ['pointerdown','keydown','touchstart','scroll'];
+      if (comparisonPage) {
+        // Register now: a visitor can interact before the window load event.
+        interactionEvents.forEach(function(evt) {
+          document.addEventListener(evt, scheduleAnalytics, { once: true, passive: true, capture: true });
+        });
+      }
       function setupAnalyticsSchedule() {
-        var comparisonPage = window.location.pathname === '/top-preschools-in-thane';
-        // This page's first paint is a static comparison heading; keep GTM off
-        // its initial main-thread work while retaining the interaction fallback.
-        var scheduleOnIdle = function() {
+        if (comparisonPage) {
+          // Guaranteed fallback for a visitor who does not interact.
+          setTimeout(scheduleAnalytics, 3500);
+        } else {
           if ('requestIdleCallback' in window) {
             requestIdleCallback(scheduleAnalytics, { timeout: 3500 });
           } else {
             setTimeout(scheduleAnalytics, 1500);
           }
-        };
-        if (comparisonPage) setTimeout(scheduleOnIdle, 8000);
-        else scheduleOnIdle();
-        // Also load on first user interaction to avoid missing fast-bounce events
-        ['pointerdown','keydown','touchstart','scroll'].forEach(function(evt) {
-          document.addEventListener(evt, scheduleAnalytics, { once: true, passive: true, capture: true });
-        });
+          interactionEvents.forEach(function(evt) {
+            document.addEventListener(evt, scheduleAnalytics, { once: true, passive: true, capture: true });
+          });
+        }
       }
       if (document.readyState === 'complete') {
         setupAnalyticsSchedule();
@@ -157,10 +163,6 @@
       }
       
       function loadAnalytics() {
-        // Pre-configure GA4 so GTM's GA4 tag never fires an automatic page_view.
-        // React SPA calls trackPageView() with the correct title after each navigation.
-        gtag('config', 'G-G1MX1N0M05', { send_page_view: false });
-
         // Load the GTM container — it fires Clarity, Google Ads, Call-Tracking,
         // Meta Pixels, and the CAPI builder through their GTM tags.
         // Nothing else may self-inject on load (Clarity removed from inline code).

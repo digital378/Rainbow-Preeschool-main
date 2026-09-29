@@ -135,7 +135,7 @@ export const TOP_PRESCHOOLS_BREADCRUMB_SCHEMA = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   itemListElement: [
-    { "@type": "ListItem", name: "Home", item: `${BASE_URL}/` },
-    { "@type": "ListItem", name: "Top Preschools in Thane", item: PAGE_URL },
+    { "@type": "ListItem", position: 1, name: "Home", item: `${BASE_URL}/` },
+    { "@type": "ListItem", position: 2, name: "Top Preschools in Thane", item: PAGE_URL },
   ],
 };

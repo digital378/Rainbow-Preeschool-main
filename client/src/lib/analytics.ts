@@ -11,6 +11,7 @@ declare global {
   interface Window {
     dataLayer: any[];
     gtag: (...args: any[]) => void;
+    loadDeferredAnalytics?: () => void;
   }
 }
 
@@ -549,6 +550,10 @@ export const pushToDataLayer = (event: Record<string, any>) => {
   window.dataLayer.push(event);
 };
 
+export const loadDeferredAnalytics = () => {
+  if (typeof window !== 'undefined') window.loadDeferredAnalytics?.();
+};
+
 // Track page views with retry for initial page load
 const DEFAULT_TITLE = 'Rainbow Preschool International - Thane';
 
@@ -619,7 +624,8 @@ export const trackPageView = (url: string, retryCount = 0, campaignQuerySnapshot
     window.gtag('event', 'page_view', {
       page_path: pagePath,
       page_title: title,
-      page_location: pageLocation
+      page_location: pageLocation,
+      send_to: measurementId,
     });
     console.debug('[GA4] Pageview tracked:', url, title);
   };

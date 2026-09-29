@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef } from "react";
+import { useLayoutEffect, useRef, type MouseEvent } from "react";
 import { Link } from "wouter";
 import { Card, CardContent } from "@/components/ui/card";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -6,7 +6,7 @@ import { SEO } from "@/components/seo";
 import { CTASection } from "@/components/cta-section";
 import { BlogInternalLinks } from "@/components/blog-internal-links";
 import { EEATSignals } from "@/components/eeat-signals";
-import { pushToDataLayer } from "@/lib/analytics";
+import { loadDeferredAnalytics, pushToDataLayer } from "@/lib/analytics";
 import {
   TOP_PRESCHOOLS,
   TOP_PRESCHOOLS_COPY,
@@ -16,6 +16,39 @@ import {
   TOP_PRESCHOOLS_BREADCRUMB_SCHEMA,
 } from "@shared/top-preschools-thane-content";
 import { Star, Shield, CheckCircle } from "lucide-react";
+
+function trackAdmissionsClick(event: MouseEvent<HTMLAnchorElement>, link: (typeof TOP_PRESCHOOLS_COPY.admissionsLinks)[number]) {
+  const isCall = link.event === "top_preschools_call";
+  let navigated = false;
+  let fallback: number | undefined;
+  const finishCall = () => {
+    if (!isCall || navigated) return;
+    navigated = true;
+    if (fallback !== undefined) window.clearTimeout(fallback);
+    window.location.href = link.href;
+  };
+
+  if (isCall) {
+    // Let GTM process the queued event before leaving the page. A timeout
+    // still opens the dialer if GTM is blocked or slow.
+    event.preventDefault();
+    fallback = window.setTimeout(finishCall, 1800);
+  }
+  const measurementId = import.meta.env.VITE_GA_MEASUREMENT_ID;
+  if (measurementId && typeof window.gtag === "function") {
+    // Queue an explicit GA4 event as well as the custom GTM event. GTM may
+    // not have a tag for this custom event, but both queues survive late load.
+    window.gtag("event", link.event, { send_to: measurementId, phone: "8291568972" });
+  } else {
+    console.warn(`Unable to queue GA4 event: ${link.event}`);
+  }
+  pushToDataLayer({
+    event: link.event,
+    phone: "8291568972",
+    ...(isCall ? { eventCallback: finishCall, eventTimeout: 1600 } : {}),
+  });
+  loadDeferredAnalytics();
+}
 
 export default function TopPreschoolsThane() {
   const hasFirstPaintHeading = useRef(
@@ -90,7 +123,7 @@ export default function TopPreschoolsThane() {
                           href={link.href}
                           target={link.event === "top_preschools_whatsapp" ? "_blank" : undefined}
                           rel={link.event === "top_preschools_whatsapp" ? "noopener noreferrer" : undefined}
-                          onClick={() => pushToDataLayer({ event: link.event, phone: "8291568972" })}
+                          onClick={(event) => trackAdmissionsClick(event, link)}
                           className={link.event === "top_preschools_whatsapp"
                             ? "inline-flex items-center gap-1.5 rounded-full bg-green-500 hover:bg-green-600 text-white font-semibold text-sm px-4 py-2 shadow-md transition-colors"
                             : "inline-flex items-center px-4 py-2 rounded-md bg-red-600 text-white text-sm font-semibold hover:bg-red-700"}
