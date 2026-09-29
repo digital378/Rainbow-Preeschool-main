@@ -26,6 +26,7 @@ import { NURSERY_COPY } from "../shared/nursery-page-content";
 import { KINDERGARTEN_COPY } from "../shared/kindergarten-page-content";
 import { PROGRAMMES_COPY } from "../shared/programmes-page-content";
 import { CONTACT_PAGE_COPY } from "../shared/contact-page-copy";
+import { TOP_PRESCHOOLS_COPY } from "../shared/top-preschools-thane-content";
 
 const BASE = (process.argv[2] || "http://localhost:5000").replace(/\/$/, "");
 const UA = "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)";
@@ -117,11 +118,12 @@ async function checkUrl(path: string): Promise<CheckResult> {
   }
   const admissionsPage = path === "/preschool-admissions";
   const programmePage = path === "/playgroup" || path === "/nursery" || path === "/kindergarten" || path === "/programmes";
-  const expectedType = path === "/contact" ? "ContactPage" : path === "/" || admissionsPage || programmePage ? "WebPage" : "Article";
+  const comparisonPage = path === "/top-preschools-in-thane";
+  const expectedType = path === "/contact" ? "ContactPage" : path === "/" || admissionsPage || programmePage || comparisonPage ? "WebPage" : "Article";
   if (!new RegExp(`"@type":\\s*"${expectedType}"`).test(html)) {
     missing.push(`${expectedType} JSON-LD`);
   }
-  if ((path === "/" || admissionsPage || programmePage || path === "/contact") && /"@type":\s*"Article"/.test(html)) {
+  if ((path === "/" || admissionsPage || programmePage || comparisonPage || path === "/contact") && /"@type":\s*"Article"/.test(html)) {
     missing.push(`unexpected Article JSON-LD on ${path}`);
   }
   const expectedDate = path === "/"
@@ -132,6 +134,7 @@ async function checkUrl(path: string): Promise<CheckResult> {
     : path === "/kindergarten" ? KINDERGARTEN_COPY.publishDate
     : path === "/programmes" ? PROGRAMMES_COPY.publishDate
     : path === "/contact" ? CONTACT_PAGE_COPY.publishDate
+    : comparisonPage ? TOP_PRESCHOOLS_COPY.dateIso
     : LAST_UPDATED_ISO;
   if (
     !html.includes(`"dateModified":"${expectedDate}"`) &&
@@ -145,6 +148,7 @@ async function checkUrl(path: string): Promise<CheckResult> {
     : path === "/kindergarten" ? KINDERGARTEN_COPY.publishDateDisplay
     : path === "/programmes" ? PROGRAMMES_COPY.publishDateDisplay
     : path === "/contact" ? CONTACT_PAGE_COPY.publishDateDisplay
+    : comparisonPage ? TOP_PRESCHOOLS_COPY.dateDisplay
     : LAST_UPDATED_DISPLAY;
   if (path !== "/" && !html.includes(expectedDisplay)) {
     missing.push(`display="${expectedDisplay}"`);
