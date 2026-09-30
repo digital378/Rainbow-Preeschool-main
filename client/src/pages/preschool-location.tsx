@@ -12,9 +12,12 @@ import {
 } from "@/components/ui/accordion";
 import { LocalCallbackForm } from "@/components/local-callback-form";
 import { MinimalHeader } from "@/components/landing/minimal-header";
+import { StickyCTABar } from "@/components/landing/sticky-cta-bar";
 import { EEATSignals } from "@/components/eeat-signals";
 import { LAST_UPDATED_DISPLAY, LAST_UPDATED_ISO } from "@shared/site-freshness";
 import { 
+  ADMISSIONS_PHONE_LABEL,
+  ADMISSIONS_PHONE_NUMBER,
   getCentreBySlug, 
   preschoolPageSEO, 
   preschoolIntros, 
@@ -219,9 +222,10 @@ function PreschoolLocationTemplate({ localitySlug }: PreschoolLocationPageProps)
     <div className="min-h-screen">
       <MinimalHeader
         whatsappNumber={centre.whatsappNumber}
-        phoneNumber={centre.phoneNumbers[0] || ""}
+        phoneNumber={ADMISSIONS_PHONE_NUMBER}
+        callLabel={ADMISSIONS_PHONE_LABEL}
         locality={centre.localityName}
-        onCallClick={() => handleCallClick(centre.phoneNumbers[0])}
+        onCallClick={() => handleCallClick(ADMISSIONS_PHONE_NUMBER)}
         onWhatsAppClick={handleWhatsAppClick}
       />
       <div className="pt-20 md:pt-24">
@@ -267,13 +271,14 @@ function PreschoolLocationTemplate({ localitySlug }: PreschoolLocationPageProps)
 
               <div className="flex flex-wrap gap-3">
                 <a 
-                  href={`tel:${centre.phoneNumbers[0]?.replace(/\s/g, '')}`}
-                  onClick={() => handleCallClick(centre.phoneNumbers[0])}
+                  href={`tel:${ADMISSIONS_PHONE_NUMBER}`}
+                  onClick={() => handleCallClick(ADMISSIONS_PHONE_NUMBER)}
                   data-testid="button-call-primary"
+                  className="max-w-full"
                 >
-                  <Button size="lg">
+                  <Button size="lg" className="max-w-full h-auto min-h-11 whitespace-normal leading-tight">
                     <Phone className="w-4 h-4 mr-2" />
-                    Call Now
+                     {ADMISSIONS_PHONE_LABEL}
                   </Button>
                 </a>
                 <a 
@@ -493,7 +498,9 @@ function PreschoolLocationTemplate({ localitySlug }: PreschoolLocationPageProps)
                 )}
 
                 <div>
-                  <p className="font-medium mb-2">Phone Numbers</p>
+                  <h3 className="font-semibold mb-2">Centre address &amp; contact</h3>
+                  <p className="text-slate-700 mb-3">{centre.address}</p>
+                  <p className="font-medium mb-2">Centre phone</p>
                   <div className="space-y-2">
                     {centre.phoneNumbers.map((phone, index) => (
                       <a
@@ -523,34 +530,27 @@ function PreschoolLocationTemplate({ localitySlug }: PreschoolLocationPageProps)
                       WhatsApp Us
                     </Button>
                   </a>
-                  <a
-                    href={centre.googleMapsDirectionsUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={handleDirectionsClick}
-                    data-testid="link-directions"
-                  >
-                    <Button variant="outline">
-                      <Navigation className="w-4 h-4 mr-2" />
-                      Get Directions
-                    </Button>
-                  </a>
                 </div>
               </CardContent>
             </Card>
 
             {centre.googleMapsEmbedUrl && (
-              <div className="rounded-lg overflow-hidden shadow-md h-[300px] lg:h-auto" data-testid="map-embed">
+              <div className="space-y-4" data-testid="map-embed">
+                <div className="rounded-2xl overflow-hidden shadow-md h-[300px] md:h-[380px]">
                 <iframe
                   src={centre.googleMapsEmbedUrl}
                   width="100%"
                   height="100%"
-                  style={{ border: 0, minHeight: '300px' }}
+                  style={{ border: 0 }}
                   allowFullScreen
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
                   title={`${centre.name} Location Map`}
                 />
+                </div>
+                <a href={centre.googleMapsDirectionsUrl} target="_blank" rel="noopener noreferrer" onClick={handleDirectionsClick} data-testid="link-directions">
+                  <Button variant="outline"><Navigation className="w-4 h-4 mr-2" />Get directions</Button>
+                </a>
               </div>
             )}
           </div>
@@ -681,13 +681,14 @@ function PreschoolLocationTemplate({ localitySlug }: PreschoolLocationPageProps)
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <a 
-              href={`tel:${centre.phoneNumbers[0]?.replace(/\s/g, '')}`}
-              onClick={() => handleCallClick(centre.phoneNumbers[0])}
+              href={`tel:${ADMISSIONS_PHONE_NUMBER}`}
+              onClick={() => handleCallClick(ADMISSIONS_PHONE_NUMBER)}
               data-testid="button-cta-call"
+              className="max-w-full"
             >
-              <Button size="lg" variant="secondary">
+              <Button size="lg" variant="secondary" className="max-w-full h-auto min-h-11 whitespace-normal leading-tight">
                 <Phone className="w-4 h-4 mr-2" />
-                Call {centre.phoneNumbers[0]}
+                {ADMISSIONS_PHONE_LABEL}
               </Button>
             </a>
             <a 
@@ -706,6 +707,9 @@ function PreschoolLocationTemplate({ localitySlug }: PreschoolLocationPageProps)
         </div>
       </section>
       </div>
+      <StickyCTABar phoneNumber={ADMISSIONS_PHONE_NUMBER} callLabel={ADMISSIONS_PHONE_LABEL}
+        whatsappNumber={centre.whatsappNumber} locality={centre.localityName}
+        onCallClick={() => handleCallClick(ADMISSIONS_PHONE_NUMBER)} onWhatsAppClick={handleWhatsAppClick} twoActionsOnly />
     </div>
   );
 }

@@ -8,7 +8,9 @@ interface StickyCTABarProps {
   locality: string;
   onCallClick?: () => void;
   onWhatsAppClick?: () => void;
-  onCallbackClick: () => void;
+  onCallbackClick?: () => void;
+  callLabel?: string;
+  twoActionsOnly?: boolean;
 }
 
 export function StickyCTABar({
@@ -18,8 +20,10 @@ export function StickyCTABar({
   onCallClick,
   onWhatsAppClick,
   onCallbackClick,
+  callLabel = "Call",
+  twoActionsOnly = false,
 }: StickyCTABarProps) {
-  const cleanPhone = phoneNumber.replace(/[^0-9]/g, "");
+  const cleanPhone = `${phoneNumber.startsWith("+") ? "+" : ""}${phoneNumber.replace(/[^0-9]/g, "")}`;
 
   return (
     <>
@@ -31,9 +35,9 @@ export function StickyCTABar({
             onClick={onCallClick}
             className="flex-1"
           >
-            <Button className="w-full gap-1.5" size="sm" data-testid="sticky-call-button">
+             <Button className="w-full gap-1.5 h-auto min-h-10 whitespace-normal text-[11px] leading-tight bg-primary" size="sm" data-testid="sticky-call-button">
               <Phone className="h-4 w-4" />
-              Call
+               {callLabel}
             </Button>
           </a>
 
@@ -55,16 +59,16 @@ export function StickyCTABar({
             </Button>
           </a>
 
-          <Button
+           {!twoActionsOnly && onCallbackClick && <Button
             variant="secondary"
             size="sm"
             className="flex-1 gap-1.5"
             onClick={onCallbackClick}
             data-testid="sticky-callback-button"
-          >
+           >
             <MessageCircle className="h-4 w-4" />
             Callback
-          </Button>
+           </Button>}
         </div>
       </div>
 

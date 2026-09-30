@@ -22,6 +22,9 @@ interface LocalCallbackFormProps {
   centre?: string;
   sourcePage?: string;
   compact?: boolean;
+  title?: string;
+  subtitle?: string;
+  className?: string;
 }
 
 const childAgeOptions = [
@@ -40,7 +43,10 @@ export function LocalCallbackForm({
   locality, 
   centre,
   sourcePage,
-  compact = false 
+  compact = false,
+  title = "Request a Free Callback",
+  subtitle = "Get all your queries answered by our admissions team",
+  className,
 }: LocalCallbackFormProps) {
   const { toast } = useToast();
   const formRef = useRef<HTMLFormElement>(null);
@@ -152,13 +158,11 @@ export function LocalCallbackForm({
   }
 
   return (
-    <Card>
+    <Card className={className}>
       {!compact && (
         <CardHeader className="pb-4">
-          <h3 className="text-xl font-bold">Request a Free Callback</h3>
-          <p className="text-sm text-muted-foreground">
-            Get all your queries answered by our admissions team
-          </p>
+          <h3 className="text-xl font-bold">{title}</h3>
+          <p className="text-sm text-slate-700">{subtitle}</p>
         </CardHeader>
       )}
       <CardContent className={compact ? "pt-4" : ""}>

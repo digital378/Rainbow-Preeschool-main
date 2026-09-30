@@ -235,6 +235,7 @@ const allowedHomepageExternalLinks = new Set([
   "tel:+918291568972",
   "https://wa.me/919833781550",
   "tel:+919833781550",
+  "tel:+919152489789",
   "https://maps.app.goo.gl/oFnzPGooMos4qACV9",
 ]);
 

@@ -10,6 +10,7 @@ interface MinimalHeaderProps {
   locality: string;
   onCallClick?: () => void;
   onWhatsAppClick?: () => void;
+  callLabel?: string;
 }
 
 export function MinimalHeader({
@@ -18,8 +19,9 @@ export function MinimalHeader({
   locality,
   onCallClick,
   onWhatsAppClick,
+  callLabel = "Call",
 }: MinimalHeaderProps) {
-  const cleanPhone = phoneNumber.replace(/[^0-9]/g, "");
+  const cleanPhone = `${phoneNumber.startsWith("+") ? "+" : ""}${phoneNumber.replace(/[^0-9]/g, "")}`;
   
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b h-14">
@@ -41,9 +43,9 @@ export function MinimalHeader({
             onClick={onCallClick}
             data-testid="header-call-button"
           >
-            <Button variant="outline" size="sm" className="gap-1.5">
-              <Phone className="h-4 w-4" />
-              <span className="hidden sm:inline">Call</span>
+             <Button variant="outline" size="sm" className="gap-1.5 h-auto min-h-9 py-1.5">
+               <Phone className="h-4 w-4 shrink-0" />
+               <span className="text-[11px] sm:text-sm leading-tight whitespace-normal">{callLabel}</span>
             </Button>
           </a>
           

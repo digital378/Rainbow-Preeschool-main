@@ -1,23 +1,25 @@
 import { useLayoutEffect, useRef } from "react";
 import { Link } from "wouter";
-import { ChevronRight, Heart, MapPin, MessageCircle, Navigation, Phone, Shield, Users } from "lucide-react";
+import { Blocks, BookOpen, ChevronRight, ClipboardList, GraduationCap, MapPin, MessageCircle, Music2, Navigation, Phone, ShieldCheck, Sparkles, SprayCan, Sun, Users, Video } from "lucide-react";
 import { SEO, createBreadcrumbSchema } from "@/components/seo";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { MinimalHeader } from "@/components/landing/minimal-header";
+import { StickyCTABar } from "@/components/landing/sticky-cta-bar";
 import { LocalCallbackForm } from "@/components/local-callback-form";
 import { HomeRainbowTheatre } from "@/components/home/home-rainbow-theatre";
-import { BRANCH_REEL_EXCERPTS } from "@/components/rainbow-theatre/local-reel-posters";
 import { BranchQuickFacts, BranchAreas, BranchAdmissions, BranchNearby } from "@/components/centre/branch-sections";
-import { anandNagarPage as copy, getCentreBySlug, preschoolFAQs, preschoolPageSEO, whyParentsChoose } from "@shared/centre-data";
+import { ADMISSIONS_PHONE_LABEL, ADMISSIONS_PHONE_NUMBER, anandNagarPage as copy, getCentreBySlug, preschoolFAQs, preschoolPageSEO, whyParentsChoose } from "@shared/centre-data";
 import { trackCallClick, trackWhatsAppClick, trackDirectionsClick } from "@/lib/analytics";
 
 const centre = getCentreBySlug("anand-nagar")!;
 const seo = preschoolPageSEO["anand-nagar"];
 const faqs = preschoolFAQs["anand-nagar"];
 const why = whyParentsChoose["anand-nagar"];
+const programmeIcons = [Blocks, Sparkles, GraduationCap];
+const whyIcons = [MapPin, Users, Video, SprayCan, ClipboardList, Music2];
 const base = "https://www.rainbowpreschools.com";
 const url = `${base}${seo.canonicalPath}`;
 const pageSchemas = [
@@ -45,7 +47,7 @@ export function AnandNagarCentrePage() {
     document.getElementById("anand-initial")?.classList.add("anand-hydrated");
     return () => document.getElementById("anand-initial")?.remove();
   }, []);
-  const call = () => trackCallClick({ centre: centre.name, locality: centre.localityName, phone: centre.phoneNumbers[0], source_page: seo.canonicalPath });
+  const call = () => trackCallClick({ centre: centre.name, locality: centre.localityName, phone: ADMISSIONS_PHONE_NUMBER, source_page: seo.canonicalPath });
   const whatsapp = () => trackWhatsAppClick({ centre: centre.name, locality: centre.localityName, source_page: seo.canonicalPath });
   const directions = () => trackDirectionsClick({ centre: centre.name, locality: centre.localityName, source_page: seo.canonicalPath });
 
@@ -55,7 +57,7 @@ export function AnandNagarCentrePage() {
         ogImage="/images/og/anand-nagar-1200x630.jpg" ogImageAlt="Two children playing with blocks at Rainbow Preschool"
         ogImageType="image/jpeg" ogImageWidth={1200} ogImageHeight={630}
         structuredData={initialHeading.current ? undefined : pageSchemas} />
-      <MinimalHeader whatsappNumber={centre.whatsappNumber} phoneNumber={centre.phoneNumbers[0]} locality={centre.localityName}
+      <MinimalHeader whatsappNumber={centre.whatsappNumber} phoneNumber={ADMISSIONS_PHONE_NUMBER} callLabel={ADMISSIONS_PHONE_LABEL} locality={centre.localityName}
         onCallClick={call} onWhatsAppClick={whatsapp} />
       <main className="pt-20 md:pt-24">
         <nav className="bg-muted/50 py-2 px-4" aria-label="Breadcrumb">
@@ -66,91 +68,102 @@ export function AnandNagarCentrePage() {
           </ol>
         </nav>
 
-        <section className="py-8 md:py-12 bg-gradient-to-b from-primary/5 to-transparent">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
-            <div>
+        <section className="py-8 md:py-12 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-8 lg:gap-x-12 lg:gap-y-6 items-start">
+            <div className="min-w-0 lg:col-start-1 lg:row-start-1">
               <Badge className="mb-4"><MapPin className="w-3 h-3 mr-1" />Anand Nagar, Thane</Badge>
               {initialHeading.current
                 ? <div aria-hidden="true" className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6" style={{ visibility: "hidden" }}>{seo.h1}</div>
                 : <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">{seo.h1}</h1>}
-              <p className="text-lg font-semibold text-muted-foreground mb-5" style={initialHeading.current ? { visibility: "hidden" } : undefined}>{copy.heroSubline}</p>
-              <div className="flex flex-wrap gap-2 mb-7">{copy.trustChips.map((chip) => <Badge key={chip} variant="secondary" className="font-semibold">{chip}</Badge>)}</div>
+              <p className="text-lg font-semibold text-slate-700 mb-5" style={initialHeading.current ? { visibility: "hidden" } : undefined}>{copy.heroSubline}</p>
+              <div className="flex flex-wrap gap-2 mb-7">{copy.trustChips.map((chip) => <Badge key={chip} variant="secondary" className="font-semibold whitespace-normal text-left max-w-full">{chip}</Badge>)}</div>
               <div className="flex flex-wrap gap-3">
-                <a href="tel:+919833781550" onClick={call}><Button size="lg"><Phone className="w-4 h-4 mr-2" />Call 98337 81550</Button></a>
-                <a href={`https://wa.me/91${centre.whatsappNumber}`} target="_blank" rel="noopener noreferrer" onClick={whatsapp}><Button size="lg" variant="outline"><MessageCircle className="w-4 h-4 mr-2" />WhatsApp</Button></a>
+                <a href={`tel:${ADMISSIONS_PHONE_NUMBER}`} onClick={call} className="max-w-full"><Button size="lg" className="bg-primary text-white max-w-full h-auto min-h-11 whitespace-normal leading-tight"><Phone className="w-4 h-4 mr-2" />{ADMISSIONS_PHONE_LABEL}</Button></a>
+                <a href={`https://wa.me/91${centre.whatsappNumber}`} target="_blank" rel="noopener noreferrer" onClick={whatsapp}><Button size="lg" className="bg-green-600 hover:bg-green-700 text-white"><MessageCircle className="w-4 h-4 mr-2" />WhatsApp</Button></a>
                 <a href={centre.googleMapsDirectionsUrl} target="_blank" rel="noopener noreferrer" onClick={directions}><Button size="lg" variant="outline"><Navigation className="w-4 h-4 mr-2" />Get directions</Button></a>
               </div>
             </div>
-            <Card className="shadow-lg">
-              <CardHeader><CardTitle className="text-xl">Request a Callback</CardTitle><p className="text-sm text-muted-foreground">Fill in your details and we'll call you back within 24 hours</p></CardHeader>
-              <CardContent><LocalCallbackForm locality={centre.localityName} centre={centre.name} sourcePage="preschool-anand-nagar" /></CardContent>
-            </Card>
+            <LocalCallbackForm locality={centre.localityName} centre={centre.name} sourcePage="preschool-anand-nagar"
+              title="Book a Visit or Callback" subtitle="Our admissions team calls back within 24 hours."
+              className="shadow-lg lg:col-start-2 lg:row-start-1 lg:row-span-2 lg:self-stretch lg:flex lg:flex-col lg:justify-center" />
+            <div className="lg:col-start-1 lg:row-start-2 rounded-2xl overflow-hidden aspect-[16/10]">
+              <img src="/images/optimized/teacher-teaching-children-classroom.webp" alt="Rainbow Preschool teacher leading a classroom lesson with children"
+                width={1197} height={800} fetchPriority="high" className="w-full h-full object-cover" />
+            </div>
           </div>
         </section>
 
         <BranchQuickFacts facts={copy.quickFacts} />
 
-        <section className="py-12 md:py-16">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl md:text-3xl font-bold mb-6">{copy.aboutHeading}</h2>
-            {copy.aboutParagraphs.map((paragraph) => <p key={paragraph} className="text-muted-foreground mb-4 leading-relaxed">{paragraph}</p>)}
+        <section className="py-10 md:py-16 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+            <div>
+              <h2 className="text-2xl md:text-3xl font-bold mb-6">{copy.aboutHeading}</h2>
+              {copy.aboutParagraphs.map((paragraph) => <p key={paragraph} className="text-slate-700 text-base md:text-[17px] font-medium mb-4 leading-relaxed">{paragraph}</p>)}
+            </div>
+            <div className="rounded-2xl overflow-hidden aspect-[3/2]">
+              <img src="/images/optimized/children-learning-rainbow-preschool.webp" alt="Children joining a classroom lesson at Rainbow Preschool"
+                loading="lazy" width={1197} height={800} className="w-full h-full object-cover" />
+            </div>
           </div>
         </section>
 
-        <section className="py-12 md:py-16 bg-muted/30">
+        <section className="py-10 md:py-16 bg-[#fff9f2]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center">{copy.programmesHeading}</h2>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-              {copy.programmes.map((item) => {
-                const card = <Card className={`h-full ${item.href ? "hover-elevate" : ""}`}><CardContent className="pt-6">
-                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-4"><Heart className="w-6 h-6 text-primary" /></div>
-                  <h3 className="text-lg font-semibold mb-2">{item.title}</h3><p className="text-sm font-semibold mb-2">{item.age}</p>
-                  <p className="text-sm text-muted-foreground">{item.description}</p>
+            <div className="grid md:grid-cols-3 gap-5">
+              {copy.programmes.slice(0, 3).map((item, index) => {
+                const Icon = programmeIcons[index];
+                return <Link key={item.title} href={item.href} className="block h-full">
+                  <Card className="h-full hover-elevate border-primary/10"><CardContent className="pt-6">
+                    <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4"><Icon className="w-6 h-6 text-primary" aria-hidden="true" /></div>
+                    <span className="inline-block rounded-full bg-amber-100 text-amber-900 px-3 py-1 text-xs font-bold mb-3">{item.age}</span>
+                    <h3 className="text-lg font-bold mb-2">{item.title}</h3>
+                    <p className="text-slate-700 mb-4">{item.description}</p>
+                    <span className="text-primary font-bold">Learn more →</span>
+                  </CardContent></Card>
+                </Link>;
+              })}
+            </div>
+            <div className="grid md:grid-cols-2 gap-5 mt-5">
+              {copy.programmes.slice(3).map((item, index) => {
+                const Icon = index === 0 ? BookOpen : Sun;
+                const card = <Card className="h-full border-primary/10"><CardContent className="p-5 flex gap-4 items-start">
+                  <Icon className="w-6 h-6 text-primary shrink-0" aria-hidden="true" />
+                  <div><h3 className="font-bold text-lg">{item.title}</h3>
+                    <p className="text-slate-700">{item.description}</p>{item.href && <span className="text-primary font-bold">Learn more →</span>}
+                  </div>
                 </CardContent></Card>;
-                return item.href ? <Link key={item.title} href={item.href}>{card}</Link> : <div key={item.title}>{card}</div>;
+                return item.href ? <Link key={item.title} href={item.href} className="block h-full">{card}</Link> : <div key={item.title}>{card}</div>;
               })}
             </div>
           </div>
         </section>
 
         <HomeRainbowTheatre heading={copy.theatreHeading} subline={copy.theatreSubline} branchCopy />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
-          <ul aria-label="Recent Rainbow moments" className="grid md:grid-cols-2 lg:grid-cols-3 gap-3 text-sm text-muted-foreground">
-            {BRANCH_REEL_EXCERPTS.map((caption, index) => <li className="border rounded-xl p-4 bg-background" key={index}>{caption}</li>)}
-          </ul>
-        </div>
 
-        <section className="py-12 md:py-16 bg-muted/30">
+        <section className="py-10 md:py-16 bg-[#fff9f2]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center">{copy.galleryHeading}</h2>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {copy.gallery.map((image, index) => <div key={image.src} className="aspect-square rounded-xl overflow-hidden">
-                <img src={image.src} alt={image.alt} loading={index === 0 ? "eager" : "lazy"} decoding="async"
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+              {copy.gallery.map((image) => <div key={image.src} className="aspect-square rounded-xl overflow-hidden">
+                <img src={image.src} alt={image.alt} loading="lazy" decoding="async"
                   width="400" height="400" className="w-full h-full object-cover hover:scale-105 transition-transform duration-300" />
               </div>)}
             </div>
           </div>
         </section>
 
-        <section className="py-12 md:py-16">
+        <section className="py-10 md:py-16 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center">{copy.whyHeading}</h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {why.map((reason) => <div key={reason} className="flex items-start gap-3 p-4 bg-background rounded-lg border">
-                <ChevronRight className="w-5 h-5 text-primary shrink-0" aria-hidden="true" /><p className="text-sm">{reason}</p>
-              </div>)}
-            </div>
-          </div>
-        </section>
-
-        <section className="py-12 md:py-16">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center">{copy.safetyHeading}</h2>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-              {copy.safety.map((item, index) => <Card key={item.title} className="h-full"><CardContent className="pt-6 text-center">
-                {index % 2 === 0 ? <Shield className="w-9 h-9 mx-auto mb-3 text-primary" /> : <Users className="w-9 h-9 mx-auto mb-3 text-primary" />}
-                <h3 className="font-semibold mb-2">{item.title}</h3><p className="text-sm text-muted-foreground">{item.description}</p>
-              </CardContent></Card>)}
+              {why.map((reason, index) => {
+                const Icon = whyIcons[index] ?? ShieldCheck;
+                return <div key={reason} className="flex items-start gap-4 p-5 bg-[#fff9f2] rounded-2xl border border-primary/10">
+                  <Icon className="w-6 h-6 text-primary shrink-0" aria-hidden="true" /><p className="text-slate-800 font-medium leading-relaxed">{reason}</p>
+                </div>;
+              })}
             </div>
           </div>
         </section>
@@ -164,7 +177,7 @@ export function AnandNagarCentrePage() {
             <Accordion type="single" collapsible className="space-y-2">
               {faqs.map((faq, index) => <AccordionItem key={faq.question} value={`faq-${index}`} className="bg-background border rounded-lg px-4">
                 <AccordionTrigger className="text-left hover:no-underline py-4"><span className="font-semibold text-sm md:text-base pr-4">{faq.question}</span></AccordionTrigger>
-                <AccordionContent forceMount className="text-muted-foreground pb-4">{faq.answer}</AccordionContent>
+                <AccordionContent forceMount className="text-slate-700 pb-4">{faq.answer}</AccordionContent>
               </AccordionItem>)}
             </Accordion>
           </div>
@@ -179,12 +192,14 @@ export function AnandNagarCentrePage() {
             <h2 className="text-2xl md:text-3xl font-bold mb-4">{copy.finalHeading}</h2>
             <p className="text-lg mb-8">Call or WhatsApp us to arrange a visit to the Anand Nagar centre.</p>
             <div className="flex flex-wrap justify-center gap-4">
-              <a href="tel:+919833781550" onClick={call}><Button size="lg" variant="secondary"><Phone className="w-4 h-4 mr-2" />Call 98337 81550</Button></a>
+              <a href={`tel:${ADMISSIONS_PHONE_NUMBER}`} onClick={call} className="max-w-full"><Button size="lg" className="bg-primary text-white max-w-full h-auto min-h-11 whitespace-normal leading-tight"><Phone className="w-4 h-4 mr-2" />{ADMISSIONS_PHONE_LABEL}</Button></a>
               <a href={`https://wa.me/91${centre.whatsappNumber}`} target="_blank" rel="noopener noreferrer" onClick={whatsapp}><Button size="lg" variant="outline" className="bg-white/10 border-white text-white hover:bg-white/20"><MessageCircle className="w-4 h-4 mr-2" />WhatsApp Us</Button></a>
             </div>
           </div>
         </section>
       </main>
+      <StickyCTABar phoneNumber={ADMISSIONS_PHONE_NUMBER} callLabel={ADMISSIONS_PHONE_LABEL} whatsappNumber={centre.whatsappNumber}
+        locality={centre.localityName} onCallClick={call} onWhatsAppClick={whatsapp} twoActionsOnly />
     </div>
   );
 }

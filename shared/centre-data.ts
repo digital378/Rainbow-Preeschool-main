@@ -26,6 +26,13 @@ export interface CentreData {
   areasServed?: string[];
 }
 
+export const ADMISSIONS_PHONE_NUMBER = "+918291568972";
+export const ADMISSIONS_PHONE_LABEL = "Call Admissions: 82915 68972";
+
+function centreMapEmbed(latitude: string, longitude: string): string {
+  return `https://www.google.com/maps?q=${latitude},${longitude}&z=16&output=embed`;
+}
+
 // Default gallery images for all centres
 // Note: These must be different from programme card images to avoid duplicates on same page
 export const defaultCentreGalleryImages = [
@@ -42,19 +49,18 @@ export const anandNagarPage = {
   publishDate: "2026-09-30",
   publishDateDisplay: "30 September 2026",
   heroSubline: "Playgroup, Nursery and KG opposite Tropical Lagoon, Ghodbunder Road",
-  trustChips: ["Since 2007", "4.9★ from 487 Google reviews across our centres", "100% female, ECCE-trained teachers", "GPS transport"],
+  trustChips: ["Since 2007", "4.9★ from 487 Google reviews across our centres", "100% female, ECCE-trained teachers"],
   quickFacts: [
-    "Ages 1.5–5.5",
-    "Batches 8:30–11:30 & 12:30–3:30, Mon–Fri",
-    "Playgroup to Grade 2",
-    "GPS-enabled transport",
-    "Happy Times daycare",
+    { icon: "baby", label: "Ages", value: "1.5–5.5 years" },
+    { icon: "clock", label: "Batches", value: "8:30–11:30 AM · 12:30–3:30 PM, Mon–Fri" },
+    { icon: "graduation", label: "Classes", value: "Playgroup to Grade 2" },
+    { icon: "bus", label: "Transport", value: "GPS-enabled" },
+    { icon: "sun", label: "Daycare", value: "Happy Times, 8:30 AM–7:30 PM" },
   ],
   aboutHeading: "About Our Anand Nagar Centre",
   aboutParagraphs: [
     "Our Anand Nagar centre is on the 1st floor of Kris Commercial Plaza, opposite Tropical Lagoon on Ghodbunder Road. Families from Anand Nagar, Kavesar, Vijay Garden, Cosmos Jewels and Waghbil can reach us in a few minutes. Children join us from 1.5 years in Playgroup and can continue through Nursery, Jr. KG and Sr. KG, and up to Grade 2 at this centre.",
     "Every class is led by our female, ECCE-trained teachers, with two teachers for every 30 children. Our play-based, NEP 2020-aligned curriculum brings in art, music, movement and storytelling every day. You get daily updates and a monthly progress report, and our Academic Coordinator, Gauri Randhir, guides the curriculum at this centre.",
-    "Playgroup begins at 1.5 years and Nursery at 2.5 years; Jr. KG and Sr. KG cover ages 3.5–5.5. Families considering the years beyond preschool can also ask about primary classes up to Grade 2 during their visit. The two Monday-to-Friday preschool batches are 8:30–11:30 AM and 12:30–3:30 PM. For children aged 2–8, Happy Times daycare runs from 8:30 AM to 7:30 PM and includes one nutritious meal. Ask our team about transport and the current fees when you arrange a visit.",
   ],
   programmesHeading: "Programmes Available at This Centre",
   programmes: [
@@ -62,28 +68,20 @@ export const anandNagarPage = {
     { title: "Nursery", age: "Ages 2.5–3.5 years", description: "Play-based learning with art, music, movement and storytelling.", href: "/nursery" },
     { title: "Kindergarten: Jr. KG & Sr. KG", age: "Ages 3.5–5.5 years", description: "Jr. KG and Sr. KG follow our NEP 2020-aligned, play-based curriculum.", href: "/kindergarten" },
     { title: "Primary classes up to Grade 2", age: "After Sr. KG", description: "Children can continue up to Grade 2 at this centre.", href: "" },
-    { title: "Happy Times daycare", age: "Ages 2–8 years", description: "8:30 AM–7:30 PM, with one nutritious meal.", href: "/happy-times" },
+    { title: "Happy Times daycare (ages 2–8)", age: "Ages 2–8 years", description: "8:30 AM–7:30 PM, with one nutritious meal.", href: "/happy-times" },
   ],
   theatreHeading: "Life at Rainbow",
   theatreSubline: "Classroom moments, celebrations and discoveries from our centres.",
   galleryHeading: "Our Learning Spaces in Anand Nagar",
   gallery: [
-    { src: "/images/optimized/children-learning-rainbow-preschool.webp", alt: "Children learning together at Rainbow Preschool" },
-    { src: "/images/optimized/child-stacking-rings-playgroup.webp", alt: "A child stacking rings during playgroup at Rainbow Preschool" },
-    { src: "/images/optimized/DSC00010.webp", alt: "Two Rainbow Preschool children playing with colourful blocks on a floor mat" },
-    { src: "/images/optimized/DSC00011.webp", alt: "Two children arranging colourful play materials at Rainbow Preschool" },
-    { src: "/images/optimized/DSC00054.webp", alt: "Two Rainbow Preschool children playing in a ball pool" },
-    { src: "/images/optimized/DSC00002.webp", alt: "Two Rainbow Preschool children holding alphabet letters over their eyes" },
-    { src: "/images/optimized/DSC00051.webp", alt: "Three Rainbow Preschool children playing with colourful balls" },
+    { src: "/images/gallery/rainbow-preschool-classroom-learning-01.webp", alt: "Bright Rainbow Preschool classroom with blue tables, child-sized chairs and whiteboard" },
+    { src: "/images/gallery/rainbow-preschool-classroom-activity-01.webp", alt: "Colourful Rainbow Preschool activity room with toy storage and birthday display" },
+    { src: "/images/gallery/rainbow-preschool-learning-through-play-01.webp", alt: "Two Rainbow Preschool children smiling during a classroom learning activity" },
+    { src: "/images/gallery/rainbow-preschool-activity-book-character-day.webp", alt: "Rainbow Preschool children dressed as book characters for Book Character Day" },
+    { src: "/images/gallery/rainbow-preschool-sports-day-event-01.webp", alt: "Rainbow Preschool children taking part in an outdoor Sports Day activity" },
+    { src: "/images/gallery/rainbow-preschool-happy-times-02.webp", alt: "Colourful Happy Times daycare activity room with child-sized tables and chairs" },
   ],
-  whyHeading: "Why Parents Choose This Centre",
-  safetyHeading: "Safety & Hygiene",
-  safety: [
-    { title: "CCTV-monitored classrooms", description: "Classrooms are monitored by CCTV." },
-    { title: "100% female, ECCE-trained staff", description: "Two teachers for every 30 children." },
-    { title: "Toys and classrooms sanitised", description: "Sanitised several times a day." },
-    { title: "Daily parent updates", description: "You'll know how your child's day went." },
-  ],
+  whyHeading: "Why Parents Choose Our Anand Nagar Centre",
   areasHeading: "Preschool Near Kavesar, Vijay Garden and Anand Nagar",
   nearbyAreas: [
     { label: "Under 1 km", areas: ["Anand Nagar", "Tropical Lagoon", "Kavesar", "Vijay Garden", "Kasarvadavali", "Cosmos Jewels", "Parkwoods"] },
@@ -120,10 +118,10 @@ export const centres: CentreData[] = [
     phoneNumbers: ["022-47762019", "93218 39367"],
     whatsappNumber: "8828195788",
     googleMapsDirectionsUrl: "https://maps.app.goo.gl/jenJNhoqsExdWH5DA",
-    googleMapsEmbedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3767.1234!2d72.9754!3d19.2187!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTnCsDEzJzA3LjMiTiA3MsKwNTgnMzEuNCJF!5e0!3m2!1sen!2sin!4v1234567890",
+    googleMapsEmbedUrl: centreMapEmbed("19.2326549", "72.9710766"),
     landmarks: ["Khewra Circle", "Edenwoods", "Manpada"],
-    latitude: "19.2168",
-    longitude: "72.9815",
+    latitude: "19.2326549",
+    longitude: "72.9710766",
     programmeLinks: {
       playgroup: "/playgroup",
       nursery: "/nursery",
@@ -143,9 +141,10 @@ export const centres: CentreData[] = [
     phoneNumbers: ["91365 78589"],
     whatsappNumber: "9136578589",
     googleMapsDirectionsUrl: "https://maps.app.goo.gl/KrcVoEu8xSHEzEPd9",
+    googleMapsEmbedUrl: centreMapEmbed("19.1917133", "72.966523"),
     landmarks: ["Hariniwas Circle", "Bhakti Mandir Road", "Panchpakadi"],
-    latitude: "19.1958",
-    longitude: "72.9698",
+    latitude: "19.1917133",
+    longitude: "72.966523",
     programmeLinks: {
       playgroup: "/playgroup",
       nursery: "/nursery",
@@ -165,7 +164,7 @@ export const centres: CentreData[] = [
     phoneNumbers: ["98337 81550", "91524 89789"],
     whatsappNumber: "9833781550",
     googleMapsDirectionsUrl: "https://maps.app.goo.gl/oFnzPGooMos4qACV9",
-    googleMapsEmbedUrl: "https://maps.google.com/maps?q=19.2648723,72.9707478&z=16&output=embed",
+    googleMapsEmbedUrl: centreMapEmbed("19.2648723", "72.9707478"),
     landmarks: ["Tropical Lagoon", "Anand Nagar bus depot", "Ghodbunder Road"],
     latitude: "19.2648723",
     longitude: "72.9707478",
@@ -188,9 +187,10 @@ export const centres: CentreData[] = [
     phoneNumbers: ["93212 38375"],
     whatsappNumber: "9167399247",
     googleMapsDirectionsUrl: "https://maps.app.goo.gl/WAp5VMqUs6UhUK4c8",
+    googleMapsEmbedUrl: centreMapEmbed("19.228991", "72.9802583"),
     landmarks: ["Dhokali Naka", "Kolshet Road", "Aban Park Society"],
-    latitude: "19.2305",
-    longitude: "72.9889",
+    latitude: "19.228991",
+    longitude: "72.9802583",
     programmeLinks: {
       playgroup: "/playgroup",
       nursery: "/nursery",
@@ -210,9 +210,10 @@ export const centres: CentreData[] = [
     phoneNumbers: ["74003 27905"],
     whatsappNumber: "7400327905",
     googleMapsDirectionsUrl: "https://maps.app.goo.gl/HoW2W9r1v6Jzi397A",
+    googleMapsEmbedUrl: centreMapEmbed("19.1990801", "72.9913522"),
     landmarks: ["Sayba Hall", "Manisha Nagar"],
-    latitude: "19.2019",
-    longitude: "73.0229",
+    latitude: "19.1990801",
+    longitude: "72.9913522",
     programmeLinks: {
       playgroup: "/playgroup",
       nursery: "/nursery",
@@ -232,9 +233,10 @@ export const centres: CentreData[] = [
     phoneNumbers: ["022-40062128", "87798 00068"],
     whatsappNumber: "8779800068",
     googleMapsDirectionsUrl: "https://maps.app.goo.gl/kE2EyU3YUuf9ZDuNA",
+    googleMapsEmbedUrl: centreMapEmbed("19.2669237", "72.9634446"),
     landmarks: ["Hypercity Mall", "Parijat Gardens"],
-    latitude: "19.2499",
-    longitude: "72.9721",
+    latitude: "19.2669237",
+    longitude: "72.9634446",
     programmeLinks: {
       playgroup: "/playgroup",
       nursery: "/nursery",
@@ -439,10 +441,10 @@ export const whyParentsChoose: Record<string, string[]> = {
   "anand-nagar": [
     "Opposite Tropical Lagoon on Ghodbunder Road, easy to reach from Kavesar and Vijay Garden",
     "100% female, ECCE-trained teachers; two teachers per class of 30",
-    "Art, music, movement and storytelling every day",
+    "CCTV-monitored classrooms",
+    "Toys and classrooms sanitised several times a day",
     "Daily updates and monthly progress reports",
-    "Continue up to Grade 2 at the same centre",
-    "GPS-enabled in-house transport",
+    "Art, music, movement and storytelling every day",
   ],
   dhokali: [
     "Strategically located on Kolshet Road for easy access",
@@ -483,7 +485,7 @@ export const preschoolFAQs: Record<string, Array<{ question: string; answer: str
     },
     {
       question: "What is the fee structure for preschool in Manpada?",
-      answer: "For detailed fee information, please contact our Manpada centre at 022-47762019 or 93218 39367. We offer competitive fees with excellent education quality."
+      answer: "For detailed fee information, please call Admissions on 82915 68972."
     },
     {
       question: "What programmes are available at the Manpada centre?",
@@ -491,7 +493,7 @@ export const preschoolFAQs: Record<string, Array<{ question: string; answer: str
     },
     {
       question: "How do I enroll my child at Rainbow Preschool Manpada?",
-      answer: "Fill out the callback form on this page or call us at 93218 39367. Our team will schedule a visit and guide you through the enrollment process."
+      answer: "Fill out the callback form on this page or call Admissions on 82915 68972. Our team will schedule a visit and guide you through the enrollment process."
     },
     {
       question: "Is Rainbow Preschool Manpada safe for my child?",
@@ -503,7 +505,7 @@ export const preschoolFAQs: Record<string, Array<{ question: string; answer: str
     },
     {
       question: "Can I visit the Manpada centre before enrolling?",
-      answer: "Yes, we encourage all parents to visit! Contact us at 93218 39367 or fill the callback form to schedule a free visit to our Manpada centre."
+      answer: "Yes, we encourage all parents to visit! Call Admissions on 82915 68972 or fill the callback form to schedule a visit to our Manpada centre."
     },
   ],
   hariniwas: [
@@ -517,11 +519,11 @@ export const preschoolFAQs: Record<string, Array<{ question: string; answer: str
     },
     {
       question: "What are the timings at Hariniwas centre?",
-      answer: "We offer morning and afternoon batches. Contact us at 91365 78589 for specific batch timings that suit your schedule."
+      answer: "We offer morning and afternoon batches. Call Admissions on 82915 68972 for specific batch timings that suit your schedule."
     },
     {
       question: "How can I contact Rainbow Preschool Hariniwas?",
-      answer: "Call us at 91365 78589 or WhatsApp the same number. You can also fill the callback form for a quick response."
+      answer: "Call Admissions on 82915 68972, WhatsApp the centre, or fill the callback form for a quick response."
     },
     {
       question: "What curriculum does Rainbow Preschool follow?",
@@ -537,7 +539,7 @@ export const preschoolFAQs: Record<string, Array<{ question: string; answer: str
     },
     {
       question: "Can I schedule a visit to the Hariniwas centre?",
-      answer: "Yes! Fill out the callback form or call 91365 78589 to schedule a free visit and see our learning environment firsthand."
+      answer: "Yes! Fill out the callback form or call Admissions on 82915 68972 to schedule a visit and see our learning environment firsthand."
     },
   ],
   "anand-nagar": [
@@ -548,8 +550,8 @@ export const preschoolFAQs: Record<string, Array<{ question: string; answer: str
     { question: "What is the class size?", answer: "We keep two teachers for every 30 children, and all our teachers are female and ECCE-trained." },
     { question: "Do you provide transport?", answer: "Yes, GPS-enabled in-house transport." },
     { question: "Is there daycare?", answer: "Yes, Happy Times daycare for ages 2–8 runs here from 8:30 AM to 7:30 PM, with one nutritious meal." },
-    { question: "What are the fees?", answer: "Please call 98337 81550 for current fees." },
-    { question: "How do I enrol?", answer: "Call or WhatsApp 98337 81550, or fill in the callback form. We'll book your visit and a short parent–child interaction." },
+    { question: "What are the fees?", answer: "Please call Admissions on 82915 68972 for current fees." },
+    { question: "How do I enrol?", answer: "Call Admissions on 82915 68972, WhatsApp the centre, or fill in the callback form. We'll book your visit and a short parent–child interaction." },
   ],
   dhokali: [
     {
@@ -566,7 +568,7 @@ export const preschoolFAQs: Record<string, Array<{ question: string; answer: str
     },
     {
       question: "How can I contact Rainbow Preschool Dhokali?",
-      answer: "Call us at 93212 38375 or WhatsApp 91673 99247. You can also fill the callback form for a quick response."
+      answer: "Call Admissions on 82915 68972, WhatsApp the centre, or fill the callback form for a quick response."
     },
     {
       question: "What is the curriculum at Dhokali centre?",
@@ -574,7 +576,7 @@ export const preschoolFAQs: Record<string, Array<{ question: string; answer: str
     },
     {
       question: "Are there any sibling discounts available?",
-      answer: "Please contact our Dhokali centre at 93212 38375 for information about sibling discounts and other offers."
+      answer: "Please call Admissions on 82915 68972 for information about sibling discounts and other offers."
     },
     {
       question: "What safety features does the Dhokali centre have?",
@@ -582,7 +584,7 @@ export const preschoolFAQs: Record<string, Array<{ question: string; answer: str
     },
     {
       question: "Can I visit before enrolling?",
-      answer: "Yes! We encourage parent visits. Call 93212 38375 or use the callback form to schedule a free visit."
+      answer: "Yes! We encourage parent visits. Call Admissions on 82915 68972 or use the callback form to schedule a visit."
     },
   ],
   kalwa: [
@@ -604,7 +606,7 @@ export const preschoolFAQs: Record<string, Array<{ question: string; answer: str
     },
     {
       question: "How do I enroll my child at Kalwa?",
-      answer: "Call 74003 27905 or fill out the callback form. Our team will schedule a visit and guide you through enrollment."
+      answer: "Call Admissions on 82915 68972 or fill out the callback form. Our team will schedule a visit and guide you through enrollment."
     },
     {
       question: "What is special about Rainbow Preschool's teaching method?",
@@ -638,7 +640,7 @@ export const preschoolFAQs: Record<string, Array<{ question: string; answer: str
     },
     {
       question: "How do I contact Rainbow Preschool Kasarvadavali?",
-      answer: "Call 022-40062128 or 87798 00068. You can also WhatsApp us at 87798 00068 or fill the callback form."
+      answer: "Call Admissions on 82915 68972, WhatsApp the centre, or fill the callback form."
     },
     {
       question: "What areas does the Kasarvadavali centre serve?",
@@ -650,7 +652,7 @@ export const preschoolFAQs: Record<string, Array<{ question: string; answer: str
     },
     {
       question: "Can I schedule a visit?",
-      answer: "Yes! Fill the callback form or call 87798 00068 to schedule a free visit to our Kasarvadavali centre."
+      answer: "Yes! Fill the callback form or call Admissions on 82915 68972 to schedule a visit to our Kasarvadavali centre."
     },
   ],
 };

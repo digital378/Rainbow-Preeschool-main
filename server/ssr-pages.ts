@@ -2125,12 +2125,12 @@ const staticPages: Record<string, PageSEOData> = {
 };
 
 const preschoolCentres: Record<string, { locality: string; address: string; phone: string; lat: string; lng: string }> = {
-  "/preschool-in-manpada-thane": { locality: "Manpada", address: "Aggarwal Arcade, Near Khewra Circle, Manpada, Thane (W)", phone: "+918291568972", lat: "19.2168", lng: "72.9815" },
-  "/preschool-in-hariniwas-thane": { locality: "Hariniwas", address: "M.V.Apartments, Bhakti Mandir Road, Opp. Thanawala Garage, Hariniwas Circle, Panchpakadi, Thane (W)", phone: "+918291568972", lat: "19.1958", lng: "72.9698" },
-  "/preschool-in-anand-nagar-thane": { locality: "Anand Nagar", address: "Kris Commercial Plaza, 1st Floor, Opp. Tropical Lagoon, Anand Nagar, Ghodbunder Road, Thane (W)", phone: "+919833781550", lat: "19.2648723", lng: "72.9707478" },
-  "/preschool-in-dhokali-thane": { locality: "Dhokali", address: "Kolshet Road, Dhokali Naka, Opp. Aban Park Society, Thane (W)", phone: "+918291568972", lat: "19.2305", lng: "72.9889" },
-  "/preschool-in-kalwa-thane": { locality: "Kalwa", address: "Harsh Prasad Co-op Hsg, Soc, Near Sayba Hall, Manisha Nagar, Gate No.1, Kalwa", phone: "+918291568972", lat: "19.2019", lng: "73.0229" },
-  "/preschool-in-kasarvadavali-thane": { locality: "Kasarvadavali", address: "Rosa Gardenia, Next to Parijat Gardens, Kasarvadavali, Behind Hypercity Mall, Thane (W)", phone: "+918291568972", lat: "19.2499", lng: "72.9721" },
+  "/preschool-in-manpada-thane": { locality: "Manpada", address: "Aggarwal Arcade, Near Khewra Circle, Manpada, Thane (W)", phone: "+918291568972", lat: "19.2326549", lng: "72.9710766" },
+  "/preschool-in-hariniwas-thane": { locality: "Hariniwas", address: "M.V.Apartments, Bhakti Mandir Road, Opp. Thanawala Garage, Hariniwas Circle, Panchpakadi, Thane (W)", phone: "+918291568972", lat: "19.1917133", lng: "72.966523" },
+  "/preschool-in-anand-nagar-thane": { locality: "Anand Nagar", address: "Kris Commercial Plaza, 1st Floor, Opp. Tropical Lagoon, Anand Nagar, Ghodbunder Road, Thane (W)", phone: "+918291568972", lat: "19.2648723", lng: "72.9707478" },
+  "/preschool-in-dhokali-thane": { locality: "Dhokali", address: "Kolshet Road, Dhokali Naka, Opp. Aban Park Society, Thane (W)", phone: "+918291568972", lat: "19.228991", lng: "72.9802583" },
+  "/preschool-in-kalwa-thane": { locality: "Kalwa", address: "Harsh Prasad Co-op Hsg, Soc, Near Sayba Hall, Manisha Nagar, Gate No.1, Kalwa", phone: "+918291568972", lat: "19.1990801", lng: "72.9913522" },
+  "/preschool-in-kasarvadavali-thane": { locality: "Kasarvadavali", address: "Rosa Gardenia, Next to Parijat Gardens, Kasarvadavali, Behind Hypercity Mall, Thane (W)", phone: "+918291568972", lat: "19.2669237", lng: "72.9634446" },
 };
 
 // ── Pages intentionally excluded from indexing ──────────────────────────────
@@ -2650,14 +2650,15 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
         {
           items: [...page.trustChips],
           links: [
-            { text: "Call 98337 81550", url: "tel:+919833781550" },
+            { text: "Call Admissions: 82915 68972", url: "tel:+918291568972" },
             { text: "WhatsApp", url: "https://wa.me/919833781550" },
             { text: "Get directions", url: centre.googleMapsDirectionsUrl },
           ],
         },
+        { heading: "Book a Visit or Callback", text: "Our admissions team calls back within 24 hours." },
         {
           heading: "Quick Facts",
-          items: [...page.quickFacts],
+          items: page.quickFacts.map((fact) => `${fact.label.toUpperCase()}: ${fact.value}`),
         },
         {
           heading: page.aboutHeading,
@@ -2668,7 +2669,7 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
           subsections: page.programmes.map((programme) => ({
             heading: programme.title,
             text: `${programme.age} — ${programme.description}`,
-            links: programme.href ? [{ text: programme.title, url: programme.href }] : undefined,
+            links: programme.href ? [{ text: "Learn more →", url: programme.href }] : undefined,
           })),
         },
         {
@@ -2686,10 +2687,6 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
           items: [...(whyParentsChoose["anand-nagar"] ?? [])],
         },
         {
-          heading: page.safetyHeading,
-          items: page.safety.map((item) => `${item.title}: ${item.description}`),
-        },
-        {
           heading: page.areasHeading,
           subsections: [
             ...page.nearbyAreas.map((group) => ({
@@ -2698,6 +2695,7 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
             })),
             { text: page.areasParagraph },
             { heading: page.reachHeading, text: page.reachText },
+            { heading: "Centre address & contact", text: centre.address, items: ["Centre phone"], links: centre.phoneNumbers.map((phone) => ({ text: phone, url: `tel:+91${phone.replace(/\D/g, "")}` })) },
           ],
           links: [{ text: "Get directions", url: centre.googleMapsDirectionsUrl }],
         },
@@ -2725,7 +2723,7 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
         title: page.finalHeading,
         description: "Call or WhatsApp us to arrange a visit to the Anand Nagar centre.",
         links: [
-          { text: "Call 98337 81550", url: "tel:+919833781550" },
+          { text: "Call Admissions: 82915 68972", url: "tel:+918291568972" },
           { text: "WhatsApp", url: "https://wa.me/919833781550" },
         ],
       },
