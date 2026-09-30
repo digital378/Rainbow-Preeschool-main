@@ -115,7 +115,7 @@ export function BranchNearby({ content, nearest }: { content: BranchSectionConte
         <h2 className="text-2xl md:text-3xl font-bold mb-6">{content.nearbyHeading}</h2>
         <div className="grid sm:grid-cols-2 gap-4">
           <Link href={nearest.href}><Card className="hover-elevate h-full"><CardContent className="pt-6 font-semibold"><MapPin className="w-5 h-5 text-primary inline-block mr-2" />{content.nearbyLinkText}</CardContent></Card></Link>
-          <Link href="/play-school-near-me"><Card className="hover-elevate h-full"><CardContent className="pt-6 font-semibold">All 6 centres</CardContent></Card></Link>
+          <Link href="/contact"><Card className="hover-elevate h-full"><CardContent className="pt-6 font-semibold">All 6 centres</CardContent></Card></Link>
         </div>
       </div>
     </section>

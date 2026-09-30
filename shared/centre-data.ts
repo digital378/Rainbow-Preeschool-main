@@ -550,8 +550,8 @@ export const preschoolFAQs: Record<string, Array<{ question: string; answer: str
     { question: "What is the class size?", answer: "We keep two teachers for every 30 children, and all our teachers are female and ECCE-trained." },
     { question: "Do you provide transport?", answer: "Yes, GPS-enabled in-house transport." },
     { question: "Is there daycare?", answer: "Yes, Happy Times daycare for ages 2–8 runs here from 8:30 AM to 7:30 PM, with one nutritious meal." },
-    { question: "What are the fees?", answer: "Please call Admissions on 82915 68972 for current fees." },
-    { question: "How do I enrol?", answer: "Call Admissions on 82915 68972, WhatsApp the centre, or fill in the callback form. We'll book your visit and a short parent–child interaction." },
+    { question: "What are the fees?", answer: "Please call our admissions team on 82915 68972 for current fees." },
+    { question: "How do I enrol?", answer: "Call our admissions team on 82915 68972, WhatsApp us on 98337 81550, or fill in the callback form. We'll book your visit and a short parent–child interaction." },
   ],
   dhokali: [
     {

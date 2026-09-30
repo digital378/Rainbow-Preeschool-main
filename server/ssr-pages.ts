@@ -2715,7 +2715,7 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
           heading: page.nearbyHeading,
           links: [
             { text: page.nearbyLinkText, url: "/preschool-in-kasarvadavali-thane" },
-            { text: "All 6 centres", url: "/play-school-near-me" },
+            { text: "All 6 centres", url: "/contact" },
           ],
         },
       ],

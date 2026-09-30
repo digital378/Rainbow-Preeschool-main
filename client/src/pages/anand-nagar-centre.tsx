@@ -1,11 +1,10 @@
-import { useLayoutEffect, useRef } from "react";
+import { lazy, Suspense, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Link } from "wouter";
 import { Blocks, BookOpen, ChevronRight, ClipboardList, GraduationCap, MapPin, MessageCircle, Music2, Navigation, Phone, ShieldCheck, Sparkles, SprayCan, Sun, Users, Video } from "lucide-react";
 import { SEO, createBreadcrumbSchema } from "@/components/seo";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { MinimalHeader } from "@/components/landing/minimal-header";
 import { StickyCTABar } from "@/components/landing/sticky-cta-bar";
 import { LocalCallbackForm } from "@/components/local-callback-form";
@@ -20,6 +19,7 @@ const faqs = preschoolFAQs["anand-nagar"];
 const why = whyParentsChoose["anand-nagar"];
 const programmeIcons = [Blocks, Sparkles, GraduationCap];
 const whyIcons = [MapPin, Users, Video, SprayCan, ClipboardList, Music2];
+const BranchFaq = lazy(() => import("@/components/centre/branch-faq").then(({ BranchFaq }) => ({ default: BranchFaq })));
 const base = "https://www.rainbowpreschools.com";
 const url = `${base}${seo.canonicalPath}`;
 const pageSchemas = [
@@ -42,10 +42,28 @@ const pageSchemas = [
 
 export function AnandNagarCentrePage() {
   const initialHeading = useRef(typeof document !== "undefined" && !!document.getElementById("anand-initial-h1"));
+  const faqRef = useRef<HTMLElement>(null);
+  const [faqReady, setFaqReady] = useState(false);
   useLayoutEffect(() => {
     if (!initialHeading.current) return;
     document.getElementById("anand-initial")?.classList.add("anand-hydrated");
     return () => document.getElementById("anand-initial")?.remove();
+  }, []);
+  useEffect(() => {
+    const section = faqRef.current;
+    if (!section) return;
+    if (typeof IntersectionObserver === "undefined") {
+      setFaqReady(true);
+      return;
+    }
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setFaqReady(true);
+        observer.disconnect();
+      }
+    }, { rootMargin: "600px 0px" });
+    observer.observe(section);
+    return () => observer.disconnect();
   }, []);
   const call = () => trackCallClick({ centre: centre.name, locality: centre.localityName, phone: ADMISSIONS_PHONE_NUMBER, source_page: seo.canonicalPath });
   const whatsapp = () => trackWhatsAppClick({ centre: centre.name, locality: centre.localityName, source_page: seo.canonicalPath });
@@ -171,15 +189,16 @@ export function AnandNagarCentrePage() {
         <BranchAreas content={copy} centre={centre} onDirections={directions} />
         <BranchAdmissions content={copy} />
 
-        <section className="py-12 md:py-16">
+        <section ref={faqRef} className="py-12 md:py-16">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center">{copy.faqHeading}</h2>
-            <Accordion type="single" collapsible className="space-y-2">
-              {faqs.map((faq, index) => <AccordionItem key={faq.question} value={`faq-${index}`} className="bg-background border rounded-lg px-4">
-                <AccordionTrigger className="text-left hover:no-underline py-4"><span className="font-semibold text-sm md:text-base pr-4">{faq.question}</span></AccordionTrigger>
-                <AccordionContent forceMount className="text-slate-700 pb-4">{faq.answer}</AccordionContent>
-              </AccordionItem>)}
-            </Accordion>
+            {faqReady ? (
+              <Suspense fallback={<div aria-hidden="true" className="space-y-2">{faqs.map(faq => <div key={faq.question} className="bg-background border rounded-lg px-4 py-4 min-h-16 font-semibold text-sm md:text-base">{faq.question}</div>)}</div>}>
+                <BranchFaq faqs={faqs} />
+              </Suspense>
+            ) : (
+              <div aria-hidden="true" className="space-y-2">{faqs.map(faq => <div key={faq.question} className="bg-background border rounded-lg px-4 py-4 min-h-16 font-semibold text-sm md:text-base">{faq.question}</div>)}</div>
+            )}
           </div>
         </section>
 

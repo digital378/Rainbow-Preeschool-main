@@ -10,6 +10,16 @@
   padding: 0 20px;
 }
 
+.home-rainbow-reel__deferred {
+  min-height: 750px;
+}
+
+@media (max-width: 767px) {
+  .home-rainbow-reel__deferred {
+    min-height: 940px;
+  }
+}
+
 .quick-callback-ticket + .home-rainbow-reel .home-rainbow-reel__inner {
   padding-left: 0;
   padding-right: 0;
