@@ -1,0 +1,111 @@
+PAGE UPDATE: /preschool-in-manpada-thane  (branch page 3 of 6)
+Use the same reusable branch template as Anand Nagar and Kalwa: same section order, design, behaviour, performance rules and checks. Only the data, text and photos below change.
+Rules: don't take screenshots, text report only, don't publish, don't invent facts, no "best/No. 1/finest/award-winning". Meta description must be 155 characters or fewer. Don't show any visible text about photo provenance.
+
+CONFIRMED FACTS: MANPADA (AGGARWAL) CENTRE
+- Name: Rainbow Preschool International, Aggarwal Centre (Manpada)
+- Address: Aggarwal Arcade, Near Khewra Circle, Manpada, Thane (W) 400610
+- Map pin: 19.2326549, 72.9710766. Google profile: https://maps.app.goo.gl/jenJNhoqsExdWH5DA
+  (Also correct latitude/longitude in centre-data.ts. It currently says 19.2168 / 72.9815, which is wrong. Make sure the map embed, schema and any distance logic all use 19.2326549 / 72.9710766.)
+- Centre phones: 022-47762019 and 93218 39367. Centre WhatsApp: 88281 95788. All "Call Admissions" buttons: 82915 68972 (no number shown on the button)
+- Ages 1.5–5.5: Playgroup 1.5–2.5, Nursery 2.5–3.5, Jr. KG 3.5–4.5, Sr. KG 4.5–5.5 (age as of 1 June)
+- Classes at this centre continue up to Grade 4
+- Batches: 8:30–11:30 AM and 12:30–3:30 PM, Monday to Friday
+- Happy Times daycare runs at this centre (ages 2–8, 8:30 AM–7:30 PM, one nutritious meal). Keep it to one programme card and one FAQ; don't give it extra weight.
+- GPS-enabled in-house transport
+- 100% female, ECCE-trained teachers. Ratio 30:2. CCTV-monitored classrooms. Toys and classrooms sanitised several times a day. Daily updates and monthly progress reports. NEP 2020-aligned, play-based curriculum
+- Academic Coordinator: Swapnali Pandit
+- Admission steps, 24-hour reply, "call for fees": same as the other branch pages
+- Brand rating chip: "4.9★ from 487 Google reviews across our centres"
+- Nearest other centre: Dhokali (about 1 km)
+
+AREAS WITHIN ABOUT 2 KM (say "under 1 km" / "1–2 km", never metres)
+- Under 1 km: Khewra Circle, Manpada, Chitalsar, Tikuji-ni-wadi, Dosti Imperia, Hiranandani Meadows, Lokpuram, Kokanipada
+- 1–2 km: Vasant Vihar, Pokhran Road No. 2, Edenwoods, Tata Glendale
+- Landmarks: near Khewra Circle; about 700 m from R Mall on Ghodbunder Road
+- Do NOT list on this page: R Mall (as an "area"), Dhokali, Balkum, Kolshet, Kapurbawdi, Majiwada (Dhokali page), Kavesar, Vijay Garden, Hiranandani Estate, Patlipada, Dongaripada (Anand Nagar page), Charai (Hariniwas page). Remove "Hiranandani Estate" and "Patlipada" from Manpada's areasServed in centre-data.ts.
+
+1. METADATA
+- Title (58 characters): "Preschool in Manpada, Thane | Near Khewra Circle | Rainbow"
+- Meta (141 characters): "Playgroup, Nursery & KG (ages 1.5–5.5) at Aggarwal Arcade near Khewra Circle, Manpada. Up to Grade 4, GPS transport. 2027-28 admissions open."
+- og:description matches the meta. Create a new share image /images/og/manpada-1200x630.jpg from a photo not used on any other page.
+
+2. PAGE TEXT (same sections as Anand Nagar)
+A. Hero
+   - H1: "Preschool in Manpada, Thane"
+   - Subline: "Playgroup, Nursery and KG at Aggarwal Arcade, near Khewra Circle"
+   - Same 3 chips as the other branch pages
+B. Quick facts (5 tiles)
+   - Ages 1.5–5.5
+   - Batches
+   - Playgroup to Sr. KG
+   - Up to Grade 4
+   - GPS-enabled transport
+   (Happy Times stays in the programmes and FAQ, not in the tiles.)
+C. About Our Manpada Centre:
+   "Our Manpada centre is at Aggarwal Arcade, near Khewra Circle. Families from Manpada, Chitalsar, Tikuji-ni-wadi, Hiranandani Meadows and Lokpuram can reach us in a few minutes. Children join us from 1.5 years in Playgroup and can continue through Nursery, Jr. KG and Sr. KG, and up to Grade 4 at this centre.
+   Every class is led by our female, ECCE-trained teachers, with two teachers for every 30 children. Our play-based, NEP 2020-aligned curriculum brings in art, music, movement and storytelling every day. You get daily updates and a monthly progress report, and our Academic Coordinator, Swapnali Pandit, guides the curriculum at this centre."
+D. Programmes
+   - 3 main cards (Playgroup, Nursery, Kindergarten: Jr. KG & Sr. KG) linking to /playgroup, /nursery and /kindergarten
+   - 2 slim cards: "Primary classes up to Grade 4" and "Happy Times daycare (ages 2–8)" → /happy-times
+E. Rainbow Theatre: the same component and rules.
+F. Gallery: heading "Our Learning Spaces in Manpada". See PHOTO RULES.
+G. Why Parents Choose Our Manpada Centre (6 tiles):
+   1. At Aggarwal Arcade near Khewra Circle, easy to reach from Chitalsar and Tikuji-ni-wadi
+   2. 100% female, ECCE-trained teachers; two teachers per class of 30
+   3. CCTV-monitored classrooms
+   4. Toys and classrooms sanitised several times a day
+   5. Daily updates and monthly progress reports
+   6. Continue up to Grade 4 at the same centre
+H. Areas (H2: "Preschool Near Khewra Circle, Tikuji-ni-wadi and Hiranandani Meadows")
+   - Chips from the lists above
+   - Paragraph: "If you live around Khewra Circle, Chitalsar, Tikuji-ni-wadi, Hiranandani Meadows or Lokpuram, our Manpada centre is usually the closest Rainbow centre. Families near R Mall, Dhokali and Kolshet Road are also close to our Dhokali centre, so book a visit at whichever suits your route."
+   - How to reach: "At Aggarwal Arcade, near Khewra Circle in Manpada, about 700 m from R Mall on Ghodbunder Road."
+   - Map: the lazy iframe using 19.2326549, 72.9710766, plus a Get directions button
+I. Admissions: the same as the other branch pages.
+J. FAQ:
+   1. Where is Rainbow Preschool in Manpada? → the full address
+   2. Which areas is the centre close to? → from the lists
+   3. Batch timings? → "8:30–11:30 AM or 12:30–3:30 PM, Monday to Friday."
+   4. Which classes are available? → "Playgroup, Nursery, Jr. KG and Sr. KG (1.5–5.5 years), and classes up to Grade 4."
+   5. Class size? → 30:2, female ECCE-trained
+   6. Transport? → "Yes, GPS-enabled in-house transport."
+   7. Is there daycare? → "Yes, Happy Times daycare for ages 2–8 runs here from 8:30 AM to 7:30 PM, with one nutritious meal."
+   8. Fees? → "Please call our admissions team on 82915 68972 for current fees."
+   9. How do I enrol? → "Call our admissions team on 82915 68972, WhatsApp us on 88281 95788, or fill in the callback form. We'll book your visit and a short parent–child interaction."
+K. Nearby centres: Dhokali (about 1 km) → /preschool-in-dhokali-thane, and "All 6 centres" → /contact.
+L. Final CTA: "Visit Our Manpada Centre".
+Remove from the current Manpada page:
+- "Trusted by Edenwoods families", "small batch sizes"
+- "18+ years of experience" as a claim (the Since 2007 chip covers it)
+- "1.5–5" age ranges, "2026-27", Kids Activity Club, Summer Camp
+- "Curriculum Team", "Reviewed by", "24/7", "secure entry/parent verification"
+- the old "Local Landmarks" and "Neighbourhoods Served" copy
+- anything else not in the facts above
+
+3. PHOTO RULES
+- Use only photos NOT already used on Anand Nagar or Kalwa. The uniqueness check must pass across all three pages.
+- Use as many distinct real photos as are available (target 6–8). If fewer than 4 are left, use what's left and tell me the count; Rainbow Theatre will carry the page.
+- File names follow the same rule as before: area name only if the photo is known to be from that centre, otherwise "thane" (e.g. playgroup-thane-art-activity.webp). Descriptive alt text.
+- Register every Manpada photo in shared/branch-photos.ts.
+
+4. STRUCTURED DATA: the same as the other branch pages:
+- WebPage + BreadcrumbList (positions 1–3)
+- Preschool with:
+  - @id …/preschool-in-manpada-thane#centre
+  - address with postalCode 400610
+  - geo 19.2326549 / 72.9710766
+  - telephone +91-22-47762019
+  - hasMap, parentOrganization, areaServed
+- No aggregateRating, openingHours, FAQPage or Article.
+
+5. CHECKS (text only)
+- Visitor and Googlebot versions match; one H1.
+- The map iframe loads on scroll with the correct pin.
+- All internal links return 200 with no redirects.
+- Meta is 155 characters or fewer.
+- The photo-uniqueness check passes (Anand Nagar + Kalwa + Manpada).
+- Mobile Lighthouse, production build, median of 3: LCP under 2.5 s, CLS under 0.05, TBT under 250 ms.
+- Run the full pre-publish script twice; both runs must pass.
+
+REPORT: title, meta (with character count) and H1; the full text of About, Areas and FAQ; the photo list (file + alt + Manpada/Thane); confirmation the old claims are gone; the centre-data coordinate fix; Lighthouse scores; pre-publish results; files changed. Don't publish.

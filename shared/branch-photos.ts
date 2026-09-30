@@ -73,6 +73,42 @@ export const branchPhotos = {
       },
     ],
   },
+  manpada: {
+    hero: {
+      src: "/images/branches/play-school-thane-teacher-classroom.webp",
+      alt: "Rainbow Preschool teacher engaging children during a classroom lesson",
+    },
+    about: {
+      src: "/images/branches/preschool-thane-child-building-blocks.webp",
+      alt: "Young child smiling while building with colourful blocks at Rainbow Preschool",
+    },
+    gallery: [
+      {
+        src: "/images/branches/preschool-thane-red-table-classroom.webp",
+        alt: "Rows of red tables and a colourful display in a Rainbow Preschool classroom",
+      },
+      {
+        src: "/images/branches/play-school-thane-colourful-activity-room.webp",
+        alt: "Blue child-sized tables and a tree-themed mural in a Rainbow Preschool activity room",
+      },
+      {
+        src: "/images/branches/preschool-thane-sand-tray-play.webp",
+        alt: "Child playing with a pink bucket in a green sensory sand tray",
+      },
+      {
+        src: "/images/branches/nursery-school-thane-turquoise-classroom.webp",
+        alt: "Turquoise classroom tables and yellow chairs arranged in rows",
+      },
+      {
+        src: "/images/branches/preschool-thane-colourful-learning-corridor.webp",
+        alt: "Bright indoor play corridor with colourful floor circles and a children's display wall",
+      },
+      {
+        src: "/images/branches/preschool-thane-childrens-library.webp",
+        alt: "Colourful books, toys and child-sized seating in a Rainbow Preschool library",
+      },
+    ],
+  },
 } as const;
 
 // Canonical file → owning branch index. New branch pages must register photos here

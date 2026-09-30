@@ -98,6 +98,45 @@ export const anandNagarPage = {
   finalHeading: "Visit Our Anand Nagar Centre",
 } as const;
 
+export const manpadaPage = {
+  ...anandNagarPage,
+  heroSubline: "Playgroup, Nursery and KG at Aggarwal Arcade, near Khewra Circle",
+  aboutHeading: "About Our Manpada Centre",
+  aboutParagraphs: [
+    "Our Manpada centre is at Aggarwal Arcade, near Khewra Circle. Families from Manpada, Chitalsar, Tikuji-ni-wadi, Hiranandani Meadows and Lokpuram can reach us in a few minutes. Children join us from 1.5 years in Playgroup and can continue through Nursery, Jr. KG and Sr. KG, and up to Grade 4 at this centre.",
+    "Every class is led by our female, ECCE-trained teachers, with two teachers for every 30 children. Our play-based, NEP 2020-aligned curriculum brings in art, music, movement and storytelling every day. You get daily updates and a monthly progress report, and our Academic Coordinator, Swapnali Pandit, guides the curriculum at this centre.",
+  ],
+  quickFacts: [
+    { icon: "baby", label: "Ages", value: "1.5–5.5 years" },
+    { icon: "clock", label: "Batches", value: "8:30–11:30 AM · 12:30–3:30 PM, Mon–Fri" },
+    { icon: "book", label: "Classes", value: "Playgroup to Sr. KG" },
+    { icon: "graduation", label: "Primary", value: "Up to Grade 4" },
+    { icon: "bus", label: "Transport", value: "GPS-enabled" },
+  ],
+  programmesHeading: "Programmes Available at This Centre",
+  programmes: [
+    { title: "Playgroup", age: "Ages 1.5–2.5 years", description: "Playgroup for children aged 1.5–2.5 years.", href: "/playgroup" },
+    { title: "Nursery", age: "Ages 2.5–3.5 years", description: "Nursery for children aged 2.5–3.5 years.", href: "/nursery" },
+    { title: "Kindergarten: Jr. KG & Sr. KG", age: "Ages 3.5–5.5 years", description: "Jr. KG and Sr. KG for children aged 3.5–5.5 years.", href: "/kindergarten" },
+    { title: "Primary classes up to Grade 4", age: "After Sr. KG", description: "Children can continue up to Grade 4 at this centre.", href: "" },
+    { title: "Happy Times daycare (ages 2–8)", age: "Ages 2–8 years", description: "8:30 AM–7:30 PM, with one nutritious meal.", href: "/happy-times" },
+  ],
+  galleryHeading: "Our Learning Spaces in Manpada",
+  gallery: branchPhotos.manpada.gallery,
+  whyHeading: "Why Parents Choose Our Manpada Centre",
+  areasHeading: "Preschool Near Khewra Circle, Tikuji-ni-wadi and Hiranandani Meadows",
+  nearbyAreas: [
+    { label: "Under 1 km", areas: ["Khewra Circle", "Manpada", "Chitalsar", "Tikuji-ni-wadi", "Dosti Imperia", "Hiranandani Meadows", "Lokpuram", "Kokanipada"] },
+    { label: "1–2 km", areas: ["Vasant Vihar", "Pokhran Road No. 2", "Edenwoods", "Tata Glendale"] },
+  ],
+  areasParagraph: "If you live around Khewra Circle, Chitalsar, Tikuji-ni-wadi, Hiranandani Meadows or Lokpuram, our Manpada centre is usually the closest Rainbow centre. Families near R Mall, Dhokali and Kolshet Road are also close to our Dhokali centre, so book a visit at whichever suits your route.",
+  reachText: "At Aggarwal Arcade, near Khewra Circle in Manpada, about 700 m from R Mall on Ghodbunder Road.",
+  admissionLine: "Age is counted as of 1 June. Admissions for 2027-28 are open, and our team replies within 24 hours. Call for fees.",
+  admissionsDetails: "There is no entrance test. The parent–child interaction is a relaxed conversation of about 20 minutes. Once you confirm a seat, there are 2–3 short orientation sessions before term begins. You can ask which programme matches your child's age, how transport works and whether the batch timings suit your routine when you visit.",
+  nearbyLinkText: "Dhokali (about 1 km)",
+  finalHeading: "Visit Our Manpada Centre",
+} as const;
+
 // These pages share the same branch layout but never share locality claims.
 export const kalwaPage = {
   ...anandNagarPage,
@@ -147,7 +186,7 @@ export const centres: CentreData[] = [
     whatsappNumber: "8828195788",
     googleMapsDirectionsUrl: "https://maps.app.goo.gl/jenJNhoqsExdWH5DA",
     googleMapsEmbedUrl: centreMapEmbed("19.2326549", "72.9710766"),
-    landmarks: ["Khewra Circle", "Edenwoods", "Manpada"],
+    landmarks: ["Khewra Circle", "R Mall", "Ghodbunder Road"],
     latitude: "19.2326549",
     longitude: "72.9710766",
     programmeLinks: {
@@ -155,7 +194,7 @@ export const centres: CentreData[] = [
       nursery: "/nursery",
       kindergarten: "/kindergarten",
     },
-    areasServed: ["Manpada", "Edenwoods", "Hiranandani Estate", "Patlipada"],
+    areasServed: ["Khewra Circle", "Manpada", "Chitalsar", "Tikuji-ni-wadi", "Dosti Imperia", "Hiranandani Meadows", "Lokpuram", "Kokanipada", "Vasant Vihar", "Pokhran Road No. 2", "Edenwoods", "Tata Glendale"],
   },
   {
     id: "hariniwas",
@@ -377,8 +416,8 @@ export interface PreschoolPageSEO {
 
 export const preschoolPageSEO: Record<string, PreschoolPageSEO> = {
   manpada: {
-    title: "Preschool in Manpada, Thane | Rainbow Preschool",
-    description: "Trusted by Edenwoods families since 2007, Rainbow Preschool Manpada offers Playgroup to KG with small batches & 100% female staff. Enquire for 2026-27.",
+    title: "Preschool in Manpada, Thane | Near Khewra Circle | Rainbow",
+    description: "Playgroup, Nursery & KG (ages 1.5–5.5) at Aggarwal Arcade near Khewra Circle, Manpada. Up to Grade 4, GPS transport. 2027-28 admissions open.",
     h1: "Preschool in Manpada, Thane",
     canonicalPath: "/preschool-in-manpada-thane",
   },
@@ -417,9 +456,9 @@ export const preschoolPageSEO: Record<string, PreschoolPageSEO> = {
 // Preschool-specific intro paragraphs for each location
 export const preschoolIntros: Record<string, { paragraph1: string; paragraph2: string; paragraph3: string }> = {
   manpada: {
-    paragraph1: "Looking for a trusted preschool in Manpada, Thane? Rainbow Preschool International at Aggarwal Arcade, near Khewra Circle, has been nurturing young minds for over 18 years. Our Manpada centre offers a comprehensive early childhood education programme including Playgroup, Nursery, and Kindergarten.",
-    paragraph2: "Parents in Manpada and surrounding areas like Edenwoods choose Rainbow Preschool for our proven play-based curriculum that makes learning joyful. Our experienced, caring teachers create a safe and stimulating environment where your child can develop essential cognitive, social, and emotional skills.",
-    paragraph3: "With CCTV monitoring, 100% female staff, and a focus on holistic development, our Manpada centre is the ideal place for your toddler's first learning experience. Schedule a visit today to see why families across Thane West trust Rainbow Preschool.",
+    paragraph1: manpadaPage.aboutParagraphs[0],
+    paragraph2: manpadaPage.aboutParagraphs[1],
+    paragraph3: manpadaPage.areasParagraph,
   },
   hariniwas: {
     paragraph1: "Rainbow Preschool International's Hariniwas centre, located at M.V. Apartments on Bhakti Mandir Road, is a cornerstone of quality early childhood education in Thane. Serving families in Hariniwas Circle, Panchpakadi, and nearby localities, we offer Playgroup, Nursery, and Kindergarten programmes.",
@@ -451,12 +490,12 @@ export const preschoolIntros: Record<string, { paragraph1: string; paragraph2: s
 // Why parents choose Rainbow - locality specific
 export const whyParentsChoose: Record<string, string[]> = {
   manpada: [
-    "Convenient location near Khewra Circle with easy access from Edenwoods",
-    "18+ years of experience in early childhood education",
-    "Small batch sizes ensuring individual attention for each child",
-    "Proven play-based curriculum that makes learning enjoyable",
-    "CCTV monitoring and 100% female teaching staff",
-    "Safe outdoor play area for physical development",
+    "At Aggarwal Arcade near Khewra Circle, easy to reach from Chitalsar and Tikuji-ni-wadi",
+    "100% female, ECCE-trained teachers; two teachers per class of 30",
+    "CCTV-monitored classrooms",
+    "Toys and classrooms sanitised several times a day",
+    "Daily updates and monthly progress reports",
+    "Continue up to Grade 4 at the same centre",
   ],
   hariniwas: [
     "Central Thane location in the heart of Hariniwas Circle",
@@ -504,36 +543,40 @@ export const whyParentsChoose: Record<string, string[]> = {
 export const preschoolFAQs: Record<string, Array<{ question: string; answer: string }>> = {
   manpada: [
     {
-      question: "What age groups does Rainbow Preschool Manpada accept?",
-      answer: "Our Manpada centre accepts children from 1.5 years (18 months) for Playgroup, 2.5-3.5 years for Nursery, and 3.5-5.5 years for Kindergarten. Each programme is age-appropriate and designed for optimal development."
+      question: "Where is Rainbow Preschool in Manpada?",
+      answer: "Rainbow Preschool International, Aggarwal Centre (Manpada), is at Aggarwal Arcade, Near Khewra Circle, Manpada, Thane (W) 400610."
     },
     {
-      question: "Where exactly is Rainbow Preschool located in Manpada?",
-      answer: "We're located at Aggarwal Arcade, Near Khewra Circle, Manpada, Thane (W). It's easily accessible from Edenwoods and surrounding residential areas."
+      question: "Which areas is the centre close to?",
+      answer: "Khewra Circle, Manpada, Chitalsar, Tikuji-ni-wadi, Dosti Imperia, Hiranandani Meadows, Lokpuram and Kokanipada are under 1 km away. Vasant Vihar, Pokhran Road No. 2, Edenwoods and Tata Glendale are 1–2 km away."
     },
     {
-      question: "What is the fee structure for preschool in Manpada?",
-      answer: "For detailed fee information, please call Admissions on 82915 68972."
+      question: "What are the batch timings?",
+      answer: "8:30–11:30 AM or 12:30–3:30 PM, Monday to Friday."
     },
     {
-      question: "What programmes are available at the Manpada centre?",
-      answer: "We offer Playgroup (1.5-2.5 years), Nursery (2.5-3.5 years), Kindergarten (3.5-5.5 years), Kids Activity Club, Summer Camp, and Happy Times extended care."
+      question: "Which classes are available?",
+      answer: "Playgroup, Nursery, Jr. KG and Sr. KG (1.5–5.5 years), and classes up to Grade 4."
     },
     {
-      question: "How do I enroll my child at Rainbow Preschool Manpada?",
-      answer: "Fill out the callback form on this page or call Admissions on 82915 68972. Our team will schedule a visit and guide you through the enrollment process."
+      question: "What is the class size?",
+      answer: "Classes have two female, ECCE-trained teachers for every 30 children."
     },
     {
-      question: "Is Rainbow Preschool Manpada safe for my child?",
-      answer: "Absolutely. We have CCTV monitoring, 100% female staff, secure entry/exit procedures, and follow strict health and hygiene protocols."
+      question: "Do you provide transport?",
+      answer: "Yes, GPS-enabled in-house transport."
     },
     {
-      question: "What makes Rainbow Preschool different from other preschools in Manpada?",
-      answer: "With 18+ years of experience and 1,00,000+ students nurtured, we offer proven play-based curriculum, experienced teachers, and a focus on holistic development that prepares children for life."
+      question: "Is there daycare?",
+      answer: "Yes, Happy Times daycare for ages 2–8 runs here from 8:30 AM to 7:30 PM, with one nutritious meal."
     },
     {
-      question: "Can I visit the Manpada centre before enrolling?",
-      answer: "Yes, we encourage all parents to visit! Call Admissions on 82915 68972 or fill the callback form to schedule a visit to our Manpada centre."
+      question: "What are the fees?",
+      answer: "Please call our admissions team on 82915 68972 for current fees."
+    },
+    {
+      question: "How do I enrol?",
+      answer: "Call our admissions team on 82915 68972, WhatsApp us on 88281 95788, or fill in the callback form. We'll book your visit and a short parent–child interaction."
     },
   ],
   hariniwas: [

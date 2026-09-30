@@ -715,7 +715,7 @@ function PreschoolLocationTemplate({ localitySlug }: PreschoolLocationPageProps)
 }
 
 export function PreschoolInManpada() {
-  return <PreschoolLocationTemplate localitySlug="manpada" />;
+  return <BranchCentrePage slug="manpada" />;
 }
 
 export function PreschoolInHariniwas() {

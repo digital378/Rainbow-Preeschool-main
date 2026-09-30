@@ -10,7 +10,7 @@ import { StickyCTABar } from "@/components/landing/sticky-cta-bar";
 import { LocalCallbackForm } from "@/components/local-callback-form";
 import { HomeRainbowTheatre } from "@/components/home/home-rainbow-theatre";
 import { BranchQuickFacts, BranchAreas, BranchAdmissions, BranchNearby } from "@/components/centre/branch-sections";
-import { ADMISSIONS_PHONE_LABEL, ADMISSIONS_PHONE_NUMBER, anandNagarPage, kalwaPage, getCentreBySlug, preschoolFAQs, preschoolPageSEO, whyParentsChoose } from "@shared/centre-data";
+import { ADMISSIONS_PHONE_LABEL, ADMISSIONS_PHONE_NUMBER, anandNagarPage, kalwaPage, manpadaPage, getCentreBySlug, preschoolFAQs, preschoolPageSEO, whyParentsChoose } from "@shared/centre-data";
 import { branchPhotos } from "@shared/branch-photos";
 import { trackCallClick, trackWhatsAppClick, trackDirectionsClick } from "@/lib/analytics";
 
@@ -18,14 +18,14 @@ const programmeIcons = [Blocks, Sparkles, GraduationCap];
 const whyIcons = [MapPin, Users, Video, SprayCan, ClipboardList, Music2];
 const BranchFaq = lazy(() => import("@/components/centre/branch-faq").then(({ BranchFaq }) => ({ default: BranchFaq })));
 const base = "https://www.rainbowpreschools.com";
-type BranchSlug = "anand-nagar" | "kalwa";
+type BranchSlug = "anand-nagar" | "kalwa" | "manpada";
 
 export function BranchCentrePage({ slug }: { slug: BranchSlug }) {
   const centre = getCentreBySlug(slug)!;
   const seo = preschoolPageSEO[slug];
   const faqs = preschoolFAQs[slug];
   const why = whyParentsChoose[slug];
-  const copy = slug === "anand-nagar" ? anandNagarPage : kalwaPage;
+  const copy = slug === "anand-nagar" ? anandNagarPage : slug === "kalwa" ? kalwaPage : manpadaPage;
   const photos = branchPhotos[slug];
   const pageSchemas = useMemo(() => {
     const url = `${base}${seo.canonicalPath}`;
@@ -33,8 +33,8 @@ export function BranchCentrePage({ slug }: { slug: BranchSlug }) {
       { "@context": "https://schema.org", "@type": "WebPage", "@id": `${url}#webpage`, url, name: seo.title, description: seo.description, dateModified: copy.publishDate },
       {
         "@context": "https://schema.org", "@type": "Preschool", "@id": `${url}#centre`,
-        name: `Rainbow Preschool International, ${centre.localityName} Centre`, url,
-        address: { "@type": "PostalAddress", streetAddress: centre.address, addressLocality: "Thane", addressRegion: "Maharashtra", addressCountry: "IN" },
+        name: slug === "manpada" ? `Rainbow Preschool International, ${centre.name}` : `Rainbow Preschool International, ${centre.localityName} Centre`, url,
+        address: { "@type": "PostalAddress", streetAddress: centre.address, addressLocality: "Thane", addressRegion: "Maharashtra", ...(slug === "manpada" ? { postalCode: centre.postalCode } : {}), addressCountry: "IN" },
         geo: { "@type": "GeoCoordinates", latitude: Number(centre.latitude), longitude: Number(centre.longitude) },
         telephone: `+91-${centre.phoneNumbers[0].replace(/\D/g, "")}`, hasMap: centre.googleMapsDirectionsUrl,
         parentOrganization: { "@id": `${base}/#organization` },
@@ -47,7 +47,7 @@ export function BranchCentrePage({ slug }: { slug: BranchSlug }) {
       ]),
     ];
   }, [centre, seo, copy.publishDate]);
-  const initialId = slug === "anand-nagar" ? "anand-initial" : "kalwa-initial";
+  const initialId = slug === "anand-nagar" ? "anand-initial" : slug === "kalwa" ? "kalwa-initial" : "manpada-initial";
   const initialHeading = useRef(typeof document !== "undefined" && !!document.getElementById(`${initialId}-h1`));
   const faqRef = useRef<HTMLElement>(null);
   const [faqReady, setFaqReady] = useState(false);
@@ -79,8 +79,8 @@ export function BranchCentrePage({ slug }: { slug: BranchSlug }) {
   return (
     <div className="min-h-screen">
       <SEO title={seo.title} description={seo.description} canonical={seo.canonicalPath} lang="en-IN"
-        ogImage={slug === "anand-nagar" ? "/images/og/anand-nagar-1200x630.jpg" : "/images/og/kalwa-1200x630.jpg"}
-        ogImageAlt={slug === "anand-nagar" ? "Two children playing with blocks at Rainbow Preschool" : "Rainbow Preschool children learning together at a classroom table"}
+        ogImage={`/images/og/${slug}-1200x630.jpg`}
+        ogImageAlt={slug === "anand-nagar" ? "Two children playing with blocks at Rainbow Preschool" : slug === "kalwa" ? "Rainbow Preschool children learning together at a classroom table" : "Rainbow Preschool classroom activity"}
         ogImageType="image/jpeg" ogImageWidth={1200} ogImageHeight={630}
         structuredData={initialHeading.current ? undefined : pageSchemas} />
       <MinimalHeader whatsappNumber={centre.whatsappNumber} phoneNumber={ADMISSIONS_PHONE_NUMBER} callLabel={ADMISSIONS_PHONE_LABEL} locality={centre.localityName}
@@ -114,7 +114,7 @@ export function BranchCentrePage({ slug }: { slug: BranchSlug }) {
               className="shadow-lg lg:col-start-2 lg:row-start-1 lg:row-span-2 lg:self-stretch lg:flex lg:flex-col lg:justify-center" />
             <div className="lg:col-start-1 lg:row-start-2 rounded-2xl overflow-hidden aspect-[16/10]">
               <img src={photos.hero.src} alt={photos.hero.alt}
-                width={slug === "kalwa" ? 900 : 1197} height={slug === "kalwa" ? 600 : 800} {...{ fetchpriority: "high" }} className="w-full h-full object-cover" />
+                width={slug === "anand-nagar" ? 1197 : 900} height={slug === "anand-nagar" ? 800 : 600} {...{ fetchpriority: "high" }} className="w-full h-full object-cover" />
             </div>
           </div>
         </section>
@@ -129,7 +129,7 @@ export function BranchCentrePage({ slug }: { slug: BranchSlug }) {
             </div>
             <div className="rounded-2xl overflow-hidden aspect-[3/2]">
               <img src={photos.about.src} alt={photos.about.alt}
-                loading="lazy" width={slug === "kalwa" ? 900 : 1197} height={slug === "kalwa" ? 678 : 800} className="w-full h-full object-cover" />
+                loading="lazy" width={slug === "anand-nagar" ? 1197 : 900} height={slug === "anand-nagar" ? 800 : slug === "kalwa" ? 678 : 600} className="w-full h-full object-cover" />
             </div>
           </div>
         </section>
@@ -210,7 +210,7 @@ export function BranchCentrePage({ slug }: { slug: BranchSlug }) {
           </div>
         </section>
 
-        <BranchNearby content={copy} nearest={slug === "anand-nagar" ? { name: "Kasarvadavali", href: "/preschool-in-kasarvadavali-thane" } : { name: "Hariniwas", href: "/preschool-in-hariniwas-thane" }} />
+        <BranchNearby content={copy} nearest={slug === "anand-nagar" ? { name: "Kasarvadavali", href: "/preschool-in-kasarvadavali-thane" } : slug === "kalwa" ? { name: "Hariniwas", href: "/preschool-in-hariniwas-thane" } : { name: "Dhokali", href: "/preschool-in-dhokali-thane" }} />
         <div className="max-w-4xl mx-auto px-4 py-8 text-sm text-muted-foreground">Last updated: <time dateTime={copy.publishDate}>{copy.publishDateDisplay}</time></div>
 
         <section className="relative overflow-hidden py-10 md:py-16 bg-gradient-to-r from-primary via-accent to-secondary text-white">

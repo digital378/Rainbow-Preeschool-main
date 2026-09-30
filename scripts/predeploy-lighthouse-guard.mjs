@@ -30,7 +30,9 @@ const SCREENSHOT_FREE = process.env.LH_NO_SCREENSHOTS === '1';
 const SCREENSHOT_TRACE_CATEGORY = 'disabled-by-default-devtools.screenshot';
 const SCREENSHOT_AUDIT_IDS = new Set(['screenshot-thumbnails', 'final-screenshot']);
 
-const PAGES = [
+const PAGES = process.env.LH_SINGLE_PAGE ? [
+  { name: process.env.LH_SINGLE_PAGE.replace(/^\/+/, ''), path: `/${process.env.LH_SINGLE_PAGE.replace(/^\/+/, '')}` },
+] : [
   { name: 'home',                 path: '/' },
   { name: 'play-school-near-me',  path: '/play-school-near-me' },
 ];
@@ -192,6 +194,20 @@ async function runBest(url) {
   return score(a) >= score(b) ? a : b;
 }
 
+// Branch-page audits require three independent mobile runs. Keep the default
+// predeploy two-run behavior unchanged; use the median for an explicit page.
+async function runMedianThree(url) {
+  const runs = [await runOne(url), await runOne(url), await runOne(url)];
+  const values = runs.map(extractMetrics);
+  for (const metric of ['lcp', 'cls', 'tbt']) {
+    if (values.some((value) => !Number.isFinite(value[metric]))) {
+      throw new Error(`${metric.toUpperCase()} unavailable in at least one run`);
+    }
+  }
+  const median = (key) => values.map((value) => value[key]).sort((a, b) => a - b)[1];
+  return { performance: null, lcp: median('lcp'), cls: median('cls'), tbt: median('tbt') };
+}
+
 function extractMetrics(lhr) {
   if (!SCREENSHOT_FREE) {
     return {
@@ -217,16 +233,16 @@ function check(name, metrics) {
     breaches.push(`Performance ${metrics.performance} < ${THRESHOLDS.performance}`);
   if (SCREENSHOT_FREE && !Number.isFinite(metrics.lcp))
     breaches.push('LCP unavailable');
-  else if (metrics.lcp > THRESHOLDS.lcp)
-    breaches.push(`LCP ${Math.round(metrics.lcp)}ms > ${THRESHOLDS.lcp}ms`);
+  else if (process.env.LH_MEDIAN_THREE === '1' ? metrics.lcp >= THRESHOLDS.lcp : metrics.lcp > THRESHOLDS.lcp)
+    breaches.push(`LCP ${Math.round(metrics.lcp)}ms ${process.env.LH_MEDIAN_THREE === '1' ? '>=' : '>'} ${THRESHOLDS.lcp}ms`);
   if (SCREENSHOT_FREE && !Number.isFinite(metrics.cls))
     breaches.push('CLS unavailable');
-  else if (metrics.cls > THRESHOLDS.cls)
-    breaches.push(`CLS ${metrics.cls.toFixed(3)} > ${THRESHOLDS.cls}`);
+  else if (process.env.LH_MEDIAN_THREE === '1' ? metrics.cls >= THRESHOLDS.cls : metrics.cls > THRESHOLDS.cls)
+    breaches.push(`CLS ${metrics.cls.toFixed(3)} ${process.env.LH_MEDIAN_THREE === '1' ? '>=' : '>'} ${THRESHOLDS.cls}`);
   if (SCREENSHOT_FREE && !Number.isFinite(metrics.tbt))
     breaches.push('TBT unavailable');
-  else if (metrics.tbt > THRESHOLDS.tbt)
-    breaches.push(`TBT ${Math.round(metrics.tbt)}ms > ${THRESHOLDS.tbt}ms`);
+  else if (process.env.LH_MEDIAN_THREE === '1' ? metrics.tbt >= THRESHOLDS.tbt : metrics.tbt > THRESHOLDS.tbt)
+    breaches.push(`TBT ${Math.round(metrics.tbt)}ms ${process.env.LH_MEDIAN_THREE === '1' ? '>=' : '>'} ${THRESHOLDS.tbt}ms`);
   return breaches;
 }
 
@@ -242,8 +258,9 @@ function check(name, metrics) {
     const url = `${BASE_URL}${page.path}`;
     process.stdout.write(`Testing ${page.name} (${url}) … `);
     try {
-      const lhr = await runBest(url);
-      const m = extractMetrics(lhr);
+      const m = process.env.LH_MEDIAN_THREE === '1'
+        ? await runMedianThree(url)
+        : extractMetrics(await runBest(url));
       const breaches = check(page.name, m);
       console.log(
         `Perf=${m.performance == null ? 'N/A' : m.performance}  ` +

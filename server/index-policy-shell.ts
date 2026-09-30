@@ -10,7 +10,7 @@ import { PROGRAMMES_COPY, PROGRAMMES_FAQS } from "@shared/programmes-page-conten
 import { CONTACT_PAGE_COPY } from "@shared/contact-page-copy";
 import { TOP_PRESCHOOLS_COPY } from "@shared/top-preschools-thane-content";
 import { ABOUT_PAGE_COPY } from "@shared/about-page-content";
-import { anandNagarPage, kalwaPage } from "@shared/centre-data";
+import { anandNagarPage, kalwaPage, manpadaPage } from "@shared/centre-data";
 import { PLAY_SCHOOL_NEAR_ME_H1, PLAY_SCHOOL_NEAR_ME_INTRO } from "@shared/play-school-near-me-hero";
 
 /**
@@ -21,10 +21,10 @@ import { PLAY_SCHOOL_NEAR_ME_H1, PLAY_SCHOOL_NEAR_ME_INTRO } from "@shared/play-
  */
 export function injectIndexPolicyShell(path: string, html: string): string {
   if (path === "/") return html;
-  const isBranchPage = path === "/preschool-in-anand-nagar-thane" || path === "/preschool-in-kalwa-thane";
+  const isBranchPage = path === "/preschool-in-anand-nagar-thane" || path === "/preschool-in-kalwa-thane" || path === "/preschool-in-manpada-thane";
   const branchImageAlt = path === "/preschool-in-anand-nagar-thane"
     ? "Two children playing with blocks at Rainbow Preschool"
-    : "Rainbow Preschool children learning together at a classroom table";
+    : path === "/preschool-in-kalwa-thane" ? "Rainbow Preschool children learning together at a classroom table" : "Rainbow Preschool classroom activity";
   const seo = getPageSEO(path);
   if (!seo && path !== "/terms" && path !== "/privacy" && !shouldNoIndex(path)) return html;
 
@@ -110,8 +110,8 @@ export function injectIndexPolicyShell(path: string, html: string): string {
   }
   if (isBranchPage) {
     // Keep the text-led first paint stationary while React mounts.
-    const initialId = path === "/preschool-in-anand-nagar-thane" ? "anand-initial" : "kalwa-initial";
-    const branchCopy = path === "/preschool-in-anand-nagar-thane" ? anandNagarPage : kalwaPage;
+    const initialId = path === "/preschool-in-anand-nagar-thane" ? "anand-initial" : path === "/preschool-in-kalwa-thane" ? "kalwa-initial" : "manpada-initial";
+    const branchCopy = path === "/preschool-in-anand-nagar-thane" ? anandNagarPage : path === "/preschool-in-kalwa-thane" ? kalwaPage : manpadaPage;
     result = result.replace(/<link rel="preload" as="font" type="font\/woff2" crossorigin href="https:\/\/fonts\.gstatic\.com\/[^"]+">/, "");
     result = result.replace("</head>", `<style>
       #${initialId}{position:absolute;z-index:2;top:12.1875rem;left:1rem;width:calc(100vw - 2rem);pointer-events:none}
