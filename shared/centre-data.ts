@@ -27,7 +27,7 @@ export interface CentreData {
 }
 
 export const ADMISSIONS_PHONE_NUMBER = "+918291568972";
-export const ADMISSIONS_PHONE_LABEL = "Call Admissions: 82915 68972";
+export const ADMISSIONS_PHONE_LABEL = "Call Admissions";
 
 function centreMapEmbed(latitude: string, longitude: string): string {
   return `https://www.google.com/maps?q=${latitude},${longitude}&z=16&output=embed`;

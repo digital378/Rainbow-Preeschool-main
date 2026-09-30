@@ -27,6 +27,7 @@ import {
   legacyHardcodedBlogPosts,
 } from "../server/seed-blog-posts";
 import {
+  ADMISSIONS_PHONE_LABEL,
   anandNagarPage,
   preschoolIntros,
   whyParentsChoose,
@@ -2650,7 +2651,7 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
         {
           items: [...page.trustChips],
           links: [
-            { text: "Call Admissions: 82915 68972", url: "tel:+918291568972" },
+            { text: ADMISSIONS_PHONE_LABEL, url: "tel:+918291568972" },
             { text: "WhatsApp", url: "https://wa.me/919833781550" },
             { text: "Get directions", url: centre.googleMapsDirectionsUrl },
           ],
@@ -2723,7 +2724,7 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
         title: page.finalHeading,
         description: "Call or WhatsApp us to arrange a visit to the Anand Nagar centre.",
         links: [
-          { text: "Call Admissions: 82915 68972", url: "tel:+918291568972" },
+          { text: ADMISSIONS_PHONE_LABEL, url: "tel:+918291568972" },
           { text: "WhatsApp", url: "https://wa.me/919833781550" },
         ],
       },
