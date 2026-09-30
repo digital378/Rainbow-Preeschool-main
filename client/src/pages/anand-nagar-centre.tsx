@@ -171,7 +171,6 @@ export function BranchCentrePage({ slug }: { slug: BranchSlug }) {
         <section className="py-10 md:py-16 bg-[#fff9f2]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center">{copy.galleryHeading}</h2>
-            {slug === "kalwa" && <p className="text-center text-sm text-slate-600 mb-6">Photographs from Rainbow centres in Thane; individual photo locations have not been verified.</p>}
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               {photos.gallery.map((image) => <div key={image.src} className="aspect-square rounded-xl overflow-hidden">
                 <img src={image.src} alt={image.alt} loading="lazy" decoding="async"

@@ -2688,7 +2688,6 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
         },
         {
           heading: page.galleryHeading,
-          text: slug === "kalwa" ? "Photographs from Rainbow centres in Thane; individual photo locations have not been verified." : undefined,
           images: branchGallery,
         },
         {

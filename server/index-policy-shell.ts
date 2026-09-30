@@ -11,6 +11,7 @@ import { CONTACT_PAGE_COPY } from "@shared/contact-page-copy";
 import { TOP_PRESCHOOLS_COPY } from "@shared/top-preschools-thane-content";
 import { ABOUT_PAGE_COPY } from "@shared/about-page-content";
 import { anandNagarPage, kalwaPage } from "@shared/centre-data";
+import { PLAY_SCHOOL_NEAR_ME_H1, PLAY_SCHOOL_NEAR_ME_INTRO } from "@shared/play-school-near-me-hero";
 
 /**
  * Keep the browser's initial document metadata aligned with bot SSR and the
@@ -85,6 +86,27 @@ export function injectIndexPolicyShell(path: string, html: string): string {
       @media(min-width:1024px){#about-initial{top:14rem}#about-initial h1{font-size:3.75rem;line-height:1}}
     </style></head>`);
     result = result.replace('<div id="root"></div>', `<div id="about-initial"><h1 id="about-initial-h1">${escape(ABOUT_PAGE_COPY.heroHeading)}</h1></div><div id="root"></div>`);
+  }
+  if (path === "/play-school-near-me") {
+    // Text paints from the HTML response. React reserves identical space for it
+    // instead of replacing or moving the LCP node during hydration.
+    result = result.replace(/<link rel="preload" as="font" type="font\/woff2" crossorigin href="https:\/\/fonts\.gstatic\.com\/[^"]+">/, "");
+    result = result.replace("</head>", `<style>
+      #near-me-initial{position:absolute;inset:0 0 auto;z-index:2;pointer-events:none;padding-top:5rem;font-family:Inter,"Open Sans",sans-serif;color:#181d25}
+      #near-me-initial section{padding:4rem 0;background:linear-gradient(135deg,rgba(223,32,96,.1),rgba(255,193,7,.05),rgba(77,176,115,.1))}
+      #near-me-initial .inner{max-width:80rem;margin:auto;padding:0 1rem}
+      #near-me-initial .grid{display:grid;grid-template-columns:1fr;gap:3rem;align-items:center}
+      #near-me-initial .badge-space{height:34px;margin-bottom:1rem}
+      #near-me-initial h1{font-family:Poppins,Inter,sans-serif;font-size:1.875rem;line-height:2.25rem;font-weight:700;letter-spacing:-.02em;margin:0 0 1.5rem}
+      #near-me-initial p{font-size:1.125rem;line-height:1.625;margin:0 0 2rem;color:#6a7181}
+      #near-me-initial .buttons-space{height:96px}
+      #near-me-initial .form-space{height:514px}
+      @media(min-width:640px){#near-me-initial .inner{padding:0 1.5rem}#near-me-initial .buttons-space{height:40px}#near-me-initial .form-space{height:498px}}
+      @media(min-width:768px){#near-me-initial{padding-top:6rem}#near-me-initial section{padding:6rem 0}#near-me-initial h1{font-size:2.25rem;line-height:2.5rem}#near-me-initial p{font-size:1.25rem;line-height:1.4}}
+      @media(min-width:1024px){#near-me-initial section{padding:8rem 0}#near-me-initial .inner{padding:0 2rem}#near-me-initial .grid{grid-template-columns:repeat(2,minmax(0,1fr))}#near-me-initial h1{font-size:3rem;line-height:1}}
+      #near-me-initial.near-me-hydrated section{background:none}
+    </style></head>`);
+    result = result.replace('<div id="root"></div>', `<div id="near-me-initial"><section><div class="inner"><div class="grid"><div><div class="badge-space" aria-hidden="true"></div><h1 id="near-me-initial-h1">${escape(PLAY_SCHOOL_NEAR_ME_H1)}</h1><p>${escape(PLAY_SCHOOL_NEAR_ME_INTRO)}</p><div class="buttons-space" aria-hidden="true"></div></div><div class="form-space" aria-hidden="true"></div></div></div></section></div><div id="root"></div>`);
   }
   if (isBranchPage) {
     // Keep the text-led first paint stationary while React mounts.

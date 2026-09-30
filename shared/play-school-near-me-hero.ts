@@ -1,0 +1,2 @@
+export const PLAY_SCHOOL_NEAR_ME_H1 = "Play School & Preschool Near Me in Thane";
+export const PLAY_SCHOOL_NEAR_ME_INTRO = "Rainbow Preschool International is Thane's trusted play school and preschool near you — 6 centres across Thane West offering safe, play-based early learning for 1,00,000+ families since 2007.";

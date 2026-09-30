@@ -1,3 +1,5 @@
+// The specific location of the Kalwa page photos has not been verified. Use
+// Thane filenames and location-neutral alt text; do not claim they are Kalwa photos.
 export const branchPhotos = {
   "anand-nagar": {
     hero: {

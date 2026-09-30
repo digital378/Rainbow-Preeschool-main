@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useLayoutEffect, useState, useRef } from "react";
 import { Link } from "wouter";
 import { PLAY_SCHOOL_GALLERY_IMAGES } from "@shared/page-image-data";
 import { Badge } from "@/components/ui/badge";
@@ -51,6 +51,7 @@ import { EEATSignals } from "@/components/eeat-signals";
 import { VERIFIED_RATING } from "@/lib/verified-rating";
 import { LAST_UPDATED_DISPLAY, LAST_UPDATED_ISO } from "@shared/site-freshness";
 import { playSchoolFAQs } from "@shared/play-school-faq-data";
+import { PLAY_SCHOOL_NEAR_ME_H1, PLAY_SCHOOL_NEAR_ME_INTRO } from "@shared/play-school-near-me-hero";
 
 const callbackFormSchema = z.object({
   parentName: z.string().min(2, "Please enter your name"),
@@ -439,6 +440,14 @@ const centreAreasServed = [
 ];
 
 export default function PlaySchoolNearMe() {
+  const initialHeading = useRef(typeof document !== "undefined" && !!document.getElementById("near-me-initial-h1"));
+
+  useLayoutEffect(() => {
+    if (!initialHeading.current) return;
+    const initial = document.getElementById("near-me-initial");
+    initial?.classList.add("near-me-hydrated");
+    return () => initial?.remove();
+  }, []);
 
   return (
     <div className="pt-20 md:pt-24">
@@ -466,11 +475,11 @@ export default function PlaySchoolNearMe() {
               <Badge variant="secondary" className="text-base px-4 py-1 mb-4">
                 Ages 1.5 - 2.5 Years
               </Badge>
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-                Play School & Preschool Near Me in Thane
-              </h1>
-              <p className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed">
-                Rainbow Preschool International is Thane's trusted play school and preschool near you — 6 centres across Thane West offering safe, play-based early learning for 1,00,000+ families since 2007.
+              {initialHeading.current
+                ? <div aria-hidden="true" className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6" style={{ fontFamily: "Poppins, Inter, sans-serif", letterSpacing: "-0.02em", visibility: "hidden" }}>{PLAY_SCHOOL_NEAR_ME_H1}</div>
+                : <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">Play School & Preschool Near Me in Thane</h1>}
+              <p className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed" style={initialHeading.current ? { visibility: "hidden" } : undefined}>
+                {PLAY_SCHOOL_NEAR_ME_INTRO}
               </p>
               <div className="flex flex-wrap gap-4">
                 <Button size="lg" onClick={() => document.getElementById('ps-centres')?.scrollIntoView({ behavior: 'smooth' })} data-testid="button-ps-hero-enquire">
