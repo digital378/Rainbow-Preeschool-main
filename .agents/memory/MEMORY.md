@@ -42,3 +42,4 @@
 - [Comparison page attribution](comparison-page-attribution.md) — the About box is intentionally absent; visitor and bot versions show only the date near the bottom.
 - [Screenshot-free Lighthouse](screenshot-free-lighthouse.md) — suppress screenshot trace and gatherers when prohibited; LCP/CLS/TBT remain available, but the performance score may be null.
 - [Google Maps embed checks](google-maps-embed-checks.md) — embed URLs can fail a HEAD probe yet load via GET; verify the browser iframe’s final response.
+- [Branch FAQ audit timing](branch-faq-audit-timing.md) — wait for hydration before scrolling to lazy FAQs; an immediate scroll can falsely report missing answers.

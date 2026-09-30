@@ -3,7 +3,7 @@ import { Baby, BookOpen, Bus, Clock3, GraduationCap, MapPin, Navigation, Phone, 
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import type { CentreData } from "@shared/centre-data";
+import { ADMISSIONS_PHONE_DISPLAY, ADMISSIONS_PHONE_NUMBER, type CentreData } from "@shared/centre-data";
 
 export interface BranchSectionContent {
   quickFacts: readonly { icon: string; label: string; value: string }[];
@@ -65,9 +65,11 @@ export function BranchAreas({ content, centre, onDirections }: { content: Branch
             <div className="rounded-2xl bg-white border p-5">
               <h3 className="font-bold mb-2">Centre address &amp; contact</h3>
               <p className="text-slate-700 mb-3">{centre.address}</p>
-              <p className="text-xs uppercase tracking-wide font-bold text-slate-600 mb-2">Centre phone</p>
+              <p className="text-xs uppercase tracking-wide font-bold text-slate-600 mb-2">{centre.hideCentrePhonesOnBranchPage ? "Admissions" : "Centre phone"}</p>
               <div className="flex flex-wrap gap-x-5 gap-y-2">
-                {centre.phoneNumbers.map((phone) => <a key={phone} href={`tel:+91${phone.replace(/\D/g, "")}`} className="inline-flex items-center gap-2 font-semibold text-primary hover:underline"><Phone className="w-4 h-4" />{phone}</a>)}
+                {centre.hideCentrePhonesOnBranchPage
+                  ? <a href={`tel:${ADMISSIONS_PHONE_NUMBER}`} className="inline-flex items-center gap-2 font-semibold text-primary hover:underline"><Phone className="w-4 h-4" />{ADMISSIONS_PHONE_DISPLAY}</a>
+                  : centre.phoneNumbers.map((phone) => <a key={phone} href={`tel:+91${phone.replace(/\D/g, "")}`} className="inline-flex items-center gap-2 font-semibold text-primary hover:underline"><Phone className="w-4 h-4" />{phone}</a>)}
               </div>
             </div>
           </div>

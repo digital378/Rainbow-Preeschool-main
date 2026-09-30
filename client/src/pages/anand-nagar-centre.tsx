@@ -10,7 +10,7 @@ import { StickyCTABar } from "@/components/landing/sticky-cta-bar";
 import { LocalCallbackForm } from "@/components/local-callback-form";
 import { HomeRainbowTheatre } from "@/components/home/home-rainbow-theatre";
 import { BranchQuickFacts, BranchAreas, BranchAdmissions, BranchNearby } from "@/components/centre/branch-sections";
-import { ADMISSIONS_PHONE_LABEL, ADMISSIONS_PHONE_NUMBER, anandNagarPage, kalwaPage, manpadaPage, getCentreBySlug, preschoolFAQs, preschoolPageSEO, whyParentsChoose } from "@shared/centre-data";
+import { ADMISSIONS_PHONE_LABEL, ADMISSIONS_PHONE_NUMBER, anandNagarPage, kalwaPage, manpadaPage, branchPageSchemaTelephone, getCentreBySlug, preschoolFAQs, preschoolPageSEO, whyParentsChoose } from "@shared/centre-data";
 import { branchPhotos } from "@shared/branch-photos";
 import { trackCallClick, trackWhatsAppClick, trackDirectionsClick } from "@/lib/analytics";
 
@@ -36,7 +36,7 @@ export function BranchCentrePage({ slug }: { slug: BranchSlug }) {
         name: slug === "manpada" ? `Rainbow Preschool International, ${centre.name}` : `Rainbow Preschool International, ${centre.localityName} Centre`, url,
         address: { "@type": "PostalAddress", streetAddress: centre.address, addressLocality: "Thane", addressRegion: "Maharashtra", ...(slug === "manpada" ? { postalCode: centre.postalCode } : {}), addressCountry: "IN" },
         geo: { "@type": "GeoCoordinates", latitude: Number(centre.latitude), longitude: Number(centre.longitude) },
-        telephone: `+91-${centre.phoneNumbers[0].replace(/\D/g, "")}`, hasMap: centre.googleMapsDirectionsUrl,
+        telephone: branchPageSchemaTelephone(centre), hasMap: centre.googleMapsDirectionsUrl,
         parentOrganization: { "@id": `${base}/#organization` },
         areaServed: centre.areasServed?.map((name) => ({ "@type": "Place", name })),
       },

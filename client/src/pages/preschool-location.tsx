@@ -18,6 +18,8 @@ import { LAST_UPDATED_DISPLAY, LAST_UPDATED_ISO } from "@shared/site-freshness";
 import { 
   ADMISSIONS_PHONE_LABEL,
   ADMISSIONS_PHONE_NUMBER,
+  ADMISSIONS_PHONE_DISPLAY,
+  branchPageSchemaTelephone,
   getCentreBySlug, 
   preschoolPageSEO, 
   preschoolIntros, 
@@ -89,7 +91,7 @@ function PreschoolLocationTemplate({ localitySlug }: PreschoolLocationPageProps)
       "name": `Rainbow Preschool International - ${centre.name}`,
       "description": seo.description,
       "url": `https://www.rainbowpreschools.com${seo.canonicalPath}`,
-      "telephone": centre.phoneNumbers[0]?.replace(/\s/g, ''),
+      "telephone": branchPageSchemaTelephone(centre),
       "address": {
         "@type": "PostalAddress",
         "streetAddress": centre.address,
@@ -500,9 +502,19 @@ function PreschoolLocationTemplate({ localitySlug }: PreschoolLocationPageProps)
                 <div>
                   <h3 className="font-semibold mb-2">Centre address &amp; contact</h3>
                   <p className="text-slate-700 mb-3">{centre.address}</p>
-                  <p className="font-medium mb-2">Centre phone</p>
+                  <p className="font-medium mb-2">{centre.hideCentrePhonesOnBranchPage ? "Admissions" : "Centre phone"}</p>
                   <div className="space-y-2">
-                    {centre.phoneNumbers.map((phone, index) => (
+                    {centre.hideCentrePhonesOnBranchPage ? (
+                      <a
+                        href={`tel:${ADMISSIONS_PHONE_NUMBER}`}
+                        className="flex items-center gap-2 text-primary hover:underline"
+                        onClick={() => handleCallClick(ADMISSIONS_PHONE_NUMBER)}
+                        data-testid="link-phone-admissions"
+                      >
+                        <Phone className="w-4 h-4" />
+                        {ADMISSIONS_PHONE_DISPLAY}
+                      </a>
+                    ) : centre.phoneNumbers.map((phone, index) => (
                       <a
                         key={index}
                         href={`tel:${phone.replace(/\s/g, '')}`}

@@ -11,6 +11,7 @@ import { BLOG_LIST_COPY, blogPostToListEntry, legacyBlogListEntries } from "@sha
 import { getBlogFeaturedImage, LEGACY_BLOG_FEATURED_IMAGE_URLS, LEGACY_BLOG_LOCAL_POST_SLUGS } from "@shared/blog-featured-image-data";
 import { getBlogMetadata } from "@shared/blog-metadata";
 import { TOP_PRESCHOOLS_COPY, TOP_PRESCHOOLS_CENTRE_LINKS, TOP_PRESCHOOLS_COMPETITOR_LINKS, TOP_PRESCHOOLS_BREADCRUMB_SCHEMA } from "@shared/top-preschools-thane-content";
+import { centres } from "@shared/centre-data";
 
 // Inclusion rule: only add UA strings that appear EXCLUSIVELY in automated
 // crawlers / bots and NEVER in any human-operated browser or in-app browser.
@@ -245,13 +246,14 @@ const allowedTopPreschoolsExternalLinks = new Set([
   ...TOP_PRESCHOOLS_CENTRE_LINKS.map((link) => link.href),
   ...TOP_PRESCHOOLS_COMPETITOR_LINKS.map((link) => link.href),
 ]);
+const allowedBranchWhatsAppLinks = new Set(centres.map((centre) => `https://wa.me/91${centre.whatsappNumber}`));
 
 function resolvePageLink(url: string): { href: string; external: boolean } | null {
   const hrefPath = finalInternalPath(url);
   if (hrefPath) {
     return { href: `${BASE_URL}${hrefPath}`, external: false };
   }
-  return (allowedHomepageExternalLinks.has(url) || allowedTopPreschoolsExternalLinks.has(url))
+  return (allowedHomepageExternalLinks.has(url) || allowedTopPreschoolsExternalLinks.has(url) || allowedBranchWhatsAppLinks.has(url))
     ? { href: url, external: !url.startsWith("tel:") }
     : null;
 }

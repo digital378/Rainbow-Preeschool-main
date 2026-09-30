@@ -28,6 +28,9 @@ import {
 } from "../server/seed-blog-posts";
 import {
   ADMISSIONS_PHONE_LABEL,
+  ADMISSIONS_PHONE_DISPLAY,
+  ADMISSIONS_SCHEMA_TELEPHONE,
+  branchPageSchemaTelephone,
   anandNagarPage,
   kalwaPage,
   manpadaPage,
@@ -2608,7 +2611,7 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
         latitude: Number(centre.latitude),
         longitude: Number(centre.longitude),
       },
-      telephone: `+91-${centre.phoneNumbers[0].replace(/\D/g, "")}`,
+      telephone: branchPageSchemaTelephone(centre),
       hasMap: centre.googleMapsDirectionsUrl,
       parentOrganization: { "@id": `${BASE_URL}/#organization` },
       areaServed: areas.map((name) => ({ "@type": "Place", name })),
@@ -2705,7 +2708,9 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
             })),
             { text: page.areasParagraph },
             { heading: page.reachHeading, text: page.reachText },
-            { heading: "Centre address & contact", text: centre.address, items: ["Centre phone"], links: centre.phoneNumbers.map((phone) => ({ text: phone, url: `tel:+91${phone.replace(/\D/g, "")}` })) },
+            { heading: "Centre address & contact", text: centre.address, items: [centre.hideCentrePhonesOnBranchPage ? "Admissions" : "Centre phone"], links: centre.hideCentrePhonesOnBranchPage
+              ? [{ text: ADMISSIONS_PHONE_DISPLAY, url: "tel:+918291568972" }]
+              : centre.phoneNumbers.map((phone) => ({ text: phone, url: `tel:+91${phone.replace(/\D/g, "")}` })) },
           ],
           links: [{ text: "Get directions", url: centre.googleMapsDirectionsUrl }],
         },
@@ -2869,7 +2874,7 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
       h1: `Preschool in ${centre.locality}, Thane`,
       introText: intros?.paragraph1 ?? `Looking for a quality preschool in ${centre.locality}, Thane? Rainbow Preschool International's ${centre.locality} centre offers Playgroup, Nursery, and Kindergarten programmes in a safe, nurturing environment.`,
       breadcrumbs: [{ name: "Home", url: "/" }, { name: "Centres", url: "/play-school-near-me" }, { name: `Preschool in ${centre.locality}, Thane`, url: cleanPath }],
-      structuredData: [localBusinessSchema(centre.locality, centre.address, centre.phone, cleanPath, centre.lat, centre.lng, getCentreBySlug(localitySlug)?.areasServed), richFAQSchema],
+      structuredData: [localBusinessSchema(centre.locality, centre.address, getCentreBySlug(localitySlug)?.hideCentrePhonesOnBranchPage ? ADMISSIONS_SCHEMA_TELEPHONE : centre.phone, cleanPath, centre.lat, centre.lng, getCentreBySlug(localitySlug)?.areasServed), richFAQSchema],
       contentSections: [
         ...richSections,
         ...(richCentre ? [{

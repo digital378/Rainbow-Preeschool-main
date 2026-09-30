@@ -12,6 +12,7 @@ export interface CentreData {
   address: string;
   postalCode: string;
   phoneNumbers: string[];
+  hideCentrePhonesOnBranchPage: boolean;
   whatsappNumber: string;
   googleMapsDirectionsUrl: string;
   googleMapsEmbedUrl?: string;
@@ -29,6 +30,14 @@ export interface CentreData {
 
 export const ADMISSIONS_PHONE_NUMBER = "+918291568972";
 export const ADMISSIONS_PHONE_LABEL = "Call Admissions";
+export const ADMISSIONS_PHONE_DISPLAY = "82915 68972";
+export const ADMISSIONS_SCHEMA_TELEPHONE = "+91-8291568972";
+
+export function branchPageSchemaTelephone(centre: CentreData): string {
+  return centre.hideCentrePhonesOnBranchPage
+    ? ADMISSIONS_SCHEMA_TELEPHONE
+    : `+91-${centre.phoneNumbers[0].replace(/\D/g, "")}`;
+}
 
 function centreMapEmbed(latitude: string, longitude: string): string {
   return `https://www.google.com/maps?q=${latitude},${longitude}&z=16&output=embed`;
@@ -183,6 +192,7 @@ export const centres: CentreData[] = [
     address: "Aggarwal Arcade, Near Khewra Circle, Manpada, Thane (W)",
     postalCode: "400610",
     phoneNumbers: ["022-47762019", "93218 39367"],
+    hideCentrePhonesOnBranchPage: true,
     whatsappNumber: "8828195788",
     googleMapsDirectionsUrl: "https://maps.app.goo.gl/jenJNhoqsExdWH5DA",
     googleMapsEmbedUrl: centreMapEmbed("19.2326549", "72.9710766"),
@@ -206,6 +216,7 @@ export const centres: CentreData[] = [
     address: "M.V.Apartments, Bhakti Mandir Road, Opp. Thanawala Garage, Hariniwas Circle, Panchpakadi, Thane (W)",
     postalCode: "400602",
     phoneNumbers: ["91365 78589"],
+    hideCentrePhonesOnBranchPage: true,
     whatsappNumber: "9136578589",
     googleMapsDirectionsUrl: "https://maps.app.goo.gl/KrcVoEu8xSHEzEPd9",
     googleMapsEmbedUrl: centreMapEmbed("19.1917133", "72.966523"),
@@ -229,6 +240,7 @@ export const centres: CentreData[] = [
     address: "Kris Commercial Plaza, 1st Floor, Opp. Tropical Lagoon, Anand Nagar, Ghodbunder Road, Thane (W)",
     postalCode: "400601",
     phoneNumbers: ["98337 81550", "91524 89789"],
+    hideCentrePhonesOnBranchPage: true,
     whatsappNumber: "9833781550",
     googleMapsDirectionsUrl: "https://maps.app.goo.gl/oFnzPGooMos4qACV9",
     googleMapsEmbedUrl: centreMapEmbed("19.2648723", "72.9707478"),
@@ -252,6 +264,7 @@ export const centres: CentreData[] = [
     address: "Kolshet Road, Dhokali Naka, Opp. Aban Park Society, Thane (W)",
     postalCode: "400607",
     phoneNumbers: ["93212 38375"],
+    hideCentrePhonesOnBranchPage: true,
     whatsappNumber: "9167399247",
     googleMapsDirectionsUrl: "https://maps.app.goo.gl/WAp5VMqUs6UhUK4c8",
     googleMapsEmbedUrl: centreMapEmbed("19.228991", "72.9802583"),
@@ -275,6 +288,7 @@ export const centres: CentreData[] = [
     address: "Harsh Prasad Co-op Hsg Soc, Near Sayba Hall, Manisha Nagar, Gate No. 1, Kalwa, Thane",
     postalCode: "400605",
     phoneNumbers: ["74003 27905"],
+    hideCentrePhonesOnBranchPage: true,
     whatsappNumber: "7400327905",
     googleMapsDirectionsUrl: "https://maps.app.goo.gl/HoW2W9r1v6Jzi397A",
     googleMapsEmbedUrl: centreMapEmbed("19.1990801", "72.9913522"),
@@ -298,6 +312,7 @@ export const centres: CentreData[] = [
     address: "Rosa Gardenia, Next to Parijat Gardens, Kasarvadavali, Behind Hypercity Mall, Thane (W)",
     postalCode: "400615",
     phoneNumbers: ["022-40062128", "87798 00068"],
+    hideCentrePhonesOnBranchPage: true,
     whatsappNumber: "8779800068",
     googleMapsDirectionsUrl: "https://maps.app.goo.gl/kE2EyU3YUuf9ZDuNA",
     googleMapsEmbedUrl: centreMapEmbed("19.2669237", "72.9634446"),
@@ -324,7 +339,7 @@ export function getCentreBySlug(slug: string): CentreData | undefined {
 const RAINBOW_BASE_URL = "https://www.rainbowpreschools.com";
 
 export function createBranchLocalBusinessSchema(centre: CentreData) {
-  const primaryPhone = centre.phoneNumbers[0] || "+91-8291568972";
+  const primaryPhone = branchPageSchemaTelephone(centre);
   return {
     "@context": "https://schema.org",
     "@type": "Preschool",
@@ -594,7 +609,7 @@ export const preschoolFAQs: Record<string, Array<{ question: string; answer: str
     },
     {
       question: "How can I contact Rainbow Preschool Hariniwas?",
-      answer: "Call Admissions on 82915 68972, WhatsApp the centre, or fill the callback form for a quick response."
+      answer: "Call Admissions on 82915 68972, WhatsApp us on 91365 78589, or fill the callback form for a quick response."
     },
     {
       question: "What curriculum does Rainbow Preschool follow?",
@@ -639,7 +654,7 @@ export const preschoolFAQs: Record<string, Array<{ question: string; answer: str
     },
     {
       question: "How can I contact Rainbow Preschool Dhokali?",
-      answer: "Call Admissions on 82915 68972, WhatsApp the centre, or fill the callback form for a quick response."
+      answer: "Call Admissions on 82915 68972, WhatsApp us on 91673 99247, or fill the callback form for a quick response."
     },
     {
       question: "What is the curriculum at Dhokali centre?",
@@ -688,7 +703,7 @@ export const preschoolFAQs: Record<string, Array<{ question: string; answer: str
     },
     {
       question: "How do I contact Rainbow Preschool Kasarvadavali?",
-      answer: "Call Admissions on 82915 68972, WhatsApp the centre, or fill the callback form."
+      answer: "Call Admissions on 82915 68972, WhatsApp us on 87798 00068, or fill the callback form."
     },
     {
       question: "What areas does the Kasarvadavali centre serve?",
