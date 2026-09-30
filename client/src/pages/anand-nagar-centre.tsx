@@ -86,7 +86,7 @@ export function AnandNagarCentrePage() {
           </ol>
         </nav>
 
-        <section className="py-8 md:py-12 bg-white">
+        <section className="py-10 md:py-16 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-8 lg:gap-x-12 lg:gap-y-6 items-start">
             <div className="min-w-0 lg:col-start-1 lg:row-start-1">
               <Badge className="mb-4"><MapPin className="w-3 h-3 mr-1" />Anand Nagar, Thane</Badge>
@@ -189,7 +189,7 @@ export function AnandNagarCentrePage() {
         <BranchAreas content={copy} centre={centre} onDirections={directions} />
         <BranchAdmissions content={copy} />
 
-        <section ref={faqRef} className="py-12 md:py-16">
+        <section ref={faqRef} className="py-10 md:py-16">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center">{copy.faqHeading}</h2>
             {faqReady ? (
@@ -205,7 +205,7 @@ export function AnandNagarCentrePage() {
         <BranchNearby content={copy} nearest={{ name: "Kasarvadavali", href: "/preschool-in-kasarvadavali-thane" }} />
         <div className="max-w-4xl mx-auto px-4 py-8 text-sm text-muted-foreground">Last updated: <time dateTime={copy.publishDate}>{copy.publishDateDisplay}</time></div>
 
-        <section className="relative overflow-hidden py-16 md:py-20 bg-gradient-to-r from-primary via-accent to-secondary text-white">
+        <section className="relative overflow-hidden py-10 md:py-16 bg-gradient-to-r from-primary via-accent to-secondary text-white">
           <div className="absolute inset-0 bg-black/40" />
           <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-2xl md:text-3xl font-bold mb-4">{copy.finalHeading}</h2>

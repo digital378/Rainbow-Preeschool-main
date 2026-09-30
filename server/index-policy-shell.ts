@@ -86,12 +86,12 @@ export function injectIndexPolicyShell(path: string, html: string): string {
     // Keep the text-led first paint stationary while React mounts.
     result = result.replace(/<link rel="preload" as="font" type="font\/woff2" crossorigin href="https:\/\/fonts\.gstatic\.com\/[^"]+">/, "");
     result = result.replace("</head>", `<style>
-      #anand-initial{position:absolute;z-index:2;top:11.6875rem;left:1rem;width:calc(100vw - 2rem);pointer-events:none}
+      #anand-initial{position:absolute;z-index:2;top:12.1875rem;left:1rem;width:calc(100vw - 2rem);pointer-events:none}
       #anand-initial h1{font-family:Inter,"Open Sans",sans-serif;font-size:1.875rem;line-height:2.25rem;font-weight:700;letter-spacing:normal;margin:0 0 1.5rem}
       #anand-initial p{font-family:Inter,sans-serif;font-size:1.125rem;line-height:1.75rem;font-weight:600;margin:0;color:#334155}
-      @media(min-width:640px){#anand-initial{top:13.625rem;left:1.5rem;width:calc(100vw - 3rem)}}
-      @media(min-width:768px){#anand-initial h1{font-size:2.25rem;line-height:2.5rem}}
-      @media(min-width:1024px){#anand-initial{top:13.6875rem;left:max(2rem,calc((100vw - 80rem)/2 + 2rem));width:calc((min(100vw,80rem) - 7rem)/2)}#anand-initial h1{font-size:3rem;line-height:1}}
+      @media(min-width:640px){#anand-initial{top:12.1875rem;left:1.5rem;width:calc(100vw - 3rem)}}
+      @media(min-width:768px){#anand-initial{top:14.625rem}#anand-initial h1{font-size:2.25rem;line-height:2.5rem}}
+      @media(min-width:1024px){#anand-initial{top:14.6875rem;left:max(2rem,calc((100vw - 80rem)/2 + 2rem));width:calc((min(100vw,80rem) - 7rem)/2)}#anand-initial h1{font-size:3rem;line-height:1}}
     </style></head>`);
     result = result.replace('<div id="root"></div>', `<div id="anand-initial"><h1 id="anand-initial-h1">${escape(seo.h1 ?? "Preschool in Anand Nagar, Thane")}</h1><p>${escape(anandNagarPage.heroSubline)}</p></div><div id="root"></div>`);
   }
