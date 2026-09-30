@@ -2615,6 +2615,7 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
       name: pageSEO.title,
       description: pageSEO.description,
       inLanguage: "en-IN",
+      dateModified: page.publishDate,
     };
     const reelCaptions = BRANCH_REEL_EXCERPTS;
     const faqItems = faqs.map((faq) => ({

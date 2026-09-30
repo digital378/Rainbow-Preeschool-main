@@ -362,7 +362,7 @@ export const preschoolPageSEO: Record<string, PreschoolPageSEO> = {
   },
   "anand-nagar": {
     title: "Preschool in Anand Nagar, Ghodbunder Road, Thane | Rainbow",
-    description: "Playgroup, Nursery & KG (ages 1.5–5.5) opposite Tropical Lagoon, Anand Nagar, Ghodbunder Road. Close to Kavesar, Vijay Garden & Waghbil. Admissions open for 2027-28.",
+    description: "Playgroup, Nursery & KG (ages 1.5–5.5) opp. Tropical Lagoon, Ghodbunder Road, Anand Nagar. Near Kavesar & Vijay Garden. 2027-28 admissions open.",
     h1: "Preschool in Anand Nagar, Thane",
     canonicalPath: "/preschool-in-anand-nagar-thane",
   },

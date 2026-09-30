@@ -28,6 +28,7 @@ import { PROGRAMMES_COPY } from "../shared/programmes-page-content";
 import { CONTACT_PAGE_COPY } from "../shared/contact-page-copy";
 import { TOP_PRESCHOOLS_COPY } from "../shared/top-preschools-thane-content";
 import { ABOUT_PAGE_COPY } from "../shared/about-page-content";
+import { anandNagarPage } from "../shared/centre-data";
 
 const BASE = (process.argv[2] || "http://localhost:5000").replace(/\/$/, "");
 const UA = "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)";
@@ -111,6 +112,7 @@ async function checkUrl(path: string): Promise<CheckResult> {
 
   const missing: string[] = [];
   if (status !== 200) missing.push(`status=${status}`);
+  const anandCentrePage = path === "/preschool-in-anand-nagar-thane";
   if (path === "/top-preschools-in-thane" || path === "/about") {
     const byline = path === "/about"
       ? `Last updated: <time datetime="${ABOUT_PAGE_COPY.dateIso}">${ABOUT_PAGE_COPY.dateDisplay}</time>`
@@ -126,6 +128,10 @@ async function checkUrl(path: string): Promise<CheckResult> {
     if (path === "/about" && html.indexOf(byline) < html.indexOf(ABOUT_PAGE_COPY.exploreHeading)) {
       missing.push("last-updated line is before the Explore links");
     }
+  } else if (anandCentrePage) {
+    const updatedLine = `Last updated: <time datetime="${anandNagarPage.publishDate}">${anandNagarPage.publishDateDisplay}</time>`;
+    if (!html.includes(updatedLine)) missing.push("centre last-updated line");
+    if (html.includes("Reviewed by Rainbow Preschool Curriculum Team")) missing.push("outdated reviewer byline");
   } else if (path !== "/" && !html.includes("Reviewed by Rainbow Preschool Curriculum Team")) {
     missing.push("byline");
   }
@@ -135,11 +141,11 @@ async function checkUrl(path: string): Promise<CheckResult> {
   const admissionsPage = path === "/preschool-admissions";
   const programmePage = path === "/playgroup" || path === "/nursery" || path === "/kindergarten" || path === "/programmes";
   const comparisonPage = path === "/top-preschools-in-thane";
-  const expectedType = path === "/about" ? "AboutPage" : path === "/contact" ? "ContactPage" : path === "/" || admissionsPage || programmePage || comparisonPage ? "WebPage" : "Article";
+  const expectedType = path === "/about" ? "AboutPage" : path === "/contact" ? "ContactPage" : path === "/" || admissionsPage || programmePage || comparisonPage || anandCentrePage ? "WebPage" : "Article";
   if (!new RegExp(`"@type":\\s*"${expectedType}"`).test(html)) {
     missing.push(`${expectedType} JSON-LD`);
   }
-  if ((path === "/" || path === "/about" || admissionsPage || programmePage || comparisonPage || path === "/contact") && /"@type":\s*"Article"/.test(html)) {
+  if ((path === "/" || path === "/about" || admissionsPage || programmePage || comparisonPage || anandCentrePage || path === "/contact") && /"@type":\s*"Article"/.test(html)) {
     missing.push(`unexpected Article JSON-LD on ${path}`);
   }
   const expectedDate = path === "/"
@@ -150,6 +156,7 @@ async function checkUrl(path: string): Promise<CheckResult> {
     : path === "/kindergarten" ? KINDERGARTEN_COPY.publishDate
     : path === "/programmes" ? PROGRAMMES_COPY.publishDate
     : path === "/contact" ? CONTACT_PAGE_COPY.publishDate
+    : anandCentrePage ? anandNagarPage.publishDate
     : comparisonPage ? TOP_PRESCHOOLS_COPY.dateIso
     : path === "/about" ? ABOUT_PAGE_COPY.dateIso
     : LAST_UPDATED_ISO;
@@ -165,6 +172,7 @@ async function checkUrl(path: string): Promise<CheckResult> {
     : path === "/kindergarten" ? KINDERGARTEN_COPY.publishDateDisplay
     : path === "/programmes" ? PROGRAMMES_COPY.publishDateDisplay
     : path === "/contact" ? CONTACT_PAGE_COPY.publishDateDisplay
+    : anandCentrePage ? anandNagarPage.publishDateDisplay
     : comparisonPage ? TOP_PRESCHOOLS_COPY.dateDisplay
     : path === "/about" ? ABOUT_PAGE_COPY.dateDisplay
     : LAST_UPDATED_DISPLAY;
