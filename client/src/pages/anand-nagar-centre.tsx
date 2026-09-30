@@ -10,7 +10,7 @@ import { StickyCTABar } from "@/components/landing/sticky-cta-bar";
 import { LocalCallbackForm } from "@/components/local-callback-form";
 import { HomeRainbowTheatre } from "@/components/home/home-rainbow-theatre";
 import { BranchQuickFacts, BranchAreas, BranchAdmissions, BranchNearby } from "@/components/centre/branch-sections";
-import { ADMISSIONS_PHONE_LABEL, ADMISSIONS_PHONE_NUMBER, anandNagarPage, kalwaPage, manpadaPage, branchPageSchemaTelephone, getCentreBySlug, preschoolFAQs, preschoolPageSEO, whyParentsChoose } from "@shared/centre-data";
+import { ADMISSIONS_PHONE_LABEL, ADMISSIONS_PHONE_NUMBER, anandNagarPage, kalwaPage, manpadaPage, hariniwasPage, branchPageSchemaTelephone, branchWhatsAppGreeting, getCentreBySlug, preschoolFAQs, preschoolPageSEO, whyParentsChoose } from "@shared/centre-data";
 import { branchPhotos } from "@shared/branch-photos";
 import { trackCallClick, trackWhatsAppClick, trackDirectionsClick } from "@/lib/analytics";
 
@@ -18,14 +18,14 @@ const programmeIcons = [Blocks, Sparkles, GraduationCap];
 const whyIcons = [MapPin, Users, Video, SprayCan, ClipboardList, Music2];
 const BranchFaq = lazy(() => import("@/components/centre/branch-faq").then(({ BranchFaq }) => ({ default: BranchFaq })));
 const base = "https://www.rainbowpreschools.com";
-type BranchSlug = "anand-nagar" | "kalwa" | "manpada";
+type BranchSlug = "anand-nagar" | "kalwa" | "manpada" | "hariniwas";
 
 export function BranchCentrePage({ slug }: { slug: BranchSlug }) {
   const centre = getCentreBySlug(slug)!;
   const seo = preschoolPageSEO[slug];
   const faqs = preschoolFAQs[slug];
   const why = whyParentsChoose[slug];
-  const copy = slug === "anand-nagar" ? anandNagarPage : slug === "kalwa" ? kalwaPage : manpadaPage;
+  const copy = slug === "anand-nagar" ? anandNagarPage : slug === "kalwa" ? kalwaPage : slug === "hariniwas" ? hariniwasPage : manpadaPage;
   const photos = branchPhotos[slug];
   const pageSchemas = useMemo(() => {
     const url = `${base}${seo.canonicalPath}`;
@@ -34,7 +34,7 @@ export function BranchCentrePage({ slug }: { slug: BranchSlug }) {
       {
         "@context": "https://schema.org", "@type": "Preschool", "@id": `${url}#centre`,
         name: slug === "manpada" ? `Rainbow Preschool International, ${centre.name}` : `Rainbow Preschool International, ${centre.localityName} Centre`, url,
-        address: { "@type": "PostalAddress", streetAddress: centre.address, addressLocality: "Thane", addressRegion: "Maharashtra", ...(slug === "manpada" ? { postalCode: centre.postalCode } : {}), addressCountry: "IN" },
+        address: { "@type": "PostalAddress", streetAddress: centre.branchPageAddress ?? centre.address, addressLocality: "Thane", addressRegion: "Maharashtra", ...(["manpada", "hariniwas"].includes(slug) ? { postalCode: centre.postalCode } : {}), addressCountry: "IN" },
         geo: { "@type": "GeoCoordinates", latitude: Number(centre.latitude), longitude: Number(centre.longitude) },
         telephone: branchPageSchemaTelephone(centre), hasMap: centre.googleMapsDirectionsUrl,
         parentOrganization: { "@id": `${base}/#organization` },
@@ -47,7 +47,7 @@ export function BranchCentrePage({ slug }: { slug: BranchSlug }) {
       ]),
     ];
   }, [centre, seo, copy.publishDate]);
-  const initialId = slug === "anand-nagar" ? "anand-initial" : slug === "kalwa" ? "kalwa-initial" : "manpada-initial";
+  const initialId = slug === "anand-nagar" ? "anand-initial" : slug === "kalwa" ? "kalwa-initial" : slug === "hariniwas" ? "hariniwas-initial" : "manpada-initial";
   const initialHeading = useRef(typeof document !== "undefined" && !!document.getElementById(`${initialId}-h1`));
   const faqRef = useRef<HTMLElement>(null);
   const [faqReady, setFaqReady] = useState(false);
@@ -83,7 +83,7 @@ export function BranchCentrePage({ slug }: { slug: BranchSlug }) {
         ogImageAlt={slug === "anand-nagar" ? "Two children playing with blocks at Rainbow Preschool" : slug === "kalwa" ? "Rainbow Preschool children learning together at a classroom table" : "Rainbow Preschool classroom activity"}
         ogImageType="image/jpeg" ogImageWidth={1200} ogImageHeight={630}
         structuredData={initialHeading.current ? undefined : pageSchemas} />
-      <MinimalHeader whatsappNumber={centre.whatsappNumber} phoneNumber={ADMISSIONS_PHONE_NUMBER} callLabel={ADMISSIONS_PHONE_LABEL} locality={centre.localityName}
+      <MinimalHeader whatsappNumber={centre.whatsappNumber} phoneNumber={ADMISSIONS_PHONE_NUMBER} callLabel={ADMISSIONS_PHONE_LABEL} locality={centre.localityName} whatsappGreeting={branchWhatsAppGreeting(centre)}
         onCallClick={call} onWhatsAppClick={whatsapp} />
       <main className="pt-20 md:pt-24">
         <nav className="bg-muted/50 py-2 px-4" aria-label="Breadcrumb">
@@ -210,7 +210,7 @@ export function BranchCentrePage({ slug }: { slug: BranchSlug }) {
           </div>
         </section>
 
-        <BranchNearby content={copy} nearest={slug === "anand-nagar" ? { name: "Kasarvadavali", href: "/preschool-in-kasarvadavali-thane" } : slug === "kalwa" ? { name: "Hariniwas", href: "/preschool-in-hariniwas-thane" } : { name: "Dhokali", href: "/preschool-in-dhokali-thane" }} />
+        <BranchNearby content={copy} nearest={slug === "anand-nagar" ? { name: "Kasarvadavali", href: "/preschool-in-kasarvadavali-thane" } : slug === "kalwa" ? { name: "Hariniwas", href: "/preschool-in-hariniwas-thane" } : slug === "hariniwas" ? { name: "Kalwa", href: "/preschool-in-kalwa-thane" } : { name: "Dhokali", href: "/preschool-in-dhokali-thane" }} />
         <div className="max-w-4xl mx-auto px-4 py-8 text-sm text-muted-foreground">Last updated: <time dateTime={copy.publishDate}>{copy.publishDateDisplay}</time></div>
 
         <section className="relative overflow-hidden py-10 md:py-16 bg-gradient-to-r from-primary via-accent to-secondary text-white">
@@ -225,7 +225,7 @@ export function BranchCentrePage({ slug }: { slug: BranchSlug }) {
           </div>
         </section>
       </main>
-      <StickyCTABar phoneNumber={ADMISSIONS_PHONE_NUMBER} callLabel={ADMISSIONS_PHONE_LABEL} whatsappNumber={centre.whatsappNumber}
+      <StickyCTABar phoneNumber={ADMISSIONS_PHONE_NUMBER} callLabel={ADMISSIONS_PHONE_LABEL} whatsappNumber={centre.whatsappNumber} whatsappGreeting={branchWhatsAppGreeting(centre)}
         locality={centre.localityName} onCallClick={call} onWhatsAppClick={whatsapp} twoActionsOnly />
     </div>
   );

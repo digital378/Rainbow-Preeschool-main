@@ -1,0 +1,111 @@
+PAGE UPDATE: /preschool-in-hariniwas-thane  (branch page 4 of 6)
+Use the same reusable branch template as Anand Nagar, Kalwa and Manpada: same section order, design, behaviour, performance rules, phone rule and checks. Only the data, text and photos below change.
+Rules: text report only, no screenshots, don't publish, don't invent facts, no "best/No. 1/finest/award-winning". Meta description 155 characters or fewer. No visible photo-provenance text.
+
+CONFIRMED FACTS: HARINIWAS CENTRE
+- Name: Rainbow Preschool International, Hariniwas Centre
+- Address: M.V. Apartments, Bhakti Mandir Road, Opp. Thanawala Garage, Hariniwas Circle, Panchpakhadi, Thane (W) 400602
+  (Spell it "Panchpakhadi" in visible text. Keep the stored address data as is if other pages depend on it.)
+- Map pin: 19.1917133, 72.966523. Google profile: https://maps.app.goo.gl/KrcVoEu8xSHEzEPd9
+- Phone rule: the only phone shown or dialled is 82915 68972 ("Call Admissions"). Centre WhatsApp: 91365 78589. Schema telephone: +91-8291568972.
+- Ages 1.5–5.5: Playgroup 1.5–2.5, Nursery 2.5–3.5, Jr. KG 3.5–4.5, Sr. KG 4.5–5.5 (age as of 1 June)
+- Classes at this centre continue up to Grade 3
+- Batches: 8:30–11:30 AM and 12:30–3:30 PM, Monday to Friday
+- NO Happy Times daycare at this centre (no tile, card or FAQ)
+- GPS-enabled in-house transport
+- 100% female, ECCE-trained teachers. Ratio 30:2. CCTV-monitored classrooms. Toys and classrooms sanitised several times a day. Daily updates and monthly progress reports. NEP 2020-aligned, play-based curriculum
+- Academic Coordinator: Shweta Chheda
+- Admission steps, 24-hour reply, "call for fees": same as the other branch pages
+- Brand rating chip: "4.9★ from 487 Google reviews across our centres"
+- Nearest other centre: Kalwa (about 3 km, across the Kalwa bridge)
+
+AREAS WITHIN ABOUT 2 KM (say "under 1 km" / "1–2 km", never metres)
+- Under 1 km: Hariniwas Circle, Panchpakhadi, Teen Hath Naka, Ghantali, Ram Maruti Road, Nitin Company, Talao Pali (Masunda Lake), Thane station
+- 1–2 km: Naupada, Gokhale Road, Charai, Jambli Naka, Tembhi Naka, Chendani Koliwada, Khopat, Cadbury Junction, Uthalsar, Kolbad
+- Landmarks: at Hariniwas Circle, opposite Thanawala Garage on Bhakti Mandir Road; about 1 km from Thane railway station
+- Do NOT list Kalwa-side areas (Manisha Nagar, Kharegaon, Saket, Rabodi) or Ghodbunder Road areas on this page.
+
+1. METADATA
+- Title (48 characters): "Preschool in Hariniwas, Naupada, Thane | Rainbow"
+- Meta (143 characters): "Playgroup, Nursery & KG (ages 1.5–5.5) at Hariniwas Circle, Panchpakhadi, near Naupada & Thane station. Up to Grade 3. 2027-28 admissions open."
+- og:description matches the meta. Create a new share image /images/og/hariniwas-1200x630.jpg from a photo not used on any other page.
+
+2. PAGE TEXT (same sections as the other branch pages)
+A. Hero
+   - H1: "Preschool in Hariniwas, Thane"
+   - Subline: "Playgroup, Nursery and KG at Hariniwas Circle, near Naupada and Thane station"
+   - The same 3 chips
+B. Quick facts (5 tiles)
+   - Ages 1.5–5.5
+   - Batches
+   - Playgroup to Sr. KG
+   - Up to Grade 3
+   - GPS-enabled transport
+C. About Our Hariniwas Centre:
+   "Our Hariniwas centre is at M.V. Apartments on Bhakti Mandir Road, opposite Thanawala Garage at Hariniwas Circle, about 1 km from Thane station. Families from Panchpakhadi, Naupada, Ghantali, Ram Maruti Road and Charai can reach us in a few minutes. Children join us from 1.5 years in Playgroup and can continue through Nursery, Jr. KG and Sr. KG, and up to Grade 3 at this centre.
+   Every class is led by our female, ECCE-trained teachers, with two teachers for every 30 children. Our play-based, NEP 2020-aligned curriculum brings in art, music, movement and storytelling every day. You get daily updates and a monthly progress report, and our Academic Coordinator, Shweta Chheda, guides the curriculum at this centre."
+D. Programmes
+   - 3 main cards (Playgroup, Nursery, Kindergarten: Jr. KG & Sr. KG) linking to /playgroup, /nursery and /kindergarten
+   - 1 wide card: "Primary classes up to Grade 3"
+E. Rainbow Theatre: the same component and rules.
+F. Gallery: heading "Our Learning Spaces in Hariniwas". See PHOTO RULES.
+G. Why Parents Choose Our Hariniwas Centre (6 tiles):
+   1. At Hariniwas Circle, about 1 km from Thane station, easy to reach from Naupada and Panchpakhadi
+   2. 100% female, ECCE-trained teachers; two teachers per class of 30
+   3. CCTV-monitored classrooms
+   4. Toys and classrooms sanitised several times a day
+   5. Daily updates and monthly progress reports
+   6. Continue up to Grade 3 at the same centre
+H. Areas (H2: "Preschool Near Naupada, Panchpakhadi and Thane Station")
+   - Chips from the lists above
+   - Paragraph: "If you live in Panchpakhadi, Naupada, Ghantali, Ram Maruti Road or around Talao Pali, our Hariniwas centre is the closest Rainbow centre. Families in Charai, Khopat and Uthalsar can reach us in a few minutes too."
+   - How to reach: "At Hariniwas Circle on Bhakti Mandir Road, opposite Thanawala Garage, about 1 km from Thane railway station."
+   - Map: the lazy iframe using 19.1917133, 72.966523, plus a Get directions button
+I. Admissions: the same as the other branch pages.
+J. FAQ:
+   1. Where is Rainbow Preschool in Hariniwas? → the full address
+   2. Which areas is the centre close to? → from the lists
+   3. How far is it from Thane station? → "About 1 km."
+   4. Batch timings? → "8:30–11:30 AM or 12:30–3:30 PM, Monday to Friday."
+   5. Which classes are available? → "Playgroup, Nursery, Jr. KG and Sr. KG (1.5–5.5 years), and classes up to Grade 3."
+   6. Class size? → 30:2, female ECCE-trained
+   7. Transport? → "Yes, GPS-enabled in-house transport."
+   8. Fees? → "Please call our admissions team on 82915 68972 for current fees."
+   9. How do I enrol? → "Call our admissions team on 82915 68972, WhatsApp us on 91365 78589, or fill in the callback form. We'll book your visit and a short parent–child interaction."
+K. Nearby centres: Kalwa (about 3 km) → /preschool-in-kalwa-thane, and "All 6 centres" → /contact.
+L. Final CTA: "Visit Our Hariniwas Centre".
+Remove from the current Hariniwas page:
+- "blending traditional values with modern teaching" (unconfirmed)
+- small-batch or ratio claims other than 30:2
+- "1.5–5" age ranges, "2026-27", Kids Activity Club, Summer Camp
+- Happy Times
+- "Curriculum Team", "Reviewed by", "24/7", "secure entry/parent verification"
+- the old "Local Landmarks" and "Neighbourhoods Served" copy
+- anything else not in the facts above
+Old URL /play-school-near-naupada must still 301 straight to this page (check: no redirect chain).
+
+3. WHATSAPP GREETING (all 6 branch pages, via the shared template)
+Replace the pre-filled WhatsApp text "…playgroup…" with a general message: "Hi, I'd like to know about admissions at Rainbow Preschool International, [Centre name]." (e.g. "…, Hariniwas."). Keep each centre's own WhatsApp number.
+
+4. PHOTO RULES
+- Use only photos NOT already used on Anand Nagar, Kalwa or Manpada. The uniqueness check must pass across all four pages.
+- Use as many distinct real photos as are available (target 6–8). If fewer than 4 remain, use what's left and tell me the count.
+- File names: area name only if the photo is known to be from that centre, otherwise "thane". Descriptive alt text. Register them in shared/branch-photos.ts.
+- Also report how many unused real photos will remain after Hariniwas, for Dhokali and Kasarvadavali.
+
+5. STRUCTURED DATA: the same as the other branch pages:
+- WebPage + BreadcrumbList (1–3)
+- Preschool with @id …/preschool-in-hariniwas-thane#centre, address with postalCode 400602, geo 19.1917133 / 72.966523, telephone +91-8291568972, hasMap, parentOrganization, areaServed
+- No aggregateRating, openingHours, FAQPage or Article.
+
+6. CHECKS (text only)
+- Visitor and Googlebot versions match; one H1.
+- The map loads on scroll with the correct pin.
+- All internal links return 200 with no redirects; /play-school-near-naupada goes to this page with a single 301.
+- Phone-number scan: only 8291568972 and 9136578589 appear.
+- Meta is 155 characters or fewer.
+- The photo-uniqueness check passes across 4 pages.
+- Mobile Lighthouse, production build, median of 3: LCP under 2.5 s, CLS under 0.05, TBT under 250 ms.
+- Full pre-publish script: two consecutive passes.
+
+REPORT: title, meta (with character count) and H1; the full text of About, Areas and FAQ; the photo list (file + alt + Hariniwas/Thane) and the count of photos remaining; the WhatsApp greeting on each of the 6 branch pages; the phone scan result; Lighthouse; pre-publish results; files changed. Don't publish.

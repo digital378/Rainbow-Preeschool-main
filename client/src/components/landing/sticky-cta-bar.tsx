@@ -6,6 +6,7 @@ interface StickyCTABarProps {
   phoneNumber: string;
   whatsappNumber: string;
   locality: string;
+  whatsappGreeting?: string;
   onCallClick?: () => void;
   onWhatsAppClick?: () => void;
   onCallbackClick?: () => void;
@@ -17,6 +18,7 @@ export function StickyCTABar({
   phoneNumber,
   whatsappNumber,
   locality,
+  whatsappGreeting,
   onCallClick,
   onWhatsAppClick,
   onCallbackClick,
@@ -42,7 +44,7 @@ export function StickyCTABar({
           </a>
 
           <a
-            href={`https://wa.me/91${whatsappNumber}?text=${encodeURIComponent(`Hi, I'm interested in playgroup admission in ${locality}`)}`}
+            href={`https://wa.me/91${whatsappNumber}?text=${encodeURIComponent(whatsappGreeting ?? `Hi, I'm interested in playgroup admission in ${locality}`)}`}
             target="_blank"
             rel="noopener noreferrer"
             onClick={onWhatsAppClick}

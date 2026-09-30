@@ -8,6 +8,7 @@ interface MinimalHeaderProps {
   whatsappNumber: string;
   phoneNumber: string;
   locality: string;
+  whatsappGreeting?: string;
   onCallClick?: () => void;
   onWhatsAppClick?: () => void;
   callLabel?: string;
@@ -17,6 +18,7 @@ export function MinimalHeader({
   whatsappNumber,
   phoneNumber,
   locality,
+  whatsappGreeting,
   onCallClick,
   onWhatsAppClick,
   callLabel = "Call",
@@ -50,7 +52,7 @@ export function MinimalHeader({
           </a>
           
           <a
-            href={`https://wa.me/91${whatsappNumber}?text=${encodeURIComponent(`Hi, I'm interested in playgroup admission in ${locality}`)}`}
+            href={`https://wa.me/91${whatsappNumber}?text=${encodeURIComponent(whatsappGreeting ?? `Hi, I'm interested in playgroup admission in ${locality}`)}`}
             target="_blank"
             rel="noopener noreferrer"
             onClick={onWhatsAppClick}

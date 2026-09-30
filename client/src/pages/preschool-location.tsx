@@ -20,6 +20,7 @@ import {
   ADMISSIONS_PHONE_NUMBER,
   ADMISSIONS_PHONE_DISPLAY,
   branchPageSchemaTelephone,
+  branchWhatsAppGreeting,
   getCentreBySlug, 
   preschoolPageSEO, 
   preschoolIntros, 
@@ -224,6 +225,7 @@ function PreschoolLocationTemplate({ localitySlug }: PreschoolLocationPageProps)
     <div className="min-h-screen">
       <MinimalHeader
         whatsappNumber={centre.whatsappNumber}
+        whatsappGreeting={branchWhatsAppGreeting(centre)}
         phoneNumber={ADMISSIONS_PHONE_NUMBER}
         callLabel={ADMISSIONS_PHONE_LABEL}
         locality={centre.localityName}
@@ -719,7 +721,7 @@ function PreschoolLocationTemplate({ localitySlug }: PreschoolLocationPageProps)
         </div>
       </section>
       </div>
-      <StickyCTABar phoneNumber={ADMISSIONS_PHONE_NUMBER} callLabel={ADMISSIONS_PHONE_LABEL}
+      <StickyCTABar phoneNumber={ADMISSIONS_PHONE_NUMBER} callLabel={ADMISSIONS_PHONE_LABEL} whatsappGreeting={branchWhatsAppGreeting(centre)}
         whatsappNumber={centre.whatsappNumber} locality={centre.localityName}
         onCallClick={() => handleCallClick(ADMISSIONS_PHONE_NUMBER)} onWhatsAppClick={handleWhatsAppClick} twoActionsOnly />
     </div>
@@ -731,7 +733,7 @@ export function PreschoolInManpada() {
 }
 
 export function PreschoolInHariniwas() {
-  return <PreschoolLocationTemplate localitySlug="hariniwas" />;
+  return <BranchCentrePage slug="hariniwas" />;
 }
 
 export function PreschoolInAnandNagar() {

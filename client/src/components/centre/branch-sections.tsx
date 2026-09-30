@@ -64,7 +64,7 @@ export function BranchAreas({ content, centre, onDirections }: { content: Branch
             <p className="text-slate-700">{content.reachText}</p>
             <div className="rounded-2xl bg-white border p-5">
               <h3 className="font-bold mb-2">Centre address &amp; contact</h3>
-              <p className="text-slate-700 mb-3">{centre.address}</p>
+              <p className="text-slate-700 mb-3">{centre.branchPageAddress ?? centre.address}</p>
               <p className="text-xs uppercase tracking-wide font-bold text-slate-600 mb-2">{centre.hideCentrePhonesOnBranchPage ? "Admissions" : "Centre phone"}</p>
               <div className="flex flex-wrap gap-x-5 gap-y-2">
                 {centre.hideCentrePhonesOnBranchPage

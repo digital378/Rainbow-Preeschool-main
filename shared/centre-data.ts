@@ -10,6 +10,7 @@ export interface CentreData {
   playgroundLandingUrl: string;
   preschoolLandingUrl: string;
   address: string;
+  branchPageAddress?: string;
   postalCode: string;
   phoneNumbers: string[];
   hideCentrePhonesOnBranchPage: boolean;
@@ -32,6 +33,10 @@ export const ADMISSIONS_PHONE_NUMBER = "+918291568972";
 export const ADMISSIONS_PHONE_LABEL = "Call Admissions";
 export const ADMISSIONS_PHONE_DISPLAY = "82915 68972";
 export const ADMISSIONS_SCHEMA_TELEPHONE = "+91-8291568972";
+
+export function branchWhatsAppGreeting(centre: CentreData): string {
+  return `Hi, I'd like to know about admissions at Rainbow Preschool International, ${centre.localityName}.`;
+}
 
 export function branchPageSchemaTelephone(centre: CentreData): string {
   return centre.hideCentrePhonesOnBranchPage
@@ -181,6 +186,40 @@ export const kalwaPage = {
   finalHeading: "Visit Our Kalwa Centre",
 } as const;
 
+export const hariniwasPage = {
+  ...anandNagarPage,
+  heroSubline: "Playgroup, Nursery and KG at Hariniwas Circle, near Naupada and Thane station",
+  quickFacts: [
+    { icon: "baby", label: "Ages", value: "1.5–5.5 years" },
+    { icon: "clock", label: "Batches", value: "8:30–11:30 AM · 12:30–3:30 PM, Mon–Fri" },
+    { icon: "book", label: "Classes", value: "Playgroup to Sr. KG" },
+    { icon: "graduation", label: "Primary", value: "Up to Grade 3" },
+    { icon: "bus", label: "Transport", value: "GPS-enabled" },
+  ],
+  aboutHeading: "About Our Hariniwas Centre",
+  aboutParagraphs: [
+    "Our Hariniwas centre is at M.V. Apartments on Bhakti Mandir Road, opposite Thanawala Garage at Hariniwas Circle, about 1 km from Thane station. Families from Panchpakhadi, Naupada, Ghantali, Ram Maruti Road and Charai can reach us in a few minutes. Children join us from 1.5 years in Playgroup and can continue through Nursery, Jr. KG and Sr. KG, and up to Grade 3 at this centre.",
+    "Every class is led by our female, ECCE-trained teachers, with two teachers for every 30 children. Our play-based, NEP 2020-aligned curriculum brings in art, music, movement and storytelling every day. You get daily updates and a monthly progress report, and our Academic Coordinator, Shweta Chheda, guides the curriculum at this centre.",
+  ],
+  programmes: [
+    ...anandNagarPage.programmes.slice(0, 3),
+    { title: "Primary classes up to Grade 3", age: "After Sr. KG", description: "Children can continue up to Grade 3 at this centre.", href: "" },
+  ],
+  galleryHeading: "Our Learning Spaces in Hariniwas",
+  gallery: branchPhotos.hariniwas.gallery,
+  whyHeading: "Why Parents Choose Our Hariniwas Centre",
+  areasHeading: "Preschool Near Naupada, Panchpakhadi and Thane Station",
+  nearbyAreas: [
+    { label: "Under 1 km", areas: ["Hariniwas Circle", "Panchpakhadi", "Teen Hath Naka", "Ghantali", "Ram Maruti Road", "Nitin Company", "Talao Pali (Masunda Lake)", "Thane station"] },
+    { label: "1–2 km", areas: ["Naupada", "Gokhale Road", "Charai", "Jambli Naka", "Tembhi Naka", "Chendani Koliwada", "Khopat", "Cadbury Junction", "Uthalsar", "Kolbad"] },
+  ],
+  areasParagraph: "If you live in Panchpakhadi, Naupada, Ghantali, Ram Maruti Road or around Talao Pali, our Hariniwas centre is the closest Rainbow centre. Families in Charai, Khopat and Uthalsar can reach us in a few minutes too.",
+  reachText: "At Hariniwas Circle on Bhakti Mandir Road, opposite Thanawala Garage, about 1 km from Thane railway station.",
+  admissionsDetails: "There is no entrance test. The parent–child interaction is a relaxed conversation of about 20 minutes. Once you confirm a seat, there are 2–3 short orientation sessions before term begins. You can ask which programme matches your child's age, how transport works and whether the batch timings suit your routine when you visit.",
+  nearbyLinkText: "Kalwa (about 3 km, across the Kalwa bridge)",
+  finalHeading: "Visit Our Hariniwas Centre",
+} as const;
+
 export const centres: CentreData[] = [
   {
     id: "manpada",
@@ -214,6 +253,7 @@ export const centres: CentreData[] = [
     playgroundLandingUrl: "/playgroup",
     preschoolLandingUrl: "/preschool-in-hariniwas-thane",
     address: "M.V.Apartments, Bhakti Mandir Road, Opp. Thanawala Garage, Hariniwas Circle, Panchpakadi, Thane (W)",
+    branchPageAddress: "M.V. Apartments, Bhakti Mandir Road, Opp. Thanawala Garage, Hariniwas Circle, Panchpakhadi, Thane (W) 400602",
     postalCode: "400602",
     phoneNumbers: ["91365 78589"],
     hideCentrePhonesOnBranchPage: true,
@@ -228,7 +268,7 @@ export const centres: CentreData[] = [
       nursery: "/nursery",
       kindergarten: "/kindergarten",
     },
-    areasServed: ["Hariniwas", "Panchpakadi", "Naupada", "Charai", "Khopat"],
+    areasServed: ["Hariniwas Circle", "Panchpakhadi", "Teen Hath Naka", "Ghantali", "Ram Maruti Road", "Nitin Company", "Talao Pali (Masunda Lake)", "Thane station", "Naupada", "Gokhale Road", "Charai", "Jambli Naka", "Tembhi Naka", "Chendani Koliwada", "Khopat", "Cadbury Junction", "Uthalsar", "Kolbad"],
   },
   {
     id: "anand-nagar",
@@ -437,8 +477,8 @@ export const preschoolPageSEO: Record<string, PreschoolPageSEO> = {
     canonicalPath: "/preschool-in-manpada-thane",
   },
   hariniwas: {
-    title: "Preschool in Hariniwas, Thane | Rainbow Preschool",
-    description: "Rainbow Preschool at Hariniwas Circle, Panchpakadi — blending traditional values with modern teaching. Playgroup, Nursery & KG, ages 1.5–5. Enquire now.",
+    title: "Preschool in Hariniwas, Naupada, Thane | Rainbow",
+    description: "Playgroup, Nursery & KG (ages 1.5–5.5) at Hariniwas Circle, Panchpakhadi, near Naupada & Thane station. Up to Grade 3. 2027-28 admissions open.",
     h1: "Preschool in Hariniwas, Thane",
     canonicalPath: "/preschool-in-hariniwas-thane",
   },
@@ -513,12 +553,12 @@ export const whyParentsChoose: Record<string, string[]> = {
     "Continue up to Grade 4 at the same centre",
   ],
   hariniwas: [
-    "Central Thane location in the heart of Hariniwas Circle",
-    "Trusted by families in Panchpakadi for generations",
-    "Experienced teachers with years of early childhood expertise",
-    "Balanced curriculum combining traditional values with modern methods",
-    "Secure premises with controlled entry and exit",
-    "Focus on holistic child development",
+    "At Hariniwas Circle, about 1 km from Thane station, easy to reach from Naupada and Panchpakhadi",
+    "100% female, ECCE-trained teachers; two teachers per class of 30",
+    "CCTV-monitored classrooms",
+    "Toys and classrooms sanitised several times a day",
+    "Daily updates and monthly progress reports",
+    "Continue up to Grade 3 at the same centre",
   ],
   "anand-nagar": [
     "Opposite Tropical Lagoon on Ghodbunder Road, easy to reach from Kavesar and Vijay Garden",
@@ -595,38 +635,15 @@ export const preschoolFAQs: Record<string, Array<{ question: string; answer: str
     },
   ],
   hariniwas: [
-    {
-      question: "Where is Rainbow Preschool Hariniwas located?",
-      answer: "Our Hariniwas centre is at M.V. Apartments, Bhakti Mandir Road, Opposite Thanawala Garage, Hariniwas Circle, Panchpakadi, Thane (W)."
-    },
-    {
-      question: "What age children can join Rainbow Preschool Hariniwas?",
-      answer: "We accept children from 1.5 years for Playgroup, 2.5 years for Nursery, and 3.5 years for Kindergarten, covering the complete preschool journey."
-    },
-    {
-      question: "What are the timings at Hariniwas centre?",
-      answer: "We offer morning and afternoon batches. Call Admissions on 82915 68972 for specific batch timings that suit your schedule."
-    },
-    {
-      question: "How can I contact Rainbow Preschool Hariniwas?",
-      answer: "Call Admissions on 82915 68972, WhatsApp us on 91365 78589, or fill the callback form for a quick response."
-    },
-    {
-      question: "What curriculum does Rainbow Preschool follow?",
-      answer: "We follow a play-based curriculum that combines learning with fun. Activities include sensory play, art, music, movement, storytelling, and age-appropriate academics."
-    },
-    {
-      question: "Is parking available near the Hariniwas centre?",
-      answer: "Street parking is available near M.V. Apartments. The centre is also well-connected by auto-rickshaws from Thane station."
-    },
-    {
-      question: "What safety measures are in place?",
-      answer: "We have CCTV surveillance, 100% female staff, secure entry gates, strict visitor protocols, and maintain high hygiene standards."
-    },
-    {
-      question: "Can I schedule a visit to the Hariniwas centre?",
-      answer: "Yes! Fill out the callback form or call Admissions on 82915 68972 to schedule a visit and see our learning environment firsthand."
-    },
+    { question: "Where is Rainbow Preschool in Hariniwas?", answer: "Rainbow Preschool International, Hariniwas Centre, is at M.V. Apartments, Bhakti Mandir Road, Opp. Thanawala Garage, Hariniwas Circle, Panchpakhadi, Thane (W) 400602." },
+    { question: "Which areas is the centre close to?", answer: "Hariniwas Circle, Panchpakhadi, Teen Hath Naka, Ghantali, Ram Maruti Road, Nitin Company, Talao Pali (Masunda Lake) and Thane station are under 1 km away. Naupada, Gokhale Road, Charai, Jambli Naka, Tembhi Naka, Chendani Koliwada, Khopat, Cadbury Junction, Uthalsar and Kolbad are 1–2 km away." },
+    { question: "How far is it from Thane station?", answer: "About 1 km." },
+    { question: "What are the batch timings?", answer: "8:30–11:30 AM or 12:30–3:30 PM, Monday to Friday." },
+    { question: "Which classes are available?", answer: "Playgroup, Nursery, Jr. KG and Sr. KG (1.5–5.5 years), and classes up to Grade 3." },
+    { question: "What is the class size?", answer: "Classes have two female, ECCE-trained teachers for every 30 children." },
+    { question: "Do you provide transport?", answer: "Yes, GPS-enabled in-house transport." },
+    { question: "What are the fees?", answer: "Please call our admissions team on 82915 68972 for current fees." },
+    { question: "How do I enrol?", answer: "Call our admissions team on 82915 68972, WhatsApp us on 91365 78589, or fill in the callback form. We'll book your visit and a short parent–child interaction." },
   ],
   "anand-nagar": [
     { question: "Where is Rainbow Preschool in Anand Nagar?", answer: "Kris Commercial Plaza, 1st Floor, opposite Tropical Lagoon, Anand Nagar, Ghodbunder Road, Thane (W)." },

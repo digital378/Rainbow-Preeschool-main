@@ -109,6 +109,42 @@ export const branchPhotos = {
       },
     ],
   },
+  hariniwas: {
+    hero: {
+      src: "/images/branches/play-school-thane-colourful-floor-play.webp",
+      alt: "Two children play with colourful foam shapes on a classroom floor",
+    },
+    about: {
+      src: "/images/branches/playgroup-thane-dice-game.webp",
+      alt: "Children take turns with a large dice during a floor game",
+    },
+    gallery: [
+      {
+        src: "/images/branches/playgroup-thane-indoor-ball-pit.webp",
+        alt: "Three children smiling at an indoor ball pit",
+      },
+      {
+        src: "/images/branches/preschool-thane-floor-board-game.webp",
+        alt: "Children playing a large floor board game with teachers nearby",
+      },
+      {
+        src: "/images/branches/playgroup-thane-ball-pit.webp",
+        alt: "Child smiling among colourful balls in an indoor play area",
+      },
+      {
+        src: "/images/branches/preschool-thane-classroom-question.webp",
+        alt: "Child raising a hand while seated at a classroom table",
+      },
+      {
+        src: "/images/branches/preschool-thane-ring-stacking.webp",
+        alt: "Child arranging colourful rings during a classroom activity",
+      },
+      {
+        src: "/images/branches/preschool-thane-building-blocks-play.webp",
+        alt: "Two children playing together with oversized colourful blocks",
+      },
+    ],
+  },
 } as const;
 
 // Canonical file → owning branch index. New branch pages must register photos here
