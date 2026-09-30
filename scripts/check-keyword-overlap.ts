@@ -72,7 +72,7 @@ const REDIRECTED_PAGE_DESTINATIONS: Record<string, string> = {
   "/playgroup-in-anand-nagar": "/preschool-in-anand-nagar-thane",
   "/playgroup-in-kalwa": "/preschool-in-kalwa-thane",
   "/playgroup-in-dhokali": "/preschool-in-dhokali-thane",
-  "/play-school-near-majiwada": "/preschool-in-anand-nagar-thane",
+  "/play-school-near-majiwada": "/preschool-in-dhokali-thane",
   "/play-school-near-naupada": "/preschool-in-hariniwas-thane",
   "/blog/nursery-school-admission-thane-2026": "/preschool-admissions",
   "/importance-of-play-in-childrens-emotional-growth": "/blog/how-play-based-learning-shapes-young-minds",

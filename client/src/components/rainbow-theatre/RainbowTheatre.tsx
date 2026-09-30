@@ -6,7 +6,7 @@ import { useInstagramReels, type Reel } from "./useInstagramReels";
 import { LOCAL_REEL_POSTERS } from "./local-reel-posters";
 import { LOCAL_REEL_MEDIA } from "./local-reel-media";
 import "./theatre.css";
-import { cleanReelCaption } from "@shared/clean-reel-caption";
+import { cleanReelCaption, cleanBranchReelCaption } from "@shared/clean-reel-caption";
 
 const PLACEHOLDER_COUNT = 4;
 
@@ -31,11 +31,17 @@ export function RainbowTheatre({
   enabled = active,
   endpoint,
   variant = "walkthrough",
+  heading,
+  subline,
+  branchCopy = false,
 }: {
   active: boolean;
   enabled?: boolean;
   endpoint?: string;
   variant?: "walkthrough" | "homepage";
+  heading?: string;
+  subline?: string;
+  branchCopy?: boolean;
 }) {
   const [playRequestedId, setPlayRequestedId] = useState<string | null>(null);
   const {
@@ -53,14 +59,14 @@ export function RainbowTheatre({
       const live = liveById.get(poster.id);
       return {
         id: poster.id,
-        caption: poster.caption,
+        caption: branchCopy ? cleanBranchReelCaption(poster.caption) : poster.caption,
         permalink: poster.permalink,
         thumbnailUrl: poster.posterPath,
         mediaUrl: LOCAL_REEL_MEDIA[poster.id] ?? live?.mediaUrl,
         timestamp: live?.timestamp ?? "",
       };
     });
-  }, [sourceReels, variant]);
+  }, [sourceReels, variant, branchCopy]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [soundOn, setSoundOn] = useState(variant === "homepage");
   const [playbackBlocked, setPlaybackBlocked] = useState(false);
@@ -308,7 +314,7 @@ export function RainbowTheatre({
           disabled={showHomepageLoading}
           onClick={() => selectReel(currentReel.id)}
         >
-          <img className="rainbow-theatre__video" src={currentReel.thumbnailUrl} alt="" />
+          <img className="rainbow-theatre__video" src={currentReel.thumbnailUrl} alt="" loading={branchCopy ? "lazy" : undefined} />
           {!showHomepageLoading && (
             <span
               aria-hidden="true"
@@ -506,8 +512,8 @@ export function RainbowTheatre({
     <section className={`rainbow-theatre rainbow-theatre--${variant}${active ? " is-active" : ""}`} aria-label="The Rainbow Theatre">
       <div className="rainbow-theatre__intro">
           <span className="rainbow-theatre__eyebrow"><i aria-hidden="true" /> {variant === "homepage" ? "The Rainbow Theatre" : "Scene 6 · The Rainbow Theatre"}</span>
-          <h2>{variant === "homepage" ? "A front-row look at our days" : "Now showing, from our Instagram"}</h2>
-          <p>{variant === "homepage" ? "Small classroom moments, celebrations and discoveries from Rainbow." : "Watch the latest Rainbow video. Browse earlier posts in the playlist."}</p>
+          <h2>{heading ?? (variant === "homepage" ? "A front-row look at our days" : "Now showing, from our Instagram")}</h2>
+          <p>{subline ?? (variant === "homepage" ? "Small classroom moments, celebrations and discoveries from Rainbow." : "Watch the latest Rainbow video. Browse earlier posts in the playlist.")}</p>
         {isError && showFeedError && (
           <p role="alert" className="rainbow-theatre__error">
             Instagram videos could not load. <button type="button" onClick={() => void refetch()}>Try again</button>

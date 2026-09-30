@@ -27,6 +27,7 @@ import {
   legacyHardcodedBlogPosts,
 } from "../server/seed-blog-posts";
 import {
+  anandNagarPage,
   preschoolIntros,
   whyParentsChoose,
   preschoolFAQs,
@@ -61,7 +62,7 @@ import {
 } from "@shared/national-symbols-page-content";
 import { TOP_PRESCHOOLS, TOP_PRESCHOOLS_COPY, TOP_PRESCHOOLS_CENTRE_LINKS, TOP_PRESCHOOLS_COMPETITOR_LINKS, TOP_PRESCHOOLS_WEBPAGE_SCHEMA } from "@shared/top-preschools-thane-content";
 import { cleanReelCaption } from "@shared/clean-reel-caption";
-import { LOCAL_REEL_POSTERS } from "../client/src/components/rainbow-theatre/local-reel-posters";
+import { BRANCH_REEL_EXCERPTS, LOCAL_REEL_POSTERS } from "../client/src/components/rainbow-theatre/local-reel-posters";
 import {
   HOME_CALLBACK_COPY,
   HOME_VISITOR_COPY,
@@ -560,8 +561,9 @@ export interface PageSEOData {
     paragraphs?: readonly string[];
     richParagraphs?: readonly (readonly { text: string; href?: string }[])[];
     faqAsHeadings?: boolean;
+    faqInitiallyClosed?: boolean;
     faqOutro?: { text: string; linkText: string; url: string };
-    subsections?: readonly { heading?: string; image?: { src: string; alt: string; width?: number; height?: number }; text?: string; items?: readonly string[]; links?: readonly { text: string; url: string; newTab?: boolean; nofollow?: boolean }[] }[];
+    subsections?: readonly { heading?: string; image?: { src: string; alt: string; width?: number; height?: number; loading?: "eager" | "lazy" }; text?: string; items?: readonly string[]; links?: readonly { text: string; url: string; newTab?: boolean; nofollow?: boolean }[] }[];
     beforeSubsectionsItems?: readonly string[];
     afterSubsectionsRichParagraphs?: readonly (readonly { text: string; href?: string }[])[];
     items?: readonly string[];
@@ -583,9 +585,9 @@ export interface PageSEOData {
      * benefits from machine-readable tabular markup for search engines.
      */
     table?: { headers: string[]; rows: string[][] };
-    images?: readonly { src: string; alt: string; caption?: string; width?: number; height?: number }[];
+    images?: readonly { src: string; alt: string; caption?: string; width?: number; height?: number; loading?: "eager" | "lazy" }[];
   }[];
-  images?: { src: string; alt: string; width: number; height: number }[];
+  images?: { src: string; alt: string; width: number; height: number; loading?: "eager" | "lazy" }[];
   blogCards?: BlogListEntry[];
   blogCategories?: string[];
   blogArticleCount?: number;
@@ -1595,7 +1597,7 @@ const staticPages: Record<string, PageSEOData> = {
       })),
     }],
     contentSections: [
-      { heading: "Rainbow Preschool — Your Nearest Play School in Thane", text: "When parents in Thane search for a play school near me, they are usually looking for three things at once: a centre genuinely close to home, an environment they can absolutely trust with a 1.5- to 2.5-year-old toddler, and a curriculum that is play-based rather than worksheet-driven. Rainbow Preschool International delivers all three across 6 strategically located centres in Thane West — Manpada, Hariniwas (Naupada), Anand Nagar (Majiwada), Dhokali (Kolshet Road), Kalwa and Kasarvadavali (Ghodbunder Road). We have been Thane's most-trusted play school since 2007, with over 1,00,000 alumni, a 4.9-star Google rating from 487+ verified parent reviews, and award recognition from India Today, ScooNews, the Economic Times and the World Education Summit. Whichever Thane neighbourhood you live in, there is a Rainbow play school within a short, convenient distance from your home." },
+      { heading: "Rainbow Preschool — Your Nearest Play School in Thane", text: "When parents in Thane search for a play school near me, they are usually looking for three things at once: a centre genuinely close to home, an environment they can absolutely trust with a 1.5- to 2.5-year-old toddler, and a curriculum that is play-based rather than worksheet-driven. Rainbow Preschool International delivers all three across 6 strategically located centres in Thane West — Manpada, Hariniwas (Naupada), Anand Nagar (Ghodbunder Road), Dhokali (Kolshet Road), Kalwa and Kasarvadavali (Ghodbunder Road). We have been Thane's most-trusted play school since 2007, with over 1,00,000 alumni, a 4.9-star Google rating from 487+ verified parent reviews, and award recognition from India Today, ScooNews, the Economic Times and the World Education Summit. Whichever Thane neighbourhood you live in, there is a Rainbow play school within a short, convenient distance from your home." },
       { heading: "Inside Our Play School Classrooms", text: "A peek into the colourful, safe, and stimulating environment where your child will learn and grow.", images: PLAY_SCHOOL_GALLERY_IMAGES },
       { heading: "What Makes a Good Play School Near You", text: "A genuinely good play school is much more than a clean room with toys. When you visit any play school in Thane, evaluate it on these six dimensions — they are exactly the standards Rainbow has been built around for 18+ years.", items: [
         "Safe, child-friendly environment — CCTV-enabled classrooms, child-proofed furniture, secure single-point entry/exit, daily sanitisation",
@@ -1620,14 +1622,14 @@ const staticPages: Record<string, PageSEOData> = {
       { heading: "Our 6 Play School Centres in Thane West", text: "Pick the centre nearest your home — every Rainbow play school in Thane delivers the same curriculum, the same teacher quality and the same safety standard.", items: [
         "Manpada (Hiranandani Estate, Ghodbunder Road) — for Hiranandani Estate, Patlipada, Manpada families",
         "Hariniwas Circle (Naupada) — for Naupada, Panchpakadi, Charai, Khopat families",
-        "Anand Nagar (Majiwada) — for Majiwada, Tropical Lagoon, Anand Nagar, Vasant Vihar families",
+        "Anand Nagar (Ghodbunder Road) — for Anand Nagar, Tropical Lagoon, Kavesar, Vijay Garden, Cosmos Jewels and Parkwoods families",
         "Dhokali (Kolshet Road) — for Kolshet Road, Dhokali Naka, Vandana Nagar, Balkum families",
         "Kalwa — for Kalwa, Vitawa, Kharegaon, Mumbra-side families",
         "Kasarvadavali (Ghodbunder Road) — for Kasarvadavali, Hiranandani Meadows, Brahmand, upper Ghodbunder families",
       ]},
       { heading: "Explore by Neighbourhood", text: "Compare the local play school and playgroup information for the area closest to your family:", links: [
         { text: "Play school near Ghodbunder Road (Manpada and Kasarvadavali)", url: "/play-school-near-ghodbunder-road" },
-        { text: "Play school near Majiwada (Anand Nagar)", url: "/preschool-in-anand-nagar-thane" },
+        { text: "Play school near Majiwada (Dhokali)", url: "/preschool-in-dhokali-thane" },
         { text: "Play school near Naupada (Hariniwas)", url: "/preschool-in-hariniwas-thane" },
         { text: "Playgroup near Ghodbunder Road", url: "/play-school-near-ghodbunder-road" },
         { text: "Playgroup in Dhokali (Kolshet Road)", url: "/preschool-in-dhokali-thane" },
@@ -1636,12 +1638,12 @@ const staticPages: Record<string, PageSEOData> = {
       { heading: "Preschool Near Me — Areas We Serve Across Thane", text: "Parents searching for a 'preschool near me' in Thane will find a Rainbow centre within a short distance from every major residential pocket. Here is a locality-by-locality guide to which Rainbow play school is closest to you.", items: [
         "Manpada, Edenwoods, Hiranandani Estate — Rainbow Preschool Manpada (Aggarwal Arcade, near Khewra Circle) on Ghodbunder Road",
         "Hariniwas Circle, Naupada, Panchpakadi, Charai, Khopat — Rainbow Preschool Hariniwas (Bhakti Mandir Road, opp. Thanawala Garage)",
-        "Anand Nagar, Majiwada, Vasant Vihar, Kapurbawdi — Rainbow Preschool Anand Nagar (Kris Commercial Plaza, opp. Tropical Lagoon)",
+        "Anand Nagar, Tropical Lagoon, Kavesar, Vijay Garden, Kasarvadavali, Cosmos Jewels and Parkwoods (under 1 km); Vijay Nagari, Puranik City, Waghbil, Dongaripada, Owale, Hiranandani Estate and Patlipada (1–2 km) — Rainbow Preschool Anand Nagar (Kris Commercial Plaza, opp. Tropical Lagoon, Ghodbunder Road)",
         "Dhokali, Kolshet Road, Vandana Nagar, Balkum — Rainbow Preschool Dhokali (Kolshet Road, Dhokali Naka, opp. Aban Park)",
         "Kalwa, Manisha Nagar, Vitawa, Kharegaon — Rainbow Preschool Kalwa (near Sayba Hall, Manisha Nagar)",
         "Kasarvadavali, Patlipada, Brahmand, Hiranandani Meadows — Rainbow Preschool Kasarvadavali (Rosa Gardenia, behind Hypercity Mall, Ghodbunder Road)",
       ]},
-      { heading: "How to Find Your Nearest Play School in Thane", text: "Each Rainbow centre has a distinct landmark to guide you. The Manpada centre is at Aggarwal Arcade near Khewra Circle on Ghodbunder Road. The Hariniwas centre is on Bhakti Mandir Road near Hariniwas Circle in central Thane — walkable from Naupada and Panchpakadi. The Anand Nagar centre sits opposite Tropical Lagoon at Majiwada Junction. The Dhokali centre is on Kolshet Road at Dhokali Naka, opposite Aban Park Society, making it convenient for families along Eastern Thane's Kolshet corridor. The Kalwa centre is near Sayba Hall in Manisha Nagar — the closest Rainbow play school for families east of the Thane creek. The Kasarvadavali centre is behind Hypercity Mall on Ghodbunder Road, serving upper Ghodbunder Road, Brahmand and Hiranandani Meadows families. For directions, call +91-8291568972 or use the Google Maps links on each centre's page." },
+      { heading: "How to Find Your Nearest Play School in Thane", text: "Each Rainbow centre has a distinct landmark to guide you. The Manpada centre is at Aggarwal Arcade near Khewra Circle on Ghodbunder Road. The Hariniwas centre is on Bhakti Mandir Road near Hariniwas Circle in central Thane — walkable from Naupada and Panchpakadi. The Anand Nagar centre is opposite Tropical Lagoon, near Anand Nagar bus depot, on Ghodbunder Road. The Dhokali centre is on Kolshet Road at Dhokali Naka, opposite Aban Park Society, making it convenient for families along Eastern Thane's Kolshet corridor and the Majiwada area. The Kalwa centre is near Sayba Hall in Manisha Nagar — the closest Rainbow play school for families east of the Thane creek. The Kasarvadavali centre is behind Hypercity Mall on Ghodbunder Road, serving upper Ghodbunder Road, Brahmand and Hiranandani Meadows families. For directions, call +91-8291568972 or use the Google Maps links on each centre's page." },
       { heading: "Play School vs Daycare — What's the Real Difference?", text: "Many Thane parents ask whether a play school and a daycare are the same thing. They are not. A daycare is primarily designed to look after a child while parents work — the focus is care and supervision. A play school is an early-learning programme built around an age-appropriate curriculum, qualified teachers, and structured developmental activities. Rainbow Preschool's play school in Thane is purely an early-learning programme: 3 hours, twice a day, focused on social, language, motor, cognitive and emotional development. If you also need extended supervision while you work, our Happy Times after-school programme runs from 9 AM to 6 PM at select centres and is a separately enrolled service." },
       { heading: "Play School Timings, Fees and Admission", text: "We offer two flexible play school batches at every Thane centre — Morning (8:30 AM to 11:30 AM) and Afternoon (12:30 PM to 3:30 PM), Monday to Friday. Fees vary by centre and batch and are fully transparent — no donation, no entrance test, no parent interview. Admissions are open year-round on a rolling basis. To enquire, call +91-8291568972 or fill the form on this page. Our admissions team will respond within 24 hours and arrange a free, no-pressure campus visit at the Rainbow play school nearest your home, including Saturdays. We strongly recommend visiting before enrolling so you can see the classroom, meet your child's prospective teacher and ask all your questions in person." },
       { heading: "Frequently Asked Questions about Play School Near Me in Thane", text: "Below are the questions Thane parents most often ask before enrolling their toddler in a play school. If your question is not listed, call +91-8291568972 and our admissions team will gladly walk you through it.", items: [
@@ -1650,7 +1652,7 @@ const staticPages: Record<string, PageSEOData> = {
         "Q: Will my toddler cry on day one? A: Almost every toddler cries the first few days — it is completely normal. Our teachers are trained in gentle settling and your child usually settles within 1–2 weeks.",
         "Q: Are mid-year admissions allowed? A: Yes, Rainbow play school admissions are open year-round on a rolling basis, subject to seat availability at the centre nearest your home.",
         "Q: Which Rainbow Preschool is nearest to Ghodbunder Road? A: Families on Ghodbunder Road have two options — the Kasarvadavali centre behind Hypercity Mall (upper Ghodbunder) or the Manpada centre near Khewra Circle. Call 82915 68972 to confirm which is closer.",
-        "Q: Is there a play school near Majiwada in Thane? A: Yes — the Anand Nagar centre, opposite Tropical Lagoon at Majiwada Junction, is the nearest Rainbow play school for Majiwada families.",
+        "Q: Is there a play school near Majiwada in Thane? A: Rainbow's Dhokali centre on Kolshet Road is about 1.8 km from Majiwada. Visit /preschool-in-dhokali-thane for details.",
         "Q: Which is the nearest play school to Hariniwas Circle or Panchpakadi? A: The Hariniwas centre on Bhakti Mandir Road, near Hariniwas Circle, serves Panchpakadi, Naupada, Charai, and Khopat families.",
         "Q: Is there a Rainbow play school near Kolshet Road? A: Yes — the Dhokali centre is on Kolshet Road at Dhokali Naka, opposite Aban Park Society.",
       ]},
@@ -2125,7 +2127,7 @@ const staticPages: Record<string, PageSEOData> = {
 const preschoolCentres: Record<string, { locality: string; address: string; phone: string; lat: string; lng: string }> = {
   "/preschool-in-manpada-thane": { locality: "Manpada", address: "Aggarwal Arcade, Near Khewra Circle, Manpada, Thane (W)", phone: "+918291568972", lat: "19.2168", lng: "72.9815" },
   "/preschool-in-hariniwas-thane": { locality: "Hariniwas", address: "M.V.Apartments, Bhakti Mandir Road, Opp. Thanawala Garage, Hariniwas Circle, Panchpakadi, Thane (W)", phone: "+918291568972", lat: "19.1958", lng: "72.9698" },
-  "/preschool-in-anand-nagar-thane": { locality: "Anand Nagar", address: "Kris Commercial Plaza, 1st Floor, Opp. Tropical Lagoon, Anand Nagar, Thane (W)", phone: "+918291568972", lat: "19.2239", lng: "72.9805" },
+  "/preschool-in-anand-nagar-thane": { locality: "Anand Nagar", address: "Kris Commercial Plaza, 1st Floor, Opp. Tropical Lagoon, Anand Nagar, Ghodbunder Road, Thane (W)", phone: "+919833781550", lat: "19.2648723", lng: "72.9707478" },
   "/preschool-in-dhokali-thane": { locality: "Dhokali", address: "Kolshet Road, Dhokali Naka, Opp. Aban Park Society, Thane (W)", phone: "+918291568972", lat: "19.2305", lng: "72.9889" },
   "/preschool-in-kalwa-thane": { locality: "Kalwa", address: "Harsh Prasad Co-op Hsg, Soc, Near Sayba Hall, Manisha Nagar, Gate No.1, Kalwa", phone: "+918291568972", lat: "19.2019", lng: "73.0229" },
   "/preschool-in-kasarvadavali-thane": { locality: "Kasarvadavali", address: "Rosa Gardenia, Next to Parijat Gardens, Kasarvadavali, Behind Hypercity Mall, Thane (W)", phone: "+918291568972", lat: "19.2499", lng: "72.9721" },
@@ -2569,6 +2571,165 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
 
   if (staticPages[cleanPath]) {
     return staticPages[cleanPath];
+  }
+
+  if (cleanPath === "/preschool-in-anand-nagar-thane") {
+    const centre = getCentreBySlug("anand-nagar");
+    if (!centre) {
+      throw new Error("Missing shared centre data for Anand Nagar preschool page");
+    }
+    const page = anandNagarPage;
+    const pageSEO = preschoolPageSEO["anand-nagar"];
+    const faqs = preschoolFAQs["anand-nagar"] ?? [];
+    const areas = centre.areasServed ?? page.nearbyAreas.flatMap((group) => group.areas);
+    const centreUrl = `${BASE_URL}/preschool-in-anand-nagar-thane`;
+    const preschoolSchema = {
+      "@context": "https://schema.org",
+      "@type": "Preschool",
+      "@id": `${centreUrl}#centre`,
+      name: "Rainbow Preschool International, Anand Nagar Centre",
+      url: centreUrl,
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: centre.address,
+        addressLocality: "Thane",
+        addressRegion: "Maharashtra",
+        addressCountry: "IN",
+      },
+      geo: {
+        "@type": "GeoCoordinates",
+        latitude: Number(centre.latitude),
+        longitude: Number(centre.longitude),
+      },
+      telephone: "+91-9833781550",
+      hasMap: centre.googleMapsDirectionsUrl,
+      parentOrganization: { "@id": `${BASE_URL}/#organization` },
+      areaServed: areas.map((name) => ({ "@type": "Place", name })),
+    };
+    const webpageSchema = {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "@id": `${centreUrl}#webpage`,
+      url: centreUrl,
+      name: pageSEO.title,
+      description: pageSEO.description,
+      inLanguage: "en-IN",
+    };
+    const reelCaptions = BRANCH_REEL_EXCERPTS;
+    const faqItems = faqs.map((faq) => ({
+      question: faq.question,
+      answerSegments: [{ text: faq.answer }],
+    }));
+    const anandGallery = page.gallery.map((image, index) => ({
+      src: image.src,
+      alt: image.alt,
+      width: 400,
+      height: 400,
+      loading: index === 0 ? "eager" as const : "lazy" as const,
+    }));
+
+    return {
+      title: pageSEO.title,
+      description: pageSEO.description,
+      canonical: centreUrl,
+      ogImage: `${BASE_URL}/images/og/anand-nagar-1200x630.jpg`,
+      ogImageAlt: "Two children playing with blocks at Rainbow Preschool",
+      h1: pageSEO.h1,
+      introText: page.heroSubline,
+      breadcrumbs: [
+        { name: "Home", url: "/" },
+        { name: "Centres", url: "/play-school-near-me" },
+        { name: "Anand Nagar", url: cleanPath },
+      ],
+      structuredData: [webpageSchema, preschoolSchema],
+      suppressArticleSchema: true,
+      lastModified: page.publishDate,
+      lastModifiedDisplay: page.publishDateDisplay,
+      reviewerAfterContent: true,
+      contentSections: [
+        {
+          items: [...page.trustChips],
+          links: [
+            { text: "Call 98337 81550", url: "tel:+919833781550" },
+            { text: "WhatsApp", url: "https://wa.me/919833781550" },
+            { text: "Get directions", url: centre.googleMapsDirectionsUrl },
+          ],
+        },
+        {
+          heading: "Quick Facts",
+          items: [...page.quickFacts],
+        },
+        {
+          heading: page.aboutHeading,
+          paragraphs: [...page.aboutParagraphs],
+        },
+        {
+          heading: page.programmesHeading,
+          subsections: page.programmes.map((programme) => ({
+            heading: programme.title,
+            text: `${programme.age} — ${programme.description}`,
+            links: programme.href ? [{ text: programme.title, url: programme.href }] : undefined,
+          })),
+        },
+        {
+          heading: page.theatreHeading,
+          text: page.theatreSubline,
+          items: reelCaptions,
+          links: [{ text: "Visit Instagram", url: "https://www.instagram.com/rainbowpreschools/" }],
+        },
+        {
+          heading: page.galleryHeading,
+          images: anandGallery,
+        },
+        {
+          heading: page.whyHeading,
+          items: [...(whyParentsChoose["anand-nagar"] ?? [])],
+        },
+        {
+          heading: page.safetyHeading,
+          items: page.safety.map((item) => `${item.title}: ${item.description}`),
+        },
+        {
+          heading: page.areasHeading,
+          subsections: [
+            ...page.nearbyAreas.map((group) => ({
+              heading: group.label,
+              items: [...group.areas],
+            })),
+            { text: page.areasParagraph },
+            { heading: page.reachHeading, text: page.reachText },
+          ],
+          links: [{ text: "Get directions", url: centre.googleMapsDirectionsUrl }],
+        },
+        {
+          heading: page.admissionsHeading,
+          beforeSubsectionsItems: [...page.admissionSteps],
+          afterSubsectionsRichParagraphs: [[{ text: page.admissionsDetails }], [{ text: page.admissionLine }]],
+          links: [{ text: "Full admission details", url: "/preschool-admissions" }],
+        },
+        {
+          heading: page.faqHeading,
+          faqItems,
+          faqInitiallyClosed: true,
+        },
+        {
+          heading: page.nearbyHeading,
+          links: [
+            { text: page.nearbyLinkText, url: "/preschool-in-kasarvadavali-thane" },
+            { text: "All 6 centres", url: "/play-school-near-me" },
+          ],
+        },
+      ],
+      images: [],
+      finalCallToAction: {
+        title: page.finalHeading,
+        description: "Call or WhatsApp us to arrange a visit to the Anand Nagar centre.",
+        links: [
+          { text: "Call 98337 81550", url: "tel:+919833781550" },
+          { text: "WhatsApp", url: "https://wa.me/919833781550" },
+        ],
+      },
+    };
   }
 
   if (preschoolCentres[cleanPath]) {

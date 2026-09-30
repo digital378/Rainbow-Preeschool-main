@@ -618,7 +618,7 @@ const blogPostsData: Record<string, BlogPostData> = {
       "A score of 40+ out of 50 indicates an excellent preschool. Any score below 30 suggests looking elsewhere.",
       "## Visit Rainbow Preschool International",
       "We invite you to visit any of our six centres across Thane and evaluate us against these 10 signs. We're confident you'll find a warm, professional, and genuinely child-centred environment.",
-      "**Our 6 Centres:**\n- Manpada (Ghodbunder Road)\n- Hariniwas (Naupada)\n- Anand Nagar (Majiwada)\n- Dhokali (Kolshet Road)\n- Kalwa\n- Kasarvadavali (Ghodbunder Road)",
+      "**Our 6 Centres:**\n- Manpada (Ghodbunder Road)\n- Hariniwas (Naupada)\n- Anand Nagar (Ghodbunder Road)\n- Dhokali (Kolshet Road)\n- Kalwa\n- Kasarvadavali (Ghodbunder Road)",
       "Schedule your visit today — call 82915 68972 or visit our admissions page.",
       "RIS_BACKLINK:Looking for a quality school beyond preschool? Our sister institution, [Rainbow International School](https://rainbowinternationalschool.in), carries the same commitment to excellence through their [CBSE curriculum](https://rainbowinternationalschool.in/curriculum) from pre-primary to Class 12, with [award-winning programmes](https://rainbowinternationalschool.in/awards-achievements)."
     ]

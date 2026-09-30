@@ -36,6 +36,77 @@ export const defaultCentreGalleryImages = [
   "/images/optimized/DSC00054.webp",
 ];
 
+// Shared visitor/crawler copy for the Anand Nagar branch. The other branch
+// pages can adopt the same section shape without inheriting Anand Nagar facts.
+export const anandNagarPage = {
+  publishDate: "2026-09-30",
+  publishDateDisplay: "30 September 2026",
+  heroSubline: "Playgroup, Nursery and KG opposite Tropical Lagoon, Ghodbunder Road",
+  trustChips: ["Since 2007", "4.9★ from 487 Google reviews across our centres", "100% female, ECCE-trained teachers", "GPS transport"],
+  quickFacts: [
+    "Ages 1.5–5.5",
+    "Batches 8:30–11:30 & 12:30–3:30, Mon–Fri",
+    "Playgroup to Grade 2",
+    "GPS-enabled transport",
+    "Happy Times daycare",
+  ],
+  aboutHeading: "About Our Anand Nagar Centre",
+  aboutParagraphs: [
+    "Our Anand Nagar centre is on the 1st floor of Kris Commercial Plaza, opposite Tropical Lagoon on Ghodbunder Road. Families from Anand Nagar, Kavesar, Vijay Garden, Cosmos Jewels and Waghbil can reach us in a few minutes. Children join us from 1.5 years in Playgroup and can continue through Nursery, Jr. KG and Sr. KG, and up to Grade 2 at this centre.",
+    "Every class is led by our female, ECCE-trained teachers, with two teachers for every 30 children. Our play-based, NEP 2020-aligned curriculum brings in art, music, movement and storytelling every day. You get daily updates and a monthly progress report, and our Academic Coordinator, Gauri Randhir, guides the curriculum at this centre.",
+    "Playgroup begins at 1.5 years and Nursery at 2.5 years; Jr. KG and Sr. KG cover ages 3.5–5.5. Families considering the years beyond preschool can also ask about primary classes up to Grade 2 during their visit. The two Monday-to-Friday preschool batches are 8:30–11:30 AM and 12:30–3:30 PM. For children aged 2–8, Happy Times daycare runs from 8:30 AM to 7:30 PM and includes one nutritious meal. Ask our team about transport and the current fees when you arrange a visit.",
+  ],
+  programmesHeading: "Programmes Available at This Centre",
+  programmes: [
+    { title: "Playgroup", age: "Ages 1.5–2.5 years", description: "An introduction to play-based learning, art, music, movement and storytelling.", href: "/playgroup" },
+    { title: "Nursery", age: "Ages 2.5–3.5 years", description: "Play-based learning with art, music, movement and storytelling.", href: "/nursery" },
+    { title: "Kindergarten: Jr. KG & Sr. KG", age: "Ages 3.5–5.5 years", description: "Jr. KG and Sr. KG follow our NEP 2020-aligned, play-based curriculum.", href: "/kindergarten" },
+    { title: "Primary classes up to Grade 2", age: "After Sr. KG", description: "Children can continue up to Grade 2 at this centre.", href: "" },
+    { title: "Happy Times daycare", age: "Ages 2–8 years", description: "8:30 AM–7:30 PM, with one nutritious meal.", href: "/happy-times" },
+  ],
+  theatreHeading: "Life at Rainbow",
+  theatreSubline: "Classroom moments, celebrations and discoveries from our centres.",
+  galleryHeading: "Our Learning Spaces in Anand Nagar",
+  gallery: [
+    { src: "/images/optimized/children-learning-rainbow-preschool.webp", alt: "Children learning together at Rainbow Preschool" },
+    { src: "/images/optimized/child-stacking-rings-playgroup.webp", alt: "A child stacking rings during playgroup at Rainbow Preschool" },
+    { src: "/images/optimized/DSC00010.webp", alt: "Two Rainbow Preschool children playing with colourful blocks on a floor mat" },
+    { src: "/images/optimized/DSC00011.webp", alt: "Two children arranging colourful play materials at Rainbow Preschool" },
+    { src: "/images/optimized/DSC00054.webp", alt: "Two Rainbow Preschool children playing in a ball pool" },
+    { src: "/images/optimized/DSC00002.webp", alt: "Two Rainbow Preschool children holding alphabet letters over their eyes" },
+    { src: "/images/optimized/DSC00051.webp", alt: "Three Rainbow Preschool children playing with colourful balls" },
+  ],
+  whyHeading: "Why Parents Choose This Centre",
+  safetyHeading: "Safety & Hygiene",
+  safety: [
+    { title: "CCTV-monitored classrooms", description: "Classrooms are monitored by CCTV." },
+    { title: "100% female, ECCE-trained staff", description: "Two teachers for every 30 children." },
+    { title: "Toys and classrooms sanitised", description: "Sanitised several times a day." },
+    { title: "Daily parent updates", description: "You'll know how your child's day went." },
+  ],
+  areasHeading: "Preschool Near Kavesar, Vijay Garden and Anand Nagar",
+  nearbyAreas: [
+    { label: "Under 1 km", areas: ["Anand Nagar", "Tropical Lagoon", "Kavesar", "Vijay Garden", "Kasarvadavali", "Cosmos Jewels", "Parkwoods"] },
+    { label: "1–2 km", areas: ["Vijay Nagari", "Puranik City", "Waghbil", "Dongaripada", "Owale", "Hiranandani Estate", "Patlipada"] },
+  ],
+  areasParagraph: "If you live in Kavesar, Vijay Garden, Cosmos Jewels, Parkwoods or anywhere along this stretch of Ghodbunder Road, our Anand Nagar centre is usually the closest Rainbow centre. Families in Kasarvadavali, Puranik City and Owale are also close to our Kasarvadavali centre, so book a visit at whichever suits your route.",
+  reachHeading: "How to reach us",
+  reachText: "Opposite Tropical Lagoon, next to the Anand Nagar bus depot, on the 1st floor of Kris Commercial Plaza.",
+  admissionsHeading: "Admissions at This Centre",
+  admissionSteps: [
+    "Book a visit",
+    "A relaxed ~20-minute parent–child interaction (no entrance test)",
+    "Confirm your seat",
+    "2–3 short orientation sessions before term",
+  ],
+  admissionLine: "Age is counted as of 1 June. Admissions for 2027-28 are open, and our team replies within 24 hours. Call for fees.",
+  admissionsDetails: "There is no entrance test. The parent–child interaction is a relaxed conversation of about 20 minutes. Once you confirm a seat, there are 2–3 short orientation sessions before term begins. You can ask which programme matches your child's age, how transport works and whether the daycare hours suit your routine when you visit.",
+  faqHeading: "Frequently Asked Questions",
+  nearbyHeading: "Nearby Rainbow Centres",
+  nearbyLinkText: "Kasarvadavali (about 0.8 km)",
+  finalHeading: "Visit Our Anand Nagar Centre",
+} as const;
+
 export const centres: CentreData[] = [
   {
     id: "manpada",
@@ -89,20 +160,21 @@ export const centres: CentreData[] = [
     localitySlug: "anand-nagar",
     playgroundLandingUrl: "/preschool-in-anand-nagar-thane",
     preschoolLandingUrl: "/preschool-in-anand-nagar-thane",
-    address: "Kris Commercial Plaza, 1st Floor, Opp. Tropical Lagoon, Anand Nagar, Thane (W)",
+    address: "Kris Commercial Plaza, 1st Floor, Opp. Tropical Lagoon, Anand Nagar, Ghodbunder Road, Thane (W)",
     postalCode: "400601",
     phoneNumbers: ["98337 81550", "91524 89789"],
     whatsappNumber: "9833781550",
     googleMapsDirectionsUrl: "https://maps.app.goo.gl/oFnzPGooMos4qACV9",
-    landmarks: ["Tropical Lagoon", "Kris Commercial Plaza"],
-    latitude: "19.2239",
-    longitude: "72.9805",
+    googleMapsEmbedUrl: "https://maps.google.com/maps?q=19.2648723,72.9707478&z=16&output=embed",
+    landmarks: ["Tropical Lagoon", "Anand Nagar bus depot", "Ghodbunder Road"],
+    latitude: "19.2648723",
+    longitude: "72.9707478",
     programmeLinks: {
       playgroup: "/playgroup",
       nursery: "/nursery",
       kindergarten: "/kindergarten",
     },
-    areasServed: ["Anand Nagar", "Majiwada", "Vasant Vihar", "Kapurbawdi"],
+    areasServed: ["Anand Nagar", "Tropical Lagoon", "Kavesar", "Vijay Garden", "Kasarvadavali", "Cosmos Jewels", "Parkwoods", "Vijay Nagari", "Puranik City", "Waghbil", "Dongaripada", "Owale", "Hiranandani Estate", "Patlipada"],
   },
   {
     id: "dhokali",
@@ -287,8 +359,8 @@ export const preschoolPageSEO: Record<string, PreschoolPageSEO> = {
     canonicalPath: "/preschool-in-hariniwas-thane",
   },
   "anand-nagar": {
-    title: "Preschool in Anand Nagar, Thane | Rainbow Preschool",
-    description: "Rainbow Preschool Anand Nagar (opp. Tropical Lagoon) — art, music & movement every day. Playgroup, Nursery & KG, ages 1.5–5. Enquire for 2026-27.",
+    title: "Preschool in Anand Nagar, Ghodbunder Road, Thane | Rainbow",
+    description: "Playgroup, Nursery & KG (ages 1.5–5.5) opposite Tropical Lagoon, Anand Nagar, Ghodbunder Road. Close to Kavesar, Vijay Garden & Waghbil. Admissions open for 2027-28.",
     h1: "Preschool in Anand Nagar, Thane",
     canonicalPath: "/preschool-in-anand-nagar-thane",
   },
@@ -325,9 +397,9 @@ export const preschoolIntros: Record<string, { paragraph1: string; paragraph2: s
     paragraph3: "Safety is paramount at our Hariniwas location. With secure entry/exit procedures, constant supervision, and a nurturing atmosphere, parents can trust that their children are in caring hands. Contact us to arrange a visit and discover the Rainbow difference.",
   },
   "anand-nagar": {
-    paragraph1: "Discover quality preschool education in Anand Nagar, Thane at Rainbow Preschool International. Located at Kris Commercial Plaza, opposite Tropical Lagoon, our centre offers exceptional Playgroup, Nursery, and Kindergarten programmes for children aged 1.5 to 5 years.",
-    paragraph2: "Families in Anand Nagar appreciate our balanced approach to early learning. Our curriculum combines play-based activities with structured learning to prepare children for formal schooling while keeping the joy in learning. Art, music, movement, and storytelling are integral parts of every day.",
-    paragraph3: "Our Anand Nagar centre features well-equipped classrooms, experienced teachers, and a safe outdoor play area. With over 1,00,000 students nurtured across our network, Rainbow Preschool brings proven expertise to your neighborhood. Book a visit to experience our warm, welcoming environment.",
+    paragraph1: "Our Anand Nagar centre is on the 1st floor of Kris Commercial Plaza, opposite Tropical Lagoon on Ghodbunder Road. Families from Anand Nagar, Kavesar, Vijay Garden, Cosmos Jewels and Waghbil can reach us in a few minutes. Children join us from 1.5 years in Playgroup and can continue through Nursery, Jr. KG and Sr. KG, and up to Grade 2 at this centre.",
+    paragraph2: "Every class is led by our female, ECCE-trained teachers, with two teachers for every 30 children. Our play-based, NEP 2020-aligned curriculum brings in art, music, movement and storytelling every day. You get daily updates and a monthly progress report, and our Academic Coordinator, Gauri Randhir, guides the curriculum at this centre.",
+    paragraph3: "Happy Times daycare for ages 2–8 runs at this centre from 8:30 AM to 7:30 PM with one nutritious meal. GPS-enabled in-house transport is available. Classes run Monday to Friday in two batches, 8:30–11:30 AM and 12:30–3:30 PM.",
   },
   dhokali: {
     paragraph1: "Rainbow Preschool International's Dhokali centre on Kolshet Road serves families seeking quality early education in Thane West. Located opposite Aban Park Society at Dhokali Naka, we offer comprehensive Playgroup, Nursery, and Kindergarten programmes.",
@@ -365,12 +437,12 @@ export const whyParentsChoose: Record<string, string[]> = {
     "Focus on holistic child development",
   ],
   "anand-nagar": [
-    "Prime location opposite Tropical Lagoon, easily accessible",
-    "Well-ventilated, modern classrooms with learning resources",
-    "Passionate teachers dedicated to each child's growth",
-    "Art, music, and movement integrated into daily activities",
-    "Strong parent communication and regular progress updates",
-    "Safe, nurturing environment with 100% female staff",
+    "Opposite Tropical Lagoon on Ghodbunder Road, easy to reach from Kavesar and Vijay Garden",
+    "100% female, ECCE-trained teachers; two teachers per class of 30",
+    "Art, music, movement and storytelling every day",
+    "Daily updates and monthly progress reports",
+    "Continue up to Grade 2 at the same centre",
+    "GPS-enabled in-house transport",
   ],
   dhokali: [
     "Strategically located on Kolshet Road for easy access",
@@ -469,38 +541,15 @@ export const preschoolFAQs: Record<string, Array<{ question: string; answer: str
     },
   ],
   "anand-nagar": [
-    {
-      question: "Where is Rainbow Preschool in Anand Nagar located?",
-      answer: "We're at Kris Commercial Plaza, 1st Floor, Opposite Tropical Lagoon, Anand Nagar, Thane (W). It's a prominent location easily accessible from the main road."
-    },
-    {
-      question: "What programmes does the Anand Nagar centre offer?",
-      answer: "We offer Playgroup (1.5-2.5 years), Nursery (2.5-3.5 years), Kindergarten (3.5-5.5 years), along with Kids Activity Club and Summer Camp."
-    },
-    {
-      question: "How do I reach Rainbow Preschool Anand Nagar?",
-      answer: "Look for Kris Commercial Plaza opposite Tropical Lagoon in Anand Nagar. Call 98337 81550 or 91524 89789 for directions."
-    },
-    {
-      question: "What is the batch size at Anand Nagar centre?",
-      answer: "We maintain small batch sizes of 15-20 children per class to ensure personalized attention for every child."
-    },
-    {
-      question: "What are the fees for preschool in Anand Nagar?",
-      answer: "For detailed fee information, please contact our centre at 98337 81550. We offer competitive fees with quality education."
-    },
-    {
-      question: "Is the Anand Nagar centre air-conditioned?",
-      answer: "Our classrooms are well-ventilated and designed for children's comfort. Contact us for specific facility details."
-    },
-    {
-      question: "What makes the Anand Nagar centre special?",
-      answer: "Our Anand Nagar centre features experienced teachers, modern facilities, a safe play area, and a curriculum that balances learning with fun."
-    },
-    {
-      question: "How do I enroll my child?",
-      answer: "Call 98337 81550, WhatsApp the same number, or fill out the callback form. We'll schedule a visit and help you with the enrollment process."
-    },
+    { question: "Where is Rainbow Preschool in Anand Nagar?", answer: "Kris Commercial Plaza, 1st Floor, opposite Tropical Lagoon, Anand Nagar, Ghodbunder Road, Thane (W)." },
+    { question: "Which areas is the centre close to?", answer: "Anand Nagar, Kavesar, Vijay Garden, Cosmos Jewels and Parkwoods are under 1 km away. Vijay Nagari, Waghbil, Dongaripada, Owale and Hiranandani Estate are 1–2 km away." },
+    { question: "What are the batch timings?", answer: "8:30–11:30 AM or 12:30–3:30 PM, Monday to Friday." },
+    { question: "Which classes are available?", answer: "Playgroup, Nursery, Jr. KG and Sr. KG (1.5–5.5 years), and classes up to Grade 2." },
+    { question: "What is the class size?", answer: "We keep two teachers for every 30 children, and all our teachers are female and ECCE-trained." },
+    { question: "Do you provide transport?", answer: "Yes, GPS-enabled in-house transport." },
+    { question: "Is there daycare?", answer: "Yes, Happy Times daycare for ages 2–8 runs here from 8:30 AM to 7:30 PM, with one nutritious meal." },
+    { question: "What are the fees?", answer: "Please call 98337 81550 for current fees." },
+    { question: "How do I enrol?", answer: "Call or WhatsApp 98337 81550, or fill in the callback form. We'll book your visit and a short parent–child interaction." },
   ],
   dhokali: [
     {

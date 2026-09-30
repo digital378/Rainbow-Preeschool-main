@@ -1,3 +1,5 @@
+import { cleanBranchReelCaption } from "@shared/clean-reel-caption";
+
 export type LocalReelPoster = {
   id: string;
   caption: string;
@@ -524,3 +526,8 @@ export const LOCAL_REEL_POSTERS: readonly LocalReelPoster[] =
     "posterPath": "/instagram-reels/poster-086.jpg"
   }
 ];
+
+export const BRANCH_REEL_EXCERPTS = LOCAL_REEL_POSTERS.slice(0, 6).map((reel) => {
+  const caption = cleanBranchReelCaption(reel.caption).replace(/\s+/g, " ").trim();
+  return caption.length > 120 ? `${caption.slice(0, 117).trimEnd()}…` : caption;
+});

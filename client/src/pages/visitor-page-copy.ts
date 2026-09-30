@@ -139,9 +139,9 @@ export const HOME_VISITOR_FAQS: readonly VisitorFaq[] = [
   },
   {
     question: "Where are Rainbow Preschool centres located in Thane?",
-    schemaAnswerText: "We have six centres across Thane West: Manpada (near Ghodbunder Road), Hariniwas (Naupada), Anand Nagar (Majiwada), Dhokali (Kolshet Road), Kalwa, and Kasarvadavali (Ghodbunder Road).",
+    schemaAnswerText: "We have six centres across Thane West: Manpada (near Ghodbunder Road), Hariniwas (Naupada), Anand Nagar (Ghodbunder Road), Dhokali (Kolshet Road), Kalwa, and Kasarvadavali (Ghodbunder Road).",
     answerSegments: [
-      { text: "We have six centres across Thane West: Manpada (near Ghodbunder Road), Hariniwas (Naupada), Anand Nagar (Majiwada), Dhokali (Kolshet Road), Kalwa, and Kasarvadavali (Ghodbunder Road). " },
+      { text: "We have six centres across Thane West: Manpada (near Ghodbunder Road), Hariniwas (Naupada), Anand Nagar (Ghodbunder Road), Dhokali (Kolshet Road), Kalwa, and Kasarvadavali (Ghodbunder Road). " },
       { text: "Find the centre nearest to you", href: "/play-school-near-me" },
       { text: "." },
     ],

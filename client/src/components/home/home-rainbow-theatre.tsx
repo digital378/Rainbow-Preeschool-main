@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { RainbowTheatre } from "@/components/rainbow-theatre/RainbowTheatre";
 import "./home-rainbow-theatre.css";
 
-export function HomeRainbowTheatre() {
+export function HomeRainbowTheatre({ heading, subline, branchCopy }: { heading?: string; subline?: string; branchCopy?: boolean } = {}) {
   const sectionRef = useRef<HTMLElement>(null);
   const [loaded, setLoaded] = useState(false);
   const [active, setActive] = useState(false);
@@ -34,7 +34,7 @@ export function HomeRainbowTheatre() {
   return (
     <section ref={sectionRef} className="home-rainbow-reel" aria-label="Rainbow Theatre">
       <div className="home-rainbow-reel__inner">
-        <RainbowTheatre active={active} enabled={loaded} endpoint="/api/instagram/reels" variant="homepage" />
+        <RainbowTheatre active={active} enabled={loaded} endpoint="/api/instagram/reels" variant="homepage" heading={heading} subline={subline} branchCopy={branchCopy} />
       </div>
     </section>
   );

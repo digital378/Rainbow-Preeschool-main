@@ -89,7 +89,7 @@ export const ABOUT_PAGE_COPY = {
   centres: [
     { name: "Aggarwal (Manpada)", area: "Near Khewra Circle · Playgroup to Grade 4", linkText: "View Manpada centre →", href: "/preschool-in-manpada-thane" },
     { name: "Hariniwas", area: "Naupada, Central Thane · Playgroup to Grade 3", linkText: "View Hariniwas centre →", href: "/preschool-in-hariniwas-thane" },
-    { name: "Anand Nagar", area: "Majiwada, opposite Tropical Lagoon · Playgroup to Grade 2", linkText: "View Anand Nagar centre →", href: "/preschool-in-anand-nagar-thane" },
+    { name: "Anand Nagar", area: "Ghodbunder Road, opposite Tropical Lagoon · Playgroup to Grade 2", linkText: "View Anand Nagar centre →", href: "/preschool-in-anand-nagar-thane" },
     { name: "Dhokali", area: "Kolshet Road · Playgroup to Sr. KG", linkText: "View Dhokali centre →", href: "/preschool-in-dhokali-thane" },
     { name: "Kalwa", area: "Eastern Thane · Playgroup to Grade 4", linkText: "View Kalwa centre →", href: "/preschool-in-kalwa-thane" },
     { name: "Kasarvadavali", area: "Ghodbunder Road · Playgroup to Grade 3", linkText: "View Kasarvadavali centre →", href: "/preschool-in-kasarvadavali-thane" },

@@ -10,6 +10,7 @@ import { PROGRAMMES_COPY, PROGRAMMES_FAQS } from "@shared/programmes-page-conten
 import { CONTACT_PAGE_COPY } from "@shared/contact-page-copy";
 import { TOP_PRESCHOOLS_COPY } from "@shared/top-preschools-thane-content";
 import { ABOUT_PAGE_COPY } from "@shared/about-page-content";
+import { anandNagarPage } from "@shared/centre-data";
 
 /**
  * Keep the browser's initial document metadata aligned with bot SSR and the
@@ -30,7 +31,7 @@ export function injectIndexPolicyShell(path: string, html: string): string {
     .replace(/<meta name="robots" content="[^"]*"\s*\/?>/i, `<meta name="robots" content="${robots}" />`)
     .replace(/<link rel="canonical" href="[^"]*"\s*\/?>/i, `<link rel="canonical" href="${escape(canonical)}" />`);
   if (!seo) return result;
-  if (path === "/nursery" || path === "/kindergarten" || path === "/programmes" || path === "/contact" || path === "/top-preschools-in-thane" || path === "/about") result = result.replace('<html lang="en">', '<html lang="en-IN">');
+  if (path === "/nursery" || path === "/kindergarten" || path === "/programmes" || path === "/contact" || path === "/top-preschools-in-thane" || path === "/about" || path === "/preschool-in-anand-nagar-thane") result = result.replace('<html lang="en">', '<html lang="en-IN">');
 
   const updateMeta = (kind: "name" | "property", key: string, value: string) => {
     const tag = `<meta ${kind}="${key}" content="${escape(value)}" />`;
@@ -47,13 +48,13 @@ export function injectIndexPolicyShell(path: string, html: string): string {
   updateMeta("property", "og:title", seo.title);
   updateMeta("property", "og:description", seo.description);
   updateMeta("property", "og:image", seo.ogImage ?? `${PREFERRED_DOMAIN}/og-image.jpg`);
-  if (path === "/nursery" || path === "/kindergarten" || path === "/programmes" || path === "/contact" || path === "/top-preschools-in-thane" || path === "/about") {
+  if (path === "/nursery" || path === "/kindergarten" || path === "/programmes" || path === "/contact" || path === "/top-preschools-in-thane" || path === "/about" || path === "/preschool-in-anand-nagar-thane") {
     updateMeta("property", "og:locale", "en_IN");
-    updateMeta("property", "og:image:alt", path === "/about" ? ABOUT_PAGE_COPY.ogImageAlt : path === "/top-preschools-in-thane" ? TOP_PRESCHOOLS_COPY.ogImageAlt : path === "/contact" ? CONTACT_PAGE_COPY.ogImageAlt : path === "/programmes" ? PROGRAMMES_COPY.ogImageAlt : path === "/kindergarten" ? KINDERGARTEN_COPY.ogImageAlt : NURSERY_COPY.ogImageAlt);
+    updateMeta("property", "og:image:alt", path === "/preschool-in-anand-nagar-thane" ? "Two children playing with blocks at Rainbow Preschool" : path === "/about" ? ABOUT_PAGE_COPY.ogImageAlt : path === "/top-preschools-in-thane" ? TOP_PRESCHOOLS_COPY.ogImageAlt : path === "/contact" ? CONTACT_PAGE_COPY.ogImageAlt : path === "/programmes" ? PROGRAMMES_COPY.ogImageAlt : path === "/kindergarten" ? KINDERGARTEN_COPY.ogImageAlt : NURSERY_COPY.ogImageAlt);
     updateMeta("property", "og:image:type", "image/jpeg");
     updateMeta("property", "og:image:width", "1200");
     updateMeta("property", "og:image:height", "630");
-    updateMeta("name", "twitter:image:alt", path === "/about" ? ABOUT_PAGE_COPY.ogImageAlt : path === "/top-preschools-in-thane" ? TOP_PRESCHOOLS_COPY.ogImageAlt : path === "/contact" ? CONTACT_PAGE_COPY.ogImageAlt : path === "/programmes" ? PROGRAMMES_COPY.ogImageAlt : path === "/kindergarten" ? KINDERGARTEN_COPY.ogImageAlt : NURSERY_COPY.ogImageAlt);
+    updateMeta("name", "twitter:image:alt", path === "/preschool-in-anand-nagar-thane" ? "Two children playing with blocks at Rainbow Preschool" : path === "/about" ? ABOUT_PAGE_COPY.ogImageAlt : path === "/top-preschools-in-thane" ? TOP_PRESCHOOLS_COPY.ogImageAlt : path === "/contact" ? CONTACT_PAGE_COPY.ogImageAlt : path === "/programmes" ? PROGRAMMES_COPY.ogImageAlt : path === "/kindergarten" ? KINDERGARTEN_COPY.ogImageAlt : NURSERY_COPY.ogImageAlt);
   }
   updateMeta("name", "twitter:url", canonical);
   updateMeta("name", "twitter:title", seo.title);
@@ -80,6 +81,18 @@ export function injectIndexPolicyShell(path: string, html: string): string {
       @media(min-width:1024px){#about-initial{top:14rem}#about-initial h1{font-size:3.75rem;line-height:1}}
     </style></head>`);
     result = result.replace('<div id="root"></div>', `<div id="about-initial"><h1 id="about-initial-h1">${escape(ABOUT_PAGE_COPY.heroHeading)}</h1></div><div id="root"></div>`);
+  }
+  if (path === "/preschool-in-anand-nagar-thane") {
+    // Keep the text-led first paint stationary while React mounts.
+    result = result.replace(/<link rel="preload" as="font" type="font\/woff2" crossorigin href="https:\/\/fonts\.gstatic\.com\/[^"]+">/, "");
+    result = result.replace("</head>", `<style>
+      #anand-initial{position:absolute;z-index:2;top:12.5rem;left:max(1rem,calc((100vw - 80rem)/2 + 1rem));max-width:37rem;pointer-events:none}
+      #anand-initial h1{font-family:Poppins,Inter,sans-serif;font-size:1.875rem;line-height:2.25rem;font-weight:700;margin:0 0 1.5rem}
+      #anand-initial p{font-family:Inter,sans-serif;font-size:1.125rem;line-height:1.75rem;font-weight:600;margin:0;color:#666}
+      @media(min-width:768px){#anand-initial{top:13.5rem}#anand-initial h1{font-size:2.25rem;line-height:2.5rem}}
+      @media(min-width:1024px){#anand-initial{top:13.5rem}#anand-initial h1{font-size:3rem;line-height:1}}
+    </style></head>`);
+    result = result.replace('<div id="root"></div>', `<div id="anand-initial"><h1 id="anand-initial-h1">${escape(seo.h1 ?? "Preschool in Anand Nagar, Thane")}</h1><p>${escape(anandNagarPage.heroSubline)}</p></div><div id="root"></div>`);
   }
   if (path === "/playgroup" || path === "/nursery" || path === "/kindergarten") {
     // Keep the first-paint H1 as the LCP candidate after React mounts.

@@ -406,11 +406,11 @@ const centreAreasServed = [
   },
   {
     id: "anand-nagar",
-    localityName: "Anand Nagar (Majiwada)",
+    localityName: "Anand Nagar (Ghodbunder Road)",
     preschoolLandingUrl: "/preschool-in-anand-nagar-thane",
-    address: "Kris Commercial Plaza, Opp. Tropical Lagoon, Anand Nagar",
-    landmarks: ["Tropical Lagoon", "Majiwada Junction", "Kris Commercial Plaza"],
-    routeNote: "Visible from Majiwada Junction, directly opposite Tropical Lagoon — easy by auto or two-wheeler.",
+    address: "Kris Commercial Plaza, Opp. Tropical Lagoon, Anand Nagar, Ghodbunder Road",
+    landmarks: ["Tropical Lagoon", "Anand Nagar bus depot", "Ghodbunder Road"],
+    routeNote: "Opposite Tropical Lagoon at Kris Commercial Plaza on Ghodbunder Road, near Anand Nagar bus depot.",
   },
   {
     id: "dhokali",
@@ -1006,8 +1006,8 @@ export default function PlaySchoolNearMe() {
               <div className="flex items-start gap-4">
                 <div className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary text-white font-bold text-sm shrink-0 mt-0.5">3</div>
                 <div>
-                  <p className="font-semibold mb-1">Anand Nagar — Majiwada Junction</p>
-                  <p className="text-sm text-muted-foreground">Opposite Tropical Lagoon at Majiwada Junction. Easily visible landmark — serves Anand Nagar, Majiwada, Vasant Vihar and Kapurbawdi families.</p>
+                  <p className="font-semibold mb-1">Anand Nagar — Ghodbunder Road</p>
+                  <p className="text-sm text-muted-foreground">Opposite Tropical Lagoon, near Anand Nagar bus depot, on Ghodbunder Road. Serves Anand Nagar, Kavesar, Vijay Garden, Cosmos Jewels and Parkwoods, with other nearby areas including Vijay Nagari, Waghbil, Dongaripada, Owale, Hiranandani Estate and Patlipada.</p>
                 </div>
               </div>
               <div className="flex items-start gap-4">

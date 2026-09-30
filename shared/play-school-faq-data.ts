@@ -60,11 +60,11 @@ export const playSchoolFAQs: PlaySchoolFAQ[] = [
   },
   {
     question: "Is there a play school near Majiwada in Thane?",
-    answer: "Yes. Rainbow Preschool's Anand Nagar centre is located at Kris Commercial Plaza, directly opposite Tropical Lagoon at Majiwada Junction, Thane West. It is the nearest Rainbow play school for families in Anand Nagar, Majiwada, Vasant Vihar, and Kapurbawdi. Visit /preschool-in-anand-nagar-thane or call 98337 81550 for details."
+    answer: "Rainbow Preschool's Dhokali centre on Kolshet Road is about 1.8 km from Majiwada. The Anand Nagar centre is on Ghodbunder Road, opposite Tropical Lagoon. Visit /preschool-in-dhokali-thane or call 93212 38375 for details."
   },
   {
     question: "How do I find a preschool near me in Thane West?",
-    answer: "Rainbow Preschool runs 6 centres across Thane West: Manpada (Ghodbunder Road), Hariniwas Circle (Naupada/Panchpakadi), Anand Nagar (Majiwada), Dhokali (Kolshet Road), and Kasarvadavali (upper Ghodbunder Road). For Eastern Thane, our Kalwa centre serves Manisha Nagar and surrounding areas. Share your locality with our team at 82915 68972 and we will direct you to the nearest centre within minutes."
+    answer: "Rainbow Preschool runs 6 centres across Thane West: Manpada (Ghodbunder Road), Hariniwas Circle (Naupada/Panchpakadi), Anand Nagar (Ghodbunder Road), Dhokali (Kolshet Road), and Kasarvadavali (upper Ghodbunder Road). For Eastern Thane, our Kalwa centre serves Manisha Nagar and surrounding areas. Share your locality with our team at 82915 68972 and we will direct you to the nearest centre within minutes."
   },
   {
     question: "Which is the nearest play school to Hariniwas Circle or Panchpakadi?",
@@ -80,7 +80,7 @@ export const playSchoolFAQs: PlaySchoolFAQ[] = [
   },
   {
     question: "Which is the nearest preschool to me in Thane West?",
-    answer: "The nearest Rainbow Preschool to you depends on your locality. Ghodbunder Road families choose Manpada (near Khewra Circle) or Kasarvadavali (behind Hypercity Mall). Central Thane families visit Hariniwas in Naupada. Majiwada families use Anand Nagar (opposite Tropical Lagoon). Kolshet Road residents use Dhokali. Eastern Thane families use Kalwa. Call 82915 68972 — our team will direct you to the nearest centre in minutes."
+    answer: "The nearest Rainbow Preschool to you depends on your locality. Ghodbunder Road families choose Manpada (near Khewra Circle), Anand Nagar (opposite Tropical Lagoon) or Kasarvadavali (behind Hypercity Mall). Central Thane families visit Hariniwas in Naupada. Majiwada families can visit Dhokali on Kolshet Road. Eastern Thane families use Kalwa. Call 82915 68972 — our team will direct you to the nearest centre in minutes."
   },
   {
     question: "Is Rainbow the best preschool near me in Thane?",

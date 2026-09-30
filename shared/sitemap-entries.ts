@@ -15,6 +15,7 @@
 // have DB access, so the dump only contains the curated non-blog URLs).
 
 import { PREFERRED_DOMAIN } from "./seo-config";
+import { anandNagarPage } from "./centre-data";
 import { HOME_PUBLISH_DATE_ISO } from "./home-publish-date";
 import { ADMISSIONS_PUBLISH_DATE_ISO } from "./admissions-page-copy";
 import { PLAYGROUP_COPY } from "./playgroup-page-content";
@@ -97,7 +98,7 @@ export const SITEMAP_ENTRIES: SitemapEntry[] = [
   // ── LOCAL SEO – PRESCHOOL CENTRE PAGES ──────────────────
   { url: "/preschool-in-manpada-thane", priority: 0.9, changefreq: "monthly" },
   { url: "/preschool-in-hariniwas-thane", priority: 0.9, changefreq: "monthly" },
-  { url: "/preschool-in-anand-nagar-thane", priority: 0.9, changefreq: "monthly" },
+  { url: "/preschool-in-anand-nagar-thane", priority: 0.9, changefreq: "monthly", lastmod: anandNagarPage.publishDate },
   { url: "/preschool-in-dhokali-thane", priority: 0.9, changefreq: "monthly" },
   { url: "/preschool-in-kalwa-thane", priority: 0.9, changefreq: "monthly" },
   { url: "/preschool-in-kasarvadavali-thane", priority: 0.9, changefreq: "monthly" },
