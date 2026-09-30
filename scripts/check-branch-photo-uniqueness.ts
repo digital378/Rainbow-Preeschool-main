@@ -1,54 +1,104 @@
-import { createHash } from "node:crypto";
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync } from "node:fs";
 import path from "node:path";
+import sharp from "sharp";
 import { branchPhotos } from "../shared/branch-photos";
 
 const publicRoot = path.resolve(process.cwd(), "client/public");
-const seenHashes = new Map<string, string>();
-const errors: string[] = [];
+// A 64-bit difference hash tolerates resizing, re-encoding and small colour
+// changes. Eight differing bits catches near-identical photos without treating
+// every classroom or play-area photo as the same image.
+const MAX_DHASH_DISTANCE = 8;
 
-for (const [branch, photos] of Object.entries(branchPhotos)) {
-  const referencedPhotos = [
-    { section: "hero", ...photos.hero },
-    { section: "about", ...photos.about },
-    ...photos.gallery.map((photo, index) => ({
-      section: `gallery[${index}]`,
-      ...photo,
-    })),
-  ];
+interface CheckedPhoto {
+  branch: string;
+  section: string;
+  src: string;
+  hash: bigint;
+}
 
-  const seenInBranch = new Set<string>();
-  for (const photo of referencedPhotos) {
-    const relativePath = photo.src.replace(/^\/+/, "");
-    const filePath = path.resolve(publicRoot, relativePath);
-    if (!filePath.startsWith(`${publicRoot}${path.sep}`)) {
-      errors.push(`${branch} ${photo.section}: photo path escapes client/public: ${photo.src}`);
-      continue;
+async function differenceHash(filePath: string): Promise<bigint> {
+  const pixels = await sharp(filePath)
+    .resize(9, 8, { fit: "fill" })
+    .grayscale()
+    .raw()
+    .toBuffer();
+  let hash = 0n;
+  for (let row = 0; row < 8; row++) {
+    for (let col = 0; col < 8; col++) {
+      hash = (hash << 1n) | BigInt(pixels[row * 9 + col] > pixels[row * 9 + col + 1]);
     }
-    if (!existsSync(filePath)) {
-      errors.push(`${branch} ${photo.section}: missing photo ${photo.src}`);
-      continue;
-    }
-
-    const hash = createHash("sha256").update(readFileSync(filePath)).digest("hex");
-    const previous = seenHashes.get(hash);
-    if (previous) {
-      errors.push(`${branch} ${photo.section}: duplicate photo content matches ${previous} (${photo.src})`);
-    } else {
-      seenHashes.set(hash, `${branch} ${photo.section} (${photo.src})`);
-    }
-
-    if (seenInBranch.has(hash)) {
-      errors.push(`${branch} ${photo.section}: duplicate photo content within ${branch} (${photo.src})`);
-    }
-    seenInBranch.add(hash);
   }
+  return hash;
 }
 
-if (errors.length) {
-  console.error("Branch photo uniqueness check failed:");
-  for (const error of errors) console.error(`- ${error}`);
-  process.exit(1);
+function hammingDistance(first: bigint, second: bigint): number {
+  let bits = first ^ second;
+  let distance = 0;
+  while (bits !== 0n) {
+    bits &= bits - 1n;
+    distance++;
+  }
+  return distance;
 }
 
-console.log(`Branch photo uniqueness check passed (${seenHashes.size} unique photo files).`);
+async function main() {
+  const checked: CheckedPhoto[] = [];
+  const errors: string[] = [];
+
+  for (const [branch, photos] of Object.entries(branchPhotos)) {
+    const referencedPhotos = [
+      { section: "hero", ...photos.hero },
+      { section: "about", ...photos.about },
+      ...photos.gallery.map((photo, index) => ({
+        section: `gallery[${index}]`,
+        ...photo,
+      })),
+    ];
+
+    for (const photo of referencedPhotos) {
+      const filePath = path.resolve(publicRoot, photo.src.replace(/^\/+/, ""));
+      if (!filePath.startsWith(`${publicRoot}${path.sep}`)) {
+        errors.push(`${branch} ${photo.section}: photo path escapes client/public: ${photo.src}`);
+        continue;
+      }
+      if (!existsSync(filePath)) {
+        errors.push(`${branch} ${photo.section}: missing photo ${photo.src}`);
+        continue;
+      }
+
+      try {
+        const hash = await differenceHash(filePath);
+        for (const previous of checked) {
+          const distance = hammingDistance(hash, previous.hash);
+          if (distance <= MAX_DHASH_DISTANCE) {
+            const scope = previous.branch === branch ? `within ${branch}` : `across ${previous.branch} and ${branch}`;
+            errors.push(
+              `${branch} ${photo.section} (${photo.src}) matches ${previous.branch} ${previous.section} (${previous.src}) ` +
+              `${scope}: perceptual dHash distance ${distance}/64 (threshold ≤${MAX_DHASH_DISTANCE})`,
+            );
+          }
+        }
+        checked.push({ branch, section: photo.section, src: photo.src, hash });
+      } catch (error) {
+        errors.push(`${branch} ${photo.section}: cannot decode photo ${photo.src}: ${String(error)}`);
+      }
+    }
+  }
+
+  if (errors.length) {
+    console.error("Branch photo uniqueness check failed:");
+    for (const error of errors) console.error(`- ${error}`);
+    process.exitCode = 1;
+    return;
+  }
+
+  console.log(
+    `Branch photo uniqueness check passed (${checked.length} photos across ${Object.keys(branchPhotos).length} branches; ` +
+    `64-bit perceptual dHash, near-duplicate threshold ≤${MAX_DHASH_DISTANCE} differing bits; within and across pages).`,
+  );
+}
+
+main().catch((error) => {
+  console.error("Branch photo uniqueness check failed:", error);
+  process.exitCode = 1;
+});

@@ -225,9 +225,9 @@ if ! npx --no-install tsx scripts/check-robots-txt-valid.ts; then
   exit 1
 fi
 
-log "step 10d/18 — tsx scripts/check-branch-photo-uniqueness.ts (branch photo asset guard)"
+log "step 10d/18 — tsx scripts/check-branch-photo-uniqueness.ts (within-page and cross-page perceptual photo guard)"
 if ! npx --no-install tsx scripts/check-branch-photo-uniqueness.ts; then
-  log "FAIL — branch photo guard found a missing photo or duplicate image content."
+  log "FAIL — branch photo guard found a missing photo or a perceptual near-duplicate."
   log "blocking deploy."
   exit 1
 fi

@@ -79,13 +79,13 @@ export const branchPhotos = {
       alt: "Rainbow Preschool teacher engaging children during a classroom lesson",
     },
     about: {
-      src: "/images/branches/preschool-thane-child-building-blocks.webp",
-      alt: "Young child smiling while building with colourful blocks at Rainbow Preschool",
+      src: "/images/branches/preschool-thane-guided-table-activity.webp",
+      alt: "Teacher guiding three children at a classroom activity table",
     },
     gallery: [
       {
-        src: "/images/branches/preschool-thane-red-table-classroom.webp",
-        alt: "Rows of red tables and a colourful display in a Rainbow Preschool classroom",
+        src: "/images/branches/preschool-thane-yellow-table-classroom.webp",
+        alt: "Yellow child-sized tables and chairs in a Rainbow Preschool classroom",
       },
       {
         src: "/images/branches/play-school-thane-colourful-activity-room.webp",
@@ -96,8 +96,8 @@ export const branchPhotos = {
         alt: "Child playing with a pink bucket in a green sensory sand tray",
       },
       {
-        src: "/images/branches/nursery-school-thane-turquoise-classroom.webp",
-        alt: "Turquoise classroom tables and yellow chairs arranged in rows",
+        src: "/images/branches/playgroup-thane-outdoor-toddler-play-area.webp",
+        alt: "Green-floored children's play area with colourful wall murals and toys",
       },
       {
         src: "/images/branches/preschool-thane-colourful-learning-corridor.webp",
@@ -128,8 +128,8 @@ export const branchPhotos = {
         alt: "Children playing a large floor board game with teachers nearby",
       },
       {
-        src: "/images/branches/playgroup-thane-ball-pit.webp",
-        alt: "Child smiling among colourful balls in an indoor play area",
+        src: "/images/branches/preschool-thane-classroom-projects.webp",
+        alt: "Four children showing colourful projects at a classroom table",
       },
       {
         src: "/images/branches/preschool-thane-classroom-question.webp",
