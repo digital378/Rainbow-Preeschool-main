@@ -44,6 +44,13 @@ export function branchPageSchemaTelephone(centre: CentreData): string {
     : `+91-${centre.phoneNumbers[0].replace(/\D/g, "")}`;
 }
 
+export function branchFaqAnswerSegments(faq: { answer: string; link?: { text: string; href: string } }): { text: string; href?: string }[] {
+  if (!faq.link) return [{ text: faq.answer }];
+  const parts = faq.answer.split(faq.link.text);
+  if (parts.length !== 2) throw new Error(`FAQ link text must occur exactly once: ${faq.link.text}`);
+  return [{ text: parts[0] }, { text: faq.link.text, href: faq.link.href }, { text: parts[1] }];
+}
+
 function centreMapEmbed(latitude: string, longitude: string): string {
   return `https://www.google.com/maps?q=${latitude},${longitude}&z=16&output=embed`;
 }
@@ -220,6 +227,40 @@ export const hariniwasPage = {
   finalHeading: "Visit Our Hariniwas Centre",
 } as const;
 
+export const dhokaliPage = {
+  ...anandNagarPage,
+  heroSubline: "Playgroup, Nursery and KG at Dhokali Naka, Kolshet Road, near R Mall",
+  quickFacts: [
+    { icon: "baby", label: "Ages", value: "1.5–5.5 years" },
+    { icon: "clock", label: "Batches", value: "8:30–11:30 AM · 12:30–3:30 PM, Mon–Fri" },
+    { icon: "book", label: "Classes", value: "Playgroup to Sr. KG" },
+    { icon: "bus", label: "Transport", value: "GPS-enabled" },
+    { icon: "sun", label: "Daycare", value: "Happy Times, 8:30 AM–7:30 PM" },
+  ],
+  aboutHeading: "About Our Dhokali Centre",
+  aboutParagraphs: [
+    "Our Dhokali centre is on Kolshet Road at Dhokali Naka, opposite Aban Park Society and about 300 m from R Mall. Families from Dhokali, Kolshet, Balkum, Kapurbawdi and Majiwada can reach us in a few minutes. Children join us from 1.5 years in Playgroup and continue through Nursery, Jr. KG and Sr. KG at this centre.",
+    "Every class is led by our female, ECCE-trained teachers, with two teachers for every 30 children. Our play-based, NEP 2020-aligned curriculum brings in art, music, movement and storytelling every day. You get daily updates and a monthly progress report, and our Academic Coordinator, Harsha Sutar, guides the curriculum at this centre.",
+  ],
+  programmes: [
+    ...anandNagarPage.programmes.slice(0, 3),
+    { title: "Happy Times daycare (ages 2–8)", age: "Ages 2–8 years", description: "8:30 AM–7:30 PM, with one nutritious meal.", href: "/happy-times" },
+  ],
+  galleryHeading: "Our Learning Spaces in Dhokali",
+  gallery: branchPhotos.dhokali.gallery,
+  whyHeading: "Why Parents Choose Our Dhokali Centre",
+  areasHeading: "Preschool Near Kolshet Road, Balkum and Majiwada",
+  nearbyAreas: [
+    { label: "Under 1 km", areas: ["Dhokali Naka", "Dhokali", "Kolshet Road", "Kolshet", "R Mall", "Aban Park"] },
+    { label: "1–2 km", areas: ["Balkum", "Balkum Naka", "Kapurbawdi", "Glady Alwares Road", "Runwal Garden City", "Lodha Amara", "Siddhachal", "Majiwada"] },
+  ],
+  areasParagraph: "If you live around Dhokali, Kolshet Road, Balkum, Kapurbawdi or Majiwada, our Dhokali centre is usually the closest Rainbow centre. Book a visit at whichever Rainbow centre suits your route.",
+  reachText: "At Dhokali Naka on Kolshet Road, opposite Aban Park Society, about 300 m from R Mall.",
+  admissionsDetails: "There is no entrance test. The parent–child interaction is a relaxed conversation of about 20 minutes. Once you confirm a seat, there are 2–3 short orientation sessions before term begins. You can ask which programme matches your child's age, how transport works and whether the daycare hours suit your routine when you visit.",
+  nearbyLinkText: "Manpada (about 1 km)",
+  finalHeading: "Visit Our Dhokali Centre",
+} as const;
+
 export const centres: CentreData[] = [
   {
     id: "manpada",
@@ -301,9 +342,9 @@ export const centres: CentreData[] = [
     localitySlug: "dhokali",
     playgroundLandingUrl: "/preschool-in-dhokali-thane",
     preschoolLandingUrl: "/preschool-in-dhokali-thane",
-    address: "Kolshet Road, Dhokali Naka, Opp. Aban Park Society, Thane (W)",
+    address: "Kolshet Road, Dhokali Naka, Opp. Aban Park Society, Thane (W) 400607",
     postalCode: "400607",
-    phoneNumbers: ["93212 38375"],
+    phoneNumbers: ["82915 68972"],
     hideCentrePhonesOnBranchPage: true,
     whatsappNumber: "9167399247",
     googleMapsDirectionsUrl: "https://maps.app.goo.gl/WAp5VMqUs6UhUK4c8",
@@ -316,7 +357,7 @@ export const centres: CentreData[] = [
       nursery: "/nursery",
       kindergarten: "/kindergarten",
     },
-    areasServed: ["Dhokali", "Kolshet Road", "Vandana Nagar", "Balkum"],
+    areasServed: ["Dhokali Naka", "Dhokali", "Kolshet Road", "Kolshet", "R Mall", "Aban Park", "Balkum", "Balkum Naka", "Kapurbawdi", "Glady Alwares Road", "Runwal Garden City", "Lodha Amara", "Siddhachal", "Majiwada"],
   },
   {
     id: "kalwa",
@@ -489,8 +530,8 @@ export const preschoolPageSEO: Record<string, PreschoolPageSEO> = {
     canonicalPath: "/preschool-in-anand-nagar-thane",
   },
   dhokali: {
-    title: "Preschool in Dhokali, Thane | Rainbow Preschool",
-    description: "Rainbow Preschool Dhokali on Kolshet Rd — the local choice for Dhokali, Kolshet & Majiwada families. Playgroup to KG, ages 1.5–5. Enquire for 2026-27.",
+    title: "Preschool in Dhokali, Kolshet Road, Thane | Rainbow",
+    description: "Playgroup, Nursery & KG (ages 1.5–5.5) on Kolshet Road, Dhokali Naka, near R Mall. Close to Balkum, Kapurbawdi & Majiwada. 2027-28 admissions open.",
     h1: "Preschool in Dhokali, Thane",
     canonicalPath: "/preschool-in-dhokali-thane",
   },
@@ -569,12 +610,12 @@ export const whyParentsChoose: Record<string, string[]> = {
     "Art, music, movement and storytelling every day",
   ],
   dhokali: [
-    "Strategically located on Kolshet Road for easy access",
-    "Serving families from Dhokali, Kolshet, and Majiwada",
-    "Quality curriculum preparing children for formal schooling",
-    "Focus on creativity, curiosity, and love for learning",
-    "Comprehensive safety measures including CCTV",
-    "Affordable fees with excellent education quality",
+    "At Dhokali Naka on Kolshet Road, near R Mall, easy to reach from Balkum and Kapurbawdi",
+    "100% female, ECCE-trained teachers; two teachers per class of 30",
+    "CCTV-monitored classrooms",
+    "Toys and classrooms sanitised several times a day",
+    "Daily updates and monthly progress reports",
+    "Happy Times daycare at the same centre for working parents (ages 2–8)",
   ],
   kalwa: [
     "In Manisha Nagar near Sayba Hall, about 700 m from Kalwa station",
@@ -595,7 +636,7 @@ export const whyParentsChoose: Record<string, string[]> = {
 };
 
 // Preschool FAQs for each location
-export const preschoolFAQs: Record<string, Array<{ question: string; answer: string }>> = {
+export const preschoolFAQs: Record<string, Array<{ question: string; answer: string; link?: { text: string; href: string } }>> = {
   manpada: [
     {
       question: "Where is Rainbow Preschool in Manpada?",
@@ -657,38 +698,16 @@ export const preschoolFAQs: Record<string, Array<{ question: string; answer: str
     { question: "How do I enrol?", answer: "Call our admissions team on 82915 68972, WhatsApp us on 98337 81550, or fill in the callback form. We'll book your visit and a short parent–child interaction." },
   ],
   dhokali: [
-    {
-      question: "Where is Rainbow Preschool in Dhokali?",
-      answer: "Our Dhokali centre is on Kolshet Road, Dhokali Naka, Opposite Aban Park Society, Thane (W). It's easily accessible from Kolshet Road."
-    },
-    {
-      question: "Which areas does the Dhokali centre serve?",
-      answer: "We serve families from Dhokali, Kolshet, Majiwada, and surrounding residential areas."
-    },
-    {
-      question: "What age groups are accepted at Dhokali?",
-      answer: "We accept children from 1.5 years for Playgroup, 2.5 years for Nursery, and 3.5 years for Kindergarten."
-    },
-    {
-      question: "How can I contact Rainbow Preschool Dhokali?",
-      answer: "Call Admissions on 82915 68972, WhatsApp us on 91673 99247, or fill the callback form for a quick response."
-    },
-    {
-      question: "What is the curriculum at Dhokali centre?",
-      answer: "We follow Rainbow's proven play-based curriculum including sensory activities, art, music, outdoor play, and age-appropriate academics."
-    },
-    {
-      question: "Are there any sibling discounts available?",
-      answer: "Please call Admissions on 82915 68972 for information about sibling discounts and other offers."
-    },
-    {
-      question: "What safety features does the Dhokali centre have?",
-      answer: "We have CCTV monitoring, 100% female staff, secure entry/exit, and follow strict health and safety protocols."
-    },
-    {
-      question: "Can I visit before enrolling?",
-      answer: "Yes! We encourage parent visits. Call Admissions on 82915 68972 or use the callback form to schedule a visit."
-    },
+    { question: "Where is Rainbow Preschool in Dhokali?", answer: "Rainbow Preschool International, Dhokali Centre, is at Kolshet Road, Dhokali Naka, Opp. Aban Park Society, Thane (W) 400607." },
+    { question: "Which areas is the centre close to?", answer: "Dhokali Naka, Dhokali, Kolshet Road, Kolshet, R Mall and Aban Park are under 1 km away. Balkum, Balkum Naka, Kapurbawdi, Glady Alwares Road, Runwal Garden City, Lodha Amara, Siddhachal and Majiwada are 1–2 km away." },
+    { question: "What are the batch timings?", answer: "8:30–11:30 AM or 12:30–3:30 PM, Monday to Friday." },
+    { question: "Which classes are available?", answer: "Playgroup, Nursery, Jr. KG and Sr. KG, for ages 1.5–5.5." },
+    { question: "What happens after Sr. KG?", answer: "Our Manpada centre, about 1 km away, continues up to Grade 4, and our group's K–12 school, Rainbow International School, is in Brahmand, Thane West.", link: { text: "Manpada centre", href: "/preschool-in-manpada-thane" } },
+    { question: "What is the class size?", answer: "Classes have two female, ECCE-trained teachers for every 30 children." },
+    { question: "Do you provide transport?", answer: "Yes, GPS-enabled in-house transport." },
+    { question: "Is there daycare?", answer: "Yes, Happy Times daycare for ages 2–8 runs here from 8:30 AM to 7:30 PM, with one nutritious meal." },
+    { question: "What are the fees?", answer: "Please call our admissions team on 82915 68972 for current fees." },
+    { question: "How do I enrol?", answer: "Call our admissions team on 82915 68972, WhatsApp us on 91673 99247, or fill in the callback form. We'll book your visit and a short parent–child interaction." },
   ],
   kalwa: [
     { question: "Where is Rainbow Preschool in Kalwa?", answer: "Harsh Prasad Co-op Hsg Soc, Near Sayba Hall, Manisha Nagar, Gate No. 1, Kalwa, Thane." },

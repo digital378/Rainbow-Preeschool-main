@@ -145,6 +145,42 @@ export const branchPhotos = {
       },
     ],
   },
+  dhokali: {
+    hero: {
+      src: "/images/branches/preschool-in-dhokali-thane-centre-entrance.webp",
+      alt: "Rainbow Preschool International entrance with colourful murals and a Rainbow sign",
+    },
+    about: {
+      src: "/images/branches/preschool-thane-activity-room-tree.webp",
+      alt: "Bright Rainbow Preschool activity room with a tree feature and play shelves",
+    },
+    gallery: [
+      {
+        src: "/images/branches/preschool-thane-happy-times-classroom.webp",
+        alt: "Preschool activity room with colourful child-sized tables and a wall display",
+      },
+      {
+        src: "/images/branches/playgroup-thane-colourful-indoor-play-corridor.webp",
+        alt: "Bright indoor play corridor with colourful flooring and wall murals",
+      },
+      {
+        src: "/images/branches/preschool-thane-fathers-day-group.webp",
+        alt: "Children and adults gathered for a preschool Father's Day activity",
+      },
+      {
+        src: "/images/branches/preschool-thane-sports-field-day.webp",
+        alt: "Children playing on a field during preschool sports day",
+      },
+      {
+        src: "/images/branches/preschool-thane-daycare-rest-room.webp",
+        alt: "Daycare rest area with child-sized beds and colourful storage shelves",
+      },
+      {
+        src: "/images/branches/preschool-thane-fire-station-visit.webp",
+        alt: "Preschool children and teachers visiting a fire engine",
+      },
+    ],
+  },
 } as const;
 
 // Canonical file → owning branch index. New branch pages must register photos here

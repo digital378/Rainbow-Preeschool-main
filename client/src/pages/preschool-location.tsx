@@ -741,7 +741,7 @@ export function PreschoolInAnandNagar() {
 }
 
 export function PreschoolInDhokali() {
-  return <PreschoolLocationTemplate localitySlug="dhokali" />;
+  return <BranchCentrePage slug="dhokali" />;
 }
 
 export function PreschoolInKalwa() {

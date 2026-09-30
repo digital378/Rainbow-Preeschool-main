@@ -28,7 +28,7 @@ import { PROGRAMMES_COPY } from "../shared/programmes-page-content";
 import { CONTACT_PAGE_COPY } from "../shared/contact-page-copy";
 import { TOP_PRESCHOOLS_COPY } from "../shared/top-preschools-thane-content";
 import { ABOUT_PAGE_COPY } from "../shared/about-page-content";
-import { anandNagarPage, kalwaPage, manpadaPage, hariniwasPage } from "../shared/centre-data";
+import { anandNagarPage, kalwaPage, manpadaPage, hariniwasPage, dhokaliPage } from "../shared/centre-data";
 
 const BASE = (process.argv[2] || "http://localhost:5000").replace(/\/$/, "");
 const UA = "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)";
@@ -115,6 +115,7 @@ async function checkUrl(path: string): Promise<CheckResult> {
   const branchPage = path === "/preschool-in-anand-nagar-thane" ? anandNagarPage
     : path === "/preschool-in-kalwa-thane" ? kalwaPage
     : path === "/preschool-in-hariniwas-thane" ? hariniwasPage
+    : path === "/preschool-in-dhokali-thane" ? dhokaliPage
     : path === "/preschool-in-manpada-thane" ? manpadaPage : null;
   if (path === "/top-preschools-in-thane" || path === "/about") {
     const byline = path === "/about"

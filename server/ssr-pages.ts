@@ -31,10 +31,12 @@ import {
   ADMISSIONS_PHONE_DISPLAY,
   ADMISSIONS_SCHEMA_TELEPHONE,
   branchPageSchemaTelephone,
+  branchFaqAnswerSegments,
   anandNagarPage,
   kalwaPage,
   manpadaPage,
   hariniwasPage,
+  dhokaliPage,
   preschoolIntros,
   whyParentsChoose,
   preschoolFAQs,
@@ -2581,13 +2583,13 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
     return staticPages[cleanPath];
   }
 
-  if (cleanPath === "/preschool-in-anand-nagar-thane" || cleanPath === "/preschool-in-kalwa-thane" || cleanPath === "/preschool-in-manpada-thane" || cleanPath === "/preschool-in-hariniwas-thane") {
-    const slug = cleanPath === "/preschool-in-anand-nagar-thane" ? "anand-nagar" : cleanPath === "/preschool-in-kalwa-thane" ? "kalwa" : cleanPath === "/preschool-in-hariniwas-thane" ? "hariniwas" : "manpada";
+  if (cleanPath === "/preschool-in-anand-nagar-thane" || cleanPath === "/preschool-in-kalwa-thane" || cleanPath === "/preschool-in-manpada-thane" || cleanPath === "/preschool-in-hariniwas-thane" || cleanPath === "/preschool-in-dhokali-thane") {
+    const slug = cleanPath === "/preschool-in-anand-nagar-thane" ? "anand-nagar" : cleanPath === "/preschool-in-kalwa-thane" ? "kalwa" : cleanPath === "/preschool-in-hariniwas-thane" ? "hariniwas" : cleanPath === "/preschool-in-dhokali-thane" ? "dhokali" : "manpada";
     const centre = getCentreBySlug(slug);
     if (!centre) {
       throw new Error(`Missing shared centre data for ${slug} preschool page`);
     }
-    const page = slug === "anand-nagar" ? anandNagarPage : slug === "kalwa" ? kalwaPage : slug === "hariniwas" ? hariniwasPage : manpadaPage;
+    const page = slug === "anand-nagar" ? anandNagarPage : slug === "kalwa" ? kalwaPage : slug === "hariniwas" ? hariniwasPage : slug === "dhokali" ? dhokaliPage : manpadaPage;
     const pageSEO = preschoolPageSEO[slug];
     const faqs = preschoolFAQs[slug] ?? [];
     const photos = branchPhotos[slug];
@@ -2604,7 +2606,7 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
         streetAddress: centre.branchPageAddress ?? centre.address,
         addressLocality: "Thane",
         addressRegion: "Maharashtra",
-        ...(["manpada", "hariniwas"].includes(slug) ? { postalCode: centre.postalCode } : {}),
+        ...(["manpada", "hariniwas", "dhokali"].includes(slug) ? { postalCode: centre.postalCode } : {}),
         addressCountry: "IN",
       },
       geo: {
@@ -2630,7 +2632,7 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
     const reelCaptions = BRANCH_REEL_EXCERPTS;
     const faqItems = faqs.map((faq) => ({
       question: faq.question,
-      answerSegments: [{ text: faq.answer }],
+      answerSegments: branchFaqAnswerSegments(faq),
     }));
     const branchGallery = photos.gallery.map((image, index) => ({
       src: image.src,
@@ -2645,7 +2647,7 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
       description: pageSEO.description,
       canonical: centreUrl,
       ogImage: `${BASE_URL}/images/og/${slug}-1200x630.jpg`,
-      ogImageAlt: slug === "anand-nagar" ? "Two children playing with blocks at Rainbow Preschool" : slug === "kalwa" ? "Rainbow Preschool children learning together at a classroom table" : "Rainbow Preschool classroom activity",
+      ogImageAlt: slug === "anand-nagar" ? "Two children playing with blocks at Rainbow Preschool" : slug === "kalwa" ? "Rainbow Preschool children learning together at a classroom table" : slug === "dhokali" ? "Rainbow Preschool International entrance with colourful murals" : "Rainbow Preschool classroom activity",
       h1: pageSEO.h1,
       introText: page.heroSubline,
       breadcrumbs: [
@@ -2729,7 +2731,7 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
         {
           heading: page.nearbyHeading,
           links: [
-             { text: page.nearbyLinkText, url: slug === "anand-nagar" ? "/preschool-in-kasarvadavali-thane" : slug === "kalwa" ? "/preschool-in-hariniwas-thane" : slug === "hariniwas" ? "/preschool-in-kalwa-thane" : "/preschool-in-dhokali-thane" },
+             { text: page.nearbyLinkText, url: slug === "anand-nagar" ? "/preschool-in-kasarvadavali-thane" : slug === "kalwa" ? "/preschool-in-hariniwas-thane" : slug === "hariniwas" ? "/preschool-in-kalwa-thane" : slug === "dhokali" ? "/preschool-in-manpada-thane" : "/preschool-in-dhokali-thane" },
             { text: "All 6 centres", url: "/contact" },
           ],
         },

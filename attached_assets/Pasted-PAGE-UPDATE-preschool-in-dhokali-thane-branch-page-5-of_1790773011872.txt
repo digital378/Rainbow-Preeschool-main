@@ -1,0 +1,105 @@
+PAGE UPDATE: /preschool-in-dhokali-thane  (branch page 5 of 6)
+Use the same reusable branch template as the other branch pages: same section order, design, behaviour, performance rules, phone rule, WhatsApp greeting, perceptual photo guard and checks. Only the data, text and photos below change.
+Rules: text report only, no screenshots, don't publish, don't invent facts, no "best/No. 1/finest/award-winning". Meta description 155 characters or fewer. No visible photo-provenance text.
+
+CONFIRMED FACTS: DHOKALI CENTRE
+- Name: Rainbow Preschool International, Dhokali Centre
+- Address: Kolshet Road, Dhokali Naka, Opp. Aban Park Society, Thane (W) 400607
+- Map pin: 19.228991, 72.9802583. Google profile: https://maps.app.goo.gl/WAp5VMqUs6UhUK4c8
+- Phone rule: the only phone shown or dialled is 82915 68972 ("Call Admissions"). Centre WhatsApp: 91673 99247. Schema telephone: +91-8291568972.
+- Ages 1.5–5.5: Playgroup 1.5–2.5, Nursery 2.5–3.5, Jr. KG 3.5–4.5, Sr. KG 4.5–5.5 (age as of 1 June)
+- This centre runs Playgroup to Sr. KG ONLY. No primary classes: no "Grade" card, tile or FAQ. For "what after Sr. KG", the FAQ points to our other centres and the group's K–12 school (see FAQ 5).
+- Batches: 8:30–11:30 AM and 12:30–3:30 PM, Monday to Friday
+- Happy Times daycare runs at this centre (ages 2–8, 8:30 AM–7:30 PM, one nutritious meal). One programme card and one FAQ only.
+- GPS-enabled in-house transport
+- 100% female, ECCE-trained teachers. Ratio 30:2. CCTV-monitored classrooms. Toys and classrooms sanitised several times a day. Daily updates and monthly progress reports. NEP 2020-aligned, play-based curriculum
+- Academic Coordinator: Harsha Sutar
+- Admission steps, 24-hour reply, "call for fees": same as the other branch pages
+- Brand rating chip: "4.9★ from 487 Google reviews across our centres"
+- Nearest other centre: Manpada (about 1 km)
+
+AREAS WITHIN ABOUT 2 KM (say "under 1 km" / "1–2 km", never metres)
+- Under 1 km: Dhokali Naka, Dhokali, Kolshet Road, Kolshet, R Mall, Aban Park
+- 1–2 km: Balkum, Balkum Naka, Kapurbawdi, Glady Alwares Road, Runwal Garden City, Lodha Amara, Siddhachal, Majiwada
+- Landmarks: at Dhokali Naka on Kolshet Road, opposite Aban Park Society; about 300 m from R Mall
+- Do NOT list on this page: Khewra Circle, Manpada, Chitalsar, Tikuji-ni-wadi, Dosti Imperia, Hiranandani Meadows, Lokpuram, Vasant Vihar (Manpada page), or any Ghodbunder Road/Kavesar, Hariniwas or Kalwa areas.
+
+1. METADATA
+- Title (51 characters): "Preschool in Dhokali, Kolshet Road, Thane | Rainbow"
+- Meta (147 characters): "Playgroup, Nursery & KG (ages 1.5–5.5) on Kolshet Road, Dhokali Naka, near R Mall. Close to Balkum, Kapurbawdi & Majiwada. 2027-28 admissions open."
+- og:description matches the meta. Create a new share image /images/og/dhokali-1200x630.jpg.
+
+2. PAGE TEXT (same sections as the other branch pages)
+A. Hero
+   - H1: "Preschool in Dhokali, Thane"
+   - Subline: "Playgroup, Nursery and KG at Dhokali Naka, Kolshet Road, near R Mall"
+   - The same 3 chips
+B. Quick facts (5 tiles)
+   - Ages 1.5–5.5
+   - Batches
+   - Playgroup to Sr. KG
+   - GPS-enabled transport
+   - Sun → "DAYCARE" / "Happy Times, 8:30 AM–7:30 PM"
+C. About Our Dhokali Centre:
+   "Our Dhokali centre is on Kolshet Road at Dhokali Naka, opposite Aban Park Society and about 300 m from R Mall. Families from Dhokali, Kolshet, Balkum, Kapurbawdi and Majiwada can reach us in a few minutes. Children join us from 1.5 years in Playgroup and continue through Nursery, Jr. KG and Sr. KG at this centre.
+   Every class is led by our female, ECCE-trained teachers, with two teachers for every 30 children. Our play-based, NEP 2020-aligned curriculum brings in art, music, movement and storytelling every day. You get daily updates and a monthly progress report, and our Academic Coordinator, Harsha Sutar, guides the curriculum at this centre."
+D. Programmes
+   - 3 main cards (Playgroup, Nursery, Kindergarten: Jr. KG & Sr. KG) linking to /playgroup, /nursery and /kindergarten
+   - 1 slim card: "Happy Times daycare (ages 2–8)" → /happy-times
+E. Rainbow Theatre: the same component and rules.
+F. Gallery: heading "Our Learning Spaces in Dhokali". See PHOTO RULES.
+G. Why Parents Choose Our Dhokali Centre (6 tiles):
+   1. At Dhokali Naka on Kolshet Road, near R Mall, easy to reach from Balkum and Kapurbawdi
+   2. 100% female, ECCE-trained teachers; two teachers per class of 30
+   3. CCTV-monitored classrooms
+   4. Toys and classrooms sanitised several times a day
+   5. Daily updates and monthly progress reports
+   6. Happy Times daycare at the same centre for working parents (ages 2–8)
+H. Areas (H2: "Preschool Near Kolshet Road, Balkum and Majiwada")
+   - Chips from the lists above
+   - Paragraph: "If you live around Dhokali, Kolshet Road, Balkum, Kapurbawdi or Majiwada, our Dhokali centre is usually the closest Rainbow centre. Families near Khewra Circle and Tikuji-ni-wadi are also close to our Manpada centre, so book a visit at whichever suits your route."
+   - How to reach: "At Dhokali Naka on Kolshet Road, opposite Aban Park Society, about 300 m from R Mall."
+   - Map: the lazy iframe using 19.228991, 72.9802583, plus a Get directions button
+I. Admissions: the same as the other branch pages.
+J. FAQ:
+   1. Where is Rainbow Preschool in Dhokali? → the full address
+   2. Which areas is the centre close to? → from the lists
+   3. Batch timings? → "8:30–11:30 AM or 12:30–3:30 PM, Monday to Friday."
+   4. Which classes are available? → "Playgroup, Nursery, Jr. KG and Sr. KG, for ages 1.5–5.5."
+   5. What happens after Sr. KG? → "Our Manpada centre, about 1 km away, continues up to Grade 4, and our group's K–12 school, Rainbow International School, is in Brahmand, Thane West." (Link "Manpada centre" to /preschool-in-manpada-thane.)
+   6. Class size? → 30:2, female ECCE-trained
+   7. Transport? → "Yes, GPS-enabled in-house transport."
+   8. Is there daycare? → "Yes, Happy Times daycare for ages 2–8 runs here from 8:30 AM to 7:30 PM, with one nutritious meal."
+   9. Fees? → "Please call our admissions team on 82915 68972 for current fees."
+   10. How do I enrol? → "Call our admissions team on 82915 68972, WhatsApp us on 91673 99247, or fill in the callback form. We'll book your visit and a short parent–child interaction."
+K. Nearby centres: Manpada (about 1 km) → /preschool-in-manpada-thane, and "All 6 centres" → /contact.
+L. Final CTA: "Visit Our Dhokali Centre".
+Remove from the current Dhokali page:
+- "the local choice for Dhokali, Kolshet & Majiwada families"
+- small-batch claims, "1.5–5", "2026-27", Kids Activity Club, Summer Camp
+- "Curriculum Team", "Reviewed by", "24/7", "secure entry/parent verification"
+- the old Vandana Nagar and other "Neighbourhoods Served" / "Local Landmarks" copy
+- anything else not in the facts above
+Check that /play-school-near-majiwada still 301s straight to this page (a single hop).
+
+3. PHOTO RULES
+- If any of the 4 centre-front (façade) photos you identified earlier is the DHOKALI centre, use it as the Dhokali hero photo and name it with the area (e.g. preschool-in-dhokali-thane-centre-entrance.webp), with alt text like "Entrance of Rainbow Preschool International, Dhokali centre on Kolshet Road". Tell me which centres the 4 façades belong to and how you identified each (e.g. visible signage). Don't use another centre's façade here.
+- The rest: unused, visually distinct photos only. The perceptual guard must pass across all 5 pages and within the page. Target 8 photos in total.
+- Naming: area name only for photos known to be from Dhokali, otherwise "thane". Descriptive alt text. Register them in shared/branch-photos.ts.
+- Report the distinct photos remaining for Kasarvadavali.
+
+4. STRUCTURED DATA: the same as the other branch pages:
+- WebPage + BreadcrumbList (1–3)
+- Preschool with @id …/preschool-in-dhokali-thane#centre, postalCode 400607, geo 19.228991 / 72.9802583, telephone +91-8291568972, hasMap, parentOrganization, areaServed
+- None of the excluded types or properties.
+
+5. CHECKS (text only)
+- Visitor and Googlebot versions match; one H1; the map pin is correct; all internal links return 200 with no redirects.
+- The Majiwada redirect is a single 301.
+- Phone scan: only 8291568972 and 9167399247.
+- Meta is 155 characters or fewer.
+- The perceptual photo guard passes across 5 pages.
+- Mobile Lighthouse, production build, median of 3: LCP under 2.5 s, CLS under 0.05, TBT under 250 ms.
+- Full pre-publish script: two consecutive passes.
+
+REPORT: title, meta (with character count) and H1; the full text of About, Areas and FAQ; the photo list (file + alt + Dhokali/Thane); the façade identification; the photos remaining; phone scan; Lighthouse; pre-publish results; files changed. Don't publish.

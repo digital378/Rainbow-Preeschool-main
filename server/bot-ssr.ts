@@ -276,7 +276,7 @@ function renderImageHtml(image: {
 }
 
 function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
-  const isEnhancedBranch = requestUrl === "/preschool-in-anand-nagar-thane" || requestUrl === "/preschool-in-kalwa-thane" || requestUrl === "/preschool-in-manpada-thane" || requestUrl === "/preschool-in-hariniwas-thane";
+  const isEnhancedBranch = requestUrl === "/preschool-in-anand-nagar-thane" || requestUrl === "/preschool-in-kalwa-thane" || requestUrl === "/preschool-in-manpada-thane" || requestUrl === "/preschool-in-hariniwas-thane" || requestUrl === "/preschool-in-dhokali-thane";
   // These standalone pages end at their contact CTA in the visitor app.
   // Keep the crawler HTML aligned rather than appending the shared footer.
   const endsAtContact = requestUrl === "/play-school-near-ghodbunder-road"
