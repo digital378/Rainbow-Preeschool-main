@@ -9,6 +9,9 @@
  *   BASE_URL=https://www.rainbowpreschools.com \
  *     node scripts/predeploy-lighthouse-guard.mjs
  *
+ *   LH_NO_SCREENSHOTS=1 BASE_URL=https://www.rainbowpreschools.com \
+ *     node scripts/predeploy-lighthouse-guard.mjs
+ *
  *   Defaults to http://localhost:5000 if BASE_URL unset (matches predeploy.sh
  *   server boot port so it can be wired into predeploy.sh once chromium is
  *   confirmed available in the Replit NixOS environment).
@@ -19,8 +22,13 @@
 
 import lighthouse from 'lighthouse';
 import * as chromeLauncher from 'chrome-launcher';
+import TraceGatherer from 'lighthouse/core/gather/gatherers/trace.js';
+import { initializeConfig } from 'lighthouse/core/config/config.js';
 
 const BASE_URL = process.env.BASE_URL || 'http://localhost:5000';
+const SCREENSHOT_FREE = process.env.LH_NO_SCREENSHOTS === '1';
+const SCREENSHOT_TRACE_CATEGORY = 'disabled-by-default-devtools.screenshot';
+const SCREENSHOT_AUDIT_IDS = new Set(['screenshot-thumbnails', 'final-screenshot']);
 
 const PAGES = [
   { name: 'home',                 path: '/' },
@@ -56,6 +64,21 @@ const THRESHOLDS = {
   tbt:         parseInt(process.env.LH_MAX_TBT   ?? '1200', 10),
 };
 
+// Lighthouse's Trace gatherer hardcodes the filmstrip category in its default
+// category list. Replace its instrumentation only in screenshot-free mode.
+class ScreenshotFreeTraceGatherer extends TraceGatherer {
+  async startSensitiveInstrumentation({ driver, settings }) {
+    const traceCategories = TraceGatherer.getDefaultTraceCategories()
+      .filter(category => category !== SCREENSHOT_TRACE_CATEGORY)
+      .concat(settings.additionalTraceCategories || []);
+    await driver.defaultSession.sendCommand('Page.enable');
+    await driver.defaultSession.sendCommand('Tracing.start', {
+      categories: traceCategories.join(','),
+      options: 'sampling-frequency=10000',
+    });
+  }
+}
+
 const LH_CONFIG = {
   extends: 'lighthouse:default',
   settings: {
@@ -77,8 +100,54 @@ const LH_CONFIG = {
       disabled: false,
     },
     onlyCategories: ['performance'],
+    ...(SCREENSHOT_FREE ? {
+      disableFullPageScreenshot: true,
+      skipAudits: [...SCREENSHOT_AUDIT_IDS],
+    } : {}),
   },
+  ...(SCREENSHOT_FREE ? {
+    artifacts: [
+      { id: 'Trace', gatherer: ScreenshotFreeTraceGatherer },
+    ],
+  } : {}),
 };
+
+async function assertScreenshotFreeResolvedConfig() {
+  const { resolvedConfig } = await initializeConfig('navigation', LH_CONFIG);
+  const artifacts = resolvedConfig.artifacts || [];
+  const audits = resolvedConfig.audits || [];
+  const traceArtifact = artifacts.find(({ id }) => id === 'Trace');
+  const traceGatherer = traceArtifact?.gatherer?.instance;
+  const screenshotAudits = audits
+    .map(audit => audit.implementation.meta.id)
+    .filter(id => SCREENSHOT_AUDIT_IDS.has(id));
+  const additionalCategories = resolvedConfig.settings.additionalTraceCategories || [];
+  const failures = [];
+
+  if (resolvedConfig.settings.disableFullPageScreenshot !== true) {
+    failures.push('full-page screenshot setting is not disabled');
+  }
+  if (artifacts.some(({ id }) => id === 'FullPageScreenshot')) {
+    failures.push('FullPageScreenshot gatherer remains enabled');
+  }
+  if (screenshotAudits.length) {
+    failures.push(`screenshot audits remain enabled: ${screenshotAudits.join(', ')}`);
+  }
+  if (!(traceGatherer instanceof ScreenshotFreeTraceGatherer)) {
+    failures.push('Trace gatherer is not the screenshot-free implementation');
+  }
+  const traceCategories = TraceGatherer.getDefaultTraceCategories()
+    .filter(category => category !== SCREENSHOT_TRACE_CATEGORY)
+    .concat(additionalCategories);
+  if (traceCategories.includes(SCREENSHOT_TRACE_CATEGORY)) {
+    failures.push('trace filmstrip screenshot category remains enabled');
+  }
+
+  if (failures.length) {
+    throw new Error(`Screenshot-free Lighthouse config check failed: ${failures.join('; ')}`);
+  }
+  console.log('Screenshot-free config verified: no trace filmstrip, full-page screenshot, or screenshot audits.');
+}
 
 async function runOne(url) {
   const chromeFlags = ['--headless=new', '--no-sandbox', '--disable-gpu'];
@@ -103,28 +172,60 @@ async function runOne(url) {
 async function runBest(url) {
   const a = await runOne(url);
   const b = await runOne(url);
+  if (SCREENSHOT_FREE) {
+    const quality = (result) => {
+      const metrics = extractMetrics(result);
+      const breaches = check('', metrics).length;
+      const normalizedTotal = [
+        [metrics.lcp, THRESHOLDS.lcp],
+        [metrics.cls, THRESHOLDS.cls],
+        [metrics.tbt, THRESHOLDS.tbt],
+      ].reduce((total, [value, threshold]) =>
+        total + (Number.isFinite(value) ? value / threshold : Infinity), 0);
+      return [breaches, normalizedTotal];
+    };
+    const [aBreaches, aTotal] = quality(a);
+    const [bBreaches, bTotal] = quality(b);
+    return aBreaches < bBreaches || (aBreaches === bBreaches && aTotal <= bTotal) ? a : b;
+  }
   const score = (r) => r.categories?.performance?.score ?? 0;
   return score(a) >= score(b) ? a : b;
 }
 
 function extractMetrics(lhr) {
+  if (!SCREENSHOT_FREE) {
+    return {
+      performance: Math.round((lhr.categories?.performance?.score ?? 0) * 100),
+      lcp:         lhr.audits?.['largest-contentful-paint']?.numericValue ?? 0,
+      cls:         lhr.audits?.['cumulative-layout-shift']?.numericValue ?? 0,
+      tbt:         lhr.audits?.['total-blocking-time']?.numericValue ?? 0,
+    };
+  }
   return {
-    performance: Math.round((lhr.categories?.performance?.score ?? 0) * 100),
-    lcp:         lhr.audits?.['largest-contentful-paint']?.numericValue ?? 0,
-    cls:         lhr.audits?.['cumulative-layout-shift']?.numericValue ?? 0,
-    tbt:         lhr.audits?.['total-blocking-time']?.numericValue ?? 0,
+    performance: lhr.categories?.performance?.score == null
+      ? null
+      : Math.round(lhr.categories.performance.score * 100),
+    lcp:         lhr.audits?.['largest-contentful-paint']?.numericValue ?? null,
+    cls:         lhr.audits?.['cumulative-layout-shift']?.numericValue ?? null,
+    tbt:         lhr.audits?.['total-blocking-time']?.numericValue ?? null,
   };
 }
 
 function check(name, metrics) {
   const breaches = [];
-  if (metrics.performance < THRESHOLDS.performance)
+  if (!SCREENSHOT_FREE && metrics.performance < THRESHOLDS.performance)
     breaches.push(`Performance ${metrics.performance} < ${THRESHOLDS.performance}`);
-  if (metrics.lcp > THRESHOLDS.lcp)
+  if (SCREENSHOT_FREE && !Number.isFinite(metrics.lcp))
+    breaches.push('LCP unavailable');
+  else if (metrics.lcp > THRESHOLDS.lcp)
     breaches.push(`LCP ${Math.round(metrics.lcp)}ms > ${THRESHOLDS.lcp}ms`);
-  if (metrics.cls > THRESHOLDS.cls)
+  if (SCREENSHOT_FREE && !Number.isFinite(metrics.cls))
+    breaches.push('CLS unavailable');
+  else if (metrics.cls > THRESHOLDS.cls)
     breaches.push(`CLS ${metrics.cls.toFixed(3)} > ${THRESHOLDS.cls}`);
-  if (metrics.tbt > THRESHOLDS.tbt)
+  if (SCREENSHOT_FREE && !Number.isFinite(metrics.tbt))
+    breaches.push('TBT unavailable');
+  else if (metrics.tbt > THRESHOLDS.tbt)
     breaches.push(`TBT ${Math.round(metrics.tbt)}ms > ${THRESHOLDS.tbt}ms`);
   return breaches;
 }
@@ -132,6 +233,10 @@ function check(name, metrics) {
 (async () => {
   let failed = false;
   console.log(`\nPredeploy Lighthouse guard — base: ${BASE_URL}\n`);
+  if (SCREENSHOT_FREE) {
+    // Resolve and verify every screenshot source before any Chrome process starts.
+    await assertScreenshotFreeResolvedConfig();
+  }
 
   for (const page of PAGES) {
     const url = `${BASE_URL}${page.path}`;
@@ -141,8 +246,10 @@ function check(name, metrics) {
       const m = extractMetrics(lhr);
       const breaches = check(page.name, m);
       console.log(
-        `Perf=${m.performance}  LCP=${Math.round(m.lcp)}ms  ` +
-        `CLS=${m.cls.toFixed(3)}  TBT=${Math.round(m.tbt)}ms`,
+        `Perf=${m.performance == null ? 'N/A' : m.performance}  ` +
+        `LCP=${Number.isFinite(m.lcp) ? `${Math.round(m.lcp)}ms` : 'N/A'}  ` +
+        `CLS=${Number.isFinite(m.cls) ? m.cls.toFixed(3) : 'N/A'}  ` +
+        `TBT=${Number.isFinite(m.tbt) ? `${Math.round(m.tbt)}ms` : 'N/A'}`,
       );
       if (breaches.length) {
         failed = true;

@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import { Baby, Bus, Clock3, GraduationCap, MapPin, Navigation, Phone, Sun } from "lucide-react";
+import { Baby, BookOpen, Bus, Clock3, GraduationCap, MapPin, Navigation, Phone, Sun } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -20,7 +20,7 @@ export interface BranchSectionContent {
   nearbyLinkText: string;
 }
 
-const factIcons = { baby: Baby, clock: Clock3, graduation: GraduationCap, bus: Bus, sun: Sun };
+const factIcons = { baby: Baby, clock: Clock3, book: BookOpen, graduation: GraduationCap, bus: Bus, sun: Sun };
 
 export function BranchQuickFacts({ facts }: { facts: BranchSectionContent["quickFacts"] }) {
   return (

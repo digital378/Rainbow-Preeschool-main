@@ -27,9 +27,9 @@ const reasons = [
 ];
 
 const classroomImages = [
-  "rainbow-preschool-classroom-activity-01.webp",
-  "rainbow-preschool-classroom-learning-01.webp",
-  "rainbow-preschool-activity-room-01.webp",
+  "/images/branches/play-school-thane-activity-room.webp",
+  "/images/branches/preschool-thane-classroom.webp",
+  "/images/gallery/rainbow-preschool-activity-room-01.webp",
 ];
 
 function Eyebrow({ index }: { index: number }) {
@@ -115,7 +115,7 @@ function Playground() {
       <p>Real classroom moments and learning environments from Rainbow Preschool.</p>
       <div className="walk-gallery">
         {classroomImages.map((src) => (
-          <img key={src} src={`/images/gallery/${src}`} alt="Rainbow Preschool classroom moment" loading="lazy" />
+          <img key={src} src={src} alt="Rainbow Preschool classroom moment" loading="lazy" />
         ))}
       </div>
       <div className="walk-actions"><a className="walk-btn walk-btn-ghost" href="/gallery">Open the gallery <ArrowUpRight /></a></div>

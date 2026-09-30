@@ -786,7 +786,7 @@ function GlassCard() {
         }}
       >
         <img
-          src="/images/optimized/children-learning-rainbow-preschool.webp"
+          src="/images/branches/preschool-thane-classroom-learning.webp"
           alt="Happy children at Rainbow Preschool Thane"
           className="absolute inset-0 w-full h-full object-cover object-top"
           draggable={false}

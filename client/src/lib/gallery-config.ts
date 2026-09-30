@@ -70,7 +70,7 @@ export const GALLERY_IMAGES: GalleryImage[] = [
   // ── CLASSROOMS ──────────────────────────────────────────────────────
   {
     id: "cls-01",
-    src: "/images/gallery/rainbow-preschool-classroom-learning-01.webp",
+    src: "/images/branches/preschool-thane-classroom.webp",
     alt: "Children engaged in classroom learning at Rainbow Preschool International Thane",
     caption: "Play-based learning in action",
     category: "classrooms",
@@ -84,7 +84,7 @@ export const GALLERY_IMAGES: GalleryImage[] = [
   },
   {
     id: "cls-05",
-    src: "/images/gallery/rainbow-preschool-classroom-activity-01.webp",
+    src: "/images/branches/play-school-thane-activity-room.webp",
     alt: "Creative classroom activity at Rainbow Preschool International Thane",
     caption: "Creative hands-on activities",
     category: "classrooms",
@@ -100,7 +100,7 @@ export const GALLERY_IMAGES: GalleryImage[] = [
   // ── ACTIVITIES ──────────────────────────────────────────────────────
   {
     id: "act-01",
-    src: "/images/gallery/rainbow-preschool-activity-book-character-day.webp",
+    src: "/images/branches/preschool-thane-book-character-day.webp",
     alt: "Book Character Day activity at Rainbow Preschool International Thane",
     caption: "Book Character Day — love of reading",
     category: "activities",
@@ -221,7 +221,7 @@ export const GALLERY_IMAGES: GalleryImage[] = [
   },
   {
     id: "evt-08",
-    src: "/images/gallery/rainbow-preschool-sports-day-event-01.webp",
+    src: "/images/branches/preschool-thane-sports-day.webp",
     alt: "Sports Day event at Rainbow Preschool Thane — active play and competition",
     caption: "Sports Day — fitness and team spirit",
     category: "events",
@@ -251,7 +251,7 @@ export const GALLERY_IMAGES: GalleryImage[] = [
   },
   {
     id: "hap-02",
-    src: "/images/gallery/rainbow-preschool-happy-times-02.webp",
+    src: "/images/branches/preschool-thane-daycare-room.webp",
     alt: "Children having fun during Happy Times session at Rainbow Preschool Thane",
     caption: "Fun-filled Happy Times sessions",
     category: "happy-times",
@@ -374,7 +374,7 @@ export const GALLERY_IMAGES: GalleryImage[] = [
   // ── LEARNING THROUGH PLAY ───────────────────────────────────────────
   {
     id: "ltp-01",
-    src: "/images/gallery/rainbow-preschool-learning-through-play-01.webp",
+    src: "/images/branches/playgroup-thane-classroom-play.webp",
     alt: "Children learning through play at Rainbow Preschool International Thane",
     caption: "Learning through play — curiosity in action",
     category: "learning-through-play",

@@ -29,6 +29,7 @@ import {
 import {
   ADMISSIONS_PHONE_LABEL,
   anandNagarPage,
+  kalwaPage,
   preschoolIntros,
   whyParentsChoose,
   preschoolFAQs,
@@ -38,6 +39,7 @@ import {
   getCentreBySlug,
   createAllBranchLocalBusinessSchemas,
 } from "@shared/centre-data";
+import { branchPhotos } from "@shared/branch-photos";
 import { legacyPagesData } from "@shared/legacy-pages-data";
 import { isNonSeoServerRoute } from "./non-seo-routes";
 import { shouldNoIndex, NOINDEX_SLUGS } from "@shared/seo-config";
@@ -2130,7 +2132,7 @@ const preschoolCentres: Record<string, { locality: string; address: string; phon
   "/preschool-in-hariniwas-thane": { locality: "Hariniwas", address: "M.V.Apartments, Bhakti Mandir Road, Opp. Thanawala Garage, Hariniwas Circle, Panchpakadi, Thane (W)", phone: "+918291568972", lat: "19.1917133", lng: "72.966523" },
   "/preschool-in-anand-nagar-thane": { locality: "Anand Nagar", address: "Kris Commercial Plaza, 1st Floor, Opp. Tropical Lagoon, Anand Nagar, Ghodbunder Road, Thane (W)", phone: "+918291568972", lat: "19.2648723", lng: "72.9707478" },
   "/preschool-in-dhokali-thane": { locality: "Dhokali", address: "Kolshet Road, Dhokali Naka, Opp. Aban Park Society, Thane (W)", phone: "+918291568972", lat: "19.228991", lng: "72.9802583" },
-  "/preschool-in-kalwa-thane": { locality: "Kalwa", address: "Harsh Prasad Co-op Hsg, Soc, Near Sayba Hall, Manisha Nagar, Gate No.1, Kalwa", phone: "+918291568972", lat: "19.1990801", lng: "72.9913522" },
+  "/preschool-in-kalwa-thane": { locality: "Kalwa", address: "Harsh Prasad Co-op Hsg Soc, Near Sayba Hall, Manisha Nagar, Gate No. 1, Kalwa, Thane", phone: "+917400327905", lat: "19.1990801", lng: "72.9913522" },
   "/preschool-in-kasarvadavali-thane": { locality: "Kasarvadavali", address: "Rosa Gardenia, Next to Parijat Gardens, Kasarvadavali, Behind Hypercity Mall, Thane (W)", phone: "+918291568972", lat: "19.2669237", lng: "72.9634446" },
 };
 
@@ -2574,21 +2576,23 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
     return staticPages[cleanPath];
   }
 
-  if (cleanPath === "/preschool-in-anand-nagar-thane") {
-    const centre = getCentreBySlug("anand-nagar");
+  if (cleanPath === "/preschool-in-anand-nagar-thane" || cleanPath === "/preschool-in-kalwa-thane") {
+    const slug = cleanPath === "/preschool-in-anand-nagar-thane" ? "anand-nagar" : "kalwa";
+    const centre = getCentreBySlug(slug);
     if (!centre) {
-      throw new Error("Missing shared centre data for Anand Nagar preschool page");
+      throw new Error(`Missing shared centre data for ${slug} preschool page`);
     }
-    const page = anandNagarPage;
-    const pageSEO = preschoolPageSEO["anand-nagar"];
-    const faqs = preschoolFAQs["anand-nagar"] ?? [];
+    const page = slug === "anand-nagar" ? anandNagarPage : kalwaPage;
+    const pageSEO = preschoolPageSEO[slug];
+    const faqs = preschoolFAQs[slug] ?? [];
+    const photos = branchPhotos[slug];
     const areas = centre.areasServed ?? page.nearbyAreas.flatMap((group) => group.areas);
-    const centreUrl = `${BASE_URL}/preschool-in-anand-nagar-thane`;
+    const centreUrl = `${BASE_URL}${cleanPath}`;
     const preschoolSchema = {
       "@context": "https://schema.org",
       "@type": "Preschool",
       "@id": `${centreUrl}#centre`,
-      name: "Rainbow Preschool International, Anand Nagar Centre",
+      name: `Rainbow Preschool International, ${centre.localityName} Centre`,
       url: centreUrl,
       address: {
         "@type": "PostalAddress",
@@ -2602,7 +2606,7 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
         latitude: Number(centre.latitude),
         longitude: Number(centre.longitude),
       },
-      telephone: "+91-9833781550",
+      telephone: `+91-${centre.phoneNumbers[0].replace(/\D/g, "")}`,
       hasMap: centre.googleMapsDirectionsUrl,
       parentOrganization: { "@id": `${BASE_URL}/#organization` },
       areaServed: areas.map((name) => ({ "@type": "Place", name })),
@@ -2622,7 +2626,7 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
       question: faq.question,
       answerSegments: [{ text: faq.answer }],
     }));
-    const anandGallery = page.gallery.map((image, index) => ({
+    const branchGallery = photos.gallery.map((image, index) => ({
       src: image.src,
       alt: image.alt,
       width: 400,
@@ -2634,14 +2638,14 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
       title: pageSEO.title,
       description: pageSEO.description,
       canonical: centreUrl,
-      ogImage: `${BASE_URL}/images/og/anand-nagar-1200x630.jpg`,
-      ogImageAlt: "Two children playing with blocks at Rainbow Preschool",
+      ogImage: `${BASE_URL}/images/og/${slug}-1200x630.jpg`,
+      ogImageAlt: slug === "anand-nagar" ? "Two children playing with blocks at Rainbow Preschool" : "Rainbow Preschool children learning together at a classroom table",
       h1: pageSEO.h1,
       introText: page.heroSubline,
       breadcrumbs: [
         { name: "Home", url: "/" },
         { name: "Centres", url: "/play-school-near-me" },
-        { name: "Anand Nagar", url: cleanPath },
+        { name: centre.localityName, url: cleanPath },
       ],
       structuredData: [webpageSchema, preschoolSchema],
       suppressArticleSchema: true,
@@ -2651,9 +2655,10 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
       contentSections: [
         {
           items: [...page.trustChips],
+          images: [{ src: photos.hero.src, alt: photos.hero.alt, width: slug === "kalwa" ? 900 : 1197, height: slug === "kalwa" ? 600 : 800, loading: "eager" }],
           links: [
             { text: ADMISSIONS_PHONE_LABEL, url: "tel:+918291568972" },
-            { text: "WhatsApp", url: "https://wa.me/919833781550" },
+            { text: "WhatsApp", url: `https://wa.me/91${centre.whatsappNumber}` },
             { text: "Get directions", url: centre.googleMapsDirectionsUrl },
           ],
         },
@@ -2665,6 +2670,7 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
         {
           heading: page.aboutHeading,
           paragraphs: [...page.aboutParagraphs],
+          images: [{ src: photos.about.src, alt: photos.about.alt, width: slug === "kalwa" ? 900 : 1197, height: slug === "kalwa" ? 678 : 800 }],
         },
         {
           heading: page.programmesHeading,
@@ -2682,11 +2688,12 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
         },
         {
           heading: page.galleryHeading,
-          images: anandGallery,
+          text: slug === "kalwa" ? "Photographs from Rainbow centres in Thane; individual photo locations have not been verified." : undefined,
+          images: branchGallery,
         },
         {
           heading: page.whyHeading,
-          items: [...(whyParentsChoose["anand-nagar"] ?? [])],
+          items: [...(whyParentsChoose[slug] ?? [])],
         },
         {
           heading: page.areasHeading,
@@ -2715,7 +2722,7 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
         {
           heading: page.nearbyHeading,
           links: [
-            { text: page.nearbyLinkText, url: "/preschool-in-kasarvadavali-thane" },
+            { text: page.nearbyLinkText, url: slug === "anand-nagar" ? "/preschool-in-kasarvadavali-thane" : "/preschool-in-hariniwas-thane" },
             { text: "All 6 centres", url: "/contact" },
           ],
         },
@@ -2723,10 +2730,10 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
       images: [],
       finalCallToAction: {
         title: page.finalHeading,
-        description: "Call or WhatsApp us to arrange a visit to the Anand Nagar centre.",
+        description: `Call or WhatsApp us to arrange a visit to the ${centre.localityName} centre.`,
         links: [
           { text: ADMISSIONS_PHONE_LABEL, url: "tel:+918291568972" },
-          { text: "WhatsApp", url: "https://wa.me/919833781550" },
+          { text: "WhatsApp", url: `https://wa.me/91${centre.whatsappNumber}` },
         ],
       },
     };

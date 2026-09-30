@@ -678,14 +678,14 @@ const LE_CHIPS = [
   { Icon: Users,         label: HOME_VISITOR_COPY.sections[1].items?.[3] ?? "", grad:"linear-gradient(135deg,#7C4DFF 0%,#A06BFF 100%)", glow:"rgba(124,77,255,.28)", side:"right" as const, bob:"le-bob-b 6.0s ease-in-out 0.2s infinite" },
 ];
 const LE_FILMSTRIP = [
-  "rainbow-preschool-classroom-activity-01.webp",
-  "rainbow-preschool-classroom-learning-01.webp",
-  "rainbow-preschool-activity-room-01.webp",
-  "rainbow-preschool-learning-through-play-01.webp",
-  "rainbow-preschool-classroom-activity-02.webp",
-  "rainbow-preschool-classroom-learning-02.webp",
-  "rainbow-preschool-activity-room-02.webp",
-  "rainbow-preschool-learning-through-play-02.webp",
+  "/images/branches/play-school-thane-activity-room.webp",
+  "/images/branches/preschool-thane-classroom.webp",
+  "/images/gallery/rainbow-preschool-activity-room-01.webp",
+  "/images/branches/playgroup-thane-classroom-play.webp",
+  "/images/gallery/rainbow-preschool-classroom-activity-02.webp",
+  "/images/gallery/rainbow-preschool-classroom-learning-02.webp",
+  "/images/gallery/rainbow-preschool-activity-room-02.webp",
+  "/images/gallery/rainbow-preschool-learning-through-play-02.webp",
 ];
 
 function LearningEnvironmentSection() {
@@ -975,7 +975,7 @@ function LearningEnvironmentSection() {
             {[...LE_FILMSTRIP, ...LE_FILMSTRIP].map((src, i) => (
               <div key={i} style={{ flexShrink:0, width:240, height:152, borderRadius:16, overflow:"hidden",
                 boxShadow:"0 4px 18px rgba(33,27,46,.10)" }}>
-                <img src={`/images/gallery/${src}`}
+                <img src={src}
                   alt="Rainbow Preschool classroom moment"
                   loading="lazy"
                   style={{ display:"block", width:"100%", height:"100%", objectFit:"cover" }}

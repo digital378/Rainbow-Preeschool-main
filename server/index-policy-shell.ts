@@ -10,7 +10,7 @@ import { PROGRAMMES_COPY, PROGRAMMES_FAQS } from "@shared/programmes-page-conten
 import { CONTACT_PAGE_COPY } from "@shared/contact-page-copy";
 import { TOP_PRESCHOOLS_COPY } from "@shared/top-preschools-thane-content";
 import { ABOUT_PAGE_COPY } from "@shared/about-page-content";
-import { anandNagarPage } from "@shared/centre-data";
+import { anandNagarPage, kalwaPage } from "@shared/centre-data";
 
 /**
  * Keep the browser's initial document metadata aligned with bot SSR and the
@@ -20,6 +20,10 @@ import { anandNagarPage } from "@shared/centre-data";
  */
 export function injectIndexPolicyShell(path: string, html: string): string {
   if (path === "/") return html;
+  const isBranchPage = path === "/preschool-in-anand-nagar-thane" || path === "/preschool-in-kalwa-thane";
+  const branchImageAlt = path === "/preschool-in-anand-nagar-thane"
+    ? "Two children playing with blocks at Rainbow Preschool"
+    : "Rainbow Preschool children learning together at a classroom table";
   const seo = getPageSEO(path);
   if (!seo && path !== "/terms" && path !== "/privacy" && !shouldNoIndex(path)) return html;
 
@@ -31,7 +35,7 @@ export function injectIndexPolicyShell(path: string, html: string): string {
     .replace(/<meta name="robots" content="[^"]*"\s*\/?>/i, `<meta name="robots" content="${robots}" />`)
     .replace(/<link rel="canonical" href="[^"]*"\s*\/?>/i, `<link rel="canonical" href="${escape(canonical)}" />`);
   if (!seo) return result;
-  if (path === "/nursery" || path === "/kindergarten" || path === "/programmes" || path === "/contact" || path === "/top-preschools-in-thane" || path === "/about" || path === "/preschool-in-anand-nagar-thane") result = result.replace('<html lang="en">', '<html lang="en-IN">');
+  if (path === "/nursery" || path === "/kindergarten" || path === "/programmes" || path === "/contact" || path === "/top-preschools-in-thane" || path === "/about" || isBranchPage) result = result.replace('<html lang="en">', '<html lang="en-IN">');
 
   const updateMeta = (kind: "name" | "property", key: string, value: string) => {
     const tag = `<meta ${kind}="${key}" content="${escape(value)}" />`;
@@ -48,13 +52,13 @@ export function injectIndexPolicyShell(path: string, html: string): string {
   updateMeta("property", "og:title", seo.title);
   updateMeta("property", "og:description", seo.description);
   updateMeta("property", "og:image", seo.ogImage ?? `${PREFERRED_DOMAIN}/og-image.jpg`);
-  if (path === "/nursery" || path === "/kindergarten" || path === "/programmes" || path === "/contact" || path === "/top-preschools-in-thane" || path === "/about" || path === "/preschool-in-anand-nagar-thane") {
+  if (path === "/nursery" || path === "/kindergarten" || path === "/programmes" || path === "/contact" || path === "/top-preschools-in-thane" || path === "/about" || isBranchPage) {
     updateMeta("property", "og:locale", "en_IN");
-    updateMeta("property", "og:image:alt", path === "/preschool-in-anand-nagar-thane" ? "Two children playing with blocks at Rainbow Preschool" : path === "/about" ? ABOUT_PAGE_COPY.ogImageAlt : path === "/top-preschools-in-thane" ? TOP_PRESCHOOLS_COPY.ogImageAlt : path === "/contact" ? CONTACT_PAGE_COPY.ogImageAlt : path === "/programmes" ? PROGRAMMES_COPY.ogImageAlt : path === "/kindergarten" ? KINDERGARTEN_COPY.ogImageAlt : NURSERY_COPY.ogImageAlt);
+    updateMeta("property", "og:image:alt", isBranchPage ? branchImageAlt : path === "/about" ? ABOUT_PAGE_COPY.ogImageAlt : path === "/top-preschools-in-thane" ? TOP_PRESCHOOLS_COPY.ogImageAlt : path === "/contact" ? CONTACT_PAGE_COPY.ogImageAlt : path === "/programmes" ? PROGRAMMES_COPY.ogImageAlt : path === "/kindergarten" ? KINDERGARTEN_COPY.ogImageAlt : NURSERY_COPY.ogImageAlt);
     updateMeta("property", "og:image:type", "image/jpeg");
     updateMeta("property", "og:image:width", "1200");
     updateMeta("property", "og:image:height", "630");
-    updateMeta("name", "twitter:image:alt", path === "/preschool-in-anand-nagar-thane" ? "Two children playing with blocks at Rainbow Preschool" : path === "/about" ? ABOUT_PAGE_COPY.ogImageAlt : path === "/top-preschools-in-thane" ? TOP_PRESCHOOLS_COPY.ogImageAlt : path === "/contact" ? CONTACT_PAGE_COPY.ogImageAlt : path === "/programmes" ? PROGRAMMES_COPY.ogImageAlt : path === "/kindergarten" ? KINDERGARTEN_COPY.ogImageAlt : NURSERY_COPY.ogImageAlt);
+    updateMeta("name", "twitter:image:alt", isBranchPage ? branchImageAlt : path === "/about" ? ABOUT_PAGE_COPY.ogImageAlt : path === "/top-preschools-in-thane" ? TOP_PRESCHOOLS_COPY.ogImageAlt : path === "/contact" ? CONTACT_PAGE_COPY.ogImageAlt : path === "/programmes" ? PROGRAMMES_COPY.ogImageAlt : path === "/kindergarten" ? KINDERGARTEN_COPY.ogImageAlt : NURSERY_COPY.ogImageAlt);
   }
   updateMeta("name", "twitter:url", canonical);
   updateMeta("name", "twitter:title", seo.title);
@@ -82,18 +86,20 @@ export function injectIndexPolicyShell(path: string, html: string): string {
     </style></head>`);
     result = result.replace('<div id="root"></div>', `<div id="about-initial"><h1 id="about-initial-h1">${escape(ABOUT_PAGE_COPY.heroHeading)}</h1></div><div id="root"></div>`);
   }
-  if (path === "/preschool-in-anand-nagar-thane") {
+  if (isBranchPage) {
     // Keep the text-led first paint stationary while React mounts.
+    const initialId = path === "/preschool-in-anand-nagar-thane" ? "anand-initial" : "kalwa-initial";
+    const branchCopy = path === "/preschool-in-anand-nagar-thane" ? anandNagarPage : kalwaPage;
     result = result.replace(/<link rel="preload" as="font" type="font\/woff2" crossorigin href="https:\/\/fonts\.gstatic\.com\/[^"]+">/, "");
     result = result.replace("</head>", `<style>
-      #anand-initial{position:absolute;z-index:2;top:12.1875rem;left:1rem;width:calc(100vw - 2rem);pointer-events:none}
-      #anand-initial h1{font-family:Inter,"Open Sans",sans-serif;font-size:1.875rem;line-height:2.25rem;font-weight:700;letter-spacing:normal;margin:0 0 1.5rem}
-      #anand-initial p{font-family:Inter,sans-serif;font-size:1.125rem;line-height:1.75rem;font-weight:600;margin:0;color:#334155}
-      @media(min-width:640px){#anand-initial{top:12.1875rem;left:1.5rem;width:calc(100vw - 3rem)}}
-      @media(min-width:768px){#anand-initial{top:14.625rem}#anand-initial h1{font-size:2.25rem;line-height:2.5rem}}
-      @media(min-width:1024px){#anand-initial{top:14.6875rem;left:max(2rem,calc((100vw - 80rem)/2 + 2rem));width:calc((min(100vw,80rem) - 7rem)/2)}#anand-initial h1{font-size:3rem;line-height:1}}
+      #${initialId}{position:absolute;z-index:2;top:12.1875rem;left:1rem;width:calc(100vw - 2rem);pointer-events:none}
+      #${initialId} h1{font-family:Inter,"Open Sans",sans-serif;font-size:1.875rem;line-height:2.25rem;font-weight:700;letter-spacing:normal;margin:0 0 1.5rem}
+      #${initialId} p{font-family:Inter,sans-serif;font-size:1.125rem;line-height:1.75rem;font-weight:600;margin:0;color:#334155}
+      @media(min-width:640px){#${initialId}{top:12.1875rem;left:1.5rem;width:calc(100vw - 3rem)}}
+      @media(min-width:768px){#${initialId}{top:14.625rem}#${initialId} h1{font-size:2.25rem;line-height:2.5rem}}
+      @media(min-width:1024px){#${initialId}{top:14.6875rem;left:max(2rem,calc((100vw - 80rem)/2 + 2rem));width:calc((min(100vw,80rem) - 7rem)/2)}#${initialId} h1{font-size:3rem;line-height:1}}
     </style></head>`);
-    result = result.replace('<div id="root"></div>', `<div id="anand-initial"><h1 id="anand-initial-h1">${escape(seo.h1 ?? "Preschool in Anand Nagar, Thane")}</h1><p>${escape(anandNagarPage.heroSubline)}</p></div><div id="root"></div>`);
+    result = result.replace('<div id="root"></div>', `<div id="${initialId}"><h1 id="${initialId}-h1">${escape(seo.h1 ?? "")}</h1><p>${escape(branchCopy.heroSubline)}</p></div><div id="root"></div>`);
   }
   if (path === "/playgroup" || path === "/nursery" || path === "/kindergarten") {
     // Keep the first-paint H1 as the LCP candidate after React mounts.

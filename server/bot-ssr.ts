@@ -274,6 +274,7 @@ function renderImageHtml(image: {
 }
 
 function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
+  const isEnhancedBranch = requestUrl === "/preschool-in-anand-nagar-thane" || requestUrl === "/preschool-in-kalwa-thane";
   // These standalone pages end at their contact CTA in the visitor app.
   // Keep the crawler HTML aligned rather than appending the shared footer.
   const endsAtContact = requestUrl === "/play-school-near-ghodbunder-road"
@@ -314,7 +315,7 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
     if (Array.isArray(t)) return t.some((v) => v === "Article" || v === "BlogPosting");
     return false;
   });
-  if (seo.lastModified && !seo.homepage && !seo.suppressArticleSchema && requestUrl !== "/preschool-in-anand-nagar-thane" && !hasExistingArticle) {
+  if (seo.lastModified && !seo.homepage && !seo.suppressArticleSchema && !isEnhancedBranch && !hasExistingArticle) {
     // E-E-A-T: emit a rich Article with reviewedBy for pages that don't already
     // have their own Article/BlogPosting in structuredData. Blog posts are excluded
     // here because their ssr-pages.ts entry already includes BlogPosting + reviewedBy.
@@ -480,7 +481,7 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
       </article></a>`).join("\n")}</div></section>`
     : "";
   const reviewerCreditHtml = seo.lastModified
-    ? requestUrl === "/preschool-in-anand-nagar-thane" || requestUrl === "/top-preschools-in-thane" || requestUrl === "/about"
+    ? isEnhancedBranch || requestUrl === "/top-preschools-in-thane" || requestUrl === "/about"
       ? `<p style="font-size:0.875rem;color:#666;margin:24px 0">Last updated: <time datetime="${escapeHtml(seo.lastModified)}">${escapeHtml(seo.lastModifiedDisplay || seo.lastModified)}</time></p>`
       : `<p style="font-size:0.875rem;color:#666;margin:8px 0 16px"><strong>Reviewed by Rainbow Preschool Curriculum Team</strong>${requestUrl === "/playgroup" || requestUrl === "/nursery" ? " — Curriculum Team, Rainbow Preschool International" : ""} — Last updated: <time datetime="${escapeHtml(seo.lastModified)}">${escapeHtml(seo.lastModifiedDisplay || seo.lastModified)}</time>${requestUrl === "/playgroup" || requestUrl === "/nursery" ? " — 4.9 from 487 Google reviews" : ""}</p>`
     : "";
@@ -494,7 +495,7 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
     : requestUrl === "/contact" || requestUrl === "/top-preschools-in-thane" ? "" : `<a href="${BASE_URL}/contact" class="cta">Enquire Now — Call 82915 68972</a>`;
 
   return `<!DOCTYPE html>
-  <html lang="${requestUrl === "/nursery" || requestUrl === "/kindergarten" || requestUrl === "/programmes" || requestUrl === "/contact" || requestUrl === "/top-preschools-in-thane" || requestUrl === "/about" || requestUrl === "/preschool-in-anand-nagar-thane" ? "en-IN" : "en"}">
+  <html lang="${requestUrl === "/nursery" || requestUrl === "/kindergarten" || requestUrl === "/programmes" || requestUrl === "/contact" || requestUrl === "/top-preschools-in-thane" || requestUrl === "/about" || isEnhancedBranch ? "en-IN" : "en"}">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5" />
@@ -511,7 +512,7 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
     <meta property="og:description" content="${escapeHtml(seo.description)}" />
     <meta property="og:image" content="${ogImage}" />
      <meta property="og:image:alt" content="${escapeHtml(seo.ogImageAlt || "Three preschoolers in red uniforms playing on a bright yellow background with colorful toy blocks")}" />
-     ${requestUrl === "/nursery" || requestUrl === "/kindergarten" || requestUrl === "/programmes" || requestUrl === "/contact" || requestUrl === "/top-preschools-in-thane" || requestUrl === "/about" || requestUrl === "/preschool-in-anand-nagar-thane" ? `<meta property="og:image:type" content="image/jpeg" />
+     ${requestUrl === "/nursery" || requestUrl === "/kindergarten" || requestUrl === "/programmes" || requestUrl === "/contact" || requestUrl === "/top-preschools-in-thane" || requestUrl === "/about" || isEnhancedBranch ? `<meta property="og:image:type" content="image/jpeg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />` : ""}
     <meta property="og:site_name" content="Rainbow Preschool International" />
@@ -577,11 +578,11 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
       ${seo.heroSubheading ? `<h3>${escapeHtml(seo.heroSubheading)}</h3>` : ""}
       ${(seo.images || []).map(renderImageHtml).join("\n")}
       ${contentHtml}
-      ${seo.reviewerAfterContent && requestUrl !== "/preschool-in-anand-nagar-thane" ? reviewerCreditHtml : ""}
+      ${seo.reviewerAfterContent && !isEnhancedBranch ? reviewerCreditHtml : ""}
       ${blogControlsHtml}
       ${blogCardsHtml}
       ${finalCallToActionHtml}
-      ${seo.reviewerAfterContent && requestUrl === "/preschool-in-anand-nagar-thane" ? reviewerCreditHtml : ""}
+      ${seo.reviewerAfterContent && isEnhancedBranch ? reviewerCreditHtml : ""}
       ${endsAtContact ? "" : `<div class="network">
         <p><strong>Our Network:</strong> <a href="https://rainbowinternationalschool.in" rel="noopener">Rainbow International School</a> — CBSE-affiliated K–12 school in Thane West, Nursery to Class 12</p>
       </div>`}

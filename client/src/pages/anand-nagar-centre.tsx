@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { Link } from "wouter";
 import { Blocks, BookOpen, ChevronRight, ClipboardList, GraduationCap, MapPin, MessageCircle, Music2, Navigation, Phone, ShieldCheck, Sparkles, SprayCan, Sun, Users, Video } from "lucide-react";
 import { SEO, createBreadcrumbSchema } from "@/components/seo";
@@ -10,45 +10,52 @@ import { StickyCTABar } from "@/components/landing/sticky-cta-bar";
 import { LocalCallbackForm } from "@/components/local-callback-form";
 import { HomeRainbowTheatre } from "@/components/home/home-rainbow-theatre";
 import { BranchQuickFacts, BranchAreas, BranchAdmissions, BranchNearby } from "@/components/centre/branch-sections";
-import { ADMISSIONS_PHONE_LABEL, ADMISSIONS_PHONE_NUMBER, anandNagarPage as copy, getCentreBySlug, preschoolFAQs, preschoolPageSEO, whyParentsChoose } from "@shared/centre-data";
+import { ADMISSIONS_PHONE_LABEL, ADMISSIONS_PHONE_NUMBER, anandNagarPage, kalwaPage, getCentreBySlug, preschoolFAQs, preschoolPageSEO, whyParentsChoose } from "@shared/centre-data";
+import { branchPhotos } from "@shared/branch-photos";
 import { trackCallClick, trackWhatsAppClick, trackDirectionsClick } from "@/lib/analytics";
 
-const centre = getCentreBySlug("anand-nagar")!;
-const seo = preschoolPageSEO["anand-nagar"];
-const faqs = preschoolFAQs["anand-nagar"];
-const why = whyParentsChoose["anand-nagar"];
 const programmeIcons = [Blocks, Sparkles, GraduationCap];
 const whyIcons = [MapPin, Users, Video, SprayCan, ClipboardList, Music2];
 const BranchFaq = lazy(() => import("@/components/centre/branch-faq").then(({ BranchFaq }) => ({ default: BranchFaq })));
 const base = "https://www.rainbowpreschools.com";
-const url = `${base}${seo.canonicalPath}`;
-const pageSchemas = [
-  { "@context": "https://schema.org", "@type": "WebPage", "@id": `${url}#webpage`, url, name: seo.title, description: seo.description, dateModified: copy.publishDate },
-  {
-    "@context": "https://schema.org", "@type": "Preschool", "@id": `${url}#centre`,
-    name: "Rainbow Preschool International, Anand Nagar Centre", url,
-    address: { "@type": "PostalAddress", streetAddress: centre.address, addressLocality: "Thane", addressRegion: "Maharashtra", addressCountry: "IN" },
-    geo: { "@type": "GeoCoordinates", latitude: Number(centre.latitude), longitude: Number(centre.longitude) },
-    telephone: "+91-9833781550", hasMap: centre.googleMapsDirectionsUrl,
-    parentOrganization: { "@id": `${base}/#organization` },
-    areaServed: centre.areasServed?.map((name) => ({ "@type": "Place", name })),
-  },
-  createBreadcrumbSchema([
-    { name: "Home", url: "/" },
-    { name: "Centres", url: "/play-school-near-me" },
-    { name: "Anand Nagar", url: seo.canonicalPath },
-  ]),
-];
+type BranchSlug = "anand-nagar" | "kalwa";
 
-export function AnandNagarCentrePage() {
-  const initialHeading = useRef(typeof document !== "undefined" && !!document.getElementById("anand-initial-h1"));
+export function BranchCentrePage({ slug }: { slug: BranchSlug }) {
+  const centre = getCentreBySlug(slug)!;
+  const seo = preschoolPageSEO[slug];
+  const faqs = preschoolFAQs[slug];
+  const why = whyParentsChoose[slug];
+  const copy = slug === "anand-nagar" ? anandNagarPage : kalwaPage;
+  const photos = branchPhotos[slug];
+  const pageSchemas = useMemo(() => {
+    const url = `${base}${seo.canonicalPath}`;
+    return [
+      { "@context": "https://schema.org", "@type": "WebPage", "@id": `${url}#webpage`, url, name: seo.title, description: seo.description, dateModified: copy.publishDate },
+      {
+        "@context": "https://schema.org", "@type": "Preschool", "@id": `${url}#centre`,
+        name: `Rainbow Preschool International, ${centre.localityName} Centre`, url,
+        address: { "@type": "PostalAddress", streetAddress: centre.address, addressLocality: "Thane", addressRegion: "Maharashtra", addressCountry: "IN" },
+        geo: { "@type": "GeoCoordinates", latitude: Number(centre.latitude), longitude: Number(centre.longitude) },
+        telephone: `+91-${centre.phoneNumbers[0].replace(/\D/g, "")}`, hasMap: centre.googleMapsDirectionsUrl,
+        parentOrganization: { "@id": `${base}/#organization` },
+        areaServed: centre.areasServed?.map((name) => ({ "@type": "Place", name })),
+      },
+      createBreadcrumbSchema([
+        { name: "Home", url: "/" },
+        { name: "Centres", url: "/play-school-near-me" },
+        { name: centre.localityName, url: seo.canonicalPath },
+      ]),
+    ];
+  }, [centre, seo, copy.publishDate]);
+  const initialId = slug === "anand-nagar" ? "anand-initial" : "kalwa-initial";
+  const initialHeading = useRef(typeof document !== "undefined" && !!document.getElementById(`${initialId}-h1`));
   const faqRef = useRef<HTMLElement>(null);
   const [faqReady, setFaqReady] = useState(false);
   useLayoutEffect(() => {
     if (!initialHeading.current) return;
-    document.getElementById("anand-initial")?.classList.add("anand-hydrated");
-    return () => document.getElementById("anand-initial")?.remove();
-  }, []);
+    document.getElementById(initialId)?.classList.add("anand-hydrated");
+    return () => document.getElementById(initialId)?.remove();
+  }, [initialId]);
   useEffect(() => {
     const section = faqRef.current;
     if (!section) return;
@@ -72,7 +79,8 @@ export function AnandNagarCentrePage() {
   return (
     <div className="min-h-screen">
       <SEO title={seo.title} description={seo.description} canonical={seo.canonicalPath} lang="en-IN"
-        ogImage="/images/og/anand-nagar-1200x630.jpg" ogImageAlt="Two children playing with blocks at Rainbow Preschool"
+        ogImage={slug === "anand-nagar" ? "/images/og/anand-nagar-1200x630.jpg" : "/images/og/kalwa-1200x630.jpg"}
+        ogImageAlt={slug === "anand-nagar" ? "Two children playing with blocks at Rainbow Preschool" : "Rainbow Preschool children learning together at a classroom table"}
         ogImageType="image/jpeg" ogImageWidth={1200} ogImageHeight={630}
         structuredData={initialHeading.current ? undefined : pageSchemas} />
       <MinimalHeader whatsappNumber={centre.whatsappNumber} phoneNumber={ADMISSIONS_PHONE_NUMBER} callLabel={ADMISSIONS_PHONE_LABEL} locality={centre.localityName}
@@ -82,14 +90,14 @@ export function AnandNagarCentrePage() {
           <ol className="max-w-7xl mx-auto flex items-center gap-2 text-sm text-muted-foreground flex-wrap">
             <li><Link href="/" className="hover:text-primary">Home</Link></li><ChevronRight className="h-4 w-4" aria-hidden="true" />
             <li><Link href="/play-school-near-me" className="hover:text-primary">Centres</Link></li><ChevronRight className="h-4 w-4" aria-hidden="true" />
-            <li className="text-foreground font-semibold"><Link href={seo.canonicalPath} aria-current="page">Anand Nagar</Link></li>
+            <li className="text-foreground font-semibold"><Link href={seo.canonicalPath} aria-current="page">{centre.localityName}</Link></li>
           </ol>
         </nav>
 
         <section className="py-10 md:py-16 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-8 lg:gap-x-12 lg:gap-y-6 items-start">
             <div className="min-w-0 lg:col-start-1 lg:row-start-1">
-              <Badge className="mb-4"><MapPin className="w-3 h-3 mr-1" />Anand Nagar, Thane</Badge>
+              <Badge className="mb-4"><MapPin className="w-3 h-3 mr-1" />{centre.localityName}, Thane</Badge>
               {initialHeading.current
                 ? <div aria-hidden="true" className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6" style={{ visibility: "hidden" }}>{seo.h1}</div>
                 : <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">{seo.h1}</h1>}
@@ -101,12 +109,12 @@ export function AnandNagarCentrePage() {
                 <a href={centre.googleMapsDirectionsUrl} target="_blank" rel="noopener noreferrer" onClick={directions}><Button size="lg" variant="outline"><Navigation className="w-4 h-4 mr-2" />Get directions</Button></a>
               </div>
             </div>
-            <LocalCallbackForm locality={centre.localityName} centre={centre.name} sourcePage="preschool-anand-nagar"
+            <LocalCallbackForm locality={centre.localityName} centre={centre.name} sourcePage={`preschool-${slug}`}
               title="Book a Visit or Callback" subtitle="Our admissions team calls back within 24 hours."
               className="shadow-lg lg:col-start-2 lg:row-start-1 lg:row-span-2 lg:self-stretch lg:flex lg:flex-col lg:justify-center" />
             <div className="lg:col-start-1 lg:row-start-2 rounded-2xl overflow-hidden aspect-[16/10]">
-              <img src="/images/optimized/teacher-teaching-children-classroom.webp" alt="Rainbow Preschool teacher leading a classroom lesson with children"
-                width={1197} height={800} fetchPriority="high" className="w-full h-full object-cover" />
+              <img src={photos.hero.src} alt={photos.hero.alt}
+                width={slug === "kalwa" ? 900 : 1197} height={slug === "kalwa" ? 600 : 800} {...{ fetchpriority: "high" }} className="w-full h-full object-cover" />
             </div>
           </div>
         </section>
@@ -120,8 +128,8 @@ export function AnandNagarCentrePage() {
               {copy.aboutParagraphs.map((paragraph) => <p key={paragraph} className="text-slate-700 text-base md:text-[17px] font-medium mb-4 leading-relaxed">{paragraph}</p>)}
             </div>
             <div className="rounded-2xl overflow-hidden aspect-[3/2]">
-              <img src="/images/optimized/children-learning-rainbow-preschool.webp" alt="Children joining a classroom lesson at Rainbow Preschool"
-                loading="lazy" width={1197} height={800} className="w-full h-full object-cover" />
+              <img src={photos.about.src} alt={photos.about.alt}
+                loading="lazy" width={slug === "kalwa" ? 900 : 1197} height={slug === "kalwa" ? 678 : 800} className="w-full h-full object-cover" />
             </div>
           </div>
         </section>
@@ -143,7 +151,7 @@ export function AnandNagarCentrePage() {
                 </Link>;
               })}
             </div>
-            <div className="grid md:grid-cols-2 gap-5 mt-5">
+            <div className={`grid gap-5 mt-5 ${copy.programmes.length === 4 ? "grid-cols-1" : "md:grid-cols-2"}`}>
               {copy.programmes.slice(3).map((item, index) => {
                 const Icon = index === 0 ? BookOpen : Sun;
                 const card = <Card className="h-full border-primary/10"><CardContent className="p-5 flex gap-4 items-start">
@@ -163,8 +171,9 @@ export function AnandNagarCentrePage() {
         <section className="py-10 md:py-16 bg-[#fff9f2]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center">{copy.galleryHeading}</h2>
+            {slug === "kalwa" && <p className="text-center text-sm text-slate-600 mb-6">Photographs from Rainbow centres in Thane; individual photo locations have not been verified.</p>}
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-              {copy.gallery.map((image) => <div key={image.src} className="aspect-square rounded-xl overflow-hidden">
+              {photos.gallery.map((image) => <div key={image.src} className="aspect-square rounded-xl overflow-hidden">
                 <img src={image.src} alt={image.alt} loading="lazy" decoding="async"
                   width="400" height="400" className="w-full h-full object-cover hover:scale-105 transition-transform duration-300" />
               </div>)}
@@ -202,14 +211,14 @@ export function AnandNagarCentrePage() {
           </div>
         </section>
 
-        <BranchNearby content={copy} nearest={{ name: "Kasarvadavali", href: "/preschool-in-kasarvadavali-thane" }} />
+        <BranchNearby content={copy} nearest={slug === "anand-nagar" ? { name: "Kasarvadavali", href: "/preschool-in-kasarvadavali-thane" } : { name: "Hariniwas", href: "/preschool-in-hariniwas-thane" }} />
         <div className="max-w-4xl mx-auto px-4 py-8 text-sm text-muted-foreground">Last updated: <time dateTime={copy.publishDate}>{copy.publishDateDisplay}</time></div>
 
         <section className="relative overflow-hidden py-10 md:py-16 bg-gradient-to-r from-primary via-accent to-secondary text-white">
           <div className="absolute inset-0 bg-black/40" />
           <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-2xl md:text-3xl font-bold mb-4">{copy.finalHeading}</h2>
-            <p className="text-lg mb-8">Call or WhatsApp us to arrange a visit to the Anand Nagar centre.</p>
+            <p className="text-lg mb-8">Call or WhatsApp us to arrange a visit to the {centre.localityName} centre.</p>
             <div className="flex flex-wrap justify-center gap-4">
               <a href={`tel:${ADMISSIONS_PHONE_NUMBER}`} onClick={call} className="max-w-full"><Button size="lg" className="bg-primary text-white max-w-full h-auto min-h-11 whitespace-normal leading-tight"><Phone className="w-4 h-4 mr-2" />{ADMISSIONS_PHONE_LABEL}</Button></a>
               <a href={`https://wa.me/91${centre.whatsappNumber}`} target="_blank" rel="noopener noreferrer" onClick={whatsapp}><Button size="lg" variant="outline" className="bg-white/10 border-white text-white hover:bg-white/20"><MessageCircle className="w-4 h-4 mr-2" />WhatsApp Us</Button></a>
@@ -221,4 +230,8 @@ export function AnandNagarCentrePage() {
         locality={centre.localityName} onCallClick={call} onWhatsAppClick={whatsapp} twoActionsOnly />
     </div>
   );
+}
+
+export function AnandNagarCentrePage() {
+  return <BranchCentrePage slug="anand-nagar" />;
 }

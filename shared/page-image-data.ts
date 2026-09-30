@@ -16,10 +16,10 @@ export const HOME_HERO_IMAGE = {
 // campus photo in desktop/mobile layouts and loops the filmstrip twice; the
 // bot copy emits each tuple only once.
 export const HOME_FILMSTRIP_IMAGES = [
-  { src: "/images/gallery/rainbow-preschool-classroom-activity-01.webp", alt: "Rainbow Preschool classroom moment" },
-  { src: "/images/gallery/rainbow-preschool-classroom-learning-01.webp", alt: "Rainbow Preschool classroom moment" },
+  { src: "/images/branches/play-school-thane-activity-room.webp", alt: "Rainbow Preschool classroom moment" },
+  { src: "/images/branches/preschool-thane-classroom.webp", alt: "Rainbow Preschool classroom moment" },
   { src: "/images/gallery/rainbow-preschool-activity-room-01.webp", alt: "Rainbow Preschool classroom moment" },
-  { src: "/images/gallery/rainbow-preschool-learning-through-play-01.webp", alt: "Rainbow Preschool classroom moment" },
+  { src: "/images/branches/playgroup-thane-classroom-play.webp", alt: "Rainbow Preschool classroom moment" },
   { src: "/images/gallery/rainbow-preschool-classroom-activity-02.webp", alt: "Rainbow Preschool classroom moment" },
   { src: "/images/gallery/rainbow-preschool-classroom-learning-02.webp", alt: "Rainbow Preschool classroom moment" },
   { src: "/images/gallery/rainbow-preschool-activity-room-02.webp", alt: "Rainbow Preschool classroom moment" },

@@ -9,6 +9,7 @@
 - [Canonical noindex list](noindex-canonical-list.md) — NOINDEX_SLUGS in shared/seo-config.ts is the only noindex list; ssr-pages derives from it; robots sync guard enforces parity.
 - [Bot-SSR blocks standalone blog pages](bot-ssr-standalone-passthrough.md) — check-sitemap-200 uses Googlebot UA; bot-ssr intercepts before registerRoutes; pages not in ssr-pages.ts get hard 404. Fix: passthrough via STANDALONE_BLOG_SLUGS.
 - [Gallery image selection](gallery-image-selection.md) — source photos from gallery-config.ts (curated captions), not /images/optimized (has duplicates, rotations, wrong-age classrooms).
+- [Branch photo provenance](branch-photo-provenance.md) — real Rainbow photos are not necessarily from the named centre; use Thane labeling unless origin is verified.
 - [Static ad landing pages](static-ad-pages.md) — ad pages are static HTML in public/ + dist/ad-assets build copy, not React; assets must exist under client/public (Vite root) or they 404 in prod.
 - [Dense-file edit pitfalls](dense-file-edit-pitfalls.md) — never mix Edit + sed line-range deletes on one file in a batch; demand grep-verifiable evidence for subagent fix claims; sample scrollY over time when testing smooth scroll.
 - [Tester container-width false positives](tester-scrollwidth-false-positive.md) — a tester checking "is content narrower/centered" via document.body.scrollWidth measures page overflow, not the container; ask it to getBoundingClientRect() the actual container div instead.

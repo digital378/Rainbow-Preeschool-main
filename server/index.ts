@@ -226,6 +226,25 @@ app.get(["/raksha-bandhan-redesign", "/raksha-bandhan-redesign/"], (_req, res) =
   res.redirect(308, "/blog/raksha-bandhan-2026-for-kids");
 });
 
+// Retired Anand Nagar image URLs must redirect before express.static can serve
+// the legacy files from public/.
+const retiredAnandNagarPhotoUrls: Record<string, string> = {
+  "/images/optimized/teacher-teaching-children-classroom.webp": "/images/branches/play-school-thane-classroom-teacher.webp",
+  "/images/optimized/children-learning-rainbow-preschool.webp": "/images/branches/preschool-thane-classroom-learning.webp",
+  "/images/gallery/rainbow-preschool-classroom-learning-01.webp": "/images/branches/preschool-thane-classroom.webp",
+  "/images/gallery/rainbow-preschool-classroom-activity-01.webp": "/images/branches/play-school-thane-activity-room.webp",
+  "/images/gallery/rainbow-preschool-learning-through-play-01.webp": "/images/branches/playgroup-thane-classroom-play.webp",
+  "/images/gallery/rainbow-preschool-activity-book-character-day.webp": "/images/branches/preschool-thane-book-character-day.webp",
+  "/images/gallery/rainbow-preschool-sports-day-event-01.webp": "/images/branches/preschool-thane-sports-day.webp",
+  "/images/gallery/rainbow-preschool-happy-times-02.webp": "/images/branches/preschool-thane-daycare-room.webp",
+};
+app.use((req, res, next) => {
+  if (req.method !== "GET" && req.method !== "HEAD") return next();
+  const destination = retiredAnandNagarPhotoUrls[req.path.toLowerCase()];
+  if (destination) return res.redirect(301, destination);
+  next();
+});
+
 // Serve static files from public folder with appropriate caching headers
 app.use(express.static(path.join(process.cwd(), "public"), {
   etag: true,

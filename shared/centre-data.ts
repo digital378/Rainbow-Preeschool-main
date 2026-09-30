@@ -1,5 +1,6 @@
 // Centralized Centre Data for Rainbow Preschool International
 // Single source of truth for all centre information across the website
+import { branchPhotos } from "./branch-photos";
 
 export interface CentreData {
   id: string;
@@ -33,10 +34,9 @@ function centreMapEmbed(latitude: string, longitude: string): string {
   return `https://www.google.com/maps?q=${latitude},${longitude}&z=16&output=embed`;
 }
 
-// Default gallery images for all centres
-// Note: These must be different from programme card images to avoid duplicates on same page
+// Legacy generic centre galleries; migrated branch pages use their own registered photos.
 export const defaultCentreGalleryImages = [
-  "/images/optimized/children-learning-rainbow-preschool.webp",
+  "/images/optimized/DSC00497.webp",
   "/images/optimized/child-stacking-rings-playgroup.webp",
   "/images/optimized/DSC00010.webp",
   "/images/optimized/DSC00011.webp",
@@ -73,14 +73,7 @@ export const anandNagarPage = {
   theatreHeading: "Life at Rainbow",
   theatreSubline: "Classroom moments, celebrations and discoveries from our centres.",
   galleryHeading: "Our Learning Spaces in Anand Nagar",
-  gallery: [
-    { src: "/images/gallery/rainbow-preschool-classroom-learning-01.webp", alt: "Bright Rainbow Preschool classroom with blue tables, child-sized chairs and whiteboard" },
-    { src: "/images/gallery/rainbow-preschool-classroom-activity-01.webp", alt: "Colourful Rainbow Preschool activity room with toy storage and birthday display" },
-    { src: "/images/gallery/rainbow-preschool-learning-through-play-01.webp", alt: "Two Rainbow Preschool children smiling during a classroom learning activity" },
-    { src: "/images/gallery/rainbow-preschool-activity-book-character-day.webp", alt: "Rainbow Preschool children dressed as book characters for Book Character Day" },
-    { src: "/images/gallery/rainbow-preschool-sports-day-event-01.webp", alt: "Rainbow Preschool children taking part in an outdoor Sports Day activity" },
-    { src: "/images/gallery/rainbow-preschool-happy-times-02.webp", alt: "Colourful Happy Times daycare activity room with child-sized tables and chairs" },
-  ],
+  gallery: branchPhotos["anand-nagar"].gallery,
   whyHeading: "Why Parents Choose Our Anand Nagar Centre",
   areasHeading: "Preschool Near Kavesar, Vijay Garden and Anand Nagar",
   nearbyAreas: [
@@ -103,6 +96,41 @@ export const anandNagarPage = {
   nearbyHeading: "Nearby Rainbow Centres",
   nearbyLinkText: "Kasarvadavali (about 0.8 km)",
   finalHeading: "Visit Our Anand Nagar Centre",
+} as const;
+
+// These pages share the same branch layout but never share locality claims.
+export const kalwaPage = {
+  ...anandNagarPage,
+  heroSubline: "Playgroup, Nursery and KG near Sayba Hall, Manisha Nagar, Kalwa",
+  quickFacts: [
+    { icon: "baby", label: "Ages", value: "1.5–5.5 years" },
+    { icon: "clock", label: "Batches", value: "8:30–11:30 AM · 12:30–3:30 PM, Mon–Fri" },
+    { icon: "book", label: "Classes", value: "Playgroup to Sr. KG" },
+    { icon: "graduation", label: "Primary", value: "Up to Grade 4" },
+    { icon: "bus", label: "Transport", value: "GPS-enabled" },
+  ],
+  aboutHeading: "About Our Kalwa Centre",
+  aboutParagraphs: [
+    "Our Kalwa centre is in Manisha Nagar, near Sayba Hall and about 700 m from Kalwa station. Families from Manisha Nagar, Shastri Nagar, Kalwa Naka, Budhaji Nagar and Kharegaon can reach us in a few minutes. Children join us from 1.5 years in Playgroup and can continue through Nursery, Jr. KG and Sr. KG, and up to Grade 4 at this centre.",
+    "Every class is led by our female, ECCE-trained teachers, with two teachers for every 30 children. Our play-based, NEP 2020-aligned curriculum brings in art, music, movement and storytelling every day. You get daily updates and a monthly progress report, and our Academic Coordinator, Mittal Shah, guides the curriculum at this centre.",
+  ],
+  programmes: [
+    ...anandNagarPage.programmes.slice(0, 3),
+    { title: "Primary classes up to Grade 4", age: "After Sr. KG", description: "Children can continue up to Grade 4 at this centre.", href: "" },
+  ],
+  galleryHeading: "Our Learning Spaces in Kalwa",
+  gallery: branchPhotos.kalwa.gallery,
+  whyHeading: "Why Parents Choose Our Kalwa Centre",
+  areasHeading: "Preschool Near Manisha Nagar, Kalwa Station and Kharegaon",
+  nearbyAreas: [
+    { label: "Under 1 km", areas: ["Manisha Nagar", "Shastri Nagar", "Sahyadri Society", "Kalwa Naka", "Kalwa station", "Budhaji Nagar", "Kranti Nagar", "Kamgar Nagar"] },
+    { label: "1–2 km", areas: ["Kharegaon", "Parsik Nagar", "Vitawa", "Saket Complex", "Rabodi"] },
+  ],
+  areasParagraph: "If you live in Manisha Nagar, Shastri Nagar, Kalwa Naka or anywhere near Kalwa station, our Kalwa centre is the closest Rainbow centre. Families across the Kalwa bridge in Saket and Rabodi can reach us in a few minutes too.",
+  reachText: "Near Sayba Hall, Manisha Nagar Gate No. 1, about a 10-minute walk from Kalwa station.",
+  admissionsDetails: "There is no entrance test. The parent–child interaction is a relaxed conversation of about 20 minutes. Once you confirm a seat, there are 2–3 short orientation sessions before term begins. You can ask which programme matches your child's age, how transport works and whether the batch timings suit your routine when you visit.",
+  nearbyLinkText: "Hariniwas (about 3 km, across the Kalwa bridge)",
+  finalHeading: "Visit Our Kalwa Centre",
 } as const;
 
 export const centres: CentreData[] = [
@@ -205,13 +233,13 @@ export const centres: CentreData[] = [
     localitySlug: "kalwa",
     playgroundLandingUrl: "/preschool-in-kalwa-thane",
     preschoolLandingUrl: "/preschool-in-kalwa-thane",
-    address: "Harsh Prasad Co-op Hsg, Soc, Near Sayba Hall, Manisha Nagar, Gate No.1, Kalwa",
+    address: "Harsh Prasad Co-op Hsg Soc, Near Sayba Hall, Manisha Nagar, Gate No. 1, Kalwa, Thane",
     postalCode: "400605",
     phoneNumbers: ["74003 27905"],
     whatsappNumber: "7400327905",
     googleMapsDirectionsUrl: "https://maps.app.goo.gl/HoW2W9r1v6Jzi397A",
     googleMapsEmbedUrl: centreMapEmbed("19.1990801", "72.9913522"),
-    landmarks: ["Sayba Hall", "Manisha Nagar"],
+    landmarks: ["Sayba Hall", "Manisha Nagar Gate No. 1", "Kalwa railway station", "Manisha Vidyalaya"],
     latitude: "19.1990801",
     longitude: "72.9913522",
     programmeLinks: {
@@ -219,7 +247,7 @@ export const centres: CentreData[] = [
       nursery: "/nursery",
       kindergarten: "/kindergarten",
     },
-    areasServed: ["Kalwa", "Manisha Nagar", "Vitawa", "Kharegaon"],
+    areasServed: ["Manisha Nagar", "Shastri Nagar", "Sahyadri Society", "Kalwa Naka", "Kalwa station", "Budhaji Nagar", "Kranti Nagar", "Kamgar Nagar", "Kharegaon", "Parsik Nagar", "Vitawa", "Saket Complex", "Rabodi"],
   },
   {
     id: "kasarvadavali",
@@ -373,8 +401,8 @@ export const preschoolPageSEO: Record<string, PreschoolPageSEO> = {
     canonicalPath: "/preschool-in-dhokali-thane",
   },
   kalwa: {
-    title: "Preschool in Kalwa, Thane | Rainbow Preschool",
-    description: "Rainbow Preschool Kalwa, Manisha Nagar — near Kalwa station, small batches & caring female staff. Playgroup, Nursery & KG, ages 1.5–5. Enquire now.",
+    title: "Preschool in Kalwa, Thane | Playgroup & Nursery | Rainbow",
+    description: "Playgroup, Nursery & KG (ages 1.5–5.5) near Sayba Hall, Manisha Nagar, Kalwa. Classes up to Grade 4 and GPS transport. 2027-28 admissions open.",
     h1: "Preschool in Kalwa, Thane",
     canonicalPath: "/preschool-in-kalwa-thane",
   },
@@ -409,9 +437,9 @@ export const preschoolIntros: Record<string, { paragraph1: string; paragraph2: s
     paragraph3: "At our Dhokali location, safety meets quality education. CCTV monitoring, trained female staff, and secure premises ensure your child's wellbeing. Join the Rainbow family and give your child the best start in their educational journey.",
   },
   kalwa: {
-    paragraph1: "Looking for the best preschool in Kalwa? Rainbow Preschool International, located near Sayba Hall in Manisha Nagar, offers top-quality Playgroup, Nursery, and Kindergarten programmes. We've been a trusted name in early childhood education for families across Kalwa and Thane.",
-    paragraph2: "Our Kalwa centre provides a nurturing environment where young children thrive. Through our play-based curriculum, children develop cognitive skills, social abilities, and emotional intelligence. Our teachers are passionate about making every child's early learning experience memorable.",
-    paragraph3: "Conveniently located for families in Kalwa, our centre combines accessibility with excellence. With proven safety protocols and a commitment to each child's growth, Rainbow Preschool Kalwa is the ideal choice for your little one's educational foundation.",
+    paragraph1: kalwaPage.aboutParagraphs[0],
+    paragraph2: kalwaPage.aboutParagraphs[1],
+    paragraph3: kalwaPage.areasParagraph,
   },
   kasarvadavali: {
     paragraph1: "Rainbow Preschool International's Kasarvadavali centre at Rosa Gardenia, behind Hypercity Mall, is the premier preschool choice for families along Ghodbunder Road. We offer excellent Playgroup, Nursery, and Kindergarten programmes for children aged 1.5 to 5 years.",
@@ -455,12 +483,12 @@ export const whyParentsChoose: Record<string, string[]> = {
     "Affordable fees with excellent education quality",
   ],
   kalwa: [
-    "Conveniently located near Sayba Hall in Manisha Nagar",
-    "Easy access from Kalwa station and surrounding areas",
-    "Warm, caring teachers who understand young children",
-    "Play-based learning approach for optimal development",
-    "Regular parent-teacher interactions and events",
-    "Safe, hygienic learning environment",
+    "In Manisha Nagar near Sayba Hall, about 700 m from Kalwa station",
+    "100% female, ECCE-trained teachers; two teachers per class of 30",
+    "CCTV-monitored classrooms",
+    "Toys and classrooms sanitised several times a day",
+    "Daily updates and monthly progress reports",
+    "Continue up to Grade 4 at the same centre",
   ],
   kasarvadavali: [
     "Modern facilities near Hypercity Mall on Ghodbunder Road",
@@ -588,38 +616,15 @@ export const preschoolFAQs: Record<string, Array<{ question: string; answer: str
     },
   ],
   kalwa: [
-    {
-      question: "Where is Rainbow Preschool in Kalwa located?",
-      answer: "Our Kalwa centre is at Harsh Prasad Co-op Housing Society, Near Sayba Hall, Manisha Nagar, Gate No.1, Kalwa."
-    },
-    {
-      question: "How far is the Kalwa centre from Kalwa station?",
-      answer: "The centre is approximately 10-15 minutes from Kalwa railway station by auto-rickshaw, located in the well-known Manisha Nagar area."
-    },
-    {
-      question: "What programmes are available at Kalwa?",
-      answer: "We offer Playgroup (1.5-2.5 years), Nursery (2.5-3.5 years), Kindergarten (3.5-5.5 years), and Kids Activity Club."
-    },
-    {
-      question: "What are the timings at Kalwa centre?",
-      answer: "We have morning and afternoon batches. Contact us at 74003 27905 for specific batch timings."
-    },
-    {
-      question: "How do I enroll my child at Kalwa?",
-      answer: "Call Admissions on 82915 68972 or fill out the callback form. Our team will schedule a visit and guide you through enrollment."
-    },
-    {
-      question: "What is special about Rainbow Preschool's teaching method?",
-      answer: "We use a play-based approach where children learn through activities, exploration, and guided play, making learning enjoyable and effective."
-    },
-    {
-      question: "Is the Kalwa centre safe?",
-      answer: "Yes, we prioritize safety with CCTV surveillance, 100% female staff, secure entry gates, and strict health protocols."
-    },
-    {
-      question: "Can parents visit during school hours?",
-      answer: "Scheduled visits are welcome! Contact us at 74003 27905 to arrange a visit to see our centre in action."
-    },
+    { question: "Where is Rainbow Preschool in Kalwa?", answer: "Harsh Prasad Co-op Hsg Soc, Near Sayba Hall, Manisha Nagar, Gate No. 1, Kalwa, Thane." },
+    { question: "Which areas is the centre close to?", answer: "Manisha Nagar, Shastri Nagar, Sahyadri Society, Kalwa Naka, Kalwa station, Budhaji Nagar, Kranti Nagar and Kamgar Nagar are under 1 km away. Kharegaon, Parsik Nagar, Vitawa, Saket Complex and Rabodi are 1–2 km away." },
+    { question: "What are the batch timings?", answer: "8:30–11:30 AM or 12:30–3:30 PM, Monday to Friday." },
+    { question: "Which classes are available?", answer: "Playgroup, Nursery, Jr. KG and Sr. KG (1.5–5.5 years), and classes up to Grade 4." },
+    { question: "What is the class size?", answer: "We keep two teachers for every 30 children, and all our teachers are female and ECCE-trained." },
+    { question: "Do you provide transport?", answer: "Yes, GPS-enabled in-house transport." },
+    { question: "How far is it from Kalwa station?", answer: "About 700 m, roughly a 10-minute walk." },
+    { question: "What are the fees?", answer: "Please call our admissions team on 82915 68972 for current fees." },
+    { question: "How do I enrol?", answer: "Call our admissions team on 82915 68972, WhatsApp us on 74003 27905, or fill in the callback form. We'll book your visit and a short parent–child interaction." },
   ],
   kasarvadavali: [
     {

@@ -29,7 +29,7 @@ import {
 import { getPlaygroupLandingBySlug } from "@shared/playgroup-landing-data";
 import { COMMERCIAL_PAGES_LAST_UPDATED_DISPLAY } from "@shared/seo-config";
 import { trackCallClick, trackWhatsAppClick, trackDirectionsClick, pushToDataLayer } from "@/lib/analytics";
-import { AnandNagarCentrePage } from "./anand-nagar-centre";
+import { AnandNagarCentrePage, BranchCentrePage } from "./anand-nagar-centre";
 
 interface PreschoolLocationPageProps {
   localitySlug: string;
@@ -731,7 +731,7 @@ export function PreschoolInDhokali() {
 }
 
 export function PreschoolInKalwa() {
-  return <PreschoolLocationTemplate localitySlug="kalwa" />;
+  return <BranchCentrePage slug="kalwa" />;
 }
 
 export function PreschoolInKasarvadavali() {
