@@ -19,6 +19,7 @@ import {
   ADMISSIONS_PHONE_LABEL,
   ADMISSIONS_PHONE_NUMBER,
   ADMISSIONS_PHONE_DISPLAY,
+  BRANCH_GALLERY_HEADING,
   branchPageSchemaTelephone,
   branchWhatsAppGreeting,
   getCentreBySlug, 
@@ -374,7 +375,7 @@ function PreschoolLocationTemplate({ localitySlug }: PreschoolLocationPageProps)
       <section className="py-12 md:py-16 bg-muted/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center">
-            Our Learning Spaces in {centre.localityName}
+            {BRANCH_GALLERY_HEADING}
           </h2>
           <p className="text-center text-muted-foreground max-w-2xl mx-auto mb-8">
             Explore our vibrant classrooms and play areas designed to inspire curiosity and learning

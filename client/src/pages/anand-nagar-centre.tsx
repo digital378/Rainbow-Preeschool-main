@@ -18,7 +18,7 @@ const programmeIcons = [Blocks, Sparkles, GraduationCap];
 const whyIcons = [MapPin, Users, Video, SprayCan, ClipboardList, Music2];
 const BranchFaq = lazy(() => import("@/components/centre/branch-faq").then(({ BranchFaq }) => ({ default: BranchFaq })));
 const base = "https://www.rainbowpreschools.com";
-type BranchSlug = keyof typeof branchPhotos;
+type BranchSlug = Exclude<keyof typeof branchPhotos, "kasarvadavali">;
 
 export function BranchCentrePage({ slug }: { slug: BranchSlug }) {
   const centre = getCentreBySlug(slug)!;
@@ -80,7 +80,7 @@ export function BranchCentrePage({ slug }: { slug: BranchSlug }) {
     <div className="min-h-screen">
       <SEO title={seo.title} description={seo.description} canonical={seo.canonicalPath} lang="en-IN"
         ogImage={`/images/og/${slug}-1200x630.jpg`}
-        ogImageAlt={slug === "anand-nagar" ? "Two children playing with blocks at Rainbow Preschool" : slug === "kalwa" ? "Rainbow Preschool children learning together at a classroom table" : slug === "dhokali" ? "Rainbow Preschool International entrance with colourful murals" : "Rainbow Preschool classroom activity"}
+        ogImageAlt={slug === "manpada" ? photos.hero.alt : slug === "anand-nagar" ? "Two children playing with blocks at Rainbow Preschool" : slug === "kalwa" ? "Rainbow Preschool children learning together at a classroom table" : slug === "dhokali" ? "Rainbow Preschool International entrance with colourful murals" : "Rainbow Preschool classroom activity"}
         ogImageType="image/jpeg" ogImageWidth={1200} ogImageHeight={630}
         structuredData={initialHeading.current ? undefined : pageSchemas} />
       <MinimalHeader whatsappNumber={centre.whatsappNumber} phoneNumber={ADMISSIONS_PHONE_NUMBER} callLabel={ADMISSIONS_PHONE_LABEL} locality={centre.localityName} whatsappGreeting={branchWhatsAppGreeting(centre)}
@@ -111,8 +111,8 @@ export function BranchCentrePage({ slug }: { slug: BranchSlug }) {
             </div>
             <LocalCallbackForm locality={centre.localityName} centre={centre.name} sourcePage={`preschool-${slug}`}
               title="Book a Visit or Callback" subtitle="Our admissions team calls back within 24 hours."
-              className="shadow-lg lg:col-start-2 lg:row-start-1 lg:row-span-2 lg:self-stretch lg:flex lg:flex-col lg:justify-center" />
-            <div className="lg:col-start-1 lg:row-start-2 rounded-2xl overflow-hidden aspect-[16/10]">
+              className="shadow-lg lg:col-start-2 lg:row-start-1 lg:row-span-2 lg:self-start" />
+            <div className="lg:col-start-1 lg:row-start-2 rounded-2xl overflow-hidden aspect-[16/10] w-full lg:max-w-[608px] lg:max-h-[380px]">
               <img src={photos.hero.src} alt={photos.hero.alt}
                 width={slug === "anand-nagar" ? 1197 : 900} height={slug === "anand-nagar" ? 800 : 600} {...{ fetchpriority: "high" }} className="w-full h-full object-cover" />
             </div>
@@ -233,4 +233,22 @@ export function BranchCentrePage({ slug }: { slug: BranchSlug }) {
 
 export function AnandNagarCentrePage() {
   return <BranchCentrePage slug="anand-nagar" />;
+}
+
+// Direct lazy route entry points avoid loading the legacy page/accordion module
+// when visiting a migrated branch. The rendered template is unchanged.
+export function ManpadaCentrePage() {
+  return <BranchCentrePage slug="manpada" />;
+}
+
+export function HariniwasCentrePage() {
+  return <BranchCentrePage slug="hariniwas" />;
+}
+
+export function DhokaliCentrePage() {
+  return <BranchCentrePage slug="dhokali" />;
+}
+
+export function KalwaCentrePage() {
+  return <BranchCentrePage slug="kalwa" />;
 }

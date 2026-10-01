@@ -42,6 +42,7 @@ import {
   preschoolFAQs,
   preschoolPageSEO,
   defaultCentreGalleryImages,
+  BRANCH_GALLERY_HEADING,
   centres,
   getCentreBySlug,
   createAllBranchLocalBusinessSchemas,
@@ -2647,7 +2648,7 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
       description: pageSEO.description,
       canonical: centreUrl,
       ogImage: `${BASE_URL}/images/og/${slug}-1200x630.jpg`,
-      ogImageAlt: slug === "anand-nagar" ? "Two children playing with blocks at Rainbow Preschool" : slug === "kalwa" ? "Rainbow Preschool children learning together at a classroom table" : slug === "dhokali" ? "Rainbow Preschool International entrance with colourful murals" : "Rainbow Preschool classroom activity",
+      ogImageAlt: slug === "manpada" ? photos.hero.alt : slug === "anand-nagar" ? "Two children playing with blocks at Rainbow Preschool" : slug === "kalwa" ? "Rainbow Preschool children learning together at a classroom table" : slug === "dhokali" ? "Rainbow Preschool International entrance with colourful murals" : "Rainbow Preschool classroom activity",
       h1: pageSEO.h1,
       introText: page.heroSubline,
       breadcrumbs: [
@@ -2881,7 +2882,7 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
       contentSections: [
         ...richSections,
         ...(richCentre ? [{
-          heading: `Our Learning Spaces in ${richCentre.localityName}`,
+          heading: BRANCH_GALLERY_HEADING,
           text: "Explore our vibrant classrooms and play areas designed to inspire curiosity and learning",
           images: (richCentre.galleryImages || defaultCentreGalleryImages).map((src, index) => ({
             src,

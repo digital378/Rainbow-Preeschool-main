@@ -75,8 +75,8 @@ export const branchPhotos = {
   },
   manpada: {
     hero: {
-      src: "/images/branches/play-school-thane-teacher-classroom.webp",
-      alt: "Rainbow Preschool teacher engaging children during a classroom lesson",
+      src: "/images/branches/preschool-in-manpada-thane-centre-entrance.webp",
+      alt: "Entrance of Rainbow Preschool International, Manpada centre at Aggarwal Arcade, near Khewra Circle",
     },
     about: {
       src: "/images/branches/preschool-thane-guided-table-activity.webp",
@@ -146,6 +146,8 @@ export const branchPhotos = {
     ],
   },
   dhokali: {
+    // Retained under the user's fallback rule; its gallery attribution has not
+    // been independently matched to the Google profile's exterior photos.
     hero: {
       src: "/images/branches/preschool-in-dhokali-thane-centre-entrance.webp",
       alt: "Rainbow Preschool International entrance with colourful murals and a Rainbow sign",
@@ -181,13 +183,28 @@ export const branchPhotos = {
       },
     ],
   },
+  // Preserve the legacy Kasarvadavali gallery. It has no hero/About photo yet;
+  // include its actual images in the same cross-page ownership/perceptual guard.
+  kasarvadavali: {
+    gallery: [
+      { src: "/images/optimized/DSC00497.webp", alt: "Rainbow Preschool Kasarvadavali classroom activities 1" },
+      { src: "/images/optimized/child-stacking-rings-playgroup.webp", alt: "Rainbow Preschool Kasarvadavali classroom activities 2" },
+      { src: "/images/optimized/DSC00010.webp", alt: "Rainbow Preschool Kasarvadavali classroom activities 3" },
+      { src: "/images/optimized/DSC00011.webp", alt: "Rainbow Preschool Kasarvadavali classroom activities 4" },
+      { src: "/images/optimized/DSC00054.webp", alt: "Rainbow Preschool Kasarvadavali classroom activities 5" },
+    ],
+  },
 } as const;
 
 // Canonical file → owning branch index. New branch pages must register photos here
 // rather than silently borrowing from another branch's hero, About or gallery.
 export const branchPhotoOwners: Record<string, keyof typeof branchPhotos> = {};
 for (const [slug, photos] of Object.entries(branchPhotos)) {
-  for (const photo of [photos.hero, photos.about, ...photos.gallery]) {
+  for (const photo of [
+    ...("hero" in photos ? [photos.hero] : []),
+    ...("about" in photos ? [photos.about] : []),
+    ...photos.gallery,
+  ]) {
     if (branchPhotoOwners[photo.src]) {
       throw new Error(`Branch photo ${photo.src} belongs to both ${branchPhotoOwners[photo.src]} and ${slug}`);
     }

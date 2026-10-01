@@ -1,0 +1,38 @@
+UPDATE: centre-front (façade) hero photos + gallery heading on ALL 6 branch pages
+Pages: /preschool-in-anand-nagar-thane, /preschool-in-kalwa-thane, /preschool-in-manpada-thane, /preschool-in-hariniwas-thane, /preschool-in-dhokali-thane, /preschool-in-kasarvadavali-thane
+Rules: text report only, no screenshots, don't publish, keep all other content and design as they are.
+
+1. GALLERY HEADING (all 6 pages, via the shared template)
+   Change "Our Learning Spaces in [Centre]" to "Our Learning Spaces at Rainbow" on every branch page, in both the visitor and Googlebot versions.
+
+2. HERO PHOTO = THAT CENTRE'S OWN FRONT/ENTRANCE (like Dhokali)
+   - Each branch page's hero photo (under the buttons) must be a real photo of THAT centre's own front or entrance.
+   - Identify each façade from visible signage, the building or surroundings, matched against the centre's address and Google profile. Never use one centre's façade on another centre's page.
+   - File name: preschool-in-[area]-thane-centre-entrance.webp (area = anand-nagar, kalwa, manpada, hariniwas, dhokali, kasarvadavali).
+   - Alt text: "Entrance of Rainbow Preschool International, [Centre] centre, [short location]". Examples:
+     - "Entrance of Rainbow Preschool International, Dhokali centre on Kolshet Road"
+     - "… Anand Nagar centre opposite Tropical Lagoon"
+     - "… Kalwa centre near Sayba Hall, Manisha Nagar"
+     - "… Manpada centre at Aggarwal Arcade, near Khewra Circle"
+     - "… Hariniwas centre at Hariniwas Circle"
+     - "… Kasarvadavali centre at Rosa Gardenia"
+   - The photo that the façade replaces goes back into the unused pool. Don't add it to another page.
+   - If a centre's façade photo is NOT available in the project, leave that page's current hero as is and list the centre in the report. I'll supply photos for those.
+   - The share image (/images/og/[centre]-1200x630.jpg) for each centre with a façade should also use that façade.
+   - Register every façade in shared/branch-photos.ts as owned by its centre. The perceptual photo guard must pass across and within all pages.
+
+3. HERO LAYOUT FIX (shared template)
+   The callback card currently stretches to the height of the tall hero photo, leaving large empty space above and below the form.
+   - Make the card height fit its content, aligned to the top of the hero.
+   - Keep the hero photo at a fixed 16:10 ratio (max height about 380 px on desktop) so the two columns look balanced. No empty bands inside the card.
+   - Keep the H1 as the first-paint element. The hero photo has width/height set and fetchpriority="high".
+   - CLS must stay under 0.05.
+
+4. CHECKS
+   - Visitor and Googlebot versions match on all 6 pages; one H1 each.
+   - Each hero image returns 200.
+   - The perceptual guard passes.
+   - Mobile Lighthouse, production build, median of 3, on Anand Nagar and Dhokali: LCP under 2.5 s, CLS under 0.05, TBT under 250 ms.
+   - Full pre-publish script: two consecutive passes.
+
+REPORT: per centre, the façade file, how it was identified, its alt text and the share image; the centres with no façade available; the photos returned to the pool; Lighthouse; pre-publish results. Don't publish.

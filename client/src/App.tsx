@@ -60,11 +60,11 @@ const PlaySchoolNearGhodbunderRoad = lazy(() => import("@/pages/play-school-near
 const RainbowSparkleTrail = lazy(() => import("@/components/rainbow-sparkle-trail").then(m => ({ default: m.RainbowSparkleTrail })));
 const DummyPage = lazy(() => import("@/pages/dummy"));
 
-const LazyPreschoolInManpada = lazy(() => import("@/pages/preschool-location").then(m => ({ default: m.PreschoolInManpada })));
-const LazyPreschoolInHariniwas = lazy(() => import("@/pages/preschool-location").then(m => ({ default: m.PreschoolInHariniwas })));
-const LazyPreschoolInAnandNagar = lazy(() => import("@/pages/preschool-location").then(m => ({ default: m.PreschoolInAnandNagar })));
-const LazyPreschoolInDhokali = lazy(() => import("@/pages/preschool-location").then(m => ({ default: m.PreschoolInDhokali })));
-const LazyPreschoolInKalwa = lazy(() => import("@/pages/preschool-location").then(m => ({ default: m.PreschoolInKalwa })));
+const LazyPreschoolInManpada = lazy(() => import("@/pages/anand-nagar-centre").then(m => ({ default: m.ManpadaCentrePage })));
+const LazyPreschoolInHariniwas = lazy(() => import("@/pages/anand-nagar-centre").then(m => ({ default: m.HariniwasCentrePage })));
+const LazyPreschoolInAnandNagar = lazy(() => import("@/pages/anand-nagar-centre").then(m => ({ default: m.AnandNagarCentrePage })));
+const LazyPreschoolInDhokali = lazy(() => import("@/pages/anand-nagar-centre").then(m => ({ default: m.DhokaliCentrePage })));
+const LazyPreschoolInKalwa = lazy(() => import("@/pages/anand-nagar-centre").then(m => ({ default: m.KalwaCentrePage })));
 const LazyPreschoolInKasarvadavali = lazy(() => import("@/pages/preschool-location").then(m => ({ default: m.PreschoolInKasarvadavali })));
 
 const LazyMotivationalThoughtsForKids = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.MotivationalThoughtsForKids })));

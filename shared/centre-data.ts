@@ -33,6 +33,7 @@ export const ADMISSIONS_PHONE_NUMBER = "+918291568972";
 export const ADMISSIONS_PHONE_LABEL = "Call Admissions";
 export const ADMISSIONS_PHONE_DISPLAY = "82915 68972";
 export const ADMISSIONS_SCHEMA_TELEPHONE = "+91-8291568972";
+export const BRANCH_GALLERY_HEADING = "Our Learning Spaces at Rainbow";
 
 export function branchWhatsAppGreeting(centre: CentreData): string {
   return `Hi, I'd like to know about admissions at Rainbow Preschool International, ${centre.localityName}.`;
@@ -57,11 +58,7 @@ function centreMapEmbed(latitude: string, longitude: string): string {
 
 // Legacy generic centre galleries; migrated branch pages use their own registered photos.
 export const defaultCentreGalleryImages = [
-  "/images/optimized/DSC00497.webp",
-  "/images/optimized/child-stacking-rings-playgroup.webp",
-  "/images/optimized/DSC00010.webp",
-  "/images/optimized/DSC00011.webp",
-  "/images/optimized/DSC00054.webp",
+  ...branchPhotos.kasarvadavali.gallery.map((photo) => photo.src),
 ];
 
 // Shared visitor/crawler copy for the Anand Nagar branch. The other branch
@@ -93,7 +90,7 @@ export const anandNagarPage = {
   ],
   theatreHeading: "Life at Rainbow",
   theatreSubline: "Classroom moments, celebrations and discoveries from our centres.",
-  galleryHeading: "Our Learning Spaces in Anand Nagar",
+  galleryHeading: BRANCH_GALLERY_HEADING,
   gallery: branchPhotos["anand-nagar"].gallery,
   whyHeading: "Why Parents Choose Our Anand Nagar Centre",
   areasHeading: "Preschool Near Kavesar, Vijay Garden and Anand Nagar",
@@ -142,7 +139,7 @@ export const manpadaPage = {
     { title: "Primary classes up to Grade 4", age: "After Sr. KG", description: "Children can continue up to Grade 4 at this centre.", href: "" },
     { title: "Happy Times daycare (ages 2–8)", age: "Ages 2–8 years", description: "8:30 AM–7:30 PM, with one nutritious meal.", href: "/happy-times" },
   ],
-  galleryHeading: "Our Learning Spaces in Manpada",
+  galleryHeading: BRANCH_GALLERY_HEADING,
   gallery: branchPhotos.manpada.gallery,
   whyHeading: "Why Parents Choose Our Manpada Centre",
   areasHeading: "Preschool Near Khewra Circle, Tikuji-ni-wadi and Hiranandani Meadows",
@@ -178,7 +175,7 @@ export const kalwaPage = {
     ...anandNagarPage.programmes.slice(0, 3),
     { title: "Primary classes up to Grade 4", age: "After Sr. KG", description: "Children can continue up to Grade 4 at this centre.", href: "" },
   ],
-  galleryHeading: "Our Learning Spaces in Kalwa",
+  galleryHeading: BRANCH_GALLERY_HEADING,
   gallery: branchPhotos.kalwa.gallery,
   whyHeading: "Why Parents Choose Our Kalwa Centre",
   areasHeading: "Preschool Near Manisha Nagar, Kalwa Station and Kharegaon",
@@ -212,7 +209,7 @@ export const hariniwasPage = {
     ...anandNagarPage.programmes.slice(0, 3),
     { title: "Primary classes up to Grade 3", age: "After Sr. KG", description: "Children can continue up to Grade 3 at this centre.", href: "" },
   ],
-  galleryHeading: "Our Learning Spaces in Hariniwas",
+  galleryHeading: BRANCH_GALLERY_HEADING,
   gallery: branchPhotos.hariniwas.gallery,
   whyHeading: "Why Parents Choose Our Hariniwas Centre",
   areasHeading: "Preschool Near Naupada, Panchpakhadi and Thane Station",
@@ -246,7 +243,7 @@ export const dhokaliPage = {
     ...anandNagarPage.programmes.slice(0, 3),
     { title: "Happy Times daycare (ages 2–8)", age: "Ages 2–8 years", description: "8:30 AM–7:30 PM, with one nutritious meal.", href: "/happy-times" },
   ],
-  galleryHeading: "Our Learning Spaces in Dhokali",
+  galleryHeading: BRANCH_GALLERY_HEADING,
   gallery: branchPhotos.dhokali.gallery,
   whyHeading: "Why Parents Choose Our Dhokali Centre",
   areasHeading: "Preschool Near Kolshet Road, Balkum and Majiwada",

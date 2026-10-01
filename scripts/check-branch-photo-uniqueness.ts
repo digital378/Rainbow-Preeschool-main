@@ -47,8 +47,8 @@ async function main() {
 
   for (const [branch, photos] of Object.entries(branchPhotos)) {
     const referencedPhotos = [
-      { section: "hero", ...photos.hero },
-      { section: "about", ...photos.about },
+      ...("hero" in photos ? [{ section: "hero", ...photos.hero }] : []),
+      ...("about" in photos ? [{ section: "about", ...photos.about }] : []),
       ...photos.gallery.map((photo, index) => ({
         section: `gallery[${index}]`,
         ...photo,
