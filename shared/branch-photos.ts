@@ -1,3 +1,5 @@
+import { CONTACT_PAGE_COPY } from "./contact-page-copy";
+
 // The specific location of the Kalwa page photos has not been verified. Use
 // Thane filenames and location-neutral alt text; do not claim they are Kalwa photos.
 export const branchPhotos = {
@@ -255,6 +257,17 @@ type HubCentreImage = {
   kind: "illustration" | "photo";
 };
 
+// Contact is the approved reference for centre-card images. Keep both pages
+// on the same assets instead of selecting unrelated branch gallery shots.
+export const contactCentreImages = {
+  "anand-nagar": CONTACT_PAGE_COPY.centreDetails["anand-nagar"].image,
+  manpada: CONTACT_PAGE_COPY.centreDetails.aggarwal.image,
+  kasarvadavali: CONTACT_PAGE_COPY.centreDetails.kasarvadavali.image,
+  dhokali: CONTACT_PAGE_COPY.centreDetails.dhokali.image,
+  hariniwas: CONTACT_PAGE_COPY.centreDetails.hariniwas.image,
+  kalwa: CONTACT_PAGE_COPY.centreDetails.kalwa.image,
+} as const;
+
 export const playSchoolNearMePhotos: {
   hero: HubPhoto & { srcSet: string; avifSrcSet: string };
   about: HubPhoto;
@@ -281,32 +294,32 @@ export const playSchoolNearMePhotos: {
   },
   centres: {
     "anand-nagar": {
-      src: branchPhotos["anand-nagar"].gallery[1].src,
+      src: contactCentreImages["anand-nagar"].src,
       alt: "Rainbow Preschool Anand Nagar, Thane — centre photo",
       kind: "photo",
     },
     manpada: {
-      src: branchPhotos.manpada.hero.src,
+      src: contactCentreImages.manpada.src,
       alt: "Rainbow Preschool Manpada, Thane — centre photo",
       kind: "photo",
     },
     kasarvadavali: {
-      src: branchPhotos.kasarvadavali.gallery[5].src,
+      src: contactCentreImages.kasarvadavali.src,
       alt: "Rainbow Preschool Kasarvadavali, Thane — centre photo",
       kind: "photo",
     },
     dhokali: {
-      src: branchPhotos.dhokali.hero.src,
+      src: contactCentreImages.dhokali.src,
       alt: "Rainbow Preschool Dhokali, Thane — centre photo",
       kind: "photo",
     },
     hariniwas: {
-      src: branchPhotos.hariniwas.gallery[3].src,
+      src: contactCentreImages.hariniwas.src,
       alt: "Rainbow Preschool Hariniwas, Thane — centre photo",
       kind: "photo",
     },
     kalwa: {
-      src: branchPhotos.kalwa.hero.src,
+      src: contactCentreImages.kalwa.src,
       alt: "Rainbow Preschool Kalwa, Thane — centre photo",
       kind: "photo",
     },
@@ -332,11 +345,10 @@ function registerHubAsset(src: string) {
 }
 
 function registerHubCentreHero(slug: keyof typeof branchPhotos, src: string) {
-  const photos = branchPhotos[slug];
-  const ownPhotos: readonly {src: string}[] = [photos.hero, photos.about, ...photos.gallery];
-  if (!ownPhotos.some(photo => photo.src === src) || photoPageOwners[src] !== slug) {
-    throw new Error(`Play School Near Me centre image ${slug} must use its own registered branch photo`);
+  if (src !== contactCentreImages[slug].src || (photoPageOwners[src] && photoPageOwners[src] !== slug)) {
+    throw new Error(`Play School Near Me centre image ${slug} must match its Contact page image`);
   }
+  photoPageOwners[src] = slug;
 }
 
 function registerSrcSet(srcSet?: string) {

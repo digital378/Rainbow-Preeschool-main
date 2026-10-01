@@ -33,10 +33,10 @@ Photos replaced by centre façades stay in the unused pool but must not be reass
 
 **How to apply:** Do not interpret “unused pool” as permission to recycle former Manpada or Kalwa heroes onto a different centre page. Distinguish those reserved images from photos that have never been assigned.
 
-## Creator-approved near-me card reuse
+## Creator-approved near-me centre images
 
-The creator explicitly approved using each centre's existing branch-page hero on the near-me hub and stated that provenance for those assignments is settled. Treat that as creator confirmation, not a new independent verification.
+The Contact page's centre images are the creator-approved reference for the near-me cards. This supersedes earlier selections from branch heroes and activity galleries. Preserve the centre-to-image assignments; treat the approval as creator confirmation, not independent provenance verification.
 
-**Why:** On 2026-10-01, the creator replaced the earlier no-reuse requirement with permission to reuse these six existing URLs, without copying or re-saving the files, and exempt only those six hub references from the perceptual guard.
+**Why:** On 2026-10-01, the creator explicitly corrected the near-me images and asked for the same matching centre photos already used on Contact.
 
-**How to apply:** Preserve each centre's own assignment and keep branch-to-branch uniqueness enforced. This permission does not authorise reassigning a photo to another centre, recycling reserved heroes elsewhere, or labelling arbitrary gallery photos as branch-specific.
+**How to apply:** Reuse Contact's centre-image mapping, including Manpada's Aggarwal centre ID, rather than choosing classroom photos from branch galleries. Match Contact's normal card framing and keep cross-centre uniqueness enforced. Do not reassign a photo to a different centre.

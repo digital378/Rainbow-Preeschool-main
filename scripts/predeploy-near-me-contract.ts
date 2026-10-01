@@ -157,10 +157,7 @@ async function run() {
       const [slug, copy] = branches[index];
       assert.equal(attribute(card[0].split(">")[0], "data-centre-slug"), slug);
       const image = card[1].match(/<img\b[^>]*>/i)?.[0] || "";
-      const expectedPhoto = slug === "anand-nagar" ? branchPhotos[slug].gallery[1].src
-        : slug === "kasarvadavali" ? branchPhotos[slug].gallery[5].src
-        : slug === "hariniwas" ? branchPhotos[slug].gallery[3].src
-        : branchPhotos[slug].hero.src;
+      const expectedPhoto = `/images/gallery/rainbow-preschool-${slug}-centre-thane.webp`;
       assert.equal(attribute(image, "src"), expectedPhoto, `Wrong own-branch photo: ${slug}`);
       assert.equal(attribute(image, "alt"), `Rainbow Preschool ${branchLocalities[index]}, Thane — centre photo`);
       assert.equal(attribute(image, "width"), "600");

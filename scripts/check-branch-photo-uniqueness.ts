@@ -1,7 +1,7 @@
 import { existsSync } from "node:fs";
 import path from "node:path";
 import sharp from "sharp";
-import { branchPhotos, photoPageOwners, playSchoolNearMePhotos } from "../shared/branch-photos";
+import { branchPhotos, contactCentreImages, photoPageOwners, playSchoolNearMePhotos } from "../shared/branch-photos";
 
 const publicRoot = path.resolve(process.cwd(), "client/public");
 // A 64-bit DCT perceptual hash tolerates resizing, re-encoding and small colour
@@ -10,33 +10,33 @@ const publicRoot = path.resolve(process.cwd(), "client/public");
 const MAX_PHASH_DISTANCE = 8;
 const hubCentrePhotoPairs = {
   "anand-nagar": {
-    src: branchPhotos["anand-nagar"].gallery[1].src,
-    branchSection: "gallery[1]",
+    src: contactCentreImages["anand-nagar"].src,
+    branchSection: "Contact",
     alt: "Rainbow Preschool Anand Nagar, Thane — centre photo",
   },
   manpada: {
-    src: branchPhotos.manpada.hero.src,
-    branchSection: "hero",
+    src: contactCentreImages.manpada.src,
+    branchSection: "Contact",
     alt: "Rainbow Preschool Manpada, Thane — centre photo",
   },
   kasarvadavali: {
-    src: branchPhotos.kasarvadavali.gallery[5].src,
-    branchSection: "gallery[5]",
+    src: contactCentreImages.kasarvadavali.src,
+    branchSection: "Contact",
     alt: "Rainbow Preschool Kasarvadavali, Thane — centre photo",
   },
   dhokali: {
-    src: branchPhotos.dhokali.hero.src,
-    branchSection: "hero",
+    src: contactCentreImages.dhokali.src,
+    branchSection: "Contact",
     alt: "Rainbow Preschool Dhokali, Thane — centre photo",
   },
   hariniwas: {
-    src: branchPhotos.hariniwas.gallery[3].src,
-    branchSection: "gallery[3]",
+    src: contactCentreImages.hariniwas.src,
+    branchSection: "Contact",
     alt: "Rainbow Preschool Hariniwas, Thane — centre photo",
   },
   kalwa: {
-    src: branchPhotos.kalwa.hero.src,
-    branchSection: "hero",
+    src: contactCentreImages.kalwa.src,
+    branchSection: "Contact",
     alt: "Rainbow Preschool Kalwa, Thane — centre photo",
   },
 } as const;
@@ -187,9 +187,7 @@ async function main() {
         const expectedPair = hubCentreSlug ? hubCentrePhotoPairs[hubCentreSlug] : undefined;
         const ownBranchSectionPair = hubCentreSlug &&
           photo.src === expectedPair?.src &&
-          previous.page === hubCentreSlug &&
-          previous.section === expectedPair?.branchSection &&
-          previous.src === expectedPair?.src;
+          previous.page === hubCentreSlug;
         if (ownBranchSectionPair) continue;
         const distance = hammingDistance(hash, previous.hash);
         if (distance <= MAX_PHASH_DISTANCE) {

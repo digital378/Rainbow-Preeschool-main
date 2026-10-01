@@ -228,9 +228,6 @@ body:has(> #near-me-document:not([hidden])) > #root {
 .nm-centre-image { display: block; overflow: hidden; aspect-ratio: 3 / 2; background: hsl(var(--surface-subtle)); }
 .nm-centre-image img,
 .nm-centre-art { display: block; width: 100%; height: 100%; aspect-ratio: 3 / 2; object-fit: cover; }
-.nm-centre-art[data-centre-photo="kalwa"] { transform: scale(1.5); transform-origin: center top; object-position: 50% 0%; }
-.nm-centre-art[data-centre-photo="manpada"] { object-position: 50% 65%; }
-.nm-centre-art[data-centre-photo="dhokali"] { object-position: 50% 0%; }
 .nm-card-body { padding: 24px; }
 .nm-card-body h3 { margin: 0 0 7px; font-size: 19px; line-height: 1.35; }
 .nm-address { min-height: 42px; margin: 0 0 10px; color: var(--nm-muted); font-size: 14px; line-height: 1.5; }
