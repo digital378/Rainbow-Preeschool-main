@@ -1,9 +1,10 @@
+body:has(> #near-me-document:not([hidden])) > #root { height: 0 !important; min-height: 0 !important; }
 .near-me-page {
   --nm-red: #c72c3c;
   --nm-red-dark: #981f31;
   --nm-yellow: #ffe49a;
-  --nm-ink: #272a32;
-  --nm-muted: #484b54;
+  --nm-ink: #1f2937;
+  --nm-muted: #374151;
   --nm-green: #236b50;
   --nm-paper: #fffaf2;
   --nm-line: #e7e0d8;
@@ -23,12 +24,13 @@
 .nm-hero-image { display: block; max-width: 640px; margin-top: 24px; }
 .nm-hero-image img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; border-radius: 20px; }
 .nm-hero { background: linear-gradient(128deg, #fffaf2 0%, #fff 48%, #fff1e9 100%); padding: 150px 24px 68px; scroll-margin-top: 104px; }
-.nm-hero-inner { max-width: 1240px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1.04fr) minmax(400px, .96fr); align-items: center; gap: clamp(36px, 5vw, 76px); }
-.nm-hero-copy { padding: 12px 0 16px; }
+.nm-hero-inner { max-width: 1240px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(400px, .88fr); grid-template-rows: auto auto; grid-template-areas: "copy finder" "media finder"; align-items: center; gap: 18px clamp(36px, 5vw, 76px); }
+.nm-hero-copy { grid-area: copy; padding: 12px 0 0; }
+.nm-hero-media { grid-area: media; min-width: 0; }
 .nm-kicker { display: inline-flex; align-items: center; min-height: 38px; padding: 6px 14px; border-radius: 999px; background: var(--nm-yellow); color: #362f22; font-size: 14px; font-weight: 700; letter-spacing: .01em; }
 .nm-hero h1 { max-width: 700px; margin: 22px 0 18px; font-size: clamp(34px, 4.1vw, 56px); line-height: 1.12; letter-spacing: -.045em; font-weight: 800; }
 .nm-intro { max-width: 700px; margin: 0; color: #333640; font-size: 17px; font-weight: 500; line-height: 1.75; }
-.nm-hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 27px; }
+.nm-hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 0; }
 .nm-button { min-height: 48px; display: inline-flex; justify-content: center; align-items: center; gap: 8px; border-radius: 12px; padding: 10px 18px; border: 1px solid transparent; text-align: center; text-decoration: none !important; font-weight: 700 !important; line-height: 1.25; transition: transform .18s ease, background-color .18s ease, border-color .18s ease; }
 .nm-button:hover { transform: translateY(-2px); }
 .nm-button-red { color: #fff !important; background: var(--nm-red); box-shadow: 0 6px 16px #8d26301c; }
@@ -36,7 +38,7 @@
 .nm-button-outline { color: var(--nm-red-dark) !important; border-color: #d9a0a3; background: #fff; }
 .nm-button-outline:hover { background: #fff4f2; }
 .nm-button-green { color: #fff !important; background: #267255; }
-.nm-finder { background: #fff; border: 1px solid #ebdfd6; border-radius: 22px; padding: 24px; box-shadow: 0 18px 54px #4b2b1e12; }
+.nm-finder { grid-area: finder; align-self: center; background: #fff; border: 1px solid #ebdfd6; border-radius: 22px; padding: 24px; box-shadow: 0 18px 54px #4b2b1e12; }
 .nm-finder h2 { margin: 0 0 16px; font-size: 23px; line-height: 1.3; font-weight: 800; letter-spacing: -.025em; }
 .nm-location-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; }
 .nm-location-row input, .nm-callback-form input, .nm-callback-form select { width: 100%; min-height: 47px; border: 1px solid #d9d4ce; border-radius: 10px; background: #fff; color: var(--nm-ink); padding: 9px 12px; font-size: 14px; }
@@ -52,6 +54,7 @@
 .nm-callback-form label { display: grid; gap: 4px; font-size: 13px; color: #383b43; font-weight: 600; }
 .nm-callback-form label:nth-of-type(1), .nm-callback-form label:nth-of-type(2) { grid-column: span 1; }
 .nm-error { grid-column: 1 / -1; margin-top: -7px; color: #a1192e; font-size: 12px; font-weight: 600; }
+.nm-form-error { margin: 0; }
 .nm-submit { grid-column: 1 / -1; width: 100%; }
 .nm-submit:disabled { cursor: wait; opacity: .7; }
 .nm-privacy { margin: 9px 0 0; color: #43454d; text-align: center; font-size: 12px; line-height: 1.4; }
@@ -115,7 +118,11 @@
 .nm-guide-links a { margin-left: 3px; }
 .nm-info-grid { display: grid; grid-template-columns: 1.1fr 1fr 1fr; gap: 17px; }
 .nm-info-grid article { min-height: 230px; padding: 24px; border: 1px solid #e9e1d8; border-radius: 19px; background: #fff; }
-.nm-info-icon { color: var(--nm-red); font-family: "DM Mono", monospace; font-weight: 700; font-size: 14px; }
+.nm-info-icon { width: 48px; height: 48px; display: grid; place-items: center; border-radius: 14px; flex: none; }
+.nm-info-icon-clock { color: #8a4b17; background: #fff2df; }
+.nm-info-icon-banknote { color: #22603a; background: #eaf6eb; }
+.nm-info-icon-bus { color: #1e5b80; background: #eaf4fb; }
+.nm-info-icon svg { width: 24px; height: 24px; display: block; }
 .nm-info-grid h3 { margin: 12px 0 8px; font-size: 22px; font-weight: 700; }
 .nm-info-grid p { margin: 0 0 14px; color: #3d4048; }
 .nm-info-grid .nm-button { min-height: 44px; font-size: 13px; }
@@ -154,6 +161,8 @@
 .nm-theatre-intro { max-width: 1240px; margin: 0 auto; padding: 0 24px; }
 .nm-theatre-intro h2 { margin: 7px 0 8px; font-size: clamp(30px, 3.4vw, 42px); line-height: 1.2; font-weight: 800; }
 .nm-theatre-intro p { margin: 0; color: #42454f; }
+.nm-theatre-mount { max-width: 1240px; margin: 0 auto; }
+.nm-theatre-mount .rainbow-theatre__intro { display: none; }
 .nm-faq-list { max-width: 980px; }
 .nm-faq-item { border-top: 1px solid #e2dcd4; }
 .nm-faq-item:last-child { border-bottom: 1px solid #e2dcd4; }
@@ -177,21 +186,22 @@
 .nm-modal > p { margin: 0 0 17px; color: #44464e; }
 .nm-modal-close { position: absolute; top: 13px; right: 14px; width: 44px; height: 44px; border: 0; border-radius: 50%; background: #f5e9e3; color: #362c2c; font-size: 28px; }
 @media (max-width: 1023px) {
-  .nm-hero-inner { grid-template-columns: 1fr; gap: 24px; max-width: 780px; }
+  .nm-hero-inner { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto auto auto; grid-template-areas: "copy" "finder" "media"; align-items: start; gap: 18px; max-width: 780px; }
   .nm-hero-copy { padding-bottom: 0; }
+  .nm-finder { align-self: stretch; }
   .nm-centre-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .nm-programme-track { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 767px) {
   .near-me-page { font-size: 16px; }
   .nm-hero { padding: 88px 16px 35px; }
-  .nm-hero-inner { gap: 18px; }
+  .nm-hero-inner { gap: 16px; }
   .nm-hero-copy { padding-top: 0; }
   .nm-kicker { min-height: 34px; padding: 5px 11px; font-size: 12px; }
   .nm-hero h1 { margin: 13px 0 10px; font-size: 34px; line-height: 1.13; }
   .nm-intro { font-size: 16px; line-height: 1.55; }
   .nm-hero-image { display: none; }
-  .nm-hero-actions { margin-top: 17px; gap: 8px; }
+  .nm-hero-actions { margin-top: 0; gap: 8px; }
   .nm-hero-actions .nm-button { min-height: 44px; padding: 9px 12px; font-size: 13px; }
   .nm-finder { padding: 17px; border-radius: 17px; }
   .nm-finder h2 { margin-bottom: 12px; font-size: 20px; }
@@ -213,7 +223,7 @@
   .nm-trust-grid > div:last-child { grid-column: 1 / -1; border-left: 0; }
   .nm-trust-grid strong { font-size: 23px; }
   .nm-trust-grid span { font-size: 15px; }
-  .nm-section { padding: 55px 16px; scroll-margin-top: 76px; }
+  .nm-section { padding: 56px 16px; scroll-margin-top: 76px; }
   .nm-section-heading { margin-bottom: 23px; }
   .nm-section-heading h2, .nm-about-copy h2, .nm-theatre-intro h2 { font-size: 29px; }
   .nm-eyebrow { font-size: 11px; }
@@ -257,6 +267,7 @@
   .nm-midyear, .nm-contact-hours { font-size: 14px; }
   .nm-theatre-wrap { min-height: 250px; padding: 20px 0; overflow: hidden; }
   .nm-theatre-intro { padding: 0 16px; }
+  .nm-theatre-mount { padding: 0 16px; }
   .nm-theatre-placeholder { height: 210px; margin: 0 16px; }
   .nm-faq-item summary { min-height: 59px; font-size: 15px; }
   .nm-faq-item p { padding-right: 5px; font-size: 15px; }
@@ -272,6 +283,9 @@
   .nm-modal-backdrop { padding: 0; align-items: end; }
   .nm-modal { width: 100%; max-height: 92dvh; padding: 25px 17px 22px; border-radius: 20px 20px 0 0; }
   body.nm-sticky-on .fixed.bottom-6.right-4 { bottom: 74px !important; }
+}
+@media (min-width: 768px) {
+  body.nm-sticky-on .fixed.bottom-6.right-4 { bottom: 1.5rem !important; }
 }
 @media (prefers-reduced-motion: reduce) {
   .near-me-page *, .near-me-page *::before, .near-me-page *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }

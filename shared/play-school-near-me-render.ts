@@ -16,6 +16,13 @@ import { ADMISSIONS_PHONE_NUMBER, branchWhatsAppGreeting } from "./centre-data";
 const escapeHtml = (value: string) => value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
 const link = (href: string, text: string, className = "") =>
   `<a href="${escapeHtml(href)}"${className ? ` class="${escapeHtml(className)}"` : ""}>${escapeHtml(text)}</a>`;
+const infoIconPaths = {
+  clock: '<circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>',
+  banknote: '<rect width="20" height="12" x="2" y="6" rx="2"></rect><circle cx="12" cy="12" r="2"></circle><path d="M6 12h.01M18 12h.01"></path>',
+  bus: '<path d="M8 6v6"></path><path d="M15 6v6"></path><path d="M2 12h19.6"></path><path d="M18 18h3s.5-1.7.8-2.8c.1-.4.2-.8.2-1.2 0-.4-.1-.8-.2-1.2l-1.4-5C20.1 6.8 19.1 6 18 6H4a2 2 0 0 0-2 2v10h3"></path><circle cx="7" cy="18" r="2"></circle><path d="M9 18h5"></path><circle cx="16" cy="18" r="2"></circle>',
+} as const;
+const infoIcon = (name: keyof typeof infoIconPaths) =>
+  `<span class="nm-info-icon nm-info-icon-${name}" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false">${infoIconPaths[name]}</svg></span>`;
 const listAreas = (areas: readonly string[], threshold = 5) => {
   const chips = (items: readonly string[]) => `<div class="nm-area-chips">${items.map((area) => `<span>${escapeHtml(area)}</span>`).join("")}</div>`;
   const visible = areas.slice(0, threshold);
@@ -63,14 +70,6 @@ export function renderPlaySchoolNearMeHtml(): string {
             <span class="nm-kicker">${escapeHtml(PLAY_SCHOOL_NEAR_ME_CONTENT.kicker)}</span>
             <h1>${escapeHtml(PLAY_SCHOOL_NEAR_ME_CONTENT.h1)}</h1>
             <p class="nm-intro">${escapeHtml(intro)}</p>
-            <div class="nm-hero-actions">
-              <a class="nm-button nm-button-red" href="#nm-centres">${nearMeUi.findCentre}</a>
-              <a class="nm-button nm-button-outline" href="tel:${ADMISSIONS_PHONE_NUMBER}">${nearMeUi.callAdmissions}</a>
-            </div>
-            <picture class="nm-hero-image">
-              <source type="image/avif" srcset="${escapeHtml(hero.avifSrcSet)}" sizes="(max-width: 767px) 100vw, 45vw" />
-              <img src="${escapeHtml(hero.src)}" srcset="${escapeHtml(hero.srcSet)}" sizes="(max-width: 767px) 100vw, 45vw" width="${hero.width}" height="${hero.height}" alt="${escapeHtml(hero.alt)}" fetchpriority="high" decoding="async" />
-            </picture>
           </div>
           <section class="nm-finder" id="nm-finder" aria-labelledby="nm-finder-title">
             <h2 id="nm-finder-title">${nearMeUi.finderHeading}</h2>
@@ -88,7 +87,7 @@ export function renderPlaySchoolNearMeHtml(): string {
               <input type="hidden" name="message" value="${escapeHtml(nearMeUi.formMessage)}" />
               <input type="hidden" name="leadSource" value="${escapeHtml(nearMeUi.formLeadSource)}" />
               <label>${nearMeUi.parentName}<input name="parentName" autocomplete="name" required minlength="2" /></label><small class="nm-error" data-error="parentName" hidden></small>
-              <label>${nearMeUi.mobile}<input name="phone" type="tel" inputmode="tel" autocomplete="tel" pattern="[+0-9()\\s-]{10,}" required /></label><small class="nm-error" data-error="phone" hidden></small>
+              <label>${nearMeUi.mobile}<input name="phone" type="tel" inputmode="tel" autocomplete="tel" pattern="[+0-9\\(\\)\\s\\-]{10,}" required /></label><small class="nm-error" data-error="phone" hidden></small>
               <label>${nearMeUi.childAge}<select name="childAge" required><option value="">Choose age group</option>${nearMeUi.ageChoices.map((choice) => `<option value="${escapeHtml(choice)}">${escapeHtml(choice)}</option>`).join("")}</select></label><small class="nm-error" data-error="childAge" hidden></small>
               <label>${nearMeUi.preferredCentre}<select name="branch" required><option value="">Choose a centre</option>${PLAY_SCHOOL_NEAR_ME_CENTRES.map((centre) => `<option value="${escapeHtml(centre.localityName)}">${escapeHtml(centre.localityName)}</option>`).join("")}</select></label><small class="nm-error" data-error="branch" hidden></small>
               <p class="nm-error nm-form-error" id="nm-form-error" role="alert" hidden></p>
@@ -99,10 +98,20 @@ export function renderPlaySchoolNearMeHtml(): string {
             <p class="nm-privacy">${nearMeUi.privacy}</p>
             <a class="nm-quiet-link" href="#nm-callback-form" data-action="book-visit">${nearMeUi.bookVisit}</a>
           </section>
+          <div class="nm-hero-media">
+            <div class="nm-hero-actions">
+              <a class="nm-button nm-button-red" href="#nm-trust">${nearMeUi.findCentre}</a>
+              <a class="nm-button nm-button-outline" href="tel:${ADMISSIONS_PHONE_NUMBER}">${nearMeUi.callAdmissions}</a>
+            </div>
+            <picture class="nm-hero-image">
+              <source type="image/avif" srcset="${escapeHtml(hero.avifSrcSet)}" sizes="(max-width: 767px) 100vw, 45vw" />
+              <img src="${escapeHtml(hero.src)}" srcset="${escapeHtml(hero.srcSet)}" sizes="(max-width: 767px) 100vw, 45vw" width="${hero.width}" height="${hero.height}" alt="${escapeHtml(hero.alt)}" fetchpriority="high" decoding="async" />
+            </picture>
+          </div>
         </div>
       </section>
 
-      <section class="nm-trust" aria-label="Rainbow Preschool facts"><div class="nm-trust-grid">
+      <section class="nm-trust" id="nm-trust" aria-label="Rainbow Preschool facts"><div class="nm-trust-grid">
         ${nearMeCopy.trust.map(([value, label]) => `<div><strong>${escapeHtml(value)}</strong><span>${escapeHtml(label)}</span></div>`).join("")}
       </div></section>
 
@@ -121,9 +130,9 @@ export function renderPlaySchoolNearMeHtml(): string {
 
       <section class="nm-section nm-info-section"><div class="nm-section-heading"><span class="nm-eyebrow">${escapeHtml(nearMeCopy.sectionEyebrows.timings)}</span><h2>${escapeHtml(nearMeCopy.headings.timings)}</h2></div>
         <div class="nm-info-grid">
-          <article><span class="nm-info-icon">01</span><h3>Timings</h3><p>Morning 8:30–11:30 AM · Afternoon 12:30–3:30 PM · Monday to Friday</p></article>
-          <article><span class="nm-info-icon">02</span><h3>Fees</h3><p>Fees vary by centre and class. Call Admissions for the 2027-28 fee details.</p><a class="nm-button nm-button-red" href="tel:${ADMISSIONS_PHONE_NUMBER}">Call Admissions</a></article>
-          <article><span class="nm-info-icon">03</span><h3>Transport</h3><p>GPS-enabled in-house transport at all 6 centres.</p></article>
+          <article>${infoIcon("clock")}<h3>Timings</h3><p>Morning 8:30–11:30 AM · Afternoon 12:30–3:30 PM · Monday to Friday</p></article>
+          <article>${infoIcon("banknote")}<h3>Fees</h3><p>Fees vary by centre and class. Call Admissions for the 2027-28 fee details.</p><a class="nm-button nm-button-red" href="tel:${ADMISSIONS_PHONE_NUMBER}">Call Admissions</a></article>
+          <article>${infoIcon("bus")}<h3>Transport</h3><p>GPS-enabled in-house transport at all 6 centres.</p></article>
         </div>
       </section>
 

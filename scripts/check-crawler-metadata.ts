@@ -335,6 +335,20 @@ async function main(): Promise<void> {
         failures.push({ route: `${route} [${name}]`, reason: `HTTP ${result.status}` });
         continue;
       }
+      if (route === "/play-school-near-me") {
+        // This hub deliberately serves the same complete initial document to
+        // visitors and crawlers, rather than the legacy bot-only footer.
+        const visitor = await fetchWithUA(route, "Mozilla/5.0");
+        const main = (html: string) => html.match(/<main\b[^>]*\bid=["']near-me-document["'][^>]*>[\s\S]*?<\/main>/i)?.[0];
+        const crawlerMain = main(result.body);
+        if ("error" in visitor || visitor.status !== 200 || !crawlerMain || crawlerMain !== main(visitor.body)) {
+          failures.push({
+            route: `${route} [${name}]`,
+            reason: `${name} did not receive the complete visitor-identical near-me document`,
+          });
+        }
+        continue;
+      }
       if (!result.body.includes("Our Network:")) {
         failures.push({
           route: `${route} [${name}]`,

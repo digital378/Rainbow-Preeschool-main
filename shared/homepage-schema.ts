@@ -2,6 +2,7 @@ import { centres } from "./centre-data";
 import {
   HOME_PUBLISH_DATE_ISO,
 } from "./home-publish-date";
+import { SHARED_ORGANIZATION_SCHEMA } from "./organization-schema";
 
 export const HOMEPAGE_URL = "https://www.rainbowpreschools.com/";
 export const HOMEPAGE_TITLE =
@@ -11,43 +12,7 @@ export const HOMEPAGE_DESCRIPTION =
 export const HOMEPAGE_H1 =
   "Preschool in Thane · Playgroup, Nursery & Kindergarten";
 
-const ORGANIZATION_ID = "https://www.rainbowpreschools.com/#organization";
-
-export const HOMEPAGE_ORGANIZATION_SCHEMA = {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "@id": ORGANIZATION_ID,
-  name: "Rainbow Preschool International",
-  url: "https://www.rainbowpreschools.com/",
-  logo: {
-    "@type": "ImageObject",
-    url: "https://www.rainbowpreschools.com/images/logo.webp",
-    width: 512,
-    height: 512,
-  },
-  foundingDate: "2007",
-  telephone: "+918291568972",
-  contactPoint: {
-    "@type": "ContactPoint",
-    telephone: "+91-8291568972",
-    email: "admin@rainbowpreschools.com",
-    contactType: "admissions",
-    areaServed: "Thane",
-    hoursAvailable: {
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-      opens: "09:00",
-      closes: "18:00",
-    },
-  },
-  sameAs: [
-    "https://www.google.com/maps/place/?q=place_id:ChIJs8uL-1-5vjcRPWjKJYOMaA0",
-    "https://www.facebook.com/rainbowpreschoolthane",
-    "https://www.instagram.com/rainbowpreschoolthane",
-    "https://www.youtube.com/@RainbowPreschoolInternational",
-    "https://www.justdial.com/Thane/Rainbow-Preschool-International",
-  ],
-};
+export const HOMEPAGE_ORGANIZATION_SCHEMA = SHARED_ORGANIZATION_SCHEMA;
 
 export const HOMEPAGE_PRESCHOOL_SCHEMAS = centres.map((centre) => ({
   "@context": "https://schema.org",
@@ -64,7 +29,7 @@ export const HOMEPAGE_PRESCHOOL_SCHEMAS = centres.map((centre) => ({
     postalCode: centre.postalCode,
     addressCountry: "IN",
   },
-  parentOrganization: { "@id": ORGANIZATION_ID },
+  parentOrganization: { "@id": SHARED_ORGANIZATION_SCHEMA["@id"] },
 }));
 
 export const HOMEPAGE_WEBPAGE_SCHEMA = {
@@ -76,7 +41,7 @@ export const HOMEPAGE_WEBPAGE_SCHEMA = {
   description: HOMEPAGE_DESCRIPTION,
   dateModified: HOME_PUBLISH_DATE_ISO,
   inLanguage: "en-IN",
-  publisher: { "@id": ORGANIZATION_ID },
+  publisher: { "@id": SHARED_ORGANIZATION_SCHEMA["@id"] },
   about: HOMEPAGE_PRESCHOOL_SCHEMAS.map((preschool) => ({
     "@id": preschool["@id"],
   })),

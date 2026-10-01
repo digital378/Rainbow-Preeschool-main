@@ -577,7 +577,10 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
       ${seo.reviewerAfterContent ? "" : reviewerCreditHtml}
        ${seo.introSegments
          ? `<p>${seo.introSegments.map(segment =>
-             segment.href && /^tel:\+?[0-9]+$/.test(segment.href)
+             segment.href && (
+               /^tel:\+?[0-9]+$/.test(segment.href)
+               || requestUrl === "/top-preschools-in-thane" && segment.href === "/play-school-near-me"
+             )
                ? `<a href="${escapeHtml(segment.href)}">${escapeHtml(segment.text)}</a>`
                : escapeHtml(segment.text)
            ).join("")}</p>`

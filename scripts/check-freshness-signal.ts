@@ -18,6 +18,7 @@
  *   2 — could not reach the server at all
  */
 
+import { statSync } from "node:fs";
 import { LAST_UPDATED_ISO, LAST_UPDATED_DISPLAY } from "../shared/site-freshness";
 import { HOME_PUBLISH_DATE_ISO } from "../shared/home-publish-date";
 import { ADMISSIONS_PUBLISH_DATE_ISO, ADMISSIONS_PUBLISH_DATE_DISPLAY } from "../shared/admissions-page-copy";
@@ -175,7 +176,7 @@ async function checkUrl(path: string): Promise<CheckResult> {
     : branchPage ? branchPage.publishDate
     : comparisonPage ? TOP_PRESCHOOLS_COPY.dateIso
     : path === "/about" ? ABOUT_PAGE_COPY.dateIso
-    : redesignedHub ? LAST_UPDATED_ISO
+    : redesignedHub ? new Date(statSync("dist/index.cjs").mtimeMs).toISOString().slice(0, 10)
     : LAST_UPDATED_ISO;
   if (
     !html.includes(`"dateModified":"${expectedDate}"`) &&

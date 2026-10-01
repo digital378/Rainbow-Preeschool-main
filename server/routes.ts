@@ -2,6 +2,8 @@ import express, { type Express, type Request, type Response, type NextFunction }
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertContactSchema, joinNowBranchNames } from "@shared/schema";
+import { ADMISSIONS_PHONE_NUMBER } from "@shared/centre-data";
+import { getPlaySchoolNearMeProgramme } from "@shared/play-school-near-me-content";
 import { z } from "zod";
 import { sendLeadNotificationEmail, sendSheetsFailureAlertEmail, sendEmailFailureAlertEmail } from "./gmail";
 import { sendLeadToMCB, getBranchID } from "./mcb";
@@ -14,6 +16,18 @@ import path from "path";
 import fs from "fs";
 
 const RECAPTCHA_SECRET_KEY = process.env.RECAPTCHA_SECRET_KEY || "";
+const renderNearMeContactResponse = (success: boolean) => `<!doctype html>
+<html lang="en">
+  <head><meta charset="utf-8"><meta name="robots" content="noindex,nofollow"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${success ? "Request received" : "Request not sent"} | Rainbow Preschool</title></head>
+  <body>
+    <main>
+      <h1>${success ? "Thank you — your callback request was received." : "We couldn’t send your request."}</h1>
+      <p>${success ? "The admissions team will respond within 24 hours." : "Please go back and check your details, or call Admissions for help."}</p>
+      <p><a href="tel:${ADMISSIONS_PHONE_NUMBER}">Call Admissions</a></p>
+      <p><a href="/play-school-near-me">Back to Play School Near Me</a></p>
+    </main>
+  </body>
+</html>`;
 
 // Legacy redirect map removed — all redirects now handled in server/redirects.ts
 const _LEGACY_REDIRECT_MAP: Record<string, string> = {
@@ -530,7 +544,14 @@ export async function registerRoutes(
   app.post("/api/contact", async (req, res) => {
     let submissionKey: string | null = null;
     let finishJob: ((result: { status: number; body: unknown }) => void) | null = null;
+    let isNearMeNativeForm = false;
     try {
+      isNearMeNativeForm =
+        Boolean(req.is("application/x-www-form-urlencoded")) &&
+        req.body?.leadSource === "play-school-near-me" &&
+        !req.xhr;
+      if (isNearMeNativeForm) res.set("X-Robots-Tag", "noindex, nofollow");
+
       const { recaptchaToken, submissionId, ...formData } = req.body;
       submissionKey =
         typeof submissionId === "string" && submissionId.length > 0 && submissionId.length <= 64
@@ -581,7 +602,10 @@ export async function registerRoutes(
         }
       }
 
-      const validatedData = insertContactSchema.parse(formData);
+      const dataForValidation = formData.leadSource === "play-school-near-me"
+        ? { ...formData, programme: getPlaySchoolNearMeProgramme(String(formData.childAge ?? "")) }
+        : formData;
+      const validatedData = insertContactSchema.parse(dataForValidation);
       // Campaign belongs to the lead notification/CRM request, not the
       // existing lead table: new server code must remain safe with the
       // published table even when its schema has not been updated yet.
@@ -682,7 +706,11 @@ export async function registerRoutes(
       // reservation so duplicate requests replay this exact response).
       const responseBody = { success: true, id: contact.id, emailSent, sheetAppended };
       if (finishJob) finishJob({ status: 201, body: responseBody });
-      res.status(201).json(responseBody);
+      if (isNearMeNativeForm) {
+        res.status(201).type("html").send(renderNearMeContactResponse(true));
+      } else {
+        res.status(201).json(responseBody);
+      }
       
       // Send to MCB CRM in background (non-blocking)
       (async () => {
@@ -710,12 +738,20 @@ export async function registerRoutes(
       if (error instanceof z.ZodError) {
         const body = { error: "Invalid form data", details: error.errors };
         if (finishJob) finishJob({ status: 400, body });
-        res.status(400).json(body);
+        if (isNearMeNativeForm) {
+          res.status(400).type("html").send(renderNearMeContactResponse(false));
+        } else {
+          res.status(400).json(body);
+        }
       } else {
         console.error("Contact submission error:", error);
         const body = { error: "Failed to submit contact form" };
         if (finishJob) finishJob({ status: 500, body });
-        res.status(500).json(body);
+        if (isNearMeNativeForm) {
+          res.status(500).type("html").send(renderNearMeContactResponse(false));
+        } else {
+          res.status(500).json(body);
+        }
       }
     }
   });

@@ -89,6 +89,7 @@ export function injectIndexPolicyShell(path: string, html: string): string {
     result = result.replace('<div id="root"></div>', `<div id="about-initial"><h1 id="about-initial-h1">${escape(ABOUT_PAGE_COPY.heroHeading)}</h1></div><div id="root"></div>`);
   }
   if (path === "/play-school-near-me") {
+    result = result.replace(/<template id="static-lcp-hero-template">[\s\S]*?<\/template>/i, "");
     const hero = playSchoolNearMePhotos.hero;
     // The page renderer is the sole source of visitor-visible hub content.
     // Keep it outside the app root so the hub controller can enhance the

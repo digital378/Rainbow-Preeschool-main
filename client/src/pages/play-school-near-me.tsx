@@ -9,7 +9,10 @@ import {
   PLAY_SCHOOL_NEAR_ME_CENTRES,
   PLAY_SCHOOL_NEAR_ME_CONTENT,
   PLAY_SCHOOL_NEAR_ME_OG,
+  NEAR_ME_BUILD_DATE,
   getPlaySchoolNearMeSchemas,
+  getPlaySchoolNearMeProgramme,
+  findPlaySchoolNearMeAreaMatches,
   nearMeUi,
 } from "@shared/play-school-near-me-content";
 import { renderPlaySchoolNearMeHtml } from "@shared/play-school-near-me-render";
@@ -36,8 +39,6 @@ function isPlaySchoolNearMeSchema(script: HTMLScriptElement) {
     return false;
   }
 }
-
-const normalise = (value: string) => value.trim().toLocaleLowerCase().replace(/\s+/g, " ");
 
 function mountStaticDocument() {
   let documentMain = document.getElementById("near-me-document");
@@ -66,7 +67,7 @@ function PlaySchoolNearMe() {
     [],
   );
   const structuredData = useMemo(
-    () => existingPageSchemas.length ? undefined : getPlaySchoolNearMeSchemas(new Date().toISOString().slice(0, 10)),
+    () => existingPageSchemas.length ? undefined : getPlaySchoolNearMeSchemas(NEAR_ME_BUILD_DATE),
     [existingPageSchemas],
   );
 
@@ -130,19 +131,13 @@ function PlaySchoolNearMe() {
       }
     };
     const lookupArea = () => {
-      const query = normalise(areaInput.value);
+      const query = areaInput.value;
       results.replaceChildren();
-      if (!query) {
+      if (!query.trim()) {
         setStatus("");
         return;
       }
-      const matches = PLAY_SCHOOL_NEAR_ME_CENTRES.map((centre) => {
-        const nearOne = centre.near1.some((area) => normalise(area).includes(query) || query.includes(normalise(area)));
-        const nearTwo = centre.near2.some((area) => normalise(area).includes(query) || query.includes(normalise(area)));
-        const aliases = [centre.localityName, ...(centre.areasServed ?? [])];
-        const aliasMatch = aliases.some((area) => normalise(area).includes(query) || query.includes(normalise(area)));
-        return { centre, priority: nearOne ? 0 : nearTwo ? 1 : 2, matches: nearOne || nearTwo || aliasMatch };
-      }).filter((entry) => entry.matches).sort((a, b) => a.priority - b.priority);
+      const matches = findPlaySchoolNearMeAreaMatches(query);
       renderResults(matches.map(({ centre }) => ({ centre })));
       setStatus(matches.length
         ? matches.length === 1 ? nearMeUi.areaMatchOne : nearMeUi.areaMatchMany.replace("{count}", String(matches.length))
@@ -272,6 +267,7 @@ function PlaySchoolNearMe() {
       const parentName = String(values.get("parentName") ?? "").trim();
       const phone = String(values.get("phone") ?? "").trim();
       const childAge = String(values.get("childAge") ?? "");
+      const programme = getPlaySchoolNearMeProgramme(childAge);
       const branch = String(values.get("branch") ?? "");
       if (parentName.length < 2) revealFormFieldError("parentName", nearMeUi.invalidName);
       if (!/^[+\d()\s-]{10,}$/.test(phone)) revealFormFieldError("phone", nearMeUi.invalidPhone);
@@ -287,7 +283,7 @@ function PlaySchoolNearMe() {
           phone,
           childAge,
           branch,
-          programme: nearMeUi.formProgramme,
+          programme,
           childName: nearMeUi.formChildName,
           email: nearMeUi.formEmail,
           message: nearMeUi.formMessage,
@@ -295,7 +291,7 @@ function PlaySchoolNearMe() {
         });
         const data = await response.json();
         if (!cancelled) setStatus(nearMeUi.callbackSent);
-        if (data?.emailSent) trackFormSubmit({ formType: "instant", programme: "Playgroup", centre: branch, parentName, phone, childAge });
+        if (data?.emailSent) trackFormSubmit({ formType: "instant", programme, centre: branch, parentName, phone, childAge });
         form.reset();
       } catch {
         if (!cancelled) {

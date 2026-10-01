@@ -69,6 +69,7 @@ function scanBanned(content: string): string[] {
   ];
   const failures = bans.filter(pattern => pattern.test(content)).map(String);
   const permitted = [
+    /Looking for the best preschool or play school near you in Thane\? 6 Rainbow centres, ages 1\.5–5\.5, since 2007\. Book a visit for 2027-28 admissions\./gi,
     /Best Preschool in Thane award(?:\s*\([^)]*\))?/gi,
     /Best Preschool in Thane\s*\(2018,\s*2023\)/gi,
     /How to choose the best preschool in Thane/gi,
@@ -115,7 +116,7 @@ async function run() {
     assert.equal(attribute(canonicalTag || "", "href"), domain + path);
     assert(meta(html, "og:image")?.endsWith("/images/og/play-school-near-me-thane-og.jpg"));
     const content = text(main(html));
-    assert.deepEqual(scanBanned(content), [], "Banned claims remain");
+    assert.deepEqual(scanBanned(decode(html)), [], "Banned claims remain in full HTML, metadata, schema or attributes");
     const structured = schemas(html);
     const pageSchemas = structured.filter(schema => {
       const organization = ["Organization", "EducationalOrganization"].includes(schema["@type"])
@@ -160,6 +161,25 @@ async function run() {
     .map(url => url.pathname + url.search))];
   const statuses = await Promise.all(internal.map(async path => [path, (await fetch(base + path, { redirect: "manual" })).status] as const));
   for (const [path, status] of statuses) assert.equal(status, 200, `Internal link is not final 200: ${path}`);
+  const inbound = [
+    ["/", "find a play school near you in Thane"],
+    ["/top-preschools-in-thane", "Rainbow play schools near you"],
+    ["/playgroup", "playgroup near me in Thane"],
+    ["/nursery", "nursery school near me"],
+    ["/kindergarten", "kindergarten near me in Thane"],
+    ["/preschool-admissions", "preschool near me — all 6 centres"],
+    ...branches.map(([slug]) => [`/preschool-in-${slug}-thane`, "All Rainbow play schools in Thane"]),
+  ];
+  const inboundFailures = await Promise.all(inbound.map(async ([path, anchor]) => {
+    const response = await fetch(base + path, { headers: { "user-agent": "Googlebot" } });
+    assert.equal(response.status, 200, `Inbound source not 200: ${path}`);
+    const html = await response.text();
+    const matching = [...html.matchAll(/(<a\b[^>]*>)([\s\S]*?)<\/a>/gi)]
+      .filter(match => text(match[2]) === anchor
+        && new URL(attribute(match[1], "href") || "", base).pathname === "/play-school-near-me");
+    return matching.length === 1 ? null : `${path}: "${anchor}" found ${matching.length} times`;
+  }));
+  assert.deepEqual(inboundFailures.filter(Boolean), [], "Contextual inbound link contract");
   console.log(`Near-me contract PASS: title ${title.length}, meta ${description.length}; H1–H3 diff []; banned hits 0; six centres/all areas; schema reference IDs; ${internal.length} internal links 200.`);
   console.log("H1–H3 outline:", JSON.stringify(outline));
 }

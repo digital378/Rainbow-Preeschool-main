@@ -2,6 +2,11 @@ import type { CentreData } from "./centre-data";
 import { centres } from "./centre-data";
 import { playSchoolNearMePhotos } from "./branch-photos";
 
+declare const __NEAR_ME_BUILD_DATE__: string;
+export const NEAR_ME_BUILD_DATE = typeof __NEAR_ME_BUILD_DATE__ === "string"
+  ? __NEAR_ME_BUILD_DATE__
+  : new Date().toISOString().slice(0, 10);
+
 export const PLAY_SCHOOL_NEAR_ME_OG = {
   url: `https://www.rainbowpreschools.com${playSchoolNearMePhotos.og.src}`,
   alt: playSchoolNearMePhotos.og.alt,
@@ -141,6 +146,46 @@ export const areaOwners: AreaOwner[] = (() => {
 
 export const allCentreFilters = ["All", "Ghodbunder Road", "Manpada", "Kasarvadavali", "Dhokali / Kolshet", "Hariniwas / Naupada", "Kalwa"] as const;
 
+const areaCombiningMarks = new RegExp("\\p{M}", "gu");
+const areaSeparators = new RegExp("[^\\p{L}\\p{N}]", "gu");
+
+export function normalisePlaySchoolNearMeArea(value: string) {
+  return value.normalize("NFKD").toLocaleLowerCase().replace(areaCombiningMarks, "").replace(areaSeparators, "");
+}
+
+export function findPlaySchoolNearMeAreaMatches(value: string) {
+  const query = normalisePlaySchoolNearMeArea(value);
+  if (!query) return [];
+  return PLAY_SCHOOL_NEAR_ME_CENTRES.map((centre) => {
+    const nearOne = centre.near1.some((area) => {
+      const normalizedArea = normalisePlaySchoolNearMeArea(area);
+      return normalizedArea.includes(query) || query.includes(normalizedArea);
+    });
+    const nearTwo = centre.near2.some((area) => {
+      const normalizedArea = normalisePlaySchoolNearMeArea(area);
+      return normalizedArea.includes(query) || query.includes(normalizedArea);
+    });
+    const aliases = [centre.localityName, ...(centre.areasServed ?? [])];
+    const aliasMatch = aliases.some((area) => {
+      const normalizedArea = normalisePlaySchoolNearMeArea(area);
+      return normalizedArea.includes(query) || query.includes(normalizedArea);
+    });
+    return { centre, priority: nearOne ? 0 : nearTwo ? 1 : 2, matches: nearOne || nearTwo || aliasMatch };
+  }).filter((entry) => entry.matches).sort((a, b) => a.priority - b.priority);
+}
+
+export const playSchoolNearMeProgrammeByAgeChoice = {
+  "Playgroup 1.5–2.5": "Playgroup",
+  "Nursery 2.5–3.5": "Nursery",
+  "Jr. KG 3.5–4.5": "Jr. KG",
+  "Sr. KG 4.5–5.5": "Sr. KG",
+  "Not sure": "Not sure",
+} as const;
+
+export function getPlaySchoolNearMeProgramme(childAge: string) {
+  return playSchoolNearMeProgrammeByAgeChoice[childAge as keyof typeof playSchoolNearMeProgrammeByAgeChoice] ?? "Not sure";
+}
+
 export const nearMeUi = {
   findCentre: "Find My Nearest Centre",
   callAdmissions: "Call Admissions",
@@ -167,7 +212,7 @@ export const nearMeUi = {
   requestFailed: "We couldn’t send your request. Please try again or call Admissions.",
   callbackSent: "Your callback request was received. The admissions team will respond within 24 hours.",
   privacy: "Your coordinates stay in this browser and are not saved or sent.",
-  formProgramme: "Playgroup",
+  formProgramme: "Not sure",
   formChildName: "Not provided",
   formEmail: "",
   formMessage: "Quick callback request from Play School Near Me page",

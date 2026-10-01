@@ -233,6 +233,11 @@ if ! npx --no-install tsx scripts/check-branch-photo-uniqueness.ts; then
 fi
 
 log "step 11/18 — npm run build"
+log "step 10e/18 — approved Organization metadata and branch identity guard"
+if ! npx --no-install vitest run server/organization-schema.test.ts; then
+  log "FAIL — shared Organization metadata or branch parent reference guard."
+  exit 1
+fi
 if ! npm run build; then
   log "FAIL — production build failed; aborting deploy"
   exit 1

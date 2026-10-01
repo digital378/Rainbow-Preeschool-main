@@ -1,5 +1,6 @@
 import { useEffect } from "react";
-import { PLAYGROUP, KINDERGARTEN, HAPPY_TIMES } from "@shared/programme-data";
+import { PLAYGROUP, KINDERGARTEN } from "@shared/programme-data";
+import { SHARED_ORGANIZATION_SCHEMA } from "@shared/organization-schema";
 
 interface SEOProps {
   title: string;
@@ -139,32 +140,7 @@ export function SEO({
   return null;
 }
 
-export const organizationSchema = {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  name: "Rainbow Preschool International",
-  url: BASE_URL,
-  logo: `${BASE_URL}/images/logo.webp`,
-  description:
-    `Rainbow Preschool International is a trusted preschool and playgroup in Thane, offering quality early childhood education for children aged ${PLAYGROUP.ageMin}\u2013${HAPPY_TIMES.ageMax} years.`,
-  foundingDate: "2007",
-  address: {
-    "@type": "PostalAddress",
-    addressLocality: "Thane",
-    addressRegion: "Maharashtra",
-    addressCountry: "IN",
-  },
-  contactPoint: {
-    "@type": "ContactPoint",
-    telephone: "+91-8291568972",
-    contactType: "admissions",
-    availableLanguage: ["English", "Hindi", "Marathi"],
-  },
-  sameAs: [
-    "https://www.facebook.com/rainbowpreschoolthane",
-    "https://www.instagram.com/rainbowpreschoolthane",
-  ],
-};
+export const organizationSchema = SHARED_ORGANIZATION_SCHEMA;
 
 export const websiteSchema = {
   "@context": "https://schema.org",

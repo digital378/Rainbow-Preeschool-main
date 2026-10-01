@@ -13,6 +13,7 @@ import { FinalCTA } from "./final-cta";
 import { EEATSignals } from "@/components/eeat-signals";
 import { LAST_UPDATED_DISPLAY } from "@shared/site-freshness";
 import { pushToDataLayer } from "@/lib/analytics";
+import { SHARED_ORGANIZATION_SCHEMA } from "@shared/organization-schema";
 
 interface PlaygroupLandingTemplateProps {
   data: PlaygroupLandingData;
@@ -24,17 +25,6 @@ export function PlaygroupLandingTemplate({ data }: PlaygroupLandingTemplateProps
   // Inject structured data
   useEffect(() => {
     const scripts: HTMLScriptElement[] = [];
-
-    // Organization schema
-    const orgSchema = {
-      "@context": "https://schema.org",
-      "@type": "EducationalOrganization",
-      name: "Rainbow Preschool International",
-      url: "https://www.rainbowpreschools.com",
-      logo: "https://www.rainbowpreschools.com/images/logo.webp",
-      description: "Trusted preschool in Thane since 2007",
-      foundingDate: "2007",
-    };
 
     // WebSite schema
     const webSchema = {
@@ -89,7 +79,7 @@ export function PlaygroupLandingTemplate({ data }: PlaygroupLandingTemplateProps
         }
       : null;
 
-    const schemas = [orgSchema, webSchema, breadcrumbSchema, faqSchema, localBusinessSchema].filter(Boolean);
+    const schemas = [SHARED_ORGANIZATION_SCHEMA, webSchema, breadcrumbSchema, faqSchema, localBusinessSchema].filter(Boolean);
 
     // AUDIT-206: Retained — /playgroup-in-* locality pages have minimal SSR
     // entries (locality + h1 only). This useEffect is the sole structured-data

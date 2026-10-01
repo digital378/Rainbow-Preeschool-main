@@ -1,3 +1,4 @@
+import { statSync } from "node:fs";
 import {
   LAST_UPDATED_DISPLAY,
   LAST_UPDATED_ISO,
@@ -96,6 +97,7 @@ import {
 } from "@shared/homepage-schema";
 import { NATIONAL_SYMBOLS_FAQ_SCHEMA_ITEMS } from "@shared/national-symbols-faq-data";
 import { NATIONAL_SYMBOLS_CRAFTS } from "@shared/national-symbols-craft-data";
+import { SHARED_ORGANIZATION_SCHEMA } from "@shared/organization-schema";
 import { PLAY_SCHOOL_NEAR_ME_CONTENT, getPlaySchoolNearMeSchemas } from "@shared/play-school-near-me-content";
 import { redirectMap } from "./redirects";
 import { SITEMAP_ENTRIES } from "@shared/sitemap-entries";
@@ -547,6 +549,9 @@ const BLOG_SLUGS = [
 assertAllBlogSlugsCovered(BLOG_SLUGS);
 
 const BASE_URL = "https://www.rainbowpreschools.com";
+const NEAR_ME_BUILD_DATE = new Date(process.env.NODE_ENV === "production"
+  ? statSync("dist/index.cjs").mtimeMs
+  : Date.now()).toISOString().slice(0, 10);
 
 export interface PageSEOData {
   title: string;
@@ -618,119 +623,7 @@ export interface PageSEOData {
   };
 }
 
-/**
- * Slim EducationalOrganization schema for programme + commercial pages.
- * Org identity only.
- */
-
-const programmeOrgSchema = {
-  "@context": "https://schema.org",
-  "@type": "EducationalOrganization",
-  "@id": `${BASE_URL}/#organization`,
-  name: "Rainbow Preschool International",
-  alternateName: "Rainbow Preschool",
-  url: BASE_URL,
-  logo: {
-    "@type": "ImageObject",
-    url: `${BASE_URL}/images/logo.webp`,
-    width: 512,
-    height: 512,
-  },
-  image: `${BASE_URL}/og-image.jpg`,
-  description: "Rainbow Preschool International is a trusted preschool and playgroup in Thane, offering quality early childhood education for children aged 1.5 to 6 years since 2007.",
-  foundingDate: "2007",
-  numberOfEmployees: { "@type": "QuantitativeValue", minValue: 50 },
-  areaServed: [
-    { "@type": "City", name: "Thane", containedInPlace: { "@type": "State", name: "Maharashtra" } },
-    { "@type": "Place", name: "Thane West" },
-    { "@type": "Place", name: "Ghodbunder Road, Thane" },
-    { "@type": "Place", name: "Manpada, Thane" },
-    { "@type": "Place", name: "Naupada, Thane" },
-    { "@type": "Place", name: "Majiwada, Thane" },
-    { "@type": "Place", name: "Kolshet Road, Thane" },
-    { "@type": "Place", name: "Kalwa, Thane" },
-    { "@type": "Place", name: "Kasarvadavali, Thane" },
-    { "@type": "AdministrativeArea", name: "Mumbai Metropolitan Region" },
-  ],
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: "2nd Floor, Chestnut Plaza, Opp. Edenwoods, Khewra Cir Marg",
-    addressLocality: "Thane",
-    addressRegion: "Maharashtra",
-    postalCode: "400610",
-    addressCountry: "IN",
-  },
-  contactPoint: {
-    "@type": "ContactPoint",
-    telephone: "+918291568972",
-    contactType: "admissions",
-    availableLanguage: ["English", "Hindi", "Marathi"],
-  },
-};
-
-const organizationSchema = {
-  "@context": "https://schema.org",
-  "@type": "EducationalOrganization",
-  "@id": `${BASE_URL}/#organization`,
-  name: "Rainbow Preschool International",
-  alternateName: "Rainbow Preschool",
-  url: BASE_URL,
-  logo: {
-    "@type": "ImageObject",
-    url: `${BASE_URL}/images/logo.webp`,
-    width: 512,
-    height: 512,
-  },
-  image: `${BASE_URL}/og-image.jpg`,
-  description: "Rainbow Preschool International is a trusted preschool and playgroup in Thane, offering quality early childhood education for children aged 1.5 to 6 years since 2007.",
-  foundingDate: "2007",
-  numberOfEmployees: { "@type": "QuantitativeValue", minValue: 50 },
-  areaServed: [
-    { "@type": "City", name: "Thane", containedInPlace: { "@type": "State", name: "Maharashtra" } },
-    { "@type": "Place", name: "Thane West" },
-    { "@type": "Place", name: "Ghodbunder Road, Thane" },
-    { "@type": "Place", name: "Manpada, Thane" },
-    { "@type": "Place", name: "Naupada, Thane" },
-    { "@type": "Place", name: "Majiwada, Thane" },
-    { "@type": "Place", name: "Kolshet Road, Thane" },
-    { "@type": "Place", name: "Kalwa, Thane" },
-    { "@type": "Place", name: "Kasarvadavali, Thane" },
-    { "@type": "AdministrativeArea", name: "Mumbai Metropolitan Region" },
-  ],
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: "2nd Floor, Chestnut Plaza, Opp. Edenwoods, Khewra Cir Marg",
-    addressLocality: "Thane",
-    addressRegion: "Maharashtra",
-    postalCode: "400610",
-    addressCountry: "IN",
-  },
-  contactPoint: {
-    "@type": "ContactPoint",
-    telephone: "+918291568972",
-    contactType: "admissions",
-    availableLanguage: ["English", "Hindi", "Marathi"],
-  },
-  sameAs: [
-    "https://www.google.com/maps/place/?q=place_id:ChIJs8uL-1-5vjcRPWjKJYOMaA0",
-    "https://www.facebook.com/rainbowpreschoolthane",
-    "https://www.instagram.com/rainbowpreschoolthane",
-    "https://www.youtube.com/@RainbowPreschoolInternational",
-    "https://www.justdial.com/Thane/Rainbow-Preschool-International",
-  ],
-  award: [
-    "India Today Best Preschool Award",
-    "ScooNews Education Award",
-    "Economic Times Best Brand Award",
-  ],
-  knowsAbout: [
-    "Early Childhood Education",
-    "Preschool Education",
-    "Play-Based Learning",
-    "Montessori Education",
-    "Child Development",
-  ],
-};
+const organizationSchema = SHARED_ORGANIZATION_SCHEMA;
 
 const websiteSchema = {
   "@context": "https://schema.org",
@@ -1620,12 +1513,12 @@ const staticPages: Record<string, PageSEOData> = {
     heroBadge: PLAY_SCHOOL_NEAR_ME_CONTENT.kicker,
     structuredData: [
       organizationSchema,
-      websiteSchema,
-      ...getPlaySchoolNearMeSchemas(LAST_UPDATED_ISO),
+      { ...websiteSchema, "@id": `${BASE_URL}/#website` },
+      ...getPlaySchoolNearMeSchemas(NEAR_ME_BUILD_DATE),
     ],
     suppressArticleSchema: true,
-    lastModified: LAST_UPDATED_ISO,
-    lastModifiedDisplay: LAST_UPDATED_DISPLAY,
+    lastModified: NEAR_ME_BUILD_DATE,
+    lastModifiedDisplay: NEAR_ME_BUILD_DATE,
   },
   "/play-school-near-ghodbunder-road": {
     title: "Play School Near Ghodbunder Road | Rainbow Preschool",
@@ -1775,12 +1668,7 @@ const staticPages: Record<string, PageSEOData> = {
     h1: testimonialsSEO.h1,
     introText: testimonialsSEO.intro,
     breadcrumbs: [{ name: "Home", url: "/" }, { name: "Testimonials", url: "/testimonials" }],
-    structuredData: [{
-      "@context": "https://schema.org",
-      "@type": "EducationalOrganization",
-      name: "Rainbow Preschool International",
-      url: BASE_URL,
-    }],
+    structuredData: [organizationSchema],
     contentSections: [
       { heading: "Parent Experiences", items: testimonials.map((testimonial) =>
         `${testimonial.centre} · ${testimonial.programme} · ${testimonial.childAge ?? ""} — ${testimonial.text}`
