@@ -12,17 +12,18 @@ import { appendEnquiryRow, appendJoinNowRow } from "./sheets-sync";
 import { registerIndraApiRoutes } from "./indra-api";
 import { pushIndraEvent } from "./indra-webhook";
 import { requireAdminHeader, requireRpsAuth } from "./admin-auth";
+import { validateNearMeContactFields } from "./near-me-contact-validation";
 import path from "path";
 import fs from "fs";
 
 const RECAPTCHA_SECRET_KEY = process.env.RECAPTCHA_SECRET_KEY || "";
-const renderNearMeContactResponse = (success: boolean) => `<!doctype html>
+const renderNearMeContactResponse = (success: boolean, errorMessage?: string) => `<!doctype html>
 <html lang="en">
   <head><meta charset="utf-8"><meta name="robots" content="noindex,nofollow"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${success ? "Request received" : "Request not sent"} | Rainbow Preschool</title></head>
   <body>
     <main>
       <h1>${success ? "Thank you — your callback request was received." : "We couldn’t send your request."}</h1>
-      <p>${success ? "The admissions team will respond within 24 hours." : "Please go back and check your details, or call Admissions for help."}</p>
+      <p>${success ? "The admissions team will respond within 24 hours." : errorMessage || "Please go back and check your details, or call Admissions for help."}</p>
       <p><a href="tel:${ADMISSIONS_PHONE_NUMBER}">Call Admissions</a></p>
       <p><a href="/play-school-near-me">Back to Play School Near Me</a></p>
     </main>
@@ -553,6 +554,19 @@ export async function registerRoutes(
       if (isNearMeNativeForm) res.set("X-Robots-Tag", "noindex, nofollow");
 
       const { recaptchaToken, submissionId, ...formData } = req.body;
+      const nearMeFieldErrors = validateNearMeContactFields(formData);
+      if (Object.keys(nearMeFieldErrors).length > 0) {
+        const body = { error: "Invalid form data", fieldErrors: nearMeFieldErrors };
+        if (isNearMeNativeForm) {
+          res.status(400).type("html").send(
+            renderNearMeContactResponse(false, Object.values(nearMeFieldErrors).join(" ")),
+          );
+        } else {
+          res.status(400).json(body);
+        }
+        return;
+      }
+
       submissionKey =
         typeof submissionId === "string" && submissionId.length > 0 && submissionId.length <= 64
           ? submissionId

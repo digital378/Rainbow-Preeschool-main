@@ -32,3 +32,11 @@ Photos replaced by centre façades stay in the unused pool but must not be reass
 **Why:** The creator specifically required replaced heroes to remain unused, even though subsequent page updates allow selecting other unused photos.
 
 **How to apply:** Do not interpret “unused pool” as permission to recycle former Manpada or Kalwa heroes onto a different centre page. Distinguish those reserved images from photos that have never been assigned.
+
+## Creator-approved near-me card reuse
+
+The creator explicitly approved using each centre's existing branch-page hero on the near-me hub and stated that provenance for those assignments is settled. Treat that as creator confirmation, not a new independent verification.
+
+**Why:** On 2026-10-01, the creator replaced the earlier no-reuse requirement with permission to reuse these six existing URLs, without copying or re-saving the files, and exempt only those six hub references from the perceptual guard.
+
+**How to apply:** Preserve each centre's own assignment and keep branch-to-branch uniqueness enforced. This permission does not authorise reassigning a photo to another centre, recycling reserved heroes elsewhere, or labelling arbitrary gallery photos as branch-specific.

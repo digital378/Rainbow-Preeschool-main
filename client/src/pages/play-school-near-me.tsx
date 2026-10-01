@@ -10,12 +10,15 @@ import {
   PLAY_SCHOOL_NEAR_ME_CONTENT,
   PLAY_SCHOOL_NEAR_ME_OG,
   NEAR_ME_BUILD_DATE,
+  areaOwners,
   getPlaySchoolNearMeSchemas,
   getPlaySchoolNearMeProgramme,
   findPlaySchoolNearMeAreaMatches,
+  normalisePlaySchoolNearMeArea,
   nearMeUi,
 } from "@shared/play-school-near-me-content";
 import { renderPlaySchoolNearMeHtml } from "@shared/play-school-near-me-render";
+import { ADMISSIONS_PHONE_NUMBER, branchWhatsAppGreeting } from "@shared/centre-data";
 import "@/styles/play-school-near-me.css";
 
 const NEAR_ME_CANONICAL = "https://www.rainbowpreschools.com/play-school-near-me";
@@ -76,6 +79,9 @@ function PlaySchoolNearMe() {
     const status = documentMain.querySelector<HTMLElement>("#nm-finder-status");
     const results = documentMain.querySelector<HTMLElement>("#nm-mini-results");
     const areaInput = documentMain.querySelector<HTMLInputElement>("#nm-area-input");
+    const areaPicker = documentMain.querySelector<HTMLInputElement>("#nm-area-picker-input");
+    const areaOptions = documentMain.querySelector<HTMLElement>("#nm-area-options");
+    const areaSelection = documentMain.querySelector<HTMLElement>("#nm-area-selection");
     const filterButtons = Array.from(documentMain.querySelectorAll<HTMLButtonElement>(".nm-filter-row button"));
     const centreCards = Array.from(documentMain.querySelectorAll<HTMLElement>(".nm-centre-card"));
     const form = documentMain.querySelector<HTMLFormElement>("#nm-callback-form");
@@ -89,11 +95,12 @@ function PlaySchoolNearMe() {
     let theatreObserver: IntersectionObserver | undefined;
     let faqObserver: IntersectionObserver | undefined;
     let finderActivated = false;
+    let areaPickerActivated = false;
     let filtersActivated = false;
     let faqListenersAttached = false;
     let faqDetails: HTMLDetailsElement[] = [];
 
-    if (!status || !results || !areaInput || !form || !formError || !locateButton || !submitButton) {
+    if (!status || !results || !areaInput || !areaPicker || !areaOptions || !areaSelection || !form || !formError || !locateButton || !submitButton) {
       throw new Error("Play School Near Me document is missing required interactive controls.");
     }
 
@@ -142,6 +149,113 @@ function PlaySchoolNearMe() {
       setStatus(matches.length
         ? matches.length === 1 ? nearMeUi.areaMatchOne : nearMeUi.areaMatchMany.replace("{count}", String(matches.length))
         : nearMeUi.noAreaMatch);
+    };
+    const areaOptionNodes = Array.from(areaOptions.querySelectorAll<HTMLElement>('[role="option"]'));
+    let activeAreaOption = -1;
+    const setActiveAreaOption = (index: number) => {
+      activeAreaOption = index;
+      areaOptionNodes.forEach((option, optionIndex) => {
+        option.setAttribute("aria-selected", String(optionIndex === activeAreaOption));
+      });
+      const activeOption = areaOptionNodes[activeAreaOption];
+      if (activeOption && !activeOption.hidden) areaPicker.setAttribute("aria-activedescendant", activeOption.id);
+      else areaPicker.removeAttribute("aria-activedescendant");
+    };
+    const openAreaOptions = () => {
+      const query = normalisePlaySchoolNearMeArea(areaPicker.value);
+      let visibleCount = 0;
+      areaOptionNodes.forEach((option) => {
+        const matches = !query || normalisePlaySchoolNearMeArea(option.dataset.areaValue ?? "").includes(query);
+        option.hidden = !matches;
+        if (matches) visibleCount++;
+      });
+      areaOptions.hidden = visibleCount === 0;
+      areaPicker.setAttribute("aria-expanded", String(visibleCount > 0));
+      setActiveAreaOption(-1);
+    };
+    const closeAreaOptions = () => {
+      areaOptions.hidden = true;
+      areaPicker.setAttribute("aria-expanded", "false");
+      setActiveAreaOption(-1);
+    };
+    const selectArea = (index: number) => {
+      const owner = areaOwners[index];
+      if (!owner) return;
+      areaPicker.value = owner.area;
+      closeAreaOptions();
+      areaSelection.replaceChildren();
+      const card = document.createElement("article");
+      card.className = "nm-area-result-card";
+      const title = document.createElement("h3");
+      title.textContent = owner.centre.displayName;
+      const distance = document.createElement("p");
+      distance.className = "nm-area-result-distance";
+      distance.textContent = owner.distance;
+      const actions = document.createElement("div");
+      actions.className = "nm-card-actions";
+      const call = document.createElement("a");
+      call.className = "nm-button nm-button-red";
+      call.href = `tel:${ADMISSIONS_PHONE_NUMBER}`;
+      call.textContent = "Call Now";
+      const whatsapp = document.createElement("a");
+      whatsapp.className = "nm-button nm-button-green";
+      whatsapp.href = `https://wa.me/91${encodeURIComponent(owner.centre.whatsappNumber)}?text=${encodeURIComponent(branchWhatsAppGreeting(owner.centre))}`;
+      whatsapp.target = "_blank";
+      whatsapp.rel = "noreferrer";
+      whatsapp.textContent = nearMeUi.whatsApp;
+      whatsapp.dataset.trackWhatsapp = owner.centre.localityName;
+      const view = document.createElement("a");
+      view.className = "nm-button nm-button-outline";
+      view.href = `${owner.centre.preschoolLandingUrl}#centre`;
+      view.textContent = nearMeUi.viewCentre;
+      actions.append(call, whatsapp, view);
+      card.append(title, distance, actions);
+      areaSelection.append(card);
+    };
+    const onAreaPickerInput = () => {
+      areaSelection.replaceChildren();
+      openAreaOptions();
+    };
+    const onAreaPickerKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+        event.preventDefault();
+        if (areaOptions.hidden) openAreaOptions();
+        const options = areaOptionNodes.filter((option) => !option.hidden);
+        if (!options.length) return;
+        const current = options.findIndex((option) => Number(option.dataset.areaIndex) === activeAreaOption);
+        const next = event.key === "ArrowDown"
+          ? (current + 1 + options.length) % options.length
+          : (current <= 0 ? options.length - 1 : current - 1);
+        setActiveAreaOption(Number(options[next].dataset.areaIndex));
+        return;
+      }
+      if (event.key === "Enter") {
+        const active = areaOptionNodes.find((option) => Number(option.dataset.areaIndex) === activeAreaOption && !option.hidden);
+        const exact = areaOwners.findIndex((owner) => normalisePlaySchoolNearMeArea(owner.area) === normalisePlaySchoolNearMeArea(areaPicker.value));
+        const selectedIndex = active ? Number(active.dataset.areaIndex) : exact;
+        if (selectedIndex >= 0) {
+          event.preventDefault();
+          selectArea(selectedIndex);
+        }
+      } else if (event.key === "Escape") {
+        closeAreaOptions();
+      }
+    };
+    const onAreaPickerClick = (event: Event) => {
+      const option = (event.target as Element).closest<HTMLElement>('[role="option"]');
+      if (option?.dataset.areaIndex) selectArea(Number(option.dataset.areaIndex));
+    };
+    const onAreaPickerOutsideClick = (event: Event) => {
+      if (!(event.target instanceof Element) || !event.target.closest(".nm-area-picker")) closeAreaOptions();
+    };
+    const activateAreaPicker = () => {
+      if (areaPickerActivated) return;
+      areaPickerActivated = true;
+      areaPicker.addEventListener("input", onAreaPickerInput);
+      areaPicker.addEventListener("keydown", onAreaPickerKeyDown);
+      areaPicker.addEventListener("focus", openAreaOptions);
+      areaOptions.addEventListener("click", onAreaPickerClick);
+      document.addEventListener("click", onAreaPickerOutsideClick, true);
     };
     const radians = (degrees: number) => degrees * Math.PI / 180;
     const locate = () => {
@@ -229,6 +343,7 @@ function PlaySchoolNearMe() {
       const target = event.target;
       if (!(target instanceof Element)) return;
       if (target.closest("#nm-finder")) activateFinder();
+      if (target.closest(".nm-area-picker")) activateAreaPicker();
       if (target.closest(".nm-filter-row")) activateFilters();
       if (target.closest(".nm-faq-list")) activateFaqListeners();
     };
@@ -269,8 +384,8 @@ function PlaySchoolNearMe() {
       const childAge = String(values.get("childAge") ?? "");
       const programme = getPlaySchoolNearMeProgramme(childAge);
       const branch = String(values.get("branch") ?? "");
-      if (parentName.length < 2) revealFormFieldError("parentName", nearMeUi.invalidName);
-      if (!/^[+\d()\s-]{10,}$/.test(phone)) revealFormFieldError("phone", nearMeUi.invalidPhone);
+      if (!parentName || parentName.length < 2) revealFormFieldError("parentName", nearMeUi.invalidName);
+      if (!/^[6-9][0-9]{9}$/.test(phone)) revealFormFieldError("phone", nearMeUi.invalidPhone);
       if (!childAge) revealFormFieldError("childAge", nearMeUi.invalidAge);
       if (!branch) revealFormFieldError("branch", nearMeUi.invalidCentre);
       if (form.querySelector('[aria-invalid="true"]')) return;
@@ -293,10 +408,29 @@ function PlaySchoolNearMe() {
         if (!cancelled) setStatus(nearMeUi.callbackSent);
         if (data?.emailSent) trackFormSubmit({ formType: "instant", programme, centre: branch, parentName, phone, childAge });
         form.reset();
-      } catch {
+      } catch (caughtError) {
         if (!cancelled) {
-          formError.textContent = nearMeUi.requestFailed;
-          formError.hidden = false;
+          // apiRequest includes the server's JSON body in its error message.
+          // Preserve inline field feedback when the server rejects a stale or
+          // non-JavaScript form submission, without changing the endpoint.
+          const error = caughtError;
+          let fieldErrors: Record<string, string> = {};
+          if (error instanceof Error) {
+            const jsonStart = error.message.indexOf("{");
+            if (jsonStart >= 0) {
+              try {
+                fieldErrors = JSON.parse(error.message.slice(jsonStart)).fieldErrors ?? {};
+              } catch {
+                fieldErrors = {};
+              }
+            }
+          }
+          if (fieldErrors.parentName) revealFormFieldError("parentName", fieldErrors.parentName);
+          if (fieldErrors.phone) revealFormFieldError("phone", fieldErrors.phone);
+          if (!fieldErrors.parentName && !fieldErrors.phone) {
+            formError.textContent = nearMeUi.requestFailed;
+            formError.hidden = false;
+          }
         }
       } finally {
         submitting = false;
@@ -380,6 +514,13 @@ function PlaySchoolNearMe() {
         areaInput.removeEventListener("input", onAreaInput);
         locateButton.removeEventListener("click", onLocate);
         form.removeEventListener("submit", onSubmit);
+      }
+      if (areaPickerActivated) {
+        areaPicker.removeEventListener("input", onAreaPickerInput);
+        areaPicker.removeEventListener("keydown", onAreaPickerKeyDown);
+        areaPicker.removeEventListener("focus", openAreaOptions);
+        areaOptions.removeEventListener("click", onAreaPickerClick);
+        document.removeEventListener("click", onAreaPickerOutsideClick, true);
       }
       if (filtersActivated) filterRow?.removeEventListener("click", onFilter);
       documentMain.removeEventListener("click", onWhatsApp);

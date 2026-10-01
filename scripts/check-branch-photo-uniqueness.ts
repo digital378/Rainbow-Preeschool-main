@@ -8,6 +8,32 @@ const publicRoot = path.resolve(process.cwd(), "client/public");
 // changes. Eight differing bits catches near-identical photos without treating
 // every classroom or play-area photo as the same image.
 const MAX_PHASH_DISTANCE = 8;
+const hubCentreHeroPairs = {
+  "anand-nagar": {
+    src: branchPhotos["anand-nagar"].hero.src,
+    alt: "Rainbow Preschool Anand Nagar, Thane — centre photo",
+  },
+  manpada: {
+    src: branchPhotos.manpada.hero.src,
+    alt: "Rainbow Preschool Manpada, Thane — centre photo",
+  },
+  kasarvadavali: {
+    src: branchPhotos.kasarvadavali.hero.src,
+    alt: "Rainbow Preschool Kasarvadavali, Thane — centre photo",
+  },
+  dhokali: {
+    src: branchPhotos.dhokali.hero.src,
+    alt: "Rainbow Preschool Dhokali, Thane — centre photo",
+  },
+  hariniwas: {
+    src: branchPhotos.hariniwas.hero.src,
+    alt: "Rainbow Preschool Hariniwas, Thane — centre photo",
+  },
+  kalwa: {
+    src: branchPhotos.kalwa.hero.src,
+    alt: "Rainbow Preschool Kalwa, Thane — centre photo",
+  },
+} as const;
 
 interface CheckedPhoto {
   page: string;
@@ -88,6 +114,20 @@ async function main() {
   const checked: CheckedPhoto[] = [];
   const errors: string[] = [];
 
+  for (const [slug, expected] of Object.entries(hubCentreHeroPairs)) {
+    const photo = playSchoolNearMePhotos.centres[slug as keyof typeof playSchoolNearMePhotos.centres];
+    if (!photo || photo.kind !== "photo") {
+      errors.push(`/play-school-near-me centres.${slug}: expected a photo for its matching branch hero`);
+      continue;
+    }
+    if (photo.src !== expected.src) {
+      errors.push(`/play-school-near-me centres.${slug}: expected its own branch hero ${expected.src}, received ${photo.src}`);
+    }
+    if (photo.alt !== expected.alt) {
+      errors.push(`/play-school-near-me centres.${slug}: expected alt text "${expected.alt}"`);
+    }
+  }
+
   for (const [branch, photos] of Object.entries(branchPhotos)) {
     const referencedPhotos = [
       ...("hero" in photos ? [{ section: "hero", ...photos.hero }] : []),
@@ -134,7 +174,16 @@ async function main() {
     if (!filePath) continue;
     try {
       const hash = await perceptualHash(filePath);
+      const hubCentreSlug = photo.section.startsWith("centres.")
+        ? photo.section.slice("centres.".length) as keyof typeof hubCentreHeroPairs
+        : undefined;
       for (const previous of checked) {
+        const ownBranchHeroPair = hubCentreSlug &&
+          photo.src === hubCentreHeroPairs[hubCentreSlug].src &&
+          previous.page === hubCentreSlug &&
+          previous.section === "hero" &&
+          previous.src === hubCentreHeroPairs[hubCentreSlug].src;
+        if (ownBranchHeroPair) continue;
         const distance = hammingDistance(hash, previous.hash);
         if (distance <= MAX_PHASH_DISTANCE) {
           errors.push(
@@ -146,35 +195,6 @@ async function main() {
       checked.push({ page: "/play-school-near-me", section: photo.section, src: photo.src, hash });
     } catch (error) {
       errors.push(`/play-school-near-me ${photo.section}: cannot decode photo ${photo.src}: ${String(error)}`);
-    }
-  }
-
-  for (const [slug, photo] of Object.entries(playSchoolNearMePhotos.centres)) {
-    const filePath = imagePath(photo.src, "/play-school-near-me", `centres.${slug}`, errors);
-    if (photo.kind === "illustration") {
-      // Illustrations are intentionally outside the photo-uniqueness comparison.
-      if (!photo.src.toLowerCase().endsWith(".svg")) {
-        errors.push(`/play-school-near-me centres.${slug}: illustration must be an SVG: ${photo.src}`);
-      }
-    } else if (photo.kind !== "photo") {
-      errors.push(`/play-school-near-me centres.${slug}: unknown image kind`);
-    }
-    if (photo.kind === "photo" && filePath && !checked.some((item) => item.src === photo.src)) {
-      try {
-        const hash = await perceptualHash(filePath);
-        for (const previous of checked) {
-          const distance = hammingDistance(hash, previous.hash);
-          if (distance <= MAX_PHASH_DISTANCE) {
-            errors.push(
-              `/play-school-near-me centres.${slug} (${photo.src}) matches ${previous.page} ${previous.section} ` +
-                `(${previous.src}): perceptual pHash distance ${distance}/64 (threshold ≤${MAX_PHASH_DISTANCE})`,
-            );
-          }
-        }
-        checked.push({ page: "/play-school-near-me", section: `centres.${slug}`, src: photo.src, hash });
-      } catch (error) {
-        errors.push(`/play-school-near-me centres.${slug}: cannot decode photo ${photo.src}: ${String(error)}`);
-      }
     }
   }
 

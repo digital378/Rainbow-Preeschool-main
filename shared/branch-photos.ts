@@ -281,34 +281,34 @@ export const playSchoolNearMePhotos: {
   },
   centres: {
     "anand-nagar": {
-      src: "/images/play-school-near-me/centres/anand-nagar.svg",
-      alt: "Illustrated Rainbow Preschool centre tile for Anand Nagar on Ghodbunder Road",
-      kind: "illustration",
+      src: branchPhotos["anand-nagar"].hero.src,
+      alt: "Rainbow Preschool Anand Nagar, Thane — centre photo",
+      kind: "photo",
     },
     manpada: {
-      src: "/images/play-school-near-me/centres/manpada.svg",
-      alt: "Illustrated Rainbow Preschool centre tile for Manpada near Khewra Circle",
-      kind: "illustration",
+      src: branchPhotos.manpada.hero.src,
+      alt: "Rainbow Preschool Manpada, Thane — centre photo",
+      kind: "photo",
     },
     kasarvadavali: {
-      src: "/images/play-school-near-me/centres/kasarvadavali.svg",
-      alt: "Illustrated Rainbow Preschool centre tile for Kasarvadavali on Ghodbunder Road",
-      kind: "illustration",
+      src: branchPhotos.kasarvadavali.hero.src,
+      alt: "Rainbow Preschool Kasarvadavali, Thane — centre photo",
+      kind: "photo",
     },
     dhokali: {
-      src: "/images/play-school-near-me/centres/dhokali.svg",
-      alt: "Illustrated Rainbow Preschool centre tile for Dhokali on Kolshet Road",
-      kind: "illustration",
+      src: branchPhotos.dhokali.hero.src,
+      alt: "Rainbow Preschool Dhokali, Thane — centre photo",
+      kind: "photo",
     },
     hariniwas: {
-      src: "/images/play-school-near-me/centres/hariniwas.svg",
-      alt: "Illustrated Rainbow Preschool centre tile for Hariniwas Circle",
-      kind: "illustration",
+      src: branchPhotos.hariniwas.hero.src,
+      alt: "Rainbow Preschool Hariniwas, Thane — centre photo",
+      kind: "photo",
     },
     kalwa: {
-      src: "/images/play-school-near-me/centres/kalwa.svg",
-      alt: "Illustrated Rainbow Preschool centre tile for Kalwa in Manisha Nagar",
-      kind: "illustration",
+      src: branchPhotos.kalwa.hero.src,
+      alt: "Rainbow Preschool Kalwa, Thane — centre photo",
+      kind: "photo",
     },
   },
   og: {
@@ -331,6 +331,13 @@ function registerHubAsset(src: string) {
   photoPageOwners[src] = "/play-school-near-me";
 }
 
+function registerHubCentreHero(slug: keyof typeof branchPhotos, src: string) {
+  const expectedSrc = branchPhotos[slug].hero.src;
+  if (src !== expectedSrc || photoPageOwners[src] !== slug) {
+    throw new Error(`Play School Near Me centre image ${slug} must use its own registered branch hero`);
+  }
+}
+
 function registerSrcSet(srcSet?: string) {
   if (!srcSet) return;
   for (const candidate of srcSet.split(",")) {
@@ -343,7 +350,9 @@ registerHubAsset(playSchoolNearMePhotos.hero.src);
 registerSrcSet(playSchoolNearMePhotos.hero.srcSet);
 registerSrcSet(playSchoolNearMePhotos.hero.avifSrcSet);
 registerHubAsset(playSchoolNearMePhotos.about.src);
-for (const centre of Object.values(playSchoolNearMePhotos.centres)) {
-  registerHubAsset(centre.src);
+for (const [slug, centre] of Object.entries(playSchoolNearMePhotos.centres)) {
+  const centreSlug = slug as keyof typeof branchPhotos;
+  if (centre.kind === "photo") registerHubCentreHero(centreSlug, centre.src);
+  else registerHubAsset(centre.src);
 }
 registerHubAsset(playSchoolNearMePhotos.og.src);

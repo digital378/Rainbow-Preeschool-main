@@ -1,3 +1,5 @@
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import { shouldNoIndex, PREFERRED_DOMAIN } from "@shared/seo-config";
 import { getPageSEO } from "./ssr-pages";
 import { PLAYGROUP_COPY } from "@shared/playgroup-page-content";
@@ -95,8 +97,16 @@ export function injectIndexPolicyShell(path: string, html: string): string {
     // Keep it outside the app root so the hub controller can enhance the
     // existing DOM without replacing the stationary H1 or intro.
     result = result.replace(/<link rel="preload"[^>]*>/gi, "");
-    result = result.replace("</head>", `<link rel="stylesheet" href="/styles/play-school-near-me.css" />
-    <link rel="preload" as="image" href="${escape(hero.avifSrcSet.split(",")[0].trim().split(/\s+/)[0])}" imagesrcset="${escape(hero.avifSrcSet)}" imagesizes="(max-width: 767px) 100vw, 45vw" type="image/avif" />
+    const stylesheetPath = resolve(process.cwd(), process.env.NODE_ENV === "production"
+      ? "dist/public/styles/play-school-near-me.css"
+      : "client/public/styles/play-school-near-me.css");
+    const stylesheet = readFileSync(stylesheetPath, "utf8").replace(/<\/style/gi, "<\\/style");
+    result = result.replace(/<head([^>]*)>/i, `<head$1>
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/poppins-800.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-near-me-500.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin fetchpriority="low" href="/fonts/inter-near-me-700.woff2" />`);
+    result = result.replace("</head>", `<style data-near-me-css>${stylesheet}</style>
+    <link rel="preload" as="image" media="(min-width: 768px)" href="${escape(hero.avifSrcSet.split(",")[0].trim().split(/\s+/)[0])}" imagesrcset="${escape(hero.avifSrcSet)}" imagesizes="45vw" type="image/avif" fetchpriority="low" />
     </head>`);
     result = result.replace('<div id="root"></div>', `<div id="root"></div>${renderPlaySchoolNearMeHtml()}<div id="near-me-footer"></div>`);
   }

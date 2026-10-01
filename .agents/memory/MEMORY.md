@@ -45,3 +45,4 @@
 - [Branch FAQ audit timing](branch-faq-audit-timing.md) — wait for hydration before scrolling to lazy FAQs; an immediate scroll can falsely report missing answers.
 - [Design worker write scope](design-worker-write-scope.md) — outputDir is a write boundary; coordinate shared/server/public foundations separately.
 - [Native pattern validation](native-pattern-validation.md) — HTML pattern uses Unicode v mode; ordinary JS regex tests can miss invalid character-class syntax.
+- [Rendered font verification](rendered-font-verification.md) — computed font names and weights can hide fallback or synthetic faces; inspect the actual rendered font.

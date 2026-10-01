@@ -1,0 +1,76 @@
+Update /play-school-near-me (don't publish, don't take screenshots, report in text only)
+
+This is a design update to the page you just built. Other pages stay exactly as they are.
+
+1. Use only the bright Rainbow red
+
+Read the exact red used in the header nav bar from the CSS. Use that value for every red on this page: primary buttons, Call Now buttons, text links, eyebrow labels, the active filter pill, step numbers, FAQ "+" icons and the final call-to-action band.
+Remove the darker crimson/maroon shade (around 
+#C8293B) completely.
+If red link text fails AA contrast, make it bold rather than darker.
+Yellow is only for the award pill and small highlights. Green WhatsApp buttons stay as they are.
+Remove the pastel lilac, teal and peach card backgrounds. Use white, or a very light warm tint where a section needs separation.
+
+2. Bold, legible type (mandatory)
+
+H1, H2 and H3 must use the site's heading font, Poppins: weight 800 for H1 and H2, 700 for H3. The headings currently render at regular weight in a system font, which isn't acceptable.
+Body text: weight 500, colour 
+#1F2937. Centre names and programme card titles: weight 700.
+Remove the monospace font from the eyebrow labels (e.g. "CLOSE TO YOUR EVERYDAY ROUTE") and from the card numbers "01"–"04". Use Poppins 700: eyebrows in bright red, card numbers in yellow.
+
+3. Hero alignment (desktop)
+
+Top-align the "Find a Play School Near You" card with the award pill; remove the empty gap above the card.
+Reduce the hero photo's height, or place it in the right column behind/below the form card. The H1, intro, two buttons and the form should all fit in the first screen at 1366×768.
+Keep the H1 stationary through hydration, as now.
+
+4. "Our 6 play schools in Thane": real branch photos and a Call Now button
+
+Photos:
+Replace the 6 illustrated SVG house tiles with real photos. For each card, use the hero / centre-front photo already assigned to that centre's branch page in shared/branch-photos.ts. Those photos are already verified for their centres, so provenance is settled.
+Reference the existing file URLs; do not copy or re-save the files.
+Exempt only these 6 references on /play-school-near-me from the perceptual photo guard. The guard must still enforce uniqueness between branch pages.
+Delete the 6 unused centres/*.svg tiles.
+Image settings:
+Alt text: "Rainbow Preschool [Centre], Thane — centre photo".
+4:3 ratio, object-fit: cover, explicit width and height.
+Lazy-load all except the first two cards.
+Buttons on every card, in this order:
+Call Now (solid bright red) → tel:+918291568972, the main admissions number for every centre. Don't show the digits.
+WhatsApp (green, that centre's WhatsApp number with the usual prefill).
+Directions (outline).
+View centre (text link with an arrow, anchor "Preschool in [Area], Thane").
+Mobile: 2×2 button grid, full-width buttons, tap targets of at least 44 px.
+
+5. Replace the A–Z "Play school near your area in Thane" grid
+
+Keep the H2 "Play school near your area in Thane". Remove the 4-column A–Z grid and its letter H3s (A, B, C…).
+Area dropdown: add a "Select your area" searchable dropdown/combobox listing every area alphabetically. When an area is chosen, show one result card directly below with:
+the centre name
+"Under 1 km" or "1–2 km"
+Call Now, WhatsApp and View centre buttons
+Accordions: below the dropdown, add 6 accordions, one per centre, closed by default.
+Title format: "Rainbow Preschool [Centre] — areas served (N areas)".
+Inside: two chip groups, "Under 1 km" and "1–2 km". Each chip links to that branch page.
+Use native <details>/<summary>. Every area and link must stay in the SSR HTML for both Googlebot and visitors, even when collapsed.
+Mobile: the dropdown is full width and the accordions are stacked.
+
+6. Callback form validation
+
+Make /api/contact reject submissions from this page's form on the server when the name or mobile is missing, or the mobile isn't a valid 10-digit Indian number.
+Show a clear inline error. Don't change the endpoint, the fields or the tracking events.
+Don't create live test leads.
+
+7. Before reporting
+
+Pre-publish: run predeploy twice (mobile LCP ≤ 2.5 s, TBT ≤ 200 ms, CLS ≤ 0.1).
+Scans: run the banned-phrase scan and the visitor/Googlebot parity diff.
+Report (text only):
+the exact red hex now used, and confirmation that the crimson shade and monospace font no longer appear anywhere on the page
+the heading font and weights as rendered
+the 6 centre photo paths, with alt text
+the new H2/H3 outline
+word count
+the area dropdown and accordion check, including confirmation that all areas are in the SSR HTML
+the form validation result
+LCP / TBT / CLS for both passes

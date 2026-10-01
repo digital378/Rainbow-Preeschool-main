@@ -10,6 +10,7 @@ import {
   nearMeCopy,
   nearMeUi,
   programmeContent,
+  normalisePlaySchoolNearMeArea,
 } from "./play-school-near-me-content";
 import { ADMISSIONS_PHONE_NUMBER, branchWhatsAppGreeting } from "./centre-data";
 
@@ -23,43 +24,55 @@ const infoIconPaths = {
 } as const;
 const infoIcon = (name: keyof typeof infoIconPaths) =>
   `<span class="nm-info-icon nm-info-icon-${name}" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false">${infoIconPaths[name]}</svg></span>`;
-const listAreas = (areas: readonly string[], threshold = 5) => {
-  const chips = (items: readonly string[]) => `<div class="nm-area-chips">${items.map((area) => `<span>${escapeHtml(area)}</span>`).join("")}</div>`;
-  const visible = areas.slice(0, threshold);
-  const remaining = areas.slice(threshold);
-  return remaining.length
-    ? `${chips(visible)}<details class="nm-more-areas"><summary>+${remaining.length} more</summary>${chips(remaining)}</details>`
-    : chips(areas);
-};
-
 function centreCard(centre: typeof PLAY_SCHOOL_NEAR_ME_CENTRES[number], index: number) {
   const image = playSchoolNearMePhotos.centres[centre.id as keyof typeof playSchoolNearMePhotos.centres];
   const greeting = encodeURIComponent(branchWhatsAppGreeting(centre));
-  const areaMarkup = (areas: readonly string[], label: string) =>
-    `<div class="nm-area-group"><strong>${label}</strong>${listAreas(areas)}</div>`;
   return `<article class="nm-centre-card" data-centre-slug="${escapeHtml(centre.id)}" data-centre-filter="${escapeHtml(centre.filter)}">
-    <img class="nm-centre-art nm-art-${escapeHtml(centre.id)}" src="${escapeHtml(image.src)}" alt="${escapeHtml(image.alt)}" width="600" height="450" loading="${index < 2 ? "eager" : "lazy"}" decoding="async" />
+    <img class="nm-centre-art" src="${escapeHtml(image.src)}" alt="${escapeHtml(image.alt)}" width="600" height="450" loading="${index < 2 ? "eager" : "lazy"}" fetchpriority="low" decoding="async" />
     <div class="nm-card-body">
       <h3>${escapeHtml(centre.displayName)}</h3>
       <p class="nm-address">${escapeHtml(centre.address)}</p>
         <div class="nm-badges" aria-label="Programmes and classes">${programmeContent.map((programme) => `<span>${escapeHtml(programme.title)}</span>`).join("")}<b>${escapeHtml(centre.grade)}</b></div>
-      ${areaMarkup(centre.near1, "Under 1 km:")}
-      ${areaMarkup(centre.near2, "1–2 km:")}
       <div class="nm-card-actions">
-        ${link(`${centre.preschoolLandingUrl}#centre`, `Preschool in ${centre.localityName}, Thane`, "nm-button nm-button-outline")}
+        <a class="nm-button nm-button-red" href="tel:${ADMISSIONS_PHONE_NUMBER}">Call Now</a>
         <a class="nm-button nm-button-green" href="https://wa.me/91${escapeHtml(centre.whatsappNumber)}?text=${greeting}" target="_blank" rel="noreferrer" data-track-whatsapp="${escapeHtml(centre.localityName)}">WhatsApp</a>
-        <a class="nm-directions" href="${escapeHtml(centre.googleMapsDirectionsUrl)}" target="_blank" rel="noreferrer">Directions</a>
+        <a class="nm-button nm-button-outline" href="${escapeHtml(centre.googleMapsDirectionsUrl)}" target="_blank" rel="noreferrer">Directions</a>
+        ${link(`${centre.preschoolLandingUrl}#centre`, `Preschool in ${centre.localityName}, Thane`, "nm-card-view-link")}
       </div>
     </div>
   </article>`;
 }
 
 export function renderPlaySchoolNearMeHtml(): string {
-  const groupedAreas = areaOwners.reduce<Record<string, typeof areaOwners>>((groups, entry) => {
-    const letter = entry.area[0].toLocaleUpperCase();
-    (groups[letter] ??= []).push(entry);
-    return groups;
-  }, {});
+  const areaOptions = areaOwners.map(({ area }, index) =>
+    `<div id="nm-area-option-${normalisePlaySchoolNearMeArea(area)}" class="nm-area-option" role="option" aria-selected="false" data-area-index="${index}" data-area-value="${escapeHtml(area)}">${escapeHtml(area)}</div>`,
+  ).join("");
+  const areaAccordions = PLAY_SCHOOL_NEAR_ME_CENTRES.map((centre) => {
+    const uniqueAreas = new Set<string>();
+    const underOneKm = centre.near1.filter((area) => {
+      const normalized = normalisePlaySchoolNearMeArea(area);
+      if (uniqueAreas.has(normalized)) return false;
+      uniqueAreas.add(normalized);
+      return true;
+    });
+    const oneToTwoKm = centre.near2.filter((area) => {
+      const normalized = normalisePlaySchoolNearMeArea(area);
+      if (uniqueAreas.has(normalized)) return false;
+      uniqueAreas.add(normalized);
+      return true;
+    });
+    const servedAreaCount = uniqueAreas.size;
+    const areaLinks = (areas: string[]) => areas.length
+      ? `<ul class="nm-area-links">${areas.map((area) => `<li>${link(`${centre.preschoolLandingUrl}#centre`, area)}</li>`).join("")}</ul>`
+      : `<p class="nm-area-empty">No areas listed in this distance range.</p>`;
+    return `<details class="nm-area-accordion">
+      <summary><h3 class="nm-area-accordion-heading">Rainbow Preschool ${escapeHtml(centre.localityName)} — areas served (${servedAreaCount} areas)<span aria-hidden="true">+</span></h3></summary>
+      <div class="nm-area-accordion-content">
+        <section aria-label="Under 1 km"><strong>Under 1 km</strong>${areaLinks(underOneKm)}</section>
+        <section aria-label="1–2 km"><strong>1–2 km</strong>${areaLinks(oneToTwoKm)}</section>
+      </div>
+    </details>`;
+  }).join("");
   const hero = playSchoolNearMePhotos.hero;
   const intro = PLAY_SCHOOL_NEAR_ME_CONTENT.intro;
   return `<main id="near-me-document" class="near-me-page">
@@ -87,7 +100,7 @@ export function renderPlaySchoolNearMeHtml(): string {
               <input type="hidden" name="message" value="${escapeHtml(nearMeUi.formMessage)}" />
               <input type="hidden" name="leadSource" value="${escapeHtml(nearMeUi.formLeadSource)}" />
               <label>${nearMeUi.parentName}<input name="parentName" autocomplete="name" required minlength="2" /></label><small class="nm-error" data-error="parentName" hidden></small>
-              <label>${nearMeUi.mobile}<input name="phone" type="tel" inputmode="tel" autocomplete="tel" pattern="[+0-9\\(\\)\\s\\-]{10,}" required /></label><small class="nm-error" data-error="phone" hidden></small>
+              <label>${nearMeUi.mobile}<input name="phone" type="tel" inputmode="numeric" autocomplete="tel" pattern="[6-9][0-9]{9}" maxlength="10" minlength="10" required /></label><small class="nm-error" data-error="phone" hidden></small>
               <label>${nearMeUi.childAge}<select name="childAge" required><option value="">Choose age group</option>${nearMeUi.ageChoices.map((choice) => `<option value="${escapeHtml(choice)}">${escapeHtml(choice)}</option>`).join("")}</select></label><small class="nm-error" data-error="childAge" hidden></small>
               <label>${nearMeUi.preferredCentre}<select name="branch" required><option value="">Choose a centre</option>${PLAY_SCHOOL_NEAR_ME_CENTRES.map((centre) => `<option value="${escapeHtml(centre.localityName)}">${escapeHtml(centre.localityName)}</option>`).join("")}</select></label><small class="nm-error" data-error="branch" hidden></small>
               <p class="nm-error nm-form-error" id="nm-form-error" role="alert" hidden></p>
@@ -105,7 +118,7 @@ export function renderPlaySchoolNearMeHtml(): string {
             </div>
             <picture class="nm-hero-image">
               <source type="image/avif" srcset="${escapeHtml(hero.avifSrcSet)}" sizes="(max-width: 767px) 100vw, 45vw" />
-              <img src="${escapeHtml(hero.src)}" srcset="${escapeHtml(hero.srcSet)}" sizes="(max-width: 767px) 100vw, 45vw" width="${hero.width}" height="${hero.height}" alt="${escapeHtml(hero.alt)}" fetchpriority="high" decoding="async" />
+              <img src="${escapeHtml(hero.src)}" srcset="${escapeHtml(hero.srcSet)}" sizes="(max-width: 767px) 100vw, 45vw" width="${hero.width}" height="${hero.height}" alt="${escapeHtml(hero.alt)}" loading="lazy" fetchpriority="low" decoding="async" />
             </picture>
           </div>
         </div>
@@ -149,7 +162,14 @@ export function renderPlaySchoolNearMeHtml(): string {
       </section>
 
       <section class="nm-section nm-areas-section"><div class="nm-section-heading"><span class="nm-eyebrow">${escapeHtml(nearMeCopy.sectionEyebrows.areas)}</span><h2>${escapeHtml(nearMeCopy.headings.areas)}</h2></div>
-        <div class="nm-area-index">${Object.entries(groupedAreas).map(([letter, entries]) => `<div class="nm-area-column"><h3>${escapeHtml(letter)}</h3>${entries.map(({ area, centre }) => link(`${centre.preschoolLandingUrl}#centre`, area)).join("")}</div>`).join("")}</div>
+        <div class="nm-area-picker">
+          <label for="nm-area-picker-input">Select your area</label>
+          <input id="nm-area-picker-input" type="text" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="nm-area-options" aria-describedby="nm-area-picker-hint" autocomplete="off" placeholder="Search all areas and societies" />
+          <p class="nm-area-picker-hint" id="nm-area-picker-hint">Type to search, then choose an area from the alphabetical list.</p>
+          <div class="nm-area-options" id="nm-area-options" role="listbox" aria-label="Areas served" hidden>${areaOptions}</div>
+        </div>
+        <div class="nm-area-selection" id="nm-area-selection" aria-live="polite"></div>
+        <div class="nm-area-accordions">${areaAccordions}</div>
         <p class="nm-area-note">${escapeHtml(nearMeCopy.dontSeeArea)} <a href="tel:${ADMISSIONS_PHONE_NUMBER}">Call Admissions</a> and we’ll tell you the closest centre and transport route.</p>
       </section>
 

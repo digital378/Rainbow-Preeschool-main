@@ -36,7 +36,7 @@ export type NearMeCentre = CentreData & {
   lat: number;
   lng: number;
 };
-export type AreaOwner = { normalized: string; area: string; centre: NearMeCentre };
+export type AreaOwner = { normalized: string; area: string; centre: NearMeCentre; distance: "Under 1 km" | "1–2 km" };
 
 const centreDetails = [
   {
@@ -124,22 +124,24 @@ export const faqs = [
 ] as const;
 
 export const areaOwners: AreaOwner[] = (() => {
-  const owners = new Map<string, NearMeCentre>();
+  const owners = new Map<string, Omit<AreaOwner, "normalized">>();
   // Register every under-1-km area first so it takes precedence over every
   // longer-distance mention of the same neighbourhood.
   for (const centre of PLAY_SCHOOL_NEAR_ME_CENTRES) {
-    for (const area of centre.near1) if (!owners.has(area.trim().toLocaleLowerCase())) owners.set(area.trim().toLocaleLowerCase(), centre);
+    for (const area of centre.near1) {
+      const normalized = area.trim().toLocaleLowerCase();
+      if (!owners.has(normalized)) owners.set(normalized, { area, centre, distance: "Under 1 km" });
+    }
   }
   for (const centre of PLAY_SCHOOL_NEAR_ME_CENTRES) {
-    for (const area of centre.near2) if (!owners.has(area.trim().toLocaleLowerCase())) owners.set(area.trim().toLocaleLowerCase(), centre);
+    for (const area of centre.near2) {
+      const normalized = area.trim().toLocaleLowerCase();
+      if (!owners.has(normalized)) owners.set(normalized, { area, centre, distance: "1–2 km" });
+    }
   }
   const entries: AreaOwner[] = [];
-  owners.forEach((centre, normalized) => {
-    entries.push({
-      normalized,
-      area: [...centre.near1, ...centre.near2].find((name) => name.trim().toLocaleLowerCase() === normalized) ?? normalized,
-      centre,
-    });
+  owners.forEach((owner, normalized) => {
+    entries.push({ normalized, ...owner });
   });
   return entries.sort((a, b) => a.area.localeCompare(b.area));
 })();
@@ -206,7 +208,7 @@ export const nearMeUi = {
   areaMatchOne: "1 centre serves this area.",
   areaMatchMany: "{count} centres serve this area.",
   invalidName: "Enter your name.",
-  invalidPhone: "Enter a valid mobile number.",
+  invalidPhone: "Enter a valid 10-digit Indian mobile number.",
   invalidAge: "Choose an age group.",
   invalidCentre: "Choose a preferred centre.",
   requestFailed: "We couldn’t send your request. Please try again or call Admissions.",

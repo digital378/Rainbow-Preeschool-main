@@ -3,6 +3,7 @@ import {
   anandNagarPage, manpadaPage, kasarvadavaliPage, dhokaliPage,
   hariniwasPage, kalwaPage,
 } from "../shared/centre-data";
+import { branchPhotos } from "../shared/branch-photos";
 
 const base = process.env.BASE_URL || "http://127.0.0.1:5000";
 const path = "/play-school-near-me";
@@ -15,6 +16,7 @@ const branches = [
   ["kasarvadavali", kasarvadavaliPage], ["dhokali", dhokaliPage],
   ["hariniwas", hariniwasPage], ["kalwa", kalwaPage],
 ] as const;
+const branchLocalities = ["Anand Nagar", "Manpada", "Kasarvadavali", "Dhokali", "Hariniwas", "Kalwa"];
 
 function decode(value: string): string {
   return value.replace(/&#(?:x([0-9a-f]+)|(\d+));/gi, (_, hex, dec) =>
@@ -94,6 +96,7 @@ async function run() {
   const outline = headings(visitorMain);
   assert.deepEqual(outline, headings(botMain), "H1–H3 parity diff must be empty");
   assert.deepEqual(outline.filter(item => item.level === 1), [{ level: 1, text: h1 }]);
+  assert(!outline.some(item => item.level === 3 && /^[A-Z]$/.test(item.text)), "Retired A–Z letter headings remain");
   const expectedH2s = [
     "Our 6 play schools in Thane", "Playgroup, Nursery & Kindergarten near you",
     "Play school timings, fees & transport in Thane", "How to choose the best preschool in Thane",
@@ -147,6 +150,39 @@ async function run() {
       }
     }
     assert(content.includes("Searching for a play school near me or a preschool in Thane?"));
+    const cards = [...main(html).matchAll(/<article\b[^>]*class=["']nm-centre-card["'][^>]*>([\s\S]*?)<\/article>/gi)];
+    assert.equal(cards.length, 6, "Six branch cards must remain in initial HTML");
+    for (const [index, card] of cards.entries()) {
+      const [slug, copy] = branches[index];
+      assert.equal(attribute(card[0].split(">")[0], "data-centre-slug"), slug);
+      const image = card[1].match(/<img\b[^>]*>/i)?.[0] || "";
+      assert.equal(attribute(image, "src"), branchPhotos[slug].hero.src, `Wrong branch hero: ${slug}`);
+      assert.equal(attribute(image, "alt"), `Rainbow Preschool ${branchLocalities[index]}, Thane — centre photo`);
+      assert.equal(attribute(image, "width"), "600");
+      assert.equal(attribute(image, "height"), "450");
+      assert.equal(attribute(image, "loading"), index < 2 ? "eager" : "lazy");
+      const actions = [...card[1].matchAll(/(<a\b[^>]*>)([\s\S]*?)<\/a>/gi)];
+      assert.deepEqual(actions.map(item => text(item[2]).replace(/\s*→$/, "")), [
+        "Call Now", "WhatsApp", "Directions", `Preschool in ${branchLocalities[index]}, Thane`,
+      ]);
+      assert.equal(attribute(actions[0][1], "href"), "tel:+918291568972");
+    }
+    assert(/role=["']combobox["']/.test(main(html)), "Searchable area combobox missing from initial HTML");
+    const accordions = [...main(html).matchAll(/<details\b([^>]*class=["']nm-area-accordion["'][^>]*)>([\s\S]*?)<\/details>/gi)];
+    assert.equal(accordions.length, 6, "Six centre area accordions must remain in initial HTML");
+    for (const [index, accordion] of accordions.entries()) {
+      assert(!/\bopen(?:\s|=|$)/i.test(accordion[1]), "Area accordions must start closed");
+      const [slug, copy] = branches[index];
+      assert(text(accordion[2]).includes(`Rainbow Preschool ${branchLocalities[index]} — areas served (`));
+      assert(text(accordion[2]).includes("Under 1 km") && text(accordion[2]).includes("1–2 km"));
+      for (const group of copy.nearbyAreas) {
+        for (const area of group.areas) {
+          assert([...accordion[2].matchAll(/(<a\b[^>]*>)([\s\S]*?)<\/a>/gi)].some(item =>
+            text(item[2]) === area && attribute(item[1], "href") === `/preschool-in-${slug}-thane#centre`),
+          `${slug}: ${area} missing its own branch link in collapsed SSR accordion`);
+        }
+      }
+    }
   }
   const hrefs = [...visitorMain.matchAll(/<a\b[^>]*>/gi)]
     .map(match => attribute(match[0], "href")).filter((href): href is string => !!href);
