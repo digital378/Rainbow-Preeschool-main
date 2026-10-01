@@ -13,7 +13,6 @@ import {
   areaOwners,
   getPlaySchoolNearMeSchemas,
   getPlaySchoolNearMeProgramme,
-  findPlaySchoolNearMeAreaMatches,
   normalisePlaySchoolNearMeArea,
   nearMeUi,
 } from "@shared/play-school-near-me-content";
@@ -78,8 +77,6 @@ function PlaySchoolNearMe() {
   useEffect(() => {
     const { documentMain, created } = mountStaticDocument();
     const status = documentMain.querySelector<HTMLElement>("#nm-finder-status");
-    const results = documentMain.querySelector<HTMLElement>("#nm-mini-results");
-    const areaInput = documentMain.querySelector<HTMLInputElement>("#nm-area-input");
     const areaPicker = documentMain.querySelector<HTMLInputElement>("#nm-area-picker-input");
     const areaOptions = documentMain.querySelector<HTMLElement>("#nm-area-options");
     const areaSelection = documentMain.querySelector<HTMLElement>("#nm-area-selection");
@@ -87,7 +84,6 @@ function PlaySchoolNearMe() {
     const centreCards = Array.from(documentMain.querySelectorAll<HTMLElement>(".nm-centre-card"));
     const form = documentMain.querySelector<HTMLFormElement>("#nm-callback-form");
     const formError = documentMain.querySelector<HTMLElement>("#nm-form-error");
-    const locateButton = documentMain.querySelector<HTMLButtonElement>('[data-action="locate"]');
     const submitButton = documentMain.querySelector<HTMLButtonElement>(".nm-submit");
     const programmeTrack = documentMain.querySelector<HTMLElement>("#nm-programme-track");
     let submitting = false;
@@ -101,56 +97,11 @@ function PlaySchoolNearMe() {
     let faqListenersAttached = false;
     let faqDetails: HTMLDetailsElement[] = [];
 
-    if (!status || !results || !areaInput || !areaPicker || !areaOptions || !areaSelection || !form || !formError || !locateButton || !submitButton) {
+    if (!status || !areaPicker || !areaOptions || !areaSelection || !form || !formError || !submitButton) {
       throw new Error("Play School Near Me document is missing required interactive controls.");
     }
 
     const setStatus = (message: string) => { status.textContent = message; };
-    const renderResults = (items: { centre: typeof PLAY_SCHOOL_NEAR_ME_CENTRES[number]; distance?: number }[]) => {
-      results.replaceChildren();
-      for (const { centre, distance } of items) {
-        const card = document.createElement("article");
-        card.className = "nm-mini-card";
-        const title = document.createElement("h3");
-        title.textContent = centre.localityName;
-        card.append(title);
-        if (typeof distance === "number") {
-          const distanceText = document.createElement("p");
-          distanceText.className = "nm-distance";
-          distanceText.textContent = `${nearMeUi.nearbyDistance} ${distance.toFixed(1)} km`;
-          card.append(distanceText);
-        }
-        const actions = document.createElement("div");
-        actions.className = "nm-card-actions";
-        const view = document.createElement("a");
-        view.className = homepageButtonClasses("nm-button nm-button-outline");
-        view.href = `${centre.preschoolLandingUrl}#centre`;
-        view.textContent = nearMeUi.viewCentre;
-        const whatsapp = document.createElement("a");
-        whatsapp.className = homepageButtonClasses("nm-button nm-button-green");
-        whatsapp.href = `https://wa.me/91${encodeURIComponent(centre.whatsappNumber)}?text=${encodeURIComponent(`Hi, I'd like to know about admissions at Rainbow Preschool International, ${centre.localityName}.`)}`;
-        whatsapp.target = "_blank";
-        whatsapp.rel = "noreferrer";
-        whatsapp.textContent = nearMeUi.whatsApp;
-        whatsapp.dataset.trackWhatsapp = centre.localityName;
-        actions.append(view, whatsapp);
-        card.append(actions);
-        results.append(card);
-      }
-    };
-    const lookupArea = () => {
-      const query = areaInput.value;
-      results.replaceChildren();
-      if (!query.trim()) {
-        setStatus("");
-        return;
-      }
-      const matches = findPlaySchoolNearMeAreaMatches(query);
-      renderResults(matches.map(({ centre }) => ({ centre })));
-      setStatus(matches.length
-        ? matches.length === 1 ? nearMeUi.areaMatchOne : nearMeUi.areaMatchMany.replace("{count}", String(matches.length))
-        : nearMeUi.noAreaMatch);
-    };
     const areaOptionNodes = Array.from(areaOptions.querySelectorAll<HTMLElement>('[role="option"]'));
     let activeAreaOption = -1;
     const setActiveAreaOption = (index: number) => {
@@ -258,31 +209,6 @@ function PlaySchoolNearMe() {
       areaOptions.addEventListener("click", onAreaPickerClick);
       document.addEventListener("click", onAreaPickerOutsideClick, true);
     };
-    const radians = (degrees: number) => degrees * Math.PI / 180;
-    const locate = () => {
-      results.replaceChildren();
-      if (!navigator.geolocation) {
-        setStatus(nearMeUi.locationUnavailable);
-        return;
-      }
-      setStatus(nearMeUi.findingLocation);
-      navigator.geolocation.getCurrentPosition(({ coords }) => {
-        if (cancelled) return;
-        const nearest = PLAY_SCHOOL_NEAR_ME_CENTRES.map((centre) => {
-          const dLat = radians(centre.lat - coords.latitude);
-          const dLng = radians(centre.lng - coords.longitude);
-          const a = Math.sin(dLat / 2) ** 2 + Math.cos(radians(coords.latitude)) * Math.cos(radians(centre.lat)) * Math.sin(dLng / 2) ** 2;
-          return { centre, distance: 6371 * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)) };
-        }).sort((a, b) => a.distance - b.distance).slice(0, 2);
-        renderResults(nearest);
-        setStatus(nearMeUi.locationResults);
-      }, (error) => {
-        if (cancelled) return;
-        setStatus(error.code === error.PERMISSION_DENIED
-          ? nearMeUi.locationDenied
-          : nearMeUi.locationFailed);
-      }, { enableHighAccuracy: false, timeout: 10000, maximumAge: 0 });
-    };
     const updateFilter = (filter: string) => {
       filterButtons.forEach((button) => {
         const active = button.dataset.filter === filter;
@@ -310,8 +236,6 @@ function PlaySchoolNearMe() {
       formError.hidden = true;
       formError.textContent = "";
     };
-    const onAreaInput = () => lookupArea();
-    const onLocate = () => locate();
     const onFilter = (event: Event) => {
       const button = (event.target as Element).closest<HTMLButtonElement>("[data-filter]");
       if (button?.dataset.filter) updateFilter(button.dataset.filter);
@@ -324,8 +248,6 @@ function PlaySchoolNearMe() {
       if (finderActivated) return;
       finderActivated = true;
       form.noValidate = true;
-      areaInput.addEventListener("input", onAreaInput);
-      locateButton.addEventListener("click", onLocate);
       form.addEventListener("submit", onSubmit);
     };
     const filterRow = documentMain.querySelector<HTMLElement>(".nm-filter-row");
@@ -512,8 +434,6 @@ function PlaySchoolNearMe() {
       document.removeEventListener("focusin", activateOnFirstInteraction, true);
       document.removeEventListener("click", activateOnFirstInteraction, true);
       if (finderActivated) {
-        areaInput.removeEventListener("input", onAreaInput);
-        locateButton.removeEventListener("click", onLocate);
         form.removeEventListener("submit", onSubmit);
       }
       if (areaPickerActivated) {

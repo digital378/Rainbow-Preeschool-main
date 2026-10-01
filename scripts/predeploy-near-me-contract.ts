@@ -151,6 +151,8 @@ async function run() {
       }
     }
     assert(content.includes("Searching for a play school near me or a preschool in Thane?"));
+    assert(!/\bid=["']nm-area-input["']|\bdata-action=["']locate["']/.test(main(html)), "Removed hero location controls must not return");
+    assert(/\bid=["']nm-callback-form["']/.test(main(html)), "Hero enquiry form must remain");
     const cards = [...main(html).matchAll(/<article\b[^>]*class=["']nm-centre-card["'][^>]*>([\s\S]*?)<\/article>/gi)];
     assert.equal(cards.length, 6, "Six branch cards must remain in initial HTML");
     for (const [index, card] of cards.entries()) {

@@ -109,13 +109,7 @@ export function renderPlaySchoolNearMeHtml(): string {
           </div>
           <section class="nm-finder" id="nm-finder" aria-labelledby="nm-finder-title">
             <h2 id="nm-finder-title">${nearMeUi.finderHeading}</h2>
-            <div class="nm-location-row">
-              <label class="nm-sr-only" for="nm-area-input">${nearMeUi.areaLabel}</label>
-              <input id="nm-area-input" type="search" autocomplete="off" placeholder="${escapeHtml(nearMeUi.areaPlaceholder)}" aria-controls="nm-mini-results" />
-              <button type="button" class="nm-button nm-location-button" data-action="locate">${nearMeUi.useLocation}</button>
-            </div>
             <p class="nm-finder-status" id="nm-finder-status" role="status" aria-live="polite"></p>
-            <div class="nm-mini-results" id="nm-mini-results" aria-live="polite"></div>
             <form class="nm-callback-form" id="nm-callback-form" method="post" action="/api/contact" accept-charset="UTF-8">
               <input type="hidden" name="programme" value="${escapeHtml(nearMeUi.formProgramme)}" />
               <input type="hidden" name="childName" value="${escapeHtml(nearMeUi.formChildName)}" />
