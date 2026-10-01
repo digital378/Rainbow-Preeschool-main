@@ -13,6 +13,7 @@ import {
   normalisePlaySchoolNearMeArea,
 } from "./play-school-near-me-content";
 import { ADMISSIONS_PHONE_NUMBER, branchWhatsAppGreeting } from "./centre-data";
+import { homepageButtonClasses } from "./button-styles";
 
 const escapeHtml = (value: string) => value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
 const link = (href: string, text: string, className = "") =>
@@ -24,11 +25,33 @@ const infoIconPaths = {
 } as const;
 const infoIcon = (name: keyof typeof infoIconPaths) =>
   `<span class="nm-info-icon nm-info-icon-${name}" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false">${infoIconPaths[name]}</svg></span>`;
+const timelineIconPaths = {
+  users: '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path>',
+  blocks: '<rect width="7" height="7" x="14" y="3" rx="1"></rect><path d="M10 21V8a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1H3"></path>',
+  music: '<path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle>',
+  utensils: '<path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"></path><path d="M7 2v20"></path><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"></path>',
+  palette: '<circle cx="13.5" cy="6.5" r=".5" fill="currentColor"></circle><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"></circle><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"></circle><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"></circle><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"></path>',
+  sun: '<circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path>',
+  "book-open": '<path d="M12 7v14"></path><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"></path>',
+} as const;
+const timelineIcon = (name: keyof typeof timelineIconPaths) =>
+  `<span class="nm-timeline-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false">${timelineIconPaths[name]}</svg></span>`;
+const checkIcon = () =>
+  '<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>';
+const daySteps = [
+  ["8:30 AM", "Welcome circle & attendance", "warm greetings and settling in", "users"],
+  ["9:00 AM", "Free play & exploration", "open-ended play with toys and materials", "blocks"],
+  ["9:30 AM", "Rhymes & songs", "music, movement and language", "music"],
+  ["10:00 AM", "Snack time", "snacks and social time", "utensils"],
+  ["10:30 AM", "Learning activity", "colours, shapes or sensory exploration", "palette"],
+  ["11:00 AM", "Outdoor play", "movement and motor skills", "sun"],
+  ["11:30 AM", "Story time & goodbye", "calming stories and pickup", "book-open"],
+] as const;
 function centreCard(centre: typeof PLAY_SCHOOL_NEAR_ME_CENTRES[number], index: number) {
   const image = playSchoolNearMePhotos.centres[centre.id as keyof typeof playSchoolNearMePhotos.centres];
   const greeting = encodeURIComponent(branchWhatsAppGreeting(centre));
   return `<article class="nm-centre-card" data-centre-slug="${escapeHtml(centre.id)}" data-centre-filter="${escapeHtml(centre.filter)}">
-    <img class="nm-centre-art" src="${escapeHtml(image.src)}" alt="${escapeHtml(image.alt)}" width="600" height="450" loading="${index < 2 ? "eager" : "lazy"}" fetchpriority="low" decoding="async" />
+    <div class="nm-centre-image"><img class="nm-centre-art" data-centre-photo="${centre.id}" src="${escapeHtml(image.src)}" alt="${escapeHtml(image.alt)}" width="600" height="400" loading="${index < 2 ? "eager" : "lazy"}" fetchpriority="low" decoding="async" /></div>
     <div class="nm-card-body">
       <h3>${escapeHtml(centre.displayName)}</h3>
       <p class="nm-address">${escapeHtml(centre.address)}</p>
@@ -37,8 +60,8 @@ function centreCard(centre: typeof PLAY_SCHOOL_NEAR_ME_CENTRES[number], index: n
         <a class="nm-button nm-button-red" href="tel:${ADMISSIONS_PHONE_NUMBER}">Call Now</a>
         <a class="nm-button nm-button-green" href="https://wa.me/91${escapeHtml(centre.whatsappNumber)}?text=${greeting}" target="_blank" rel="noreferrer" data-track-whatsapp="${escapeHtml(centre.localityName)}">WhatsApp</a>
         <a class="nm-button nm-button-outline" href="${escapeHtml(centre.googleMapsDirectionsUrl)}" target="_blank" rel="noreferrer">Directions</a>
-        ${link(`${centre.preschoolLandingUrl}#centre`, `Preschool in ${centre.localityName}, Thane`, "nm-card-view-link")}
       </div>
+      ${link(`${centre.preschoolLandingUrl}#centre`, "View centre", "nm-card-view-link")}
     </div>
   </article>`;
 }
@@ -109,7 +132,6 @@ export function renderPlaySchoolNearMeHtml(): string {
             <noscript><p class="nm-privacy">${escapeHtml(nearMeUi.noScriptFormHelp)}</p></noscript>
             <p class="nm-privacy">${nearMeUi.callbackIntro}</p>
             <p class="nm-privacy">${nearMeUi.privacy}</p>
-            <a class="nm-quiet-link" href="#nm-callback-form" data-action="book-visit">${nearMeUi.bookVisit}</a>
           </section>
           <div class="nm-hero-media">
             <div class="nm-hero-actions">
@@ -130,7 +152,7 @@ export function renderPlaySchoolNearMeHtml(): string {
 
       <section class="nm-section nm-centres-section" id="nm-centres">
         <div class="nm-section-heading"><span class="nm-eyebrow">${escapeHtml(nearMeCopy.sectionEyebrows.centres)}</span><h2>${escapeHtml(nearMeCopy.headings.centres)}</h2><p>${escapeHtml(nearMeCopy.centreInstructions)}</p></div>
-        <div class="nm-filter-row" aria-label="Filter centres by area">${allCentreFilters.map((filter, index) => `<button type="button" data-filter="${escapeHtml(filter)}" aria-pressed="${index === 0}"${index === 0 ? ' class="is-active"' : ""}>${escapeHtml(filter)}</button>`).join("")}</div>
+        <div class="nm-filter-row" aria-label="Filter centres by area">${allCentreFilters.map((filter, index) => `<button type="button" data-filter="${escapeHtml(filter)}" aria-pressed="${index === 0}" class="nm-button nm-filter-button${index === 0 ? " is-active" : ""}">${escapeHtml(filter)}</button>`).join("")}</div>
         <div class="nm-centre-grid">${PLAY_SCHOOL_NEAR_ME_CENTRES.map(centreCard).join("")}</div>
       </section>
 
@@ -149,15 +171,20 @@ export function renderPlaySchoolNearMeHtml(): string {
         </div>
       </section>
 
+      <section class="nm-section nm-timeline-section" id="nm-day">
+        <div class="nm-section-heading"><h2>A day at our play school in Thane</h2><p>Morning batch 8:30-11:30 AM. The afternoon batch (12:30-3:30 PM) follows the same flow.</p></div>
+        <ol class="nm-day-timeline">${daySteps.map(([time, title, text, icon]) => `<li><span class="nm-time-pill">${time}</span>${timelineIcon(icon)}<div><h3>${escapeHtml(title)}</h3><p>${escapeHtml(text)}</p></div></li>`).join("")}</ol>
+      </section>
+
       <section class="nm-section nm-checklist-section"><div class="nm-section-heading"><span class="nm-eyebrow">${escapeHtml(nearMeCopy.sectionEyebrows.checklist)}</span><h2>${escapeHtml(nearMeCopy.headings.checklist)}</h2><p>Use this checklist when you visit any play school near you — including ours.</p></div>
-        <ol class="nm-checklist">${checklist.map(([heading, advice, fact], index) => `<li><span class="nm-check-number">${String(index + 1).padStart(2, "0")}</span><div><h3>${escapeHtml(heading)}</h3><p>${escapeHtml(advice)}</p><small><b>At Rainbow:</b> ${escapeHtml(fact)}</small></div></li>`).join("")}</ol>
+        <ol class="nm-checklist">${checklist.map(([heading, advice, fact]) => `<li><span class="nm-check-icon">${checkIcon()}</span><div><h3>${escapeHtml(heading)}</h3><p>${escapeHtml(advice)}</p><small><b>At Rainbow:</b> ${escapeHtml(fact)}</small></div></li>`).join("")}</ol>
         <p class="nm-center-link-line">${escapeHtml(nearMeCopy.compareOptions)} ${link("/top-preschools-in-thane", "See our guide to preschools in Thane")}.</p>
       </section>
 
       <section class="nm-about-section">
         <img class="nm-about-art" src="${escapeHtml(playSchoolNearMePhotos.about.src)}" alt="${escapeHtml(playSchoolNearMePhotos.about.alt)}" width="${playSchoolNearMePhotos.about.width}" height="${playSchoolNearMePhotos.about.height}" loading="lazy" decoding="async" />
         <div class="nm-about-copy"><span class="nm-eyebrow">${escapeHtml(nearMeCopy.sectionEyebrows.about)}</span><h2>${escapeHtml(nearMeCopy.headings.about)}</h2>
-          <ul>${nearMeCopy.aboutBullets.map((bullet) => `<li>${escapeHtml(bullet)}</li>`).join("")}</ul>${link("/about", "About Rainbow", "nm-inline-link")}
+          <ul>${nearMeCopy.aboutBullets.map((bullet) => `<li><span class="nm-feature-icon">${infoIcon("clock")}</span>${escapeHtml(bullet)}</li>`).join("")}</ul>${link("/about", "About Rainbow", "nm-inline-link")}
         </div>
       </section>
 
@@ -199,5 +226,7 @@ export function renderPlaySchoolNearMeHtml(): string {
       </section>
     </div>
     <div class="nm-sticky-bar"><a href="tel:${ADMISSIONS_PHONE_NUMBER}">Call Admissions</a><a href="https://wa.me/918291568972?text=Hi%2C%20I%20would%20like%20to%20know%20more%20about%20Rainbow%20Preschool" target="_blank" rel="noreferrer" data-track-whatsapp="sticky">WhatsApp</a></div>
-  </main>`;
+  </main>`
+    .replace(/<span class="nm-eyebrow">[\s\S]*?<\/span>/g, "")
+    .replace(/class="([^"]*\bnm-button\b[^"]*)"/g, (_, classes: string) => `class="${homepageButtonClasses(classes)}"`);
 }

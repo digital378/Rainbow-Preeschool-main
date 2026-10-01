@@ -281,7 +281,7 @@ export const playSchoolNearMePhotos: {
   },
   centres: {
     "anand-nagar": {
-      src: branchPhotos["anand-nagar"].hero.src,
+      src: branchPhotos["anand-nagar"].gallery[1].src,
       alt: "Rainbow Preschool Anand Nagar, Thane — centre photo",
       kind: "photo",
     },
@@ -291,7 +291,7 @@ export const playSchoolNearMePhotos: {
       kind: "photo",
     },
     kasarvadavali: {
-      src: branchPhotos.kasarvadavali.hero.src,
+      src: branchPhotos.kasarvadavali.gallery[5].src,
       alt: "Rainbow Preschool Kasarvadavali, Thane — centre photo",
       kind: "photo",
     },
@@ -301,7 +301,7 @@ export const playSchoolNearMePhotos: {
       kind: "photo",
     },
     hariniwas: {
-      src: branchPhotos.hariniwas.hero.src,
+      src: branchPhotos.hariniwas.gallery[3].src,
       alt: "Rainbow Preschool Hariniwas, Thane — centre photo",
       kind: "photo",
     },
@@ -332,9 +332,10 @@ function registerHubAsset(src: string) {
 }
 
 function registerHubCentreHero(slug: keyof typeof branchPhotos, src: string) {
-  const expectedSrc = branchPhotos[slug].hero.src;
-  if (src !== expectedSrc || photoPageOwners[src] !== slug) {
-    throw new Error(`Play School Near Me centre image ${slug} must use its own registered branch hero`);
+  const photos = branchPhotos[slug];
+  const ownPhotos: readonly {src: string}[] = [photos.hero, photos.about, ...photos.gallery];
+  if (!ownPhotos.some(photo => photo.src === src) || photoPageOwners[src] !== slug) {
+    throw new Error(`Play School Near Me centre image ${slug} must use its own registered branch photo`);
   }
 }
 

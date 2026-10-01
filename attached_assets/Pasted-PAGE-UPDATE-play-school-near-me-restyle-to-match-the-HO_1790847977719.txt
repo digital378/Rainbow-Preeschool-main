@@ -1,0 +1,96 @@
+PAGE UPDATE: /play-school-near-me — restyle to match the HOMEPAGE design
+Rules: Keep all content, SEO, metadata, schema, links, finder logic, form validation and visitor/Googlebot parity exactly as now, except the changes below. Text report only, no screenshots, don't publish, don't invent facts, no "best/No. 1/most-trusted/finest" claims and no urgency. Keep the stationary first-paint H1/intro.
+
+1. USE THE HOMEPAGE DESIGN SYSTEM (MANDATORY)
+- First read the homepage components and copy their patterns. Do not invent new styles.
+- Reuse from the homepage:
+  - the section heading component (font, weight, size, letter-spacing, line-height; no negative letter-spacing unless the homepage uses it)
+  - the button component (size, padding, radius, font size/weight)
+  - card styles (radius, border, shadow, padding)
+  - container width, section padding and grid gaps
+  - background alternation and image treatment (radius, aspect ratio)
+  - body font and size
+- Delete this page's custom fonts (separate Inter files) and its custom button/heading CSS. Use the homepage's own font loading.
+- Headings: bold and legible but not heavy or condensed. Match the homepage heading weight exactly.
+- Remove the spaced-out uppercase red eyebrow labels ("CLOSE TO YOUR EVERYDAY ROUTE", "A CLASS FOR EACH NEXT STEP", etc.) unless the homepage uses that exact pattern; if it does, copy its style.
+- The only red is the header red #EC1313.
+
+2. BUTTONS: SMALLER AND REFINED
+- Every button uses the homepage button component and sizes. No oversized or extra-bold buttons.
+- Centre cards: compact buttons in one row:
+  - Call Now (red)
+  - WhatsApp (green, same green as the header Admissions button)
+  - Directions (outline)
+  - "View centre ->" as a text link underneath.
+- Mobile: the 3 buttons sit in one row if they fit, otherwise a 2+1 layout.
+- Final CTA band and the Fees card: homepage-sized buttons.
+- Remove the stray underlined "Book a Visit" link under the hero form.
+
+3. HERO
+- Match the homepage hero layout and spacing.
+- Fix the hero photo; it is currently cropped into a thin strip under the buttons. Do one of these, whichever matches the homepage better:
+  - show it as a proper image (homepage radius, 4:3 or 16:10, never cropped across the child's face), or
+  - remove it from the left column and use it as a soft image panel behind the form card.
+- Make the form card more compact, using homepage input styles.
+- Show "Location permission was not granted..." only after a denied click, in small grey text. Never show it on load.
+
+4. CENTRE PHOTOS
+- Exteriors:
+  - Manpada, Dhokali and Kalwa keep their centre-front photos.
+  - Kalwa: crop/position so the Rainbow signboard is the focus, not the van.
+- Anand Nagar, Kasarvadavali and Hariniwas:
+  - use a photo clearly showing that centre's own classroom or signage from its branch page;
+  - if none exists, use that centre's best interior photo from its branch-page gallery that shows Rainbow branding.
+  - Never use a generic photo (e.g. children lying on a floor mat) as a centre card image.
+- Card images: homepage card-image style (same radius and aspect ratio), object-fit: cover, focal point set per image.
+- In the report, classify each centre's photo as: exterior / branded interior / generic.
+
+5. BRING BACK "A DAY AT RAINBOW" (TIMELINE)
+- Place it after "Play school timings, fees & transport in Thane".
+- H2: "A day at our play school in Thane"
+- Sub-text: "Morning batch 8:30-11:30 AM. The afternoon batch (12:30-3:30 PM) follows the same flow."
+- Steps:
+  1. 8:30 AM: Welcome circle & attendance (warm greetings and settling in)
+  2. 9:00 AM: Free play & exploration (open-ended play with toys and materials)
+  3. 9:30 AM: Rhymes & songs (music, movement and language)
+  4. 10:00 AM: Snack time (snacks and social time)
+  5. 10:30 AM: Learning activity (colours, shapes or sensory exploration)
+  6. 11:00 AM: Outdoor play (movement and motor skills)
+  7. 11:30 AM: Story time & goodbye (calming stories and pickup)
+- Design:
+  - Desktop: a clean horizontal timeline, or a refined 2-column alternating timeline, using homepage card styles, yellow time pills and a thin red connector line.
+  - Mobile: vertical.
+  - Small lucide icon per step.
+- Must be in the SSR HTML (parity).
+
+6. SECTION POLISH
+- Spacing:
+  - All sections use the homepage section padding and container width.
+  - Remove the large empty gaps (above the programme section and after the admissions section).
+- Programme cards: homepage card style, with small yellow number badges instead of loose numbers.
+- "How to choose the best preschool in Thane":
+  - cards in a 2- or 3-column grid with icons, matching the homepage "why choose" style.
+- "Why parents in Thane choose Rainbow":
+  - turn the plain lines into an icon list or 4 small feature tiles like the homepage, with the image beside them.
+- Admissions stepper and calendar tiles: homepage card styling.
+- Area finder and accordions: keep them, styled with homepage inputs and borders.
+- FAQ: use the homepage FAQ accordion style if one exists.
+
+7. PERFORMANCE (LCP currently fails at 2.86-2.88s)
+- The intro paragraph is the LCP element:
+  - with homepage fonts, render it immediately using font-display: swap and a size-adjusted fallback, so it never waits on a font file.
+- Reduce this page's initial JS:
+  - defer the finder, area combobox, accordions, Theatre and FAQ logic until interaction or near the viewport;
+  - keep the hero form script minimal.
+- Don't preload any image unless it's above the fold on mobile.
+- Target: mobile LCP <= 2.5s, TBT <= 200ms, CLS <= 0.1, on TWO consecutive predeploy runs.
+
+8. REPORT (TEXT ONLY)
+- Which homepage components and styles were reused.
+- Heading font, weight and letter-spacing as rendered.
+- Button sizes.
+- The 6 centre photos, each with its classification.
+- The restored timeline's place in the H2/H3 outline.
+- Banned-phrase scan result, parity diff and word count.
+- LCP / TBT / CLS for both runs.
+- Don't publish.

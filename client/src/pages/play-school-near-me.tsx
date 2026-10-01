@@ -19,6 +19,7 @@ import {
 } from "@shared/play-school-near-me-content";
 import { renderPlaySchoolNearMeHtml } from "@shared/play-school-near-me-render";
 import { ADMISSIONS_PHONE_NUMBER, branchWhatsAppGreeting } from "@shared/centre-data";
+import { homepageButtonClasses } from "@shared/button-styles";
 import "@/styles/play-school-near-me.css";
 
 const NEAR_ME_CANONICAL = "https://www.rainbowpreschools.com/play-school-near-me";
@@ -122,11 +123,11 @@ function PlaySchoolNearMe() {
         const actions = document.createElement("div");
         actions.className = "nm-card-actions";
         const view = document.createElement("a");
-        view.className = "nm-button nm-button-outline";
+        view.className = homepageButtonClasses("nm-button nm-button-outline");
         view.href = `${centre.preschoolLandingUrl}#centre`;
         view.textContent = nearMeUi.viewCentre;
         const whatsapp = document.createElement("a");
-        whatsapp.className = "nm-button nm-button-green";
+        whatsapp.className = homepageButtonClasses("nm-button nm-button-green");
         whatsapp.href = `https://wa.me/91${encodeURIComponent(centre.whatsappNumber)}?text=${encodeURIComponent(`Hi, I'd like to know about admissions at Rainbow Preschool International, ${centre.localityName}.`)}`;
         whatsapp.target = "_blank";
         whatsapp.rel = "noreferrer";
@@ -194,18 +195,18 @@ function PlaySchoolNearMe() {
       const actions = document.createElement("div");
       actions.className = "nm-card-actions";
       const call = document.createElement("a");
-      call.className = "nm-button nm-button-red";
+      call.className = homepageButtonClasses("nm-button nm-button-red");
       call.href = `tel:${ADMISSIONS_PHONE_NUMBER}`;
       call.textContent = "Call Now";
       const whatsapp = document.createElement("a");
-      whatsapp.className = "nm-button nm-button-green";
+      whatsapp.className = homepageButtonClasses("nm-button nm-button-green");
       whatsapp.href = `https://wa.me/91${encodeURIComponent(owner.centre.whatsappNumber)}?text=${encodeURIComponent(branchWhatsAppGreeting(owner.centre))}`;
       whatsapp.target = "_blank";
       whatsapp.rel = "noreferrer";
       whatsapp.textContent = nearMeUi.whatsApp;
       whatsapp.dataset.trackWhatsapp = owner.centre.localityName;
       const view = document.createElement("a");
-      view.className = "nm-button nm-button-outline";
+      view.className = homepageButtonClasses("nm-button nm-button-outline");
       view.href = `${owner.centre.preschoolLandingUrl}#centre`;
       view.textContent = nearMeUi.viewCentre;
       actions.append(call, whatsapp, view);

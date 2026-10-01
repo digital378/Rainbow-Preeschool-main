@@ -8,29 +8,35 @@ const publicRoot = path.resolve(process.cwd(), "client/public");
 // changes. Eight differing bits catches near-identical photos without treating
 // every classroom or play-area photo as the same image.
 const MAX_PHASH_DISTANCE = 8;
-const hubCentreHeroPairs = {
+const hubCentrePhotoPairs = {
   "anand-nagar": {
-    src: branchPhotos["anand-nagar"].hero.src,
+    src: branchPhotos["anand-nagar"].gallery[1].src,
+    branchSection: "gallery[1]",
     alt: "Rainbow Preschool Anand Nagar, Thane — centre photo",
   },
   manpada: {
     src: branchPhotos.manpada.hero.src,
+    branchSection: "hero",
     alt: "Rainbow Preschool Manpada, Thane — centre photo",
   },
   kasarvadavali: {
-    src: branchPhotos.kasarvadavali.hero.src,
+    src: branchPhotos.kasarvadavali.gallery[5].src,
+    branchSection: "gallery[5]",
     alt: "Rainbow Preschool Kasarvadavali, Thane — centre photo",
   },
   dhokali: {
     src: branchPhotos.dhokali.hero.src,
+    branchSection: "hero",
     alt: "Rainbow Preschool Dhokali, Thane — centre photo",
   },
   hariniwas: {
-    src: branchPhotos.hariniwas.hero.src,
+    src: branchPhotos.hariniwas.gallery[3].src,
+    branchSection: "gallery[3]",
     alt: "Rainbow Preschool Hariniwas, Thane — centre photo",
   },
   kalwa: {
     src: branchPhotos.kalwa.hero.src,
+    branchSection: "hero",
     alt: "Rainbow Preschool Kalwa, Thane — centre photo",
   },
 } as const;
@@ -114,14 +120,14 @@ async function main() {
   const checked: CheckedPhoto[] = [];
   const errors: string[] = [];
 
-  for (const [slug, expected] of Object.entries(hubCentreHeroPairs)) {
+  for (const [slug, expected] of Object.entries(hubCentrePhotoPairs)) {
     const photo = playSchoolNearMePhotos.centres[slug as keyof typeof playSchoolNearMePhotos.centres];
     if (!photo || photo.kind !== "photo") {
-      errors.push(`/play-school-near-me centres.${slug}: expected a photo for its matching branch hero`);
+      errors.push(`/play-school-near-me centres.${slug}: expected a photo from its matching branch`);
       continue;
     }
     if (photo.src !== expected.src) {
-      errors.push(`/play-school-near-me centres.${slug}: expected its own branch hero ${expected.src}, received ${photo.src}`);
+      errors.push(`/play-school-near-me centres.${slug}: expected its own branch ${expected.branchSection} photo ${expected.src}, received ${photo.src}`);
     }
     if (photo.alt !== expected.alt) {
       errors.push(`/play-school-near-me centres.${slug}: expected alt text "${expected.alt}"`);
@@ -175,15 +181,16 @@ async function main() {
     try {
       const hash = await perceptualHash(filePath);
       const hubCentreSlug = photo.section.startsWith("centres.")
-        ? photo.section.slice("centres.".length) as keyof typeof hubCentreHeroPairs
+        ? photo.section.slice("centres.".length) as keyof typeof hubCentrePhotoPairs
         : undefined;
       for (const previous of checked) {
-        const ownBranchHeroPair = hubCentreSlug &&
-          photo.src === hubCentreHeroPairs[hubCentreSlug].src &&
+        const expectedPair = hubCentreSlug ? hubCentrePhotoPairs[hubCentreSlug] : undefined;
+        const ownBranchSectionPair = hubCentreSlug &&
+          photo.src === expectedPair?.src &&
           previous.page === hubCentreSlug &&
-          previous.section === "hero" &&
-          previous.src === hubCentreHeroPairs[hubCentreSlug].src;
-        if (ownBranchHeroPair) continue;
+          previous.section === expectedPair?.branchSection &&
+          previous.src === expectedPair?.src;
+        if (ownBranchSectionPair) continue;
         const distance = hammingDistance(hash, previous.hash);
         if (distance <= MAX_PHASH_DISTANCE) {
           errors.push(

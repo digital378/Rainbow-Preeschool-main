@@ -64,7 +64,7 @@ function scanBanned(content: string): string[] {
     /fire checks|drills|water tests|verified pickup|secure pickup|single[-\s]point entry/i,
     /English and Hindi|including Saturdays|year[-\s]round|no parent interview/i,
     /Happy Times|18\+ Years|Curriculum Team|April 24, 2026/i,
-    /8:30 snack|outdoor play.*story time/i,
+    /8:30 snack/i,
     /Ages 1\.5 [–-] 2\.5 Years|2026[–-]27/i,
     /No\.?\s*1\b|#1\b|\bleading\b/i,
     /What Makes a Top Play School in India|A Day in Our Playgroup|Why Should You Enrol Your Child in a Play School/i,
@@ -99,7 +99,8 @@ async function run() {
   assert(!outline.some(item => item.level === 3 && /^[A-Z]$/.test(item.text)), "Retired A–Z letter headings remain");
   const expectedH2s = [
     "Our 6 play schools in Thane", "Playgroup, Nursery & Kindergarten near you",
-    "Play school timings, fees & transport in Thane", "How to choose the best preschool in Thane",
+    "Play school timings, fees & transport in Thane", "A day at our play school in Thane",
+    "How to choose the best preschool in Thane",
     "Why parents in Thane choose Rainbow", "Play school near your area in Thane",
     "Preschool admissions near you — 2027-28", "Play school & preschool near me — FAQs",
   ];
@@ -156,17 +157,48 @@ async function run() {
       const [slug, copy] = branches[index];
       assert.equal(attribute(card[0].split(">")[0], "data-centre-slug"), slug);
       const image = card[1].match(/<img\b[^>]*>/i)?.[0] || "";
-      assert.equal(attribute(image, "src"), branchPhotos[slug].hero.src, `Wrong branch hero: ${slug}`);
+      const expectedPhoto = slug === "anand-nagar" ? branchPhotos[slug].gallery[1].src
+        : slug === "kasarvadavali" ? branchPhotos[slug].gallery[5].src
+        : slug === "hariniwas" ? branchPhotos[slug].gallery[3].src
+        : branchPhotos[slug].hero.src;
+      assert.equal(attribute(image, "src"), expectedPhoto, `Wrong own-branch photo: ${slug}`);
       assert.equal(attribute(image, "alt"), `Rainbow Preschool ${branchLocalities[index]}, Thane — centre photo`);
       assert.equal(attribute(image, "width"), "600");
-      assert.equal(attribute(image, "height"), "450");
+      assert.equal(attribute(image, "height"), "400");
       assert.equal(attribute(image, "loading"), index < 2 ? "eager" : "lazy");
-      const actions = [...card[1].matchAll(/(<a\b[^>]*>)([\s\S]*?)<\/a>/gi)];
+      const actionContainer = card[1].match(/<div\b[^>]*class=["']nm-card-actions["'][^>]*>([\s\S]*?)<\/div>/i);
+      assert(actionContainer, `${slug}: compact card actions are missing`);
+      const actions = [...actionContainer[1].matchAll(/(<a\b[^>]*>)([\s\S]*?)<\/a>/gi)];
       assert.deepEqual(actions.map(item => text(item[2]).replace(/\s*→$/, "")), [
-        "Call Now", "WhatsApp", "Directions", `Preschool in ${branchLocalities[index]}, Thane`,
+        "Call Now", "WhatsApp", "Directions",
       ]);
       assert.equal(attribute(actions[0][1], "href"), "tel:+918291568972");
+      const viewCentreLinks = [...card[1].matchAll(/(<a\b[^>]*>)([\s\S]*?)<\/a>/gi)]
+        .filter(item => attribute(item[1], "class") === "nm-card-view-link");
+      assert.equal(viewCentreLinks.length, 1, `${slug}: View centre text link must appear once`);
+      assert.equal(text(viewCentreLinks[0][2]), "View centre");
+      assert.equal(
+        attribute(viewCentreLinks[0][1], "href"),
+        `/preschool-in-${slug}-thane#centre`,
+        `${slug}: View centre link must lead to its branch`,
+      );
+      assert(!actionContainer[1].includes("nm-card-view-link"), `${slug}: View centre must sit outside compact card actions`);
     }
+    const timingsThenTimeline = main(html).match(
+      /<section\b[^>]*class=["'][^"']*\bnm-info-section\b[^"']*["'][^>]*>([\s\S]*?)<\/section>\s*<section\b[^>]*class=["'][^"']*\bnm-timeline-section\b[^"']*["'][^>]*>([\s\S]*?)<\/section>/i,
+    );
+    assert(timingsThenTimeline, "Seven-step timeline must immediately follow Timings");
+    assert(text(timingsThenTimeline[1]).includes("Timings"));
+    assert.equal(
+      text(timingsThenTimeline[2].match(/<h2\b[^>]*>([\s\S]*?)<\/h2>/i)?.[1] || ""),
+      "A day at our play school in Thane",
+    );
+    const timeline = timingsThenTimeline[2].match(/<ol\b[^>]*class=["'][^"']*\bnm-day-timeline\b[^"']*["'][^>]*>([\s\S]*?)<\/ol>/i);
+    assert(timeline, "Day timeline list is missing");
+    const timeLabels = [...timeline[1].matchAll(
+      /<span\b[^>]*class=["'][^"']*\bnm-time-pill\b[^"']*["'][^>]*>([\s\S]*?)<\/span>/gi,
+    )].map(match => text(match[1]));
+    assert.deepEqual(timeLabels, ["8:30 AM", "9:00 AM", "9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM"]);
     assert(/role=["']combobox["']/.test(main(html)), "Searchable area combobox missing from initial HTML");
     const accordions = [...main(html).matchAll(/<details\b([^>]*class=["']nm-area-accordion["'][^>]*)>([\s\S]*?)<\/details>/gi)];
     assert.equal(accordions.length, 6, "Six centre area accordions must remain in initial HTML");

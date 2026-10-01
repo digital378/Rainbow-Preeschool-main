@@ -10,3 +10,9 @@ On a text-led page, calling `requestIdleCallback` as soon as `load` fires does n
 **How to apply:** For noncritical third parties, measure actual request start times rather than inferring deferral from an idle callback. Preserve an interaction trigger so users who need chat or tracking do not wait. For text LCP, benchmark font preload/source changes on a production build and revert them if they regress LCP; do not assume preloading more fonts helps.
 
 For a text-first page with a stationary first-paint H1, changing a Google Fonts stylesheet to a narrower weight and `display=swap` alone had little effect on simulated mobile LCP. Removing that page's high-priority Poppins font preload (while retaining the stylesheet) reduced simulated LCP substantially without changing the final font. **Why:** The preload competed for first-paint bandwidth even though the text could initially paint in a fallback font. **How to apply:** Test both the stylesheet and preload priorities separately on the production build, and check font appearance after load as well as LCP.
+
+A paint-boundary delay around React mounting is not a delay around its static imports, module preloads, or render-blocking stylesheet fetches.
+
+**Why:** Mount-only deferral left the text-led hub over its LCP budget. Delaying entry fetch/evaluation and the shared stylesheet, while retaining complete critical styles, produced consecutive passing production checks.
+
+**How to apply:** Inspect actual request timing. When keeping the app off first paint, schedule entry loading at the HTML shell rather than only delaying mounting inside an already loaded module. Include the reference theme tokens and component utilities in critical CSS; wait for the full stylesheet before mounting shared navigation. Preserve a no-JS stylesheet path and stationary content.

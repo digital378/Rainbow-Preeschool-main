@@ -238,7 +238,7 @@ if ! npx --no-install vitest run server/organization-schema.test.ts; then
   log "FAIL — shared Organization metadata or branch parent reference guard."
   exit 1
 fi
-if ! npm run build; then
+if ! node scripts/build-near-me-styles.mjs || ! npm run build; then
   log "FAIL — production build failed; aborting deploy"
   exit 1
 fi

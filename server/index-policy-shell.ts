@@ -92,22 +92,30 @@ export function injectIndexPolicyShell(path: string, html: string): string {
   }
   if (path === "/play-school-near-me") {
     result = result.replace(/<template id="static-lcp-hero-template">[\s\S]*?<\/template>/i, "");
-    const hero = playSchoolNearMePhotos.hero;
     // The page renderer is the sole source of visitor-visible hub content.
     // Keep it outside the app root so the hub controller can enhance the
     // existing DOM without replacing the stationary H1 or intro.
-    result = result.replace(/<link rel="preload"[^>]*>/gi, "");
+    result = result.replace(/<link\b(?=[^>]*rel="(?:preload|modulepreload)")(?=[^>]*(?:as="image"|rel="modulepreload"))[^>]*>/gi, "");
+    // This route uses homepage weights 600/700, not its 800-weight preload.
+    result = result.replace(/<link\b(?=[^>]*rel="preload")(?=[^>]*as="font")[^>]*>/gi, "");
+    const deferredStyles: string[] = [];
+    result = result.replace(/<link\b(?=[^>]*rel="stylesheet")(?=[^>]*href="(\/assets\/[^"]+\.css)")[^>]*>/gi,
+      (tag, href: string) => {
+        deferredStyles.push(href);
+        return `<noscript>${tag}</noscript>`;
+      });
     const stylesheetPath = resolve(process.cwd(), process.env.NODE_ENV === "production"
       ? "dist/public/styles/play-school-near-me.css"
       : "client/public/styles/play-school-near-me.css");
     const stylesheet = readFileSync(stylesheetPath, "utf8").replace(/<\/style/gi, "<\\/style");
-    result = result.replace(/<head([^>]*)>/i, `<head$1>
-    <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/poppins-800.woff2" />
-    <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-near-me-500.woff2" />
-    <link rel="preload" as="font" type="font/woff2" crossorigin fetchpriority="low" href="/fonts/inter-near-me-700.woff2" />`);
-    result = result.replace("</head>", `<style data-near-me-css>${stylesheet}</style>
-    <link rel="preload" as="image" media="(min-width: 768px)" href="${escape(hero.avifSrcSet.split(",")[0].trim().split(/\s+/)[0])}" imagesrcset="${escape(hero.avifSrcSet)}" imagesizes="45vw" type="image/avif" fetchpriority="low" />
-    </head>`);
+    // Keep the common homepage font loading, with swap and the same local
+    // size-adjusted Inter fallback. No page-specific downloadable faces.
+    result = result.replace(/display=optional/g, "display=swap");
+    result = result.replace("</head>", () => `<style data-near-me-css>
+    @font-face{font-family:Inter;src:local(Arial),local("Helvetica Neue"),local(Helvetica);font-weight:400 600;font-style:normal;font-display:swap;size-adjust:107%;ascent-override:90%;descent-override:22%;line-gap-override:0%}
+    ${stylesheet}</style></head>`);
+    result = result.replace(/<script\b(?=[^>]*\btype="module")(?=[^>]*\bsrc="([^"]+)")[^>]*><\/script>/g,
+      (_script, entry: string) => `<script type="module">requestAnimationFrame(()=>requestAnimationFrame(async()=>{await Promise.all(${JSON.stringify(deferredStyles)}.map(href=>new Promise((resolve,reject)=>{const link=document.createElement("link");link.rel="stylesheet";link.href=href;link.onload=resolve;link.onerror=reject;document.head.append(link)})));await import(${JSON.stringify(entry).replace(/</g, "\\u003c")})}));</script>`);
     result = result.replace('<div id="root"></div>', `<div id="root"></div>${renderPlaySchoolNearMeHtml()}<div id="near-me-footer"></div>`);
   }
   if (isBranchPage) {
