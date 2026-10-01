@@ -10,7 +10,7 @@ import { StickyCTABar } from "@/components/landing/sticky-cta-bar";
 import { LocalCallbackForm } from "@/components/local-callback-form";
 import { HomeRainbowTheatre } from "@/components/home/home-rainbow-theatre";
 import { BranchQuickFacts, BranchAreas, BranchAdmissions, BranchNearby } from "@/components/centre/branch-sections";
-import { ADMISSIONS_PHONE_LABEL, ADMISSIONS_PHONE_NUMBER, anandNagarPage, kalwaPage, manpadaPage, hariniwasPage, dhokaliPage, branchPageSchemaTelephone, branchWhatsAppGreeting, getCentreBySlug, preschoolFAQs, preschoolPageSEO, whyParentsChoose } from "@shared/centre-data";
+import { ADMISSIONS_PHONE_LABEL, ADMISSIONS_PHONE_NUMBER, anandNagarPage, kalwaPage, manpadaPage, hariniwasPage, dhokaliPage, kasarvadavaliPage, branchPageSchemaTelephone, branchWhatsAppGreeting, getCentreBySlug, preschoolFAQs, preschoolPageSEO, whyParentsChoose } from "@shared/centre-data";
 import { branchPhotos } from "@shared/branch-photos";
 import { trackCallClick, trackWhatsAppClick, trackDirectionsClick } from "@/lib/analytics";
 
@@ -18,14 +18,14 @@ const programmeIcons = [Blocks, Sparkles, GraduationCap];
 const whyIcons = [MapPin, Users, Video, SprayCan, ClipboardList, Music2];
 const BranchFaq = lazy(() => import("@/components/centre/branch-faq").then(({ BranchFaq }) => ({ default: BranchFaq })));
 const base = "https://www.rainbowpreschools.com";
-type BranchSlug = Exclude<keyof typeof branchPhotos, "kasarvadavali">;
+type BranchSlug = keyof typeof branchPhotos;
 
 export function BranchCentrePage({ slug }: { slug: BranchSlug }) {
   const centre = getCentreBySlug(slug)!;
   const seo = preschoolPageSEO[slug];
   const faqs = preschoolFAQs[slug];
   const why = whyParentsChoose[slug];
-  const copy = slug === "anand-nagar" ? anandNagarPage : slug === "kalwa" ? kalwaPage : slug === "hariniwas" ? hariniwasPage : slug === "dhokali" ? dhokaliPage : manpadaPage;
+  const copy = slug === "anand-nagar" ? anandNagarPage : slug === "kalwa" ? kalwaPage : slug === "hariniwas" ? hariniwasPage : slug === "dhokali" ? dhokaliPage : slug === "kasarvadavali" ? kasarvadavaliPage : manpadaPage;
   const photos = branchPhotos[slug];
   const pageSchemas = useMemo(() => {
     const url = `${base}${seo.canonicalPath}`;
@@ -34,7 +34,7 @@ export function BranchCentrePage({ slug }: { slug: BranchSlug }) {
       {
         "@context": "https://schema.org", "@type": "Preschool", "@id": `${url}#centre`,
         name: slug === "manpada" ? `Rainbow Preschool International, ${centre.name}` : `Rainbow Preschool International, ${centre.localityName} Centre`, url,
-        address: { "@type": "PostalAddress", streetAddress: centre.branchPageAddress ?? centre.address, addressLocality: "Thane", addressRegion: "Maharashtra", ...(["manpada", "hariniwas", "dhokali"].includes(slug) ? { postalCode: centre.postalCode } : {}), addressCountry: "IN" },
+        address: { "@type": "PostalAddress", streetAddress: centre.branchPageAddress ?? centre.address, addressLocality: "Thane", addressRegion: "Maharashtra", ...(["manpada", "hariniwas", "dhokali", "kasarvadavali"].includes(slug) ? { postalCode: centre.postalCode } : {}), addressCountry: "IN" },
         geo: { "@type": "GeoCoordinates", latitude: Number(centre.latitude), longitude: Number(centre.longitude) },
         telephone: branchPageSchemaTelephone(centre), hasMap: centre.googleMapsDirectionsUrl,
         parentOrganization: { "@id": `${base}/#organization` },
@@ -47,7 +47,7 @@ export function BranchCentrePage({ slug }: { slug: BranchSlug }) {
       ]),
     ];
   }, [centre, seo, copy.publishDate]);
-  const initialId = slug === "anand-nagar" ? "anand-initial" : slug === "kalwa" ? "kalwa-initial" : slug === "hariniwas" ? "hariniwas-initial" : slug === "dhokali" ? "dhokali-initial" : "manpada-initial";
+  const initialId = slug === "anand-nagar" ? "anand-initial" : slug === "kalwa" ? "kalwa-initial" : slug === "hariniwas" ? "hariniwas-initial" : slug === "dhokali" ? "dhokali-initial" : slug === "kasarvadavali" ? "kasarvadavali-initial" : "manpada-initial";
   const initialHeading = useRef(typeof document !== "undefined" && !!document.getElementById(`${initialId}-h1`));
   const faqRef = useRef<HTMLElement>(null);
   const [faqReady, setFaqReady] = useState(false);
@@ -75,12 +75,13 @@ export function BranchCentrePage({ slug }: { slug: BranchSlug }) {
   const call = () => trackCallClick({ centre: centre.name, locality: centre.localityName, phone: ADMISSIONS_PHONE_NUMBER, source_page: seo.canonicalPath });
   const whatsapp = () => trackWhatsAppClick({ centre: centre.name, locality: centre.localityName, source_page: seo.canonicalPath });
   const directions = () => trackDirectionsClick({ centre: centre.name, locality: centre.localityName, source_page: seo.canonicalPath });
+  const whatsappHref = `https://wa.me/91${centre.whatsappNumber}?text=${encodeURIComponent(branchWhatsAppGreeting(centre))}`;
 
   return (
     <div className="min-h-screen">
       <SEO title={seo.title} description={seo.description} canonical={seo.canonicalPath} lang="en-IN"
         ogImage={`/images/og/${slug}-1200x630.jpg`}
-        ogImageAlt={slug === "manpada" || slug === "kalwa" ? photos.hero.alt : slug === "anand-nagar" ? "Two children playing with blocks at Rainbow Preschool" : slug === "dhokali" ? "Rainbow Preschool International entrance with colourful murals" : "Rainbow Preschool classroom activity"}
+        ogImageAlt={slug === "manpada" || slug === "kalwa" || slug === "kasarvadavali" ? photos.hero.alt : slug === "anand-nagar" ? "Two children playing with blocks at Rainbow Preschool" : slug === "dhokali" ? "Rainbow Preschool International entrance with colourful murals" : "Rainbow Preschool classroom activity"}
         ogImageType="image/jpeg" ogImageWidth={1200} ogImageHeight={630}
         structuredData={initialHeading.current ? undefined : pageSchemas} />
       <MinimalHeader whatsappNumber={centre.whatsappNumber} phoneNumber={ADMISSIONS_PHONE_NUMBER} callLabel={ADMISSIONS_PHONE_LABEL} locality={centre.localityName} whatsappGreeting={branchWhatsAppGreeting(centre)}
@@ -105,7 +106,7 @@ export function BranchCentrePage({ slug }: { slug: BranchSlug }) {
               <div className="flex flex-wrap gap-2 mb-7">{copy.trustChips.map((chip) => <Badge key={chip} variant="secondary" className="font-semibold whitespace-normal text-left max-w-full">{chip}</Badge>)}</div>
               <div className="flex flex-wrap gap-3">
                 <a href={`tel:${ADMISSIONS_PHONE_NUMBER}`} onClick={call} className="max-w-full"><Button size="lg" className="bg-primary text-white max-w-full h-auto min-h-11 whitespace-normal leading-tight"><Phone className="w-4 h-4 mr-2" />{ADMISSIONS_PHONE_LABEL}</Button></a>
-                <a href={`https://wa.me/91${centre.whatsappNumber}`} target="_blank" rel="noopener noreferrer" onClick={whatsapp}><Button size="lg" className="bg-green-600 hover:bg-green-700 text-white"><MessageCircle className="w-4 h-4 mr-2" />WhatsApp</Button></a>
+                <a href={whatsappHref} target="_blank" rel="noopener noreferrer" onClick={whatsapp}><Button size="lg" className="bg-green-600 hover:bg-green-700 text-white"><MessageCircle className="w-4 h-4 mr-2" />WhatsApp</Button></a>
                 <a href={centre.googleMapsDirectionsUrl} target="_blank" rel="noopener noreferrer" onClick={directions}><Button size="lg" variant="outline"><Navigation className="w-4 h-4 mr-2" />Get directions</Button></a>
               </div>
             </div>
@@ -210,7 +211,7 @@ export function BranchCentrePage({ slug }: { slug: BranchSlug }) {
           </div>
         </section>
 
-        <BranchNearby content={copy} nearest={slug === "anand-nagar" ? { name: "Kasarvadavali", href: "/preschool-in-kasarvadavali-thane" } : slug === "kalwa" ? { name: "Hariniwas", href: "/preschool-in-hariniwas-thane" } : slug === "hariniwas" ? { name: "Kalwa", href: "/preschool-in-kalwa-thane" } : slug === "dhokali" ? { name: "Manpada", href: "/preschool-in-manpada-thane" } : { name: "Dhokali", href: "/preschool-in-dhokali-thane" }} />
+        <BranchNearby content={copy} nearest={slug === "anand-nagar" ? { name: "Kasarvadavali", href: "/preschool-in-kasarvadavali-thane" } : slug === "kalwa" ? { name: "Hariniwas", href: "/preschool-in-hariniwas-thane" } : slug === "hariniwas" ? { name: "Kalwa", href: "/preschool-in-kalwa-thane" } : slug === "dhokali" ? { name: "Manpada", href: "/preschool-in-manpada-thane" } : slug === "kasarvadavali" ? { name: "Anand Nagar", href: "/preschool-in-anand-nagar-thane" } : { name: "Dhokali", href: "/preschool-in-dhokali-thane" }} />
         <div className="max-w-4xl mx-auto px-4 py-8 text-sm text-muted-foreground">Last updated: <time dateTime={copy.publishDate}>{copy.publishDateDisplay}</time></div>
 
         <section className="relative overflow-hidden py-10 md:py-16 bg-gradient-to-r from-primary via-accent to-secondary text-white">
@@ -220,7 +221,7 @@ export function BranchCentrePage({ slug }: { slug: BranchSlug }) {
             <p className="text-lg mb-8">Call or WhatsApp us to arrange a visit to the {centre.localityName} centre.</p>
             <div className="flex flex-wrap justify-center gap-4">
               <a href={`tel:${ADMISSIONS_PHONE_NUMBER}`} onClick={call} className="max-w-full"><Button size="lg" className="bg-primary text-white max-w-full h-auto min-h-11 whitespace-normal leading-tight"><Phone className="w-4 h-4 mr-2" />{ADMISSIONS_PHONE_LABEL}</Button></a>
-              <a href={`https://wa.me/91${centre.whatsappNumber}`} target="_blank" rel="noopener noreferrer" onClick={whatsapp}><Button size="lg" variant="outline" className="bg-white/10 border-white text-white hover:bg-white/20"><MessageCircle className="w-4 h-4 mr-2" />WhatsApp Us</Button></a>
+              <a href={whatsappHref} target="_blank" rel="noopener noreferrer" onClick={whatsapp}><Button size="lg" variant="outline" className="bg-white/10 border-white text-white hover:bg-white/20"><MessageCircle className="w-4 h-4 mr-2" />WhatsApp Us</Button></a>
             </div>
           </div>
         </section>
@@ -251,4 +252,8 @@ export function DhokaliCentrePage() {
 
 export function KalwaCentrePage() {
   return <BranchCentrePage slug="kalwa" />;
+}
+
+export function KasarvadavaliCentrePage() {
+  return <BranchCentrePage slug="kasarvadavali" />;
 }

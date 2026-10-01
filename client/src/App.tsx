@@ -65,7 +65,7 @@ const LazyPreschoolInHariniwas = lazy(() => import("@/pages/anand-nagar-centre")
 const LazyPreschoolInAnandNagar = lazy(() => import("@/pages/anand-nagar-centre").then(m => ({ default: m.AnandNagarCentrePage })));
 const LazyPreschoolInDhokali = lazy(() => import("@/pages/anand-nagar-centre").then(m => ({ default: m.DhokaliCentrePage })));
 const LazyPreschoolInKalwa = lazy(() => import("@/pages/anand-nagar-centre").then(m => ({ default: m.KalwaCentrePage })));
-const LazyPreschoolInKasarvadavali = lazy(() => import("@/pages/preschool-location").then(m => ({ default: m.PreschoolInKasarvadavali })));
+const LazyPreschoolInKasarvadavali = lazy(() => import("@/pages/anand-nagar-centre").then(m => ({ default: m.KasarvadavaliCentrePage })));
 
 const LazyMotivationalThoughtsForKids = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.MotivationalThoughtsForKids })));
 const LazyFruitsVegetablesEnglishHindi = lazy(() => import("@/pages/legacy-pages").then(m => ({ default: m.FruitsVegetablesEnglishHindi })));

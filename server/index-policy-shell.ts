@@ -10,7 +10,7 @@ import { PROGRAMMES_COPY, PROGRAMMES_FAQS } from "@shared/programmes-page-conten
 import { CONTACT_PAGE_COPY } from "@shared/contact-page-copy";
 import { TOP_PRESCHOOLS_COPY } from "@shared/top-preschools-thane-content";
 import { ABOUT_PAGE_COPY } from "@shared/about-page-content";
-import { anandNagarPage, kalwaPage, manpadaPage, hariniwasPage, dhokaliPage } from "@shared/centre-data";
+import { anandNagarPage, kalwaPage, manpadaPage, hariniwasPage, dhokaliPage, kasarvadavaliPage } from "@shared/centre-data";
 import { PLAY_SCHOOL_NEAR_ME_H1, PLAY_SCHOOL_NEAR_ME_INTRO } from "@shared/play-school-near-me-hero";
 
 /**
@@ -21,7 +21,7 @@ import { PLAY_SCHOOL_NEAR_ME_H1, PLAY_SCHOOL_NEAR_ME_INTRO } from "@shared/play-
  */
 export function injectIndexPolicyShell(path: string, html: string): string {
   if (path === "/") return html;
-  const isBranchPage = path === "/preschool-in-anand-nagar-thane" || path === "/preschool-in-kalwa-thane" || path === "/preschool-in-manpada-thane" || path === "/preschool-in-hariniwas-thane" || path === "/preschool-in-dhokali-thane";
+  const isBranchPage = path === "/preschool-in-anand-nagar-thane" || path === "/preschool-in-kalwa-thane" || path === "/preschool-in-manpada-thane" || path === "/preschool-in-hariniwas-thane" || path === "/preschool-in-dhokali-thane" || path === "/preschool-in-kasarvadavali-thane";
   const branchImageAlt = path === "/preschool-in-anand-nagar-thane"
     ? "Two children playing with blocks at Rainbow Preschool"
     : path === "/preschool-in-kalwa-thane" ? "Rainbow Preschool children learning together at a classroom table" : path === "/preschool-in-dhokali-thane" ? "Rainbow Preschool International entrance with colourful murals" : "Rainbow Preschool classroom activity";
@@ -55,11 +55,11 @@ export function injectIndexPolicyShell(path: string, html: string): string {
   updateMeta("property", "og:image", seo.ogImage ?? `${PREFERRED_DOMAIN}/og-image.jpg`);
   if (path === "/nursery" || path === "/kindergarten" || path === "/programmes" || path === "/contact" || path === "/top-preschools-in-thane" || path === "/about" || isBranchPage) {
     updateMeta("property", "og:locale", "en_IN");
-    updateMeta("property", "og:image:alt", isBranchPage ? branchImageAlt : path === "/about" ? ABOUT_PAGE_COPY.ogImageAlt : path === "/top-preschools-in-thane" ? TOP_PRESCHOOLS_COPY.ogImageAlt : path === "/contact" ? CONTACT_PAGE_COPY.ogImageAlt : path === "/programmes" ? PROGRAMMES_COPY.ogImageAlt : path === "/kindergarten" ? KINDERGARTEN_COPY.ogImageAlt : NURSERY_COPY.ogImageAlt);
+    updateMeta("property", "og:image:alt", isBranchPage ? seo.ogImageAlt ?? branchImageAlt : path === "/about" ? ABOUT_PAGE_COPY.ogImageAlt : path === "/top-preschools-in-thane" ? TOP_PRESCHOOLS_COPY.ogImageAlt : path === "/contact" ? CONTACT_PAGE_COPY.ogImageAlt : path === "/programmes" ? PROGRAMMES_COPY.ogImageAlt : path === "/kindergarten" ? KINDERGARTEN_COPY.ogImageAlt : NURSERY_COPY.ogImageAlt);
     updateMeta("property", "og:image:type", "image/jpeg");
     updateMeta("property", "og:image:width", "1200");
     updateMeta("property", "og:image:height", "630");
-    updateMeta("name", "twitter:image:alt", isBranchPage ? branchImageAlt : path === "/about" ? ABOUT_PAGE_COPY.ogImageAlt : path === "/top-preschools-in-thane" ? TOP_PRESCHOOLS_COPY.ogImageAlt : path === "/contact" ? CONTACT_PAGE_COPY.ogImageAlt : path === "/programmes" ? PROGRAMMES_COPY.ogImageAlt : path === "/kindergarten" ? KINDERGARTEN_COPY.ogImageAlt : NURSERY_COPY.ogImageAlt);
+    updateMeta("name", "twitter:image:alt", isBranchPage ? seo.ogImageAlt ?? branchImageAlt : path === "/about" ? ABOUT_PAGE_COPY.ogImageAlt : path === "/top-preschools-in-thane" ? TOP_PRESCHOOLS_COPY.ogImageAlt : path === "/contact" ? CONTACT_PAGE_COPY.ogImageAlt : path === "/programmes" ? PROGRAMMES_COPY.ogImageAlt : path === "/kindergarten" ? KINDERGARTEN_COPY.ogImageAlt : NURSERY_COPY.ogImageAlt);
   }
   updateMeta("name", "twitter:url", canonical);
   updateMeta("name", "twitter:title", seo.title);
@@ -110,8 +110,8 @@ export function injectIndexPolicyShell(path: string, html: string): string {
   }
   if (isBranchPage) {
     // Keep the text-led first paint stationary while React mounts.
-    const initialId = path === "/preschool-in-anand-nagar-thane" ? "anand-initial" : path === "/preschool-in-kalwa-thane" ? "kalwa-initial" : path === "/preschool-in-hariniwas-thane" ? "hariniwas-initial" : path === "/preschool-in-dhokali-thane" ? "dhokali-initial" : "manpada-initial";
-    const branchCopy = path === "/preschool-in-anand-nagar-thane" ? anandNagarPage : path === "/preschool-in-kalwa-thane" ? kalwaPage : path === "/preschool-in-hariniwas-thane" ? hariniwasPage : path === "/preschool-in-dhokali-thane" ? dhokaliPage : manpadaPage;
+    const initialId = path === "/preschool-in-anand-nagar-thane" ? "anand-initial" : path === "/preschool-in-kalwa-thane" ? "kalwa-initial" : path === "/preschool-in-hariniwas-thane" ? "hariniwas-initial" : path === "/preschool-in-dhokali-thane" ? "dhokali-initial" : path === "/preschool-in-kasarvadavali-thane" ? "kasarvadavali-initial" : "manpada-initial";
+    const branchCopy = path === "/preschool-in-anand-nagar-thane" ? anandNagarPage : path === "/preschool-in-kalwa-thane" ? kalwaPage : path === "/preschool-in-hariniwas-thane" ? hariniwasPage : path === "/preschool-in-dhokali-thane" ? dhokaliPage : path === "/preschool-in-kasarvadavali-thane" ? kasarvadavaliPage : manpadaPage;
     result = result.replace(/<link rel="preload" as="font" type="font\/woff2" crossorigin href="https:\/\/fonts\.gstatic\.com\/[^"]+">/, "");
     result = result.replace("</head>", `<style>
       #${initialId}{position:absolute;z-index:2;top:12.1875rem;left:1rem;width:calc(100vw - 2rem);pointer-events:none}

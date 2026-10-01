@@ -61,7 +61,6 @@ const DEFERRED_ALLOWLIST = new Set([
   "client/src/components/legacy-landing-page.tsx",
   "client/src/components/landing/playgroup-landing-template.tsx",
   "client/src/pages/holi-activities.tsx",
-  "client/src/pages/preschool-location.tsx",
 ]);
 
 const ALLOWLIST = new Set([...PERMANENT_ALLOWLIST, ...DEFERRED_ALLOWLIST]);

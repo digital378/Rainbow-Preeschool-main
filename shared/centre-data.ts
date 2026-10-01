@@ -258,6 +258,55 @@ export const dhokaliPage = {
   finalHeading: "Visit Our Dhokali Centre",
 } as const;
 
+export const kasarvadavaliPage = {
+  ...anandNagarPage,
+  heroSubline: "Playgroup, Nursery and KG at Rosa Gardenia, behind Hypercity Mall, Ghodbunder Road",
+  trustChips: ["Since 2007", "4.9★ from 487 Google reviews across our centres", "100% female, ECCE-trained teachers"],
+  quickFacts: [
+    { icon: "baby", label: "Ages", value: "1.5–5.5 years" },
+    { icon: "clock", label: "Batches", value: "8:30–11:30 AM · 12:30–3:30 PM, Mon–Fri" },
+    { icon: "book", label: "Classes", value: "Playgroup to Sr. KG" },
+    { icon: "graduation", label: "Primary", value: "Up to Grade 3" },
+    { icon: "bus", label: "Transport", value: "GPS-enabled" },
+  ],
+  aboutHeading: "About Our Kasarvadavali Centre",
+  aboutParagraphs: [
+    "Our Kasarvadavali centre is at Rosa Gardenia, next to Parijat Gardens and behind Hypercity Mall on Ghodbunder Road. Families from Kasarvadavali, Puranik City, Owale and Mogharpada can reach us in a few minutes. Children join us from 1.5 years in Playgroup and can continue through Nursery, Jr. KG and Sr. KG, and up to Grade 3 at this centre.",
+    "Every class is led by our female, ECCE-trained teachers, with two teachers for every 30 children. Our play-based, NEP 2020-aligned curriculum brings in art, music, movement and storytelling every day. You get daily updates and a monthly progress report, and our Academic Coordinator, Nilsy Jain, guides the curriculum at this centre.",
+  ],
+  programmesHeading: "Programmes Available at This Centre",
+  programmes: [
+    { title: "Playgroup", age: "Ages 1.5–2.5 years", description: "Playgroup for children aged 1.5–2.5 years.", href: "/playgroup" },
+    { title: "Nursery", age: "Ages 2.5–3.5 years", description: "Nursery for children aged 2.5–3.5 years.", href: "/nursery" },
+    { title: "Kindergarten: Jr. KG & Sr. KG", age: "Ages 3.5–5.5 years", description: "Jr. KG and Sr. KG for children aged 3.5–5.5 years.", href: "/kindergarten" },
+    { title: "Primary classes up to Grade 3", age: "After Sr. KG", description: "Children can continue up to Grade 3 at this centre.", href: "" },
+  ],
+  galleryHeading: BRANCH_GALLERY_HEADING,
+  gallery: branchPhotos.kasarvadavali.gallery,
+  whyHeading: "Why Parents Choose Our Kasarvadavali Centre",
+  areasHeading: "Preschool Near Kasarvadavali, Puranik City and Owale",
+  nearbyAreas: [
+    { label: "Under 1 km", areas: ["Kasarvadavali", "Rosa Gardenia", "Parijat Gardens", "Hypercity", "Puranik City"] },
+    { label: "1–2 km", areas: ["Owale", "Mogharpada", "Vijay Annex"] },
+  ],
+  areasParagraph: "If you live in Kasarvadavali, Puranik City, Owale or around Hypercity on Ghodbunder Road, our Kasarvadavali centre is usually the closest Rainbow centre. Families near Tropical Lagoon and Kavesar are also close to our Anand Nagar centre, so book a visit at whichever suits your route.",
+  reachHeading: "How to reach us",
+  reachText: "At Rosa Gardenia, next to Parijat Gardens, behind Hypercity Mall on Ghodbunder Road.",
+  admissionsHeading: "Admissions at This Centre",
+  admissionSteps: [
+    "Book a visit",
+    "A relaxed ~20-minute parent–child interaction (no entrance test)",
+    "Confirm your seat",
+    "2–3 short orientation sessions before term",
+  ],
+  admissionLine: "Age is counted as of 1 June. Admissions for 2027-28 are open, and our team replies within 24 hours. Call for fees.",
+  admissionsDetails: "There is no entrance test. The parent–child interaction is a relaxed conversation of about 20 minutes. Once you confirm a seat, there are 2–3 short orientation sessions before term begins. You can ask which programme matches your child's age, how transport works and whether the batch timings suit your routine when you visit.",
+  faqHeading: "Frequently Asked Questions",
+  nearbyHeading: "Nearby Rainbow Centres",
+  nearbyLinkText: "Anand Nagar (about 0.8 km)",
+  finalHeading: "Visit Our Kasarvadavali Centre",
+} as const;
+
 export const centres: CentreData[] = [
   {
     id: "manpada",
@@ -387,9 +436,9 @@ export const centres: CentreData[] = [
     localitySlug: "kasarvadavali",
     playgroundLandingUrl: "/preschool-in-kasarvadavali-thane",
     preschoolLandingUrl: "/preschool-in-kasarvadavali-thane",
-    address: "Rosa Gardenia, Next to Parijat Gardens, Kasarvadavali, Behind Hypercity Mall, Thane (W)",
+    address: "Rosa Gardenia, Next to Parijat Gardens, Kasarvadavali, Behind Hypercity Mall, Ghodbunder Road, Thane (W) 400615",
     postalCode: "400615",
-    phoneNumbers: ["022-40062128", "87798 00068"],
+    phoneNumbers: [ADMISSIONS_PHONE_DISPLAY],
     hideCentrePhonesOnBranchPage: true,
     whatsappNumber: "8779800068",
     googleMapsDirectionsUrl: "https://maps.app.goo.gl/kE2EyU3YUuf9ZDuNA",
@@ -402,7 +451,7 @@ export const centres: CentreData[] = [
       nursery: "/nursery",
       kindergarten: "/kindergarten",
     },
-    areasServed: ["Kasarvadavali", "Patlipada", "Brahmand", "Hiranandani Meadows"],
+    areasServed: ["Kasarvadavali", "Rosa Gardenia", "Parijat Gardens", "Hypercity", "Puranik City", "Owale", "Mogharpada", "Vijay Annex"],
   },
 ];
 
@@ -539,8 +588,8 @@ export const preschoolPageSEO: Record<string, PreschoolPageSEO> = {
     canonicalPath: "/preschool-in-kalwa-thane",
   },
   kasarvadavali: {
-    title: "Preschool in Kasarvadavali, Thane | Rainbow Preschool",
-    description: "Rainbow Preschool Kasarvadavali (behind Hypercity, Ghodbunder Rd) — preferred by Patlipada families. Playgroup to KG, ages 1.5–5. Enquire for 2026-27.",
+    title: "Preschool in Kasarvadavali, Ghodbunder Road, Thane | Rainbow",
+    description: "Playgroup, Nursery & KG (1.5–5.5 yrs) at Rosa Gardenia, near Hypercity, Kasarvadavali. Near Owale & Puranik City. Up to Grade 3. 2027-28 admissions open.",
     h1: "Preschool in Kasarvadavali, Thane",
     canonicalPath: "/preschool-in-kasarvadavali-thane",
   },
@@ -574,9 +623,9 @@ export const preschoolIntros: Record<string, { paragraph1: string; paragraph2: s
     paragraph3: kalwaPage.areasParagraph,
   },
   kasarvadavali: {
-    paragraph1: "Rainbow Preschool International's Kasarvadavali centre at Rosa Gardenia, behind Hypercity Mall, is the premier preschool choice for families along Ghodbunder Road. We offer excellent Playgroup, Nursery, and Kindergarten programmes for children aged 1.5 to 5 years.",
-    paragraph2: "Parents in Kasarvadavali, Patlipada, and surrounding areas value our holistic approach to early education. Our curriculum balances academic readiness with creative expression, physical development, and social skills. Every child receives individual attention from our caring teachers.",
-    paragraph3: "The Kasarvadavali centre features modern facilities, a dedicated outdoor play area, and comprehensive safety measures including CCTV and secure entry. Experience why families across Ghodbunder Road trust Rainbow Preschool for their children's early education.",
+    paragraph1: kasarvadavaliPage.aboutParagraphs[0],
+    paragraph2: kasarvadavaliPage.aboutParagraphs[1],
+    paragraph3: kasarvadavaliPage.areasParagraph,
   },
 };
 
@@ -623,12 +672,12 @@ export const whyParentsChoose: Record<string, string[]> = {
     "Continue up to Grade 4 at the same centre",
   ],
   kasarvadavali: [
-    "Modern facilities near Hypercity Mall on Ghodbunder Road",
-    "Serving families from Kasarvadavali, Patlipada, and beyond",
-    "Spacious classrooms and dedicated outdoor play area",
-    "Individual attention with small teacher-student ratios",
-    "Comprehensive early learning curriculum",
-    "Trusted by 1,00,000+ families across Rainbow's network",
+    "At Rosa Gardenia behind Hypercity Mall, easy to reach from Puranik City and Owale",
+    "100% female, ECCE-trained teachers; two teachers per class of 30",
+    "CCTV-monitored classrooms",
+    "Toys and classrooms sanitised several times a day",
+    "Daily updates and monthly progress reports",
+    "Continue up to Grade 3 at the same centre",
   ],
 };
 
@@ -719,36 +768,36 @@ export const preschoolFAQs: Record<string, Array<{ question: string; answer: str
   ],
   kasarvadavali: [
     {
-      question: "Where exactly is Rainbow Preschool in Kasarvadavali?",
-      answer: "We're at Rosa Gardenia, Next to Parijat Gardens, behind Hypercity Mall, Kasarvadavali, Thane (W). It's a prime location on Ghodbunder Road."
+      question: "Where is Rainbow Preschool in Kasarvadavali?",
+      answer: "Rainbow Preschool International, Kasarvadavali Centre, is at Rosa Gardenia, Next to Parijat Gardens, Kasarvadavali, Behind Hypercity Mall, Ghodbunder Road, Thane (W) 400615."
     },
     {
-      question: "What age groups does the Kasarvadavali centre accept?",
-      answer: "We accept children from 1.5 years for Playgroup, 2.5 years for Nursery, and 3.5 years for Kindergarten."
+      question: "Which areas is the centre close to?",
+      answer: "Kasarvadavali, Rosa Gardenia, Parijat Gardens, Hypercity and Puranik City are under 1 km away. Owale, Mogharpada and Vijay Annex are 1–2 km away."
     },
     {
-      question: "Is parking available at the Kasarvadavali centre?",
-      answer: "Yes, ample parking is available near Rosa Gardenia. The centre is also easily accessible by auto from all Ghodbunder Road areas."
+      question: "What are the batch timings?",
+      answer: "8:30–11:30 AM or 12:30–3:30 PM, Monday to Friday."
     },
     {
-      question: "What facilities does the Kasarvadavali centre have?",
-      answer: "Modern classrooms, dedicated outdoor play area, CCTV monitoring, experienced teachers, and all learning materials needed for early education."
+      question: "Which classes are available?",
+      answer: "Playgroup, Nursery, Jr. KG and Sr. KG (1.5–5.5 years), and classes up to Grade 3."
     },
     {
-      question: "How do I contact Rainbow Preschool Kasarvadavali?",
-      answer: "Call Admissions on 82915 68972, WhatsApp us on 87798 00068, or fill the callback form."
+      question: "What is the class size?",
+      answer: "Classes have two female, ECCE-trained teachers for every 30 children."
     },
     {
-      question: "What areas does the Kasarvadavali centre serve?",
-      answer: "We serve families from Kasarvadavali, Patlipada, Owale, Majiwada, and all areas along Ghodbunder Road."
+      question: "Do you provide transport?",
+      answer: "Yes, GPS-enabled in-house transport."
     },
     {
-      question: "What is included in the preschool curriculum?",
-      answer: "Our curriculum includes play-based learning, language development, early math concepts, art, music, physical activities, and social skill building."
+      question: "What are the fees?",
+      answer: "Please call our admissions team on 82915 68972 for current fees."
     },
     {
-      question: "Can I schedule a visit?",
-      answer: "Yes! Fill the callback form or call Admissions on 82915 68972 to schedule a visit to our Kasarvadavali centre."
+      question: "How do I enrol?",
+      answer: "Call our admissions team on 82915 68972, WhatsApp us on 87798 00068, or fill in the callback form. We'll book your visit and a short parent–child interaction."
     },
   ],
 };

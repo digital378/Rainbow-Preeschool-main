@@ -11,7 +11,7 @@ import { BLOG_LIST_COPY, blogPostToListEntry, legacyBlogListEntries } from "@sha
 import { getBlogFeaturedImage, LEGACY_BLOG_FEATURED_IMAGE_URLS, LEGACY_BLOG_LOCAL_POST_SLUGS } from "@shared/blog-featured-image-data";
 import { getBlogMetadata } from "@shared/blog-metadata";
 import { TOP_PRESCHOOLS_COPY, TOP_PRESCHOOLS_CENTRE_LINKS, TOP_PRESCHOOLS_COMPETITOR_LINKS, TOP_PRESCHOOLS_BREADCRUMB_SCHEMA } from "@shared/top-preschools-thane-content";
-import { centres } from "@shared/centre-data";
+import { centres, branchWhatsAppGreeting } from "@shared/centre-data";
 
 // Inclusion rule: only add UA strings that appear EXCLUSIVELY in automated
 // crawlers / bots and NEVER in any human-operated browser or in-app browser.
@@ -246,7 +246,10 @@ const allowedTopPreschoolsExternalLinks = new Set([
   ...TOP_PRESCHOOLS_CENTRE_LINKS.map((link) => link.href),
   ...TOP_PRESCHOOLS_COMPETITOR_LINKS.map((link) => link.href),
 ]);
-const allowedBranchWhatsAppLinks = new Set(centres.map((centre) => `https://wa.me/91${centre.whatsappNumber}`));
+const allowedBranchWhatsAppLinks = new Set(centres.flatMap((centre) => {
+  const url = `https://wa.me/91${centre.whatsappNumber}`;
+  return [url, `${url}?text=${encodeURIComponent(branchWhatsAppGreeting(centre))}`];
+}));
 
 function resolvePageLink(url: string): { href: string; external: boolean } | null {
   const hrefPath = finalInternalPath(url);
@@ -276,7 +279,7 @@ function renderImageHtml(image: {
 }
 
 function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
-  const isEnhancedBranch = requestUrl === "/preschool-in-anand-nagar-thane" || requestUrl === "/preschool-in-kalwa-thane" || requestUrl === "/preschool-in-manpada-thane" || requestUrl === "/preschool-in-hariniwas-thane" || requestUrl === "/preschool-in-dhokali-thane";
+  const isEnhancedBranch = requestUrl === "/preschool-in-anand-nagar-thane" || requestUrl === "/preschool-in-kalwa-thane" || requestUrl === "/preschool-in-manpada-thane" || requestUrl === "/preschool-in-hariniwas-thane" || requestUrl === "/preschool-in-dhokali-thane" || requestUrl === "/preschool-in-kasarvadavali-thane";
   // These standalone pages end at their contact CTA in the visitor app.
   // Keep the crawler HTML aligned rather than appending the shared footer.
   const endsAtContact = requestUrl === "/play-school-near-ghodbunder-road"

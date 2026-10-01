@@ -184,15 +184,40 @@ export const branchPhotos = {
       },
     ],
   },
-  // Preserve the legacy Kasarvadavali gallery. It has no hero/About photo yet;
-  // include its actual images in the same cross-page ownership/perceptual guard.
   kasarvadavali: {
+    hero: {
+      src: "/images/branches/preschool-thane-classroom-hero.webp",
+      alt: "Bright preschool classroom with child-sized seating and a long activity table",
+    },
+    about: {
+      src: "/images/branches/preschool-thane-child-foam-blocks-about.webp",
+      alt: "Child playing with colourful rings and foam blocks in a classroom activity area",
+    },
     gallery: [
-      { src: "/images/optimized/DSC00497.webp", alt: "Rainbow Preschool Kasarvadavali classroom activities 1" },
-      { src: "/images/optimized/child-stacking-rings-playgroup.webp", alt: "Rainbow Preschool Kasarvadavali classroom activities 2" },
-      { src: "/images/optimized/DSC00010.webp", alt: "Rainbow Preschool Kasarvadavali classroom activities 3" },
-      { src: "/images/optimized/DSC00011.webp", alt: "Rainbow Preschool Kasarvadavali classroom activities 4" },
-      { src: "/images/optimized/DSC00054.webp", alt: "Rainbow Preschool Kasarvadavali classroom activities 5" },
+      {
+        src: "/images/branches/preschool-thane-ball-pit-play.webp",
+        alt: "Child smiling among colourful balls in an indoor play area",
+      },
+      {
+        src: "/images/branches/preschool-thane-table-drawing.webp",
+        alt: "Two children drawing together at a classroom table",
+      },
+      {
+        src: "/images/branches/preschool-thane-classroom-toy-activity.webp",
+        alt: "Child exploring colourful toys during a classroom table activity",
+      },
+      {
+        src: "/images/branches/preschool-thane-cartoon-character-event.webp",
+        alt: "Children standing with costumed cartoon characters at a preschool event",
+      },
+      {
+        src: "/images/branches/preschool-thane-under-the-sea-event.webp",
+        alt: "Children in colourful costumes during an under-the-sea themed preschool activity",
+      },
+      {
+        src: "/images/branches/preschool-thane-colourful-corridor.webp",
+        alt: "Bright preschool hallway with colourful classroom doors and child-friendly displays",
+      },
     ],
   },
 } as const;

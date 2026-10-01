@@ -37,6 +37,8 @@ import {
   manpadaPage,
   hariniwasPage,
   dhokaliPage,
+  kasarvadavaliPage,
+  branchWhatsAppGreeting,
   preschoolIntros,
   whyParentsChoose,
   preschoolFAQs,
@@ -2584,18 +2586,19 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
     return staticPages[cleanPath];
   }
 
-  if (cleanPath === "/preschool-in-anand-nagar-thane" || cleanPath === "/preschool-in-kalwa-thane" || cleanPath === "/preschool-in-manpada-thane" || cleanPath === "/preschool-in-hariniwas-thane" || cleanPath === "/preschool-in-dhokali-thane") {
-    const slug = cleanPath === "/preschool-in-anand-nagar-thane" ? "anand-nagar" : cleanPath === "/preschool-in-kalwa-thane" ? "kalwa" : cleanPath === "/preschool-in-hariniwas-thane" ? "hariniwas" : cleanPath === "/preschool-in-dhokali-thane" ? "dhokali" : "manpada";
+  if (cleanPath === "/preschool-in-anand-nagar-thane" || cleanPath === "/preschool-in-kalwa-thane" || cleanPath === "/preschool-in-manpada-thane" || cleanPath === "/preschool-in-hariniwas-thane" || cleanPath === "/preschool-in-dhokali-thane" || cleanPath === "/preschool-in-kasarvadavali-thane") {
+    const slug = cleanPath === "/preschool-in-anand-nagar-thane" ? "anand-nagar" : cleanPath === "/preschool-in-kalwa-thane" ? "kalwa" : cleanPath === "/preschool-in-hariniwas-thane" ? "hariniwas" : cleanPath === "/preschool-in-dhokali-thane" ? "dhokali" : cleanPath === "/preschool-in-kasarvadavali-thane" ? "kasarvadavali" : "manpada";
     const centre = getCentreBySlug(slug);
     if (!centre) {
       throw new Error(`Missing shared centre data for ${slug} preschool page`);
     }
-    const page = slug === "anand-nagar" ? anandNagarPage : slug === "kalwa" ? kalwaPage : slug === "hariniwas" ? hariniwasPage : slug === "dhokali" ? dhokaliPage : manpadaPage;
+    const page = slug === "anand-nagar" ? anandNagarPage : slug === "kalwa" ? kalwaPage : slug === "hariniwas" ? hariniwasPage : slug === "dhokali" ? dhokaliPage : slug === "kasarvadavali" ? kasarvadavaliPage : manpadaPage;
     const pageSEO = preschoolPageSEO[slug];
     const faqs = preschoolFAQs[slug] ?? [];
     const photos = branchPhotos[slug];
     const areas = centre.areasServed ?? page.nearbyAreas.flatMap((group) => group.areas);
     const centreUrl = `${BASE_URL}${cleanPath}`;
+    const whatsappHref = `https://wa.me/91${centre.whatsappNumber}?text=${encodeURIComponent(branchWhatsAppGreeting(centre))}`;
     const preschoolSchema = {
       "@context": "https://schema.org",
       "@type": "Preschool",
@@ -2607,7 +2610,7 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
         streetAddress: centre.branchPageAddress ?? centre.address,
         addressLocality: "Thane",
         addressRegion: "Maharashtra",
-        ...(["manpada", "hariniwas", "dhokali"].includes(slug) ? { postalCode: centre.postalCode } : {}),
+        ...(["manpada", "hariniwas", "dhokali", "kasarvadavali"].includes(slug) ? { postalCode: centre.postalCode } : {}),
         addressCountry: "IN",
       },
       geo: {
@@ -2648,7 +2651,7 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
       description: pageSEO.description,
       canonical: centreUrl,
       ogImage: `${BASE_URL}/images/og/${slug}-1200x630.jpg`,
-      ogImageAlt: slug === "manpada" || slug === "kalwa" ? photos.hero.alt : slug === "anand-nagar" ? "Two children playing with blocks at Rainbow Preschool" : slug === "dhokali" ? "Rainbow Preschool International entrance with colourful murals" : "Rainbow Preschool classroom activity",
+      ogImageAlt: slug === "manpada" || slug === "kalwa" || slug === "kasarvadavali" ? photos.hero.alt : slug === "anand-nagar" ? "Two children playing with blocks at Rainbow Preschool" : slug === "dhokali" ? "Rainbow Preschool International entrance with colourful murals" : "Rainbow Preschool classroom activity",
       h1: pageSEO.h1,
       introText: page.heroSubline,
       breadcrumbs: [
@@ -2667,7 +2670,7 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
            images: [{ src: photos.hero.src, alt: photos.hero.alt, width: slug === "anand-nagar" ? 1197 : 900, height: slug === "anand-nagar" ? 800 : 600, loading: "eager" }],
           links: [
             { text: ADMISSIONS_PHONE_LABEL, url: "tel:+918291568972" },
-            { text: "WhatsApp", url: `https://wa.me/91${centre.whatsappNumber}` },
+            { text: "WhatsApp", url: whatsappHref },
             { text: "Get directions", url: centre.googleMapsDirectionsUrl },
           ],
         },
@@ -2732,7 +2735,7 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
         {
           heading: page.nearbyHeading,
           links: [
-             { text: page.nearbyLinkText, url: slug === "anand-nagar" ? "/preschool-in-kasarvadavali-thane" : slug === "kalwa" ? "/preschool-in-hariniwas-thane" : slug === "hariniwas" ? "/preschool-in-kalwa-thane" : slug === "dhokali" ? "/preschool-in-manpada-thane" : "/preschool-in-dhokali-thane" },
+              { text: page.nearbyLinkText, url: slug === "anand-nagar" ? "/preschool-in-kasarvadavali-thane" : slug === "kalwa" ? "/preschool-in-hariniwas-thane" : slug === "hariniwas" ? "/preschool-in-kalwa-thane" : slug === "dhokali" ? "/preschool-in-manpada-thane" : slug === "kasarvadavali" ? "/preschool-in-anand-nagar-thane" : "/preschool-in-dhokali-thane" },
             { text: "All 6 centres", url: "/contact" },
           ],
         },
@@ -2743,7 +2746,7 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
         description: `Call or WhatsApp us to arrange a visit to the ${centre.localityName} centre.`,
         links: [
           { text: ADMISSIONS_PHONE_LABEL, url: "tel:+918291568972" },
-          { text: "WhatsApp", url: `https://wa.me/91${centre.whatsappNumber}` },
+          { text: "WhatsApp", url: whatsappHref },
         ],
       },
     };

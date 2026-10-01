@@ -28,7 +28,7 @@ import { PROGRAMMES_COPY } from "../shared/programmes-page-content";
 import { CONTACT_PAGE_COPY } from "../shared/contact-page-copy";
 import { TOP_PRESCHOOLS_COPY } from "../shared/top-preschools-thane-content";
 import { ABOUT_PAGE_COPY } from "../shared/about-page-content";
-import { anandNagarPage, kalwaPage, manpadaPage, hariniwasPage, dhokaliPage } from "../shared/centre-data";
+import { anandNagarPage, kalwaPage, manpadaPage, hariniwasPage, dhokaliPage, kasarvadavaliPage } from "../shared/centre-data";
 
 const BASE = (process.argv[2] || "http://localhost:5000").replace(/\/$/, "");
 const UA = "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)";
@@ -116,6 +116,7 @@ async function checkUrl(path: string): Promise<CheckResult> {
     : path === "/preschool-in-kalwa-thane" ? kalwaPage
     : path === "/preschool-in-hariniwas-thane" ? hariniwasPage
     : path === "/preschool-in-dhokali-thane" ? dhokaliPage
+    : path === "/preschool-in-kasarvadavali-thane" ? kasarvadavaliPage
     : path === "/preschool-in-manpada-thane" ? manpadaPage : null;
   if (path === "/top-preschools-in-thane" || path === "/about") {
     const byline = path === "/about"
@@ -151,6 +152,9 @@ async function checkUrl(path: string): Promise<CheckResult> {
   }
   if ((path === "/" || path === "/about" || admissionsPage || programmePage || comparisonPage || branchPage || path === "/contact") && /"@type":\s*"Article"/.test(html)) {
     missing.push(`unexpected Article JSON-LD on ${path}`);
+  }
+  if (branchPage && /"@type":\s*"FAQPage"/.test(html)) {
+    missing.push(`unexpected FAQPage JSON-LD on ${path}`);
   }
   const expectedDate = path === "/"
     ? HOME_PUBLISH_DATE_ISO

@@ -24,3 +24,11 @@ The creator explicitly confirmed that the façade with a yellow Rainbow bus in f
 **Why:** After the external verification could not resolve the signage discrepancy, the creator supplied that exact photo in the Kalwa centre card and directly identified it as Kalwa.
 
 **How to apply:** Use the original full-resolution façade, not the uploaded card screenshot. Do not repeat the earlier rejection or describe this as independently Google-verified; distinguish creator confirmation from external verification.
+
+## Returned heroes are reserved
+
+Photos replaced by centre façades stay in the unused pool but must not be reassigned to another branch without explicit permission.
+
+**Why:** The creator specifically required replaced heroes to remain unused, even though subsequent page updates allow selecting other unused photos.
+
+**How to apply:** Do not interpret “unused pool” as permission to recycle former Manpada or Kalwa heroes onto a different centre page. Distinguish those reserved images from photos that have never been assigned.
