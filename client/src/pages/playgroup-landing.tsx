@@ -399,7 +399,8 @@ export default function PlaygroupLanding() {
               <p className="text-lg leading-relaxed">
                 {PLAYGROUP_COPY.whyFinalSegments.map((segment, index) => "href" in segment
                   ? <Link key={index} href={segment.href} className="text-primary hover:underline">{segment.text}</Link>
-                  : <span key={index}>{segment.text}</span>)}
+                  : <span key={index}>{segment.text}</span>)}{" "}
+                For local families, explore <Link href="/play-school-near-me" className="text-primary hover:underline">playgroup near me in Thane</Link>.
               </p>
             </div>
           </div>

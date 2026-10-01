@@ -11,7 +11,8 @@ import { CONTACT_PAGE_COPY } from "@shared/contact-page-copy";
 import { TOP_PRESCHOOLS_COPY } from "@shared/top-preschools-thane-content";
 import { ABOUT_PAGE_COPY } from "@shared/about-page-content";
 import { anandNagarPage, kalwaPage, manpadaPage, hariniwasPage, dhokaliPage, kasarvadavaliPage } from "@shared/centre-data";
-import { PLAY_SCHOOL_NEAR_ME_H1, PLAY_SCHOOL_NEAR_ME_INTRO } from "@shared/play-school-near-me-hero";
+import { playSchoolNearMePhotos } from "@shared/branch-photos";
+import { renderPlaySchoolNearMeHtml } from "@shared/play-school-near-me-render";
 
 /**
  * Keep the browser's initial document metadata aligned with bot SSR and the
@@ -36,7 +37,7 @@ export function injectIndexPolicyShell(path: string, html: string): string {
     .replace(/<meta name="robots" content="[^"]*"\s*\/?>/i, `<meta name="robots" content="${robots}" />`)
     .replace(/<link rel="canonical" href="[^"]*"\s*\/?>/i, `<link rel="canonical" href="${escape(canonical)}" />`);
   if (!seo) return result;
-  if (path === "/nursery" || path === "/kindergarten" || path === "/programmes" || path === "/contact" || path === "/top-preschools-in-thane" || path === "/about" || isBranchPage) result = result.replace('<html lang="en">', '<html lang="en-IN">');
+  if (path === "/nursery" || path === "/kindergarten" || path === "/programmes" || path === "/contact" || path === "/top-preschools-in-thane" || path === "/about" || path === "/play-school-near-me" || isBranchPage) result = result.replace('<html lang="en">', '<html lang="en-IN">');
 
   const updateMeta = (kind: "name" | "property", key: string, value: string) => {
     const tag = `<meta ${kind}="${key}" content="${escape(value)}" />`;
@@ -53,13 +54,13 @@ export function injectIndexPolicyShell(path: string, html: string): string {
   updateMeta("property", "og:title", seo.title);
   updateMeta("property", "og:description", seo.description);
   updateMeta("property", "og:image", seo.ogImage ?? `${PREFERRED_DOMAIN}/og-image.jpg`);
-  if (path === "/nursery" || path === "/kindergarten" || path === "/programmes" || path === "/contact" || path === "/top-preschools-in-thane" || path === "/about" || isBranchPage) {
+  if (path === "/nursery" || path === "/kindergarten" || path === "/programmes" || path === "/contact" || path === "/top-preschools-in-thane" || path === "/about" || path === "/play-school-near-me" || isBranchPage) {
     updateMeta("property", "og:locale", "en_IN");
-    updateMeta("property", "og:image:alt", isBranchPage ? seo.ogImageAlt ?? branchImageAlt : path === "/about" ? ABOUT_PAGE_COPY.ogImageAlt : path === "/top-preschools-in-thane" ? TOP_PRESCHOOLS_COPY.ogImageAlt : path === "/contact" ? CONTACT_PAGE_COPY.ogImageAlt : path === "/programmes" ? PROGRAMMES_COPY.ogImageAlt : path === "/kindergarten" ? KINDERGARTEN_COPY.ogImageAlt : NURSERY_COPY.ogImageAlt);
+    updateMeta("property", "og:image:alt", isBranchPage ? seo.ogImageAlt ?? branchImageAlt : path === "/about" ? ABOUT_PAGE_COPY.ogImageAlt : path === "/top-preschools-in-thane" ? TOP_PRESCHOOLS_COPY.ogImageAlt : path === "/contact" ? CONTACT_PAGE_COPY.ogImageAlt : path === "/programmes" ? PROGRAMMES_COPY.ogImageAlt : path === "/kindergarten" ? KINDERGARTEN_COPY.ogImageAlt : path === "/play-school-near-me" ? seo.ogImageAlt ?? "" : NURSERY_COPY.ogImageAlt);
     updateMeta("property", "og:image:type", "image/jpeg");
     updateMeta("property", "og:image:width", "1200");
     updateMeta("property", "og:image:height", "630");
-    updateMeta("name", "twitter:image:alt", isBranchPage ? seo.ogImageAlt ?? branchImageAlt : path === "/about" ? ABOUT_PAGE_COPY.ogImageAlt : path === "/top-preschools-in-thane" ? TOP_PRESCHOOLS_COPY.ogImageAlt : path === "/contact" ? CONTACT_PAGE_COPY.ogImageAlt : path === "/programmes" ? PROGRAMMES_COPY.ogImageAlt : path === "/kindergarten" ? KINDERGARTEN_COPY.ogImageAlt : NURSERY_COPY.ogImageAlt);
+    updateMeta("name", "twitter:image:alt", isBranchPage ? seo.ogImageAlt ?? branchImageAlt : path === "/about" ? ABOUT_PAGE_COPY.ogImageAlt : path === "/top-preschools-in-thane" ? TOP_PRESCHOOLS_COPY.ogImageAlt : path === "/contact" ? CONTACT_PAGE_COPY.ogImageAlt : path === "/programmes" ? PROGRAMMES_COPY.ogImageAlt : path === "/kindergarten" ? KINDERGARTEN_COPY.ogImageAlt : path === "/play-school-near-me" ? seo.ogImageAlt ?? "" : NURSERY_COPY.ogImageAlt);
   }
   updateMeta("name", "twitter:url", canonical);
   updateMeta("name", "twitter:title", seo.title);
@@ -88,25 +89,15 @@ export function injectIndexPolicyShell(path: string, html: string): string {
     result = result.replace('<div id="root"></div>', `<div id="about-initial"><h1 id="about-initial-h1">${escape(ABOUT_PAGE_COPY.heroHeading)}</h1></div><div id="root"></div>`);
   }
   if (path === "/play-school-near-me") {
-    // Text paints from the HTML response. React reserves identical space for it
-    // instead of replacing or moving the LCP node during hydration.
-    result = result.replace(/<link rel="preload" as="font" type="font\/woff2" crossorigin href="https:\/\/fonts\.gstatic\.com\/[^"]+">/, "");
-    result = result.replace("</head>", `<style>
-      #near-me-initial{position:absolute;inset:0 0 auto;z-index:2;pointer-events:none;padding-top:5rem;font-family:Inter,"Open Sans",sans-serif;color:#181d25}
-      #near-me-initial section{padding:4rem 0;background:linear-gradient(135deg,rgba(223,32,96,.1),rgba(255,193,7,.05),rgba(77,176,115,.1))}
-      #near-me-initial .inner{max-width:80rem;margin:auto;padding:0 1rem}
-      #near-me-initial .grid{display:grid;grid-template-columns:1fr;gap:3rem;align-items:center}
-      #near-me-initial .badge-space{height:34px;margin-bottom:1rem}
-      #near-me-initial h1{font-family:Poppins,Inter,sans-serif;font-size:1.875rem;line-height:2.25rem;font-weight:700;letter-spacing:-.02em;margin:0 0 1.5rem}
-      #near-me-initial p{font-size:1.125rem;line-height:1.625;margin:0 0 2rem;color:#6a7181}
-      #near-me-initial .buttons-space{height:96px}
-      #near-me-initial .form-space{height:514px}
-      @media(min-width:640px){#near-me-initial .inner{padding:0 1.5rem}#near-me-initial .buttons-space{height:40px}#near-me-initial .form-space{height:498px}}
-      @media(min-width:768px){#near-me-initial{padding-top:6rem}#near-me-initial section{padding:6rem 0}#near-me-initial h1{font-size:2.25rem;line-height:2.5rem}#near-me-initial p{font-size:1.25rem;line-height:1.4}}
-      @media(min-width:1024px){#near-me-initial section{padding:8rem 0}#near-me-initial .inner{padding:0 2rem}#near-me-initial .grid{grid-template-columns:repeat(2,minmax(0,1fr))}#near-me-initial h1{font-size:3rem;line-height:1}}
-      #near-me-initial.near-me-hydrated section{background:none}
-    </style></head>`);
-    result = result.replace('<div id="root"></div>', `<div id="near-me-initial"><section><div class="inner"><div class="grid"><div><div class="badge-space" aria-hidden="true"></div><h1 id="near-me-initial-h1">${escape(PLAY_SCHOOL_NEAR_ME_H1)}</h1><p>${escape(PLAY_SCHOOL_NEAR_ME_INTRO)}</p><div class="buttons-space" aria-hidden="true"></div></div><div class="form-space" aria-hidden="true"></div></div></div></section></div><div id="root"></div>`);
+    const hero = playSchoolNearMePhotos.hero;
+    // The page renderer is the sole source of visitor-visible hub content.
+    // Keep it outside the app root so the hub controller can enhance the
+    // existing DOM without replacing the stationary H1 or intro.
+    result = result.replace(/<link rel="preload"[^>]*>/gi, "");
+    result = result.replace("</head>", `<link rel="stylesheet" href="/styles/play-school-near-me.css" />
+    <link rel="preload" as="image" href="${escape(hero.avifSrcSet.split(",")[0].trim().split(/\s+/)[0])}" imagesrcset="${escape(hero.avifSrcSet)}" imagesizes="(max-width: 767px) 100vw, 45vw" type="image/avif" />
+    </head>`);
+    result = result.replace('<div id="root"></div>', `<div id="root"></div>${renderPlaySchoolNearMeHtml()}<div id="near-me-footer"></div>`);
   }
   if (isBranchPage) {
     // Keep the text-led first paint stationary while React mounts.

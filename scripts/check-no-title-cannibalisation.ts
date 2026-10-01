@@ -60,6 +60,7 @@
  */
 import { readFileSync, readdirSync } from "node:fs";
 import { resolve } from "node:path";
+import { PLAY_SCHOOL_NEAR_ME_CONTENT } from "../shared/play-school-near-me-content";
 
 const ROOT = process.cwd();
 
@@ -415,6 +416,12 @@ scanCentreData();
 scanPlaygroupLanding();
 scanClientPages();
 scanLegacyPagesData();
+titles.push({
+  file: "shared/play-school-near-me-content.ts",
+  line: 1,
+  url: "/play-school-near-me",
+  title: PLAY_SCHOOL_NEAR_ME_CONTENT.title,
+});
 validate();
 validateSsrClientParity();
 

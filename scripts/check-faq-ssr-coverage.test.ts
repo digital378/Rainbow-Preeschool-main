@@ -237,10 +237,9 @@ assert(
 );
 
 assert(
-  "/play-school-near-me does NOT currently call createFAQSchema but has FAQPage SSR",
-  // Just verifying the lookup works for a known page with FAQPage in SSR
+  "/play-school-near-me intentionally has no FAQPage schema after its redesign",
   hasFAQPageSSRCoverage(realSSR, "/play-school-near-me"),
-  true
+  false
 );
 
 assert(

@@ -405,7 +405,8 @@ export default function KindergartenLanding() {
                 {KINDERGARTEN_VISITOR_COPY.sections[0].paragraphs?.[1]}
               </p>
               <p className="text-lg leading-relaxed">
-                {KINDERGARTEN_VISITOR_COPY.sections[0].paragraphs?.[2]}
+                {KINDERGARTEN_VISITOR_COPY.sections[0].paragraphs?.[2]}{" "}
+                See local options for <Link href="/play-school-near-me" className="text-primary hover:underline">kindergarten near me in Thane</Link>.
               </p>
             </div>
           </div>

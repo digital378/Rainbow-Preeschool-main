@@ -34,6 +34,7 @@ export function RainbowTheatre({
   heading,
   subline,
   branchCopy = false,
+  introAlreadyRendered = false,
 }: {
   active: boolean;
   enabled?: boolean;
@@ -42,6 +43,7 @@ export function RainbowTheatre({
   heading?: string;
   subline?: string;
   branchCopy?: boolean;
+  introAlreadyRendered?: boolean;
 }) {
   const [playRequestedId, setPlayRequestedId] = useState<string | null>(null);
   const {
@@ -510,7 +512,7 @@ export function RainbowTheatre({
 
   return (
     <section className={`rainbow-theatre rainbow-theatre--${variant}${active ? " is-active" : ""}`} aria-label="The Rainbow Theatre">
-      <div className="rainbow-theatre__intro">
+      {!introAlreadyRendered && <div className="rainbow-theatre__intro">
           <span className="rainbow-theatre__eyebrow"><i aria-hidden="true" /> {variant === "homepage" ? "The Rainbow Theatre" : "Scene 6 · The Rainbow Theatre"}</span>
           <h2>{heading ?? (variant === "homepage" ? "A front-row look at our days" : "Now showing, from our Instagram")}</h2>
           <p>{subline ?? (variant === "homepage" ? "Small classroom moments, celebrations and discoveries from Rainbow." : "Watch the latest Rainbow video. Browse earlier posts in the playlist.")}</p>
@@ -519,7 +521,7 @@ export function RainbowTheatre({
             Instagram videos could not load. <button type="button" onClick={() => void refetch()}>Try again</button>
           </p>
         )}
-      </div>
+      </div>}
 
       <div className="rainbow-theatre__layout">
         <div className="rainbow-theatre__screen-wrap">

@@ -1780,7 +1780,8 @@ export default function Home() {
               <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">{HOME_VISITOR_COPY.sections[2].items?.[6]}</p>
               <h2 className="text-3xl md:text-4xl font-bold mb-4" data-sparkle>{HOME_VISITOR_COPY.sections[2].items?.[7]}</h2>
               <p className="text-muted-foreground text-lg">
-                {HOME_VISITOR_COPY.sections[2].items?.[8]}
+                {HOME_VISITOR_COPY.sections[2].items?.[8]}{" "}
+                <Link href="/play-school-near-me" className="text-primary hover:underline">find a play school near you in Thane</Link>.
               </p>
             </div>
 

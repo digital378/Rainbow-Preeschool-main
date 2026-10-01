@@ -12,6 +12,8 @@ import { getBlogFeaturedImage, LEGACY_BLOG_FEATURED_IMAGE_URLS, LEGACY_BLOG_LOCA
 import { getBlogMetadata } from "@shared/blog-metadata";
 import { TOP_PRESCHOOLS_COPY, TOP_PRESCHOOLS_CENTRE_LINKS, TOP_PRESCHOOLS_COMPETITOR_LINKS, TOP_PRESCHOOLS_BREADCRUMB_SCHEMA } from "@shared/top-preschools-thane-content";
 import { centres, branchWhatsAppGreeting } from "@shared/centre-data";
+import { injectIndexPolicyShell } from "./index-policy-shell";
+import { injectPageSchemas } from "./static";
 
 // Inclusion rule: only add UA strings that appear EXCLUSIVELY in automated
 // crawlers / bots and NEVER in any human-operated browser or in-app browser.
@@ -643,6 +645,49 @@ export function setupBotSSR(app: Express) {
     }
 
     const seo = getPageSEO(urlPath);
+
+    if (urlPath === "/play-school-near-me" && seo) {
+      // Use the exact same shared renderer and policy-shell injection as the
+      // visitor response. In particular, do not run the generic bot renderer
+      // here: it adds the legacy byline, Article schema and a different body.
+      const botTemplate = `<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5" />
+    <title></title>
+    <meta name="description" content="" />
+    <meta name="author" content="Rainbow Preschool International" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="" />
+    <meta property="og:title" content="" />
+    <meta property="og:description" content="" />
+    <meta property="og:image" content="" />
+    <meta property="og:site_name" content="Rainbow Preschool International" />
+    <meta property="og:locale" content="en_IN" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="" />
+    <meta name="twitter:description" content="" />
+    <meta name="twitter:image" content="" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="256x256" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/favicon.png" />
+  </head>
+  <body><div id="root"></div></body>
+</html>`;
+      const html = injectIndexPolicyShell(urlPath, injectPageSchemas(urlPath, botTemplate));
+      res.status(200).set({
+        "Content-Type": "text/html; charset=utf-8",
+        "Cache-Control": "no-store",
+        "CDN-Cache-Control": "no-store",
+        "Cloudflare-CDN-Cache-Control": "no-store",
+        "Vary": "User-Agent, Accept-Encoding",
+      }).removeHeader("Set-Cookie");
+      res.send(html);
+      return;
+    }
 
     if (!seo) {
       // Standalone blog pages are self-contained HTML files with their own

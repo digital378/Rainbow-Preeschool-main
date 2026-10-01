@@ -12,7 +12,6 @@ import {
   HOME_FILMSTRIP_IMAGES,
   HOME_HERO_IMAGE,
   HOME_PROGRAMME_IMAGES,
-  PLAY_SCHOOL_GALLERY_IMAGES,
   PROGRAMME_GALLERY_IMAGES,
 } from "@shared/page-image-data";
 import {
@@ -47,7 +46,6 @@ import {
   BRANCH_GALLERY_HEADING,
   centres,
   getCentreBySlug,
-  createAllBranchLocalBusinessSchemas,
 } from "@shared/centre-data";
 import { branchPhotos } from "@shared/branch-photos";
 import { legacyPagesData } from "@shared/legacy-pages-data";
@@ -98,7 +96,7 @@ import {
 } from "@shared/homepage-schema";
 import { NATIONAL_SYMBOLS_FAQ_SCHEMA_ITEMS } from "@shared/national-symbols-faq-data";
 import { NATIONAL_SYMBOLS_CRAFTS } from "@shared/national-symbols-craft-data";
-import { PLAY_SCHOOL_FAQ_SCHEMA_ITEMS } from "@shared/play-school-faq-data";
+import { PLAY_SCHOOL_NEAR_ME_CONTENT, getPlaySchoolNearMeSchemas } from "@shared/play-school-near-me-content";
 import { redirectMap } from "./redirects";
 import { SITEMAP_ENTRIES } from "@shared/sitemap-entries";
 import { getLiveLegacySitemapEntries } from "./legacy-sitemap";
@@ -129,10 +127,6 @@ const knownIndexableBodyTargets = new Set([
   ...ssrOnlyBlogPosts.map(post => `/blog/${post.slug}`),
   ...legacyHardcodedBlogPosts.map(post => `/blog/${post.slug}`),
 ]);
-
-// Pre-compute the per-branch LocalBusiness JSON-LD array once at module load
-// so commercial-page SSR can splat it into structuredData without per-request work.
-const branchLocalBusinessSchemas = createAllBranchLocalBusinessSchemas();
 
 /**
  * Strips lightweight markdown markers (`**bold**`, `*italic*`,
@@ -348,7 +342,10 @@ function visitorProgrammePageSections(
 function nurseryPageSections(): NonNullable<PageSEOData["contentSections"]> {
   const s = NURSERY_VISITOR_COPY.sections;
   return [
-    { heading: s[0].heading, richParagraphs: s[0].paragraphSegments },
+    { heading: s[0].heading, richParagraphs: [
+      ...(s[0].paragraphSegments ?? []),
+      [{ text: "Explore " }, { text: "nursery school near me", href: "/play-school-near-me" }, { text: " in Thane." }],
+    ] },
     { heading: s[1].heading, text: s[1].paragraphs?.[0],
       items: NURSERY_DAILY_ROUTINE.map(slot => `${slot.time} ${slot.activity} ${slot.description}`) },
     { heading: s[2].heading, text: s[2].paragraphs?.[0],
@@ -869,6 +866,11 @@ const homepageSections: NonNullable<PageSEOData["contentSections"]> = [
     eyebrow: HOME_VISITOR_COPY.sections[3].heading,
     heading: HOME_VISITOR_COPY.sections[0].heading,
     text: HOME_VISITOR_COPY.sections[0].paragraphs?.[0],
+    richParagraphs: [[
+      { text: "For families comparing locations, " },
+      { text: "find a play school near you in Thane", href: "/play-school-near-me" },
+      { text: "." },
+    ]],
     items: [
       "18+ Years in Thane",
       "6 Centres",
@@ -1234,7 +1236,10 @@ const staticPages: Record<string, PageSEOData> = {
     structuredData: [PLAYGROUP_WEBPAGE_SCHEMA],
     suppressArticleSchema: true,
     contentSections: [
-      { heading: PLAYGROUP_COPY.whyHeading, paragraphs: PLAYGROUP_COPY.whyParagraphs, richParagraphs: [PLAYGROUP_COPY.whyFinalSegments] },
+      { heading: PLAYGROUP_COPY.whyHeading, paragraphs: PLAYGROUP_COPY.whyParagraphs, richParagraphs: [
+        PLAYGROUP_COPY.whyFinalSegments,
+        [{ text: "Explore " }, { text: "playgroup near me in Thane", href: "/play-school-near-me" }, { text: " at Rainbow." }],
+      ] },
       { heading: PLAYGROUP_COPY.dayHeading, text: PLAYGROUP_COPY.dayIntro, items: PLAYGROUP_COPY.routine.map(slot => `${slot.time} ${slot.activity} ${slot.description}`) },
       { heading: PLAYGROUP_COPY.learningHeading, text: PLAYGROUP_COPY.learningIntro,
         subsections: PLAYGROUP_COPY.learningTags.map(heading => ({ heading })) },
@@ -1334,6 +1339,11 @@ const staticPages: Record<string, PageSEOData> = {
         KINDERGARTEN_DAILY_ROUTINE,
         PROGRAMME_GALLERY_IMAGES.kindergarten,
       );
+      sections[0].richParagraphs = [[
+        { text: "Explore " },
+        { text: "kindergarten near me in Thane", href: "/play-school-near-me" },
+        { text: " across all six centres." },
+      ]];
       sections[0].links = [{ text: "nursery", url: "/nursery" }];
       sections[4].items = [
         ...(sections[4].items ?? []),
@@ -1536,6 +1546,11 @@ const staticPages: Record<string, PageSEOData> = {
       {
         heading: ADMISSIONS_SECTION_HEADINGS.centres,
         text: ADMISSIONS_PAGE_COPY.sections.centresIntro,
+        richParagraphs: [[
+          { text: "Explore " },
+          { text: "preschool near me — all 6 centres", href: "/play-school-near-me" },
+          { text: " in Thane." },
+        ]],
         items: centres.map((centre) => `${centre.name} — ${centre.localityName} — ${ADMISSIONS_CENTRE_CLASSES[centre.id]}`),
         links: centres.map((centre) => ({
           text: "View Details →",
@@ -1594,98 +1609,21 @@ const staticPages: Record<string, PageSEOData> = {
     internalLinks: [],
   },
   "/play-school-near-me": {
-    title: "Play School & Preschool Near Me in Thane | Rainbow",
-    description: "Find the best play school & preschool near you in Thane — Rainbow Preschool, 6 centres across Thane West, safe play-based learning since 2007.",
-    keywords: "play school near me, preschool near me, playschool near me in thane, preschool near me in thane, top playschool thane, best play school thane",
+    title: PLAY_SCHOOL_NEAR_ME_CONTENT.title,
+    description: PLAY_SCHOOL_NEAR_ME_CONTENT.description,
+    keywords: "play school near me, preschool near me, pre school near me, play school in Thane, play school in Thane West, playschool Thane, nursery school near me, kindergarten near me, play group near me, playgroup school near me, pre nursery school near me, preschool admission near me, play school near me with fees, good preschool near me, best nursery school in Thane",
     canonical: `${BASE_URL}/play-school-near-me`,
-    h1: "Play School & Preschool Near Me in Thane",
-    breadcrumbs: [{ name: "Home", url: "/" }, { name: "Play School Near Me", url: "" }],
-    structuredData: [organizationSchema, websiteSchema, ...branchLocalBusinessSchemas, {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      mainEntity: PLAY_SCHOOL_FAQ_SCHEMA_ITEMS.map(item => ({
-        "@type": "Question",
-        name: item.question,
-        acceptedAnswer: { "@type": "Answer", text: item.answer },
-      })),
-    }],
-    contentSections: [
-      { heading: "Rainbow Preschool — Your Nearest Play School in Thane", text: "When parents in Thane search for a play school near me, they are usually looking for three things at once: a centre genuinely close to home, an environment they can absolutely trust with a 1.5- to 2.5-year-old toddler, and a curriculum that is play-based rather than worksheet-driven. Rainbow Preschool International delivers all three across 6 strategically located centres in Thane West — Manpada, Hariniwas (Naupada), Anand Nagar (Ghodbunder Road), Dhokali (Kolshet Road), Kalwa and Kasarvadavali (Ghodbunder Road). We have been Thane's most-trusted play school since 2007, with over 1,00,000 alumni, a 4.9-star Google rating from 487+ verified parent reviews, and award recognition from India Today, ScooNews, the Economic Times and the World Education Summit. Whichever Thane neighbourhood you live in, there is a Rainbow play school within a short, convenient distance from your home." },
-      { heading: "Inside Our Play School Classrooms", text: "A peek into the colourful, safe, and stimulating environment where your child will learn and grow.", images: PLAY_SCHOOL_GALLERY_IMAGES },
-      { heading: "What Makes a Good Play School Near You", text: "A genuinely good play school is much more than a clean room with toys. When you visit any play school in Thane, evaluate it on these six dimensions — they are exactly the standards Rainbow has been built around for 18+ years.", items: [
-        "Safe, child-friendly environment — CCTV-enabled classrooms, child-proofed furniture, secure single-point entry/exit, daily sanitisation",
-        "Trained, ECE-qualified female educators — every teacher background-verified, regularly trained in early childhood development and first aid",
-        "Play-based, activity-driven curriculum — learning through songs, sensory play, art, story, movement and free play, not worksheets or rote drills",
-        "Small batch sizes — 10–12 toddlers per group so every child is seen, heard and supported every single day",
-        "Convenient location near your home — short commute keeps your toddler in a relaxed, settled state of mind",
-        "Transparent parent communication — daily verbal feedback, monthly written progress notes, open-door access to your child's teacher",
-      ]},
-      { heading: "What Happens at Rainbow Play School Every Day", text: "Toddlers thrive on predictability — a calm, repeating rhythm to the day helps them feel safe and frees up their energy for learning. Every Rainbow play school day in Thane follows the same gentle structure: a warm welcome circle with songs and greetings; free play at activity stations (art corner, sensory tray, block area, pretend-play kitchen) where toddlers choose their activities and build independence; a short structured group activity that introduces a new concept, colour, shape or sound; outdoor play and movement to develop gross motor skills and burn energy; story time and rhymes for vocabulary and listening; snack time for self-help skills and table manners; and a cheerful goodbye circle. The day is intentionally short (3 hours) because that's the right cognitive load for a 1.5- to 2.5-year-old." },
-      { heading: "What Your Toddler Will Learn", text: "A play school is not childcare with toys — it is the foundation of every later academic skill. At Rainbow's play school in Thane, toddlers develop the following skills in their first year:", items: [
-        "Social skills — making friends, sharing, taking turns, cooperating in a group",
-        "Fine motor development — finger strength through art, clay, threading, building, scooping",
-        "Gross motor skills — running, jumping, balancing, climbing, throwing and catching in a safe environment",
-        "Language development — vocabulary growth in English and Hindi through songs, stories, conversations and circle time",
-        "Sensory processing — exploring textures, sounds, smells, colours and tastes in a guided way",
-        "Emotional regulation — naming feelings, managing transitions, building resilience and patience",
-        "Early independence — managing personal belongings, following simple instructions, beginning self-care routines",
-        "Pre-academic concepts — colours, shapes, sizes, numbers and patterns introduced through hands-on play, never rote",
-      ]},
-      { heading: "Safety, Hygiene and Trust — Our Promise to Every Toddler Parent", text: "Rainbow's safety standard is identical across all 6 Thane play school centres and is non-negotiable. Classrooms and common areas are CCTV-enabled. Every teacher is female, ECCE-trained, and background-verified. Furniture is child-proofed with rounded edges. Toys and high-touch surfaces are sanitised daily. There is a single secure entry/exit with a verified pickup system — no child leaves with anyone other than the listed guardians. A first-aid certified educator is on every floor every day, fire-safety equipment is checked monthly, evacuation drills with children happen quarterly, and drinking water is independently tested every month. For a toddler this small, this much detail matters." },
-      { heading: "Our 6 Play School Centres in Thane West", text: "Pick the centre nearest your home — every Rainbow play school in Thane delivers the same curriculum, the same teacher quality and the same safety standard.", items: [
-        "Manpada (Hiranandani Estate, Ghodbunder Road) — for Hiranandani Estate, Patlipada, Manpada families",
-        "Hariniwas Circle (Naupada) — for Naupada, Panchpakadi, Charai, Khopat families",
-        "Anand Nagar (Ghodbunder Road) — for Anand Nagar, Tropical Lagoon, Kavesar, Vijay Garden, Cosmos Jewels and Parkwoods families",
-        "Dhokali (Kolshet Road) — for Kolshet Road, Dhokali Naka, Vandana Nagar, Balkum families",
-        "Kalwa — for Kalwa, Vitawa, Kharegaon, Mumbra-side families",
-        "Kasarvadavali (Ghodbunder Road) — for Kasarvadavali, Hiranandani Meadows, Brahmand, upper Ghodbunder families",
-      ]},
-      { heading: "Explore by Neighbourhood", text: "Compare the local play school and playgroup information for the area closest to your family:", links: [
-        { text: "Play school near Ghodbunder Road (Manpada and Kasarvadavali)", url: "/play-school-near-ghodbunder-road" },
-        { text: "Play school near Majiwada (Dhokali)", url: "/preschool-in-dhokali-thane" },
-        { text: "Play school near Naupada (Hariniwas)", url: "/preschool-in-hariniwas-thane" },
-        { text: "Playgroup near Ghodbunder Road", url: "/play-school-near-ghodbunder-road" },
-        { text: "Playgroup in Dhokali (Kolshet Road)", url: "/preschool-in-dhokali-thane" },
-        { text: "Playgroup in Kalwa", url: "/preschool-in-kalwa-thane" },
-      ]},
-      { heading: "Preschool Near Me — Areas We Serve Across Thane", text: "Parents searching for a 'preschool near me' in Thane will find a Rainbow centre within a short distance from every major residential pocket. Here is a locality-by-locality guide to which Rainbow play school is closest to you.", items: [
-        "Manpada, Edenwoods, Hiranandani Estate — Rainbow Preschool Manpada (Aggarwal Arcade, near Khewra Circle) on Ghodbunder Road",
-        "Hariniwas Circle, Naupada, Panchpakadi, Charai, Khopat — Rainbow Preschool Hariniwas (Bhakti Mandir Road, opp. Thanawala Garage)",
-        "Anand Nagar, Tropical Lagoon, Kavesar, Vijay Garden, Kasarvadavali, Cosmos Jewels and Parkwoods (under 1 km); Vijay Nagari, Puranik City, Waghbil, Dongaripada, Owale, Hiranandani Estate and Patlipada (1–2 km) — Rainbow Preschool Anand Nagar (Kris Commercial Plaza, opp. Tropical Lagoon, Ghodbunder Road)",
-        "Dhokali, Kolshet Road, Vandana Nagar, Balkum — Rainbow Preschool Dhokali (Kolshet Road, Dhokali Naka, opp. Aban Park)",
-        "Kalwa, Manisha Nagar, Vitawa, Kharegaon — Rainbow Preschool Kalwa (near Sayba Hall, Manisha Nagar)",
-        "Kasarvadavali, Patlipada, Brahmand, Hiranandani Meadows — Rainbow Preschool Kasarvadavali (Rosa Gardenia, behind Hypercity Mall, Ghodbunder Road)",
-      ]},
-      { heading: "How to Find Your Nearest Play School in Thane", text: "Each Rainbow centre has a distinct landmark to guide you. The Manpada centre is at Aggarwal Arcade near Khewra Circle on Ghodbunder Road. The Hariniwas centre is on Bhakti Mandir Road near Hariniwas Circle in central Thane — walkable from Naupada and Panchpakadi. The Anand Nagar centre is opposite Tropical Lagoon, near Anand Nagar bus depot, on Ghodbunder Road. The Dhokali centre is on Kolshet Road at Dhokali Naka, opposite Aban Park Society, making it convenient for families along Eastern Thane's Kolshet corridor and the Majiwada area. The Kalwa centre is near Sayba Hall in Manisha Nagar — the closest Rainbow play school for families east of the Thane creek. The Kasarvadavali centre is behind Hypercity Mall on Ghodbunder Road, serving upper Ghodbunder Road, Brahmand and Hiranandani Meadows families. For directions, call +91-8291568972 or use the Google Maps links on each centre's page." },
-      { heading: "Play School vs Daycare — What's the Real Difference?", text: "Many Thane parents ask whether a play school and a daycare are the same thing. They are not. A daycare is primarily designed to look after a child while parents work — the focus is care and supervision. A play school is an early-learning programme built around an age-appropriate curriculum, qualified teachers, and structured developmental activities. Rainbow Preschool's play school in Thane is purely an early-learning programme: 3 hours, twice a day, focused on social, language, motor, cognitive and emotional development. If you also need extended supervision while you work, our Happy Times after-school programme runs from 9 AM to 6 PM at select centres and is a separately enrolled service." },
-      { heading: "Play School Timings, Fees and Admission", text: "We offer two flexible play school batches at every Thane centre — Morning (8:30 AM to 11:30 AM) and Afternoon (12:30 PM to 3:30 PM), Monday to Friday. Fees vary by centre and batch and are fully transparent — no donation, no entrance test, no parent interview. Admissions are open year-round on a rolling basis. To enquire, call +91-8291568972 or fill the form on this page. Our admissions team will respond within 24 hours and arrange a free, no-pressure campus visit at the Rainbow play school nearest your home, including Saturdays. We strongly recommend visiting before enrolling so you can see the classroom, meet your child's prospective teacher and ask all your questions in person." },
-      { heading: "Frequently Asked Questions about Play School Near Me in Thane", text: "Below are the questions Thane parents most often ask before enrolling their toddler in a play school. If your question is not listed, call +91-8291568972 and our admissions team will gladly walk you through it.", items: [
-        "Q: What is the right age to start play school? A: Most children are ready for play school between 1.5 and 2.5 years. We recommend visiting a centre and observing your child's response before deciding.",
-        "Q: How is play school different from a preschool? A: Play school is the entry-level programme for toddlers (1.5–2.5 years), focused on sensory and social play. Preschool is a broader umbrella covering Playgroup, Nursery and Kindergarten (1.5–6 years).",
-        "Q: Will my toddler cry on day one? A: Almost every toddler cries the first few days — it is completely normal. Our teachers are trained in gentle settling and your child usually settles within 1–2 weeks.",
-        "Q: Are mid-year admissions allowed? A: Yes, Rainbow play school admissions are open year-round on a rolling basis, subject to seat availability at the centre nearest your home.",
-        "Q: Which Rainbow Preschool is nearest to Ghodbunder Road? A: Families on Ghodbunder Road have two options — the Kasarvadavali centre behind Hypercity Mall (upper Ghodbunder) or the Manpada centre near Khewra Circle. Call 82915 68972 to confirm which is closer.",
-        "Q: Is there a play school near Majiwada in Thane? A: Rainbow's Dhokali centre on Kolshet Road is about 1.8 km from Majiwada. Visit /preschool-in-dhokali-thane for details.",
-        "Q: Which is the nearest play school to Hariniwas Circle or Panchpakadi? A: The Hariniwas centre on Bhakti Mandir Road, near Hariniwas Circle, serves Panchpakadi, Naupada, Charai, and Khopat families.",
-        "Q: Is there a Rainbow play school near Kolshet Road? A: Yes — the Dhokali centre is on Kolshet Road at Dhokali Naka, opposite Aban Park Society.",
-      ]},
-      { heading: "Continue Exploring", text: "Read more about our age-aligned programmes, related Thane locality pages, or our admissions process. Best Preschool Near Me in Thane and Play School Near Me are this page:", links: [
-        { text: "Playgroup Programme (1.5–2.5 years)", url: "/playgroup" },
-        { text: "Nursery Programme (2.5–3.5 years)", url: "/nursery" },
-        { text: "Kindergarten Programme (3.5–5.5 yrs)", url: "/kindergarten" },
-        { text: "Preschool Admissions", url: "/preschool-admissions" },
-        { text: "Preschool in Manpada, Thane", url: "/preschool-in-manpada-thane" },
-        { text: "Preschool in Anand Nagar, Thane", url: "/preschool-in-anand-nagar-thane" },
-        { text: "Preschool in Dhokali, Thane", url: "/preschool-in-dhokali-thane" },
-        { text: "Preschool in Kasarvadavali, Thane", url: "/preschool-in-kasarvadavali-thane" },
-        { text: "Preschool in Hariniwas, Thane", url: "/preschool-in-hariniwas-thane" },
-        { text: "Preschool in Kalwa, Thane", url: "/preschool-in-kalwa-thane" },
-        { text: "Playgroup in Manpada, Thane", url: "/preschool-in-manpada-thane" },
-        { text: "Playgroup in Kalwa, Thane", url: "/preschool-in-kalwa-thane" },
-        { text: "Playgroup in Kasarvadavali, Thane", url: "/preschool-in-kasarvadavali-thane" },
-      ]},
+    ogImage: "/images/og/play-school-near-me-thane-og.jpg",
+    ogImageAlt: "Play School & Preschool Near You in Thane. Best Preschool in Thane award · 2018 & 2023, with a Rainbow Preschool classroom photo",
+    h1: PLAY_SCHOOL_NEAR_ME_CONTENT.h1,
+    introText: PLAY_SCHOOL_NEAR_ME_CONTENT.intro,
+    heroBadge: PLAY_SCHOOL_NEAR_ME_CONTENT.kicker,
+    structuredData: [
+      organizationSchema,
+      websiteSchema,
+      ...getPlaySchoolNearMeSchemas(LAST_UPDATED_ISO),
     ],
-    internalLinks: commonInternalLinks.filter((link) => link.url !== "/play-school-near-me"),
+    suppressArticleSchema: true,
     lastModified: LAST_UPDATED_ISO,
     lastModifiedDisplay: LAST_UPDATED_DISPLAY,
   },
@@ -1784,7 +1722,10 @@ const staticPages: Record<string, PageSEOData> = {
     suppressArticleSchema: true,
     structuredData: [TOP_PRESCHOOLS_WEBPAGE_SCHEMA],
     h1: TOP_PRESCHOOLS_COPY.h1,
-    introText: TOP_PRESCHOOLS_COPY.introduction,
+    introSegments: [
+      { text: `${TOP_PRESCHOOLS_COPY.introduction} ` },
+      { text: TOP_PRESCHOOLS_COPY.inboundCentreLink.label, href: TOP_PRESCHOOLS_COPY.inboundCentreLink.href },
+    ],
     heroBadge: TOP_PRESCHOOLS_COPY.badge,
     breadcrumbs: [{ name: "Home", url: "/" }, { name: "Top Preschools in Thane", url: "/top-preschools-in-thane" }],
     contentSections: [
@@ -2737,6 +2678,7 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
           links: [
               { text: page.nearbyLinkText, url: slug === "anand-nagar" ? "/preschool-in-kasarvadavali-thane" : slug === "kalwa" ? "/preschool-in-hariniwas-thane" : slug === "hariniwas" ? "/preschool-in-kalwa-thane" : slug === "dhokali" ? "/preschool-in-manpada-thane" : slug === "kasarvadavali" ? "/preschool-in-anand-nagar-thane" : "/preschool-in-dhokali-thane" },
             { text: "All 6 centres", url: "/contact" },
+            { text: "All Rainbow play schools in Thane", url: "/play-school-near-me" },
           ],
         },
       ],

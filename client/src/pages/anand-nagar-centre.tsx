@@ -212,6 +212,7 @@ export function BranchCentrePage({ slug }: { slug: BranchSlug }) {
         </section>
 
         <BranchNearby content={copy} nearest={slug === "anand-nagar" ? { name: "Kasarvadavali", href: "/preschool-in-kasarvadavali-thane" } : slug === "kalwa" ? { name: "Hariniwas", href: "/preschool-in-hariniwas-thane" } : slug === "hariniwas" ? { name: "Kalwa", href: "/preschool-in-kalwa-thane" } : slug === "dhokali" ? { name: "Manpada", href: "/preschool-in-manpada-thane" } : slug === "kasarvadavali" ? { name: "Anand Nagar", href: "/preschool-in-anand-nagar-thane" } : { name: "Dhokali", href: "/preschool-in-dhokali-thane" }} />
+        <p className="max-w-4xl mx-auto px-4 text-sm text-muted-foreground">Explore <Link href="/play-school-near-me" className="text-primary hover:underline">All Rainbow play schools in Thane</Link>.</p>
         <div className="max-w-4xl mx-auto px-4 py-8 text-sm text-muted-foreground">Last updated: <time dateTime={copy.publishDate}>{copy.publishDateDisplay}</time></div>
 
         <section className="relative overflow-hidden py-10 md:py-16 bg-gradient-to-r from-primary via-accent to-secondary text-white">

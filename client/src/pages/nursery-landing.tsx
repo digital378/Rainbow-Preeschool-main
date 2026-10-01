@@ -415,7 +415,8 @@ export default function NurseryLanding() {
                 {NURSERY_VISITOR_COPY.sections[0].paragraphs?.[1]}
               </p>
               <p className="text-lg leading-relaxed">
-                {NURSERY_VISITOR_COPY.sections[0].paragraphs?.[2].split("Kindergarten")[0]}<Link href="/kindergarten" className="text-primary hover:underline">Kindergarten</Link>.
+                {NURSERY_VISITOR_COPY.sections[0].paragraphs?.[2].split("Kindergarten")[0]}<Link href="/kindergarten" className="text-primary hover:underline">Kindergarten</Link>.{" "}
+                For local families, explore <Link href="/play-school-near-me" className="text-primary hover:underline">nursery school near me</Link>.
               </p>
             </div>
           </div>

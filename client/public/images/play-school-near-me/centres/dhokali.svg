@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="480" viewBox="0 0 720 480">
+  <title>Illustrated Rainbow Preschool centre tile — Dhokali</title>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#e7f5ff"/>
+      <stop offset="1" stop-color="#fff2dc"/>
+    </linearGradient>
+  </defs>
+  <rect width="720" height="480" rx="28" fill="url(#bg)"/>
+  <circle cx="624" cy="91" r="100" fill="#9bc7e4" opacity=".45"/>
+  <path d="M0 349c116-47 199 28 308-8 129-42 235-55 412 15v124H0z" fill="#b7d6e8" opacity=".62"/>
+  <path d="M97 302V169h205v133" fill="#fff" stroke="#56869c" stroke-width="9"/>
+  <path d="M84 174h230l-21-48H106z" fill="#f0a25a"/>
+  <path d="M124 200h53v54h-53zm96 0h53v54h-53z" fill="#f7d56e"/>
+  <path d="M358 149h207M358 188h146M358 227h190" stroke="#82b4c5" stroke-width="10" stroke-linecap="round"/>
+  <circle cx="544" cy="290" r="33" fill="#e98270"/>
+  <circle cx="601" cy="290" r="33" fill="#83bdad"/>
+  <text x="72" y="378" fill="#27364b" font-family="Arial, sans-serif" font-size="42" font-weight="700">Dhokali</text>
+  <text x="74" y="422" fill="#586577" font-family="Arial, sans-serif" font-size="22" font-weight="600" letter-spacing="2">KOLSHET ROAD</text>
+</svg>

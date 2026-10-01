@@ -43,3 +43,4 @@
 - [Screenshot-free Lighthouse](screenshot-free-lighthouse.md) — suppress screenshot trace and gatherers when prohibited; LCP/CLS/TBT remain available, but the performance score may be null.
 - [Google Maps embed checks](google-maps-embed-checks.md) — embed URLs can fail a HEAD probe yet load via GET; verify the browser iframe’s final response.
 - [Branch FAQ audit timing](branch-faq-audit-timing.md) — wait for hydration before scrolling to lazy FAQs; an immediate scroll can falsely report missing answers.
+- [Design worker write scope](design-worker-write-scope.md) — outputDir is a write boundary; coordinate shared/server/public foundations separately.

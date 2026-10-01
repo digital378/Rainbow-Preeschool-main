@@ -21,6 +21,7 @@
  */
 import { readFileSync, readdirSync } from "node:fs";
 import { resolve } from "node:path";
+import { PLAY_SCHOOL_NEAR_ME_CONTENT } from "../shared/play-school-near-me-content";
 
 const ROOT = process.cwd();
 const MAX_LEN = 155;
@@ -218,6 +219,12 @@ function scanClientPages() {
 }
 
 scanSsrPages();
+entries.push({
+  file: "shared/play-school-near-me-content.ts",
+  line: 1,
+  url: "/play-school-near-me",
+  description: PLAY_SCHOOL_NEAR_ME_CONTENT.description,
+});
 scanCentreData();
 scanPlaygroupLanding();
 scanLegacyPages();

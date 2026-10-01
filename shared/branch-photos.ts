@@ -237,3 +237,113 @@ for (const [slug, photos] of Object.entries(branchPhotos)) {
     branchPhotoOwners[photo.src] = slug as keyof typeof branchPhotos;
   }
 }
+
+// The page-level hub registry stays separate from the six-key branchPhotos API.
+// Hero srcSet entries and the OG image are intentional derivatives of their
+// registered photo sources, not additional photographs.
+type HubPhoto = {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+  srcSet?: string;
+  avifSrcSet?: string;
+};
+type HubCentreImage = {
+  src: string;
+  alt: string;
+  kind: "illustration" | "photo";
+};
+
+export const playSchoolNearMePhotos: {
+  hero: HubPhoto & { srcSet: string; avifSrcSet: string };
+  about: HubPhoto;
+  centres: Record<keyof typeof branchPhotos, HubCentreImage>;
+  og: Omit<HubPhoto, "srcSet" | "avifSrcSet">;
+} = {
+  hero: {
+    src: "/images/play-school-near-me/play-school-near-me-thane-classroom-1200.webp",
+    alt: "A Rainbow Preschool child stacking colourful blocks during a classroom activity",
+    width: 1200,
+    height: 800,
+    srcSet:
+      "/images/play-school-near-me/play-school-near-me-thane-classroom-640.webp 640w, " +
+      "/images/play-school-near-me/play-school-near-me-thane-classroom-1200.webp 1200w",
+    avifSrcSet:
+      "/images/play-school-near-me/play-school-near-me-thane-classroom-640.avif 640w, " +
+      "/images/play-school-near-me/play-school-near-me-thane-classroom-1200.avif 1200w",
+  },
+  about: {
+    src: "/images/play-school-near-me/play-school-near-me-thane-about.webp",
+    alt: "Two Rainbow Preschool children seated at a classroom table with paper and pencils",
+    width: 900,
+    height: 602,
+  },
+  centres: {
+    "anand-nagar": {
+      src: "/images/play-school-near-me/centres/anand-nagar.svg",
+      alt: "Illustrated Rainbow Preschool centre tile for Anand Nagar on Ghodbunder Road",
+      kind: "illustration",
+    },
+    manpada: {
+      src: "/images/play-school-near-me/centres/manpada.svg",
+      alt: "Illustrated Rainbow Preschool centre tile for Manpada near Khewra Circle",
+      kind: "illustration",
+    },
+    kasarvadavali: {
+      src: "/images/play-school-near-me/centres/kasarvadavali.svg",
+      alt: "Illustrated Rainbow Preschool centre tile for Kasarvadavali on Ghodbunder Road",
+      kind: "illustration",
+    },
+    dhokali: {
+      src: "/images/play-school-near-me/centres/dhokali.svg",
+      alt: "Illustrated Rainbow Preschool centre tile for Dhokali on Kolshet Road",
+      kind: "illustration",
+    },
+    hariniwas: {
+      src: "/images/play-school-near-me/centres/hariniwas.svg",
+      alt: "Illustrated Rainbow Preschool centre tile for Hariniwas Circle",
+      kind: "illustration",
+    },
+    kalwa: {
+      src: "/images/play-school-near-me/centres/kalwa.svg",
+      alt: "Illustrated Rainbow Preschool centre tile for Kalwa in Manisha Nagar",
+      kind: "illustration",
+    },
+  },
+  og: {
+    src: "/images/og/play-school-near-me-thane-og.jpg",
+    alt: "Play School & Preschool Near You in Thane. Best Preschool in Thane award · 2018 & 2023, with a Rainbow Preschool classroom photo",
+    width: 1200,
+    height: 630,
+  },
+};
+
+// Canonical file → page ownership includes branch photos and this hub's
+// originals, derivatives and illustrations. The branchPhotos object remains
+// the unchanged six-key API consumed by branch pages.
+export const photoPageOwners: Record<string, string> = { ...branchPhotoOwners };
+function registerHubAsset(src: string) {
+  const previousOwner = photoPageOwners[src];
+  if (previousOwner && previousOwner !== "/play-school-near-me") {
+    throw new Error(`Photo asset ${src} belongs to both ${previousOwner} and /play-school-near-me`);
+  }
+  photoPageOwners[src] = "/play-school-near-me";
+}
+
+function registerSrcSet(srcSet?: string) {
+  if (!srcSet) return;
+  for (const candidate of srcSet.split(",")) {
+    const src = candidate.trim().split(/\s+/, 1)[0];
+    if (src) registerHubAsset(src);
+  }
+}
+
+registerHubAsset(playSchoolNearMePhotos.hero.src);
+registerSrcSet(playSchoolNearMePhotos.hero.srcSet);
+registerSrcSet(playSchoolNearMePhotos.hero.avifSrcSet);
+registerHubAsset(playSchoolNearMePhotos.about.src);
+for (const centre of Object.values(playSchoolNearMePhotos.centres)) {
+  registerHubAsset(centre.src);
+}
+registerHubAsset(playSchoolNearMePhotos.og.src);

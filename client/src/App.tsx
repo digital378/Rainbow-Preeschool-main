@@ -1,5 +1,6 @@
 import { Switch, Route, useLocation } from "wouter";
 import { useEffect, useState, lazy, Suspense } from "react";
+import { createPortal } from "react-dom";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
@@ -330,11 +331,33 @@ function DeferredChatWidget({ comparisonPage = false }: { comparisonPage?: boole
   );
 }
 
+function NearMeFooterPortal() {
+  const [host, setHost] = useState<HTMLElement | null>(null);
+  useEffect(() => {
+    let footerHost = document.getElementById("near-me-footer");
+    let created = false;
+    if (!footerHost) {
+      footerHost = document.createElement("div");
+      footerHost.id = "near-me-footer";
+      const page = document.getElementById("near-me-document");
+      if (page) page.after(footerHost);
+      else document.getElementById("root")?.after(footerHost);
+      created = true;
+    }
+    setHost(footerHost);
+    return () => {
+      if (created) footerHost?.remove();
+    };
+  }, []);
+  return host ? createPortal(<Suspense fallback={null}><Footer /></Suspense>, host) : null;
+}
+
 function AppContent() {
   const [location] = useLocation();
   const pathWithoutQuery = location.split("?")[0];
   const normalizedPath = pathWithoutQuery.replace(/\/$/, '') || '/';
   const isStandaloneLanding = STANDALONE_LANDING_PATHS.some(p => p.toLowerCase() === normalizedPath.toLowerCase());
+  const isNearMePage = normalizedPath === "/play-school-near-me";
 
   if (isStandaloneLanding) {
     return (
@@ -346,15 +369,23 @@ function AppContent() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col relative z-10">
+    <div className={`relative z-10 ${isNearMePage ? "" : "min-h-screen flex flex-col"}`}>
       <Navigation />
-      <main className="flex-1">
-        <ScrollToTop />
-        <Router />
-      </main>
-      <Suspense fallback={null}>
-        <Footer />
-      </Suspense>
+      {isNearMePage ? (
+        <>
+          <ScrollToTop />
+          <Router />
+          <NearMeFooterPortal />
+        </>
+      ) : (
+        <>
+          <main className="flex-1">
+            <ScrollToTop />
+            <Router />
+          </main>
+          <Suspense fallback={null}><Footer /></Suspense>
+        </>
+      )}
       <DeferredChatWidget comparisonPage={normalizedPath === "/top-preschools-in-thane"} />
     </div>
   );

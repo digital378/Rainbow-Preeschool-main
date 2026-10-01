@@ -32,6 +32,7 @@ const BOT_SSR_MARKER = "Our Network:";
 const PATHS = [
   "/", "/playgroup", "/contact", "/gallery", "/preschool-admissions",
   "/faqs", "/blog/what-age-start-play-school", "/preschool-in-manpada-thane",
+  "/play-school-near-me",
 ] as const;
 
 // A path guaranteed to never be a real route (used to verify true 404s).
@@ -97,6 +98,10 @@ function extractH1(html: string): string {
 
 function hasJsonLd(html: string): boolean {
   return /application\/ld\+json/i.test(html);
+}
+
+function extractNearMeMain(html: string): string {
+  return html.match(/<main\b[^>]*id="near-me-document"[^>]*>[\s\S]*?<\/main>/i)?.[0] ?? "";
 }
 
 // ─── Main ─────────────────────────────────────────────────────────────────────
@@ -199,6 +204,16 @@ async function main(): Promise<void> {
         detail: `bot H1: ${JSON.stringify(h1)}`,
       });
     }
+    if (path === "/play-school-near-me") {
+      const main = extractNearMeMain(body);
+      const hubH1Count = (main.match(/<h1\b/gi) ?? []).length;
+      results.push({
+        path,
+        assertion: "Hub BOT has one shared-renderer main and exactly one H1",
+        pass: !!main && hubH1Count === 1,
+        detail: `main=${!!main}, H1 count=${hubH1Count}`,
+      });
+    }
 
     // 2. Non-home BOT titles differ from the homepage shell title; homepage
     // itself must retain exactly the same title across both response paths.
@@ -270,6 +285,16 @@ async function main(): Promise<void> {
         path, assertion: `Initial shell ${field} matches bot`,
         pass: !!humanValue && humanValue === botValue,
         detail: `initial=${JSON.stringify(humanValue)} bot=${JSON.stringify(botValue)}`,
+      });
+    }
+    if (path === "/play-school-near-me") {
+      const humanMain = extractNearMeMain(body);
+      const botMain = extractNearMeMain(bot);
+      results.push({
+        path,
+        assertion: "Visitor and BOT near-me main bodies are byte-identical",
+        pass: !!humanMain && humanMain === botMain,
+        detail: humanMain === botMain && humanMain ? "shared renderer output matches" : "near-me main body differs or is missing",
       });
     }
 

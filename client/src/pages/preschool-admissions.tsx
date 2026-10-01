@@ -276,7 +276,8 @@ export default function PreschoolAdmissions() {
                   {ADMISSIONS_SECTION_HEADINGS.centres}
                 </h2>
                 <p className="text-sm md:text-base text-gray-600 dark:text-gray-300 text-center max-w-3xl mx-auto mb-6">
-                  {ADMISSIONS_PAGE_COPY.sections.centresIntro}
+                  {ADMISSIONS_PAGE_COPY.sections.centresIntro}{" "}
+                  Find a <Link href="/play-school-near-me" className="underline">preschool near me — all 6 centres</Link>.
                 </p>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
                   {centres.map((centre) => (

@@ -1,1155 +1,424 @@
-import { useEffect, useLayoutEffect, useState, useRef } from "react";
-import { Link } from "wouter";
-import { PLAY_SCHOOL_GALLERY_IMAGES } from "@shared/page-image-data";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+import { useEffect, useMemo } from "react";
+import { createRoot, type Root } from "react-dom/client";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { ErrorBoundary } from "@/components/error-boundary";
+import { SEO } from "@/components/seo";
+import { apiRequest, queryClient } from "@/lib/queryClient";
+import { trackFormSubmit, trackWhatsAppClick } from "@/lib/analytics";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import { SEO, createBreadcrumbSchema } from "@/components/seo";
-import { ContactForm } from "@/components/contact-form";
-import { CountUp } from "@/components/count-up";
-import { BranchCard } from "@/components/branch-card";
-import { branches } from "@shared/schema";
-import { centres } from "@shared/centre-data";
-import {
-  Baby, CheckCircle, ArrowRight, MapPin, Phone, Clock, Users, Star, Shield,
-  Shapes, MessageCircle, HandHeart, Activity, Music, UsersRound, Lock,
-  Sparkles, Heart, BookOpen, Palette, ShieldCheck, Eye, MessageSquare,
-  Award, GraduationCap, TreePine, Lightbulb, Target, Trophy
-} from "lucide-react";
-import { SiWhatsapp } from "react-icons/si";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { useMutation } from "@tanstack/react-query";
-import { apiRequest } from "@/lib/queryClient";
-import { useToast } from "@/hooks/use-toast";
-import { trackFormSubmit } from "@/lib/analytics";
-import { SEOCrossLinks } from "@/components/seo-crosslinks";
-import { EEATSignals } from "@/components/eeat-signals";
-import { VERIFIED_RATING } from "@/lib/verified-rating";
-import { LAST_UPDATED_DISPLAY, LAST_UPDATED_ISO } from "@shared/site-freshness";
-import { playSchoolFAQs } from "@shared/play-school-faq-data";
-import { PLAY_SCHOOL_NEAR_ME_H1, PLAY_SCHOOL_NEAR_ME_INTRO } from "@shared/play-school-near-me-hero";
+  PLAY_SCHOOL_NEAR_ME_CENTRES,
+  PLAY_SCHOOL_NEAR_ME_CONTENT,
+  PLAY_SCHOOL_NEAR_ME_OG,
+  getPlaySchoolNearMeSchemas,
+  nearMeUi,
+} from "@shared/play-school-near-me-content";
+import { renderPlaySchoolNearMeHtml } from "@shared/play-school-near-me-render";
+import "@/styles/play-school-near-me.css";
 
-const callbackFormSchema = z.object({
-  parentName: z.string().min(2, "Please enter your name"),
-  phone: z.string().min(10, "Please enter a valid phone number"),
-  childAge: z.string().min(1, "Please select child's age"),
-  branch: z.string().min(1, "Please select a centre"),
-});
+const NEAR_ME_CANONICAL = "https://www.rainbowpreschools.com/play-school-near-me";
 
-type CallbackFormData = z.infer<typeof callbackFormSchema>;
-
-function MiniCallbackForm() {
-  const { toast } = useToast();
-  const form = useForm<CallbackFormData>({
-    resolver: zodResolver(callbackFormSchema),
-    defaultValues: {
-      parentName: "",
-      phone: "",
-      childAge: "",
-      branch: "",
-    },
-  });
-
-  const mutation = useMutation({
-    mutationFn: async (data: CallbackFormData) => {
-      const response = await apiRequest("POST", "/api/contact", {
-        parentName: data.parentName,
-        phone: data.phone,
-        childAge: data.childAge,
-        branch: data.branch,
-        programme: "Playgroup",
-        childName: "Not provided",
-        email: "",
-        message: "Quick callback request from Play School Near Me page",
-      });
-      return response.json();
-    },
-    onSuccess: (responseData: { success: boolean; id: number; emailSent: boolean }) => {
-      toast({
-        title: "Callback Requested!",
-        description: "Our team will call you shortly.",
-      });
-      if (responseData.emailSent) {
-        trackFormSubmit({
-          formType: 'instant',
-          programme: 'Playgroup',
-          centre: form.getValues().branch,
-          parentName: form.getValues().parentName,
-          phone: form.getValues().phone,
-          childAge: form.getValues().childAge,
+function isPlaySchoolNearMeSchema(script: HTMLScriptElement) {
+  try {
+    const parsed = JSON.parse(script.textContent || "null");
+    const entries = Array.isArray(parsed) ? parsed : Array.isArray(parsed?.["@graph"]) ? parsed["@graph"] : [parsed];
+    return entries.some((schema) => {
+      if (!schema || typeof schema !== "object") return false;
+      if (schema["@type"] === "WebPage") return schema.url === NEAR_ME_CANONICAL;
+      if (schema["@type"] === "BreadcrumbList") {
+        return schema.itemListElement?.some((item: { item?: string | { "@id"?: string; url?: string } }) => {
+          const url = typeof item.item === "string" ? item.item : item.item?.["@id"] ?? item.item?.url;
+          return url === NEAR_ME_CANONICAL;
         });
       }
-      form.reset();
-    },
-    onError: () => {
-      toast({
-        title: "Error",
-        description: "Something went wrong. Please try again.",
-        variant: "destructive",
-      });
-    },
-  });
-
-  return (
-    <Card className="shadow-xl border-2 border-primary/20">
-      <CardContent className="p-6">
-        <h3 className="text-xl font-bold mb-4 text-center">Find a Play School Near You</h3>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit((data) => mutation.mutate(data))} className="space-y-4">
-            <FormField
-              control={form.control}
-              name="parentName"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Parent Name *</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Your name" {...field} data-testid="input-ps-callback-parent-name" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="phone"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Mobile Number *</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Your mobile number" {...field} data-testid="input-ps-callback-phone" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="childAge"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Child's Age</FormLabel>
-                  <Select onValueChange={field.onChange} value={field.value}>
-                    <FormControl>
-                      <SelectTrigger data-testid="select-ps-callback-age">
-                        <SelectValue placeholder="Select age" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="1.5 years">1.5 years</SelectItem>
-                      <SelectItem value="2 years">2 years</SelectItem>
-                      <SelectItem value="2.5 years">2.5 years</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="branch"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Preferred Centre</FormLabel>
-                  <Select onValueChange={field.onChange} value={field.value}>
-                    <FormControl>
-                      <SelectTrigger data-testid="select-ps-callback-branch">
-                        <SelectValue placeholder="Select centre" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {branches.map((branch) => (
-                        <SelectItem key={branch.id} value={branch.name}>
-                          {branch.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button
-              type="submit"
-              className="w-full"
-              disabled={mutation.isPending}
-              data-testid="button-ps-callback-submit"
-            >
-              {mutation.isPending ? "Submitting..." : "Get a Free Callback"}
-            </Button>
-          </form>
-        </Form>
-        <p className="text-xs text-muted-foreground text-center mt-3 flex items-center justify-center gap-1">
-          <Lock className="w-3 h-3" /> We respect your privacy. No spam. Only one call.
-        </p>
-      </CardContent>
-    </Card>
-  );
+      return schema["@type"] === "ItemList" && schema.name === "Rainbow Preschool International centres in Thane";
+    });
+  } catch {
+    return false;
+  }
 }
 
-function StickyMobileCTA() {
-  const [isVisible, setIsVisible] = useState(false);
-  const [showForm, setShowForm] = useState(false);
+const normalise = (value: string) => value.trim().toLocaleLowerCase().replace(/\s+/g, " ");
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsVisible(window.scrollY > 500);
-    };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  if (!isVisible) return null;
-
-  return (
-    <>
-      {showForm && (
-        <div className="fixed inset-0 z-50 bg-black/50 flex items-end md:items-center justify-center p-4" role="dialog" aria-modal="true" aria-label="Request callback form">
-          <Card className="w-full max-w-md max-h-[90vh] overflow-y-auto">
-            <CardContent className="p-6">
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-xl font-bold">Request Callback</h3>
-                <Button variant="ghost" size="icon" aria-label="Close form" onClick={() => setShowForm(false)} data-testid="button-ps-modal-close">
-                  <span className="text-xl" aria-hidden="true">&times;</span>
-                </Button>
-              </div>
-              <ContactForm defaultProgramme="Playgroup" onSuccess={() => setShowForm(false)} />
-            </CardContent>
-          </Card>
-        </div>
-      )}
-    </>
-  );
+function mountStaticDocument() {
+  let documentMain = document.getElementById("near-me-document");
+  let created = false;
+  if (!documentMain) {
+    document.getElementById("root")?.insertAdjacentHTML("afterend", renderPlaySchoolNearMeHtml());
+    documentMain = document.getElementById("near-me-document");
+    created = true;
+  }
+  if (!documentMain) throw new Error("Unable to mount Play School Near Me document.");
+  documentMain.hidden = false;
+  let footer = document.getElementById("near-me-footer");
+  if (!footer) {
+    footer = document.createElement("div");
+    footer.id = "near-me-footer";
+    documentMain.after(footer);
+  }
+  return { documentMain, created };
 }
 
-function ActivitiesSection({ activities }: { activities: string[] }) {
-  const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef<HTMLElement>(null);
+function PlaySchoolNearMe() {
+  const existingPageSchemas = useMemo(
+    () => typeof document === "undefined"
+      ? []
+      : Array.from(document.querySelectorAll<HTMLScriptElement>('script[type="application/ld+json"]')).filter(isPlaySchoolNearMeSchema),
+    [],
+  );
+  const structuredData = useMemo(
+    () => existingPageSchemas.length ? undefined : getPlaySchoolNearMeSchemas(new Date().toISOString().slice(0, 10)),
+    [existingPageSchemas],
+  );
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.3 }
-    );
+    const { documentMain, created } = mountStaticDocument();
+    const status = documentMain.querySelector<HTMLElement>("#nm-finder-status");
+    const results = documentMain.querySelector<HTMLElement>("#nm-mini-results");
+    const areaInput = documentMain.querySelector<HTMLInputElement>("#nm-area-input");
+    const filterButtons = Array.from(documentMain.querySelectorAll<HTMLButtonElement>(".nm-filter-row button"));
+    const centreCards = Array.from(documentMain.querySelectorAll<HTMLElement>(".nm-centre-card"));
+    const form = documentMain.querySelector<HTMLFormElement>("#nm-callback-form");
+    const formError = documentMain.querySelector<HTMLElement>("#nm-form-error");
+    const locateButton = documentMain.querySelector<HTMLButtonElement>('[data-action="locate"]');
+    const submitButton = documentMain.querySelector<HTMLButtonElement>(".nm-submit");
+    const programmeTrack = documentMain.querySelector<HTMLElement>("#nm-programme-track");
+    let submitting = false;
+    let cancelled = false;
+    let theatreRoot: Root | undefined;
+    let theatreObserver: IntersectionObserver | undefined;
+    let faqObserver: IntersectionObserver | undefined;
+    let finderActivated = false;
+    let filtersActivated = false;
+    let faqListenersAttached = false;
+    let faqDetails: HTMLDetailsElement[] = [];
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
+    if (!status || !results || !areaInput || !form || !formError || !locateButton || !submitButton) {
+      throw new Error("Play School Near Me document is missing required interactive controls.");
     }
 
-    return () => observer.disconnect();
-  }, []);
+    const setStatus = (message: string) => { status.textContent = message; };
+    const renderResults = (items: { centre: typeof PLAY_SCHOOL_NEAR_ME_CENTRES[number]; distance?: number }[]) => {
+      results.replaceChildren();
+      for (const { centre, distance } of items) {
+        const card = document.createElement("article");
+        card.className = "nm-mini-card";
+        const title = document.createElement("h3");
+        title.textContent = centre.localityName;
+        card.append(title);
+        if (typeof distance === "number") {
+          const distanceText = document.createElement("p");
+          distanceText.className = "nm-distance";
+          distanceText.textContent = `${nearMeUi.nearbyDistance} ${distance.toFixed(1)} km`;
+          card.append(distanceText);
+        }
+        const actions = document.createElement("div");
+        actions.className = "nm-card-actions";
+        const view = document.createElement("a");
+        view.className = "nm-button nm-button-outline";
+        view.href = `${centre.preschoolLandingUrl}#centre`;
+        view.textContent = nearMeUi.viewCentre;
+        const whatsapp = document.createElement("a");
+        whatsapp.className = "nm-button nm-button-green";
+        whatsapp.href = `https://wa.me/91${encodeURIComponent(centre.whatsappNumber)}?text=${encodeURIComponent(`Hi, I'd like to know about admissions at Rainbow Preschool International, ${centre.localityName}.`)}`;
+        whatsapp.target = "_blank";
+        whatsapp.rel = "noreferrer";
+        whatsapp.textContent = nearMeUi.whatsApp;
+        whatsapp.dataset.trackWhatsapp = centre.localityName;
+        actions.append(view, whatsapp);
+        card.append(actions);
+        results.append(card);
+      }
+    };
+    const lookupArea = () => {
+      const query = normalise(areaInput.value);
+      results.replaceChildren();
+      if (!query) {
+        setStatus("");
+        return;
+      }
+      const matches = PLAY_SCHOOL_NEAR_ME_CENTRES.map((centre) => {
+        const nearOne = centre.near1.some((area) => normalise(area).includes(query) || query.includes(normalise(area)));
+        const nearTwo = centre.near2.some((area) => normalise(area).includes(query) || query.includes(normalise(area)));
+        const aliases = [centre.localityName, ...(centre.areasServed ?? [])];
+        const aliasMatch = aliases.some((area) => normalise(area).includes(query) || query.includes(normalise(area)));
+        return { centre, priority: nearOne ? 0 : nearTwo ? 1 : 2, matches: nearOne || nearTwo || aliasMatch };
+      }).filter((entry) => entry.matches).sort((a, b) => a.priority - b.priority);
+      renderResults(matches.map(({ centre }) => ({ centre })));
+      setStatus(matches.length
+        ? matches.length === 1 ? nearMeUi.areaMatchOne : nearMeUi.areaMatchMany.replace("{count}", String(matches.length))
+        : nearMeUi.noAreaMatch);
+    };
+    const radians = (degrees: number) => degrees * Math.PI / 180;
+    const locate = () => {
+      results.replaceChildren();
+      if (!navigator.geolocation) {
+        setStatus(nearMeUi.locationUnavailable);
+        return;
+      }
+      setStatus(nearMeUi.findingLocation);
+      navigator.geolocation.getCurrentPosition(({ coords }) => {
+        if (cancelled) return;
+        const nearest = PLAY_SCHOOL_NEAR_ME_CENTRES.map((centre) => {
+          const dLat = radians(centre.lat - coords.latitude);
+          const dLng = radians(centre.lng - coords.longitude);
+          const a = Math.sin(dLat / 2) ** 2 + Math.cos(radians(coords.latitude)) * Math.cos(radians(centre.lat)) * Math.sin(dLng / 2) ** 2;
+          return { centre, distance: 6371 * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)) };
+        }).sort((a, b) => a.distance - b.distance).slice(0, 2);
+        renderResults(nearest);
+        setStatus(nearMeUi.locationResults);
+      }, (error) => {
+        if (cancelled) return;
+        setStatus(error.code === error.PERMISSION_DENIED
+          ? nearMeUi.locationDenied
+          : nearMeUi.locationFailed);
+      }, { enableHighAccuracy: false, timeout: 10000, maximumAge: 0 });
+    };
+    const updateFilter = (filter: string) => {
+      filterButtons.forEach((button) => {
+        const active = button.dataset.filter === filter;
+        button.setAttribute("aria-pressed", String(active));
+        button.classList.toggle("is-active", active);
+      });
+      centreCards.forEach((card) => {
+        card.hidden = filter !== "All" && card.dataset.centreFilter !== filter;
+      });
+    };
+    const revealFormFieldError = (field: string, message: string) => {
+      const messageNode = form.querySelector<HTMLElement>(`[data-error="${field}"]`);
+      const input = form.elements.namedItem(field);
+      if (messageNode) {
+        messageNode.textContent = message;
+        messageNode.hidden = !message;
+      }
+      if (input instanceof HTMLElement) {
+        if (message) input.setAttribute("aria-invalid", "true");
+        else input.removeAttribute("aria-invalid");
+      }
+    };
+    const clearFormErrors = () => {
+      ["parentName", "phone", "childAge", "branch"].forEach((name) => revealFormFieldError(name, ""));
+      formError.hidden = true;
+      formError.textContent = "";
+    };
+    const onAreaInput = () => lookupArea();
+    const onLocate = () => locate();
+    const onFilter = (event: Event) => {
+      const button = (event.target as Element).closest<HTMLButtonElement>("[data-filter]");
+      if (button?.dataset.filter) updateFilter(button.dataset.filter);
+    };
+    const onFaqToggle = (event: Event) => {
+      const details = event.currentTarget as HTMLDetailsElement;
+      details.querySelector("summary")?.setAttribute("aria-expanded", String(details.open));
+    };
+    const activateFinder = () => {
+      if (finderActivated) return;
+      finderActivated = true;
+      form.noValidate = true;
+      areaInput.addEventListener("input", onAreaInput);
+      locateButton.addEventListener("click", onLocate);
+      form.addEventListener("submit", onSubmit);
+    };
+    const filterRow = documentMain.querySelector<HTMLElement>(".nm-filter-row");
+    const activateFilters = () => {
+      if (filtersActivated || !filterRow) return;
+      filtersActivated = true;
+      filterRow.addEventListener("click", onFilter);
+    };
+    const activateFaqListeners = () => {
+      if (faqListenersAttached) return;
+      faqListenersAttached = true;
+      faqDetails = Array.from(documentMain.querySelectorAll<HTMLDetailsElement>(".nm-faq-item"));
+      faqDetails.forEach((details) => details.addEventListener("toggle", onFaqToggle));
+    };
+    const activateOnFirstInteraction = (event: Event) => {
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+      if (target.closest("#nm-finder")) activateFinder();
+      if (target.closest(".nm-filter-row")) activateFilters();
+      if (target.closest(".nm-faq-list")) activateFaqListeners();
+    };
+    const onWhatsApp = (event: Event) => {
+      const link = (event.target as Element).closest<HTMLAnchorElement>("[data-track-whatsapp]");
+      if (!link) return;
+      const centre = link.dataset.trackWhatsapp;
+      trackWhatsAppClick(centre && centre !== "general" && centre !== "sticky"
+        ? { centre, locality: centre, source_page: "play-school-near-me" }
+        : { source_page: `play-school-near-me-${centre ?? "cta"}` });
+    };
+    const onProgrammeScroll = () => {
+      if (!programmeTrack) return;
+      const first = programmeTrack.querySelector<HTMLElement>(".nm-programme-card");
+      if (!first) return;
+      const step = first.offsetWidth + parseFloat(getComputedStyle(programmeTrack).columnGap || "0");
+      const index = Math.min(3, Math.round(programmeTrack.scrollLeft / step));
+      documentMain.querySelectorAll<HTMLButtonElement>(".nm-dots button").forEach((dot) => {
+        if (Number(dot.dataset.programmeIndex) === index) dot.setAttribute("aria-current", "true");
+        else dot.removeAttribute("aria-current");
+      });
+    };
+    const onProgrammeDots = (event: Event) => {
+      const button = (event.target as Element).closest<HTMLButtonElement>("[data-programme-index]");
+      if (!button || !programmeTrack) return;
+      const cards = programmeTrack.querySelectorAll<HTMLElement>(".nm-programme-card");
+      const card = cards[Number(button.dataset.programmeIndex)];
+      if (card) programmeTrack.scrollTo({ left: card.offsetLeft - programmeTrack.offsetLeft, behavior: "smooth" });
+      onProgrammeScroll();
+    };
+    const onSubmit = async (event: SubmitEvent) => {
+      event.preventDefault();
+      if (submitting) return;
+      clearFormErrors();
+      const values = new FormData(form);
+      const parentName = String(values.get("parentName") ?? "").trim();
+      const phone = String(values.get("phone") ?? "").trim();
+      const childAge = String(values.get("childAge") ?? "");
+      const branch = String(values.get("branch") ?? "");
+      if (parentName.length < 2) revealFormFieldError("parentName", nearMeUi.invalidName);
+      if (!/^[+\d()\s-]{10,}$/.test(phone)) revealFormFieldError("phone", nearMeUi.invalidPhone);
+      if (!childAge) revealFormFieldError("childAge", nearMeUi.invalidAge);
+      if (!branch) revealFormFieldError("branch", nearMeUi.invalidCentre);
+      if (form.querySelector('[aria-invalid="true"]')) return;
+      submitting = true;
+      submitButton.disabled = true;
+      submitButton.textContent = nearMeUi.sending;
+      try {
+        const response = await apiRequest("POST", "/api/contact", {
+          parentName,
+          phone,
+          childAge,
+          branch,
+          programme: nearMeUi.formProgramme,
+          childName: nearMeUi.formChildName,
+          email: nearMeUi.formEmail,
+          message: nearMeUi.formMessage,
+          leadSource: nearMeUi.formLeadSource,
+        });
+        const data = await response.json();
+        if (!cancelled) setStatus(nearMeUi.callbackSent);
+        if (data?.emailSent) trackFormSubmit({ formType: "instant", programme: "Playgroup", centre: branch, parentName, phone, childAge });
+        form.reset();
+      } catch {
+        if (!cancelled) {
+          formError.textContent = nearMeUi.requestFailed;
+          formError.hidden = false;
+        }
+      } finally {
+        submitting = false;
+        if (!cancelled) {
+          submitButton.disabled = false;
+          submitButton.textContent = nearMeUi.getCallback;
+        }
+      }
+    };
+
+    document.addEventListener("pointerdown", activateOnFirstInteraction, true);
+    document.addEventListener("focusin", activateOnFirstInteraction, true);
+    document.addEventListener("click", activateOnFirstInteraction, true);
+    documentMain.addEventListener("click", onWhatsApp);
+    documentMain.querySelector(".nm-dots")?.addEventListener("click", onProgrammeDots);
+    programmeTrack?.addEventListener("scroll", onProgrammeScroll, { passive: true });
+
+    const hero = documentMain.querySelector<HTMLElement>(".nm-hero");
+    const setSticky = (show: boolean) => {
+      documentMain.classList.toggle("nm-sticky-active", show);
+      document.body.classList.toggle("nm-sticky-on", show);
+    };
+    let heroPast = false;
+    let footerVisible = false;
+    const updateSticky = () => setSticky(heroPast && !footerVisible);
+    const heroObserver = hero && "IntersectionObserver" in window
+      ? new IntersectionObserver(([entry]) => { heroPast = !entry.isIntersecting; updateSticky(); }, { threshold: 0 })
+      : undefined;
+    if (hero && heroObserver) heroObserver.observe(hero);
+    const footer = document.getElementById("near-me-footer") ?? document.querySelector("footer");
+    const footerObserver = footer && "IntersectionObserver" in window
+      ? new IntersectionObserver(([entry]) => { footerVisible = entry.isIntersecting; updateSticky(); }, { threshold: 0 })
+      : undefined;
+    if (footer && footerObserver) footerObserver.observe(footer);
+
+    const faqSection = documentMain.querySelector<HTMLElement>(".nm-faq-section");
+    if (faqSection && "IntersectionObserver" in window) {
+      faqObserver = new IntersectionObserver(([entry]) => {
+        if (entry.isIntersecting) {
+          activateFaqListeners();
+          faqObserver?.disconnect();
+        }
+      }, { rootMargin: "350px" });
+      faqObserver.observe(faqSection);
+    }
+
+    const theatreSection = documentMain.querySelector<HTMLElement>("#nm-theatre");
+    const mountTheatre = async () => {
+      if (!theatreSection || theatreRoot || cancelled) return;
+      const mount = theatreSection.querySelector<HTMLElement>(".nm-theatre-mount");
+      if (!mount) return;
+      const { HomeRainbowTheatre } = await import("@/components/home/home-rainbow-theatre");
+      if (cancelled) return;
+      theatreRoot = createRoot(mount);
+      theatreRoot.render(
+        <QueryClientProvider client={queryClient}>
+          <ErrorBoundary name="near-me-theatre" silent>
+            <HomeRainbowTheatre heading="The Rainbow Theatre" subline="Classroom moments, celebrations and discoveries from our centres." branchCopy introAlreadyRendered />
+          </ErrorBoundary>
+        </QueryClientProvider>,
+      );
+    };
+    if (theatreSection && "IntersectionObserver" in window) {
+      theatreObserver = new IntersectionObserver(([entry]) => {
+        if (entry.isIntersecting) {
+          theatreObserver?.disconnect();
+          void mountTheatre();
+        }
+      }, { rootMargin: "350px" });
+      theatreObserver.observe(theatreSection);
+    } else if (theatreSection) {
+      void mountTheatre();
+    }
+
+    return () => {
+      cancelled = true;
+      document.removeEventListener("pointerdown", activateOnFirstInteraction, true);
+      document.removeEventListener("focusin", activateOnFirstInteraction, true);
+      document.removeEventListener("click", activateOnFirstInteraction, true);
+      if (finderActivated) {
+        areaInput.removeEventListener("input", onAreaInput);
+        locateButton.removeEventListener("click", onLocate);
+        form.removeEventListener("submit", onSubmit);
+      }
+      if (filtersActivated) filterRow?.removeEventListener("click", onFilter);
+      documentMain.removeEventListener("click", onWhatsApp);
+      documentMain.querySelector(".nm-dots")?.removeEventListener("click", onProgrammeDots);
+      programmeTrack?.removeEventListener("scroll", onProgrammeScroll);
+      heroObserver?.disconnect();
+      footerObserver?.disconnect();
+      faqObserver?.disconnect();
+      theatreObserver?.disconnect();
+      theatreRoot?.unmount();
+      faqDetails.forEach((details) => details.removeEventListener("toggle", onFaqToggle));
+      document.body.classList.remove("nm-sticky-on");
+      documentMain.classList.remove("nm-sticky-active");
+      existingPageSchemas.forEach((script) => script.remove());
+      // Keep the SSR-owned main node stationary for back/forward navigation.
+      documentMain.hidden = true;
+      if (created) {
+        document.getElementById("near-me-footer")?.remove();
+      }
+    };
+  }, [existingPageSchemas]);
 
   return (
-    <section ref={sectionRef} className="py-16 md:py-20 lg:py-24">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">What Happens at a Play School Every Day?</h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            A play school day is packed with engaging, age-appropriate activities that build skills through fun.
-          </p>
-        </div>
-        <div className="flex flex-wrap justify-center gap-3">
-          {activities.map((activity, index) => (
-            <Badge
-              key={index}
-              variant="outline"
-              className={`text-base px-4 py-2 cursor-pointer transition-all duration-300 ${
-                isVisible
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-4"
-              }`}
-              style={{
-                transitionDelay: isVisible ? `${index * 100}ms` : "0ms",
-                transitionProperty: "all"
-              }}
-            >
-              {activity}
-            </Badge>
-          ))}
-        </div>
-      </div>
-    </section>
+    <SEO
+      title={PLAY_SCHOOL_NEAR_ME_CONTENT.title}
+      description={PLAY_SCHOOL_NEAR_ME_CONTENT.description}
+      canonical={NEAR_ME_CANONICAL}
+      ogImage={PLAY_SCHOOL_NEAR_ME_OG.url}
+      ogImageAlt={PLAY_SCHOOL_NEAR_ME_OG.alt}
+      ogImageType={PLAY_SCHOOL_NEAR_ME_OG.type}
+      ogImageWidth={PLAY_SCHOOL_NEAR_ME_OG.width}
+      ogImageHeight={PLAY_SCHOOL_NEAR_ME_OG.height}
+      structuredData={structuredData}
+    />
   );
 }
 
-const topPreschools = [
-  {
-    rank: 1,
-    name: "Rainbow Preschool International",
-    location: "Thane (6 Centres), Mumbai Metropolitan Region",
-    curriculum: "Play-Based + Montessori Blend",
-    safety: "CCTV, 100% Female Staff, Sanitised Daily",
-    experience: "18+ Years",
-    awards: "India Today, ScooNews, Economic Times",
-    highlight: true,
-  },
-  {
-    rank: 2,
-    name: "EuroKids",
-    location: "Pan-India (1000+ Centres)",
-    curriculum: "EUNOIA Curriculum",
-    safety: "CCTV, Safety Protocols",
-    experience: "20+ Years",
-    awards: "Multiple National Awards",
-    highlight: false,
-  },
-  {
-    rank: 3,
-    name: "Kidzee",
-    location: "Pan-India (1800+ Centres)",
-    curriculum: "iLLUME Curriculum",
-    safety: "Standard Safety Measures",
-    experience: "17+ Years",
-    awards: "Franchise Awards",
-    highlight: false,
-  },
-  {
-    rank: 4,
-    name: "Podar Jumbo Kids",
-    location: "Pan-India (300+ Centres)",
-    curriculum: "9 Gem Methodology",
-    safety: "Standard Safety Measures",
-    experience: "90+ Years (Podar Group)",
-    awards: "Education Excellence Awards",
-    highlight: false,
-  },
-  {
-    rank: 5,
-    name: "Kangaroo Kids",
-    location: "Metro Cities",
-    curriculum: "Reggio Emilia Inspired",
-    safety: "Standard Safety Measures",
-    experience: "15+ Years",
-    awards: "Education Innovation Awards",
-    highlight: false,
-  },
-];
-
-const howToChooseItems = [
-  { icon: ShieldCheck, title: "Safety & Hygiene Standards", description: "Look for CCTV-enabled classrooms, sanitised premises, child-proofed furniture, and a 100% female staff policy for added safety." },
-  { icon: BookOpen, title: "Curriculum & Learning Approach", description: "A good play school uses play-based learning, not rote memorisation. Ask about the daily schedule and how it nurtures cognitive and social skills." },
-  { icon: Users, title: "Teacher-to-Child Ratio", description: "Smaller batches (10-12 children) mean more individual attention. Experienced, trained teachers make a significant difference." },
-  { icon: MapPin, title: "Location & Accessibility", description: "Choose a play school near your home or workplace. Proximity reduces commute stress for both parent and child." },
-  { icon: Award, title: "Reputation & Track Record", description: "Look for awards, parent testimonials, and years of operation. An established play school with a proven track record is a safer bet." },
-  { icon: Eye, title: "Parent Communication", description: "Regular updates, parent-teacher meetings, and transparent communication about your child's progress are signs of a quality play school." },
-];
-
-const whyChooseItems = [
-  { icon: Sparkles, title: "Builds Social Confidence", description: "Children learn to interact with peers, share, take turns, and build friendships in a structured group setting." },
-  { icon: Target, title: "Develops Motor Skills", description: "Through drawing, building blocks, outdoor play, and sensory activities, children develop both fine and gross motor skills." },
-  { icon: Lightbulb, title: "Stimulates Cognitive Growth", description: "Play-based learning activities improve problem-solving, memory, concentration, and early language skills." },
-  { icon: Heart, title: "Emotional Readiness for School", description: "A play school bridges the gap between home and formal school, helping children adapt to routines and classroom settings." },
-  { icon: GraduationCap, title: "Foundation for Lifelong Learning", description: "Research shows that children who attend quality early childhood programmes perform better academically and socially in later years." },
-  { icon: TreePine, title: "Exploration & Creativity", description: "Art, music, storytelling, and nature exploration ignite curiosity and creativity that textbooks alone cannot provide." },
-];
-
-const dailyRoutine = [
-  { time: "8:30 AM", activity: "Welcome Circle & Attendance", description: "Warm greetings and settling in" },
-  { time: "9:00 AM", activity: "Free Play & Exploration", description: "Open-ended play with toys and materials" },
-  { time: "9:30 AM", activity: "Rhymes & Songs", description: "Music, movement, and language development" },
-  { time: "10:00 AM", activity: "Snack Time", description: "Healthy snacks and social interaction" },
-  { time: "10:30 AM", activity: "Learning Activity", description: "Colors, shapes, or sensory exploration" },
-  { time: "11:00 AM", activity: "Outdoor Play", description: "Physical activity and motor skill development" },
-  { time: "11:30 AM", activity: "Story Time & Goodbye", description: "Calming stories and preparation for pickup" },
-];
-
-const activities = [
-  "Circle Time", "Rhymes & Songs", "Free Play", "Art & Craft",
-  "Sensory Activities", "Story Time", "Outdoor Play", "Building Blocks",
-  "Sand & Water Play", "Music & Movement", "Nature Walks", "Puppet Shows",
-  "Colour Recognition", "Shape Sorting", "Dancing", "Role Play"
-];
-
-
-const centreAreasServed = [
-  {
-    id: "manpada",
-    localityName: "Manpada",
-    preschoolLandingUrl: "/preschool-in-manpada-thane",
-    address: "Aggarwal Arcade, Near Khewra Circle, Manpada",
-    landmarks: ["Khewra Circle", "Edenwoods Township", "Ghodbunder Road"],
-    routeNote: "Off Ghodbunder Road at the Manpada signal — 2 min from Edenwoods main gate.",
-  },
-  {
-    id: "hariniwas",
-    localityName: "Hariniwas (Naupada)",
-    preschoolLandingUrl: "/preschool-in-hariniwas-thane",
-    address: "Bhakti Mandir Road, Hariniwas Circle, Panchpakadi",
-    landmarks: ["Hariniwas Circle", "Bhakti Mandir Road", "Thanawala Garage"],
-    routeNote: "Central Thane — walkable from Panchpakadi and Naupada, auto-accessible from Thane station.",
-  },
-  {
-    id: "anand-nagar",
-    localityName: "Anand Nagar (Ghodbunder Road)",
-    preschoolLandingUrl: "/preschool-in-anand-nagar-thane",
-    address: "Kris Commercial Plaza, Opp. Tropical Lagoon, Anand Nagar, Ghodbunder Road",
-    landmarks: ["Tropical Lagoon", "Anand Nagar bus depot", "Ghodbunder Road"],
-    routeNote: "Opposite Tropical Lagoon at Kris Commercial Plaza on Ghodbunder Road, near Anand Nagar bus depot.",
-  },
-  {
-    id: "dhokali",
-    localityName: "Dhokali (Kolshet Road)",
-    preschoolLandingUrl: "/preschool-in-dhokali-thane",
-    address: "Kolshet Road, Dhokali Naka, Opp. Aban Park Society",
-    landmarks: ["Dhokali Naka", "Aban Park Society", "Kolshet Road"],
-    routeNote: "On Kolshet Road at Dhokali Naka — convenient for families from Eastern Thane and Ghodbunder Road.",
-  },
-  {
-    id: "kalwa",
-    localityName: "Kalwa",
-    preschoolLandingUrl: "/preschool-in-kalwa-thane",
-    address: "Near Sayba Hall, Manisha Nagar, Gate No. 1, Kalwa",
-    landmarks: ["Sayba Hall", "Kalwa Station", "Manisha Nagar"],
-    routeNote: "Short walk from Kalwa station — the nearest Rainbow centre for families east of Thane creek.",
-  },
-  {
-    id: "kasarvadavali",
-    localityName: "Kasarvadavali (Ghodbunder Road)",
-    preschoolLandingUrl: "/preschool-in-kasarvadavali-thane",
-    address: "Rosa Gardenia, Behind Hypercity Mall, Kasarvadavali",
-    landmarks: ["Hypercity Mall", "Parijat Gardens", "Ghodbunder Road"],
-    routeNote: "Behind Hypercity Mall on Ghodbunder Road — ideal for upper Ghodbunder, Brahmand and Hiranandani Meadows families.",
-  },
-];
-
-export default function PlaySchoolNearMe() {
-  const initialHeading = useRef(typeof document !== "undefined" && !!document.getElementById("near-me-initial-h1"));
-
-  useLayoutEffect(() => {
-    if (!initialHeading.current) return;
-    const initial = document.getElementById("near-me-initial");
-    initial?.classList.add("near-me-hydrated");
-    return () => initial?.remove();
-  }, []);
-
-  return (
-    <div className="pt-20 md:pt-24">
-      <SEO
-        title="Play School & Preschool Near Me in Thane | Rainbow"
-        description="Find the best play school & preschool near you in Thane — Rainbow Preschool, 6 centres across Thane West, safe play-based learning since 2007."
-        keywords="play school near me, preschool near me, playschool near me, play school in thane, preschool in thane, early learning centre near me, Rainbow Preschools"
-        canonical="https://www.rainbowpreschools.com/play-school-near-me"
-        structuredData={createBreadcrumbSchema([
-          { name: "Home", url: "/" },
-          { name: "Play School Near Me", url: "/play-school-near-me" },
-        ])}
-      />
-
-      {/* Hero Section */}
-      <section className="py-16 md:py-24 lg:py-32 bg-gradient-to-br from-primary/10 via-accent/5 to-secondary/10 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-10 left-10 w-32 h-32 bg-primary rounded-full blur-3xl" />
-          <div className="absolute bottom-10 right-10 w-40 h-40 bg-secondary rounded-full blur-3xl" />
-          <div className="absolute top-1/2 left-1/2 w-48 h-48 bg-accent rounded-full blur-3xl transform -translate-x-1/2 -translate-y-1/2" />
-        </div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <Badge variant="secondary" className="text-base px-4 py-1 mb-4">
-                Ages 1.5 - 2.5 Years
-              </Badge>
-              {initialHeading.current
-                ? <div aria-hidden="true" className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6" style={{ fontFamily: "Poppins, Inter, sans-serif", letterSpacing: "-0.02em", visibility: "hidden" }}>{PLAY_SCHOOL_NEAR_ME_H1}</div>
-                : <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">Play School & Preschool Near Me in Thane</h1>}
-              <p className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed" style={initialHeading.current ? { visibility: "hidden" } : undefined}>
-                {PLAY_SCHOOL_NEAR_ME_INTRO}
-              </p>
-              <div className="flex flex-wrap gap-4">
-                <Button size="lg" onClick={() => document.getElementById('ps-centres')?.scrollIntoView({ behavior: 'smooth' })} data-testid="button-ps-hero-enquire">
-                  View Our Centres <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-                <Button
-                  variant="outline"
-                  size="lg"
-                  onClick={() => window.open("https://wa.me/918291568972?text=Hi, I'm looking for a play school near me in Thane", "_blank")}
-                  data-testid="button-ps-hero-whatsapp"
-                >
-                  <SiWhatsapp className="mr-2 h-5 w-5" /> WhatsApp Us
-                </Button>
-              </div>
-            </div>
-            <div className="lg:pl-8">
-              <MiniCallbackForm />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* What is a Play School */}
-      <section className="py-16 md:py-20 lg:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-center">What is a Play School?</h2>
-            <div className="prose prose-lg max-w-none text-muted-foreground">
-              <p className="text-lg leading-relaxed mb-4">
-                A <strong>play school</strong> is a structured early learning environment designed for toddlers between <strong>1.5 and 2.5 years</strong> of age. Unlike traditional schools that emphasise academic instruction, a play school focuses on learning through play, exploration, and hands-on activities. It is your child's very first step into the world of education.
-              </p>
-              <p className="text-lg leading-relaxed mb-4">
-                At a quality play school, children are introduced to routines, group interactions, and sensory-rich experiences that build the foundation for cognitive, emotional, and social development. Activities like circle time, rhymes, art, sensory play, and outdoor exploration are carefully designed to suit a toddler's natural curiosity and developmental needs.
-              </p>
-              <p className="text-lg leading-relaxed">
-                Whether you're searching for a <strong>play school</strong> or a <strong>preschool near you</strong>, look for safety, nurturing relationships, and a developmentally appropriate curriculum — not one that pushes academics too early. The right preschool gives your child confidence, independence, and a love for learning that lasts a lifetime.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* How to Choose a Play School */}
-      <section className="py-16 md:py-20 lg:py-24 bg-muted/30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">How to Choose the Right Play School Near You</h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Finding the best play school for your toddler is one of the most important decisions you'll make as a parent. Here are the key factors to evaluate.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            {howToChooseItems.map((item, index) => (
-              <Card key={index} className="p-6">
-                <div className="flex items-start gap-4">
-                  <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-primary/10 shrink-0">
-                    <item.icon className="w-6 h-6 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-lg mb-2">{item.title}</h3>
-                    <p className="text-sm text-muted-foreground">{item.description}</p>
-                  </div>
-                </div>
-              </Card>
-            ))}
-          </div>
-          <div className="text-center mt-10">
-            <p className="text-muted-foreground mb-4">Rainbow Preschool meets every one of these criteria with flying colours.</p>
-            <Button onClick={() => document.getElementById('ps-enquiry-form')?.scrollIntoView({ behavior: 'smooth' })} data-testid="button-ps-choose-enquire">
-              Schedule a Free Campus Visit <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-          </div>
-        </div>
-      </section>
-
-      {/* Why Choose a Play School */}
-      <section className="py-16 md:py-20 lg:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Why Should You Enrol Your Child in a Play School?</h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Enrolling your child in a play school between 1.5 and 2.5 years creates lasting developmental advantages that shape their future.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            {whyChooseItems.map((item, index) => (
-              <div key={index} className="text-center p-6">
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-primary/10 to-secondary/10 mb-4">
-                  <item.icon className="w-8 h-8 text-primary" />
-                </div>
-                <h3 className="font-semibold text-lg mb-2">{item.title}</h3>
-                <p className="text-sm text-muted-foreground">{item.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* A Day in Our Playgroup - Timeline */}
-      <section className="py-16 md:py-20 lg:py-24 bg-muted/30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">A Day in Our Playgroup</h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              A structured yet flexible routine that balances learning, play, and rest.
-            </p>
-          </div>
-          <div className="max-w-3xl mx-auto">
-            <div className="relative">
-              <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-primary/20 transform md:-translate-x-1/2" />
-              {dailyRoutine.map((item, index) => (
-                <div key={index} className={`relative flex items-start gap-4 mb-8 ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
-                  <div className="absolute left-4 md:left-1/2 w-3 h-3 bg-primary rounded-full transform -translate-x-1/2 mt-2" />
-                  <div className={`ml-12 md:ml-0 md:w-1/2 ${index % 2 === 0 ? 'md:pr-12 md:text-right' : 'md:pl-12'}`}>
-                    <div className="bg-background p-4 rounded-lg shadow-sm border">
-                      <Badge variant="secondary" className="mb-2">{item.time}</Badge>
-                      <h4 className="font-semibold text-lg">{item.activity}</h4>
-                      <p className="text-sm text-muted-foreground">{item.description}</p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Top Preschools Comparison */}
-      <section className="py-16 md:py-20 lg:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">What Makes a Top Play School in India?</h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              We compared leading preschool brands across India on the parameters that matter most to parents — curriculum quality, safety measures, experience, and industry recognition.
-            </p>
-          </div>
-
-          {/* Desktop Table */}
-          <div className="hidden md:block overflow-x-auto">
-            <table className="w-full border-collapse bg-background rounded-xl overflow-hidden shadow-md" data-testid="table-top-preschools">
-              <thead>
-                <tr className="bg-primary text-white">
-                  <th className="p-4 text-left font-semibold">#</th>
-                  <th className="p-4 text-left font-semibold">Play School</th>
-                  <th className="p-4 text-left font-semibold">Curriculum</th>
-                  <th className="p-4 text-left font-semibold">Safety</th>
-                  <th className="p-4 text-left font-semibold">Experience</th>
-                  <th className="p-4 text-left font-semibold">Awards & Recognition</th>
-                </tr>
-              </thead>
-              <tbody>
-                {topPreschools.map((school) => (
-                  <tr
-                    key={school.rank}
-                    className={`border-b last:border-b-0 ${school.highlight ? 'bg-primary/5 font-medium' : ''}`}
-                    data-testid={`row-preschool-${school.rank}`}
-                  >
-                    <td className="p-4">
-                      {school.highlight ? (
-                        <span className="inline-flex items-center justify-center w-8 h-8 bg-primary text-white rounded-full font-bold text-sm">
-                          {school.rank}
-                        </span>
-                      ) : (
-                        <span className="text-muted-foreground">{school.rank}</span>
-                      )}
-                    </td>
-                    <td className="p-4">
-                      <div className="font-semibold">{school.name}</div>
-                      <div className="text-xs text-muted-foreground">{school.location}</div>
-                    </td>
-                    <td className="p-4 text-sm">{school.curriculum}</td>
-                    <td className="p-4 text-sm">{school.safety}</td>
-                    <td className="p-4 text-sm">{school.experience}</td>
-                    <td className="p-4 text-sm">{school.awards}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-          {/* Mobile Cards */}
-          <div className="md:hidden space-y-4">
-            {topPreschools.map((school) => (
-              <Card key={school.rank} className={`overflow-hidden ${school.highlight ? 'border-primary border-2' : ''}`} data-testid={`card-preschool-mobile-${school.rank}`}>
-                <CardContent className="p-4">
-                  <div className="flex items-center gap-3 mb-3">
-                    {school.highlight ? (
-                      <span className="inline-flex items-center justify-center w-8 h-8 bg-primary text-white rounded-full font-bold text-sm">
-                        {school.rank}
-                      </span>
-                    ) : (
-                      <span className="inline-flex items-center justify-center w-8 h-8 bg-muted rounded-full font-bold text-sm text-muted-foreground">
-                        {school.rank}
-                      </span>
-                    )}
-                    <div>
-                      <div className="font-semibold">{school.name}</div>
-                      <div className="text-xs text-muted-foreground">{school.location}</div>
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-2 gap-2 text-sm">
-                    <div><span className="font-medium">Curriculum:</span> <span className="text-muted-foreground">{school.curriculum}</span></div>
-                    <div><span className="font-medium">Safety:</span> <span className="text-muted-foreground">{school.safety}</span></div>
-                    <div><span className="font-medium">Experience:</span> <span className="text-muted-foreground">{school.experience}</span></div>
-                    <div><span className="font-medium">Awards:</span> <span className="text-muted-foreground">{school.awards}</span></div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-
-          <div className="text-center mt-8">
-            <p className="text-muted-foreground mb-4 max-w-2xl mx-auto">
-              Rainbow Preschool International combines the personal attention of a local play school with nationally recognised standards of excellence — making it the ideal choice for parents in Thane and the Mumbai Metropolitan Region.
-            </p>
-            <Button onClick={() => document.getElementById('ps-enquiry-form')?.scrollIntoView({ behavior: 'smooth' })} data-testid="button-ps-compare-enquire">
-              Enquire at Rainbow Preschool <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-          </div>
-        </div>
-      </section>
-
-      {/* Video Section */}
-      <section className="py-16 md:py-20 lg:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">Take a Virtual Tour of Our Play School</h2>
-              <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
-                See our colourful, child-safe classrooms, outdoor play areas, and learning spaces designed to spark curiosity. Our centres are purpose-built for toddlers aged 1.5 to 2.5 years with age-appropriate furniture, sensory corners, and spacious activity zones.
-              </p>
-              <ul className="space-y-3 mb-8">
-                <li className="flex items-center gap-3">
-                  <CheckCircle className="w-5 h-5 text-green-500 shrink-0" />
-                  <span>Purpose-built classrooms for toddlers</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <CheckCircle className="w-5 h-5 text-green-500 shrink-0" />
-                  <span>Safe outdoor play areas with soft flooring</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <CheckCircle className="w-5 h-5 text-green-500 shrink-0" />
-                  <span>Dedicated sensory and art rooms</span>
-                </li>
-              </ul>
-              <Button onClick={() => document.getElementById('ps-enquiry-form')?.scrollIntoView({ behavior: 'smooth' })} data-testid="button-ps-video-enquire">
-                Book a Campus Visit <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </div>
-            <div className="rounded-xl overflow-hidden shadow-lg">
-              <video autoPlay loop muted playsInline preload="none" className="w-full h-auto" data-testid="video-walkthrough-play-school">
-                <source src="/assets/RPS_Walkthrough_Video_-_Website_1_1766126796450.mp4" type="video/mp4" />
-              </video>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Enquiry Form */}
-      <section id="ps-enquiry-form" className="py-16 md:py-20 lg:py-24 scroll-mt-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
-            <div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                Ready to Find the Perfect Play School for Your Child?
-              </h2>
-              <p className="text-muted-foreground text-lg leading-relaxed mb-6">
-                Share your details and our admission team will help you choose the right centre, understand our programme, and schedule a campus visit — all at no obligation.
-              </p>
-              <ul className="space-y-3">
-                <li className="flex items-center gap-3">
-                  <CheckCircle className="w-5 h-5 text-green-500 shrink-0" />
-                  <span>Free personalised guidance for your child's needs</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <CheckCircle className="w-5 h-5 text-green-500 shrink-0" />
-                  <span>Schedule a centre visit at your convenience</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <CheckCircle className="w-5 h-5 text-green-500 shrink-0" />
-                  <span>Transparent fee structure — no hidden charges</span>
-                </li>
-              </ul>
-
-              {/* Internal Links */}
-              <div className="mt-8 p-4 bg-muted/50 rounded-lg">
-                <p className="font-semibold mb-3">Explore More Programmes:</p>
-                <div className="flex flex-wrap gap-2">
-                  <Link href="/playgroup">
-                    <Button variant="outline" size="sm" data-testid="link-ps-playgroup">Playgroup Programme</Button>
-                  </Link>
-                  <Link href="/nursery">
-                    <Button variant="outline" size="sm" data-testid="link-ps-nursery">Nursery Programme</Button>
-                  </Link>
-                  <Link href="/kindergarten">
-                    <Button variant="outline" size="sm" data-testid="link-ps-kindergarten">Kindergarten Programme</Button>
-                  </Link>
-                  <Button asChild variant="outline" size="sm">
-                    <span data-testid="link-ps-preschool-near-me">Find Nearest Centre</span>
-                  </Button>
-                  <Link href="/preschool-admissions">
-                    <Button variant="outline" size="sm" data-testid="link-ps-admissions">Admission Process</Button>
-                  </Link>
-                  <Link href="/happy-times">
-                    <Button variant="outline" size="sm" data-testid="link-ps-happy-times">Happy Times</Button>
-                  </Link>
-                </div>
-              </div>
-            </div>
-            <Card className="shadow-lg">
-              <CardContent className="p-6 md:p-8">
-                <h3 className="text-xl font-bold mb-6">Talk to Our Admission Expert</h3>
-                <ContactForm defaultProgramme="Playgroup" />
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* Gallery Section */}
-      <section className="py-16 md:py-20 lg:py-24 bg-muted/30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Inside Our Play School Classrooms</h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              A peek into the colourful, safe, and stimulating environment where your child will learn and grow.
-            </p>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {PLAY_SCHOOL_GALLERY_IMAGES.map((image, index) => (
-              <div key={image.src} className={`${index === 0 ? "md:col-span-2 md:row-span-2" : ""} ${index === 5 ? "md:hidden" : ""} relative overflow-hidden rounded-xl aspect-square`}>
-                <img src={image.src} alt={image.alt} className="w-full h-full object-cover" loading="lazy" decoding="async" width={image.width} height={image.height} data-testid={`img-ps-gallery-${index + 1}`} />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Why Choose Rainbow */}
-      <section className="py-16 md:py-20 lg:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">Why Parents Choose Rainbow as Their Play School</h2>
-              <ul className="space-y-4">
-                <li className="flex items-start gap-3">
-                  <Star className="w-5 h-5 text-secondary mt-0.5 shrink-0" />
-                  <span className="text-lg">Small batch sizes of 10–12 children per group for individual attention</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <Star className="w-5 h-5 text-secondary mt-0.5 shrink-0" />
-                  <span className="text-lg">100% trained female teachers and caregivers</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <Star className="w-5 h-5 text-secondary mt-0.5 shrink-0" />
-                  <span className="text-lg">CCTV-monitored, sanitised, and child-proofed premises</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <Star className="w-5 h-5 text-secondary mt-0.5 shrink-0" />
-                  <span className="text-lg">Play-based curriculum designed by early childhood experts</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <Star className="w-5 h-5 text-secondary mt-0.5 shrink-0" />
-                  <span className="text-lg">Nationally awarded — India Today, ScooNews, Economic Times</span>
-                </li>
-              </ul>
-              <div className="mt-8 text-muted-foreground">
-                <div className="flex items-start gap-4">
-                  <Clock className="w-5 h-5 text-primary mt-0.5 shrink-0" />
-                  <div>
-                    <strong>Timings:</strong>
-                    <div className="mt-1 space-y-1">
-                      <div>Morning Batch - 8:30AM to 11:30AM</div>
-                      <div>Afternoon Batch - 12:30PM to 3:30PM</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <Card className="text-center p-6">
-                <Users className="w-10 h-10 text-primary mx-auto mb-3" />
-                <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground whitespace-nowrap">
-                  1 Lac+
-                </div>
-                <div className="text-sm text-muted-foreground">Happy Students</div>
-              </Card>
-              <Card className="text-center p-6">
-                <Star className="w-10 h-10 text-secondary mx-auto mb-3" />
-                <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground whitespace-nowrap min-h-[2.5rem] flex items-center justify-center">
-                  <CountUp end={18} duration={1500} delay={200} suffix="+" />
-                </div>
-                <div className="text-sm text-muted-foreground">Years of Excellence</div>
-              </Card>
-              <Card className="text-center p-6">
-                <MapPin className="w-10 h-10 text-accent mx-auto mb-3" />
-                <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground whitespace-nowrap min-h-[2.5rem] flex items-center justify-center">
-                  <CountUp end={6} duration={1500} delay={400} prefix="0" />
-                </div>
-                <div className="text-sm text-muted-foreground">Centres in Thane</div>
-              </Card>
-              <Card className="text-center p-6">
-                <Shield className="w-10 h-10 text-green-500 mx-auto mb-3" />
-                <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground whitespace-nowrap min-h-[2.5rem] flex items-center justify-center">
-                  <CountUp end={100} duration={1500} delay={600} suffix="%" />
-                </div>
-                <div className="text-sm text-muted-foreground">Female Staff</div>
-              </Card>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Safety Section */}
-      <section className="py-16 md:py-20 lg:py-24 bg-muted/30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Safety & Hygiene at Our Play School</h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              When choosing a play school near you, safety should be non-negotiable. Here's what we guarantee.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <Card className="text-center p-6">
-              <ShieldCheck className="w-12 h-12 text-green-500 mx-auto mb-4" />
-              <h3 className="font-semibold text-lg mb-2">Daily Sanitisation</h3>
-              <p className="text-sm text-muted-foreground">Every toy, surface, and classroom is sanitised multiple times throughout the day</p>
-            </Card>
-            <Card className="text-center p-6">
-              <UsersRound className="w-12 h-12 text-red-500 mx-auto mb-4" />
-              <h3 className="font-semibold text-lg mb-2">100% Female Staff</h3>
-              <p className="text-sm text-muted-foreground">All teachers and caregivers are trained, verified female professionals</p>
-            </Card>
-            <Card className="text-center p-6">
-              <Eye className="w-12 h-12 text-blue-500 mx-auto mb-4" />
-              <h3 className="font-semibold text-lg mb-2">CCTV Monitoring</h3>
-              <p className="text-sm text-muted-foreground">Cameras cover classrooms and common areas at every centre for child safety</p>
-            </Card>
-            <Card className="text-center p-6">
-              <MessageSquare className="w-12 h-12 text-purple-500 mx-auto mb-4" />
-              <h3 className="font-semibold text-lg mb-2">Regular Updates</h3>
-              <p className="text-sm text-muted-foreground">Daily activity reports, photos, and regular parent-teacher communication</p>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* Daily Activities */}
-      <ActivitiesSection activities={activities} />
-
-      {/* Centre Locations */}
-      <section id="ps-centres" className="py-16 md:py-20 lg:py-24 bg-muted/30 scroll-mt-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-12">
-            <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">Our Locations</p>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Find a Play School Near You in Thane</h2>
-            <p className="text-muted-foreground text-lg">
-              Rainbow Preschool operates 6 centres across Thane, making it easy to find a quality play school close to your home.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {branches.map((branch) => (
-              <BranchCard key={branch.id} branch={branch} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Areas We Serve Near You */}
-      <section className="py-16 md:py-20 lg:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <p className="text-sm font-medium text-primary mb-2 uppercase tracking-wide">Preschool Near Me</p>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Areas We Serve Across Thane</h2>
-            <p className="text-muted-foreground text-lg max-w-3xl mx-auto">
-              Rainbow Preschool's 6 centres are spread across Thane West so that a quality play school and preschool is always close to your neighbourhood. Whether you search "play school near me" or "preschool near me" in Thane, you'll find a Rainbow centre nearby.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-            {centreAreasServed.map((centre) => (
-              <Card key={centre.id} className="p-6 hover:shadow-md transition-shadow">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-primary/10 shrink-0">
-                    <MapPin className="w-5 h-5 text-primary" />
-                  </div>
-                  <h3 className="font-bold text-lg leading-tight">{centre.localityName}</h3>
-                </div>
-                <p className="text-sm text-muted-foreground mb-3">{centre.address}</p>
-                <div className="mb-3">
-                  <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-1">Neighbourhoods Served</p>
-                  <div className="flex flex-wrap gap-1">
-                    {(centres.find(c => c.id === centre.id)?.areasServed ?? []).map((n) => (
-                      <Badge key={n} variant="secondary" className="text-xs">{n}</Badge>
-                    ))}
-                  </div>
-                </div>
-                <div className="mb-4">
-                  <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-1">Nearby Landmarks</p>
-                  <div className="flex flex-wrap gap-1">
-                    {centre.landmarks.map((l) => (
-                      <Badge key={l} variant="outline" className="text-xs">{l}</Badge>
-                    ))}
-                  </div>
-                </div>
-                <p className="text-xs text-muted-foreground italic mb-4">{centre.routeNote}</p>
-                <Link href={centre.preschoolLandingUrl}>
-                  <Button variant="outline" size="sm" className="w-full" data-testid={`link-ps-centre-${centre.id}`}>
-                    View {centre.localityName} Centre <ArrowRight className="ml-1 h-3 w-3" />
-                  </Button>
-                </Link>
-              </Card>
-            ))}
-          </div>
-
-          {/* How to find your nearest centre */}
-          <div className="bg-muted/40 rounded-2xl p-6 md:p-10">
-            <h3 className="text-2xl font-bold mb-6 text-center">How to Find Your Nearest Play School in Thane</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="flex items-start gap-4">
-                <div className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary text-white font-bold text-sm shrink-0 mt-0.5">1</div>
-                <div>
-                  <p className="font-semibold mb-1">Manpada — Ghodbunder Road</p>
-                  <p className="text-sm text-muted-foreground">Aggarwal Arcade near Khewra Circle. Off Ghodbunder Road, 2 min from the Edenwoods main gate. Serves Manpada, Edenwoods, Hiranandani Estate and Patlipada.</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-4">
-                <div className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary text-white font-bold text-sm shrink-0 mt-0.5">2</div>
-                <div>
-                  <p className="font-semibold mb-1">Hariniwas — Naupada / Panchpakadi</p>
-                  <p className="text-sm text-muted-foreground">Bhakti Mandir Road, near Hariniwas Circle. Central Thane location — walkable from Panchpakadi, Naupada, Charai and Khopat. Auto-accessible from Thane station.</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-4">
-                <div className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary text-white font-bold text-sm shrink-0 mt-0.5">3</div>
-                <div>
-                  <p className="font-semibold mb-1">Anand Nagar — Ghodbunder Road</p>
-                  <p className="text-sm text-muted-foreground">Opposite Tropical Lagoon, near Anand Nagar bus depot, on Ghodbunder Road. Serves Anand Nagar, Kavesar, Vijay Garden, Cosmos Jewels and Parkwoods, with other nearby areas including Vijay Nagari, Waghbil, Dongaripada, Owale, Hiranandani Estate and Patlipada.</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-4">
-                <div className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary text-white font-bold text-sm shrink-0 mt-0.5">4</div>
-                <div>
-                  <p className="font-semibold mb-1">Dhokali — Kolshet Road</p>
-                  <p className="text-sm text-muted-foreground">Kolshet Road at Dhokali Naka, opposite Aban Park Society. Ideal for Eastern Thane families in Dhokali, Kolshet Road, Vandana Nagar and Balkum.</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-4">
-                <div className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary text-white font-bold text-sm shrink-0 mt-0.5">5</div>
-                <div>
-                  <p className="font-semibold mb-1">Kalwa — Manisha Nagar</p>
-                  <p className="text-sm text-muted-foreground">Near Sayba Hall, Manisha Nagar, Gate No. 1. Short walk from Kalwa station — the nearest Rainbow play school for families east of the Thane creek.</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-4">
-                <div className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary text-white font-bold text-sm shrink-0 mt-0.5">6</div>
-                <div>
-                  <p className="font-semibold mb-1">Kasarvadavali — Ghodbunder Road (upper)</p>
-                  <p className="text-sm text-muted-foreground">Rosa Gardenia, behind Hypercity Mall, Ghodbunder Road. Serves Kasarvadavali, Patlipada, Brahmand and Hiranandani Meadows.</p>
-                </div>
-              </div>
-            </div>
-            <div className="text-center mt-8">
-              <p className="text-muted-foreground mb-4">Not sure which centre is closest? Our team will guide you.</p>
-              <Button onClick={() => document.getElementById('ps-enquiry-form')?.scrollIntoView({ behavior: 'smooth' })} data-testid="button-ps-areas-enquire">
-                Find My Nearest Centre <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ Section */}
-      <section className="py-16 md:py-20 lg:py-24 bg-muted/30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Frequently Asked Questions About Play Schools</h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Common questions parents ask when looking for a play school near them.
-            </p>
-          </div>
-          <div className="max-w-3xl mx-auto">
-            <Accordion type="single" collapsible className="space-y-4">
-              {playSchoolFAQs.map((faq, index) => (
-                <AccordionItem key={index} value={`faq-${index}`} className="bg-background rounded-lg px-6">
-                  <AccordionTrigger className="text-left font-semibold hover:no-underline">
-                    {faq.question}
-                  </AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground">
-                    {faq.answer}
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
-            <div className="text-center mt-8">
-              <p className="text-muted-foreground mb-4">Still have questions?</p>
-              <Button
-                variant="outline"
-                onClick={() => document.getElementById('ps-enquiry-form')?.scrollIntoView({ behavior: 'smooth' })}
-                data-testid="button-ps-faq-callback"
-              >
-                Request a Callback
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-4">
-        <EEATSignals
-          pageUrl="/play-school-near-me"
-          pageName="Play School Near Me in Thane"
-          reviewedBy="Rainbow Preschool Curriculum Team"
-          reviewerRole="Curriculum Team, Rainbow Preschool International"
-          lastUpdated={LAST_UPDATED_DISPLAY}
-          lastUpdatedIso={LAST_UPDATED_ISO}
-          ratingValue={VERIFIED_RATING.ratingValue}
-          reviewCount={VERIFIED_RATING.reviewCount}
-          schemaId="play-school-near-me"
-        />
-      </div>
-
-      {/* Final CTA */}
-      <section className="py-16 md:py-20 lg:py-24 bg-gradient-to-r from-primary via-accent to-secondary relative overflow-hidden">
-        <div className="absolute inset-0 bg-black/40" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-          <div className="text-center text-white">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-              Give Your Child the Best Start at Rainbow Play School
-            </h2>
-            <p className="text-lg md:text-xl mb-8 opacity-90 max-w-2xl mx-auto">
-              Join 1,00,000+ families who trust Rainbow Preschool International for their child's first learning experience.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button
-                size="lg"
-                variant="secondary"
-                onClick={() => document.getElementById('ps-enquiry-form')?.scrollIntoView({ behavior: 'smooth' })}
-                data-testid="button-ps-final-callback"
-              >
-                <Phone className="mr-2 h-5 w-5" /> Request Callback
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="border-white text-white hover:bg-white/20"
-                onClick={() => window.open("https://wa.me/918291568972?text=Hi, I'm looking for a play school near me in Thane", "_blank")}
-                data-testid="button-ps-final-whatsapp"
-              >
-                <SiWhatsapp className="mr-2 h-5 w-5" /> WhatsApp Us
-              </Button>
-              <Button asChild
-                size="lg"
-                variant="outline"
-                className="border-white text-white hover:bg-white/20"
-              >
-                <span data-testid="button-ps-final-centres">
-                  <MapPin className="mr-2 h-5 w-5" /> Find Nearest Centre
-                </span>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <SEOCrossLinks currentPath="/play-school-near-me" />
-
-      {/* Sticky Mobile CTA */}
-      <StickyMobileCTA />
-
-      <div className="h-20 md:hidden" />
-    </div>
-  );
-}
+export default PlaySchoolNearMe;

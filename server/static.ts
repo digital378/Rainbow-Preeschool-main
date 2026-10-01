@@ -18,8 +18,9 @@ const BASE_URL = "https://www.rainbowpreschools.com";
  *   3. Social-preview crawlers (WhatsApp, Slack, etc.) that are absent from
  *      BOT_USER_AGENTS get correct Open Graph + schema data.
  *
- * Only the `structuredData` array and the `breadcrumbs` list are injected —
- * no page content — so the React app hydrates normally.
+ * Usually only the `structuredData` array and `breadcrumbs` list are injected,
+ * so the React app hydrates normally. The redesigned near-me route additionally
+ * inserts its shared, stationary main document through index-policy-shell.
  */
 export function injectPageSchemas(urlPath: string, html: string): string {
   // Homepage has its own freshness injection; production does not run this

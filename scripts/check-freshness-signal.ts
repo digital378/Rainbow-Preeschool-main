@@ -118,7 +118,14 @@ async function checkUrl(path: string): Promise<CheckResult> {
     : path === "/preschool-in-dhokali-thane" ? dhokaliPage
     : path === "/preschool-in-kasarvadavali-thane" ? kasarvadavaliPage
     : path === "/preschool-in-manpada-thane" ? manpadaPage : null;
-  if (path === "/top-preschools-in-thane" || path === "/about") {
+  if (path === "/play-school-near-me") {
+    if (html.includes("Reviewed by Rainbow Preschool Curriculum Team")) {
+      missing.push("redesigned hub must not include the legacy reviewer byline");
+    }
+    if (/"@type":\s*"(?:Article|BlogPosting|FAQPage)"/.test(html)) {
+      missing.push("redesigned hub must not emit Article, BlogPosting, or FAQPage JSON-LD");
+    }
+  } else if (path === "/top-preschools-in-thane" || path === "/about") {
     const byline = path === "/about"
       ? `Last updated: <time datetime="${ABOUT_PAGE_COPY.dateIso}">${ABOUT_PAGE_COPY.dateDisplay}</time>`
       : `Last updated: <time datetime="${TOP_PRESCHOOLS_COPY.dateIso}">${TOP_PRESCHOOLS_COPY.dateDisplay}</time>`;
@@ -140,17 +147,18 @@ async function checkUrl(path: string): Promise<CheckResult> {
   } else if (path !== "/" && !html.includes("Reviewed by Rainbow Preschool Curriculum Team")) {
     missing.push("byline");
   }
-  if (path !== "/" && !html.includes("Last updated:")) {
+  if (path !== "/" && path !== "/play-school-near-me" && !html.includes("Last updated:")) {
     missing.push("Last updated: line");
   }
   const admissionsPage = path === "/preschool-admissions";
   const programmePage = path === "/playgroup" || path === "/nursery" || path === "/kindergarten" || path === "/programmes";
   const comparisonPage = path === "/top-preschools-in-thane";
-  const expectedType = path === "/about" ? "AboutPage" : path === "/contact" ? "ContactPage" : path === "/" || admissionsPage || programmePage || comparisonPage || branchPage ? "WebPage" : "Article";
+  const redesignedHub = path === "/play-school-near-me";
+  const expectedType = path === "/about" ? "AboutPage" : path === "/contact" ? "ContactPage" : path === "/" || admissionsPage || programmePage || comparisonPage || branchPage || redesignedHub ? "WebPage" : "Article";
   if (!new RegExp(`"@type":\\s*"${expectedType}"`).test(html)) {
     missing.push(`${expectedType} JSON-LD`);
   }
-  if ((path === "/" || path === "/about" || admissionsPage || programmePage || comparisonPage || branchPage || path === "/contact") && /"@type":\s*"Article"/.test(html)) {
+  if ((path === "/" || path === "/about" || admissionsPage || programmePage || comparisonPage || branchPage || path === "/contact" || redesignedHub) && /"@type":\s*"Article"/.test(html)) {
     missing.push(`unexpected Article JSON-LD on ${path}`);
   }
   if (branchPage && /"@type":\s*"FAQPage"/.test(html)) {
@@ -167,6 +175,7 @@ async function checkUrl(path: string): Promise<CheckResult> {
     : branchPage ? branchPage.publishDate
     : comparisonPage ? TOP_PRESCHOOLS_COPY.dateIso
     : path === "/about" ? ABOUT_PAGE_COPY.dateIso
+    : redesignedHub ? LAST_UPDATED_ISO
     : LAST_UPDATED_ISO;
   if (
     !html.includes(`"dateModified":"${expectedDate}"`) &&
@@ -184,7 +193,7 @@ async function checkUrl(path: string): Promise<CheckResult> {
     : comparisonPage ? TOP_PRESCHOOLS_COPY.dateDisplay
     : path === "/about" ? ABOUT_PAGE_COPY.dateDisplay
     : LAST_UPDATED_DISPLAY;
-  if (path !== "/" && !html.includes(expectedDisplay)) {
+  if (path !== "/" && !redesignedHub && !html.includes(expectedDisplay)) {
     missing.push(`display="${expectedDisplay}"`);
   }
 

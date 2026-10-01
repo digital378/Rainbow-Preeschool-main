@@ -11,16 +11,16 @@
  *
  * Asserts (as Googlebot):
  *   1. Playgroup and nursery emit their dated WebPage JSON-LD; kindergarten
- *      and play-school-near-me retain FAQPage JSON-LD.
+ *      emits WebPage JSON-LD; redesigned near-me emits WebPage, BreadcrumbList
+ *      and ItemList only (no FAQPage or Article).
  *   2. Kindergarten emits only WebPage and BreadcrumbList JSON-LD.
  *   3. /play-school-near-me has a visible body with at least 1,200 words of
  *      meaningful prose (length proxy for content depth).
  *   4. The homepage emits anchor tags to all 4 commercial URLs in the body.
  *   5. Each commercial page emits a self-referential <link rel="canonical">
  *      pointing at its own URL (protects against historical canonical drift).
- *   6. Each commercial page emits the visible "Reviewed by Rainbow Preschool
- *      Curriculum Team" byline (E-E-A-T trust signal; per the editorial rule
- *      no individual person name may appear).
+ *   6. Existing programme pages retain their visible organization byline;
+ *      redesigned near-me explicitly omits the legacy reviewer byline.
  *   7. Every ghost slug (and trailing-slash variant) returns 301 to its
  *      canonical destination.
  *   8. Legacy and merged URLs 301 directly to their surviving destinations.
@@ -36,6 +36,8 @@
  *   2 — could not reach the server at all
  */
 
+import { PLAY_SCHOOL_NEAR_ME_CONTENT } from "../shared/play-school-near-me-content";
+
 const BASE = (process.argv[2] || "http://localhost:5000").replace(/\/$/, "");
 const UA = "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)";
 const BROWSER_UA =
@@ -43,6 +45,10 @@ const BROWSER_UA =
 const FETCH_TIMEOUT_MS = 15_000;
 
 const SITE_BASE_URL = "https://www.rainbowpreschools.com";
+
+const PLAY_SCHOOL_NEAR_ME_PATH = "/play-school-near-me";
+const PLAY_SCHOOL_NEAR_ME_TITLE = "Play School & Preschool Near Me in Thane | 6 Centres | Rainbow";
+const PLAY_SCHOOL_NEAR_ME_DESCRIPTION = "Looking for the best preschool or play school near you in Thane? 6 Rainbow centres, ages 1.5–5.5, since 2007. Book a visit for 2027-28 admissions.";
 
 const COMMERCIAL_PAGES = [
   "/playgroup",
@@ -244,6 +250,101 @@ function hasSelfCanonical(html: string, path: string): boolean {
   return m[1] === expected || m[1] === `${expected}/`;
 }
 
+function extractPageMain(html: string): string {
+  return html.match(/<main\b[^>]*id="near-me-document"[^>]*>([\s\S]*?)<\/main>/i)?.[1] ?? "";
+}
+
+function stripMarkup(value: string): string {
+  return value.replace(/<[^>]+>/g, " ").replace(/&amp;/g, "&").replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&#39;/g, "'")
+    .replace(/&nbsp;/g, " ").replace(/\s+/g, " ").trim();
+}
+
+function extractJsonLd(html: string): unknown[] {
+  const scripts = html.match(/<script[^>]*type="application\/ld\+json"[^>]*>[\s\S]*?<\/script>/gi) ?? [];
+  return scripts.flatMap((script) => {
+    const json = script.replace(/^<script[^>]*>/i, "").replace(/<\/script>$/i, "");
+    try {
+      return [JSON.parse(json) as unknown];
+    } catch {
+      return [];
+    }
+  });
+}
+
+function getSchemaType(schema: unknown): string[] {
+  if (!schema || typeof schema !== "object" || !("@type" in schema)) return [];
+  const type = (schema as { "@type": unknown })["@type"];
+  return typeof type === "string" ? [type] : Array.isArray(type) ? type.filter((value): value is string => typeof value === "string") : [];
+}
+
+function checkRedesignedHub(html: string): string[] {
+  const errors: string[] = [];
+  const main = extractPageMain(html);
+  if (!main) errors.push('missing rendered <main id="near-me-document">');
+  if (main && !stripMarkup(main).includes(PLAY_SCHOOL_NEAR_ME_CONTENT.intro)) {
+    errors.push("rendered hub main is missing its approved shared intro copy");
+  }
+
+  const title = html.match(/<title[^>]*>([\s\S]*?)<\/title>/i)?.[1] ?? "";
+  const description = html.match(/<meta name="description" content="([^"]*)"/i)?.[1] ?? "";
+  const decodedTitle = stripMarkup(title).replace(/&amp;/g, "&");
+  const decodedDescription = stripMarkup(description).replace(/&amp;/g, "&");
+  if (PLAY_SCHOOL_NEAR_ME_CONTENT.title !== PLAY_SCHOOL_NEAR_ME_TITLE || decodedTitle !== PLAY_SCHOOL_NEAR_ME_TITLE) {
+    errors.push(`title must exactly match the approved 62-character title`);
+  }
+  if (PLAY_SCHOOL_NEAR_ME_CONTENT.description !== PLAY_SCHOOL_NEAR_ME_DESCRIPTION || decodedDescription !== PLAY_SCHOOL_NEAR_ME_DESCRIPTION) {
+    errors.push(`description must exactly match the approved 146-character meta description`);
+  }
+  if (PLAY_SCHOOL_NEAR_ME_TITLE.length !== 62 || PLAY_SCHOOL_NEAR_ME_DESCRIPTION.length !== 146) {
+    errors.push("approved title/meta character-count contract changed");
+  }
+  if (!PLAY_SCHOOL_NEAR_ME_CONTENT.intro.startsWith("Searching for a play school near me or a preschool in Thane?")) {
+    errors.push("shared hub intro must begin with the approved exact first sentence");
+  }
+  const h1 = main.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/i)?.[1] ?? "";
+  if (stripMarkup(h1) !== PLAY_SCHOOL_NEAR_ME_CONTENT.h1) {
+    errors.push("rendered hub H1 does not match the shared content H1");
+  }
+  if (html.includes(BYLINE)) errors.push("redesigned hub must not contain the legacy reviewer byline");
+
+  const schemas = extractJsonLd(html);
+  const pageTypes = schemas.flatMap(getSchemaType);
+  for (const type of ["WebPage", "BreadcrumbList", "ItemList"]) {
+    if (!pageTypes.includes(type)) errors.push(`missing ${type} JSON-LD`);
+  }
+  if (pageTypes.includes("FAQPage") || pageTypes.includes("Article") || pageTypes.includes("BlogPosting")) {
+    errors.push("hub must not emit FAQPage, Article, or BlogPosting JSON-LD");
+  }
+  const webPage = schemas.find(schema => getSchemaType(schema).includes("WebPage")) as {
+    dateModified?: unknown;
+  } | undefined;
+  if (!webPage?.dateModified || typeof webPage.dateModified !== "string") {
+    errors.push("WebPage JSON-LD is missing dateModified");
+  }
+
+  const itemList = schemas.find(schema => getSchemaType(schema).includes("ItemList")) as {
+    itemListElement?: Array<{ item?: { "@id"?: string }; url?: string }>;
+  } | undefined;
+  const expectedIds = [
+    "preschool-in-anand-nagar-thane",
+    "preschool-in-dhokali-thane",
+    "preschool-in-hariniwas-thane",
+    "preschool-in-kalwa-thane",
+    "preschool-in-kasarvadavali-thane",
+    "preschool-in-manpada-thane",
+  ].map(slug => `${SITE_BASE_URL}/${slug}#centre`).sort();
+  const listItems = itemList?.itemListElement ?? [];
+  const ids = listItems.map(entry => entry.item?.["@id"] ?? "").sort();
+  if (ids.length !== expectedIds.length || ids.some((id, index) => id !== expectedIds[index])) {
+    errors.push("ItemList must reference exactly the six live www branch #centre IDs");
+  }
+  if (listItems.some(entry => !expectedIds.includes(entry.url ?? ""))) {
+    errors.push("ItemList centre urls must match the six live www branch centre IDs");
+  }
+  return errors;
+}
+
 function hasOrgByline(html: string): boolean {
   return html.includes(BYLINE);
 }
@@ -273,8 +374,11 @@ async function main(): Promise<void> {
       if (WEBPAGE_ONLY_PROGRAMMES.has(path) && !/"@type"\s*:\s*"WebPage"/.test(html)) {
         failures.push({ url: path, reason: "missing WebPage JSON-LD" });
       }
-      if (!WEBPAGE_ONLY_PROGRAMMES.has(path) && !hasFaqPageJsonLd(html)) {
+      if (path !== PLAY_SCHOOL_NEAR_ME_PATH && !WEBPAGE_ONLY_PROGRAMMES.has(path) && !hasFaqPageJsonLd(html)) {
         failures.push({ url: path, reason: "missing FAQPage JSON-LD" });
+      }
+      if (path === PLAY_SCHOOL_NEAR_ME_PATH) {
+        for (const reason of checkRedesignedHub(html)) failures.push({ url: path, reason });
       }
 
       if (PROGRAMME_PAGES.includes(path) && !hasNoPersonAuthor(html)) {
@@ -289,7 +393,7 @@ async function main(): Promise<void> {
           reason: `canonical link is missing or does not point to ${SITE_BASE_URL}${path}`,
         });
       }
-      if (!hasOrgByline(html)) {
+      if (path !== PLAY_SCHOOL_NEAR_ME_PATH && !hasOrgByline(html)) {
         failures.push({
           url: path,
           reason: `missing visible "${BYLINE}" byline`,
@@ -369,6 +473,16 @@ async function main(): Promise<void> {
       path: "/playgroup",
       assertions: [
         { label: "WebPage JSON-LD", test: (html) => /"@type"\s*:\s*"WebPage"/.test(html) },
+      ],
+    },
+    {
+      path: PLAY_SCHOOL_NEAR_ME_PATH,
+      assertions: [
+        { label: "WebPage JSON-LD", test: (html) => /"@type"\s*:\s*"WebPage"/.test(html) },
+        { label: "BreadcrumbList JSON-LD", test: (html) => /"@type"\s*:\s*"BreadcrumbList"/.test(html) },
+        { label: "ItemList JSON-LD", test: (html) => /"@type"\s*:\s*"ItemList"/.test(html) },
+        { label: "no FAQPage, Article, or reviewer byline", test: (html) => !/"@type"\s*:\s*"(?:FAQPage|Article|BlogPosting)"/.test(html) && !html.includes(BYLINE) },
+        { label: "shared full hub main", test: (html) => !!extractPageMain(html) },
       ],
     },
   ];
@@ -471,7 +585,7 @@ async function main(): Promise<void> {
   }
 
   console.log(
-    `\n[check-keyword-targets] PASSED — ${COMMERCIAL_PAGES.length} commercial pages have expected schema + self-canonical + curriculum-team byline, ${DEEP_CONTENT_PAGES.length} deep-content pages meet word target, ${REDIRECTS.length} ghost slugs 301 correctly, ${BROWSER_UA_SCHEMA_CHECKS.length} SPA pages verified with browser UA (injectPageSchemas path). (Homepage anchor check skipped — SPA-served to all visitors; Googlebot executes JS.)`
+    `\n[check-keyword-targets] PASSED — ${COMMERCIAL_PAGES.length} commercial pages have expected schema + self-canonical and page-specific freshness/byline contracts, ${DEEP_CONTENT_PAGES.length} deep-content pages meet word target, ${REDIRECTS.length} ghost slugs 301 correctly, ${BROWSER_UA_SCHEMA_CHECKS.length} SPA pages verified with browser UA (injectPageSchemas path). (Homepage anchor check skipped — SPA-served to all visitors; Googlebot executes JS.)`
   );
   process.exit(0);
 }

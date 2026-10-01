@@ -45,6 +45,7 @@ import { GALLERY_PAGE_COPY } from "../client/src/lib/gallery-config";
 import { HOMEPAGE_H1 } from "../shared/homepage-schema";
 import { PLAYGROUP_COPY } from "../shared/playgroup-page-content";
 import { NURSERY_COPY } from "../shared/nursery-page-content";
+import { PLAY_SCHOOL_NEAR_ME_CONTENT } from "../shared/play-school-near-me-content";
 import {
   HOME_VISITOR_COPY,
   KINDERGARTEN_VISITOR_COPY,
@@ -61,6 +62,7 @@ const SHARED_H1_EXPRESSIONS: Record<string, string> = {
   "PLAYGROUP_COPY.h1": PLAYGROUP_COPY.h1,
   "NURSERY_COPY.h1": NURSERY_COPY.h1,
   "NURSERY_VISITOR_COPY.h1": NURSERY_VISITOR_COPY.h1,
+  "PLAY_SCHOOL_NEAR_ME_CONTENT.h1": PLAY_SCHOOL_NEAR_ME_CONTENT.h1,
   "KINDERGARTEN_VISITOR_COPY.h1": KINDERGARTEN_VISITOR_COPY.h1,
   "GALLERY_PAGE_COPY.heroTitle": GALLERY_PAGE_COPY.heroTitle,
   "CONTACT_PAGE_COPY.h1": CONTACT_PAGE_COPY.h1,
@@ -342,7 +344,6 @@ const CLIENT_H1_MAP: Record<string, { file: string; nthH1?: number }> = {
   "/national-symbols-of-india-for-kids": { file: "client/src/pages/national-symbols-of-india.tsx" },
   // SEO commercial landing pages
   "/preschool-admissions":        { file: "client/src/pages/preschool-admissions.tsx" },
-  "/play-school-near-me":         { file: "client/src/pages/play-school-near-me.tsx" },
   // Hyperlocal "near {landmark}" play school pages
   "/play-school-near-ghodbunder-road": { file: "client/src/pages/play-school-near-ghodbunder-road.tsx" },
   // Legal — one file, two routes; nthH1 selects which <h1> applies
@@ -517,6 +518,18 @@ function main() {
           `  Fix: update one or both sides so the h1 text is identical on both.`,
       );
     }
+  }
+
+  // This route's initial H1 and intro are emitted by the shared static
+  // renderer rather than a duplicate JSX H1. Keep the SSR metadata H1 tied
+  // to the same shared content source; runtime HTML parity is covered by the
+  // bot/visitor shared-renderer contract.
+  const nearMeSsrH1 = ssrH1s.get("/play-school-near-me");
+  if (!nearMeSsrH1 || nearMeSsrH1.h1 !== PLAY_SCHOOL_NEAR_ME_CONTENT.h1) {
+    errors.push(
+      `/play-school-near-me H1 source mismatch: expected "${PLAY_SCHOOL_NEAR_ME_CONTENT.h1}", ` +
+      `found "${nearMeSsrH1?.h1 ?? "(missing)"}" in server/ssr-pages.ts.`,
+    );
   }
 
   const locality = checkLocalityPages();

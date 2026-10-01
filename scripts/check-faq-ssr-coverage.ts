@@ -105,6 +105,10 @@ for (const abs of allFiles) {
   // The archived best-preschool component no longer has a route; requests
   // redirect before SSR, so its old FAQ schema must not be required here.
   if (canonical === "/best-preschool-near-me-in-thane") continue;
+  // The redesigned near-me hub deliberately renders FAQs for users without
+  // FAQPage JSON-LD. Its no-FAQPage contract is checked by
+  // scripts/check-keyword-targets.ts instead.
+  if (canonical === "/play-school-near-me") continue;
   callSites.push({ rel, canonical });
 }
 

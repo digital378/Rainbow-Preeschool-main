@@ -90,6 +90,9 @@ export default function TopPreschoolsThane() {
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">{TOP_PRESCHOOLS_COPY.introduction}</p>
           </div>
         )}
+        <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-center mb-8">
+          Explore <Link href={TOP_PRESCHOOLS_COPY.inboundCentreLink.href} className="text-primary hover:underline">{TOP_PRESCHOOLS_COPY.inboundCentreLink.label}</Link>.
+        </p>
 
         <Accordion type="single" defaultValue="school-rainbow-preschool-international" collapsible className="space-y-6">
           {TOP_PRESCHOOLS.map((school) => (

@@ -313,6 +313,12 @@ npx --no-install tsx scripts/check-local-reel-media.ts "${PREDEPLOY_URL}"
 LOCAL_REELS_EXIT=$?
 set -e
 
+log "step 16e/18 — near-me initial HTML, schema, claim and link contract"
+set +e
+BASE_URL="${PREDEPLOY_URL}" npx --no-install tsx scripts/predeploy-near-me-contract.ts
+NEAR_ME_CONTRACT_EXIT=$?
+set -e
+
 # ── step 15 — Lighthouse performance guard ───────────────────────────────────
 # Runs a simulated-mobile Lighthouse audit against home + priority landing page.
 # Skippable during initial threshold calibration: SKIP_PERF_GUARD=1 bash predeploy.sh
@@ -338,7 +344,10 @@ else
 fi
 # ─────────────────────────────────────────────────────────────────────────────
 
-if [ "${FRESHNESS_EXIT}" -ne 0 ] || [ "${KEYWORD_EXIT}" -ne 0 ] || [ "${SITEMAP_EXIT}" -ne 0 ] || [ "${BOT_DETECTION_EXIT}" -ne 0 ] || [ "${AD_PAGES_EXIT}" -ne 0 ] || [ "${CRAWLER_METADATA_EXIT}" -ne 0 ] || [ "${LOCAL_REELS_EXIT}" -ne 0 ] || [ "${PERF_EXIT}" -ne 0 ]; then
+if [ "${FRESHNESS_EXIT}" -ne 0 ] || [ "${KEYWORD_EXIT}" -ne 0 ] || [ "${SITEMAP_EXIT}" -ne 0 ] || [ "${BOT_DETECTION_EXIT}" -ne 0 ] || [ "${AD_PAGES_EXIT}" -ne 0 ] || [ "${CRAWLER_METADATA_EXIT}" -ne 0 ] || [ "${LOCAL_REELS_EXIT}" -ne 0 ] || [ "${NEAR_ME_CONTRACT_EXIT}" -ne 0 ] || [ "${PERF_EXIT}" -ne 0 ]; then
+  if [ "${NEAR_ME_CONTRACT_EXIT}" -ne 0 ]; then
+    log "FAIL — near-me initial HTML/schema/claim/link contract exited ${NEAR_ME_CONTRACT_EXIT}."
+  fi
   if [ "${FRESHNESS_EXIT}" -ne 0 ]; then
     log "FAIL — freshness smoke-test exited ${FRESHNESS_EXIT}. See offending URLs above."
   fi
@@ -389,6 +398,9 @@ if [ "${FRESHNESS_EXIT}" -ne 0 ] || [ "${KEYWORD_EXIT}" -ne 0 ] || [ "${SITEMAP_
   fi
   if [ "${LOCAL_REELS_EXIT}" -ne 0 ]; then
     exit "${LOCAL_REELS_EXIT}"
+  fi
+  if [ "${NEAR_ME_CONTRACT_EXIT}" -ne 0 ]; then
+    exit "${NEAR_ME_CONTRACT_EXIT}"
   fi
   exit "${PERF_EXIT}"
 fi
