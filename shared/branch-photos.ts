@@ -38,9 +38,10 @@ export const branchPhotos = {
     ],
   },
   kalwa: {
+    // Centre identity confirmed by the creator for the yellow-bus frontage photo.
     hero: {
-      src: "/images/branches/play-school-thane-learning-through-play.webp",
-      alt: "Child playing with stacking toys in a Rainbow play school classroom",
+      src: "/images/branches/preschool-in-kalwa-thane-centre-entrance.webp",
+      alt: "Entrance of Rainbow Preschool International, Kalwa centre near Sayba Hall, Manisha Nagar",
     },
     about: {
       src: "/images/branches/preschool-thane-library.webp",

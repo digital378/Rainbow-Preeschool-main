@@ -80,7 +80,7 @@ export function BranchCentrePage({ slug }: { slug: BranchSlug }) {
     <div className="min-h-screen">
       <SEO title={seo.title} description={seo.description} canonical={seo.canonicalPath} lang="en-IN"
         ogImage={`/images/og/${slug}-1200x630.jpg`}
-        ogImageAlt={slug === "manpada" ? photos.hero.alt : slug === "anand-nagar" ? "Two children playing with blocks at Rainbow Preschool" : slug === "kalwa" ? "Rainbow Preschool children learning together at a classroom table" : slug === "dhokali" ? "Rainbow Preschool International entrance with colourful murals" : "Rainbow Preschool classroom activity"}
+        ogImageAlt={slug === "manpada" || slug === "kalwa" ? photos.hero.alt : slug === "anand-nagar" ? "Two children playing with blocks at Rainbow Preschool" : slug === "dhokali" ? "Rainbow Preschool International entrance with colourful murals" : "Rainbow Preschool classroom activity"}
         ogImageType="image/jpeg" ogImageWidth={1200} ogImageHeight={630}
         structuredData={initialHeading.current ? undefined : pageSchemas} />
       <MinimalHeader whatsappNumber={centre.whatsappNumber} phoneNumber={ADMISSIONS_PHONE_NUMBER} callLabel={ADMISSIONS_PHONE_LABEL} locality={centre.localityName} whatsappGreeting={branchWhatsAppGreeting(centre)}

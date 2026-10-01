@@ -2648,7 +2648,7 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
       description: pageSEO.description,
       canonical: centreUrl,
       ogImage: `${BASE_URL}/images/og/${slug}-1200x630.jpg`,
-      ogImageAlt: slug === "manpada" ? photos.hero.alt : slug === "anand-nagar" ? "Two children playing with blocks at Rainbow Preschool" : slug === "kalwa" ? "Rainbow Preschool children learning together at a classroom table" : slug === "dhokali" ? "Rainbow Preschool International entrance with colourful murals" : "Rainbow Preschool classroom activity",
+      ogImageAlt: slug === "manpada" || slug === "kalwa" ? photos.hero.alt : slug === "anand-nagar" ? "Two children playing with blocks at Rainbow Preschool" : slug === "dhokali" ? "Rainbow Preschool International entrance with colourful murals" : "Rainbow Preschool classroom activity",
       h1: pageSEO.h1,
       introText: page.heroSubline,
       breadcrumbs: [
