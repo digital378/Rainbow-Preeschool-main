@@ -243,6 +243,12 @@ if ! node scripts/build-near-me-styles.mjs || ! npm run build; then
   exit 1
 fi
 
+log "step 11a/18 — isolated production startup without workspace node_modules"
+if ! node scripts/check-production-runtime.mjs; then
+  log "FAIL — production runtime dependencies are missing; aborting deploy"
+  exit 1
+fi
+
 log "step 12/18 — booting production server on ${PREDEPLOY_URL} for the SEO smoke-tests"
 NODE_ENV=production PORT="${PREDEPLOY_PORT}" node dist/index.cjs >"${SERVER_LOG}" 2>&1 &
 SERVER_PID=$!

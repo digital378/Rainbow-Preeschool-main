@@ -50,8 +50,17 @@ async function checkStaticAdTracking() {
 // which helps cold start times
 const allowlist = [
   "@google/generative-ai",
+  // Legacy HTML rendering imports the existing React navigation/UI on the
+  // server. Bundle its dependencies too: publishing cannot rely on the
+  // workspace's node_modules being present in the runtime image.
+  "@radix-ui/react-accordion",
+  "@radix-ui/react-collapsible",
+  "@radix-ui/react-dropdown-menu",
+  "@radix-ui/react-slot",
   "@replit/connectors-sdk",
   "axios",
+  "class-variance-authority",
+  "clsx",
   "compression",
   "connect-pg-simple",
   "cors",
@@ -63,6 +72,7 @@ const allowlist = [
   "express-session",
   "googleapis",
   "jsonwebtoken",
+  "lucide-react",
   "memorystore",
   "multer",
   "nanoid",
@@ -71,8 +81,13 @@ const allowlist = [
   "passport",
   "passport-local",
   "pg",
+  "react",
+  "react-dom",
+  "react-icons",
   "stripe",
+  "tailwind-merge",
   "uuid",
+  "wouter",
   "ws",
   "zod",
   "zod-validation-error",

@@ -48,3 +48,4 @@
 - [Rendered font verification](rendered-font-verification.md) — computed font names and weights can hide fallback or synthetic faces; inspect the actual rendered font.
 - [Ghodbunder Road grouping](ghodbunder-centre-grouping.md) — creator-approved pair is Anand Nagar and Kasarvadavali, not the retired page's Manpada pairing.
 - [Wouter server location](wouter-server-location.md) — static memory-location lacks a server snapshot; use native Router ssrPath for server rendering.
+- [Isolated production runtime](isolated-production-runtime.md) — workspace startup can hide missing published packages; test the compiled server outside workspace module resolution.
