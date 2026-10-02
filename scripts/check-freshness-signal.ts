@@ -70,6 +70,7 @@ const EVERGREEN_LANDER_URLS = [
   "/top-preschools-in-thane",
   "/testimonials",
   "/faqs",
+  "/pre-kg-age-guide",
 ];
 
 const ALL_URLS = [...COMMERCIAL_URLS, ...LOCALITY_URLS, ...EVERGREEN_LANDER_URLS];
@@ -145,10 +146,13 @@ async function checkUrl(path: string): Promise<CheckResult> {
     const updatedLine = `Last updated: <time datetime="${branchPage.publishDate}">${branchPage.publishDateDisplay}</time>`;
     if (!html.includes(updatedLine)) missing.push("centre last-updated line");
     if (html.includes("Reviewed by Rainbow Preschool Curriculum Team")) missing.push("outdated reviewer byline");
+  } else if (path === "/pre-kg-age-guide") {
+    if (html.includes("Reviewed by Rainbow Preschool Curriculum Team")) missing.push("retired reviewer byline");
+    if (/"@type":\s*"FAQPage"/.test(html)) missing.push("unexpected FAQPage JSON-LD");
   } else if (path !== "/" && !html.includes("Reviewed by Rainbow Preschool Curriculum Team")) {
     missing.push("byline");
   }
-  if (path !== "/" && path !== "/play-school-near-me" && !html.includes("Last updated:")) {
+  if (path !== "/" && path !== "/play-school-near-me" && path !== "/pre-kg-age-guide" && !html.includes("Last updated:")) {
     missing.push("Last updated: line");
   }
   const admissionsPage = path === "/preschool-admissions";
@@ -176,7 +180,7 @@ async function checkUrl(path: string): Promise<CheckResult> {
     : branchPage ? branchPage.publishDate
     : comparisonPage ? TOP_PRESCHOOLS_COPY.dateIso
     : path === "/about" ? ABOUT_PAGE_COPY.dateIso
-    : redesignedHub ? new Date(statSync("dist/index.cjs").mtimeMs).toISOString().slice(0, 10)
+    : redesignedHub || path === "/pre-kg-age-guide" ? new Date(statSync("dist/index.cjs").mtimeMs).toISOString().slice(0, 10)
     : LAST_UPDATED_ISO;
   if (
     !html.includes(`"dateModified":"${expectedDate}"`) &&
@@ -194,7 +198,7 @@ async function checkUrl(path: string): Promise<CheckResult> {
     : comparisonPage ? TOP_PRESCHOOLS_COPY.dateDisplay
     : path === "/about" ? ABOUT_PAGE_COPY.dateDisplay
     : LAST_UPDATED_DISPLAY;
-  if (path !== "/" && !redesignedHub && !html.includes(expectedDisplay)) {
+  if (path !== "/" && !redesignedHub && path !== "/pre-kg-age-guide" && !html.includes(expectedDisplay)) {
     missing.push(`display="${expectedDisplay}"`);
   }
 

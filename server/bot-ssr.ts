@@ -641,6 +641,11 @@ export function setupBotSSR(app: Express) {
     if (urlPath === "/national-symbols-of-india-for-kids") {
       return next();
     }
+    // This legacy page is rendered from its visitor React component in the
+    // shared index shell, so crawlers and browsers receive identical markup.
+    if (urlPath === "/pre-kg-age-guide") {
+      return next();
+    }
 
     if (
       urlPath.startsWith("/api/") ||

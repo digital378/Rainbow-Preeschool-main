@@ -1,0 +1,67 @@
+PAGE UPDATE: /pre-kg-age-guide
+Rules: DESIGN FREEZE. Keep every section's design, layout and order. Only text, links and metadata change; any new text uses existing styles. Text report only, no screenshots, don't publish, don't invent facts, no "best/No. 1/most trusted" claims and no urgency. Meta description 155 characters or fewer.
+
+1. METADATA
+- Title (exactly, 62 chars): Pre KG Full Form & Age in India: When Should Your Child Start?
+- Meta (exactly, 150 chars): Pre-KG full form is Pre-Kindergarten. See the right Pre-KG age in India, how it compares with Nursery, LKG and UKG, and the signs your child is ready.
+- H1: "Pre KG Age in India: Full Form, Age and When to Start"
+- OG image: use a real Rainbow classroom photo already on the site (not the generic og-image.jpg), named pre-kg-age-guide-og.jpg, 1200×630.
+- Schema:
+  - keep Article (dateModified = build date) and BreadcrumbList
+  - remove FAQPage; the visible FAQ stays
+
+2. REMOVE
+- The "Reviewed by Rainbow Preschool Curriculum Team — Last updated: April 24, 2026" byline.
+- In "References & Sources", remove the sentence "This guide is reviewed by Rainbow Preschool's nursery teachers and…" but keep the list of public sources.
+- In "About this guide", remove the "Last reviewed … by the Rainbow Preschool nursery team" lines.
+- Remove "Book a 15-min free chat with our nursery head" and its button text. Replace it with "Talk to admissions: call our admissions team", linking to the existing Call Admissions pattern (tel:+918291568972, label "Call Admissions", no digits shown).
+
+3. NEW TEXT AT THE TOP (straight after the H1, existing intro paragraph style)
+"Pre-KG full form: Pre-Kindergarten. Pre-KG is the class before LKG (Lower Kindergarten). In most Indian schools it is for children about 3 to 4 years old, and many schools call it Nursery. At Rainbow Preschool International, the matching class is Nursery (2.5–3.5 years), followed by Jr. KG (LKG) and Sr. KG (UKG)."
+
+4. FACT FIXES
+- "What Age is Right for Pre-KG?":
+  - Keep "typically 3–4 years" as the general India range.
+  - Change the Rainbow sentence to: "At Rainbow Preschool International, the Pre-KG stage is our Nursery class for children aged 2.5–3.5 years. Age is counted as of 1 June of the academic year."
+  - Replace "Visit any of our centres in Manpada, Kalwa, or Kasarvadavali" with "Visit any of our 6 centres in Thane", linking "6 centres in Thane" to /play-school-near-me.
+  - Bullets: "Follows Playgroup (1.5–2.5 years)" and "Prepares children for Jr. KG and Sr. KG (3.5–5.5 years)".
+- "What Pre-KG Covers": replace "Language development in English and Hindi" with "Language development through stories, rhymes and conversation".
+- Age comparison table: change the rows to the following (keep the same table design):
+  Playgroup | 1.5–2.5 years | Sensory play, social skills, settling into school | 3 hours
+  Nursery (Pre-KG) | 2.5–3.5 years | Early phonics, numbers, fine motor skills | 3 hours
+  Jr. KG (LKG) | 3.5–4.5 years | Reading readiness, writing, early maths | 3 hours
+  Sr. KG (UKG) | 4.5–5.5 years | School readiness, literacy and numeracy foundations | 3 hours
+  Add a note under the table: "Rainbow batches run Monday to Friday, 8:30–11:30 AM or 12:30–3:30 PM. Age is counted as of 1 June."
+  Rename the table heading to "Age Comparison: Playgroup vs Nursery (Pre-KG) vs LKG vs UKG".
+- Replace the sentence "let our nursery team observe them for 15 minutes — we'll tell you honestly which programme suits today" with "visit a Rainbow centre. Admission includes a relaxed parent–child interaction of about 20 minutes (no entrance test), and our team will help you choose the right class."
+- "Related Programme Pages":
+  - Kindergarten line: "Kindergarten (3.5–5.5 years) — Jr. KG and Sr. KG, the next step after Pre-KG."
+  - Nursery line: "Nursery in Thane (2.5–3.5 years) — Rainbow's Pre-KG-equivalent class."
+  - Replace "Best preschool near me in Thane — see why 1 lakh+ Thane parents picked Rainbow" with "Find a play school near you in Thane — 6 Rainbow centres", linking to /play-school-near-me.
+  - Change "how to enrol for 2026–27" to "how to enrol for 2027-28".
+- FAQ fixes:
+  - "What is the difference between Pre-KG and Nursery?": change "(2.5-4 years)" to "(2.5–3.5 years)".
+  - "What is the Pre-KG admission age cutoff?": "At Rainbow Preschool International, age is counted as of 1 June of the academic year: Nursery (Pre-KG) is for children aged 2.5–3.5 years on that date. Other schools may use different cut-offs, so check with each school."
+  - "How long is the Pre-KG day?": "At Rainbow Preschool International, Nursery (Pre-KG) batches are 3 hours: 8:30–11:30 AM or 12:30–3:30 PM, Monday to Friday."
+  - "Can my child start Pre-KG if they're not toilet trained?": keep the meaning but remove "Our teachers are experienced in supporting this transition"; say "Talk to our admissions team about your child's routine."
+- Add 2 FAQs:
+  - "What is the full form of Pre-KG?" Answer: "Pre-KG stands for Pre-Kindergarten. It is the class before LKG (Lower Kindergarten) and UKG (Upper Kindergarten)."
+  - "What comes after Pre-KG?" Answer: "LKG (called Jr. KG at Rainbow, 3.5–4.5 years), then UKG (Sr. KG, 4.5–5.5 years)."
+
+5. LINKS (existing link style)
+- In "Signs Your Child is Ready", add: "Not sure? Try our preschool readiness quiz", linking to /preschool-readiness-quiz.
+- In "What Age is Right", add: "Read more: what is the right age to start play school?", linking to /blog/what-age-start-play-school.
+- Keep the existing /playgroup, /nursery, /kindergarten, /preschool-admissions and centre links.
+
+6. CHECKS AND REPORT
+- Run predeploy twice: meta ≤155, freshness, mobile LCP ≤2.5s, TBT ≤200ms, CLS ≤0.1.
+- Parity: visitor and Googlebot HTML must contain the same content.
+- Banned-phrase scan: 0 hits for "best preschool", "Curriculum Team", "nursery head", "15 minutes", "15-min", "English and Hindi", "2026-27", "2026–27", "4–6 years", "5–6 years", "2.5-4 years".
+- Report (text only):
+  - title and meta, with character counts
+  - H1/H2 outline
+  - the final table rows
+  - schema types
+  - links added
+  - LCP / TBT / CLS for both runs
+- Don't publish.

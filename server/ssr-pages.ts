@@ -2873,8 +2873,9 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
       });
     }
 
+    const isPreKgAgeGuide = slugNoTrail === "/pre-kg-age-guide";
     const structuredData: object[] = [];
-    if (data.faqs && data.faqs.length > 0) {
+    if (!isPreKgAgeGuide && data.faqs && data.faqs.length > 0) {
       structuredData.push({
         "@context": "https://schema.org",
         "@type": "FAQPage",
@@ -2897,6 +2898,28 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
           (f) => `${f.question} — ${stripMarkdown(stripInlineHtml(f.answer))}`,
         ),
         links: data.faqs.flatMap(f => extractSafeBodyLinks(f.answer)),
+      });
+    }
+    if (isPreKgAgeGuide) {
+      structuredData.push({
+        "@context": "https://schema.org",
+        "@type": "Article",
+        headline: data.h1,
+        description: data.metaDescription,
+        url: `${BASE_URL}${slugNoTrail}`,
+        dateModified: NEAR_ME_BUILD_DATE,
+        author: {
+          "@type": "Organization",
+          name: "Rainbow Preschool International",
+        },
+        publisher: {
+          "@type": "Organization",
+          name: "Rainbow Preschool International",
+        },
+        image: data.ogImage
+          ? (/^https?:\/\//i.test(data.ogImage) ? data.ogImage : `${BASE_URL}${data.ogImage.startsWith("/") ? "" : "/"}${data.ogImage}`)
+          : `${BASE_URL}/images/pre-kg-age-guide-og.jpg`,
+        inLanguage: "en-IN",
       });
     }
 
@@ -2932,6 +2955,12 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
       keywords: data.metaKeywords,
       canonical: `${BASE_URL}${slugNoTrail}`,
       ogType: "article",
+      ogImage: data.ogImage
+        ? (/^https?:\/\//i.test(data.ogImage) ? data.ogImage : `${BASE_URL}${data.ogImage.startsWith("/") ? "" : "/"}${data.ogImage}`)
+        : isPreKgAgeGuide
+          ? `${BASE_URL}/images/pre-kg-age-guide-og.jpg`
+          : undefined,
+      ogImageAlt: data.ogImageAlt,
       noIndex: shouldNoIndex(slugNoTrail),
       h1: data.h1,
       introText,

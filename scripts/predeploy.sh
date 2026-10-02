@@ -347,6 +347,11 @@ set +e
 BASE_URL="${PREDEPLOY_URL}" npx --no-install tsx scripts/check-national-symbols-page.ts
 NATIONAL_SYMBOLS_EXIT=$?
 set -e
+log "step 16i/18 — pre-KG metadata/schema/HTML-parity/content contract"
+set +e
+BASE_URL="${PREDEPLOY_URL}" npx --no-install tsx scripts/check-pre-kg-page.ts
+PRE_KG_EXIT=$?
+set -e
 if [ "${SKIP_PERF_GUARD:-0}" != "1" ]; then
   log "step 17/18 — Lighthouse performance guard (BASE_URL=${PREDEPLOY_URL})"
   set +e
@@ -363,7 +368,11 @@ else
 fi
 # ─────────────────────────────────────────────────────────────────────────────
 
-if [ "${FRESHNESS_EXIT}" -ne 0 ] || [ "${KEYWORD_EXIT}" -ne 0 ] || [ "${SITEMAP_EXIT}" -ne 0 ] || [ "${BOT_DETECTION_EXIT}" -ne 0 ] || [ "${AD_PAGES_EXIT}" -ne 0 ] || [ "${CRAWLER_METADATA_EXIT}" -ne 0 ] || [ "${LOCAL_REELS_EXIT}" -ne 0 ] || [ "${NEAR_ME_CONTRACT_EXIT}" -ne 0 ] || [ "${DIWALI_GUIDE_EXIT}" -ne 0 ] || [ "${NATIONAL_SYMBOLS_EXIT}" -ne 0 ] || [ "${PERF_EXIT}" -ne 0 ]; then
+if [ "${FRESHNESS_EXIT}" -ne 0 ] || [ "${KEYWORD_EXIT}" -ne 0 ] || [ "${SITEMAP_EXIT}" -ne 0 ] || [ "${BOT_DETECTION_EXIT}" -ne 0 ] || [ "${AD_PAGES_EXIT}" -ne 0 ] || [ "${CRAWLER_METADATA_EXIT}" -ne 0 ] || [ "${LOCAL_REELS_EXIT}" -ne 0 ] || [ "${NEAR_ME_CONTRACT_EXIT}" -ne 0 ] || [ "${DIWALI_GUIDE_EXIT}" -ne 0 ] || [ "${NATIONAL_SYMBOLS_EXIT}" -ne 0 ] || [ "${PRE_KG_EXIT}" -ne 0 ] || [ "${PERF_EXIT}" -ne 0 ]; then
+  if [ "${PRE_KG_EXIT}" -ne 0 ]; then
+    log "FAIL — pre-KG metadata/schema/HTML-parity/content contract exited ${PRE_KG_EXIT}."
+    exit "${PRE_KG_EXIT}"
+  fi
   if [ "${NATIONAL_SYMBOLS_EXIT}" -ne 0 ]; then
     log "FAIL — national-symbols metadata/schema/HTML-parity contract exited ${NATIONAL_SYMBOLS_EXIT}."
   fi

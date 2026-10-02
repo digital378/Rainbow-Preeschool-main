@@ -34,7 +34,7 @@ export function injectPageSchemas(urlPath: string, html: string): string {
   if (seo.structuredData && seo.structuredData.length > 0) {
     for (const schema of seo.structuredData) {
       scripts.push(
-        `<script type="application/ld+json"${urlPath === "/playgroup" || urlPath === "/nursery" || urlPath === "/national-symbols-of-india-for-kids" ? ' data-seo-schema="true"' : ""}>${JSON.stringify(schema)}</script>`,
+        `<script type="application/ld+json"${urlPath === "/playgroup" || urlPath === "/nursery" || urlPath === "/national-symbols-of-india-for-kids" ? ' data-seo-schema="true"' : urlPath === "/pre-kg-age-guide" ? ' data-seo-schema="pre-kg-age-guide"' : ""}>${JSON.stringify(schema)}</script>`,
       );
     }
   }
@@ -52,7 +52,7 @@ export function injectPageSchemas(urlPath: string, html: string): string {
       })),
     };
     scripts.push(
-      `<script type="application/ld+json"${urlPath === "/playgroup" || urlPath === "/nursery" || urlPath === "/national-symbols-of-india-for-kids" ? ' data-seo-schema="true"' : ""}>${JSON.stringify(breadcrumbSchema)}</script>`,
+      `<script type="application/ld+json"${urlPath === "/playgroup" || urlPath === "/nursery" || urlPath === "/national-symbols-of-india-for-kids" ? ' data-seo-schema="true"' : urlPath === "/pre-kg-age-guide" ? ' data-seo-schema="pre-kg-age-guide"' : ""}>${JSON.stringify(breadcrumbSchema)}</script>`,
     );
   }
 

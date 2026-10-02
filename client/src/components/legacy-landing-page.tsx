@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { ChevronRight, Phone, MessageCircle, BookOpen, GraduationCap, MapPin, ArrowLeft, Star, ArrowRight } from "lucide-react";
 import { shouldNoIndex } from "@shared/seo-config";
@@ -12,6 +12,11 @@ import {
 } from "@/components/ui/accordion";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
+
+declare const __NEAR_ME_BUILD_DATE__: string;
+const LEGACY_ARTICLE_BUILD_DATE = typeof __NEAR_ME_BUILD_DATE__ === "string"
+  ? __NEAR_ME_BUILD_DATE__
+  : new Date().toISOString().slice(0, 10);
 
 // Auto-linking configuration for internal links
 const autoLinkConfig = [
@@ -69,6 +74,9 @@ export interface LegacyPageData {
   slug: string;
   title: string;
   metaDescription: string;
+  ogImage?: string;
+  ogImageAlt?: string;
+  lead?: string;
   metaKeywords?: string;
   h1: string;
   intro: string;
@@ -93,6 +101,15 @@ export function LegacyLandingPage({ data }: LegacyLandingPageProps) {
   const canonicalUrl = `https://www.rainbowpreschools.com${slugWithoutTrailingSlash}`;
   const category = data.category || "Resources";
   const noIndex = shouldNoIndex(slugWithoutTrailingSlash);
+  const isPreKgAgeGuide = slugWithoutTrailingSlash === "/pre-kg-age-guide";
+  const [openFaq, setOpenFaq] = useState<string | undefined>(undefined);
+  const ogImage = data.ogImage
+    ? data.ogImage.startsWith("http")
+      ? data.ogImage
+      : `https://www.rainbowpreschools.com${data.ogImage.startsWith("/") ? "" : "/"}${data.ogImage}`
+    : isPreKgAgeGuide
+      ? "https://www.rainbowpreschools.com/images/pre-kg-age-guide-og.jpg"
+      : "https://www.rainbowpreschools.com/og-image.jpg";
 
   useEffect(() => {
     document.title = data.title;
@@ -114,11 +131,20 @@ export function LegacyLandingPage({ data }: LegacyLandingPageProps) {
     updateMeta('og:description', data.metaDescription, true);
     updateMeta('og:type', 'article', true);
     updateMeta('og:url', canonicalUrl, true);
-    updateMeta('og:image', 'https://www.rainbowpreschools.com/og-image.jpg', true);
+    updateMeta('og:image', ogImage, true);
+    if (isPreKgAgeGuide) {
+      updateMeta('og:image:type', 'image/jpeg', true);
+      updateMeta('og:image:width', '1200', true);
+      updateMeta('og:image:height', '630', true);
+      updateMeta('og:image:alt', data.ogImageAlt || 'Rainbow Preschool classroom photo', true);
+    }
     updateMeta('twitter:card', 'summary_large_image');
     updateMeta('twitter:title', data.title);
     updateMeta('twitter:description', data.metaDescription);
-    updateMeta('twitter:image', 'https://www.rainbowpreschools.com/og-image.jpg');
+    updateMeta('twitter:image', ogImage);
+    if (isPreKgAgeGuide) {
+      updateMeta('twitter:image:alt', data.ogImageAlt || 'Rainbow Preschool classroom photo');
+    }
     if (data.metaKeywords) {
       updateMeta('keywords', data.metaKeywords);
     }
@@ -135,7 +161,7 @@ export function LegacyLandingPage({ data }: LegacyLandingPageProps) {
       document.title = "Rainbow Preschool International";
       updateMeta('robots', 'index, follow');
     };
-  }, [data, canonicalUrl, noIndex]);
+  }, [data, canonicalUrl, noIndex, ogImage]);
 
   useEffect(() => {
     const faqSchema = {
@@ -182,6 +208,7 @@ export function LegacyLandingPage({ data }: LegacyLandingPageProps) {
       "headline": data.h1,
       "description": data.metaDescription,
       "url": canonicalUrl,
+      ...(isPreKgAgeGuide ? { "dateModified": LEGACY_ARTICLE_BUILD_DATE } : {}),
       "publisher": {
         "@type": "Organization",
         "name": "Rainbow Preschool International",
@@ -189,10 +216,14 @@ export function LegacyLandingPage({ data }: LegacyLandingPageProps) {
       }
     };
 
-    // AUDIT-206: Retained — legacy blog pages have no `structuredData` field in
-    // their ssr-pages.ts entries. Bot SSR adds a generic Article via bot-ssr.ts
-    // but not FAQPage or BreadcrumbList. This useEffect is the sole source of
-    // those schemas. Remove once SSR entries include equivalent structuredData.
+    // Legacy pages retain their client schema fallback; this target route gets
+    // its Article and BreadcrumbList in the static visitor/bot shell instead.
+    // Avoid duplicating them after hydration; the effect remains the fallback
+    // for client-side navigation into this page.
+    if (isPreKgAgeGuide && document.querySelector('script[data-seo-schema="pre-kg-age-guide"]')) {
+      return;
+    }
+
     const scriptId = `legacy-schema-${data.slug.replace(/\//g, '-')}`;
     let existingScript = document.getElementById(scriptId);
     if (existingScript) {
@@ -202,14 +233,18 @@ export function LegacyLandingPage({ data }: LegacyLandingPageProps) {
     const script = document.createElement('script');
     script.id = scriptId;
     script.type = 'application/ld+json';
-    script.textContent = JSON.stringify([faqSchema, breadcrumbSchema, articleSchema]);
+    script.textContent = JSON.stringify(
+      isPreKgAgeGuide
+        ? [breadcrumbSchema, articleSchema]
+        : [faqSchema, breadcrumbSchema, articleSchema],
+    );
     document.head.appendChild(script);
 
     return () => {
       const s = document.getElementById(scriptId);
       if (s) s.remove();
     };
-  }, [data, canonicalUrl, category]);
+  }, [data, canonicalUrl, category, isPreKgAgeGuide]);
 
   return (
     <div className="min-h-screen bg-background">
@@ -253,6 +288,11 @@ export function LegacyLandingPage({ data }: LegacyLandingPageProps) {
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6 font-display" data-testid="text-page-title">
                 {data.h1}
               </h1>
+              {data.lead && (
+                <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mb-8 [&_a]:text-primary [&_a]:underline [&_a]:hover:text-primary/80">
+                  {data.lead}
+                </p>
+              )}
               <p 
                 className="text-lg md:text-xl text-muted-foreground max-w-3xl mb-8 [&_a]:text-primary [&_a]:underline [&_a]:hover:text-primary/80"
                 dangerouslySetInnerHTML={{ __html: enrichContentWithLinks(data.intro) }}
@@ -262,7 +302,7 @@ export function LegacyLandingPage({ data }: LegacyLandingPageProps) {
                 <Button asChild size="lg" data-testid="button-enquire-top">
                   <Link href="/contact">
                     <Phone className="w-5 h-5 mr-2" />
-                    Enquire Now
+                    {isPreKgAgeGuide ? "Contact Admissions" : "Enquire Now"}
                   </Link>
                 </Button>
                 <Button asChild variant="outline" size="lg" data-testid="button-programmes-top">
@@ -325,18 +365,24 @@ export function LegacyLandingPage({ data }: LegacyLandingPageProps) {
                     <Star className="w-6 h-6 text-primary flex-shrink-0 mt-0.5" />
                     <div>
                       <h3 className="text-lg md:text-xl font-bold text-foreground font-display">
-                        Looking for the Best Preschool in Thane?
+                        {isPreKgAgeGuide ? "Find a play school near you in Thane" : "Looking for the Best Preschool in Thane?"}
                       </h3>
                       <p className="text-muted-foreground text-sm mt-1">
-                        Rainbow Preschool International has been nurturing young minds since 2007 across 6 centres in Thane. Discover why thousands of parents trust us with their child's early education.
+                        {isPreKgAgeGuide
+                          ? "Compare programme ages and find details for Rainbow's 6 centres in Thane."
+                          : "Rainbow Preschool International has been nurturing young minds since 2007 across 6 centres in Thane. Discover why thousands of parents trust us with their child's early education."}
                       </p>
                     </div>
                   </div>
                   <div className="grid sm:grid-cols-2 gap-3 mt-5">
-                    <Link href="/play-school-near-me" className="group flex items-center justify-between p-3 bg-white rounded-lg border border-primary/20 hover:border-primary/40 hover:shadow-sm transition-all" data-testid="link-cta-best-preschool">
+                    <Link href="/play-school-near-me" className="group flex items-center justify-between p-3 bg-white rounded-lg border border-primary/20 hover:border-primary/40 hover:shadow-sm transition-all" data-testid={isPreKgAgeGuide ? "link-cta-play-schools-near-you" : "link-cta-best-preschool"}>
                       <div>
-                        <span className="font-semibold text-foreground group-hover:text-primary transition-colors text-sm">Best Preschool in Thane</span>
-                        <span className="block text-xs text-muted-foreground">Why parents choose Rainbow</span>
+                        <span className="font-semibold text-foreground group-hover:text-primary transition-colors text-sm">
+                          {isPreKgAgeGuide ? "Play schools near you" : "Best Preschool in Thane"}
+                        </span>
+                        <span className="block text-xs text-muted-foreground">
+                          {isPreKgAgeGuide ? "See Rainbow's 6 centres in Thane" : "Why parents choose Rainbow"}
+                        </span>
                       </div>
                       <ArrowRight className="w-4 h-4 text-primary opacity-0 group-hover:opacity-100 transition-opacity" />
                     </Link>
@@ -349,8 +395,12 @@ export function LegacyLandingPage({ data }: LegacyLandingPageProps) {
                     </Link>
                     <Link href="/preschool-admissions" className="group flex items-center justify-between p-3 bg-white rounded-lg border border-primary/20 hover:border-primary/40 hover:shadow-sm transition-all" data-testid="link-cta-admissions">
                       <div>
-                        <span className="font-semibold text-foreground group-hover:text-primary transition-colors text-sm">Admissions Open 2025-26</span>
-                        <span className="block text-xs text-muted-foreground">Enrol your child today</span>
+                        <span className="font-semibold text-foreground group-hover:text-primary transition-colors text-sm">
+                          {isPreKgAgeGuide ? "Admissions 2027-28" : "Admissions Open 2025-26"}
+                        </span>
+                        <span className="block text-xs text-muted-foreground">
+                          {isPreKgAgeGuide ? "View the admission process" : "Enrol your child today"}
+                        </span>
                       </div>
                       <ArrowRight className="w-4 h-4 text-primary opacity-0 group-hover:opacity-100 transition-opacity" />
                     </Link>
@@ -368,17 +418,30 @@ export function LegacyLandingPage({ data }: LegacyLandingPageProps) {
                   <h2 className="text-2xl md:text-3xl font-semibold text-foreground mb-6 font-display">
                     Frequently Asked Questions
                   </h2>
-                  <Accordion type="single" collapsible className="w-full">
-                    {data.faqs.map((faq, index) => (
-                      <AccordionItem key={index} value={`faq-${index}`}>
-                        <AccordionTrigger className="text-left font-medium" data-testid={`faq-trigger-${index}`}>
-                          {faq.question}
-                        </AccordionTrigger>
-                        <AccordionContent className="text-muted-foreground [&_a]:text-primary [&_a]:underline [&_a]:hover:text-primary/80">
-                          <span dangerouslySetInnerHTML={{ __html: enrichContentWithLinks(faq.answer) }} />
-                        </AccordionContent>
-                      </AccordionItem>
-                    ))}
+                  <Accordion
+                    type="single"
+                    collapsible
+                    className="w-full"
+                    value={isPreKgAgeGuide ? openFaq : undefined}
+                    onValueChange={isPreKgAgeGuide ? setOpenFaq : undefined}
+                  >
+                    {data.faqs.map((faq, index) => {
+                      const itemValue = `faq-${index}`;
+                      return (
+                        <AccordionItem key={index} value={itemValue}>
+                          <AccordionTrigger className="text-left font-medium" data-testid={`faq-trigger-${index}`}>
+                            {faq.question}
+                          </AccordionTrigger>
+                          <AccordionContent
+                            forceMount={isPreKgAgeGuide}
+                            hidden={isPreKgAgeGuide && openFaq !== itemValue ? true : undefined}
+                            className="text-muted-foreground [&_a]:text-primary [&_a]:underline [&_a]:hover:text-primary/80"
+                          >
+                            <span dangerouslySetInnerHTML={{ __html: enrichContentWithLinks(faq.answer) }} />
+                          </AccordionContent>
+                        </AccordionItem>
+                      );
+                    })}
                   </Accordion>
                 </section>
               </div>
@@ -467,15 +530,17 @@ export function LegacyLandingPage({ data }: LegacyLandingPageProps) {
             <section className="mt-16 py-12 bg-gradient-to-r from-primary/10 via-secondary/10 to-accent/10 rounded-2xl">
               <div className="text-center px-6">
                 <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4 font-display">
-                  Ready to Give Your Child the Best Start?
+                  {isPreKgAgeGuide ? "Explore preschool programmes" : "Ready to Give Your Child the Best Start?"}
                 </h2>
                 <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
-                  Join Rainbow Preschool International and watch your child thrive with our play-based, holistic learning approach.
+                  {isPreKgAgeGuide
+                    ? "See how Playgroup, Nursery and Kindergarten are organized at Rainbow Preschool International."
+                    : "Join Rainbow Preschool International and watch your child thrive with our play-based, holistic learning approach."}
                 </p>
                 <div className="flex flex-wrap justify-center gap-4">
                   <Button asChild size="lg" data-testid="button-enquire-bottom">
                     <Link href="/contact">
-                      Enquire Now
+                      {isPreKgAgeGuide ? "Contact Admissions" : "Enquire Now"}
                     </Link>
                   </Button>
                   <Button asChild variant="outline" size="lg" data-testid="button-programmes-bottom">

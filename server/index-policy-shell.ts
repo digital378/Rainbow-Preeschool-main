@@ -16,6 +16,8 @@ import { anandNagarPage, kalwaPage, manpadaPage, hariniwasPage, dhokaliPage, kas
 import { playSchoolNearMePhotos } from "@shared/branch-photos";
 import { renderPlaySchoolNearMeHtml } from "@shared/play-school-near-me-render";
 import { injectSymbolsDocument } from "./symbols-document";
+import { getLegacyPageData } from "@shared/legacy-pages-data";
+import { renderLegacyLandingPage } from "./legacy-page-render";
 
 /**
  * Keep the browser's initial document metadata aligned with bot SSR and the
@@ -57,6 +59,12 @@ export function injectIndexPolicyShell(path: string, html: string): string {
   updateMeta("property", "og:title", seo.title);
   updateMeta("property", "og:description", seo.description);
   updateMeta("property", "og:image", seo.ogImage ?? `${PREFERRED_DOMAIN}/og-image.jpg`);
+  if (path === "/pre-kg-age-guide") {
+    updateMeta("property", "og:image:type", "image/jpeg");
+    updateMeta("property", "og:image:width", "1200");
+    updateMeta("property", "og:image:height", "630");
+    updateMeta("property", "og:image:alt", seo.ogImageAlt ?? "Rainbow Preschool classroom photo");
+  }
   if (path === "/nursery" || path === "/kindergarten" || path === "/programmes" || path === "/contact" || path === "/top-preschools-in-thane" || path === "/about" || path === "/play-school-near-me" || isBranchPage) {
     updateMeta("property", "og:locale", "en_IN");
     updateMeta("property", "og:image:alt", isBranchPage ? seo.ogImageAlt ?? branchImageAlt : path === "/about" ? ABOUT_PAGE_COPY.ogImageAlt : path === "/top-preschools-in-thane" ? TOP_PRESCHOOLS_COPY.ogImageAlt : path === "/contact" ? CONTACT_PAGE_COPY.ogImageAlt : path === "/programmes" ? PROGRAMMES_COPY.ogImageAlt : path === "/kindergarten" ? KINDERGARTEN_COPY.ogImageAlt : path === "/play-school-near-me" ? seo.ogImageAlt ?? "" : NURSERY_COPY.ogImageAlt);
@@ -69,12 +77,24 @@ export function injectIndexPolicyShell(path: string, html: string): string {
   updateMeta("name", "twitter:title", seo.title);
   updateMeta("name", "twitter:description", seo.description);
   updateMeta("name", "twitter:image", seo.ogImage ?? `${PREFERRED_DOMAIN}/og-image.jpg`);
+  if (path === "/pre-kg-age-guide") {
+    updateMeta("name", "twitter:image:alt", seo.ogImageAlt ?? "Rainbow Preschool classroom photo");
+  }
   if (seo.keywords) {
     updateMeta("name", "keywords", seo.keywords);
   } else {
     result = result.replace(/\s*<meta name="keywords" content="[^"]*"\s*\/?>/i, "");
   }
   if (path === "/national-symbols-of-india-for-kids") return injectSymbolsDocument(result);
+  if (path === "/pre-kg-age-guide") {
+    const legacyPageData = getLegacyPageData("/pre-kg-age-guide/");
+    if (legacyPageData) {
+      result = result.replace(
+        '<div id="root"></div>',
+        `<div id="root">${renderLegacyLandingPage(legacyPageData)}</div>`,
+      );
+    }
+  }
   if (path === "/about") {
     // Let the headline paint with its metric-compatible fallback before the
     // Poppins stylesheet arrives; loading an external font at highest

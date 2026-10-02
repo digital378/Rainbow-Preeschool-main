@@ -248,25 +248,27 @@ export const legacyPagesData: Record<string, LegacyPageData> = {
 
   "/pre-kg-age-guide/": {
     slug: "/pre-kg-age-guide/",
-    title: "Pre KG Age in India | When to Start Pre-KG",
-    metaDescription: "Understand the right Pre KG age in India, when your child should start Pre-KG and how parents can prepare for preschool admission with Rainbow Preschools.",
-    h1: "Pre KG Age in India: When Should Your Child Start?",
+    title: "Pre KG Full Form & Age in India: When Should Your Child Start?",
+    metaDescription: "Pre-KG full form is Pre-Kindergarten. See the right Pre-KG age in India, how it compares with Nursery, LKG and UKG, and the signs your child is ready.",
+    h1: "Pre KG Age in India: Full Form, Age and When to Start",
+    lead: "Pre-KG full form: Pre-Kindergarten. Pre-KG is the class before LKG (Lower Kindergarten). In most Indian schools it is for children about 3 to 4 years old, and many schools call it Nursery. At Rainbow Preschool International, the matching class is Nursery (2.5–3.5 years), followed by Jr. KG (LKG) and Sr. KG (UKG).",
+    ogImage: "/images/pre-kg-age-guide-og.jpg",
     intro: "Deciding when to start Pre-KG is an important decision for parents. This guide helps you understand the appropriate age, readiness signs, and what Pre-Kindergarten education involves at <a href=\"/about\">Rainbow Preschool International</a> in Thane.",
     sections: [
       {
         heading: "What Age is Right for Pre-KG?",
-        content: "Pre-Kindergarten (Pre-KG) typically suits children between 3 to 4 years of age. However, readiness depends on more than just age - developmental milestones and emotional readiness also play crucial roles.\n\nAt <a href=\"/about\">Rainbow Preschool</a>, our Pre-KG programme (part of our <a href=\"/nursery\">Nursery</a> level) is designed for children who have completed <a href=\"/playgroup\">Playgroup</a> or are developmentally ready for structured learning. Visit any of our centres in <a href=\"/preschool-in-manpada-thane\">Manpada</a>, <a href=\"/preschool-in-kalwa-thane\">Kalwa</a>, or <a href=\"/preschool-in-kasarvadavali-thane\">Kasarvadavali</a> to learn more.",
+        content: "Pre-Kindergarten (Pre-KG) typically suits children between 3 to 4 years of age. However, readiness depends on more than just age - developmental milestones and emotional readiness also play crucial roles.\n\nAt Rainbow Preschool International, the Pre-KG stage is our <a href=\"/nursery\">Nursery</a> class for children aged 2.5–3.5 years. Age is counted as of 1 June of the academic year. Visit any of our <a href=\"/play-school-near-me\">6 centres in Thane</a> to learn more. Centre pages: <a href=\"/preschool-in-manpada-thane\">Manpada</a>, <a href=\"/preschool-in-kalwa-thane\">Kalwa</a> and <a href=\"/preschool-in-kasarvadavali-thane\">Kasarvadavali</a>.\n\nRead more: <a href=\"/blog/what-age-start-play-school\">what is the right age to start play school?</a>",
         bulletPoints: [
           "Typical age range: 3-4 years",
-          "Follows Playgroup completion (1.5-2.5 years)",
-          "Prepares children for Kindergarten (3.5–5.5 years)",
+          "Follows Playgroup (1.5–2.5 years)",
+          "Prepares children for Jr. KG and Sr. KG (3.5–5.5 years)",
           "Birth date cutoffs vary - check with specific schools",
           "Individual readiness matters as much as age"
         ]
       },
       {
         heading: "Signs Your Child is Ready for Pre-KG",
-        content: "Look for these developmental signs that indicate Pre-KG readiness:",
+        content: "Look for these developmental signs that indicate Pre-KG readiness:\n\nNot sure? <a href=\"/preschool-readiness-quiz\">Try our preschool readiness quiz</a>.",
         bulletPoints: [
           "Can separate from parents without excessive distress",
           "Shows interest in learning letters and numbers",
@@ -285,7 +287,7 @@ export const legacyPagesData: Record<string, LegacyPageData> = {
           "Pre-writing skills and hand strengthening",
           "Basic concepts (colors, shapes, sizes)",
           "Social skills and classroom behavior",
-          "Language development in English and Hindi",
+          "Language development through stories, rhymes and conversation",
           "Creative arts and music",
           "Physical development through structured play"
         ]
@@ -296,13 +298,13 @@ export const legacyPagesData: Record<string, LegacyPageData> = {
         bulletPoints: []
       },
       {
-        heading: "Age Comparison: Playgroup vs Nursery vs Pre-KG vs Kindergarten",
-        content: "Use this quick reference table to see exactly where Pre-KG fits in the early-years journey, and which programme is right for your child today. For deeper details, jump to our <a href=\"/playgroup\">Playgroup Programme</a>, <a href=\"/nursery\">Nursery</a>, or <a href=\"/kindergarten\">Kindergarten</a> pages.\n\n<div class=\"overflow-x-auto my-4 rounded-lg border border-gray-200 dark:border-gray-700\"><table class=\"w-full text-sm\"><thead class=\"bg-gray-50 dark:bg-gray-900\"><tr><th class=\"text-left p-3 font-semibold\">Programme</th><th class=\"text-left p-3 font-semibold\">Age range</th><th class=\"text-left p-3 font-semibold\">Main focus</th><th class=\"text-left p-3 font-semibold\">Typical day length</th></tr></thead><tbody class=\"divide-y divide-gray-200 dark:divide-gray-700\"><tr><td class=\"p-3 font-medium\">Playgroup</td><td class=\"p-3\">1.5 – 2.5 years</td><td class=\"p-3\">Sensory play, social skills, separation comfort</td><td class=\"p-3\">2.5 – 3 hours</td></tr><tr><td class=\"p-3 font-medium\">Nursery</td><td class=\"p-3\">2.5 – 3.5 years</td><td class=\"p-3\">Phonics intro, numbers 1–10, fine motor skills</td><td class=\"p-3\">3 – 4 hours</td></tr><tr><td class=\"p-3 font-medium text-primary\">Pre-KG</td><td class=\"p-3 text-primary\">3 – 4 years</td><td class=\"p-3 text-primary\">Letter & number recognition, pre-writing, classroom routines</td><td class=\"p-3 text-primary\">3 – 4 hours</td></tr><tr><td class=\"p-3 font-medium\">Jr. KG</td><td class=\"p-3\">4 – 5 years</td><td class=\"p-3\">Reading, writing, basic math, structured learning</td><td class=\"p-3\">4 – 5 hours</td></tr><tr><td class=\"p-3 font-medium\">Sr. KG</td><td class=\"p-3\">5 – 6 years</td><td class=\"p-3\">School readiness, full literacy & numeracy foundation</td><td class=\"p-3\">4 – 5 hours</td></tr></tbody></table></div>\n\nIf your child sits between two stages, the safest bet is to visit a Rainbow centre and let our nursery team observe them for 15 minutes — we'll tell you honestly which programme suits today.",
+        heading: "Age Comparison: Playgroup vs Nursery (Pre-KG) vs LKG vs UKG",
+        content: "Use this quick reference table to see exactly where Pre-KG fits in the early-years journey, and which programme is right for your child today. For deeper details, jump to our <a href=\"/playgroup\">Playgroup Programme</a>, <a href=\"/nursery\">Nursery</a>, or <a href=\"/kindergarten\">Kindergarten</a> pages.\n\n<div class=\"overflow-x-auto my-4 rounded-lg border border-gray-200 dark:border-gray-700\"><table class=\"w-full text-sm\"><thead class=\"bg-gray-50 dark:bg-gray-900\"><tr><th class=\"text-left p-3 font-semibold\">Programme</th><th class=\"text-left p-3 font-semibold\">Age range</th><th class=\"text-left p-3 font-semibold\">Main focus</th><th class=\"text-left p-3 font-semibold\">Typical day length</th></tr></thead><tbody class=\"divide-y divide-gray-200 dark:divide-gray-700\"><tr><td class=\"p-3 font-medium\">Playgroup</td><td class=\"p-3\">1.5–2.5 years</td><td class=\"p-3\">Sensory play, social skills, settling into school</td><td class=\"p-3\">3 hours</td></tr><tr><td class=\"p-3 font-medium text-primary\">Nursery (Pre-KG)</td><td class=\"p-3 text-primary\">2.5–3.5 years</td><td class=\"p-3 text-primary\">Early phonics, numbers, fine motor skills</td><td class=\"p-3 text-primary\">3 hours</td></tr><tr><td class=\"p-3 font-medium\">Jr. KG (LKG)</td><td class=\"p-3\">3.5–4.5 years</td><td class=\"p-3\">Reading readiness, writing, early maths</td><td class=\"p-3\">3 hours</td></tr><tr><td class=\"p-3 font-medium\">Sr. KG (UKG)</td><td class=\"p-3\">4.5–5.5 years</td><td class=\"p-3\">School readiness, literacy and numeracy foundations</td><td class=\"p-3\">3 hours</td></tr></tbody></table></div>\n\nRainbow batches run Monday to Friday, 8:30–11:30 AM or 12:30–3:30 PM. Age is counted as of 1 June.\n\nIf your child sits between two stages, visit a Rainbow centre. Admission includes a relaxed parent–child interaction of about 20 minutes (no entrance test), and our team will help you choose the right class.",
         bulletPoints: []
       },
       {
         heading: "Save or Share This Guide",
-        content: "Found this guide useful? Most parents save it or share it with a partner / grandparent before deciding on Pre-KG admission.\n\n- 📥 <strong>Print or save as PDF:</strong> press Ctrl+P (or Cmd+P on Mac) and choose 'Save as PDF' to keep this age guide handy.\n- 📲 <strong>Share with another parent:</strong> WhatsApp this page link — <a href=\"https://wa.me/?text=Helpful%20Pre-KG%20age%20guide%20from%20Rainbow%20Preschool%20Thane%3A%20https%3A%2F%2Fwww.rainbowpreschools.com%2Fpre-kg-age-guide\" target=\"_blank\" rel=\"noopener\">tap to share on WhatsApp</a>.\n- 📧 <strong>Talk to admissions:</strong> not sure if your child is ready? <a href=\"/contact\">Book a 15-min free chat</a> with our nursery head.",
+        content: "Found this guide useful? Most parents save it or share it with a partner / grandparent before deciding on Pre-KG admission.\n\n- 📥 <strong>Print or save as PDF:</strong> press Ctrl+P (or Cmd+P on Mac) and choose 'Save as PDF' to keep this age guide handy.\n- 📲 <strong>Share with another parent:</strong> WhatsApp this page link — <a href=\"https://wa.me/?text=Helpful%20Pre-KG%20age%20guide%20from%20Rainbow%20Preschool%20Thane%3A%20https%3A%2F%2Fwww.rainbowpreschools.com%2Fpre-kg-age-guide\" target=\"_blank\" rel=\"noopener\">tap to share on WhatsApp</a>.\n- 📧 <strong>Talk to admissions:</strong> call our admissions team — <a href=\"tel:+918291568972\">Call Admissions</a>.",
         bulletPoints: []
       },
       {
@@ -310,15 +312,15 @@ export const legacyPagesData: Record<string, LegacyPageData> = {
         content: "Now that you know the right age for Pre-KG, explore the actual programmes your child can join at Rainbow Preschool Thane:",
         bulletPoints: [
           "<a href=\"/playgroup\">Playgroup (1.5–2.5 years)</a> — the stage just before Pre-KG, ideal for first-time school exposure.",
-          "<a href=\"/nursery\">Nursery in Thane (2.5–3.5 years)</a> — Rainbow's Pre-KG-equivalent programme with phonics, numbers and pre-writing.",
-          "<a href=\"/kindergarten\">Kindergarten (4–6 years)</a> — the next step after Pre-KG, building reading, writing and school readiness.",
-          "<a href=\"/play-school-near-me\">Best preschool near me in Thane</a> — see why 1 lakh+ Thane parents picked Rainbow.",
-          "<a href=\"/preschool-admissions\">Admission process & current intake dates</a> — exactly how to enrol for 2026–27."
+          "<a href=\"/nursery\">Nursery in Thane (2.5–3.5 years)</a> — Rainbow's Pre-KG-equivalent class.",
+          "<a href=\"/kindergarten\">Kindergarten (3.5–5.5 years)</a> — Jr. KG and Sr. KG, the next step after Pre-KG.",
+          "<a href=\"/play-school-near-me\">Find a play school near you in Thane</a> — 6 Rainbow centres.",
+          "<a href=\"/preschool-admissions\">Admission process & current intake dates</a> — how to enrol for 2027-28."
         ]
       },
       {
         heading: "References & Sources",
-        content: "This guide is reviewed by Rainbow Preschool's nursery teachers and aligned with the National Education Policy 2020 and widely-cited child development frameworks. Selected sources parents can read independently:",
+        content: "Selected sources parents can read independently:",
         bulletPoints: [
           "Ministry of Education, Govt. of India — <em>National Education Policy 2020</em>, sections on Early Childhood Care and Education (ECCE) and the foundational stage (ages 3–8).",
           "NCERT — <em>National Curriculum Framework for Foundational Stage 2022</em>, age-appropriate competency expectations.",
@@ -329,15 +331,17 @@ export const legacyPagesData: Record<string, LegacyPageData> = {
       },
       {
         heading: "About this guide",
-        content: "<p><strong>Last reviewed:</strong> April 2026 by the Rainbow Preschool nursery team in Thane. <strong>Next review:</strong> April 2027. We update this guide every academic year to reflect current admission age cut-offs and NEP 2020 guidance.</p>",
+        content: "<p>Use this guide to compare programme ages and readiness signs before discussing admission with a school.</p>",
         bulletPoints: []
       }
     ],
     faqs: [
-      { question: "What is the difference between Pre-KG and Nursery?", answer: "These terms are often used interchangeably. At <a href=\"/about\">Rainbow Preschool</a>, our <a href=\"/nursery\">Nursery programme</a> serves the Pre-KG age group (2.5-4 years) and prepares children for <a href=\"/kindergarten\">Kindergarten</a>." },
-      { question: "Can my child start Pre-KG if they're not toilet trained?", answer: "We work with parents on toilet training, but children should be making progress. Our teachers are experienced in supporting this transition." },
-      { question: "What is the Pre-KG admission age cutoff?", answer: "Generally, children should be 3 years old by June for the academic year starting in April. Contact our admissions team for specific cutoff dates." },
-      { question: "How long is the Pre-KG day?", answer: "At Rainbow Preschool, we offer flexible timing options including half-day (3 hours) and full-day (5-6 hours) programmes to suit different family needs." }
+      { question: "What is the difference between Pre-KG and Nursery?", answer: "These terms are often used interchangeably. At <a href=\"/about\">Rainbow Preschool</a>, our <a href=\"/nursery\">Nursery programme</a> serves the Pre-KG age group (2.5–3.5 years) and prepares children for <a href=\"/kindergarten\">Kindergarten</a>." },
+      { question: "Can my child start Pre-KG if they're not toilet trained?", answer: "We work with parents on toilet training, but children should be making progress. Talk to our admissions team about your child's routine." },
+      { question: "What is the Pre-KG admission age cutoff?", answer: "At Rainbow Preschool International, age is counted as of 1 June of the academic year: Nursery (Pre-KG) is for children aged 2.5–3.5 years on that date. Other schools may use different cut-offs, so check with each school." },
+      { question: "How long is the Pre-KG day?", answer: "At Rainbow Preschool International, Nursery (Pre-KG) batches are 3 hours: 8:30–11:30 AM or 12:30–3:30 PM, Monday to Friday." },
+      { question: "What is the full form of Pre-KG?", answer: "Pre-KG stands for Pre-Kindergarten. It is the class before LKG (Lower Kindergarten) and UKG (Upper Kindergarten)." },
+      { question: "What comes after Pre-KG?", answer: "LKG (called Jr. KG at Rainbow, 3.5–4.5 years), then UKG (Sr. KG, 4.5–5.5 years)." }
     ],
     relatedLinks: [
       { title: "Nursery Programme", url: "/nursery", description: "Pre-KG curriculum details" },
@@ -345,7 +349,9 @@ export const legacyPagesData: Record<string, LegacyPageData> = {
       { title: "Kindergarten", url: "/kindergarten", description: "Next step after Pre-KG" },
       { title: "Admissions", url: "/contact", description: "Enquire about Pre-KG admissions" }
     ],
-    internalLinks: commonInternalLinks,
+    internalLinks: commonInternalLinks.map(link => link.text === "Best Preschool in Thane"
+      ? { ...link, text: "Preschool centres in Thane" }
+      : link),
     category: "Admissions"
   },
 

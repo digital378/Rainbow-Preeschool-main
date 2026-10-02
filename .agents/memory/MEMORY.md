@@ -47,3 +47,4 @@
 - [Native pattern validation](native-pattern-validation.md) — HTML pattern uses Unicode v mode; ordinary JS regex tests can miss invalid character-class syntax.
 - [Rendered font verification](rendered-font-verification.md) — computed font names and weights can hide fallback or synthetic faces; inspect the actual rendered font.
 - [Ghodbunder Road grouping](ghodbunder-centre-grouping.md) — creator-approved pair is Anand Nagar and Kasarvadavali, not the retired page's Manpada pairing.
+- [Wouter server location](wouter-server-location.md) — static memory-location lacks a server snapshot; use native Router ssrPath for server rendering.
