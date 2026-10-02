@@ -38,6 +38,13 @@ export default defineConfig({
   },
   root: path.resolve(import.meta.dirname, "client"),
   build: {
+    manifest: true,
+    rollupOptions: {
+      input: {
+        main: path.resolve(import.meta.dirname, "client/index.html"),
+        symbols: path.resolve(import.meta.dirname, "client/src/symbols/bootstrap.ts"),
+      },
+    },
     outDir: path.resolve(import.meta.dirname, "dist/public"),
     emptyOutDir: true,
     // Target modern browsers to eliminate ~69KB of legacy transpilation overhead.

@@ -4,12 +4,12 @@ import { SiFacebook, SiInstagram, SiYoutube } from "react-icons/si";
 const logoImage = "/images/optimized/rainbow-logo.webp";
 import { localityLandingPages, preschoolLandingPages } from "@shared/centre-data";
 
-export function Footer() {
+export function Footer({ contentsOnly = false }: { contentsOnly?: boolean } = {}) {
   const currentYear = new Date().getFullYear();
   const [location] = useLocation();
   const FooterHeading = "h3";
 
-  return (
+  const element = (
     <footer className="bg-card border-t">
       {/* Rainbow strip */}
       <div className="h-1 rainbow-gradient" />
@@ -244,4 +244,6 @@ export function Footer() {
       </div>
     </footer>
   );
+
+  return contentsOnly ? element.props.children : element;
 }

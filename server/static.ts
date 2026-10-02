@@ -8,16 +8,6 @@ import { TOP_PRESCHOOLS_BREADCRUMB_SCHEMA } from "@shared/top-preschools-thane-c
 
 const BASE_URL = "https://www.rainbowpreschools.com";
 
-let nationalSymbolsPreload: string | undefined;
-function getNationalSymbolsPreload(): string {
-  if (nationalSymbolsPreload !== undefined) return nationalSymbolsPreload;
-  const files = fs.readdirSync(path.resolve(__dirname, "public/assets"))
-    .filter(file => /^national-symbols-of-india-[\w-]+\.js$/.test(file));
-  if (files.length !== 1) throw new Error("Expected exactly one built National Symbols route chunk for its modulepreload hint.");
-  nationalSymbolsPreload = `<link rel="modulepreload" crossorigin href="/assets/${files[0]}">`;
-  return nationalSymbolsPreload;
-}
-
 /**
  * Inject structured-data JSON-LD scripts for any URL that has an entry in
  * staticPages.  This mirrors what bot-ssr.ts does for crawlers, but runs for
@@ -69,9 +59,7 @@ export function injectPageSchemas(urlPath: string, html: string): string {
   if (scripts.length === 0 || !html.includes("</head>")) return html;
   // Use a replacer function so '$' characters in schema JSON are never
   // interpreted as special replacement patterns by String.prototype.replace.
-  const preload = urlPath === "/national-symbols-of-india-for-kids" && process.env.NODE_ENV === "production"
-    ? `    ${getNationalSymbolsPreload()}\n` : "";
-  const injection = `${preload}    ${scripts.join("\n    ")}\n</head>`;
+  const injection = `    ${scripts.join("\n    ")}\n</head>`;
   return html.replace("</head>", () => injection);
 }
 

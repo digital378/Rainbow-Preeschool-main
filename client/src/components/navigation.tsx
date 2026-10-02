@@ -38,7 +38,7 @@ const navLinks = [
   { href: "/contact", label: "Contact" },
 ];
 
-export function Navigation() {
+export function Navigation({ contentsOnly = false }: { contentsOnly?: boolean } = {}) {
   const [location] = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -92,7 +92,7 @@ export function Navigation() {
   // Use transparent header only on homepage when not scrolled
   const useTransparentHeader = isHomepage && !isScrolled;
 
-  return (
+  const element = (
     <header
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
@@ -413,4 +413,6 @@ export function Navigation() {
       </div>
     </header>
   );
+
+  return contentsOnly ? element.props.children : element;
 }
