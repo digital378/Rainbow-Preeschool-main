@@ -111,7 +111,7 @@ export default function Contact() {
                     </div>
                     <div>
                       <h3 className="font-semibold mb-1">{CONTACT_PAGE_COPY.phoneLabel}</h3>
-                      <a href="tel:8291568972" className="text-muted-foreground hover:text-primary transition-colors" data-testid="link-contact-phone">
+                      <a href="tel:+918291568972" className="text-muted-foreground hover:text-primary transition-colors" data-testid="link-contact-phone">
                         {CONTACT_PAGE_COPY.generalPhone}
                       </a>
                       <p className="text-sm text-muted-foreground mt-1">{CONTACT_PAGE_COPY.phoneSecondary}</p>
@@ -218,8 +218,6 @@ export default function Contact() {
         <EEATSignals
           pageUrl="/contact"
           pageName="Contact Rainbow Preschool Thane"
-          reviewedBy="Rainbow Preschool Curriculum Team"
-          reviewerRole="Curriculum Team, Rainbow Preschool International"
           lastUpdated={CONTACT_PAGE_COPY.publishDateDisplay}
           lastUpdatedIso={CONTACT_PAGE_COPY.publishDate}
           showRating={false}

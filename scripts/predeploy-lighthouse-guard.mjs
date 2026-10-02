@@ -36,6 +36,8 @@ const PAGES = process.env.LH_SINGLE_PAGE ? [
 ] : [
   { name: 'home',                 path: '/' },
   { name: 'play-school-near-me',  path: '/play-school-near-me' },
+  ...(process.env.LH_EXTRA_PAGES || '').split(',').filter(Boolean)
+    .map(path => ({ name: path.replace(/^\/+/, ''), path: `/${path.replace(/^\/+/, '')}` })),
 ];
 
 // Thresholds can be overridden via env vars so predeploy.sh can pass

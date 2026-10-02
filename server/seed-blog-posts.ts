@@ -38,7 +38,7 @@ EXPLORE_MORE: [Explore Our Programmes](/programmes)|[Schedule a Campus Visit](/p
     id: randomUUID(),
     title: "Ganesh Chaturthi 2026 for Kids | Rainbow Preschools",
     slug: "ganesh-chaturthi-for-kids",
-    excerpt: "Make Ganesh Chaturthi 2026 magical for your toddler! Simple stories, rhymes, crafts, speeches and playful activities for little ones from Rainbow Preschools, Thane.",
+    excerpt: "Ganesh Chaturthi 2026 for kids: stories, rhymes, crafts, speeches and Bappa's Trail. From Rainbow Preschools, Thane.",
     content: `Ganesh Chaturthi is a joyful ten-day festival filled with colours, music, modaks, stories, and family traditions. This preschool-friendly guide helps parents introduce Ganpati Bappa through gentle, age-appropriate activities.
 
 ## Ganesh Chaturthi 2026
@@ -136,9 +136,9 @@ EXPLORE_MORE: [Explore Our Programmes](/programmes)|[Schedule a Campus Visit](/p
   // ─── Raksha Bandhan 2026 — most recent post, appears first in listing ───
   {
     id: randomUUID(),
-    title: "Raksha Bandhan 2026 for Kids: Stories, Essays, Speeches, Slogans & More",
+    title: "Raksha Bandhan 2026 for Kids: Stories, Essays & More",
     slug: "raksha-bandhan-2026-for-kids",
-    excerpt: "Everything parents and little ones need for Raksha Bandhan 2026 — age-appropriate stories, simple essays in English/Hindi/Marathi, slogans, quotes, DIY craft activities, a kids' quiz & FAQs. From Rainbow Preschool International, Thane.",
+    excerpt: "Raksha Bandhan 2026 for kids: stories, English, Hindi and Marathi essays, slogans, quotes, DIY crafts, a quiz and FAQs. From Rainbow Preschool International.",
     content: `Raksha Bandhan 2026 falls on **Friday, 28th August 2026** — a joyful festival that celebrates the loving bond between brothers and sisters. For little ones, it's the perfect chance to talk about love, protection, and family through simple stories, crafts, and songs.
 
 ## The Story Behind Raksha Bandhan
@@ -199,7 +199,7 @@ EXPLORE_MORE: [Explore Our Playgroup Programme](/playgroup)|[Schedule a Campus V
     id: randomUUID(),
     title: "Independence Day for Kids 2026 — Activities, Speeches, Stories & Free Downloads",
     slug: "independence-day-for-kids",
-    excerpt: "Celebrate India's 80th Independence Day with your little one! Fun activities, easy speeches, stories, a quiz, and free patriotic image downloads — all made for preschool kids.",
+    excerpt: "Make Independence Day 2026 special: simple speeches, rhymes, crafts, stories and patriotic images for preschoolers. By Rainbow Preschools, Thane.",
     content: `Every year on **15th August**, India celebrates Independence Day — one of the most important days in our country's history. On this day in 1947, India became free from British rule after many years of struggle. In 2026, we celebrate India's **80th Independence Day** — a very special milestone!
 
 ## Why 2026 Is Special
@@ -306,7 +306,7 @@ Replace the pre-bed tablet with a 10-minute reading routine in your home languag
 
 **"My child throws a tantrum when I switch off the screen."** This is a sign of overuse. Use a visual timer (like an hourglass), give a 5-minute warning, and have a fun transition activity ready ("After the show, we are making chapatis together!"). Predictability prevents most meltdowns.
 
-## A Final Word from Our Curriculum Team
+## A Final Word
 Children learn best from real people, real objects, and real experiences. The cuddle from *Aaji*, the muddy hands in the balcony garden, the giggle while playing *chuppa-chuppi* with a sibling — these are the experiences that wire a young brain for empathy, language, and creativity. Screens have a place, but they are the dessert, not the main course.
 
 
@@ -329,7 +329,6 @@ Children learn best from real people, real objects, and real experiences. The cu
 
 EXPLORE_MORE: [Explore Our Playgroup Program](/playgroup)|[Take the Preschool Readiness Quiz](/preschool-readiness-quiz)|[Frequently Asked Questions](/faqs)
 
-Reviewed by the Rainbow Preschool Curriculum Team
 Last updated: April 2026`,
     imageUrl: "/images/optimized/children-learning-colorful-toys-preschool.webp",
     category: "Parenting Tips",
@@ -454,7 +453,7 @@ Along with the tiffin, ensure your child has a sturdy water bottle. In the humid
   Perfectly fine if refrigerated promptly and re-heated thoroughly in the morning. Avoid sending fish or seafood in tiffin — the smell intensifies and disturbs other children.
 
 
-  ## A Note from Our Curriculum Team on Mindful Feeding
+  ## A Note on Mindful Feeding
   At our Thane centres we sit with the children during snack and lunch — not to monitor, but to model. We chat about flavours, talk about where the rice came from, ask "what colour is your sabzi today?" These small conversations turn eating from a transactional activity into a sensory, social ritual. Try the same at one meal a day at home for two weeks. Most parents tell us their child's relationship with food noticeably improves — and so does the family's bond.
 
   If your child is struggling with food acceptance, also read our companion post on **Picky Eater Toddler Solutions** — the two articles together cover both *what* to send and *how* to handle the eating itself.
@@ -465,7 +464,6 @@ Along with the tiffin, ensure your child has a sturdy water bottle. In the humid
 
 EXPLORE_MORE: [Learn About Our Playgroup](/playgroup)|[What Parents Say About Us](/testimonials)|[Our Nursery Curriculum](/nursery)
 
-Reviewed by the Rainbow Preschool Curriculum Team
 Last updated: April 2026`,
     imageUrl: "/images/optimized/kids-playing-ball-pit-rainbow-preschool.webp",
     category: "Parenting Tips",
@@ -547,7 +545,7 @@ While most children train without medical involvement, do consult your paediatri
   This works for some families with full-time caregiving. It is not "better" or "worse" than diaper-then-train; it is simply different. Don't feel pressured by online accounts of "diaper-free babies" — choose what works for your family's reality.
 
 
-  ## A Note from Our Curriculum Team on Patience
+  ## A Note on Patience
   In all my years of working with families in Thane, the single biggest predictor of smooth toilet training has been **the parent's emotional state, not the child's age or readiness signs.** When you can stay genuinely calm during accidents, the child's nervous system mirrors yours — and learns faster. When you secretly feel stressed (even if you don't show it), children pick up on it and the process drags.
 
   Build in support for yourself: a partner who shares the load, a friend you can vent to, an honest WhatsApp group of fellow parents going through the same phase. You are not failing if it takes longer than expected. You are simply parenting a unique human being.
@@ -558,7 +556,6 @@ While most children train without medical involvement, do consult your paediatri
 
 EXPLORE_MORE: [Admissions Information](/preschool-admissions)|[Find a Center Near You](/play-school-near-me)|[Playgroup Details](/playgroup)
 
-Reviewed by the Rainbow Preschool Curriculum Team
 Last updated: April 2026`,
     imageUrl: "/images/optimized/DSC00011.webp",
     category: "Parenting Tips",
@@ -649,7 +646,7 @@ Our snack and meal times follow the same calm, no-pressure principle. Children s
   Yes. It teaches the child to override their own fullness signals, which research links to weight gain and disordered eating in later life. Serve smaller portions and offer seconds — this trains a healthy relationship with hunger.
 
 
-  ## A Note from Our Curriculum Team on the Long View
+  ## A Note on the Long View
   Most parents who fear they are "raising a picky eater for life" find, by the time the child is 7 or 8, that the variety on the plate has quietly grown to include 30, 40, even 50 foods. The phase passes. What lasts is the *relationship* the child has with food and with family meals.
 
   So when you feel discouraged after a refused dinner, zoom out: are mealtimes generally pleasant? Are you modelling enjoyment of food yourself? Are you offering variety without coercion? If yes, you are doing it right — even if today's dal-rice ended up half-eaten. Trust the process; trust your child.
@@ -660,7 +657,6 @@ Our snack and meal times follow the same calm, no-pressure principle. Children s
 
 EXPLORE_MORE: [Our Testimonials](/testimonials)|[Playgroup Overview](/playgroup)|[Nursery Program](/nursery)
 
-Reviewed by the Rainbow Preschool Curriculum Team
 Last updated: April 2026`,
     imageUrl: "/images/optimized/children-learning-colorful-toys-preschool.webp",
     category: "Parenting Tips",
@@ -758,14 +754,13 @@ Tantrums are normal up to age 5–6 and gradually reduce in frequency. Speak to 
   Most children show a marked decrease by age 4, when language and impulse control are better developed. By age 6, occasional meltdowns may still happen during overwhelm, but daily tantrums are usually behind you.
 
 
-  ## A Note from Our Curriculum Team on the Parent's Own Emotions
+  ## A Note on the Parent's Own Emotions
   There is no shame in admitting that tantrums are *hard*. They press every button — the embarrassment in public, the exhaustion at the end of a long day, the worry that you are "doing it wrong." 
 
   Two practices help most parents I work with in Thane: (1) a 30-second pause before reacting (literally count "one Mississippi, two Mississippi…"), and (2) a 5-minute self-care moment after a difficult tantrum — splash water on your face, message a friend, sit with your tea. You cannot pour from an empty cup. Looking after your own regulation is the foundation for teaching your child theirs.
 
 EXPLORE_MORE: [View Our Testimonials](/testimonials)|[Our Playgroup Program](/playgroup)|[Nursery Details](/nursery)
 
-Reviewed by the Rainbow Preschool Curriculum Team
 Last updated: April 2026`,
     imageUrl: "/images/optimized/kids-playing-ball-pit-rainbow-preschool.webp",
     category: "Child Development",
@@ -860,7 +855,7 @@ Take a photo at the school gate on day 1 (your school's policy permitting). One 
   Completely normal in the first month. Pack a fresh set of clothes daily (in a sealed bag), and accept that this is part of the transition. Praise the child for telling the teacher rather than scolding for the accident.
 
 
-  ## A Note from Our Curriculum Team on the Bigger Picture
+  ## A Note on the Bigger Picture
   The first day of preschool is the beginning of your child's lifelong learning journey — but it is also the beginning of *yours* as a school parent. The relationships you build with the class teacher, the rhythm you establish with morning routines, the small celebrations of "she sang the rainbow song today!" — all of these set the tone for the next 15+ years of schooling.
 
   Be present, be curious, ask the teacher questions, attend the parent-teacher meetings, and most of all, talk to your child every day about their school day. Not "what did you study?" but "what made you laugh today?" These conversations are the foundation of a lifelong love for learning.
@@ -871,7 +866,6 @@ Take a photo at the school gate on day 1 (your school's policy permitting). One 
 
 EXPLORE_MORE: [Preschool Admissions](/preschool-admissions)|[Our Thane Branches](/contact)|[Find the Best Preschool Near Me](/play-school-near-me)
 
-Reviewed by the Rainbow Preschool Curriculum Team
 Last updated: April 2026`,
     imageUrl: "/images/optimized/DSC00011.webp",
     category: "Parenting Tips",
@@ -973,7 +967,7 @@ Our weekly schedule across all Thane centres includes a "Wonder Wednesday" — a
   Share concrete outcomes: stronger problem-solving, better hand-eye coordination, vocabulary growth. Many *Aajis* and *Dadis* in Thane have been quietly delighted to see their grandchild's curiosity flourish — invite them to join the next experiment.
 
 
-  ## A Note from Our Curriculum Team on Curiosity as a Skill
+  ## A Note on Curiosity as a Skill
   The best gift you can give your preschooler is not a particular activity or a particular toy — it is the lifelong habit of asking "I wonder why…?" and then having the courage to find out. 
 
   In a world where information is one tap away, the children who will thrive are the ones who *want* to ask questions, who tolerate not knowing the answer immediately, and who enjoy the process of discovery itself. Every magnetic experiment, every sink-or-float test, every time you say "let's find out together" — you are building exactly that.
@@ -984,7 +978,6 @@ Our weekly schedule across all Thane centres includes a "Wonder Wednesday" — a
 
 EXPLORE_MORE: [Our Kindergarten Program](/kindergarten)|[Nursery Details](/nursery)|[Best Preschool Near Me in Thane](/play-school-near-me)
 
-Reviewed by the Rainbow Preschool Curriculum Team
 Last updated: April 2026`,
     imageUrl: "/images/optimized/children-learning-colorful-toys-preschool.webp",
     category: "Learning Activities",
@@ -1085,7 +1078,7 @@ Each day at our Thane centres begins with a 5-minute "Calm Circle" — a song, a
   Yes, with consistency. Daily 7-minute morning sessions for 4–6 weeks typically reduce reactive impulsivity by a meaningful margin. Combine with reduced screen time and outdoor play for best results.
 
 
-  ## A Note from Our Curriculum Team on Starting Small
+  ## A Note on Starting Small
   Many Thane parents come to us asking, "Where do I start? My child won't sit still!" Our advice: start with two minutes a day for one week. That's it. Two minutes of stretching together while *chai* brews. Two minutes of belly breathing before bed. Two minutes of "noticing five things in this room."
 
   After one week, the child will often *ask* for the routine. After three weeks, it becomes part of the family rhythm. Don't wait for the perfect moment, the perfect mat, or a yoga teacher. Begin today, however imperfectly. Consistency beats perfection every single time.
@@ -1096,7 +1089,6 @@ Each day at our Thane centres begins with a 5-minute "Calm Circle" — a song, a
 
 EXPLORE_MORE: [Explore Playgroup](/playgroup)|[Our Nursery Program](/nursery)|[Our Thane Branches](/contact)
 
-Reviewed by the Rainbow Preschool Curriculum Team
 Last updated: April 2026`,
     imageUrl: "/images/optimized/kids-playing-ball-pit-rainbow-preschool.webp",
     category: "Learning Activities",
@@ -1174,7 +1166,7 @@ Some children — especially toddlers under 3 — may push, hit, or pinch the ba
 
 If aggression continues after 6 weeks or escalates, talk to your paediatrician. There are gentle behavioural approaches that can help quickly.
 
-## A Final Note from Our Curriculum Team
+## A Final Note
 The arrival of a sibling is one of the biggest emotional events in a preschooler's life. Handled well, it builds resilience, empathy, and a lifelong friendship. Handled poorly, it can create lasting feelings of "I am not enough." The good news: there is no perfect script. Your love, your patience, and your willingness to keep showing up — even on the days when you yourself are sleep-deprived — is what your older child needs most.
 
 
@@ -1199,7 +1191,6 @@ The arrival of a sibling is one of the biggest emotional events in a preschooler
 
 EXPLORE_MORE: [Our Playgroup Program](/playgroup)|[Preschool Readiness Quiz](/preschool-readiness-quiz)|[Parent Testimonials](/testimonials)
 
-Reviewed by the Rainbow Preschool Curriculum Team
 Last updated: April 2026`,
     imageUrl: "/images/optimized/DSC00011.webp",
     category: "Parenting Tips",
@@ -1275,7 +1266,7 @@ Early intervention is *highly* effective. The brain is most plastic in the first
 ## Bilingual Bonus, Not a Burden
 We hear this concern weekly: "We speak Marathi at home, English at school, and Hindi with grandparents — is this confusing my child?" Decades of research now confirms: **bilingual and trilingual children are not delayed.** They simply distribute vocabulary across languages early on, then catch up — often surpassing monolingual peers by age 5–6 in metalinguistic skills (the ability to think *about* language). Keep all your languages alive at home; you are giving your child a lifelong cognitive gift.
 
-## A Final Note from Our Curriculum Team
+## A Final Note
 Speech and language development is one of the most miraculous parts of early childhood — and one of the most varied. Two perfectly healthy children can hit milestones months apart. Stay observant, stay calm, read every day, and consult a paediatrician if anything in this article triggered a real concern. Most "late talkers" are simply busy talkers with a lot to figure out first.
 
 
@@ -1300,7 +1291,6 @@ Speech and language development is one of the most miraculous parts of early chi
 
 EXPLORE_MORE: [Playgroup Curriculum](/playgroup)|[Nursery Program](/nursery)|[Frequently Asked Questions](/faqs)
 
-Reviewed by the Rainbow Preschool Curriculum Team
 Last updated: April 2026`,
     imageUrl: "/images/optimized/children-learning-colorful-toys-preschool.webp",
     category: "Child Development",
@@ -1401,7 +1391,7 @@ Across our six Thane centres, Republic Day is one of our gentlest, most joy-fill
 
 We deliberately keep the format short — about 45 minutes total — because young children remember warmth and pride far better than long speeches.
 
-## A Final Word From Our Curriculum Team
+## A Final Word
 Republic Day is a beautiful early lesson in belonging. Children who grow up understanding that their country was built by ordinary people — teachers, lawyers, farmers, soldiers, freedom fighters — grow up believing that they too can build something for India one day. That belief is worth far more than any march or parade.
 
 This 26 January, take a few minutes to stand with your child, look at the flag, and explain — in your own words and your own language — what it means. The rest will follow naturally.
@@ -1435,7 +1425,6 @@ This 26 January, take a few minutes to stand with your child, look at the flag, 
 
 EXPLORE_MORE: [Explore Our Playgroup Program](/playgroup)|[Visit Our Centres](/contact)|[Frequently Asked Questions](/faqs)
 
-Reviewed by the Rainbow Preschool Curriculum Team
 Last updated: April 2026`,
     imageUrl: "/images/optimized/children-learning-colorful-toys-preschool.webp",
     category: "School Events",
@@ -1554,10 +1543,10 @@ export const ssrOnlyBlogPosts: BlogPost[] = [
   },
   {
     id: randomUUID(),
-    title: "Nursery School Admission Process in Thane — Step-by-Step Guide 2026-27",
+    title: "Nursery School Admission Process in Thane — Step-by-Step Guide",
     slug: "nursery-school-admission-thane-2026",
-    excerpt: "Everything Thane parents need to know about nursery school admissions for 2026-27 — timelines, documents, age criteria, tips, and what to expect.",
-    content: "A step-by-step guide to nursery school admissions in Thane for 2026-27 — when to start the search, age criteria, the documents you'll need, typical timelines, fee structures, and tips to maximise your chances at top preschools. Covers what to expect at the parent interaction round and how to prepare your child.",
+    excerpt: "Everything Thane parents need to know about nursery school admissions — timelines, documents, age criteria, tips, and what to expect.",
+    content: "A step-by-step guide to nursery school admissions in Thane — when to start the search, age criteria, the documents you'll need, typical timelines, fee structures, and tips to maximise your chances at top preschools. Covers what to expect at the parent interaction round and how to prepare your child.",
     imageUrl: "/images/optimized/kids-playing-ball-pit-rainbow-preschool.webp",
     category: "Admissions",
     publishedAt: new Date("2026-01-15"),
@@ -2484,7 +2473,7 @@ RIS_BACKLINK:Play-based learning continues to be valuable as children grow. [Rai
 
 **Trust the Teachers:** Trained preschool teachers are experts at helping children settle in. Most children stop crying within minutes of parents leaving.
 
-EXPLORE_MORE:[Our Programmes](/programmes)|[Nursery Programme](/nursery)|[Top Preschool in Thane](/play-school-near-me)|[Preschool Admissions 2026-27](/preschool-admissions)
+EXPLORE_MORE:[Our Programmes](/programmes)|[Nursery Programme](/nursery)|[Top Preschool in Thane](/play-school-near-me)|[Preschool Admissions](/preschool-admissions)
 
 ## The First Week: What to Expect
 
@@ -2750,7 +2739,7 @@ Safety should be non-negotiable. Check for:
 
 Rainbow Preschool maintains 24/7 CCTV monitoring, daily hygiene routines, fire safety equipment, and first-aid-trained staff across all centres.
 
-EXPLORE_MORE:[Find a Preschool Near You in Thane](/play-school-near-me)|[Our Programmes](/programmes)|[Preschool Admissions 2026-27](/preschool-admissions)|[Is Your Child Ready? Take the Quiz](/preschool-readiness-quiz)
+EXPLORE_MORE:[Find a Preschool Near You in Thane](/play-school-near-me)|[Our Programmes](/programmes)|[Preschool Admissions](/preschool-admissions)|[Is Your Child Ready? Take the Quiz](/preschool-readiness-quiz)
 
 ## Sign 6: Strong Communication with Parents
 
@@ -3232,7 +3221,7 @@ While flexibility is important for toddlers, some structure is beneficial. A con
 
 Through art activities, pretend play, music, and open-ended exploration, play school nurtures the creative thinking that is foundational to problem-solving and innovation throughout life.
 
-EXPLORE_MORE:[Rainbow Playgroup Programme](/playgroup)|[Play School Near Me in Thane](/play-school-near-me)|[Admissions Open 2026-27](/preschool-admissions)|[Compare Top Preschools in Thane](/top-preschools-in-thane)
+EXPLORE_MORE:[Rainbow Playgroup Programme](/playgroup)|[Play School Near Me in Thane](/play-school-near-me)|[Preschool Admissions](/preschool-admissions)|[Compare Top Preschools in Thane](/top-preschools-in-thane)
 
 ### 9. Cognitive Stimulation
 
@@ -3299,12 +3288,12 @@ RIS_BACKLINK:Early learning is just the beginning. [Rainbow International School
   },
   {
     id: randomUUID(),
-    title: "Nursery School Admission in Thane 2026-27",
+    title: "Nursery School Admission in Thane",
     slug: "nursery-school-admission-thane-2026",
     excerpt: "",
-    content: `Planning nursery school admission for your child in Thane? The 2026-27 admission season is upon us, and getting started early gives you the best chance of securing a spot at your preferred school. This step-by-step guide covers everything you need to know — from age criteria and documents to timelines and insider tips. For current Rainbow enrolment, see [preschool admission in Thane 2026-27 and 2027-28](/preschool-admissions).
+    content: `Planning nursery school admission for your child in Thane? Getting started early gives you the best chance of securing a spot at your preferred school. This step-by-step guide covers everything you need to know — from age criteria and documents to timelines and insider tips. For current Rainbow enrolment, see [preschool admission in Thane](/preschool-admissions).
 
-## Nursery Admission Timeline for Thane (2026-27)
+## Nursery Admission Timeline for Thane
 
 While timelines vary between schools, here's the general pattern for nursery admissions in Thane:
 
@@ -3409,9 +3398,9 @@ Nursery school fees in Thane vary widely based on the school's reputation, locat
 6. **Check for flexibility** — Can you switch batches? What's the cancellation policy?
 7. **Talk to other parents** — Personal recommendations are invaluable
 
-## Rainbow Preschool International: Admissions Open 2026-27
+## Rainbow Preschool International: Admissions
 
-We're currently accepting admissions for 2026-27 across all six centres in Thane. Here's why thousands of families choose Rainbow:
+Learn about admissions across our six centres in Thane. Here's why thousands of families choose Rainbow:
 
 - 18+ years of trusted excellence since 2007
 - 4.9★ Google rating with 487+ reviews

@@ -24,8 +24,8 @@ export const ADMISSIONS_WEBPAGE_SCHEMA = {
   "@type": "WebPage",
   "@id": "https://www.rainbowpreschools.com/preschool-admissions",
   url: "https://www.rainbowpreschools.com/preschool-admissions",
-  name: "Preschool Admission in Thane for 2026-27 and 2027-28",
-  description: "Admissions open at our 6 Rainbow Preschool International centres in Thane: mid-year 2026-27 seats and early 2027-28 admission for playgroup, nursery and KG.",
+  name: "Preschool Admission in Thane for 2027-28",
+  description: "Admissions open for 2027-28 at our 6 Rainbow Preschool International centres in Thane for playgroup, nursery and KG. Mid-year seats as available.",
   dateModified: ADMISSIONS_PUBLISH_DATE_ISO,
   inLanguage: "en-IN",
   about: { "@id": "https://www.rainbowpreschools.com/#organization" },
@@ -34,14 +34,14 @@ export const ADMISSIONS_WEBPAGE_SCHEMA = {
 
 export const ADMISSIONS_PAGE_COPY = {
   meta: {
-    title: "Preschool Admission in Thane 2026-27 & 2027-28 | Rainbow",
+    title: "Preschool Admission in Thane 2027-28 | Rainbow",
     description: ADMISSIONS_WEBPAGE_SCHEMA.description,
     keywords: "preschool admissions in thane, preschool admission near me, nursery admission thane, kindergarten admission thane, playgroup admission thane, preschool admission process, preschool admission form, preschool admission enquiry",
   },
   hero: {
-    eyebrow: "Admissions Open: 2026-27 (mid-year) and 2027-28",
+    eyebrow: "Admissions Open: 2027-28 (mid-year seats subject to availability)",
     h1: ADMISSIONS_WEBPAGE_SCHEMA.name,
-    subheadline: "Rainbow Preschool International has welcomed children in Thane since 2007. We are now taking admissions for Playgroup, Nursery, Jr. KG and Sr. KG across our 6 centres: mid-year seats for 2026-27, and early admission for 2027-28 from October.",
+    subheadline: "Rainbow Preschool International has welcomed children in Thane since 2007. We are now taking admissions for Playgroup, Nursery, Jr. KG and Sr. KG across our 6 centres: mid-year seats, subject to availability, and early admission for 2027-28 from October.",
     supporting: "Below you'll find the age criteria, the documents you need and our six-step admission process. Send an enquiry and our admissions team will call you within 24 hours.",
     form: {
       title: "Start Your Admission Enquiry",

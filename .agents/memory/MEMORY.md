@@ -49,3 +49,4 @@
 - [Ghodbunder Road grouping](ghodbunder-centre-grouping.md) — creator-approved pair is Anand Nagar and Kasarvadavali, not the retired page's Manpada pairing.
 - [Wouter server location](wouter-server-location.md) — static memory-location lacks a server snapshot; use native Router ssrPath for server rendering.
 - [Isolated production runtime](isolated-production-runtime.md) — workspace startup can hide missing published packages; test the compiled server outside workspace module resolution.
+- [Call routing and freshness](public-call-and-freshness-policy.md) — centralize all call links, preserve centre WhatsApp; seven key pages have date-only freshness strips, with no team attribution.

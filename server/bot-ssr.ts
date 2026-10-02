@@ -235,11 +235,8 @@ const allowedHomepageExternalLinks = new Set([
   "https://wa.me/918291568972?text=Hi%2C%20I%20would%20like%20to%20know%20more%20about%20Rainbow%20Preschool",
   "https://wa.me/918291568972?text=Hi%2C%20I%27m%20interested%20in%20Playgroup%20admission",
   "https://wa.me/918291568972?text=Hi%2C%20I%27m%20interested%20in%20Nursery%20admission",
-  "tel:+918828195788",
   "tel:+918291568972",
   "https://wa.me/919833781550",
-  "tel:+919833781550",
-  "tel:+919152489789",
   "https://maps.app.goo.gl/oFnzPGooMos4qACV9",
 ]);
 
@@ -313,9 +310,8 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
   // pages without duplicating Article markup on blog posts (which already
   // emit their own BlogPosting/Article block with the correct dates,
   // headline, author and publisher via `seo.structuredData`). The visible
-  // "Reviewed by Rainbow Preschool Curriculum Team — Last updated …" byline
-  // + <time> element below is rendered from the same `lastModified` field
-  // so the visible and JSON-LD freshness dates can never drift apart.
+  // The visible "Last updated" byline + <time> below uses the same
+  // `lastModified` field as JSON-LD so freshness dates cannot drift apart.
   const hasExistingArticle = allStructuredData.some((data) => {
     const t = (data as { "@type"?: unknown })["@type"];
     if (typeof t === "string") return t === "Article" || t === "BlogPosting";
@@ -323,13 +319,10 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
     return false;
   });
   if (seo.lastModified && !seo.homepage && !seo.suppressArticleSchema && !isEnhancedBranch && !hasExistingArticle) {
-    // E-E-A-T: emit a rich Article with reviewedBy for pages that don't already
-    // have their own Article/BlogPosting in structuredData. Blog posts are excluded
-    // here because their ssr-pages.ts entry already includes BlogPosting + reviewedBy.
-    // author and reviewer are always the org Curriculum Team for non-blog pages.
-    const curriculumTeam = {
+    // E-E-A-T: emit an Article for pages without their own Article/BlogPosting.
+    const rainbowOrganization = {
       "@type": "Organization",
-      name: "Rainbow Preschool Curriculum Team",
+      name: "Rainbow Preschool International",
       parentOrganization: {
         "@type": "Organization",
         name: "Rainbow Preschool International",
@@ -343,8 +336,7 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
       url: canonical,
       mainEntityOfPage: { "@type": "WebPage", "@id": canonical },
       dateModified: seo.lastModified,
-      author: curriculumTeam,
-      reviewedBy: curriculumTeam,
+      author: rainbowOrganization,
       publisher: {
         "@type": "Organization",
         name: "Rainbow Preschool International",
@@ -490,7 +482,7 @@ function renderSSRHtml(seo: PageSEOData, requestUrl: string): string {
   const reviewerCreditHtml = seo.lastModified
     ? isEnhancedBranch || requestUrl === "/top-preschools-in-thane" || requestUrl === "/about"
       ? `<p style="font-size:0.875rem;color:#666;margin:24px 0">Last updated: <time datetime="${escapeHtml(seo.lastModified)}">${escapeHtml(seo.lastModifiedDisplay || seo.lastModified)}</time></p>`
-      : `<p style="font-size:0.875rem;color:#666;margin:8px 0 16px"><strong>Reviewed by Rainbow Preschool Curriculum Team</strong>${requestUrl === "/playgroup" || requestUrl === "/nursery" ? " — Curriculum Team, Rainbow Preschool International" : ""} — Last updated: <time datetime="${escapeHtml(seo.lastModified)}">${escapeHtml(seo.lastModifiedDisplay || seo.lastModified)}</time>${requestUrl === "/playgroup" || requestUrl === "/nursery" ? " — 4.9 from 487 Google reviews" : ""}</p>`
+      : `<p style="font-size:0.875rem;color:#666;margin:8px 0 16px">Last updated: <time datetime="${escapeHtml(seo.lastModified)}">${escapeHtml(seo.lastModifiedDisplay || seo.lastModified)}</time></p>`
     : "";
   const finalCallToActionHtml = seo.finalCallToAction
     ? `<section class="final-cta"><h2>${escapeHtml(seo.finalCallToAction.title)}</h2><p>${escapeHtml(seo.finalCallToAction.description)}</p><ul>${seo.finalCallToAction.links.map((link) => {

@@ -784,10 +784,9 @@ export default function PlaygroupLanding() {
         <EEATSignals
           pageUrl="/playgroup"
           pageName="Playgroup in Thane"
-          reviewedBy="Rainbow Preschool Curriculum Team"
-          reviewerRole="Curriculum Team, Rainbow Preschool International"
           lastUpdated={PLAYGROUP_COPY.publishDateDisplay}
           lastUpdatedIso={PLAYGROUP_COPY.publishDate}
+          showRating={false}
           ratingValue={VERIFIED_RATING.ratingValue}
           reviewCount={VERIFIED_RATING.reviewCount}
           schemaId="playgroup-landing"

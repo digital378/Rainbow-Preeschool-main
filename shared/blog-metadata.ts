@@ -67,9 +67,9 @@ export const BLOG_METADATA: Record<string, BlogMetadata> = {
     h1: "Benefits of Play School for 2 Year Olds — Is Your Toddler Ready?",
   },
   "nursery-school-admission-thane-2026": {
-    title: "Nursery School Admission in Thane 2026-27 | Complete Guide",
-    description: "Step-by-step guide to nursery school admission in Thane for 2026-27. Age criteria, documents, timelines, fees, and tips to secure admission.",
-    h1: "Nursery School Admission Process in Thane — Step-by-Step Guide 2026-27",
+    title: "Nursery School Admission Process in Thane | Complete Guide",
+    description: "Step-by-step guide to nursery school admission in Thane. Age criteria, documents, timelines, fees, and tips to secure admission.",
+    h1: "Nursery School Admission Process in Thane — Step-by-Step Guide",
   },
   "what-children-learn-nursery-school": {
     title: "What Children Learn in Nursery School | Monthly Guide",
@@ -143,7 +143,7 @@ export const BLOG_METADATA: Record<string, BlogMetadata> = {
   },
   "ganesh-chaturthi-for-kids": {
     title: "Ganesh Chaturthi 2026 for Kids | Rainbow Preschools",
-    description: "Make Ganesh Chaturthi 2026 magical for your toddler! Simple stories, rhymes, crafts, speeches and playful activities for little ones from Rainbow Preschools, Thane.",
+    description: "Ganesh Chaturthi 2026 for kids: stories, rhymes, crafts, speeches and Bappa's Trail. From Rainbow Preschools, Thane.",
     h1: "Ganesh Chaturthi 2026 for Kids | Rainbow Preschools",
   },
   "janmashtami-for-kids": {
@@ -152,13 +152,13 @@ export const BLOG_METADATA: Record<string, BlogMetadata> = {
     h1: "Janmashtami 2026 for Kids | Rainbow Preschools",
   },
   "raksha-bandhan-2026-for-kids": {
-    title: "Raksha Bandhan 2026 for Kids: Stories, Essays, Speeches, Slogans & More",
-    description: "Everything parents and little ones need for Raksha Bandhan 2026 — age-appropriate stories, simple essays in English/Hindi/Marathi, slogans, quotes, DIY craft activities, a kids' quiz & FAQs. From Rainbow Preschool International, Thane.",
+    title: "Raksha Bandhan 2026 for Kids: Stories, Essays & More",
+    description: "Raksha Bandhan 2026 for kids: stories, English/Hindi/Marathi essays, slogans, quotes, DIY crafts, a quiz and FAQs. From Rainbow Preschool International.",
     h1: "Raksha Bandhan 2026 for Kids: Stories, Essays, Speeches, Slogans & More",
   },
   "independence-day-for-kids": {
-    title: "Independence Day for Kids 2026 — Activities, Speeches, Stories & Free Downloads",
-    description: "Celebrate India's 80th Independence Day with your little one! Fun activities, easy speeches, stories, a quiz, and free patriotic image downloads — all made for preschool kids.",
+    title: "Independence Day Activities for Kids | Rainbow Preschools",
+    description: "Make Independence Day 2026 special: simple speeches, rhymes, crafts, stories and patriotic images for preschoolers. By Rainbow Preschools, Thane.",
     h1: "Independence Day for Kids 2026 — Activities, Speeches, Stories & Free Downloads",
   },
 };

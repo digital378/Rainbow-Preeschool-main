@@ -128,6 +128,5 @@ export const HAPPY_TIMES_SSR_COPY = [
   }),
   "Enquire Now", "WhatsApp Us", "Find Nearest Centre",
   "Award-Winning Preschool", "Admission Process", "Our Programmes",
-  "Talk to Our Admission Expert", "Rainbow Preschool Curriculum Team",
-  "Curriculum Team, Rainbow Preschool International", "Reviewed by", "Last updated:",
+  "Talk to Our Admission Expert", "Reviewed by", "Last updated:",
 ].join("\n");

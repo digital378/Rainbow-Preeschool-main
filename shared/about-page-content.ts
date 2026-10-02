@@ -2,7 +2,7 @@ const BASE_URL = "https://www.rainbowpreschools.com";
 
 export const ABOUT_PAGE_COPY = {
   title: "About Rainbow Preschool International, Thane | Since 2007",
-  description: "Since 2007, Rainbow Preschool International has run 6 preschool centres in Thane for ages 1.5–5.5, with ECCE-trained female teachers and a play-based, NEP 2020-aligned curriculum.",
+  description: "Since 2007, Rainbow Preschool International has run 6 centres in Thane for ages 1.5–5.5, with ECCE-trained teachers and a play-based NEP 2020 curriculum.",
   dateIso: "2026-09-29",
   dateDisplay: "29 September 2026",
   ogImage: `${BASE_URL}/images/og/about-1200x630.jpg`,

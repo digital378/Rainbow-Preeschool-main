@@ -89,7 +89,7 @@ export default function AdGoogleLanding() {
     // Add meta description
     const descMeta = document.createElement('meta');
     descMeta.name = 'description';
-    descMeta.content = 'Join the best preschool in Thane! Rainbow Preschool offers playgroup, nursery & kindergarten with CCTV, female staff & transport. Admissions open 2026-27.';
+    descMeta.content = 'Join the best preschool in Thane! Rainbow Preschool offers playgroup, nursery & kindergarten with CCTV, female staff & transport. Admissions open for 2027-28.';
     document.head.appendChild(descMeta);
 
     // GA4 + Clarity are loaded by client/index.html on idle / first interaction
@@ -300,7 +300,7 @@ export default function AdGoogleLanding() {
           <div className="space-y-4">
             <div className="inline-flex items-center gap-2 bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-semibold">
               <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-              Limited Seats for 2026-27
+              Admissions for 2027-28
             </div>
             <h1 className="text-3xl md:text-4xl font-bold leading-tight text-gray-900">
               Best Preschool in <span className="text-red-600">Thane</span> Near You

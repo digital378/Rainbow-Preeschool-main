@@ -42,7 +42,7 @@ export default function FlyerLanding() {
 
     const descMeta = document.createElement('meta');
     descMeta.name = 'description';
-    descMeta.content = 'Admissions open 2026-27 at Rainbow Preschool Thane. CCTV, 100% female staff, transport. 6 centres across Thane. Enquire now!';
+    descMeta.content = 'Admissions open for 2027-28 at Rainbow Preschool Thane. CCTV, 100% female staff, transport. 6 centres across Thane. Enquire now!';
     document.head.appendChild(descMeta);
 
     if (!(window as any).gtag) {
@@ -169,7 +169,7 @@ export default function FlyerLanding() {
           <div className="space-y-4 order-2 md:order-1">
             <div className="inline-flex items-center gap-2 bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-semibold">
               <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-              Admissions Open 2026-27
+              Admissions Open for 2027-28
             </div>
             <h1 className="text-3xl md:text-4xl font-bold leading-tight text-gray-900">
               Best Preschool in <span className="text-red-600">Thane</span> Near You

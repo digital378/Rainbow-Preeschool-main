@@ -147,7 +147,7 @@ function PlaySchoolNearMe() {
       actions.className = "nm-card-actions";
       const call = document.createElement("a");
       call.className = homepageButtonClasses("nm-button nm-button-red");
-      call.href = `tel:${ADMISSIONS_PHONE_NUMBER}`;
+      call.href = "tel:+918291568972";
       call.textContent = "Call Now";
       const whatsapp = document.createElement("a");
       whatsapp.className = homepageButtonClasses("nm-button nm-button-green");

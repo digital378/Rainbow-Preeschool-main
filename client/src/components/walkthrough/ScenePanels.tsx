@@ -146,7 +146,7 @@ function Courtyard() {
         <a className="walk-text-link" href={VERIFIED_RATING.sourceUrl} target="_blank" rel="noopener noreferrer">Google reviews</a>
       </div>
       <div className="walk-source-links" aria-label="Contact Rainbow">
-        <a href="tel:+918828195788">Call Rainbow</a>
+        <a href="tel:+918291568972">Call Rainbow</a>
         <a href="https://wa.me/918828195788" target="_blank" rel="noopener noreferrer">WhatsApp</a>
       </div>
     </>

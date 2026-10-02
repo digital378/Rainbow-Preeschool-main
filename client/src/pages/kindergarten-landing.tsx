@@ -810,10 +810,9 @@ export default function KindergartenLanding() {
         <EEATSignals
           pageUrl="/kindergarten"
           pageName={PROGRAMME_LANDING_EEAT_COPY.kindergartenPageName}
-          reviewedBy={PROGRAMME_LANDING_EEAT_COPY.reviewedBy}
-          reviewerRole={PROGRAMME_LANDING_EEAT_COPY.reviewerRole}
           lastUpdated={KINDERGARTEN_COPY.publishDateDisplay}
           lastUpdatedIso={KINDERGARTEN_COPY.publishDate}
+          showRating={false}
           ratingValue={VERIFIED_RATING.ratingValue}
           reviewCount={VERIFIED_RATING.reviewCount}
           ratingSource="Google reviews"

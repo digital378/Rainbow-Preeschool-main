@@ -35,7 +35,7 @@ const CONFIG = {
     headline: "CBSE 11th Grade Admissions Open at Rainbow International School, Brahmand Thane",
     subheadline: "Apply for Science, Commerce, or Humanities in a structured academic environment focused on board preparation, student growth, and future readiness.",
     supportLine: "Regular school admissions for Grade 11. Enquire for stream availability, eligibility, and admission guidance.",
-    urgency: "Limited seats available across select streams for the 2026–27 academic year.",
+    urgency: "Limited seats available across select streams.",
     trustChips: ["CBSE Curriculum", "Experienced Faculty", "Safe Campus"],
   },
   form: {
@@ -366,10 +366,10 @@ export default function RIS11thLanding() {
             <img src="/images/ris-logo.png" alt="Rainbow International School" className="h-9 w-9 flex-shrink-0 rounded-full" width="36" height="36" />
             <div className="min-w-0">
               <div className="font-bold text-[#0A4847] text-sm leading-tight truncate">Rainbow International School</div>
-              <div className="text-[10px] text-[#0E6160] font-medium">Grade 11 Admissions — 2026–27</div>
+              <div className="text-[10px] text-[#0E6160] font-medium">Grade 11 Admissions</div>
             </div>
           </div>
-          <a href={`tel:${CONFIG.phone}`} onClick={trackCall("header")}
+          <a href="tel:+918291568972" onClick={trackCall("header")}
             className="flex items-center gap-1.5 text-white px-3 py-2 rounded-full text-xs font-semibold flex-shrink-0 whitespace-nowrap"
             style={{ background: "linear-gradient(135deg, #0A4847, #0E6160)" }}
             data-testid="link-11th-header-call">
@@ -445,7 +445,7 @@ export default function RIS11thLanding() {
                 </div>
                 <h3 className="text-xl font-bold text-gray-900">{CONFIG.form.successHeading}</h3>
                 <p className="text-gray-600 text-sm">{CONFIG.form.successText}</p>
-                <a href={`tel:${CONFIG.phone}`} onClick={trackCall("success")}
+                <a href="tel:+918291568972" onClick={trackCall("success")}
                   className="inline-flex items-center gap-2 text-white px-5 py-2.5 rounded-full font-semibold text-sm"
                   style={{ background: "linear-gradient(135deg, #0A4847, #0E6160)" }}
                   data-testid="link-11th-success-call">
@@ -548,7 +548,7 @@ export default function RIS11thLanding() {
                   <p className="text-xs text-gray-400 text-center leading-relaxed">{CONFIG.form.microcopy}</p>
 
                   <div className="flex gap-2">
-                    <a href={`tel:${CONFIG.phone}`} onClick={trackCall("form")}
+                    <a href="tel:+918291568972" onClick={trackCall("form")}
                       className="flex-1 flex items-center justify-center gap-1.5 border border-[#0E6160] text-[#0E6160] py-2.5 rounded-full font-semibold text-sm hover:bg-teal-50 transition-colors"
                       data-testid="link-11th-form-call"><PhoneIcon sm /> Call
                     </a>
@@ -762,7 +762,7 @@ export default function RIS11thLanding() {
         {/* ── FINAL CTA ──────────────────────────────────────────────────────── */}
         <div className="mt-10 rounded-2xl p-6 md:p-8 text-center text-white" style={{ background: "linear-gradient(135deg, #0A4847 0%, #0E6160 100%)" }}>
           <div className="inline-flex items-center gap-2 bg-white/20 text-white text-xs font-semibold px-3 py-1 rounded-full mb-3">
-            <span className="w-2 h-2 bg-white rounded-full animate-pulse" /> Admissions 2026–27 Open
+            <span className="w-2 h-2 bg-white rounded-full animate-pulse" /> Admissions Open
           </div>
           <h2 className="text-2xl md:text-3xl font-bold mb-2">{CONFIG.cta.heading}</h2>
           <p className="text-teal-100 mb-6 max-w-md mx-auto text-sm leading-relaxed">{CONFIG.cta.subtext}</p>
@@ -772,7 +772,7 @@ export default function RIS11thLanding() {
               data-testid="button-11th-final-cta">
               {CONFIG.cta.primaryButton}
             </button>
-            <a href={`tel:${CONFIG.phone}`} onClick={trackCall("final_cta")}
+            <a href="tel:+918291568972" onClick={trackCall("final_cta")}
               className="flex items-center justify-center gap-2 bg-white/20 hover:bg-white/30 text-white font-bold py-3 px-6 rounded-full border border-white/40 transition-colors"
               data-testid="link-11th-final-call">
               <PhoneIcon sm /> {CONFIG.cta.secondaryButton}
@@ -787,7 +787,7 @@ export default function RIS11thLanding() {
         <p className="font-semibold text-gray-900">{CONFIG.footer.name}</p>
         <p className="mt-0.5 text-xs text-gray-500">{CONFIG.footer.tagline}</p>
         <div className="mt-3 flex items-center justify-center gap-4">
-          <a href={`tel:${CONFIG.phone}`} onClick={trackCall("footer")} className="text-[#0E6160] font-semibold text-sm" data-testid="link-11th-footer-call">{CONFIG.phoneDisplay}</a>
+          <a href="tel:+918291568972" onClick={trackCall("footer")} className="text-[#0E6160] font-semibold text-sm" data-testid="link-11th-footer-call">{CONFIG.phoneDisplay}</a>
           <a href={CONFIG.whatsappUrl} onClick={trackWhatsApp("footer")} className="text-green-600 font-semibold text-sm" data-testid="link-11th-footer-whatsapp">WhatsApp</a>
         </div>
       </footer>
@@ -802,7 +802,7 @@ export default function RIS11thLanding() {
       {/* ── MOBILE STICKY CTA BAR ─────────────────────────────────────────── */}
       <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-white border-t border-gray-200 shadow-lg">
         <div className="flex">
-          <a href={`tel:${CONFIG.phone}`} onClick={trackCall("sticky_mobile")}
+          <a href="tel:+918291568972" onClick={trackCall("sticky_mobile")}
             className="flex-1 flex flex-col items-center justify-center gap-0.5 py-3 text-[#0E6160] font-semibold text-xs"
             data-testid="link-11th-sticky-call">
             <PhoneIcon sm /> Call Now

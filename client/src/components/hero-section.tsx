@@ -52,7 +52,7 @@ export function HeroSection() {
                 className="w-2 h-2 rounded-full bg-green-400 flex-shrink-0"
                 style={{ boxShadow: "0 0 0 4px rgba(74,222,128,0.28)", animation: "pulse 2s ease-in-out infinite" }}
               />
-              <span className="text-sm font-semibold text-white/95 tracking-wide">Admissions Open · 2026–27</span>
+              <span className="text-sm font-semibold text-white/95 tracking-wide">Admissions Open · 2027–28</span>
             </div>
           </a>
 

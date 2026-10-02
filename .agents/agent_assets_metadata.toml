@@ -322,3 +322,17 @@ mtime_ms = 1790574626181
 storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:0c61580c-1c60-4ec3-afe4-28e8a9482287/b633f394-a9e0-4c15-9aa0-765b7f4fd6e4/a69573af-d2e6-44a6-8855-df5bc90cee84"
 storage_version_token = "1790574656639116"
 content_type = "image/png"
+
+[[outputs]]
+id = "fZSDYeMpO2TJn9HUeCpBT"
+uri = "file://reports/sitewide-cleanup-2026-10-02.md"
+type = "text"
+title = "Sitewide cleanup — full text report"
+description = "All 63 changed sitemap pages with old → new details, final zero-count scan, both predeploy outcomes, and homepage/admissions LCP, TBT and CLS."
+logical_id = "8dbe2dbb-a4e0-40aa-8b1f-009234aa492e"
+content_hash = "sha256:ee366d6f0a608227ac29556ba9d615b0c94817f614a88a19d147c93a8104a6b9"
+size = 20066
+mtime_ms = 1790947451551
+storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:0c61580c-1c60-4ec3-afe4-28e8a9482287/8dbe2dbb-a4e0-40aa-8b1f-009234aa492e/d421c329-e49d-430a-9c98-643593617a04"
+storage_version_token = "1790947454780478"
+content_type = "text/markdown"

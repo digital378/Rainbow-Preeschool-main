@@ -31,8 +31,8 @@ interface EEATSignalsProps {
 export function EEATSignals({
   pageUrl: _pageUrl,
   pageName: _pageName,
-  reviewedBy = "Rainbow Preschool Curriculum Team",
-  reviewerRole = "Curriculum Team, Rainbow Preschool International",
+  reviewedBy,
+  reviewerRole,
   reviewerCredentials,
   reviewerBio,
   reviewerProfileUrl: _reviewerProfileUrl,
@@ -54,8 +54,6 @@ export function EEATSignals({
   // This component is now UI-only: it renders the visible E-E-A-T strip
   // (reviewer byline, date, star rating) but no longer touches the DOM schema.
 
-  const reviewerEyebrow = "Reviewed by";
-
   return (
     <div
       className="my-6 p-4 md:p-5 rounded-xl border border-red-200/60 bg-gradient-to-r from-red-50/70 to-yellow-50/70 dark:from-red-950/30 dark:to-yellow-950/20 dark:border-red-800/40"
@@ -67,7 +65,6 @@ export function EEATSignals({
             <ShieldCheck className="w-5 h-5 text-primary" />
           </div>
           <div>
-            <p className="text-xs font-semibold uppercase tracking-wide text-primary">{reviewerEyebrow}</p>
             {reviewedBy ? (
               <p className="text-sm font-semibold text-gray-900 dark:text-white" data-testid={`text-eeat-reviewer-${schemaId}`}>
                 {reviewedBy}
@@ -76,12 +73,14 @@ export function EEATSignals({
                 ) : null}
               </p>
             ) : null}
-            <p
-              className={`${reviewedBy ? "text-xs text-muted-foreground" : "text-sm font-semibold text-gray-900 dark:text-white"}`}
-              data-testid={`text-eeat-role-${schemaId}`}
-            >
-              {reviewerRole}
-            </p>
+            {reviewerRole ? (
+              <p
+                className={`${reviewedBy ? "text-xs text-muted-foreground" : "text-sm font-semibold text-gray-900 dark:text-white"}`}
+                data-testid={`text-eeat-role-${schemaId}`}
+              >
+                {reviewerRole}
+              </p>
+            ) : null}
             {reviewerBio ? (
               <p className="text-xs text-muted-foreground mt-1 max-w-md" data-testid={`text-eeat-bio-${schemaId}`}>
                 {reviewerBio}

@@ -222,8 +222,6 @@ export default function FAQs() {
         <EEATSignals
           pageUrl="/faqs"
           pageName="Frequently Asked Questions | Rainbow Preschool"
-          reviewedBy="Rainbow Preschool Curriculum Team"
-          reviewerRole="Curriculum Team, Rainbow Preschool International"
           lastUpdated={LAST_UPDATED_DISPLAY}
           lastUpdatedIso={LAST_UPDATED_ISO}
           showRating={false}

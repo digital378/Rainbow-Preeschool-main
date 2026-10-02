@@ -149,8 +149,8 @@ async function checkUrl(path: string): Promise<CheckResult> {
   } else if (path === "/pre-kg-age-guide") {
     if (html.includes("Reviewed by Rainbow Preschool Curriculum Team")) missing.push("retired reviewer byline");
     if (/"@type":\s*"FAQPage"/.test(html)) missing.push("unexpected FAQPage JSON-LD");
-  } else if (path !== "/" && !html.includes("Reviewed by Rainbow Preschool Curriculum Team")) {
-    missing.push("byline");
+  } else if (html.includes("Curriculum Team")) {
+    missing.push("retired Curriculum Team attribution");
   }
   if (path !== "/" && path !== "/play-school-near-me" && path !== "/pre-kg-age-guide" && !html.includes("Last updated:")) {
     missing.push("Last updated: line");

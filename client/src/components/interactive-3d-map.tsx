@@ -627,7 +627,7 @@ function ThreeDMap({ highlightedId, onCentreSelect, onCentreHover, isMobile, cop
 
               {/* Call */}
               <a
-                href={`tel:${c.phoneNumbers[0]?.replace(/[\s-]/g, "")}`}
+                href="tel:+918291568972"
                 onClick={e => e.stopPropagation()}
                 style={{
                   flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: 4,

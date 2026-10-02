@@ -4,7 +4,7 @@
  * Editorial policy: Rainbow Preschool International does not use any
  * individual person's name as a public byline, reviewer or contributor
  * anywhere on the site. All blog posts are attributed at the
- * organisation level to the Rainbow Preschool Curriculum Team.
+ * organisation level to Rainbow Preschool International.
  *
  * The per-slug map below is preserved (rather than collapsed to a
  * single default) so that `assertAllBlogSlugsCovered()` continues to
@@ -42,8 +42,8 @@ export interface BlogAuthorship {
 
 // ── Single canonical org-level attribution ───────────────────────────────
 
-const RAINBOW_CURRICULUM_TEAM: BlogPerson = {
-  name: "Rainbow Preschool Curriculum Team",
+const RAINBOW_ORGANIZATION: BlogPerson = {
+  name: "Rainbow Preschool International",
   role: "Rainbow Preschool International",
   credentials: "",
   bio: "",
@@ -51,8 +51,8 @@ const RAINBOW_CURRICULUM_TEAM: BlogPerson = {
 };
 
 export const DEFAULT_BLOG_AUTHORSHIP: BlogAuthorship = {
-  author: RAINBOW_CURRICULUM_TEAM,
-  reviewedBy: RAINBOW_CURRICULUM_TEAM,
+  author: RAINBOW_ORGANIZATION,
+  reviewedBy: RAINBOW_ORGANIZATION,
 };
 
 // ── Per-slug registry ────────────────────────────────────────────────────
@@ -131,8 +131,7 @@ export function blogPersonToSchema(person: BlogPerson): Record<string, unknown> 
     name: person.name,
     url: person.url ?? BASE_URL,
   };
-  // Nest under the parent Rainbow Preschool International org when the
-  // attribution is to the Curriculum Team (or any other internal team).
+  // Nest under the parent organisation for any other internal attribution.
   if (person.name !== "Rainbow Preschool International") {
     node.parentOrganization = {
       "@type": "Organization",

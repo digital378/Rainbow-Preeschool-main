@@ -318,6 +318,12 @@ npx --no-install tsx scripts/check-crawler-metadata.ts "${PREDEPLOY_URL}"
 CRAWLER_METADATA_EXIT=$?
 set -e
 
+log "step 16c2/18 — every sitemap route: decoded description ≤155 and title ≤65"
+set +e
+node scripts/sitewide-cleanup-audit.mjs "${PREDEPLOY_URL}" --metadata-only
+SITEMAP_METADATA_LENGTH_EXIT=$?
+set -e
+
 log "step 16d/18 — tsx scripts/check-local-reel-media.ts ${PREDEPLOY_URL}"
 set +e
 npx --no-install tsx scripts/check-local-reel-media.ts "${PREDEPLOY_URL}"
@@ -374,7 +380,11 @@ else
 fi
 # ─────────────────────────────────────────────────────────────────────────────
 
-if [ "${FRESHNESS_EXIT}" -ne 0 ] || [ "${KEYWORD_EXIT}" -ne 0 ] || [ "${SITEMAP_EXIT}" -ne 0 ] || [ "${BOT_DETECTION_EXIT}" -ne 0 ] || [ "${AD_PAGES_EXIT}" -ne 0 ] || [ "${CRAWLER_METADATA_EXIT}" -ne 0 ] || [ "${LOCAL_REELS_EXIT}" -ne 0 ] || [ "${NEAR_ME_CONTRACT_EXIT}" -ne 0 ] || [ "${DIWALI_GUIDE_EXIT}" -ne 0 ] || [ "${NATIONAL_SYMBOLS_EXIT}" -ne 0 ] || [ "${PRE_KG_EXIT}" -ne 0 ] || [ "${PERF_EXIT}" -ne 0 ]; then
+if [ "${FRESHNESS_EXIT}" -ne 0 ] || [ "${KEYWORD_EXIT}" -ne 0 ] || [ "${SITEMAP_EXIT}" -ne 0 ] || [ "${BOT_DETECTION_EXIT}" -ne 0 ] || [ "${AD_PAGES_EXIT}" -ne 0 ] || [ "${CRAWLER_METADATA_EXIT}" -ne 0 ] || [ "${SITEMAP_METADATA_LENGTH_EXIT}" -ne 0 ] || [ "${LOCAL_REELS_EXIT}" -ne 0 ] || [ "${NEAR_ME_CONTRACT_EXIT}" -ne 0 ] || [ "${DIWALI_GUIDE_EXIT}" -ne 0 ] || [ "${NATIONAL_SYMBOLS_EXIT}" -ne 0 ] || [ "${PRE_KG_EXIT}" -ne 0 ] || [ "${PERF_EXIT}" -ne 0 ]; then
+  if [ "${SITEMAP_METADATA_LENGTH_EXIT}" -ne 0 ]; then
+    log "FAIL — sitemap-wide decoded metadata length check failed."
+    exit "${SITEMAP_METADATA_LENGTH_EXIT}"
+  fi
   if [ "${PRE_KG_EXIT}" -ne 0 ]; then
     log "FAIL — pre-KG metadata/schema/HTML-parity/content contract exited ${PRE_KG_EXIT}."
     exit "${PRE_KG_EXIT}"

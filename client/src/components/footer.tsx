@@ -179,7 +179,7 @@ export function Footer({ contentsOnly = false }: { contentsOnly?: boolean } = {}
                 <Phone className="h-4 w-4 text-primary mt-0.5 shrink-0" />
                 <div className="flex flex-col gap-1">
                   <a
-                    href="tel:8291568972"
+                    href="tel:+918291568972"
                     className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                     data-testid="link-footer-phone-1"
                   >

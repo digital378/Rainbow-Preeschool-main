@@ -41,7 +41,7 @@ export function MinimalHeader({
         
         <div className="flex items-center gap-2">
           <a
-            href={`tel:${cleanPhone}`}
+            href="tel:+918291568972"
             onClick={onCallClick}
             data-testid="header-call-button"
           >

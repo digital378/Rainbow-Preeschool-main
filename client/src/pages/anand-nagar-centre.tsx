@@ -105,7 +105,7 @@ export function BranchCentrePage({ slug }: { slug: BranchSlug }) {
               <p className="text-lg font-semibold text-slate-700 mb-5" style={initialHeading.current ? { visibility: "hidden" } : undefined}>{copy.heroSubline}</p>
               <div className="flex flex-wrap gap-2 mb-7">{copy.trustChips.map((chip) => <Badge key={chip} variant="secondary" className="font-semibold whitespace-normal text-left max-w-full">{chip}</Badge>)}</div>
               <div className="flex flex-wrap gap-3">
-                <a href={`tel:${ADMISSIONS_PHONE_NUMBER}`} onClick={call} className="max-w-full"><Button size="lg" className="bg-primary text-white max-w-full h-auto min-h-11 whitespace-normal leading-tight"><Phone className="w-4 h-4 mr-2" />{ADMISSIONS_PHONE_LABEL}</Button></a>
+                <a href="tel:+918291568972" onClick={call} className="max-w-full"><Button size="lg" className="bg-primary text-white max-w-full h-auto min-h-11 whitespace-normal leading-tight"><Phone className="w-4 h-4 mr-2" />{ADMISSIONS_PHONE_LABEL}</Button></a>
                 <a href={whatsappHref} target="_blank" rel="noopener noreferrer" onClick={whatsapp}><Button size="lg" className="bg-green-600 hover:bg-green-700 text-white"><MessageCircle className="w-4 h-4 mr-2" />WhatsApp</Button></a>
                 <a href={centre.googleMapsDirectionsUrl} target="_blank" rel="noopener noreferrer" onClick={directions}><Button size="lg" variant="outline"><Navigation className="w-4 h-4 mr-2" />Get directions</Button></a>
               </div>
@@ -221,7 +221,7 @@ export function BranchCentrePage({ slug }: { slug: BranchSlug }) {
             <h2 className="text-2xl md:text-3xl font-bold mb-4">{copy.finalHeading}</h2>
             <p className="text-lg mb-8">Call or WhatsApp us to arrange a visit to the {centre.localityName} centre.</p>
             <div className="flex flex-wrap justify-center gap-4">
-              <a href={`tel:${ADMISSIONS_PHONE_NUMBER}`} onClick={call} className="max-w-full"><Button size="lg" className="bg-primary text-white max-w-full h-auto min-h-11 whitespace-normal leading-tight"><Phone className="w-4 h-4 mr-2" />{ADMISSIONS_PHONE_LABEL}</Button></a>
+              <a href="tel:+918291568972" onClick={call} className="max-w-full"><Button size="lg" className="bg-primary text-white max-w-full h-auto min-h-11 whitespace-normal leading-tight"><Phone className="w-4 h-4 mr-2" />{ADMISSIONS_PHONE_LABEL}</Button></a>
               <a href={whatsappHref} target="_blank" rel="noopener noreferrer" onClick={whatsapp}><Button size="lg" variant="outline" className="bg-white/10 border-white text-white hover:bg-white/20"><MessageCircle className="w-4 h-4 mr-2" />WhatsApp Us</Button></a>
             </div>
           </div>

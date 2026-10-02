@@ -115,7 +115,7 @@ export function CentreCardWithMap({
                     {phones.map((phone) => (
                       <a
                         key={phone}
-                        href={`tel:${phone.replace(/[^0-9]/g, "")}`}
+                        href="tel:+918291568972"
                         className="text-sm hover:text-primary transition-colors"
                         onClick={() => handleCallClick(phone)}
                         data-testid={`centre-phone-${phone}`}

@@ -8,7 +8,7 @@ const CONFIG = {
   hero: {
     badgeText: "Check Seat Availability",
     headline: "Rainbow International School, Thane",
-    subheadline: "Admissions open for 2026–27. A trusted CBSE school in Brahmand focused on academics, confidence, leadership, and holistic development from Nursery to Grade 12.",
+    subheadline: "A trusted CBSE school in Brahmand focused on academics, confidence, leadership, and holistic development from Nursery to Grade 12.",
     urgencyText: "Several grades have limited seats remaining. Admissions are processed on a first-come, first-served basis.",
     trustChips: ["CBSE Curriculum", "Smart Classrooms", "Transport", "CCTV Campus"],
   },
@@ -20,7 +20,7 @@ const CONFIG = {
     successText: "We'll call you within 30 minutes to confirm seat availability.",
   },
   seatTable: {
-    heading: "Seat Availability 2026–27",
+    heading: "Seat Availability",
     subtext: "Updated regularly. Admissions are subject to seat availability and processed on a first-come, first-served basis.",
   },
   video: {
@@ -101,7 +101,7 @@ const CONFIG = {
   },
   cta: {
     heading: "Seats Are Filling Fast",
-    subtext: "Enquire today to check availability and secure admission for the 2026–27 academic year.",
+    subtext: "Enquire today to check availability and secure admission.",
     buttonText: "Reserve Seat Now",
   },
   footer: {
@@ -204,10 +204,10 @@ export default function RISLanding() {
     meta.name = "robots";
     meta.content = "noindex, nofollow";
     document.head.appendChild(meta);
-    document.title = "Rainbow International School Thane — Admissions 2026–27";
+    document.title = "Rainbow International School Thane — Admissions";
     const descMeta = document.createElement("meta");
     descMeta.name = "description";
-    descMeta.content = "Limited seats at Rainbow International School Thane. CBSE school Nursery to Grade 12. Admissions open 2026–27. Reserve your seat now.";
+    descMeta.content = "Limited seats at Rainbow International School Thane. CBSE school Nursery to Grade 12. Reserve your seat now.";
     document.head.appendChild(descMeta);
     if (!(window as any).gtag) {
       const s = document.createElement("script");
@@ -325,7 +325,7 @@ export default function RISLanding() {
             <span className="font-bold text-[#1b2e65] text-sm leading-tight">Rainbow International School</span>
           </div>
           <a
-            href={`tel:${CONFIG.phone}`}
+            href="tel:+918291568972"
             onClick={trackCall("header")}
             className="flex items-center gap-1.5 bg-[#243B81] text-white px-3 py-2 rounded-full text-xs font-semibold flex-shrink-0 whitespace-nowrap"
             data-testid="link-ris-header-call"
@@ -398,7 +398,7 @@ export default function RISLanding() {
                 </div>
                 <h3 className="text-xl font-bold text-gray-900">Thank You!</h3>
                 <p className="text-gray-600 text-sm">{CONFIG.form.successText}</p>
-                <a href={`tel:${CONFIG.phone}`} onClick={trackCall("success")} className="inline-flex items-center gap-2 bg-[#243B81] text-white px-5 py-2.5 rounded-full font-semibold text-sm" data-testid="link-ris-success-call">
+                <a href="tel:+918291568972" onClick={trackCall("success")} className="inline-flex items-center gap-2 bg-[#243B81] text-white px-5 py-2.5 rounded-full font-semibold text-sm" data-testid="link-ris-success-call">
                   <PhoneIcon /> Call Now: {CONFIG.phoneDisplay}
                 </a>
                 <a href={CONFIG.whatsappUrl} onClick={trackWhatsApp("success")} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 border border-green-500 text-green-600 px-5 py-2.5 rounded-full font-semibold text-sm" data-testid="link-ris-success-whatsapp">
@@ -487,7 +487,7 @@ export default function RISLanding() {
                   <p className="text-xs text-gray-400 text-center leading-relaxed">{CONFIG.form.microcopy}</p>
 
                   <div className="flex gap-2">
-                    <a href={`tel:${CONFIG.phone}`} onClick={trackCall("form")}
+                    <a href="tel:+918291568972" onClick={trackCall("form")}
                       className="flex-1 flex items-center justify-center gap-1.5 border border-[#243B81] text-[#243B81] py-2.5 rounded-full font-semibold text-sm hover:bg-[#243B81]/8 transition-colors"
                       data-testid="link-ris-form-call">
                       <PhoneIcon sm /> Call
@@ -732,7 +732,7 @@ export default function RISLanding() {
         {/* ── FINAL CTA ──────────────────────────────────────────────────────── */}
         <div className="mt-10 bg-[#243B81] rounded-2xl p-6 md:p-8 text-center text-white">
           <div className="inline-flex items-center gap-2 bg-white/20 text-white text-xs font-semibold px-3 py-1 rounded-full mb-3">
-            <span className="w-2 h-2 bg-white rounded-full animate-pulse" /> Admissions 2026–27 Open
+            <span className="w-2 h-2 bg-white rounded-full animate-pulse" /> Admissions Open
           </div>
           <h2 className="text-2xl md:text-3xl font-bold mb-2">{CONFIG.cta.heading}</h2>
           <p className="text-white/80 mb-6 max-w-md mx-auto text-sm leading-relaxed">{CONFIG.cta.subtext}</p>
@@ -758,7 +758,7 @@ export default function RISLanding() {
         <p className="font-semibold text-gray-900">{CONFIG.footer.name}</p>
         <p className="mt-0.5 text-xs text-gray-500">{CONFIG.footer.tagline}</p>
         <div className="mt-3 flex items-center justify-center gap-4">
-          <a href={`tel:${CONFIG.phone}`} onClick={trackCall("footer")} className="text-[#243B81] font-semibold text-sm" data-testid="link-ris-footer-call">{CONFIG.phoneDisplay}</a>
+          <a href="tel:+918291568972" onClick={trackCall("footer")} className="text-[#243B81] font-semibold text-sm" data-testid="link-ris-footer-call">{CONFIG.phoneDisplay}</a>
           <a href={CONFIG.whatsappUrl} onClick={trackWhatsApp("footer")} className="text-green-600 font-semibold text-sm" data-testid="link-ris-footer-whatsapp">WhatsApp</a>
         </div>
       </footer>
@@ -773,7 +773,7 @@ export default function RISLanding() {
       {/* ── MOBILE STICKY CTA BAR ─────────────────────────────────────────── */}
       <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-white border-t border-gray-200 shadow-lg">
         <div className="flex">
-          <a href={`tel:${CONFIG.phone}`} onClick={trackCall("sticky_mobile")}
+          <a href="tel:+918291568972" onClick={trackCall("sticky_mobile")}
             className="flex-1 flex flex-col items-center justify-center gap-0.5 py-3 text-[#243B81] font-semibold text-xs"
             data-testid="link-ris-sticky-call">
             <PhoneIcon sm /> Call Now

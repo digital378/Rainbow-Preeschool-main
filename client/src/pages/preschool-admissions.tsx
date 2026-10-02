@@ -410,8 +410,6 @@ export default function PreschoolAdmissions() {
                 <EEATSignals
                   pageUrl="/preschool-admissions"
                   pageName={hero.h1}
-                  reviewedBy="Rainbow Preschool Curriculum Team"
-                  reviewerRole="Curriculum Team, Rainbow Preschool International"
                   lastUpdated={ADMISSIONS_PUBLISH_DATE_DISPLAY}
                   lastUpdatedIso={ADMISSIONS_PUBLISH_DATE_ISO}
                   showRating={false}

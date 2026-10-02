@@ -33,7 +33,7 @@ export function StickyCTABar({
       <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-background/95 backdrop-blur-sm border-t p-2 safe-area-bottom">
         <div className="flex items-center gap-2">
           <a
-            href={`tel:${cleanPhone}`}
+            href="tel:+918291568972"
             onClick={onCallClick}
             className="flex-1"
           >

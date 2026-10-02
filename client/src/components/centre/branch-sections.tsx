@@ -68,8 +68,8 @@ export function BranchAreas({ content, centre, onDirections }: { content: Branch
               <p className="text-xs uppercase tracking-wide font-bold text-slate-600 mb-2">{centre.hideCentrePhonesOnBranchPage ? "Admissions" : "Centre phone"}</p>
               <div className="flex flex-wrap gap-x-5 gap-y-2">
                 {centre.hideCentrePhonesOnBranchPage
-                  ? <a href={`tel:${ADMISSIONS_PHONE_NUMBER}`} className="inline-flex items-center gap-2 font-semibold text-primary hover:underline"><Phone className="w-4 h-4" />{ADMISSIONS_PHONE_DISPLAY}</a>
-                  : centre.phoneNumbers.map((phone) => <a key={phone} href={`tel:+91${phone.replace(/\D/g, "")}`} className="inline-flex items-center gap-2 font-semibold text-primary hover:underline"><Phone className="w-4 h-4" />{phone}</a>)}
+                  ? <a href="tel:+918291568972" className="inline-flex items-center gap-2 font-semibold text-primary hover:underline"><Phone className="w-4 h-4" />{ADMISSIONS_PHONE_DISPLAY}</a>
+                  : centre.phoneNumbers.map((phone) => <a key={phone} href="tel:+918291568972" className="inline-flex items-center gap-2 font-semibold text-primary hover:underline"><Phone className="w-4 h-4" />{phone}</a>)}
               </div>
             </div>
           </div>

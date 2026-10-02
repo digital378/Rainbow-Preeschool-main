@@ -67,7 +67,7 @@ export const PLAYGROUP_FAQS: PlaygroupFAQ[] = [
     question: "Do parents need to stay during playgroup sessions?",
     answerSegments: [
       { text: "Please ask the team at your preferred centre about its arrangements for parents during playgroup sessions. You can use the enquiry form on this page or call " },
-      { text: "82915 68972", href: "tel:8291568972" },
+      { text: "82915 68972", href: "tel:+918291568972" },
       { text: ". Our playgroup is designed as a gentle first step into learning, routine and friendships for young children." },
     ],
   },
@@ -75,7 +75,7 @@ export const PLAYGROUP_FAQS: PlaygroupFAQ[] = [
     question: "How can I enquire about playgroup admission in Thane?",
     answerSegments: [
       { text: "Call " },
-      { text: "82915 68972", href: "tel:8291568972" },
+      { text: "82915 68972", href: "tel:+918291568972" },
       { text: " or use the enquiry form on this page to ask about playgroup admission. Let us know which of our 6 Thane centres is convenient for your family: Manpada, Hariniwas, Anand Nagar, Dhokali, Kalwa or Kasarvadavali. For fees, call us for current fee details." },
     ],
   },

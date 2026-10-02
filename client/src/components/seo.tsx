@@ -242,8 +242,6 @@ export function createBlogPostSchema(post: {
       "@type": "Organization",
       name: "Rainbow Preschool International",
       url: BASE_URL,
-      department: "Curriculum Team",
-      description: "The Rainbow Preschool curriculum team designs and oversees play-based learning programmes across all 6 Thane centres, with 15+ years of collective experience in early childhood education.",
     },
     publisher: {
       "@type": "Organization",

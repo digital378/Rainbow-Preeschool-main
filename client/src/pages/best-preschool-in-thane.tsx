@@ -666,8 +666,6 @@ export default function BestPreschoolInThane() {
               <EEATSignals
                 pageUrl="/best-preschool-near-me-in-thane"
                 pageName="Best Preschool in Thane"
-                reviewedBy="Rainbow Preschool Curriculum Team"
-                reviewerRole="Curriculum Team, Rainbow Preschool International"
                 lastUpdated={LAST_UPDATED_DISPLAY}
                 lastUpdatedIso={LAST_UPDATED_ISO}
                 ratingValue={VERIFIED_RATING.ratingValue}

@@ -111,8 +111,6 @@ export default function Testimonials() {
         <EEATSignals
           pageUrl="/testimonials"
           pageName="Parent Testimonials | Rainbow Preschool International"
-          reviewedBy="Rainbow Preschool Curriculum Team"
-          reviewerRole="Curriculum Team, Rainbow Preschool International"
           lastUpdated={LAST_UPDATED_DISPLAY}
           lastUpdatedIso={LAST_UPDATED_ISO}
           showRating={false}

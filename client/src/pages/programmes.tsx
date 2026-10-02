@@ -253,8 +253,6 @@ export default function Programmes() {
         <EEATSignals
           pageUrl="/programmes"
           pageName={PROGRAMMES_VISITOR_EEAT_COPY.pageName}
-          reviewedBy={PROGRAMMES_VISITOR_EEAT_COPY.reviewedBy}
-          reviewerRole={PROGRAMMES_VISITOR_EEAT_COPY.reviewerRole}
           lastUpdated={PROGRAMMES_COPY.publishDateDisplay}
           lastUpdatedIso={PROGRAMMES_COPY.publishDate}
           showRating={false}

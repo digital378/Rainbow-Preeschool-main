@@ -8,7 +8,7 @@ const CONFIG = {
   phoneDisplay: "+91 82915 68972",
   whatsappText: "Hi, I'm from Thane interested in Rainbow Preschool admissions",
   hero: {
-    badge: "Admissions For 2026-27 Closing On 30th March",
+    badge: "Admissions for 2027-28",
     headline: "Best Preschool in Thane for Your Child's Early Development",
     subheadline: "A safe, nurturing and activity-based learning environment trusted by parents for over 18 years.",
     locationLine: "Conveniently located in Manpada, Kalwa, Dhokali, Kasarvadavali, Anand Nagar & Hariniwas.",
@@ -142,7 +142,7 @@ const CONFIG = {
     ],
   },
   urgency: {
-    heading: "Limited Seats Available for 2026–27",
+    heading: "Admissions for 2027-28",
     subtext: "Enquire today to check seat availability and speak with our admission counsellor.",
     primaryCta: "Book a School Visit",
     secondaryCta: "Chat on WhatsApp",
@@ -267,7 +267,7 @@ export default function AdLanding() {
 
     const descMeta = document.createElement("meta");
     descMeta.name = "description";
-    descMeta.content = "Limited seats for preschool admissions 2026-27 at Rainbow Preschool Thane. CCTV surveillance, 100% female staff, transport facility. Book your visit today!";
+    descMeta.content = "Preschool admissions for 2027-28 at Rainbow Preschool Thane. CCTV surveillance, 100% female staff, transport facility. Book your visit today!";
     document.head.appendChild(descMeta);
 
     if (!(window as any).gtag) {
@@ -403,7 +403,7 @@ export default function AdLanding() {
             <span className="font-bold text-red-600 text-base md:text-lg">Rainbow Preschool</span>
           </a>
           <a
-            href={`tel:${CONFIG.phone}`}
+            href="tel:+918291568972"
             onClick={trackCall("header")}
             className="flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded-full text-sm font-semibold"
             data-testid="link-ad-header-call"
@@ -470,7 +470,7 @@ export default function AdLanding() {
                 <h3 className="text-xl font-bold text-gray-900">{CONFIG.form.successHeading}</h3>
                 <p className="text-gray-600">{CONFIG.form.successText}</p>
                 <a
-                  href={`tel:${CONFIG.phone}`}
+                  href="tel:+918291568972"
                   onClick={trackCall("success")}
                   className="inline-flex items-center gap-2 bg-red-600 text-white px-5 py-2.5 rounded-full font-semibold text-sm"
                   data-testid="link-ad-success-call"
@@ -586,7 +586,7 @@ export default function AdLanding() {
 
                   <div className="flex gap-2 pt-1">
                     <a
-                      href={`tel:${CONFIG.phone}`}
+                      href="tel:+918291568972"
                       onClick={trackCall("form")}
                       className="flex-1 flex items-center justify-center gap-2 border border-red-500 text-red-600 py-2.5 rounded-full font-semibold text-sm hover:bg-red-50 transition-colors"
                       data-testid="link-ad-form-call"
@@ -906,7 +906,7 @@ export default function AdLanding() {
         {/* ── URGENCY CTA ────────────────────────────────────────────────────── */}
         <div className="mt-10 bg-red-600 rounded-2xl p-6 md:p-8 text-center text-white">
           <div className="inline-flex items-center gap-2 bg-white/20 text-white text-xs font-semibold px-3 py-1 rounded-full mb-3">
-            <span className="w-2 h-2 bg-white rounded-full animate-pulse" /> Admissions 2026–27 Now Open
+            <span className="w-2 h-2 bg-white rounded-full animate-pulse" /> Admissions for 2027-28
           </div>
           <h2 className="text-2xl md:text-3xl font-bold mb-2">{CONFIG.urgency.heading}</h2>
           <p className="text-red-100 mb-6 max-w-md mx-auto text-sm leading-relaxed">{CONFIG.urgency.subtext}</p>
@@ -953,7 +953,7 @@ export default function AdLanding() {
         <p className="font-semibold text-gray-900">Rainbow Preschool International</p>
         <p className="mt-0.5">Thane's #1 Preschool Since 2007</p>
         <div className="mt-3 flex items-center justify-center gap-4">
-          <a href={`tel:${CONFIG.phone}`} onClick={trackCall("footer")} className="text-red-600 font-semibold" data-testid="link-ad-footer-call">{CONFIG.phoneDisplay}</a>
+          <a href="tel:+918291568972" onClick={trackCall("footer")} className="text-red-600 font-semibold" data-testid="link-ad-footer-call">{CONFIG.phoneDisplay}</a>
           <a href={`https://wa.me/${CONFIG.phone.replace("+", "")}?text=${encodeURIComponent(CONFIG.whatsappText)}`} onClick={trackWhatsApp("footer")} className="text-green-600 font-semibold" data-testid="link-ad-footer-whatsapp">WhatsApp</a>
         </div>
       </footer>
@@ -974,7 +974,7 @@ export default function AdLanding() {
       <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-white border-t border-gray-200 shadow-lg">
         <div className="flex">
           <a
-            href={`tel:${CONFIG.phone}`}
+            href="tel:+918291568972"
             onClick={trackCall("sticky_mobile")}
             className="flex-1 flex flex-col items-center justify-center gap-0.5 py-3 text-red-600 font-semibold text-xs"
             data-testid="link-ad-sticky-call"

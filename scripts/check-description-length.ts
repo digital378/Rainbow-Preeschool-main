@@ -21,6 +21,7 @@
  */
 import { readFileSync, readdirSync } from "node:fs";
 import { resolve } from "node:path";
+import { decodeHTML } from "entities";
 import { PLAY_SCHOOL_NEAR_ME_CONTENT } from "../shared/play-school-near-me-content";
 
 const ROOT = process.cwd();
@@ -231,9 +232,10 @@ scanLegacyPages();
 scanClientPages();
 
 for (const e of entries) {
-  if (e.description.length > MAX_LEN) {
+  const length = [...decodeHTML(e.description)].length;
+  if (length > MAX_LEN) {
     errors.push(
-      `${e.file}:${e.line} — description for ${e.url} is ${e.description.length} chars (limit ${MAX_LEN}). Description: "${e.description}"`,
+      `${e.file}:${e.line} — description for ${e.url} is ${length} decoded chars (limit ${MAX_LEN}). Description: "${e.description}"`,
     );
   }
 }

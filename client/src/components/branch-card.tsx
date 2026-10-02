@@ -125,7 +125,7 @@ export function BranchCard({ branch, classesText, daycareText, image, copy = { v
             <div className="flex items-center gap-2 text-sm">
               <Phone className="w-4 h-4 text-muted-foreground" />
               <a
-                href={`tel:${landline.replace(/-/g, "")}`}
+                href="tel:+918291568972"
                 aria-label={copy.accessibleActions ? `Call ${branch.name}` : undefined}
                 className="hover:text-primary transition-colors"
                 onClick={() => handleCallClick(landline)}
@@ -139,7 +139,7 @@ export function BranchCard({ branch, classesText, daycareText, image, copy = { v
             <div className="flex items-center gap-2 text-sm">
               <Phone className="w-4 h-4 text-muted-foreground" />
               <a
-                href={`tel:${callingNumber}`}
+                href="tel:+918291568972"
                 aria-label={copy.accessibleActions ? `Call ${branch.name}` : undefined}
                 className="hover:text-primary transition-colors"
                 onClick={() => handleCallClick(branch.calling!)}
@@ -153,7 +153,7 @@ export function BranchCard({ branch, classesText, daycareText, image, copy = { v
             <div className="flex items-center gap-2 text-sm">
               <Phone className="w-4 h-4 text-muted-foreground" />
               <a
-                href={`tel:${secondCalling.replace(/\s/g, "")}`}
+                href="tel:+918291568972"
                 aria-label={copy.accessibleActions ? `Call ${branch.name}` : undefined}
                 className="hover:text-primary transition-colors"
                 onClick={() => handleCallClick(secondCalling)}

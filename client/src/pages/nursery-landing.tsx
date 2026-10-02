@@ -868,10 +868,9 @@ export default function NurseryLanding() {
         <EEATSignals
           pageUrl="/nursery"
           pageName={NURSERY_COPY.pageName}
-          reviewedBy={NURSERY_COPY.reviewedBy}
-          reviewerRole={NURSERY_COPY.reviewerRole}
           lastUpdated={NURSERY_COPY.publishDateDisplay}
           lastUpdatedIso={NURSERY_COPY.publishDate}
+          showRating={false}
           ratingValue={VERIFIED_RATING.ratingValue}
           reviewCount={VERIFIED_RATING.reviewCount}
           schemaId="nursery-landing"

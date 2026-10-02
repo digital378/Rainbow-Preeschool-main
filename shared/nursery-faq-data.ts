@@ -73,7 +73,7 @@ export const NURSERY_FAQS: readonly NurseryFAQ[] = [
     question: "Do you provide regular updates on my child's progress?",
     answerSegments: [
       { text: "Yes. Nursery families receive daily parent updates and monthly progress reports. These keep parents informed about their child's time at the centre and progress through the programme. For questions about updates or your preferred centre, contact the admissions team using the enquiry form or call " },
-      { text: "82915 68972", href: "tel:8291568972" },
+      { text: "82915 68972", href: "tel:+918291568972" },
       { text: "." },
     ],
   },
@@ -81,7 +81,7 @@ export const NURSERY_FAQS: readonly NurseryFAQ[] = [
     question: "How do I apply for nursery admission for 2027-28?",
     answerSegments: [
       { text: "Use the enquiry form on this page or call " },
-      { text: "82915 68972", href: "tel:8291568972" },
+      { text: "82915 68972", href: "tel:+918291568972" },
       { text: ". The admissions team will call you within 24 hours. You can then arrange a free centre visit, followed by a relaxed parent–child interaction, documents and the admission fee, and 2–3 short orientation sessions before term. For fees, call us for current fee details." },
     ],
   },

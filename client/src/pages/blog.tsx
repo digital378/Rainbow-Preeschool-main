@@ -181,8 +181,6 @@ export default function Blog() {
         <EEATSignals
           pageUrl="/blog"
           pageName="Rainbow Preschool Blog"
-          reviewedBy="Rainbow Preschool Curriculum Team"
-          reviewerRole="Curriculum Team, Rainbow Preschool International"
           lastUpdated={LAST_UPDATED_DISPLAY}
           lastUpdatedIso={LAST_UPDATED_ISO}
           showRating={false}

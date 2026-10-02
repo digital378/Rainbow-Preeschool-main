@@ -351,7 +351,7 @@ export default function RepublicDay2026() {
                 </Link>
                 <Link href="/preschool-admissions" data-testid="link-related-admissions">
                   <div className="p-4 bg-muted/50 rounded-lg hover:bg-muted transition-colors cursor-pointer group">
-                    <h4 className="font-semibold text-foreground group-hover:text-primary transition-colors">Admissions 2026-27</h4>
+                    <h4 className="font-semibold text-foreground group-hover:text-primary transition-colors">Preschool Admissions</h4>
                     <p className="text-sm text-muted-foreground mt-1">Join the Rainbow family - limited seats available</p>
                   </div>
                 </Link>

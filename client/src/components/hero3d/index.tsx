@@ -1145,7 +1145,7 @@ export default function Hero3D() {
             <div className="h3d-badge-pill">
               <span className="h-2 w-2 rounded-full flex-shrink-0"
                 style={{ background:"#22C55E", animation:"h3d-dot-pulse 2.2s ease-in-out infinite" }}/>
-              <span>Admissions Open · 2026–27</span>
+              <span>Admissions Open · 2027–28</span>
               <span style={{ color:T.inkSoft }}>→</span>
               <span style={{ color:T.inkSoft }}>Limited seats</span>
             </div>

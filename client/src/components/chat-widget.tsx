@@ -328,7 +328,7 @@ export function ChatWidget() {
           sender: "bot",
           text: `Thank you, ${data.name}! 🎉\n\nOur team will call you at ${data.phone} within 24 hours.\n\nCan't wait? Reach us directly:`,
           links: [
-            { label: "📞 Call 82915 68972", href: "tel:8291568972", color: "primary" },
+            { label: "📞 Call 82915 68972", href: "tel:+918291568972", color: "primary" },
             { label: "💬 WhatsApp Us", href: `https://wa.me/${PHONE_NUMBER}?text=Hi%2C%20I%20just%20submitted%20an%20enquiry%20and%20would%20like%20to%20know%20more`, color: "green" },
           ],
           quickReplies: [

@@ -108,7 +108,7 @@ export function LandingHero({
             </Button>
           </a>
           
-          <a href={`tel:${cleanPhone}`} onClick={onCallClick} className="w-full sm:w-auto">
+          <a href="tel:+918291568972" onClick={onCallClick} className="w-full sm:w-auto">
             <Button
               size="lg"
               variant="ghost"

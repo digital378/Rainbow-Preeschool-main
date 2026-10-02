@@ -7,7 +7,7 @@ import { branches } from "./schema";
  */
 export const CONTACT_PAGE_COPY = {
   title: "Contact Rainbow Preschool Thane | Phone & Centres",
-  description: "Call 82915 68972 or visit one of our 6 Rainbow Preschool International centres in Thane. Addresses, phone and WhatsApp numbers, head office and enquiry form.",
+  description: "Call 82915 68972 or visit one of our 6 Rainbow Preschool International centres in Thane: addresses, phone and WhatsApp numbers, and enquiry form.",
   ogImage: "https://www.rainbowpreschools.com/images/og/contact-share-1200x630.jpg",
   ogImageAlt: "Rainbow Preschool centre in Thane",
   publishDate: "2026-09-29",
@@ -16,7 +16,7 @@ export const CONTACT_PAGE_COPY = {
   intro: "Questions about admissions or want to visit a centre? Call us on 82915 68972, WhatsApp your nearest centre, or send the form below. Our admissions team replies within 24 hours.",
   introSegments: [
     { text: "Questions about admissions or want to visit a centre? Call us on " },
-    { text: "82915 68972", href: "tel:8291568972" },
+    { text: "82915 68972", href: "tel:+918291568972" },
     { text: ", WhatsApp your nearest centre, or send the form below. Our admissions team replies within 24 hours." },
   ],
   callbackHeading: "Request A Callback",

@@ -1493,7 +1493,7 @@ function ContactSection() {
 
             {/* Quick-contact buttons */}
             <div style={{ display:"flex", gap:10, flexWrap:"wrap" }}>
-              <a href="tel:+918828195788" className="ctc-contact-btn ctc-call-btn" style={{
+              <a href="tel:+918291568972" className="ctc-contact-btn ctc-call-btn" style={{
                 display:"inline-flex", alignItems:"center", gap:7,
                 padding:"10px 20px", borderRadius:10, fontSize:13, fontWeight:700,
                 background:"#211B2E", color:"white", textDecoration:"none",
@@ -1723,7 +1723,7 @@ export default function Home() {
     <div>
       <SEO
         title="Preschool in Thane | Playgroup, Nursery & KG | Rainbow"
-        description="Playgroup, nursery and KG for ages 1.5 to 5.5 at 6 Rainbow Preschool International centres in Thane, since 2007. Book a free visit for 2026-27 or 2027-28."
+        description="Playgroup, nursery and KG for ages 1.5 to 5.5 at 6 Rainbow Preschool International centres in Thane, since 2007. Book a free visit for 2027-28."
         keywords="rainbow preschool, preschool in thane, playgroup in thane, nursery school thane, early childhood education thane, rainbow preschool international"
         canonical="https://www.rainbowpreschools.com/"
       />
@@ -1838,8 +1838,6 @@ export default function Home() {
         <EEATSignals
           pageUrl="/"
           pageName="Rainbow Preschool International — Preschool Chain in Thane"
-          reviewedBy="Rainbow Preschool Curriculum Team"
-          reviewerRole="Curriculum Team, Rainbow Preschool International"
           lastUpdated={HOME_PUBLISH_DATE_DISPLAY}
           lastUpdatedIso={HOME_PUBLISH_DATE_ISO}
           showRating={false}

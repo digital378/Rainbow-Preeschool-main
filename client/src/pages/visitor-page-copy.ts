@@ -316,15 +316,11 @@ export const PROGRAMMES_VISITOR_COPY: VisitorPageCopy = {
 
 export const PROGRAMMES_VISITOR_EEAT_COPY = {
   pageName: "Preschool Programmes in Thane",
-  reviewedBy: "Rainbow Preschool Curriculum Team",
-  reviewerRole: "Curriculum Team, Rainbow Preschool International",
 } as const;
 
 export const PROGRAMME_LANDING_EEAT_COPY = {
   nurseryPageName: "Nursery School in Thane",
   kindergartenPageName: "Kindergarten in Thane",
-  reviewedBy: PROGRAMMES_VISITOR_EEAT_COPY.reviewedBy,
-  reviewerRole: PROGRAMMES_VISITOR_EEAT_COPY.reviewerRole,
 } as const;
 
 export const CONTACT_VISITOR_COPY: VisitorPageCopy = {

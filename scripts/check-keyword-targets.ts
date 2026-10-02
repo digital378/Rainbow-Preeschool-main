@@ -347,7 +347,7 @@ function checkRedesignedHub(html: string): string[] {
 }
 
 function hasOrgByline(html: string): boolean {
-  return html.includes(BYLINE);
+  return html.includes("Last updated:") && !html.includes("Curriculum Team");
 }
 
 function hasAnchorTo(html: string, path: string): boolean {
@@ -397,7 +397,7 @@ async function main(): Promise<void> {
       if (path !== PLAY_SCHOOL_NEAR_ME_PATH && !hasOrgByline(html)) {
         failures.push({
           url: path,
-          reason: `missing visible "${BYLINE}" byline`,
+          reason: "missing date-only Last updated line or retired Curriculum Team attribution remains",
         });
       }
     } catch (err) {

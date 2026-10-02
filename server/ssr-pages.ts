@@ -221,6 +221,7 @@ function parseBlogBody(rawContent: string): BlogBody {
       const trimmed = line.trim();
       if (trimmed.startsWith("EXPLORE_MORE:")) return false;
       if (/^Reviewed by /i.test(trimmed)) return false;
+      if (/curriculum\s+team/i.test(trimmed)) return false;
       if (/^Last updated:/i.test(trimmed)) return false;
       return true;
     })
@@ -893,7 +894,7 @@ const homepageSections: NonNullable<PageSEOData["contentSections"]> = [
     ],
     images: [{ src: "/assets/walkthrough-poster.webp", alt: "Rainbow Preschool campus" }],
     links: [
-      { text: HOME_CALLBACK_COPY.callNow, url: "tel:+918828195788" },
+      { text: HOME_CALLBACK_COPY.callNow, url: "tel:+918291568972" },
       { text: "WhatsApp", url: "https://wa.me/918828195788" },
     ],
   },
@@ -1929,12 +1930,12 @@ const risSharedFaq = [
 ];
 
 const risLandingSEO: PageSEOData = {
-  title: "Rainbow International School Thane — Admissions 2026–27",
-  description: "Limited seats at Rainbow International School Thane. CBSE school Nursery to Grade 12. Admissions open 2026–27. Reserve your seat now.",
+  title: "Rainbow International School Thane — Admissions",
+  description: "Limited seats at Rainbow International School Thane. CBSE school Nursery to Grade 12. Admissions open. Reserve your seat now.",
   canonical: `${BASE_URL}/ris`,
   noIndex: true,
   h1: "Rainbow International School Thane",
-  introText: "Rainbow International School, Thane is a CBSE school in Brahmand focused on academics, confidence, leadership, and holistic development from Nursery to Grade 12. Admissions for 2026–27 are open and processed on a first-come, first-served basis; several grades have limited seats remaining.",
+  introText: "Rainbow International School, Thane is a CBSE school in Brahmand focused on academics, confidence, leadership, and holistic development from Nursery to Grade 12. Admissions are open and processed on a first-come, first-served basis; several grades have limited seats remaining.",
   breadcrumbs: [{ name: "Home", url: "/" }, { name: "Rainbow International School", url: "/ris" }],
   contentSections: [
     {
@@ -1986,7 +1987,7 @@ const ris11thLandingSEO: PageSEOData = {
   canonical: `${BASE_URL}/ris-11th`,
   noIndex: true,
   h1: "CBSE 11th Grade Admissions Open at Rainbow International School, Brahmand Thane",
-  introText: "Rainbow International School, Thane offers structured Grade 11 admissions across Science, Commerce, and Humanities for the 2026–27 academic year. Limited seats are available across select streams.",
+  introText: "Rainbow International School, Thane offers structured Grade 11 admissions across Science, Commerce, and Humanities. Limited seats are available across select streams.",
   breadcrumbs: [{ name: "Home", url: "/" }, { name: "Rainbow International School", url: "/ris" }, { name: "11th Grade Admissions", url: "/ris-11th" }],
   contentSections: [
     {
@@ -2458,7 +2459,7 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
             { heading: page.reachHeading, text: page.reachText },
             { heading: "Centre address & contact", text: centre.branchPageAddress ?? centre.address, items: [centre.hideCentrePhonesOnBranchPage ? "Admissions" : "Centre phone"], links: centre.hideCentrePhonesOnBranchPage
               ? [{ text: ADMISSIONS_PHONE_DISPLAY, url: "tel:+918291568972" }]
-              : centre.phoneNumbers.map((phone) => ({ text: phone, url: `tel:+91${phone.replace(/\D/g, "")}` })) },
+              : centre.phoneNumbers.map((phone) => ({ text: phone, url: "tel:+918291568972" })) },
           ],
           links: [{ text: "Get directions", url: centre.googleMapsDirectionsUrl }],
         },
@@ -2605,7 +2606,7 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
 
     richSections.push({
       heading: `Visit, Address & Contact for the ${centre.locality} Centre`,
-      text: `Our ${centre.locality} centre is located at ${centre.address}. To plan a visit or speak with the centre head, call ${centre.phone} between 9 AM and 6 PM, Monday to Saturday. We strongly encourage a free, no-obligation campus tour before you enrol — you will see our classrooms, meet the teachers, observe a live class in session, and have all your questions answered candidly. Walk-ins are welcome during school hours, and we can also arrange a guided trial class so your child can experience a typical Rainbow morning before you decide. Admissions for the 2026-27 academic year are open on a rolling basis, and seats are allocated on a first-come, first-served basis subject to age criteria and batch availability at the ${centre.locality} centre.`,
+      text: `Our ${centre.locality} centre is located at ${centre.address}. To plan a visit or speak with the centre head, call ${centre.phone} between 9 AM and 6 PM, Monday to Saturday. We strongly encourage a free, no-obligation campus tour before you enrol — you will see our classrooms, meet the teachers, observe a live class in session, and have all your questions answered candidly. Walk-ins are welcome during school hours, and we can also arrange a guided trial class so your child can experience a typical Rainbow morning before you decide. Admissions are open on a rolling basis, and seats are allocated on a first-come, first-served basis subject to age criteria and batch availability at the ${centre.locality} centre.`,
     });
 
     if (centreFaqs && centreFaqs.length > 0) {
@@ -2643,7 +2644,7 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
         { text: `Playgroup near ${centre.locality}`, url: "/playgroup" },
         { text: `Nursery near ${centre.locality}`, url: "/nursery" },
         { text: `Kindergarten near ${centre.locality}`, url: "/kindergarten" },
-        { text: "Preschool Admissions 2026-27", url: "/preschool-admissions" },
+        { text: "Preschool Admissions", url: "/preschool-admissions" },
       ],
       lastModified: LAST_UPDATED_ISO,
       lastModifiedDisplay: LAST_UPDATED_DISPLAY,
@@ -2661,7 +2662,6 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
       }
       const authorship = getBlogAuthorship(slug);
       const blogAuthor = blogPersonToSchema(authorship.author);
-      const blogReviewer = blogPersonToSchema(authorship.reviewedBy);
 
       const blogFAQs: Record<string, { q: string; a: string }[]> = {
         "what-to-ask-during-a-tour-of-a-preschool-in-thane": [
@@ -2785,7 +2785,6 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
         datePublished: post.datePublished,
         dateModified: post.lastModified,
         author: blogAuthor,
-        reviewedBy: blogReviewer,
         publisher: { "@type": "Organization", name: "Rainbow Preschool International", logo: { "@type": "ImageObject", url: `${BASE_URL}/images/logo.webp` } },
         mainEntityOfPage: { "@type": "WebPage", "@id": `${BASE_URL}/blog/${slug}` },
         articleSection: "Early Childhood Education",

@@ -294,7 +294,7 @@ export default function ReadinessQuiz() {
                 </Link>
                 <Link href="/preschool-admissions" className="flex items-center gap-2 p-3 rounded-lg border hover:border-red-300 hover:shadow-sm transition-all text-sm text-gray-700" data-testid="link-quiz-admission">
                   <ArrowRight className="w-4 h-4 text-red-500 flex-shrink-0" />
-                  Nursery Admission Guide 2026-27
+                  Nursery Admission Guide
                 </Link>
               </div>
             </div>
@@ -308,8 +308,6 @@ export default function ReadinessQuiz() {
         <EEATSignals
           pageUrl="/preschool-readiness-quiz"
           pageName="Preschool Readiness Quiz"
-          reviewedBy="Rainbow Preschool Curriculum Team"
-          reviewerRole="Curriculum Team, Rainbow Preschool International"
           lastUpdated={LAST_UPDATED_DISPLAY}
           lastUpdatedIso={LAST_UPDATED_ISO}
           showRating={false}

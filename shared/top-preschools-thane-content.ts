@@ -18,8 +18,8 @@ export const TOP_PRESCHOOLS_CENTRE_LINKS = centres.map((centre) => ({
 }));
 
 export const TOP_PRESCHOOLS_COPY = {
-  metaTitle: "Top Preschools in Thane (2027-28): Ages, Areas & Google Ratings | Rainbow",
-  metaDescription: "Compare preschools in Thane side by side: age groups, areas covered and Google ratings. Published by Rainbow Preschool International, with 6 centres in Thane since 2007.",
+  metaTitle: "Top Preschools in Thane (2027-28): Ages, Areas & Ratings",
+  metaDescription: "Compare preschools in Thane side by side: age groups, areas covered and Google ratings, by Rainbow Preschool International, 6 centres since 2007.",
   h1: "Top Preschools in Thane: Ages, Areas and Google Ratings",
   introduction: "Choosing a preschool in Thane usually comes down to three things: the right age group, a centre close to home, and what other parents say. This page puts those facts side by side for well-known preschools in Thane.",
   inboundCentreLink: { label: "Rainbow play schools near you", href: "/play-school-near-me" },

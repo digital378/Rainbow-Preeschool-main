@@ -416,8 +416,6 @@ export default function Gallery() {
         <EEATSignals
           pageUrl="/gallery"
           pageName="Rainbow Preschool Gallery — Thane"
-          reviewedBy="Rainbow Preschool Curriculum Team"
-          reviewerRole="Curriculum Team, Rainbow Preschool International"
           lastUpdated={LAST_UPDATED_DISPLAY}
           lastUpdatedIso={LAST_UPDATED_ISO}
           showRating={false}

@@ -36,9 +36,8 @@ const PAGES_DIR = resolve(ROOT, "client/src/pages");
  * All other pages must still carry `showRating={false}`.
  */
 const VERIFIED_RATING_PAGES = new Set([
-  "playgroup-landing.tsx",
-  "nursery-landing.tsx",
-  "kindergarten-landing.tsx",
+  // Programme freshness strips are now date-only, even though their separate
+  // review sections may still use verified ratings.
   "play-school-near-me.tsx",
 ]);
 

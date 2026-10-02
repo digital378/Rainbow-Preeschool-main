@@ -4,7 +4,7 @@ import type { VisitorPageCopy } from "../client/src/pages/visitor-page-copy";
 export const NURSERY_COPY = {
   title: "Nursery School in Thane (2.5–3.5 Years) | Rainbow Preschool",
   description:
-    "Nursery for children aged 2.5 to 3.5 years at our 6 Rainbow Preschool International centres in Thane: phonics, numbers and play. Admissions open for 2027-28.",
+    "Nursery for ages 2.5 to 3.5 at our 6 Rainbow Preschool International centres in Thane: phonics, numbers and play. Admissions open for 2027-28.",
   ogImage: "https://www.rainbowpreschools.com/images/og/nursery-share-1200x630.jpg",
   ogImageAlt: "Nursery class reading session at Rainbow Preschool, Thane",
   h1: "Nursery School in Thane for Children Aged 2.5 to 3.5 Years",
@@ -14,8 +14,6 @@ export const NURSERY_COPY = {
   heroSubline:
     "The next step after playgroup: phonics, numbers and creative play for children aged 2.5 to 3.5 in Thane.",
   pageName: "Nursery School in Thane",
-  reviewedBy: "Rainbow Preschool Curriculum Team",
-  reviewerRole: "Curriculum Team, Rainbow Preschool International",
 } as const;
 
 export const NURSERY_VISITOR_COPY: VisitorPageCopy = {
@@ -196,7 +194,7 @@ export const NURSERY_VISITOR_COPY: VisitorPageCopy = {
       heading: "Nursery Admission Process & Important Dates",
       items: ["Key admission dates"],
       paragraphs: [
-        "Nursery admissions are open at all 6 Rainbow centres: early admission for 2027-28 and mid-year seats for 2026-27, subject to availability.",
+        "Nursery admissions are open at all 6 Rainbow centres: early admission for 2027-28 and mid-year seats, subject to availability.",
       ],
       steps: [
         { label: "1. Enquire", description: "Submit the form on this page or call 82915 68972. Our admissions team will call you within 24 hours." },

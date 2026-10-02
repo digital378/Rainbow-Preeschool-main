@@ -673,8 +673,6 @@ export default function HappyTimesLanding() {
         <EEATSignals
           pageUrl="/happy-times"
           pageName="Daycare in Thane | Happy Times After-School Care"
-          reviewedBy="Rainbow Preschool Curriculum Team"
-          reviewerRole="Curriculum Team, Rainbow Preschool International"
           lastUpdated={LAST_UPDATED_DISPLAY}
           lastUpdatedIso={LAST_UPDATED_ISO}
           showRating={false}
