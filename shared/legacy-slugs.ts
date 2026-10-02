@@ -15,7 +15,6 @@ export const legacySlugs = [
   "/body-parts-names-in-english-for-preschoolers/",
   "/rainy-season-activities-for-kindergarten/",
   "/6-simple-tips-for-improving-listening-skills-in-preschoolers/",
-  "/diwali-activity-for-kindergarten/",
   "/impact-of-parent-teacher-communication-on-student-success/",
   "/holi-activities-for-kids/",
   "/7-things-you-can-do-to-help-children-overcome-fear/",

@@ -24,6 +24,7 @@ import lighthouse from 'lighthouse';
 import * as chromeLauncher from 'chrome-launcher';
 import TraceGatherer from 'lighthouse/core/gather/gatherers/trace.js';
 import { initializeConfig } from 'lighthouse/core/config/config.js';
+import { writeFile } from 'node:fs/promises';
 
 const BASE_URL = process.env.BASE_URL || 'http://localhost:5000';
 const SCREENSHOT_FREE = process.env.LH_NO_SCREENSHOTS === '1';
@@ -178,6 +179,9 @@ async function runOne(url) {
     }, LH_CONFIG);
     if (runnerResult.lhr.runtimeError) {
       throw new Error(`Lighthouse runtime error: ${runnerResult.lhr.runtimeError.message}`);
+    }
+    if (process.env.LH_DEBUG_REPORT) {
+      await writeFile(process.env.LH_DEBUG_REPORT, JSON.stringify(runnerResult.lhr));
     }
     return runnerResult.lhr;
   } finally {

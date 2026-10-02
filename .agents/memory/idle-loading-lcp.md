@@ -16,3 +16,9 @@ A paint-boundary delay around React mounting is not a delay around its static im
 **Why:** Mount-only deferral left the text-led hub over its LCP budget. Delaying entry fetch/evaluation and the shared stylesheet, while retaining complete critical styles, produced consecutive passing production checks.
 
 **How to apply:** Inspect actual request timing. When keeping the app off first paint, schedule entry loading at the HTML shell rather than only delaying mounting inside an already loaded module. Include the reference theme tokens and component utilities in critical CSS; wait for the full stylesheet before mounting shared navigation. Preserve a no-JS stylesheet path and stationary content.
+
+Long multilingual standalone guides can request fonts for off-screen chapters during initial layout, even when every image is lazy-loaded.
+
+**Why:** The festival guide's below-fold Devanagari text triggered substantial early font downloads; these competed with its hero in simulated mobile loading. Skipping off-screen chapter layout, removing an unused italic preload, and matching the preload to the actual responsive image brought LCP within budget without changing the fonts or template.
+
+**How to apply:** Inspect requested font files before changing typography. Consider page-scoped `content-visibility:auto` with intrinsic-size estimates while retaining all initial HTML text. Verify chapter anchors, tabs, FAQ and the complete quiz afterwards; do not apply the change to other pages without measuring them.

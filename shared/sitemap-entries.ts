@@ -24,6 +24,7 @@ import { KINDERGARTEN_COPY } from "./kindergarten-page-content";
 import { TOP_PRESCHOOLS_COPY } from "./top-preschools-thane-content";
 import { PROGRAMMES_COPY } from "./programmes-page-content";
 import { CONTACT_PAGE_COPY } from "./contact-page-copy";
+import { DIWALI_BUILD_DATE } from "./diwali-guide-meta";
 
 export type SitemapChangefreq =
   | "always"
@@ -121,7 +122,12 @@ export const SITEMAP_ENTRIES: SitemapEntry[] = [
   { url: "/36-motivational-thoughts-of-the-day-for-kids", priority: 0.8, changefreq: "yearly" },
   { url: "/body-parts-names-in-english-for-preschoolers", priority: 0.6, changefreq: "yearly" },
   { url: "/rainy-season-activities-for-kindergarten", priority: 0.6, changefreq: "yearly" },
-  { url: "/diwali-activity-for-kindergarten", priority: 0.6, changefreq: "yearly" },
+  {
+    url: "/diwali-activity-for-kindergarten",
+    priority: 0.6,
+    changefreq: "yearly",
+    lastmod: DIWALI_BUILD_DATE,
+  },
   { url: "/best-indoor-games-for-kids-at-home", priority: 0.6, changefreq: "yearly" },
   { url: "/explore-50-fruits-vegetables-english-hindi", priority: 0.6, changefreq: "yearly" },
   { url: "/solitary-play-activities", priority: 0.5, changefreq: "yearly" },

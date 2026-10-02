@@ -1,5 +1,6 @@
 import { LegacyLandingPage, AuthorArchivePage } from "@/components/legacy-landing-page";
 import { legacyPagesData, getLegacyPageData } from "@shared/legacy-pages-data";
+import { useEffect } from "react";
 
 function createLegacyPage(slug: string) {
   return function LegacyPage() {
@@ -26,7 +27,12 @@ export const GoodTouchBadTouch = createLegacyPage("/guide-to-understanding-good-
 export const BodyPartsNames = createLegacyPage("/body-parts-names-in-english-for-preschoolers/");
 export const RainySeasonActivities = createLegacyPage("/rainy-season-activities-for-kindergarten/");
 export const ListeningSkillsTips = createLegacyPage("/6-simple-tips-for-improving-listening-skills-in-preschoolers/");
-export const DiwaliActivities = createLegacyPage("/diwali-activity-for-kindergarten/");
+export function DiwaliActivities() {
+  useEffect(() => {
+    window.location.reload();
+  }, []);
+  return null;
+}
 export const ParentTeacherCommunication = createLegacyPage("/impact-of-parent-teacher-communication-on-student-success/");
 export const HoliActivities = createLegacyPage("/holi-activities-for-kids/");
 export const OvercomeFear = createLegacyPage("/7-things-you-can-do-to-help-children-overcome-fear/");

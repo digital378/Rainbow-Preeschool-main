@@ -1,6 +1,6 @@
 import { build as esbuild } from "esbuild";
 import { build as viteBuild } from "vite";
-import { rm, readFile, cp, readdir, mkdir } from "fs/promises";
+import { rm, readFile, writeFile, cp, readdir, mkdir } from "fs/promises";
 import { existsSync } from "fs";
 import { resolve } from "path";
 import {
@@ -80,10 +80,16 @@ const allowlist = [
 
 async function buildAll() {
   await checkStaticAdTracking();
+  const diwaliBuildDate = new Date().toISOString().slice(0, 10);
+  process.env.DIWALI_BUILD_DATE = diwaliBuildDate;
   await rm("dist", { recursive: true, force: true });
 
   console.log("building client...");
-  await viteBuild();
+  await viteBuild({
+    define: {
+      "process.env.DIWALI_BUILD_DATE": JSON.stringify(diwaliBuildDate),
+    },
+  });
 
   console.log("building server...");
   const pkg = JSON.parse(await readFile("package.json", "utf-8"));
@@ -101,6 +107,7 @@ async function buildAll() {
     outfile: "dist/index.cjs",
     define: {
       "process.env.NODE_ENV": '"production"',
+      "process.env.DIWALI_BUILD_DATE": JSON.stringify(diwaliBuildDate),
     },
     minify: true,
     external: externals,
@@ -112,11 +119,26 @@ async function buildAll() {
   // of the runtime working directory (process.cwd() can differ between the
   // build container and the production Cloud Run container).
   const blogPagesDir = resolve("blog-pages");
-  if (existsSync(blogPagesDir)) {
-    console.log("copying blog-pages → dist/blog-assets ...");
-    await cp(blogPagesDir, resolve("dist", "blog-assets"), { recursive: true });
-    console.log("done.");
+  if (!existsSync(blogPagesDir)) {
+    throw new Error(`Required standalone blog pages directory is missing: ${blogPagesDir}`);
   }
+  console.log("copying blog-pages → dist/blog-assets ...");
+  await cp(blogPagesDir, resolve("dist", "blog-assets"), { recursive: true });
+  const diwaliHtml = resolve(
+    "dist",
+    "blog-assets",
+    "diwali-activity-for-kindergarten",
+    "index.html",
+  );
+  if (!existsSync(diwaliHtml)) {
+    throw new Error(`Required standalone Diwali page is missing: ${diwaliHtml}`);
+  }
+  const html = (await readFile(diwaliHtml, "utf-8")).replaceAll(
+    "__DIWALI_BUILD_DATE__",
+    diwaliBuildDate,
+  );
+  await writeFile(diwaliHtml, html);
+  console.log("done.");
 
   // Copy standalone ad landing HTML into dist/ad-assets/ for the same reason:
   // server/index.ts resolves it relative to the compiled bundle first.

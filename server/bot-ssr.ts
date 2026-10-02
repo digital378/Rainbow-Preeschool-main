@@ -631,6 +631,12 @@ export function setupBotSSR(app: Express) {
 
     const urlPath = req.path;
 
+    // This root-level standalone document owns its complete visitor and bot
+    // HTML, metadata, and JSON-LD. Always let the dedicated route serve it.
+    if (urlPath === "/diwali-activity-for-kindergarten") {
+      return next();
+    }
+
     if (
       urlPath.startsWith("/api/") ||
       urlPath.startsWith("/assets/") ||

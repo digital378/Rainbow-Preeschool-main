@@ -112,6 +112,15 @@ import {
 } from "../client/src/lib/gallery-config";
 import { CONTACT_PAGE_COPY, CONTACT_PAGE_SCHEMA } from "@shared/contact-page-copy";
 import {
+  DIWALI_GUIDE_CANONICAL,
+  DIWALI_GUIDE_DESCRIPTION,
+  DIWALI_GUIDE_H1,
+  DIWALI_GUIDE_OG_IMAGE,
+  DIWALI_GUIDE_PATH,
+  DIWALI_GUIDE_TITLE,
+  getDiwaliGuideStructuredData,
+} from "@shared/diwali-guide-meta";
+import {
   BLOG_LIST_COPY,
   type BlogListEntry,
 } from "@shared/blog-list-copy";
@@ -924,6 +933,16 @@ const homepageSections: NonNullable<PageSEOData["contentSections"]> = [
 ];
 
 const staticPages: Record<string, PageSEOData> = {
+  [DIWALI_GUIDE_PATH]: {
+    title: DIWALI_GUIDE_TITLE,
+    description: DIWALI_GUIDE_DESCRIPTION,
+    canonical: DIWALI_GUIDE_CANONICAL,
+    ogType: "article",
+    ogImage: DIWALI_GUIDE_OG_IMAGE,
+    h1: DIWALI_GUIDE_H1,
+    structuredData: getDiwaliGuideStructuredData(),
+    suppressArticleSchema: true,
+  },
   "/": {
     title: HOMEPAGE_TITLE,
     description: HOMEPAGE_DESCRIPTION,

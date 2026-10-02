@@ -968,66 +968,6 @@ Object.assign(legacyPagesData, {
     category: "Child Development"
   },
 
-  "/diwali-activity-for-kindergarten/": {
-    slug: "/diwali-activity-for-kindergarten/",
-    title: "Diwali Activities for Kindergarten | Rainbow Preschool Thane",
-    metaDescription: "Fun and safe Diwali activities for kindergarten children. Craft ideas, stories, and celebrations for preschoolers in Thane.",
-    h1: "Diwali Activities for Kindergarten",
-    intro: "Diwali is a special time for young children! These age-appropriate activities from <a href=\"/about\">Rainbow Preschool International</a> help <a href=\"/kindergarten\">kindergarteners</a> understand and celebrate the festival of lights while learning about Indian culture and traditions.",
-    sections: [
-      {
-        heading: "Learning About Diwali",
-        content: "Help children understand Diwali through simple concepts:\n- Diwali is the festival of lights\n- We celebrate the victory of good over evil\n- Families come together to celebrate\n- We light diyas (lamps) and decorate our homes\n- We share sweets and gifts with family and friends",
-        bulletPoints: []
-      },
-      {
-        heading: "Craft Activities",
-        content: "Creative projects for the classroom or home:",
-        bulletPoints: [
-          "Paper diyas - Cut and decorate paper lamp shapes",
-          "Rangoli with chalk or colored rice",
-          "Kandil (lantern) making with paper",
-          "Handprint diyas art",
-          "Decorated greeting cards",
-          "Paper plate Lakshmi craft",
-          "Glitter firework art (paint and glitter)",
-          "Clay diya making"
-        ]
-      },
-      {
-        heading: "Songs and Stories",
-        content: "Cultural learning activities:",
-        bulletPoints: [
-          "Simple Diwali songs and rhymes",
-          "Age-appropriate Ramayana stories",
-          "Counting diyas games",
-          "Color matching with Rangoli",
-          "Diwali vocabulary building"
-        ]
-      },
-      {
-        heading: "Safe Celebration Tips",
-        content: "Keep Diwali safe for young children:",
-        bulletPoints: [
-          "Use LED candles instead of real flames around children",
-          "Keep firecrackers away from young children",
-          "Supervise all craft activities with glue, glitter, etc.",
-          "Choose eco-friendly celebration options",
-          "Maintain regular sleep schedules despite festivities"
-        ]
-      }
-    ],
-    faqs: [
-      { question: "How does Rainbow Preschool celebrate Diwali?", answer: "We have special Diwali celebrations at all our centres in <a href=\"/preschool-in-manpada-thane\">Manpada</a>, <a href=\"/preschool-in-hariniwas-thane\">Hariniwas</a>, and <a href=\"/preschool-in-dhokali-thane\">Dhokali</a> with traditional dress days, cultural activities, craft workshops, and storytelling. Children learn about the festival in an age-appropriate, inclusive way. <a href=\"/contact\">Contact us</a> to learn more." },
-      { question: "Are Diwali crafts safe for 3-4 year olds?", answer: "Yes, when adapted for their age. We use child-safe materials, avoid small parts that could be choking hazards, and always supervise activities." },
-      { question: "How can I explain Diwali's meaning to my preschooler?", answer: "Keep it simple: 'Diwali is when we celebrate that good always wins over bad, and we light lamps to show that light is stronger than darkness.'" },
-      { question: "What should my child wear for Diwali celebration at school?", answer: "Traditional Indian attire like kurta-pajama for boys and lehenga/salwar for girls is perfect. Keep clothes comfortable as children will be active." }
-    ],
-    relatedLinks: commonRelatedLinks,
-    internalLinks: commonInternalLinks,
-    category: "School Events"
-  },
-
   "/impact-of-parent-teacher-communication-on-student-success/": {
     slug: "/impact-of-parent-teacher-communication-on-student-success/",
     title: "Parent-Teacher Communication & Child Success | Rainbow Preschool",

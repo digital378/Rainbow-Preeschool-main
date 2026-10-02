@@ -15,6 +15,10 @@ import { requireAdminHeader, requireRpsAuth } from "./admin-auth";
 import { validateNearMeContactFields } from "./near-me-contact-validation";
 import path from "path";
 import fs from "fs";
+import {
+  DIWALI_BUILD_DATE,
+  DIWALI_GUIDE_PATH,
+} from "@shared/diwali-guide-meta";
 
 const RECAPTCHA_SECRET_KEY = process.env.RECAPTCHA_SECRET_KEY || "";
 const renderNearMeContactResponse = (success: boolean, errorMessage?: string) => `<!doctype html>
@@ -360,6 +364,54 @@ export async function registerRoutes(
       process.env.NODE_ENV === "production" ? "public, max-age=3600" : "no-store"
     );
     res.send(_navratriDussehraHtml);
+  });
+
+  // Diwali's root URL is a self-contained standalone guide. The production
+  // artifact is authoritative in production; development serves its source.
+  const diwaliGuidePath = path.join(
+    process.cwd(),
+    process.env.NODE_ENV === "production" ? "dist" : "blog-pages",
+    ...(process.env.NODE_ENV === "production"
+      ? ["blog-assets", "diwali-activity-for-kindergarten"]
+      : ["diwali-activity-for-kindergarten"]),
+  );
+  const diwaliGuideHtmlPath = path.join(diwaliGuidePath, "index.html");
+  const diwaliGuideAssetsPath = diwaliGuidePath;
+  let diwaliGuideHtml: Buffer | null = null;
+  if (fs.existsSync(diwaliGuideHtmlPath)) {
+    diwaliGuideHtml = Buffer.from(
+      fs
+        .readFileSync(diwaliGuideHtmlPath, "utf-8")
+        .replaceAll("__DIWALI_BUILD_DATE__", DIWALI_BUILD_DATE),
+    );
+    console.log(`[standalone-page] Diwali guide loaded from: ${diwaliGuideHtmlPath}`);
+  } else {
+    console.error(
+      `[standalone-page] Diwali guide missing: ${diwaliGuideHtmlPath}`,
+    );
+  }
+  if (fs.existsSync(diwaliGuideAssetsPath)) {
+    app.use(
+      "/blog-pages/diwali-activity-for-kindergarten",
+      express.static(diwaliGuideAssetsPath, {
+        immutable: process.env.NODE_ENV === "production",
+        maxAge: process.env.NODE_ENV === "production" ? "1y" : 0,
+      }),
+    );
+  }
+  app.get(DIWALI_GUIDE_PATH, (_req, res) => {
+    if (!diwaliGuideHtml) {
+      return res
+        .status(503)
+        .type("text/plain")
+        .send(`Standalone Diwali guide is unavailable: ${diwaliGuideHtmlPath}`);
+    }
+    res.setHeader("Content-Type", "text/html; charset=utf-8");
+    res.setHeader(
+      "Cache-Control",
+      process.env.NODE_ENV === "production" ? "public, max-age=3600" : "no-store",
+    );
+    res.send(diwaliGuideHtml);
   });
 
   // Raksha Bandhan 2026 is an independent static RPS article. Its relative
