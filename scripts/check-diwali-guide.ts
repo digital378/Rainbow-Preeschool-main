@@ -259,9 +259,9 @@ async function check() {
   const telLinks = Array.from(visitorHtml.matchAll(/href=["'](tel:[^"']+)["']/gi), (match) => match[1]);
   assert(
     telLinks.length === 1 &&
-      telLinks[0] === "tel:8291568972" &&
-      /Call Admissions[^<]*82915 68972/.test(visitorHtml),
-    "The only phone CTA must be Call Admissions at 82915 68972.",
+      telLinks[0] === "tel:+918291568972" &&
+      /href=["']tel:\+918291568972["']>\s*Call Admissions\s*<\/a>/.test(visitorHtml),
+    "The only phone CTA must use tel:+918291568972 and show only Call Admissions.",
   );
 
   const sitemapResponse = await get(`${BASE_URL}/sitemap.xml`, GOOGLEBOT_UA);
