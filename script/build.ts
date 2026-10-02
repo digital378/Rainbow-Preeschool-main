@@ -88,6 +88,7 @@ async function buildAll() {
   await viteBuild({
     define: {
       "process.env.DIWALI_BUILD_DATE": JSON.stringify(diwaliBuildDate),
+      "__NATIONAL_SYMBOLS_BUILD_DATE__": JSON.stringify(diwaliBuildDate),
     },
   });
 
@@ -108,6 +109,7 @@ async function buildAll() {
     define: {
       "process.env.NODE_ENV": '"production"',
       "process.env.DIWALI_BUILD_DATE": JSON.stringify(diwaliBuildDate),
+      "__NATIONAL_SYMBOLS_BUILD_DATE__": JSON.stringify(diwaliBuildDate),
     },
     minify: true,
     external: externals,

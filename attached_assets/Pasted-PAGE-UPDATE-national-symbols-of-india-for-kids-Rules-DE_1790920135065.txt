@@ -1,0 +1,55 @@
+PAGE UPDATE: /national-symbols-of-india-for-kids
+Rules: DESIGN FREEZE. Keep every section's design, layout and order. Only text, links, metadata, heading tags and alt text change; any new text uses existing styles. Text report only, no screenshots, don't publish, don't invent facts, no "best/No. 1" claims and no urgency. Meta description 155 characters or fewer.
+
+1. METADATA
+- Title (exactly, 62 chars): National Symbols of India for Kids: 17 Names, Pictures & Facts
+- Meta (exactly, 154 chars): All 17 national symbols of India for kids with pictures, Hindi names and easy facts, plus why some lists say 20. Riddles, crafts and a printable passport.
+- Keep the H1 and canonical.
+- Remove the "Reviewed by Rainbow Preschool Curriculum Team — Last updated: August 4, 2026" byline.
+
+2. HEADING TAGS (semantic only, no visual change)
+- Change the existing visual titles to real heading tags, keeping their current classes and styles so they look identical:
+  - H2: "Why We Collect These Symbols", each zone title ("Zone 1 — The Nation's Identity", "Zone 2 — The Wild Trail", "Zone 3 — The Nature Garden"), and the riddles, matching game, Symbol Passport, crafts and FAQ section titles.
+  - H3: each of the 17 symbol card titles, e.g. "National Animal — Royal Bengal Tiger", "National Flower — Lotus".
+- Exactly one H1. No skipped levels.
+
+3. NEW TEXT, USING EXISTING STYLES
+a) A quick list directly after the intro, with the H2 "List of 17 national symbols of India". One line per symbol, in the existing body/list style:
+   National Flag – Tiranga | National Emblem – Lion Capital of Ashoka | National Anthem – Jana Gana Mana | National Song – Vande Mataram | National Pledge | National Currency Symbol – ₹ | National Calendar – Saka Calendar | National Animal – Royal Bengal Tiger | National Bird – Peacock | National Aquatic Animal – Ganges River Dolphin | National Reptile – King Cobra | National Heritage Animal – Elephant | National Flower – Lotus | National Fruit – Mango | National Tree – Banyan | National Vegetable – Pumpkin | National River – Ganga
+   Each line links to its card on the page with an anchor link.
+   Use the same names and categories the cards use. If any card differs, report it rather than changing the card.
+b) Hindi name line: add one small line under each symbol card title, in the existing small text style:
+   राष्ट्रीय ध्वज (तिरंगा) · राष्ट्रीय प्रतीक · राष्ट्रगान (जन गण मन) · राष्ट्रीय गीत (वन्दे मातरम्) · राष्ट्रीय प्रतिज्ञा · रुपया चिह्न (₹) · राष्ट्रीय पंचांग (शक संवत) · राष्ट्रीय पशु (बाघ) · राष्ट्रीय पक्षी (मोर) · राष्ट्रीय जलीय जीव (गंगा डॉल्फ़िन) · राष्ट्रीय सरीसृप (किंग कोबरा) · राष्ट्रीय धरोहर पशु (हाथी) · राष्ट्रीय पुष्प (कमल) · राष्ट्रीय फल (आम) · राष्ट्रीय वृक्ष (बरगद) · राष्ट्रीय सब्ज़ी (कद्दू) · राष्ट्रीय नदी (गंगा)
+c) New short section after Zone 3, H2 "17 or 20 national symbols of India?", 3–4 sentences in the existing body style:
+   "You may see lists of 17, 20 or more national symbols. This guide covers 17 widely recognised symbols. Longer lists often add India's national motto, 'Satyameva Jayate' ('Truth Alone Triumphs'), which appears below the national emblem, and sometimes a national game. Many lists name hockey as India's national game, but the Government of India has not officially declared a national game."
+d) FAQ (visible accordion, existing style):
+   - Add "How many national symbols does India have — 17 or 20?", with a 2-sentence answer matching section 3c.
+   - Add "Which national symbols should LKG and UKG children learn?" Answer: start with the flag, peacock, tiger, lotus, mango and the ₹ sign, which children can easily spot, then add the anthem, emblem and banyan tree as they grow.
+   - Replace the answer to "Does Rainbow Preschool teach national symbols as part of its curriculum?" with: "Rainbow Preschool International follows a play-based curriculum aligned with NEP 2020, where children learn through stories, crafts and songs. You're welcome to book a visit at any of our 6 centres in Thane." Link "6 centres in Thane" to /play-school-near-me.
+
+4. IMAGE ALT TEXT
+- Every symbol image needs descriptive alt text, e.g. "Indian national flag Tiranga with the Ashoka Chakra" or "Royal Bengal Tiger, national animal of India".
+- Repeated small icons in the game or passport that are decorative may keep alt="" and aria-hidden="true". Each symbol's main card image must have alt text.
+
+5. LINKS
+- Make the existing "Independence Day guide" mention a link to /blog/independence-day-for-kids.
+- In the flag or anthem card, add "Republic Day activities for kids" linking to /blog/republic-day-2026.
+- Keep the existing /kindergarten, /about and /nursery links.
+
+6. SCHEMA
+- Keep BlogPosting (dateModified = build date, image = hero) and ItemList (the 17 symbols).
+- Keep ONE BreadcrumbList and remove the duplicate.
+- Remove the FAQPage and all 8 HowTo schema blocks. The visible FAQ and crafts stay on the page.
+
+7. CHECKS AND REPORT
+- Run predeploy twice: meta ≤155, freshness, mobile LCP ≤2.5s, TBT ≤200ms, CLS ≤0.1.
+- Run the parity check: visitor HTML must equal Googlebot HTML.
+- Report (text only):
+  - title and meta, with character counts
+  - the full H1/H2/H3 outline
+  - confirmation that no visual change was made to any section
+  - alt text for each symbol image
+  - schema types now output
+  - links added
+  - LCP / TBT / CLS for both runs
+- Don't publish.

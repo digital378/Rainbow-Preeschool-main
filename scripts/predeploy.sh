@@ -342,6 +342,11 @@ set -e
 # "observed score minus a small buffer" so the guard catches regressions, not
 # just catastrophic failures. See scripts/predeploy-lighthouse-guard.mjs.
 PERF_EXIT=0
+log "step 16h/18 — national-symbols metadata/schema/HTML-parity contract"
+set +e
+BASE_URL="${PREDEPLOY_URL}" npx --no-install tsx scripts/check-national-symbols-page.ts
+NATIONAL_SYMBOLS_EXIT=$?
+set -e
 if [ "${SKIP_PERF_GUARD:-0}" != "1" ]; then
   log "step 17/18 — Lighthouse performance guard (BASE_URL=${PREDEPLOY_URL})"
   set +e
@@ -358,7 +363,10 @@ else
 fi
 # ─────────────────────────────────────────────────────────────────────────────
 
-if [ "${FRESHNESS_EXIT}" -ne 0 ] || [ "${KEYWORD_EXIT}" -ne 0 ] || [ "${SITEMAP_EXIT}" -ne 0 ] || [ "${BOT_DETECTION_EXIT}" -ne 0 ] || [ "${AD_PAGES_EXIT}" -ne 0 ] || [ "${CRAWLER_METADATA_EXIT}" -ne 0 ] || [ "${LOCAL_REELS_EXIT}" -ne 0 ] || [ "${NEAR_ME_CONTRACT_EXIT}" -ne 0 ] || [ "${DIWALI_GUIDE_EXIT}" -ne 0 ] || [ "${PERF_EXIT}" -ne 0 ]; then
+if [ "${FRESHNESS_EXIT}" -ne 0 ] || [ "${KEYWORD_EXIT}" -ne 0 ] || [ "${SITEMAP_EXIT}" -ne 0 ] || [ "${BOT_DETECTION_EXIT}" -ne 0 ] || [ "${AD_PAGES_EXIT}" -ne 0 ] || [ "${CRAWLER_METADATA_EXIT}" -ne 0 ] || [ "${LOCAL_REELS_EXIT}" -ne 0 ] || [ "${NEAR_ME_CONTRACT_EXIT}" -ne 0 ] || [ "${DIWALI_GUIDE_EXIT}" -ne 0 ] || [ "${NATIONAL_SYMBOLS_EXIT}" -ne 0 ] || [ "${PERF_EXIT}" -ne 0 ]; then
+  if [ "${NATIONAL_SYMBOLS_EXIT}" -ne 0 ]; then
+    log "FAIL — national-symbols metadata/schema/HTML-parity contract exited ${NATIONAL_SYMBOLS_EXIT}."
+  fi
   if [ "${NEAR_ME_CONTRACT_EXIT}" -ne 0 ]; then
     log "FAIL — near-me initial HTML/schema/claim/link contract exited ${NEAR_ME_CONTRACT_EXIT}."
   fi

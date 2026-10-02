@@ -636,6 +636,11 @@ export function setupBotSSR(app: Express) {
     if (urlPath === "/diwali-activity-for-kindergarten") {
       return next();
     }
+    // Keep this frozen React page and its metadata identical for visitors and
+    // crawlers rather than substituting the generic crawler-only layout.
+    if (urlPath === "/national-symbols-of-india-for-kids") {
+      return next();
+    }
 
     if (
       urlPath.startsWith("/api/") ||

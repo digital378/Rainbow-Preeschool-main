@@ -25,6 +25,7 @@ import { TOP_PRESCHOOLS_COPY } from "./top-preschools-thane-content";
 import { PROGRAMMES_COPY } from "./programmes-page-content";
 import { CONTACT_PAGE_COPY } from "./contact-page-copy";
 import { DIWALI_BUILD_DATE } from "./diwali-guide-meta";
+import { NATIONAL_SYMBOLS_BUILD_DATE } from "./national-symbols-page-meta";
 
 export type SitemapChangefreq =
   | "always"
@@ -117,7 +118,7 @@ export const SITEMAP_ENTRIES: SitemapEntry[] = [
 
   // ── SEASONAL / STANDALONE (high-traffic GSC content) ────
   { url: "/holi-activities-for-kids", priority: 0.7, changefreq: "yearly" },
-  { url: "/national-symbols-of-india-for-kids", priority: 0.8, changefreq: "yearly" },
+  { url: "/national-symbols-of-india-for-kids", priority: 0.8, changefreq: "yearly", lastmod: NATIONAL_SYMBOLS_BUILD_DATE },
   { url: "/sports-day-activities-for-kindergarten", priority: 0.7, changefreq: "yearly" },
   { url: "/36-motivational-thoughts-of-the-day-for-kids", priority: 0.8, changefreq: "yearly" },
   { url: "/body-parts-names-in-english-for-preschoolers", priority: 0.6, changefreq: "yearly" },
