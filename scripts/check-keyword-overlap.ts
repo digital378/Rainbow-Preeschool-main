@@ -66,7 +66,8 @@ const OWNED_PHRASES: OwnedPhrase[] = [
 // treating redirected pages as current keyword owners.
 const REDIRECTED_PAGE_DESTINATIONS: Record<string, string> = {
   "/best-preschool-near-me-in-thane": "/play-school-near-me",
-  "/playgroup-near-ghodbunder-road": "/play-school-near-ghodbunder-road",
+  "/play-school-near-ghodbunder-road": "/play-school-near-me",
+  "/playgroup-near-ghodbunder-road": "/play-school-near-me",
   "/playgroup-in-manpada": "/preschool-in-manpada-thane",
   "/playgroup-in-kasarvadavali": "/preschool-in-kasarvadavali-thane",
   "/playgroup-in-anand-nagar": "/preschool-in-anand-nagar-thane",

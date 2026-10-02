@@ -31,6 +31,7 @@ export type NearMeCentre = CentreData & {
   displayName: string;
   grade: string;
   filter: string;
+  additionalFilters?: readonly string[];
   near1: readonly string[];
   near2: readonly string[];
   lat: number;
@@ -50,7 +51,7 @@ const centreDetails = [
     near2: ["Vasant Vihar", "Pokhran Road No. 2", "Edenwoods", "Tata Glendale"],
   },
   {
-    id: "kasarvadavali", displayName: "Rainbow Preschool, Kasarvadavali", grade: "Up to Grade 3", filter: "Kasarvadavali",
+    id: "kasarvadavali", displayName: "Rainbow Preschool, Kasarvadavali", grade: "Up to Grade 3", filter: "Kasarvadavali", additionalFilters: ["Ghodbunder Road"],
     near1: ["Kasarvadavali", "Rosa Gardenia", "Parijat Gardens", "Hypercity", "Puranik City"],
     near2: ["Owale", "Mogharpada", "Vijay Annex"],
   },
@@ -111,6 +112,14 @@ export const admissionsSteps = [
 export const faqs = [
   { q: "Which is the best preschool in Thane?", a: "The right preschool depends on distance, curriculum, teachers and hygiene; use the checklist above. Rainbow has the Best Preschool in Thane award (2018, 2023), a 4.9 rating from 487 Google reviews, has operated since 2007 and has 6 centres. Compare options in our guide to preschools in Thane." },
   { q: "How do I find a good play school near me in Thane?", a: "Compare the commute, curriculum, teachers and hygiene, then visit centres that suit your route. Rainbow has six centres across Thane; use the area filters or type your area above." },
+  {
+    q: "Is there a Rainbow play school on Ghodbunder Road?",
+    a: "Yes, there are two. Rainbow Preschool, Anand Nagar is at Kris Commercial Plaza, opposite Tropical Lagoon, Anand Nagar. Rainbow Preschool, Kasarvadavali is at Rosa Gardenia, next to Parijat Gardens, behind Hypercity Mall. Both offer Playgroup, Nursery, Jr. KG and Sr. KG, with GPS-enabled transport.",
+    links: [
+      { text: "Rainbow Preschool, Anand Nagar", url: "/preschool-in-anand-nagar-thane" },
+      { text: "Rainbow Preschool, Kasarvadavali", url: "/preschool-in-kasarvadavali-thane" },
+    ],
+  },
   { q: "What is the right age for play school?", a: "Playgroup is for ages 1.5–2.5 years. Age is counted as of 1 June of the academic year." },
   { q: "What is the difference between play school, preschool, nursery and kindergarten?", a: "Play school and preschool describe early learning for young children. At Rainbow, the age bands are Playgroup 1.5–2.5, Nursery 2.5–3.5, Jr. KG 3.5–4.5 and Sr. KG 4.5–5.5 years." },
   { q: "What are the play school fees in Thane?", a: "Fees are not published and vary by centre and class. Call Admissions for the 2027-28 fee details." },

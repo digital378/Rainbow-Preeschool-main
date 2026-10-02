@@ -56,7 +56,6 @@ const FAQsPage = lazy(() => import("@/pages/faqs"));
 const PreschoolAdmissions = lazy(() => import("@/pages/preschool-admissions"));
 const Gallery = lazy(() => import("@/pages/gallery"));
 const PlaySchoolNearMe = lazy(() => import("@/pages/play-school-near-me"));
-const PlaySchoolNearGhodbunderRoad = lazy(() => import("@/pages/play-school-near-ghodbunder-road"));
 
 const RainbowSparkleTrail = lazy(() => import("@/components/rainbow-sparkle-trail").then(m => ({ default: m.RainbowSparkleTrail })));
 const DummyPage = lazy(() => import("@/pages/dummy"));
@@ -126,7 +125,6 @@ import { legacySlugs } from "@shared/legacy-slugs";
 
 const STANDALONE_LANDING_PATHS = [
   "/dummy",
-  "/play-school-near-ghodbunder-road",
   "/preschool-in-manpada-thane",
   "/preschool-in-hariniwas-thane",
   "/preschool-in-anand-nagar-thane",
@@ -205,7 +203,6 @@ function Router() {
         {/* High-intent SEO landing pages */}
         <Route path="/preschool-admissions" component={PreschoolAdmissions} />
         <Route path="/play-school-near-me" component={PlaySchoolNearMe} />
-        <Route path="/play-school-near-ghodbunder-road" component={PlaySchoolNearGhodbunderRoad} />
         
         <Route path="/join-now" component={ReferralPage} />
         <Route path="/ad" component={AdLanding} />

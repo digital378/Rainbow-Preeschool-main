@@ -73,7 +73,8 @@ const DEEP_CONTENT_MIN_WORDS = 1200;
 const REDIRECT_BASE: Array<{ from: string; to: string }> = [
   { from: "/preschool-near-me", to: "/play-school-near-me" },
   { from: "/best-preschool-near-me-in-thane", to: "/play-school-near-me" },
-  { from: "/playgroup-near-ghodbunder-road", to: "/play-school-near-ghodbunder-road" },
+  { from: "/play-school-near-ghodbunder-road", to: "/play-school-near-me" },
+  { from: "/playgroup-near-ghodbunder-road", to: "/play-school-near-me" },
   { from: "/playgroup-in-manpada", to: "/preschool-in-manpada-thane" },
   { from: "/playgroup-in-kasarvadavali", to: "/preschool-in-kasarvadavali-thane" },
   { from: "/playgroup-in-anand-nagar", to: "/preschool-in-anand-nagar-thane" },
@@ -553,10 +554,18 @@ async function main(): Promise<void> {
         });
         continue;
       }
-      if (!location || !location.endsWith(r.to)) {
+      const exactGhodbunderRedirect =
+        r.from === "/play-school-near-ghodbunder-road" ||
+        r.from === "/play-school-near-ghodbunder-road/" ||
+        r.from === "/playgroup-near-ghodbunder-road" ||
+        r.from === "/playgroup-near-ghodbunder-road/";
+      const expectedLocation = exactGhodbunderRedirect
+        ? `${SITE_BASE_URL}${r.to}`
+        : null;
+      if (!location || (expectedLocation ? location !== expectedLocation : !location.endsWith(r.to))) {
         failures.push({
           url: r.from,
-          reason: `expected redirect to ${r.to}, got ${location ?? "<none>"}`,
+          reason: `expected redirect to ${expectedLocation ?? r.to}, got ${location ?? "<none>"}`,
         });
       }
     } catch (err) {

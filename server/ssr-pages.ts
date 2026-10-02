@@ -1520,51 +1520,6 @@ const staticPages: Record<string, PageSEOData> = {
     lastModified: NEAR_ME_BUILD_DATE,
     lastModifiedDisplay: NEAR_ME_BUILD_DATE,
   },
-  "/play-school-near-ghodbunder-road": {
-    title: "Play School Near Ghodbunder Road | Rainbow Preschool",
-    description: "Looking for a play school near Ghodbunder Road? Rainbow Preschool has centres in Manpada (Khewra Circle) and Kasarvadavali (Hypercity Mall).",
-    keywords: "play school near ghodbunder road, preschool near ghodbunder road, playschool ghodbunder road thane, preschool manpada thane, preschool kasarvadavali thane",
-    canonical: `${BASE_URL}/play-school-near-ghodbunder-road`,
-    h1: "Play School Near Ghodbunder Road",
-    breadcrumbs: [
-      { name: "Home", url: "/" },
-      { name: "Play School Near Me", url: "/play-school-near-me" },
-      { name: "Ghodbunder Road", url: "/play-school-near-ghodbunder-road" },
-    ],
-    structuredData: [organizationSchema, websiteSchema, {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      mainEntity: [
-        { "@type": "Question", name: "Which Rainbow Preschool is nearest to Ghodbunder Road?", acceptedAnswer: { "@type": "Answer", text: "Rainbow Preschool has two centres for Ghodbunder Road families: Manpada (Aggarwal Arcade, near Khewra Circle) and Kasarvadavali (Rosa Gardenia, behind Hypercity Mall)." } },
-        { "@type": "Question", name: "Is there a play school near Edenwoods in Thane?", acceptedAnswer: { "@type": "Answer", text: "Yes. Rainbow Preschool Manpada (Aggarwal Arcade, near Khewra Circle) is the nearest play school for families in Edenwoods and Hiranandani Estate on lower Ghodbunder Road." } },
-        { "@type": "Question", name: "Is there a preschool near Hypercity Mall on Ghodbunder Road?", acceptedAnswer: { "@type": "Answer", text: "Yes. Rainbow Preschool Kasarvadavali is at Rosa Gardenia, directly behind Hypercity Mall — convenient for families in Kasarvadavali, Patlipada, Brahmand and Hiranandani Meadows." } },
-        { "@type": "Question", name: "What age does the play school near Ghodbunder Road accept?", acceptedAnswer: { "@type": "Answer", text: "The Playgroup (play school) programme is for children aged 1.5 to 2.5 years. Morning (8:30–11:30 AM) and Afternoon (12:30–3:30 PM) batches are available at both Ghodbunder Road centres." } },
-        { "@type": "Question", name: "Are admissions open at Rainbow Preschool on Ghodbunder Road?", acceptedAnswer: { "@type": "Answer", text: "Yes, admissions are open year-round on a rolling basis at both centres. Call +91-8291568972 or fill the enquiry form on this page to book a free campus visit." } },
-      ],
-    }],
-    contentSections: [
-      { heading: "Two Centres Serving Ghodbunder Road", text: "Rainbow Preschool operates two centres along the Ghodbunder Road corridor. The Manpada centre at Aggarwal Arcade, near Khewra Circle, serves families from Manpada, Edenwoods, Patlipada and Hiranandani Estate. The Kasarvadavali centre at Rosa Gardenia, behind Hypercity Mall, is the nearest play school for families in Kasarvadavali, Brahmand, Hiranandani Meadows and upper Ghodbunder Road." },
-      { heading: "Frequently Asked Questions about Play School Near Ghodbunder Road", text: "Parents near Ghodbunder Road commonly ask:", items: [
-        "Q: Which Rainbow Preschool is nearest to Ghodbunder Road? A: Two centres serve Ghodbunder Road — Manpada (Khewra Circle) and Kasarvadavali (behind Hypercity Mall).",
-        "Q: Is there a play school near Edenwoods? A: Yes — Rainbow Preschool Manpada is the nearest centre for Edenwoods and Hiranandani Estate families.",
-        "Q: Is there a preschool near Hypercity Mall? A: Yes — Rainbow Preschool Kasarvadavali (Rosa Gardenia) is directly behind Hypercity Mall.",
-        "Q: What age does the play school accept? A: 1.5 to 2.5 years (Playgroup programme).",
-        "Q: Are admissions open? A: Yes, year-round rolling basis. Call +91-8291568972.",
-      ]},
-      { heading: "Explore More", text: "Related Thane locality pages and programmes. Playgroup near Ghodbunder Road is this page:", links: [
-        { text: "Play School Near Me in Thane", url: "/play-school-near-me" },
-        { text: "Preschool in Manpada, Thane", url: "/preschool-in-manpada-thane" },
-        { text: "Preschool in Kasarvadavali, Thane", url: "/preschool-in-kasarvadavali-thane" },
-        { text: "Playgroup in Manpada", url: "/preschool-in-manpada-thane" },
-        { text: "Playgroup in Kasarvadavali", url: "/preschool-in-kasarvadavali-thane" },
-        { text: "Playgroup Programme", url: "/playgroup" },
-        { text: "Preschool Admissions", url: "/preschool-admissions" },
-      ]},
-    ],
-    internalLinks: commonInternalLinks,
-    lastModified: LAST_UPDATED_ISO,
-    lastModifiedDisplay: LAST_UPDATED_DISPLAY,
-  },
   "/happy-times": {
     title: "Daycare in Thane | Safe After-School Care | Rainbow Preschool",
     description: "Enroll your child (ages 2–8) in Happy Times — Rainbow Preschool's after-school enrichment in Thane. Art, music, dance, sports & creative play.",
@@ -2390,6 +2345,7 @@ export function isKnownRoute(urlPath: string): boolean {
 }
 
 const RETIRED_PAGE_PATHS = new Set([
+  "/play-school-near-ghodbunder-road",
   "/best-preschool-near-me-in-thane",
   "/playgroup-near-ghodbunder-road",
   "/playgroup-in-manpada",
@@ -2668,10 +2624,10 @@ export function getPageSEO(urlPath: string): PageSEOData | null {
 
     const nearbyPages: Record<string, { text: string; url: string }[]> = {
       "/preschool-in-manpada-thane": [
-        { text: "Play school near Ghodbunder Road", url: "/play-school-near-ghodbunder-road" },
+        { text: "play schools on Ghodbunder Road", url: "/play-school-near-me" },
       ],
       "/preschool-in-kasarvadavali-thane": [
-        { text: "Play school near Ghodbunder Road", url: "/play-school-near-ghodbunder-road" },
+        { text: "play schools on Ghodbunder Road", url: "/play-school-near-me" },
       ],
     };
     const nearbyPlainText: Record<string, string[]> = {

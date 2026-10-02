@@ -19,6 +19,14 @@ Run predeploy validation on an unused port when the development workflow already
 
 **How to apply:** Set `PREDEPLOY_PORT` to a free port for local runs, then confirm the boot log says the production server bound to that port.
 
+## Inherited performance-skip flag
+
+Do not infer that performance was checked from predeploy's generic PASS summary. An inherited performance-skip flag can disable that stage even when the command does not explicitly request skipping it.
+
+**Why:** Two successful validation runs printed the broad success summary while their performance stage was skipped by an existing environment setting. Separate screenshot-free performance checks then exposed a budget failure that the summaries did not show.
+
+**How to apply:** When a full performance-inclusive run is required, explicitly enable the performance stage and inspect its log. If performance is measured separately, report that distinction and retain both passing and failing measurements.
+
 ## Schema contract drift
 
 When a page intentionally switches from Article/FAQ/Organization markup to a dated WebPage, update the publishing checks to assert the new schema and that page's own publish date. Do not restore retired markup just to satisfy stale assertions.

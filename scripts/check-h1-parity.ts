@@ -344,8 +344,6 @@ const CLIENT_H1_MAP: Record<string, { file: string; nthH1?: number }> = {
   "/national-symbols-of-india-for-kids": { file: "client/src/pages/national-symbols-of-india.tsx" },
   // SEO commercial landing pages
   "/preschool-admissions":        { file: "client/src/pages/preschool-admissions.tsx" },
-  // Hyperlocal "near {landmark}" play school pages
-  "/play-school-near-ghodbunder-road": { file: "client/src/pages/play-school-near-ghodbunder-road.tsx" },
   // Legal — one file, two routes; nthH1 selects which <h1> applies
   "/terms":                       { file: "client/src/pages/legal.tsx", nthH1: 1 },
   "/privacy":                     { file: "client/src/pages/legal.tsx", nthH1: 2 },

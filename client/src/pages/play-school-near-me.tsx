@@ -216,7 +216,7 @@ function PlaySchoolNearMe() {
         button.classList.toggle("is-active", active);
       });
       centreCards.forEach((card) => {
-        card.hidden = filter !== "All" && card.dataset.centreFilter !== filter;
+        card.hidden = filter !== "All" && !card.dataset.centreFilter?.split("|").includes(filter);
       });
     };
     const revealFormFieldError = (field: string, message: string) => {

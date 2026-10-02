@@ -155,6 +155,10 @@ async function run() {
     assert(/\bid=["']nm-callback-form["']/.test(main(html)), "Hero enquiry form must remain");
     const cards = [...main(html).matchAll(/<article\b[^>]*class=["']nm-centre-card["'][^>]*>([\s\S]*?)<\/article>/gi)];
     assert.equal(cards.length, 6, "Six branch cards must remain in initial HTML");
+    const ghodbunderCards = cards.filter(card =>
+      attribute(card[0].split(">")[0], "data-centre-filter")?.split("|").includes("Ghodbunder Road"),
+    ).map(card => attribute(card[0].split(">")[0], "data-centre-slug"));
+    assert.deepEqual(ghodbunderCards, ["anand-nagar", "kasarvadavali"], "Ghodbunder Road filter must include both centres");
     for (const [index, card] of cards.entries()) {
       const [slug, copy] = branches[index];
       assert.equal(attribute(card[0].split(">")[0], "data-centre-slug"), slug);
@@ -199,6 +203,18 @@ async function run() {
     )].map(match => text(match[1]));
     assert.deepEqual(timeLabels, ["8:30 AM", "9:00 AM", "9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM"]);
     assert(/role=["']combobox["']/.test(main(html)), "Searchable area combobox missing from initial HTML");
+    const faqItems = [...main(html).matchAll(/<details\b[^>]*class=["']nm-faq-item["'][^>]*>([\s\S]*?)<\/details>/gi)];
+    const faqQuestions = faqItems.map(item => text(item[1].match(/<summary\b[^>]*>([\s\S]*?)<\/summary>/i)?.[1] || "").replace(/\s*\+$/, ""));
+    const ghodbunderQuestion = "Is there a Rainbow play school on Ghodbunder Road?";
+    assert.equal(faqQuestions.filter(question => question === ghodbunderQuestion).length, 1, "Ghodbunder Road FAQ must occur exactly once");
+    const ghodbunderIndex = faqQuestions.indexOf(ghodbunderQuestion);
+    assert.equal(faqQuestions[ghodbunderIndex - 1], "How do I find a good play school near me in Thane?", "Ghodbunder Road FAQ order");
+    const ghodbunderAnswer = faqItems[ghodbunderIndex][1].match(/<p\b[^>]*>([\s\S]*?)<\/p>/i)?.[1] || "";
+    assert.equal(text(ghodbunderAnswer), "Yes, there are two. Rainbow Preschool, Anand Nagar is at Kris Commercial Plaza, opposite Tropical Lagoon, Anand Nagar. Rainbow Preschool, Kasarvadavali is at Rosa Gardenia, next to Parijat Gardens, behind Hypercity Mall. Both offer Playgroup, Nursery, Jr. KG and Sr. KG, with GPS-enabled transport.");
+    assert.deepEqual([...ghodbunderAnswer.matchAll(/(<a\b[^>]*>)([\s\S]*?)<\/a>/gi)].map(item => [text(item[2]), attribute(item[1], "href")]), [
+      ["Rainbow Preschool, Anand Nagar", "/preschool-in-anand-nagar-thane"],
+      ["Rainbow Preschool, Kasarvadavali", "/preschool-in-kasarvadavali-thane"],
+    ], "Ghodbunder Road FAQ centre links");
     const accordions = [...main(html).matchAll(/<details\b([^>]*class=["']nm-area-accordion["'][^>]*)>([\s\S]*?)<\/details>/gi)];
     assert.equal(accordions.length, 6, "Six centre area accordions must remain in initial HTML");
     for (const [index, accordion] of accordions.entries()) {

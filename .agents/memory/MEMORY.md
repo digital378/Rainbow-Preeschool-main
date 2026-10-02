@@ -20,7 +20,7 @@
 - [Dev proxy Lighthouse SEO](dev-proxy-lighthouse-seo.md) — the proxied preview adds a noindex response header, so Lighthouse SEO can fail despite indexable app metadata.
 - [Idle loading and LCP](idle-loading-lcp.md) — requestIdleCallback can fire during initial load; deferral needs an explicit post-paint boundary, and font preloads can worsen mobile LCP.
 - [Rendered image parity scope](rendered-image-parity-scope.md) — compare unique stable editorial image tuples; repeated carousels and conditional media fallbacks distort raw counts.
-- [Cloudflare HSTS vs app-level header](cloudflare-hsts-vs-app-header.md) — apex-domain redirect is issued by Cloudflare before reaching Express, so an app-level HSTS header doesn't cover it; needs the zone's `security_header` setting enabled separately.
+- [Cloudflare edge vs origin](cloudflare-hsts-vs-app-header.md) — apex redirects precede Express; origin HSTS and single-hop path rules need matching edge configuration.
 - [Two public directories](two-public-directories.md) — top-level `public/` is served unconditionally (dev AND prod) via its own express.static call; works fine in production despite not going through the Vite build.
 - [Analytics guard strength](analytics-guard-strength.md) — tracking guards must verify dispatch and interaction wiring, explicit destinations, and disabled automatic page views—not event-name strings.
 - [Dependency reconciliation](post-merge-dependency-setup.md) — use npm clean installs; mixed lockfiles can confuse deploy detection and pnpm-linked trees break incremental npm installs.
@@ -36,7 +36,7 @@
 - [Local Google tag verification gap](local-google-tag-verification.md) — a local browser can load GTM but block its secondary Google tag request; queue tests do not prove GA4 receipt.
 - [Reel refresh on Autoscale](reel-refresh-autoscale.md) — keep the six-hour in-process timer plus request-time stale/expiry checks; an idle Autoscale instance cannot run timers.
 - [Retired page invariants](retired-page-invariants.md) — archived page source can still trigger live-route startup and SEO source-scan checks; scope exclusions to truly retired pages.
-- [Standalone locality page ending](standalone-contact-ending.md) — six centre pages and Ghodbunder Road intentionally end at contact CTA, without footer in visitor or crawler HTML.
+- [Standalone locality page ending](standalone-contact-ending.md) — six centre pages intentionally end at contact CTA, without footer in visitor or crawler HTML.
 - [Lighthouse hydration LCP](lighthouse-simulated-vs-observed-lcp.md) — replacing or moving a first-paint H1 during React mount can keep simulated LCP slow; leave the initial node stationary.
 - [Inert hero template H1](inert-hero-template-h1.md) — raw HTML parsers count the homepage H1 inside an inert template on other routes; live DOM queries do not.
 - [Comparison page attribution](comparison-page-attribution.md) — the About box is intentionally absent; visitor and bot versions show only the date near the bottom.
@@ -46,3 +46,4 @@
 - [Design worker write scope](design-worker-write-scope.md) — outputDir is a write boundary; coordinate shared/server/public foundations separately.
 - [Native pattern validation](native-pattern-validation.md) — HTML pattern uses Unicode v mode; ordinary JS regex tests can miss invalid character-class syntax.
 - [Rendered font verification](rendered-font-verification.md) — computed font names and weights can hide fallback or synthetic faces; inspect the actual rendered font.
+- [Ghodbunder Road grouping](ghodbunder-centre-grouping.md) — creator-approved pair is Anand Nagar and Kasarvadavali, not the retired page's Manpada pairing.

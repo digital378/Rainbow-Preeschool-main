@@ -542,7 +542,6 @@ export const preschoolLandingPages = [
 export const localityLandingPages = [
   { name: "Manpada", slug: "manpada", url: "/preschool-in-manpada-thane" },
   { name: "Kalwa", slug: "kalwa", url: "/preschool-in-kalwa-thane" },
-  { name: "Ghodbunder Road", slug: "ghodbunder-road", url: "/play-school-near-ghodbunder-road" },
   { name: "Anand Nagar", slug: "anand-nagar", url: "/preschool-in-anand-nagar-thane" },
   { name: "Kasarvadavali", slug: "kasarvadavali", url: "/preschool-in-kasarvadavali-thane" },
   { name: "Dhokali", slug: "dhokali", url: "/preschool-in-dhokali-thane" },
@@ -826,12 +825,6 @@ export const localPageSEO: Record<string, LocalPageSEO> = {
     h1: "Playgroup in Kalwa, Thane (1.5-2.5 Years)",
     canonicalPath: "/playgroup-in-kalwa",
   },
-  "ghodbunder-road": {
-    title: "Playgroup near Ghodbunder Road, Thane | Rainbow Preschool",
-    description: "Playgroup near Ghodbunder Road at Kasarvadavali — NEP 2020-aligned curriculum, ages 1.5–2.5 yrs. Rainbow Preschool beside Parijat Gardens. Enquire now.",
-    h1: "Playgroup near Ghodbunder Road, Thane (1.5-2.5 Years)",
-    canonicalPath: "/playgroup-near-ghodbunder-road",
-  },
   "anand-nagar": {
     title: "Playgroup in Anand Nagar, Thane | Rainbow Preschool",
     description: "Playgroup in Anand Nagar opp. Tropical Lagoon — daily art, music & movement woven into every session. Rainbow Preschool. Book a free visit.",
@@ -932,32 +925,6 @@ export const localityFAQs: Record<string, Array<{ question: string; answer: stri
       answer: "For detailed fee information, please contact our Kalwa centre at 74003 27905 or fill out the enquiry form. We offer competitive fees with quality education."
     },
   ],
-  "ghodbunder-road": [
-    {
-      question: "Is there a Rainbow Preschool near Ghodbunder Road?",
-      answer: "Yes! Our Kasarvadavali centre is located behind Hypercity Mall on Ghodbunder Road. It's easily accessible from all areas along Ghodbunder Road including Vasant Vihar, Manpada, and Kapurbawdi."
-    },
-    {
-      question: "What areas does the Ghodbunder Road centre serve?",
-      answer: "Our centre serves families from Kasarvadavali, Ghodbunder Road, Patlipada, Majiwada, Owale, and surrounding areas. We're conveniently located near major residential complexes."
-    },
-    {
-      question: "How do I reach Rainbow Preschool on Ghodbunder Road?",
-      answer: "We're located at Rosa Gardenia, Next to Parijat Gardens, behind Hypercity Mall, Kasarvadavali. Contact us at 022-40062128 or 87798 00068 for directions."
-    },
-    {
-      question: "What is the playgroup timings at the Ghodbunder Road centre?",
-      answer: "We offer morning and afternoon batches for playgroup. Please contact us at 87798 00068 for specific batch timings that suit your schedule."
-    },
-    {
-      question: "Is parking available at the Ghodbunder Road centre?",
-      answer: "Yes, ample parking is available near Rosa Gardenia. The centre is also easily accessible by auto-rickshaw and buses along Ghodbunder Road."
-    },
-    {
-      question: "Can I visit the centre before enrolling?",
-      answer: "We encourage all parents to visit! Call us at 87798 00068 or fill the callback form to schedule a free visit to our Ghodbunder Road centre."
-    },
-  ],
   "anand-nagar": [
     {
       question: "Where is Rainbow Preschool in Anand Nagar?",
@@ -1043,7 +1010,6 @@ export const localityIntros: Record<string, string> = {
   thane: "Looking for the best playgroup in Thane for your toddler? Rainbow Preschool International has been nurturing young minds across Thane West for over 18 years. With 6 conveniently located centres, we offer safe, play-based early learning that prepares your child for a bright future.",
   manpada: "Rainbow Preschool's Manpada centre, located near Khewra Circle, has been a trusted choice for families in the area for years. Our playgroup programme provides a nurturing environment where toddlers aged 1.5-2.5 years learn through play, creativity, and exploration.",
   kalwa: "Parents in Kalwa trust Rainbow Preschool for their toddler's first learning experience. Our centre near Sayba Hall offers a safe, fun environment where children aged 1.5-2.5 years develop essential skills through our play-based curriculum.",
-  "ghodbunder-road": "Looking for a playgroup near Ghodbunder Road? Rainbow Preschool's Kasarvadavali centre, located behind Hypercity Mall, serves families across the Ghodbunder corridor. Our proven curriculum helps toddlers aged 1.5-2.5 years develop through joyful learning.",
   "anand-nagar": "Rainbow Preschool's Anand Nagar centre, opposite Tropical Lagoon, is the perfect choice for parents seeking quality early education. Our playgroup programme for toddlers aged 1.5-2.5 years combines play-based learning with a safe, caring environment.",
   kasarvadavali: "Our Kasarvadavali centre at Rosa Gardenia welcomes families seeking a trusted playgroup for their toddlers. Located near Parijat Gardens and Hypercity Mall, we offer the same quality Rainbow education that 1,00,000+ students have experienced.",
   dhokali: "Parents in Dhokali and Kolshet Road area trust Rainbow Preschool for their child's early education. Our centre opposite Aban Park Society provides a safe, stimulating environment where toddlers aged 1.5-2.5 years thrive and grow.",

@@ -231,9 +231,9 @@ const realSSR = readFileSync(
 );
 
 assert(
-  "/play-school-near-ghodbunder-road has FAQPage in its staticPages block",
+  "Retired /play-school-near-ghodbunder-road no longer has page-specific FAQPage",
   hasFAQPageSSRCoverage(realSSR, "/play-school-near-ghodbunder-road"),
-  true
+  false
 );
 
 assert(

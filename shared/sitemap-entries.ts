@@ -50,6 +50,7 @@ export interface SitemapEntry {
 // their former URLs.
 export const ARCHIVED_REDIRECT_PATHS = new Set([
   "/best-preschool-near-me-in-thane",
+  "/play-school-near-ghodbunder-road",
   "/playgroup-near-ghodbunder-road",
   "/playgroup-in-manpada",
   "/playgroup-in-kasarvadavali",
@@ -87,7 +88,6 @@ export const SITEMAP_ENTRIES: SitemapEntry[] = [
   // ── HIGH-INTENT LANDING PAGES ────────────────────────────
   { url: "/preschool-admissions", priority: 1.0, changefreq: "weekly", lastmod: ADMISSIONS_PUBLISH_DATE_ISO },
   { url: "/play-school-near-me", priority: 1.0, changefreq: "weekly" },
-  { url: "/play-school-near-ghodbunder-road", priority: 0.85, changefreq: "monthly" },
 
   // ── PROGRAMME PAGES ──────────────────────────────────────
   { url: "/playgroup", priority: 0.9, changefreq: "monthly", lastmod: PLAYGROUP_COPY.publishDate },

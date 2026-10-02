@@ -8,3 +8,11 @@ This project's Express app sets `Strict-Transport-Security` itself (e.g. via hel
 **Why:** Browsers only start enforcing HSTS after they've received the header once; a first-hit redirect without it leaves a small window where that specific hop isn't HSTS-protected. Zone-level HSTS via Cloudflare's `security_header` setting applies to every response from the zone, including edge-issued redirects.
 
 **How to apply:** Check current state via `cloudflare.request({ method: "GET", path: "/zones/<zone_id>/settings/security_header" })` (Cloudflare MCP). If `strict_transport_security.enabled` is `false`, enabling it (mirror the app's existing `max_age`/`include_subdomains` values) fixes the gap without needing an app-level change. Avoid turning on `preload` unless the user explicitly wants HSTS-preload-list submission — it's a much harder-to-reverse commitment than the `enabled`/`max_age`/`include_subdomains` fields.
+
+## Single-hop path consolidation
+
+An origin redirect placed before Express host canonicalization does not bypass Cloudflare's earlier apex-to-www redirect. To guarantee one hop on the public apex domain, its edge rule must also recognize consolidated paths and point directly to the final canonical destination.
+
+**Why:** The live apex domain returns a redirect to the same path on www before the app can apply a retired-path redirect. Host-header tests against the app can pass while the public domain still adds a hop.
+
+**How to apply:** Clearly distinguish unpublished origin verification from public edge verification. Coordinate path-specific edge exceptions with release approval; do not change live rules when the user asks for unpublished work.

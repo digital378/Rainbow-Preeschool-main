@@ -671,8 +671,10 @@ export const redirectMap: Record<string, string> = {
   // filtering; the early redirect middleware also normalizes case and slashes.
   "/best-preschool-near-me-in-thane": "/play-school-near-me",
   "/best-preschool-near-me-in-thane/": "/play-school-near-me",
-  "/playgroup-near-ghodbunder-road": "/play-school-near-ghodbunder-road",
-  "/playgroup-near-ghodbunder-road/": "/play-school-near-ghodbunder-road",
+  "/play-school-near-ghodbunder-road": "/play-school-near-me",
+  "/play-school-near-ghodbunder-road/": "/play-school-near-me",
+  "/playgroup-near-ghodbunder-road": "/play-school-near-me",
+  "/playgroup-near-ghodbunder-road/": "/play-school-near-me",
   "/playgroup-in-manpada": "/preschool-in-manpada-thane",
   "/playgroup-in-manpada/": "/preschool-in-manpada-thane",
   "/playgroup-in-kasarvadavali": "/preschool-in-kasarvadavali-thane",
@@ -728,10 +730,13 @@ export function preserveAttribution(target: string, originalUrl: string): string
 
 export function setupRedirects(app: Express) {
   // Consolidated-page redirects run before host/query canonicalization so
-  // every UA gets one permanent hop, with the incoming query untouched.
+  // every UA gets one permanent hop. Ghodbunder merges use the absolute
+  // canonical destination and retain attribution while discarding private/junk
+  // query parameters.
   const consolidatedTargets: Record<string, string> = {
     "/best-preschool-near-me-in-thane": "/play-school-near-me",
-    "/playgroup-near-ghodbunder-road": "/play-school-near-ghodbunder-road",
+    "/play-school-near-ghodbunder-road": "/play-school-near-me",
+    "/playgroup-near-ghodbunder-road": "/play-school-near-me",
     "/playgroup-in-manpada": "/preschool-in-manpada-thane",
     "/playgroup-in-kasarvadavali": "/preschool-in-kasarvadavali-thane",
     "/playgroup-in-anand-nagar": "/preschool-in-anand-nagar-thane",
@@ -754,7 +759,15 @@ export function setupRedirects(app: Express) {
     const proto = (req.get("x-forwarded-proto") || req.protocol).toLowerCase();
     const needsCanonicalHost = process.env.NODE_ENV === "production" &&
       (host !== "www.rainbowpreschools.com" || proto === "http");
-    const location = needsCanonicalHost
+    const isGhodbunderConsolidation =
+      normalizedPath === "/play-school-near-ghodbunder-road" ||
+      normalizedPath === "/playgroup-near-ghodbunder-road";
+    const absoluteTarget = isGhodbunderConsolidation
+      ? `https://www.rainbowpreschools.com${target}`
+      : null;
+    const location = absoluteTarget
+      ? preserveAttribution(absoluteTarget, req.originalUrl)
+      : needsCanonicalHost
       ? `https://www.rainbowpreschools.com${target}${query}`
       : `${target}${query}`;
     return res.redirect(301, location);

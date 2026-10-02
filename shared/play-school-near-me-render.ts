@@ -50,7 +50,7 @@ const daySteps = [
 function centreCard(centre: typeof PLAY_SCHOOL_NEAR_ME_CENTRES[number], index: number) {
   const image = playSchoolNearMePhotos.centres[centre.id as keyof typeof playSchoolNearMePhotos.centres];
   const greeting = encodeURIComponent(branchWhatsAppGreeting(centre));
-  return `<article class="nm-centre-card" data-centre-slug="${escapeHtml(centre.id)}" data-centre-filter="${escapeHtml(centre.filter)}">
+  return `<article class="nm-centre-card" data-centre-slug="${escapeHtml(centre.id)}" data-centre-filter="${escapeHtml([centre.filter, ...(centre.additionalFilters ?? [])].join("|"))}">
     <div class="nm-centre-image"><img class="nm-centre-art" data-centre-photo="${centre.id}" src="${escapeHtml(image.src)}" alt="${escapeHtml(image.alt)}" width="600" height="400" loading="${index < 2 ? "eager" : "lazy"}" fetchpriority="low" decoding="async" /></div>
     <div class="nm-card-body">
       <h3>${escapeHtml(centre.displayName)}</h3>
@@ -207,10 +207,16 @@ export function renderPlaySchoolNearMeHtml(): string {
       </section>
 
       <section class="nm-section nm-faq-section"><div class="nm-section-heading"><span class="nm-eyebrow">${escapeHtml(nearMeCopy.sectionEyebrows.faq)}</span><h2>${escapeHtml(nearMeCopy.headings.faq)}</h2></div>
-        <div class="nm-faq-list">${faqs.map(({ q, a }, index) => {
-          const answer = index === 0
+        <div class="nm-faq-list">${faqs.map((faq, index) => {
+          const { q, a } = faq;
+          let answer = index === 0
             ? escapeHtml(a).replace("Compare options in our guide to preschools in Thane.", `${link("/top-preschools-in-thane", "Compare options in our guide to preschools in Thane")}.`)
             : escapeHtml(a);
+          if ("links" in faq) {
+            for (const item of faq.links) {
+              answer = answer.replace(escapeHtml(item.text), link(item.url, item.text));
+            }
+          }
           return `<details class="nm-faq-item"><summary aria-expanded="false">${escapeHtml(q)}<span aria-hidden="true">+</span></summary><p>${answer}</p></details>`;
         }).join("")}</div>
       </section>
