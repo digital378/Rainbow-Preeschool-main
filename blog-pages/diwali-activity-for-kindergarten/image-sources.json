@@ -1,0 +1,108 @@
+{
+  "hero": {
+    "base": "diwali-celebration-preschool-thane",
+    "type": "Rainbow photo",
+    "sourcePath": "client/public/images/gallery/rainbow-preschool-diwali-celebration-event.webp",
+    "sourceUrl": "/images/gallery/rainbow-preschool-diwali-celebration-event.webp",
+    "alt": "Children holding colourful crafts in front of a festive display with paper diyas and a sweets table"
+  },
+  "stories": [
+    {
+      "base": "diwali-celebration-for-kids-floor-decorations",
+      "type": "Rainbow Instagram photo",
+      "sourcePath": "client/public/instagram-reels/poster-051.jpg",
+      "sourceUrl": "https://www.instagram.com/reel/DQEHZHkiAat/",
+      "width": 540,
+      "height": 960,
+      "alt": "Children in festive clothing stand beside colourful floor decorations"
+    },
+    {
+      "base": "diwali-akash-kandil-celebration-for-kids",
+      "type": "Rainbow Instagram photo",
+      "sourcePath": "client/public/instagram-reels/poster-084.jpg",
+      "sourceUrl": "https://www.instagram.com/reel/DBx0bXkimKN/",
+      "width": 640,
+      "height": 1136,
+      "alt": "Children in festive clothing carry paper lanterns through a decorated school hallway"
+    }
+  ],
+  "crafts": [
+    {
+      "base": "diwali-craft-for-kids-paper-plate-diya-finished",
+      "previousBase": "diwali-craft-for-kids-paper-plate-diya",
+      "type": "Illustration",
+      "sourcePath": "attached_assets/generated_images/diwali-finished-paper-plate-diya.png",
+      "alt": "Decorated red paper-plate diya with a yellow paper flame, glitter dots and paper trim"
+    },
+    {
+      "base": "diwali-craft-for-kids-clay-diya-finished",
+      "previousBase": "diwali-craft-for-kids-clay-diya",
+      "type": "Illustration",
+      "sourcePath": "attached_assets/generated_images/diwali-finished-clay-diya.png",
+      "alt": "Handmade clay diya with a finger-shaped rim and teal and gold painted dots"
+    },
+    {
+      "base": "diwali-craft-for-kids-handprint-diya-finished",
+      "previousBase": "diwali-craft-for-kids-handprint-diya",
+      "type": "Illustration",
+      "sourcePath": "attached_assets/generated_images/diwali-finished-handprint-diya.png",
+      "alt": "Three coloured handprints around paper diyas on a sheet beside paints and brushes"
+    },
+    {
+      "base": "easy-rangoli-for-kids-finished",
+      "previousBase": "easy-rangoli-for-kids",
+      "type": "Illustration",
+      "sourcePath": "attached_assets/generated_images/diwali-finished-dot-grid-rangoli.png",
+      "alt": "Flower-shaped rangoli on a floor with coloured rice, chalk outlines and bowls of petals"
+    },
+    {
+      "base": "akash-kandil-for-kids-finished",
+      "previousBase": "akash-kandil-for-kids",
+      "type": "Illustration",
+      "sourcePath": "attached_assets/generated_images/diwali-finished-akash-kandil.png",
+      "alt": "Hanging red and gold paper akash kandil with folded panels and long fringed tassels"
+    },
+    {
+      "base": "diwali-greeting-card-for-kids-finished",
+      "previousBase": "diwali-greeting-card-for-kids",
+      "type": "Illustration",
+      "sourcePath": "attached_assets/generated_images/diwali-finished-greeting-card.png",
+      "alt": "Folded Diwali greeting card decorated with a paper diya, flowers and gold dots"
+    },
+    {
+      "base": "diwali-lotus-craft-for-kids-finished",
+      "previousBase": "diwali-lotus-craft-for-kids",
+      "type": "Illustration",
+      "sourcePath": "attached_assets/generated_images/diwali-finished-lotus-craft.png",
+      "alt": "Layered red paper lotus with a yellow centre on a scalloped paper-plate base"
+    },
+    {
+      "base": "diwali-firework-paint-art-for-kids-finished",
+      "previousBase": "diwali-firework-paint-art-for-kids",
+      "type": "Illustration",
+      "sourcePath": "attached_assets/generated_images/diwali-finished-firework-art.png",
+      "alt": "Colourful fork-print firework bursts painted on navy paper beside paint and a fork"
+    },
+    {
+      "base": "counting-diyas-for-kids-finished",
+      "previousBase": "counting-diyas-for-kids",
+      "type": "Illustration",
+      "sourcePath": "attached_assets/generated_images/diwali-finished-counting-diyas.png",
+      "alt": "Five paper diya cards with rows of coloured counting counters"
+    },
+    {
+      "base": "rangoli-colour-matching-for-kids-finished",
+      "previousBase": "rangoli-colour-matching-for-kids",
+      "type": "Illustration",
+      "sourcePath": "attached_assets/generated_images/diwali-finished-rangoli-colour-matching.png",
+      "alt": "Four-colour rangoli matching board with large coloured shapes arranged beside its petals"
+    },
+    {
+      "base": "mini-killa-fort-for-kids-finished",
+      "previousBase": "mini-killa-fort-for-kids",
+      "type": "Illustration",
+      "sourcePath": "attached_assets/generated_images/diwali-finished-mini-killa.png",
+      "alt": "Handmade miniature fort with towers, battlements, steps, a paper flag and small clay trees"
+    }
+  ]
+}

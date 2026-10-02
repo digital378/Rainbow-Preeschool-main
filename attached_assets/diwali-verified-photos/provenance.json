@@ -1,0 +1,51 @@
+{
+  "candidates": [
+    {
+      "file": "rainbow-gallery-diwali-celebration.webp",
+      "dimensions": "900x675",
+      "factualAlt": "Children stand in front of a colourful festive display with paper diya decorations and a sweets table.",
+      "source": {
+        "type": "Rainbow-curated gallery",
+        "path": "client/public/images/gallery/rainbow-preschool-diwali-celebration-event.webp",
+        "galleryId": "evt-04",
+        "curatedAlt": "Diwali celebration at Rainbow Preschool International Thane",
+        "curatedCaption": "Diwali — festival of lights and learning"
+      },
+      "visualReview": "The pixels show children in festive clothing in front of a colourful school display with diya-shaped decorations, lights and sweets. This is an actual Diwali scene, unlike generic classroom work.",
+      "recommendedUse": "Hero or lead celebration image: landscape composition, recognizable Diwali display, and strongest standalone image of the candidates."
+    },
+    {
+      "file": "instagram-diwali-rangoli-reel-poster.jpg",
+      "dimensions": "540x960",
+      "factualAlt": "Four children in festive clothing stand beside a line of colourful floor decorations at a Diwali celebration.",
+      "source": {
+        "type": "Rainbow Instagram reel thumbnail from local authenticated-feed snapshot",
+        "localManifest": "client/src/components/rainbow-theatre/local-reel-posters.ts",
+        "localPoster": "client/public/instagram-reels/poster-051.jpg",
+        "permalink": "https://www.instagram.com/reel/DQEHZHkiAat/",
+        "caption": "Our little ones lit up Diwali with smiles, fun, and learning! 🪔✨ Here’s what made their day special: exploring the magic and meaning of Diwali; enjoying sweet treats with friends; designing their very own colorful rangolis; and dancing along to cheerful festival tunes. The caption identifies Rainbow Preschools in its hashtags."
+      },
+      "visualReview": "The pixels show four children dressed for a festival, floor decorations, and an authored Diwali Celebration title graphic. It is a vertical branded reel thumbnail, not a clean craft close-up.",
+      "recommendedUse": "Supporting story/celebration image; pair with a short factual explanation of rangoli rather than presenting it as a close-up craft tutorial."
+    },
+    {
+      "file": "instagram-diwali-dhokali-reel-poster.jpg",
+      "dimensions": "640x1136",
+      "factualAlt": "Children in festive clothing stand in a school hallway decorated with hanging paper lanterns.",
+      "source": {
+        "type": "Rainbow Instagram reel thumbnail from local authenticated-feed snapshot",
+        "localManifest": "client/src/components/rainbow-theatre/local-reel-posters.ts",
+        "localPoster": "client/public/instagram-reels/poster-084.jpg",
+        "permalink": "https://www.instagram.com/reel/DBx0bXkimKN/",
+        "caption": "Celebrating Diwali with Laughter, Learning, and Light! 🪔✨ Highlights include learning the significance of the festival, sharing Diwali treats, creating rangoli designs, and dancing to festive tunes. The caption explicitly says: “Rainbow Preschool, Dhokali Centre.”"
+      },
+      "visualReview": "The pixels show children in festive clothing in a decorated hallway; hanging paper lanterns are visible. The poster is vertical and includes Rainbow branding.",
+      "recommendedUse": "Supporting story image for a general Diwali celebration passage; not a hero or craft-step image."
+    }
+  ],
+  "researchNotes": [
+    "The gallery entry evt-04 was visually inspected and is genuinely Diwali-themed; the verified gallery caption and image path establish it as Rainbow gallery content.",
+    "The two Instagram items were selected by caption in the existing local reel metadata and their actual saved poster pixels were inspected. Their local manifest includes Instagram permalinks and captions, without timestamps.",
+    "The Instagram reels endpoint was not available on the existing local service during this research. The INSTAGRAM_ACCESS_TOKEN secret-existence check returned no configured entry; no credential was requested or read."
+  ]
+}

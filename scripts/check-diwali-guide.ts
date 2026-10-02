@@ -179,7 +179,7 @@ async function check() {
   assert(!("datePublished" in (article ?? {})), "A datePublished was added without source evidence.");
   assert(
     article?.headline === H1 &&
-      article?.image === "https://www.rainbowpreschools.com/images/diwali-activities-for-kindergarten-2026-hero.webp",
+      article?.image === "https://www.rainbowpreschools.com/images/diwali-celebration-preschool-thane.webp",
     "Article schema headline or hero image is incorrect.",
   );
   const breadcrumb = schemas.find((schema) => schema["@type"] === "BreadcrumbList");
@@ -286,7 +286,7 @@ async function check() {
     );
   }
   const ogImage = "https://www.rainbowpreschools.com/images/og/diwali-activities-for-kindergarten-2026-og.jpg";
-  const heroImage = "/images/diwali-activities-for-kindergarten-2026-hero.webp";
+  const heroImage = "/images/diwali-celebration-preschool-thane.webp";
   assert(visitorHtml.includes(ogImage), "Approved Diwali OG image is missing.");
   assert(visitorHtml.includes(heroImage), "Approved Diwali hero image is missing.");
   assert(

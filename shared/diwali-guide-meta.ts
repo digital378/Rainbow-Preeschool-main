@@ -7,7 +7,7 @@ export const DIWALI_GUIDE_H1 = "Diwali Activities for Kindergarten";
 export const DIWALI_GUIDE_CANONICAL =
   "https://www.rainbowpreschools.com/diwali-activity-for-kindergarten";
 export const DIWALI_GUIDE_HERO_IMAGE =
-  "https://www.rainbowpreschools.com/images/diwali-activities-for-kindergarten-2026-hero.webp";
+  "https://www.rainbowpreschools.com/images/diwali-celebration-preschool-thane.webp";
 export const DIWALI_GUIDE_OG_IMAGE =
   "https://www.rainbowpreschools.com/images/og/diwali-activities-for-kindergarten-2026-og.jpg";
 

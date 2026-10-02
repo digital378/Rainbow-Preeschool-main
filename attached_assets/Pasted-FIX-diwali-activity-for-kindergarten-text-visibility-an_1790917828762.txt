@@ -1,0 +1,40 @@
+FIX: /diwali-activity-for-kindergarten — text visibility and images
+Rules: Same page, same template. Text report only, no screenshots, don't publish. No changes to any other page.
+
+1. TEXT VISIBILITY (mandatory)
+- Every chapter heading (H2), its intro paragraph and every H3 currently renders white or near-white on a cream background and is unreadable. Affected: "The Stories", "Crafts, Rangoli & Activities", "Play & Connect", "Ten fun facts for little ones", "Ram, Sita and the lamps of Ayodhya", "Diwali quiz for kids", and all other chapters.
+- Fix: either restore the dark/coloured chapter band exactly as on /blog/navratri-dussehra-2026-for-kids, or, if the band isn't used, make the text dark:
+  - headings #1F2937
+  - intro text #374151 at weight 500
+- Remove the white glow/text-shadow on the headings.
+- Check that the off-screen "defer layout" change (content-visibility or similar) isn't stripping the section backgrounds. Backgrounds and colours must be identical before and after scrolling.
+- Every text element on the page must pass WCAG AA contrast (4.5:1 for body text, 3:1 for large headings). List any element that fails.
+
+2. LAYOUT
+- Story cards: use the full card width, or a 2-column layout with an illustration on the right. No empty right half.
+- Craft cards: equal height, image area filled.
+
+3. IMAGES: replace the flat single icons
+- First choice: real Rainbow Preschool International photos of Diwali celebrations, crafts, rangoli or diyas from past years.
+  - Take them from the site's gallery or Rainbow's Instagram (the existing access token). Use only Rainbow's own photos.
+  - Use one for the hero and as many as fit the craft and story cards (e.g. children's diya crafts, a rangoli, a kandil, a dressed-up class).
+  - Name files with search terms: diwali-craft-for-kids-[item].webp, diwali-celebration-preschool-thane.webp.
+  - Alt text must describe what's in the photo. Don't claim when or where it was taken unless the post says so.
+- Where no suitable real photo exists, make a rich, finished illustration of the actual craft, not a single small icon. For example:
+  - a decorated paper-plate diya with paper flame and glitter
+  - a full rangoli on a floor
+  - a hanging kandil with tassels
+  - a child-made greeting card
+  These should be warm, detailed and filling the image area, in the same visual style as the Navratri page artwork.
+- No AI-generated photos of children.
+- Keep explicit width and height, AVIF/WebP and lazy-loading below the fold.
+
+4. CHECKS AND REPORT
+- Run predeploy twice: mobile LCP ≤ 2.5s, TBT ≤ 200ms, CLS ≤ 0.1.
+- Run the parity check.
+- Report (text only):
+  - what caused the white text and how it was fixed
+  - contrast check results
+  - each image with its file name, source (Rainbow photo with its gallery/Instagram source, or illustration) and alt text
+  - LCP / TBT / CLS for both runs
+- Don't publish.
