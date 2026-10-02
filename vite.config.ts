@@ -43,6 +43,7 @@ export default defineConfig({
       input: {
         main: path.resolve(import.meta.dirname, "client/index.html"),
         symbols: path.resolve(import.meta.dirname, "client/src/symbols/bootstrap.ts"),
+        legacy: path.resolve(import.meta.dirname, "client/src/legacy-articles/bootstrap.ts"),
       },
     },
     outDir: path.resolve(import.meta.dirname, "dist/public"),

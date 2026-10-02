@@ -5,6 +5,8 @@ import { injectHomepageFreshness } from "./homepage-freshness";
 import { injectIndexPolicyShell } from "./index-policy-shell";
 import { getPageSEO, getStaticPagePaths, isKnownRoute } from "./ssr-pages";
 import { TOP_PRESCHOOLS_BREADCRUMB_SCHEMA } from "@shared/top-preschools-thane-content";
+import { LEGACY_ARTICLE_PATHS, isLegacyArticlePath } from "@shared/legacy-article-routes";
+import { getLegacyPageData } from "@shared/legacy-pages-data";
 
 const BASE_URL = "https://www.rainbowpreschools.com";
 
@@ -30,6 +32,25 @@ export function injectPageSchemas(urlPath: string, html: string): string {
   if (!seo) return html;
 
   const scripts: string[] = [];
+  // Preserve the Article previously installed by the legacy client effect.
+  // Pre-KG already supplies its build-dated Article through getPageSEO.
+  if (isLegacyArticlePath(urlPath) && urlPath !== "/pre-kg-age-guide") {
+    const page = getLegacyPageData(`${urlPath}/`);
+    if (page) {
+      scripts.push(`<script type="application/ld+json">${JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Article",
+        headline: page.h1,
+        description: page.metaDescription,
+        url: `${BASE_URL}${urlPath}`,
+        publisher: {
+          "@type": "Organization",
+          name: "Rainbow Preschool International",
+          url: BASE_URL,
+        },
+      })}</script>`);
+    }
+  }
 
   if (seo.structuredData && seo.structuredData.length > 0) {
     for (const schema of seo.structuredData) {
@@ -125,7 +146,7 @@ function getBaseHtml(indexPath: string): string {
  */
 function prewarmPageCache(indexPath: string): void {
   const baseHtml = getBaseHtml(indexPath);
-  const paths = getStaticPagePaths().filter((p) => p !== "/");
+  const paths = Array.from(new Set([...getStaticPagePaths(), ...LEGACY_ARTICLE_PATHS])).filter((p) => p !== "/");
   for (const urlPath of paths) {
     if (!pageCache.has(urlPath)) {
       pageCache.set(urlPath, injectIndexPolicyShell(urlPath, injectPageSchemas(urlPath, baseHtml)));

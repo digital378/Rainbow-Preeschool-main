@@ -14,6 +14,7 @@ import { TOP_PRESCHOOLS_COPY, TOP_PRESCHOOLS_CENTRE_LINKS, TOP_PRESCHOOLS_COMPET
 import { centres, branchWhatsAppGreeting } from "@shared/centre-data";
 import { injectIndexPolicyShell } from "./index-policy-shell";
 import { injectPageSchemas } from "./static";
+import { isLegacyArticlePath } from "@shared/legacy-article-routes";
 
 // Inclusion rule: only add UA strings that appear EXCLUSIVELY in automated
 // crawlers / bots and NEVER in any human-operated browser or in-app browser.
@@ -643,7 +644,7 @@ export function setupBotSSR(app: Express) {
     }
     // This legacy page is rendered from its visitor React component in the
     // shared index shell, so crawlers and browsers receive identical markup.
-    if (urlPath === "/pre-kg-age-guide") {
+    if (isLegacyArticlePath(urlPath)) {
       return next();
     }
 

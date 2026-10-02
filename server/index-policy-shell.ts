@@ -16,8 +16,8 @@ import { anandNagarPage, kalwaPage, manpadaPage, hariniwasPage, dhokaliPage, kas
 import { playSchoolNearMePhotos } from "@shared/branch-photos";
 import { renderPlaySchoolNearMeHtml } from "@shared/play-school-near-me-render";
 import { injectSymbolsDocument } from "./symbols-document";
-import { getLegacyPageData } from "@shared/legacy-pages-data";
-import { renderLegacyLandingPage } from "./legacy-page-render";
+import { isLegacyArticlePath } from "@shared/legacy-article-routes";
+import { injectLegacyArticleDocument } from "./legacy-article-document";
 
 /**
  * Keep the browser's initial document metadata aligned with bot SSR and the
@@ -86,15 +86,7 @@ export function injectIndexPolicyShell(path: string, html: string): string {
     result = result.replace(/\s*<meta name="keywords" content="[^"]*"\s*\/?>/i, "");
   }
   if (path === "/national-symbols-of-india-for-kids") return injectSymbolsDocument(result);
-  if (path === "/pre-kg-age-guide") {
-    const legacyPageData = getLegacyPageData("/pre-kg-age-guide/");
-    if (legacyPageData) {
-      result = result.replace(
-        '<div id="root"></div>',
-        `<div id="root">${renderLegacyLandingPage(legacyPageData)}</div>`,
-      );
-    }
-  }
+  if (isLegacyArticlePath(path)) return injectLegacyArticleDocument(path, result);
   if (path === "/about") {
     // Let the headline paint with its metric-compatible fallback before the
     // Poppins stylesheet arrives; loading an external font at highest

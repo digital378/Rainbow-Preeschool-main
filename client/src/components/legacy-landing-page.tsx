@@ -93,15 +93,19 @@ export interface LegacyPageData {
 
 interface LegacyLandingPageProps {
   data: LegacyPageData;
+  chromeMarkup?: {
+    navigation: string;
+  };
 }
 
-export function LegacyLandingPage({ data }: LegacyLandingPageProps) {
+export function LegacyLandingPage({ data, chromeMarkup }: LegacyLandingPageProps) {
   // Remove trailing slash from slug for canonical URL to match actual routes
   const slugWithoutTrailingSlash = data.slug.replace(/\/$/, '');
   const canonicalUrl = `https://www.rainbowpreschools.com${slugWithoutTrailingSlash}`;
   const category = data.category || "Resources";
   const noIndex = shouldNoIndex(slugWithoutTrailingSlash);
   const isPreKgAgeGuide = slugWithoutTrailingSlash === "/pre-kg-age-guide";
+  const includeClosedFaqAnswers = isPreKgAgeGuide || !!chromeMarkup;
   const [openFaq, setOpenFaq] = useState<string | undefined>(undefined);
   const ogImage = data.ogImage
     ? data.ogImage.startsWith("http")
@@ -247,8 +251,16 @@ export function LegacyLandingPage({ data }: LegacyLandingPageProps) {
   }, [data, canonicalUrl, category, isPreKgAgeGuide]);
 
   return (
-    <div className="min-h-screen bg-background">
-      <Navigation />
+    <div className="min-h-screen bg-background" data-legacy-article={slugWithoutTrailingSlash}>
+      {chromeMarkup?.navigation ? (
+        <div
+          data-legacy-chrome-island="navigation"
+          style={{ display: "contents" }}
+          dangerouslySetInnerHTML={{ __html: chromeMarkup.navigation }}
+        />
+      ) : (
+        <Navigation />
+      )}
       
       <main className="pt-20 md:pt-24">
         <article>
@@ -424,17 +436,18 @@ export function LegacyLandingPage({ data }: LegacyLandingPageProps) {
                     className="w-full"
                     value={isPreKgAgeGuide ? openFaq : undefined}
                     onValueChange={isPreKgAgeGuide ? setOpenFaq : undefined}
+                    data-faq-island="legacy"
                   >
                     {data.faqs.map((faq, index) => {
                       const itemValue = `faq-${index}`;
                       return (
-                        <AccordionItem key={index} value={itemValue}>
+                        <AccordionItem key={index} value={itemValue} data-legacy-faq-item="true">
                           <AccordionTrigger className="text-left font-medium" data-testid={`faq-trigger-${index}`}>
                             {faq.question}
                           </AccordionTrigger>
                           <AccordionContent
-                            forceMount={isPreKgAgeGuide}
-                            hidden={isPreKgAgeGuide && openFaq !== itemValue ? true : undefined}
+                            forceMount={includeClosedFaqAnswers ? true : undefined}
+                            hidden={includeClosedFaqAnswers && openFaq !== itemValue ? true : undefined}
                             className="text-muted-foreground [&_a]:text-primary [&_a]:underline [&_a]:hover:text-primary/80"
                           >
                             <span dangerouslySetInnerHTML={{ __html: enrichContentWithLinks(faq.answer) }} />
