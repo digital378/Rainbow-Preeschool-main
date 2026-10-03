@@ -45,6 +45,7 @@
 - [Branch FAQ audit timing](branch-faq-audit-timing.md) — wait for hydration before scrolling to lazy FAQs; an immediate scroll can falsely report missing answers.
 - [Design worker write scope](design-worker-write-scope.md) — outputDir is a write boundary; coordinate shared/server/public foundations separately.
 - [Native pattern validation](native-pattern-validation.md) — HTML pattern uses Unicode v mode; ordinary JS regex tests can miss invalid character-class syntax.
+- [JSDOM CSS shorthands](jsdom-css-shorthands.md) — computed overflow axis longhands may be empty despite overflow:auto; avoid false-negative scroller tests.
 - [Rendered font verification](rendered-font-verification.md) — computed font names and weights can hide fallback or synthetic faces; inspect the actual rendered font.
 - [Ghodbunder Road grouping](ghodbunder-centre-grouping.md) — creator-approved pair is Anand Nagar and Kasarvadavali, not the retired page's Manpada pairing.
 - [Wouter server location](wouter-server-location.md) — static memory-location lacks a server snapshot; use native Router ssrPath for server rendering.

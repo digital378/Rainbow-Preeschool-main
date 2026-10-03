@@ -6,6 +6,7 @@ import {
   type RefObject,
 } from "react";
 import { DURATION, LAST, SCENES } from "./scenes";
+import { getLenis } from "@/hooks/useLenis";
 
 const DESKTOP_QUERY = "(min-aspect-ratio: 1/1) and (min-width: 720px)";
 const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
@@ -327,10 +328,18 @@ export function useScrollScrub({
       const spans = sceneScrollSpans(total, stage.clientHeight, desktop);
       const distance = sceneIndex === 0 ? 0 : spans.first + (sceneIndex - 1) * spans.later;
       const top = window.scrollY + bounds.top + distance + 2;
-      window.scrollTo({
-        top,
-        behavior: reducedMotion ? "auto" : "smooth",
-      });
+      const lenis = getLenis();
+      if (lenis) {
+        lenis.scrollTo(top, {
+          duration: 1.2,
+          easing: (t: number) => 1 - Math.pow(1 - t, 3),
+        });
+      } else {
+        window.scrollTo({
+          top,
+          behavior: reducedMotion ? "auto" : "smooth",
+        });
+      }
     },
     [desktop, reducedMotion, spacerRef, stageRef],
   );

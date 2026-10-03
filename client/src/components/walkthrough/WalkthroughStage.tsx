@@ -6,6 +6,7 @@ import {
 } from "react";
 import { HOLD, SCENES } from "./scenes";
 import { useScrollScrub } from "./useScrollScrub";
+import { getLenis } from "@/hooks/useLenis";
 import "./stage.css";
 
 export type WalkthroughStageHandle = {
@@ -71,7 +72,13 @@ export const WalkthroughStage = forwardRef<
   return (
     <div className="walkthrough-experience">
       <div className="walkthrough-stage" ref={stageRef}>
-        <a className="walkthrough-skip" href="#after-walkthrough">
+        <a className="walkthrough-skip" href="#after-walkthrough" onClick={(event) => {
+          const lenis = getLenis();
+          if (lenis) {
+            event.preventDefault();
+            lenis.scrollTo("#after-walkthrough");
+          }
+        }}>
           Skip the walkthrough
         </a>
 

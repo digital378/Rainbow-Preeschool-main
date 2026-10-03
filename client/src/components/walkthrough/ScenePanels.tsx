@@ -132,7 +132,7 @@ function Courtyard() {
         <span><Star fill="currentColor" />{VERIFIED_RATING.ratingValue} / 5</span>
         <small>Based on {VERIFIED_RATING.reviewCount}+ Google Reviews</small>
       </div>
-      <div className="walk-quotes" tabIndex={0} aria-label="Parent testimonials, swipe for more">
+      <div className="walk-quotes" data-lenis-prevent tabIndex={0} aria-label="Parent testimonials, swipe for more">
         {testimonials.slice(0, 5).map((quote) => (
           <figure className="walk-quote" key={quote.id}>
             <span className="walk-stars" aria-label={`${quote.rating} out of 5 stars`}>{"★".repeat(quote.rating)}</span>
@@ -190,7 +190,7 @@ export const ScenePanel = memo(function ScenePanel({
 }) {
   if (index < 0 || index > 7) return null;
   return (
-    <div className="walk-panel-content" data-scene={index}>
+    <div className="walk-panel-content" data-scene={index} data-lenis-prevent={index === 7 ? "" : undefined}>
       {index === 0 && <Gate />}
       {index === 1 && <Reception />}
       {index === 2 && <Corridor />}

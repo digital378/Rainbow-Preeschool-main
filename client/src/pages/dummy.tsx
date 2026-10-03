@@ -1,12 +1,14 @@
 import { useCallback, useRef } from "react";
 import { Menu, Phone } from "lucide-react";
 import { SEO } from "@/components/seo";
+import { useLenis } from "@/hooks/useLenis";
 import { WalkthroughStage, type WalkthroughStageHandle } from "@/components/walkthrough/WalkthroughStage";
 import { ScenePanel } from "@/components/walkthrough/ScenePanels";
 import { AfterWalkthrough } from "@/components/walkthrough/AfterWalkthrough";
 import "@/components/walkthrough/page.css";
 
 export default function DummyPage() {
+  useLenis();
   const stage = useRef<WalkthroughStageHandle>(null);
   const goToScene = useCallback((index: number) => stage.current?.goToScene(index), []);
   const renderPanel = useCallback(
@@ -48,7 +50,7 @@ export default function DummyPage() {
                 <Phone aria-hidden="true" size={16} fill="currentColor" />
                 <span>Book Visit</span>
               </a>
-              <details className="wt-mobile-menu">
+              <details className="wt-mobile-menu" data-lenis-prevent>
                 <summary aria-label="Open navigation menu"><Menu aria-hidden="true" size={22} /></summary>
                 <nav aria-label="Mobile walkthrough navigation">
                   <a href="/">Home</a>
