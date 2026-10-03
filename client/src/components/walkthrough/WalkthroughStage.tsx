@@ -1,191 +1,82 @@
-import {
-  forwardRef,
-  useImperativeHandle,
-  useRef,
-  type ReactNode,
-} from "react";
-import { HOLD, SCENES } from "./scenes";
+import { forwardRef, useImperativeHandle, useRef, type ReactNode } from "react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { SCENES } from "./scenes";
 import { useScrollScrub } from "./useScrollScrub";
-import { getLenis } from "@/hooks/useLenis";
+import { useFramePlayer } from "./useFramePlayer";
+import { getWalkthroughLenis } from "./useWalkthroughLenis";
 import "./stage.css";
 
-export type WalkthroughStageHandle = {
-  goToScene(index: number): void;
-};
-
-type WalkthroughStageProps = {
-  renderPanel: (
-    index: number,
-    active: boolean,
-    goTo: (index: number) => void,
-  ) => ReactNode;
+export type WalkthroughStageHandle = { goToScene(index: number): void };
+type Props = {
+  renderPanel(index: number, active: boolean, goTo: (index: number) => void): ReactNode;
   onSceneChange?: (index: number) => void;
 };
 
-function easeInOutQuad(value: number): number {
-  return value < 0.5
-    ? 2 * value * value
-    : 1 - Math.pow(-2 * value + 2, 2) / 2;
-}
+export const WalkthroughStage = forwardRef<WalkthroughStageHandle, Props>(
+  function WalkthroughStage({ renderPanel, onSceneChange }, forwardedRef) {
+    const stageRef = useRef<HTMLDivElement>(null);
+    const canvasRef = useRef<HTMLCanvasElement>(null);
+    const {
+      desktop, frameX, cardScene, labelScene, goToScene,
+      isLite, canToggleMotion, toggleMotion,
+    } = useScrollScrub({ stageRef, onSceneChange });
+    const player = useFramePlayer(canvasRef, desktop, isLite, frameX);
+    useGSAP(() => {
+      const panel = stageRef.current?.querySelector(".walkthrough-panel.is-active");
+      if (panel && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        gsap.from(panel, { opacity: 0, y: "+=12", duration: 0.25, ease: "power2.out" });
+      }
+    }, { scope: stageRef, dependencies: [cardScene], revertOnUpdate: true });
+    useImperativeHandle(forwardedRef, () => ({ goToScene }), [goToScene]);
+    const current = Math.min(7, Math.floor(frameX));
+    const next = Math.min(7, current + 1);
+    const fraction = frameX - current;
+    const fallback = isLite || player.failed;
+    const device = desktop ? "desktop" : "mobile";
+    return (
+      <div id="experience" className="walkthrough-experience">
+        <div className="walkthrough-stage" ref={stageRef} data-mode={fallback ? "stills" : "frames"} data-card-scene={cardScene}>
+          <a className="walkthrough-skip" href="#after-walkthrough" onClick={event => {
+            const lenis = getWalkthroughLenis();
+            if (lenis) { event.preventDefault(); lenis.scrollTo("#after-walkthrough", { duration: 1.2 }); }
+          }}>Skip the walkthrough</a>
 
-export const WalkthroughStage = forwardRef<
-  WalkthroughStageHandle,
-  WalkthroughStageProps
->(function WalkthroughStage({ renderPanel, onSceneChange }, forwardedRef) {
-  const stageRef = useRef<HTMLDivElement>(null);
-  const spacerRef = useRef<HTMLDivElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const {
-    activeScene,
-    desktop,
-    frameX,
-    goToScene,
-    isLite,
-    canToggleMotion,
-    toggleMotion,
-    labelScene,
-    videoReady,
-  } = useScrollScrub({
-    stageRef,
-    spacerRef,
-    videoRef,
-    onSceneChange,
-  });
-
-  useImperativeHandle(
-    forwardedRef,
-    () => ({
-      goToScene,
-    }),
-    [goToScene],
-  );
-
-  const currentIndex = Math.min(Math.floor(frameX), SCENES.length - 1);
-  const fraction = frameX - currentIndex;
-  const nextIndex = Math.min(currentIndex + 1, SCENES.length - 1);
-  const blend =
-    currentIndex === SCENES.length - 1 || fraction < HOLD
-      ? 0
-      : easeInOutQuad((fraction - HOLD) / (1 - HOLD));
-  const stills = desktop ? "desktop" : "mobile";
-
-  return (
-    <div className="walkthrough-experience">
-      <div className="walkthrough-stage" ref={stageRef}>
-        <a className="walkthrough-skip" href="#after-walkthrough" onClick={(event) => {
-          const lenis = getLenis();
-          if (lenis) {
-            event.preventDefault();
-            lenis.scrollTo("#after-walkthrough");
-          }
-        }}>
-          Skip the walkthrough
-        </a>
-
-        {!isLite && (
-          <>
-            <img
-              className={`walkthrough-poster${videoReady ? " is-faded" : ""}`}
-              src={SCENES[0].still[stills]}
-              alt=""
-              {...{ fetchpriority: "high" }}
-              decoding="async"
-              aria-hidden="true"
-            />
-            <video
-              ref={videoRef}
-              className="walkthrough-video"
-              muted
-              playsInline
-              preload="auto"
-              aria-hidden="true"
-              tabIndex={-1}
-            />
-          </>
-        )}
-        <div className={`walkthrough-stills${videoReady ? " is-faded" : ""}`} aria-hidden="true">
-            <img
-              className="walkthrough-still walkthrough-still--current"
-              src={SCENES[currentIndex].still[stills]}
-              alt=""
-              {...{ fetchpriority: currentIndex === 0 ? "high" : "auto" }}
-              decoding="async"
-              style={{ opacity: 1 }}
-            />
-            <img
-              className="walkthrough-still walkthrough-still--next"
-              src={SCENES[nextIndex].still[stills]}
-              alt=""
-              {...{ fetchpriority: "auto" }}
-              decoding="async"
-              style={{ opacity: blend }}
-            />
-        </div>
-
-        <div className="walkthrough-scrim" aria-hidden="true" />
-
-        <div className="walkthrough-where" aria-live="polite">
-          <span className="walkthrough-where-number">
-            {labelScene + 1} / {SCENES.length}
-          </span>
-          <span>{SCENES[labelScene].name}</span>
-        </div>
-        {canToggleMotion && (
-          <button
-            type="button"
-            className="walkthrough-motion-toggle"
-            onClick={toggleMotion}
-            aria-pressed={!isLite}
-          >
-            {isLite ? "Use video backdrop" : "Fast scroll mode"}
-          </button>
-        )}
-
-        <nav className="walkthrough-rail" aria-label="Scenes">
-          {SCENES.map((scene) => (
-            <button
-              className={
-                activeScene === scene.index ? "walkthrough-rail-dot is-active" : "walkthrough-rail-dot"
-              }
-              key={scene.key}
-              type="button"
-              aria-label={`Go to ${scene.name}`}
-              aria-current={activeScene === scene.index ? "step" : undefined}
-              onClick={() => goToScene(scene.index)}
-            >
-              <span>{scene.name}</span>
-            </button>
-          ))}
-        </nav>
-
-        {SCENES.map((scene) => {
-          const active = activeScene === scene.index;
-          return (
-            <section
-              className={
-                active
-                  ? `walkthrough-panel is-active${scene.index === 5 ? " walkthrough-panel--theatre" : ""}`
-                  : `walkthrough-panel${scene.index === 5 ? " walkthrough-panel--theatre" : ""}`
-              }
-              key={scene.key}
-              ref={(element) => {
-                if (element) element.inert = !active;
-              }}
-              aria-label={`Scene ${scene.index + 1} · ${scene.name}`}
-              aria-hidden={!active}
-            >
+          <canvas ref={canvasRef} className="walkthrough-canvas" style={{ opacity: player.ready ? 1 : 0 }} aria-hidden="true" />
+          <div className={`walkthrough-stills${player.ready ? " is-faded" : ""}`} aria-hidden="true">
+            <img className="walkthrough-still walkthrough-still--current"
+              src={SCENES[current].still[device]} alt="" fetchPriority={current === 0 ? "high" : "auto"} decoding="async" />
+            <img className="walkthrough-still walkthrough-still--next"
+              src={SCENES[next].still[device]} alt="" decoding="async" style={{ opacity: fallback ? fraction : 0 }} />
+          </div>
+          <div className="walkthrough-scrim" aria-hidden="true" />
+          <div className="walkthrough-where" aria-live="polite">
+            <span className="walkthrough-where-number">{labelScene + 1} / 8</span>
+            <span>{SCENES[labelScene].name}</span>
+          </div>
+          {canToggleMotion && !player.failed && <button type="button" className="walkthrough-motion-toggle"
+            onClick={toggleMotion} aria-pressed={!isLite}>
+            {isLite ? "Use camera motion" : "Use scene stills"}
+          </button>}
+          <nav className="walkthrough-rail" aria-label="Scenes">
+            {SCENES.map(scene => <button type="button" key={scene.key}
+              className={`walkthrough-rail-dot${labelScene === scene.index ? " is-active" : ""}`}
+              aria-label={`Go to ${scene.name}`} aria-current={labelScene === scene.index ? "step" : undefined}
+              onClick={() => goToScene(scene.index)}><span>{scene.name}</span></button>)}
+          </nav>
+          {SCENES.map(scene => {
+            const active = cardScene === scene.index;
+            return <section key={scene.key}
+              className={`walkthrough-panel${active ? " is-active" : ""}${scene.index === 5 ? " walkthrough-panel--theatre" : ""}`}
+              data-lenis-prevent
+              ref={element => { if (element) element.inert = !active; }}
+              aria-label={`Scene ${scene.index + 1} · ${scene.name}`} aria-hidden={!active}>
               {renderPanel(scene.index, active, goToScene)}
-            </section>
-          );
-        })}
+            </section>;
+          })}
+        </div>
       </div>
-      <div
-        className="walkthrough-spacer"
-        ref={spacerRef}
-        aria-hidden="true"
-      />
-    </div>
-  );
-});
-
+    );
+  },
+);
 WalkthroughStage.displayName = "WalkthroughStage";

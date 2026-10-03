@@ -1,14 +1,14 @@
 import { useCallback, useRef } from "react";
 import { Menu, Phone } from "lucide-react";
 import { SEO } from "@/components/seo";
-import { useLenis } from "@/hooks/useLenis";
+import { useWalkthroughLenis } from "@/components/walkthrough/useWalkthroughLenis";
 import { WalkthroughStage, type WalkthroughStageHandle } from "@/components/walkthrough/WalkthroughStage";
 import { ScenePanel } from "@/components/walkthrough/ScenePanels";
 import { AfterWalkthrough } from "@/components/walkthrough/AfterWalkthrough";
 import "@/components/walkthrough/page.css";
 
 export default function DummyPage() {
-  useLenis();
+  useWalkthroughLenis();
   const stage = useRef<WalkthroughStageHandle>(null);
   const goToScene = useCallback((index: number) => stage.current?.goToScene(index), []);
   const renderPanel = useCallback(

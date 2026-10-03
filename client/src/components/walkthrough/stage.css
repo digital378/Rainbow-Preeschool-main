@@ -1,134 +1,89 @@
-.walkthrough-experience {
+.wt-page .walkthrough-experience {
   display: grid;
   position: relative;
   isolation: isolate;
 }
 
-.walkthrough-stage,
-.walkthrough-spacer {
+.wt-page .walkthrough-stage {
   grid-area: 1 / 1;
-}
-
-.walkthrough-stage {
-  position: sticky;
-  top: 0;
-  align-self: start;
+  position: relative;
   height: 100vh;
   height: 100svh;
   min-height: 0;
   overflow: hidden;
-  background: #e9ddd2;
-  color: #23180f;
+  background: #dceaf0;
+  color: #283b43;
 }
 
-.walkthrough-spacer {
-  height: calc(100vh * 4.5);
-  height: calc(100svh * 4.5);
-  pointer-events: none;
-}
-
-.walkthrough-skip {
-  position: absolute;
-  z-index: 20;
-  top: calc(122px + env(safe-area-inset-top, 0px));
-  left: 16px;
-  padding: 7px 11px;
-  border-radius: 10px;
-  background: #fff;
-  color: #23180f;
-  font: 700 14px/1.2 Inter, system-ui, sans-serif;
-  box-shadow: 0 5px 18px rgb(35 24 15 / 18%);
-}
-
-.walkthrough-skip:focus {
-  outline: 3px solid #f4a62a;
-  outline-offset: 3px;
-}
-
-.walkthrough-video,
-.walkthrough-poster,
-.walkthrough-stills,
-.walkthrough-still {
+.wt-page .walkthrough-canvas,
+.wt-page .walkthrough-stills,
+.wt-page .walkthrough-still {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
 }
 
-.walkthrough-video,
-.walkthrough-poster,
-.walkthrough-still {
+.wt-page .walkthrough-canvas,
+.wt-page .walkthrough-still {
   object-fit: cover;
 }
 
-.walkthrough-video,
-.walkthrough-poster,
-.walkthrough-stills {
+.wt-page .walkthrough-canvas,
+.wt-page .walkthrough-stills {
   pointer-events: none;
 }
 
-.walkthrough-poster {
-  z-index: 1;
-  opacity: 1;
-  transition: opacity 500ms ease;
-}
+.wt-page .walkthrough-canvas { z-index: 0; }
+.wt-page .walkthrough-stills { z-index: 1; transition: opacity 280ms ease; }
+.wt-page .walkthrough-stills.is-faded { opacity: 0; visibility: hidden; transition: opacity 280ms ease, visibility 0s linear 280ms; }
+.wt-page .walkthrough-still { transition: none; }
 
-.walkthrough-poster.is-faded {
-  opacity: 0;
-}
-
-.walkthrough-video {
-  z-index: 0;
-}
-
-.walkthrough-stills {
-  z-index: 1;
-  transition: opacity 280ms ease;
-}
-
-.walkthrough-stills.is-faded {
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 280ms ease, visibility 0s linear 280ms;
-}
-
-.walkthrough-still {
-  /* The crossfade is driven by scroll; a second opacity transition lags behind it. */
-  transition: none;
-}
-
-.walkthrough-scrim {
+.wt-page .walkthrough-scrim {
   position: absolute;
   z-index: 2;
   inset: 0;
   pointer-events: none;
-  background: linear-gradient(
-    180deg,
-    rgb(35 24 15 / 18%) 0%,
-    transparent 22%,
-    transparent 45%,
-    rgb(35 24 15 / 42%) 100%
-  );
+  background: linear-gradient(180deg, rgb(25 43 51 / 16%) 0%, transparent 26%, transparent 57%, rgb(25 43 51 / 28%) 100%);
 }
 
-.walkthrough-where {
+.wt-page .walkthrough-skip,
+.wt-page .walkthrough-motion-toggle {
+  position: absolute;
+  z-index: 20;
+  left: 14px;
+  border: 1px solid rgb(255 255 255 / 82%);
+  border-radius: 10px;
+  padding: 8px 11px;
+  background: #fff9eb;
+  color: #283b43;
+  box-shadow: 0 5px 18px rgb(25 43 51 / 18%);
+  font: 700 12px/1.2 Inter, system-ui, sans-serif;
+  cursor: pointer;
+}
+.wt-page .walkthrough-skip { top: calc(111px + env(safe-area-inset-top, 0px)); }
+.wt-page .walkthrough-motion-toggle { top: calc(116px + env(safe-area-inset-top, 0px)); }
+.wt-page .walkthrough-skip:focus-visible,
+.wt-page .walkthrough-motion-toggle:focus-visible { outline: 3px solid #f4a62a; outline-offset: 3px; }
+
+.wt-page .walkthrough-where {
   position: absolute;
   z-index: 6;
-  top: calc(60px + env(safe-area-inset-top, 0px) + 12px);
-  left: 16px;
+  top: calc(60px + env(safe-area-inset-top, 0px) + 10px);
+  left: 14px;
   display: flex;
   align-items: center;
   gap: 8px;
-  max-width: calc(100% - 32px);
+  max-width: calc(100% - 72px);
   padding: 6px 12px 6px 8px;
+  border: 1px solid rgb(255 255 255 / 82%);
   border-radius: 999px;
-  background: rgb(255 255 255 / 92%);
-  color: #23180f;
-  box-shadow: 0 8px 20px -12px rgb(35 24 15 / 50%);
+  background: #fff9eb;
+  color: #283b43;
+  box-shadow: 0 8px 20px -12px rgb(25 43 51 / 50%);
   font: 700 12px/1.3 Inter, system-ui, sans-serif;
 }
-
-.walkthrough-where-number {
+.wt-page .walkthrough-where-number {
   flex: none;
   padding: 2px 8px;
   border-radius: 999px;
@@ -138,197 +93,124 @@
   font-variant-numeric: tabular-nums;
 }
 
-.walkthrough-motion-toggle {
+.wt-page .walkthrough-rail {
   position: absolute;
-  z-index: 20;
-  top: calc(164px + env(safe-area-inset-top, 0px));
-  left: 16px;
-  padding: 7px 11px;
-  border: 1px solid rgb(255 255 255 / 70%);
-  border-radius: 10px;
-  background: rgb(35 24 15 / 78%);
-  color: #fff;
-  font: 700 12px/1.2 Inter, system-ui, sans-serif;
-  cursor: pointer;
-}
-
-.walkthrough-motion-toggle:focus-visible {
-  outline: 3px solid #f4a62a;
-  outline-offset: 3px;
-}
-
-.walkthrough-rail {
-  position: absolute;
-  z-index: 6;
+  z-index: 8;
   top: 50%;
-  right: 26px;
-  display: none;
+  right: 7px;
+  display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 7px;
   transform: translateY(-50%);
 }
-
-.walkthrough-rail-dot {
+.wt-page .walkthrough-rail-dot {
   position: relative;
-  width: 12px;
-  height: 12px;
+  width: 28px;
+  height: 28px;
   padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+}
+.wt-page .walkthrough-rail-dot::before {
+  position: absolute;
+  inset: 8px;
   border: 2px solid #fff;
   border-radius: 50%;
-  background: rgb(255 255 255 / 35%);
+  background: rgb(40 59 67 / 46%);
   box-shadow: 0 2px 6px rgb(0 0 0 / 25%);
-  cursor: pointer;
-  transition: transform 200ms ease, background 200ms ease;
+  content: "";
+  transition: transform 180ms ease;
 }
-
-.walkthrough-rail-dot.is-active {
-  transform: scale(1.35);
-  background: #ec210f;
-}
-
-.walkthrough-rail-dot span {
+.wt-page .walkthrough-rail-dot.is-active::before { transform: scale(1.35); background: #ec210f; }
+.wt-page .walkthrough-rail-dot span {
   position: absolute;
   top: 50%;
-  right: 22px;
-  padding: 4px 10px;
+  right: 31px;
+  padding: 5px 9px;
+  border: 1px solid #efe4cc;
   border-radius: 8px;
   transform: translateY(-50%);
-  background: #fff;
-  color: #23180f;
-  font: 700 12px/1.3 Inter, system-ui, sans-serif;
+  background: #fff9eb;
+  color: #283b43;
+  font: 700 11px/1.25 Inter, system-ui, sans-serif;
   white-space: nowrap;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 200ms ease;
+  transition: opacity 160ms ease;
 }
+.wt-page .walkthrough-rail-dot:hover span,
+.wt-page .walkthrough-rail-dot:focus-visible span,
+.wt-page .walkthrough-rail-dot.is-active span { opacity: 1; }
+.wt-page .walkthrough-rail-dot:focus-visible { outline: 2px solid #f4a62a; outline-offset: 1px; }
 
-.walkthrough-rail-dot:hover span,
-.walkthrough-rail-dot:focus-visible span,
-.walkthrough-rail-dot.is-active span {
-  opacity: 1;
-}
-
-.walkthrough-panel {
+.wt-page .walkthrough-panel {
   position: absolute;
   z-index: 5;
-  right: 16px;
-  bottom: calc(16px + env(safe-area-inset-bottom, 0px));
-  left: 16px;
-  max-height: 56svh;
+  right: 42px;
+  bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  left: 12px;
+  max-height: 44svh;
   overflow: auto;
-  /* Let the page advance once a card reaches the end of its own content. */
-  overscroll-behavior-y: auto;
-  padding: 20px 18px 18px;
-  border-radius: 22px;
-  background: rgb(255 255 255 / 96%);
-  box-shadow: 0 30px 60px -24px rgb(35 24 15 / 55%);
+  overscroll-behavior-y: contain;
+  touch-action: pan-y;
+  padding: 15px 16px 14px;
+  border: 1px solid rgb(255 255 255 / 88%);
+  border-radius: 19px;
+  background: #fff9eb;
+  box-shadow: 0 22px 52px -25px rgb(25 43 51 / 50%);
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transform: translateY(12px);
-  /* Hide the outgoing panel immediately; two readable cards must not overlap. */
+  transform: translateY(10px);
   transition: none;
+  scrollbar-color: #d7c9ad transparent;
+  scrollbar-width: thin;
 }
-
-.walkthrough-panel.is-active {
+.wt-page .walkthrough-panel.is-active {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
   transform: none;
-  transition:
-    opacity 280ms ease-out,
-    transform 320ms ease-out,
-    visibility 0s;
+  transition: none;
+}
+.wt-page .walkthrough-panel--theatre { max-height: 44svh; }
+.wt-page .walkthrough-panel:has([data-scene="0"]) { max-height: 44svh; }
+
+@media (max-width: 768px) {
+  .wt-page .walkthrough-motion-toggle { display: none; }
+  .wt-page .walkthrough-panel,
+  .wt-page .walkthrough-panel--theatre,
+  .wt-page .walkthrough-panel:has([data-scene="0"]) { max-height: 44svh; }
 }
 
-.walkthrough-panel--theatre {
-  max-height: min(74svh, 700px);
-}
-
-.walkthrough-panel:has([data-scene="0"]) {
-  max-height: calc(100svh - 155px - env(safe-area-inset-bottom, 0px));
-  /* Once the card reaches its edge, keep scrolling into Reception. */
-  overscroll-behavior-y: auto;
-}
-
-@media (max-width: 719px), (max-aspect-ratio: 1 / 1) {
-  /* Touch visitors get the fast, reliable stills instead of a competing video control. */
-  .walkthrough-motion-toggle { display: none; }
-}
-
-@media (max-width: 719px) and (max-height: 700px) {
-  .walkthrough-skip { top: calc(110px + env(safe-area-inset-top, 0px)); }
-  .walkthrough-panel:has([data-scene="0"]) {
-    max-height: calc(100svh - 166px - env(safe-area-inset-bottom, 0px));
-    padding: 16px 18px;
-  }
-}
-
-@media (min-aspect-ratio: 1 / 1) and (min-width: 720px) {
-  .walkthrough-spacer {
-    height: calc(100vh * 4.5);
-    height: calc(100svh * 4.5);
-  }
-
-  .walkthrough-skip,
-  .walkthrough-motion-toggle {
-    left: auto;
-    right: max(26px, 5vw);
-  }
-
-  .walkthrough-skip {
-    top: calc(78px + env(safe-area-inset-top, 0px));
-  }
-
-  .walkthrough-motion-toggle {
-    top: calc(118px + env(safe-area-inset-top, 0px));
-  }
-
-  .walkthrough-scrim {
-    background: linear-gradient(
-      90deg,
-      rgb(35 24 15 / 38%) 0%,
-      rgb(35 24 15 / 8%) 45%,
-      transparent 70%
-    );
-  }
-
-  .walkthrough-rail {
-    display: flex;
-  }
-
-  .walkthrough-panel {
-    top: calc(50% + 30px);
+@media (min-width: 769px) {
+  .wt-page .walkthrough-skip,
+  .wt-page .walkthrough-motion-toggle { left: auto; right: max(26px, 5vw); }
+  .wt-page .walkthrough-skip { top: calc(78px + env(safe-area-inset-top, 0px)); }
+  .wt-page .walkthrough-motion-toggle { top: calc(120px + env(safe-area-inset-top, 0px)); }
+  .wt-page .walkthrough-scrim { background: linear-gradient(90deg, rgb(25 43 51 / 30%) 0%, rgb(25 43 51 / 8%) 44%, transparent 72%); }
+  .wt-page .walkthrough-rail { right: 22px; gap: 9px; }
+  .wt-page .walkthrough-panel {
+    top: 50%;
     right: auto;
     bottom: auto;
     left: max(28px, 5vw);
-    width: min(440px, 40vw);
-    max-height: calc(100svh - 60px - 60px);
-    padding: 28px 26px 24px;
-    transform: translateY(calc(-50% + 12px));
+    width: min(420px, 37vw);
+    max-height: 52svh;
+    padding: 20px 21px 18px;
+    transform: translateY(calc(-50% + 10px));
   }
-
-  .walkthrough-panel.is-active {
-    transform: translateY(-50%);
-  }
-
-  .walkthrough-panel:has([data-scene="0"]) {
-    width: min(468px, 42vw);
-    max-height: calc(100svh - 125px);
-  }
-
-  .walkthrough-panel--theatre {
-    width: min(900px, calc(100vw - 370px));
-    max-height: calc(100svh - 126px);
-  }
+  .wt-page .walkthrough-panel.is-active { transform: translateY(-50%); }
+  .wt-page .walkthrough-panel:has([data-scene="0"]) { width: min(440px, 39vw); max-height: 60svh; }
+  .wt-page .walkthrough-panel--theatre { width: min(760px, calc(100vw - 360px)); max-height: 60svh; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .walkthrough-panel,
-  .walkthrough-panel.is-active,
-  .walkthrough-poster,
-  .walkthrough-rail-dot,
-  .walkthrough-rail-dot span {
-    transition: none;
-  }
+  .wt-page .walkthrough-panel,
+  .wt-page .walkthrough-panel.is-active,
+  .wt-page .walkthrough-stills,
+  .wt-page .walkthrough-rail-dot::before,
+  .wt-page .walkthrough-rail-dot span { transition: none; }
 }
