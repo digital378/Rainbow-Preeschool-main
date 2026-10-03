@@ -1,0 +1,36 @@
+TASK: PHASE 1 — build the walkthrough frame sequences for /dummy. Asset processing only.
+
+RULES
+- No screenshots — do not take or send any. I will check visuals myself.
+- Do NOT change any page code, including /dummy. Do not touch any live page, design, text or layout.
+- Follow .agents/skills/rainbow-immersive. Keep all existing skills, memory files and guards as they are.
+- Do not change scripts/post-merge.sh. Do not run npm ci.
+
+1) SOURCE
+- Use the 14 transition clips in .local/walkthrough-src/ (7 desktop 16:9 + 7 mobile 9:16), as listed in docs/walkthrough-assets.md.
+- Each clip is ~5.04 s, 24 fps, 121 frames. Desktop clips are 1924x1076, mobile clips 1076x1924.
+
+2) EXTRACT WEBP FRAMES WITH FFMPEG
+- Output folders: client/public/walkthrough/frames/desktop/01..07/ and client/public/walkthrough/frames/mobile/01..07/
+- File names: 0001.webp, 0002.webp ... (zero-padded, in order).
+- Desktop: scale to 1600 px wide. Mobile: scale to 720 px wide. Keep the aspect ratio, use lanczos scaling, strip metadata.
+- Start at 15 fps and WebP quality 65.
+
+3) SIZE BUDGET (must pass)
+- Total for all 7 desktop folders: under 15 MB. Total for all 7 mobile folders: under 8 MB.
+- If over budget, step down in this order, re-extract and re-measure each time:
+  a) quality 60, b) 12 fps, c) desktop 1440 px / mobile 640 px.
+- Never go below 12 fps or quality 55. If the budget still cannot be met, stop and report the closest result.
+- Delete any earlier attempts so only the final frames remain.
+
+4) MANIFEST
+- Create client/public/walkthrough/frames/manifest.json listing, for each device and each transition 01–07: folder path, frame count, fps used, width x height, and total bytes.
+- Add a short "Frame sequences" section to docs/walkthrough-assets.md with the final settings (fps, quality, sizes) and the totals per device.
+
+5) VERIFY
+- Check that every folder has a frame count matching the manifest, that no frame is 0 bytes, and that numbering is sequential with no gaps.
+- Run the production build and confirm it still passes and the app starts on port 5000.
+
+6) REPORT AND PUSH
+- Report: final fps, quality and widths; frames per transition; MB per device; files changed.
+- Commit and push to GitHub main. If the push fails with "Invalid username or token", do not retry. Stop and report it.
