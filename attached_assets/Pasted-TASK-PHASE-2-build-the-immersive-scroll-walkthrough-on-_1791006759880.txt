@@ -1,0 +1,44 @@
+TASK: PHASE 2 — build the immersive scroll walkthrough on /dummy using the AVIF frame sequences.
+
+RULES
+- No screenshots — do not take or send any. I will check visuals myself.
+- Change ONLY the /dummy page and components used only by /dummy. Do not change any other page, shared layout, header or footer.
+- Follow .agents/skills/rainbow-immersive, plus the gsap-* and three-best-practices skills. Use Context7 for current GSAP / Lenis APIs.
+- Do not change scripts/post-merge.sh, package files or replit.nix. Do not run npm ci.
+- Brand: official name "Rainbow Preschool International"; bright header red only (no crimson, maroon or pink); Poppins/Inter at bold, legible weights (never 300 or lighter); bright, premium look matching the live homepage; no grain or noise; no oversized extra-bold buttons.
+- Use only facts from the shared data files and the existing /dummy content. Do not invent text, numbers or awards. All existing information on /dummy must stay findable and all programme links must keep working.
+
+1) FRAME PLAYER
+- Read client/public/walkthrough/frames/manifest.json. Use desktop frames for viewports wider than 768 px, mobile frames otherwise.
+- One full-screen <canvas>. Draw only when the frame index changes (requestAnimationFrame). Cover-fit. Cap devicePixelRatio at 2.
+- Load frames for the current transition and the next one only. Decode ahead with img.decode() or createImageBitmap so scrubbing never waits on decoding. Release bitmaps for transitions more than one away.
+- Show the scene still as a poster until the transition's frames are ready.
+
+2) SCROLL
+- 8 scenes in order: Gate, Reception, Corridor, Classroom, Playground, Rainbow Theatre, Courtyard, Across Thane. Transition 01 is Gate→Reception, through 07 Courtyard→Across Thane.
+- Each transition is scrubbed by GSAP ScrollTrigger (scrub between 0.5 and 1) inside one pinned section.
+- Keep the existing single Lenis instance mounted only on /dummy (lerp ~0.1, smoothWheel true, syncTouch false), driven by gsap.ticker, with lenis.on("scroll", ScrollTrigger.update), destroyed on unmount. No CSS scroll-behavior: smooth while Lenis is active. Keep data-lenis-prevent on inner scroll and drag areas.
+- Keep the n / 8 counter, the dot rail, "Continue to…" and "Skip the walkthrough"; they use lenis.scrollTo when Lenis is active.
+
+3) INFO CARDS
+- A scene's card slides in only after its transition finishes (camera stopped) and hides when the next transition starts.
+- Compact. On mobile under 45% of screen height; never cover most of the artwork. Use the existing card content for each scene.
+
+4) FALLBACKS
+- prefers-reduced-motion, Save-Data, 2G, or a browser without AVIF support: no frame scrubbing. Show the scene stills with simple cross-fades, same cards and navigation.
+- Remove the old desktop walkthrough video from /dummy (it returned HTTP 500); the frame sequences replace it.
+
+5) PERFORMANCE
+- Animate only transform and opacity. No backdrop-filter or blur during scroll. No off-screen infinite loops.
+- Wrap all animations in useGSAP / gsap.context with full cleanup on unmount.
+- First scene visible in under 2.5 s on 4G.
+
+6) VERIFY (no screenshots)
+- Production build passes and the app starts on port 5000.
+- /dummy loads without console errors; leaving /dummy destroys Lenis and all ScrollTriggers (no leftovers on other pages).
+- Each transition shows its correct frame count from the manifest; the fallback path works with reduced motion turned on.
+- Every other page is unchanged.
+
+7) REPORT AND PUSH
+- Report the files changed with line ranges, the checks you ran and their results, and anything unverified.
+- Commit and push to GitHub main. If the push fails with "Invalid username or token", do not retry. Stop and report it.
