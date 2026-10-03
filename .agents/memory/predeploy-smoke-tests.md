@@ -13,11 +13,19 @@ The homepage receives bot SSR for Googlebot, while a browser's initial HTML gets
 
 ## Local smoke-test port collision
 
-Run predeploy validation on an unused port when the development workflow already owns the script's default port.
+Run predeploy validation on unused port 5199 while leaving the development preview on port 5000 online.
 
 **Why:** The smoke-test production server can fail to bind, while the script's reachability check mistakenly accepts the running development server. Later checks then report misleading failures against the wrong application instance.
 
-**How to apply:** Set `PREDEPLOY_PORT` to a free port for local runs, then confirm the boot log says the production server bound to that port.
+**How to apply:** Use the 5199 default, ensure it is free, and confirm the boot log says the production server bound to that port. Never use 5000 or stop another listener to free a port.
+
+## Uptime monitoring isolation
+
+Run preview-uptime polling independently of synchronous preparation or bulk file hashing, and timestamp the actual check window.
+
+**Why:** Sharing one Node event loop with bulk hashing delayed a preparation-time probe and produced a timeout before predeploy began, although all polls during both requested check runs returned HTTP 200.
+
+**How to apply:** Use a separate polling process for future verification. Retain preflight samples and distinguish preparation-time failures from in-run failures; never discard a timeout inside the requested check window.
 
 ## Inherited performance-skip flag
 

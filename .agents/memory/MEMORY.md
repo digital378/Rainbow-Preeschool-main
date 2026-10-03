@@ -2,6 +2,7 @@
 - [H1 sync pattern](h1-sync.md) — SSR h1: field in ssr-pages.ts must equal client <h1> text exactly; guard checks parity.
 - [Title cannibalisation guard](title-guard.md) — scripts/check-no-title-cannibalisation.ts; wired in pre-commit, pre-push, predeploy; NOT in npm run check (cannot edit package.json).
 - [Predeploy smoke-test pitfalls](predeploy-smoke-tests.md) — use a free local port; explicitly enable performance checks, since an inherited skip flag can hide them.
+- [Keep the preview online](keep-preview-online.md) — keep port 5000 running during tasks; use spare port 5199 for smoke tests and run full predeploy only for requested publish checks.
 - [Homepage redesign patterns](homepage-redesign-patterns.md) — design system token application patterns; bento grid, shadow-card, section-eyebrow, bg-surface-warm, icon-xl/md/sm usage.
 - [Premium Design System v2.0](design-system-v2.md) — all tokens, component classes, shadow/radius/surface/animation vars; shadows were all 0 before; /dummy is the visual reference page.
 - [R3F firewall + Three.js fallback](r3f-firewall.md) — @react-three/fiber/@react-three/drei blocked by Replit firewall; use raw Three.js. Replit preview has no GPU so need isWebGLAvailable() + CSS fallback.

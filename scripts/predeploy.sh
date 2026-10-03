@@ -3,7 +3,7 @@
 #
 # Runs static guards first (fast, no build needed), then the production build,
 # boots the built server in the background, waits for it to start serving on
-# $PREDEPLOY_PORT (default 5000), and then runs the SEO smoke-tests against
+# $PREDEPLOY_PORT (default 5199), and then runs the SEO smoke-tests against
 # the same already-booted server:
 #
 #   1.  scripts/check-no-person-author.ts — static scan that fails if any
@@ -109,7 +109,7 @@
 set -u
 set -o pipefail
 
-PREDEPLOY_PORT="${PREDEPLOY_PORT:-5000}"
+PREDEPLOY_PORT="${PREDEPLOY_PORT:-5199}"
 PREDEPLOY_HOST="127.0.0.1"
 PREDEPLOY_URL="http://${PREDEPLOY_HOST}:${PREDEPLOY_PORT}"
 WAIT_TIMEOUT_SECS="${PREDEPLOY_WAIT_SECS:-60}"
@@ -120,26 +120,60 @@ log() {
   echo "[predeploy] $*"
 }
 
+assert_smoke_port_available() {
+  PREDEPLOY_PORT="${PREDEPLOY_PORT}" node <<'NODE'
+const net = require("node:net");
+const port = Number(process.env.PREDEPLOY_PORT);
+if (!Number.isInteger(port) || port < 1 || port > 65535) {
+  console.error("[predeploy] FAIL — PREDEPLOY_PORT must be an integer from 1 to 65535.");
+  process.exit(1);
+}
+const probe = net.createServer();
+probe.once("error", (error) => {
+  const reason = error.code === "EADDRINUSE"
+    ? `port ${port} is already in use`
+    : `cannot reserve port ${port} (${error.code})`;
+  console.error(`[predeploy] FAIL — ${reason}; refusing to start the smoke-test server. No existing process was stopped.`);
+  process.exit(1);
+});
+// A wildcard bind also detects listeners on other local interfaces.
+probe.listen(port, () => probe.close());
+NODE
+}
+
+smoke_server_is_running() {
+  [ -n "${SERVER_PID}" ] && jobs -pr | grep -Fx -- "${SERVER_PID}" >/dev/null
+}
+
 cleanup() {
-  if [ -n "${SERVER_PID}" ] && kill -0 "${SERVER_PID}" 2>/dev/null; then
+  # Only signal this shell's still-running child, never a process found by port.
+  if smoke_server_is_running; then
     log "stopping smoke-test server (pid=${SERVER_PID})"
     kill "${SERVER_PID}" 2>/dev/null || true
     # Give it a moment to shut down cleanly, then force-kill if still alive.
     for _ in 1 2 3 4 5; do
-      if ! kill -0 "${SERVER_PID}" 2>/dev/null; then
+      if ! smoke_server_is_running; then
         break
       fi
       sleep 1
     done
-    if kill -0 "${SERVER_PID}" 2>/dev/null; then
+    if smoke_server_is_running; then
       kill -9 "${SERVER_PID}" 2>/dev/null || true
     fi
+  fi
+  if [ -n "${SERVER_PID}" ]; then
+    wait "${SERVER_PID}" 2>/dev/null || true
   fi
   if [ -n "${SERVER_LOG}" ] && [ -f "${SERVER_LOG}" ]; then
     rm -f "${SERVER_LOG}"
   fi
 }
 trap cleanup EXIT INT TERM
+
+# Fail fast, before a build, without interrupting the process using the port.
+if ! assert_smoke_port_available; then
+  exit 1
+fi
 
 log "step 1/18 — tsx scripts/check-no-person-author.ts (editorial-byline guard)"
 if ! npx --no-install tsx scripts/check-no-person-author.ts; then
@@ -250,6 +284,10 @@ if ! node scripts/check-production-runtime.mjs; then
 fi
 
 log "step 12/18 — booting production server on ${PREDEPLOY_URL} for the SEO smoke-tests"
+# The port may have become occupied while the static guards/build were running.
+if ! assert_smoke_port_available; then
+  exit 1
+fi
 NODE_ENV=production PORT="${PREDEPLOY_PORT}" node dist/index.cjs >"${SERVER_LOG}" 2>&1 &
 SERVER_PID=$!
 
