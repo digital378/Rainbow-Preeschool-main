@@ -9,6 +9,7 @@
 - [Canonical noindex list](noindex-canonical-list.md) — NOINDEX_SLUGS in shared/seo-config.ts is the only noindex list; ssr-pages derives from it; robots sync guard enforces parity.
 - [Bot-SSR blocks standalone blog pages](bot-ssr-standalone-passthrough.md) — check-sitemap-200 uses Googlebot UA; bot-ssr intercepts before registerRoutes; pages not in ssr-pages.ts get hard 404. Fix: passthrough via STANDALONE_BLOG_SLUGS.
 - [Gallery image selection](gallery-image-selection.md) — source photos from gallery-config.ts (curated captions), not /images/optimized (has duplicates, rotations, wrong-age classrooms).
+- [Asset cleanup safety](asset-cleanup-reference-safety.md) — preserve dynamic directory inputs; bulk-search exact filenames and validate path context before deleting.
 - [Branch photo provenance](branch-photo-provenance.md) — real Rainbow photos are not necessarily from the named centre; use Thane labeling unless origin is verified.
 - [Static ad landing pages](static-ad-pages.md) — ad pages are static HTML in public/ + dist/ad-assets build copy, not React; assets must exist under client/public (Vite root) or they 404 in prod.
 - [Dense-file edit pitfalls](dense-file-edit-pitfalls.md) — never mix Edit + sed line-range deletes on one file in a batch; demand grep-verifiable evidence for subagent fix claims; sample scrollY over time when testing smooth scroll.
@@ -23,7 +24,7 @@
 - [Cloudflare edge vs origin](cloudflare-hsts-vs-app-header.md) — apex redirects precede Express; origin HSTS and single-hop path rules need matching edge configuration.
 - [Two public directories](two-public-directories.md) — top-level `public/` is served unconditionally (dev AND prod) via its own express.static call; works fine in production despite not going through the Vite build.
 - [Analytics guard strength](analytics-guard-strength.md) — tracking guards must verify dispatch and interaction wiring, explicit destinations, and disabled automatic page views—not event-name strings.
-- [Dependency reconciliation](post-merge-dependency-setup.md) — use npm clean installs; mixed lockfiles can confuse deploy detection and pnpm-linked trees break incremental npm installs.
+- [Dependency reconciliation](post-merge-dependency-setup.md) — reuse dependencies after normal merges; clean installs are for fresh deployments or demonstrated mixed-tree repair.
 - [Private page cookies](private-page-cookies.md) — public HTML renderers strip Set-Cookie; complete private login on a redirect before rendering the SPA page.
 - [Campaign attribution privacy](campaign-attribution-privacy.md) — filter values and scrub the URL before third-party tags; keep raw attribution only for first-party leads.
 - [Sticky stages and body overflow](sticky-stages-body-overflow.md) — overflow-x:hidden on body can make sticky children scroll away; inspect computed ancestor overflow before changing the layout.

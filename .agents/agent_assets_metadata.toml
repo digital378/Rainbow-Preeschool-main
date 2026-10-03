@@ -336,3 +336,17 @@ mtime_ms = 1790947451551
 storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:0c61580c-1c60-4ec3-afe4-28e8a9482287/8dbe2dbb-a4e0-40aa-8b1f-009234aa492e/d421c329-e49d-430a-9c98-643593617a04"
 storage_version_token = "1790947454780478"
 content_type = "text/markdown"
+
+[[outputs]]
+id = "wrVp7NvvbjFdqKL8sPcku"
+uri = "file://workspace-cleanup-results.txt"
+type = "text"
+title = "Workspace cleanup — inventory and full deletion list"
+description = "Before/after sizes, all 626 deleted files, preserved asset references and JSON, five deleted branches, merge-script checks, and port 5000 startup confirmation."
+logical_id = "f32ba846-4296-443c-993f-0e5afcc9cb08"
+content_hash = "sha256:ee54700c6a99ca158fb69e58607adafc22ea54472e004183b3f79d2345337e96"
+size = 285758
+mtime_ms = 1791000995024
+storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:0c61580c-1c60-4ec3-afe4-28e8a9482287/f32ba846-4296-443c-993f-0e5afcc9cb08/f645bc96-2d81-4ac4-8174-d527d6d08fb3"
+storage_version_token = "1791000998188182"
+content_type = "text/plain"
