@@ -350,3 +350,17 @@ mtime_ms = 1791000995024
 storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:0c61580c-1c60-4ec3-afe4-28e8a9482287/f32ba846-4296-443c-993f-0e5afcc9cb08/f645bc96-2d81-4ac4-8174-d527d6d08fb3"
 storage_version_token = "1791000998188182"
 content_type = "text/plain"
+
+[[outputs]]
+id = "8Wjm6RUzR2oHTj3gPqWHj"
+uri = "file://docs/walkthrough-assets.md"
+type = "text"
+title = "Walkthrough asset manifest"
+description = "All 21 filenames, exact byte sizes, source URLs, scene mapping and ffprobe measurements. Includes model rigging limitations."
+logical_id = "43492ffa-ef43-4627-beb7-a53897c3499b"
+content_hash = "sha256:406379785a8cea8f5b1d8acf0f53b171eb73002833c8aa7576ea499faccdeb2e"
+size = 8436
+mtime_ms = 1791001573920
+storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:0c61580c-1c60-4ec3-afe4-28e8a9482287/43492ffa-ef43-4627-beb7-a53897c3499b/9ed1aa1c-eca6-4374-b1a9-32e6e0426a63"
+storage_version_token = "1791001946614413"
+content_type = "text/markdown"
