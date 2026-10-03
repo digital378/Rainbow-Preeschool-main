@@ -1,0 +1,187 @@
+{
+  "version": 1,
+  "format": "avif",
+  "fileNamePattern": "{frame:04d}.avif",
+  "startNumber": 1,
+  "devices": {
+    "desktop": {
+      "fps": 12,
+      "quality": 35,
+      "width": 1280,
+      "totalBytes": 13029186,
+      "transitions": [
+        {
+          "transition": "01",
+          "folder": "/walkthrough/frames/desktop/01/",
+          "format": "avif",
+          "frameCount": 61,
+          "fps": 12,
+          "quality": 35,
+          "width": 1280,
+          "height": 716,
+          "totalBytes": 1975536
+        },
+        {
+          "transition": "02",
+          "folder": "/walkthrough/frames/desktop/02/",
+          "format": "avif",
+          "frameCount": 61,
+          "fps": 12,
+          "quality": 35,
+          "width": 1280,
+          "height": 716,
+          "totalBytes": 1545632
+        },
+        {
+          "transition": "03",
+          "folder": "/walkthrough/frames/desktop/03/",
+          "format": "avif",
+          "frameCount": 61,
+          "fps": 12,
+          "quality": 35,
+          "width": 1280,
+          "height": 716,
+          "totalBytes": 1414722
+        },
+        {
+          "transition": "04",
+          "folder": "/walkthrough/frames/desktop/04/",
+          "format": "avif",
+          "frameCount": 61,
+          "fps": 12,
+          "quality": 35,
+          "width": 1280,
+          "height": 716,
+          "totalBytes": 2030784
+        },
+        {
+          "transition": "05",
+          "folder": "/walkthrough/frames/desktop/05/",
+          "format": "avif",
+          "frameCount": 61,
+          "fps": 12,
+          "quality": 35,
+          "width": 1280,
+          "height": 716,
+          "totalBytes": 1903470
+        },
+        {
+          "transition": "06",
+          "folder": "/walkthrough/frames/desktop/06/",
+          "format": "avif",
+          "frameCount": 61,
+          "fps": 12,
+          "quality": 35,
+          "width": 1280,
+          "height": 716,
+          "totalBytes": 1667965
+        },
+        {
+          "transition": "07",
+          "folder": "/walkthrough/frames/desktop/07/",
+          "format": "avif",
+          "frameCount": 61,
+          "fps": 12,
+          "quality": 35,
+          "width": 1280,
+          "height": 716,
+          "totalBytes": 2491077
+        }
+      ],
+      "budgetBytes": 15000000,
+      "budgetPassed": true
+    },
+    "mobile": {
+      "fps": 10,
+      "quality": 35,
+      "width": 540,
+      "totalBytes": 7320368,
+      "transitions": [
+        {
+          "transition": "01",
+          "folder": "/walkthrough/frames/mobile/01/",
+          "format": "avif",
+          "frameCount": 50,
+          "fps": 10,
+          "quality": 35,
+          "width": 540,
+          "height": 966,
+          "totalBytes": 1023828
+        },
+        {
+          "transition": "02",
+          "folder": "/walkthrough/frames/mobile/02/",
+          "format": "avif",
+          "frameCount": 50,
+          "fps": 10,
+          "quality": 35,
+          "width": 540,
+          "height": 966,
+          "totalBytes": 739157
+        },
+        {
+          "transition": "03",
+          "folder": "/walkthrough/frames/mobile/03/",
+          "format": "avif",
+          "frameCount": 50,
+          "fps": 10,
+          "quality": 35,
+          "width": 540,
+          "height": 966,
+          "totalBytes": 744322
+        },
+        {
+          "transition": "04",
+          "folder": "/walkthrough/frames/mobile/04/",
+          "format": "avif",
+          "frameCount": 50,
+          "fps": 10,
+          "quality": 35,
+          "width": 540,
+          "height": 966,
+          "totalBytes": 1204055
+        },
+        {
+          "transition": "05",
+          "folder": "/walkthrough/frames/mobile/05/",
+          "format": "avif",
+          "frameCount": 50,
+          "fps": 10,
+          "quality": 35,
+          "width": 540,
+          "height": 966,
+          "totalBytes": 955257
+        },
+        {
+          "transition": "06",
+          "folder": "/walkthrough/frames/mobile/06/",
+          "format": "avif",
+          "frameCount": 50,
+          "fps": 10,
+          "quality": 35,
+          "width": 540,
+          "height": 966,
+          "totalBytes": 1134329
+        },
+        {
+          "transition": "07",
+          "folder": "/walkthrough/frames/mobile/07/",
+          "format": "avif",
+          "frameCount": 50,
+          "fps": 10,
+          "quality": 35,
+          "width": 540,
+          "height": 966,
+          "totalBytes": 1519420
+        }
+      ],
+      "budgetBytes": 8000000,
+      "budgetPassed": true
+    }
+  },
+  "fallback": {
+    "requiredFor": "Browsers without AVIF support, including iOS versions older than 16",
+    "desktop": "/walkthrough/scenes/desktop/scene-{scene}.webp",
+    "mobile": "/walkthrough/scenes/mobile/scene-{scene}.webp"
+  }
+}

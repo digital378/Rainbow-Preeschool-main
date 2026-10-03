@@ -59,3 +59,18 @@ Validation: all PNGs are 880 × 1168. All three GLBs are valid GLB v2 containers
 | `counsellor/counsellor-rigged-animated-b.glb` | 12622856 | https://d8j0ntlcm91z4.cloudfront.net/user_3GtPe5Y342R7qxGzTqdo8TSCJyk/hf_20260924_045953_cce6cc9b-e364-4fb0-8c17-2040635ca16e.glb |
 
 Total downloaded: **21 files, 248503775 bytes (236.99 MiB)**.
+
+## Frame sequences
+
+Final AVIF sequences are in `client/public/walkthrough/frames/{device}/{01..07}/`, named `0001.avif`, `0002.avif`, and so on. Per-transition counts, dimensions, frame rates, quality and byte totals are recorded in `client/public/walkthrough/frames/manifest.json`. All earlier WebP frames and intermediate AVIF attempts were removed.
+
+| Device | FPS | AVIF quality | Dimensions | Frames per transition | Total frames | Total bytes | Decimal MB | Budget |
+|---|---:|---:|---|---:|---:|---:|---:|---|
+| Desktop | 12 | 35 | 1280 × 716 | 61 for each of 01–07 | 427 | 13029186 | 13.03 | Under 15 MB: PASS |
+| Mobile | 10 | 35 | 540 × 966 | 50 for each of 01–07 | 350 | 7320368 | 7.32 | Under 8 MB: PASS |
+
+Each device was tried at quality 40 first, then re-extracted at quality 35 to meet its budget. Neither required the permitted width reduction. Budget checks use decimal MB (1 MB = 1,000,000 bytes) and count all final frame files.
+
+Processing: FFmpeg extracts frames at the stated FPS using Lanczos scaling and aspect-ratio-preserving even dimensions. Temporary PPM frames are encoded with ImageMagick AVIF, 8-bit depth, quality 35, `heic:speed=8`, `heic:max-threads=1`, and `-strip` to remove metadata. Temporary extraction files are deleted after encoding. No packages or system configuration were changed.
+
+Browsers without AVIF support, including iOS versions older than 16, **must use the existing scene-still fallback**. The future walkthrough loader must detect AVIF support before choosing these sequences. This asset-processing phase does not change any page code or implement the loader.

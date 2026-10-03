@@ -1,0 +1,34 @@
+TASK: PHASE 1 (retry) — redo the walkthrough frames as AVIF to meet the size budget. Asset processing only.
+
+RULES
+- No screenshots — do not take or send any. I will check visuals myself.
+- Do NOT change any page code, including /dummy. Do not touch any live page, design, text or layout.
+- Do not change scripts/post-merge.sh, package files or replit.nix. Do not run npm ci.
+- Follow .agents/skills/rainbow-immersive.
+
+1) FORMAT CHANGE
+- WebP could not meet the budget (32 MB desktop / 24 MB mobile at 12 fps q60). Switch to AVIF.
+- Extract frames with ffmpeg (lanczos scaling) from the clips in .local/walkthrough-src/, then encode each frame to AVIF with ImageMagick (magick, which already supports AVIF). Strip metadata.
+- Delete the existing WebP frames in client/public/walkthrough/frames/ so only the final AVIF frames remain. Names: 0001.avif, 0002.avif ...
+
+2) STARTING SETTINGS
+- Desktop: 1280 px wide, 12 fps, AVIF quality 40.
+- Mobile: 540 px wide, 10 fps, AVIF quality 40.
+
+3) SIZE BUDGET (must pass)
+- All 7 desktop folders together under 15 MB. All 7 mobile folders together under 8 MB.
+- If a device is over budget, step down for that device only, in this order, re-measuring each time:
+  a) quality 35, b) desktop 1152 px / mobile 480 px.
+- Never go below 10 fps, quality 35, or those widths. If the budget still cannot be met, stop and report the closest result.
+
+4) MANIFEST AND DOCS
+- Create client/public/walkthrough/frames/manifest.json: for each device and transition 01–07 give folder, format "avif", frame count, fps, width x height, total bytes.
+- Add a "Frame sequences" section to docs/walkthrough-assets.md with the final settings and per-device totals. Note that browsers without AVIF support (older than iOS 16) must use the scene-still fallback.
+
+5) VERIFY
+- Every folder's frame count matches the manifest, no 0-byte frames, sequential numbering with no gaps, consistent dimensions.
+- Run the production build and confirm the app still starts on port 5000.
+
+6) REPORT AND PUSH
+- Report final settings, frames per transition, MB per device and the files changed.
+- Commit and push to GitHub main. If the push fails with "Invalid username or token", do not retry. Stop and report it.
