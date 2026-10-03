@@ -2,6 +2,7 @@
 .git/
 .agents/
 .local/
+.local/walkthrough-src/
 .cache/
 .superpowers/
 

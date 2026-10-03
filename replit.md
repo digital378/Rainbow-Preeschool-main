@@ -1,5 +1,10 @@
 # Rainbow Preschool International Website
 
+## Immersive /dummy walkthrough
+- Rules for immersive walkthrough work: `.agents/skills/rainbow-immersive/SKILL.md`.
+- Scene stills, source asset paths and video measurements: `docs/walkthrough-assets.md`.
+- Large originals stay in `.local/walkthrough-src/`, excluded from GitHub and deployments. Setup alone must not change `/dummy` or any live page.
+
 ## Design freeze (set by the Digital Marketing Manager, 25 Sep 2026)
 - Never change the visual design or layout of any existing page or section unless the task names the exact visual change.
 - SEO and content tasks may only edit text, headings, links, metadata and structured data, move existing sections, and delete sections the task lists by name.

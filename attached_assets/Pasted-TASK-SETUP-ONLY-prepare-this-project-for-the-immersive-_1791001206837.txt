@@ -1,0 +1,79 @@
+TASK: SETUP ONLY — prepare this project for the immersive /dummy walkthrough build. Do NOT change any page design, layout, text or visuals in this task.
+
+RULES
+- No screenshots — do not take or send any. I will check visuals myself.
+- Do not modify any live page. Do not touch the /dummy page code yet.
+- Keep all existing skills, memory files and guards exactly as they are.
+
+1) INSTALL AGENT SKILLS (same way the existing skills in .agents/skills were installed, so skills-lock.json is updated)
+   - GSAP official skills: npx skills add https://github.com/greensock/gsap-skills
+     (should add gsap-core, gsap-timeline, gsap-scrolltrigger, gsap-plugins, gsap-utils, gsap-react, gsap-performance, gsap-frameworks)
+   - Three.js performance skill: from https://github.com/emalorenzo/three-agent-skills install ONLY "three-best-practices" (skip the r3f one — @react-three/fiber is blocked in this project per .agents/memory/r3f-firewall.md)
+   - Confirm each new SKILL.md exists under .agents/skills/.
+
+2) PACKAGES
+   - Add @gsap/react (useGSAP hook). gsap ^3.15 and lenis are already installed — keep them.
+   - Pin "three" to a stable npm release that matches @types/three (^0.185) instead of "github:mrdoob/three.js#dev". Then confirm the app still builds and SchoolTownMap3D still works. If pinning breaks anything, revert and tell me why.
+   - Use npm clean installs only (see .agents/memory/post-merge-dependency-setup.md).
+
+3) SYSTEM TOOLS
+   - Add ffmpeg to replit.nix (keep imagemagick and libwebp). Verify with: ffmpeg -version and ffprobe -version.
+
+4) DOWNLOAD THE HIGGSFIELD SOURCE ASSETS
+   - Create folder .local/walkthrough-src/ and add it to .gitignore AND .replitignore so these large originals never go to GitHub or the deployment.
+   - Download every file below into it, using the names given (e.g. desktop/01-gate-to-reception.mp4, mobile/01-gate-to-reception.mp4, counsellor/counsellor-a.png, counsellor/counsellor-rigged-animated-a.glb).
+   - Run ffprobe on each video and record duration, resolution, fps and frame count.
+
+desktop 16:9 transition clips (5s each, 1920x1080):
+- 01 gate-to-reception: https://d8j0ntlcm91z4.cloudfront.net/user_3GtPe5Y342R7qxGzTqdo8TSCJyk/hf_20260924_044901_d04b354b-e7ba-4dec-a1d1-ec2c434cd0c3.mp4
+- 02 reception-to-corridor: https://d8j0ntlcm91z4.cloudfront.net/user_3GtPe5Y342R7qxGzTqdo8TSCJyk/hf_20260924_044901_9344b43c-b44a-48ad-97e2-1634560d294f.mp4
+- 03 corridor-to-classroom: https://d8j0ntlcm91z4.cloudfront.net/user_3GtPe5Y342R7qxGzTqdo8TSCJyk/hf_20260924_044901_097a3800-856f-48d7-8bde-feb17c57d946.mp4
+- 04 classroom-to-playground: https://d8j0ntlcm91z4.cloudfront.net/user_3GtPe5Y342R7qxGzTqdo8TSCJyk/hf_20260924_044901_d51e9ab2-e143-4f86-86e1-ecf4316ddc29.mp4
+- 05 playground-to-theatre: https://d8j0ntlcm91z4.cloudfront.net/user_3GtPe5Y342R7qxGzTqdo8TSCJyk/hf_20260924_044901_3127f100-a373-4c76-9ae3-be6e50a1f76c.mp4
+- 06 theatre-to-courtyard: https://d8j0ntlcm91z4.cloudfront.net/user_3GtPe5Y342R7qxGzTqdo8TSCJyk/hf_20260924_044901_207c3d2e-705b-4d66-8745-b4e4588ee1af.mp4
+- 07 courtyard-to-aerial: https://d8j0ntlcm91z4.cloudfront.net/user_3GtPe5Y342R7qxGzTqdo8TSCJyk/hf_20260924_044901_b691b8c4-8016-4b2d-a297-f97c9ce93e88.mp4
+
+mobile 9:16 transition clips (5s each, 1080x1920):
+- 01 gate-to-reception: https://d8j0ntlcm91z4.cloudfront.net/user_3GtPe5Y342R7qxGzTqdo8TSCJyk/hf_20260924_042059_a6ac443a-ab71-4cfc-b5cc-c4e508d77d54.mp4
+- 02 reception-to-corridor: https://d8j0ntlcm91z4.cloudfront.net/user_3GtPe5Y342R7qxGzTqdo8TSCJyk/hf_20260924_042542_2ac1061b-7691-40eb-ad80-edab7faaf22d.mp4
+- 03 corridor-to-classroom: https://d8j0ntlcm91z4.cloudfront.net/user_3GtPe5Y342R7qxGzTqdo8TSCJyk/hf_20260924_042543_15cfe677-127d-43f5-b64f-35344cf06f33.mp4
+- 04 classroom-to-playground: https://d8j0ntlcm91z4.cloudfront.net/user_3GtPe5Y342R7qxGzTqdo8TSCJyk/hf_20260924_042543_9a8a32a3-84e2-4868-a98f-a62b8eff800f.mp4
+- 05 playground-to-theatre: https://d8j0ntlcm91z4.cloudfront.net/user_3GtPe5Y342R7qxGzTqdo8TSCJyk/hf_20260924_044901_471d08e6-da1a-4acb-9635-577b0df075dd.mp4
+- 06 theatre-to-courtyard: https://d8j0ntlcm91z4.cloudfront.net/user_3GtPe5Y342R7qxGzTqdo8TSCJyk/hf_20260924_044901_537cbe53-9a94-4e1b-a374-6de14ffb38b5.mp4
+- 07 courtyard-to-aerial: https://d8j0ntlcm91z4.cloudfront.net/user_3GtPe5Y342R7qxGzTqdo8TSCJyk/hf_20260924_042544_77e48302-9d7d-4b6a-963f-bfaf3f64ba65.mp4
+
+counsellor mascot character art (3:4):
+- counsellor-a: https://d8j0ntlcm91z4.cloudfront.net/user_3GtPe5Y342R7qxGzTqdo8TSCJyk/hf_20260924_041541_810a57c9-8381-4ed9-96c7-9b03552995e9.png
+- counsellor-b: https://d8j0ntlcm91z4.cloudfront.net/user_3GtPe5Y342R7qxGzTqdo8TSCJyk/hf_20260924_041541_fd39e3e9-e6fa-47e7-a3e0-8b1c8b911503.png
+- counsellor-c: https://d8j0ntlcm91z4.cloudfront.net/user_3GtPe5Y342R7qxGzTqdo8TSCJyk/hf_20260924_041541_d32f88e4-f595-4519-ad01-6365c5cbe24c.png
+- counsellor source image (used for the 3D models): https://d2ol7oe51mr4n9.cloudfront.net/user_3GtPe5Y342R7qxGzTqdo8TSCJyk/982d70d6-126e-4980-9f06-8bac2096c412.png
+
+counsellor mascot 3D models (GLB, ~12MB each):
+- counsellor-rigged-animated-a: https://d8j0ntlcm91z4.cloudfront.net/user_3GtPe5Y342R7qxGzTqdo8TSCJyk/hf_20260924_054328_afebea53-b38c-4f57-a26d-ec773100a9b8.glb
+- counsellor-static: https://d8j0ntlcm91z4.cloudfront.net/user_3GtPe5Y342R7qxGzTqdo8TSCJyk/hf_20260924_053801_02aed67f-5e19-4cfa-96f0-79201f7f18ef.glb
+- counsellor-rigged-animated-b: https://d8j0ntlcm91z4.cloudfront.net/user_3GtPe5Y342R7qxGzTqdo8TSCJyk/hf_20260924_045953_cce6cc9b-e364-4fb0-8c17-2040635ca16e.glb
+
+   - The 8 scene still images already live in client/public/walkthrough/scenes/desktop and /mobile — keep them.
+
+5) ASSET MANIFEST
+   - Create docs/walkthrough-assets.md listing: each scene (1 Gate, 2 Reception, 3 Corridor, 4 Classroom, 5 Playground, 6 Rainbow Theatre, 7 Courtyard, 8 Across Thane), its desktop + mobile still path, the transition clip that LEADS INTO the next scene, the source URL above, and the ffprobe details. Also list the counsellor files.
+
+6) CREATE A PROJECT SKILL: .agents/skills/rainbow-immersive/SKILL.md
+   Frontmatter: name: rainbow-immersive ; description: Rules for building the immersive scroll walkthrough on /dummy (Rainbow Preschool International). Use for any /dummy, walkthrough, scroll animation, frame sequence, Lenis, GSAP or counsellor-mascot work.
+   Body (write these rules clearly):
+   - Brand: official name "Rainbow Preschool International". Main colour is the bright header red only (no dark crimson/maroon, no pink). Fonts: Poppins/Inter at bold, clearly legible weights — never thin/light (300 or below) for visible text. Bright, modern, premium look. No film grain or noise overlays. No oversized, extra-bold buttons.
+   - Mobile is the priority; desktop also matters. Test both.
+   - Smoothness rules: one Lenis instance for /dummy only (smoothWheel on desktop, native touch on mobile), driven from gsap.ticker with lenis.on("scroll", ScrollTrigger.update). Use useGSAP + gsap.context for every animation and clean up on unmount. Animate only transform and opacity. No backdrop-filter/blur while scrolling. No infinite decorative loops running off-screen.
+   - Walkthrough motion = scroll-scrubbed IMAGE SEQUENCE on a <canvas>, NOT video currentTime seeking. Frames are extracted from the Higgsfield transition clips with ffmpeg, as WebP: desktop ~1600px wide, mobile ~720px wide, 24–30 frames per second of clip, quality ~70. Preload the current + next scene's frames only; show the scene still as the poster until frames are ready. Draw with requestAnimationFrame, cover-fit, devicePixelRatio capped at 2.
+   - Each scene is pinned with ScrollTrigger (scrub ~0.5–1) while its transition plays; info cards enter only after the camera stops, stay compact, and never hide most of the artwork.
+   - Respect prefers-reduced-motion and Save-Data: fall back to the scene stills with simple cross-fades.
+   - Performance budget: first scene visible under 2.5s on 4G; total walkthrough frames under 15MB desktop / 8MB mobile, loaded progressively; 3D GLB models must be compressed (Draco/meshopt + KTX2/WebP textures) to under 3MB and lazy-loaded, with an image fallback.
+   - Content rules: all existing homepage information must stay findable; programme links/redirects must keep working; facts come only from shared data files (never invent claims).
+   - Never take or send screenshots.
+
+7) UPDATE replit.md
+   - Add a short section "Immersive /dummy walkthrough" pointing to .agents/skills/rainbow-immersive/SKILL.md and docs/walkthrough-assets.md.
+
+8) COMMIT AND PUSH everything (except .local/) to the GitHub main branch.
+
+REPORT BACK (short list): skills installed, package changes, ffmpeg version, files downloaded with sizes and ffprobe details, files created/changed, and anything that failed.
